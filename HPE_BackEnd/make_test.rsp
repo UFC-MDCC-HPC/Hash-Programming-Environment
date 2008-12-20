@@ -1,4 +1,4 @@
-./main/Program.cs
+./deploy_test/Program.cs
 
 -lib:"C:\Program Files\Mono-2.0.1\lib\mono\DGAC"
 

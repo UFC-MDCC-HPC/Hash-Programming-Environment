@@ -1,12 +1,12 @@
 -r:System.Runtime.Remoting.dll
 
+-lib:"C:\Program Files\Mono-2.0.1\lib\mono\DGAC"
+
 -out:./bin/worker.exe
 
-RemotingServerWorker.cs 
-ServerObject.cs 
-Constants.cs 
-CommandLineUtil.cs 
-FileUtil.cs
+worker/RemotingServerWorker.cs 
+
+-r:DGAC
  
 -target:exe
  

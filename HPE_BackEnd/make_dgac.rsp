@@ -1,26 +1,26 @@
-LoaderApp.cs 
-LoaderComponent.cs 
-LoaderAbstractComponent.cs 
-LoaderConcreteComponent.cs 
-database/model/*.cs 
-database/dao/*.cs 
-tree/*.cs
+DGAC/LoaderApp.cs 
+DGAC/LoaderComponent.cs 
+DGAC/LoaderAbstractComponent.cs 
+DGAC/LoaderConcreteComponent.cs 
+DGAC/database/model/*.cs 
+DGAC/database/dao/*.cs 
+DGAC/tree/*.cs
 DGAC/base/*.cs
-HashComponent.cs 
-CommandLineUtil.cs
-Constants.cs
-FileUtil.cs
-DGAC.cs
-ServerObject.cs
+DGAC/HashComponent.cs 
+DGAC/CommandLineUtil.cs
+DGAC/Constants.cs
+DGAC/FileUtil.cs
+DGAC/DGAC.cs
+DGAC/ServerObject.cs
 
 -target:library
 
--keyfile:DGAC.snk
+-keyfile:DGAC/DGAC.snk
 
 -debug+
 
 -r:System.Data
--r:database/MySql.Data
+-r:DGAC/database/MySql.Data
 -r:System.Runtime.Remoting
 -r:System.Xml
 -out:bin/DGAC.dll
