@@ -1,0 +1,14 @@
+-r:System.Runtime.Remoting.dll
+
+-out:./bin/worker.exe
+
+RemotingServerWorker.cs 
+ServerObject.cs 
+Constants.cs 
+CommandLineUtil.cs 
+FileUtil.cs
+ 
+-target:exe
+ 
+
+

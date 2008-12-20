@@ -1,0 +1,10 @@
+./main/BackEndWS.asmx.cs
+-lib:/export/home/hpe.backend/hpe_support/mono-2.0/lib/mono/DGAC
+-r:System.Web.Services.dll 
+-r:System.Runtime.Remoting.dll
+-r:System.Data.dll 
+-r:DGAC
+
+-target:library
+
+-out:../hpe.backend.service/BackEndWS.asmx.dll
