@@ -1,7 +1,7 @@
 package hPE;
 
+import hPE.frontend.factory.HComponentFactory;
 import hPE.model.base.HComponent;
-import hPE.model.base.factory.HComponentFactory;
 import hPE.model.kinds.activate.computation.HComputationComponent;
 import hPE.model.kinds.activate.computation.application.HApplicationComponent;
 import hPE.model.kinds.activate.synchronization.HSynchronizationComponent;

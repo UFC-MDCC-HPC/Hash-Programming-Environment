@@ -1,9 +1,9 @@
 package hPE.model.kinds.base;
 
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HInterface;
 import hPE.model.base.IBindingTarget;
 import hPE.model.base.IHUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.interfaces.IPackageLocation;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package hPE.model.base;
 
-import hPE.model.base.exceptions.HPEAbortException;
-import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
+import hPE.frontend.exceptions.HPEAbortException;
+import hPE.frontend.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.interfaces.IComponentEntry;
 import hPE.model.interfaces.IConfiguration;
 import hPE.model.interfaces.IInterface;

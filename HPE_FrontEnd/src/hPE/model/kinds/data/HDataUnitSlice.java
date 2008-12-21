@@ -2,12 +2,12 @@ package hPE.model.kinds.data;
 
 import org.eclipse.draw2d.geometry.Point;
 
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.HInterfaceSlice;
 import hPE.model.base.HUnitSlice;
 import hPE.model.base.IHUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationInterfaceSlice;
 
 public class HDataUnitSlice extends HUnitSlice {

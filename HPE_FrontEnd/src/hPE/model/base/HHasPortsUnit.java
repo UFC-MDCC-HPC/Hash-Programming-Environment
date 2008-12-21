@@ -3,7 +3,7 @@ package hPE.model.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import hPE.model.base.exceptions.HPEAbortException;
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.kinds.base.HHasPortsInterface;
 
 import org.eclipse.draw2d.geometry.Point;

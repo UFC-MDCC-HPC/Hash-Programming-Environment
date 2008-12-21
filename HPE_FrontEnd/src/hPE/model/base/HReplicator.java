@@ -19,7 +19,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.draw2d.ColorConstants;
 
 
-import hPE.model.base.exceptions.HPEInvalidNameException;
+import hPE.frontend.exceptions.HPEInvalidNameException;
 import hPE.model.interfaces.IConfiguration;
 import hPE.model.interfaces.IReplicator;
 

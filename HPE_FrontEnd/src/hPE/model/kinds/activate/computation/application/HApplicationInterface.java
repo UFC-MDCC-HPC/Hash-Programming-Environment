@@ -6,11 +6,11 @@ import org.eclipse.draw2d.geometry.Point;
 
 import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.codegen.base.activate.computation.application.c_sharp.HBESynthesizerCSharpMain;
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationInterface;
 
 public class HApplicationInterface extends HComputationInterface {

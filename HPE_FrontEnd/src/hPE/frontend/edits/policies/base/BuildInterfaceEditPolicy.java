@@ -7,9 +7,9 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 
 import hPE.frontend.edits.base.UnitEditPart;
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HInterface;
 import hPE.model.base.IHUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.data.HDataUnit;
 
 import org.eclipse.draw2d.geometry.Point;

@@ -1,11 +1,11 @@
 package hPE.frontend.commands.base;
 
+import hPE.frontend.exceptions.HPEInvalidNameException;
+import hPE.frontend.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HLinkToReplicator;
 import hPE.model.base.HReplicator;
 import hPE.model.base.IReplicatedElement;
-import hPE.model.base.exceptions.HPEInvalidNameException;
-import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;

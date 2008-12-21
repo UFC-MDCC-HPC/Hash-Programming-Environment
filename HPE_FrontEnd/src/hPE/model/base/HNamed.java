@@ -1,6 +1,6 @@
 package hPE.model.base;
 
-import hPE.model.base.exceptions.HPEInvalidNameException;
+import hPE.frontend.exceptions.HPEInvalidNameException;
 
 
 public interface HNamed {

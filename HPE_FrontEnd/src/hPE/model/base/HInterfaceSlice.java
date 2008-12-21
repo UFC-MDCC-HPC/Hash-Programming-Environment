@@ -12,7 +12,7 @@ import java.util.List;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.geometry.Point;
 
-import hPE.model.base.exceptions.HPENotFusableSlicesException;
+import hPE.frontend.exceptions.HPENotFusableSlicesException;
 import hPE.model.interfaces.IInterface;
 import hPE.model.interfaces.IConfiguration;
 import hPE.model.interfaces.IInterfaceSlice;

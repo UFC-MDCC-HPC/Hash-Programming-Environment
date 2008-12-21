@@ -1,4 +1,4 @@
-package hPE.model.base.factory;
+package hPE.frontend.factory;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;

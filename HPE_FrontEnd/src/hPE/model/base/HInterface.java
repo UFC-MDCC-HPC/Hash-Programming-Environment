@@ -3,7 +3,7 @@ package hPE.model.base;
 import hPE.frontend.codegen.HBEAbstractFile;
 import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.codegen.HBESourceVersion;
-import hPE.model.base.exceptions.HPENotFusableSlicesException;
+import hPE.frontend.exceptions.HPENotFusableSlicesException;
 import hPE.model.interfaces.IComponent;
 import hPE.model.interfaces.IInterface;
 import hPE.util.Pair;

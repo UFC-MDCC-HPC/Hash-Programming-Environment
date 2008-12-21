@@ -1,10 +1,10 @@
 package hPE.model.kinds.activate.computation;
 
 import hPE.frontend.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.HActivateInterface;
 
 import java.util.List;

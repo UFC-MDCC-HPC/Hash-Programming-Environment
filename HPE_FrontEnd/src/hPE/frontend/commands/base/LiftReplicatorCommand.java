@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 
 import org.eclipse.gef.commands.Command;
 
+import hPE.frontend.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HLinkToReplicator;
 import hPE.model.base.HReplicator;
 import hPE.model.base.HUnit;
 import hPE.model.base.HUnitSlice;
-import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 
 
 public class LiftReplicatorCommand extends Command {

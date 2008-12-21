@@ -1,12 +1,12 @@
 package hPE.frontend.library.model.classes;
 
+import hPE.frontend.factory.HComponentFactoryImpl;
 import hPE.frontend.library.HPEComponentFileNotFound;
 import hPE.frontend.library.HPELocationEntry;
 import hPE.frontend.library.model.interfaces.ILComponentView;
 import hPE.frontend.library.model.interfaces.ILInterfaceCompositeView;
 import hPE.frontend.library.model.interfaces.ILPackage;
 import hPE.model.base.HComponent;
-import hPE.model.base.factory.HComponentFactoryImpl;
 import hPE.xml.component.ComponentType;
 import hPE.xml.component.InterfaceType;
 

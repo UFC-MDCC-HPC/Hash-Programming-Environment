@@ -1,10 +1,10 @@
 package hPE.model.kinds.data;
 
 import hPE.frontend.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.interfaces.IPortType;
 import hPE.model.kinds.base.HHasPortsInterface;
 

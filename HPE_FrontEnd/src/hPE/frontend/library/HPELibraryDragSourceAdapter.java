@@ -41,10 +41,10 @@ import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
 
 import hPE.ComponentFile;
+import hPE.frontend.factory.HComponentFactoryImpl;
 import hPE.frontend.library.model.interfaces.ILComponentView;
 import hPE.frontend.library.model.interfaces.ILPackage;
 import hPE.model.base.HComponent;
-import hPE.model.base.factory.HComponentFactoryImpl;
 
 public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
 

@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import org.eclipse.gef.commands.Command;
 
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HBinding;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
@@ -20,7 +21,6 @@ import hPE.model.kinds.activate.computation.HComputationUnitSlice;
 import hPE.model.kinds.data.HDataUnit;
 import hPE.model.kinds.data.HDataUnitSlice;
 import hPE.model.base.HLinkToReplicator;
-import hPE.model.base.exceptions.HPEAbortException;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Dimension;

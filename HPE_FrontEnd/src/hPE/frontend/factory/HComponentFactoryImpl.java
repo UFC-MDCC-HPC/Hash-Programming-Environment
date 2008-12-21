@@ -1,4 +1,4 @@
-package hPE.model.base.factory;
+package hPE.frontend.factory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import hPE.frontend.codegen.HBEAbstractFile;
@@ -8,6 +8,8 @@ import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpMainDefinition;
 import hPE.frontend.codegen.base.c_sharp.HBESourceVersionCSharp;
 import hPE.frontend.commands.base.FuseReplicatorCommand;
 import hPE.frontend.commands.base.SupersedeCommand;
+import hPE.frontend.exceptions.HPEAbortException;
+import hPE.frontend.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSlice;
@@ -24,8 +26,6 @@ import hPE.model.base.IHVisualElement;
 import hPE.model.base.IHasColor;
 import hPE.model.base.IPointsToReplicator;
 import hPE.model.base.HReplicator.ReplicatorOrigin;
-import hPE.model.base.exceptions.HPEAbortException;
-import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.kinds.activate.HActivateInterface;
 import hPE.model.kinds.activate.computation.HComputationComponent;
 import hPE.model.kinds.activate.computation.application.HApplicationComponent;

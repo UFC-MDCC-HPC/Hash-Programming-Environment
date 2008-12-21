@@ -1,7 +1,7 @@
 package hPE.frontend.commands.base;
 
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HComponent;
-import hPE.model.base.exceptions.HPEAbortException;
 
 import javax.swing.JOptionPane;
 

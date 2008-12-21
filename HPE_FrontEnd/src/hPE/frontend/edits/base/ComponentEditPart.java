@@ -11,13 +11,13 @@ import hPE.frontend.edits.policies.base.RemoveElementEditPolicy;
 import hPE.frontend.edits.policies.base.SetParameterEditPolicy;
 import hPE.frontend.edits.policies.base.SupplyParameterEditPolicy;
 import hPE.frontend.edits.policies.base.UnitFlowLayoutEditPolicy;
+import hPE.frontend.exceptions.HPEInvalidNameException;
 import hPE.frontend.figures.base.ComponentFigure;
 import hPE.frontend.figures.base.ConfigurationNodeFigure;
 import hPE.model.base.HComponent;
 import hPE.model.base.HLinkToReplicator;
 import hPE.model.base.HReplicator;
 import hPE.model.base.IReplicatedElement;
-import hPE.model.base.exceptions.HPEInvalidNameException;
 import hPE.model.interfaces.IComponent;
 
 import java.beans.PropertyChangeEvent;

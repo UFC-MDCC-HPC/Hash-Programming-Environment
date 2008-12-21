@@ -1,12 +1,12 @@
 package hPE.model.kinds.base;
 
+import hPE.frontend.exceptions.HPENotFusableSlicesException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.HInterfaceSlice;
 import hPE.model.base.HUnitSlice;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.base.exceptions.HPENotFusableSlicesException;
 
 import org.eclipse.draw2d.geometry.Point;
 

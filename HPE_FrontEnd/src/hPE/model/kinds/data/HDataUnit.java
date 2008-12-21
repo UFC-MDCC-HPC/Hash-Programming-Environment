@@ -1,6 +1,7 @@
 package hPE.model.kinds.data;
 
 
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HHasPortsUnit;
 import hPE.model.base.HInterface;
@@ -9,7 +10,6 @@ import hPE.model.base.HUnitSlice;
 import hPE.model.base.HUnitStub;
 import hPE.model.base.IHPrimUnit;
 import hPE.model.base.IHUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 
 import org.eclipse.draw2d.geometry.Point;
 

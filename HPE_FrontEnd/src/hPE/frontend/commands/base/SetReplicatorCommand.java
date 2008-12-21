@@ -6,12 +6,12 @@ import javax.swing.JOptionPane;
 
 import org.eclipse.gef.commands.Command;
 
+import hPE.frontend.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.base.HBinding;
 import hPE.model.base.HPrimUnitStub;
 import hPE.model.base.HReplicator;
 import hPE.model.base.IHPrimUnit;
 import hPE.model.base.IReplicatedElement;
-import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 
 
 public class SetReplicatorCommand extends Command {

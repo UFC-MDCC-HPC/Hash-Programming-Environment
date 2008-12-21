@@ -2,7 +2,7 @@ package hPE.model.base;
 
 import java.util.List;
 
-import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
+import hPE.frontend.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.interfaces.IConfiguration;
 import hPE.model.interfaces.IReplicator;
 

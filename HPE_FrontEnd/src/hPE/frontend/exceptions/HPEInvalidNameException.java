@@ -1,4 +1,4 @@
-package hPE.model.base.exceptions;
+package hPE.frontend.exceptions;
 
 public class HPEInvalidNameException extends Exception {
 

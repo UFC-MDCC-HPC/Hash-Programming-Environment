@@ -3,6 +3,7 @@ package hPE.model.kinds.qualifier.environment;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
+import hPE.frontend.exceptions.HPEAbortException;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSig;
@@ -12,7 +13,6 @@ import hPE.model.base.HUnitSlice;
 import hPE.model.base.HUnitStub;
 import hPE.model.base.IHPrimUnit;
 import hPE.model.base.IHUnit;
-import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationUnitSlice;
 import hPE.model.kinds.activate.computation.application.HApplicationInterface;
 import hPE.model.kinds.qualifier.HQualifierUnit;
