@@ -1,11 +1,11 @@
 package hPE.frontend.dialogs.base;
 
 import hPE.HPEVersionEditor;
-import hPE.backend.cluster.synthesizer.HBEAbstractFile;
-import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
-import hPE.backend.cluster.synthesizer.HBESourceVersion;
-import hPE.backend.cluster.synthesizer.C.HBESynthesizerDataTypeRawForC;
-import hPE.backend.cluster.synthesizer.C.HBESynthesizerForC;
+import hPE.frontend.codegen.HBEAbstractFile;
+import hPE.frontend.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.codegen.HBESourceVersion;
+import hPE.frontend.codegen.C.HBESynthesizerDataTypeRawForC;
+import hPE.frontend.codegen.C.HBESynthesizerForC;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

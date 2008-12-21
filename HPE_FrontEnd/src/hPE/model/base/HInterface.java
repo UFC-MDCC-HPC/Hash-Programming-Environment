@@ -1,8 +1,8 @@
 package hPE.model.base;
 
-import hPE.backend.cluster.synthesizer.HBEAbstractFile;
-import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
-import hPE.backend.cluster.synthesizer.HBESourceVersion;
+import hPE.frontend.codegen.HBEAbstractFile;
+import hPE.frontend.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.codegen.HBESourceVersion;
 import hPE.model.base.exceptions.HPENotFusableSlicesException;
 import hPE.model.interfaces.IComponent;
 import hPE.model.interfaces.IInterface;

@@ -1,11 +1,11 @@
 package hPE.model.base.factory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import hPE.backend.cluster.synthesizer.HBEAbstractFile;
-import hPE.backend.cluster.synthesizer.HBESourceVersion;
-import hPE.backend.cluster.synthesizer.c_sharp.HBESourceCSharpClassDefinition;
-import hPE.backend.cluster.synthesizer.c_sharp.HBESourceCSharpMainDefinition;
-import hPE.backend.cluster.synthesizer.c_sharp.HBESourceVersionCSharp;
+import hPE.frontend.codegen.HBEAbstractFile;
+import hPE.frontend.codegen.HBESourceVersion;
+import hPE.frontend.codegen.c_sharp.HBESourceCSharpClassDefinition;
+import hPE.frontend.codegen.c_sharp.HBESourceCSharpMainDefinition;
+import hPE.frontend.codegen.c_sharp.HBESourceVersionCSharp;
 import hPE.frontend.commands.base.FuseReplicatorCommand;
 import hPE.frontend.commands.base.SupersedeCommand;
 import hPE.model.base.HComponent;
@@ -2128,8 +2128,8 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 	}
 
 	private HBESourceVersion createSourceVersion(String sourceType) {
-	    if (sourceType.equals(hPE.backend.cluster.synthesizer.base.activate.computation.application.c_sharp.HBESourceVersionCSharp.getType()))	{
-		    return new hPE.backend.cluster.synthesizer.base.activate.computation.application.c_sharp.HBESourceVersionCSharp();
+	    if (sourceType.equals(hPE.frontend.codegen.base.activate.computation.application.c_sharp.HBESourceVersionCSharp.getType()))	{
+		    return new hPE.frontend.codegen.base.activate.computation.application.c_sharp.HBESourceVersionCSharp();
 	    } else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
 	    	return  new HBESourceVersionCSharp();
 	    } else {

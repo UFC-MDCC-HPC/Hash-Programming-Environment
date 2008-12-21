@@ -1,71 +1,31 @@
 package hPE.frontend.edits.base;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceStatus;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.draw2d.ConnectionAnchor;
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.Request;
-import org.eclipse.gef.RequestConstants;
-import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
-import org.eclipse.gef.tools.DirectEditManager;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import hPE.HPEVersionEditor;
-import hPE.model.base.HComponent;
-import hPE.model.base.HInterface;
-import hPE.model.base.HInterfaceSlice;
-import hPE.model.base.HLinkToInterface;
-import hPE.model.base.HUnit;
-import hPE.model.kinds.activate.HActivateInterface;
-import hPE.model.kinds.data.HDataInterface;
-
-import hPE.backend.cluster.synthesizer.HBEAbstractFile;
-import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
-import hPE.backend.cluster.synthesizer.HBESourceVersion;
-import hPE.backend.cluster.synthesizer.C.HBESynthesizerForC;
 import hPE.frontend.edits.policies.base.ChangeColorEditPolicy;
 import hPE.frontend.edits.policies.base.HashGraphicalNodeEditPolicy;
 import hPE.frontend.edits.policies.base.NameDirectEditPolicy;
 import hPE.frontend.edits.policies.base.OpenSourceEditPolicy;
 import hPE.frontend.edits.policies.base.UnitFlowLayoutEditPolicy;
-import hPE.frontend.edits.policies.kinds.activate.EditProtocolEditPolicy;
 import hPE.frontend.figures.base.ConfigurationNodeFigure;
 import hPE.frontend.figures.base.InterfaceFigure;
+import hPE.model.base.HInterface;
+import hPE.model.base.HLinkToInterface;
+import hPE.model.kinds.activate.HActivateInterface;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.ConnectionEditPart;
+import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.operation.ModalContext;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
-import org.eclipse.ui.dialogs.ContainerGenerator;
-import org.eclipse.ui.editors.text.TextEditor;
-import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
-import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.RequestConstants;
+import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.gef.tools.DirectEditManager;
 
 
 public class InterfaceEditPart<ModelType extends HInterface, FigureType extends InterfaceFigure> extends AbstractGraphicalEditPart implements PropertyChangeListener, NodeEditPart {

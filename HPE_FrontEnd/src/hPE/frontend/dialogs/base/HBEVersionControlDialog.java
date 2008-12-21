@@ -1,33 +1,27 @@
 package hPE.frontend.dialogs.base;
 
 import hPE.HPEVersionEditor;
-import hPE.backend.cluster.synthesizer.HBEAbstractFile;
-import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
-import hPE.backend.cluster.synthesizer.HBESourceVersion;
-import hPE.backend.cluster.synthesizer.C.HBESynthesizerDataTypeRawForC;
-import hPE.backend.cluster.synthesizer.C.HBESynthesizerForC;
+import hPE.frontend.codegen.HBEAbstractFile;
+import hPE.frontend.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.codegen.HBESourceVersion;
+import hPE.model.base.HInterface;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableColumn;
 import java.awt.FlowLayout;
-import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextPane;
-
-import hPE.model.base.HInterface;
-
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.table.TableColumn;
 
 
 public class HBEVersionControlDialog extends JDialog {

@@ -1,6 +1,6 @@
 package hPE.model.kinds.activate;
 
-import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
+import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.model.base.HBinding;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;

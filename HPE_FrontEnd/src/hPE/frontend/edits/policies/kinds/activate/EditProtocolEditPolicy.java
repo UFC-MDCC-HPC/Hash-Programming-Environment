@@ -4,7 +4,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 
-import hPE.backend.cluster.synthesizer.C.HBESynthesizerForC;
+import hPE.frontend.codegen.C.HBESynthesizerForC;
 
 import hPE.model.base.*;
 import hPE.model.kinds.activate.HActivateInterface;

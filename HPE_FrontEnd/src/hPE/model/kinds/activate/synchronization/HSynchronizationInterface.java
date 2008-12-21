@@ -1,6 +1,6 @@
 package hPE.model.kinds.activate.synchronization;
 
-import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
+import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
@@ -26,10 +26,10 @@ public class HSynchronizationInterface extends HActivateInterface {
 		List<HBEAbstractSynthesizer> l = super.getSupportedSynthesizers();
 		HComponent c = (HComponent) this.getConfiguration();
 		if (c.isAbstractConfiguration()) {
-			l.add(new hPE.backend.cluster.synthesizer.base.activate.c_sharp.HBESynthesizerCSharpAbstract());
+			l.add(new hPE.frontend.codegen.base.activate.c_sharp.HBESynthesizerCSharpAbstract());
 		}
 		else {
-			l.add(new hPE.backend.cluster.synthesizer.base.activate.c_sharp.HBESynthesizerCSharpConcrete());
+			l.add(new hPE.frontend.codegen.base.activate.c_sharp.HBESynthesizerCSharpConcrete());
 		}
 		return l;
 	}
