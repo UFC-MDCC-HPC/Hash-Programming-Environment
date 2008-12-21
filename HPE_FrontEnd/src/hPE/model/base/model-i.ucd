@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="model-i" size="2390,2713" id="hPE.base.model" metadata="uml2-1.0" initialized="true" zoom="0.75" scrolledX="-222" scrolledY="-145" tag="1000" key="3230303530373138204850452F6668636A">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.12/@sourceConnections.0 //@children.14/@sourceConnections.7 //@children.11/@sourceConnections.7" name="HSliceAbstraction" location="440,-241" size="206,283" id="hPE.model/HSliceAbstraction" runTimeClassModel="addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),setWhich_interface(LhPE.model.HInterface;),show_interface(),notifyColorChange(),hide_interface(),visibleInterface(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),getNestingFactor(),getWhich_interface(),nestingFactor,name,HSliceAbstraction(Ljava.lang.String;LhPE.model.HInterface;LhPE.model.HInterfaceSig;I)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="102,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.model/HSliceAbstraction#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="nestingFactor" id="hPE.model/HSliceAbstraction#nestingFactor"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,198">
+      <children xsi:type="editmodel:MethodEditModel" name="HSliceAbstraction" id="hPE.model/HSliceAbstraction#HSliceAbstraction(Ljava.lang.String;LhPE.base.model.HInterface;LhPE.base.model.HInterfaceSig;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.model/HSliceAbstraction#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show_interface" id="hPE.model/HSliceAbstraction#show_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide_interface" id="hPE.model/HSliceAbstraction#hide_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.model/HSliceAbstraction#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.model/HSliceAbstraction#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyColorChange" id="hPE.model/HSliceAbstraction#notifyColorChange()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNestingFactor" id="hPE.model/HSliceAbstraction#getNestingFactor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setWhich_interface" id="hPE.model/HSliceAbstraction#setWhich_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="visibleInterface" id="hPE.model/HSliceAbstraction#visibleInterface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getWhich_interface" id="hPE.model/HSliceAbstraction#getWhich_interface()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/IPropertyChangeListener&lt;-hPE.model/HSliceAbstraction" source="//@children.0" target="//@children.23" targetEnd="//@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="81,283" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="111,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/IHasInterface&lt;-hPE.model/HSliceAbstraction" source="//@children.0" target="//@children.25" targetEnd="//@children.0/@sourceConnections.1/@children.1" sourceEnd="//@children.0/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,264" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="144,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.model/HSliceAbstraction" source="//@children.0" target="//@children.19" targetEnd="//@children.0/@sourceConnections.2/@children.1" sourceEnd="//@children.0/@sourceConnections.2/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,273" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="113,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HSliceAbstraction@hSliceAbstraction" source="//@children.0" target="//@children.26" targetEnd="//@children.0/@sourceConnections.3/@children.1" label="//@children.0/@sourceConnections.3/@children.2" sourceEnd="//@children.0/@sourceConnections.3/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hSliceAbstraction" location="0,273" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HSliceAbstraction@hSliceAbstraction|hPE.model/HSliceAbstraction#hSliceAbstraction" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToInterface" location="139,-1" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HSliceAbstraction@hSliceAbstraction|hPE.base.model/HLinkToInterface#linkToInterface" multiplicityLabel="//@children.0/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.0/@sourceConnections.3/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToInterface" location="29,48" size="80,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="123,48" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.13/@sourceConnections.3" name="HProtocol" location="752,-340" size="206,157" id="hPE.kinds.computation.model.protocol/HProtocol" runTimeClassModel="setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),HProtocol(LhPE.model.HInterface;),setAction(LhPE.model.HAction;),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),addSemaphore(LhPE.model.HSemaphore;),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,108">
+      <children xsi:type="editmodel:MethodEditModel" name="HProtocol" id="hPE.kinds.computation.model.protocol/HProtocol#HProtocol(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setAction" id="hPE.kinds.computation.model.protocol/HProtocol#setAction(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addSemaphore" id="hPE.kinds.computation.model.protocol/HProtocol#addSemaphore(LhPE.kinds.computation.model.protocol.HSemaphore;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.kinds.computation.model.protocol/HProtocol#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.kinds.computation.model.protocol/HProtocol#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.kinds.computation.model.protocol/HProtocol#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/HVisualElement&lt;-hPE.kinds.computation.model.protocol/HProtocol" source="//@children.1" target="//@children.19" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="127,156" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="32,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.kinds.computation.model.protocol/HProtocol@protocol+hPE.kinds.computation.model.protocol/HAction@action" source="//@children.1" target="//@children.2" targetEnd="//@children.1/@sourceConnections.1/@children.1" label="//@children.1/@sourceConnections.1/@children.2" sourceEnd="//@children.1/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="protocol" location="29,156" id="hPE.kinds.computation.model.protocol/HProtocol@protocol+hPE.kinds.computation.model.protocol/HAction@action|hPE.kinds.computation.model.protocol/HProtocol#protocol" attachSource="true" multiplicityLabel="//@children.1/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.1/@sourceConnections.1/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" # protocol" location="722,-177" size="51,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="787,-177" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="action" location="0,178" id="hPE.kinds.computation.model.protocol/HProtocol@protocol+hPE.kinds.computation.model.protocol/HAction@action|hPE.kinds.computation.model.protocol/HAction#action" multiplicityLabel="//@children.1/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.1/@sourceConnections.1/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" + action" location="780,185" size="41,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="815,157" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.kinds.computation.model.protocol/HProtocol@protocol+hPE.kinds.computation.model.protocol/HSemaphore@semaphores" source="//@children.1" target="//@children.10" targetEnd="//@children.1/@sourceConnections.2/@children.1" label="//@children.1/@sourceConnections.2/@children.2" sourceEnd="//@children.1/@sourceConnections.2/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="protocol" location="100,0" id="hPE.kinds.computation.model.protocol/HProtocol@protocol+hPE.kinds.computation.model.protocol/HSemaphore@semaphores|hPE.kinds.computation.model.protocol/HProtocol#protocol" attachSource="true" multiplicityLabel="//@children.1/@sourceConnections.2/@children.0/@children.1" roleLabel="//@children.1/@sourceConnections.2/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - protocol" location="859,-361" size="49,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="827,-361" size="18,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="semaphores" location="63,85" id="hPE.kinds.computation.model.protocol/HProtocol@protocol+hPE.kinds.computation.model.protocol/HSemaphore@semaphores|hPE.kinds.computation.model.protocol/HSemaphore#semaphores" multiplicityLabel="//@children.1/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.1/@sourceConnections.2/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" + semaphores" location="859,-409" size="72,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="841,-409" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.1 //@children.9/@sourceConnections.1 //@children.6/@sourceConnections.0 //@children.9/@sourceConnections.0" name="HAction" location="829,1" size="210,391" id="hPE.kinds.computation.model.protocol/HAction" runTimeClassModel="repeat,getTopActionCopy(),encapsulatingDoAction,HAction(Ljava.lang.String;LhPE.model.HCombinatorAction;),setCombinatorAction(LhPE.model.HCombinatorAction;),getRepeatDepth(),setRepeat(I),HAction(Ljava.lang.String;LhPE.model.HProtocol;),getEncapsulatingDoAction(),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),setEncapsulatingDoAction(LhPE.model.HDoAction;),getCopy(LhPE.model.HCombinatorAction;),label,isRepeat(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),saved_bounds,setProtocol(LhPE.model.HProtocol;),organizeAction()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="187,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="label" id="hPE.kinds.computation.model.protocol/HAction#label"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="repeat" id="hPE.kinds.computation.model.protocol/HAction#repeat"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="encapsulatingDoAction" id="hPE.kinds.computation.model.protocol/HAction#encapsulatingDoAction"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="saved_bounds" id="hPE.kinds.computation.model.protocol/HAction#saved_bounds"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,270">
+      <children xsi:type="editmodel:MethodEditModel" name="HAction" id="hPE.kinds.computation.model.protocol/HAction#HAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HAction" id="hPE.kinds.computation.model.protocol/HAction#HAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.kinds.computation.model.protocol/HAction#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRepeat" id="hPE.kinds.computation.model.protocol/HAction#isRepeat()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="organizeAction" id="hPE.kinds.computation.model.protocol/HAction#organizeAction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCopy" id="hPE.kinds.computation.model.protocol/HAction#getCopy(LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setCombinatorAction" id="hPE.kinds.computation.model.protocol/HAction#setCombinatorAction(LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setEncapsulatingDoAction" id="hPE.kinds.computation.model.protocol/HAction#setEncapsulatingDoAction(LhPE.kinds.computation.model.protocol.HDoAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEncapsulatingDoAction" id="hPE.kinds.computation.model.protocol/HAction#getEncapsulatingDoAction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setProtocol" id="hPE.kinds.computation.model.protocol/HAction#setProtocol(LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRepeat" id="hPE.kinds.computation.model.protocol/HAction#setRepeat(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.kinds.computation.model.protocol/HAction#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTopActionCopy" id="hPE.kinds.computation.model.protocol/HAction#getTopActionCopy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.kinds.computation.model.protocol/HAction#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRepeatDepth" id="hPE.kinds.computation.model.protocol/HAction#getRepeatDepth()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.kinds.computation.model.protocol/HAction" source="//@children.2" target="//@children.19" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,256" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,9"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HSeqAction" location="1440,-14" size="221,175" id="hPE.kinds.computation.model.protocol/HSeqAction" runTimeClassModel="HSeqAction(Ljava.lang.String;LhPE.model.HProtocol;),HSeqAction(Ljava.lang.String;LhPE.model.HCombinatorAction;),getEntryConnectionIDs(),getExitConnectionIDs(),getInnerActionTargetConnectionID(LhPE.model.HAction;),getInnerActionSourceConnectionID(LhPE.model.HAction;),organizeAction()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="198,126">
+      <children xsi:type="editmodel:MethodEditModel" name="HSeqAction" id="hPE.kinds.computation.model.protocol/HSeqAction#HSeqAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HSeqAction" id="hPE.kinds.computation.model.protocol/HSeqAction#HSeqAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getExitConnectionIDs" id="hPE.kinds.computation.model.protocol/HSeqAction#getExitConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="organizeAction" id="hPE.kinds.computation.model.protocol/HSeqAction#organizeAction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEntryConnectionIDs" id="hPE.kinds.computation.model.protocol/HSeqAction#getEntryConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionSourceConnectionID" id="hPE.kinds.computation.model.protocol/HSeqAction#getInnerActionSourceConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionTargetConnectionID" id="hPE.kinds.computation.model.protocol/HSeqAction#getInnerActionTargetConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.kinds.computation.model.protocol/HCombinatorAction&lt;-hPE.kinds.computation.model.protocol/HSeqAction" source="//@children.3" target="//@children.9" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,99" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="221,76"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HParAction" location="1440,170" size="221,175" id="hPE.kinds.computation.model.protocol/HParAction" runTimeClassModel="HParAction(Ljava.lang.String;LhPE.model.HProtocol;),getExitConnectionIDs(),getEntryConnectionIDs(),getInnerActionTargetConnectionID(LhPE.model.HAction;),HParAction(Ljava.lang.String;LhPE.model.HCombinatorAction;),getInnerActionSourceConnectionID(LhPE.model.HAction;),organizeAction()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="198,126">
+      <children xsi:type="editmodel:MethodEditModel" name="HParAction" id="hPE.kinds.computation.model.protocol/HParAction#HParAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HParAction" id="hPE.kinds.computation.model.protocol/HParAction#HParAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="organizeAction" id="hPE.kinds.computation.model.protocol/HParAction#organizeAction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEntryConnectionIDs" id="hPE.kinds.computation.model.protocol/HParAction#getEntryConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionSourceConnectionID" id="hPE.kinds.computation.model.protocol/HParAction#getInnerActionSourceConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getExitConnectionIDs" id="hPE.kinds.computation.model.protocol/HParAction#getExitConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionTargetConnectionID" id="hPE.kinds.computation.model.protocol/HParAction#getInnerActionTargetConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.kinds.computation.model.protocol/HCombinatorAction&lt;-hPE.kinds.computation.model.protocol/HParAction" source="//@children.4" target="//@children.9" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,87" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="221,248"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HAltAction" location="1439,360" size="221,175" id="hPE.kinds.computation.model.protocol/HAltAction" runTimeClassModel="HAltAction(Ljava.lang.String;LhPE.model.HCombinatorAction;),getEntryConnectionIDs(),getExitConnectionIDs(),getInnerActionTargetConnectionID(LhPE.model.HAction;),HAltAction(Ljava.lang.String;LhPE.model.HProtocol;),organizeAction(),getInnerActionSourceConnectionID(LhPE.model.HAction;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="198,126">
+      <children xsi:type="editmodel:MethodEditModel" name="HAltAction" id="hPE.kinds.computation.model.protocol/HAltAction#HAltAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HAltAction" id="hPE.kinds.computation.model.protocol/HAltAction#HAltAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionSourceConnectionID" id="hPE.kinds.computation.model.protocol/HAltAction#getInnerActionSourceConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionTargetConnectionID" id="hPE.kinds.computation.model.protocol/HAltAction#getInnerActionTargetConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getExitConnectionIDs" id="hPE.kinds.computation.model.protocol/HAltAction#getExitConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEntryConnectionIDs" id="hPE.kinds.computation.model.protocol/HAltAction#getEntryConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="organizeAction" id="hPE.kinds.computation.model.protocol/HAltAction#organizeAction()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.kinds.computation.model.protocol/HCombinatorAction&lt;-hPE.kinds.computation.model.protocol/HAltAction" source="//@children.5" target="//@children.9" targetEnd="//@children.5/@sourceConnections.0/@children.1" sourceEnd="//@children.5/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,83" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="221,434"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.0 //@children.29/@sourceConnections.0 //@children.7/@sourceConnections.0" name="HPrimitiveAction" location="1133,-218" size="148,85" id="hPE.kinds.computation.model.protocol/HPrimitiveAction" runTimeClassModel="HPrimitiveAction(Ljava.lang.String;LhPE.model.HCombinatorAction;),HPrimitiveAction(Ljava.lang.String;LhPE.model.HProtocol;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HPrimitiveAction" id="hPE.kinds.computation.model.protocol/HPrimitiveAction#HPrimitiveAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HPrimitiveAction" id="hPE.kinds.computation.model.protocol/HPrimitiveAction#HPrimitiveAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.kinds.computation.model.protocol/HAction&lt;-hPE.kinds.computation.model.protocol/HPrimitiveAction" source="//@children.6" target="//@children.2" targetEnd="//@children.6/@sourceConnections.0/@children.1" sourceEnd="//@children.6/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-1,39" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="93,-1"/>
+      <bendpoints secondRelativeDimension="0,-89" firstRelativeDimension="-177,1"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HWaitAction" location="1439,-301" size="120,85" id="hPE.kinds.computation.model.protocol/HWaitAction" runTimeClassModel="HWaitAction(LhPE.model.HSemaphore;Ljava.lang.String;LhPE.model.HCombinatorAction;),HWaitAction(LhPE.model.HSemaphore;Ljava.lang.String;LhPE.model.HProtocol;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="89,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HWaitAction" location="10,10" id="hPE.kinds.computation.model.protocol/HWaitAction#HWaitAction(LhPE.kinds.computation.model.protocol.HSemaphore;Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HWaitAction" location="4,7" id="hPE.kinds.computation.model.protocol/HWaitAction#HWaitAction(LhPE.kinds.computation.model.protocol.HSemaphore;Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.kinds.computation.model.protocol/HPrimitiveAction&lt;-hPE.kinds.computation.model.protocol/HWaitAction" source="//@children.7" target="//@children.6" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-1,45" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="148,39"/>
+      <bendpoints secondRelativeDimension="56,1" firstRelativeDimension="-57,25"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.kinds.computation.model.protocol/HSemaphore@semaphore+hPE.kinds.computation.model.protocol/HWaitAction@wait_actions" source="//@children.7" target="//@children.10" targetEnd="//@children.7/@sourceConnections.1/@children.1" label="//@children.7/@sourceConnections.1/@children.2" sourceEnd="//@children.7/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="wait_actions" location="-1,17" id="hPE.kinds.computation.model.protocol/HSemaphore@semaphore+hPE.kinds.computation.model.protocol/HWaitAction@wait_actions|hPE.kinds.computation.model.protocol/HWaitAction#wait_actions" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="semaphore" location="131,57" id="hPE.kinds.computation.model.protocol/HSemaphore@semaphore+hPE.kinds.computation.model.protocol/HWaitAction@wait_actions|hPE.kinds.computation.model.protocol/HSemaphore#semaphore" multiplicityLabel="//@children.7/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.7/@sourceConnections.1/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - semaphore" location="927,-465" size="64,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="927,-437" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="183,95" firstRelativeDimension="-206,-25"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HSignalAction" location="1438,-401" size="132,85" id="hPE.kinds.computation.model.protocol/HSignalAction" runTimeClassModel="HSignalAction(LhPE.model.HSemaphore;Ljava.lang.String;LhPE.model.HCombinatorAction;),HSignalAction(LhPE.model.HSemaphore;Ljava.lang.String;LhPE.model.HProtocol;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="97,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HSignalAction" id="hPE.kinds.computation.model.protocol/HSignalAction#HSignalAction(LhPE.kinds.computation.model.protocol.HSemaphore;Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HSignalAction" id="hPE.kinds.computation.model.protocol/HSignalAction#HSignalAction(LhPE.kinds.computation.model.protocol.HSemaphore;Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.kinds.computation.model.protocol/HPrimitiveAction&lt;-hPE.kinds.computation.model.protocol/HSignalAction" source="//@children.8" target="//@children.6" targetEnd="//@children.8/@sourceConnections.0/@children.1" sourceEnd="//@children.8/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-1,41" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="148,8"/>
+      <bendpoints secondRelativeDimension="58,1" firstRelativeDimension="-54,80"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.kinds.computation.model.protocol/HSemaphore@semaphore+hPE.kinds.computation.model.protocol/HSignalAction@signal_actions" source="//@children.8" target="//@children.10" targetEnd="//@children.8/@sourceConnections.1/@children.1" label="//@children.8/@sourceConnections.1/@children.2" sourceEnd="//@children.8/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="signal_actions" location="-1,21" id="hPE.kinds.computation.model.protocol/HSemaphore@semaphore+hPE.kinds.computation.model.protocol/HSignalAction@signal_actions|hPE.kinds.computation.model.protocol/HSignalAction#signal_actions" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="semaphore" location="131,25" id="hPE.kinds.computation.model.protocol/HSemaphore@semaphore+hPE.kinds.computation.model.protocol/HSignalAction@signal_actions|hPE.kinds.computation.model.protocol/HSemaphore#semaphore" multiplicityLabel="//@children.8/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.8/@sourceConnections.1/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - semaphore" location="927,-497" size="64,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="927,-469" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="188,57" firstRelativeDimension="-200,-15"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.4/@sourceConnections.0 //@children.5/@sourceConnections.0" name="HCombinatorAction" location="1120,9" size="221,517" id="hPE.kinds.computation.model.protocol/HCombinatorAction" runTimeClassModel="getEndConnectionID(),adjustBoundsToNewChild(LhPE.model.HAction;),getBeginConnectionID(),getExitConnectionIDs(),getCombinatorExit(),getCombinatorEntry(),HCombinatorAction(Ljava.lang.String;LhPE.model.HCombinatorAction;),sinalizeRefresh(),HCombinatorAction(Ljava.lang.String;LhPE.model.HProtocol;),unfoldAction(LhPE.model.HDoAction;),replaceAction(LhPE.model.HAction;LhPE.model.HAction;),combinatorExit,setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),foldAction(LhPE.model.HAction;),getCopy(LhPE.model.HCombinatorAction;),getInnerActionTargetConnectionID(LhPE.model.HAction;),removeAction(LhPE.model.HAction;),setActions(Ljava.util.List;),getEntryConnectionIDs(),combinatorEntry,unliftAction(Ljava.util.List;),addAction(Ljava.util.List;),addAction(ILhPE.model.HAction;),adjustBoundsToChildren(),liftAction(LhPE.model.HCombinatorAction;),addAction(LhPE.model.HAction;),getInnerActionSourceConnectionID(LhPE.model.HAction;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="166,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="combinatorExit" id="hPE.kinds.computation.model.protocol/HCombinatorAction#combinatorExit"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="combinatorEntry" id="hPE.kinds.computation.model.protocol/HCombinatorAction#combinatorEntry"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="198,432">
+      <children xsi:type="editmodel:MethodEditModel" name="addAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#addAction(ILhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HCombinatorAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#HCombinatorAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HCombinatorAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#HCombinatorAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionSourceConnectionID" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getInnerActionSourceConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="replaceAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#replaceAction(LhPE.kinds.computation.model.protocol.HAction;LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEndConnectionID" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getEndConnectionID()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unliftAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#unliftAction(Ljava.util.List;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerActionTargetConnectionID" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getInnerActionTargetConnectionID(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getExitConnectionIDs" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getExitConnectionIDs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="adjustBoundsToChildren" id="hPE.kinds.computation.model.protocol/HCombinatorAction#adjustBoundsToChildren()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="foldAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#foldAction(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sinalizeRefresh" id="hPE.kinds.computation.model.protocol/HCombinatorAction#sinalizeRefresh()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="adjustBoundsToNewChild" id="hPE.kinds.computation.model.protocol/HCombinatorAction#adjustBoundsToNewChild(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.kinds.computation.model.protocol/HCombinatorAction#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#addAction(Ljava.util.List;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setActions" id="hPE.kinds.computation.model.protocol/HCombinatorAction#setActions(Ljava.util.List;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCopy" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getCopy(LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCombinatorEntry" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getCombinatorEntry()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#removeAction(LhPE.kinds.computation.model.protocol.HAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCombinatorExit" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getCombinatorExit()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="liftAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#liftAction(LhPE.kinds.computation.model.protocol.HCombinatorAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unfoldAction" id="hPE.kinds.computation.model.protocol/HCombinatorAction#unfoldAction(LhPE.kinds.computation.model.protocol.HDoAction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getBeginConnectionID" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getBeginConnectionID()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEntryConnectionIDs" id="hPE.kinds.computation.model.protocol/HCombinatorAction#getEntryConnectionIDs()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.kinds.computation.model.protocol/HAction@actions+hPE.kinds.computation.model.protocol/HCombinatorAction@action_combinator" source="//@children.9" target="//@children.2" targetEnd="//@children.9/@sourceConnections.0/@children.1" label="//@children.9/@sourceConnections.0/@children.2" sourceEnd="//@children.9/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="action_combinator" location="0,149" id="hPE.kinds.computation.model.protocol/HAction@actions+hPE.kinds.computation.model.protocol/HCombinatorAction@action_combinator|hPE.kinds.computation.model.protocol/HCombinatorAction#action_combinator" attachSource="true" multiplicityLabel="//@children.9/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.9/@sourceConnections.0/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" + action_combinator" location="1013,171" size="100,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="15.000000000000002" distanceFromWire="21.0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1095,164" size="18,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="actions" location="209,157" id="hPE.kinds.computation.model.protocol/HAction@actions+hPE.kinds.computation.model.protocol/HCombinatorAction@action_combinator|hPE.kinds.computation.model.protocol/HAction#actions" multiplicityLabel="//@children.9/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.0/@children.1/@children.0" navigable="true" orderingKind="1" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - actions" location="1045,136" size="45,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="1045,164" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.kinds.computation.model.protocol/HAction&lt;-hPE.kinds.computation.model.protocol/HCombinatorAction" source="//@children.9" target="//@children.2" targetEnd="//@children.9/@sourceConnections.1/@children.1" sourceEnd="//@children.9/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,277" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="209,288"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.2 //@children.8/@sourceConnections.1 //@children.7/@sourceConnections.1" name="HSemaphore" location="789,-501" size="131,85" id="hPE.kinds.computation.model.protocol/HSemaphore" runTimeClassModel="HSemaphore(Ljava.lang.String;LhPE.model.HProtocol;),name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="79,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.kinds.computation.model.protocol/HSemaphore#name"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,18">
+      <children xsi:type="editmodel:MethodEditModel" name="HSemaphore" id="hPE.kinds.computation.model.protocol/HSemaphore#HSemaphore(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.0 //@children.17/@sourceConnections.3 //@children.15/@sourceConnections.5" name="HUnit" location="1,428" size="206,715" id="hPE.base.model/HUnit" runTimeClassModel="getUnit_direct_slices(),unSetReplicator(LhPE.model.HReplicator;),hasSlices(),observable,addUnitItem(LhPE.model.HUnitSliceAbstraction;),restrict_interface(LhPE.model.HInterface;),getSlice(LhPE.model.HSliceAbstraction;),getReplicators(),create_interface_from_slices(Lorg.eclipse.draw2d.geometry.Point;),isReplicatorFactorDetermined(LhPE.model.HReplicator;),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),remove(),notifyColorChange(),getMyReplicas(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),getWhich_interface(),name,getReplicationFactor(LhPE.model.HReplicator;),isReplicated(),attach_to_interface(LhPE.model.HInterface;),HUnit(Ljava.lang.String;LhPE.model.HConfiguration;Lorg.eclipse.draw2d.geometry.Point;),unhide(),detach_from_interface(),hidden(),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),unsetSlice_of(),setWhich_interface(LhPE.model.HInterface;),setReplicator(LhPE.model.HReplicator;),show_interface(),addUnitSlice(LhPE.model.HUnit;),HUnit(Ljava.lang.String;LhPE.model.HConfiguration;LhPE.model.HInterface;),hide_interface(),visibleInterface(),hide(),removeUnitItem(LhPE.model.HUnitSliceAbstraction;),isReplicatedBy(LhPE.model.HReplicator;),match_for_attachment(LhPE.model.HInterface;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="146,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.base.model/HUnit#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="observable" id="hPE.base.model/HUnit#observable"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,720">
+      <children xsi:type="editmodel:MethodEditModel" name="HUnit" id="hPE.base.model/HUnit#HUnit(Ljava.lang.String;LhPE.base.model.HComponent;LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HUnit" location="5,70" id="hPE.base.model/HUnit#HUnit(Ljava.lang.String;LhPE.base.model.HComponent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addUnitItem" id="hPE.base.model/HUnit#addUnitItem(LhPE.model.HUnitSliceAbstraction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addUnitSlice" id="hPE.base.model/HUnit#addUnitSlice(LhPE.base.model.HUnit;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSlice" id="hPE.base.model/HUnit#getSlice(LhPE.model.HSliceAbstraction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getUnit_direct_slices" id="hPE.base.model/HUnit#getUnit_direct_slices()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasSlices" id="hPE.base.model/HUnit#hasSlices()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hidden" id="hPE.base.model/HUnit#hidden()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide" id="hPE.base.model/HUnit#hide()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="restrict_interface" id="hPE.base.model/HUnit#restrict_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unhide" id="hPE.base.model/HUnit#unhide()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unsetSlice_of" id="hPE.base.model/HUnit#unsetSlice_of()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.base.model/HUnit#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/HUnit#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/HUnit#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="remove" id="hPE.base.model/HUnit#remove()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getWhich_interface" id="hPE.base.model/HUnit#getWhich_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setWhich_interface" id="hPE.base.model/HUnit#setWhich_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="visibleInterface" id="hPE.base.model/HUnit#visibleInterface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="attach_to_interface" id="hPE.base.model/HUnit#attach_to_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="match_for_attachment" id="hPE.base.model/HUnit#match_for_attachment(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide_interface" id="hPE.base.model/HUnit#hide_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="detach_from_interface" id="hPE.base.model/HUnit#detach_from_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="create_interface_from_slices" id="hPE.base.model/HUnit#create_interface_from_slices(Lorg.eclipse.draw2d.geometry.Point;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show_interface" id="hPE.base.model/HUnit#show_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicationFactor" id="hPE.base.model/HUnit#getReplicationFactor(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMyReplicas" id="hPE.base.model/HUnit#getMyReplicas()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicated" id="hPE.base.model/HUnit#isReplicated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatorFactorDetermined" id="hPE.base.model/HUnit#isReplicatorFactorDetermined(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicators" id="hPE.base.model/HUnit#getReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setReplicator" id="hPE.base.model/HUnit#setReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unSetReplicator" id="hPE.base.model/HUnit#unSetReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatedBy" id="hPE.base.model/HUnit#isReplicatedBy(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeUnitItem" id="hPE.base.model/HUnit#removeUnitItem(LhPE.model.HUnitSliceAbstraction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyColorChange" id="hPE.base.model/HUnit#notifyColorChange()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HUnit@slice_of+hPE.base.model/HUnit@unit_slices" source="//@children.11" target="//@children.11" targetEnd="//@children.11/@sourceConnections.0/@children.1" label="//@children.11/@sourceConnections.0/@children.2" sourceEnd="//@children.11/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="slice_of" location="0,17" id="hPE.base.model/HUnit@slice_of+hPE.base.model/HUnit@unit_slices|hPE.base.model/HUnit#slice_of" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - slice_of" location="-55,451" size="48,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="-25,423" size="18,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="unit_slices" location="12,0" id="hPE.base.model/HUnit@slice_of+hPE.base.model/HUnit@unit_slices|hPE.base.model/HUnit#unit_slices" anchorKind="FixedAtEdge" multiplicityLabel="//@children.11/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.0/@children.1/@children.0" navigable="true" orderingKind="1" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - unit_slices" location="19,407" size="61,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="1,407" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.base.model/HUnit" source="//@children.11" target="//@children.19" targetEnd="//@children.11/@sourceConnections.1/@children.1" sourceEnd="//@children.11/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,432" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,51"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HNamed&lt;-hPE.base.model/HUnit" source="//@children.11" target="//@children.21" targetEnd="//@children.11/@sourceConnections.2/@children.1" sourceEnd="//@children.11/@sourceConnections.2/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,77" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,58"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/IHasInterface&lt;-hPE.base.model/HUnit" source="//@children.11" target="//@children.25" targetEnd="//@children.11/@sourceConnections.3/@children.1" sourceEnd="//@children.11/@sourceConnections.3/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="103,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="112,166" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.base.model/HUnit@hUnit" source="//@children.11" target="//@children.26" targetEnd="//@children.11/@sourceConnections.4/@children.1" label="//@children.11/@sourceConnections.4/@children.2" sourceEnd="//@children.11/@sourceConnections.4/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hUnit" location="90,0" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.base.model/HUnit@hUnit|hPE.base.model/HUnit#hUnit" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToInterface" location="114,229" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.base.model/HUnit@hUnit|hPE.base.model/HLinkToInterface#linkToInterface" multiplicityLabel="//@children.11/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.4/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToInterface" location="97,305" size="80,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="65,305" size="18,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.model/IHasReplicator&lt;-hPE.base.model/HUnit" source="//@children.11" target="//@children.28" targetEnd="//@children.11/@sourceConnections.5/@children.1" sourceEnd="//@children.11/@sourceConnections.5/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,620" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="142,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HUnitSliceAbstraction@unit_slice_abstractions+hPE.base.model/HUnit@unit" source="//@children.11" target="//@children.14" targetEnd="//@children.11/@sourceConnections.6/@children.1" label="//@children.11/@sourceConnections.6/@children.2" sourceEnd="//@children.11/@sourceConnections.6/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="unit" location="205,397" id="hPE.model/HUnitSliceAbstraction@unit_slice_abstractions+hPE.base.model/HUnit@unit|hPE.base.model/HUnit#unit" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.6/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.6/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - unit" location="213,803" size="27,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="213,831" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="unit_slice_abstractions" location="-1,175" id="hPE.model/HUnitSliceAbstraction@unit_slice_abstractions+hPE.base.model/HUnit@unit|hPE.model/HUnitSliceAbstraction#unit_slice_abstractions" multiplicityLabel="//@children.11/@sourceConnections.6/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.6/@children.1/@children.0" navigable="true" orderingKind="1">
+        <children xsi:type="editmodel:LabelEditModel" name=" - unit_slice_abstractions" location="370,803" size="121,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="487,831" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HSliceAbstraction@mapped_to_slice+hPE.base.model/HUnit@hUnit" source="//@children.11" target="//@children.0" targetEnd="//@children.11/@sourceConnections.7/@children.1" label="//@children.11/@sourceConnections.7/@children.2" sourceEnd="//@children.11/@sourceConnections.7/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hUnit" location="205,101" id="hPE.model/HSliceAbstraction@mapped_to_slice+hPE.base.model/HUnit@hUnit|hPE.base.model/HUnit#hUnit" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="mapped_to_slice" location="51,282" id="hPE.model/HSliceAbstraction@mapped_to_slice+hPE.base.model/HUnit@hUnit|hPE.model/HSliceAbstraction#mapped_to_slice" multiplicityLabel="//@children.11/@sourceConnections.7/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.7/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - mapped_to_slice" location="497,48" size="91,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="465,48" size="18,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.13/@sourceConnections.2" name="HInterfaceSig" location="130,-289" size="163,139" id="hPE.base.model/HInterfaceSig" runTimeClassModel="HInterfaceSig(Ljava.lang.String;),HInterfaceSig(),color,addComplyingInterface(LhPE.model.HInterface;),addSlice(LhPE.model.HSliceAbstraction;),name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="110,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.base.model/HInterfaceSig#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="color" id="hPE.base.model/HInterfaceSig#color"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="140,54">
+      <children xsi:type="editmodel:MethodEditModel" name="HInterfaceSig" id="hPE.base.model/HInterfaceSig#HInterfaceSig(LhPE.base.model.IHUnit;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addSlice" id="hPE.base.model/HInterfaceSig#addSlice(LhPE.model.HSliceAbstraction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addComplyingInterface" id="hPE.base.model/HInterfaceSig#addComplyingInterface(LhPE.base.model.HPrimInterface;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="hPE.model/HSliceAbstraction@slices+hPE.base.model/HInterfaceSig@interface_sig" source="//@children.12" target="//@children.0" targetEnd="//@children.12/@sourceConnections.0/@children.1" label="//@children.12/@sourceConnections.0/@children.2" sourceEnd="//@children.12/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="interface_sig" location="163,94" id="hPE.model/HSliceAbstraction@slices+hPE.base.model/HInterfaceSig@interface_sig|hPE.base.model/HInterfaceSig#interface_sig" attachSource="true" multiplicityLabel="//@children.12/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.12/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - interface_sig" location="299,-217" size="73,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="299,-189" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="slices" location="0,46" id="hPE.model/HSliceAbstraction@slices+hPE.base.model/HInterfaceSig@interface_sig|hPE.model/HSliceAbstraction#slices" multiplicityLabel="//@children.12/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.12/@sourceConnections.0/@children.1/@children.0" navigable="true" orderingKind="1">
+        <children xsi:type="editmodel:LabelEditModel" name=" - slices" location="395,-217" size="38,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="429,-189" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.17/@sourceConnections.0 //@children.26/@sourceConnections.0" name="HInterface" location="-291,-433" size="206,427" id="hPE.base.model/HInterface" runTimeClassModel="editable,show(),HInterface(LhPE.model.HConfiguration;LhPE.model.HInterfaceSig;Lorg.eclipse.draw2d.geometry.Point;),setEditable(Z),getName(),addLinkToInterface(LhPE.model.HLinkToInterface;),buildDefaultProtocol(),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),protocolIsVisible(),hideProtocol(),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),hidden,getColor(),show_protocol,removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),hide(),restricts(LhPE.model.HInterface;),setName(Ljava.lang.String;),isEditable(),setColor(Lorg.eclipse.swt.graphics.Color;),showProtocol()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="136,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="hidden" id="hPE.base.model/HInterface#hidden"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="show_protocol" id="hPE.base.model/HInterface#show_protocol"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="editable" id="hPE.base.model/HInterface#editable"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,324">
+      <children xsi:type="editmodel:MethodEditModel" name="HInterface" id="hPE.base.model/HInterface#HInterface(LhPE.base.model.HComponent;LhPE.base.model.HInterfaceSig;LhPE.base.model.HUnit;Lorg.eclipse.draw2d.geometry.Point;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="restricts" id="hPE.base.model/HInterface#restricts(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/HInterface#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/HInterface#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.base.model/HInterface#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setName" id="hPE.base.model/HInterface#setName(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show" id="hPE.base.model/HInterface#show()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide" id="hPE.base.model/HInterface#hide()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getName" id="hPE.base.model/HInterface#getName()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addLinkToInterface" id="hPE.base.model/HInterface#addLinkToInterface(LhPE.base.model.HLinkToInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getColor" id="hPE.base.model/HInterface#getColor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hideProtocol" id="hPE.base.model/HInterface#hideProtocol()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="showProtocol" id="hPE.base.model/HInterface#showProtocol()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setColor" id="hPE.base.model/HInterface#setColor(Lorg.eclipse.swt.graphics.Color;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="protocolIsVisible" id="hPE.base.model/HInterface#protocolIsVisible()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setEditable" id="hPE.base.model/HInterface#setEditable(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="buildDefaultProtocol" id="hPE.base.model/HInterface#buildDefaultProtocol()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isEditable" id="hPE.base.model/HInterface#isEditable()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.base.model/HInterface" source="//@children.13" target="//@children.19" targetEnd="//@children.13/@sourceConnections.0/@children.1" sourceEnd="//@children.13/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="83,428" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="72,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HNamed&lt;-hPE.base.model/HInterface" source="//@children.13" target="//@children.21" targetEnd="//@children.13/@sourceConnections.1/@children.1" sourceEnd="//@children.13/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="148,428" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="48,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HInterface@complying_interfaces+hPE.base.model/HInterfaceSig@signature" source="//@children.13" target="//@children.12" targetEnd="//@children.13/@sourceConnections.2/@children.1" label="//@children.13/@sourceConnections.2/@children.2" sourceEnd="//@children.13/@sourceConnections.2/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="complying_interfaces" location="205,222" id="hPE.base.model/HInterface@complying_interfaces+hPE.base.model/HInterfaceSig@signature|hPE.base.model/HInterface#complying_interfaces" attachSource="true" multiplicityLabel="//@children.13/@sourceConnections.2/@children.0/@children.1" roleLabel="//@children.13/@sourceConnections.2/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - complying_interfaces" location="-79,-233" size="113,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="-79,-205" size="4,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="signature" location="-1,77" id="hPE.base.model/HInterface@complying_interfaces+hPE.base.model/HInterfaceSig@signature|hPE.base.model/HInterfaceSig#signature" multiplicityLabel="//@children.13/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.13/@sourceConnections.2/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" + signature" location="65,-233" size="57,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="116,-205" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HInterface@which_interface+hPE.kinds.computation.model.protocol/HProtocol@protocol" source="//@children.13" target="//@children.1" targetEnd="//@children.13/@sourceConnections.3/@children.1" label="//@children.13/@sourceConnections.3/@children.2" sourceEnd="//@children.13/@sourceConnections.3/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="which_interface" location="205,126" id="hPE.base.model/HInterface@which_interface+hPE.kinds.computation.model.protocol/HProtocol@protocol|hPE.base.model/HInterface#which_interface" attachSource="true" multiplicityLabel="//@children.13/@sourceConnections.3/@children.0/@children.1" roleLabel="//@children.13/@sourceConnections.3/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - which_interface" location="-79,-329" size="89,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="-79,-301" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="protocol" location="0,33" id="hPE.base.model/HInterface@which_interface+hPE.kinds.computation.model.protocol/HProtocol@protocol|hPE.kinds.computation.model.protocol/HProtocol#protocol" multiplicityLabel="//@children.13/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.13/@sourceConnections.3/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + protocol" location="694,-329" size="51,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="727,-301" size="18,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.20/@sourceConnections.1 //@children.11/@sourceConnections.6" name="HUnitSliceAbstraction" location="499,649" size="206,517" id="hPE.model/HUnitSliceAbstraction" runTimeClassModel="HUnitSliceAbstraction(LhPE.model.HUnit;LhPE.model.HSliceAbstraction;Lorg.eclipse.draw2d.geometry.Point;),unSetReplicator(LhPE.model.HReplicator;),getReplicators(),isReplicatorFactorDetermined(LhPE.model.HReplicator;),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),HUnitSliceAbstraction(LhPE.model.HUnit;LhPE.model.HInterface;Lorg.eclipse.draw2d.geometry.Point;),remove(),unsetBinding(),notifyColorChange(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),getMyReplicas(),getNestingFactor(),getWhich_interface(),nestingFactor,getReplicationFactor(LhPE.model.HReplicator;),isReplicated(),unsetSlice_abstraction(),setNestingFactor(I),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),setWhich_interface(LhPE.model.HInterface;),setReplicator(LhPE.model.HReplicator;),show_interface(),hide_interface(),visibleInterface(),isReplicatedBy(LhPE.model.HReplicator;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="102,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="nestingFactor" id="hPE.model/HUnitSliceAbstraction#nestingFactor"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,450">
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.model/HUnitSliceAbstraction#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.model/HUnitSliceAbstraction#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.model/HUnitSliceAbstraction#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="remove" id="hPE.model/HUnitSliceAbstraction#remove()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HUnitSliceAbstraction" id="hPE.model/HUnitSliceAbstraction#HUnitSliceAbstraction(LhPE.base.model.HUnit;LhPE.base.model.HInterface;Lorg.eclipse.draw2d.geometry.Point;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setWhich_interface" id="hPE.model/HUnitSliceAbstraction#setWhich_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getWhich_interface" id="hPE.model/HUnitSliceAbstraction#getWhich_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show_interface" id="hPE.model/HUnitSliceAbstraction#show_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide_interface" id="hPE.model/HUnitSliceAbstraction#hide_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unsetSlice_abstraction" id="hPE.model/HUnitSliceAbstraction#unsetSlice_abstraction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="visibleInterface" id="hPE.model/HUnitSliceAbstraction#visibleInterface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMyReplicas" id="hPE.model/HUnitSliceAbstraction#getMyReplicas()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatorFactorDetermined" id="hPE.model/HUnitSliceAbstraction#isReplicatorFactorDetermined(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setReplicator" id="hPE.model/HUnitSliceAbstraction#setReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicators" id="hPE.model/HUnitSliceAbstraction#getReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicationFactor" id="hPE.model/HUnitSliceAbstraction#getReplicationFactor(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicated" id="hPE.model/HUnitSliceAbstraction#isReplicated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unSetReplicator" id="hPE.model/HUnitSliceAbstraction#unSetReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatedBy" id="hPE.model/HUnitSliceAbstraction#isReplicatedBy(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unsetBinding" id="hPE.model/HUnitSliceAbstraction#unsetBinding()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyColorChange" id="hPE.model/HUnitSliceAbstraction#notifyColorChange()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setNestingFactor" id="hPE.model/HUnitSliceAbstraction#setNestingFactor(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNestingFactor" id="hPE.model/HUnitSliceAbstraction#getNestingFactor()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/IPropertyChangeListener&lt;-hPE.model/HUnitSliceAbstraction" source="//@children.14" target="//@children.23" targetEnd="//@children.14/@sourceConnections.0/@children.1" sourceEnd="//@children.14/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,493" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="137,-1"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/INode&lt;-hPE.model/HUnitSliceAbstraction" source="//@children.14" target="//@children.24" targetEnd="//@children.14/@sourceConnections.1/@children.1" sourceEnd="//@children.14/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,493" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="104,22"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/INode&lt;-hPE.model/HUnitSliceAbstraction" source="//@children.14" target="//@children.24" targetEnd="//@children.14/@sourceConnections.2/@children.1" sourceEnd="//@children.14/@sourceConnections.2/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="205,271" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="103,34"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction" source="//@children.14" target="//@children.26" targetEnd="//@children.14/@sourceConnections.3/@children.1" label="//@children.14/@sourceConnections.3/@children.2" sourceEnd="//@children.14/@sourceConnections.3/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hUnitSliceAbstraction" location="0,10" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.model/HUnitSliceAbstraction#hUnitSliceAbstraction" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToInterface" location="196,229" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.base.model/HLinkToInterface#linkToInterface" multiplicityLabel="//@children.14/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.14/@sourceConnections.3/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToInterface" location="85,305" size="80,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="179,305" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.model/IHasReplicator&lt;-hPE.model/HUnitSliceAbstraction" source="//@children.14" target="//@children.28" targetEnd="//@children.14/@sourceConnections.4/@children.1" sourceEnd="//@children.14/@sourceConnections.4/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,339" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="195,36"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.model/HUnitSliceAbstraction" source="//@children.14" target="//@children.19" targetEnd="//@children.14/@sourceConnections.5/@children.1" sourceEnd="//@children.14/@sourceConnections.5/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,211" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,51"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HComponentEntry@component_entry+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction" source="//@children.14" target="//@children.16" targetEnd="//@children.14/@sourceConnections.6/@children.1" label="//@children.14/@sourceConnections.6/@children.2" sourceEnd="//@children.14/@sourceConnections.6/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hUnitSliceAbstraction" location="205,331" id="hPE.model/HComponentEntry@component_entry+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.model/HUnitSliceAbstraction#hUnitSliceAbstraction" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="component_entry" location="-1,391" id="hPE.model/HComponentEntry@component_entry+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.model/HComponentEntry#component_entry" multiplicityLabel="//@children.14/@sourceConnections.6/@children.1/@children.1" roleLabel="//@children.14/@sourceConnections.6/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - component_entry" location="1179,959" size="94,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1267,987" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HSliceAbstraction@slice_abstraction+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction" source="//@children.14" target="//@children.0" targetEnd="//@children.14/@sourceConnections.7/@children.1" label="//@children.14/@sourceConnections.7/@children.2" sourceEnd="//@children.14/@sourceConnections.7/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hUnitSliceAbstraction" location="57,-1" id="hPE.model/HSliceAbstraction@slice_abstraction+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.model/HUnitSliceAbstraction#hUnitSliceAbstraction" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="slice_abstraction" location="116,282" id="hPE.model/HSliceAbstraction@slice_abstraction+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.model/HSliceAbstraction#slice_abstraction" multiplicityLabel="//@children.14/@sourceConnections.7/@children.1/@children.1" roleLabel="//@children.14/@sourceConnections.7/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - slice_abstraction" location="563,48" size="92,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="543,48" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction" source="//@children.14" target="//@children.27" targetEnd="//@children.14/@sourceConnections.8/@children.1" label="//@children.14/@sourceConnections.8/@children.2" sourceEnd="//@children.14/@sourceConnections.8/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hUnitSliceAbstraction" location="161,-1" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.model/HUnitSliceAbstraction#hUnitSliceAbstraction" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToReplicator" location="174,210" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HUnitSliceAbstraction@hUnitSliceAbstraction|hPE.base.model/HLinkToReplicator#linkToReplicator" multiplicityLabel="//@children.14/@sourceConnections.8/@children.1/@children.1" roleLabel="//@children.14/@sourceConnections.8/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToReplicator" location="667,-423" size="85,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="649,-423" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/IHasInterface&lt;-hPE.model/HUnitSliceAbstraction" source="//@children.14" target="//@children.25" targetEnd="//@children.14/@sourceConnections.9/@children.1" sourceEnd="//@children.14/@sourceConnections.9/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-1,68" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="108,171"/>
+      <bendpoints secondRelativeDimension="0,182" firstRelativeDimension="-119,-108"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.17/@sourceConnections.1" name="HComponent" location="1779,600" size="206,391" id="hPE.model/HComponent" runTimeClassModel="unSetReplicator(LhPE.model.HReplicator;),HComponent(LhPE.model.HConfiguration;Ljava.lang.String;Lorg.eclipse.draw2d.geometry.Point;),isReplicated(),getReplicators(),unsetAllReplicators(),isReplicatorFactorDetermined(LhPE.model.HReplicator;),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),setReplicator(LhPE.model.HReplicator;),color,addEntry(LhPE.model.HComponentEntry;),getMyReplicas(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),location,name,isReplicatedBy(LhPE.model.HReplicator;),getReplicationFactor(LhPE.model.HReplicator;),canRemoveMe()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="134,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.model/HComponent#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="location" id="hPE.model/HComponent#location"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="color" id="hPE.model/HComponent#color"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,306">
+      <children xsi:type="editmodel:MethodEditModel" name="HComponent" id="hPE.model/HComponent#HComponent(LhPE.base.model.HComponent;Ljava.lang.String;Lorg.eclipse.draw2d.geometry.Point;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="loadComponent" id="hPE.model/HComponent#loadComponent()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addEntry" id="hPE.model/HComponent#addEntry(LhPE.model.HComponentEntry;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.model/HComponent#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.model/HComponent#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.model/HComponent#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setReplicator" id="hPE.model/HComponent#setReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMyReplicas" id="hPE.model/HComponent#getMyReplicas()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicators" id="hPE.model/HComponent#getReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicated" id="hPE.model/HComponent#isReplicated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicationFactor" id="hPE.model/HComponent#getReplicationFactor(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatorFactorDetermined" id="hPE.model/HComponent#isReplicatorFactorDetermined(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unSetReplicator" id="hPE.model/HComponent#unSetReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatedBy" id="hPE.model/HComponent#isReplicatedBy(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unsetAllReplicators" id="hPE.model/HComponent#unsetAllReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="canRemoveMe" id="hPE.model/HComponent#canRemoveMe()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HNamed&lt;-hPE.model/HComponent" source="//@children.15" target="//@children.21" targetEnd="//@children.15/@sourceConnections.0/@children.1" sourceEnd="//@children.15/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,180" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,65"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.model/IHasReplicator&lt;-hPE.model/HComponent" source="//@children.15" target="//@children.28" targetEnd="//@children.15/@sourceConnections.1/@children.1" sourceEnd="//@children.15/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,232" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="195,78"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/HVisualElement&lt;-hPE.model/HComponent" source="//@children.15" target="//@children.19" targetEnd="//@children.15/@sourceConnections.2/@children.1" sourceEnd="//@children.15/@sourceConnections.2/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="-1,319" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="144,77"/>
+      <bendpoints secondRelativeDimension="467,39" firstRelativeDimension="-490,2"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HComponent@which_component+hPE.model/HComponentEntry@entries" source="//@children.15" target="//@children.16" targetEnd="//@children.15/@sourceConnections.3/@children.1" label="//@children.15/@sourceConnections.3/@children.2" sourceEnd="//@children.15/@sourceConnections.3/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="which_component" location="-1,202" id="hPE.model/HComponent@which_component+hPE.model/HComponentEntry@entries|hPE.model/HComponent#which_component" attachSource="true" multiplicityLabel="//@children.15/@sourceConnections.3/@children.0/@children.1" roleLabel="//@children.15/@sourceConnections.3/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - which_component" location="1672,780" size="99,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1765,808" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="entries" location="207,212" id="hPE.model/HComponent@which_component+hPE.model/HComponentEntry@entries|hPE.model/HComponentEntry#entries" multiplicityLabel="//@children.15/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.15/@sourceConnections.3/@children.1/@children.0" navigable="true" orderingKind="1" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - entries" location="1495,780" size="43,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="1495,808" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HComponent@hComponent" source="//@children.15" target="//@children.27" targetEnd="//@children.15/@sourceConnections.4/@children.1" label="//@children.15/@sourceConnections.4/@children.2" sourceEnd="//@children.15/@sourceConnections.4/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hComponent" location="73,0" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HComponent@hComponent|hPE.model/HComponent#hComponent" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToReplicator" location="206,120" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HComponent@hComponent|hPE.base.model/HLinkToReplicator#linkToReplicator" multiplicityLabel="//@children.15/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.15/@sourceConnections.4/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToReplicator" location="699,-541" size="85,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="699,-513" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HComponent@which_component+hPE.base.model/HUnit@observable_units" source="//@children.15" target="//@children.11" targetEnd="//@children.15/@sourceConnections.5/@children.1" label="//@children.15/@sourceConnections.5/@children.2" sourceEnd="//@children.15/@sourceConnections.5/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="which_component" location="105,390" id="hPE.model/HComponent@which_component+hPE.base.model/HUnit@observable_units|hPE.model/HComponent#which_component" attachSource="true" multiplicityLabel="//@children.15/@sourceConnections.5/@children.0/@children.1" roleLabel="//@children.15/@sourceConnections.5/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - which_component" location="1891,997" size="99,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1859,997" size="18,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="observable_units" location="103,714" id="hPE.model/HComponent@which_component+hPE.base.model/HUnit@observable_units|hPE.base.model/HUnit#observable_units" multiplicityLabel="//@children.15/@sourceConnections.5/@children.1/@children.1" roleLabel="//@children.15/@sourceConnections.5/@children.1/@children.0" navigable="true" orderingKind="1" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - observable_units" location="4,1149" size="93,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="111,1149" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.20/@sourceConnections.0 //@children.15/@sourceConnections.3 //@children.14/@sourceConnections.6" name="HComponentEntry" location="1281,590" size="208,643" id="hPE.model/HComponentEntry" runTimeClassModel="unSetReplicator(LhPE.model.HReplicator;),setReplicator(LhPE.model.HReplicator;Z),canOpen(),HComponentEntry(LhPE.model.HComponentEntry;Ljava.lang.String;LhPE.model.HInterface;),HComponentEntry(LhPE.model.HComponent;Ljava.lang.String;LhPE.model.HInterface;),openSlice(),ancestor_entry,getReplicators(),unsetAllReplicators(),isReplicatorFactorDetermined(LhPE.model.HReplicator;),setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),unsetBinding(),isOpen(),notifyColorChange(),adjustComponentBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),getMyReplicas(),getWhich_interface(),name,getReplicationFactor(LhPE.model.HReplicator;),closeSlice(),inner_slices,isReplicated(),getInnerSlices(),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),canClose(),setReplicator(LhPE.model.HReplicator;),setWhich_interface(LhPE.model.HInterface;),show_interface(),unlock(),visibleInterface(),hide_interface(),lock(),isReplicatedBy(LhPE.model.HReplicator;),adjustAncestorEntryBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="185,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.model/HComponentEntry#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="inner_slices" id="hPE.model/HComponentEntry#inner_slices"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="ancestor_entry" id="hPE.model/HComponentEntry#ancestor_entry"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,540">
+      <children xsi:type="editmodel:MethodEditModel" name="HComponentEntry" id="hPE.model/HComponentEntry#HComponentEntry(LhPE.base.model.HUnit;Ljava.lang.String;LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.model/HComponentEntry#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.model/HComponentEntry#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.model/HComponentEntry#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getWhich_interface" id="hPE.model/HComponentEntry#getWhich_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setWhich_interface" id="hPE.model/HComponentEntry#setWhich_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="visibleInterface" id="hPE.model/HComponentEntry#visibleInterface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show_interface" id="hPE.model/HComponentEntry#show_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide_interface" id="hPE.model/HComponentEntry#hide_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatorFactorDetermined" id="hPE.model/HComponentEntry#isReplicatorFactorDetermined(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMyReplicas" id="hPE.model/HComponentEntry#getMyReplicas()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setReplicator" id="hPE.model/HComponentEntry#setReplicator(LhPE.base.model.HReplicator;Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicators" id="hPE.model/HComponentEntry#getReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicated" id="hPE.model/HComponentEntry#isReplicated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicationFactor" id="hPE.model/HComponentEntry#getReplicationFactor(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unSetReplicator" id="hPE.model/HComponentEntry#unSetReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatedBy" id="hPE.model/HComponentEntry#isReplicatedBy(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unsetAllReplicators" id="hPE.model/HComponentEntry#unsetAllReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unsetBinding" id="hPE.model/HComponentEntry#unsetBinding()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="adjustComponentBounds" id="hPE.model/HComponentEntry#adjustComponentBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openSlice" id="hPE.model/HComponentEntry#openSlice()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyColorChange" id="hPE.model/HComponentEntry#notifyColorChange()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unlock" id="hPE.model/HComponentEntry#unlock()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="canClose" id="hPE.model/HComponentEntry#canClose()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="canOpen" id="hPE.model/HComponentEntry#canOpen()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isOpen" id="hPE.model/HComponentEntry#isOpen()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInnerSlices" id="hPE.model/HComponentEntry#getInnerSlices()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="adjustAncestorEntryBounds" id="hPE.model/HComponentEntry#adjustAncestorEntryBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="lock" id="hPE.model/HComponentEntry#lock()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="closeSlice" id="hPE.model/HComponentEntry#closeSlice()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.model/HComponentEntry" source="//@children.16" target="//@children.19" targetEnd="//@children.16/@sourceConnections.0/@children.1" sourceEnd="//@children.16/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,270" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,51"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/IPropertyChangeListener&lt;-hPE.model/HComponentEntry" source="//@children.16" target="//@children.23" targetEnd="//@children.16/@sourceConnections.1/@children.1" sourceEnd="//@children.16/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,383" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="185,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/INode&lt;-hPE.model/HComponentEntry" source="//@children.16" target="//@children.24" targetEnd="//@children.16/@sourceConnections.2/@children.1" sourceEnd="//@children.16/@sourceConnections.2/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,570" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="104,40"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.model/IHasReplicator&lt;-hPE.model/HComponentEntry" source="//@children.16" target="//@children.28" targetEnd="//@children.16/@sourceConnections.3/@children.1" sourceEnd="//@children.16/@sourceConnections.3/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,362" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="195,74"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HComponentEntry@hComponentEntry" source="//@children.16" target="//@children.27" targetEnd="//@children.16/@sourceConnections.4/@children.1" label="//@children.16/@sourceConnections.4/@children.2" sourceEnd="//@children.16/@sourceConnections.4/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hComponentEntry" location="-1,48" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HComponentEntry@hComponentEntry|hPE.model/HComponentEntry#hComponentEntry" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToReplicator" location="197,211" id="hPE.base.model/HLinkToReplicator@linkToReplicator+hPE.model/HComponentEntry@hComponentEntry|hPE.base.model/HLinkToReplicator#linkToReplicator" multiplicityLabel="//@children.16/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.4/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToReplicator" location="590,-423" size="85,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="689,-423" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HComponentEntry@hComponentEntry" source="//@children.16" target="//@children.26" targetEnd="//@children.16/@sourceConnections.5/@children.1" label="//@children.16/@sourceConnections.5/@children.2" sourceEnd="//@children.16/@sourceConnections.5/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="hComponentEntry" location="-1,12" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HComponentEntry@hComponentEntry|hPE.model/HComponentEntry#hComponentEntry" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linkToInterface" location="196,229" id="hPE.base.model/HLinkToInterface@linkToInterface+hPE.model/HComponentEntry@hComponentEntry|hPE.base.model/HLinkToInterface#linkToInterface" multiplicityLabel="//@children.16/@sourceConnections.5/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.5/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linkToInterface" location="85,305" size="80,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="179,305" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="hPE.base.model/IHasInterface&lt;-hPE.model/HComponentEntry" source="//@children.16" target="//@children.25" targetEnd="//@children.16/@sourceConnections.6/@children.1" sourceEnd="//@children.16/@sourceConnections.6/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="60,170" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HConfiguration" location="-91,-1050" size="206,373" id="hPE.base.model/HComponent" runTimeClassModel="HConfiguration(Ljava.lang.String;),newUnit(LhPE.model.HUnit;),newBinding(LhPE.model.HBinding;),newReplicator(LhPE.model.HReplicator;),loadComponent(LhPE.model.HConfiguration;Lorg.eclipse.draw2d.geometry.Point;),find_component_by_name(Ljava.lang.String;),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),color,newInterface(LhPE.model.HInterface;),unlinkReplicator(LhPE.model.HReplicator;),addComponent(LhPE.model.HComponent;),refresh(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),clean_unused_replicators(),setName(Ljava.lang.String;),name,unlinkUnit(LhPE.model.HUnit;),removeUnit(LhPE.model.HUnit;),removeComponent(LhPE.model.HComponent;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="88,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.base.model/HComponent#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="color" id="hPE.base.model/HComponent#color"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,396">
+      <children xsi:type="editmodel:MethodEditModel" name="HConfiguration" id="hPE.base.model/HComponent#HComponent(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="newUnit" id="hPE.base.model/HComponent#newUnit(LhPE.base.model.HUnit;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="newInterface" id="hPE.base.model/HComponent#newInterface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addComponent" id="hPE.base.model/HComponent#addComponent(LhPE.model.HComponent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeUnit" id="hPE.base.model/HComponent#removeUnit(LhPE.base.model.HUnit;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="newBinding" id="hPE.base.model/HComponent#removeBinding(LhPE.base.model.HBinding;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/HComponent#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/HComponent#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="refresh" id="hPE.base.model/HComponent#refresh()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="newReplicator" id="hPE.base.model/HComponent#newReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unlinkReplicator" id="hPE.base.model/HComponent#unlinkReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="find_component_by_name" id="hPE.base.model/HComponent#find_component_by_name(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="loadComponent" id="hPE.base.model/HComponent#loadComponent(LhPE.base.model.HComponent;Lorg.eclipse.draw2d.geometry.Point;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeComponent" id="hPE.base.model/HComponent#removeComponent(LhPE.model.HComponent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="clean_unused_replicators" id="hPE.base.model/HComponent#clean_unused_replicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setName" id="hPE.base.model/HComponent#setName(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="hPE.base.model/HInterface@interfaces+hPE.base.model/HComponent@configuration" source="//@children.17" target="//@children.13" targetEnd="//@children.17/@sourceConnections.0/@children.1" label="//@children.17/@sourceConnections.0/@children.2" sourceEnd="//@children.17/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="configuration" location="3,374" id="hPE.base.model/HInterface@interfaces+hPE.base.model/HComponent@configuration|hPE.base.model/HComponent#configuration" attachSource="true" multiplicityLabel="//@children.17/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.17/@sourceConnections.0/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" + configuration" location="-81,-671" size="75,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="-101,-671" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="interfaces" location="203,1" id="hPE.base.model/HInterface@interfaces+hPE.base.model/HComponent@configuration|hPE.base.model/HInterface#interfaces" multiplicityLabel="//@children.17/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.17/@sourceConnections.0/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - interfaces" location="-81,-455" size="59,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="-99,-455" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HComponent@configuration+hPE.model/HComponent@components" source="//@children.17" target="//@children.15" targetEnd="//@children.17/@sourceConnections.1/@children.1" label="//@children.17/@sourceConnections.1/@children.2" sourceEnd="//@children.17/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="configuration" location="204,107" id="hPE.base.model/HComponent@configuration+hPE.model/HComponent@components|hPE.base.model/HComponent#configuration" attachSource="true" multiplicityLabel="//@children.17/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.17/@sourceConnections.1/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - configuration" location="121,-965" size="73,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="121,-937" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="components" location="129,0" id="hPE.base.model/HComponent@configuration+hPE.model/HComponent@components|hPE.model/HComponent#components" multiplicityLabel="//@children.17/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.17/@sourceConnections.1/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - components" location="1915,579" size="69,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="1897,579" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HNamed&lt;-hPE.base.model/HComponent" source="//@children.17" target="//@children.21" targetEnd="//@children.17/@sourceConnections.2/@children.1" sourceEnd="//@children.17/@sourceConnections.2/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="83,374" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="56,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HComponent@configuration+hPE.base.model/HUnit@units" source="//@children.17" target="//@children.11" targetEnd="//@children.17/@sourceConnections.3/@children.1" label="//@children.17/@sourceConnections.3/@children.2" sourceEnd="//@children.17/@sourceConnections.3/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="configuration" location="115,372" id="hPE.base.model/HComponent@configuration+hPE.base.model/HUnit@units|hPE.base.model/HComponent#configuration" attachSource="true" multiplicityLabel="//@children.17/@sourceConnections.3/@children.0/@children.1" roleLabel="//@children.17/@sourceConnections.3/@children.0/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - configuration" location="-56,-671" size="73,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="31,-671" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="units" location="25,0" id="hPE.base.model/HComponent@configuration+hPE.base.model/HUnit@units|hPE.base.model/HUnit#units" multiplicityLabel="//@children.17/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.17/@sourceConnections.3/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - units" location="32,407" size="33,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="14,407" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HComponent@configuration+hPE.base.model/HBinding@bindings" source="//@children.17" target="//@children.20" targetEnd="//@children.17/@sourceConnections.4/@children.1" label="//@children.17/@sourceConnections.4/@children.2" sourceEnd="//@children.17/@sourceConnections.4/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="configuration" location="205,217" id="hPE.base.model/HComponent@configuration+hPE.base.model/HBinding@bindings|hPE.base.model/HComponent#configuration" attachSource="true" multiplicityLabel="//@children.17/@sourceConnections.4/@children.0/@children.1" roleLabel="//@children.17/@sourceConnections.4/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - configuration" location="121,-855" size="73,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="121,-827" size="6,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="bindings" location="97,0" id="hPE.base.model/HComponent@configuration+hPE.base.model/HBinding@bindings|hPE.base.model/HBinding#bindings" multiplicityLabel="//@children.17/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.17/@sourceConnections.4/@children.1/@children.0" navigable="true" changeability="2">
+        <children xsi:type="editmodel:LabelEditModel" name=" - bindings" location="964,739" size="50,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="946,739" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.27/@sourceConnections.0" name="HReplicator" location="183,-690" size="206,301" id="hPE.base.model/HReplicator" runTimeClassModel="getName(),linksToMe,removeLink(LhPE.model.HLinkToReplicator;),HReplicator(LhPE.model.HConfiguration;Ljava.lang.String;Lorg.eclipse.draw2d.geometry.Point;),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),factor,setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;),color,remove(),varid,removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),setName(Ljava.lang.String;),addLink(LhPE.model.HLinkToReplicator;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="factor" id="hPE.base.model/HReplicator#factor"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="varid" id="hPE.base.model/HReplicator#varid"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="color" id="hPE.base.model/HReplicator#color"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="linksToMe" id="hPE.base.model/HReplicator#linksToMe"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,180">
+      <children xsi:type="editmodel:MethodEditModel" name="init_replicator" id="hPE.base.model/HReplicator#init_replicator(LhPE.base.model.HComponent;Ljava.lang.String;Lorg.eclipse.draw2d.geometry.Point;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/HReplicator#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/HReplicator#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBounds" id="hPE.base.model/HReplicator#setBounds(Lorg.eclipse.draw2d.geometry.Rectangle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HReplicator" id="hPE.base.model/HReplicator#HReplicator(LhPE.base.model.HComponent;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addLink" id="hPE.base.model/HReplicator#addLink(LhPE.base.model.HLinkToReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeLink" id="hPE.base.model/HReplicator#removeLink(LhPE.base.model.HLinkToReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getName" id="hPE.base.model/HReplicator#getName()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setName" id="hPE.base.model/HReplicator#setName(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="remove" id="hPE.base.model/HReplicator#remove()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HVisualElement&lt;-hPE.base.model/HReplicator" source="//@children.18" target="//@children.19" targetEnd="//@children.18/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="50,302" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="91,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.base.model/HNamed&lt;-hPE.base.model/HReplicator" source="//@children.18" target="//@children.21" targetEnd="//@children.18/@sourceConnections.1/@children.1" sourceEnd="//@children.18/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="41,302" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="73,0"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.1 //@children.16/@sourceConnections.0 //@children.13/@sourceConnections.0 //@children.18/@sourceConnections.0 //@children.1/@sourceConnections.0 //@children.2/@sourceConnections.0 //@children.15/@sourceConnections.2 //@children.14/@sourceConnections.5 //@children.0/@sourceConnections.2" name="HVisualElement" location="-280,809" size="144,103" id="hPE.base.model/HVisualElement" runTimeClassModel="bounds,HVisualElement()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="121,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="bounds" id="hPE.base.model/HVisualElement#bounds"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="104,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HVisualElement" id="hPE.base.model/HVisualElement#HVisualElement()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.17/@sourceConnections.4" name="HBinding" location="861,760" size="206,139" id="hPE.base.model/HBinding" runTimeClassModel="remove(),HBinding(LhPE.model.HConfiguration;LhPE.model.HUnitSliceAbstraction;LhPE.model.HComponentEntry;),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),name,addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="79,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="hPE.base.model/HBinding#name"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,72">
+      <children xsi:type="editmodel:MethodEditModel" name="HBinding" id="hPE.base.model/HBinding#HBinding(LhPE.base.model.HComponent;LhPE.model.HUnitSliceAbstraction;LhPE.model.HComponentEntry;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="remove" id="hPE.base.model/HBinding#remove()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/HBinding#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/HBinding#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.model/HComponentEntry@entry+hPE.base.model/HBinding@binding" source="//@children.20" target="//@children.16" targetEnd="//@children.20/@sourceConnections.0/@children.1" label="//@children.20/@sourceConnections.0/@children.2" sourceEnd="//@children.20/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="binding" location="206,69" id="hPE.model/HComponentEntry@entry+hPE.base.model/HBinding@binding|hPE.base.model/HBinding#binding" attachSource="true" multiplicityLabel="//@children.20/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - binding" location="1073,807" size="44,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1073,835" size="18,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="entry" location="-1,238" id="hPE.model/HComponentEntry@entry+hPE.base.model/HBinding@binding|hPE.model/HComponentEntry#entry" multiplicityLabel="//@children.20/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - entry" location="1238,807" size="35,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1267,835" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HBinding@binding+hPE.model/HUnitSliceAbstraction@port" source="//@children.20" target="//@children.14" targetEnd="//@children.20/@sourceConnections.1/@children.1" label="//@children.20/@sourceConnections.1/@children.2" sourceEnd="//@children.20/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="binding" location="-1,62" id="hPE.base.model/HBinding@binding+hPE.model/HUnitSliceAbstraction@port|hPE.base.model/HBinding#binding" attachSource="true" multiplicityLabel="//@children.20/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.20/@sourceConnections.1/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - binding" location="809,828" size="44,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="835,800" size="18,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="port" location="205,172" id="hPE.base.model/HBinding@binding+hPE.model/HUnitSliceAbstraction@port|hPE.model/HUnitSliceAbstraction#port" multiplicityLabel="//@children.20/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.20/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + port" location="711,799" size="31,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="711,827" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.11/@sourceConnections.2 //@children.15/@sourceConnections.0 //@children.13/@sourceConnections.1 //@children.18/@sourceConnections.1 //@children.17/@sourceConnections.2" name="HNamed" location="-191,447" size="96,117" stereotype="interface" id="hPE.base.model/HNamed" runTimeClassModel="getName(),setName(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="45,18"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="72,36">
+      <children xsi:type="editmodel:MethodEditModel" name="getName" id="hPE.base.model/HNamed#getName()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setName" id="hPE.base.model/HNamed#setName(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" name="HNamed" location="24,-36" size="40,39" stereotype="interface" id="hPE.base.model/HNamed" kind="required"/>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.16/@sourceConnections.1 //@children.0/@sourceConnections.0 //@children.14/@sourceConnections.0" name="IPropertyChangeListener" location="183,1519" size="206,99" stereotype="interface" id="hPE.base.model/IPropertyChangeListener" runTimeClassModel="removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,36">
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/IPropertyChangeListener#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/IPropertyChangeListener#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.14/@sourceConnections.1 //@children.16/@sourceConnections.2 //@children.14/@sourceConnections.2" name="INode" location="-261,1120" size="103,81" stereotype="interface" id="hPE.base.model/INode" runTimeClassModel="getBinding()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="80,18">
+      <children xsi:type="editmodel:MethodEditModel" name="getBinding" id="hPE.base.model/INode#getBinding()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.11/@sourceConnections.3 //@children.14/@sourceConnections.9 //@children.0/@sourceConnections.1 //@children.16/@sourceConnections.6" verticalGuide="//@boardSetting/@topRuler/@guides.0" name="IHasInterface" location="232,99" size="147,171" stereotype="interface" id="hPE.base.model/IHasInterface" runTimeClassModel="setWhich_interface(LhPE.model.HInterface;),show_interface(),notifyColorChange(),visibleInterface(),hide_interface(),getWhich_interface()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="124,108">
+      <children xsi:type="editmodel:MethodEditModel" name="getWhich_interface" id="hPE.base.model/IHasInterface#getWhich_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setWhich_interface" id="hPE.base.model/IHasInterface#setWhich_interface(LhPE.base.model.HInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="visibleInterface" id="hPE.base.model/IHasInterface#visibleInterface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show_interface" id="hPE.base.model/IHasInterface#show_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide_interface" id="hPE.base.model/IHasInterface#hide_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyColorChange" id="hPE.base.model/IHasInterface#notifyColorChange()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.14/@sourceConnections.3 //@children.16/@sourceConnections.5 //@children.11/@sourceConnections.4 //@children.0/@sourceConnections.3" name="HLinkToInterface" location="-23,70" size="206,229" id="hPE.base.model/HLinkToInterface" runTimeClassModel="show_interface(),linked,notify_new_color(),getLinked(),visibleInterface(),hide_interface(),removePropertyChangeListener(Ljava.beans.PropertyChangeListener;),listeners,addPropertyChangeListener(Ljava.beans.PropertyChangeListener;),HLinkToInterface(LhPE.model.IHasInterface;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="182,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="listeners" id="hPE.base.model/HLinkToInterface#listeners"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="linked" id="hPE.base.model/HLinkToInterface#linked"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="183,144">
+      <children xsi:type="editmodel:MethodEditModel" name="HLinkToInterface" id="hPE.base.model/HLinkToInterface#HLinkToInterface(LhPE.base.model.IHasInterface;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hide_interface" id="hPE.base.model/HLinkToInterface#hide_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="show_interface" id="hPE.base.model/HLinkToInterface#show_interface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="visibleInterface" id="hPE.base.model/HLinkToInterface#visibleInterface()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLinked" id="hPE.base.model/HLinkToInterface#getLinked()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notify_new_color" id="hPE.base.model/HLinkToInterface#notify_new_color()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addPropertyChangeListener" id="hPE.base.model/HLinkToInterface#addPropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removePropertyChangeListener" id="hPE.base.model/HLinkToInterface#removePropertyChangeListener(Ljava.beans.PropertyChangeListener;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="hPE.base.model/HLinkToInterface@linksToTheInterface+hPE.base.model/HInterface@which_interface" source="//@children.26" target="//@children.13" targetEnd="//@children.26/@sourceConnections.0/@children.1" label="//@children.26/@sourceConnections.0/@children.2" sourceEnd="//@children.26/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="linksToTheInterface" location="35,-1" id="hPE.base.model/HLinkToInterface@linksToTheInterface+hPE.base.model/HInterface@which_interface|hPE.base.model/HLinkToInterface#linksToTheInterface" attachSource="true" multiplicityLabel="//@children.26/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.26/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - linksToTheInterface" location="19,48" size="104,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="1,48" size="4,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="which_interface" location="206,417" id="hPE.base.model/HLinkToInterface@linksToTheInterface+hPE.base.model/HInterface@which_interface|hPE.base.model/HInterface#which_interface" multiplicityLabel="//@children.26/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.26/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + which_interface" location="-79,-37" size="91,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="-79,-9" size="18,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.4 //@children.15/@sourceConnections.4 //@children.14/@sourceConnections.8" name="HLinkToReplicator" location="486,-640" size="207,211" id="hPE.base.model/HLinkToReplicator" runTimeClassModel="isReplicatorFactorDetermined(),permanent,getReplicated(),isPermanent(),unlinkFromReplicator(),setPermanent(Z),replicated_element,HLinkToReplicator(LhPE.model.IHasReplicator;LhPE.model.HReplicator;),getReplicationFactor()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="184,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="replicated_element" id="hPE.base.model/HLinkToReplicator#replicated_element"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="permanent" id="hPE.base.model/HLinkToReplicator#permanent"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="171,126">
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicationFactor" id="hPE.base.model/HLinkToReplicator#getReplicationFactor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatorFactorDetermined" id="hPE.base.model/HLinkToReplicator#isReplicatorFactorDetermined()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unlinkFromReplicator" id="hPE.base.model/HLinkToReplicator#unlinkFromReplicator()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HLinkToReplicator" id="hPE.base.model/HLinkToReplicator#HLinkToReplicator(LhPE.model.IHasReplicator;LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicated" id="hPE.base.model/HLinkToReplicator#getReplicated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setPermanent" id="hPE.base.model/HLinkToReplicator#setPermanent(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isPermanent" id="hPE.base.model/HLinkToReplicator#isPermanent()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="hPE.base.model/HLinkToReplicator@replicated_elements+hPE.base.model/HReplicator@which_replicator" source="//@children.27" target="//@children.18" targetEnd="//@children.27/@sourceConnections.0/@children.1" label="//@children.27/@sourceConnections.0/@children.2" sourceEnd="//@children.27/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="replicated_elements" location="0,106" id="hPE.base.model/HLinkToReplicator@replicated_elements+hPE.base.model/HReplicator@which_replicator|hPE.base.model/HLinkToReplicator#replicated_elements" attachSource="true" multiplicityLabel="//@children.27/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.27/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - replicated_elements" location="372,-556" size="106,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1..*" location="462,-528" size="16,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="which_replicator" location="206,156" id="hPE.base.model/HLinkToReplicator@replicated_elements+hPE.base.model/HReplicator@which_replicator|hPE.base.model/HReplicator#which_replicator" multiplicityLabel="//@children.27/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.27/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + which_replicator" location="395,-556" size="93,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="395,-528" size="6,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.11/@sourceConnections.5 //@children.14/@sourceConnections.4 //@children.16/@sourceConnections.3 //@children.15/@sourceConnections.1" name="IHasReplicator" location="-285,1418" size="194,225" stereotype="interface" id="hPE.model/IHasReplicator" runTimeClassModel="setReplicator(LhPE.model.HReplicator;),unSetReplicator(LhPE.model.HReplicator;),getLinksToReplicators(),isReplicated(),getMyReplicas(),getReplicators(),isReplicatedBy(LhPE.model.HReplicator;),getReplicationFactor(LhPE.model.HReplicator;),isReplicatorFactorDetermined(LhPE.model.HReplicator;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="171,162">
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicators" id="hPE.model/IHasReplicator#getReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setReplicator" id="hPE.model/IHasReplicator#setReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicated" id="hPE.model/IHasReplicator#isReplicated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMyReplicas" id="hPE.model/IHasReplicator#getMyReplicas()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatorFactorDetermined" id="hPE.model/IHasReplicator#isReplicatorFactorDetermined(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getReplicationFactor" id="hPE.model/IHasReplicator#getReplicationFactor(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLinksToReplicators" id="hPE.model/IHasReplicator#getLinksToReplicators()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unSetReplicator" id="hPE.model/IHasReplicator#unSetReplicator(LhPE.base.model.HReplicator;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isReplicatedBy" id="hPE.model/IHasReplicator#isReplicatedBy(LhPE.base.model.HReplicator;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HDoAction" location="1440,-206" size="212,175" id="hPE.kinds.computation.model.protocol/HDoAction" runTimeClassModel="encapsulatedAction,sliceAbstraction,setEncapsulatedAction(LhPE.model.HAction;),getEncapsulatedAction(),HDoAction(Ljava.lang.String;LhPE.model.HCombinatorAction;LhPE.model.HSliceAbstraction;),getSliceAbstraction(),HDoAction(Ljava.lang.String;LhPE.model.HProtocol;LhPE.model.HSliceAbstraction;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="189,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="encapsulatedAction" id="hPE.kinds.computation.model.protocol/HDoAction#encapsulatedAction"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sliceAbstraction" id="hPE.kinds.computation.model.protocol/HDoAction#sliceAbstraction"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="141,90">
+      <children xsi:type="editmodel:MethodEditModel" name="HDoAction" id="hPE.kinds.computation.model.protocol/HDoAction#HDoAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HCombinatorAction;LhPE.model.HSliceAbstraction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HDoAction" id="hPE.kinds.computation.model.protocol/HDoAction#HDoAction(Ljava.lang.String;LhPE.kinds.computation.model.protocol.HProtocol;LhPE.model.HSliceAbstraction;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getEncapsulatedAction" id="hPE.kinds.computation.model.protocol/HDoAction#getEncapsulatedAction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSliceAbstraction" id="hPE.kinds.computation.model.protocol/HDoAction#getSliceAbstraction()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setEncapsulatedAction" id="hPE.kinds.computation.model.protocol/HDoAction#setEncapsulatedAction(LhPE.kinds.computation.model.protocol.HAction;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="hPE.kinds.computation.model.protocol/HPrimitiveAction&lt;-hPE.kinds.computation.model.protocol/HDoAction" source="//@children.29" target="//@children.6" targetEnd="//@children.29/@sourceConnections.0/@children.1" sourceEnd="//@children.29/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,37" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="148,49"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=1"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="10,10" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler>
+      <guides position="379">
+        <entries element="//@children.25" alignment="1"/>
+      </guides>
+    </topRuler>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
