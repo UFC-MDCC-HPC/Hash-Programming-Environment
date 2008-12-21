@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="hpesrc"/>
+	<classpathentry kind="lib" path="C:/sftp3/lib/sftp.jar"/>
+	<classpathentry kind="lib" path="C:/Eclipse 3.4/eclipse/plugins/org.apache.commons.discovery_0.2.0.v200806030120/lib/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Eclipse 3.4/eclipse/plugins/javax.xml.soap_1.2.0.v200806030421/lib/saaj.jar"/>
+	<classpathentry kind="lib" path="C:/Eclipse 3.4/eclipse/plugins/javax.wsdl_1.5.1.v200806030408.jar"/>
+	<classpathentry kind="lib" path="C:/Eclipse 3.4/eclipse/plugins/org.apache.commons.logging_1.0.4.v20080605-1930.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

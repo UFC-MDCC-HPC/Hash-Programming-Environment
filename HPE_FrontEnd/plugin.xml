@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="hPE.hPEEditor"
+            contributorClass="hPE.HPEEditorActionBarContributor"
+            default="false"
+            extensions="hpe2"
+            icon="hash.gif"
+            id="org.eclipse.HPEEditor"
+            name="HPE Editor"/>
+      <editor
+            class="hPE.HPEVersionEditor"
+            default="false"
+            extensions="hpe"
+            icon="hash.gif"
+            id="org.eclipse.HPEVersionEditor"
+            name="HPE Version Editor"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.HPEWizardCategory"
+            name="%HPE_wizard_category"
+            parentCategory="org.eclipse.HPE"/>
+      <wizard
+            category="org.eclipse.HPE"
+            class="hPE.HPEWizard"
+            icon="hash.gif"
+            id="org.eclipse.HPE.HPEWizard"
+            name="# Configuration">
+         <selection class="org.eclipse.core.resources.IResource"/>
+         <description/>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+	   <perspective
+          class="hPE.HPEPerspective"
+          fixed="false"
+          id="org.eclipse.HPEPerspective"
+          name="# Programming Perspective">
+	   </perspective>
+         
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="hPE.HPEResourceNavigator"
+            id="hPE.HPEResourceNavigator"
+            name="Configuration Sessions"/>
+      <view
+            class="hPE.frontend.library.HPEComponentLibraryView"
+            id="hPE.library.HPEComponentLibraryView"
+            name="Repository"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+   </extension>
+   <extension
+         point="org.eclipse.ui.dropActions">
+      <action
+            class="hPE.DropActionDelegate1"
+            id="HPE.action1"/>
+   </extension>
+
+</plugin>
