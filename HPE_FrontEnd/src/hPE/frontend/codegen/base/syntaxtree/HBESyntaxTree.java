@@ -1,4 +1,4 @@
-package hPE.frontend.codegen.syntaxtree;
+package hPE.frontend.codegen.base.syntaxtree;
 
 import hPE.model.base.HInterface;
 import hPE.model.base.HPort;

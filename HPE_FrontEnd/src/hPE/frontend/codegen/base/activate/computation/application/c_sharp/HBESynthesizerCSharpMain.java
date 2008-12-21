@@ -5,7 +5,7 @@ import java.util.List;
 
 import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpMainDefinition;
-import hPE.frontend.codegen.syntaxtree.HBESyntaxTree;
+import hPE.frontend.codegen.base.syntaxtree.HBESyntaxTree;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.kinds.activate.HActivateInterface;

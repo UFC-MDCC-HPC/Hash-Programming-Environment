@@ -1,16 +1,16 @@
 package hPE.frontend.codegen.base.activate.c_sharp;
 
 import hPE.frontend.codegen.base.c_sharp.HBESourceVersionCSharp;
-import hPE.frontend.codegen.syntaxtree.HBECommandBlock;
-import hPE.frontend.codegen.syntaxtree.HBEConcurrentBlock;
-import hPE.frontend.codegen.syntaxtree.HBEConditionBranch;
-import hPE.frontend.codegen.syntaxtree.HBEProcedure;
-import hPE.frontend.codegen.syntaxtree.HBEProcedureCall;
-import hPE.frontend.codegen.syntaxtree.HBERepeatTestBranch;
-import hPE.frontend.codegen.syntaxtree.HBESequentialBlock;
-import hPE.frontend.codegen.syntaxtree.HBESimpleTestBranch;
-import hPE.frontend.codegen.syntaxtree.HBESkipCommand;
-import hPE.frontend.codegen.syntaxtree.HBESyntaxTree;
+import hPE.frontend.codegen.base.syntaxtree.HBECommandBlock;
+import hPE.frontend.codegen.base.syntaxtree.HBEConcurrentBlock;
+import hPE.frontend.codegen.base.syntaxtree.HBEConditionBranch;
+import hPE.frontend.codegen.base.syntaxtree.HBEProcedure;
+import hPE.frontend.codegen.base.syntaxtree.HBEProcedureCall;
+import hPE.frontend.codegen.base.syntaxtree.HBERepeatTestBranch;
+import hPE.frontend.codegen.base.syntaxtree.HBESequentialBlock;
+import hPE.frontend.codegen.base.syntaxtree.HBESimpleTestBranch;
+import hPE.frontend.codegen.base.syntaxtree.HBESkipCommand;
+import hPE.frontend.codegen.base.syntaxtree.HBESyntaxTree;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSlice;
 import hPE.model.kinds.activate.HActivateInterface;
