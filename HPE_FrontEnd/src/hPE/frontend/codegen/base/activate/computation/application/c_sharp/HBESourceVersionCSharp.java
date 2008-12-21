@@ -1,13 +1,13 @@
 package hPE.frontend.codegen.base.activate.computation.application.c_sharp;
 
 
-import hPE.frontend.codegen.c_sharp.HBESourceCSharpClassDefinition;
-import hPE.frontend.codegen.c_sharp.HBESourceCSharpMainDefinition;
+import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpClassDefinition;
+import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpMainDefinition;
 
 import java.util.List;
 
 
-public class HBESourceVersionCSharp extends hPE.frontend.codegen.c_sharp.HBESourceVersionCSharp {
+public class HBESourceVersionCSharp extends hPE.frontend.codegen.base.c_sharp.HBESourceVersionCSharp {
 
 	private HBESourceCSharpMainDefinition mainSrc; 
 	

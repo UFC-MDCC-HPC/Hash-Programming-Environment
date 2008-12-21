@@ -3,8 +3,6 @@ package hPE.frontend.codegen.base.c_sharp;
 import hPE.frontend.codegen.HBEAbstractFile;
 import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.codegen.HBESourceVersion;
-import hPE.frontend.codegen.c_sharp.HBESourceCSharpClassDefinition;
-import hPE.frontend.codegen.c_sharp.HBESourceVersionCSharp;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSlice;

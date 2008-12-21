@@ -1,6 +1,6 @@
 package hPE.frontend.codegen.base.activate.c_sharp;
 
-import hPE.frontend.codegen.c_sharp.HBESourceVersionCSharp;
+import hPE.frontend.codegen.base.c_sharp.HBESourceVersionCSharp;
 import hPE.frontend.codegen.syntaxtree.HBECommandBlock;
 import hPE.frontend.codegen.syntaxtree.HBEConcurrentBlock;
 import hPE.frontend.codegen.syntaxtree.HBEConditionBranch;

@@ -3,8 +3,8 @@ package hPE.frontend.codegen.base.activate.computation.application.c_sharp;
 import java.util.ArrayList;
 import java.util.List;
 
-import hPE.frontend.codegen.c_sharp.HBESourceCSharpClassDefinition;
-import hPE.frontend.codegen.c_sharp.HBESourceCSharpMainDefinition;
+import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpClassDefinition;
+import hPE.frontend.codegen.base.c_sharp.HBESourceCSharpMainDefinition;
 import hPE.frontend.codegen.syntaxtree.HBESyntaxTree;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
@@ -22,7 +22,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.codegen.base.activate
 	
 	protected HBESyntaxTree p2p = null;
 	
-	public hPE.frontend.codegen.c_sharp.HBESourceVersionCSharp synthesize(HInterface i, String versionID) {
+	public hPE.frontend.codegen.base.c_sharp.HBESourceVersionCSharp synthesize(HInterface i, String versionID) {
 
 		HBESourceVersionCSharp version = (HBESourceVersionCSharp) super.synthesize(i,versionID);
 		        
@@ -67,7 +67,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.codegen.base.activate
 	}
 	
     
-    protected hPE.frontend.codegen.c_sharp.HBESourceVersionCSharp createNewSourceVersion() {
+    protected hPE.frontend.codegen.base.c_sharp.HBESourceVersionCSharp createNewSourceVersion() {
     	return new HBESourceVersionCSharp();
     }
     
