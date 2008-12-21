@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import org.eclipse.gef.commands.Command;
 
 import hPE.model.base.HNamed;
-import hPE.model.exceptions.base.HPEInvalidNameException;
+import hPE.model.base.exceptions.HPEInvalidNameException;
 
 public class NameUpdatingCommand extends Command {
 

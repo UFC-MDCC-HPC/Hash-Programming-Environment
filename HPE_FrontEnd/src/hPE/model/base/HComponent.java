@@ -1,8 +1,8 @@
 package hPE.model.base;
 
 import hPE.model.base.HReplicator.ReplicatorOrigin;
-import hPE.model.exceptions.base.HPEAbortException;
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEAbortException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.interfaces.IComponent;
 import hPE.model.interfaces.IComputationConfiguration;
 import hPE.model.interfaces.IConfiguration;

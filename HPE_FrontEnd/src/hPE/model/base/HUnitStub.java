@@ -1,6 +1,6 @@
 package hPE.model.base;
 
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.interfaces.IUnit;
 
 import java.util.List;

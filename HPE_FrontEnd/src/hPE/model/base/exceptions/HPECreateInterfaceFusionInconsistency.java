@@ -1,4 +1,4 @@
-package hPE.model.exceptions.base;
+package hPE.model.base.exceptions;
 
 public class HPECreateInterfaceFusionInconsistency extends Exception {
 

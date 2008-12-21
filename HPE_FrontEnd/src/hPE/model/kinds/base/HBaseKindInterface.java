@@ -6,7 +6,7 @@ import hPE.model.base.HInterfaceSig;
 import hPE.model.base.HInterfaceSlice;
 import hPE.model.base.HUnitSlice;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.exceptions.base.HPENotFusableSlicesException;
+import hPE.model.base.exceptions.HPENotFusableSlicesException;
 
 import org.eclipse.draw2d.geometry.Point;
 

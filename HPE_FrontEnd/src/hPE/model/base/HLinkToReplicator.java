@@ -1,6 +1,6 @@
 package hPE.model.base;
 
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -6,7 +6,7 @@ import hPE.frontend.library.model.interfaces.ILComponentView;
 import hPE.frontend.library.model.interfaces.ILInterfaceCompositeView;
 import hPE.frontend.library.model.interfaces.ILPackage;
 import hPE.model.base.HComponent;
-import hPE.model.factory.base.HComponentFactoryImpl;
+import hPE.model.base.factory.HComponentFactoryImpl;
 import hPE.xml.component.ComponentType;
 import hPE.xml.component.InterfaceType;
 

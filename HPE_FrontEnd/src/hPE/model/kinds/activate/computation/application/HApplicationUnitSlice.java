@@ -6,7 +6,7 @@ import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.HInterfaceSlice;
 import hPE.model.base.IHUnit;
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationUnitSlice;
 
 

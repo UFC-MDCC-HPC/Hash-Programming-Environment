@@ -15,12 +15,12 @@ import hPE.model.base.HUnitSlice;
 import hPE.model.base.HUnitStub;
 import hPE.model.base.IBindingTarget;
 import hPE.model.base.IHUnit;
-import hPE.model.exceptions.base.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationUnit;
 import hPE.model.kinds.activate.computation.HComputationUnitSlice;
 import hPE.model.kinds.data.HDataUnit;
 import hPE.model.kinds.data.HDataUnitSlice;
 import hPE.model.base.HLinkToReplicator;
+import hPE.model.base.exceptions.HPEAbortException;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Dimension;

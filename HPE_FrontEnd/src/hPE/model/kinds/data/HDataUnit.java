@@ -9,7 +9,7 @@ import hPE.model.base.HUnitSlice;
 import hPE.model.base.HUnitStub;
 import hPE.model.base.IHPrimUnit;
 import hPE.model.base.IHUnit;
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 
 import org.eclipse.draw2d.geometry.Point;
 

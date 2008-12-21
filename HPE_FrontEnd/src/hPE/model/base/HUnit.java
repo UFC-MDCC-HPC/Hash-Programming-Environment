@@ -2,8 +2,8 @@ package hPE.model.base;
 
 import hPE.frontend.commands.base.BindingCreateCommand;
 import hPE.frontend.commands.base.LiftUnitCommand;
-import hPE.model.exceptions.base.HPEAbortException;
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEAbortException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.interfaces.IUnit;
 
 import java.util.ArrayList;

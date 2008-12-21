@@ -12,7 +12,7 @@ import hPE.model.base.HUnitSlice;
 import hPE.model.base.HUnitStub;
 import hPE.model.base.IHPrimUnit;
 import hPE.model.base.IHUnit;
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationUnitSlice;
 import hPE.model.kinds.activate.computation.application.HApplicationInterface;
 import hPE.model.kinds.qualifier.HQualifierUnit;

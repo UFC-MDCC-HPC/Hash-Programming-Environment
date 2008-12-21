@@ -1,6 +1,6 @@
 package hPE.model.base;
 
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.interfaces.IComponent;
 import java.util.Iterator;
 import hPE.model.interfaces.IConfiguration;

@@ -11,7 +11,7 @@ import hPE.model.base.HPrimUnitStub;
 import hPE.model.base.HReplicator;
 import hPE.model.base.IHPrimUnit;
 import hPE.model.base.IReplicatedElement;
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 
 
 public class SetReplicatorCommand extends Command {

@@ -4,7 +4,7 @@ import hPE.backend.cluster.synthesizer.HBEAbstractSynthesizer;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.interfaces.IPortType;
 import hPE.model.kinds.base.HHasPortsInterface;
 

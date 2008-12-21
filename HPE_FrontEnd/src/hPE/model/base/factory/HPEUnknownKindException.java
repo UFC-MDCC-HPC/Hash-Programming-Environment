@@ -1,4 +1,4 @@
-package hPE.model.factory.base;
+package hPE.model.base.factory;
 
 public class HPEUnknownKindException extends Exception {
 

@@ -13,7 +13,7 @@ import hPE.model.base.HLinkToReplicator;
 import hPE.model.base.HReplicator;
 import hPE.model.base.HUnit;
 import hPE.model.base.HUnitSlice;
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 
 
 public class LiftReplicatorCommand extends Command {

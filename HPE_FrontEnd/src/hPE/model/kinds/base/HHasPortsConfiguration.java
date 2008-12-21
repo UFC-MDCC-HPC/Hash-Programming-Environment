@@ -3,7 +3,7 @@ package hPE.model.kinds.base;
 import hPE.model.base.HInterface;
 import hPE.model.base.IBindingTarget;
 import hPE.model.base.IHUnit;
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.interfaces.IPackageLocation;
 
 import java.util.ArrayList;

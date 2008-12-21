@@ -3,7 +3,7 @@ package hPE.model.kinds.base;
 import hPE.model.base.HComponent;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.exceptions.base.HPENotFusableSlicesException;
+import hPE.model.base.exceptions.HPENotFusableSlicesException;
 
 import org.eclipse.draw2d.geometry.Point;
 

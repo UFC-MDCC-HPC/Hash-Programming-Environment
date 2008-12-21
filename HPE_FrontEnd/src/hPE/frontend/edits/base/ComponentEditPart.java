@@ -17,7 +17,7 @@ import hPE.model.base.HComponent;
 import hPE.model.base.HLinkToReplicator;
 import hPE.model.base.HReplicator;
 import hPE.model.base.IReplicatedElement;
-import hPE.model.exceptions.base.HPEInvalidNameException;
+import hPE.model.base.exceptions.HPEInvalidNameException;
 import hPE.model.interfaces.IComponent;
 
 import java.beans.PropertyChangeEvent;

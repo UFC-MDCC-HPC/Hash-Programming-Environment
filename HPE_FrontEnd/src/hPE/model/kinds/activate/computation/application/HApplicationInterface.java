@@ -10,7 +10,7 @@ import hPE.model.base.HComponent;
 import hPE.model.base.HInterface;
 import hPE.model.base.HInterfaceSig;
 import hPE.model.base.IHPrimUnit;
-import hPE.model.exceptions.base.HPEAbortException;
+import hPE.model.base.exceptions.HPEAbortException;
 import hPE.model.kinds.activate.computation.HComputationInterface;
 
 public class HApplicationInterface extends HComputationInterface {

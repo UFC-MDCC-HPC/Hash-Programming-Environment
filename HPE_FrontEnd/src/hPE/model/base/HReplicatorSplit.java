@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
-import hPE.model.exceptions.base.HPEUnmatchingEnumeratorsException;
+import hPE.model.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.model.interfaces.IConfiguration;
 import hPE.model.interfaces.IInterface;
 import hPE.model.interfaces.IReplicator;
