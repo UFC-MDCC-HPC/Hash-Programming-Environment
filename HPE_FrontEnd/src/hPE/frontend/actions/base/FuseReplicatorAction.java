@@ -12,10 +12,10 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.ui.IWorkbenchPart;
 
 import hPE.HPEPlugin;
-import hPE.frontend.commands.base.FuseReplicatorCommand;
-import hPE.model.base.HComponent;
-import hPE.model.base.HInterface;
-import hPE.model.base.HReplicator;
+import hPE.frontend.base.commands.FuseReplicatorCommand;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HReplicator;
 
 public class FuseReplicatorAction extends SelectionAction {
 

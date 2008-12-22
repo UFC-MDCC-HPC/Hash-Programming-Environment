@@ -12,11 +12,11 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.ui.IWorkbenchPart;
 
 import hPE.HPEPlugin;
-import hPE.frontend.commands.base.ChangeVariableNameCommand;
-import hPE.frontend.dialogs.base.DialogChangeVarName;
-import hPE.model.base.HComponent;
-import hPE.model.base.HInterface;
-import hPE.model.base.IHasColor;
+import hPE.frontend.base.commands.ChangeVariableNameCommand;
+import hPE.frontend.base.dialogs.DialogChangeVarName;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.IHasColor;
 
 public class ChangeVariableNameAction extends SelectionAction {
 

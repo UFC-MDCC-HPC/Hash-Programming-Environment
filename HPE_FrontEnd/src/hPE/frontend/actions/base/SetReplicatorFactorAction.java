@@ -13,11 +13,11 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
 import hPE.HPEPlugin;
-import hPE.frontend.commands.base.SetReplicatorFactorCommand;
-import hPE.frontend.commands.base.SplitReplicatorCommand;
-import hPE.model.base.HLinkToReplicator;
-import hPE.model.base.HReplicator;
-import hPE.model.base.IHUnit;
+import hPE.frontend.base.commands.SetReplicatorFactorCommand;
+import hPE.frontend.base.commands.SplitReplicatorCommand;
+import hPE.frontend.base.model.HLinkToReplicator;
+import hPE.frontend.base.model.HReplicator;
+import hPE.frontend.base.model.IHUnit;
 
 
 public class SetReplicatorFactorAction extends SelectionAction {

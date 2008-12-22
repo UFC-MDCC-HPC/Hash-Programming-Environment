@@ -1,9 +1,9 @@
 package hPE.frontend.actions.base;
 
 import hPE.HPEPlugin;
-import hPE.frontend.edits.policies.base.SetSliceNameEditPolicy;
-import hPE.model.base.HInterface;
-import hPE.model.base.HInterfaceSlice;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HInterfaceSlice;
+import hPE.frontend.base.policies.SetSliceNameEditPolicy;
 
 import java.util.List;
 

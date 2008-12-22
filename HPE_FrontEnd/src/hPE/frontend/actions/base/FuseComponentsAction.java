@@ -1,8 +1,8 @@
 package hPE.frontend.actions.base;
 
 import hPE.HPEPlugin;
-import hPE.frontend.commands.base.SupersedeCommand;
-import hPE.model.base.HComponent;
+import hPE.frontend.base.commands.SupersedeCommand;
+import hPE.frontend.base.model.HComponent;
 
 import java.util.ArrayList;
 import java.util.List;

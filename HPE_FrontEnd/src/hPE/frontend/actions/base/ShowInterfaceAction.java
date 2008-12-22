@@ -10,11 +10,11 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.frontend.edits.base.PortEditPart;
-import hPE.model.base.HBinding;
-import hPE.model.base.HPrimUnitStub;
-import hPE.model.base.IHPrimUnit;
-import hPE.model.base.IHasInterface;
+import hPE.frontend.base.edits.PortEditPart;
+import hPE.frontend.base.model.HBinding;
+import hPE.frontend.base.model.HPrimUnitStub;
+import hPE.frontend.base.model.IHPrimUnit;
+import hPE.frontend.base.model.IHasInterface;
 import hPE.HPEPlugin;
 
 public class ShowInterfaceAction extends SelectionAction {

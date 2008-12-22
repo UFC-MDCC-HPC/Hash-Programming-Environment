@@ -10,10 +10,10 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.base.HBinding;
-import hPE.model.base.HUnitSlice;
-import hPE.model.base.HUnitStub;
-import hPE.model.base.IBindingTarget;
+import hPE.frontend.base.model.HBinding;
+import hPE.frontend.base.model.HUnitSlice;
+import hPE.frontend.base.model.HUnitStub;
+import hPE.frontend.base.model.IBindingTarget;
 import hPE.HPEPlugin;
 
 public class UnbindAction extends SelectionAction {

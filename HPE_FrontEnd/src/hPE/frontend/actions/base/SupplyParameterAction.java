@@ -12,8 +12,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.frontend.edits.policies.base.SupplyParameterEditPolicy;
-import hPE.model.base.HComponent;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.policies.SupplyParameterEditPolicy;
 import hPE.HPEPlugin;
 
 public class SupplyParameterAction extends SelectionAction {

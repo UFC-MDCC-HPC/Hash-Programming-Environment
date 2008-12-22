@@ -10,7 +10,7 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.base.IHUnit;
+import hPE.frontend.base.model.IHUnit;
 import hPE.HPEPlugin;
 
 public class BuildInterfaceFromSlicesAction extends SelectionAction {

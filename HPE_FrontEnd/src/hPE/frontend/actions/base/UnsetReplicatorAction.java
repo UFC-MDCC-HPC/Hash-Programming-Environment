@@ -10,7 +10,7 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.base.HLinkToReplicator;
+import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.HPEPlugin;
 
 public class UnsetReplicatorAction extends SelectionAction {

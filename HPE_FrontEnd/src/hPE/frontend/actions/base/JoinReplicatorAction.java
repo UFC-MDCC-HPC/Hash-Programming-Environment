@@ -11,13 +11,13 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.base.HBinding;
-import hPE.model.base.HLinkToReplicator;
-import hPE.model.base.HPrimUnitStub;
-import hPE.model.base.IHUnit;
-import hPE.model.interfaces.IInterface;
 import hPE.HPEPlugin;
-import hPE.frontend.commands.base.JoinReplicatorCommand;
+import hPE.frontend.base.commands.JoinReplicatorCommand;
+import hPE.frontend.base.interfaces.IInterface;
+import hPE.frontend.base.model.HBinding;
+import hPE.frontend.base.model.HLinkToReplicator;
+import hPE.frontend.base.model.HPrimUnitStub;
+import hPE.frontend.base.model.IHUnit;
 
 
 public class JoinReplicatorAction extends SelectionAction {

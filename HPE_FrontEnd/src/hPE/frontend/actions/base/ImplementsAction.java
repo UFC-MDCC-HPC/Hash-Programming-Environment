@@ -10,9 +10,9 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.base.HComponent;
-import hPE.model.base.HUnitStub;
-import hPE.model.base.IHUnit;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HUnitStub;
+import hPE.frontend.base.model.IHUnit;
 import hPE.HPEPlugin;
 
 public class ImplementsAction extends SelectionAction {

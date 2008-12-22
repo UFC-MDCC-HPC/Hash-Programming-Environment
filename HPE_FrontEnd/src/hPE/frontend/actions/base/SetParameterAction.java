@@ -13,10 +13,10 @@ import org.eclipse.ui.IWorkbenchPart;
 import hPE.HPEPlugin;
 import org.eclipse.jface.dialogs.InputDialog;
 
-import hPE.frontend.edits.policies.base.SetParameterEditPolicy;
-import hPE.model.base.HComponent;
-import hPE.model.base.HInterface;
-import hPE.model.kinds.activate.computation.application.HApplicationComponent;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.policies.SetParameterEditPolicy;
+import hPE.frontend.kinds.application.model.HApplicationComponent;
 
 import java.util.Iterator;
 
