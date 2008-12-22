@@ -10,8 +10,8 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.kinds.activate.HActivateInterface;
-import hPE.model.protocol.kinds.activate.HProtocol;
+import hPE.frontend.kinds.activate.model.HActivateInterface;
+import hPE.frontend.kinds.activate.model.protocol.HProtocol;
 import hPE.HPEPlugin;
 
 public class EditProtocolAction extends SelectionAction {

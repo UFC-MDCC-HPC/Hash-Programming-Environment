@@ -11,11 +11,11 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.frontend.commands.kinds.activate.CombineActionsCommand;
-import hPE.model.protocol.kinds.activate.HAction;
-import hPE.model.protocol.kinds.activate.HCombinatorAction;
-import hPE.model.protocol.kinds.activate.HParAction;
-import hPE.model.protocol.kinds.activate.HSeqAction;
+import hPE.frontend.kinds.activate.commands.CombineActionsCommand;
+import hPE.frontend.kinds.activate.model.protocol.HAction;
+import hPE.frontend.kinds.activate.model.protocol.HCombinatorAction;
+import hPE.frontend.kinds.activate.model.protocol.HParAction;
+import hPE.frontend.kinds.activate.model.protocol.HSeqAction;
 import hPE.HPEPlugin;
 ;
 

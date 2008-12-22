@@ -10,7 +10,7 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.kinds.activate.computation.application.HApplicationComponent;
+import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.HPEPlugin;
 
 public class DeployApplicationAction extends SelectionAction {

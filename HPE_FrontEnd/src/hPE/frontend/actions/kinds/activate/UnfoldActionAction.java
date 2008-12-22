@@ -10,8 +10,8 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.model.protocol.kinds.activate.HAction;
-import hPE.model.protocol.kinds.activate.HDoAction;
+import hPE.frontend.kinds.activate.model.protocol.HAction;
+import hPE.frontend.kinds.activate.model.protocol.HDoAction;
 import hPE.HPEPlugin;
 
 public class UnfoldActionAction extends SelectionAction {
