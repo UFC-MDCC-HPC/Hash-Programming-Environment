@@ -52,7 +52,7 @@
             id="hPE.HPEResourceNavigator"
             name="Configuration Sessions"/>
       <view
-            class="hPE.frontend.library.HPEComponentLibraryView"
+            class="hPE.core.library.HPEComponentLibraryView"
             id="hPE.library.HPEComponentLibraryView"
             name="Repository"/>
    </extension>

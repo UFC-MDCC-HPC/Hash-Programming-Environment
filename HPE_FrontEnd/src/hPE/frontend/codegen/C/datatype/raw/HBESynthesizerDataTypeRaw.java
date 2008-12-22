@@ -3,7 +3,7 @@ package hPE.frontend.codegen.C.datatype.raw;
 import hPE.frontend.codegen.HBEAbstractFile;
 import hPE.frontend.codegen.HBESourceVersion;
 import hPE.frontend.codegen.C.datatype.HBESynthesizerDataType;
-import hPE.model.kinds.data.HDataInterface;
+import hPE.frontend.kinds.data.model.HDataInterface;
 
 public abstract class HBESynthesizerDataTypeRaw<SourceType extends HBEAbstractFile,
                                        VersionType extends HBESourceVersion<SourceType>,

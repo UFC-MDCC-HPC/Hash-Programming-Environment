@@ -1,6 +1,6 @@
 package hPE.frontend.codegen;
 
-import hPE.model.base.HInterface;
+import hPE.frontend.base.model.HInterface;
 
 
 public abstract class HBEAbstractSynthesizer<FileType    extends HBEAbstractFile, 

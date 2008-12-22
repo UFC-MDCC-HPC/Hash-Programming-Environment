@@ -1,7 +1,7 @@
 package hPE.frontend.codegen.C;
 
 import hPE.frontend.codegen.C.datatype.raw.HBESynthesizerDataTypeRaw;
-import hPE.model.kinds.data.HDataInterface;
+import hPE.frontend.kinds.data.model.HDataInterface;
 
 public class HBESynthesizerDataTypeRawForC
               extends HBESynthesizerDataTypeRaw<HBECSource,HBESourceVersionRawDataTypeForC,HDataInterface> {

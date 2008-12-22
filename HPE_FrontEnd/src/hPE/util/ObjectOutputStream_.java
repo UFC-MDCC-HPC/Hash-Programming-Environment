@@ -1,6 +1,6 @@
 package hPE.util;
 
-import hPE.model.base.HComponent;
+import hPE.frontend.base.model.HComponent;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

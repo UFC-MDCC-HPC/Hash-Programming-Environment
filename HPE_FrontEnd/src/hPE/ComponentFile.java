@@ -1,7 +1,7 @@
 package hPE;
 
-import hPE.frontend.library.model.classes.LComponentView;
-import hPE.frontend.library.model.interfaces.ILComponentView;
+import hPE.core.library.model.classes.LComponentView;
+import hPE.core.library.model.interfaces.ILComponentView;
 
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.internal.resources.Workspace;

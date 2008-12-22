@@ -1,9 +1,9 @@
 package hPE.frontend.codegen.C;
 
+import hPE.frontend.base.codegen.syntaxtree.*;
 import hPE.frontend.codegen.*;
-import hPE.frontend.codegen.base.syntaxtree.*;
-import hPE.model.kinds.activate.HActivateInterface;
-import hPE.model.kinds.activate.computation.application.HApplicationInterface;
+import hPE.frontend.kinds.activate.model.HActivateInterface;
+import hPE.frontend.kinds.application.model.HApplicationInterface;
 
 
 import java.util.Iterator;
@@ -22,7 +22,7 @@ public class HBESynthesizerForC extends HBEAbstractSynthesizer<HBECSource,HBESou
 	public HBESourceVersionForC synthesize(HActivateInterface i, String versionID) {
 
  
-	    hPE.frontend.codegen.base.syntaxtree.HBESyntaxTree p2p = new hPE.frontend.codegen.base.syntaxtree.HBESyntaxTree(i);
+	    hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree p2p = new hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree(i);
 	    this.p2p = p2p;
 		
 	    String programText = "";

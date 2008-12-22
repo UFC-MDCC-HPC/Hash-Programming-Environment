@@ -1,14 +1,14 @@
 package hPE;
 
-import hPE.frontend.factory.HComponentFactory;
-import hPE.model.base.HComponent;
-import hPE.model.kinds.activate.computation.HComputationComponent;
-import hPE.model.kinds.activate.computation.application.HApplicationComponent;
-import hPE.model.kinds.activate.synchronization.HSynchronizationComponent;
-import hPE.model.kinds.data.HDataComponent;
-import hPE.model.kinds.qualifier.HQualifierComponent;
-import hPE.model.kinds.qualifier.architecture.HArchitectureComponent;
-import hPE.model.kinds.qualifier.environment.HEnvironmentComponent;
+import hPE.frontend.base.factory.HComponentFactory;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.kinds.application.model.HApplicationComponent;
+import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
+import hPE.frontend.kinds.computation.model.HComputationComponent;
+import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
+import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
