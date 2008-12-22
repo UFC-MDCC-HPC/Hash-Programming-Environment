@@ -14,7 +14,7 @@ import hPE.util.Triple;
 
 
 
-public class HBESynthesizerCSharpMain extends hPE.frontend.activate.codegen.c_sharp.HBESynthesizerCSharpConcrete {
+public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpConcrete {
 
 	public HBESynthesizerCSharpMain() {
 		super();
