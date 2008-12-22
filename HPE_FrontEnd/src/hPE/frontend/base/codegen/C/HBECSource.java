@@ -1,6 +1,6 @@
-package hPE.frontend.codegen.C;
+package hPE.frontend.base.codegen.C;
 
-import hPE.frontend.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractFile;
 
 public abstract class HBECSource extends HBEAbstractFile {
 

@@ -1,4 +1,4 @@
-package hPE.frontend.codegen;
+package hPE.frontend.base.codegen;
 
 import hPE.frontend.base.model.HInterface;
 

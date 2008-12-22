@@ -2,6 +2,8 @@ package hPE.frontend.base.factory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceVersionCSharp;
@@ -25,8 +27,6 @@ import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
 import hPE.frontend.base.model.IPointsToReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
-import hPE.frontend.codegen.HBEAbstractFile;
-import hPE.frontend.codegen.HBESourceVersion;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HAltAction;

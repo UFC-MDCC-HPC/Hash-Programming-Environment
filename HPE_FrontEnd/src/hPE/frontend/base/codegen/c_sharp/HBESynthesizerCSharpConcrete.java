@@ -1,12 +1,12 @@
 package hPE.frontend.base.codegen.c_sharp;
 
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
-import hPE.frontend.codegen.HBEAbstractFile;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
-import hPE.frontend.codegen.HBESourceVersion;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;

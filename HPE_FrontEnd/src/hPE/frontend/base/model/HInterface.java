@@ -1,11 +1,11 @@
 package hPE.frontend.base.model;
 
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IInterface;
-import hPE.frontend.codegen.HBEAbstractFile;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
-import hPE.frontend.codegen.HBESourceVersion;
 import hPE.util.Pair;
 import hPE.util.Triple;
 

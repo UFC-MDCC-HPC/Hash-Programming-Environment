@@ -4,8 +4,8 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 
+import hPE.frontend.base.codegen.C.HBESynthesizerForC;
 import hPE.frontend.base.model.*;
-import hPE.frontend.codegen.C.HBESynthesizerForC;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HProtocol;
 

@@ -1,5 +1,6 @@
 package hPE.frontend.kinds.activate.model;
 
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComputationInterface;
@@ -12,7 +13,6 @@ import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HDoAction;
 import hPE.frontend.kinds.activate.model.protocol.HParAction;

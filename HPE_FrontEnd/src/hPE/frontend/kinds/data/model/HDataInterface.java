@@ -1,11 +1,11 @@
 package hPE.frontend.kinds.data.model;
 
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.interfaces.IPortType;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterfaceSig;
 import hPE.frontend.base.model.IHPrimUnit;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
 
 import java.util.List;

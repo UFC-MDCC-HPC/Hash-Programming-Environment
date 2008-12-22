@@ -1,6 +1,6 @@
 package hPE.frontend.base.codegen.c_sharp;
 
-import hPE.frontend.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractFile;
 
 public class HBESourceCSharpClassDefinition extends HBEAbstractFile {
 

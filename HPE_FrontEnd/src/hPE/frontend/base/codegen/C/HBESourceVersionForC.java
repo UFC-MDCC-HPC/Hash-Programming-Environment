@@ -1,6 +1,6 @@
-package hPE.frontend.codegen.C;
+package hPE.frontend.base.codegen.C;
 
-import hPE.frontend.codegen.HBESourceVersion;
+import hPE.frontend.base.codegen.HBESourceVersion;
 
 import java.util.List;
 import java.util.ArrayList;

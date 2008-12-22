@@ -1,4 +1,4 @@
-package hPE.frontend.codegen.C;
+package hPE.frontend.base.codegen.C;
 
 public class HBECSourceCode extends HBECSource {
 

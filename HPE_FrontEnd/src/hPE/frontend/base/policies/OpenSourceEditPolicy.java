@@ -17,13 +17,13 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 
 import hPE.HPEVersionEditor;
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.codegen.C.HBESynthesizerForC;
 import hPE.frontend.base.dialogs.HBEVersionControlDialog;
 import hPE.frontend.base.edits.InterfaceEditPart;
 import hPE.frontend.base.model.HInterface;
-import hPE.frontend.codegen.HBEAbstractFile;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
-import hPE.frontend.codegen.HBESourceVersion;
-import hPE.frontend.codegen.C.HBESynthesizerForC;
 
 import java.util.Iterator;
 import java.util.List;

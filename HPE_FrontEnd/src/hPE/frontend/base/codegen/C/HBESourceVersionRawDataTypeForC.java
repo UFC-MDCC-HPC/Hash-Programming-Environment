@@ -1,10 +1,10 @@
-package hPE.frontend.codegen.C;
+package hPE.frontend.base.codegen.C;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hPE.frontend.codegen.HBEAbstractFile;
-import hPE.frontend.codegen.HBESourceVersion;
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBESourceVersion;
 
 public class HBESourceVersionRawDataTypeForC extends HBESourceVersion<HBECSource> {
 

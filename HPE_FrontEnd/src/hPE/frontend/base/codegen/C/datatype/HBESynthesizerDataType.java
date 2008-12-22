@@ -1,11 +1,11 @@
-package hPE.frontend.codegen.C.datatype;
+package hPE.frontend.base.codegen.C.datatype;
 
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.codegen.C.HBECSource;
+import hPE.frontend.base.codegen.C.HBESourceVersionRawDataTypeForC;
 import hPE.frontend.base.model.HInterface;
-import hPE.frontend.codegen.HBEAbstractFile;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
-import hPE.frontend.codegen.HBESourceVersion;
-import hPE.frontend.codegen.C.HBECSource;
-import hPE.frontend.codegen.C.HBESourceVersionRawDataTypeForC;
 import hPE.frontend.kinds.data.model.HDataInterface;
 
 public abstract class HBESynthesizerDataType<SourceType extends HBEAbstractFile,

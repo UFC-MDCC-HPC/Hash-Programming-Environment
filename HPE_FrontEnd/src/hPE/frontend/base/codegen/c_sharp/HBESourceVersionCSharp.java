@@ -1,6 +1,6 @@
 package hPE.frontend.base.codegen.c_sharp;
 
-import hPE.frontend.codegen.HBESourceVersion;
+import hPE.frontend.base.codegen.HBESourceVersion;
 
 import java.util.List;
 import java.util.ArrayList;

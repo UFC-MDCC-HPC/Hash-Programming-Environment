@@ -1,7 +1,7 @@
-package hPE.frontend.codegen.C;
+package hPE.frontend.base.codegen.C;
 
+import hPE.frontend.base.codegen.*;
 import hPE.frontend.base.codegen.syntaxtree.*;
-import hPE.frontend.codegen.*;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.application.model.HApplicationInterface;
 

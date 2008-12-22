@@ -5,12 +5,12 @@ import java.util.List;
 import org.eclipse.draw2d.geometry.Point;
 
 import hPE.frontend.base.application.codegen.c_sharp.HBESynthesizerCSharpMain;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSig;
 import hPE.frontend.base.model.IHPrimUnit;
-import hPE.frontend.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.kinds.computation.model.HComputationInterface;
 
 public class HApplicationInterface extends HComputationInterface {
@@ -28,7 +28,7 @@ public class HApplicationInterface extends HComputationInterface {
 		l.clear();
 		HComponent c = (HComponent) this.getConfiguration().getTopConfiguration();
 		if (c.isAbstractConfiguration()) {
-			l.add(new hPE.frontend.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
+			l.add(new hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
 		}
 		else {
 			l.add(new HBESynthesizerCSharpMain());
