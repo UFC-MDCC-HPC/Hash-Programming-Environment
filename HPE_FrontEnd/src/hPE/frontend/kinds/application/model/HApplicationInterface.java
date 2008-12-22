@@ -28,7 +28,7 @@ public class HApplicationInterface extends HComputationInterface {
 		l.clear();
 		HComponent c = (HComponent) this.getConfiguration().getTopConfiguration();
 		if (c.isAbstractConfiguration()) {
-			l.add(new hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
+			l.add(new hPE.frontend.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
 		}
 		else {
 			l.add(new HBESynthesizerCSharpMain());

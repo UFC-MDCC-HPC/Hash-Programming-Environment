@@ -1,4 +1,4 @@
-package hPE.frontend.kinds.activate.codegen.c_sharp;
+package hPE.frontend.activate.codegen.c_sharp;
 
 import hPE.frontend.base.codegen.c_sharp.HBESourceVersionCSharp;
 import hPE.frontend.base.codegen.syntaxtree.HBECommandBlock;
@@ -25,16 +25,16 @@ import java.util.Map.Entry;
 
 
 
-public class HBESynthesizerCSharpAbstract extends hPE.frontend.base.codegen.c_sharp.HBESynthesizerCSharpAbstract {
+public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sharp.HBESynthesizerCSharpConcrete {
 
-	public HBESynthesizerCSharpAbstract() {
+	public HBESynthesizerCSharpConcrete() {
 		super();
 	}
 	    
 	private HBESyntaxTree p2p = null;
 	
 	
-	private void fillActivationSlices(HActivateInterface i, Set<Entry<HInterface,HBEProcedureCall>> activations) {
+	private void fillActivationSlices(HInterface i, Set<Entry<HInterface,HBEProcedureCall>> activations) {
 		List<HInterfaceSlice> slices = null;
 				
         for (Entry<HInterface,HBEProcedureCall> activation : activations) {
@@ -53,13 +53,30 @@ public class HBESynthesizerCSharpAbstract extends hPE.frontend.base.codegen.c_sh
 		}
 
 	}	
-	public HBESourceVersionCSharp synthesize(HActivateInterface i, String versionID) {
+	public HBESourceVersionCSharp synthesize(HInterface i, String versionID) {
 
 		
+	    hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree p2p = new hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree((HActivateInterface)i);
+	    this.p2p = p2p;
+		// fillActivationSlices(i,p2p.getActivations().entrySet());      
 		this.setIsSubclass(i, versionID);
+		boolean subClass = super.getIsSubclass();
+		if (!subClass) {
+			String programText = "";
+			
+        	// activate method signature
+			programText += "void " + ((HActivateInterface)i).getActivateMethodName() + "() { \n\n";			
+	        HBEProcedure procedure = p2p.getMainProcedure(); 		
+		    HBECommandBlock block = procedure.getMainBlock();		    
+		    programText += translateBlockToC(1,block);	
+			programText += "\n} // end activate method \n"; // end activate method
+		    
+    		super.addMethod(programText);
+		}
 		
         return super.synthesize(i,versionID);
-        		    
+        		
+	    
 	}
 
 	private String firstUpper(String s) {

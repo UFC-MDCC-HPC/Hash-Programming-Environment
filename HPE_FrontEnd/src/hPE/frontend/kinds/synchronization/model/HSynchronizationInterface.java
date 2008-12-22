@@ -26,10 +26,10 @@ public class HSynchronizationInterface extends HActivateInterface {
 		List<HBEAbstractSynthesizer> l = super.getSupportedSynthesizers();
 		HComponent c = (HComponent) this.getConfiguration();
 		if (c.isAbstractConfiguration()) {
-			l.add(new hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
+			l.add(new hPE.frontend.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
 		}
 		else {
-			l.add(new hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpConcrete());
+			l.add(new hPE.frontend.activate.codegen.c_sharp.HBESynthesizerCSharpConcrete());
 		}
 		return l;
 	}
