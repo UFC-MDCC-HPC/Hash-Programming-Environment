@@ -2129,8 +2129,8 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 	}
 
 	private HBESourceVersion createSourceVersion(String sourceType) {
-	    if (sourceType.equals(hPE.frontend.base.application.codegen.c_sharp.HBESourceVersionCSharp.getType()))	{
-		    return new hPE.frontend.base.application.codegen.c_sharp.HBESourceVersionCSharp();
+	    if (sourceType.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp.getType()))	{
+		    return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
 	    } else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
 	    	return  new HBESourceVersionCSharp();
 	    } else {

@@ -1,4 +1,4 @@
-package hPE.frontend.base.application.codegen.c_sharp;
+package hPE.frontend.kinds.application.codegen.c_sharp;
 
 
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
