@@ -1,6 +1,5 @@
 package hPE;
 
-import hPE.frontend.base.factory.HComponentFactory;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
@@ -9,6 +8,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.xml.factory.HComponentFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

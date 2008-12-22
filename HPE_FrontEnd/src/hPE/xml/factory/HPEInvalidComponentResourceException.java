@@ -1,4 +1,4 @@
-package hPE.frontend.base.factory;
+package hPE.xml.factory;
 
 public class HPEInvalidComponentResourceException extends Exception {
 

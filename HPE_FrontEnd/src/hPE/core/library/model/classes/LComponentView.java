@@ -5,10 +5,10 @@ import hPE.core.library.HPELocationEntry;
 import hPE.core.library.model.interfaces.ILComponentView;
 import hPE.core.library.model.interfaces.ILInterfaceCompositeView;
 import hPE.core.library.model.interfaces.ILPackage;
-import hPE.frontend.base.factory.HComponentFactoryImpl;
 import hPE.frontend.base.model.HComponent;
 import hPE.xml.component.ComponentType;
 import hPE.xml.component.InterfaceType;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
