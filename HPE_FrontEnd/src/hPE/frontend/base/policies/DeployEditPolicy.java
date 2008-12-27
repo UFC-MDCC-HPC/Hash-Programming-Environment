@@ -1,6 +1,8 @@
 package hPE.frontend.base.policies;
 
 import hPE.HPEVersionEditor;
+import hPE.frontend.base.dialogs.DeployComponentDialog;
+import hPE.frontend.base.dialogs.SetParameterDialog;
 import hPE.frontend.base.edits.ConfigurationEditPart;
 import hPE.frontend.base.model.HComponent;
 
@@ -60,58 +62,17 @@ public DeployCommand(ConfigurationEditPart part){
 
 public void execute(){
 
-/*	try {
-	
-	editor = (HPEVersionEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 
-	boolean isSubTyping = i.hasSuperType();
-	boolean isImplementing = !i.isAbstractInterface();
 	
-	boolean onlyEdit = isSubTyping || isImplementing;
+	// try {
 	
-	HBEVersionControlDialog dialog = new HBEVersionControlDialog(i, onlyEdit);
+		DeployComponentDialog dialog = new DeployComponentDialog(null, c);
 
-    dialog.setModal(true);
-    // dialog.pack();
-    dialog.setVisible(true);
-
-	switch	(dialog.getButtonPressed()) {
-	case 0: {
- 		 HBEAbstractSynthesizer synthesizer = dialog.getSeletectedSourceType();
-		 openExistingSourceCodeFile(synthesizer.synthesize(i,dialog.getVersionID()));
-		 dialog.dispose();
-		 break;   
-	}
-	case 1: {
-		HBESourceVersion<HBEAbstractFile> version = dialog.getSelectedSourceVersion();
+		dialog.setModal(true);
+	//	dialog.pack();
+		dialog.setVisible(true);
 		
-	    if (onlyEdit && (version.isInherit() || version.isImplement())) {
- 		     HBEAbstractSynthesizer synthesizer = dialog.getSeletectedSourceType();	    	
- 			 openExistingSourceCodeFile(synthesizer.synthesize(i,version.getVersionID()));
-	    } else {
-	    	openExistingSourceCodeFile(dialog.getSelectedSourceVersion());
-	    }
-		dialog.dispose();
-		break;
-	}
-	case 2: {
-		closeSourceCodeFile(dialog.getSelectedSourceVersion());
-		dialog.dispose();
-		break;
-	}
-		
-	}
-	
-	dialog.dispose();
-	
-	} catch (ClassCastException e) {
-		System.err.print(e.getMessage());
-	}
-*/
-	
-	try {
-	
-		String fileName = c.toString();
+	/*	String fileName = c.toString();
 		
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
 		
@@ -130,9 +91,9 @@ public void execute(){
 		
 		String s = backend.deployHashComponent(t);
 		
-	    s= s;
+	    s= s; */
 	
-	} catch (javax.xml.rpc.ServiceException e)	 {
+/* } catch (javax.xml.rpc.ServiceException e)	 {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (RemoteException e) {
@@ -144,7 +105,7 @@ public void execute(){
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	} */
 	
 	
 	
