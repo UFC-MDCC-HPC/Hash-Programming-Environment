@@ -1,28 +1,16 @@
 package hPE.frontend.base.dialogs;
 
-import hPE.frontend.backend.locations.Location;
-import hPE.frontend.backend.locations.LocationsFactory;
-import hPE.frontend.backend.locations.LocationsPackage;
-import hPE.frontend.backend.locations.Services;
-import hPE.frontend.backend.locations.impl.DocumentRootImpl;
-import hPE.frontend.backend.locations.util.LocationsAdapterFactory;
-import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
-import hPE.frontend.backend.locations.util.LocationsResourceImpl;
-import hPE.xml.component.ComponentFactory;
-import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.ComponentType;
-import hPE.frontend.backend.locations.DocumentRoot;
+import hPE.frontend.BackEndLocationList;
+import hPE.frontend.BackEndLocationList.BackEndLocationInfo;
 import hPE.frontend.base.model.HComponent;
-import hPE.xml.component.util.ComponentResourceFactoryImpl;
 
 import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -36,25 +24,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.xml.rpc.ServiceException;
 
-import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.tempuri.BackEnd_WSLocator;
 import org.tempuri.BackEnd_WSSoap;
-
-import java.awt.Dimension;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class DeployComponentDialog extends JDialog 
                                    implements	ActionListener, ListSelectionListener {
@@ -89,6 +64,13 @@ public class DeployComponentDialog extends JDialog
 		initialize();
 	}
 
+	public DeployComponentDialog(Frame owner) {
+		super(owner);
+		this.c = null;
+		initialize();
+		jButtonDeploy.setEnabled(false);
+	}
+
 	/**
 	 * This method initializes this
 	 * 
@@ -101,7 +83,16 @@ public class DeployComponentDialog extends JDialog
 		this.loadBackEndsInfo();
 	}
 
-	private Map<String,BackEndLocation> backendList = null;  //  @jve:decl-index=0:
+	private void loadBackEndsInfo() {
+		// TODO Auto-generated method stub
+		backendList = new HashMap<String,BackEndLocationInfo>();
+		BackEndLocationList.loadBackEndsInfo(backendList);		
+		Object[] backendArray = (Object[]) backendList.values().toArray();
+		getJListBackEnds().setListData(backendArray);
+		
+	}
+
+	private Map<String,BackEndLocationInfo> backendList = null;  //  @jve:decl-index=0:
 	private JButton jButtonSaveBackEndInfo = null;
 	
 	
@@ -153,72 +144,6 @@ public class DeployComponentDialog extends JDialog
 		return jContentPane;
 	}
 
-	private void loadBackEndsInfo() {
-
-		backendList = new HashMap<String,BackEndLocation>();
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put	(Resource.Factory.Registry.DEFAULT_EXTENSION, new LocationsResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI, LocationsPackage.eINSTANCE);
-    			
-		IPath path = /* ResourcesPlugin.getWorkspace().getRoot().getFullPath() */ new Path("h:\\runtime-workspace");
-		
-		URI uri = URI.createFileURI(fileSites);
-		
-		Resource resource = null;
-		
-		try {
-			
-			resource = resourceSet.getResource(uri, true);
-
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			if (e.getCause() instanceof FileNotFoundException) {
-				resource = saveData();
-			}			
-		} finally {
-			
-			LocationsResourceImpl cResource = (LocationsResourceImpl) resource;
-			EList rs = cResource.getContents();
-
-			Services services = ((DocumentRootImpl) rs.get(0)).getServices();
-			if (services.getBackend() != null) {
-				for (Location l : services.getBackend()) {
-					String name = l.getName();
-					String locURI = l.getUri();
-					String login = l.getLogin();
-					String password = l.getPassword();
-					BackEndLocation bel = new BackEndLocation(name, locURI, login, password);
-					backendList.put(name,bel);                	
-				}
-			}
-			
-			Object[] backendArray = (Object[]) backendList.values().toArray();
-			getJListBackEnds().setListData(backendArray);
-			
-		}
-	}
-
-	class BackEndLocation {
-		public String name = null;
-		public String locURI = null;
-		public String login = null;
-		public String password = null;
-
-		BackEndLocation() {}
-		
-		BackEndLocation(String name, String locURI, String login, String password) {
-		   this.name = name;
-		   this.locURI = locURI;
-		   this.login = login;
-		   this.password = password;
-		}
-		
-		public String toString() {
-			return name;
-		}
-		
-	}
 
 	/**
 	 * This method initializes jTextField_BackEndURI	
@@ -356,11 +281,11 @@ public class DeployComponentDialog extends JDialog
 		} else if (event.getSource() == jButtonAddBackEnd) {
 	        this.clearFields();
 		} else if (event.getSource() == jButtonSaveBackEndInfo) {
-			BackEndLocation b;
+			BackEndLocationInfo b;
 			if (backendList.containsKey(jTextFieldBackEndName.getText())) {
 			    b = backendList.get(jTextFieldBackEndName.getText());
 			} else {
-				b = new BackEndLocation();
+				b = new BackEndLocationInfo();
 			}
 		    b.name = jTextFieldBackEndName.getText();
 		    b.locURI = jTextField_BackEndURI.getText();
@@ -368,11 +293,11 @@ public class DeployComponentDialog extends JDialog
 		    b.password = jTextFieldBackEndPassword.getText();
 		    backendList.put(b.name, b);
 		    
-			this.saveData();
+		    BackEndLocationList.saveData(backendList);
 			this.loadBackEndsInfo();
 		} else if (event.getSource() == jButtonDeleteBackEnd) {
 		    backendList.remove(jTextFieldBackEndName.getText());	
-			this.saveData();
+		    BackEndLocationList.saveData(backendList);
 			this.loadBackEndsInfo();
 			this.clearFields();
 		}
@@ -413,63 +338,7 @@ public class DeployComponentDialog extends JDialog
 		}
 	}
 
-	private String fileSites = "BackEndLocations.xml";  //  @jve:decl-index=0:
-	
-	private Resource saveData() {
-		try {
-			// Create a resource set to hold the resources.
-			//
-			ResourceSet resourceSet = new ResourceSetImpl();
-			
-			// Register the appropriate resource factory to handle all file extentions.
-			//
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				(Resource.Factory.Registry.DEFAULT_EXTENSION, 
-				 new LocationsResourceFactoryImpl());
 
-			// Register the package to ensure it is available during loading.
-			//
-			resourceSet.getPackageRegistry().put
-				(LocationsPackage.eNS_URI, 
-				 LocationsPackage.eINSTANCE);
-	        
-			// If there are no arguments, emit an appropriate usage message.
-			//
-			URI uri = URI.createFileURI(fileSites);
-			Resource resource = resourceSet.createResource(uri);
-			
-			DocumentRoot dX = factory.createDocumentRoot();
-			Services cX = saveInfo(backendList.values());
-			dX.setServices(cX);
-		
-			resource.getContents().add(dX);
-			resource.save(null); 
-			
-			return resource;
-		} catch (IOException e) {
-			return null;
-		}
-		
-	}
-	
-	private Services saveInfo(Collection<BackEndLocation> values) {
-		Services s = factory.createServices();
-		
-		for (BackEndLocation b : values) {
-		   Location l = factory.createLocation();
-		   l.setName(b.name);
-		   l.setUri(b.locURI);
-		   if (b.login!=null && !b.login.equals("")) {
-			   l.setLogin(b.login);
-			   l.setPassword(b.password);
-		   }
-		   s.getBackend().add(l);
-		}
-		
-	    return s;	
-	}
-
-	private LocationsFactory factory = LocationsFactory.eINSTANCE;
 	private JButton jButtonDeleteBackEnd = null;
 
 	private void clearFields() {
@@ -486,7 +355,7 @@ public class DeployComponentDialog extends JDialog
 	public void valueChanged(ListSelectionEvent event) {
 		
 		if (event.getSource() == jListBackEnds) {
-			BackEndLocation bel = (BackEndLocation) jListBackEnds.getSelectedValue();
+			BackEndLocationInfo bel = (BackEndLocationInfo) jListBackEnds.getSelectedValue();
 			if (bel != null) {
 				jTextFieldBackEndName.setText(bel.name);
 				jTextField_BackEndURI.setText(bel.locURI);
