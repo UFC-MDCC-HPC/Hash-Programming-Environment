@@ -14,23 +14,23 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.HPEPlugin;
 
-public class DeployAction extends SelectionAction {
+public class BrowseAction extends SelectionAction {
 
 	private static final String
-		DEPLOY_REQUEST = "Deploy";
+		BROWSE_REQUEST = "Browse";
 	
 	public static final String
-        DEPLOY = "Deploy";
+        BROWSE = "Browse";
 
 	Request request;
 	boolean show;
 	
-	public DeployAction(IWorkbenchPart part) {
+	public BrowseAction(IWorkbenchPart part) {
 	   super(part);
-	   request = new Request(DEPLOY_REQUEST);
-	   setText(DEPLOY);
-	   setId(DEPLOY);
-	   setToolTipText(DEPLOY);
+	   request = new Request(BROWSE_REQUEST);
+	   setText(BROWSE);
+	   setId(BROWSE);
+	   setToolTipText(BROWSE);
 	   setImageDescriptor(
 	   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
 	   setHoverImageDescriptor(getImageDescriptor());		
@@ -64,7 +64,7 @@ public class DeployAction extends SelectionAction {
 	private Command getCommand() {
 		List editparts = getSelectedObjects();
 		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Deploy");//$NON-NLS-1$
+		cc.setDebugLabel(BROWSE);//$NON-NLS-1$
 		for (int i=0; i < editparts.size(); i++) {
 			EditPart part = (EditPart)editparts.get(i);
 			cc.add(part.getCommand(request));

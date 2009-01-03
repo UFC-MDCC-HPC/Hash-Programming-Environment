@@ -1,5 +1,14 @@
 package hPE.frontend;
 
+import hPE.backend.BackEnd_WSLocator;
+import hPE.backend.BackEnd_WSSoap;
+import hPE.frontend.backend.environment.DeployedComponentInfoType;
+import hPE.frontend.backend.environment.DeployedParameterType;
+import hPE.frontend.backend.environment.EnvironmentPackage;
+import hPE.frontend.backend.environment.EnvironmentType;
+import hPE.frontend.backend.environment.impl.EnvironmentFactoryImpl;
+import hPE.frontend.backend.environment.util.EnvironmentResourceFactoryImpl;
+import hPE.frontend.backend.environment.util.EnvironmentResourceImpl;
 import hPE.frontend.backend.locations.DocumentRoot;
 import hPE.frontend.backend.locations.Location;
 import hPE.frontend.backend.locations.LocationsFactory;
@@ -9,14 +18,31 @@ import hPE.frontend.backend.locations.impl.DocumentRootImpl;
 import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
 import hPE.frontend.backend.locations.util.LocationsResourceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+import javax.xml.rpc.ServiceException;
+
+import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceStatus;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -72,7 +98,7 @@ public class BackEndLocationList {
 		}
 	}
 
-	private static String fileSites = "BackEndLocations.xml";  //  @jve:decl-index=0:
+	private static String fileSites = "h:\\runtime-workspace\\BackEndLocations.xml";  //  @jve:decl-index=0:
 	
 	public static Resource saveData(Map<String,BackEndLocationInfo> backendList) {
 		try {
@@ -129,22 +155,233 @@ public class BackEndLocationList {
 	}
 
 	public static class DeployedComponentInfo {
+		public boolean isAbstract;
 		public String[] thePackage;
 		public String name;
+		public int cid;
+		public String locationURI;
 		public int kind;
 		public String[] enumerators;
 		public Integer[] enumValuation;
+		public DeployedComponentInfoParameter[] parameters;
+		
+		public String toString() {
+		  return name;
+		}
 		
 		public DeployedComponentInfo() {};
 		
+		public DeployedComponentInfo(boolean isAbstract, String[] thePackage, String name, int cid, String locationURI, int kind, String[] enumerators, DeployedComponentInfoParameter[] parameter) {
+			this.isAbstract = isAbstract;
+			this.thePackage = thePackage;
+			this.name = name;
+			this.cid = cid;
+			this.locationURI = locationURI;
+			this.kind = kind;
+			this.enumerators = enumerators;
+			this.parameters = parameter;
+		};
+		
 	}
 	
-	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b) {
+	public static class DeployedComponentInfoParameter {
+		public String parameter_id = null;
+		public int component_name = -1;
+		public DeployedComponentInfoParameter[] parameter = null;
+	}
 	
+	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b, String rootPath, Map<Integer, DeployedComponentInfo> dcListAbstract, Map<Integer, DeployedComponentInfo> dcListConcrete) {
+	
+		List<DeployedComponentInfo> l = new ArrayList<DeployedComponentInfo>();
 		
+		System.out.println("loadDeployedComponentsInfo for " + b.name);
+		
+/*		l.add(new DeployedComponentInfo(new String[] {b.name,"b","c"}, "uuu", 0,"uri1", 0, new String[] {"M","N"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","b"}, "vvv", 1,"uri2", 1, new String[] {"I"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","c"}, "xxx", 2,"uri3", 2, new String[] {"K","M","N"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"b","c"}, "yyy", 3,"uri4", 0, new String[] {"M","N"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","b"}, "rrr", 4,"uri5", 1, new String[] {"I"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","c"}, "sss", 5,"uri6", 2, new String[] {"K","M","N"}, new DeployedComponentInfoParameter[] {}));
+	*/
+		
+		try {
+
+			String urlWS = b.locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+		
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+			
+			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+			
+			byte[] data = backend.readEnvironment();
+			
+		    EnvironmentType env = loadEnvironment(data, rootPath);	
+						
+		    List<DeployedComponentInfoType> dcList = env.getDeployed();
+		    dcListAbstract.clear();
+		    dcListConcrete.clear();
+		    
+		    for (DeployedComponentInfoType dc : dcList) {
+		    	boolean isAbstract = dc.isAbstract();
+		    	String[] package_ = (String[]) dc.getPackage().toArray();
+		    	String name_ = dc.getName();
+		    	int id_ = dc.getCid();;
+		    	String uri_ = dc.getLocationURI();
+		    	int kind_ = loadKind(dc.getKind());
+		    	String[] enumerators_ = (String[]) dc.getEnumerator().toArray();
+		    	DeployedComponentInfoParameter[] parameters_ = loadParameters(dc.getParameter());
+		    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,uri_,kind_,enumerators_,parameters_); 
+		        l.add(dci);		    	
+		    	if (isAbstract) 
+		    		dcListAbstract.put(new Integer(id_), dci);
+		    	else
+		    		dcListConcrete.put(new Integer(id_), dci);
+		    }
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		
+		return l;
+	}
+		
+	private static Map<String, Integer> k = null;
+	
+	private static int loadKind(String kind) {
+		if (k == null) {
+		    k = new HashMap<String, Integer>();
+		    k.put("Application",0);
+		    k.put("Computation",1);
+		    k.put("Synchronizer",2);
+		    k.put("Data",3);
+		    k.put("Environment",4);
+		    k.put("Architecture",5);
+		    k.put("Qualifier",6);
+		} 
+				
+		return k.get(kind);
+	}
+
+	private static DeployedComponentInfoParameter[] loadParameters(
+			EList<DeployedParameterType> parameters) {
+		
+		DeployedComponentInfoParameter[] result = new DeployedComponentInfoParameter[parameters.size()];
+		
+		int i = 0;
+		for (DeployedParameterType parameter : parameters) {
+			DeployedComponentInfoParameter p = new DeployedComponentInfoParameter();
+			p.parameter_id = parameter.getParameterId(); 
+			p.component_name = parameter.isSetActual() ? parameter.getActual() : -1;
+			p.parameter = loadParameters(parameter.getParameter());
+			result[i++] = p;
+		}
+		
+		return result;
+	}
+
+	private static EnvironmentType loadEnvironment(byte[] data, String rootPath) {
+		// TODO Auto-generated method stub
+		try {				
+			InputStream is = new java.io.ByteArrayInputStream(data);
+	
+	    	String fileName = "envtemp.xml";	    	
+	    	
+	    	String sPath = rootPath.substring(0,rootPath.lastIndexOf(".")) + "/" + fileName;
+	    	
+	    	IPath path = new Path(sPath);	    	
+	    	
+	    	IWorkspaceRoot wroot = ResourcesPlugin.getWorkspace().getRoot();
+	    	IFile file = null;
+	    //	if (wroot.exists(path)) {
+	    	   file = wroot.getFile(path);
+	    //	} else {
+	    //	   file = null;
+	    //	}
+    		    							
+			createFile(file,is,getProgressMonitor());
+			
+			ResourceSet resourceSet = new ResourceSetImpl();
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put	(Resource.Factory.Registry.DEFAULT_EXTENSION, new EnvironmentResourceFactoryImpl());
+			resourceSet.getPackageRegistry().put(EnvironmentPackage.eNS_URI, EnvironmentPackage.eINSTANCE);
+	    						
+			URI uri = URI.createFileURI(sPath);
+			
+			Resource resource = null;
+			
+			resource = resourceSet.getResource(uri, true);
+			
+			EnvironmentResourceImpl cResource = (EnvironmentResourceImpl) resource;
+			EList rs = cResource.getContents();
+
+			EnvironmentType environment = ((hPE.frontend.backend.environment.impl.DocumentRootImpl) rs.get(0)).getEnvironment();
+			
+			
+			return environment;
+			
+		} catch (CoreException e) {
+        	JOptionPane.showMessageDialog(null,
+        		    "Error Creating File - ".concat(e.getMessage()),
+        		    "Error",
+        		    JOptionPane.ERROR_MESSAGE);
+		}
 		return null;
 	}
-		
+
+	/**
+	 * Creates a file resource given the file handle and contents.
+	 *
+	 * @param fileHandle the file handle to create a file resource with
+	 * @param contents the initial contents of the new file resource, or
+	 *   <code>null</code> if none (equivalent to an empty stream)
+	 * @param monitor the progress monitor to show visual progress with
+	 * @exception CoreException if the operation fails
+	 * @exception OperationCanceledException if the operation is canceled
+	 */
+	protected static void createFile(IFile fileHandle, InputStream contents,
+	        IProgressMonitor monitor) throws CoreException {
+	    if (contents == null)
+	        contents = new ByteArrayInputStream(new byte[0]);
+
+	    try {
+	        // Create a new file resource in the workspace
+//	        if (linkTargetPath != null)
+//	               fileHandle.createLink(linkTargetPath,
+//	                     IResource.ALLOW_MISSING_LOCAL, monitor);
+	 //       else {
+	            IPath path = fileHandle.getFullPath();
+	            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+	            int numSegments= path.segmentCount();
+	            if (numSegments > 2 && !root.getFolder(path.removeLastSegments(1)).exists()) {
+	                // If the direct parent of the path doesn't exist, try to create the
+	                // necessary directories.
+	                for (int i= numSegments - 2; i > 0; i--) {
+	                    IFolder folder = root.getFolder(path.removeLastSegments(i));
+	                    if (!folder.exists()) {
+	                        folder.create(false, true, monitor);
+	                    }
+	                }
+	            }
+	            fileHandle.create(contents, true, monitor);
+	        
+	    } catch (CoreException e) {
+	        // If the file already existed locally, just refresh to get contents
+	        if (e.getStatus().getCode() == IResourceStatus.PATH_OCCUPIED)
+	            fileHandle.refreshLocal(IResource.DEPTH_ZERO, null);
+	        else {
+	            throw e;
+	        }
+	    }
+
+	    if (monitor.isCanceled())
+	        throw new OperationCanceledException();
+	}
+
+	private static IProgressMonitor getProgressMonitor() {
+	    
+		return new org.eclipse.core.runtime.NullProgressMonitor();
+	}
 	
 	public static class BackEndLocationInfo {
 		public String name = null;

@@ -1,8 +1,12 @@
 package hPE.frontend.base.dialogs;
 
+import hPE.backend.BackEnd_WSLocator;
+import hPE.backend.BackEnd_WSSoap;
 import hPE.frontend.BackEndLocationList;
 import hPE.frontend.BackEndLocationList.BackEndLocationInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
+import hPE.frontend.BackEndLocationList.DeployedComponentInfoParameter;
+import hPE.frontend.base.model.HComponent;
 
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -12,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,18 +28,40 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.xml.rpc.ServiceException;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
+import javax.swing.BorderFactory;
+import javax.swing.JTree;
 
 public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JComboBox jComboBoxBackEnd = null;
-	private JTable jTableBrowse = null;
+	private JTable jTableBrowseAbstract = null;
+	private JTable jTableBrowseConcrete = null;
 	private JLabel jLabel = null;
 	private JButton jButtonRunApp = null;
 	private JPanel jPanel = null;
@@ -48,14 +76,21 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox jCheckBoxEnvironment = null;
 	private JCheckBox jCheckBoxArchitecture = null;
 	private JCheckBox jCheckBoxQualifier = null;
+	private HComponent c = null;
 	/**
 	 * @param owner
 	 */
+	public BrowseAndRunBackEndDialog(Frame owner, HComponent c) {
+		super(owner);
+		this.c = c;
+		initialize();
+	}
+
 	public BrowseAndRunBackEndDialog(Frame owner) {
 		super(owner);
 		initialize();
 	}
-
+	
 	CheckBoxListener myListener = null;
 	
 	private Map<String,BackEndLocationInfo> backendList = null;  //  @jve:decl-index=0:
@@ -70,7 +105,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		myListener = new CheckBoxListener();
 		dcList = new ArrayList<DeployedComponentInfo>();
 		
-		this.setSize(539, 306);
+		this.setSize(1029, 306);
 		this.setTitle("Browse Back-End");
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
@@ -78,15 +113,49 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		
 	}
 
+	private static String EDIT_LABEL = "manage ...";
+	
 	private void loadBackEndsInfo() {
 		// TODO Auto-generated method stub
 		backendList = new HashMap<String,BackEndLocationInfo>();
 		BackEndLocationList.loadBackEndsInfo(backendList);		
+		
+		getJComboBoxBackEnd().addItem(new BackEndLocationInfo("", null, null, null)); 
 		for (BackEndLocationInfo b : backendList.values()) {
 			getJComboBoxBackEnd().addItem(b);
-		}		
+		}			
+		getJComboBoxBackEnd().addItem(new BackEndLocationInfo(EDIT_LABEL, null, null, null)); 
+		
 		if (backendList.size() > 0) 
 			getJComboBoxBackEnd().setSelectedIndex(0);
+
+		jComboBoxBackEnd.addActionListener(
+				new ActionListener() {
+
+					public void actionPerformed(ActionEvent e) {
+						JComboBox jComboBoxBackEnd = (JComboBox) e.getSource();
+						BackEndLocationInfo b = (BackEndLocationInfo) jComboBoxBackEnd.getSelectedItem();							
+						if (b.name.equals(EDIT_LABEL)) {
+							dcList = new ArrayList<DeployedComponentInfo>();
+						    browseUpdate();
+							DeployComponentDialog dialog = new DeployComponentDialog(null);
+							dialog.setModal(true);
+							dialog.setVisible(true);				
+							jButtonDeploy.setEnabled(false);
+						} else if (b.name.equals("")) {
+							dcList = new ArrayList<DeployedComponentInfo>();
+						    browseUpdate();
+							jButtonDeploy.setEnabled(false);
+						}
+						else {
+							dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocation(),dcListAbstract,dcListConcrete);							
+						    browseUpdate();
+							jButtonDeploy.setEnabled(c != null);
+						}
+					}
+
+				}
+		);
 	}
 	
 	/**
@@ -96,8 +165,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			jLabel1Parameters = new JLabel();
+			jLabel1Parameters.setBounds(new Rectangle(685, 70, 326, 16));
+			jLabel1Parameters.setText("Parameters");
 			jLabel1 = new JLabel();
-			jLabel1.setBounds(new Rectangle(125, 52, 401, 16));
+			jLabel1.setBounds(new Rectangle(125, 50, 556, 16));
 			jLabel1.setText("Deployed Components");
 			jLabel = new JLabel();
 			jLabel.setBounds(new Rectangle(125, 10, 201, 16));
@@ -105,7 +177,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
 			jContentPane.add(getJComboBoxBackEnd(), null);
-			jContentPane.add(getJTableBrowse(), null);
+			jContentPane.add(getJTableBrowseAbstract(), null);
+			jContentPane.add(getJTableBrowseConcrete(), null);
+		//	jContentPane.add(getJScrollPane(), null);
 			jContentPane.add(jLabel, null);
 			jContentPane.add(getJButtonRunApp(), null);
 			jContentPane.add(getJPanel(), null);
@@ -118,17 +192,29 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jContentPane.add(getJCheckBoxArchitecture(), null);
 			jContentPane.add(getJCheckBoxQualifier(), null);
 			jContentPane.add(getJButtonClose(), null);
+			jContentPane.add(getJButtonDeploy(), null);
+			jContentPane.add(getJTabbedPane(), null);
+			jContentPane.add(getJScrollPaneAbstract(), null);
+			jContentPane.add(getJScrollPaneParameter(), null);
+			jContentPane.add(getJScrollPaneBrowse(), null);
+			jContentPane.add(jLabel1Parameters, null);
 		}
 		return jContentPane;
 	}
 
-	private List<DeployedComponentInfo> dcList;
+	private List<DeployedComponentInfo> dcList;  //  @jve:decl-index=0:
 	
+	private Map<Integer,DeployedComponentInfo> dcListAbstract = new HashMap<Integer,DeployedComponentInfo>();  //  @jve:decl-index=0:
+	private Map<Integer,DeployedComponentInfo> dcListConcrete = new HashMap<Integer,DeployedComponentInfo>();  //  @jve:decl-index=0:
+
 	private static int BY_PACKAGE = 0;
 	private static int BY_NAME = 1;
 	private static int BY_KIND = 2;
 	
-	private int[] grouping = {BY_PACKAGE,BY_NAME,BY_KIND};
+	private static String groupingStr[] = {"package","name","kind","enumerators"};  //  @jve:decl-index=0:
+	
+	private int[] grouping = {BY_PACKAGE, BY_NAME, BY_KIND};
+	private int[] invgrouping = new int[grouping.length];
 	
 	static private int APPLICATION = 0;
 	static private int COMPUTATION = 1;
@@ -139,8 +225,18 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	static private int QUALIFIER = 6;
 
 	boolean[] kinds = {true, false, false, false, false, false, false};
+	
+	String[] kindsStr = {"application", "computation", "synchronizer", "data structure", "environment", "architecture", "qualifier"};
+	
 	private JButton jButtonClose = null;
-
+	// private JScrollPane jScrollPane = null;
+	private JButton jButtonDeploy = null;
+	private JTabbedPane jTabbedPane = null;
+	private JScrollPane jScrollPaneAbstract = null;
+	private JScrollPane jScrollPaneBrowse = null;
+	private JScrollPane jScrollPaneParameter = null;
+	private JTree jTreeParameter = null;
+	private JLabel jLabel1Parameters = null;
 	/**
 	 * This method initializes jComboBoxBackEnd	
 	 * 	
@@ -150,39 +246,107 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jComboBoxBackEnd == null) {
 			jComboBoxBackEnd = new JComboBox();
 			jComboBoxBackEnd.setBounds(new Rectangle(125, 25, 201, 21));
-			jComboBoxBackEnd.addActionListener(
-					new ActionListener() {
-
-						public void actionPerformed(ActionEvent e) {
-							JComboBox jComboBoxBackEnd = (JComboBox) e.getSource();
-							BackEndLocationInfo b = (BackEndLocationInfo) jComboBoxBackEnd.getSelectedItem();							
-							dcList = BackEndLocationList.loadDeployedComponentsInfo(b);
-							browseUpdate();
-						}
-
-					}
-			);
 		}
 		return jComboBoxBackEnd;
 	}
 
 	
+	private class BrowseSelectionListener implements ListSelectionListener {
+
+		private JTable table = null;
+		
+		public BrowseSelectionListener(JTable table) {
+			this.table = table;
+		}
+		
+		@Override
+		public void valueChanged(ListSelectionEvent event) {
+			
+			if( event.getSource() == table.getSelectionModel()&& event.getFirstIndex() >= 0 ) {			
+				TableModel tm = (TableModel) table.getModel();
+				if (table.getSelectedRow() >= 0) {
+				    Object b = tm.getValueAt(table.getSelectedRow(), invgrouping[BY_NAME]);
+				    if (b instanceof DeployedComponentInfo) {
+				    	DeployedComponentInfo deployed = (DeployedComponentInfo) b;
+				    	
+						DefaultMutableTreeNode nodeRoot = new DefaultMutableTreeNode(deployed.name);				    	
+						
+						if (deployed.parameters.length > 0) {
+							for (DefaultMutableTreeNode node : loadParameters(deployed.parameters)) {
+	                           nodeRoot.add(node);							
+							}
+						}
+						
+						DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
+						
+						model.setRoot(nodeRoot);
+				    } else {
+						DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
+						model.setRoot(null);
+				    }
+				} else {
+					DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
+					model.setRoot(null);
+				}
+				
+			}
+			
+		}
+
+		private DefaultMutableTreeNode[] loadParameters(DeployedComponentInfoParameter[] parameters) {
+			DefaultMutableTreeNode[] node = new DefaultMutableTreeNode[parameters.length];
+			if (parameters.length > 0) {
+				int i = 0;
+				for (DeployedComponentInfoParameter d : parameters) {
+						String parameterId = d.parameter_id;
+						String actual = dcListAbstract.get(d.component_name).name;
+						node[i] = new DefaultMutableTreeNode(parameterId + " = " + actual);						
+						for (DefaultMutableTreeNode nodeSon: loadParameters(d.parameter))  					
+							node[i].add(nodeSon);
+						i++;
+				}
+			}
+			return node;
+		}
+				
+	}
+	
+
 	/**
-	 * This method initializes jTableBrowse	
+	 * This method initializes jTableBrowseAbstract	
 	 * 	
 	 * @return javax.swing.JTable	
 	 */
-	private JTable getJTableBrowse() {
-		if (jTableBrowse == null) {
-			jTableBrowse = new JTable();
-			jTableBrowse.setBounds(new Rectangle(125, 70, 401, 191));
-			jTableBrowse.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			jTableBrowse.setName("");
+	private JTable getJTableBrowseAbstract() {
+		if (jTableBrowseAbstract == null) {
+			jTableBrowseAbstract = new JTable();
+			jTableBrowseAbstract.setBounds(new Rectangle(125, 70, 401, 191));
+			jTableBrowseAbstract.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			jTableBrowseAbstract.setName("");
+			ListSelectionModel selectionModel = jTableBrowseAbstract.getSelectionModel();
+			selectionModel.addListSelectionListener(new BrowseSelectionListener(jTableBrowseAbstract));
 			
 		}
-		return jTableBrowse;
+		return jTableBrowseAbstract;
 	}
 
+	/**
+	 * This method initializes jTableBrowseAbstract	
+	 * 	
+	 * @return javax.swing.JTable	
+	 */
+	private JTable getJTableBrowseConcrete() {
+		if (jTableBrowseConcrete == null) {
+			jTableBrowseConcrete = new JTable();
+			jTableBrowseConcrete.setBounds(new Rectangle(0, 0, 0, 0));
+			jTableBrowseConcrete.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			jTableBrowseConcrete.setName("");
+			ListSelectionModel selectionModel = jTableBrowseConcrete.getSelectionModel();
+			selectionModel.addListSelectionListener(new BrowseSelectionListener(jTableBrowseConcrete));
+			
+		}
+		return jTableBrowseConcrete;
+	}
 		
 	/**
 	 * This method initializes jButtonRunApp	
@@ -192,7 +356,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JButton getJButtonRunApp() {
 		if (jButtonRunApp == null) {
 			jButtonRunApp = new JButton();
-			jButtonRunApp.setBounds(new Rectangle(330, 20, 126, 26));
+			jButtonRunApp.setBounds(new Rectangle(730, 20, 126, 26));
 			jButtonRunApp.setText("Run Application");
 			jButtonRunApp.addActionListener(this);
 }
@@ -206,33 +370,21 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	 */
 	private JPanel getJPanel() {
 		if (jPanel == null) {
-			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
-			gridBagConstraints21.gridx = 1;
-			gridBagConstraints21.anchor = GridBagConstraints.WEST;
-			gridBagConstraints21.gridy = 2;
-			gridBagConstraints21.gridx = 1;
+/*			gridBagConstraints21.gridx = 1;
 			gridBagConstraints21.anchor = GridBagConstraints.WEST;
 			gridBagConstraints21.gridy = 1;
-			GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
 			gridBagConstraints9.gridx = 1;
 			gridBagConstraints9.anchor = GridBagConstraints.WEST;
 			gridBagConstraints9.gridy = 0;
-			gridBagConstraints9.gridx = 1;
-			gridBagConstraints9.anchor = GridBagConstraints.WEST;
-			gridBagConstraints9.gridy = 0;
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 1;
 			gridBagConstraints.anchor = GridBagConstraints.WEST;
-			gridBagConstraints.gridy = 3;
-			gridBagConstraints.gridx = 1;
-			gridBagConstraints.anchor = GridBagConstraints.WEST;
-			gridBagConstraints.gridy = 2;
+			gridBagConstraints.gridy = 2;*/
 			jPanel = new JPanel();
-			jPanel.setLayout(new GridBagLayout());
-			jPanel.setBounds(new Rectangle(10, 10, 92, 72));
-			jPanel.add(getJRadioButtonByKind(), gridBagConstraints);
-			jPanel.add(getJRadioButtonByPackage(), gridBagConstraints9);
-			jPanel.add(getJRadioButtonByName(), gridBagConstraints21);
+			jPanel.setLayout(null);
+			jPanel.setBounds(new Rectangle(335, 25, 306, 24));
+			jPanel.add(getJRadioButtonByKind(), null);
+			jPanel.add(getJRadioButtonByPackage(), null);
+			jPanel.add(getJRadioButtonByName(), null);
 		}
 		return jPanel;
 	}
@@ -246,6 +398,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jRadioButtonByPackage == null) {
 			jRadioButtonByPackage = new JRadioButton();
 			jRadioButtonByPackage.setText("By Package");
+			jRadioButtonByPackage.setBounds(new Rectangle(36, 0, 92, 24));
 			jRadioButtonByPackage.setSelected(true);
 			jRadioButtonByPackage.addActionListener(this);
 		}
@@ -262,6 +415,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jRadioButtonByName = new JRadioButton();
 			jRadioButtonByName.setText("By Name");
 			jRadioButtonByName.setHorizontalTextPosition(SwingConstants.RIGHT);
+			jRadioButtonByName.setBounds(new Rectangle(128, 0, 75, 24));
 			jRadioButtonByName.setHorizontalAlignment(SwingConstants.LEFT);
 			jRadioButtonByName.addActionListener(this);
 		}
@@ -277,6 +431,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jRadioButtonByKind == null) {
 			jRadioButtonByKind = new JRadioButton();
 			jRadioButtonByKind.setText("By Kind");
+			jRadioButtonByKind.setBounds(new Rectangle(203, 0, 67, 24));
 			jRadioButtonByKind.addActionListener(this);
 		}
 		return jRadioButtonByKind;
@@ -290,7 +445,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxApplication() {
 		if (jCheckBoxApplication == null) {
 			jCheckBoxApplication = new JCheckBox();
-			jCheckBoxApplication.setBounds(new Rectangle(10, 85, 111, 21));
+			jCheckBoxApplication.setBounds(new Rectangle(10, 25, 111, 21));
 			jCheckBoxApplication.setText("Application");
 			jCheckBoxApplication.addItemListener(myListener);
 			jCheckBoxApplication.setSelected(true);
@@ -306,7 +461,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxComputation() {
 		if (jCheckBoxComputation == null) {
 			jCheckBoxComputation = new JCheckBox();
-			jCheckBoxComputation.setBounds(new Rectangle(10, 110, 111, 24));
+			jCheckBoxComputation.setBounds(new Rectangle(10, 60, 111, 24));
 			jCheckBoxComputation.setText("Computation");
 			jCheckBoxComputation.addItemListener(myListener);
 		}
@@ -321,7 +476,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxSynchronizer() {
 		if (jCheckBoxSynchronizer == null) {
 			jCheckBoxSynchronizer = new JCheckBox();
-			jCheckBoxSynchronizer.setBounds(new Rectangle(10, 135, 116, 24));
+			jCheckBoxSynchronizer.setBounds(new Rectangle(10, 95, 111, 24));
 			jCheckBoxSynchronizer.setText("Synchronizer");
 			jCheckBoxSynchronizer.addItemListener(myListener);
 		}
@@ -336,7 +491,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxData() {
 		if (jCheckBoxData == null) {
 			jCheckBoxData = new JCheckBox();
-			jCheckBoxData.setBounds(new Rectangle(10, 160, 111, 24));
+			jCheckBoxData.setBounds(new Rectangle(10, 130, 111, 24));
 			jCheckBoxData.setText("Data Structure");
 			jCheckBoxData.addItemListener(myListener);
 		}
@@ -351,7 +506,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxEnvironment() {
 		if (jCheckBoxEnvironment == null) {
 			jCheckBoxEnvironment = new JCheckBox();
-			jCheckBoxEnvironment.setBounds(new Rectangle(10, 185, 111, 24));
+			jCheckBoxEnvironment.setBounds(new Rectangle(10, 165, 111, 24));
 			jCheckBoxEnvironment.setText("Environment");
 			jCheckBoxEnvironment.addItemListener(myListener);
 		}
@@ -366,7 +521,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxArchitecture() {
 		if (jCheckBoxArchitecture == null) {
 			jCheckBoxArchitecture = new JCheckBox();
-			jCheckBoxArchitecture.setBounds(new Rectangle(10, 210, 111, 24));
+			jCheckBoxArchitecture.setBounds(new Rectangle(10, 200, 111, 24));
 			jCheckBoxArchitecture.setText("Architecture");
 			jCheckBoxArchitecture.addItemListener(myListener);
 		}
@@ -395,26 +550,74 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		
 		if (source == jButtonRunApp) {
 			runSelectedApp();
+		} else if (source == jButtonDeploy) {
+			this.deploy();
 		} else if (source == jButtonClose) {
 			this.setVisible(false);
 		} else if (source == jRadioButtonByPackage) {			
+			jRadioButtonByKind.setSelected(false);
+			jRadioButtonByName.setSelected(false);
 			reorderGrouping(BY_PACKAGE);			
 			browseUpdate();
 		} else if (source == jRadioButtonByName) {
+			jRadioButtonByPackage.setSelected(false);
+			jRadioButtonByKind.setSelected(false);
 			reorderGrouping(BY_NAME);
 			browseUpdate();
 		} else if (source == jRadioButtonByKind) {
+			jRadioButtonByPackage.setSelected(false);
+			jRadioButtonByName.setSelected(false);
             reorderGrouping(BY_KIND);
 			browseUpdate();
 		}
 		
 	}
 
+	private void browseUpdate() {
+		browseAbstractUpdate();
+		browseConcreteUpdate();
+	}
+
+	private void deploy() {
+
+		try {
+			String fileName = c.toString();
+		
+			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+			
+			InputStream is;
+			is = file.getContents();
+		
+			byte[] t = new byte[is.available()];
+			
+			is.read(t);
+			
+			String urlWS = ((BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem()).locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+		
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+			
+			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+			
+			String result = backend.deployHashComponent(t);
+			
+			JOptionPane.showMessageDialog(rootPane, result);
+			
+			this.browseUpdate();
+			
+		} catch (CoreException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+	}
 	
     private void reorderGrouping(int grouping_type) {
 	    int j = 1;
 	    int[] grouping_ = new int[3];
-		grouping_[0] = BY_PACKAGE;
+		grouping_[0] = grouping_type;
 		for (int i=0;i<3;i++) {
 			if (grouping[i] != grouping_type) {
 				grouping_[j++] = grouping[i];
@@ -429,9 +632,141 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	}
 
 	// based on current kinds and grouping ...
-	private void browseUpdate() {
-		// TODO Auto-generated method stub
+	private void browseAbstractUpdate() {
 		
+		String[] columnNames = new String[4];
+	    Object[][] data = new Object[dcList.size()][4];
+	    DeployedComponentInfo[] dataItem = new DeployedComponentInfo[dcList.size()];
+	    
+	    for (int i=0; i<3; i++)
+	        columnNames[i] = groupingStr[grouping[i]];
+	    columnNames[3] = groupingStr[3]; 
+	    
+	   
+	    for (int i=0;i<grouping.length;i++) {
+	    	invgrouping[grouping[i]] = i;
+	    }
+	    
+	    int j=0;
+	    for (DeployedComponentInfo dci : dcList) {
+	    	if (kinds[dci.kind] && dci.isAbstract){
+		    	data[j][invgrouping[0]] = buildName(dci.thePackage,".");
+		    	data[j][invgrouping[1]] = dci;
+		    	data[j][invgrouping[2]] = kindsStr[dci.kind];
+		    	data[j][3] = buildName(dci.enumerators,", ");	    	
+		    	j++;
+	    	} 	  
+	    }
+	    
+	    for (;j<dcList.size(); j++) {
+	    	data[j][invgrouping[0]] = "";
+	    	data[j][invgrouping[1]] = "";
+	    	data[j][invgrouping[2]] = "";
+	    	data[j][3] = "";
+	    }
+	    
+	    data = sort(data,invgrouping);
+	    
+	    BrowseTableModel btmAbs = new BrowseTableModel(columnNames,data);
+		jTableBrowseAbstract.setModel(btmAbs);
+		
+	}
+
+	// based on current kinds and grouping ...
+	private void browseConcreteUpdate() {
+		
+		String[] columnNames = new String[4];
+	    Object[][] data = new Object[dcList.size()][4];
+	    
+	    for (int i=0; i<3; i++)
+	        columnNames[i] = groupingStr[grouping[i]];
+	    columnNames[3] = groupingStr[3]; 
+	    
+	    int[] invgrouping = new int[grouping.length];
+	    for (int i=0;i<grouping.length;i++) {
+	    	invgrouping[grouping[i]] = i;
+	    }
+	    
+	    int j=0;
+	    for (DeployedComponentInfo dci : dcList) {
+	    	if (kinds[dci.kind] && !dci.isAbstract){	
+		    	data[j][invgrouping[0]] = buildName(dci.thePackage,".");
+		    	data[j][invgrouping[1]] = dci;
+		    	data[j][invgrouping[2]] = kindsStr[dci.kind];
+		    	data[j][3] = buildName(dci.enumerators,", ");	    	
+		    	j++;
+	    	} 	  
+	    }
+	    
+	    for (;j<dcList.size(); j++) {
+	    	data[j][invgrouping[0]] = "";
+	    	data[j][invgrouping[1]] = "";
+	    	data[j][invgrouping[2]] = "";
+	    	data[j][3] = "";
+	    }
+	    
+	    data = sort(data,invgrouping);
+	    
+	    BrowseTableModel btmCon = new BrowseTableModel(columnNames,data);
+		jTableBrowseConcrete.setModel(btmCon);
+		
+	}
+
+	
+	private Object[][] sort(Object[][] data, int[] invgrouping) {
+
+		if (data.length > 1) {
+		
+			Object[] pivot = data[0];
+			List<Object[]> ll = new ArrayList<Object[]>();
+			List<Object[]> lu = new ArrayList<Object[]>();
+			for (int i=1; i<data.length; i++) {
+			  	if ( (!data[i][0].equals("")) && 
+			  		(data[i][0].toString().compareTo(pivot[0].toString()) < 0 || 
+		  		    (data[i][0].toString().equals(pivot[0].toString()) && data[i][1].toString().compareTo(pivot[1].toString()) < 0) || 
+		  		    (data[i][0].toString().equals(pivot[0].toString()) && data[i][1].toString().equals(pivot[1].toString()) && data[i][2].toString().compareTo(pivot[2].toString()) < 0))) {
+			  	        ll.add(data[i]);
+			  	} else {
+			  		lu.add(data[i]);
+			  	}
+			}
+			
+			Object[][] arrl = new Object[ll.size()][4];
+			Object[][] arru = new Object[lu.size()][4];
+			
+			int k=0;
+			for (Object[] ss : ll) {
+				arrl[k++] = ss;
+			}
+			
+			k=0;
+			for (Object[] ss : lu) {
+				arru[k++] = ss;
+			}
+
+			arrl = sort(arrl, invgrouping);
+			arru = sort(arru, invgrouping);
+						
+			Object[][] arr = new Object[arrl.length + arru.length + 1][4]; 
+			System.arraycopy(arrl,0,arr,0,arrl.length);
+			arr[arrl.length] = pivot;
+			System.arraycopy(arru,0,arr,arrl.length+1,arru.length);
+			
+			return arr;
+		
+		} else {
+		   return data;
+		}
+	}
+		
+
+	private String buildName(String[] strs, String sep) {
+        String s = strs.length > 0 ? strs[0] : "";
+		for (int i=1; i<strs.length; i++) {
+			s += (sep + strs[i]);
+		}
+        
+		return s;
 	}
 
 	//Listens to the check boxes events
@@ -441,25 +776,25 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
         	 Object source = event.getSource();
 			 if (source == jCheckBoxApplication) {
 				 kinds[APPLICATION] = event.getStateChange() == ItemEvent.SELECTED;
+				 browseUpdate();
 			 } else if (source == jCheckBoxComputation) {
 				 kinds[COMPUTATION] = event.getStateChange() == ItemEvent.SELECTED;
+				 browseUpdate();
 			 } else if (source == jCheckBoxSynchronizer) {
 				 kinds[SYNCHRONIZER] = event.getStateChange() == ItemEvent.SELECTED;
+				 browseUpdate();
 			 } else if (source == jCheckBoxData) {
 				 kinds[DATASTRUCTURE] = event.getStateChange() == ItemEvent.SELECTED;				 
+				 browseUpdate();
 			 } else if (source == jCheckBoxEnvironment) {
 				 kinds[ENVIRONMENT] = event.getStateChange() == ItemEvent.SELECTED;
+				 browseUpdate();
 			 } else if (source == jCheckBoxArchitecture) { 
 				 kinds[ARCHITECTURE] = event.getStateChange() == ItemEvent.SELECTED;
+				 browseUpdate();
 			 } else if (source == jCheckBoxQualifier) {
 				 kinds[QUALIFIER] = event.getStateChange() == ItemEvent.SELECTED;
-			 } else if (source instanceof String) {
-				 String s = (String) source;
-				 if (s.equals("manage...")) {
-					DeployComponentDialog dialog = new DeployComponentDialog(null);
-					dialog.setModal(true);
-					dialog.setVisible(true);
-				 }
+				 browseUpdate();
 			 }
 
         }
@@ -474,10 +809,162 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JButton getJButtonClose() {
 		if (jButtonClose == null) {
 			jButtonClose = new JButton();
-			jButtonClose.setBounds(new Rectangle(460, 20, 66, 26));
+			jButtonClose.setBounds(new Rectangle(945, 20, 66, 26));
 			jButtonClose.setText("Close");
 			jButtonClose.addActionListener(this);
 		}
 		return jButtonClose;
 	}	
-}  //  @jve:decl-index=0:visual-constraint="10,10"
+	
+	
+	
+	class BrowseTableModel extends AbstractTableModel {
+	    
+		private String[] columnNames;
+	    private Object[][] data;
+	    
+	    public BrowseTableModel(String[] columnNames, Object[][] data) {
+            this.columnNames = columnNames;
+            this.data = data;
+	    }
+
+	    public int getColumnCount() {
+	        return columnNames.length;
+	    }
+
+	    public int getRowCount() {
+	        return data.length;
+	    }
+
+	    public String getColumnName(int col) {
+	        return columnNames[col];
+	    }
+
+	    public Object getValueAt(int row, int col) {
+	        return data[row][col];
+	    }
+
+	    public Class getColumnClass(int c) {
+	        return getValueAt(0, c).getClass();
+	    }
+
+	    /*
+	     * Don't need to implement this method unless your table's
+	     * editable.
+	     */
+	    public boolean isCellEditable(int row, int col) {
+            return false;
+	    }
+
+	}
+
+
+	/**
+	 * This method initializes jScrollPane	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 */
+/*	private JScrollPane getJScrollPane() {
+		if (jScrollPane == null) {
+			jScrollPane = new JScrollPane(getJTableBrowse());
+			jScrollPane.setBounds(new Rectangle(125, 70, 486, 191));
+			jScrollPane.setVisible(false);
+		}
+		return jScrollPane;
+	} */
+
+	/**
+	 * This method initializes jButtonDeploy	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButtonDeploy() {
+		if (jButtonDeploy == null) {
+			jButtonDeploy = new JButton();
+			jButtonDeploy.setBounds(new Rectangle(860, 20, 81, 26));
+			jButtonDeploy.setText("Deploy");
+			jButtonDeploy.addActionListener(this);
+			jButtonDeploy.setEnabled(false);
+		}
+		return jButtonDeploy;
+	}
+
+	/**
+	 * This method initializes jScrollPaneAbstract	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 */
+	private JScrollPane getJScrollPaneAbstract() {
+		if (jScrollPaneAbstract == null) {
+			jScrollPaneAbstract = new JScrollPane(/*getJTableBrowseAbstract()*/);
+			jScrollPaneAbstract.setBounds(new Rectangle(0, 0, 0, 0));
+		}
+		return jScrollPaneAbstract;
+	}
+
+	/**
+	 * This method initializes jScrollPaneBrowse	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 */
+	private JScrollPane getJScrollPaneBrowse() {
+		if (jScrollPaneBrowse == null) {
+			jScrollPaneBrowse = new JScrollPane(getJTabbedPane());
+			jScrollPaneBrowse.setBounds(new Rectangle(125, 70, 551, 191));
+			jScrollPaneBrowse.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		}
+		return jScrollPaneBrowse;
+	}	
+	
+
+	/**
+	 * This method initializes jTabbedPane	
+	 * 	
+	 * @return javax.swing.JTabbedPane	
+	 */
+	private JTabbedPane getJTabbedPane() {
+		if (jTabbedPane == null) {
+			jTabbedPane = new JTabbedPane();
+			jTabbedPane.setBounds(new Rectangle(345, -10, 526, 191));
+			jTabbedPane.addTab("Abstract",getJTableBrowseAbstract());
+			jTabbedPane.addTab("Concrete",getJTableBrowseConcrete());
+			
+		}
+		return jTabbedPane;
+	}
+
+	/**
+	 * This method initializes jScrollPaneParameter	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 */
+	private JScrollPane getJScrollPaneParameter() {
+		if (jScrollPaneParameter == null) {
+			jScrollPaneParameter = new JScrollPane();
+			jScrollPaneParameter.setBounds(new Rectangle(685, 90, 326, 171));
+			jScrollPaneParameter.setViewportView(getJTreeParameter());
+		}
+		return jScrollPaneParameter;
+	}
+
+	/**
+	 * This method initializes jTreeParameter	
+	 * 	
+	 * @return javax.swing.JTree	
+	 */
+	private JTree getJTreeParameter() {
+		if (jTreeParameter == null) {
+			jTreeParameter = new JTree();
+			DefaultTreeModel model = (DefaultTreeModel) jTreeParameter.getModel();
+			model.setRoot(null);
+		}
+		return jTreeParameter;
+	}
+
+
+		
+
+
+
+	
+}  //  @jve:decl-index=0:visual-constraint="90,-6"

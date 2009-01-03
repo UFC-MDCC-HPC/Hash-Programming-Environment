@@ -5,9 +5,9 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package org.tempuri;
+package hPE.backend;
 
-public class BackEnd_WSLocator extends org.apache.axis.client.Service implements org.tempuri.BackEnd_WS {
+public class BackEnd_WSLocator extends org.apache.axis.client.Service implements hPE.backend.BackEnd_WS {
 
     public BackEnd_WSLocator() {
     }
@@ -39,7 +39,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         BackEnd_WSSoapWSDDServiceName = name;
     }
 
-    public org.tempuri.BackEnd_WSSoap getBackEnd_WSSoap() throws javax.xml.rpc.ServiceException {
+    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(BackEnd_WSSoap_address);
@@ -50,9 +50,9 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         return getBackEnd_WSSoap(endpoint);
     }
 
-    public org.tempuri.BackEnd_WSSoap getBackEnd_WSSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            org.tempuri.BackEnd_WSSoapStub _stub = new org.tempuri.BackEnd_WSSoapStub(portAddress, this);
+            hPE.backend.BackEnd_WSSoapStub _stub = new hPE.backend.BackEnd_WSSoapStub(portAddress, this);
             _stub.setPortName(getBackEnd_WSSoapWSDDServiceName());
             return _stub;
         }
@@ -84,7 +84,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         BackEnd_WSSoap12WSDDServiceName = name;
     }
 
-    public org.tempuri.BackEnd_WSSoap getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException {
+    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(BackEnd_WSSoap12_address);
@@ -95,9 +95,9 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         return getBackEnd_WSSoap12(endpoint);
     }
 
-    public org.tempuri.BackEnd_WSSoap getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            org.tempuri.BackEnd_WSSoap12Stub _stub = new org.tempuri.BackEnd_WSSoap12Stub(portAddress, this);
+            hPE.backend.BackEnd_WSSoap12Stub _stub = new hPE.backend.BackEnd_WSSoap12Stub(portAddress, this);
             _stub.setPortName(getBackEnd_WSSoap12WSDDServiceName());
             return _stub;
         }
@@ -119,13 +119,13 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (org.tempuri.BackEnd_WSSoap.class.isAssignableFrom(serviceEndpointInterface)) {
-                org.tempuri.BackEnd_WSSoapStub _stub = new org.tempuri.BackEnd_WSSoapStub(new java.net.URL(BackEnd_WSSoap_address), this);
+            if (hPE.backend.BackEnd_WSSoap.class.isAssignableFrom(serviceEndpointInterface)) {
+                hPE.backend.BackEnd_WSSoapStub _stub = new hPE.backend.BackEnd_WSSoapStub(new java.net.URL(BackEnd_WSSoap_address), this);
                 _stub.setPortName(getBackEnd_WSSoapWSDDServiceName());
                 return _stub;
             }
-            if (org.tempuri.BackEnd_WSSoap.class.isAssignableFrom(serviceEndpointInterface)) {
-                org.tempuri.BackEnd_WSSoap12Stub _stub = new org.tempuri.BackEnd_WSSoap12Stub(new java.net.URL(BackEnd_WSSoap12_address), this);
+            if (hPE.backend.BackEnd_WSSoap.class.isAssignableFrom(serviceEndpointInterface)) {
+                hPE.backend.BackEnd_WSSoap12Stub _stub = new hPE.backend.BackEnd_WSSoap12Stub(new java.net.URL(BackEnd_WSSoap12_address), this);
                 _stub.setPortName(getBackEnd_WSSoap12WSDDServiceName());
                 return _stub;
             }
@@ -160,7 +160,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://tempuri.org/", "BackEnd_WS");
+        return new javax.xml.namespace.QName("http://backend.hPE/", "BackEnd_WS");
     }
 
     private java.util.HashSet ports = null;
@@ -168,8 +168,8 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://tempuri.org/", "BackEnd_WSSoap"));
-            ports.add(new javax.xml.namespace.QName("http://tempuri.org/", "BackEnd_WSSoap12"));
+            ports.add(new javax.xml.namespace.QName("http://backend.hPE/", "BackEnd_WSSoap"));
+            ports.add(new javax.xml.namespace.QName("http://backend.hPE/", "BackEnd_WSSoap12"));
         }
         return ports.iterator();
     }

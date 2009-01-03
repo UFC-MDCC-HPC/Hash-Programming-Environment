@@ -1,8 +1,8 @@
-package org.tempuri;
+package hPE.backend;
 
-public class BackEnd_WSSoapProxy implements org.tempuri.BackEnd_WSSoap {
+public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
   private String _endpoint = null;
-  private org.tempuri.BackEnd_WSSoap backEnd_WSSoap = null;
+  private hPE.backend.BackEnd_WSSoap backEnd_WSSoap = null;
   
   public BackEnd_WSSoapProxy() {
     _initBackEnd_WSSoapProxy();
@@ -15,7 +15,7 @@ public class BackEnd_WSSoapProxy implements org.tempuri.BackEnd_WSSoap {
   
   private void _initBackEnd_WSSoapProxy() {
     try {
-      backEnd_WSSoap = (new org.tempuri.BackEnd_WSLocator()).getBackEnd_WSSoap();
+      backEnd_WSSoap = (new hPE.backend.BackEnd_WSLocator()).getBackEnd_WSSoap();
       if (backEnd_WSSoap != null) {
         if (_endpoint != null)
           ((javax.xml.rpc.Stub)backEnd_WSSoap)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
@@ -38,7 +38,7 @@ public class BackEnd_WSSoapProxy implements org.tempuri.BackEnd_WSSoap {
     
   }
   
-  public org.tempuri.BackEnd_WSSoap getBackEnd_WSSoap() {
+  public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap() {
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap;
@@ -54,6 +54,12 @@ public class BackEnd_WSSoapProxy implements org.tempuri.BackEnd_WSSoap {
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap.deployHashComponent(data);
+  }
+  
+  public byte[] readEnvironment() throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.readEnvironment();
   }
   
   public java.lang.String touchBackEnd(java.lang.String message) throws java.rmi.RemoteException{

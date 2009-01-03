@@ -1,5 +1,6 @@
 package hPE;
 
+import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
@@ -181,6 +182,11 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 
 		
 		action = getAction(DeployAction.DEPLOY);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+
+		action = getAction(BrowseAction.BROWSE);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}

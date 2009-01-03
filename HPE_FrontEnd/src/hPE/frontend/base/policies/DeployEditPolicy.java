@@ -2,25 +2,12 @@ package hPE.frontend.base.policies;
 
 import hPE.HPEVersionEditor;
 import hPE.frontend.base.dialogs.DeployComponentDialog;
-import hPE.frontend.base.dialogs.SetParameterDialog;
 import hPE.frontend.base.edits.ConfigurationEditPart;
 import hPE.frontend.base.model.HComponent;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.rmi.RemoteException;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
-import org.eclipse.ui.IFileEditorInput;
-import org.tempuri.BackEnd_WS;
-import org.tempuri.BackEnd_WSLocator;
-import org.tempuri.BackEnd_WSSoap;
 
 
 public class DeployEditPolicy extends ComponentEditPolicy {

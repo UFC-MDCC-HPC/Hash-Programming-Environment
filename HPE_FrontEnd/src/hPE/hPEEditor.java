@@ -3,11 +3,10 @@ package hPE;
 
 
 import hPE.core.library.HPEComponentFileNotFound;
-import hPE.core.library.HPELocationEntry;
-import hPE.core.library.model.interfaces.ILPackage;
 import hPE.core.location.HLocationService;
 import hPE.core.location.LocationService;
 import hPE.frontend.MainConfigurationEditPartFactory;
+import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
@@ -60,7 +59,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -68,15 +66,11 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gef.ContextMenuProvider;
@@ -101,6 +95,7 @@ import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.requests.SimpleFactory;
+import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.CopyTemplateAction;
 import org.eclipse.gef.ui.actions.DeleteAction;
@@ -201,6 +196,10 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		ContextMenuProvider cmProvider = new hPEEditorContextMenuProvider(viewer, getActionRegistry(),configuration);
 		viewer.setContextMenu(cmProvider);
 		getSite().registerContextMenu(cmProvider, viewer);
+		
+	//	ActionBarContributor abContributor = new HPEEditorActionBarContributor();
+		
+		
 		
 	}
 	
@@ -329,7 +328,7 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	{
 	    //store site and input
-		setSite(site);
+		setSite(site);	
 		setInput(input);
 		
 		// add CommandStackListener
@@ -390,6 +389,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		}
 		
 		id = DeployAction.DEPLOY;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = BrowseAction.BROWSE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = FuseComponentsAction.FUSE_COMPONENTS;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
@@ -540,8 +541,6 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
 			
-			
-			
 			action = new DeployApplicationAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
@@ -552,6 +551,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		}
 		
 		action = new DeployAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+
+		action = new BrowseAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 

@@ -1,7 +1,7 @@
-#Sat Dec 20 23:00:46 GMT-03:00 2008
+#Wed Dec 31 15:33:19 GMT-03:00 2008
 eclipse.preferences.version=1
-encoding//src/org/tempuri/BackEnd_WS.java=UTF-8
-encoding//src/org/tempuri/BackEnd_WSLocator.java=UTF-8
-encoding//src/org/tempuri/BackEnd_WSSoap.java=UTF-8
-encoding//src/org/tempuri/BackEnd_WSSoap12Stub.java=UTF-8
-encoding//src/org/tempuri/BackEnd_WSSoapStub.java=UTF-8
+encoding//src/hPE/backend/BackEnd_WS.java=UTF-8
+encoding//src/hPE/backend/BackEnd_WSLocator.java=UTF-8
+encoding//src/hPE/backend/BackEnd_WSSoap.java=UTF-8
+encoding//src/hPE/backend/BackEnd_WSSoap12Stub.java=UTF-8
+encoding//src/hPE/backend/BackEnd_WSSoapStub.java=UTF-8

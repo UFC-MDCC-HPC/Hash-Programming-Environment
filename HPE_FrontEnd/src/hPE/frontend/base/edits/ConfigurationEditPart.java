@@ -21,6 +21,7 @@ import hPE.frontend.base.figures.ConfigurationFigure;
 import hPE.frontend.base.figures.INameEditableFigure;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.model.*;
+import hPE.frontend.base.policies.BrowseEditPolicy;
 import hPE.frontend.base.policies.ChangeColorEditPolicy;
 import hPE.frontend.base.policies.ChangeVariableNameEditPolicy;
 import hPE.frontend.base.policies.DeployEditPolicy;
@@ -82,6 +83,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,  new ElementsXYLayoutEditPolicy());
 	    this.installEditPolicy("Change Variable Name", new ChangeVariableNameEditPolicy());
 	    this.installEditPolicy("Deploy", new DeployEditPolicy());
+	    this.installEditPolicy("Browse", new BrowseEditPolicy());
 
 	}
 

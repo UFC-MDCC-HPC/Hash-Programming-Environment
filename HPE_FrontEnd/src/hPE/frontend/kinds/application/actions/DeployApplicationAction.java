@@ -29,9 +29,9 @@ public class DeployApplicationAction extends SelectionAction {
 	   super(part);
 	   
 	   request = new Request(DEPLOY_APPLICATION_REQUEST);
-	   setText("Deploy Application");
-	   setId("Deploy Application");
-	   setToolTipText("Deploy Application");
+	   setText(DEPLOY_APPLICATION);
+	   setId(DEPLOY_APPLICATION);
+	   setToolTipText(DEPLOY_APPLICATION);
 	   setImageDescriptor(
 	   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
 	   setHoverImageDescriptor(getImageDescriptor());

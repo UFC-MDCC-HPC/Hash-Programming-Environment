@@ -13,6 +13,7 @@
             name="HPE Editor"/>
       <editor
             class="hPE.HPEVersionEditor"
+            contributorClass="hPE.HPEEditorActionBarContributor"
             default="false"
             extensions="hpe"
             icon="hash.gif"

@@ -8,8 +8,6 @@ import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,14 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.xml.rpc.ServiceException;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
-import org.tempuri.BackEnd_WSLocator;
-import org.tempuri.BackEnd_WSSoap;
 
 public class DeployComponentDialog extends JDialog 
                                    implements	ActionListener, ListSelectionListener {
@@ -45,7 +35,6 @@ public class DeployComponentDialog extends JDialog
 	private JTextField jTextFieldBackEndPassword = null;
 	private JLabel jLabelBackEndPassword = null;
 	private JButton jButtonClose = null;
-	private JButton jButtonDeploy = null;
 	private JList jListBackEnds = null;
 	private JLabel jLabelBackEnds = null;
 	private JEditorPane jEditorPaneBackEndDescription = null;
@@ -68,7 +57,6 @@ public class DeployComponentDialog extends JDialog
 		super(owner);
 		this.c = null;
 		initialize();
-		jButtonDeploy.setEnabled(false);
 	}
 
 	/**
@@ -77,7 +65,7 @@ public class DeployComponentDialog extends JDialog
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(526, 328);
+		this.setSize(438, 328);
 		this.setTitle("Deploy Component");
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
@@ -132,7 +120,6 @@ public class DeployComponentDialog extends JDialog
 			jContentPane.add(getJTextFieldBackEndPassword(), null);
 			jContentPane.add(jLabelBackEndPassword, null);
 			jContentPane.add(getJButtonClose(), null);
-			jContentPane.add(getJButtonDeploy(), null);
 			jContentPane.add(getJListBackEnds(), null);
 			jContentPane.add(jLabelBackEnds, null);
 			jContentPane.add(getJEditorPaneBackEndDescription(), null);
@@ -206,26 +193,11 @@ public class DeployComponentDialog extends JDialog
 	private JButton getJButtonClose() {
 		if (jButtonClose == null) {
 			jButtonClose = new JButton();
-			jButtonClose.setBounds(new Rectangle(435, 60, 76, 31));
+			jButtonClose.setBounds(new Rectangle(345, 255, 76, 31));
 			jButtonClose.setText("Close");
 			jButtonClose.addActionListener(this);
 		}
 		return jButtonClose;
-	}
-
-	/**
-	 * This method initializes jButtonDeploy	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getJButtonDeploy() {
-		if (jButtonDeploy == null) {
-			jButtonDeploy = new JButton();
-			jButtonDeploy.setBounds(new Rectangle(435, 15, 76, 31));
-			jButtonDeploy.setText("Deploy");
-			jButtonDeploy.addActionListener(this);
-		}
-		return jButtonDeploy;
 	}
 
 	/**
@@ -237,7 +209,7 @@ public class DeployComponentDialog extends JDialog
 		if (jListBackEnds == null) {
 			jListBackEnds = new JList();
 			jListBackEnds.addListSelectionListener(this);
-			jListBackEnds.setBounds(new Rectangle(285, 30, 136, 256));
+			jListBackEnds.setBounds(new Rectangle(285, 30, 136, 211));
 		}
 		return jListBackEnds;
 	}
@@ -274,9 +246,7 @@ public class DeployComponentDialog extends JDialog
 	@Override
 	public void actionPerformed(ActionEvent event) {
 	    
-		if (event.getSource() == jButtonDeploy) {
-	        this.deploy();	
-		} else if (event.getSource() == jButtonClose) {
+		if (event.getSource() == jButtonClose) {
 			this.setVisible(false);
 		} else if (event.getSource() == jButtonAddBackEnd) {
 	        this.clearFields();
@@ -304,39 +274,6 @@ public class DeployComponentDialog extends JDialog
 			
 	}
 
-	private void deploy() {
-
-		try {
-			String fileName = c.toString();
-		
-			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
-			
-			InputStream is;
-			is = file.getContents();
-		
-			byte[] t = new byte[is.available()];
-			
-			is.read(t);
-			
-			String urlWS = jTextField_BackEndURI.getText();   //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
-		
-			BackEnd_WSLocator server = new BackEnd_WSLocator();
-			server.setBackEnd_WSSoapEndpointAddress(urlWS);
-			
-			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
-			
-			String s = backend.deployHashComponent(t);
-			
-			System.out.println(s);
-			
-		} catch (CoreException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-	}
 
 
 	private JButton jButtonDeleteBackEnd = null;
