@@ -13,6 +13,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference environment.ecore#//DeployedComponentInfoType/parameter"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute environment.ecore#//DeployedComponentInfoType/abstract"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute environment.ecore#//DeployedComponentInfoType/cid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute environment.ecore#//DeployedComponentInfoType/cidBase"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute environment.ecore#//DeployedComponentInfoType/kind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute environment.ecore#//DeployedComponentInfoType/locationURI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute environment.ecore#//DeployedComponentInfoType/name"/>

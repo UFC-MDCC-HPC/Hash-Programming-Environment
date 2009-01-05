@@ -44,12 +44,6 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     return backEnd_WSSoap;
   }
   
-  public java.lang.String deployAbstractComponent(byte[] data) throws java.rmi.RemoteException{
-    if (backEnd_WSSoap == null)
-      _initBackEnd_WSSoapProxy();
-    return backEnd_WSSoap.deployAbstractComponent(data);
-  }
-  
   public java.lang.String deployHashComponent(byte[] data) throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
@@ -60,6 +54,12 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap.readEnvironment();
+  }
+  
+  public java.lang.String runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.runApplication(id_concrete, eIds, eVls);
   }
   
   public java.lang.String touchBackEnd(java.lang.String message) throws java.rmi.RemoteException{

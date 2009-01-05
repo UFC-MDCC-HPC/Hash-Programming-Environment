@@ -115,13 +115,22 @@ public interface EnvironmentPackage extends EPackage {
 	int DEPLOYED_COMPONENT_INFO_TYPE__CID = 4;
 
 	/**
+	 * The feature id for the '<em><b>Cid Base</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE = 5;
+
+	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPLOYED_COMPONENT_INFO_TYPE__KIND = 5;
+	int DEPLOYED_COMPONENT_INFO_TYPE__KIND = 6;
 
 	/**
 	 * The feature id for the '<em><b>Location URI</b></em>' attribute.
@@ -130,7 +139,7 @@ public interface EnvironmentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEPLOYED_COMPONENT_INFO_TYPE__LOCATION_URI = 6;
+	int DEPLOYED_COMPONENT_INFO_TYPE__LOCATION_URI = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -139,7 +148,7 @@ public interface EnvironmentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEPLOYED_COMPONENT_INFO_TYPE__NAME = 7;
+	int DEPLOYED_COMPONENT_INFO_TYPE__NAME = 8;
 
 	/**
 	 * The number of structural features of the '<em>Deployed Component Info Type</em>' class.
@@ -148,7 +157,7 @@ public interface EnvironmentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEPLOYED_COMPONENT_INFO_TYPE_FEATURE_COUNT = 8;
+	int DEPLOYED_COMPONENT_INFO_TYPE_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link hPE.frontend.backend.environment.impl.DeployedParameterTypeImpl <em>Deployed Parameter Type</em>}' class.
@@ -353,6 +362,17 @@ public interface EnvironmentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDeployedComponentInfoType_Cid();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.frontend.backend.environment.DeployedComponentInfoType#getCidBase <em>Cid Base</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Cid Base</em>'.
+	 * @see hPE.frontend.backend.environment.DeployedComponentInfoType#getCidBase()
+	 * @see #getDeployedComponentInfoType()
+	 * @generated
+	 */
+	EAttribute getDeployedComponentInfoType_CidBase();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.frontend.backend.environment.DeployedComponentInfoType#getKind <em>Kind</em>}'.
@@ -587,6 +607,14 @@ public interface EnvironmentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEPLOYED_COMPONENT_INFO_TYPE__CID = eINSTANCE.getDeployedComponentInfoType_Cid();
+
+		/**
+		 * The meta object literal for the '<em><b>Cid Base</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE = eINSTANCE.getDeployedComponentInfoType_CidBase();
 
 		/**
 		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.

@@ -159,10 +159,11 @@ public class BackEndLocationList {
 		public String[] thePackage;
 		public String name;
 		public int cid;
+		public int cidBase;
 		public String locationURI;
 		public int kind;
 		public String[] enumerators;
-		public Integer[] enumValuation;
+		public int[] enumValuation;
 		public DeployedComponentInfoParameter[] parameters;
 		
 		public String toString() {
@@ -171,11 +172,12 @@ public class BackEndLocationList {
 		
 		public DeployedComponentInfo() {};
 		
-		public DeployedComponentInfo(boolean isAbstract, String[] thePackage, String name, int cid, String locationURI, int kind, String[] enumerators, DeployedComponentInfoParameter[] parameter) {
+		public DeployedComponentInfo(boolean isAbstract, String[] thePackage, String name, int cid, int cidBase, String locationURI, int kind, String[] enumerators, DeployedComponentInfoParameter[] parameter) {
 			this.isAbstract = isAbstract;
 			this.thePackage = thePackage;
 			this.name = name;
 			this.cid = cid;
+			this.cidBase = cidBase;
 			this.locationURI = locationURI;
 			this.kind = kind;
 			this.enumerators = enumerators;
@@ -226,11 +228,12 @@ public class BackEndLocationList {
 		    	String[] package_ = (String[]) dc.getPackage().toArray();
 		    	String name_ = dc.getName();
 		    	int id_ = dc.getCid();;
+		    	int idBase_ = dc.isSetCidBase() ? dc.getCidBase() : -1;
 		    	String uri_ = dc.getLocationURI();
 		    	int kind_ = loadKind(dc.getKind());
 		    	String[] enumerators_ = (String[]) dc.getEnumerator().toArray();
 		    	DeployedComponentInfoParameter[] parameters_ = loadParameters(dc.getParameter());
-		    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,uri_,kind_,enumerators_,parameters_); 
+		    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,idBase_,uri_,kind_,enumerators_,parameters_); 
 		        l.add(dci);		    	
 		    	if (isAbstract) 
 		    		dcListAbstract.put(new Integer(id_), dci);

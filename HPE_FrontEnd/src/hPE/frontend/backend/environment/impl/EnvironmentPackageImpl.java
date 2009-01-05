@@ -187,7 +187,7 @@ public class EnvironmentPackageImpl extends EPackageImpl implements EnvironmentP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDeployedComponentInfoType_Kind() {
+	public EAttribute getDeployedComponentInfoType_CidBase() {
 		return (EAttribute)deployedComponentInfoTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -196,7 +196,7 @@ public class EnvironmentPackageImpl extends EPackageImpl implements EnvironmentP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDeployedComponentInfoType_LocationURI() {
+	public EAttribute getDeployedComponentInfoType_Kind() {
 		return (EAttribute)deployedComponentInfoTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -205,8 +205,17 @@ public class EnvironmentPackageImpl extends EPackageImpl implements EnvironmentP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDeployedComponentInfoType_Name() {
+	public EAttribute getDeployedComponentInfoType_LocationURI() {
 		return (EAttribute)deployedComponentInfoTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDeployedComponentInfoType_Name() {
+		return (EAttribute)deployedComponentInfoTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -351,6 +360,7 @@ public class EnvironmentPackageImpl extends EPackageImpl implements EnvironmentP
 		createEReference(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__PARAMETER);
 		createEAttribute(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__ABSTRACT);
 		createEAttribute(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__CID);
+		createEAttribute(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE);
 		createEAttribute(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__KIND);
 		createEAttribute(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__LOCATION_URI);
 		createEAttribute(deployedComponentInfoTypeEClass, DEPLOYED_COMPONENT_INFO_TYPE__NAME);
@@ -410,6 +420,7 @@ public class EnvironmentPackageImpl extends EPackageImpl implements EnvironmentP
 		initEReference(getDeployedComponentInfoType_Parameter(), this.getDeployedParameterType(), null, "parameter", null, 0, -1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDeployedComponentInfoType_Abstract(), theXMLTypePackage.getBoolean(), "abstract", null, 0, 1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDeployedComponentInfoType_Cid(), theXMLTypePackage.getInt(), "cid", null, 0, 1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDeployedComponentInfoType_CidBase(), theXMLTypePackage.getInt(), "cidBase", null, 0, 1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDeployedComponentInfoType_Kind(), theXMLTypePackage.getString(), "kind", null, 0, 1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDeployedComponentInfoType_LocationURI(), theXMLTypePackage.getAnyURI(), "locationURI", null, 0, 1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDeployedComponentInfoType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, DeployedComponentInfoType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -489,6 +500,13 @@ public class EnvironmentPackageImpl extends EPackageImpl implements EnvironmentP
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cid"
+		   });		
+		addAnnotation
+		  (getDeployedComponentInfoType_CidBase(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "cidBase"
 		   });		
 		addAnnotation
 		  (getDeployedComponentInfoType_Kind(), 

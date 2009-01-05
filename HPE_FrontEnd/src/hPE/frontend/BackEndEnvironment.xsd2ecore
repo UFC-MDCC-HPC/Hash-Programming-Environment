@@ -33,6 +33,8 @@
         outputs="environment.ecore#//DeployedComponentInfoType/abstract"/>
     <nested inputs="BackEndEnvironment.xsd#//DeployedComponentInfoType;XSDComplexTypeDefinition/XSDAttributeUse=1"
         outputs="environment.ecore#//DeployedComponentInfoType/cid"/>
+    <nested inputs="BackEndEnvironment.xsd#//DeployedComponentInfoType;XSDComplexTypeDefinition/XSDAttributeUse=5"
+        outputs="environment.ecore#//DeployedComponentInfoType/cidBase"/>
     <nested inputs="BackEndEnvironment.xsd#//DeployedComponentInfoType;XSDComplexTypeDefinition/XSDAttributeUse=2"
         outputs="environment.ecore#//DeployedComponentInfoType/kind"/>
     <nested inputs="BackEndEnvironment.xsd#//DeployedComponentInfoType;XSDComplexTypeDefinition/XSDAttributeUse=4"

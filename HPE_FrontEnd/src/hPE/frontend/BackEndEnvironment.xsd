@@ -21,6 +21,7 @@
     	<attribute name="kind" type="string"></attribute>
     	<attribute name="abstract" type="boolean"></attribute>
     	<attribute name="locationURI" type="anyURI"></attribute>
+    	<attribute name="cidBase" type="int"></attribute>
     </complexType>
 
     <complexType name="EnvironmentType">

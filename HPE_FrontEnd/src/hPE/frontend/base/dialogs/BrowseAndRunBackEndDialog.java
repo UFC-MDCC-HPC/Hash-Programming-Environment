@@ -8,6 +8,7 @@ import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfoParameter;
 import hPE.frontend.base.model.HComponent;
 
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -54,6 +55,7 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
 import javax.swing.JTree;
+import javax.swing.border.TitledBorder;
 
 public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener {
 
@@ -263,52 +265,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		public void valueChanged(ListSelectionEvent event) {
 			
 			if( event.getSource() == table.getSelectionModel()&& event.getFirstIndex() >= 0 ) {			
-				TableModel tm = (TableModel) table.getModel();
-				if (table.getSelectedRow() >= 0) {
-				    Object b = tm.getValueAt(table.getSelectedRow(), invgrouping[BY_NAME]);
-				    if (b instanceof DeployedComponentInfo) {
-				    	DeployedComponentInfo deployed = (DeployedComponentInfo) b;
-				    	
-						DefaultMutableTreeNode nodeRoot = new DefaultMutableTreeNode(deployed.name);				    	
-						
-						if (deployed.parameters.length > 0) {
-							for (DefaultMutableTreeNode node : loadParameters(deployed.parameters)) {
-	                           nodeRoot.add(node);							
-							}
-						}
-						
-						DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
-						
-						model.setRoot(nodeRoot);
-				    } else {
-						DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
-						model.setRoot(null);
-				    }
-				} else {
-					DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
-					model.setRoot(null);
-				}
-				
-			}
-			
-		}
-
-		private DefaultMutableTreeNode[] loadParameters(DeployedComponentInfoParameter[] parameters) {
-			DefaultMutableTreeNode[] node = new DefaultMutableTreeNode[parameters.length];
-			if (parameters.length > 0) {
-				int i = 0;
-				for (DeployedComponentInfoParameter d : parameters) {
-						String parameterId = d.parameter_id;
-						String actual = dcListAbstract.get(d.component_name).name;
-						node[i] = new DefaultMutableTreeNode(parameterId + " = " + actual);						
-						for (DefaultMutableTreeNode nodeSon: loadParameters(d.parameter))  					
-							node[i].add(nodeSon);
-						i++;
-				}
-			}
-			return node;
-		}
-				
+				updateParameters(table);	
+			}			
+		}				
 	}
 	
 
@@ -330,6 +289,55 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		return jTableBrowseAbstract;
 	}
 
+	public void updateParameters(JTable table) {
+		TableModel tm = (TableModel) table.getModel();
+		if (table.getSelectedRow() >= 0) {
+		    Object b = tm.getValueAt(table.getSelectedRow(), invgrouping[BY_NAME]);
+		    if (b instanceof DeployedComponentInfo) {
+		    	DeployedComponentInfo deployed = (DeployedComponentInfo) b;
+		    	
+				DefaultMutableTreeNode nodeRoot = new DefaultMutableTreeNode(deployed.cidBase >= 0 ? dcListAbstract.get(deployed.cidBase).name : dcListAbstract.get(deployed.cid).name);				    	
+				
+				boolean isAbstract = deployed.isAbstract;
+				
+				getJButtonRunApp().setEnabled(!isAbstract && deployed.kind == APPLICATION);
+				
+				if (deployed.parameters.length > 0) {
+					for (DefaultMutableTreeNode node : loadParameters(deployed.parameters, isAbstract)) {
+                       nodeRoot.add(node);							
+					}
+				}
+				
+				DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
+				
+				model.setRoot(nodeRoot);
+		    } else {
+				DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
+				model.setRoot(null);
+		    }
+		} else {
+			DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
+			model.setRoot(null);
+		}
+		
+	}
+
+	private DefaultMutableTreeNode[] loadParameters(DeployedComponentInfoParameter[] parameters, boolean isAbstract) {
+		DefaultMutableTreeNode[] node = new DefaultMutableTreeNode[parameters.length];
+		if (parameters.length > 0) {
+			int i = 0;
+			for (DeployedComponentInfoParameter d : parameters) {
+					String parameterId = d.parameter_id;
+					String actual = dcListAbstract.get(d.component_name).name;
+					node[i] = new DefaultMutableTreeNode(parameterId + (isAbstract ? " <= " : " = ") + actual);						
+					for (DefaultMutableTreeNode nodeSon: loadParameters(d.parameter,isAbstract))  					
+						node[i].add(nodeSon);
+					i++;
+			}
+		}
+		return node;
+	}
+	
 	/**
 	 * This method initializes jTableBrowseAbstract	
 	 * 	
@@ -359,6 +367,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jButtonRunApp.setBounds(new Rectangle(730, 20, 126, 26));
 			jButtonRunApp.setText("Run Application");
 			jButtonRunApp.addActionListener(this);
+			jButtonRunApp.setEnabled(false);
 }
 		return jButtonRunApp;
 	}
@@ -381,7 +390,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			gridBagConstraints.gridy = 2;*/
 			jPanel = new JPanel();
 			jPanel.setLayout(null);
-			jPanel.setBounds(new Rectangle(335, 25, 306, 24));
+			jPanel.setBounds(new Rectangle(357, 16, 278, 44));
+			jPanel.setBorder(BorderFactory.createTitledBorder(null, "Sort", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
 			jPanel.add(getJRadioButtonByKind(), null);
 			jPanel.add(getJRadioButtonByPackage(), null);
 			jPanel.add(getJRadioButtonByName(), null);
@@ -398,7 +408,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jRadioButtonByPackage == null) {
 			jRadioButtonByPackage = new JRadioButton();
 			jRadioButtonByPackage.setText("By Package");
-			jRadioButtonByPackage.setBounds(new Rectangle(36, 0, 92, 24));
+			jRadioButtonByPackage.setBounds(new Rectangle(20, 15, 92, 24));
 			jRadioButtonByPackage.setSelected(true);
 			jRadioButtonByPackage.addActionListener(this);
 		}
@@ -415,7 +425,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jRadioButtonByName = new JRadioButton();
 			jRadioButtonByName.setText("By Name");
 			jRadioButtonByName.setHorizontalTextPosition(SwingConstants.RIGHT);
-			jRadioButtonByName.setBounds(new Rectangle(128, 0, 75, 24));
+			jRadioButtonByName.setBounds(new Rectangle(114, 15, 75, 24));
 			jRadioButtonByName.setHorizontalAlignment(SwingConstants.LEFT);
 			jRadioButtonByName.addActionListener(this);
 		}
@@ -431,7 +441,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jRadioButtonByKind == null) {
 			jRadioButtonByKind = new JRadioButton();
 			jRadioButtonByKind.setText("By Kind");
-			jRadioButtonByKind.setBounds(new Rectangle(203, 0, 67, 24));
+			jRadioButtonByKind.setBounds(new Rectangle(192, 15, 67, 24));
 			jRadioButtonByKind.addActionListener(this);
 		}
 		return jRadioButtonByKind;
@@ -549,7 +559,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		Object source = event.getSource();
 		
 		if (source == jButtonRunApp) {
-			runSelectedApp();
+			this.runSelectedApp();
 		} else if (source == jButtonDeploy) {
 			this.deploy();
 		} else if (source == jButtonClose) {
@@ -627,7 +637,40 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	}
 
 	private void runSelectedApp() {
-		// TODO Auto-generated method stub		
+		
+		try {
+			DeployedComponentInfo deployed = null;
+		
+			JTable table = getJTableBrowseConcrete();
+			TableModel tm = (TableModel) table.getModel();
+			if (table.getSelectedRow() >= 0) {
+				Object b = tm.getValueAt(table.getSelectedRow(), invgrouping[BY_NAME]);
+			
+			    if (b instanceof DeployedComponentInfo) {
+			    	deployed = (DeployedComponentInfo) b; 
+			    }
+			}
+		    
+		    String urlWS = ((BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem()).locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+		
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+			
+			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+			
+			deployed.enumValuation = new int[] {4, 4, 8};
+			
+			String result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation);
+			
+			JOptionPane.showMessageDialog(rootPane, result);
+			
+			this.browseUpdate();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -928,6 +971,14 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jTabbedPane.setBounds(new Rectangle(345, -10, 526, 191));
 			jTabbedPane.addTab("Abstract",getJTableBrowseAbstract());
 			jTabbedPane.addTab("Concrete",getJTableBrowseConcrete());
+			jTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+				public void stateChanged(javax.swing.event.ChangeEvent e) {
+					Object src = e.getSource();
+					JTabbedPane pane = (JTabbedPane) src;
+				    JTable table = (JTable) pane.getSelectedComponent();
+				    updateParameters(table);
+				}
+			});
 			
 		}
 		return jTabbedPane;

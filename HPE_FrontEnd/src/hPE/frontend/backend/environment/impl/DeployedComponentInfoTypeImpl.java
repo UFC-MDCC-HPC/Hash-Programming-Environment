@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#isAbstract <em>Abstract</em>}</li>
  *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#getCid <em>Cid</em>}</li>
+ *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#getCidBase <em>Cid Base</em>}</li>
  *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#getLocationURI <em>Location URI</em>}</li>
  *   <li>{@link hPE.frontend.backend.environment.impl.DeployedComponentInfoTypeImpl#getName <em>Name</em>}</li>
@@ -135,6 +136,35 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 	 * @ordered
 	 */
 	protected boolean cidESet;
+
+	/**
+	 * The default value of the '{@link #getCidBase() <em>Cid Base</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCidBase()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int CID_BASE_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getCidBase() <em>Cid Base</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCidBase()
+	 * @generated
+	 * @ordered
+	 */
+	protected int cidBase = CID_BASE_EDEFAULT;
+
+	/**
+	 * This is true if the Cid Base attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean cidBaseESet;
 
 	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
@@ -348,6 +378,52 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getCidBase() {
+		return cidBase;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCidBase(int newCidBase) {
+		int oldCidBase = cidBase;
+		cidBase = newCidBase;
+		boolean oldCidBaseESet = cidBaseESet;
+		cidBaseESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE, oldCidBase, cidBase, !oldCidBaseESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetCidBase() {
+		int oldCidBase = cidBase;
+		boolean oldCidBaseESet = cidBaseESet;
+		cidBase = CID_BASE_EDEFAULT;
+		cidBaseESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE, oldCidBase, CID_BASE_EDEFAULT, oldCidBaseESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetCidBase() {
+		return cidBaseESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getKind() {
 		return kind;
 	}
@@ -438,6 +514,8 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 				return isAbstract() ? Boolean.TRUE : Boolean.FALSE;
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID:
 				return new Integer(getCid());
+			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE:
+				return new Integer(getCidBase());
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__KIND:
 				return getKind();
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__LOCATION_URI:
@@ -475,6 +553,9 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID:
 				setCid(((Integer)newValue).intValue());
 				return;
+			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE:
+				setCidBase(((Integer)newValue).intValue());
+				return;
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__KIND:
 				setKind((String)newValue);
 				return;
@@ -511,6 +592,9 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID:
 				unsetCid();
 				return;
+			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE:
+				unsetCidBase();
+				return;
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__KIND:
 				setKind(KIND_EDEFAULT);
 				return;
@@ -542,6 +626,8 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 				return isSetAbstract();
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID:
 				return isSetCid();
+			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__CID_BASE:
+				return isSetCidBase();
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__KIND:
 				return KIND_EDEFAULT == null ? kind != null : !KIND_EDEFAULT.equals(kind);
 			case EnvironmentPackage.DEPLOYED_COMPONENT_INFO_TYPE__LOCATION_URI:
@@ -570,6 +656,8 @@ public class DeployedComponentInfoTypeImpl extends EObjectImpl implements Deploy
 		if (abstractESet) result.append(abstract_); else result.append("<unset>");
 		result.append(", cid: ");
 		if (cidESet) result.append(cid); else result.append("<unset>");
+		result.append(", cidBase: ");
+		if (cidBaseESet) result.append(cidBase); else result.append("<unset>");
 		result.append(", kind: ");
 		result.append(kind);
 		result.append(", locationURI: ");
