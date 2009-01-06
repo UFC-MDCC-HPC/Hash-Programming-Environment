@@ -19,6 +19,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +109,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		dcList = new ArrayList<DeployedComponentInfo>();
 		
 		this.setSize(1029, 306);
-		this.setTitle("Browse Back-End");
+		this.setTitle("Back-End Connection");
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
 		this.browseUpdate();
@@ -150,7 +151,13 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 							jButtonDeploy.setEnabled(false);
 						}
 						else {
-							dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocation(),dcListAbstract,dcListConcrete);							
+							try {
+								dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocation(),dcListAbstract,dcListConcrete);
+							} catch (IOException e1) {
+								JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+							} catch (ServiceException e1) {
+								JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+							}							
 						    browseUpdate();
 							jButtonDeploy.setEnabled(c != null);
 						}
@@ -619,11 +626,15 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 		} catch (CoreException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		} catch (ServiceException e) {
 			e.printStackTrace();
-		}
+			JOptionPane.showMessageDialog(rootPane, e.getMessage());
+		} 
+
 	}
 	
     private void reorderGrouping(int grouping_type) {
@@ -680,8 +691,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		}
 		
 	}

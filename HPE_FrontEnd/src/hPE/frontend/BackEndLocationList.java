@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -192,7 +193,7 @@ public class BackEndLocationList {
 		public DeployedComponentInfoParameter[] parameter = null;
 	}
 	
-	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b, String rootPath, Map<Integer, DeployedComponentInfo> dcListAbstract, Map<Integer, DeployedComponentInfo> dcListConcrete) {
+	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b, String rootPath, Map<Integer, DeployedComponentInfo> dcListAbstract, Map<Integer, DeployedComponentInfo> dcListConcrete) throws IOException, ServiceException {
 	
 		List<DeployedComponentInfo> l = new ArrayList<DeployedComponentInfo>();
 		
@@ -243,9 +244,11 @@ public class BackEndLocationList {
 		
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw e;
 		} catch (ServiceException e) {
 			e.printStackTrace();
-		}
+			throw e;
+        }
 		
 		return l;
 	}
