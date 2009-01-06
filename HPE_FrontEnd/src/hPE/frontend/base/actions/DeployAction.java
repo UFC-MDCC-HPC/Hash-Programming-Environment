@@ -42,7 +42,10 @@ public class DeployAction extends SelectionAction {
 	}
 	
 	private boolean canPerformAction() {
-		if (getSelectedObjects().isEmpty())
+		
+		return false;
+		
+	/*	if (getSelectedObjects().isEmpty())
 			return false;
 		List parts = getSelectedObjects();
 		for (int i=0; i<parts.size(); i++){
@@ -58,7 +61,7 @@ public class DeployAction extends SelectionAction {
             	return false;
             
       	}
-		return true;
+		return true; */
 	}
 	
 	private Command getCommand() {
