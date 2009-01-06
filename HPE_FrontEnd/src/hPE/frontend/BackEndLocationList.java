@@ -296,12 +296,10 @@ public class BackEndLocationList {
 	    	IPath path = new Path(sPath);	    	
 	    	
 	    	IWorkspaceRoot wroot = ResourcesPlugin.getWorkspace().getRoot();
-	    	IFile file = null;
-	    //	if (wroot.exists(path)) {
-	    	   file = wroot.getFile(path);
-	    //	} else {
-	    //	   file = null;
-	    //	}
+	    	IFile file = wroot.getFile(path);;
+	    	if (wroot.exists(path)) {
+	    	   file.delete(true, getProgressMonitor());
+	    	} 
     		    							
 			createFile(file,is,getProgressMonitor());
 			

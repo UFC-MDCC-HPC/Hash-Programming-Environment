@@ -314,10 +314,12 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		    } else {
 				DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
 				model.setRoot(null);
+				getJButtonRunApp().setEnabled(false);
 		    }
 		} else {
 			DefaultTreeModel model = (DefaultTreeModel) getJTreeParameter().getModel();
 			model.setRoot(null);
+			getJButtonRunApp().setEnabled(false);
 		}
 		
 	}
@@ -651,20 +653,30 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			    }
 			}
 		    
-		    String urlWS = ((BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem()).locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
-		
-			BackEnd_WSLocator server = new BackEnd_WSLocator();
-			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+			boolean canceled = false;
+			if (deployed.enumerators.length > 0) {
+				SetEnumeratorsDialog dialog = new SetEnumeratorsDialog(null, deployed.enumerators, deployed.enumValuation);
+				dialog.setModal(true);
+				dialog.setVisible(true);
+				canceled = dialog.getCanceled();
+				deployed.enumValuation = dialog.getEnumValuation();
+			}
 			
-			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+			if (!canceled) {
 			
-			deployed.enumValuation = new int[] {4, 4, 8};
+			    String urlWS = ((BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem()).locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
 			
-			String result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation);
-			
-			JOptionPane.showMessageDialog(rootPane, result);
-			
-			this.browseUpdate();
+				BackEnd_WSLocator server = new BackEnd_WSLocator();
+				server.setBackEnd_WSSoapEndpointAddress(urlWS);
+				
+				BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+				
+				String result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation);
+				
+				JOptionPane.showMessageDialog(rootPane, result);
+				
+				this.browseUpdate();
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
