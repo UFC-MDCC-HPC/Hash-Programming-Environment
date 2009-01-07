@@ -388,7 +388,8 @@ public class HPEComponentLibraryView extends ViewPart {
         int ops = DND.DROP_COPY | DND.DROP_MOVE;
         Transfer[] transfers = new Transfer[] {
                 LocalSelectionTransfer.getInstance(),
-                ResourceTransfer.getInstance(), FileTransfer.getInstance(),
+                ResourceTransfer.getInstance(), 
+                FileTransfer.getInstance(),
                 PluginTransfer.getInstance() };
         TreeViewer viewer = getTreeViewer();
         viewer.addDragSupport(ops, transfers, new HPELibraryDragSourceAdapter(viewer));

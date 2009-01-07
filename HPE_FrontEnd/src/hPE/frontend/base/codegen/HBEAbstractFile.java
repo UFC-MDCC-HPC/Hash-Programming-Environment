@@ -35,7 +35,7 @@ public abstract class HBEAbstractFile implements Serializable {
 		this.fileName = name;
 		this.versionID = versionID;
 			
-		this.persistSourceFile(contents,rootPath);
+	//	this.persistSourceFile(contents,rootPath);
 		
 	}
 	

@@ -1,9 +1,6 @@
 package hPE.core.library.model.interfaces;
 
-import java.io.File;
 import java.util.List;
-
-import org.eclipse.core.resources.IFile;
 
 public interface ILComponentView extends IHPEComponentLibraryItem {
 
@@ -11,7 +8,7 @@ public interface ILComponentView extends IHPEComponentLibraryItem {
 	
 	public String getName();
 	
-	public IFile getComponent(boolean useCached);
+	public java.io.File getComponent(boolean useCached);
 
 	public boolean isOK();
 }

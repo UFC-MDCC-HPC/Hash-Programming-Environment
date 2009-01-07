@@ -11,6 +11,7 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gef.commands.Command;
 
 
@@ -20,10 +21,10 @@ public class NewComponentCommand extends Command {
 	private List<HComponent> components = null;
 	private List<String> locations = null;
 	
-	private IResource[] files;
+	private String[] files;
 	private Point location;
 	
-	public NewComponentCommand(HComponent the_configuration, IResource[] files, Point location) {
+	public NewComponentCommand(HComponent the_configuration, String[] files, Point location) {
 		super();
 		
 		this.the_configuration = the_configuration;
@@ -42,9 +43,10 @@ public class NewComponentCommand extends Command {
 			components = new ArrayList<HComponent>();
 			locations = new ArrayList<String>();
 			for (int i = 0; i < files.length; i ++) {
-				if (files[i] instanceof IFile) {
-     			   IFile file = (IFile) files[i];
-     			   innerComponent = hPEEditor.getConfiguration(file);
+				if (files[i] instanceof String) {
+     			   String file = (String) files[i];
+     			   URI uri = URI.createFileURI(file); //
+     			   innerComponent = hPEEditor.getConfiguration(uri);
      			   components.add(innerComponent);
 			       locations.add(innerComponent.toString());
      			   

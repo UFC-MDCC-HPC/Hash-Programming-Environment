@@ -76,8 +76,8 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 	
 	private ComponentType component = null;
 	
-	public IFile getComponent(boolean useCached) {
-		IFile file = null;
+	public java.io.File getComponent(boolean useCached) {
+		java.io.File file = null;
 		if (!useCached || component == null) {
 			String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
 			try {
@@ -104,10 +104,10 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 		
 		List<InterfaceType> interfaces = new ArrayList<InterfaceType>();
 		
-		String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
+		// String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
 		
 		
-		IFile f = HPELocationEntry.getComponent(pkName,componentName,locationSite);
+		// java.io.File f = HPELocationEntry.getComponent(pkName,componentName,locationSite);
 		ComponentType c = null;
 		component = null;
 		
@@ -170,63 +170,6 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
          return componentName;
 	}
 	
-	   /**
-     * Creates a file resource given the file handle and contents.
-     *
-     * @param fileHandle the file handle to create a file resource with
-     * @param contents the initial contents of the new file resource, or
-     *   <code>null</code> if none (equivalent to an empty stream)
-     * @param monitor the progress monitor to show visual progress with
-     * @exception CoreException if the operation fails
-     * @exception OperationCanceledException if the operation is canceled
-     */
-    protected void createFile(IFile fileHandle, InputStream contents,
-            IProgressMonitor monitor) throws CoreException {
-        if (contents == null)
-            contents = new ByteArrayInputStream(new byte[0]);
-
-        try {
-            // Create a new file resource in the workspace
-//            if (linkTargetPath != null)
- //               fileHandle.createLink(linkTargetPath,
-   //                     IResource.ALLOW_MISSING_LOCAL, monitor);
-     //       else {
-                IPath path = fileHandle.getFullPath();
-                IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-                int numSegments= path.segmentCount();
-                if (numSegments > 2 && !root.getFolder(path.removeLastSegments(1)).exists()) {
-                    // If the direct parent of the path doesn't exist, try to create the
-                    // necessary directories.
-                    for (int i= numSegments - 2; i > 0; i--) {
-                        IFolder folder = root.getFolder(path.removeLastSegments(i));
-                        if (!folder.exists()) {
-                            folder.create(false, true, monitor);
-                        }
-                    }
-                }
-                if (fileHandle.exists()) {
-                   fileHandle.setContents(contents, true, true, monitor);
-                } else {
-                    fileHandle.create(contents, true, monitor);
-                }
-            
-        } catch (CoreException e) {
-            // If the file already existed locally, just refresh to get contents
-            if (e.getStatus().getCode() == IResourceStatus.PATH_OCCUPIED)
-                fileHandle.refreshLocal(IResource.DEPTH_ZERO, null);
-            else {
-                throw e;
-            }
-        }
-
-        if (monitor.isCanceled())
-            throw new OperationCanceledException();
-    }
-
-    private IProgressMonitor getProgressMonitor() {
-        
-    	return new org.eclipse.core.runtime.NullProgressMonitor();
-    }
 	
 	
 }

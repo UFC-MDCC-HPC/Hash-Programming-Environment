@@ -103,10 +103,10 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
 
     private String tempPath = "temp/";
     
-    private IFile[] getSelectedComponentResources() {
+    private java.io.File[] getSelectedComponentResources() {
         
-    	List<IFile> resources = new ArrayList<IFile>();
-        IFile[] result = new IFile[0];
+    	List<java.io.File> resources = new ArrayList<java.io.File>();
+        java.io.File[] result = new java.io.File[0];
 
         ISelection selection = selectionProvider.getSelection();
         if (!(selection instanceof IStructuredSelection) || selection.isEmpty()) {
@@ -124,7 +124,7 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
                 ILComponentView c = (ILComponentView) obj;
                 
                 // HComponent f = c.saveToTemporaryFile(tempPath);
-                IFile file = c.getComponent(false);
+                java.io.File file = c.getComponent(false);
                 resources.add(file);
 
                 /* TODO: Criar arquivo XML temporario para armazenar o objeto serializado......
@@ -151,7 +151,7 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
                                 
             }
         }
-        result = new IFile[resources.size()]; 
+        result = new java.io.File[resources.size()]; 
         resources.toArray(result);
         return result;
     }
@@ -161,7 +161,13 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
      */
     public void dragSetData(DragSourceEvent event) {
     	
-        IFile[] resources = getSelectedComponentResources();
+        java.io.File[] resources = getSelectedComponentResources();
+        String[] fnames = new String[resources.length];
+        
+        int i = 0;
+        for (java.io.File f : resources) {
+           fnames[i++] = f.getAbsolutePath();
+        }
         
         if (resources == null || resources.length == 0)
             return;
@@ -174,7 +180,7 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
  //           return;
     //    }
         
-       event.data = resources;
+       event.data = fnames;
     }
     
 }

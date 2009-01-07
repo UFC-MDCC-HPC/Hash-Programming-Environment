@@ -127,10 +127,10 @@ public class HPELocationEntry {
 		return componentsList;
 	}
 
-	public static IFile getComponent(String[] pkName, String componentName, URI locationSite) 
+	public static java.io.File getComponent(String[] pkName, String componentName, URI locationSite) 
 	         throws HPEComponentFileNotFound
 	{
-		IFile file = null;
+		java.io.File file = null;
 		try {
 		/**
 		 * o codigo que escrevi abaixo pega o conteudo do component e escreve num arquivo xml
@@ -158,8 +158,9 @@ public class HPELocationEntry {
 		if (!(str == null)) {
 			try {
 				String cFileName = componentName + ".tmp.hpe";  
-				file = createFile(pk,cFileName);
-				String fname = ResourcesPlugin.getWorkspace().getRoot().getLocationURI().getPath().toString() + file.getFullPath().toPortableString();
+				file = java.io.File.createTempFile("fileName",".hpe");; // createFile(pk,cFileName);
+				// String fname = ResourcesPlugin.getWorkspace().getRoot().getLocationURI().getPath().toString() + file.getFullPath().toPortableString();
+				String fname = file.getAbsolutePath();
 				BufferedWriter out = new BufferedWriter(new FileWriter(fname));
 				out.write(str);
 				out.close();        

@@ -4,6 +4,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.dnd.AbstractTransferDropTargetListener;
 import org.eclipse.jface.util.TransferDropTargetListener;
 import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.swt.dnd.DND;
@@ -22,7 +23,7 @@ public class FileTransferDropTargetListener extends
 	   }
 
 	   public FileTransferDropTargetListener(EditPartViewer viewer) {
-	      super(viewer, ResourceTransfer.getInstance());
+	      super(viewer, FileTransfer.getInstance());
 	   }
 	   
 	   protected void updateTargetRequest() {
@@ -46,7 +47,7 @@ public class FileTransferDropTargetListener extends
 	   
 	   protected void handleDrop() {
 		   // File s = ((File[]) getCurrentEvent().data)[0];
-           IResource[] files = (IResource[]) getCurrentEvent().data;
+           String[] files = (String[]) getCurrentEvent().data;
 		   //String separator = System.getProperty("file.separator");
 		   //String r = s.substring(s.lastIndexOf(separator) + 1);
 		   factory.setFiles(files);
@@ -67,7 +68,7 @@ public class FileTransferDropTargetListener extends
 	   
 	   static public class NewComponentFactory2 implements CreationFactory {
 
-		   private IResource[] files;
+		   private String[] files;
 
 	      public Object getNewObject() {
 	    	  return files;
@@ -77,7 +78,7 @@ public class FileTransferDropTargetListener extends
 		      return HComponent.class;
 		  }
 
-		  public void setFiles(IResource[] s) {
+		  public void setFiles(String[] s) {
 		      files = s;
 		  }
 		}	   

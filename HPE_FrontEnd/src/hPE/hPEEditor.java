@@ -873,11 +873,11 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	}	
 
 
-	public static HComponent getConfiguration(IFile file) {
+	public static HComponent getConfiguration(URI uri/* java.io.File file */) {
 		
 		HComponent c;
 		
-    	URI uri = URI.createURI(file.getFullPath().toPortableString());
+    	//  URI.createURI(file.getFullPath().toPortableString());
 		
 		ComponentType cX=null;
 		try {
@@ -898,7 +898,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	protected void setInput(IEditorInput input) {
 		super.setInput(input);
 		IFile file = ((IFileEditorInput) input).getFile();
-		configuration = getConfiguration(file);
+		URI uri = URI.createURI(file.getFullPath().toPortableString());
+		configuration = getConfiguration(uri);
 		setPartName(file.getName());
 	}
 	

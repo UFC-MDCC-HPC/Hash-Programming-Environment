@@ -178,7 +178,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 			return new NewReplicatorCommand((HComponent) this.getHost().getModel(),request.getLocation());
 		}
 		if (childClass == HComponent.class) {
-			return new NewComponentCommand((HComponent) this.getHost().getModel(), (IResource[]) request.getNewObject(), request.getLocation());
+			return new NewComponentCommand((HComponent) this.getHost().getModel(), (String[]) request.getNewObject(), request.getLocation());
 		}
 		
 		return null;
