@@ -20,8 +20,10 @@ import hPE.frontend.backend.locations.util.LocationsResourceImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -290,27 +292,16 @@ public class BackEndLocationList {
 	private static EnvironmentType loadEnvironment(byte[] data, String rootPath) {
 		// TODO Auto-generated method stub
 		try {				
-			InputStream is = new java.io.ByteArrayInputStream(data);
-	
-	    	String fileName = "envtemp.xml";	    	
-	    	
-	    	String sPath = rootPath.substring(0,rootPath.lastIndexOf(".")) + "/" + fileName;
-	    	
-	    	IPath path = new Path(sPath);	    	
-	    	
-	    	IWorkspaceRoot wroot = ResourcesPlugin.getWorkspace().getRoot();
-	    	IFile file = wroot.getFile(path);;
-	    	if (wroot.exists(path)) {
-	    	   file.delete(true, getProgressMonitor());
-	    	} 
-    		    							
-			createFile(file,is,getProgressMonitor());
 			
+	    	java.io.File fileTemp = java.io.File.createTempFile("env","xml");	    	
+			OutputStream out = new FileOutputStream(fileTemp);	    	
+			out.write(data);
+						
 			ResourceSet resourceSet = new ResourceSetImpl();
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put	(Resource.Factory.Registry.DEFAULT_EXTENSION, new EnvironmentResourceFactoryImpl());
 			resourceSet.getPackageRegistry().put(EnvironmentPackage.eNS_URI, EnvironmentPackage.eINSTANCE);
 	    						
-			URI uri = URI.createFileURI(sPath);
+			URI uri = URI.createFileURI(fileTemp.getAbsolutePath());
 			
 			Resource resource = null;
 			
@@ -324,11 +315,9 @@ public class BackEndLocationList {
 			
 			return environment;
 			
-		} catch (CoreException e) {
-        	JOptionPane.showMessageDialog(null,
-        		    "Error Creating File - ".concat(e.getMessage()),
-        		    "Error",
-        		    JOptionPane.ERROR_MESSAGE);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -1,27 +1,17 @@
 package hPE.frontend.base.commands;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-
-import org.eclipse.gef.commands.Command;
-import org.eclipse.ui.IFileEditorInput;
-
+import hPE.hPEEditor;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.hPEEditor;
 
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gef.commands.Command;
 
 
 public class NewComponentCommand extends Command {

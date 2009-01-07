@@ -164,18 +164,6 @@ public class HPELocationEntry {
 				out.write(str);
 				out.close();        
 			
-	
-			/* retorne o objeto ComponentType relativo ao component <componentName> localizado na package
-			   <pkName> relativo a location <locationSite>. Se a uri do arquivo XML do componente eh conhecida, basta:
-			   
-			   ComponentType c = HComponentFactoryImpl.eInstance.loadComponentX(uri);
-			   return c;
-			   
-			 */			
-			
-			   // URI uri = URI.createFileURI(file.getAbsolutePath());
-			   // cX = HComponentFactory.eInstance.loadComponentX(uri);
-			
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -196,21 +184,9 @@ public class HPELocationEntry {
 	}
 	
 	public static IFile createFile(String dirBase, String name){
-		// File file = new File(ResourcesPlugin.getWorkspace().getRoot().getLocationURI().getPath().toString() + "//" + dirBase+"//"+name.trim());
 		IPath path = new Path(dirBase + "//" + name);
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 		return file;
 	}
-/*		if (!file.exists()){
-			try{
-		      file.createNewFile();
-		      System.out.println("arquivo criado");		    
-			}
-			catch(Exception e){
-				System.out.println("falha ao criar arquivo");
-			}
-		}		
-		return file;
-	} */
 
 }
