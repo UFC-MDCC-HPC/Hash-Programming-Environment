@@ -1462,7 +1462,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		         fX.setUri(uri);
 		         fX.setFileType(fileType);
 		         fX.setName(f.getFileName());
-		         fX.setContents(f.getContents());
+		         fX.setContents(f.getCurrentContents());
 		         fX.setVersionId(f.getVersionID());
 		         fsX.add(fX);
 		    }

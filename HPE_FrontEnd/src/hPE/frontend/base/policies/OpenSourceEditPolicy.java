@@ -148,6 +148,8 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 		String sPath = (String) srcFile.getPath();
 		IPath path = new Path(sPath);
 		
+		srcFile.persistSourceFile();
+		
 		String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
 		
     	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);

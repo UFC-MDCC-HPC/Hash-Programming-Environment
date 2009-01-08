@@ -34,6 +34,8 @@ public abstract class HBEAbstractFile implements Serializable {
 		
 		this.fileName = name;
 		this.versionID = versionID;
+		this.contents = contents;
+    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf(".")).concat("/").concat(this.getFileType()).concat("/").concat(this.getVersionID()).concat("/").concat(this.getFileName());
 			
 	//	this.persistSourceFile(contents,rootPath);
 		
@@ -42,9 +44,15 @@ public abstract class HBEAbstractFile implements Serializable {
 	private String fileName;
 	private String sPath;
 	
+	private String contents;
 	
-	public String getContents() {
-		
+/*	public void setContents(String contents) {
+	    this.contents = contents;
+	}
+	*/
+	
+	public String getCurrentContents() {
+				
     	IPath path = new Path(sPath);	
     	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
     	
@@ -61,7 +69,9 @@ public abstract class HBEAbstractFile implements Serializable {
 				n = reader.read(readBuffer);
 			}
 			 			
-			String ss = s.toString();           	    	
+			String ss = s.toString();
+			
+			this.contents = ss;
 			
 		    return ss;
 			
@@ -110,15 +120,10 @@ public abstract class HBEAbstractFile implements Serializable {
 	public abstract String getFileType();
 	
 	
-	public void persistSourceFile(String programText, String rootPath) {
+	public void persistSourceFile() {
 		
-			String programName = this.getFileName();
-			
-			InputStream is = new java.io.StringBufferInputStream(programText);
+			InputStream is = new java.io.StringBufferInputStream(this.contents);
 	
-	    	String uName = programName; 
-			
-	    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf(".")).concat("/").concat(this.getFileType()).concat("/").concat(this.getVersionID()).concat("/").concat(uName);
 	    	IPath path = new Path(sPath);	    	
 	    	
 	    	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
