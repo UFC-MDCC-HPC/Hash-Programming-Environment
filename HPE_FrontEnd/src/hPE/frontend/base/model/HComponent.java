@@ -2135,7 +2135,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
              this.rememberSupply(varName, model);
        	     this.removeComponent(model);
     	  }
-    	  System.err.println("Supply OK ! " + varName + "=" + model.getComponentName());
+//    	  System.err.println("Supply OK ! " + varName + "=" + model.getComponentName());
      } 
 
      private void unlinkFromConfiguration() {

@@ -132,7 +132,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 					   r.add(l);
 					} 
 				} else {
-					System.err.println("cloned ...");
+					// System.err.println("cloned ...");
 				}
 			} else if (p instanceof HComponent) {
 				HComponent c = (HComponent) p;

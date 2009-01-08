@@ -24,7 +24,7 @@ public class ObjectOutputStream_ extends ObjectOutputStream {
     public Object replaceObject(Object obj) throws IOException {
 
     	if (obj == c) {
-    	   System.err.println(c.getName2());
+    	   //System.err.println(c.getName2());
     	   return this.nc;
     	} else     	
     	   return super.replaceObject(obj);

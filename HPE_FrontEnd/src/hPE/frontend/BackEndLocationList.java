@@ -199,7 +199,7 @@ public class BackEndLocationList {
 	
 		List<DeployedComponentInfo> l = new ArrayList<DeployedComponentInfo>();
 		
-		System.out.println("loadDeployedComponentsInfo for " + b.name);
+		// System.out.println("loadDeployedComponentsInfo for " + b.name);
 		
 /*		l.add(new DeployedComponentInfo(new String[] {b.name,"b","c"}, "uuu", 0,"uri1", 0, new String[] {"M","N"}, new DeployedComponentInfoParameter[] {}));
 		l.add(new DeployedComponentInfo(new String[] {b.name,"a","b"}, "vvv", 1,"uri2", 1, new String[] {"I"}, new DeployedComponentInfoParameter[] {}));
