@@ -7,7 +7,7 @@ import java.util.Properties;
 public class HPEProperties {
 
 	    private Properties props;  
-	    private String propertiesFile = "hpe.properties";  
+	    private String propertiesFile = "hpe.frontend.properties";  
 	  
 	    static private HPEProperties eInstance = null;
 	    
