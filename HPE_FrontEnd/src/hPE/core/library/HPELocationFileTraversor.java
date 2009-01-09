@@ -9,6 +9,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeFilter;
 
+import hPE.HPEProperties;
+
 import java.util.List;
 import java.util.ArrayList;
 import org.eclipse.core.runtime.Path;
@@ -42,7 +44,7 @@ public class HPELocationFileTraversor {
         try {
             DOMParser parser = new DOMParser();
          //   locationPath = "f:\\runtime-workspace";
-            String path = (new Path(locationPath.concat("/").concat("library.xml"))).toOSString(); 
+            String path = (new Path(locationPath)).toOSString(); 
             parser.parse(path);
             DocumentImpl document = (DocumentImpl) parser.getDocument();
 //            traverse(document.getLastChild());
@@ -79,11 +81,10 @@ public class HPELocationFileTraversor {
     	
     	
     }
-    
+        
     private String lookForLocationPath() {
         
-    	String path = System.getenv("LIBRARY_ENTRY");    	
-    	return path;
+		return HPEProperties.getInstance().getValue("core_locations");
     	
     }
     

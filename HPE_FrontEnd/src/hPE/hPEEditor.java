@@ -762,7 +762,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		controls.add(m);
 		
 		// a separator
-		PaletteSeparator separator = new PaletteSeparator("palette.seperator");
+		PaletteSeparator separator = new PaletteSeparator("palette.separator");
 		separator.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
 		controls.add(separator);
 		
@@ -777,8 +777,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 				// this is abused to transmit the desired line style 
 				public Object getObjectType() { return null; }
 			},
-			ImageDescriptor.createFromFile(getClass(), "icons/connection16.gif"),
-			ImageDescriptor.createFromFile(getClass(), "icons/connection24.gif")
+			ImageDescriptor.createFromFile(getClass(), "util/icons/connection16.gif"),
+			ImageDescriptor.createFromFile(getClass(), "util/icons/connection24.gif")
 			)
 		);
 		
@@ -791,8 +791,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 				"Create a unit", 
 				HUnit.class,
 				new SimpleFactory(HUnit.class), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle16.gif"), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle24.gif"));
+				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif"), 
+				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle24.gif"));
 		componentsDrawer.add(component);		
 
 		component = new CombinedTemplateCreationEntry(
@@ -800,8 +800,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 				"Create a replicator", 
 				HReplicator.class,
 				new SimpleFactory(HReplicator.class), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle16.gif"), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle24.gif"));
+				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"), 
+				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"));
 		componentsDrawer.add(component);		
 		
 		

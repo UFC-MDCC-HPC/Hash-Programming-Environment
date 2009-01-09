@@ -1,5 +1,6 @@
 package hPE.frontend;
 
+import hPE.HPEProperties;
 import hPE.backend.BackEnd_WSLocator;
 import hPE.backend.BackEnd_WSSoap;
 import hPE.frontend.backend.environment.DeployedComponentInfoType;
@@ -57,22 +58,28 @@ public class BackEndLocationList {
 
 	private static LocationsFactory factory = LocationsFactory.eINSTANCE;
 
+	private static String fileSites = null;
+	
+	private static String getFileSites() {
+		if (fileSites == null) {
+			fileSites = HPEProperties.getInstance().getValue("backend_locations");
+		}
+		return fileSites;
+	}
+
 	public static void loadBackEndsInfo(Map<String,BackEndLocationInfo> backendList) {
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put	(Resource.Factory.Registry.DEFAULT_EXTENSION, new LocationsResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI, LocationsPackage.eINSTANCE);
     			
-		IPath path = /* ResourcesPlugin.getWorkspace().getRoot().getFullPath() */ new Path("h:\\runtime-workspace");
-		
-		URI uri = URI.createFileURI(fileSites);
+		URI uri = URI.createFileURI(getFileSites());
 		
 		Resource resource = null;
 		
 		try {
 			
 			resource = resourceSet.getResource(uri, true);
-
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -95,13 +102,9 @@ public class BackEndLocationList {
 					backendList.put(name,bel);                	
 				}
 			}
-			
-			
-			
 		}
 	}
 
-	private static String fileSites = "h:\\runtime-workspace\\BackEndLocations.xml";  //  @jve:decl-index=0:
 	
 	public static Resource saveData(Map<String,BackEndLocationInfo> backendList) {
 		try {
@@ -123,7 +126,7 @@ public class BackEndLocationList {
 	        
 			// If there are no arguments, emit an appropriate usage message.
 			//
-			URI uri = URI.createFileURI(fileSites);
+			URI uri = URI.createFileURI(getFileSites());
 			Resource resource = resourceSet.createResource(uri);
 			
 			DocumentRoot dX = factory.createDocumentRoot();

@@ -21,20 +21,20 @@ public class HPEComponentLibraryLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {
 		ImageDescriptor descriptor = null;
 		if (element instanceof IHPEComponentLibrary) {
-			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle16.gif");
+			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif");
 		} else if (element instanceof ILPackage) {
-			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "icons/package_obj.gif");
+			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/package_obj.gif");
 		} else if (element instanceof ILComponentView) {
 			ILComponentView e = (ILComponentView) element;
 			if (e.isOK()) {
-			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "icons/component.gif");
+			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/component.gif");
 			} else {
-			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle16.gif");
+			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif");
 			}
 		} else if (element instanceof ILInterfaceCompositeView) {
-			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "icons/unit.gif");
+			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/unit.gif");
 		} else if (element instanceof ILVersion) {
-			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "icons/rectangle16.gif");
+			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif");
 		} else {
 			throw unknownElement(element);
 		}
