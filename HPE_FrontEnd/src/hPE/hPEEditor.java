@@ -3,8 +3,6 @@ package hPE;
 
 
 import hPE.core.library.HPEComponentFileNotFound;
-import hPE.core.location.HLocationService;
-import hPE.core.location.LocationService;
 import hPE.frontend.MainConfigurationEditPartFactory;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
@@ -49,6 +47,9 @@ import hPE.frontend.kinds.activate.actions.UnnestActionAction;
 import hPE.frontend.kinds.activate.model.HActivateConfiguration;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.location.LocationService;
+import hPE.location.LocationServiceService;
+import hPE.location.LocationServiceServiceLocator;
 import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
@@ -62,6 +63,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
@@ -913,62 +915,6 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 
 
 	
-	public static ComponentType getComponent(String[] pkName, String componentName) 
-    throws HPEComponentFileNotFound
-	{
-	
-		/**
-		* o codigo que escrevi abaixo pega o conteudo do component e escreve num arquivo xml
-		* nomeado como: packagename.component
-		*/
-		String pk="";
-		pk = pkName[0];
-		for(int i = 1; i<pkName.length;i++){
-			pk += "."+pkName[i];
-		}
-		
-/*		String urlWS = locationSite.toString();
-		String operation = "getComponent"; 
-		Object [] param = {pk, componentName}; //argumentos da operacao
-		String str = (String)callWebService(operation, urlWS, param);
-*/
-		//BEGIN WITHOUT WEB SERVICE
-		HLocationService loc = new LocationService();	
-		//END WITHOUT WEB SERVICE
-		
-		String str = loc.getComponent(pk, componentName);
-			
-		if (!(str == null)) {
-			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter(pk+"."+componentName+".xml"));
-				out.write(str);
-				out.close();        
-			} catch (IOException e) {}
-			
-		
-			/* retorne o objeto ComponentType relativo ao component <componentName> localizado na package
-			   <pkName> relativo a location <locationSite>. Se a uri do arquivo XML do componente eh conhecida, basta:
-			   
-			   ComponentType c = HComponentFactoryImpl.eInstance.loadComponentX(uri);
-			   return c;
-			   
-			 */			
-			
-			ComponentType cX=null;
-			URI uri = URI.createFileURI(pk+"."+componentName+".xml");
-			try {
-				cX = HComponentFactory.eInstance.loadComponentX(uri);
-			} catch (HPEInvalidComponentResourceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-			
-			return cX;
-			
-		} else {
-			throw new HPEComponentFileNotFound();
-		}
-	}
 	
 }
 

@@ -16,6 +16,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 
+import fr.improve.csharp.editor.CSharpEditor;
 import hPE.HPEVersionEditor;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
@@ -156,7 +157,7 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
     	FileEditorInput fei = new FileEditorInput(file); 
     		    
     	
-		TextEditor te = new TextEditor();
+		CSharpEditor te = new CSharpEditor();
 
 		editor.newPage(te,fei,programName);
 	}

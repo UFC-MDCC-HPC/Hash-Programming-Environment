@@ -6,6 +6,8 @@ package hPE.core.library;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -14,9 +16,13 @@ import java.util.StringTokenizer;
 
 import javax.xml.rpc.ServiceException;
 
-import localhost.axis.LocationServer_jws.LocationServer;
-import localhost.axis.LocationServer_jws.LocationServerService;
-import localhost.axis.LocationServer_jws.LocationServerServiceLocator;
+// import localhost.axis.LocationServer_jws.LocationServer;
+// import localhost.axis.LocationServer_jws.LocationServerService;
+// import localhost.axis.LocationServer_jws.LocationServerServiceLocator;
+
+import hPE.location.LocationService;
+import hPE.location.LocationServiceService;
+import hPE.location.LocationServiceServiceLocator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -30,21 +36,23 @@ public class HPELocationEntry {
 	
 	
 	public static List<String> fetchPackagesFromLocation(URI locationSite) throws RemoteException, ServiceException {
-		// try {
+		try {
 			//Dada a uri de uma location, retorne a lista de packages.
 			List<String> packagesList = new ArrayList<String>();
 			
 			String urlWS = locationSite.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
 	
-			/* BEGIN WITHOUT WEB SERVICE */
-			// HLocationService loc = new LocationService();		
-	        // String str = loc.fetchPackages();
-			/* END WITHOUT WEB SERVICE */
-			LocationServerService locationServerService = new LocationServerServiceLocator();
+			URL url = new URL(urlWS);
 			
-		    LocationServer server = locationServerService.getLocationServer(); 
+			LocationServiceService locationServerService = new LocationServiceServiceLocator();
+			
+		    LocationService server = locationServerService.getLocationService(url); 
 				
 			String str = server.fetchPackages();
+			
+			
+			
+			
 			
 	//		String operation = "fetchPackages"; 
 	//		Object [] param = {}; //argumentos da operacao
@@ -86,7 +94,11 @@ public class HPELocationEntry {
 		// catch (ServiceException e) {
 		 //    return null;
 		 //}
-		 		
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return null;		 		
 	}
 
 	public static List<String> fetchComponents(URI locationSite, String[] packagePath) {
@@ -142,27 +154,25 @@ public class HPELocationEntry {
 			pk += "."+pkName[i];
 		}
 		
-		String urlWS = locationSite.toString();
 
-		LocationServerService locationServerService = new LocationServerServiceLocator();
+		URL url = new URL(locationSite.toString());
 		
-	    LocationServer server = locationServerService.getLocationServer(); 
-		
-	    String str = server.getComponent(pk, componentName);
+		LocationServiceService locationServerService = new LocationServiceServiceLocator();
+	    LocationService server = locationServerService.getLocationService(url); 
+	    String contents = server.getComponent(pk, componentName);
 		
 		// BEGIN NO WEB SERVICE
 		// HLocationService loc = new LocationService();		
         // String str = loc.getComponent(pk, componentName);
         // END NO WEB SERVICE
 			
-		if (!(str == null)) {
+		if (!(contents == null)) {
 			try {
-				String cFileName = componentName + ".tmp.hpe";  
-				file = java.io.File.createTempFile("fileName",".hpe");; // createFile(pk,cFileName);
+				file = java.io.File.createTempFile(componentName,".hpe");; // createFile(pk,cFileName);
 				// String fname = ResourcesPlugin.getWorkspace().getRoot().getLocationURI().getPath().toString() + file.getFullPath().toPortableString();
 				String fname = file.getAbsolutePath();
 				BufferedWriter out = new BufferedWriter(new FileWriter(fname));
-				out.write(str);
+				out.write(contents);
 				out.close();        
 			
 			} catch (IOException e) {
@@ -180,6 +190,9 @@ public class HPELocationEntry {
 			
 		//} catch (HPEInvalidComponentResourceException e) {
 		//	e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return file;
 	}

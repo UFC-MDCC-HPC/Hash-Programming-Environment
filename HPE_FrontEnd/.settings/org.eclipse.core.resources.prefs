@@ -1,7 +1,28 @@
-#Wed Dec 31 15:33:19 GMT-03:00 2008
+#Sat Jan 10 17:01:03 GMT-03:00 2009
 eclipse.preferences.version=1
 encoding//src/hPE/backend/BackEnd_WS.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSLocator.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoap.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoap12Stub.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoapStub.java=UTF-8
+encoding//src/hPE/location/CreatePackage.java=UTF-8
+encoding//src/hPE/location/CreatePackageResponse.java=UTF-8
+encoding//src/hPE/location/FetchInterface.java=UTF-8
+encoding//src/hPE/location/FetchInterfaceResponse.java=UTF-8
+encoding//src/hPE/location/FetchPackages.java=UTF-8
+encoding//src/hPE/location/FetchPackagesResponse.java=UTF-8
+encoding//src/hPE/location/GetComponent.java=UTF-8
+encoding//src/hPE/location/GetComponentResponse.java=UTF-8
+encoding//src/hPE/location/LocationService.java=UTF-8
+encoding//src/hPE/location/LocationServiceService.java=UTF-8
+encoding//src/hPE/location/LocationServiceServiceLocator.java=UTF-8
+encoding//src/hPE/location/LocationServiceSoapBindingStub.java=UTF-8
+encoding//src/hPE/location/RegisterComponent.java=UTF-8
+encoding//src/hPE/location/RegisterComponentResponse.java=UTF-8
+encoding//src/hPE/location/RegisterInterface.java=UTF-8
+encoding//src/hPE/location/RegisterInterfaceResponse.java=UTF-8
+encoding//src/hPE/location/RemovePackage.java=UTF-8
+encoding//src/hPE/location/RemovePackageResponse.java=UTF-8
+encoding//src/hPE/location/UnregisterComponent.java=UTF-8
+encoding//src/hPE/location/UnregisterComponentResponse.java=UTF-8
+encoding//src/hPE/location/xml/InterfaceType.java=UTF-8
