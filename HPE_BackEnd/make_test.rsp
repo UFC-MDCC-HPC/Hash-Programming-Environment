@@ -1,0 +1,14 @@
+./deploy_test/Program.cs
+
+-lib:"C:\Program Files\Mono-2.0.1\lib\mono\DGAC"
+
+-r:System.Runtime.Remoting.dll
+-r:System.Data 
+-r:System.Xml
+-r:System
+
+-r:DGAC
+
+-target:exe
+
+-out:./bin/Test.exe

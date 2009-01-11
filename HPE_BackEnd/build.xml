@@ -1,0 +1,78 @@
+<?xml version='1.0'?>
+<project basedir='.' default='all' name='HPE_BackEnd'>
+    <property name='nant.settings.currentframework' value='mono-2.0'/>
+    <property name='build' value='bin'/>
+	<property name='src' value='src'/>
+    <target name='all' depends='dgac,worker,webservice,test'/>
+    <target name='dgac'>
+    <csc debug='true' optimize='true' output='${build}/DGAC.dll' target='library' keyfile='DGAC/DGAC.snk'>
+      <sources>
+        <include name='DGAC/*.cs'/>
+        <include name='DGAC/base/*.cs'/>
+        <include name='DGAC/tree/*.cs'/>
+        <include name='DGAC/database/model/*.cs'/>
+        <include name='DGAC/database/dao/*.cs'/>
+      </sources>
+      <resources dynamicprefix="true">
+        <include name='**/*.resx'/>
+        <include name='${src}/Resources/*.bmp'/>
+      </resources>
+      <references>
+        <include name='System.dll'/>
+        <include name='System.Data.dll'/>
+        <include name='System.Xml.dll'/>
+        <include name='System.Runtime.Remoting.dll'/>
+        <include name='DGAC/database/MySql.Data.dll'/>
+      </references>
+    </csc>
+    </target>
+    <target name='worker' depends='dgac'>
+    <csc debug='true' optimize='true' output='${build}/worker.exe' target='exe'>
+      <sources>
+        <include name='worker/RemotingServerWorker.cs'/>
+      </sources>
+      <resources dynamicprefix="true">
+        <include name='**/*.resx'/>
+        <include name='${src}/Resources/*.bmp'/>
+      </resources>
+      <references>
+        <include name='System.Runtime.Remoting.dll'/>
+        <include name='${build}/DGAC.dll'/>
+      </references>
+    </csc>
+    </target>
+    <target name='webservice' depends='dgac'>
+    <csc debug='true' optimize='true' output='${build}/BackEndWS.asmx.dll' target='library'>
+      <sources>
+        <include name='ws/BackEndWS.asmx.cs'/>
+      </sources>
+      <resources dynamicprefix="true">
+        <include name='**/*.resx'/>
+        <include name='${src}/Resources/*.bmp'/>
+      </resources>
+      <references>
+        <include name='System.Runtime.Remoting.dll'/>
+        <include name='System.Web.Services.dll'/>
+        <include name='System.Data.dll'/>
+        <include name='${build}/DGAC.dll'/>
+      </references>
+    </csc>
+    </target>
+    <target name='test' depends='dgac'>
+    <csc debug='true' optimize='true' output='${build}/test.exe' target='exe'>
+      <sources>
+        <include name='deploy_test/Program.cs'/>
+      </sources>
+      <resources dynamicprefix="true">
+        <include name='**/*.resx'/>
+        <include name='${src}/Resources/*.bmp'/>
+      </resources>
+      <references>
+        <include name='System.dll'/>
+        <include name='System.Data.dll'/>
+        <include name='System.Xml.dll'/>
+        <include name='${build}/DGAC.dll'/>
+      </references>
+    </csc>
+    </target>
+</project>
