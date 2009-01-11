@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<packageListType xmlns="http://www.example.org/packages">
+    <package path="packLucas">
+        <component name="compLucas">
+            <interface name="interfLucas">
+                <file name="test" extension=".java" descriptiveName="faz qq">
+                    <contents>conteudo do arquivo test.java</contents>
+                </file>
+            </interface>
+        </component>
+    </package>
+</packageListType>

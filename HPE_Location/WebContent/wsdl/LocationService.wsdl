@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://location.hPE" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://location.hPE" xmlns:intf="http://location.hPE" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://location.hPE" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getComponent">
+    <complexType>
+     <sequence>
+      <element name="packageName" type="xsd:string"/>
+      <element name="componentName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getComponentResponse">
+    <complexType>
+     <sequence>
+      <element name="getComponentReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createPackage">
+    <complexType>
+     <sequence>
+      <element name="packageName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createPackageResponse">
+    <complexType>
+     <sequence>
+      <element name="createPackageReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removePackage">
+    <complexType>
+     <sequence>
+      <element name="packageName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removePackageResponse">
+    <complexType>
+     <sequence>
+      <element name="removePackageReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="fetchPackages">
+    <complexType/>
+   </element>
+   <element name="fetchPackagesResponse">
+    <complexType>
+     <sequence>
+      <element name="fetchPackagesReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="registerComponent">
+    <complexType>
+     <sequence>
+      <element name="packageName" type="xsd:string"/>
+      <element name="componentName" type="xsd:string"/>
+      <element name="contents" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="registerComponentResponse">
+    <complexType>
+     <sequence>
+      <element name="registerComponentReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="unregisterComponent">
+    <complexType>
+     <sequence>
+      <element name="packageName" type="xsd:string"/>
+      <element name="componentName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="unregisterComponentResponse">
+    <complexType>
+     <sequence>
+      <element name="unregisterComponentReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="unregisterComponentResponse">
+
+      <wsdl:part element="impl:unregisterComponentResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="removePackageResponse">
+
+      <wsdl:part element="impl:removePackageResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getComponentRequest">
+
+      <wsdl:part element="impl:getComponent" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerComponentResponse">
+
+      <wsdl:part element="impl:registerComponentResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="fetchPackagesResponse">
+
+      <wsdl:part element="impl:fetchPackagesResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getComponentResponse">
+
+      <wsdl:part element="impl:getComponentResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createPackageResponse">
+
+      <wsdl:part element="impl:createPackageResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerComponentRequest">
+
+      <wsdl:part element="impl:registerComponent" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="removePackageRequest">
+
+      <wsdl:part element="impl:removePackage" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createPackageRequest">
+
+      <wsdl:part element="impl:createPackage" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="unregisterComponentRequest">
+
+      <wsdl:part element="impl:unregisterComponent" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="fetchPackagesRequest">
+
+      <wsdl:part element="impl:fetchPackages" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LocationService">
+
+      <wsdl:operation name="getComponent">
+
+         <wsdl:input message="impl:getComponentRequest" name="getComponentRequest"/>
+
+         <wsdl:output message="impl:getComponentResponse" name="getComponentResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createPackage">
+
+         <wsdl:input message="impl:createPackageRequest" name="createPackageRequest"/>
+
+         <wsdl:output message="impl:createPackageResponse" name="createPackageResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removePackage">
+
+         <wsdl:input message="impl:removePackageRequest" name="removePackageRequest"/>
+
+         <wsdl:output message="impl:removePackageResponse" name="removePackageResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="fetchPackages">
+
+         <wsdl:input message="impl:fetchPackagesRequest" name="fetchPackagesRequest"/>
+
+         <wsdl:output message="impl:fetchPackagesResponse" name="fetchPackagesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerComponent">
+
+         <wsdl:input message="impl:registerComponentRequest" name="registerComponentRequest"/>
+
+         <wsdl:output message="impl:registerComponentResponse" name="registerComponentResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="unregisterComponent">
+
+         <wsdl:input message="impl:unregisterComponentRequest" name="unregisterComponentRequest"/>
+
+         <wsdl:output message="impl:unregisterComponentResponse" name="unregisterComponentResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LocationServiceSoapBinding" type="impl:LocationService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getComponent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getComponentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getComponentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createPackage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createPackageRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createPackageResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removePackage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removePackageRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removePackageResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="fetchPackages">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="fetchPackagesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="fetchPackagesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerComponent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="registerComponentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="registerComponentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="unregisterComponent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="unregisterComponentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="unregisterComponentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LocationServiceService">
+
+      <wsdl:port binding="impl:LocationServiceSoapBinding" name="LocationService">
+
+         <wsdlsoap:address location="http://localhost:8081/HPE_Location/services/LocationService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
