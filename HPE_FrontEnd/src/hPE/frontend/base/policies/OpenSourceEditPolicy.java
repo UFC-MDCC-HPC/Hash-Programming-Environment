@@ -12,11 +12,24 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.editparts.AbstractEditPart;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IEditorRegistry;
+import org.eclipse.ui.IFileEditorMapping;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.internal.EditorManager;
+import org.eclipse.ui.internal.WorkbenchPage;
+import org.eclipse.ui.internal.WorkbenchPlugin;
+import org.eclipse.ui.internal.registry.EditorDescriptor;
 import org.eclipse.ui.part.FileEditorInput;
 
-import fr.improve.csharp.editor.CSharpEditor;
+// import fr.improve.csharp.editor.CSharpEditor;
 import hPE.HPEVersionEditor;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
@@ -142,25 +155,53 @@ public boolean canExecute() {
 
 public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceVersion) {
 	
-    // ModelType i = (ModelType) getModel();
-	
+	try {
+
 	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) {
 			
-		String sPath = (String) srcFile.getPath();
-		IPath path = new Path(sPath);
+		 String sPath = (String) srcFile.getPath();
+		 IPath path = new Path(sPath);
 		
-		srcFile.persistSourceFile();
+		 srcFile.persistSourceFile();
 		
-		String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
+		 String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
 		
-    	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-    	FileEditorInput fei = new FileEditorInput(file); 
-    		    
+    	 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+    	 FileEditorInput fei = new FileEditorInput(file); 
     	
-		CSharpEditor te = new CSharpEditor();
-
-		editor.newPage(te,fei,programName);
+    	 IWorkbench wb = PlatformUI.getWorkbench();    	
+    	 EditorDescriptor er = (EditorDescriptor) wb.getEditorRegistry().getDefaultEditor(sPath);
+    	    	
+    	
+    	 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    	 EditorManager em = ((WorkbenchPage) page).getEditorManager();
+  		 IEditorReference editorRef = em.openEditor(er.getId(),fei,true,null);
+    	 IEditorPart te = editorRef.getEditor(true);
+    	 IEditorPart te2 = te.getClass().newInstance();
+    	 page.closeEditor(te,false);
+    	 
+		 editor.newPage(te2,fei,programName);
 	}
+		
+	} /*catch (InstantiationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IllegalAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} */catch (PartInitException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (InstantiationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IllegalAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} 
 }
 
 public void closeSourceCodeFile(HBESourceVersion sourceVersion) {
