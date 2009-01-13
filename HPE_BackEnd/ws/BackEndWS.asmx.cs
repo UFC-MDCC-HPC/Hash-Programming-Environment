@@ -15,7 +15,7 @@ namespace Back_End_WS
     /// <summary>
     /// Web Service de entrada para o Back-End do HPE.
     /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
+    [WebService(Namespace = "http://backend.hPE/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
     public class BackEnd_WS : System.Web.Services.WebService
@@ -29,31 +29,6 @@ namespace Back_End_WS
     	
 	    }
     	
-	    [WebMethod]
-	    /*
-	     * XML é visto como um array de bytes, chamado data.
-	     * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
-	     * passado ao DGAC 
-         */
-	    public String deployAbstractComponent(byte[] data){
-		    try {
-                string filename = "newConfig";
-		        string path = Constants.PATH_TEMP_WORKER+filename+".xml";
-		        if(data!=null){
-			        FileUtil.saveByteArrayIntoFile(data,path);
-		            ComponentType c = LoaderApp.DeserializeObject(path);
-		            dgac.registerAbstractComponent(c);
-		        }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return e.Message;
-            }
-
-            return null;
-        }
-
         [WebMethod]
         /*
          * XML é visto como um array de bytes, chamado data.
@@ -70,11 +45,14 @@ namespace Back_End_WS
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
-                    dgac.registerConcreteComponent(c);
+                    if (c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
+                        dgac.registerAbstractComponent(c);
+                    else
+                        dgac.registerConcreteComponent(c);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
-                return e.Message;
+                return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
             }
 
             return null;
@@ -88,6 +66,20 @@ namespace Back_End_WS
             byte[] xmlEnv = LoaderApp.SerializeObject(Constants.PATH_TEMP_WORKER + "environment.xml", env);
 
             return xmlEnv;
+        }
+
+        [WebMethod]
+        public String runApplication(int id_concrete, String[] eIds, int[] eVls)
+        {
+            try
+            {
+                return dgac.runApplication(id_concrete, eIds, eVls);
+            }
+            catch (Exception e)
+            {
+                return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
+            }
+
         }
 
 

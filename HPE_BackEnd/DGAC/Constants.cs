@@ -4,13 +4,13 @@ namespace DGAC.utils{
 
 public class Constants {
 
-    public const string PROPERTIES_FILE = "h:\\temp\\properties.xml";
+    public const string PROPERTIES_FILE = "h:\\temp\\hpe.backend.properties.xml";
 
     public const int DLL_OUT = 0;
     public const int EXE_OUT = 1;
     public static string PATH_TEMP_WORKER = FileUtil.readConstant("path_temp_worker");
     public static string PATH_DGAC = FileUtil.readConstant("path_dgac");
-    public static string PATH_MONO_BIN = FileUtil.readConstant("path_dgac");
+    // public static string PATH_MONO_BIN = FileUtil.readConstant("path_dgac");
     public static string UNIT_PACKAGE_PATH = FileUtil.readConstant("unit_package_path"); // HASH_UNIT_PACKAGE";
     public static string PATH_BIN = FileUtil.readConstant("path_bin");
     public static string SERVICE_NAME = FileUtil.readConstant("service_name");
