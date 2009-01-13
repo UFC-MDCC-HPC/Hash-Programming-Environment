@@ -84,7 +84,7 @@ public class Parser implements Observer{
     	Properties properties = new Properties();
     	 
         try {
-        	String s = "location.properties";
+        	String s = "hpe.location.properties";
             properties.load(new FileInputStream(Parser.curDir+s));
         } catch (IOException e) {
         	e.printStackTrace();
