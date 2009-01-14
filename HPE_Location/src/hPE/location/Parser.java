@@ -84,13 +84,48 @@ public class Parser implements Observer{
     	Properties properties = new Properties();
     	 
         try {
-        	String s = "hpe.location.properties";
-            properties.load(new FileInputStream(Parser.curDir+s));
+        	String s = null;
+
+        	s = getArgVal("--properties");
+        	if (s == null) {
+        		s = System.getenv("HPE_LOCATION_PROPERTIES");
+        		if (s == null) {
+        			s = curDir + "hpe.location.properties";
+        		}
+        	}
+        	
+        	
+        	
+            properties.load(new FileInputStream(s));
         } catch (IOException e) {
         	e.printStackTrace();
         }
         
         return properties;
     }
+    
+    public static String[] args = {};
+    
+    public static String getArgVal(String argId)
+    {      
+        int pos = 0;
+        for (String arg : args)
+        {
+            if (arg.equals(argId))
+            {
+                if (pos <= args.length)
+                {
+                    return args[pos+1];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            pos++;
+        }
+        return null;
+    }
+
 }
 
