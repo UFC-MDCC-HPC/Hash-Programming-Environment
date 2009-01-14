@@ -48,12 +48,14 @@ namespace DGAC.database
                 {
                         int port = 5000;
                         if (args.Length > 0) {
-			                port = Convert.ToInt32(args[0]);
+			                port = Convert.ToInt32(Constants.getArgVal("--port"));
                         } else {
                             Console.WriteLine("Port was not informed in the command line. Using default port (5000).");                             
                         }
                         new RemotingServerWorker(port);
 					 
                 }
+
+
         }
 }

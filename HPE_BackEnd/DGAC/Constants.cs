@@ -1,10 +1,26 @@
 using System;
+using System.IO;
 
 namespace DGAC.utils{
 
 public class Constants {
 
-    public const string PROPERTIES_FILE = "h:\\temp\\hpe.backend.properties.xml";
+    public static string PROPERTIES_FILE = getPropertiesFilePath(); // "h:\\temp\\hpe.backend.properties.xml";
+
+    private static string getPropertiesFilePath()
+    {
+        string[] args = Environment.GetCommandLineArgs();
+        string properties_file_path = getArgVal("--properties");
+        if (properties_file_path == null)
+        {
+            properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
+            if (properties_file_path == null)
+            {
+                properties_file_path = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "hpe.backend.properties";
+            }
+        }
+        return properties_file_path;
+    }
 
     public const int DLL_OUT = 0;
     public const int EXE_OUT = 1;
@@ -21,6 +37,29 @@ public class Constants {
     public static string gac_util = FileUtil.readConstant("gac_util");
     public static string mpi_run = FileUtil.readConstant("mpi_run");
 
+    public static string getArgVal(string argId)
+    {
+        string[] args = Environment.GetCommandLineArgs();
+        int pos = 0;
+        foreach (string arg in args)
+        {
+            if (arg.Equals(argId))
+            {
+                if (pos <= args.Length)
+                {
+                    return args[pos+1];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            pos++;
+        }
+        return null;
+    }
+
+    
     /*
     public const string PATH_TEMP_WORKER = "h:\\temp\\";
     public const string PATH_DGAC = "\"C:\\Program Files\\Mono-2.0.1\\lib\\mono\\DGAC\"";

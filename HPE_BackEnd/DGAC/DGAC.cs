@@ -51,8 +51,7 @@ namespace DGAC
             {
                 ch = new TcpChannel(this.channel);
                 ChannelServices.RegisterChannel(ch, true);
-
-
+                
             }
             catch (System.Runtime.Remoting.RemotingException re)
             {
@@ -902,7 +901,6 @@ namespace DGAC
 
             IList<Enumerator> eList = edao.list(id_abstract);
             IList<string> rList = new List<string>();
-            int i = 0;
             foreach (Enumerator e in eList)
             {
                 IList<EnumeratorSplit> esList = esdao.listSplits(e.Id_abstract, e.Id_enumerator);
@@ -942,8 +940,6 @@ namespace DGAC
         public String runApplication(int id_concrete, String[] eIds, int[] eVls)
         {
             // assert: eIds.Length = eVls.Length
-            string message = "ok";
-            
             try
             {
                 Connector.openConnection();
