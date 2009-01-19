@@ -13,10 +13,10 @@ public class Connector {
 	 	string connectionString =
           "Server=" + server + ";" +
           "Database=" + database + ";" +
-          "User ID=root" + user + ";" +
+          "User ID=" + user + ";" +
           "Password=" + password + ";"  +
           "Pooling=" + pooling + ";" +
-          port != null ? "Port=5001;" : "";
+          (port != null ? "Port=5001;" : "");
        IDbConnection dbcon;
        dbcon = new MySqlConnection(connectionString);
        return dbcon;
