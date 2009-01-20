@@ -32,7 +32,7 @@ public class FuseComponentsAction extends SelectionAction {
 		setId(FUSE_COMPONENTS);
 		setToolTipText(FUSE_COMPONENTS);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

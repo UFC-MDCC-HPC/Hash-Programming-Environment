@@ -31,7 +31,7 @@ public class BuildInterfaceFromSlicesAction extends SelectionAction {
 		setId("Create Interface");
 		setToolTipText("Create Interface");
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle16.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

@@ -31,7 +31,7 @@ public class DetachInterfaceAction extends SelectionAction {
 		setId("Detach Interface");
 		setToolTipText("Detach Interface");
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

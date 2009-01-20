@@ -32,7 +32,7 @@ public class InheritFromAction extends SelectionAction {
 		setId(INHERIT_FROM);
 		setToolTipText(INHERIT_FROM);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

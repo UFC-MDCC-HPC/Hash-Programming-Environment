@@ -17,6 +17,8 @@ public abstract class HBESourceVersion<FileType extends HBEAbstractFile> impleme
 	
 	public abstract String getFileType();
 	
+	public abstract String getSynthesizerType(boolean abs);
+	
 	private String versionID = ".";
 	
 	public String getVersionID() {
@@ -50,6 +52,6 @@ public abstract class HBESourceVersion<FileType extends HBEAbstractFile> impleme
 	}
 
 	private boolean implement = false;
-	
+		
 	
 }

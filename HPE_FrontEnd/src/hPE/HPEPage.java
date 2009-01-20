@@ -10,11 +10,15 @@ import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.xml.factory.HComponentFactory;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.swing.JOptionPane;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
@@ -26,6 +30,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -38,12 +43,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.internal.Workbench;
 
 public class HPEPage extends WizardNewFileCreationPage implements
 		SelectionListener {
@@ -68,77 +75,19 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	private boolean existentialType = false;
 	
 	private Button check = null;
-	private Button model1 = null;
-	private Button model2 = null;
-	private Button model3= null;
-	private Button model4 = null; 
-	private Button model5= null;
-	private Button model6 = null; 
-	private Button model7 = null; 
-    private Button model8 = null; 
-	private int modelSelected1 = 1;
+	private int modelSelected1 = 7;
 //	private int modelSelected2 = 1;
+	
+
+	private SetVersionDialog composite2 = null;
 	
 	public void createControl(Composite parent) {
 		super.createControl(parent);
-		this.setFileName("empty" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
+		this.setFileName(/* "empty" + exampleCount + */ "*.hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		Composite composite1 = (Composite)getControl();
 		
-		
-		// sample section generation group
-		Group group1 = new Group(composite1,SWT.NONE);
-		group1.setLayout(new GridLayout());
-		group1.setText("Kind of Component"); 
-		group1.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
-		
-		// sample section generation group
-	//	Group group2 = new Group(composite1,SWT.NONE);
-	//	group2.setLayout(new GridLayout());
-	//	group2.setText("Existential Type"); 
-	//	group2.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
-		
-		// sample section generation checkboxes
-
-	//	check = new Button(group2,SWT.CHECK);
-	//	check.setText("Existential");
-	//	check.addSelectionListener(this);
-		
-		// sample section generation checkboxes
-		model1 = new Button(group1,SWT.RADIO);
-		model1.setText("Data");
-		model1.addSelectionListener(this);
-		model1.setSelection(true);
-
-		model2 = new Button(group1,SWT.RADIO);
-		model2.setText("Computation");
-		model2.addSelectionListener(this);
-
-		model3 = new Button(group1,SWT.RADIO);
-		model3.setText("Synchronizer");
-		model3.addSelectionListener(this);
-
-		model4 = new Button(group1,SWT.RADIO);
-		model4.setText("Architecture");
-		model4.addSelectionListener(this);
-
-		model5 = new Button(group1,SWT.RADIO);
-		model5.setText("Environment");
-		model5.addSelectionListener(this);
-
-		model6 = new Button(group1,SWT.RADIO);
-		model6.setText("Qualifier");
-		model6.addSelectionListener(this);
-
-		model7 = new Button(group1,SWT.RADIO);
-		model7.setText("Application");
-		model7.addSelectionListener(this);
-		
-	//	model8 = new Button(group1,SWT.RADIO);
-	//	model8.setText("Grouping");
-	//	model8.addSelectionListener(this);
-		
-		new Label(composite1,SWT.NONE);
-
+		composite2 = new SetVersionDialog(this, composite1, SWT.NONE);
+						
 		setPageComplete(validatePage());
 		
 	}
@@ -173,28 +122,28 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		if( e.getSource() == check ){
 			existentialType = ! existentialType;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model1 ){
+		} if( e.getSource() == composite2.getRadioDataStructure() ){
 			modelSelected1 = 1;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model2 ){
+		} if( e.getSource() == composite2.getRadioComputation() ){
 			modelSelected1 = 2;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model3 ){
+		} if( e.getSource() == composite2.getRadioSynchronizer() ){
 			modelSelected1 = 3;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model4 ){
+		} if( e.getSource() == composite2.getRadioArchitecture() ){
 			modelSelected1 = 4;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model5 ){
+		} if( e.getSource() == composite2.getRadioEnvironment() ){
 			modelSelected1 = 5;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model6 ){
+		} if( e.getSource() == composite2.getRadioQualifier() ){
 			modelSelected1 = 6;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model7 ){
+		} if( e.getSource() == composite2.getRadioApplication() ){
 			modelSelected1 = 7;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == model8 ){
+		} if( e.getSource() == composite2.getRadioService() ){
 			modelSelected1 = 8;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		}
@@ -205,7 +154,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 
 	protected InputStream getInitialContents() {
 		
-		String s = this.getFileName();
+		String s = this.getFileName();	
 		String separator = ".";
 		s = s.substring(0,s.lastIndexOf(separator));
 		
@@ -213,7 +162,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		
 		String absolutePath2 = absolutePath.substring(0,absolutePath.lastIndexOf(".")) + ".xml";
 		
-		URI uri = URI.createFileURI(absolutePath2);
+		URI uri = URI.createFileURI(absolutePath);
 		
 		HComponent c = null;
 		if (modelSelected1 == 1) {
@@ -233,35 +182,66 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		} else {
 			// ERROR;
 		}
-		
-		c.setLocation(absolutePath);
+			
+		setComponentVersion(c);
+		setComponentKeys(c,this.getContainerFullPath());
+		c.setAbstract(composite2.isAbstract());
 		
 		IPath path = new Path(absolutePath);
-		c.setPackagePath(path.uptoSegment(1).makeRelative());
+		// c.setPackagePath(path.removeFirstSegments(1).uptoSegment(1).makeRelative());
+		c.setPackagePath(new Path(composite2.getPackage()));
 		
 		IFile file = persistSourceFile("", path);
 		
 		factory.saveComponent(c,file,null);
 		
 		ByteArrayInputStream bais = null;
-//		try {
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			ObjectOutputStream oos = new ObjectOutputStream(baos);
-//			oos.writeObject(c);
-//			oos.flush();
-//			oos.close();
-//			baos.close(); 
-		//	bais = new ByteArrayInputStream(baos.toByteArray());
-		//	bais.close();
-//		}
-//		catch(Exception e) {
-//			e.printStackTrace();
-//		} */
 
 		return bais ;
 		
 	}
+
+	private void runCommand(String[] cmd, String[] env, java.io.File file) {
+		
+		try 
+		{ 
+			Process p = Runtime.getRuntime().exec(cmd, env, file); 
+			int r = p.waitFor(); 
+			
+			BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
+			String line=reader.readLine(); 
+			while(line!=null) 
+			{ 
+				System.out.println(line); 
+				line=reader.readLine(); 
+			} 
 	
+		} 
+		catch(IOException e1) {} 
+		catch(InterruptedException e2) {} 	
+	}
+	
+	private void setComponentKeys(HComponent c, IPath path) {
+		
+		String sn_path = HPEProperties.getInstance().getValue("sn_path");;
+		IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocation()));		
+		
+		IPath systemPath = file.getLocation().removeLastSegments(1);
+		
+        java.io.File systemFile = new java.io.File(systemPath.toOSString());
+		
+		
+        runCommand(new String[] {sn_path, "-k", c.getComponentName() + ".snk"}, new String[] {}, systemFile);
+		
+	}
+
+	private void setComponentVersion(HComponent c) {
+		Integer[] version = new Integer[4];
+		for (int i=0; i<=3;i++)
+		    version[i] = composite2.getVersionField(i);
+		c.newVersion(version);
+	}
+
 	private HComponentFactory factory = HComponentFactory.eInstance;	
 	
 	public IFile persistSourceFile(String programText, IPath path) {

@@ -222,12 +222,16 @@
 				maxOccurs="1" minOccurs="0">
 			</element>
 
+			<element name="versions" type="tns:VersionType"
+				maxOccurs="unbounded" minOccurs="1">
+			</element>
 		</sequence>
 		<attribute name="kind" type="tns:SupportedKinds"></attribute>
 		<attribute name="name" type="string"></attribute>
 
 		<attribute name="packagePath" type="anyURI"></attribute>
 		<attribute name="hash_component_UID" type="string"></attribute>
+		<attribute name="isAbstract" type="boolean"></attribute>
 	</complexType>
 	<complexType name="InterfaceSliceType">
 		<sequence>
@@ -554,5 +558,12 @@
 
     <complexType name="EnumeratorFromRecursionType">
     	<attribute name="cRef" type="string"></attribute>
+    </complexType>
+
+    <complexType name="VersionType">
+    	<attribute name="field1" type="int"></attribute>
+    	<attribute name="field2" type="int"></attribute>
+    	<attribute name="field3" type="int"></attribute>
+    	<attribute name="field4" type="int"></attribute>
     </complexType>
 </schema>

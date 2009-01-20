@@ -14,23 +14,23 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.HPEPlugin;
 
-public class BrowseAction extends SelectionAction {
+public class NewVersionAction extends SelectionAction {
 
 	private static final String
-		BROWSE_REQUEST = "Browse";
+		NEW_VERSION_REQUEST = "Manage Version";
 	
 	public static final String
-        BROWSE = "Browse";
+        NEW_VERSION = "Manage Version";
 
 	Request request;
 	boolean show;
 	
-	public BrowseAction(IWorkbenchPart part) {
+	public NewVersionAction(IWorkbenchPart part) {
 	   super(part);
-	   request = new Request(BROWSE_REQUEST);
-	   setText(BROWSE);
-	   setId(BROWSE);
-	   setToolTipText(BROWSE);
+	   request = new Request(NEW_VERSION_REQUEST);
+	   setText(NEW_VERSION);
+	   setId(NEW_VERSION);
+	   setToolTipText(NEW_VERSION);
 	   setImageDescriptor(
 	   ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 	   setHoverImageDescriptor(getImageDescriptor());		
@@ -42,29 +42,26 @@ public class BrowseAction extends SelectionAction {
 	}
 	
 	private boolean canPerformAction() {
-		if (getSelectedObjects().isEmpty())
+		
+		if (getSelectedObjects().size() !=1 )
 			return false;
-		List parts = getSelectedObjects();
-		for (int i=0; i<parts.size(); i++){
-			Object o = parts.get(i);
-			if (!(o instanceof EditPart)) return false;
-			EditPart part = (EditPart)o;
-			if (!(part.getModel() instanceof HComponent)) {
-				return false;
-			}
-            HComponent c = (HComponent) part.getModel();
-            HComponent topC = (HComponent) c.getTopConfiguration();
-            if (c!=topC) 
-            	return false;
+		EditPart part = (EditPart) getSelectedObjects().get(0);
+		if (!(part.getModel() instanceof HComponent)) {
+			return false;
+		}
+        HComponent c = (HComponent) part.getModel();
+        HComponent topC = (HComponent) c.getTopConfiguration();
+        
+        if (c!=topC) return false;
+        if (topC.isAbstractConfiguration()) return false;
             
-      	}
-		return true;
+      	return true;
 	}
 	
 	private Command getCommand() {
 		List editparts = getSelectedObjects();
 		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel(BROWSE);//$NON-NLS-1$
+		cc.setDebugLabel("Manage Version");//$NON-NLS-1$
 		for (int i=0; i < editparts.size(); i++) {
 			EditPart part = (EditPart)editparts.get(i);
 			cc.add(part.getCommand(request));

@@ -66,6 +66,7 @@ import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
+import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -461,6 +462,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass unitTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass versionTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -924,8 +932,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_HashComponentUID() {
-		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(1);
+	public EReference getComponentHeaderType_Versions() {
+		return (EReference)componentHeaderTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -933,7 +941,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Kind() {
+	public EAttribute getComponentHeaderType_HashComponentUID() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -942,7 +950,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Name() {
+	public EAttribute getComponentHeaderType_IsAbstract() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -951,8 +959,26 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_PackagePath() {
+	public EAttribute getComponentHeaderType_Kind() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentHeaderType_Name() {
+		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentHeaderType_PackagePath() {
+		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -2364,6 +2390,51 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getVersionType() {
+		return versionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersionType_Field1() {
+		return (EAttribute)versionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersionType_Field2() {
+		return (EAttribute)versionTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersionType_Field3() {
+		return (EAttribute)versionTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersionType_Field4() {
+		return (EAttribute)versionTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getVisualElementAttributes() {
 		return visualElementAttributesEClass;
 	}
@@ -2528,7 +2599,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		componentHeaderTypeEClass = createEClass(COMPONENT_HEADER_TYPE);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__BASE_TYPE);
+		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VERSIONS);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID);
+		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__IS_ABSTRACT);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__KIND);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__NAME);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__PACKAGE_PATH);
@@ -2730,6 +2803,12 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(unitTypeEClass, UNIT_TYPE__UREF);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__VISIBLE_INTERFACE);
 
+		versionTypeEClass = createEClass(VERSION_TYPE);
+		createEAttribute(versionTypeEClass, VERSION_TYPE__FIELD1);
+		createEAttribute(versionTypeEClass, VERSION_TYPE__FIELD2);
+		createEAttribute(versionTypeEClass, VERSION_TYPE__FIELD3);
+		createEAttribute(versionTypeEClass, VERSION_TYPE__FIELD4);
+
 		visualElementAttributesEClass = createEClass(VISUAL_ELEMENT_ATTRIBUTES);
 		createEReference(visualElementAttributesEClass, VISUAL_ELEMENT_ATTRIBUTES__COLOR);
 		createEAttribute(visualElementAttributesEClass, VISUAL_ELEMENT_ATTRIBUTES__H);
@@ -2843,7 +2922,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(componentHeaderTypeEClass, ComponentHeaderType.class, "ComponentHeaderType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentHeaderType_BaseType(), this.getBaseTypeType(), null, "baseType", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponentHeaderType_Versions(), this.getVersionType(), null, "versions", null, 1, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_PackagePath(), theXMLTypePackage.getAnyURI(), "packagePath", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3044,6 +3125,12 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getUnitType_Private(), theXMLTypePackage.getBoolean(), "private", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_VisibleInterface(), theXMLTypePackage.getBoolean(), "visibleInterface", "true", 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(versionTypeEClass, VersionType.class, "VersionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVersionType_Field1(), theXMLTypePackage.getInt(), "field1", null, 0, 1, VersionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVersionType_Field2(), theXMLTypePackage.getInt(), "field2", null, 0, 1, VersionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVersionType_Field3(), theXMLTypePackage.getInt(), "field3", null, 0, 1, VersionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVersionType_Field4(), theXMLTypePackage.getInt(), "field4", null, 0, 1, VersionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(visualElementAttributesEClass, VisualElementAttributes.class, "VisualElementAttributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVisualElementAttributes_Color(), this.getColorComplexType(), null, "color", null, 0, 1, VisualElementAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3372,11 +3459,25 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "baseType"
 		   });		
 		addAnnotation
+		  (getComponentHeaderType_Versions(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "versions"
+		   });		
+		addAnnotation
 		  (getComponentHeaderType_HashComponentUID(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "hash_component_UID"
+		   });		
+		addAnnotation
+		  (getComponentHeaderType_IsAbstract(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "isAbstract"
 		   });		
 		addAnnotation
 		  (getComponentHeaderType_Kind(), 
@@ -4517,6 +4618,41 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "visibleInterface"
+		   });		
+		addAnnotation
+		  (versionTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "VersionType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getVersionType_Field1(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "field1"
+		   });		
+		addAnnotation
+		  (getVersionType_Field2(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "field2"
+		   });		
+		addAnnotation
+		  (getVersionType_Field3(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "field3"
+		   });		
+		addAnnotation
+		  (getVersionType_Field4(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "field4"
 		   });		
 		addAnnotation
 		  (visualElementAttributesEClass, 

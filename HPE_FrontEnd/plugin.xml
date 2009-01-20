@@ -29,7 +29,7 @@
       <wizard
             category="org.eclipse.HPE"
             class="hPE.HPEWizard"
-            icon="hash.gif"
+            icon="src/hPE/util/icons/component.gif"
             id="org.eclipse.HPE.HPEWizard"
             name="# Configuration">
          <selection class="org.eclipse.core.resources.IResource"/>

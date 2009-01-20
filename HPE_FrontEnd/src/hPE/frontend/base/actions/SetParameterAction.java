@@ -42,7 +42,7 @@ public class SetParameterAction extends SelectionAction {
 			   setId("Set Parameter");
 			   setToolTipText("Set Parameter");
 			   setImageDescriptor(
-			   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+			   ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 			   setHoverImageDescriptor(getImageDescriptor());
 		} else {
 			   request = new Request(UNSET_PARAMETER_REQUEST);
@@ -50,7 +50,7 @@ public class SetParameterAction extends SelectionAction {
 			   setId("Unset Parameter");
 			   setToolTipText("Unset Parameter");
 			   setImageDescriptor(
-			   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+			   ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 			   setHoverImageDescriptor(getImageDescriptor());
 		}
 		
@@ -81,6 +81,8 @@ public class SetParameterAction extends SelectionAction {
             if (!x.isDirectSonOfTheTopConfiguration()) return false;
             
             if (topConfig.getWhoItImplements() == x) return false;
+            
+            if (topConfig.isAbstractConfiguration() && topConfig.getWhoItImplements() == null) return false;
             
             Iterator<HInterface> is = x.getInterfaces().iterator();
 //            while (is.hasNext()) if (!is.next().noSources()) return false; 

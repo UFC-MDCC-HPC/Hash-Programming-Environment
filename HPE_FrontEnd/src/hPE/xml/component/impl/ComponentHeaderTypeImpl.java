@@ -11,14 +11,19 @@ import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.SupportedKinds;
 
+import hPE.xml.component.VersionType;
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +33,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getBaseType <em>Base Type</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getVersions <em>Versions</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getHashComponentUID <em>Hash Component UID</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getPackagePath <em>Package Path</em>}</li>
@@ -49,6 +56,16 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	protected BaseTypeType baseType;
 
 	/**
+	 * The cached value of the '{@link #getVersions() <em>Versions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VersionType> versions;
+
+	/**
 	 * The default value of the '{@link #getHashComponentUID() <em>Hash Component UID</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -67,6 +84,35 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * @ordered
 	 */
 	protected String hashComponentUID = HASH_COMPONENT_UID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isIsAbstract() <em>Is Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsAbstract()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_ABSTRACT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsAbstract() <em>Is Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsAbstract()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isAbstract = IS_ABSTRACT_EDEFAULT;
+
+	/**
+	 * This is true if the Is Abstract attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isAbstractESet;
 
 	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
@@ -204,6 +250,18 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<VersionType> getVersions() {
+		if (versions == null) {
+			versions = new EObjectContainmentEList<VersionType>(VersionType.class, this, ComponentPackage.COMPONENT_HEADER_TYPE__VERSIONS);
+		}
+		return versions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getHashComponentUID() {
 		return hashComponentUID;
 	}
@@ -218,6 +276,52 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		hashComponentUID = newHashComponentUID;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID, oldHashComponentUID, hashComponentUID));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isIsAbstract() {
+		return isAbstract;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsAbstract(boolean newIsAbstract) {
+		boolean oldIsAbstract = isAbstract;
+		isAbstract = newIsAbstract;
+		boolean oldIsAbstractESet = isAbstractESet;
+		isAbstractESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT, oldIsAbstract, isAbstract, !oldIsAbstractESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsAbstract() {
+		boolean oldIsAbstract = isAbstract;
+		boolean oldIsAbstractESet = isAbstractESet;
+		isAbstract = IS_ABSTRACT_EDEFAULT;
+		isAbstractESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT, oldIsAbstract, IS_ABSTRACT_EDEFAULT, oldIsAbstractESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsAbstract() {
+		return isAbstractESet;
 	}
 
 	/**
@@ -318,6 +422,8 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		switch (featureID) {
 			case ComponentPackage.COMPONENT_HEADER_TYPE__BASE_TYPE:
 				return basicSetBaseType(null, msgs);
+			case ComponentPackage.COMPONENT_HEADER_TYPE__VERSIONS:
+				return ((InternalEList<?>)getVersions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -332,8 +438,12 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		switch (featureID) {
 			case ComponentPackage.COMPONENT_HEADER_TYPE__BASE_TYPE:
 				return getBaseType();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__VERSIONS:
+				return getVersions();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return getHashComponentUID();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
+				return isIsAbstract() ? Boolean.TRUE : Boolean.FALSE;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				return getKind();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
@@ -349,14 +459,22 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.COMPONENT_HEADER_TYPE__BASE_TYPE:
 				setBaseType((BaseTypeType)newValue);
 				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__VERSIONS:
+				getVersions().clear();
+				getVersions().addAll((Collection<? extends VersionType>)newValue);
+				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID((String)newValue);
+				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
+				setIsAbstract(((Boolean)newValue).booleanValue());
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				setKind((SupportedKinds)newValue);
@@ -382,8 +500,14 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 			case ComponentPackage.COMPONENT_HEADER_TYPE__BASE_TYPE:
 				setBaseType((BaseTypeType)null);
 				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__VERSIONS:
+				getVersions().clear();
+				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				setHashComponentUID(HASH_COMPONENT_UID_EDEFAULT);
+				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
+				unsetIsAbstract();
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				unsetKind();
@@ -408,8 +532,12 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		switch (featureID) {
 			case ComponentPackage.COMPONENT_HEADER_TYPE__BASE_TYPE:
 				return baseType != null;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__VERSIONS:
+				return versions != null && !versions.isEmpty();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return HASH_COMPONENT_UID_EDEFAULT == null ? hashComponentUID != null : !HASH_COMPONENT_UID_EDEFAULT.equals(hashComponentUID);
+			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
+				return isSetIsAbstract();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				return isSetKind();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
@@ -432,6 +560,8 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hashComponentUID: ");
 		result.append(hashComponentUID);
+		result.append(", isAbstract: ");
+		if (isAbstractESet) result.append(isAbstract); else result.append("<unset>");
 		result.append(", kind: ");
 		if (kindESet) result.append(kind); else result.append("<unset>");
 		result.append(", name: ");

@@ -32,7 +32,7 @@ public class DeployAction extends SelectionAction {
 	   setId(DEPLOY);
 	   setToolTipText(DEPLOY);
 	   setImageDescriptor(
-	   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+	   ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 	   setHoverImageDescriptor(getImageDescriptor());		
 	   
 	}

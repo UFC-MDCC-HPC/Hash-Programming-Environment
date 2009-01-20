@@ -3,6 +3,7 @@ package hPE.frontend.base.model;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.codegen.c_sharp.HBESourceVersionCSharp;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IInterface;
@@ -386,7 +387,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		
 		static final long serialVersionUID = 1;
 		
-		private HInterface i;
+		private HInterface i = null;
 		
 		public ListHBESourceVersion(HInterface i) {
 			this.i = i;
@@ -451,8 +452,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 
 	    public String getColumnName(int columnIndex) {
 	    	switch (columnIndex) {
-	    	case 0: return "Version ID";
+	    	case 0: return "Version";
 	    	case 1: return "Source Type";
+	    	//case 2: return "Created";
 	    	}
 	    	return "";
 	    }
@@ -463,6 +465,13 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 
 
 	    public boolean isCellEditable(int rowIndex, int columnIndex) {
+	    	HBESourceVersion<HBEAbstractFile> srcVersion = this.getSourceVersionList().get(rowIndex);
+	    	
+	    	switch (columnIndex) {
+	    	case 0: return false; 
+	    	case 1: return srcVersion.getFiles().size() == 0;
+	    	case 2: return false; 
+	    	}
 	    	return false;
 	    }
 
@@ -470,18 +479,27 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	    	
 	    	HBESourceVersion<HBEAbstractFile> srcVersion = this.getSourceVersionList().get(rowIndex);
 	    	
-	    	String type = srcVersion.getFileType();
+	    	HComponent c = (HComponent) i.getConfiguration();
+	    	
+	    	boolean abs = c.isAbstractConfiguration();
+	    	
+	    	String type = srcVersion.getFiles().size() == 0 ? (srcsUndef.containsKey(srcVersion) ? srcsUndef.get(srcVersion) : "Undefined") : srcVersion.getSynthesizerType(abs);
 	    	
 	    	switch (columnIndex) {
 	    	case 0: return srcVersion; 
 	    	case 1: return type;
+	    	//case 2: return srcVersion.getFiles().size() == 0 ? "no" : "yes"; 
 	    	}
 	    	
 	    	return null;	    	
 	    }
 
+	    private Map<HBESourceVersion<HBEAbstractFile>, String> srcsUndef = new HashMap<HBESourceVersion<HBEAbstractFile>, String>();
+	    
 	    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-	    	
+	    	HBESourceVersion<HBEAbstractFile> srcVersion = this.getSourceVersionList().get(rowIndex);
+	    	if (columnIndex == 1 && srcVersion.getFiles().size()==0)
+	    		srcsUndef.put(srcVersion, (String) aValue.toString());
 	    }
 
 	    public void addTableModelListener(TableModelListener l) {
@@ -491,6 +509,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	    public void removeTableModelListener(TableModelListener l) {
 	    	
 	    }
+
+		public void reset() {
+			srcsUndef.clear();			
+		}
 		
 		
 	}
@@ -501,7 +523,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		getSourceVersionList().addSourceVersion(sourceVersion);
 	}
 	
-	public void replaceSourceVersion(HBESourceVersion sourceVersionOld,HBESourceVersion sourceVersionNew) {
+	public void replaceSourceVersion(HBESourceVersion sourceVersionOld, HBESourceVersion sourceVersionNew) {
 		getSourceVersionList().delSourceVersion(sourceVersionOld);
 		getSourceVersionList().addSourceVersion(sourceVersionNew);
 	}
@@ -723,5 +745,69 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		}
 		
 		return r.size();
+	}
+
+	public void keepVersionConsistency() {
+		
+		HComponent c = (HComponent)this.getConfiguration();
+		
+		List<HBESourceVersion> versions_ = new ArrayList<HBESourceVersion>();
+		versions_.addAll(this.getSourceVersions());
+		
+		List<String> versionIds = new ArrayList<String>();
+		
+		
+		for (HBESourceVersion v : versions_) {
+			if (!c.containsVersion(toVersion(v.getVersionID()))) {
+				this.cleanSource(v);
+			} else {
+				versionIds.add(v.getVersionID());
+			}
+		}
+				
+		List<Integer[]> versionsC = c.getVersions();		
+		
+		// Check if versions are consistent with component versions.
+		for (Integer[] v : versionsC) {
+			String versionId = toStringVersion(v);
+			if (!versionIds.contains(versionId)) {
+				String sourceType = "C# Language";
+				HBESourceVersion source = createSourceVersion(sourceType);
+				source.setVersionID(versionId);
+				this.addSourceVersion(source);
+			}
+			
+		}
+				
+	}
+	
+	
+	public HBESourceVersion createSourceVersion(String sourceType) {
+	    if (sourceType.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp.getType()))	{
+		    return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
+	    } else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
+	    	return  new HBESourceVersionCSharp();
+	    } else {
+	        return null;
+	    }
 	}	
+	
+	public static String toStringVersion(Integer[] v) {
+		String vs = v[0].toString();
+		for (int j = 1; j < 4; j++) {
+			vs += "." + v[j].toString();
+		}		
+		return vs;
+	}
+
+	public static Integer[] toVersion(String v) {
+		String[] vI = v.split("[.]");
+		Integer[] vIn = new Integer[vI.length];
+		
+		for (int i=0; i<vI.length; i++) { 
+			vIn[i] = Integer.parseInt(vI[i]);
+		}
+		return vIn;
+	}
+	
 }

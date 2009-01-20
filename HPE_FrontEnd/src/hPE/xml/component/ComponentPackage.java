@@ -804,13 +804,31 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_HEADER_TYPE__BASE_TYPE = 0;
 
 	/**
+	 * The feature id for the '<em><b>Versions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_HEADER_TYPE__VERSIONS = 1;
+
+	/**
 	 * The feature id for the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = 1;
+	int COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = 2;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_HEADER_TYPE__IS_ABSTRACT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -819,7 +837,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__KIND = 2;
+	int COMPONENT_HEADER_TYPE__KIND = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -828,7 +846,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__NAME = 3;
+	int COMPONENT_HEADER_TYPE__NAME = 5;
 
 	/**
 	 * The feature id for the '<em><b>Package Path</b></em>' attribute.
@@ -837,7 +855,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 4;
+	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 6;
 
 	/**
 	 * The number of structural features of the '<em>Header Type</em>' class.
@@ -846,7 +864,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 5;
+	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentInUseTypeImpl <em>In Use Type</em>}' class.
@@ -2807,6 +2825,61 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_TYPE_FEATURE_COUNT = 7;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.VersionTypeImpl <em>Version Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.VersionTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
+	 * @generated
+	 */
+	int VERSION_TYPE = 54;
+
+	/**
+	 * The feature id for the '<em><b>Field1</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TYPE__FIELD1 = 0;
+
+	/**
+	 * The feature id for the '<em><b>Field2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TYPE__FIELD2 = 1;
+
+	/**
+	 * The feature id for the '<em><b>Field3</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TYPE__FIELD3 = 2;
+
+	/**
+	 * The feature id for the '<em><b>Field4</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TYPE__FIELD4 = 3;
+
+	/**
+	 * The number of structural features of the '<em>Version Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TYPE_FEATURE_COUNT = 4;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.VisualElementAttributesImpl <em>Visual Element Attributes</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2814,7 +2887,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVisualElementAttributes()
 	 * @generated
 	 */
-	int VISUAL_ELEMENT_ATTRIBUTES = 54;
+	int VISUAL_ELEMENT_ATTRIBUTES = 55;
 
 	/**
 	 * The feature id for the '<em><b>Color</b></em>' containment reference.
@@ -2878,7 +2951,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationType()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE = 55;
+	int QUANTIFICATION_TYPE = 56;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.SupportedKinds <em>Supported Kinds</em>}' enum.
@@ -2888,7 +2961,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKinds()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS = 56;
+	int SUPPORTED_KINDS = 57;
 
 	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
@@ -2898,7 +2971,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 57;
+	int QUANTIFICATION_TYPE_OBJECT = 58;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -2908,7 +2981,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 58;
+	int SUPPORTED_KINDS_OBJECT = 59;
 
 
 	/**
@@ -3328,6 +3401,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getComponentHeaderType_BaseType();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentHeaderType#getVersions <em>Versions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Versions</em>'.
+	 * @see hPE.xml.component.ComponentHeaderType#getVersions()
+	 * @see #getComponentHeaderType()
+	 * @generated
+	 */
+	EReference getComponentHeaderType_Versions();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3337,6 +3421,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getComponentHeaderType_HashComponentUID();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Abstract</em>'.
+	 * @see hPE.xml.component.ComponentHeaderType#isIsAbstract()
+	 * @see #getComponentHeaderType()
+	 * @generated
+	 */
+	EAttribute getComponentHeaderType_IsAbstract();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}'.
@@ -5047,6 +5142,60 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getUnitType_VisibleInterface();
 
 	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.VersionType <em>Version Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Version Type</em>'.
+	 * @see hPE.xml.component.VersionType
+	 * @generated
+	 */
+	EClass getVersionType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.VersionType#getField1 <em>Field1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Field1</em>'.
+	 * @see hPE.xml.component.VersionType#getField1()
+	 * @see #getVersionType()
+	 * @generated
+	 */
+	EAttribute getVersionType_Field1();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.VersionType#getField2 <em>Field2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Field2</em>'.
+	 * @see hPE.xml.component.VersionType#getField2()
+	 * @see #getVersionType()
+	 * @generated
+	 */
+	EAttribute getVersionType_Field2();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.VersionType#getField3 <em>Field3</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Field3</em>'.
+	 * @see hPE.xml.component.VersionType#getField3()
+	 * @see #getVersionType()
+	 * @generated
+	 */
+	EAttribute getVersionType_Field3();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.VersionType#getField4 <em>Field4</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Field4</em>'.
+	 * @see hPE.xml.component.VersionType#getField4()
+	 * @see #getVersionType()
+	 * @generated
+	 */
+	EAttribute getVersionType_Field4();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.VisualElementAttributes <em>Visual Element Attributes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5516,12 +5665,28 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_HEADER_TYPE__BASE_TYPE = eINSTANCE.getComponentHeaderType_BaseType();
 
 		/**
+		 * The meta object literal for the '<em><b>Versions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_HEADER_TYPE__VERSIONS = eINSTANCE.getComponentHeaderType_Versions();
+
+		/**
 		 * The meta object literal for the '<em><b>Hash Component UID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = eINSTANCE.getComponentHeaderType_HashComponentUID();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Abstract</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_HEADER_TYPE__IS_ABSTRACT = eINSTANCE.getComponentHeaderType_IsAbstract();
 
 		/**
 		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
@@ -6876,6 +7041,48 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIT_TYPE__VISIBLE_INTERFACE = eINSTANCE.getUnitType_VisibleInterface();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.VersionTypeImpl <em>Version Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.VersionTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
+		 * @generated
+		 */
+		EClass VERSION_TYPE = eINSTANCE.getVersionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Field1</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_TYPE__FIELD1 = eINSTANCE.getVersionType_Field1();
+
+		/**
+		 * The meta object literal for the '<em><b>Field2</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_TYPE__FIELD2 = eINSTANCE.getVersionType_Field2();
+
+		/**
+		 * The meta object literal for the '<em><b>Field3</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_TYPE__FIELD3 = eINSTANCE.getVersionType_Field3();
+
+		/**
+		 * The meta object literal for the '<em><b>Field4</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_TYPE__FIELD4 = eINSTANCE.getVersionType_Field4();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.VisualElementAttributesImpl <em>Visual Element Attributes</em>}' class.

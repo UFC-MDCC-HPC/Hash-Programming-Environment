@@ -40,7 +40,7 @@ public class JoinReplicatorAction extends SelectionAction {
 		setId(JOIN_REPLICATOR);
 		setToolTipText(JOIN_REPLICATOR);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 /*	    dialog = new InputDialog(part.getSite().getWorkbenchWindow().getShell(),
 	    		                 "Setting Joining Factor",

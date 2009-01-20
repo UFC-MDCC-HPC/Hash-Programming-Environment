@@ -5,23 +5,34 @@ import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HInterface.ListHBESourceVersion;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import java.awt.Dimension;
 
 
 public class HBEVersionControlDialog extends JDialog {
@@ -33,10 +44,7 @@ public class HBEVersionControlDialog extends JDialog {
 	private JPanel jContentPane = null;
 	private JTable jTable = null;
 	private JPanel jPanel = null;
-	private JButton jButton1 = null;
 	private JButton jButton2 = null;
-	private JButton jButton3 = null;
-
 	/**
 	 * This is the default constructor
 	 * @param onlyEdit TODO
@@ -54,6 +62,9 @@ public class HBEVersionControlDialog extends JDialog {
 
     public void addSynthesizers(List<HBEAbstractSynthesizer> listSynthesizers) {
     	this.typesOfSource.addAll(listSynthesizers);
+    	for (HBEAbstractSynthesizer s : listSynthesizers) {
+    		this.typesOfSourceV.put(s.toString(),s);
+    	}
     	
     }
 	
@@ -67,7 +78,7 @@ public class HBEVersionControlDialog extends JDialog {
 
 		this.addSynthesizers(i.getSupportedSynthesizers());
 		
-		this.setSize(672, 151);
+		this.setSize(384, 151);
 		this.setContentPane(getJContentPane(onlyEdit));
 		this.setTitle("Version Control for ".concat(i.getName(false,true)));
 		
@@ -97,23 +108,41 @@ public class HBEVersionControlDialog extends JDialog {
 	 */
 	private JTable getJTable() {
 		if (jTable == null) {
-			jTable = new JTable(i.getSourceVersionList());
-			
-			TableColumn  column0 = jTable.getColumnModel().getColumn(0);
-
-			// Set properties of the 1st column.
-			
-			TableColumn  column1 = jTable.getColumnModel().getColumn(1);
-			
-			// Set properties of the 2nd column.
-			 
-			
-		}
+  		    
+  		    ListHBESourceVersion l = i.getSourceVersionList();
+  		    l.reset();
+			jTable = new JTable(l);
+		    jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		    // jTable.setCellSelectionEnabled(true);
+		    JComboBox comboBox = new JComboBox(typesOfSource);		    
+		    comboBox.addComponentListener(new ComponentAdapter() {
+		      public void componentShown(ComponentEvent e) {
+		        final JComponent c = (JComponent)e.getSource();
+		        SwingUtilities.invokeLater(new Runnable() {
+		          public void run () {
+		            c.requestFocus();
+		            System.out.println(c);
+		            if (c instanceof JComboBox) {
+		              System.out.println("a");
+		            }
+		          }
+		        });
+		      }
+		    });
+		 
+		  //  EachRowEditor rowEditor = new EachRowEditor(jTable);
+		  //  rowEditor.setEditorAt(1, new DefaultCellEditor(comboBox));
+		    TableColumn c = jTable.getColumn("Source Type");
+		    c.setCellEditor(new DefaultCellEditor(comboBox));
+		
+		    DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();  
+		    renderer.setToolTipText("Click here to select source type ...");  
+		    comboBox.setName("Source Type");  
+		    c.setCellRenderer(renderer);  
+	     }
 		return jTable;
 	}
 
-	private JComboBox jComboBox = null;
-	private JTextPane jTextPane = null;
 	/**
 	 * This method initializes jPanel	
 	 * @param onlyEdit TODO
@@ -126,43 +155,12 @@ public class HBEVersionControlDialog extends JDialog {
 			flowLayout.setAlignment(java.awt.FlowLayout.RIGHT);
 			jPanel = new JPanel();
 			jPanel.setLayout(flowLayout);
-			jPanel.add(getJTextPane1(), null);
-			jPanel.add(getJComboBox(), null);
-			if (!onlyEdit)  {
-				jPanel.add(getJTextPane(), null);
-				jPanel.add(getJTextField(), null);
-				jPanel.add(getJButton1(), null);
-			}
 			jPanel.add(getJButton2(), null);
-			jPanel.add(getJButton3(), null);
+			jPanel.add(getJButtonSair(), null);
+			if (!onlyEdit)  {
+			}
 		}
 		return jPanel;
-	}
-
-	/**
-	 * This method initializes jButton1	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getJButton1() {
-		if (jButton1 == null) {
-			jButton1 = new JButton();
-			jButton1.setText("New");
-			jButton1.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	if (!jTextField.getText().equals("") && jTextField.getText() != null) {	            	
-	            	   buttonPressed = BUTTON_NEW;
-	            	   setVisible(false);
-	                } else {
-	                	JOptionPane.showMessageDialog(null,
-	                		    "A Version ID must be given.",
-	                		    "VersionID Error",
-	                		    JOptionPane.ERROR_MESSAGE);
-	                }
-	            }
-			});
-		}
-		return jButton1;
 	}
 
 	/**
@@ -173,7 +171,7 @@ public class HBEVersionControlDialog extends JDialog {
 	private JButton getJButton2() {
 		if (jButton2 == null) {
 			jButton2 = new JButton();
-			jButton2.setText("Edit");
+			jButton2.setText("Open");
 			jButton2.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (jTable.getSelectedColumn()>=0) {
@@ -192,32 +190,6 @@ public class HBEVersionControlDialog extends JDialog {
 		return jButton2;
 	}
 
-	/**
-	 * This method initializes jButton3	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getJButton3() {
-		if (jButton3 == null) {
-			jButton3 = new JButton();
-			jButton3.setText("Delete");
-			jButton3.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	if (jTable.getSelectedColumn()>=0) {
-  	            	   buttonPressed = BUTTON_DELETE;
-	            	   setVisible(false);
-	            	} else {
-	                	JOptionPane.showMessageDialog(null,
-	                		    "A source version must be selected.",
-	                		    "Source Version Error",
-	                		    JOptionPane.ERROR_MESSAGE);
-	            	}
-	            }
-			});
-		}
-		return jButton3;
-	}
-	
 	public void addLine() {
 		
 	}
@@ -230,81 +202,44 @@ public class HBEVersionControlDialog extends JDialog {
 	 */
 	
 	private Vector<HBEAbstractSynthesizer> typesOfSource = new Vector<HBEAbstractSynthesizer>();
-		
-	private JComboBox getJComboBox() {
-		if (jComboBox == null) {
-			   jComboBox = new JComboBox(typesOfSource);
-  			   jComboBox.setPreferredSize(new java.awt.Dimension(180,25));
-			   jComboBox.setSelectedIndex(0);			
-		}
-		return jComboBox;
-	}
 	
+	private Map<String,HBEAbstractSynthesizer> typesOfSourceV = new HashMap<String,HBEAbstractSynthesizer>();  //  @jve:decl-index=0:
+		
 	public HBEAbstractSynthesizer getSeletectedSourceType() {
-		return (HBEAbstractSynthesizer) getJComboBox().getSelectedItem();
+		String v = (String) getJTable().getValueAt(jTable.getSelectedRow(),1);
+		return (HBEAbstractSynthesizer) this.typesOfSourceV.get(v);
 	}
 	
 	public HBESourceVersion<HBEAbstractFile> getSelectedSourceVersion () {
 		return (HBESourceVersion<HBEAbstractFile>) getJTable().getValueAt(jTable.getSelectedRow(),0);
 	}
-
-	public String getVersionID () {
-		return (String) getJTextField().getText();
-	}
-	
-	/**
-	 * This method initializes jTextPane	
-	 * 	
-	 * @return javax.swing.JTextPane	
-	 */
-	private JTextPane getJTextPane() {
-		if (jTextPane == null) {
-			jTextPane = new JTextPane();
-			jTextPane.setBackground(new java.awt.Color(238,238,238));
-			jTextPane.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
-			jTextPane.setText("Version ID:");
-		}
-		return jTextPane;
-	}
-	
 	
 	private int buttonPressed = -1;
 	
 	public int getButtonPressed() { return buttonPressed; }
 	
 	
-	public static int BUTTON_NEW = 0;
+	public static int BUTTON_EXIT = 0;
 	public static int BUTTON_EDIT = 1;
-	public static int BUTTON_DELETE = 2;
-	private JTextField jTextField = null;
-	private JTextPane jTextPane1 = null;
-
+	
+	private JButton jButtonSair = null;
 	/**
-	 * This method initializes jTextField	
+	 * This method initializes jButtonSair	
 	 * 	
-	 * @return javax.swing.JTextField	
+	 * @return javax.swing.JButton	
 	 */
-	private JTextField getJTextField() {
-		if (jTextField == null) {
-			jTextField = new JTextField();
-			jTextField.setPreferredSize(new java.awt.Dimension(100,20));
+	private JButton getJButtonSair() {
+		if (jButtonSair == null) {
+			jButtonSair = new JButton();
+			jButtonSair.setText("Cancel");
+			jButtonSair.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	   buttonPressed = BUTTON_EXIT;
+	            	   setVisible(false);            		                
+	            }
+			});
 		}
-		return jTextField;
-	}
-
-	/**
-	 * This method initializes jTextPane1	
-	 * 	
-	 * @return javax.swing.JTextPane	
-	 */
-	private JTextPane getJTextPane1() {
-		if (jTextPane1 == null) {
-			jTextPane1 = new JTextPane();
-			jTextPane1.setBackground(new java.awt.Color(238,238,238));
-			jTextPane1.setText("Type of Source:");
-			jTextPane1.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
-		}
-		return jTextPane1;
+		return jButtonSair;
 	}
 	
 	

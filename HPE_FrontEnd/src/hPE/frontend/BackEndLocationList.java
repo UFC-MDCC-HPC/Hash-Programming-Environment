@@ -7,7 +7,6 @@ import hPE.frontend.backend.environment.DeployedComponentInfoType;
 import hPE.frontend.backend.environment.DeployedParameterType;
 import hPE.frontend.backend.environment.EnvironmentPackage;
 import hPE.frontend.backend.environment.EnvironmentType;
-import hPE.frontend.backend.environment.impl.EnvironmentFactoryImpl;
 import hPE.frontend.backend.environment.util.EnvironmentResourceFactoryImpl;
 import hPE.frontend.backend.environment.util.EnvironmentResourceImpl;
 import hPE.frontend.backend.locations.DocumentRoot;
@@ -25,18 +24,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
-import org.eclipse.core.internal.resources.File;
-import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
@@ -47,7 +42,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -372,11 +366,6 @@ public class BackEndLocationList {
 
 	    if (monitor.isCanceled())
 	        throw new OperationCanceledException();
-	}
-
-	private static IProgressMonitor getProgressMonitor() {
-	    
-		return new org.eclipse.core.runtime.NullProgressMonitor();
 	}
 	
 	public static class BackEndLocationInfo {

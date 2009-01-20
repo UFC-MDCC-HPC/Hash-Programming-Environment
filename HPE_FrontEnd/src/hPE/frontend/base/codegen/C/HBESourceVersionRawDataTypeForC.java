@@ -26,6 +26,10 @@ public class HBESourceVersionRawDataTypeForC extends HBESourceVersion<HBECSource
 		return l;
 	}
 	
+	public String getSynthesizerType(boolean abs) {
+		return "C Language - Raw Data Type";
+	}
+
 	public  String getFileType() {
 		return "C Language - Raw Data Type";
 	}

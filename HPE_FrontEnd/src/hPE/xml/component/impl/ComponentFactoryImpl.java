@@ -115,6 +115,7 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.UNIT_REF_TYPE: return createUnitRefType();
 			case ComponentPackage.UNIT_SLICE_TYPE: return createUnitSliceType();
 			case ComponentPackage.UNIT_TYPE: return createUnitType();
+			case ComponentPackage.VERSION_TYPE: return createVersionType();
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES: return createVisualElementAttributes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -701,6 +702,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public UnitType createUnitType() {
 		UnitTypeImpl unitType = new UnitTypeImpl();
 		return unitType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VersionType createVersionType() {
+		VersionTypeImpl versionType = new VersionTypeImpl();
+		return versionType;
 	}
 
 	/**

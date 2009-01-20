@@ -35,7 +35,7 @@ public abstract class HBEAbstractFile implements Serializable {
 		this.fileName = name;
 		this.versionID = versionID;
 		this.contents = contents;
-    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf(".")).concat("/").concat(this.getFileType()).concat("/").concat(this.getVersionID()).concat("/").concat(this.getFileName());
+    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf("/")).concat("/src/")/*.concat(this.getFileType()).concat("/")*/.concat(this.getVersionID()).concat("/").concat(this.getFileName());
 			
 	//	this.persistSourceFile(contents,rootPath);
 		
@@ -60,20 +60,21 @@ public abstract class HBEAbstractFile implements Serializable {
 
 		try {				
 			FileInputStream contents = (FileInputStream) file.getContents();
+			if (contents != null) {
+				Reader reader = new InputStreamReader(contents);
+				char[] readBuffer = new char[2048];
+				int n = reader.read(readBuffer);
+				while (n > 0) {
+					s.append(readBuffer, 0, n);
+					n = reader.read(readBuffer);
+				}
+				 			
+				String ss = s.toString();
+				
+				this.contents = ss;
+			} 
 			
-			Reader reader = new InputStreamReader(contents);
-			char[] readBuffer = new char[2048];
-			int n = reader.read(readBuffer);
-			while (n > 0) {
-				s.append(readBuffer, 0, n);
-				n = reader.read(readBuffer);
-			}
-			 			
-			String ss = s.toString();
-			
-			this.contents = ss;
-			
-		    return ss;
+		    return this.contents;
 			
 		} catch (CoreException e) {
         	JOptionPane.showMessageDialog(null,
@@ -93,7 +94,7 @@ public abstract class HBEAbstractFile implements Serializable {
 //			
 		}
 		
-		return null;
+		return this.contents;
 		
 	}
 	

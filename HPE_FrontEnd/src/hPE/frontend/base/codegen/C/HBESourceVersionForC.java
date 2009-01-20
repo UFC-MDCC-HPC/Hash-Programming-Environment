@@ -27,6 +27,10 @@ public class HBESourceVersionForC extends HBESourceVersion<HBECSource> {
 		return "C Language";
 	}
 	
+	public String getSynthesizerType(boolean abs) {
+		return "C Language";
+	}
+
 	public HBECSourceCode getSource() {
 	    return src;	
 	}

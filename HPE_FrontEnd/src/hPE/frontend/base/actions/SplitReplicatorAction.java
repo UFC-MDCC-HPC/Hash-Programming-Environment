@@ -39,7 +39,7 @@ public class SplitReplicatorAction extends SelectionAction {
 		setId(SPLIT_REPLICATOR);
 		setToolTipText(SPLIT_REPLICATOR);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	    dialog = new InputDialog(part.getSite().getWorkbenchWindow().getShell(),
 	    		                 "Setting Splitting Factor",

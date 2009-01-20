@@ -39,6 +39,7 @@ import hPE.frontend.base.dialogs.HBEVersionControlDialog;
 import hPE.frontend.base.edits.InterfaceEditPart;
 import hPE.frontend.base.model.HInterface;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -94,44 +95,49 @@ public void execute(){
 	boolean isImplementing = !i.isAbstractInterface();
 	
 	boolean onlyEdit = isSubTyping || isImplementing;
+
+	int result = -1;
+	HBESourceVersion<HBEAbstractFile> version = null;
+	HBEAbstractSynthesizer synthesizer = null;
 	
-	HBEVersionControlDialog dialog = new HBEVersionControlDialog(i, onlyEdit);
-
-    dialog.setModal(true);
-    dialog.pack();
-    dialog.setVisible(true);
-
-	switch	(dialog.getButtonPressed()) {
-	case 0: {
- 		 HBEAbstractSynthesizer synthesizer = dialog.getSeletectedSourceType();
-		 openExistingSourceCodeFile(synthesizer.synthesize(i,dialog.getVersionID()));
-	//	 dialog.dispose();
-		 break;   
+	i.keepVersionConsistency();
+	
+	if (isImplementing) {
+		HBEVersionControlDialog dialog = new HBEVersionControlDialog(i, onlyEdit);
+	    dialog.setModal(true);
+	    dialog.setVisible(true);
+	    result = dialog.getButtonPressed();
+	    if (result != HBEVersionControlDialog.BUTTON_EXIT) { 
+	    	version = dialog.getSelectedSourceVersion(); 
+	        synthesizer = dialog.getSeletectedSourceType();
+	    }
+	} else {
+		Collection<HBESourceVersion<HBEAbstractFile>> vs = i.getSourceVersions();
+		if (vs.size()==1) {
+			Object[] vsa = vs.toArray();
+			version = (HBESourceVersion<HBEAbstractFile>) vsa[0];
+			synthesizer = i.getSupportedSynthesizers().get(0);
+		} else {
+			throw new Exception("Unexpected interface with more than one version (OpenSourceEditPolicy)");
+		}
+		result = HBEVersionControlDialog.BUTTON_EDIT;
 	}
-	case 1: {
-		HBESourceVersion<HBEAbstractFile> version = dialog.getSelectedSourceVersion();
-		
-	    if (onlyEdit && (version.isInherit() || version.isImplement())) {
- 		     HBEAbstractSynthesizer synthesizer = dialog.getSeletectedSourceType();	    	
+	
+	
+	if (result == HBEVersionControlDialog.BUTTON_EDIT) {		
+	    if (version.getFiles().size() == 0) {
  			 openExistingSourceCodeFile(synthesizer.synthesize(i,version.getVersionID()));
 	    } else {
-	    	openExistingSourceCodeFile(dialog.getSelectedSourceVersion());
+	    	openExistingSourceCodeFile(version);
 	    }
-	//	dialog.dispose();
-		break;
-	}
-	case 2: {
-		closeSourceCodeFile(dialog.getSelectedSourceVersion());
-	//	dialog.dispose();
-		break;
-	}
+	} else {
 		
 	}
-	
-	// dialog.dispose();
 	
 	} catch (ClassCastException e) {
 		System.err.print(e.getMessage());
+	} catch (Exception e) {
+		JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Unexpected Exception", JOptionPane.ERROR_MESSAGE);		
 	}
 
 }

@@ -35,7 +35,7 @@ public class ChangeVariableNameAction extends SelectionAction {
 		setId(CHANGE_VARIABLE_NAME);
 		setToolTipText(CHANGE_VARIABLE_NAME);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

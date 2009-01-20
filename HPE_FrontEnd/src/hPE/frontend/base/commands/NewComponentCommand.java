@@ -66,10 +66,7 @@ public class NewComponentCommand extends Command {
 	public void execute() {
 		
 		
-		Iterator ls = locations.iterator();
 		for (HComponent c : components) {
-			String l = (String) ls.next();
-            c.setLocation(l);
 		    this.the_configuration.loadComponent(c, this.location);
 		}
 		

@@ -288,6 +288,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createUnitTypeAdapter();
 			}
 			@Override
+			public Adapter caseVersionType(VersionType object) {
+				return createVersionTypeAdapter();
+			}
+			@Override
 			public Adapter caseVisualElementAttributes(VisualElementAttributes object) {
 				return createVisualElementAttributesAdapter();
 			}
@@ -1064,6 +1068,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUnitTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.VersionType <em>Version Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.VersionType
+	 * @generated
+	 */
+	public Adapter createVersionTypeAdapter() {
 		return null;
 	}
 

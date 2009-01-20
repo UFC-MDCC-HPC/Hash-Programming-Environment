@@ -127,6 +127,7 @@ import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
+import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
 import hPE.xml.component.impl.DocumentRootImpl;
 import hPE.xml.component.util.ComponentResourceFactoryImpl;
@@ -593,6 +594,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			SupportedKinds kind = xCheader.getKind();
 			String packagePath = xCheader.getPackagePath();
 			String hash_component_UID = xCheader.getHashComponentUID();
+			boolean isAbstract =  xCheader.isIsAbstract();
 			
 		    this.isConcrete = false;
 		    this.isSubType  =false;
@@ -600,6 +602,8 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			component = this.createComponent(kind,name,uri);
 			component.setPackagePath(new Path(packagePath));
 			component.setHashComponentUID(hash_component_UID);
+			if (xCheader.isSetIsAbstract()) 
+				component.setAbstract(isAbstract);
 			
 			mC1 = new HashMap<String,ComponentInUseType>();
 			mC2 = new HashMap<ComponentInUseType, HComponent>();
@@ -608,6 +612,8 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			portsLaterFetch = new ArrayList<Entry<InnerComponentType,HComponent>>();
 			
 			loadSuperTypeComponent(xCheader);
+			loadVersions(xCheader.getVersions());
+			
 			if (xCinfo != null) {
 				loadInnerComponents(xCinfo);
 			
@@ -621,6 +627,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 	            
 	            if (this.isConcrete) 
 	            	component.setImplements(this.basetype);
+	            	
 	            
 	            if (this.isSubType) 
 	            	component.setExtends(this.basetype);
@@ -651,6 +658,20 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		
 		
 		return null;
+	}
+
+	private void loadVersions(EList<VersionType> versions) {
+		if (versions != null) {
+			for (VersionType version : versions) {
+				Integer[] version_ = new Integer[4];
+				version_[0] = version.getField1();
+				version_[1] = version.getField2();
+				version_[2] = version.getField3();
+				version_[3] = version.getField4();
+				component.newVersion(version_);
+			}
+		}
+		
 	}
 
 	private void loadInterfacePorts() {
@@ -837,9 +858,26 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		// save HashComponentUID
 		xH.setHashComponentUID(c.getHashComponentUID());
 		
+		xH.setIsAbstract(c.isAbstract());
+		
+		saveVersions(c,xH.getVersions());
+		
 		
 	}
 	
+	private void saveVersions(HComponent sc, EList<VersionType> list) {
+		
+		for (Integer[] version : sc.getVersions()) {
+			VersionType v = factory.createVersionType();
+			v.setField1(version[0]);
+			v.setField2(version[1]);
+			v.setField3(version[2]);
+			v.setField4(version[3]);
+			list.add(v);
+		}
+		
+	}
+
 	private void saveBaseType(HComponent baseType, ComponentHeaderType xH, boolean isAbstract) {
 		
 		BaseTypeType baseTypeX = factory.createBaseTypeType();
@@ -1459,11 +1497,12 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		         SourceFileType fX = factory.createSourceFileType();
 		    	 String uri = f.getPath();
 		         String fileType = f.getFileType();
+		         String versionIdF = f.getVersionID();
 		         fX.setUri(uri);
 		         fX.setFileType(fileType);
 		         fX.setName(f.getFileName());
 		         fX.setContents(f.getCurrentContents());
-		         fX.setVersionId(f.getVersionID());
+		         fX.setVersionId(checkVersion(versionIdF) ? versionIdF : "1.0.0.0");
 		         fsX.add(fX);
 		    }
 		    
@@ -1471,12 +1510,26 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		    String srcType = src.getFileType();
 		    
 		    s.setSourceType(srcType);
-		    s.setVersionId(version);
+		    s.setVersionId(checkVersion(version) ? version : "1.0.0.0");
 		    
 		    sourcesX.add(s);
 		}
 	}
 	
+	private boolean checkVersion(String version) {
+		try {
+			String[] v = version.split("[.]");
+			boolean ok = true;
+			for (String i : v) {
+			    Integer.parseInt(i);	
+			}
+			return v.length == 4;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		
+	}
+
 	private void saveInterfaceSlices(List<HInterfaceSlice> slices, EList<InterfaceSliceType> slicesX) {
 		
 		for (HInterfaceSlice slice : slices) {
@@ -2100,17 +2153,20 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 	
 	private void loadSourceVersions(HInterface i, InterfaceType xI) {
 		
+		
 		for (SourceType s : xI.getSources()) 
 		{
 			String versionId = s.getVersionId();
+			versionId = checkVersion(versionId) ? versionId : "1.0.0.0";
 			String sourceType = s.getSourceType();
-			HBESourceVersion source = createSourceVersion(sourceType);
+			HBESourceVersion source = i.createSourceVersion(sourceType);
 			source.setVersionID(versionId);
 			
 			for (SourceFileType f : s.getFile()) {
 			   String fileType = f.getFileType().equals("C#") ? "dll" : f.getFileType();
 			   String rootPath = this.component.getLocation();
-			   String versionIdF = f.getVersionId();			   
+			   String versionIdF = f.getVersionId();
+			   versionIdF = checkVersion(versionIdF) ? versionIdF : "1.0.0.0";
 			   String name = f.getName();
 			   String contents = f.getContents();
 			   
@@ -2118,27 +2174,20 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			   
 			   try {
 				source.addFile(ff);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			   } catch (Exception e) {
+				   e.printStackTrace();
+			   }
 			}
-			}
-			i.addSourceVersion(source);
+			// if (this.component.containsVersion(toVersion(versionId)));
+				i.addSourceVersion(source);
 		}
+		
+		i.keepVersionConsistency();
+		
 		
 	}
 
-	private HBESourceVersion createSourceVersion(String sourceType) {
-	    if (sourceType.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp.getType()))	{
-		    return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
-	    } else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
-	    	return  new HBESourceVersionCSharp();
-	    } else {
-	        return null;
-	    }
-	     
-	    
-	}	
+
 	
 	private HBEAbstractFile createFile(String fileType, String name, String contents, String rootPath, String versionID) {
 	    if (fileType.equals(HBESourceCSharpClassDefinition.getType()))	{

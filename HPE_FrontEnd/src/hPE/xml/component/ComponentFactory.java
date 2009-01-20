@@ -512,6 +512,15 @@ public interface ComponentFactory extends EFactory {
 	UnitType createUnitType();
 
 	/**
+	 * Returns a new object of class '<em>Version Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Version Type</em>'.
+	 * @generated
+	 */
+	VersionType createVersionType();
+
+	/**
 	 * Returns a new object of class '<em>Visual Element Attributes</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

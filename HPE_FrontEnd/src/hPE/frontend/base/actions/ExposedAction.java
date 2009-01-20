@@ -30,7 +30,7 @@ public class ExposedAction extends SelectionAction {
 		setId(EXPOSED);
 		setToolTipText(EXPOSED);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	
@@ -62,7 +62,7 @@ public class ExposedAction extends SelectionAction {
         
         if (topC.getSuperType() == c) return false;
             
-        if (!topC.isAbstractConfiguration()) return false;
+        if (!(topC.isAbstractConfiguration() && topC.getWhoItImplements() != null)) return false;
         
  
 		return true;

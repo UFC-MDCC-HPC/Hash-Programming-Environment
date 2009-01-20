@@ -6,6 +6,7 @@
  */
 package hPE.xml.component;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,7 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getBaseType <em>Base Type</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentHeaderType#getVersions <em>Versions</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getPackagePath <em>Package Path</em>}</li>
@@ -57,6 +60,23 @@ public interface ComponentHeaderType extends EObject {
 	void setBaseType(BaseTypeType value);
 
 	/**
+	 * Returns the value of the '<em><b>Versions</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.VersionType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Versions</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Versions</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_Versions()
+	 * @model containment="true" required="true"
+	 *        extendedMetaData="kind='element' name='versions'"
+	 * @generated
+	 */
+	EList<VersionType> getVersions();
+
+	/**
 	 * Returns the value of the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -82,6 +102,60 @@ public interface ComponentHeaderType extends EObject {
 	 * @generated
 	 */
 	void setHashComponentUID(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Abstract</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Abstract</em>' attribute.
+	 * @see #isSetIsAbstract()
+	 * @see #unsetIsAbstract()
+	 * @see #setIsAbstract(boolean)
+	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_IsAbstract()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='isAbstract'"
+	 * @generated
+	 */
+	boolean isIsAbstract();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Abstract</em>' attribute.
+	 * @see #isSetIsAbstract()
+	 * @see #unsetIsAbstract()
+	 * @see #isIsAbstract()
+	 * @generated
+	 */
+	void setIsAbstract(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsAbstract()
+	 * @see #isIsAbstract()
+	 * @see #setIsAbstract(boolean)
+	 * @generated
+	 */
+	void unsetIsAbstract();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Abstract</em>' attribute is set.
+	 * @see #unsetIsAbstract()
+	 * @see #isIsAbstract()
+	 * @see #setIsAbstract(boolean)
+	 * @generated
+	 */
+	boolean isSetIsAbstract();
 
 	/**
 	 * Returns the value of the '<em><b>Kind</b></em>' attribute.

@@ -38,7 +38,7 @@ public class ShowInterfaceAction extends SelectionAction {
 			   setId("Show Interface");
 			   setToolTipText("Show Interface");
 			   setImageDescriptor(
-			   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+			   ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 			   setHoverImageDescriptor(getImageDescriptor());
 		} else {
 			   request = new Request(HIDE_INTERFACE_REQUEST);
@@ -46,7 +46,7 @@ public class ShowInterfaceAction extends SelectionAction {
 			   setId("Hide Interface");
 			   setToolTipText("Hide Interface");
 			   setImageDescriptor(
-			   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+			   ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 			   setHoverImageDescriptor(getImageDescriptor());
 		}
 		

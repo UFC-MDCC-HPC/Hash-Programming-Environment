@@ -34,7 +34,7 @@ public class FuseReplicatorAction extends SelectionAction {
 		setId(FUSE_REPLICATOR);
 		setToolTipText(FUSE_REPLICATOR);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

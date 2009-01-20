@@ -4,6 +4,11 @@ package hPE;
 
 import hPE.core.library.HPEComponentFileNotFound;
 import hPE.frontend.MainConfigurationEditPartFactory;
+import hPE.frontend.NAntBuilder;
+import hPE.frontend.backend.locations.DocumentRoot;
+import hPE.frontend.backend.locations.LocationsPackage;
+import hPE.frontend.backend.locations.Services;
+import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
@@ -18,6 +23,7 @@ import hPE.frontend.base.actions.InheritFromAction;
 import hPE.frontend.base.actions.JoinReplicatorAction;
 import hPE.frontend.base.actions.LiftReplicatorAction;
 import hPE.frontend.base.actions.LiftUnitAction;
+import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.SetParameterAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
@@ -68,6 +74,8 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
+import net.sf.nant.release._0._86.beta1.nant.NantFactory;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -75,6 +83,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditDomain;
@@ -242,11 +253,15 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		HComponent c = getModel();
 		IFile file = ((IFileEditorInput) getEditorInput()).getFile();
 		    
-	    factory.saveComponent(c,file,monitor);			    
+	    factory.saveComponent(c,file,monitor);	
+	    
+	    NAntBuilder.save(c,monitor);
 
 	    getCommandStack().markSaveLocation();			
 	}
 	
+	
+
 	public HComponent getModel() {
 		
 		return configuration;
@@ -451,6 +466,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		id = SetRecursiveAction.SET_RECURSIVE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ImplementsAction.IMPLEMENTS;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = NewVersionAction.NEW_VERSION;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		
 		bars.updateActionBars();
@@ -674,6 +691,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		getSelectionActions().add(action.getId());
 
 		action = new ImplementsAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+		
+		action = new NewVersionAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 	}

@@ -40,7 +40,7 @@ public class SetReplicatorFactorAction extends SelectionAction {
 		setId(SET_REPLICATOR_FACTOR);
 		setToolTipText(SET_REPLICATOR_FACTOR);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	    dialog = new InputDialog(part.getSite().getWorkbenchWindow().getShell(),
 	    		                 "Configuring Replicator Factor",

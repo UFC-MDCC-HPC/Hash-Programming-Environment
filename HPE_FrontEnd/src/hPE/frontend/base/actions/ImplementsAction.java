@@ -32,7 +32,7 @@ public class ImplementsAction extends SelectionAction {
 		setId(IMPLEMENTS);
 		setToolTipText(IMPLEMENTS);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	
@@ -62,7 +62,7 @@ public class ImplementsAction extends SelectionAction {
         
         if(c.isSuperType()) return false;
         
-        if (!c.isAbstractConfiguration()) return false;
+        if (!c.isAbstractConfiguration() && c.getWhoItImplements() != null) return false;
         
         if (!c.allSupplied()) return false;
         

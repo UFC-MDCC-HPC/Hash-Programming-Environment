@@ -31,7 +31,7 @@ public class UnsetReplicatorAction extends SelectionAction {
 		setId(UNSET_REPLICATOR);
 		setToolTipText(UNSET_REPLICATOR);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	}
 	

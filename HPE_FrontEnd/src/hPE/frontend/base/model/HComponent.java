@@ -49,6 +49,59 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
 	static final long serialVersionUID = 1;
 	
+	private List<Integer[]> versions = null;
+	
+	private int currentVersion = -1;
+	
+	public boolean containsVersion(Integer[] version) {
+		
+		List<Integer[]> versions = this.getVersions();
+		
+		for (Integer[] v : versions) {
+			if (v[0] == version[0] && v[1] == version[1] && v[2] == version[2] && v[3] == version[3]) 
+				return true;
+		}
+		
+		return false;
+	}
+
+	public void setVersions(List<Integer[]> versions) {
+		this.versions = versions;
+		
+	}
+
+
+	public List<Integer[]> getVersions() {
+		if (versions == null) {
+			versions = new ArrayList<Integer[]>();
+			versions.add(new Integer[] {1,0,0,0});
+			currentVersion = 0;
+		}
+		
+		return versions;
+	}
+
+	public void newVersion(Integer[] version) {
+		if (versions == null) {
+			versions = new ArrayList<Integer[]>();
+			versions.add(version);
+			currentVersion = 0;
+		} else {
+			versions.add(version);
+			currentVersion = versions.indexOf(version);
+		}
+	}
+	
+	public Integer[] getCurrentVersion() {
+		if (versions == null) {
+			versions = new ArrayList<Integer[]>();
+			versions.add(new Integer[] {1,0,0,0});
+			currentVersion = 0;
+		}		
+		return getVersions().get(currentVersion);	
+	}
+	
+	
 	private String myPackage = null;
 	
 	public void setPackagePath(IPath myPackage) {
@@ -222,15 +275,38 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 	}
 	
+	private static int IS_UNDEFINED = -1;
+	private static int IS_ABSTRACT = 0;
+	private static int IS_CONCRETE = 1; 
+	
+	private int isAbstract = IS_UNDEFINED;
+	
+	public void setAbstract(boolean isAbstract) {
+		this.isAbstract = isAbstract ? IS_ABSTRACT : IS_CONCRETE;
+		listeners.firePropertyChange(PROPERTY_CONCRETE_CONFIGURATION, null, name); //$NON-NLS-2$//$NON-NLS-1$		
+	}
+
+	public boolean isAbstract() {
+		return isAbstract == IS_ABSTRACT;
+	}
+	
+	
 	public boolean isAbstractConfiguration() {
+		this.isAbstract = this.isAbstract == IS_UNDEFINED ? (forceIsAbstractConfiguration() ? IS_ABSTRACT : IS_CONCRETE) : isAbstract;
+		return this.isAbstract == IS_ABSTRACT;
+	}
+	
+	private boolean forceIsAbstractConfiguration() {
+
 		if (this.getSuperType() == null) {
 			return this.itImplements == null;
 		} else {
 			HComponent c = this.getSuperType();
 			return c.isAbstractConfiguration();
 		}
+		
 	}
-	
+		
 	public HComponent getWhoItImplements() {
 		
 		if (this.getSuperType() == null) {
@@ -316,12 +392,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 	
 	private String uri = null;
-	
-	public URI getURI() {
-		return URI.createURI(uri);
-	}
-	
-	public void setURI(URI uri) {
+		
+	private void setURI(URI uri) {
 		this.uri = uri.toString();
 	}
 	
@@ -1273,23 +1345,13 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 
 	// private ILComponentView libraryEntry;
-	
-	private String libraryEntry = "";
-	
-	public void setLocation(String libraryEntry) {
-		this.libraryEntry = libraryEntry;
-	}
-	
-	public String getSystemLocation() {
-		return this.uri;
-	}
-	
+			
 	public String getLocation() {
 		return uri;
 	}
 	
 	public String toString() {
-		return this.getSystemLocation();
+		return this.getLocation();
 	}
 	
 	public final static String PROPERTY_IS_PARAMETER = "PROPERTY_IS_PARAMETER";
@@ -2208,7 +2270,6 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	 that.isParameter = this.isParameter;
     	 that.isRecursive = this.isRecursive;
     	 that.itImplements = this.itImplements.getMyCopy();
-    	 that.libraryEntry = this.libraryEntry;
     	 for (HReplicator r : this.getReplicators())
 			try {
 				that.setReplicator(r);

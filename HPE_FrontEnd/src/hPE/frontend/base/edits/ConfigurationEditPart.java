@@ -27,6 +27,7 @@ import hPE.frontend.base.policies.ChangeVariableNameEditPolicy;
 import hPE.frontend.base.policies.DeployEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.ImplementsEditPolicy;
+import hPE.frontend.base.policies.NewVersionEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HProtocol;
@@ -82,7 +83,8 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,  new ElementsXYLayoutEditPolicy());
 	    this.installEditPolicy("Change Variable Name", new ChangeVariableNameEditPolicy());
-	    this.installEditPolicy("Deploy", new DeployEditPolicy());
+	    //this.installEditPolicy("Deploy", new DeployEditPolicy());
+	    this.installEditPolicy("New Version", new NewVersionEditPolicy());
 	    this.installEditPolicy("Browse", new BrowseEditPolicy());
 
 	}
@@ -216,8 +218,9 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		String name = config.isAbstractConfiguration() ? "Abstract ": "" ; 
         name = name + config.kindString() + " " + config.getNameWithParameters(true, true, true);
         if (!config.isAbstractConfiguration()) {
-            name = name + " implements " + config.getWhoItImplements().getNameWithParameters(false, true, true);
-        } else if (config.getSuperType() != null) {
+            name = name + " implements " + (config.getWhoItImplements() != null ? config.getWhoItImplements().getNameWithParameters(false, true, true) : "?");
+        }
+        else if (config.getSuperType() != null) {        
             name = name + " extends " + config.getSuperType().getNameWithParameters(false, true, true);
         }
 		

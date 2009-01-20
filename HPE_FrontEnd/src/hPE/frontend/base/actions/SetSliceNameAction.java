@@ -37,7 +37,7 @@ public class SetSliceNameAction extends SelectionAction {
 		setId(SET_SLICE_NAME);
 		setToolTipText(SET_SLICE_NAME);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 		shell = part.getSite().getWorkbenchWindow().getShell();
 	    // dialog = new InputDialog(part.getSite().getWorkbenchWindow().getShell(),"Set Slice Name","Slice Name","x",null);

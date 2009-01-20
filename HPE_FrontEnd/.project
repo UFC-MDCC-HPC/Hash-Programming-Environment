@@ -40,5 +40,10 @@
 			<type>1</type>
 			<location>C:/site.xml</location>
 		</link>
+		<link>
+			<name>src/hPE/frontend/nant.xsd</name>
+			<type>1</type>
+			<location>C:/Downloads/nant.xsd</location>
+		</link>
 	</linkedResources>
 </projectDescription>

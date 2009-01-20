@@ -19,12 +19,17 @@ public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClas
 
 	public List<HBESourceCSharpClassDefinition> getFiles() {
 		List<HBESourceCSharpClassDefinition> l = new ArrayList<HBESourceCSharpClassDefinition>();
-		l.add(this.src);
+		if (this.src != null)
+		    l.add(this.src);
 		return l;
 	}
 	
 	public  String getFileType() {
-		return "C# Language";
+		return getType();
+	}
+	
+	public String getSynthesizerType(boolean abs) {
+		return abs ? "C# Language Interface" : "C# Language Class";
 	}
 	
 	public static String getType() {

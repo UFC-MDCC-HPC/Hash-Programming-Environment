@@ -35,7 +35,7 @@ public class SupplyParameterAction extends SelectionAction {
 		setId(SUPPLY_PARAMETER);
 		setToolTipText(SUPPLY_PARAMETER);
 		setImageDescriptor(
-		ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+		ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle16.gif")); //$NON-NLS-1$
 		setHoverImageDescriptor(getImageDescriptor());
 	    dialog = new InputDialog(part.getSite().getWorkbenchWindow().getShell(),"Supplying Parameter","Variable Name","X",null);
 	}
