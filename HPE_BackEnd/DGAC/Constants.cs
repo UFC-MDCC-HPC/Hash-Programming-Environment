@@ -5,7 +5,7 @@ namespace DGAC.utils{
 
 public class Constants {
 
-    public static string PROPERTIES_FILE = "h:\\temp\\hpe.backend.properties"; // getPropertiesFilePath(); // ;
+    public static string PROPERTIES_FILE =  getPropertiesFilePath(); // "h:\\temp\\hpe.backend.properties";
 
     private static string getPropertiesFilePath()
     {
