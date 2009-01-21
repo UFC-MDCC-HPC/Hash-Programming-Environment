@@ -7,4 +7,14 @@ public class HBECSourceHeader extends HBECSource {
 		
 	}
 
+	@Override
+	public String getBinaryExtension() {
+		return "o";
+	}
+
+	@Override
+	public String getSourceExtension() {
+		return "h";
+	}
+
 }

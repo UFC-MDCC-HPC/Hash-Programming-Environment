@@ -8,8 +8,12 @@ public class HBESourceCSharpMainDefinition extends HBESourceCSharpClassDefinitio
 		super(name, contents, path, versionID);
 	}
 	
-	public String getFileType() {
+	public String getBinaryExtension() {
 		return "exe";
+	}
+
+	public String getFileType() {
+		return getType();
 	}
 	
 	public static String getType() {

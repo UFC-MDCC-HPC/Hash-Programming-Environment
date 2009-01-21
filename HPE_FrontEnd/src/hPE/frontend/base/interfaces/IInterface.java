@@ -17,11 +17,7 @@ public interface IInterface {
 	public boolean isUnamed();
 	
 	public IConfiguration getConfiguration();
-		
-	public List getModules();
-	
-	public void addModule(HModule module);
-	
+				
 	public List<HInterfaceSlice> getSlices();
 	
 	public void setEditableSource(boolean isEditableSource);

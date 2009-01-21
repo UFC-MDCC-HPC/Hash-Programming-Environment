@@ -49,15 +49,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	public void signalUpdateVisual() {
 		getListeners().firePropertyChange(HInterface.PROPERTY_SIGNATURE,null,getName2());
 	}
-
-	private List<HModule> modules;
 	
 	public final static String PROPERTY_NEW_MODULE = "PROPERTY_NEW_MODULE";
-	
-	public List<HModule> getModules() {
-		return modules;
-	}
-	
+		
 	public HPort fetchPort(String sliceOwner, String slicePortOriginalName) {
 		HInterfaceSlice sOwner = this.fetchSlice(sliceOwner);
 		for (HPort port_ : sOwner.getPorts()) {
@@ -71,12 +65,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		
 		return null;
 	}
-	
-	public void addModule(HModule module) {
-	   	this.modules.add(module);
-	   	this.getListeners().firePropertyChange(PROPERTY_NEW_MODULE,null,getName2());
-	}
-	
+		
 	public HInterfaceSlice fetchSlice(String[] sliceQRef) {
 		
 		HInterface i = this;
@@ -638,33 +627,6 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		
 	}
 	
-	public String getMyDeploymentPath() {
-	
-		String s = this.getConfiguration().getLocation();
-		String ss = s.substring(0,s.indexOf(".hpe")).concat("/");
-		
-		return ss;
-
-	}
-	
-	public HBESourceVersion<HBEAbstractFile> getMostRecentSourceVersion() throws NoSourceVersionException{
-		Collection<HBESourceVersion<HBEAbstractFile>> vs = getSourceVersions();
-		if (vs.size() > 0) {
-			return ((List<HBESourceVersion<HBEAbstractFile>>)vs).get(vs.size()-1);
-		} else {
-			throw new NoSourceVersionException(this);
-		}
-			
-	}
-	
-	public class NoSourceVersionException extends Exception {
-	
-		public NoSourceVersionException(HInterface i) {
-			super("There is no source version for the interface ".concat(i.getName2()));
-		}		
-		
-	}
-
 	public HInterfaceSlice fetchSlice(String cRef, String iRef) {
 		
 		for (HInterfaceSlice s : this.getSlices()) {

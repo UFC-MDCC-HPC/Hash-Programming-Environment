@@ -8,12 +8,20 @@ public class HBESourceCSharpClassDefinition extends HBEAbstractFile {
 		super(name, contents, path, versionID);
 	}
 	
-	public String getFileType() {
+	public String getSourceExtension() {
+		return "cs";
+	}
+
+	public String getBinaryExtension() {
 		return "dll";
+	}
+
+	public String getFileType() {
+		return getType();
 	}
 	
 	public static String getType() {
-		return "dll";
+		return "library";
 	}
 
 }

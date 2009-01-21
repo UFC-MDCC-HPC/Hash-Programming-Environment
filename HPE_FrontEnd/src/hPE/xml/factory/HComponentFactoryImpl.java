@@ -2163,7 +2163,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			source.setVersionID(versionId);
 			
 			for (SourceFileType f : s.getFile()) {
-			   String fileType = f.getFileType().equals("C#") ? "dll" : f.getFileType();
+			   String fileType = f.getFileType().equals("dll") ? "library" : f.getFileType();
 			   String rootPath = this.component.getLocation();
 			   String versionIdF = f.getVersionId();
 			   versionIdF = checkVersion(versionIdF) ? versionIdF : "1.0.0.0";

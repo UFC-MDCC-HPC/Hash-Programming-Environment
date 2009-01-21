@@ -120,6 +120,9 @@ public abstract class HBEAbstractFile implements Serializable {
 	
 	public abstract String getFileType();
 	
+	public abstract String getBinaryExtension();
+	
+	public abstract String getSourceExtension();
 	
 	public void persistSourceFile() {
 		
