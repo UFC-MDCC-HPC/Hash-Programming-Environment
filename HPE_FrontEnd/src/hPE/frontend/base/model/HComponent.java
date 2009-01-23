@@ -250,25 +250,12 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			   HInterface i = (HInterface) the_target.getInterface();
 			   i.setImplements(); // mark versions to be overriden ...
 			   try {
-				((HUnit)the_source).updatePorts();
-			} catch (HPEAbortException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			   
-	/*		   if (i instanceof HHasPortsInterface) {
-			    HHasPortsInterface iwp = (HHasPortsInterface) i; 
-			    List<IHProvidesPort> ports = new ArrayList<IHProvidesPort>();
-				iwp.getPorts(ports, null, "", ".", 1);
-				for (IHProvidesPort p : ports) {
-					p.resetDefaultName();
-				}
-			   } 
-    */
-			   
-	//		   i.setEditableSource(true);
-		//	   i.setEditable(false);
-			}
+				   ((HUnit)the_source).updatePorts();
+			   } catch (HPEAbortException e) {
+				   // TODO Auto-generated catch block
+				   e.printStackTrace();
+			   }
+		   }
 		}
 
 		listeners.firePropertyChange(PROPERTY_CONCRETE_CONFIGURATION, null, name); //$NON-NLS-2$//$NON-NLS-1$		

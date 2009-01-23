@@ -255,13 +255,10 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 	public void setIsSubclass(HInterface i, String versionID) {
 		
         HBESourceVersion<HBEAbstractFile> superVersion = i.getSourceVersion(versionID);
-        subclass = i.hasSuperType() && superVersion.isInherit();
+        subclass = i.hasSuperType() && superVersion.getFiles().isEmpty();
 
 	}
 	
-    public boolean getIsSubclass() {
-    	return subclass;
-    }
 	
 	
 }

@@ -1,5 +1,6 @@
 package hPE.xml.factory;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import hPE.frontend.base.codegen.HBEAbstractFile;
@@ -62,6 +63,8 @@ import java.util.Map.Entry;
 import javax.swing.JOptionPane;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -235,7 +238,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			String shUri = baseComponent.getLocation();
 			VisualElementAttributes v = baseComponent.getVisualDescription();
 			Rectangle bounds = new Rectangle((int)v.getX(),(int)v.getY(),(int)v.getW(),(int)v.getH());
-			URI uhri = URI.createURI("/" + shUri + "/" + name + ".hpe");
+			URI uhri = URI.createURI(shUri);
 			HComponent superType = (new HComponentFactoryImpl()).loadComponent(uhri);
 			
 			mC1.put(baseComponent.getLocalRef(), baseComponent);
@@ -274,7 +277,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			String sUri = xInnerC.getLocation();
 			String ref = xInnerC.getLocalRef();
 			boolean isExposed = xInnerC.isExposed();
-			URI innerUri = URI.createURI("/" + sUri + "/" + name + ".hpe");
+			URI innerUri = URI.createURI(sUri);
 			HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri); 
 			mC2.put(xInnerC,innerC);
 			
@@ -893,7 +896,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		baseTypeX.setComponent(superTypeX);
 		
 		String name = baseType.getComponentName();
-		String location = baseType.getPackagePath().toPortableString();
+		String location = baseType.getLocation();
 		String version = "1.0.0.0";
 		String hash_component_UID = baseType.getHashComponentUID();
 		VisualElementAttributes v = factory.createVisualElementAttributes();
@@ -1149,7 +1152,13 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		String name = ic.getComponentName();
 		String localRef = ic.getRef();
 		String version = "1.0.0.0";
-		String location = ic.getPackagePath().toPortableString(); //.getURI().toString();
+		
+		// IFolder fileIC = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(ic.getLocation()));		
+		
+		//String location = fileIC.getLocation().toOSString();
+
+		// String location = ic.getPackagePath().toPortableString(); //.getURI().toString();
+		String location = ic.getLocation();
 		boolean exposed = ic.getExposed();
 		String hash_component_UID = ic.getHashComponentUID();				
 		

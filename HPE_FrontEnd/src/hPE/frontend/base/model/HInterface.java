@@ -595,10 +595,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	
 	public void setSuperTypeID(String n) {
 		superTypeID = n;
-		
-		for (HBESourceVersion<HBEAbstractFile> version : this.getSourceVersions()) {
-			version.setInherit(true);
-		}
+		this.cleanSources();
 	}
 	
 	
@@ -607,9 +604,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	}
 	
 	public void setImplements () {
-		for (HBESourceVersion<HBEAbstractFile> version : this.getSourceVersions()) {
-			version.setImplement(true);
-		}		
+		this.cleanSources();
 	}
 	
 	public boolean isEquivalentTo(HInterface i) {

@@ -125,7 +125,7 @@ public void execute(){
 	
 	
 	if (result == HBEVersionControlDialog.BUTTON_EDIT) {		
-	    if (version.getFiles().size() == 0) {
+	    if (version.getFiles().isEmpty()) {
  			 openExistingSourceCodeFile(synthesizer.synthesize(i,version.getVersionID()));
 	    } else {
 	    	openExistingSourceCodeFile(version);

@@ -77,10 +77,12 @@ public abstract class HBEAbstractFile implements Serializable {
 		    return this.contents;
 			
 		} catch (CoreException e) {
-        	JOptionPane.showMessageDialog(null,
-        		    "Error Fetching File Contents - ".concat(e.getMessage()),
-        		    "Error",
-        		    JOptionPane.ERROR_MESSAGE);
+			if (this.contents != null)
+				persistSourceFile();
+        	// JOptionPane.showMessageDialog(null,
+        	//	    "Error Fetching File Contents - ".concat(e.getMessage()),
+        	//	    "Error",
+        	//	    JOptionPane.ERROR_MESSAGE);
 	    } catch (IOException e) {
         	JOptionPane.showMessageDialog(null,
         		    "Error Reading File Contents - ".concat(e.getMessage()),

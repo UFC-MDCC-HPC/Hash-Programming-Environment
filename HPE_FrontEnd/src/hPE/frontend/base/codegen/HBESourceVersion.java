@@ -32,26 +32,6 @@ public abstract class HBESourceVersion<FileType extends HBEAbstractFile> impleme
 	public String toString() {
 		return versionID;
 	}
-	
-	public void setInherit(boolean inherit) {
-		this.inherit = inherit;
-	}
-
-	public boolean isInherit() {
-		return inherit;
-	}
-
-	private boolean inherit = false;
-	
-	public void setImplement(boolean implement) {
-		this.implement = implement;
-	}
-
-	public boolean isImplement() {
-		return implement;
-	}
-
-	private boolean implement = false;
-		
+				
 	
 }
