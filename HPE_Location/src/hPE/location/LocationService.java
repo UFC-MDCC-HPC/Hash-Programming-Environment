@@ -11,6 +11,7 @@ import hPE.location.xml.PackageType;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @javax.jws.WebService
 public class LocationService implements HLocationService, Subject {
@@ -144,7 +145,7 @@ public class LocationService implements HLocationService, Subject {
 	    }
 	}	
 
-	public String registerComponent(String packageName, String componentName, String contents){
+	public String registerComponent(String packageName, String componentName, String contents, Map<String, byte[]> binaries){
 		
 		if(componentName.equals("")){
 			   System.out.println("Nome do component invalido");   
@@ -213,5 +214,18 @@ public class LocationService implements HLocationService, Subject {
 		String s = FileSystem.getText(packageName, componentName); 	 	 	
 		return s.equals("") ? null : s;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Local Location";
+	}
+
+	@Override
+	public String getPresentationMessage() {
+		// TODO Auto-generated method stub
+		return "I am the local location ...";
+	}
+
 	
 }
