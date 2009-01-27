@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -23,32 +23,29 @@
  <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
  <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
  <ns1:service name="LocationService" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="getComponent" qname="ns1:getComponent" returnQName="ns1:getComponentReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:packageName" type="xsd:string"/>
-   <ns2:parameter qname="ns1:componentName" type="xsd:string"/>
-  </ns2:operation>
-  <ns1:operation name="createPackage" qname="ns2:createPackage" returnQName="ns2:createPackageReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns2:operation name="getName" qname="ns1:getName" returnQName="ns1:getNameReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
+  <ns1:operation name="getComponent" qname="ns2:getComponent" returnQName="ns2:getComponentReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns2:packageName" type="xsd:string"/>
+   <ns1:parameter qname="ns2:componentName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="removePackage" qname="ns3:removePackage" returnQName="ns3:removePackageReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns3:packageName" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:operation name="fetchPackages" qname="ns4:fetchPackages" returnQName="ns4:fetchPackagesReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="registerComponent" qname="ns5:registerComponent" returnQName="ns5:registerComponentReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns5:packageName" type="xsd:string"/>
-   <ns1:parameter qname="ns5:componentName" type="xsd:string"/>
-   <ns1:parameter qname="ns5:contents" type="xsd:string"/>
+  <ns1:operation name="fetchPackages" qname="ns3:fetchPackages" returnQName="ns3:fetchPackagesReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="registerComponent" qname="ns4:registerComponent" returnQName="ns4:registerComponentReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:packageName" type="xsd:string"/>
+   <ns1:parameter qname="ns4:componentName" type="xsd:string"/>
+   <ns1:parameter qname="ns4:contents" type="xsd:string"/>
+   <ns1:parameter qname="ns4:binaries" type="ns5:Map" xmlns:ns5="http://xml.apache.org/xml-soap"/>
   </ns1:operation>
   <ns1:operation name="unregisterComponent" qname="ns6:unregisterComponent" returnQName="ns6:unregisterComponentReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns6:packageName" type="xsd:string"/>
    <ns1:parameter qname="ns6:componentName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="fetchPackages registerComponent removePackage getComponent unregisterComponent createPackage"/>
+  <ns1:operation name="getPresentationMessage" qname="ns7:getPresentationMessage" returnQName="ns7:getPresentationMessageReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://location.hPE" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:parameter name="allowedMethods" value="fetchPackages getPresentationMessage registerComponent getComponent getName unregisterComponent"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="LocationService"/>
   <ns1:parameter name="className" value="hPE.location.LocationService"/>
   <ns1:parameter name="wsdlServicePort" value="LocationService"/>
-  <ns1:parameter name="schemaQualified" value="http://location.hPE"/>
+  <ns1:parameter name="schemaQualified" value="http://xml.apache.org/xml-soap,http://location.hPE"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://location.hPE"/>
   <ns1:parameter name="wsdlServiceElement" value="LocationServiceService"/>
  </ns1:service>
