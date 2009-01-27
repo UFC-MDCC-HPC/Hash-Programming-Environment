@@ -4,6 +4,17 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://location.hPE" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <element name="getName">
+    <complexType/>
+   </element>
+   <element name="getNameResponse">
+    <complexType>
+     <sequence>
+      <element name="getNameReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="getComponent">
     <complexType>
      <sequence>
@@ -16,34 +27,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="getComponentReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="createPackage">
-    <complexType>
-     <sequence>
-      <element name="packageName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="createPackageResponse">
-    <complexType>
-     <sequence>
-      <element name="createPackageReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="removePackage">
-    <complexType>
-     <sequence>
-      <element name="packageName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="removePackageResponse">
-    <complexType>
-     <sequence>
-      <element name="removePackageReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -63,6 +46,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
       <element name="packageName" type="xsd:string"/>
       <element name="componentName" type="xsd:string"/>
       <element name="contents" type="xsd:string"/>
+      <element name="binaries" type="apachesoap:Map"/>
      </sequence>
     </complexType>
    </element>
@@ -88,18 +72,41 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="getPresentationMessage">
+    <complexType/>
+   </element>
+   <element name="getPresentationMessageResponse">
+    <complexType>
+     <sequence>
+      <element name="getPresentationMessageReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="mapItem">
+    <sequence>
+     <element name="key" nillable="true" type="xsd:anyType"/>
+     <element name="value" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="Map">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+    </sequence>
+   </complexType>
   </schema>
  </wsdl:types>
+
+   <wsdl:message name="getNameResponse">
+
+      <wsdl:part element="impl:getNameResponse" name="parameters"/>
+
+   </wsdl:message>
 
    <wsdl:message name="unregisterComponentResponse">
 
       <wsdl:part element="impl:unregisterComponentResponse" name="parameters"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="removePackageResponse">
-
-      <wsdl:part element="impl:removePackageResponse" name="parameters"/>
 
    </wsdl:message>
 
@@ -127,9 +134,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="createPackageResponse">
+   <wsdl:message name="getPresentationMessageRequest">
 
-      <wsdl:part element="impl:createPackageResponse" name="parameters"/>
+      <wsdl:part element="impl:getPresentationMessage" name="parameters"/>
 
    </wsdl:message>
 
@@ -139,15 +146,15 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="removePackageRequest">
+   <wsdl:message name="getNameRequest">
 
-      <wsdl:part element="impl:removePackage" name="parameters"/>
+      <wsdl:part element="impl:getName" name="parameters"/>
 
    </wsdl:message>
 
-   <wsdl:message name="createPackageRequest">
+   <wsdl:message name="getPresentationMessageResponse">
 
-      <wsdl:part element="impl:createPackage" name="parameters"/>
+      <wsdl:part element="impl:getPresentationMessageResponse" name="parameters"/>
 
    </wsdl:message>
 
@@ -165,27 +172,19 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="LocationService">
 
+      <wsdl:operation name="getName">
+
+         <wsdl:input message="impl:getNameRequest" name="getNameRequest"/>
+
+         <wsdl:output message="impl:getNameResponse" name="getNameResponse"/>
+
+      </wsdl:operation>
+
       <wsdl:operation name="getComponent">
 
          <wsdl:input message="impl:getComponentRequest" name="getComponentRequest"/>
 
          <wsdl:output message="impl:getComponentResponse" name="getComponentResponse"/>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="createPackage">
-
-         <wsdl:input message="impl:createPackageRequest" name="createPackageRequest"/>
-
-         <wsdl:output message="impl:createPackageResponse" name="createPackageResponse"/>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removePackage">
-
-         <wsdl:input message="impl:removePackageRequest" name="removePackageRequest"/>
-
-         <wsdl:output message="impl:removePackageResponse" name="removePackageResponse"/>
 
       </wsdl:operation>
 
@@ -213,11 +212,37 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="getPresentationMessage">
+
+         <wsdl:input message="impl:getPresentationMessageRequest" name="getPresentationMessageRequest"/>
+
+         <wsdl:output message="impl:getPresentationMessageResponse" name="getPresentationMessageResponse"/>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="LocationServiceSoapBinding" type="impl:LocationService">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getNameResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="getComponent">
 
@@ -230,42 +255,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getComponentResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="createPackage">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="createPackageRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="createPackageResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removePackage">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="removePackageRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="removePackageResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -320,6 +309,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="unregisterComponentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPresentationMessage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPresentationMessageRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPresentationMessageResponse">
 
             <wsdlsoap:body use="literal"/>
 
