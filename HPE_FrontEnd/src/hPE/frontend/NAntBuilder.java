@@ -1,5 +1,6 @@
 package hPE.frontend;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +16,20 @@ import net.sf.nant.release._0._86.beta1.nant.NantPackage;
 import net.sf.nant.release._0._86.beta1.nant.ProjectType;
 import net.sf.nant.release._0._86.beta1.nant.Target;
 import net.sf.nant.release._0._86.beta1.nant.util.NantResourceFactoryImpl;
+import hPE.HPEProperties;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -63,11 +69,19 @@ public class NAntBuilder {
 			Resource resource = resourceSet.createResource(uri);
 			
 			DocumentRoot dX = factory.createDocumentRoot();
+			
 			ProjectType cX = makeBuilder(c);
 			dX.setProject(cX);
 		
 			resource.getContents().add(dX);
 			resource.save(null); 
+
+			try {
+				ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			return resource;
 		} catch (IOException e) {
@@ -80,7 +94,7 @@ public class NAntBuilder {
 	private static ProjectType makeBuilder(HComponent c) {
 		ProjectType project = factory.createProjectType();
 		project.setName(c.getComponentName());
-		project.setBasedir(".");
+		project.setBasedir("..");
 		project.setDefault("all");
 		
 		List<NAntCoreTasksPropertyTask> properties = project.getProperty();
@@ -105,62 +119,88 @@ public class NAntBuilder {
 		
 		List<Integer[]> versions = c.getVersions();
 		for (Integer[] version : versions) {
-			Target target = factory.createTarget();
+			if (c.versionSupplied(HInterface.toStringVersion(version))) {
 			
-			String targetName = c.getComponentName()+ "-" + HInterface.toStringVersion(version);
-			targetNames.add(targetName);
-			
-			target.setName(targetName);
-			
-			List<NAntDotNetTasksCscTask> csc = target.getCsc();
-			
-			for (HInterface i : c.getInterfaces()) if (i.getConfiguration() == c) {
+				Target target = factory.createTarget();
 				
-				HBESourceVersion<HBEAbstractFile> v = i.getSourceVersion(HInterface.toStringVersion(version));
+				String targetName = c.getComponentName()+ "-" + HInterface.toStringVersion(version);
+				targetNames.add(targetName);
 				
-				if (v != null) 
-					for (HBEAbstractFile src : v.getFiles()) {
+				target.setName(targetName);
+				
+				List<NAntDotNetTasksCscTask> csc = target.getCsc();
+				
+				for (HInterface i : c.getInterfaces()) if (i.getConfiguration() == c) {
 					
-						NAntDotNetTasksCscTask compile = factory.createNAntDotNetTasksCscTask();
+					HBESourceVersion<HBEAbstractFile> v = i.getSourceVersion(HInterface.toStringVersion(version));
+					
+					List<HInterface> dependsOf = i.getCompilationDependencies2();
+					dependsOf.remove(0);
+					
+					if (v != null) 
+						for (HBEAbstractFile src : v.getFiles()) {
+						
+							NAntDotNetTasksCscTask compile = factory.createNAntDotNetTasksCscTask();
+			
+							compile.setDebug("true");
+							compile.setOptimize("true");
+							IPath path_output = src.getBinaryPath(); 
+							
+							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output.removeLastSegments(1));
+							if (!folderOutputExists) {
+								IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output.removeLastSegments(1));
 		
-						compile.setDebug("true");
-						compile.setOptimize("true");
-						IPath path_output = new Path(src.getPath().replace("/src/","/bin/")); 
-						compile.setOutput(path_output.removeFileExtension().addFileExtension(src.getBinaryExtension()));
-						compile.setTarget(src.getFileType());
-						IPath path_snk = new Path(c.getLocation());
-						compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk"));
-						
-						// Sources
-						List<NAntCoreTypesFileSet> sources = compile.getSources();
-						NAntCoreTypesFileSet source = factory.createNAntCoreTypesFileSet();
-						sources.add(source);
-						
-						// Sources / Includes
-						List<NAntCoreTypesFileSetInclude> includesSrcs = source.getInclude();
-						NAntCoreTypesFileSetInclude includeSrc = factory.createNAntCoreTypesFileSetInclude();
-						includeSrc.setName(src.getPath());
-						includesSrcs.add(includeSrc);					
-						
-						// References
-						List<NAntDotNetTypesAssemblyFileSet> refs = compile.getReferences();
-						NAntDotNetTypesAssemblyFileSet ref = factory.createNAntDotNetTypesAssemblyFileSet();
-						refs.add(ref);
-						
-						// References / Includes
-						List<NAntCoreTypesFileSetInclude> includeRefs = ref.getInclude();
-						
-						//for (references)
-						{
+								try {
+									folderOutput.create(true, true, null);
+								} catch (CoreException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							
+							
+							compile.setOutput(path_output.makeRelative());
+							compile.setTarget(src.getFileType());
+							IPath path_snk = new Path(c.getLocation());
+							compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk").makeRelative());
+							
+							// Sources
+							List<NAntCoreTypesFileSet> sources = compile.getSources();
+							NAntCoreTypesFileSet source = factory.createNAntCoreTypesFileSet();
+							sources.add(source);
+							
+							// Sources / Includes
+							List<NAntCoreTypesFileSetInclude> includesSrcs = source.getInclude();
+							NAntCoreTypesFileSetInclude includeSrc = factory.createNAntCoreTypesFileSetInclude();
+							includeSrc.setName(src.getSourcePath().makeRelative());
+							includesSrcs.add(includeSrc);					
+							
+							// References
+							List<NAntDotNetTypesAssemblyFileSet> refs = compile.getReferences();
+							NAntDotNetTypesAssemblyFileSet ref = factory.createNAntDotNetTypesAssemblyFileSet();
+							refs.add(ref);
+							
+							// References / Includes
+							List<NAntCoreTypesFileSetInclude> includeRefs = ref.getInclude();
+							
+							for (HInterface dep : dependsOf)
+							{
+								List<HBEAbstractFile> filesRef = dep.getSourceVersion("1.0.0.0").getFiles();
+								for (HBEAbstractFile file : filesRef) {
+									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
+									includeRef.setName(file.getBinaryPath().makeRelative());
+									includeRefs.add(includeRef);
+								}
+					    	}
 							NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
-							includeRef.setName("????");
+							includeRef.setName(HPEProperties.getInstance().getValue("dgac_path"));
 							includeRefs.add(includeRef);
-				    	}
-						
-						csc.add(compile);
-					}
-			}			
-			targets.add(target);
+							
+							csc.add(compile);
+						}
+				}			
+				targets.add(target);
+			}
 		}
 		
 		Target targetAll = factory.createTarget();

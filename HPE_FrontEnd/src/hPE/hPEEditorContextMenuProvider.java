@@ -16,6 +16,7 @@ import hPE.frontend.base.actions.LiftReplicatorAction;
 import hPE.frontend.base.actions.LiftUnitAction;
 import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
+import hPE.frontend.base.actions.RegisterComponentAction;
 import hPE.frontend.base.actions.SetParameterAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetReplicatorFactorAction;
@@ -338,6 +339,12 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
+		
+		action = getAction(RegisterComponentAction.REGISTER_COMPONENT);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+		
 	}
 
 	private IAction getAction(String actionId) {

@@ -35,16 +35,19 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 
 	private String componentName;
 	
+	private String version;
+	
 	private URI locationSite;
 	
 	public URI getLocationSite() {
 		return locationSite;
 	}
 		
-	public LComponentView(ILPackage parentPackage, String componentName, URI locationSite) {
+	public LComponentView(ILPackage parentPackage, String componentName, String version, URI locationSite) {
 		super(parentPackage);
 		this.locationSite = locationSite;
 		this.componentName = componentName;
+		this.version = version;
 		//readFrom(componentName);
 	}
 	
@@ -61,16 +64,9 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 		this.clearChildren();
 		this.componentName = componentName;
 		List<InterfaceType> interfaces = this.fetchInterfaces(componentName);
-		Iterator<InterfaceType> is = interfaces.iterator();
-		while (is.hasNext()) {
-			InterfaceType i = is.next();
-//			if (i instanceof IADTUnit) {
-//				ILInterfacePrimitiveView interfaceView = new LInterfacePrimitiveView(this,(IADTUnit) i);
-//				this.addChild(interfaceView);
-//			} else if (i instanceof IComputationUnit) {
-				ILInterfaceCompositeView interfaceView = new LInterfaceCompositeView(this,i);
-				this.addChild(interfaceView);
-//			}
+		for (InterfaceType i : interfaces) {
+			ILInterfaceCompositeView interfaceView = new LInterfaceCompositeView(this,i);
+			this.addChild(interfaceView);
 		}
 	}
 	
@@ -81,7 +77,7 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 		if (!useCached || component == null) {
 			String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
 			try {
-				file = HPELocationEntry.getComponent(pkName,componentName,locationSite);
+				file = HPELocationEntry.getComponent(pkName,componentName, version,locationSite);
 			} catch (HPEComponentFileNotFound e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -158,9 +154,13 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 	}
 	
 	public String getTitle() {
-		return getName();
+		return getName() + (getVersion() == null ? "" : " - " + getVersion());
 	}
 	
+	private String getVersion() {
+		return version;
+	}
+
 	public List getUnits() {
 		// returns observable units;
 		return getChildren();

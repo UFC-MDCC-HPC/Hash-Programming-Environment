@@ -116,8 +116,14 @@ public abstract class HBEAbstractFile implements Serializable {
 		this.sPath = path;
 	}
 	
-	public String getPath() {
-		return this.sPath;
+	public IPath getSourcePath() {
+		return new Path(this.sPath);
+	}
+	
+	public IPath getBinaryPath() {
+		IPath path = new Path(this.getSourcePath().toString().replace("/src/","/bin/"));
+		path = path.removeFileExtension().addFileExtension(this.getBinaryExtension());
+		return path;
 	}
 	
 	public abstract String getFileType();
@@ -130,7 +136,7 @@ public abstract class HBEAbstractFile implements Serializable {
 		
 			InputStream is = new java.io.StringBufferInputStream(this.contents);
 	
-	    	IPath path = new Path(sPath);	    	
+	    	IPath path = this.getSourcePath();	    	
 	    	
 	    	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 	    		    							

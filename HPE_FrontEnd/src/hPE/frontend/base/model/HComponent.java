@@ -1,5 +1,8 @@
 package hPE.frontend.base.model;
 
+import hPE.HPEProperties;
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IComponent;
@@ -17,9 +20,11 @@ import hPE.util.Pair;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -34,6 +39,8 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.ColorConstants;
@@ -112,6 +119,17 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		return new Path(this.myPackage); 
 	}
 	
+	public boolean versionSupplied(String version) {
+
+		for (HInterface i : this.getInterfaces()) {
+			if (i.getConfiguration() == this) {
+				HBESourceVersion<HBEAbstractFile> srcVersion = i.getSourceVersion(version);
+				if (srcVersion == null || srcVersion.getFiles().isEmpty()) return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	// TODO: EXISTENTIAL TYPE
 	//private boolean existentialType = false;
@@ -3457,6 +3475,64 @@ private boolean isInnerOfFreeParameter() {
 	}
 	
 	return false;
+}
+
+public boolean versionCompiled(String versionStr) {
+	
+	for (HInterface i : this.getInterfaces()) {
+		if (i.getConfiguration() == this) {
+			HBESourceVersion version = i.getSourceVersion(versionStr);
+     	    for (Object obj : version.getFiles()) {
+    		   HBEAbstractFile file = (HBEAbstractFile) obj;
+    		   IPath binPath = file.getBinaryPath();
+    		   if (!ResourcesPlugin.getWorkspace().getRoot().exists(binPath)) 
+    			   return false;
+    	    }
+		}
+	}
+	
+	return true;
+}
+
+public void createComponentKey() {
+	
+	IPath pathKeyFile = (new Path(this.getLocation())).removeFileExtension().addFileExtension("snk");
+	boolean ok = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
+	
+	if (!ok) {
+		String sn_path = HPEProperties.getInstance().getValue("sn_path");;
+		IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(this.getLocation()));		
+		
+		IPath loc = file.getLocation();
+		if (loc != null) {
+			IPath systemPath = loc.removeLastSegments(1);
+			
+		    java.io.File systemFile = new java.io.File(systemPath.toOSString());
+			
+			
+		    runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
+		}
+	}
+}
+
+private void runCommand(String[] cmd, String[] env, java.io.File file) {
+	
+	try 
+	{ 
+		Process p = Runtime.getRuntime().exec(cmd, env, file); 
+		int r = p.waitFor(); 
+		
+		BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
+		String line=reader.readLine(); 
+		while(line!=null) 
+		{ 
+			System.out.println(line); 
+			line=reader.readLine(); 
+		} 
+
+	} 
+	catch(IOException e1) {} 
+	catch(InterruptedException e2) {} 	
 }
 
 }

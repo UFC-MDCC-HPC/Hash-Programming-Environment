@@ -39,8 +39,17 @@ public class LPackage extends HPEComponentLibraryItem implements ILPackage {
 	private void readFromPackageLocation(URI locationSite) {
 		List<String> components = HPELocationEntry.fetchComponents(locationSite,packagePath);
 		this.clearChildren();
-		for (String componentName : components) {
-			ILComponentView componentView = new LComponentView(this,componentName,locationSite);
+		for (String componentNameAndVersion : components) {
+			String[] a = componentNameAndVersion.split(":");
+			String componentName = null;
+			String version = null;
+			if (a.length == 2) {
+				componentName = a[0];
+				version = a[1];				
+			} else {
+				componentName = componentNameAndVersion;				
+			}
+			ILComponentView componentView = new LComponentView(this, componentName, version, locationSite);
 			this.addChild(componentView);
 		}
 		
@@ -81,15 +90,15 @@ public class LPackage extends HPEComponentLibraryItem implements ILPackage {
 		// TODO: library (unregisterComponent)
 	}
 	
-	public void addComponent(ComponentType componentConfig, URI locationSite) {
+/*	public void addComponent(ComponentType componentConfig, URI locationSite) {
 		if (isAllowedToModifyPackage()) {			
 			ILComponentView componentView = new LComponentView(this,componentConfig.getHeader().getName(),locationSite);
 			this.registerNewComponent(componentConfig);
 			this.addChild(componentView);
 		}
-	}
+	}*/
 
-	public void removeComponent(ILComponentView theComponent) {
+/*	public void removeComponent(ILComponentView theComponent) {
 		if (isAllowedToModifyPackage()) {
 			
 			// TODO THE line below ...
@@ -99,7 +108,7 @@ public class LPackage extends HPEComponentLibraryItem implements ILPackage {
 			// ERROR: operation now allowed (remove package).
 		}
 	}	
-	
+	*/
 	public String[] getPackagePath() {
 		return this.packagePath;
 	}

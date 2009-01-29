@@ -185,7 +185,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		}
 			
 		setComponentVersion(c);
-		setComponentKeys(c,this.getContainerFullPath());
+		c.createComponentKey();
 		c.setAbstract(composite2.isAbstract());
 		
 		IPath path = new Path(absolutePath);
@@ -199,7 +199,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		ByteArrayInputStream bais = null;
 
 		try {
-			ResourcesPlugin.getWorkspace().getRoot().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -209,39 +209,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		
 	}
 
-	private void runCommand(String[] cmd, String[] env, java.io.File file) {
-		
-		try 
-		{ 
-			Process p = Runtime.getRuntime().exec(cmd, env, file); 
-			int r = p.waitFor(); 
-			
-			BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-			String line=reader.readLine(); 
-			while(line!=null) 
-			{ 
-				System.out.println(line); 
-				line=reader.readLine(); 
-			} 
 	
-		} 
-		catch(IOException e1) {} 
-		catch(InterruptedException e2) {} 	
-	}
-	
-	private void setComponentKeys(HComponent c, IPath path) {
-		
-		String sn_path = HPEProperties.getInstance().getValue("sn_path");;
-		IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocation()));		
-		
-		IPath systemPath = file.getLocation().removeLastSegments(1);
-		
-        java.io.File systemFile = new java.io.File(systemPath.toOSString());
-		
-		
-        runCommand(new String[] {sn_path, "-k", c.getComponentName() + ".snk"}, new String[] {}, systemFile);
-		
-	}
 
 	private void setComponentVersion(HComponent c) {
 		Integer[] version = new Integer[4];

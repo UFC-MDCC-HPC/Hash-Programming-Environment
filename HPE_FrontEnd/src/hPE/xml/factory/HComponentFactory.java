@@ -17,5 +17,9 @@ public interface HComponentFactory {
 	
 	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor);
 	
+	public void saveComponent(ComponentType cX, IFile file, IProgressMonitor monitor);
+	
+	public ComponentType marshallComponent(HComponent c);
+	
 	public HComponent buildComponent(ComponentType xC, URI uri);
 }

@@ -28,6 +28,7 @@ import hPE.frontend.base.policies.DeployEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.ImplementsEditPolicy;
 import hPE.frontend.base.policies.NewVersionEditPolicy;
+import hPE.frontend.base.policies.RegisterComponentEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HProtocol;
@@ -86,6 +87,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 	    //this.installEditPolicy("Deploy", new DeployEditPolicy());
 	    this.installEditPolicy("New Version", new NewVersionEditPolicy());
 	    this.installEditPolicy("Browse", new BrowseEditPolicy());
+	    this.installEditPolicy("Register Component", new RegisterComponentEditPolicy());
 
 	}
 

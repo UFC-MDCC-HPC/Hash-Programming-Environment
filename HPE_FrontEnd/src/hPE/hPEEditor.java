@@ -2,13 +2,8 @@ package hPE;
 
 
 
-import hPE.core.library.HPEComponentFileNotFound;
 import hPE.frontend.MainConfigurationEditPartFactory;
 import hPE.frontend.NAntBuilder;
-import hPE.frontend.backend.locations.DocumentRoot;
-import hPE.frontend.backend.locations.LocationsPackage;
-import hPE.frontend.backend.locations.Services;
-import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
@@ -25,6 +20,7 @@ import hPE.frontend.base.actions.LiftReplicatorAction;
 import hPE.frontend.base.actions.LiftUnitAction;
 import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
+import hPE.frontend.base.actions.RegisterComponentAction;
 import hPE.frontend.base.actions.SetParameterAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetReplicatorFactorAction;
@@ -53,28 +49,20 @@ import hPE.frontend.kinds.activate.actions.UnnestActionAction;
 import hPE.frontend.kinds.activate.model.HActivateConfiguration;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.location.LocationService;
-import hPE.location.LocationServiceService;
-import hPE.location.LocationServiceServiceLocator;
 import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
-
-import net.sf.nant.release._0._86.beta1.nant.NantFactory;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -83,9 +71,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditDomain;
@@ -108,7 +93,6 @@ import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.requests.SimpleFactory;
-import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.CopyTemplateAction;
 import org.eclipse.gef.ui.actions.DeleteAction;
@@ -469,6 +453,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = NewVersionAction.NEW_VERSION;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = RegisterComponentAction.REGISTER_COMPONENT;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
 		
 		bars.updateActionBars();
 		
@@ -695,6 +681,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		getSelectionActions().add(action.getId());
 		
 		action = new NewVersionAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+		
+		action = new RegisterComponentAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 	}

@@ -1,5 +1,5 @@
 /**
- * LocationServiceServiceLocator.java
+ * HPE_Location_ServerServiceLocator.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,53 +7,53 @@
 
 package hPE.location;
 
-public class LocationServiceServiceLocator extends org.apache.axis.client.Service implements hPE.location.LocationServiceService {
+public class HPE_Location_ServerServiceLocator extends org.apache.axis.client.Service implements hPE.location.HPE_Location_ServerService {
 
-    public LocationServiceServiceLocator() {
+    public HPE_Location_ServerServiceLocator() {
     }
 
 
-    public LocationServiceServiceLocator(org.apache.axis.EngineConfiguration config) {
+    public HPE_Location_ServerServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }
 
-    public LocationServiceServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+    public HPE_Location_ServerServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
 
-    // Use to get a proxy class for LocationService
-    private java.lang.String LocationService_address = "http://localhost:8081/HPE_Location/services/LocationService";
+    // Use to get a proxy class for HPE_Location_Server
+    private java.lang.String HPE_Location_Server_address = "http://localhost:8081/HPE_Location/HPE_Location_Server.jws";
 
-    public java.lang.String getLocationServiceAddress() {
-        return LocationService_address;
+    public java.lang.String getHPE_Location_ServerAddress() {
+        return HPE_Location_Server_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String LocationServiceWSDDServiceName = "LocationService";
+    private java.lang.String HPE_Location_ServerWSDDServiceName = "HPE_Location_Server";
 
-    public java.lang.String getLocationServiceWSDDServiceName() {
-        return LocationServiceWSDDServiceName;
+    public java.lang.String getHPE_Location_ServerWSDDServiceName() {
+        return HPE_Location_ServerWSDDServiceName;
     }
 
-    public void setLocationServiceWSDDServiceName(java.lang.String name) {
-        LocationServiceWSDDServiceName = name;
+    public void setHPE_Location_ServerWSDDServiceName(java.lang.String name) {
+        HPE_Location_ServerWSDDServiceName = name;
     }
 
-    public hPE.location.LocationService getLocationService() throws javax.xml.rpc.ServiceException {
+    public hPE.location.HPE_Location_Server getHPE_Location_Server() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
-            endpoint = new java.net.URL(LocationService_address);
+            endpoint = new java.net.URL(HPE_Location_Server_address);
         }
         catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        return getLocationService(endpoint);
+        return getHPE_Location_Server(endpoint);
     }
 
-    public hPE.location.LocationService getLocationService(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public hPE.location.HPE_Location_Server getHPE_Location_Server(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            hPE.location.LocationServiceSoapBindingStub _stub = new hPE.location.LocationServiceSoapBindingStub(portAddress, this);
-            _stub.setPortName(getLocationServiceWSDDServiceName());
+            hPE.location.HPE_Location_ServerSoapBindingStub _stub = new hPE.location.HPE_Location_ServerSoapBindingStub(portAddress, this);
+            _stub.setPortName(getHPE_Location_ServerWSDDServiceName());
             return _stub;
         }
         catch (org.apache.axis.AxisFault e) {
@@ -61,8 +61,8 @@ public class LocationServiceServiceLocator extends org.apache.axis.client.Servic
         }
     }
 
-    public void setLocationServiceEndpointAddress(java.lang.String address) {
-        LocationService_address = address;
+    public void setHPE_Location_ServerEndpointAddress(java.lang.String address) {
+        HPE_Location_Server_address = address;
     }
 
     /**
@@ -72,9 +72,9 @@ public class LocationServiceServiceLocator extends org.apache.axis.client.Servic
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (hPE.location.LocationService.class.isAssignableFrom(serviceEndpointInterface)) {
-                hPE.location.LocationServiceSoapBindingStub _stub = new hPE.location.LocationServiceSoapBindingStub(new java.net.URL(LocationService_address), this);
-                _stub.setPortName(getLocationServiceWSDDServiceName());
+            if (hPE.location.HPE_Location_Server.class.isAssignableFrom(serviceEndpointInterface)) {
+                hPE.location.HPE_Location_ServerSoapBindingStub _stub = new hPE.location.HPE_Location_ServerSoapBindingStub(new java.net.URL(HPE_Location_Server_address), this);
+                _stub.setPortName(getHPE_Location_ServerWSDDServiceName());
                 return _stub;
             }
         }
@@ -94,8 +94,8 @@ public class LocationServiceServiceLocator extends org.apache.axis.client.Servic
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("LocationService".equals(inputPortName)) {
-            return getLocationService();
+        if ("HPE_Location_Server".equals(inputPortName)) {
+            return getHPE_Location_Server();
         }
         else  {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
@@ -105,7 +105,7 @@ public class LocationServiceServiceLocator extends org.apache.axis.client.Servic
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://location.hPE", "LocationServiceService");
+        return new javax.xml.namespace.QName("http://localhost:8081/HPE_Location/HPE_Location_Server.jws", "HPE_Location_ServerService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class LocationServiceServiceLocator extends org.apache.axis.client.Servic
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://location.hPE", "LocationService"));
+            ports.add(new javax.xml.namespace.QName("http://localhost:8081/HPE_Location/HPE_Location_Server.jws", "HPE_Location_Server"));
         }
         return ports.iterator();
     }
@@ -123,8 +123,8 @@ public class LocationServiceServiceLocator extends org.apache.axis.client.Servic
     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         
-if ("LocationService".equals(portName)) {
-            setLocationServiceEndpointAddress(address);
+if ("HPE_Location_Server".equals(portName)) {
+            setHPE_Location_ServerEndpointAddress(address);
         }
         else 
 { // Unknown Port Name

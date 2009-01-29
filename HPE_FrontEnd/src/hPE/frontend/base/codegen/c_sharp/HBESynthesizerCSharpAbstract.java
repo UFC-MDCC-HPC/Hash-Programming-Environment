@@ -95,6 +95,8 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
 
 		programText += "using hpe.kinds.I" + i.getConfiguration().kindString() + "Kind;\n";
+
+		// GET REFERENCES - Begin ...
 		
 		List<String> usings = new ArrayList<String>();
 		for (List<HInterfaceSlice> ss : theSlices.values()) {
@@ -122,6 +124,8 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 			String componentNameExtends = cBase.getComponentName();			
 			programText += "using " + packageNameExtends + "." + componentNameExtends + "." + inheritedName + ";\n";
 		}
+		
+		// GET REFERENCES - ... End 
 		
 		programText += "\n";	
 		

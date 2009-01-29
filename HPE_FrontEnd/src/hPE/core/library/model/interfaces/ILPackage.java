@@ -12,8 +12,8 @@ public interface ILPackage extends IHPEComponentLibraryItem {
 	
 	public boolean isAllowedToModifyPackage();
 	
-	public void addComponent(ComponentType component, URI locationSite);
-	public void removeComponent(ILComponentView componentView);
+//	public void addComponent(ComponentType component, URI locationSite);
+//	public void removeComponent(ILComponentView componentView);
 	
 	public String[] getPackagePath();
 	

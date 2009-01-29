@@ -191,6 +191,27 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
     	return ls;
     }
     
+    public List<HInterface> getCompilationDependencies2() {
+        
+    	List<HInterface> ls = new ArrayList<HInterface>();   
+    	List<String> lsStr = new ArrayList<String>();
+    	ls.add(this);
+    	List<Triple<String,HInterface,String>> pars = this.getSuppliedParameters((HComponent)this.getConfiguration());
+    	
+    	for (Triple<String,HInterface,String> p : pars) {
+    	      HInterface i = p.snd();
+    	      List<HInterface> cds = i.getCompilationDependencies2();
+    	      
+    	      for (HInterface s : cds) {
+    	    	  if (!lsStr.contains(s.getPrimName())) {
+    	    	     ls.add(s);
+    	    	     lsStr.add(s.getPrimName());
+    	    	  }
+    	      }    	      
+    	}
+    	
+    	return ls;
+    }
     
     public List<Triple<String,HInterface,String>> getParameters2(HComponent cThis) {
     	
@@ -766,5 +787,6 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		}
 		return vIn;
 	}
+	
 	
 }

@@ -34,16 +34,4 @@
 		<nature>com.omondo.uml.std.Nature</nature>
 		<nature>org.eclipse.jem.beaninfo.BeanInfoNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>site.xml</name>
-			<type>1</type>
-			<location>C:/site.xml</location>
-		</link>
-		<link>
-			<name>src/hPE/frontend/nant.xsd</name>
-			<type>1</type>
-			<location>C:/Downloads/nant.xsd</location>
-		</link>
-	</linkedResources>
 </projectDescription>

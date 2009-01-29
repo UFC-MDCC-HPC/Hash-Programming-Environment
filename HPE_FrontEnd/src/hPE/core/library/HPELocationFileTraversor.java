@@ -37,9 +37,9 @@ public class HPELocationFileTraversor {
 		this.locationPath = lookForLocationPath();		
 	}
 	
-    public List fetchLocations() {
+    public List<URI> fetchLocations() {
     	
-    	List locations = new ArrayList();
+    	List<URI> locations = new ArrayList<URI>();
     	
         try {
             DOMParser parser = new DOMParser();
@@ -89,7 +89,7 @@ public class HPELocationFileTraversor {
     }
     
     //traverses the tree structure representation
-    public static void traverse(TreeWalkerImpl tw, List locations)
+    public static void traverse(TreeWalkerImpl tw, List<URI> locations)
     {
       Node n = tw.getCurrentNode();
       System.out.println(n.getNodeName());
@@ -105,7 +105,7 @@ public class HPELocationFileTraversor {
 		  URI uri = URI.createURI(address);
 		  locations.add(uri);
 		  if (address.equals("workspace")) {
-			  String project = attrs.getNamedItem("project").getNodeValue();
+			  URI project = URI.createURI(attrs.getNamedItem("project").getNodeValue());
 			  locations.add(project);
 		  }
 	  }

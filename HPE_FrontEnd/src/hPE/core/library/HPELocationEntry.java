@@ -3,6 +3,10 @@ package hPE.core.library;
 
 //import hPE.core.HLocationService;
 //import hPE.core.LocationService;
+import hPE.location.HPE_Location_Server;
+import hPE.location.HPE_Location_ServerService;
+import hPE.location.HPE_Location_ServerServiceLocator;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,14 +19,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.xml.rpc.ServiceException;
-
-// import localhost.axis.LocationServer_jws.LocationServer;
-// import localhost.axis.LocationServer_jws.LocationServerService;
-// import localhost.axis.LocationServer_jws.LocationServerServiceLocator;
-
-import hPE.location.LocationService;
-import hPE.location.LocationServiceService;
-import hPE.location.LocationServiceServiceLocator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -44,9 +40,9 @@ public class HPELocationEntry {
 	
 			URL url = new URL(urlWS);
 			
-			LocationServiceService locationServerService = new LocationServiceServiceLocator();
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
 			
-		    LocationService server = locationServerService.getLocationService(url); 
+			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
 				
 			String str = server.fetchPackages();
 			
@@ -86,14 +82,6 @@ public class HPELocationEntry {
 				}
 			  }
 			 return packagesList;
-//		 }
-//		 catch (RemoteException e) {
-		     // MessageDialog.
-	//		 return null;
-	//	 }
-		// catch (ServiceException e) {
-		 //    return null;
-		 //}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,7 +113,7 @@ public class HPELocationEntry {
 			}
 		}
 		
-		String str = htable.get(pk); //retorna todos o components numa string separados por espaï¿½o
+		String str = htable.get(pk); //retorna todos o components numa string separados por espaço
 		
 		if(str!=null){
 			StringTokenizer token= new StringTokenizer(str); 
@@ -139,7 +127,7 @@ public class HPELocationEntry {
 		return componentsList;
 	}
 
-	public static java.io.File getComponent(String[] pkName, String componentName, URI locationSite) 
+	public static java.io.File getComponent(String[] pkName, String componentName, String version, URI locationSite) 
 	         throws HPEComponentFileNotFound
 	{
 		java.io.File file = null;
@@ -157,9 +145,9 @@ public class HPELocationEntry {
 
 		URL url = new URL(locationSite.toString());
 		
-		LocationServiceService locationServerService = new LocationServiceServiceLocator();
-	    LocationService server = locationServerService.getLocationService(url); 
-	    String contents = server.getComponent(pk, componentName);
+		HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+		HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+	    String contents = server.getComponent(pk, componentName, version);
 		
 		// BEGIN NO WEB SERVICE
 		// HLocationService loc = new LocationService();		

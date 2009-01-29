@@ -7,6 +7,7 @@ import hPE.core.library.model.classes.HPEComponentLibraryItem;
 import java.util.List;
 import java.util.Iterator;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -355,7 +356,7 @@ public class HPEComponentLibraryView extends ViewPart {
 	
 	public HPEComponentLibrary getInitalInput() {
 		
-		List locations;
+		List<URI> locations;
 		
 		HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
 		

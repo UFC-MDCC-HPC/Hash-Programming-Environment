@@ -107,7 +107,7 @@ public void execute(){
 	    dialog.setModal(true);
 	    dialog.setVisible(true);
 	    result = dialog.getButtonPressed();
-	    if (result != HBEVersionControlDialog.BUTTON_EXIT) { 
+	    if (result != -1 && result != HBEVersionControlDialog.BUTTON_EXIT) { 
 	    	version = dialog.getSelectedSourceVersion(); 
 	        synthesizer = dialog.getSeletectedSourceType();
 	    }
@@ -165,7 +165,7 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 
 	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) {
 			
-		 String sPath = (String) srcFile.getPath();
+		 String sPath = (String) srcFile.getSourcePath().toString();
 		 IPath path = new Path(sPath);
 		
 		 srcFile.persistSourceFile();
@@ -219,7 +219,7 @@ public void closeSourceCodeFile(HBESourceVersion sourceVersion) {
 	Iterator<HBEAbstractFile> ss = sourceVersion.getFiles().iterator();
 	while (ss.hasNext()) {
 		HBEAbstractFile srcFile = (HBEAbstractFile) ss.next();			
-		String sPath = (String) srcFile.getPath();
+		String sPath = (String) srcFile.getSourcePath().toString();
 		IPath path = new Path(sPath);
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 		IFolder folder1 = ResourcesPlugin.getWorkspace().getRoot().getFolder(path.removeLastSegments(1));

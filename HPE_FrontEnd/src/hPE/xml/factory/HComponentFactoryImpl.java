@@ -146,11 +146,8 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 	
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
 
-	
-	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) {
-		
+	public void saveComponent(ComponentType cX, IFile file, IProgressMonitor monitor) {
 		try {
-			this.component = c;
 			// Create a resource set to hold the resources.
 			//
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -173,7 +170,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 			Resource resource = resourceSet.createResource(uri);
 			
 			DocumentRoot dX = factory.createDocumentRoot();
-			ComponentType cX = saveComponent2(c);
+//			ComponentType cX = saveComponent2(c);
 			dX.setComponent(cX);
 		
 			//file.setContents(dX, true, false, monitor);
@@ -184,6 +181,15 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		} catch (IOException e) {
 			
 		}
+		
+	}
+	
+	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) {
+		
+		this.component = c;
+		ComponentType cX = marshallComponent(c);		
+		this.saveComponent(cX, file, monitor);
+		
 	}
 	
 	// Loads a ComponentType object from XML in a HComponent object
@@ -603,6 +609,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		    this.isSubType  =false;
 		    
 			component = this.createComponent(kind,name,uri);
+			checkKeyFile();
 			component.setPackagePath(new Path(packagePath));
 			component.setHashComponentUID(hash_component_UID);
 			if (xCheader.isSetIsAbstract()) 
@@ -661,6 +668,11 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		
 		
 		return null;
+	}
+
+	private void checkKeyFile() {
+		this.component.createComponentKey();
+		
 	}
 
 	private void loadVersions(EList<VersionType> versions) {
@@ -830,7 +842,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 	private ComponentFactory factory = ComponentFactory.eINSTANCE;
 	
 	// Saves a HComponent object in a ComponentType object
-	private ComponentType saveComponent2(HComponent c) {
+	public ComponentType marshallComponent(HComponent c) {
 		
 		    ComponentType xC = factory.createComponentType(); 
 		    ComponentHeaderType xH = factory.createComponentHeaderType();
@@ -1504,7 +1516,7 @@ public final class HComponentFactoryImpl  implements HComponentFactory {
 		    
 		    for (HBEAbstractFile f : src.getFiles()) {
 		         SourceFileType fX = factory.createSourceFileType();
-		    	 String uri = f.getPath();
+		    	 String uri = f.getSourcePath().toString();
 		         String fileType = f.getFileType();
 		         String versionIdF = f.getVersionID();
 		         fX.setUri(uri);
