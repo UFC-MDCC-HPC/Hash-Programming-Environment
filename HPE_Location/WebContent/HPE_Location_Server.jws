@@ -24,9 +24,9 @@ public class HPE_Location_Server implements HLocationService {
 	}
 	
 	
-	public String registerComponent(String packageName, String component, String contents, Map<String,byte[]> binaries){
+	public String registerComponent(String packageName, String component, String version, String contents, Map<String,byte[]> binaries){
 		
-		return ls.registerComponent(packageName,component,contents,binaries);
+		return ls.registerComponent(packageName,component,version,contents,binaries);
 	
 	}
 	
@@ -36,9 +36,9 @@ public class HPE_Location_Server implements HLocationService {
 
 	
 
-	public String getComponent(String packageName, String componentName ){
+	public String getComponent(String packageName, String componentName, String version){
 			
-		return ls.getComponent(packageName, componentName );
+		return ls.getComponent(packageName, componentName, version);
 	}
 		
 }

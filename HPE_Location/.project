@@ -33,11 +33,4 @@
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>WebContent/HPE_Location_Server.jws</name>
-			<type>1</type>
-			<location>C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/HPE_Location/HPE_Location_Server.jws</location>
-		</link>
-	</linkedResources>
 </projectDescription>

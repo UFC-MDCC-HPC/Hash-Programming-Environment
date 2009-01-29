@@ -8,10 +8,12 @@ import hPE.location.xml.ObjectFactory;
 import hPE.location.xml.PackageListType;
 import hPE.location.xml.PackageType;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 @javax.jws.WebService
 public class LocationService implements HLocationService, Subject {
@@ -25,8 +27,8 @@ public class LocationService implements HLocationService, Subject {
 		this.parser.setLS(this);
 		setPackages(this.parser.getLocationXml());
 		if (packages == null ) System.exit(1);
-		FileSystem.verifyConsistency(this.packages);
 		attach(this.parser);
+		verifyConsistency(this.packages);
 	}
 	
 	protected void setPackages(PackageListType packages){		
@@ -38,19 +40,16 @@ public class LocationService implements HLocationService, Subject {
 	}
 	
 	private PackageType findPackage(String path){
-		Iterator<PackageType> i = this.packages.getPackage().iterator();
-		while(i.hasNext()){  	 
-			PackageType p = i.next();		    
+		for (PackageType p : this.packages.getPackage()) {
 		     if(p.getPath().trim().equals(path.trim())) return p;
 		}
 		return null;
 	}
 
-	private ComponentType findComponent(PackageType p, String componentName){
-		Iterator<ComponentType> i = p.getComponent().iterator();
-		while(i.hasNext()){
-			ComponentType component = i.next();
-		     if(component.getName().equals(componentName)){
+	private ComponentType findComponent(PackageType p, String componentName, String version){
+		for (ComponentType component : p.getComponent()) {
+		     if(component.getName().equals(componentName) 
+		    		 && (version == null || (version != null && component.getVersion().equals(version)))){
 		    	 return component;
 		     }
 		}
@@ -65,10 +64,9 @@ public class LocationService implements HLocationService, Subject {
 		this.observers.add(o);		
 	}
 
-	public void Notify(){		
-		Iterator<Observer> i = this.observers.iterator();
-		while (i.hasNext()){			
-			(i.next()).update();
+	public void Notify(){	
+		for (Observer o : this.observers) {
+			o.update();
 		}
 	}
 
@@ -76,13 +74,10 @@ public class LocationService implements HLocationService, Subject {
 	
 	public String fetchPackages(){
 		String str="";		
-		Iterator<PackageType> i = this.packages.getPackage().iterator();
-		while(i.hasNext()){  	 
-		     PackageType p = i.next();
-		     Iterator<ComponentType> i2 = p.getComponent().iterator();		     
-		     str += p.getPath().trim()+" ( ";
-		     while(i2.hasNext()){
-		    	 str += (i2.next()).getName().trim() + " ";		    	 
+		for (PackageType p : this.packages.getPackage()) {
+			str += p.getPath().trim()+" ( ";
+			for (ComponentType c : p.getComponent()) {
+		    	 str += c.getName().trim() + (c.getVersion() == null ? " " : ":" + c.getVersion() + " ");		    	 
 		     }
 		     str += " ) \n";
 		}
@@ -90,37 +85,30 @@ public class LocationService implements HLocationService, Subject {
 	}
 	
 	
-	private String createPackage(String packageName){
+	private PackageType createPackage(String packageName){
 		//adicionar objeto Package se nao existir	
-	   if(packageName.equals("")){
+		PackageType p = null;
+		
+		if(packageName.equals("")){
 		   System.out.println("Nome da package invalido");   
-		   return "Nome da package invalido";	
 	   }
 	   else
 		   for(int i=0;i<packageName.length();i++)
 		     if(!Character.isJavaIdentifierPart(packageName.charAt(i)) && packageName.charAt(i)!='.'){ //cada caractere pertece a [A-Z][a-z][0-9][_,$]
 				System.out.println("Nome da package invalido");
-				return "Nome da package invalido";
 			 }
 	    
 	   if(findPackage(packageName)!=null){
 		   System.out.println("Package ja existe.");
-		   return "Package ja existe.";
 	   }
 	   else{
 			ObjectFactory factory = new ObjectFactory();
-			//Package p = factory.createPackagesPackage();
-			PackageType p = factory.createPackageType();
-			//Components c = factory.createPackagesPackageComponents();
-			List<ComponentType> c = p.getComponent();//factory.
+			p = factory.createPackageType();
 			p.setPath(packageName);
-			//p.setComponents(c);
-			this.packages.getPackage().add(p);
 			System.out.println("Package adicionado.");
-			//FileSystem.createDir(packageName);
 			Notify();	
-			return "Package adicionado.";
 	   }
+	   return p;
 	}
 	
 	private String removePackage(String packageName){
@@ -145,43 +133,50 @@ public class LocationService implements HLocationService, Subject {
 	    }
 	}	
 
-	public String registerComponent(String packageName, String componentName, String contents, Map<String, byte[]> binaries){
+	public String registerComponent(String packageName, String componentName, 
+			                        String version, 
+			                        String contents, 
+			                        Map<String, byte[]> binaries){
 		
 		if(componentName.equals("")){
-			   System.out.println("Nome do component invalido");   
-			   return "Nome do component invalido";	
+			   System.out.println("Invalid component identification");   
+			   return "Invalid component identification";	
 		}
 		else
 		   for(int i=0;i<componentName.length();i++)
 		     if(!Character.isJavaIdentifierPart(componentName.charAt(i))){ //cada caractere pertece a [A-Z][a-z][0-9][_,$]
-				System.out.println("Nome do component invalido");
-				return "Nome do component invalido";
+				System.out.println("Invalid component identification");
+				return "Invalid component identification";
 			 }		
 
 		PackageType p = findPackage(packageName);
 		
 		if(p == null){
-			this.createPackage(packageName);
+			p = this.createPackage(packageName);
+			this.packages.getPackage().add(p);
 		}
 		
-		{
-			if(findComponent(p,componentName)==null){
-				ComponentType component = new ComponentType();
-				component.setName(componentName);
-				p.getComponent().add(component);
-				// FileSystem.createDir(p.getPath().trim()+"."+componentName.trim());
-				FileSystem.createFile(p.getPath(),componentName);
-				FileSystem.setText(p.getPath(),componentName, contents);
-				System.out.println("Componente adicionado.");
-				// Atualizar o location.xml
-				this.packages.getPackage().add(p);
-				Notify();	
-				return "Component adicionado.";
+		ComponentType component = findComponent(p,componentName,version);
+		
+		if(component==null){			
+			component = new ComponentType();
+			component.setName(componentName);
+			if (version != null) component.setVersion(version);
+			p.getComponent().add(component);
+			FileSystem.createFile(p.getPath(),componentName,version);
+			FileSystem.setText(p.getPath(),componentName,version, contents);
+			for (Entry<String, byte[]> bin : binaries.entrySet()) {
+				String fileName = bin.getKey();
+				byte[] binContents = bin.getValue();
+				FileSystem.createBinaryFile(p.getPath(),componentName,version,fileName,binContents);
 			}
-			else{
-				System.out.println("Component ja existe.");
-				return "Component ja existe.";
-			}
+			System.out.println("Component registered");
+			// Atualizar o location.xml
+			Notify();	
+			return "Component registered";
+		}
+		else{
+ 		    return "Component version already registered";
 		}
 	}
 	// deletar tb a pasta ?!?
@@ -192,10 +187,10 @@ public class LocationService implements HLocationService, Subject {
 			return "Package nao existe.";
 		}
 		else{
-			ComponentType component = findComponent(p, componentName);
+			ComponentType component = findComponent(p, componentName,"1.0.0.0" /* TODO: Version */);
 			if(component!=null){
 				p.getComponent().remove(component);
-				FileSystem.deleteFile(p.getPath(), componentName);
+				FileSystem.deleteFile(p.getPath(), componentName,"1.0.0.0" /* TODO: Version */);
 				System.out.println("Component removido.");
 				//FileSystem.deleteDir(p.getPath().trim()+"."+componentName.trim()+"/");
 				Notify();	
@@ -209,9 +204,9 @@ public class LocationService implements HLocationService, Subject {
 	}
 	
 	
-	public String getComponent(String packageName, String componentName){
+	public String getComponent(String packageName, String componentName, String version){
 		
-		String s = FileSystem.getText(packageName, componentName); 	 	 	
+		String s = FileSystem.getText(packageName, componentName, version); 	 	 	
 		return s.equals("") ? null : s;
 	}
 
@@ -227,5 +222,29 @@ public class LocationService implements HLocationService, Subject {
 		return "I am the local location ...";
 	}
 
+	public void verifyConsistency(PackageListType packages){
+		
+		List<ComponentType> tobeRemoved_c = new ArrayList<ComponentType>();
+		List<PackageType> tobeRemoved_p = new ArrayList<PackageType>();
+
+		for (PackageType p : packages.getPackage()) {
+			 boolean emptyPackage = true;
+		     for (ComponentType component : p.getComponent()) {
+			     boolean exists = FileSystem.testFile(p.getPath(),component.getName(),component.getVersion());
+			     emptyPackage = emptyPackage && !exists;
+			     if (!exists) tobeRemoved_c.add(component);
+		     }
+		     if (emptyPackage) tobeRemoved_p.add(p);
+		}
+		
+		packages.getPackage().removeAll(tobeRemoved_p);
+		for (PackageType p : packages.getPackage()) {
+		     p.getComponent().removeAll(tobeRemoved_c);	
+		}
+		
+		Notify();
+		
+		
+	}
 	
 }

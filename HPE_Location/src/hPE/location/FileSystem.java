@@ -1,19 +1,16 @@
 package hPE.location;
 
 
-import hPE.location.xml.ComponentType;
-import hPE.location.xml.FileType;
-import hPE.location.xml.InterfaceType;
-import hPE.location.xml.PackageListType;
-import hPE.location.xml.PackageType;
-
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 
@@ -29,9 +26,9 @@ public class FileSystem {
 		return path;
 	}
 	
-	public static void createFile(String pk, String componentName){
+	public static void createFile(String pk, String componentName, String version){
 		
-		String dirName = pk.trim() + "." + componentName.trim();
+		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
 		String name = dirName + "/" + CONFIG_HPE;
 		
 		createDir(dirName);
@@ -48,9 +45,19 @@ public class FileSystem {
 		}		
 	}
 
-	public static void deleteFile(String pk,String componentName){		
+	public static boolean testFile(String pk, String componentName, String version){
+		
+		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
+		String name = dirName + "/" + CONFIG_HPE;
+				
+		File file = new File(dirBase + name.trim());
+		return file.exists();	
+	}
+
+	public static void deleteFile(String pk, String componentName, String version){		
 	   	    
-		String name = pk.trim()+"."+componentName.trim()+"/"+CONFIG_HPE;
+		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
+		String name = dirName + "/" + CONFIG_HPE;
 
 		File file = new File(dirBase + name.trim());
 		if (file.exists()){
@@ -90,22 +97,12 @@ public class FileSystem {
 	}
 
 	
-	public static void verifyConsistency(PackageListType packages){
-		Iterator<PackageType> i = packages.getPackage().iterator();
-		while(i.hasNext()){
-		     PackageType p = i.next();		     
-		     Iterator<ComponentType> i2 = p.getComponent().iterator();
-		     while(i2.hasNext()) {
-		    	 ComponentType component = i2.next();
-			     FileSystem.createFile(p.getPath(),component.getName());
-		     }
-		}
-	}
 	
 	
-	public static String getText(String pk, String componentName){
+	public static String getText(String pk, String componentName, String version){
 		
-		String path = pk.trim()+"."+componentName.trim()+"\\"+CONFIG_HPE;
+		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
+		String path = dirName + "/" + CONFIG_HPE;
 
 		String texto="";
 		
@@ -125,9 +122,10 @@ public class FileSystem {
 		return texto;
 	}
 	
-	public static void setText(String pk, String componentName, String content){
+	public static void setText(String pk, String componentName, String version, String content){
 
-		String path = pk.trim()+"."+componentName.trim()+"/"+CONFIG_HPE;
+		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
+		String path = dirName + "/" + CONFIG_HPE;
 
 		System.out.println("PATH = " + dirBase + path);
 		
@@ -137,6 +135,46 @@ public class FileSystem {
 		}
 		catch (FileNotFoundException e1) {e1.printStackTrace();}
 		catch (IOException e) {e.printStackTrace();}
+	}
+	
+	public static byte[] getDataBinaryFile(String path, String componentName, String version, String fileName) {
+		
+		String dirName = path.trim() + "." + componentName.trim() + (version != null ? "-" + version : "") + "/bin";
+		String name = dirName + "/" + fileName; 
+		
+		try {
+	       InputStream is = new FileInputStream(dirBase + name.trim()); 
+	       byte[] contents = new byte[is.available()]; 
+	       is.read(contents);	       	      
+	       return contents;
+	    }
+		catch (IOException e){e.printStackTrace();}
+
+		return null;
+	}
+
+	public static void createBinaryFile(String path, String componentName,
+			String version, String fileName, byte[] contents) {
+		
+		
+		String dirName = path.trim() + "." + componentName.trim() + (version != null ? "-" + version : "") + "/bin";
+		String name = dirName + "/" + fileName; 
+		
+		createDir(dirName);
+		
+		File file = new File(dirBase + name.trim());
+		if (!file.exists()){
+			try {
+		      file.createNewFile();
+			  FileOutputStream fos = new FileOutputStream(dirBase + name.trim());
+			  fos.write(contents);
+		    }
+			catch(Exception e){
+				System.out.println("Error creating " + dirBase + name.trim());
+			}
+		}		
+		
+		
 	}
 
 }

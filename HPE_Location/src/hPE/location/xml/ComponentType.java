@@ -47,6 +47,8 @@ public class ComponentType {
     protected List<InterfaceType> _interface;
     @XmlAttribute
     protected String name;
+    @XmlAttribute
+	private String version;
 
     /**
      * Gets the value of the interface property.
@@ -100,5 +102,14 @@ public class ComponentType {
     public void setName(String value) {
         this.name = value;
     }
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
 
 }

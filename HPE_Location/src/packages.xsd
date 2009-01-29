@@ -30,6 +30,8 @@
 			</element>
 		</sequence>
 		<attribute name="name" type="string"></attribute>
+		<attribute name="version" type="string"></attribute>
+		<attribute name="publicKey" type="string"></attribute>
 	</complexType>
 
 	<complexType name="InterfaceType">
