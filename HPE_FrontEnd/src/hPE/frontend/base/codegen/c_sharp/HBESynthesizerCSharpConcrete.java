@@ -10,6 +10,7 @@ import hPE.frontend.base.model.HPort;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;
+import hPE.util.Pair;
 import hPE.util.Triple;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Comparator;
+
+import org.eclipse.core.runtime.Path;
 
 public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESourceCSharpClassDefinition,HBESourceVersionCSharp,HInterface> {
 
@@ -96,36 +99,41 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
  		fillPortSlices(i,varContext);
         
 		String procName = i.getName2(false,varContext);
-		String programText = "";		
+		String programText = "";
+		
+		List<String> dependencies = new ArrayList<String>();
 		
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
 		
-
 		programText += "using DGAC;\n";
 		programText += "using hpe.basic;\n";
 
  		Map<String, List<HInterfaceSlice>> tt = new HashMap<String, List<HInterfaceSlice>>();
 
  		List<String> usings = new ArrayList<String>();
+ 		List<String> refs = new ArrayList<String>();
+ 		
 		for (Entry<String,List<HInterfaceSlice>> ss : theSlices.entrySet()) {
 						
 			HInterfaceSlice s = ss.getValue().get(0);
 			
- 			for (String dep : ((HInterface)s.getInterface()).getCompilationDependencies()) {
- 				if (!usings.contains(dep)) {
- 					usings.add(dep);
- 					programText += "using " + dep + ";\n"; 				}
+ 			for (Pair<String,HInterface> dep : ((HInterface)s.getInterface()).getCompilationDependencies3()) {
+ 				String depStr = dep.fst();
+ 				String useStr = depStr.substring(0, depStr.lastIndexOf("."));
+ 				HInterface ii = dep.snd();
+ 				HComponent cii = (HComponent) ii.getConfiguration();
+ 				if (!usings.contains(useStr)) {
+ 					usings.add(useStr);
+ 					programText += "using " + useStr + ";\n";
+ 				}
+ 				if (!refs.contains(depStr))
+ 				{
+ 					refs.add(depStr);
+ 					dependencies.add(buildDependenceName(cii.getPackagePath().toString(),cii.getComponentName(),ii.getPrimName()));
+  				}
  			}
-			
-/*			HComponent config = (HComponent) s.getConfiguration();
-			String packageNameUsing = config.getPackagePath().toString();
-			String componentNameUsing = config.getComponentName();
-			if (!usings.contains(typeName)) { 
-				programText += "using " + packageNameUsing + "." + componentNameUsing + "." + typeName + ";\n";
-			    usings.add(typeName); 
-			} */
-			
+						
 		    for (HInterfaceSlice slice: ss.getValue()) {
 		    	if (slice instanceof HHasPortsInterfaceSlice && slice.getMyPort() == null) {		    	    
 		    		// set ports
@@ -145,14 +153,20 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 			        }	
 		    	}
 		    }			
-			
 		}
 		
 		for (HInterface b : paramBounds) {
 			HComponent cb = (HComponent) b.getConfiguration();
-			String using = cb.getPackagePath().toString() + "." + cb.getComponentName() + "." + b.getPrimName();
-			if (!usings.contains(using))
-			    programText += "using " + using + ";\n";
+			String depStr = cb.getPackagePath().toString() + "." + cb.getComponentName() + "." + b.getPrimName();
+			String useStr = depStr.substring(0, depStr.lastIndexOf("."));
+			if (!usings.contains(useStr)) {
+				usings.add(useStr);
+			    programText += "using " + useStr + ";\n";
+			}
+			if (!refs.contains(depStr)) {
+				refs.add(depStr);
+				dependencies.add(buildDependenceName(cb.getPackagePath().toString(), cb.getComponentName(), b.getPrimName()));
+			}
 		}
 
 		String primInheritedName = i.getInheritedName().split("<")[0];
@@ -162,7 +176,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		String packageNameImplements = cBase.getPackagePath().toString();
 		String componentNameImplements = cBase.getComponentName();
 		
-		programText += "using " + packageNameImplements + "." + componentNameImplements + "." + primInheritedName + ";\n";
+		programText += "using " + packageNameImplements + "." + componentNameImplements + ";\n";
+		dependencies.add(buildDependenceName(cBase.getPackagePath().toString(), cBase.getComponentName(), primInheritedName));
 
 		programText += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
 
@@ -264,11 +279,12 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
 		programText += "\n} // end namespace \n"; // end namespace
 		
-	    String l = i.getConfiguration().getLocation();
+	    String l = i.getConfiguration().getLocalLocation();
 	    
 	    String procFileName = i.getPrimName();
 	    
-		HBESourceCSharpClassDefinition sourceCode = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID);	
+		HBESourceCSharpClassDefinition sourceCode = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID);
+		sourceCode.setDependencies(dependencies);
 		HBESourceVersionCSharp version = createNewSourceVersion();
 		version.setSource(sourceCode);
 		version.setVersionID(versionID);
@@ -281,6 +297,13 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		return version;
 		
 	    
+	}
+
+	private String buildDependenceName(String package_, String componentName, String moduleName) {
+		return package_ + "." + componentName
+	       + Path.SEPARATOR + "bin" 
+	       + Path.SEPARATOR + "1.0.0.0" 
+	       + Path.SEPARATOR + moduleName + ".dll";
 	}
 
 	private class CompareSliceByDependence implements Comparator<HInterfaceSlice> {

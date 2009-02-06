@@ -57,7 +57,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
         mainText += "\n}\n"; // end namespace
 
         String procName = i.getPrimName();
-	    String l = i.getConfiguration().getLocation();
+	    String l = i.getConfiguration().getLocalLocation();
         
 		HBESourceCSharpMainDefinition mainCode = new HBESourceCSharpMainDefinition  (procName+"Main.cs", mainText, l, versionID);
 		version.setMainSource(mainCode);

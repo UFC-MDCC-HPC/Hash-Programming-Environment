@@ -3,6 +3,7 @@ package hPE.core.library;
 
 import hPE.core.library.model.classes.HPEComponentLibrary;
 import hPE.core.library.model.classes.HPEComponentLibraryItem;
+import hPE.core.library.model.classes.LComponentView;
 
 import java.util.List;
 import java.util.Iterator;
@@ -51,14 +52,10 @@ public class HPEComponentLibraryView extends ViewPart {
 	protected TreeViewer treeViewer;
 	protected Text text;
 	protected HPEComponentLibraryLabelProvider labelProvider;
-	
-	// protected Action onlyBoardGamesAction, atLeatThreeItems;
-	// protected Action booksBoxesGamesAction, noArticleAction;
-	// protected Action addBookAction, removeAction;
-//	protected ViewerFilter onlyBoardGamesFilter, atLeastThreeFilter;
-//	protected ViewerSorter booksBoxesGamesSorter, noArticleSorter;
-	
+		
 	protected HPEComponentLibrary root;
+	private Action refreshAction;
+	private Action viewObsoleteAction;
 	
 	/**
 	 * The constructor.
@@ -126,6 +123,7 @@ public class HPEComponentLibraryView extends ViewPart {
 	}
 
 	protected void hookListeners() {
+				
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				// if the selection is empty clear the label
@@ -138,9 +136,12 @@ public class HPEComponentLibraryView extends ViewPart {
 					StringBuffer toShow = new StringBuffer();
 					for (Iterator iterator = selection.iterator(); iterator.hasNext();) {
 						HPEComponentLibraryItem domain = (HPEComponentLibraryItem) iterator.next();
-						String value = "TESTE"; // domain.getSystemLocation();
-						toShow.append(value);
-						toShow.append(", ");
+						if (domain instanceof LComponentView) {
+							LComponentView cView = (LComponentView) domain;
+							String value = cView.getName(); // domain.getSystemLocation();
+							toShow.append(value);
+							toShow.append(", ");
+						}
 					}
 					// remove the trailing comma space pair
 					if(toShow.length() > 0) {
@@ -198,50 +199,37 @@ public class HPEComponentLibraryView extends ViewPart {
 
     
     protected void createActions() {
-	/*	onlyBoardGamesAction = new Action("Only Board Games") {
+		refreshAction = new Action("Refresh") {
 			public void run() {
-				updateFilter(onlyBoardGamesAction);
+				treeViewer.setInput(getInitalInput());
+				treeViewer.refresh();
+				refreshAction.setChecked(false);
+				treeViewer.expandToLevel(2);
 			}
 		};
-		onlyBoardGamesAction.setChecked(false);
 		
-		atLeatThreeItems = new Action("Boxes With At Least Three Items") {
+		viewObsoleteAction = new Action("Show obsolete") {
 			public void run() {
-				updateFilter(atLeatThreeItems);
+		  		setShowObsolete(!getShowObsolete());
+		  		viewObsoleteAction.setChecked(getShowObsolete());
+				treeViewer.setInput(getInitalInput());
+				treeViewer.refresh();
+				treeViewer.expandToLevel(2);
 			}
 		};
-		atLeatThreeItems.setChecked(false);
 		
-		booksBoxesGamesAction = new Action("Books, Boxes, Games") {
-			public void run() {
-				updateSorter(booksBoxesGamesAction);
-			}
-		};
-		booksBoxesGamesAction.setChecked(false);
-		
-		noArticleAction = new Action("Ignoring Articles") {
-			public void run() {
-				updateSorter(noArticleAction);
-			}
-		};
-		noArticleAction.setChecked(false);
-		
-		addBookAction = new Action("Add Book") {
-			public void run() {
-				addNewBook();
-			}			
-		};
-		addBookAction.setToolTipText("Add a New Book");
-		addBookAction.setImageDescriptor(HPEPlugin.getImageDescriptor("newBook.gif"));
+		refreshAction.setChecked(false);
+		viewObsoleteAction.setChecked(false);
+	}
+    
+    private boolean showObsolete = false;
+	
+	private void setShowObsolete(boolean b) {
+		showObsolete = b;
+	}
 
-		removeAction = new Action("Delete") {
-			public void run() {
-				removeSelected();
-			}			
-		};
-		removeAction.setToolTipText("Delete");
-		removeAction.setImageDescriptor(HPEPlugin.getImageDescriptor("remove.gif"));
-		*/		
+	private boolean getShowObsolete() {
+		return showObsolete;
 	}
 	
 	/** Add a new book to the selected moving box.
@@ -298,15 +286,11 @@ public class HPEComponentLibraryView extends ViewPart {
 
 
 	protected void fillMenu(IMenuManager rootMenuManager) {
-/*		IMenuManager filterSubmenu = new MenuManager("Filters");
-		rootMenuManager.add(filterSubmenu);
-		filterSubmenu.add(onlyBoardGamesAction);
-		filterSubmenu.add(atLeatThreeItems);
+		//IMenuManager filterSubmenu = new MenuManager("Refresh");
+		rootMenuManager.add(refreshAction);
+		rootMenuManager.add(viewObsoleteAction);
+		//filterSubmenu.add(refreshAction);
 		
-		IMenuManager sortSubmenu = new MenuManager("Sort By");
-		rootMenuManager.add(sortSubmenu);
-		sortSubmenu.add(booksBoxesGamesAction);
-		sortSubmenu.add(noArticleAction); */
 	}
 	
 	
@@ -366,7 +350,7 @@ public class HPEComponentLibraryView extends ViewPart {
 		// Read machine locations, stored in a XML file whose 
 		// path is pointed by a system variable HASH_LOCATIONS_FILE
 		
-		root = new HPEComponentLibrary(locations);
+		root = new HPEComponentLibrary(locations,getShowObsolete());
 		
 		return root;
 	}

@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getLocalRef <em>Local Ref</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getParameterId <em>Parameter Id</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getVersion <em>Version</em>}</li>
  * </ul>
@@ -174,6 +175,26 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getPackage() <em>Package</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPackage()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PACKAGE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPackage() <em>Package</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPackage()
+	 * @generated
+	 * @ordered
+	 */
+	protected String package_ = PACKAGE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getParameterId() <em>Parameter Id</em>}' attribute.
@@ -402,6 +423,27 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getPackage() {
+		return package_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPackage(String newPackage) {
+		String oldPackage = package_;
+		package_ = newPackage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE, oldPackage, package_));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getParameterId() {
 		return parameterId;
 	}
@@ -483,6 +525,8 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 				return getLocation();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				return getName();
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE:
+				return getPackage();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				return getParameterId();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__VERSION:
@@ -527,6 +571,9 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				setName((String)newValue);
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE:
+				setPackage((String)newValue);
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				setParameterId((String)newValue);
 				return;
@@ -569,6 +616,9 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE:
+				setPackage(PACKAGE_EDEFAULT);
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				setParameterId(PARAMETER_ID_EDEFAULT);
 				return;
@@ -603,6 +653,8 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE:
+				return PACKAGE_EDEFAULT == null ? package_ != null : !PACKAGE_EDEFAULT.equals(package_);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PARAMETER_ID:
 				return PARAMETER_ID_EDEFAULT == null ? parameterId != null : !PARAMETER_ID_EDEFAULT.equals(parameterId);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__VERSION:
@@ -629,6 +681,8 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 		result.append(location);
 		result.append(", name: ");
 		result.append(name);
+		result.append(", package: ");
+		result.append(package_);
 		result.append(", parameterId: ");
 		result.append(parameterId);
 		result.append(", version: ");

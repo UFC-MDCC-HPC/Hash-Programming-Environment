@@ -34,29 +34,24 @@ public class NewComponentCommand extends Command {
 	}
 
 
-	private void openComponents() {
-		
+	private void openComponents() {	
 		
 		if (components == null) {
 			
 			HComponent innerComponent;
 			components = new ArrayList<HComponent>();
 			locations = new ArrayList<String>();
-			for (int i = 0; i < files.length; i ++) {
+			String remoteURI = null;
+			for (int i = 1; i < files.length; i += 2) {
 				if (files[i] instanceof String) {
-     			   String file = (String) files[i];
-     			   URI uri = URI.createFileURI(file); //
+				   remoteURI = files[i-1];
+				   String file = (String) files[i];
+     			   URI uri = URI.createFileURI(file); 
      			   innerComponent = hPEEditor.getConfiguration(uri);
+     			   innerComponent.setRemoteURI(URI.createURI(remoteURI));
      			   components.add(innerComponent);
-			       locations.add(innerComponent.toString());
-     			   
-     			   /* InputStream is = file.getContents();
-		    	   ObjectInputStream in = new ObjectInputStream(is); 
-			       nested_component = (HComponent) in.readObject();
-			       components.add(nested_component);
-			       locations.add(nested_component.toString());
-			       in.close(); */
-				}
+			       locations.add(innerComponent.getLocalLocation());
+   				}
 			}
 			
 		}
@@ -90,21 +85,9 @@ public class NewComponentCommand extends Command {
 	
 	public boolean canExecute() {
 		openComponents();
-		Iterator cs = components.iterator();
-		while (cs.hasNext()) {
-			IComponent c = (IComponent) cs.next();
-			if (!the_configuration.accepts(c)) return false;
+		for (IComponent c : components) {
+			if (!c.isAbstract() || !the_configuration.accepts(c)) return false;
 		}
-/*		if (the_configuration instanceof HDataConfiguration) {
-			Iterator cs = components.iterator();
-			while (cs.hasNext()) {
-				HConfiguration c = (HConfiguration) cs.next();
-				if (!(c instanceof HDataConfiguration)) {
-					return false;
-				}
-			}
-			
-		} */
 		return true;
 		
 	}

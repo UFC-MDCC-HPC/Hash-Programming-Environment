@@ -38,16 +38,19 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 	private String version;
 	
 	private URI locationSite;
+
+	private boolean obsolete;
 	
 	public URI getLocationSite() {
 		return locationSite;
 	}
 		
-	public LComponentView(ILPackage parentPackage, String componentName, String version, URI locationSite) {
+	public LComponentView(ILPackage parentPackage, String componentName, String version, URI locationSite, boolean obsolete) {
 		super(parentPackage);
 		this.locationSite = locationSite;
 		this.componentName = componentName;
 		this.version = version;
+		this.obsolete = obsolete;
 		//readFrom(componentName);
 	}
 	
@@ -63,31 +66,30 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 	private void readFromComponent(String componentName) throws HPEComponentFileNotFound {
 		this.clearChildren();
 		this.componentName = componentName;
-		List<InterfaceType> interfaces = this.fetchInterfaces(componentName);
-		for (InterfaceType i : interfaces) {
-			ILInterfaceCompositeView interfaceView = new LInterfaceCompositeView(this,i);
-			this.addChild(interfaceView);
-		}
 	}
-	
-	private ComponentType component = null;
-	
+		
 	public java.io.File getComponent(boolean useCached) {
 		java.io.File file = null;
-		if (!useCached || component == null) {
-			String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
-			try {
-				file = HPELocationEntry.getComponent(pkName,componentName, version,locationSite);
-			} catch (HPEComponentFileNotFound e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				ok = false;				
-				component = null;
-	        	JOptionPane.showMessageDialog(null,
-	        		    "Missing Component " + pkName[0] + "." + componentName.toString() + " in Location " + this.getLocationSite().toString(),
+		if (!useCached) {
+			if (!obsolete) {
+				String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
+				try {
+					file = HPELocationEntry.getComponent(pkName,componentName, version, locationSite);
+				} catch (HPEComponentFileNotFound e) {
+					e.printStackTrace();
+					ok = false;				
+		        	JOptionPane.showMessageDialog(null,
+		        		    "Missing Component " + pkName[0] + "." + componentName.toString() + " in Location " + this.getLocationSite().toString(),
+		        		    "Error",
+		        		    JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				ok = false;
+	        	JOptionPane.showMessageDialog(null, componentName + " is obsolete !",
 	        		    "Error",
 	        		    JOptionPane.ERROR_MESSAGE);
 			}
+			
 		}
 		return file;
 	}
@@ -95,66 +97,9 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 	private boolean ok = true;
 	
 	public boolean isOK() { return ok; }
-		
-	public List<InterfaceType> fetchInterfaces(String componentName) throws HPEComponentFileNotFound {
-		
-		List<InterfaceType> interfaces = new ArrayList<InterfaceType>();
-		
-		// String[] pkName = ((ILPackage) this.getParent()).getPackagePath();
-		
-		
-		// java.io.File f = HPELocationEntry.getComponent(pkName,componentName,locationSite);
-		ComponentType c = null;
-		component = null;
-		
-		// ComponentType c = HComponentFactoryImpl.eInstance.loadComponentX(uri);
-		
-		Iterator<InterfaceType> is = c.getComponentInfo().getInterface().iterator();
-		while (is.hasNext()) {
-			InterfaceType i = is.next();
-			interfaces.add(i);
-		}
-		
-		return interfaces;
-		
-		
-/*		ILPackage  p = (ILPackage) getParent();
-		ILLocation l = (ILLocation) p.getParent();
-		 
-    	String projectName = ((LWorkspaceLocation) l).getProjectName();
-    	IPath path = new Path(projectName.concat(p.getPackagePathRaw()).concat("/").concat(this.getName()).concat(".hpe"));
-        IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-        
-        HComponent component = null;
-        
-        try {
-  	      ObjectInputStream in = new ObjectInputStream(file.getContents()); 
-          component = (HComponent) in.readObject();
-		} catch (IOException e) { 
-			handleLoadException(e); 
-		} catch (CoreException e) { 
-			handleLoadException(e); 
-		} catch (ClassNotFoundException e) { 
-			handleLoadException(e); 
-		}
-    */    
-        
-       // TODO: library (fetchConfiguration)
-        // retrieves the configuration of the component ...
-
-//        return component;
-        
-	}
-
-	private void handleLoadException(Exception e) {
-		
-		System.err.println("** Loading component failed");
-		e.printStackTrace();
-		
-	}
-	
+			
 	public String getTitle() {
-		return getName() + (getVersion() == null ? "" : " - " + getVersion());
+		return getName() + (getVersion() == null ? "" : " - " + getVersion()) + (obsolete ? " (obsolete)" : "");
 	}
 	
 	private String getVersion() {
@@ -168,6 +113,11 @@ public class LComponentView extends HPEComponentLibraryItem implements ILCompone
 	
 	public String getName() {
          return componentName;
+	}
+
+	@Override
+	public boolean isObsolete() {
+		return this.obsolete;
 	}
 	
 	

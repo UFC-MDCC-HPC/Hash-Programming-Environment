@@ -4,8 +4,11 @@ package hPE.core.library;
 
 import org.eclipse.emf.common.util.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /* import java.io.FileInputStream;
 import java.io.File;
@@ -41,18 +44,13 @@ import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
 
 import hPE.ComponentFile;
+import hPE.hPEEditor;
 import hPE.core.library.model.interfaces.ILComponentView;
 import hPE.core.library.model.interfaces.ILPackage;
 import hPE.frontend.base.model.HComponent;
 import hPE.xml.factory.HComponentFactoryImpl;
 
 public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
-
-    private static final String CHECK_MOVE_TITLE = "";
-
-    private static final String CHECK_DELETE_MESSAGE = "";
-    
-    private TransferData lastDataType;
     
     ISelectionProvider selectionProvider;
     
@@ -64,8 +62,7 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
      * @see DragSourceListener#dragStart(org.eclipse.swt.dnd.DragSourceEvent)
      */
     public void dragStart(DragSourceEvent event) {
-        lastDataType = null;
-        // Workaround for 1GEUS9V
+         // Workaround for 1GEUS9V
         DragSource dragSource = (DragSource) event.widget;
         Control control = dragSource.getControl();
         if (control != control.getDisplay().getFocusControl()) {
@@ -100,13 +97,11 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
             return;
         
     }
-
-    private String tempPath = "temp/";
     
-    private java.io.File[] getSelectedComponentResources() {
+    private Map<URI, java.io.File> getSelectedComponentResources() {
         
-    	List<java.io.File> resources = new ArrayList<java.io.File>();
-        java.io.File[] result = new java.io.File[0];
+    	
+    	Map<URI, java.io.File> resources = new HashMap<URI,java.io.File>();
 
         ISelection selection = selectionProvider.getSelection();
         if (!(selection instanceof IStructuredSelection) || selection.isEmpty()) {
@@ -121,39 +116,12 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
         while (itr.hasNext()) {
             Object obj = itr.next();
             if (obj instanceof ILComponentView) {
-                ILComponentView c = (ILComponentView) obj;
-                
-                // HComponent f = c.saveToTemporaryFile(tempPath);
+                ILComponentView c = (ILComponentView) obj;                
                 java.io.File file = c.getComponent(false);
-                resources.add(file);
-
-                /* TODO: Criar arquivo XML temporario para armazenar o objeto serializado......
-                 * 
-                 * 
-                 */
-/*                
-                ILPackage  p = (ILPackage ) c.getParent();
-                ILLocation l = (ILLocation) p.getParent();
-                
-                if (l instanceof LWorkspaceLocation) {
-                	String projectName = ((LWorkspaceLocation) l).getProjectName();
-                	IPath path = new Path(projectName.concat(p.getPackagePathRaw()).concat("/").concat(c.getName()).concat(".hpe"));
-//                    IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-                	IFile file = new ComponentFile(path, (Workspace)ResourcesPlugin.getWorkspace(),c);
-                    
-                    resources.add(file);
-                } else {
-                	break;
-                }
-  */              
-               
-                
-                                
+                resources.put(c.getLocationSite(), file);                                
             }
         }
-        result = new java.io.File[resources.size()]; 
-        resources.toArray(result);
-        return result;
+        return resources;
     }
     
     /*
@@ -161,24 +129,24 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
      */
     public void dragSetData(DragSourceEvent event) {
     	
-        java.io.File[] resources = getSelectedComponentResources();
-        String[] fnames = new String[resources.length];
+        Map<URI,java.io.File> resources = getSelectedComponentResources();
+        String[] fnames = new String[resources.size()*2];
+        // HComponent[] fnames = new HComponent[resources.length];
         
         int i = 0;
-        for (java.io.File f : resources) {
-           fnames[i++] = f.getAbsolutePath();
+        for (Entry<URI,java.io.File> f : resources.entrySet()) {
+        	String uri = f.getKey().toString();
+        	String fname = f.getValue().getAbsolutePath();
+        	
+            fnames[i++] = uri;
+            fnames[i++] = fname;
+           
+           //URI uri = URI.createFileURI(f.getAbsolutePath()); //
+           //fnames[i++] = hPEEditor.getConfiguration(uri);
         }
         
-        if (resources == null || resources.length == 0)
+        if (resources == null || resources.size() == 0)
             return;
-
-        // lastDataType = event.dataType;
-        //use local selection transfer if possible
-//        if (LocalSelectionTransfer.getInstance()
-  //              .isSupportedType(event.dataType)) {
-          //  event.data = LocalSelectionTransfer.getInstance().getSelection();
- //           return;
-    //    }
         
        event.data = fnames;
     }

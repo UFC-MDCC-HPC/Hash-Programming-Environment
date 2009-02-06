@@ -1067,7 +1067,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_ParameterId() {
+	public EAttribute getComponentInUseType_Package() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -1076,8 +1076,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Version() {
+	public EAttribute getComponentInUseType_ParameterId() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentInUseType_Version() {
+		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -2021,7 +2030,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Contents() {
+	public EAttribute getSourceFileType_Dependency() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -2030,7 +2039,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_FileType() {
+	public EAttribute getSourceFileType_Contents() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2039,7 +2048,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Name() {
+	public EAttribute getSourceFileType_FileType() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2048,7 +2057,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Uri() {
+	public EAttribute getSourceFileType_Name() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -2057,8 +2066,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_VersionId() {
+	public EAttribute getSourceFileType_Uri() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSourceFileType_VersionId() {
+		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -2615,6 +2633,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__LOCAL_REF);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__LOCATION);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__NAME);
+		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PACKAGE);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PARAMETER_ID);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__VERSION);
 
@@ -2753,6 +2772,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(recursiveEntryTypeEClass, RECURSIVE_ENTRY_TYPE__CREF);
 
 		sourceFileTypeEClass = createEClass(SOURCE_FILE_TYPE);
+		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__DEPENDENCY);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__CONTENTS);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__FILE_TYPE);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__NAME);
@@ -2938,6 +2958,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getComponentInUseType_LocalRef(), theXMLTypePackage.getString(), "localRef", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Location(), theXMLTypePackage.getAnyURI(), "location", null, 1, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentInUseType_Package(), theXMLTypePackage.getString(), "package", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_ParameterId(), theXMLTypePackage.getString(), "parameterId", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Version(), theXMLTypePackage.getID(), "version", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3076,6 +3097,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getRecursiveEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, RecursiveEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(sourceFileTypeEClass, SourceFileType.class, "SourceFileType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSourceFileType_Dependency(), theXMLTypePackage.getString(), "dependency", null, 0, -1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_Contents(), theXMLTypePackage.getString(), "contents", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_FileType(), theXMLTypePackage.getString(), "fileType", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3562,6 +3584,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "name"
+		   });		
+		addAnnotation
+		  (getComponentInUseType_Package(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "package"
 		   });		
 		addAnnotation
 		  (getComponentInUseType_ParameterId(), 
@@ -4317,7 +4346,14 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   source, 
 		   new String[] {
 			 "name", "SourceFileType",
-			 "kind", "empty"
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getSourceFileType_Dependency(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "dependency"
 		   });		
 		addAnnotation
 		  (getSourceFileType_Contents(), 

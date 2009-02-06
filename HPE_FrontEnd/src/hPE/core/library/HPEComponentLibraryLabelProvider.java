@@ -26,10 +26,10 @@ public class HPEComponentLibraryLabelProvider extends LabelProvider {
 			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/package_obj.gif");
 		} else if (element instanceof ILComponentView) {
 			ILComponentView e = (ILComponentView) element;
-			if (e.isOK()) {
+			if (!e.isObsolete()) {
 			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/component.gif");
 			} else {
-			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif");
+			   descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/component_obsolete.gif");
 			}
 		} else if (element instanceof ILInterfaceCompositeView) {
 			descriptor = ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/unit.gif");

@@ -55,7 +55,7 @@ public void execute(){
 	
 		DeployComponentDialog dialog = new DeployComponentDialog(null, c);
 
-		dialog.setModal(true);
+		dialog.setAlwaysOnTop(true);
 	//	dialog.pack();
 		dialog.setVisible(true);
 		

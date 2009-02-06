@@ -167,20 +167,12 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
     	String typeString = c.getPackagePath() + "." + c.getComponentName() + "." + this.getPrimName();
     	ls.add(typeString);
     	
-    	
-    	List<Triple<String,HInterface,String>> pars = this.getSuppliedParameters((HComponent)this.getConfiguration());
+    	List<Triple<String,HInterface,String>> pars = this.getParameters2((HComponent)this.getConfiguration());
     	
     	for (Triple<String,HInterface,String> p : pars) {
     	      HInterface i = p.snd();
     	      List<String> cds = i.getCompilationDependencies();
-    	      
-    	     // HComponent cI = (HComponent) i.getConfiguration();
-    	     // String typeString = cI.getPackagePath() + "." + cI.getComponentName() + "." + i.getPrimName();
-    	      
-    	     // if (!ls.contains(typeString)) {
-    	     //   ls.add(typeString);
-    	     // }
-    	      
+    	          	      
     	      for (String s : cds) {
     	    	  if (!ls.contains(s)) {
     	    	     ls.add(s);
@@ -188,18 +180,46 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
     	      }    	      
     	}
     	
+    	
     	return ls;
     }
     
+    public List<Pair<String,HInterface>> getCompilationDependencies3() {
+        
+    	List<String> lsStr = new ArrayList<String>();
+    	List<Pair<String,HInterface>> ls = new ArrayList<Pair<String,HInterface>>();
+    
+    	HComponent c = (HComponent)this.getConfiguration();
+    	String typeString = c.getPackagePath() + "." + c.getComponentName() + "." + this.getPrimName();
+    	lsStr.add(typeString);
+    	ls.add(new Pair<String,HInterface>(typeString,this));
+    	
+    	List<Triple<String,HInterface,String>> pars = this.getParameters2((HComponent)this.getConfiguration());
+    	
+    	for (Triple<String,HInterface,String> p : pars) {
+    	      HInterface i = p.snd();
+    	      List<Pair<String,HInterface>> cds = i.getCompilationDependencies3();
+    	          	      
+    	      for (Pair<String,HInterface> s : cds) {
+    	    	  if (!lsStr.contains(s.fst())) {
+    	    	     lsStr.add(s.fst());
+    	    	     ls.add(s);
+    	    	  }
+    	      }    	      
+    	}
+    	
+    	
+    	return ls;
+    }
+
     public List<HInterface> getCompilationDependencies2() {
         
     	List<HInterface> ls = new ArrayList<HInterface>();   
     	List<String> lsStr = new ArrayList<String>();
     	ls.add(this);
-    	List<Triple<String,HInterface,String>> pars = this.getSuppliedParameters((HComponent)this.getConfiguration());
+    	List<HInterface> pars = this.getSuppliedParameters((HComponent)this.getConfiguration());
     	
-    	for (Triple<String,HInterface,String> p : pars) {
-    	      HInterface i = p.snd();
+    	for (HInterface i : pars) {
     	      List<HInterface> cds = i.getCompilationDependencies2();
     	      
     	      for (HInterface s : cds) {
@@ -237,23 +257,20 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
     	
     }
     
-    public List<Triple<String,HInterface,String>> getSuppliedParameters(HComponent cThis) {
+    public List<HInterface> getSuppliedParameters(HComponent cThis) {
     	
-    	List<Triple<String,HInterface,String>> p = new ArrayList<Triple<String,HInterface,String>>();
+    	List<HInterface> p = new ArrayList<HInterface>();
     	
     	for (HInterfaceSlice c : this.getSlices()) {
     		HInterface ic = (HInterface) c.getInterface();
     		HComponent cc = (HComponent)ic.getCompliantUnits().get(0).getConfiguration();
     		
-    		for (Triple<String,HInterface,String> innerParameter : ic.getParameters2(cThis)) {
+    		for (HInterface innerParameter : ic.getSuppliedParameters(cThis)) {
     	    	p.add(innerParameter);
     	    }
     		
-    		String parId = cc.getParameterIdentifier(cThis);
-
-    	    if (cc.isParameter() && !parId.equals("type ?")) {
-     	       String varName = cc.getVariableName(); 
-     	       p.add(new Triple<String,HInterface,String> (varName,ic, parId));
+    	    if (cc.isParameter()) {
+     	       p.add(ic);
      	    }
     	}    	
     	
@@ -692,10 +709,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	}
 	
 	public void setInherited(HComponent topConfiguration) {
+ 	    this.setSuperTypeID(this.toString());
  	    this.saveInheritedName();
 		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
  	    this.setEditable(true);
- 	    this.setSuperTypeID(this.toString());
  	    this.setInheritedSlices();
 	}
 	

@@ -18,7 +18,7 @@ public class HBESynthesizerDataTypeRawForC
         String headerText = "typedef <? basic type ?> ".concat(i.getPrimName()).concat(";");
         
         
-	    String loc = i.getConfiguration().getLocation();
+	    String loc = i.getConfiguration().getLocalLocation();
         
         
 		HBECSourceHeader sourceHeader = new HBECSourceHeader(procName.concat(".h"), headerText,loc,versionID);	

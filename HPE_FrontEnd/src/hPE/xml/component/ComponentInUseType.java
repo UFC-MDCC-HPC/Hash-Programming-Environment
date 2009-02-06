@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentInUseType#getLocalRef <em>Local Ref</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getLocation <em>Location</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getName <em>Name</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentInUseType#getPackage <em>Package</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getParameterId <em>Parameter Id</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getVersion <em>Version</em>}</li>
  * </ul>
@@ -221,6 +222,33 @@ public interface ComponentInUseType extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Package</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Package</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Package</em>' attribute.
+	 * @see #setPackage(String)
+	 * @see hPE.xml.component.ComponentPackage#getComponentInUseType_Package()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='package'"
+	 * @generated
+	 */
+	String getPackage();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentInUseType#getPackage <em>Package</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Package</em>' attribute.
+	 * @see #getPackage()
+	 * @generated
+	 */
+	void setPackage(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Parameter Id</b></em>' attribute.

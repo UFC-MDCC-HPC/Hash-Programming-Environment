@@ -77,7 +77,7 @@ public class HBESynthesizerForC extends HBEAbstractSynthesizer<HBECSource,HBESou
 		    
 		// }
 	    
-	    String l = i.getConfiguration().getLocation();
+	    String l = i.getConfiguration().getLocalLocation();
 	    
 		HBECSourceCode   sourceCode   = new HBECSourceCode  (procName.concat(".c"), programText,l,versionID);	
 		HBECSourceHeader sourceHeader = new HBECSourceHeader(procName.concat(".h"), headerText,l,versionID);	

@@ -17,8 +17,11 @@ import org.eclipse.emf.common.util.URI;
 
 public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPEComponentLibrary {
 
-	public HPEComponentLibrary(List<URI> locationNameList) {
+	private boolean showObsolete = false;
+	
+	public HPEComponentLibrary(List<URI> locationNameList, boolean showObsolete) {
 		super();
+		this.showObsolete = showObsolete;
 		readFrom(locationNameList);
 	}
 		
@@ -37,7 +40,7 @@ public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPE
 		
 		    List<String> pks=null;
 			try {
-				pks = HPELocationEntry.fetchPackagesFromLocation(locationSite);
+				pks = HPELocationEntry.fetchPackagesFromLocation(locationSite, showObsolete);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			} catch (ServiceException e) {

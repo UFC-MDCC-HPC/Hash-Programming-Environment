@@ -122,6 +122,7 @@
 
 		<attribute name="hash_component_UID" type="string"></attribute>
 		<attribute name="parameter_id" type="string"></attribute>
+		<attribute name="package" type="string"></attribute>
 	</complexType>
 
 	<simpleType name="SupportedKinds">
@@ -533,6 +534,9 @@
     </complexType>
 
     <complexType name="SourceFileType">
+    	<sequence>
+    		<element name="dependency" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
     	<attribute name="uri" type="string"></attribute>
     	<attribute name="fileType" type="string"></attribute>
     	<attribute name="versionId" type="string"></attribute>

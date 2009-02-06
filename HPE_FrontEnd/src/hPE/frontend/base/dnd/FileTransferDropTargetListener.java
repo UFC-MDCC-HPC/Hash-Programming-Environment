@@ -46,10 +46,8 @@ public class FileTransferDropTargetListener extends
 		}
 	   
 	   protected void handleDrop() {
-		   // File s = ((File[]) getCurrentEvent().data)[0];
+		   //HComponent[] files = (HComponent[]) getCurrentEvent().data;
            String[] files = (String[]) getCurrentEvent().data;
-		   //String separator = System.getProperty("file.separator");
-		   //String r = s.substring(s.lastIndexOf(separator) + 1);
 		   factory.setFiles(files);
 		   super.handleDrop();
 		}
@@ -68,6 +66,7 @@ public class FileTransferDropTargetListener extends
 	   
 	   static public class NewComponentFactory2 implements CreationFactory {
 
+		   //private HComponent[] files;
 		   private String[] files;
 
 	      public Object getNewObject() {
@@ -78,7 +77,7 @@ public class FileTransferDropTargetListener extends
 		      return HComponent.class;
 		  }
 
-		  public void setFiles(String[] s) {
+		  public void setFiles(String[] s /*HComponent[] s*/) {
 		      files = s;
 		  }
 		}	   

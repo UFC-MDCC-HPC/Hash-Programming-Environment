@@ -21,7 +21,9 @@ public interface IComponent extends ICanReplicate {
 	
 	public boolean isDirectSonOfTheTopConfiguration ();
 	
-	public String getLocation();
+	public String getLocalLocation();
 
 	public IComponent getMyCopy();
+
+	public boolean isAbstract();
 }

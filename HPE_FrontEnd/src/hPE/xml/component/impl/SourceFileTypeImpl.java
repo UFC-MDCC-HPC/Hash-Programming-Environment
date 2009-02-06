@@ -9,12 +9,15 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.SourceFileType;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +26,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getDependency <em>Dependency</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getContents <em>Contents</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getFileType <em>File Type</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getName <em>Name</em>}</li>
@@ -34,6 +38,16 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * @generated
  */
 public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
+	/**
+	 * The cached value of the '{@link #getDependency() <em>Dependency</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDependency()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> dependency;
+
 	/**
 	 * The default value of the '{@link #getContents() <em>Contents</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -158,6 +172,18 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getDependency() {
+		if (dependency == null) {
+			dependency = new EDataTypeEList<String>(String.class, this, ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY);
+		}
+		return dependency;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getContents() {
 		return contents;
 	}
@@ -266,6 +292,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
+				return getDependency();
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				return getContents();
 			case ComponentPackage.SOURCE_FILE_TYPE__FILE_TYPE:
@@ -285,9 +313,14 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
+				getDependency().clear();
+				getDependency().addAll((Collection<? extends String>)newValue);
+				return;
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				setContents((String)newValue);
 				return;
@@ -315,6 +348,9 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
+				getDependency().clear();
+				return;
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				setContents(CONTENTS_EDEFAULT);
 				return;
@@ -342,6 +378,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
+				return dependency != null && !dependency.isEmpty();
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				return CONTENTS_EDEFAULT == null ? contents != null : !CONTENTS_EDEFAULT.equals(contents);
 			case ComponentPackage.SOURCE_FILE_TYPE__FILE_TYPE:
@@ -366,7 +404,9 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (contents: ");
+		result.append(" (dependency: ");
+		result.append(dependency);
+		result.append(", contents: ");
 		result.append(contents);
 		result.append(", fileType: ");
 		result.append(fileType);

@@ -73,10 +73,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 
 	public void setVersions(List<Integer[]> versions) {
-		this.versions = versions;
-		
+		this.versions = versions;		
 	}
-
 
 	public List<Integer[]> getVersions() {
 		if (versions == null) {
@@ -312,6 +310,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 	}
 		
+
 	public HComponent getWhoItImplements() {
 		
 		if (this.getSuperType() == null) {
@@ -320,11 +319,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			HComponent c = this.getSuperType();
 			return c.getWhoItImplements();
 		}
-		
-		
 	}
-	
-	
 	
 	public IHUnit fetchUnit(String uName) {
 		
@@ -390,16 +385,34 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		super();
 		this.name = name;
 		this.location = location;
- 		this.setURI(uri);
+ 		this.setLocalURI(uri);
 		
 		listeners = new PropertyChangeSupport(this);
 		
 	}
 	
-	private String uri = null;
+	public HComponent(String name, IPackageLocation location, URI uriLocal, URI uriRemote) {
 		
-	private void setURI(URI uri) {
-		this.uri = uri.toString();
+		super();
+		this.name = name;
+		this.location = location;
+ 		this.setLocalURI(uriLocal);
+ 		this.setRemoteURI(uriRemote);
+		
+		listeners = new PropertyChangeSupport(this);
+		
+	}
+	
+	private String uriLocal = null;
+	
+	private String uriRemote = null;
+		
+	private void setLocalURI(URI uri) {
+		this.uriLocal = uri.toString();
+	}
+	
+	public void setRemoteURI(URI uri) {
+		this.uriRemote = uri.toString();
 	}
 	
 //	public final static String PROPERTY_EXISTENTIAL = "PROPERTY_EXISTENTIAL";
@@ -1351,12 +1364,21 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 
 	// private ILComponentView libraryEntry;
 			
-	public String getLocation() {
-		return uri;
+	public String getRemoteLocation() {
+		return uriRemote;
+	}
+
+	public String getRelativeLocation() {
+		return Path.SEPARATOR + this.getPackagePath().toString() + "." + this.getComponentName() + Path.SEPARATOR + this.getComponentName() + ".hpe";
+	}
+	
+	
+	public String getLocalLocation() {
+		return uriLocal;
 	}
 	
 	public String toString() {
-		return this.getLocation();
+		return this.getLocalLocation();
 	}
 	
 	public final static String PROPERTY_IS_PARAMETER = "PROPERTY_IS_PARAMETER";
@@ -1367,7 +1389,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
     public void setParameter(String varName) {
     	
-    	String s = this.getTopConfiguration().toString();
+    	String s = this.getTopConfiguration().getLocalLocation();
     	
     	this.isParameter = true;
     	if (!this.parameterIdentifier.containsKey(s))
@@ -1435,8 +1457,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     
     public String getParameterIdentifier(IComponent c) {
 
-    	if (this.parameterIdentifier.containsKey(c.toString()))
-    	    return this.parameterIdentifier.get(c.toString());
+    	if (this.parameterIdentifier.containsKey(c.getLocalLocation()))
+    	    return this.parameterIdentifier.get(c.getLocalLocation());
     	else {
     		HComponent superType = getSuperType();
    			return superType != null ? superType.getParameterIdentifier(c) : "type ?";
@@ -2292,7 +2314,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	 that.supplied = this.supplied;
     	 for (Pair<String,HComponent> sc : this.supplyMemory) that.supplyMemory.add(new Pair<String,HComponent>(sc.fst(),sc.snd()));
     	 //that.units;
-    	 that.uri = this.uri;
+    	 that.uriLocal = this.uriLocal;
+    	 that.uriRemote = this.uriRemote;
     	 that.variableName = this.variableName;
     	 
     	 
@@ -3496,12 +3519,12 @@ public boolean versionCompiled(String versionStr) {
 
 public void createComponentKey() {
 	
-	IPath pathKeyFile = (new Path(this.getLocation())).removeFileExtension().addFileExtension("snk");
+	IPath pathKeyFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("snk");
 	boolean ok = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
 	
 	if (!ok) {
 		String sn_path = HPEProperties.getInstance().getValue("sn_path");;
-		IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(this.getLocation()));		
+		IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(this.getLocalLocation()));		
 		
 		IPath loc = file.getLocation();
 		if (loc != null) {
@@ -3515,7 +3538,7 @@ public void createComponentKey() {
 	}
 }
 
-private void runCommand(String[] cmd, String[] env, java.io.File file) {
+public static void runCommand(String[] cmd, String[] env, java.io.File file) {
 	
 	try 
 	{ 
@@ -3533,6 +3556,10 @@ private void runCommand(String[] cmd, String[] env, java.io.File file) {
 	} 
 	catch(IOException e1) {} 
 	catch(InterruptedException e2) {} 	
+}
+
+public static URI getStandardLocationPath(String pk, String componentName, String version) {
+	return URI.createURI(pk + "." + componentName + "\\" + componentName + ".hpe");
 }
 
 }

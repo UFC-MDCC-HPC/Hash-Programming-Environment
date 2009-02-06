@@ -886,22 +886,17 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	}	
 
 
-	public static HComponent getConfiguration(URI uri/* java.io.File file */) {
+	public static HComponent getConfiguration(URI uri) {
 		
-		HComponent c;
-		
-    	//  URI.createURI(file.getFullPath().toPortableString());
-		
-		ComponentType cX=null;
+		HComponent c = null;
+				
 		try {
-			cX = HComponentFactory.eInstance.loadComponentX(uri);
+			c = HComponentFactoryImpl.eInstance.loadComponent(uri);
 		} catch (HPEInvalidComponentResourceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 
-		c = HComponentFactoryImpl.eInstance.buildComponent(cX,uri);
-		
 		return c;
 	}
 	

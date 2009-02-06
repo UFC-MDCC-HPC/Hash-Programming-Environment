@@ -41,7 +41,7 @@ public class DialogChangeVarName extends JDialog {
 		this.setSize(464, 124);
 		this.setResizable(false);
 		this.setLocation(new java.awt.Point(100,100));
-		this.setModal(true);
+		this.setAlwaysOnTop(true);
 		this.setTitle("Change Parameter Name");
 		this.setContentPane(getJContentPane());
 	}

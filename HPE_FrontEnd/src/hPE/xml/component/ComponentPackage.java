@@ -949,13 +949,22 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_IN_USE_TYPE__NAME = 7;
 
 	/**
+	 * The feature id for the '<em><b>Package</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IN_USE_TYPE__PACKAGE = 8;
+
+	/**
 	 * The feature id for the '<em><b>Parameter Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__PARAMETER_ID = 8;
+	int COMPONENT_IN_USE_TYPE__PARAMETER_ID = 9;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -964,7 +973,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__VERSION = 9;
+	int COMPONENT_IN_USE_TYPE__VERSION = 10;
 
 	/**
 	 * The number of structural features of the '<em>In Use Type</em>' class.
@@ -973,7 +982,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 10;
+	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 11;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentTypeImpl <em>Type</em>}' class.
@@ -1714,6 +1723,15 @@ public interface ComponentPackage extends EPackage {
 	int INNER_COMPONENT_TYPE__NAME = COMPONENT_IN_USE_TYPE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Package</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_COMPONENT_TYPE__PACKAGE = COMPONENT_IN_USE_TYPE__PACKAGE;
+
+	/**
 	 * The feature id for the '<em><b>Parameter Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2340,13 +2358,22 @@ public interface ComponentPackage extends EPackage {
 	int SOURCE_FILE_TYPE = 45;
 
 	/**
+	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_FILE_TYPE__DEPENDENCY = 0;
+
+	/**
 	 * The feature id for the '<em><b>Contents</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__CONTENTS = 0;
+	int SOURCE_FILE_TYPE__CONTENTS = 1;
 
 	/**
 	 * The feature id for the '<em><b>File Type</b></em>' attribute.
@@ -2355,7 +2382,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__FILE_TYPE = 1;
+	int SOURCE_FILE_TYPE__FILE_TYPE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2364,7 +2391,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__NAME = 2;
+	int SOURCE_FILE_TYPE__NAME = 3;
 
 	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
@@ -2373,7 +2400,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__URI = 3;
+	int SOURCE_FILE_TYPE__URI = 4;
 
 	/**
 	 * The feature id for the '<em><b>Version Id</b></em>' attribute.
@@ -2382,7 +2409,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__VERSION_ID = 4;
+	int SOURCE_FILE_TYPE__VERSION_ID = 5;
 
 	/**
 	 * The number of structural features of the '<em>Source File Type</em>' class.
@@ -2391,7 +2418,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE_FEATURE_COUNT = 5;
+	int SOURCE_FILE_TYPE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SourceTypeImpl <em>Source Type</em>}' class.
@@ -3565,6 +3592,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getComponentInUseType_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#getPackage <em>Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Package</em>'.
+	 * @see hPE.xml.component.ComponentInUseType#getPackage()
+	 * @see #getComponentInUseType()
+	 * @generated
+	 */
+	EAttribute getComponentInUseType_Package();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#getParameterId <em>Parameter Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4699,6 +4737,17 @@ public interface ComponentPackage extends EPackage {
 	EClass getSourceFileType();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link hPE.xml.component.SourceFileType#getDependency <em>Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Dependency</em>'.
+	 * @see hPE.xml.component.SourceFileType#getDependency()
+	 * @see #getSourceFileType()
+	 * @generated
+	 */
+	EAttribute getSourceFileType_Dependency();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.SourceFileType#getContents <em>Contents</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5787,6 +5836,14 @@ public interface ComponentPackage extends EPackage {
 		EAttribute COMPONENT_IN_USE_TYPE__NAME = eINSTANCE.getComponentInUseType_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Package</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_IN_USE_TYPE__PACKAGE = eINSTANCE.getComponentInUseType_Package();
+
+		/**
 		 * The meta object literal for the '<em><b>Parameter Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6697,6 +6754,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EClass SOURCE_FILE_TYPE = eINSTANCE.getSourceFileType();
+
+		/**
+		 * The meta object literal for the '<em><b>Dependency</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOURCE_FILE_TYPE__DEPENDENCY = eINSTANCE.getSourceFileType_Dependency();
 
 		/**
 		 * The meta object literal for the '<em><b>Contents</b></em>' attribute feature.

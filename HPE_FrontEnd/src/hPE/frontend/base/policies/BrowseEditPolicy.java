@@ -51,7 +51,7 @@ public void execute(){
 
 	BrowseAndRunBackEndDialog dialog = new BrowseAndRunBackEndDialog(null,c);
 
-	dialog.setModal(true);
+	dialog.setAlwaysOnTop(true);
 	dialog.setVisible(true);
 		
 }

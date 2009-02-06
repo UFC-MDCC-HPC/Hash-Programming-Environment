@@ -85,6 +85,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/localRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/package"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/parameterId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentInUseType/version"/>
     </genClasses>
@@ -221,6 +222,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//RecursiveEntryType/cRef"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//SourceFileType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/dependency"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/contents"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/fileType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/name"/>

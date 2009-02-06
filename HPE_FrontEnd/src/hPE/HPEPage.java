@@ -160,9 +160,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		s = s.substring(0,s.lastIndexOf(separator));
 		
 		String absolutePath = this.getContainerFullPath().append(this.getFileName()).toPortableString();
-		
-		String absolutePath2 = absolutePath.substring(0,absolutePath.lastIndexOf(".")) + ".xml";
-		
+				
 		URI uri = URI.createFileURI(absolutePath);
 		
 		HComponent c = null;

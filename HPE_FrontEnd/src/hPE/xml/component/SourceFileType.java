@@ -6,6 +6,7 @@
  */
 package hPE.xml.component;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link hPE.xml.component.SourceFileType#getDependency <em>Dependency</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getContents <em>Contents</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getFileType <em>File Type</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getName <em>Name</em>}</li>
@@ -25,10 +27,27 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see hPE.xml.component.ComponentPackage#getSourceFileType()
- * @model extendedMetaData="name='SourceFileType' kind='empty'"
+ * @model extendedMetaData="name='SourceFileType' kind='elementOnly'"
  * @generated
  */
 public interface SourceFileType extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Dependency</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dependency</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dependency</em>' attribute list.
+	 * @see hPE.xml.component.ComponentPackage#getSourceFileType_Dependency()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='element' name='dependency'"
+	 * @generated
+	 */
+	EList<String> getDependency();
+
 	/**
 	 * Returns the value of the '<em><b>Contents</b></em>' attribute.
 	 * <!-- begin-user-doc -->

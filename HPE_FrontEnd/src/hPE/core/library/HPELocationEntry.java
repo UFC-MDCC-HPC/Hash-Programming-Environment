@@ -3,11 +3,17 @@ package hPE.core.library;
 
 //import hPE.core.HLocationService;
 //import hPE.core.LocationService;
+import hPE.HPEProperties;
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.model.HComponent;
 import hPE.location.HPE_Location_Server;
 import hPE.location.HPE_Location_ServerService;
 import hPE.location.HPE_Location_ServerServiceLocator;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +37,7 @@ public class HPELocationEntry {
 	public static Hashtable <String, String>htable = new Hashtable<String, String>();	
 	
 	
-	public static List<String> fetchPackagesFromLocation(URI locationSite) throws RemoteException, ServiceException {
+	public static List<String> fetchPackagesFromLocation(URI locationSite, boolean showObsolete) throws RemoteException, ServiceException {
 		try {
 			//Dada a uri de uma location, retorne a lista de packages.
 			List<String> packagesList = new ArrayList<String>();
@@ -44,15 +50,8 @@ public class HPELocationEntry {
 			
 			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
 				
-			String str = server.fetchPackages();
+			String str = server.fetchPackages(showObsolete);			
 			
-			
-			
-			
-			
-	//		String operation = "fetchPackages"; 
-	//		Object [] param = {}; //argumentos da operacao
-	//		String str = (String)callWebService(operation, urlWS, param); 
 			/**
 			 * o valor dessa string retornada pelo webservice � algo do seguinte formato:
 			 * package1 ( component1 component2 ... ) package2 ( ) package3 ( component1 ) ...
@@ -105,7 +104,7 @@ public class HPELocationEntry {
 		
 		if(!htable.containsKey(pk)){ //se a package ainda n�o est� na tabelahash devemos fzr um fetchpackages para adiciona-la
 			try {
-				fetchPackagesFromLocation(locationSite);
+				fetchPackagesFromLocation(locationSite,false);
 			} catch (RemoteException e) {
 			    e.printStackTrace();
 			} catch (ServiceException e) {
@@ -142,34 +141,34 @@ public class HPELocationEntry {
 			pk += "."+pkName[i];
 		}
 		
+		file = HComponentFactoryImpl.getCachePath(pk, componentName, version);
+		
+		if (!file.exists()) {
 
-		URL url = new URL(locationSite.toString());
-		
-		HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
-		HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
-	    String contents = server.getComponent(pk, componentName, version);
-		
-		// BEGIN NO WEB SERVICE
-		// HLocationService loc = new LocationService();		
-        // String str = loc.getComponent(pk, componentName);
-        // END NO WEB SERVICE
+			URL url = new URL(locationSite.toString());
 			
-		if (!(contents == null)) {
-			try {
-				file = java.io.File.createTempFile(componentName,".hpe");; // createFile(pk,cFileName);
-				// String fname = ResourcesPlugin.getWorkspace().getRoot().getLocationURI().getPath().toString() + file.getFullPath().toPortableString();
-				String fname = file.getAbsolutePath();
-				BufferedWriter out = new BufferedWriter(new FileWriter(fname));
-				out.write(contents);
-				out.close();        
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+		    String contents = server.getComponent(pk, componentName, version);
 			
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (!(contents == null)) {
+				try {
+					file.createNewFile();
+					
+					String fname = file.getAbsolutePath();
+					BufferedWriter out = new BufferedWriter(new FileWriter(fname));
+					out.write(contents);
+					out.close();        
+				
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			} else {
+				throw new HPEComponentFileNotFound();
 			}
-			
-		} else {
-			throw new HPEComponentFileNotFound();
 		}
+		
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		
@@ -189,6 +188,53 @@ public class HPELocationEntry {
 		IPath path = new Path(dirBase + "//" + name);
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 		return file;
+	}
+
+	public static void getBinaryFile(String packageName, String componentName, String versionID, HBEAbstractFile binFile, URI locationSite) {
+		
+		try {
+			URL url = new URL(locationSite.toString());
+	
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+			String fileName = (new Path(binFile.getFileName())).removeFileExtension().addFileExtension(binFile.getBinaryExtension()).toString();
+		    byte[] contents = server.getBinaryFile(packageName, componentName, versionID, fileName);
+		    
+		    File file = binFile.getBinaryPath().toFile();
+		    
+		    String path = file.getParent();
+		    File folder = new File(path);
+		    if (!folder.exists()) {
+		    	folder.mkdir();
+		    }
+		    
+			if (!file.exists()){
+				try {
+			      file.createNewFile();
+				  FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+				  fos.write(contents);
+				  fos.close();
+				  
+				  String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
+				  
+ 			      HComponent.runCommand(new String[] {gacutil_path, "-i", fileName}, new String[] {}, folder);
+			    }
+				catch(Exception e){
+					e.printStackTrace();
+				}
+			}		
+		    
+		
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

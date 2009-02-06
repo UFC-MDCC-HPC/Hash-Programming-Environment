@@ -69,7 +69,7 @@ public void execute(){
    
    this.dialog = new SetParameterDialog();
 
-   dialog.setModal(true);
+   dialog.setAlwaysOnTop(true);
    dialog.pack();
    dialog.setVisible(true);
    

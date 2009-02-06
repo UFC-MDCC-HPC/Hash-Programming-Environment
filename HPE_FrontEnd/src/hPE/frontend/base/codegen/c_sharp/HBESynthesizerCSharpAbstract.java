@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.Path;
+
 
 
 
@@ -61,6 +63,8 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
         HBESourceVersion<HBEAbstractFile> superVersion = i.getSourceVersion(versionID);
         
         List<String> varContext = new ArrayList<String>();
+
+		List<String> dependencies = new ArrayList<String>();
         
         this.setIsSubclass(i, versionID);        
                        
@@ -98,22 +102,56 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 
 		// GET REFERENCES - Begin ...
 		
-		List<String> usings = new ArrayList<String>();
-		for (List<HInterfaceSlice> ss : theSlices.values()) {
+ 		List<String> usings = new ArrayList<String>();
+ 		List<String> refs = new ArrayList<String>();
+
+		for (Entry<String,List<HInterfaceSlice>> ss : theSlices.entrySet()) {
+			
+			HInterfaceSlice s = ss.getValue().get(0);
+
+			for (Pair<String,HInterface> dep : ((HInterface)s.getInterface()).getCompilationDependencies3()) {
+				String depStr = dep.fst();
+ 				String useStr = depStr.substring(0, depStr.lastIndexOf("."));
+				HInterface ii = dep.snd();
+				HComponent cii = (HComponent) ii.getConfiguration();
+				if (!usings.contains(useStr)) {
+					usings.add(useStr);
+					programText += "using " + useStr + ";\n";
+				}
+				if (!refs.contains(depStr))
+				{
+					dependencies.add(buildDependencyName(cii.getPackagePath().toString(),cii.getComponentName(),ii.getPrimName()));
+				}
+			}
+		}
+		
+		
+/*		for (List<HInterfaceSlice> ss : theSlices.values()) {
 			HInterfaceSlice s = ss.get(0);
 			String typeName = s.getInterface().getPrimName();
 			HComponent config = (HComponent) s.getConfiguration();
 			String packageNameUsing = config.getPackagePath().toString();
 			String componentNameUsing = config.getComponentName();
-			if (!usings.contains(typeName)) 
+			if (!usings.contains(typeName)) {
 				programText += "using " + packageNameUsing + "." + componentNameUsing + "." + typeName + ";\n";
+			    dependencies.add(buildDependencyName(packageNameUsing, componentNameUsing, typeName));
+			}
 			usings.add(typeName);
-		}
+		} */
 		
 		for (HInterface b : paramBounds) {
-			HComponent cb = (HComponent) b.getConfiguration(); 
-			if (!usings.contains(b.getPrimName()))
+			HComponent cb = (HComponent) b.getConfiguration();
+			String useStr = cb.getPackagePath() + "." + cb.getComponentName();
+			if (!usings.contains(useStr)) {
+				usings.add(useStr);
 			    programText += "using " + cb.getPackagePath().toString() + "." + cb.getComponentName() + "." + b.getPrimName() + ";\n";
+			}
+			String depStr = buildDependencyName(cb.getPackagePath().toString(), cb.getComponentName(), b.getPrimName());
+			if (!refs.contains(depStr))
+			{
+				refs.add(depStr);
+				dependencies.add(depStr);
+			}
 		}
 		
 		String inheritedName = i.getInheritedName();
@@ -122,7 +160,10 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 			HComponent cBase = ((HComponent) i.getConfiguration()).getSuperType();
 			String packageNameExtends = cBase.getPackagePath().toString();
 			String componentNameExtends = cBase.getComponentName();			
-			programText += "using " + packageNameExtends + "." + componentNameExtends + "." + inheritedName + ";\n";
+			String inheritedName_ = inheritedName.split("<").length > 0 ? inheritedName = inheritedName.split("<")[0] : inheritedName;
+			
+			programText += "using " + packageNameExtends + "." + componentNameExtends + "." + inheritedName_ + ";\n";
+		    dependencies.add(buildDependencyName(packageNameExtends, componentNameExtends, inheritedName_));
 		}
 		
 		// GET REFERENCES - ... End 
@@ -193,11 +234,12 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 
 		programText += "\n} // end namespace \n"; // end namespace
 		
-	    String l = i.getConfiguration().getLocation();
+	    String l = i.getConfiguration().getLocalLocation();
 	    
 	    String procFileName = i.getPrimName();
 	    
-		HBESourceCSharpClassDefinition sourceCode   = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID);	
+		HBESourceCSharpClassDefinition sourceCode   = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID);
+		sourceCode.setDependencies(dependencies);
 		HBESourceVersionCSharp version = createNewSourceVersion();
 		version.setSource(sourceCode);
 		version.setVersionID(versionID);
@@ -211,7 +253,16 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
 	    
 	}
+	
 
+	private String buildDependencyName(String package_, String componentName, String moduleName) {
+		return package_ + "." + componentName
+	       + Path.SEPARATOR + "bin" 
+	       + Path.SEPARATOR + "1.0.0.0" 
+	       + Path.SEPARATOR + moduleName + ".dll";
+	}
+
+	
 	private String firstUpper(String s) {
 		String fl = s.substring(0, 1).toUpperCase();
 		

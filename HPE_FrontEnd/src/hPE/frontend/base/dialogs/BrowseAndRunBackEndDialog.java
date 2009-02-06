@@ -134,7 +134,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 							dcList = new ArrayList<DeployedComponentInfo>();
 						    browseUpdate();
 							DeployComponentDialog dialog = new DeployComponentDialog(null);
-							dialog.setModal(true);
+							dialog.setAlwaysOnTop(true);
 							dialog.setVisible(true);				
 							jButtonDeploy.setEnabled(false);
 						} else if (b.name.equals("")) {
@@ -144,7 +144,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 						}
 						else {
 							try {
-								dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocation(),dcListAbstract,dcListConcrete);
+								dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocalLocation(),dcListAbstract,dcListConcrete);
 							} catch (IOException e1) {
 								JOptionPane.showMessageDialog(rootPane, e1.getMessage());
 							} catch (ServiceException e1) {
@@ -592,7 +592,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private void deploy() {
 
 		try {
-			String fileName = c.toString();
+			String fileName = c.getLocalLocation()
+			;
 		
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
 			
@@ -659,7 +660,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			boolean canceled = false;
 			if (deployed.enumerators.length > 0) {
 				SetEnumeratorsDialog dialog = new SetEnumeratorsDialog(null, deployed.enumerators, deployed.enumValuation);
-				dialog.setModal(true);
+				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
 				canceled = dialog.getCanceled();
 				deployed.enumValuation = dialog.getEnumValuation();

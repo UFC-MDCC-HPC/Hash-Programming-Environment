@@ -38,18 +38,27 @@ public class LPackage extends HPEComponentLibraryItem implements ILPackage {
 	
 	private void readFromPackageLocation(URI locationSite) {
 		List<String> components = HPELocationEntry.fetchComponents(locationSite,packagePath);
+		boolean obsolete = false;
 		this.clearChildren();
 		for (String componentNameAndVersion : components) {
 			String[] a = componentNameAndVersion.split(":");
 			String componentName = null;
 			String version = null;
-			if (a.length == 2) {
+			if (a.length == 3) {
 				componentName = a[0];
-				version = a[1];				
-			} else {
+				version = a[1].equals("") ? null : a[1];
+				obsolete = a[2].equals("obsolete") ? true : false;
+			} /* else if (a.length == 3) {
+				componentName = a[0];
+				version = a[1];
+				if (a[2].equals("obsolete")) {
+					obsolete = true;
+				} 
+			} 
+			else {
 				componentName = componentNameAndVersion;				
-			}
-			ILComponentView componentView = new LComponentView(this, componentName, version, locationSite);
+			} */
+			ILComponentView componentView = new LComponentView(this, componentName, version, locationSite, obsolete);
 			this.addChild(componentView);
 		}
 		

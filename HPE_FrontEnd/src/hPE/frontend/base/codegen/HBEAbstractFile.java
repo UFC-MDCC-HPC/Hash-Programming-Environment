@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -126,6 +127,16 @@ public abstract class HBEAbstractFile implements Serializable {
 		return path;
 	}
 	
+	private List<String> dependencies = null;
+	
+	public void setDependencies(List<String> dependencies) {
+		this.dependencies = dependencies;		
+	}
+
+	public List<String> getDependencies() {
+		return this.dependencies;		
+	}
+
 	public abstract String getFileType();
 	
 	public abstract String getBinaryExtension();

@@ -54,9 +54,8 @@ public void execute(){
 
 	RegisterComponentDialog dialog = new RegisterComponentDialog(null, c);
 
-	dialog.setModal(true);
-//	dialog.pack();
-	dialog.setVisible(true);	
+	dialog.setVisible(true);
+	dialog.setAlwaysOnTop(true);
 
 	
 			

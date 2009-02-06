@@ -59,7 +59,7 @@ public class NAntBuilder {
 				(NantPackage.eNS_URI, 
 				 NantPackage.eINSTANCE);
 	        
-			IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocation()));		
+			IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocalLocation()));		
 			
 			IPath systemPath = file.getLocation().removeLastSegments(1).append("build.xml");
 			
@@ -94,7 +94,7 @@ public class NAntBuilder {
 	private static ProjectType makeBuilder(HComponent c) {
 		ProjectType project = factory.createProjectType();
 		project.setName(c.getComponentName());
-		project.setBasedir("..");
+		project.setBasedir(HPEProperties.getInstance().getValue("cache_root"));
 		project.setDefault("all");
 		
 		List<NAntCoreTasksPropertyTask> properties = project.getProperty();
@@ -133,10 +133,7 @@ public class NAntBuilder {
 				for (HInterface i : c.getInterfaces()) if (i.getConfiguration() == c) {
 					
 					HBESourceVersion<HBEAbstractFile> v = i.getSourceVersion(HInterface.toStringVersion(version));
-					
-					List<HInterface> dependsOf = i.getCompilationDependencies2();
-					dependsOf.remove(0);
-					
+										
 					if (v != null) 
 						for (HBEAbstractFile src : v.getFiles()) {
 						
@@ -144,13 +141,12 @@ public class NAntBuilder {
 			
 							compile.setDebug("true");
 							compile.setOptimize("true");
-							IPath path_output = src.getBinaryPath(); 
+							IPath path_output = ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
 							
-							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output.removeLastSegments(1));
+							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(src.getBinaryPath().removeLastSegments(1));
 							if (!folderOutputExists) {
-								IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output.removeLastSegments(1));
-		
 								try {
+									IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(src.getBinaryPath().removeLastSegments(1));
 									folderOutput.create(true, true, null);
 								} catch (CoreException e) {
 									// TODO Auto-generated catch block
@@ -159,10 +155,12 @@ public class NAntBuilder {
 							}
 							
 							
-							compile.setOutput(path_output.makeRelative());
+							
+							compile.setOutput(path_output);
 							compile.setTarget(src.getFileType());
-							IPath path_snk = new Path(c.getLocation());
-							compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk").makeRelative());
+						    String u = c.getRelativeLocation();
+							IPath path_snk = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(c.getRelativeLocation())).getLocation();
+							compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk"));
 							
 							// Sources
 							List<NAntCoreTypesFileSet> sources = compile.getSources();
@@ -172,7 +170,7 @@ public class NAntBuilder {
 							// Sources / Includes
 							List<NAntCoreTypesFileSetInclude> includesSrcs = source.getInclude();
 							NAntCoreTypesFileSetInclude includeSrc = factory.createNAntCoreTypesFileSetInclude();
-							includeSrc.setName(src.getSourcePath().makeRelative());
+							includeSrc.setName(ResourcesPlugin.getWorkspace().getRoot().getFile(src.getSourcePath()).getLocation());
 							includesSrcs.add(includeSrc);					
 							
 							// References
@@ -182,16 +180,16 @@ public class NAntBuilder {
 							
 							// References / Includes
 							List<NAntCoreTypesFileSetInclude> includeRefs = ref.getInclude();
-							
-							for (HInterface dep : dependsOf)
-							{
-								List<HBEAbstractFile> filesRef = dep.getSourceVersion("1.0.0.0").getFiles();
-								for (HBEAbstractFile file : filesRef) {
-									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
-									includeRef.setName(file.getBinaryPath().makeRelative());
-									includeRefs.add(includeRef);
-								}
-					    	}
+							if (src.getDependencies() != null)
+								for (String dep : src.getDependencies())
+								{
+									//List<HBEAbstractFile> filesRef = dep.getSourceVersion("1.0.0.0").getFiles();
+									//for (HBEAbstractFile file : filesRef) {
+										NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
+										includeRef.setName(dep/*file.getBinaryPath().makeRelative()*/);
+										includeRefs.add(includeRef);
+									//}
+						    	}
 							NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
 							includeRef.setName(HPEProperties.getInstance().getValue("dgac_path"));
 							includeRefs.add(includeRef);
@@ -209,7 +207,8 @@ public class NAntBuilder {
 		for (String tn : targetNames) {
 		   dependencies += "," + tn;	
 		}
-		dependencies = dependencies.substring(1);
+		if (targetNames.size() > 0)
+		   dependencies = dependencies.substring(1);
 		
 		targetAll.setDepends(dependencies);
 		targets.add(targetAll);

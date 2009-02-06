@@ -10,7 +10,7 @@ public interface IConfiguration {
 	
 	public String getRef();
 	
-	public String getLocation();
+	public String getLocalLocation();
 	
 	public Collection getUnits();
 	
