@@ -7,7 +7,7 @@
     <target name='dgac'>
     <csc debug='true' optimize='true' output='${build}/DGAC.dll' target='library' keyfile='DGAC/DGAC.snk'>
       <sources>
-        <include name='DGAC/*.cs'/>
+        <include name='DGAC/*.cs'/> 
         <include name='DGAC/base/*.cs'/>
         <include name='DGAC/tree/*.cs'/>
         <include name='DGAC/database/model/*.cs'/>
