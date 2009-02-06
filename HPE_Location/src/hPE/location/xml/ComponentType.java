@@ -49,6 +49,10 @@ public class ComponentType {
     protected String name;
     @XmlAttribute
 	private String version;
+    @XmlAttribute
+	private boolean obsolete = false;
+    @XmlAttribute
+	private Integer touch = 0;
 
     /**
      * Gets the value of the interface property.
@@ -109,6 +113,22 @@ public class ComponentType {
 
 	public String getVersion() {
 		return version;
+	}
+
+	public void setObsolete(boolean obsolete) {
+		this.obsolete = obsolete;
+	}
+
+	public boolean isObsolete() {
+		return obsolete;
+	}
+
+	public void touch() {
+		this.touch++;
+	}
+
+	public Integer getTouchCount() {
+		return touch;
 	}
 
 

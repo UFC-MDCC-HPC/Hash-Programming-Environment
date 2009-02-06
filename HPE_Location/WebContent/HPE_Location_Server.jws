@@ -6,13 +6,13 @@ public class HPE_Location_Server implements HLocationService {
 	
 	private LocationService ls;
 
-
+	
 	public HPE_Location_Server(){
 		ls = new LocationService();		
 	}
 	
-	public String fetchPackages(){
-		return ls.fetchPackages();
+	public String fetchPackages(boolean showObsolete){
+		return ls.fetchPackages(showObsolete);
 	}
 	
 	public String getName(){
@@ -30,15 +30,23 @@ public class HPE_Location_Server implements HLocationService {
 	
 	}
 	
-	public String unregisterComponent(String packageName, String component){		
-		return ls.unregisterComponent(packageName, component);
+	public String unregisterComponent(String packageName, String component, String version){		
+		return ls.unregisterComponent(packageName, component, version);
 	}	
-
-	
 
 	public String getComponent(String packageName, String componentName, String version){
 			
 		return ls.getComponent(packageName, componentName, version);
 	}
-		
+	
+	public String markAsObsolete(String packageName, String componentName, String version) {
+	    return ls.markAsObsolete(packageName, componentName, version); 	
+	}	
+
+	public byte[] getBinaryFile(String packageName, String componentName,
+			String version, String filePath) 
+	{
+	   return ls.getBinaryFile(packageName, componentName, version, filePath);		
+	}
+
 }

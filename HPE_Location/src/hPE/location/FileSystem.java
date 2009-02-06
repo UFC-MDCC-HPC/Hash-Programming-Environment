@@ -63,7 +63,6 @@ public class FileSystem {
 		if (file.exists()){
 			try{
 		      file.delete();
-		      System.out.println("arquivo deletado");		    
 			}
 			catch(Exception e){
 				System.out.println("falha ao deletar arquivo");

@@ -72,12 +72,16 @@ public class LocationService implements HLocationService, Subject {
 
 	////////////HLocationService...
 	
-	public String fetchPackages(){
+	public String fetchPackages(boolean showObsolete){
 		String str="";		
 		for (PackageType p : this.packages.getPackage()) {
 			str += p.getPath().trim()+" ( ";
 			for (ComponentType c : p.getComponent()) {
-		    	 str += c.getName().trim() + (c.getVersion() == null ? " " : ":" + c.getVersion() + " ");		    	 
+		    	 if (showObsolete || !c.isObsolete()) 
+		    		 str += c.getName().trim() 
+		    		        + (c.getVersion() == null ? ":" : ":" + c.getVersion()) 
+		    		        + (c.isObsolete() ? ":obsolete" : ":active")
+		    		        + " ";		    	 
 		     }
 		     str += " ) \n";
 		}
@@ -170,35 +174,34 @@ public class LocationService implements HLocationService, Subject {
 				byte[] binContents = bin.getValue();
 				FileSystem.createBinaryFile(p.getPath(),componentName,version,fileName,binContents);
 			}
-			System.out.println("Component registered");
 			// Atualizar o location.xml
 			Notify();	
 			return "Component registered";
 		}
 		else{
- 		    return "Component version already registered";
+ 		    return "Component version already registered" + (component.isObsolete() ? " (obsolete)" : " (active)");
 		}
 	}
 	// deletar tb a pasta ?!?
-	public String unregisterComponent(String packageName, String componentName){		
+	public String unregisterComponent(String packageName, String componentName, String version){		
 		PackageType p = findPackage(packageName);
 		if(p == null){
-			System.out.println("Package nao existe.");
-			return "Package nao existe.";
+			return "Package not found";
 		}
 		else{
-			ComponentType component = findComponent(p, componentName,"1.0.0.0" /* TODO: Version */);
+			ComponentType component = findComponent(p, componentName, version);
 			if(component!=null){
-				p.getComponent().remove(component);
-				FileSystem.deleteFile(p.getPath(), componentName,"1.0.0.0" /* TODO: Version */);
-				System.out.println("Component removido.");
-				//FileSystem.deleteDir(p.getPath().trim()+"."+componentName.trim()+"/");
-				Notify();	
-				return "Component removido.";
+				if (component.getTouchCount() == 0) {
+					p.getComponent().remove(component);
+					FileSystem.deleteFile(p.getPath(), componentName, version);
+					Notify();	
+					return "Component removed";
+				} else {
+					return "Component can not be removed because it has been referenced. You can make it obsolete for avoiding further references.";
+				}
 			}
 			else{
-				System.out.println("Component nao existe.");
-				return "Component nao existe.";
+				return "Component not found";
 			}
 		}
 	}
@@ -206,8 +209,18 @@ public class LocationService implements HLocationService, Subject {
 	
 	public String getComponent(String packageName, String componentName, String version){
 		
-		String s = FileSystem.getText(packageName, componentName, version); 	 	 	
-		return s.equals("") ? null : s;
+		PackageType p = this.findPackage(packageName);
+		if (p!=null) {
+			ComponentType c = this.findComponent(p, componentName, version);
+			if (c != null && !c.isObsolete()) {
+				String s = FileSystem.getText(packageName, componentName, version);
+				c.touch();
+				Notify();
+				return s;
+			} 
+		} 
+		
+		return null;
 	}
 
 	@Override
@@ -244,6 +257,37 @@ public class LocationService implements HLocationService, Subject {
 		
 		Notify();
 		
+		
+	}
+
+	@Override
+	public String markAsObsolete(String packageName, String componentName, String version) {
+		// TODO Auto-generated method stub
+		PackageType p = findPackage(packageName);
+		if (p != null) {
+			ComponentType c = findComponent(p, componentName, version);
+			if (c!=null) {
+				if (!c.isObsolete()) {
+					c.setObsolete(true);
+					Notify();			
+					return "Now, component " + packageName + "." + componentName + " is obsolete. It is inaccessible in the repository view.";
+				}
+				else {
+					return "The component " + packageName + "." + componentName + " is already obsolete.";				
+				}
+			} else {
+				return "Component " + packageName + "." + componentName + " not found in location " + getName();
+			}
+		} else {
+		    return "Package " + packageName + " not found in location " + getName();	
+		}
+	}
+
+	@Override
+	public byte[] getBinaryFile(String packageName, String componentName,
+			String version, String filePath) {
+		
+		return FileSystem.getDataBinaryFile(packageName, componentName, version, filePath);
 		
 	}
 	
