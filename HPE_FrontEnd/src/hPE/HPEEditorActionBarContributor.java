@@ -8,6 +8,7 @@ import org.eclipse.gef.ui.actions.DeleteRetargetAction;
 import org.eclipse.gef.ui.actions.RedoRetargetAction;
 import org.eclipse.gef.ui.actions.UndoRetargetAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.actions.ActionFactory;
 
 public class HPEEditorActionBarContributor extends ActionBarContributor {
@@ -41,4 +42,12 @@ public class HPEEditorActionBarContributor extends ActionBarContributor {
 		// currently none
 	}
 
+	public void setActiveEditor(IEditorPart editor) {
+             if (editor instanceof HPEVersionEditor) {
+            	 HPEVersionEditor veeditor = (HPEVersionEditor) editor;
+            	 return; 
+             } else {
+            	 super.setActiveEditor(editor);
+             }
+	}	
 }

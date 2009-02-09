@@ -278,4 +278,8 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 	public abstract void align(HPrimUnit u1);
 
 	public abstract List<IHPrimUnit> getMyClonesSorted();
+
+	public abstract void setSupersededName(String name2);
+	
+	public abstract String getSupersededName();
 }

@@ -248,23 +248,42 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         }
         
     	HComponent c = (HComponent)i.getConfiguration();
-    	String uid_concrete_component = c.getHashComponentUID();
-    	
     	List<HInterfaceSlice> ss = getSorted(theSlices);
     	
 	    for (HInterfaceSlice slice: ss) {
 	    	HPort portOfTheSlice = slice.getMyPort();
 	    	if (portOfTheSlice == null || (portOfTheSlice != null && portOfTheSlice.isPrivate()) || slice instanceof HActivateInterfaceSlice) {
-		    	String sliceName = slice.getName();
-			    
 		    	HInterface iSlice = (HInterface)slice.getInterface();
-		    	String unit_id = i.getCompliantUnits().get(0).getName2();
-		    	String unit_slice_id = slice.getName();
 		    	
-		    	String typeName = ((HInterface)slice.getInterface()).isAbstract2() ? ((HComponent)slice.getConfiguration()).getVariableName().split("@")[0] :  ((HInterface)slice.getInterface()).getName2(false, varContext);		    	
+		    	String sliceName = slice.getName();			    
+		    	String unit_id = iSlice.getCompliantUnits().get(0).getConfiguration().getRef();
+		    	String unit_slice_id = iSlice.getCompliantUnits().get(0).getSupersededName();// slice.getName();		
+		    	
+		    	String typeName = iSlice.isAbstract2() ? ((HComponent)slice.getConfiguration()).getVariableName().split("@")[0] :  ((HInterface)slice.getInterface()).getName2(false, varContext);
+	    		
+		    	List<String> varContext_ = new ArrayList<String>();
+	    		varContext_.addAll(varContext);
+	    		String typeName2 = ((HInterface)slice.getInterface()).getName2(false, varContext_);		    		
+	    		String typeName2_ = isParameter(typeName2,varContext_);
+	    		while (typeName2_ != null) {
+		    		varContext_.remove(typeName2_);
+		    		typeName2 = ((HInterface)slice.getInterface()).getName2(false, varContext_);		    		
+		    		typeName2_ = isParameter(typeName2,varContext_);
+		    	} 
+		    	
+		    	String[] params = extractParameters(typeName2);
+		    	
+		    	String paramsStr = "";
+		    	for (int counter = 0; counter < params.length - 1; counter++) {
+		    		paramsStr += "typeof(" + params[counter] + "),";
+		    	}
+		    	if (params.length > 0)
+		    		paramsStr += "typeof(" + params[params.length - 1].trim() + ")";
+		    	
+		    	String typeParams = "new Type[] {" + paramsStr + "}";
 		    	
 		    	String cast = "(" + typeName + ")";
-		    	programText += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createInstanceFor(\"" + cBase.getPackagePath() + "." + cBase.getComponentName() + "\",\"" + unit_id + "\",\"" + unit_slice_id  + "\");\n";
+		    	programText += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createInstanceFor(this, \"" + c.getHashComponentUID() + "\",\"" + unit_id + "\",\"" + unit_slice_id + "\"," + typeParams + ");\n";
 	    	} 
 	    }			
         
@@ -298,6 +317,82 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		
 	    
 	}
+
+	private String isParameter(String typeName2, List<String> varContext_) {
+
+        for (String s : varContext_) {
+        	if (typeName2.equals(s.split("@")[0])) return s;
+        }
+		
+		return null;
+	}
+
+
+
+	private String[] extractParameters(String typeName) {
+		
+		if (typeName.indexOf('<') >= 0) {
+		    String pars = typeName.substring(typeName.indexOf('<')+1, typeName.length()-1).trim();            
+            boolean stop = false; 
+            int i = 0;
+            List<String> thePars = new ArrayList<String>();
+		    while (!stop && !pars.equals("")) {			
+		    	 char thisChar = pars.charAt(i);
+		    	 if (thisChar == '<') {
+		    	    int split = enterParameter(pars,i);
+		    	    thePars.add(pars.substring(0,split));
+		    	    if (split < pars.length()) {
+		    	       pars = pars.substring(split + 1);
+		    	    } else {
+		    	    	pars = pars.substring(split);
+		    	    }
+		    	    i = 0;
+		    	 } else if (thisChar == ',') {
+		    		thePars.add(pars.substring(0,i));
+		    		pars = pars.substring(i+2);
+		    		i = 0;
+		    	 } else if (thisChar == '>') {
+		    		 stop = true;
+		    		 thePars.add(pars.substring(0,i));
+		    	 } else if (i > 0 && i+1 >= pars.length()) {
+		    	     thePars.add(pars.substring(0,i+1));	 
+		    	     stop = true;
+		    	 }
+		         i++; 
+		    }
+		    return thePars.toArray(new String[] {});
+		}
+		else {
+			   return new String[] {};
+			
+		}
+				
+	}
+
+
+
+	private int enterParameter(String pars, int i) {
+		
+		int level = -1;
+		boolean stop = false;
+		int j=i;
+		do {
+			if (pars.charAt(j) == '<') {
+				level ++;
+			} else if (pars.charAt(j) == '>') {
+				if (level == 0) {
+					stop = true;
+				} else {
+					level--;
+				}
+			} 
+			
+			j++;
+		} while (!stop);
+		return j;
+	}
+
+
 
 	private String buildDependenceName(String package_, String componentName, String moduleName) {
 		return package_ + "." + componentName

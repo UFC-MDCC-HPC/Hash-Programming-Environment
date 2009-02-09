@@ -783,9 +783,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			this.isSubType = false;
 
 			component = this.createComponent(kind, name, uri);
-			checkKeyFile();
 			component.setPackagePath(new Path(packagePath));
 			component.setHashComponentUID(hash_component_UID);
+			checkKeyFile();
 			if (xCheader.isSetIsAbstract())
 				component.setAbstract(isAbstract);
 
@@ -848,7 +848,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return null;
 	}
 
-	private void checkKeyFile() {
+	private void checkKeyFile() throws IOException {
 		this.component.createComponentKey();
 
 	}

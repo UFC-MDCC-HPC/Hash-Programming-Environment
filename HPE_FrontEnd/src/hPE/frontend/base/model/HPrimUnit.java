@@ -1074,6 +1074,15 @@ public abstract class HPrimUnit extends HVisualElement
     	return true;
     }
     
+    private String supersededName = null;
+    
+    public String getSupersededName() {
+    	return this.supersededName;
+    }
+    
+    public void setSupersededName(String name) {
+    	this.supersededName = name;
+    }
 
     @Override
     public void removeLinkToReplicator(HLinkToReplicator linkToReplicator) {

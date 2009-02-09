@@ -205,5 +205,17 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		return this.getRealUnit().getMyClonesSorted();
 	}
 
+	@Override
+	public void setSupersededName(String name2) {
+		this.getRealUnit().setSupersededName(name2);
+		
+	}
+
+	@Override
+	public String getSupersededName() {
+		// TODO Auto-generated method stub
+		return this.getRealUnit().getSupersededName();
+	}
+
 
 }

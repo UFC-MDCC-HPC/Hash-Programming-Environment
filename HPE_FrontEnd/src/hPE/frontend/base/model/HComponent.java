@@ -23,7 +23,10 @@ import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -39,6 +42,8 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
+import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -3517,26 +3522,54 @@ public boolean versionCompiled(String versionStr) {
 	return true;
 }
 
-public void createComponentKey() {
+public void createComponentKey() throws IOException  {
 	
 	IPath pathKeyFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("snk");
-	boolean ok = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
-	
-	if (!ok) {
+	IPath pathPubFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("pub");
+	boolean okSNK = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
+	boolean okPUB = ResourcesPlugin.getWorkspace().getRoot().exists(pathPubFile);
+
+	if (!okSNK || !okPUB) {
 		String sn_path = HPEProperties.getInstance().getValue("sn_path");;
 		IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(this.getLocalLocation()));		
 		
 		IPath loc = file.getLocation();
 		if (loc != null) {
-			IPath systemPath = loc.removeLastSegments(1);
-			
+			IPath systemPath = loc.removeLastSegments(1);			
 		    java.io.File systemFile = new java.io.File(systemPath.toOSString());
-			
-			
-		    runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
+
+		    if (!okSNK)
+		    	runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
+		    
+		    if (!okPUB) {
+		    	runCommand(new String[] {sn_path, "-p", this.getComponentName() + ".snk", this.getComponentName() + ".pub"}, new String[] {}, systemFile);
+	    		IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
+				InputStream is = new FileInputStream(fileW.getLocation().toOSString());
+				byte[] pk = new byte[is.available()];
+				is.read(pk);
+				is.close();
+				String pkStr = null;
+				try {
+					pkStr = getHexString(pk);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				this.setHashComponentUID(pkStr);	
+		    	
+		    
+		    }
 		}
-	}
+	}	
 }
+
+public static String getHexString(byte[] b) throws Exception {
+	  String result = "";
+	  for (int i=0; i < b.length; i++) {
+	    result +=
+	          Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
+	  }
+	  return result;
+	}
 
 public static void runCommand(String[] cmd, String[] env, java.io.File file) {
 	

@@ -8,8 +8,6 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
-import hPE.frontend.kinds.activate.model.HActivateInterface;
-import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;

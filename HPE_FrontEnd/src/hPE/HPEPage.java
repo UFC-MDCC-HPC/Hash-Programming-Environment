@@ -154,6 +154,8 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	}
 
 	protected InputStream getInitialContents() {
+
+		
 		
 		String s = this.getFileName();	
 		String separator = ".";
@@ -183,7 +185,12 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		}
 			
 		setComponentVersion(c);
-		c.createComponentKey();
+		try {
+			c.createComponentKey();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		c.setAbstract(composite2.isAbstract());
 		
 		IPath path = new Path(absolutePath);

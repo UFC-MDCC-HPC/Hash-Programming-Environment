@@ -564,6 +564,7 @@ public abstract class HUnit extends HPrimUnit
     	IHUnit new_u = (HUnit)new_u_.getRealUnit();
     	
     	new_u_.setHidden(u.getHidden());	    	
+    	new_u_.setSupersededName(u_.getName2());
     	
     	HComponent cTop = (HComponent) new_u.getConfiguration().getTopConfiguration();
     	

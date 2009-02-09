@@ -360,7 +360,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		
 	   HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
 	   String varName = c.getVariableName();
-	   boolean showVariable = varContext.contains(varName);
+	   boolean showVariable = varContext != null && varContext.contains(varName);
 	   boolean showBounds = !showVariable;
 	   
 	   return (showVariable ? varName.split("@")[0] : "") + 
