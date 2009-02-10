@@ -188,11 +188,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
-	public HComponent loadComponent(URI uri)
+	public HComponent loadComponent(URI uri, boolean isTop)
 			throws HPEInvalidComponentResourceException {
 		try {
 			ComponentType component = loadComponentX(uri);
-			return buildComponent(component, uri);
+			return buildComponent(component, uri, isTop);
 		} catch (Exception e) {
 			throw new HPEInvalidComponentResourceException(e);
 		}
@@ -267,7 +267,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				innerUri = URI.createFileURI(fileCache.getAbsolutePath());
 			}
 			
-			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri);
+			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false);
 			
 			if (copyToCache)
 				copyProjectToCache(superType, version);
@@ -335,7 +335,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				innerUri = URI.createFileURI(fileCache.getAbsolutePath());
 			}
 
-			HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri);
+			HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false);
 			
 			if (copyToCache)
 				copyProjectToCache(innerC, version);
@@ -767,7 +767,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Builds an HComponent object
-	public HComponent buildComponent(ComponentType xC, URI uri) {
+	public HComponent buildComponent(ComponentType xC, URI uri, boolean isTop) {
 
 		try {
 			ComponentHeaderType xCheader = xC.getHeader();
@@ -785,7 +785,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			component = this.createComponent(kind, name, uri);
 			component.setPackagePath(new Path(packagePath));
 			component.setHashComponentUID(hash_component_UID);
-			checkKeyFile();
+			if (isTop) 
+				checkKeyFile();
+			
 			if (xCheader.isSetIsAbstract())
 				component.setAbstract(isAbstract);
 

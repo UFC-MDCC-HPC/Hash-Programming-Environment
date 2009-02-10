@@ -21,7 +21,8 @@ public class HBESourceVersionCSharp extends hPE.frontend.base.codegen.c_sharp.HB
 	
 	public List<HBESourceCSharpClassDefinition> getFiles() {
 		List<HBESourceCSharpClassDefinition> l = super.getFiles();
-		l.add(this.mainSrc);
+		if (this.mainSrc != null)
+			l.add(this.mainSrc);
 		return l;
 	}
 			

@@ -3541,25 +3541,24 @@ public void createComponentKey() throws IOException  {
 		    if (!okSNK)
 		    	runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
 		    
-		    if (!okPUB) {
+		    if (!okPUB) 
 		    	runCommand(new String[] {sn_path, "-p", this.getComponentName() + ".snk", this.getComponentName() + ".pub"}, new String[] {}, systemFile);
-	    		IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
-				InputStream is = new FileInputStream(fileW.getLocation().toOSString());
-				byte[] pk = new byte[is.available()];
-				is.read(pk);
-				is.close();
-				String pkStr = null;
-				try {
-					pkStr = getHexString(pk);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				this.setHashComponentUID(pkStr);	
-		    	
-		    
-		    }
 		}
-	}	
+	}
+
+	IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
+	InputStream is = new FileInputStream(fileW.getLocation().toOSString());
+	byte[] pk = new byte[is.available()];
+	is.read(pk);
+	is.close();
+	String pkStr = null;
+	try {
+		pkStr = getHexString(pk);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	this.setHashComponentUID(pkStr);	
+	
 }
 
 public static String getHexString(byte[] b) throws Exception {

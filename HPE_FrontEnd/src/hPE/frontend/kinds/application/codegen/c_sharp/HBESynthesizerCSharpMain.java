@@ -3,6 +3,11 @@ package hPE.frontend.kinds.application.codegen.c_sharp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
+
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
 import hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree;
@@ -30,9 +35,19 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
 		    
         HComponent c = (HComponent) i.getConfiguration();
         
+		List<String> dependencies = new ArrayList<String>();
         
  		mainText += "using " + i.getPrimName() + ";\n";
+ 		mainText += "using " + c.getWhoItImplements().getPackagePath().toString() + "." + c.getWhoItImplements().getComponentName() + "." + i.getInheritedName().split("<")[0] + ";\n";
 
+ 		dependencies.add(super.buildDependencyName(c.getWhoItImplements().getPackagePath().toString(), c.getWhoItImplements().getComponentName(), i.getInheritedName().split("<")[0]));
+ 		
+ 		String pathD = super.buildDependencyName(c.getPackagePath().toString(), c.getComponentName(), i.getPrimName());
+ 		
+ 		IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(pathD));
+ 		
+ 		dependencies.add(fPathD.getLocation().toOSString());
+ 		
         List<String> paramActualsName = new ArrayList<String>();
  		for (Triple<String,HInterface,String> p : i.getParameters3()) {
  			HInterface i1 = p.snd();
@@ -40,6 +55,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
 	 			paramActualsName.add(i1.getPrimName());
 	 			HComponent c1 = (HComponent) i1.getConfiguration();
 	 			mainText += "using " + c1.getPackagePath() + "." + c1.getComponentName() + "."+ i1.getPrimName() + ";\n";
+	 			dependencies.add(buildDependencyName(c1.getPackagePath().toString(), c1.getComponentName(), i1.getPrimName()));
  			}
  		}
  		
@@ -60,7 +76,9 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
 	    String l = i.getConfiguration().getLocalLocation();
         
 		HBESourceCSharpMainDefinition mainCode = new HBESourceCSharpMainDefinition  (procName+"Main.cs", mainText, l, versionID);
+		mainCode.setDependencies(dependencies);
 		version.setMainSource(mainCode);
+		
 	
 		return version;
 	    

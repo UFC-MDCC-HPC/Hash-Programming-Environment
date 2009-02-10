@@ -10,7 +10,7 @@ import hPE.xml.component.ComponentType;
 
 public interface HComponentFactory {
 
-	HComponent loadComponent(URI uri) throws HPEInvalidComponentResourceException ;
+	HComponent loadComponent(URI uri, boolean isTop) throws HPEInvalidComponentResourceException ;
 	ComponentType loadComponentX(URI uri) throws HPEInvalidComponentResourceException;
 	
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
@@ -21,5 +21,5 @@ public interface HComponentFactory {
 	
 	public ComponentType marshallComponent(HComponent c);
 	
-	public HComponent buildComponent(ComponentType xC, URI uri);
+	public HComponent buildComponent(ComponentType xC, URI uri, boolean isTop);
 }

@@ -106,6 +106,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
 		
+		programText += "using System;\n";
 		programText += "using DGAC;\n";
 		programText += "using hpe.basic;\n";
 
@@ -130,7 +131,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
  				if (!refs.contains(depStr))
  				{
  					refs.add(depStr);
- 					dependencies.add(buildDependenceName(cii.getPackagePath().toString(),cii.getComponentName(),ii.getPrimName()));
+ 					dependencies.add(buildDependencyName(cii.getPackagePath().toString(),cii.getComponentName(),ii.getPrimName()));
   				}
  			}
 						
@@ -165,7 +166,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 			}
 			if (!refs.contains(depStr)) {
 				refs.add(depStr);
-				dependencies.add(buildDependenceName(cb.getPackagePath().toString(), cb.getComponentName(), b.getPrimName()));
+				dependencies.add(buildDependencyName(cb.getPackagePath().toString(), cb.getComponentName(), b.getPrimName()));
 			}
 		}
 
@@ -177,7 +178,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		String componentNameImplements = cBase.getComponentName();
 		
 		programText += "using " + packageNameImplements + "." + componentNameImplements + ";\n";
-		dependencies.add(buildDependenceName(cBase.getPackagePath().toString(), cBase.getComponentName(), primInheritedName));
+		dependencies.add(buildDependencyName(cBase.getPackagePath().toString(), cBase.getComponentName(), primInheritedName));
 
 		programText += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
 
@@ -241,13 +242,19 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 				
 		programText += "\n"; // end declaration of inner slices
 		
-        programText += procName.split("<")[0] + "() { \n\n"; // begin constructor signature
+        programText += procName.split("<")[0] + "() { \n"; // begin constructor signature
 			
         if (subclass) {
-        	programText += tabs(1) + "super();\n\n";
+        	programText += tabs(1) + "super();\n";
         }
         
-    	HComponent c = (HComponent)i.getConfiguration();
+        programText += "\n} \n\n"; // end constructor body;
+
+        programText += "override public void createSlices() {\n"; // begin constructor signature
+
+        programText += tabs(1) + "base.createSlices();\n";
+        
+        HComponent c = (HComponent)i.getConfiguration();
     	List<HInterfaceSlice> ss = getSorted(theSlices);
     	
 	    for (HInterfaceSlice slice: ss) {
@@ -288,15 +295,15 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	    }			
         
                 
-        programText += "\n\n} // end constructor \n\n"; // end constructor body;
+        programText += "} \n\n"; // end createSlices body;
 
         for (String methodCode : this.getMethods()) {
         	programText += methodCode;
         }        
         
-	    programText += "\n} // end main class \n"; // end main class	
+	    programText += "\n}\n"; // end main class	
 
-		programText += "\n} // end namespace \n"; // end namespace
+		programText += "\n}\n"; // end namespace
 		
 	    String l = i.getConfiguration().getLocalLocation();
 	    
@@ -350,11 +357,11 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	 } else if (thisChar == ',') {
 		    		thePars.add(pars.substring(0,i));
 		    		pars = pars.substring(i+2);
-		    		i = 0;
+		    		i = -1;
 		    	 } else if (thisChar == '>') {
 		    		 stop = true;
 		    		 thePars.add(pars.substring(0,i));
-		    	 } else if (i > 0 && i+1 >= pars.length()) {
+		    	 } else if (i+1 >= pars.length()) {
 		    	     thePars.add(pars.substring(0,i+1));	 
 		    	     stop = true;
 		    	 }
@@ -394,7 +401,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
 
 
-	private String buildDependenceName(String package_, String componentName, String moduleName) {
+	protected String buildDependencyName(String package_, String componentName, String moduleName) {
 		return package_ + "." + componentName
 	       + Path.SEPARATOR + "bin" 
 	       + Path.SEPARATOR + "1.0.0.0" 

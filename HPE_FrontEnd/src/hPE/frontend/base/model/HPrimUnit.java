@@ -1077,7 +1077,11 @@ public abstract class HPrimUnit extends HVisualElement
     private String supersededName = null;
     
     public String getSupersededName() {
-    	return this.supersededName;
+    	if (this.supersededName == null) {
+    		return this.getName2();
+    	} else {
+    		return this.supersededName;
+    	}
     }
     
     public void setSupersededName(String name) {
