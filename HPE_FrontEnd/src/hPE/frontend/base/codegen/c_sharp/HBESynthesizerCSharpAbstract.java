@@ -96,7 +96,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		String componentName = i.getConfiguration().getComponentName();
 		
 
-		programText += "using hpe.kinds.I" + i.getConfiguration().kindString() + "Kind;\n";
+		programText += "using hpe.kinds;\n";
 
 		// GET REFERENCES - Begin ...
 		
@@ -142,7 +142,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 			String useStr = cb.getPackagePath() + "." + cb.getComponentName();
 			if (!usings.contains(useStr)) {
 				usings.add(useStr);
-			    programText += "using " + cb.getPackagePath().toString() + "." + cb.getComponentName() + "." + b.getPrimName() + ";\n";
+			    programText += "using " + cb.getPackagePath().toString() + "." + cb.getComponentName() + ";\n";
 			}
 			String depStr = buildDependencyName(cb.getPackagePath().toString(), cb.getComponentName(), b.getPrimName());
 			if (!refs.contains(depStr))
@@ -152,25 +152,27 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 			}
 		}
 		
-		String inheritedName = i.getInheritedName();
+		String inheritedName = null;
+		String primInheritedName = i.getInheritedName() != null ? i.getInheritedName().split("<")[0] : null;
 		
-		if (inheritedName != null) {
+		if (primInheritedName != null) {
+			inheritedName = procName.replaceFirst(i.getPrimName(), primInheritedName); 
 			HComponent cBase = ((HComponent) i.getConfiguration()).getSuperType();
 			String packageNameExtends = cBase.getPackagePath().toString();
 			String componentNameExtends = cBase.getComponentName();			
-			String inheritedName_ = inheritedName.split("<").length > 0 ? inheritedName = inheritedName.split("<")[0] : inheritedName;
+	//		String inheritedName_ = inheritedName.split("<").length > 0 ? inheritedName =  inheritedName.split("<")[0] : inheritedName;
 			
-			programText += "using " + packageNameExtends + "." + componentNameExtends + "." + inheritedName_ + ";\n";
-		    dependencies.add(buildDependencyName(packageNameExtends, componentNameExtends, inheritedName_));
+			programText += "using " + packageNameExtends + "." + componentNameExtends + ";\n";
+		    dependencies.add(buildDependencyName(packageNameExtends, componentNameExtends, primInheritedName));
 		}
 		
 		// GET REFERENCES - ... End 
 		
 		programText += "\n";	
 		
-		programText = programText += "namespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
+ 		programText = programText += "namespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
 
-		programText += "public interface " + procName + " : " + (inheritedName!=null ? inheritedName + ", " : "" )  + i.getConfiguration().kindString().replace(" ", "_") + "Kind \n";  // begin class
+		programText += "public interface " + procName + " : " + (inheritedName!=null ? inheritedName + ", " : "" )  + "I" + i.getConfiguration().kindString().replace(" ", "") + "Kind \n";  // begin class
 
  		programText += programTextVarBounds;
  		

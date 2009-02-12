@@ -7,6 +7,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
@@ -31,12 +32,14 @@ import org.eclipse.ui.part.FileEditorInput;
 
 // import fr.improve.csharp.editor.CSharpEditor;
 import hPE.HPEVersionEditor;
+import hPE.frontend.NAntBuilder;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.C.HBESynthesizerForC;
 import hPE.frontend.base.dialogs.HBEVersionControlDialog;
 import hPE.frontend.base.edits.InterfaceEditPart;
+import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 
 import java.util.Collection;
@@ -127,7 +130,11 @@ public void execute(){
 	if (result == HBEVersionControlDialog.BUTTON_EDIT) {		
 	    if (version.getFiles().isEmpty()) {
  			 openExistingSourceCodeFile(synthesizer.synthesize(i,version.getVersionID()));
-	    } else {
+ 			 NAntBuilder builder = NAntBuilder.instance;
+ 			 builder.setComponent((HComponent) i.getConfiguration());
+ 			 builder.setMonitor(new NullProgressMonitor());
+ 			 (new Thread(builder)).start();
+ 	    } else {
 	    	openExistingSourceCodeFile(version);
 	    }
 	} else {

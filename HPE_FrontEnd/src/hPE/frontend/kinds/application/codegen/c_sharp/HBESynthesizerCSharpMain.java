@@ -37,8 +37,8 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
         
 		List<String> dependencies = new ArrayList<String>();
         
- 		mainText += "using " + i.getPrimName() + ";\n";
- 		mainText += "using " + c.getWhoItImplements().getPackagePath().toString() + "." + c.getWhoItImplements().getComponentName() + "." + i.getInheritedName().split("<")[0] + ";\n";
+		mainText += "using DGAC;\n";
+ 		mainText += "using " + c.getWhoItImplements().getPackagePath().toString() + "." + c.getWhoItImplements().getComponentName() + ";\n";
 
  		dependencies.add(super.buildDependencyName(c.getWhoItImplements().getPackagePath().toString(), c.getWhoItImplements().getComponentName(), i.getInheritedName().split("<")[0]));
  		
@@ -54,7 +54,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
  			if (!paramActualsName.contains(i1.getPrimName())) {
 	 			paramActualsName.add(i1.getPrimName());
 	 			HComponent c1 = (HComponent) i1.getConfiguration();
-	 			mainText += "using " + c1.getPackagePath() + "." + c1.getComponentName() + "."+ i1.getPrimName() + ";\n";
+	 			mainText += "using " + c1.getPackagePath() + "." + c1.getComponentName() + ";\n";
 	 			dependencies.add(buildDependencyName(c1.getPackagePath().toString(), c1.getComponentName(), i1.getPrimName()));
  			}
  		}
@@ -65,7 +65,12 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
         mainText += "\t\tstatic void Main(string [] args) {\n\n" ;
         
         String unitName = i.getCompliantUnits().get(0).getName2();;
-        mainText += "\t\t\t" + i.getName(false,false) + " " + unitName + " = new " + i.getName(false,false) + "();\n";
+        mainText += "\t\t\t" + i.getName(false,false) + " " + unitName + " = new " + i.getName(false,false) + "();\n\n";
+        
+        mainText += "\t\t\tBackEnd.DGACInit(\"" + c.getHashComponentUID() + "\",\"" + unitName + "\"," + unitName + "," + "args);\n";
+        
+        mainText += "\t\t\t" + unitName + ".createSlices();\n";
+        
         mainText += "\t\t\t" + unitName + ".compute();\n";
         
         mainText += "\n\t\t}\n"; // end main method;        

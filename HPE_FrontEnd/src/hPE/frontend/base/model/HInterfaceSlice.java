@@ -42,9 +42,33 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		return name;
 	}
 
+	public void setOriginalName2() {
+		if (this.originalName == null && !this.name.equals("")) {
+			originalName = this.name;
+		}
+	}
+	
+	public void resetOriginalName() {
+		this.originalName = null;
+	}
+
+	public String getOriginalName2() {
+		return originalName == null ? this.name : this.originalName;
+	}
+
+	private String originalName = null;
+	
+	
 	private String defaultName_ = null;
 	
 	public void setName(String name) {
+
+		if (name.equals("v_")) {
+			System.out.print("defaultName_");
+		}
+
+		setOriginalName2();
+		
 		if (defaultName_ == null && !this.name.equals(name)) 
 			this.defaultName_ = this.name; 
 		else if (defaultName_ != null && name.equals(this.defaultName_)) 
@@ -63,6 +87,12 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 	}
 	
 	public void resetDefaultName() {
+		
+		if (name.equals("v_")) {
+			System.out.print("defaultName_");
+		}
+
+		
 		this.defaultName_ = null;
 	}
 	

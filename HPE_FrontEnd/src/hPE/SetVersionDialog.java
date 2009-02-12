@@ -66,12 +66,7 @@ public class SetVersionDialog extends Composite {
 		this.setLayout(null);
 		createGroup();
 		createGroupKinds();
-		setSize(new Point(466, 142));
-		textPackage = new Text(this, SWT.BORDER);
-		textPackage.setBounds(new Rectangle(80, 35, 256, 19));
-		labelVersion1 = new Label(this, SWT.NONE);
-		labelVersion1.setBounds(new Rectangle(25, 40, 51, 13));
-		labelVersion1.setText("Package:");
+		setSize(new Point(466, 101));
 	}
 
 	/**
@@ -83,7 +78,7 @@ public class SetVersionDialog extends Composite {
 		groupKinds.setText("Component Kinds");
 		groupKinds.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		groupKinds.setLayout(null);
-		groupKinds.setBounds(new Rectangle(4, 61, 361, 66));
+		groupKinds.setBounds(new Rectangle(5, 30, 361, 66));
 		
 		radioApplication = new Button(groupKinds, SWT.RADIO);
 		radioApplication.setText("Application");
@@ -178,9 +173,6 @@ public class SetVersionDialog extends Composite {
 	}
 	
 	private Integer[] safeVersion = new Integer[] {1,0,0,0};
-	private Text textPackage = null;
-	private Label labelVersion1 = null;
-	
 	public void SetEnabledVersionSetting(boolean enable) {
 		if (!enable) {
 			if (!(spinnerV1.getSelection() == 1 && 
@@ -217,7 +209,7 @@ public class SetVersionDialog extends Composite {
 		group = new Group(this, SWT.NONE);
 		group.setLayout(null);
 		group.setText("");
-		group.setBounds(new Rectangle(374, 61, 85, 65));
+		group.setBounds(new Rectangle(375, 30, 85, 65));
 		org.eclipse.swt.events.SelectionListener sl = new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Object src = e.getSource();
@@ -242,8 +234,4 @@ public class SetVersionDialog extends Composite {
 	  return radioButtonAbstract.getSelection();	
 	}
 	
-	public String getPackage() {
-		return textPackage.getText();
-	}
-
 }  //  @jve:decl-index=0:visual-constraint="18,27"

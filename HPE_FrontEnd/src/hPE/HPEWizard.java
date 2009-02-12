@@ -1,6 +1,7 @@
 package hPE;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.jface.wizard.*;
@@ -13,6 +14,7 @@ public class HPEWizard extends Wizard implements INewWizard {
 		
 		public HPEWizard() {
 			super();
+			
 			// TODO Auto-generated constructor stub
 		}
 
@@ -31,6 +33,7 @@ public class HPEWizard extends Wizard implements INewWizard {
 			// TODO Auto-generated method stub
 			workbench = aWorkbench;
 			selection = currentSelection;
+		
 		}
 
 	}

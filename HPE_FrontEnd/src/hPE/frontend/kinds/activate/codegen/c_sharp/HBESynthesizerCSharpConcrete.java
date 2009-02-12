@@ -65,7 +65,7 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
 			String programText = "";
 			
         	// activate method signature
-			programText += "void " + ((HActivateInterface)i).getActivateMethodName() + "() { \n\n";			
+			programText += "public void " + ((HActivateInterface)i).getActivateMethodName() + "() { \n\n";			
 	        HBEProcedure procedure = p2p.getMainProcedure(); 		
 		    HBECommandBlock block = procedure.getMainBlock();		    
 		    programText += translateBlockToC(1,block);	

@@ -340,7 +340,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
     }
     
     public String getName(boolean showSuperType, boolean showBounds) {
-    	return getName(showSuperType, showBounds,0);
+    	return getName(showSuperType, showBounds, 0);
     }
 
 	public String getName(boolean showSuperType, boolean showBounds, int depth) {
@@ -717,6 +717,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	}
 	
 	public void setImplemented(HComponent topConfiguration) {
+		superTypeID = null; // REASON: This is the supertype of the abstract component and not of the concrete component. 
 		this.saveInheritedName();
 		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
 		this.setEditable(true);

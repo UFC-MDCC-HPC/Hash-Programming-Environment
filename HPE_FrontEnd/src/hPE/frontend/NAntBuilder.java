@@ -1,11 +1,18 @@
 package hPE.frontend;
 
-import java.io.File;
+import hPE.HPEProperties;
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.nant.release._0._86.beta1.nant.DocumentRoot;
+import net.sf.nant.release._0._86.beta1.nant.NAntCoreTasksIfNotTask;
+import net.sf.nant.release._0._86.beta1.nant.NAntCoreTasksMkDirTask;
 import net.sf.nant.release._0._86.beta1.nant.NAntCoreTasksPropertyTask;
 import net.sf.nant.release._0._86.beta1.nant.NAntCoreTypesFileSet;
 import net.sf.nant.release._0._86.beta1.nant.NAntCoreTypesFileSetInclude;
@@ -16,13 +23,7 @@ import net.sf.nant.release._0._86.beta1.nant.NantPackage;
 import net.sf.nant.release._0._86.beta1.nant.ProjectType;
 import net.sf.nant.release._0._86.beta1.nant.Target;
 import net.sf.nant.release._0._86.beta1.nant.util.NantResourceFactoryImpl;
-import hPE.HPEProperties;
-import hPE.frontend.base.codegen.HBEAbstractFile;
-import hPE.frontend.base.codegen.HBESourceVersion;
-import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HInterface;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -31,17 +32,21 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-public class NAntBuilder {
+public class NAntBuilder implements Runnable {
 	
 	private static NantFactory factory = NantFactory.eINSTANCE;
 
-	public static Resource save(HComponent c, IProgressMonitor monitor) {
+	public static NAntBuilder instance = new NAntBuilder();
+	
+	private HComponent component;
+	private IProgressMonitor monitor;
+	
+	public Resource save(HComponent c, IProgressMonitor monitor) {
 		try {
 			// Create a resource set to hold the resources.
 			//
@@ -117,6 +122,8 @@ public class NAntBuilder {
 		
 		List<String> targetNames = new ArrayList<String>();
 		
+		boolean firstPass = true;
+
 		List<Integer[]> versions = c.getVersions();
 		for (Integer[] version : versions) {
 			if (c.versionSupplied(HInterface.toStringVersion(version))) {
@@ -130,6 +137,7 @@ public class NAntBuilder {
 				
 				List<NAntDotNetTasksCscTask> csc = target.getCsc();
 				
+				
 				for (HInterface i : c.getInterfaces()) if (i.getConfiguration() == c) {
 					
 					HBESourceVersion<HBEAbstractFile> v = i.getSourceVersion(HInterface.toStringVersion(version));
@@ -142,18 +150,31 @@ public class NAntBuilder {
 							compile.setDebug("true");
 							compile.setOptimize("true");
 							IPath path_output = ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
+
+							IPath path_output_folder = src.getBinaryPath().removeLastSegments(1);
+							IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output_folder);
+							String path_output_folder_string = folderOutput.getLocation().toString();
 							
-							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(src.getBinaryPath().removeLastSegments(1));
+							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
 							if (!folderOutputExists) {
 								try {
-									IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(src.getBinaryPath().removeLastSegments(1));
 									folderOutput.create(true, true, null);
 								} catch (CoreException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
-							
+
+							if (firstPass) {
+								NAntCoreTasksIfNotTask ifNotTask = factory.createNAntCoreTasksIfNotTask();
+								target.getIfnot().add(ifNotTask);
+								ifNotTask.setTargetexists(path_output_folder_string);
+								List<NAntCoreTasksMkDirTask> mkdirList = ifNotTask.getMkdir();
+								NAntCoreTasksMkDirTask mkdirTask = factory.createNAntCoreTasksMkDirTask();
+								mkdirList.add(mkdirTask);
+								mkdirTask.setDir(path_output_folder_string);
+								firstPass = false;
+							}
 							
 							
 							compile.setOutput(path_output);
@@ -214,6 +235,28 @@ public class NAntBuilder {
 		targets.add(targetAll);
 		
 		return project;
+	}
+
+	@Override
+	public void run() {
+		save(this.component, this.monitor);
+		
+	}
+
+	public void setComponent(HComponent component) {
+		this.component = component;
+	}
+
+	public HComponent getComponent() {
+		return component;
+	}
+
+	public void setMonitor(IProgressMonitor monitor) {
+		this.monitor = monitor;
+	}
+
+	public IProgressMonitor getMonitor() {
+		return monitor;
 	}
 
 }

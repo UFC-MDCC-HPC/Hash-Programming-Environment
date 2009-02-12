@@ -3547,17 +3547,19 @@ public void createComponentKey() throws IOException  {
 	}
 
 	IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
-	InputStream is = new FileInputStream(fileW.getLocation().toOSString());
-	byte[] pk = new byte[is.available()];
-	is.read(pk);
-	is.close();
-	String pkStr = null;
-	try {
-		pkStr = getHexString(pk);
-	} catch (Exception e) {
-		e.printStackTrace();
+	if (fileW.getLocation() != null) {
+		InputStream is = new FileInputStream(fileW.getLocation().toOSString());
+		byte[] pk = new byte[is.available()];
+		is.read(pk);
+		is.close();
+		String pkStr = null;
+		try {
+			pkStr = getHexString(pk);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.setHashComponentUID(pkStr);
 	}
-	this.setHashComponentUID(pkStr);	
 	
 }
 

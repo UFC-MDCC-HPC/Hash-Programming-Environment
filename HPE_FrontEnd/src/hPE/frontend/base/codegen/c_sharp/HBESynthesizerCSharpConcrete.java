@@ -32,6 +32,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	// *******
 	
     protected Map<String,List<HInterfaceSlice>> theSlices = new HashMap<String,List<HInterfaceSlice>>();
+
+    protected Map<HInterfaceSlice,HPort> portMapping = new HashMap<HInterfaceSlice,HPort>();
     
 	private void fillPortSlices(HInterface i, List<String> varContext) {
 		
@@ -42,8 +44,9 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		List<HInterfaceSlice> iSlices = new ArrayList<HInterfaceSlice>();
 		iSlices.addAll(i.getSlices());
 		for (HPort port : i.getPorts()) {
-        	if (!port.isInherited()) {
+        	if (!port.isInherited() && !iSlices.contains(port.getMainSlice())) {
 		       iSlices.add(port.getMainSlice());
+		       portMapping.put(port.getMainSlice(), port);
         	}
 		}		
 		
@@ -216,11 +219,11 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    String typeName = s.getKey();
 		    for (HInterfaceSlice slice : s.getValue()) {
 		    	String sliceName = slice.getName();
-		    	String defaultSliceName = slice.getDefaultName();
+		    	String defaultSliceName = slice.getOriginalName2();
 		    
-			    programText += "private " + typeName + " " + sliceName + " = null;\n\n";
+			    programText += "private " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
 
-			    HPort portOfTheSlice = slice.getMyPort();
+			    HPort portOfTheSlice = portMapping.get(slice); /*slice.getMyPort()*/;
 			    boolean isPublic = (portOfTheSlice != null && !portOfTheSlice.isPrivate()) /*|| !(slice instanceof HActivateInterfaceSlice)*/;
 		        
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
@@ -230,7 +233,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 				    programText += tabs(2) + "this." + sliceName + " = value;\n";				    
 				    if (tt.containsKey(sliceName)) {
 					    for (HInterfaceSlice ss : tt.get(sliceName)) {
-					    	programText += tabs(2) + ss.getName() + "." + firstUpper(defaultSliceName) + " = value;\n";
+					    	programText += tabs(2) + ss.getName() + "." + firstUpper(portOfTheSlice.getOriginalNameOf2(ss)) + " = value;\n";
 					    }				    
 				    }
 				    programText += tabs(1) + "}\n";
@@ -242,7 +245,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 				
 		programText += "\n"; // end declaration of inner slices
 		
-        programText += procName.split("<")[0] + "() { \n"; // begin constructor signature
+        programText += "public " + procName.split("<")[0] + "() { \n"; // begin constructor signature
 			
         if (subclass) {
         	programText += tabs(1) + "super();\n";
@@ -290,7 +293,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	String typeParams = "new Type[] {" + paramsStr + "}";
 		    	
 		    	String cast = "(" + typeName + ")";
-		    	programText += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createInstanceFor(this, \"" + c.getHashComponentUID() + "\",\"" + unit_id + "\",\"" + unit_slice_id + "\"," + typeParams + ");\n";
+		    	programText += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, \"" + c.getHashComponentUID() + "\",\"" + unit_id + "\",\"" + unit_slice_id + "\"," + typeParams + ");\n";
 	    	} 
 	    }			
         

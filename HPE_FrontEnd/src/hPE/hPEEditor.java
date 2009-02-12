@@ -239,7 +239,7 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		    
 	    factory.saveComponent(c,file,monitor);	
 	    
-	    NAntBuilder.save(c,monitor);
+	    // NAntBuilder.save(c,monitor);
 
 	    getCommandStack().markSaveLocation();			
 	}

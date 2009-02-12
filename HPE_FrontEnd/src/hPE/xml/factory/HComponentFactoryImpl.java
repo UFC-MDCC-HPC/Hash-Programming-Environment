@@ -254,14 +254,16 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			URI innerUri = null;
 
 			boolean copyToCache = false;
+			boolean retrieveLibraries = false;
 			if (!fileCache.exists()) {
 				if (locationUri.scheme() == null
 						|| !locationUri.scheme().equals("http")) {
 					innerUri = locationUri;
 					copyToCache = true;
 				} else {
-					java.io.File file = HPELocationEntry.getComponent(package_.replace(".", ":").split(":"), name, version,locationUri);
+					java.io.File file = HPELocationEntry.getComponent(package_.replace(".", ":").split(":"), name, null,locationUri);
 					innerUri = URI.createFileURI(file.getAbsolutePath());
+					retrieveLibraries = true;
 				}
 			} else {
 				innerUri = URI.createFileURI(fileCache.getAbsolutePath());
@@ -272,6 +274,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (copyToCache)
 				copyProjectToCache(superType, version);
 			
+			if (retrieveLibraries)
+				retrieveLibraries(superType, locationUri);
 
 			mC1.put(baseComponent.getLocalRef(), baseComponent);
 			mC2.put(baseComponent, superType);
@@ -326,7 +330,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					copyToCache = true;
 				} else {
 					java.io.File file = HPELocationEntry.getComponent(package_
-							.replace(".", ":").split(":"), name, version,
+							.replace(".", ":").split(":"), name, null,
 							locationUri);
 					innerUri = URI.createFileURI(file.getAbsolutePath());
 					retrieveLibraries = true;
@@ -2397,6 +2401,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			for (HPort p_ : ps) {
 				for (HInterfaceSlice s_ : p_.getInterfaceSlices()) {
 					s_.resetDefaultName();
+					s_.resetOriginalName();
 				}
 			}
 			if (s == null)

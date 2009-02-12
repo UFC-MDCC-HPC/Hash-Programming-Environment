@@ -208,6 +208,20 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 		return null;
 	}
 	
+	public String getOriginalNameOf2(HInterfaceSlice sOwner) {
+		
+		for (Entry<HInterfaceSlice, List<HInterfaceSlice>> e : this.ss.entrySet()) {
+		    HInterfaceSlice es = e.getKey();
+			List<HInterfaceSlice> eos = e.getValue();
+			for (HInterfaceSlice eo : eos) {
+			    if (eo.getName().equals(sOwner.getName())) {
+			    	return es.getOriginalName2();
+			    }
+			}
+		}
+		
+		return null;
+	}
 }
 
 
