@@ -113,6 +113,7 @@ public class FileUtil{
               }
           }
       }
+      bankReader.Close();
       Console.WriteLine("PROPERTY NOT FOUND ....");
       return null;
   }

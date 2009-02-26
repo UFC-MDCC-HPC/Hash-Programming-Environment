@@ -22,6 +22,8 @@ namespace HPE_DGAC_LoadDB
         protected IList<EnumeratorType> enumerator = null;
         protected IList<FusionsOfReplicatorsType> fusionOfReplicators = null;
 
+
+
         public HashComponent loadComponent(ComponentType c)
         {
             //ComponentHeaderType ch = c.header;
@@ -32,6 +34,8 @@ namespace HPE_DGAC_LoadDB
         }
 
         protected abstract HashComponent loadComponent_(ComponentType c);
+
+        public abstract bool componentExists(string hash_component_uid, out HashComponent cRef);
 
         protected void LoadBodyItems(Object[] cb)
         {
@@ -220,7 +224,7 @@ namespace HPE_DGAC_LoadDB
             return acfa;
         }
         
-        private ParameterSupplyType lookForSupplyForVarName(string varName)
+        protected ParameterSupplyType lookForSupplyForVarName(string varName)
         {
             if (parameterSupply != null)
             {

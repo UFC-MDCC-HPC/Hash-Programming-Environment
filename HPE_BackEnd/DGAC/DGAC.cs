@@ -84,8 +84,23 @@ namespace DGAC
             Connector.beginTransaction();
             try
             {
+                bool exists = false;
                 LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
-                AbstractComponentFunctor cAbs = (AbstractComponentFunctor)abstractloader.loadComponent(ct);
+                AbstractComponentFunctor cAbs = null;
+                HashComponent cAbs_ = null;
+
+                abstractloader.componentExists(ct.header.hash_component_UID, out cAbs_);
+                if (cAbs_ == null)
+                {
+                    cAbs = (AbstractComponentFunctor)abstractloader.loadComponent(ct);
+                }
+                else
+                {
+                    Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
+                    cAbs = (AbstractComponentFunctor) cAbs_;
+                    abstractloader.updateSources(ct, cAbs);
+                    exists = true;
+                }
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
 
@@ -98,19 +113,21 @@ namespace DGAC
                     string interfaceName = interfaceToCompile.unitId;
                     string sourceCode = interfaceToCompile.sourceCode;
                     string cuid = interfaceToCompile.cuid;
+                    string library_path = interfaceToCompile.library_path;
                     int outputType = interfaceToCompile.output_type;
 
                     portTurn %= remObjects.Length;
                     Object remWorker = remObjects[portTurn];
 
-                    string publicKey = this.sendCompileCommandToWorker(cuid,
+                    string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                        remWorker,
                                                                        sourceCode,
                                                                        moduleName,
                                                                        interfaceToCompile.references,
                                                                        outputType);
 
-                    idao.setPublicKey(id_abstract, interfaceName, publicKey);
+                    if (!exists)
+                        idao.setPublicKey(id_abstract, interfaceName, publicKey);
                 }
 
                 Connector.commitTransaction(); // if it is ok, commit ...
@@ -142,8 +159,24 @@ namespace DGAC
             Connector.beginTransaction();
             try
             {
+                bool exists = false;
                 LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
-                Component cConc = (Component)concreteloader.loadComponent(ct);
+                Component cConc = null;
+                HashComponent cConc_ = null;
+
+                concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
+                if (cConc_ == null)
+                {
+                    cConc = (Component)concreteloader.loadComponent(ct);
+                }
+                else
+                {
+                    Console.Error.WriteLine("Concrete component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
+                    cConc = (Component)cConc_;
+                    concreteloader.updateSources(ct, cConc);
+                    exists = true;
+                }
+
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
 
@@ -153,6 +186,7 @@ namespace DGAC
                 {
                     int id_concrete = unitToCompile.id;
                     string cuid = unitToCompile.cuid;
+                    string library_path = unitToCompile.library_path;
                     string moduleName = unitToCompile.moduleName;
                     string unitName = unitToCompile.unitId;
                     string sourceCode = unitToCompile.sourceCode;
@@ -161,13 +195,14 @@ namespace DGAC
                     portTurn %= remObjects.Length;
                     Object remWorker = remObjects[portTurn];
 
-                    string publicKey = this.sendCompileCommandToWorker(cuid,
+                    string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                        remWorker,
                                                                        sourceCode,
                                                                        moduleName,
                                                                        unitToCompile.references,
                                                                        outputType);
-                    udao.setPublicKey(id_concrete, unitName, publicKey);
+                    if (!exists)
+                        udao.setPublicKey(id_concrete, unitName, publicKey);
                 }
 
 
@@ -186,17 +221,16 @@ namespace DGAC
             }
         }
 
-
         public void deleteComponent(String ID)
         {
 
         }
 
 
-        private string sendCompileCommandToWorker(string cuid, object remoteObject, string contents, string moduleName, string[] refs, int outFile)
+        private string sendCompileCommandToWorker(string library_path, object remoteObject, string contents, string moduleName, string[] refs, int outFile)
         {
             ServerObject worker = (ServerObject)remoteObject;
-            return worker.compileClass(cuid, contents, moduleName, refs, outFile);
+            return worker.compileClass(library_path, contents, moduleName, refs, outFile);
         }
 
         private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums)
@@ -359,7 +393,6 @@ namespace DGAC
             else
             {
                 Connector.rollBackTransaction(); // if it is ok, commit ...
-
             }
         }
 
@@ -556,19 +589,28 @@ namespace DGAC
          */
 
         public static hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
-                                                       string hash_component_uid,
-                                                       string id_inner,
-                                                       string id_interface,
-                                                       Type[] typeParams
-                                                      )
+                                                  string hash_component_uid,
+                                                  string id_inner,
+                                                  string id_interface,
+                                                  Type[] typeParams
+                                                 )
         {
+
             Connector.openConnection();
             ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
 
+
+           // Console.WriteLine(unit.GlobalRank + ": CREATE SLICE BEGIN !!! " + c.Library_path + " : " + id_inner + " : " + id_interface);
+
             int id_abstract = c.Id_abstract;
 
             database.Unit u = LoaderApp.resolveImpl(unit, c.Id_concrete, id_inner, id_interface);
+
+            if (u == null)
+            {
+                throw new ConcreteComponentNotFoundException(id_abstract, id_inner, c.Id_functor_app);
+            }
 
 
             string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
@@ -577,10 +619,11 @@ namespace DGAC
 
             Assembly a = Assembly.Load(assembly_string);
 
-            Type[] tt = a.GetTypes();
+            // Type[] tt = a.GetTypes();
 
             string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
             Type t = a.GetType(strType);
+
             Type closedT = typeParams.Length > 0 ? t.MakeGenericType(typeParams) : t;
 
             hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
@@ -623,18 +666,70 @@ namespace DGAC
             InnerComponentDAO icdao = new InnerComponentDAO();
             InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
+            int id_functor_app_inner_actual = ic.Id_functor_app;
+            int id_abstract_inner_original = ic.Id_abstract_inner;
+            int id_abstract_inner_actual = ic.Id_abstract_inner;
+            if (!ic.Parameter_top.Equals("") && !(ic.Parameter_top == null))   
+            {
+                bool achei = unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
+                if (!achei)
+                {
+                    achei = unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + unit.Id_functor_app, out id_functor_app_inner_actual);
+                }
+
+/*                if (!achei)
+                {
+                    Console.WriteLine(ic.Parameter_top + " not found in unit.ActualParameters - " + unit.Id_functor_app);
+                    foreach (KeyValuePair<string, int> kkkk in unit.ActualParameters)
+                    {
+                        Console.Write("(" + kkkk.Key + "," + kkkk.Value + ") ,");
+                    }
+                }
+                */
+                int id_functor_app_old = ic.Id_functor_app;
+                ic.Id_functor_app = id_functor_app_inner_actual;
+                AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+                AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_inner_actual);
+                id_abstract_inner_actual = acfa.Id_abstract;
+                ic.Id_abstract_inner = id_abstract_inner_actual;                
+            }
+
+            o.Id_functor_app = ic.Id_functor_app;
+
             IList<Slice> ss = sdao.list2(id_abstract, id_inner);
             IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
             Dictionary<string, int> countUnits = new Dictionary<string, int>();
             IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
+            
+            IDictionary<string,string> unitsMapping = new Dictionary<string, string>();
+
+            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+            IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(id_abstract_inner_original);
+            IList<string> id_units_ordered_actual = acfdao.getIdUnitsOrdered(id_abstract_inner_actual);
+            for (int k = 0; k < id_units_ordered.Count; k++)
+            {
+                unitsMapping.Add(id_units_ordered_actual[k], id_units_ordered[k]);
+            }
+
             foreach (Slice s in ss)  // for different split_replica's. 
             {
+                string id_interface_slice = s.Id_interface_slice;
 
                 String id_interface_of_slice = s.Id_interface;
                 IList<int> ranks;
 
                 // Ache todas as unidades que são id_interface.
                 unit.Units.TryGetValue(id_interface_of_slice, out ranks);
+
+           /*     if (ranks == null)
+                {
+                    Console.WriteLine("UNEXPECTED ERROR ! - ranks is null - id_interface_of_slice = " + id_interface_of_slice + " - In: (createSlice - DGAC.cs)");
+                    Console.WriteLine("id_abstract=" + id_abstract + " - id_inner=" + id_inner);
+                    foreach (KeyValuePair<string, IList<int>> rrr in unit.Units)
+                    {
+                        Console.Write(rrr.Key + ",");
+                    }
+                } */
 
                 // Percorra todas estas unidades e adicione somente aquelas cujos índice para algum enumerador em
                 // eix_inner seja o mesmo.
@@ -657,24 +752,24 @@ namespace DGAC
                     {
 
                         int count = 0;
-                        if (countUnits.ContainsKey(s.Id_interface_slice))
+                        if (countUnits.ContainsKey(id_interface_slice))
                         {
-                            countUnits.TryGetValue(s.Id_interface_slice, out count);
-                            countUnits.Remove(s.Id_interface_slice);
-                            countUnits.Add(s.Id_interface_slice, ++count);
+                            countUnits.TryGetValue(id_interface_slice, out count);
+                            countUnits.Remove(id_interface_slice);
+                            countUnits.Add(id_interface_slice, ++count);
                         }
                         else
-                            countUnits.Add(s.Id_interface_slice, count + 1);
+                            countUnits.Add(id_interface_slice, count + 1);
 
                         IList<int> _ranks;
-                        if (ranksAll.ContainsKey(s.Id_interface_slice))
+                        if (ranksAll.ContainsKey(id_interface_slice))
                         {
-                            ranksAll.TryGetValue(s.Id_interface_slice, out _ranks);
+                            ranksAll.TryGetValue(id_interface_slice, out _ranks);
                         }
                         else
                         {
                             _ranks = new List<int>();
-                            ranksAll.Add(s.Id_interface_slice, _ranks);
+                            ranksAll.Add(id_interface_slice, _ranks);
                         }
                         _ranks.Add(unit.Ranks[r]);
 
@@ -691,20 +786,19 @@ namespace DGAC
                             o.EnumeratorCardinality = enumeratorCardinalityNew;
                         }
                         IList<IDictionary<string, int>> l;
-                        if (enumRanksL.ContainsKey(s.Id_interface_slice))
+                        if (enumRanksL.ContainsKey(id_interface_slice))
                         {
-                            enumRanksL.TryGetValue(s.Id_interface_slice, out l);
+                            enumRanksL.TryGetValue(id_interface_slice, out l);
                         }
                         else
                         {
                             l = new List<IDictionary<string, int>>();
-                            enumRanksL.Add(s.Id_interface_slice, l);
+                            enumRanksL.Add(id_interface_slice, l);
                         }
                         l.Add(rE_);
                     }
                 }
             }
-
 
             // The slice units of id_inner are contained in the processes of ranks in ranksAll.
             IList<int> ranksAllList = new List<int>();
@@ -714,16 +808,25 @@ namespace DGAC
 
             //ranksAll.CopyTo(ranksAllArr, 0);
 
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(ic.Id_abstract_inner);
-
             int pos1 = 0;
             int pos2 = 0;
             int i = 0;
-            foreach (string id_unit_slice in id_units_ordered)
+            foreach (string id_unit_slice_ in id_units_ordered_actual)
             {
                 IList<int> ranks;
-                ranksAll.TryGetValue(id_unit_slice, out ranks);
+
+                string id_unit_slice;
+                bool achei = unitsMapping.TryGetValue(id_unit_slice_, out id_unit_slice);
+                if (!achei)
+                {
+                    Console.WriteLine("UNEXPECTED ERROR : id_unit_slice_ not found in unitsMapping (In: createSlices - DGAC.cs)");
+                }
+
+                achei = ranksAll.TryGetValue(id_unit_slice, out ranks);
+                if (!achei)
+                {
+                    Console.WriteLine("UNEXPECTED ERROR : id_unit_slice not found in ranksAll (In: createSlices - DGAC.cs)");
+                }
 
                 foreach (int r in ranks) ranksAllList.Insert(pos2++, r);
 
@@ -738,7 +841,7 @@ namespace DGAC
                 IList<int> _ranks = new List<int>();
                 for (int k = 0; k < count; k++)
                     _ranks.Add(i++);
-                unitsRanks.Add(id_unit_slice, _ranks);
+                unitsRanks.Add(id_unit_slice_, _ranks);
             }
 
             int[] ranksAllArr = new int[ranksAllList.Count];
@@ -758,6 +861,12 @@ namespace DGAC
             Connector.closeConnection();
 
             o.createSlices();
+
+            if (id_inner.Equals("e"))
+            {
+                Console.WriteLine(unit.GlobalRank + ": CREATE SLICE COMPLETE !!! " + c.Library_path + " : " + id_inner + " : " + id_interface);
+            }
+
 
             return o;
         }
@@ -992,5 +1101,91 @@ namespace DGAC
         }
 
     }//DGAC
+
+    public class ConcreteComponentNotFoundException : Exception
+    {
+        private int id_abstract;
+        private string id_inner;
+        private int id_functor_app_implements;
+
+        IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
+
+        public ConcreteComponentNotFoundException(int id_abstract, string id_inner, int id_functor_app_implements) : base()
+        {
+            this.id_abstract = id_abstract;
+            this.id_inner = id_inner;
+            this.id_functor_app_implements = id_functor_app_implements;
+
+            AbstractComponentFunctorApplicationDAO acfadao= new AbstractComponentFunctorApplicationDAO();
+            SupplyParameterDAO spdao = new SupplyParameterDAO();
+
+            AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_implements);
+
+            // It is a parameter in the subtype. Check if it is supplied in the type.
+            IList<SupplyParameter> spList = spdao.list(acfa.Id_functor_app);
+            foreach (SupplyParameter sp in spList)
+                parsSuper.Add(sp.Id_parameter, sp);
+
+
+        }
+
+        public override string Message
+        {
+            get
+            {
+               return setupMessage(id_abstract, id_inner);
+            }
+        }
+
+        private String setupMessage(int id_abstract, string id_inner)
+        {
+            InnerComponentDAO icdao = new InnerComponentDAO();
+
+            InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
+
+            string cname = buildName(ic.Id_functor_app);
+
+            return "No implementation for " + cname + " was found !";
+        } 
+
+        private string buildName(int id_functor_app)
+        {
+            string cname = "";
+
+            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+            SupplyParameterDAO spdao = new SupplyParameterDAO();
+            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+
+            AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app);
+            AbstractComponentFunctor acf = acfdao.retrieve(acfa.Id_abstract);
+
+            cname += acf.Library_path + "[";
+            
+            IList<SupplyParameter> spList = spdao.list(id_functor_app);
+            foreach (SupplyParameter sp in spList) 
+            {
+                if (sp is SupplyParameterComponent)
+                {
+                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                    cname += spc.Id_parameter + "=" + buildName(spc.Id_functor_app_actual) + ",";                    
+                }
+                else if (sp is SupplyParameterParameter)
+                {
+                    SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                    SupplyParameter sp_actual = null;
+                    parsSuper.TryGetValue(spp.Id_parameter_actual, out sp_actual);
+                    SupplyParameterComponent spc_actual = (SupplyParameterComponent)sp_actual;
+
+                    cname += spp.Id_parameter_actual + "=" + buildName(spc_actual.Id_functor_app_actual) + ",";
+                }
+            }
+            
+
+            cname += "]";
+
+            return cname;
+        }
+    }
+
 }//namespace
 

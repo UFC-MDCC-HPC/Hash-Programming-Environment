@@ -12,8 +12,27 @@ namespace HPE_DGAC_LoadDB
 
        ComponentType xc;
 
-        /* The parameter fileName points to the location of a concrete component.
-         */
+       public override bool componentExists(string hash_component_uid, out HashComponent cRef)
+       {
+           ComponentDAO cdao = new ComponentDAO();
+           Component concC = cdao.retrieve_uid(hash_component_uid);
+           if (concC == null)
+           {
+               cRef = null;
+               return false;
+           }
+           else
+           {
+               cRef = concC;
+               return true;
+           }
+
+       }
+
+       
+       
+       /* The parameter fileName points to the location of a concrete component.
+        */
         public new HashComponent loadComponent(ComponentType c)
         {
             this.xc = c;
@@ -649,5 +668,47 @@ namespace HPE_DGAC_LoadDB
         }
 
 
+
+       internal void updateSources(ComponentType ct, Component c)
+       {
+           UnitDAO udao = new UnitDAO();
+
+           LoadBodyItems(ct.componentInfo);
+
+           IDictionary<string, Unit> units = new Dictionary<string, Unit>();
+
+           AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
+           AbstractComponentFunctorApplication absCapp = absCappdao.retrieve(c.Id_functor_app);
+
+           SourceCodeDAO scdao = new SourceCodeDAO();
+
+           int id_abstract = absCapp.Id_abstract;
+
+           // for each unit ...
+           foreach (UnitType u in unit)
+           {
+               string uref = u.uRef;
+               string iRef = u.iRef;
+               string urefSuper = u.super == null ? null : u.super.uRef;
+
+               InterfaceDAO idao = new InterfaceDAO();
+               Interface i = idao.retrieve(id_abstract, uref);
+               InterfaceType ui = lookForInterface(iRef);
+
+               foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
+               {
+                   SourceCode ss = new SourceCode();
+                   ss.Type_owner = 'u';
+                   ss.Id_owner_container = c.Id_concrete;
+                   ss.Id_owner = uref;
+                   ss.Contents = sft.contents;
+                   ss.File_type = sft.fileType.Equals("exe") ? "exe" : "dll";
+                   ss.File_name = sft.name;
+                   scdao.update(ss);
+               }
+           }
+       }
+
+               //      uu.Source_code = ui.sources[ui.sources.Length - 1].file[0].contents; // Suppose the existence of only one source with only one file...
     }
 }

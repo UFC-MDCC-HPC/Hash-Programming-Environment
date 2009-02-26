@@ -13,10 +13,27 @@ namespace HPE_DGAC_LoadDB
 
         private ComponentType xc;
 
+        public override bool componentExists(string hash_component_uid, out HashComponent cRef)
+        {
+            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+            AbstractComponentFunctor absC = acfdao.retrieveByUID(hash_component_uid);
+            if (absC == null)
+            {
+                cRef = null;
+                return false;
+            }
+            else
+            {
+                cRef = absC;
+                return true;
+            }
+
+        }
+
         public new HashComponent loadComponent(ComponentType c)
         {
             this.xc = c;
-            AbstractComponentFunctor absC = (AbstractComponentFunctor) base.loadComponent(c);
+            AbstractComponentFunctor absC = (AbstractComponentFunctor)base.loadComponent(c);
             loadInnerComponents(absC);
             loadInterfaces(absC);
             loadEnumerators(absC);
@@ -233,6 +250,7 @@ namespace HPE_DGAC_LoadDB
             }
         }
 
+        private IList<ParameterRenaming> parameterRenamingSupper = null;
 
         protected override HashComponent loadComponent_(ComponentType c)
         {
@@ -255,6 +273,8 @@ namespace HPE_DGAC_LoadDB
                 {
                     baseC = c.header.baseType.component;
 
+                    parameterRenamingSupper = baseC.parameter;
+
                     // FOLLOW arrow subtype
                     AbstractComponentFunctor superC = lookForAbstractComponentFunctor(baseC.hash_component_UID);
 
@@ -275,7 +295,12 @@ namespace HPE_DGAC_LoadDB
 
         private void loadInnerComponents(AbstractComponentFunctor absC)
         {
+            IList<InnerComponentType> includeAsInner = new List<InnerComponentType>();
+
             InnerComponentDAO iNewDAO = new InnerComponentDAO();
+
+            importInnerComponentsOfSupper(absC, includeAsInner);
+
             InnerComponentExposedDAO iNewExpDAO = new InnerComponentExposedDAO();
             // For each inner component.
             if (inner != null)
@@ -283,7 +308,7 @@ namespace HPE_DGAC_LoadDB
                 foreach (InnerComponentType c in inner)
                 {
                     // innerAll.Add(c);
-                    if (isNotInSupply(c))
+                    if (isNotInSupply(c) || includeAsInner.Contains(c))
                     {
                         // CREATE INNER COMPONENT
                         InnerComponent iNew = new InnerComponent();
@@ -366,6 +391,167 @@ namespace HPE_DGAC_LoadDB
 
             }
 
+        }
+
+        private void importInnerComponentsOfSupper(AbstractComponentFunctor absC, IList<InnerComponentType> includeAsInner)
+        {
+            InnerComponentDAO iNewDAO = new InnerComponentDAO();
+            IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
+
+            // Inner components of the supertype.
+            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+            SupplyParameterDAO spdao = new SupplyParameterDAO();
+            if (absC.Id_functor_app_supertype > 0)
+            {
+                AbstractComponentFunctorApplication acfa = acfadao.retrieve(absC.Id_functor_app_supertype);
+                
+                // It is a parameter in the subtype. Check if it is supplied in the type.
+                IList<SupplyParameter> spList = spdao.list(acfa.Id_functor_app);
+                foreach (SupplyParameter sp in spList)
+                    parsSuper.Add(sp.Id_parameter, sp);
+
+                IList<InnerComponent> iss = iNewDAO.list(acfa.Id_abstract);
+                foreach (InnerComponent i in iss)
+                {
+                    InnerComponent iNew = new InnerComponent();
+                    if (i.Parameter_top != null)
+                    {
+
+                        SupplyParameter sp = null; 
+                        parsSuper.TryGetValue(i.Parameter_top, out sp);
+
+                        if (sp is SupplyParameterComponent)
+                        {
+                            // 1th CASE: It is not a parameter in the actual component.
+                            // NOT YET TESTED !!!
+                            SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+
+                            AbstractComponentFunctorApplication acfaReplace = acfadao.retrieve(spc.Id_functor_app_actual);
+                            iNew.Id_abstract_inner = acfaReplace.Id_abstract;
+                            iNew.Parameter_top = null;
+                            iNew.Id_abstract_owner = absC.Id_abstract;
+                            iNew.Id_functor_app = liftFunctorApp(acfaReplace.Id_functor_app, parsSuper);
+                            iNew.Id_inner = i.Id_inner;
+                            iNewDAO.insert(iNew);
+                        }
+                        else if (sp is SupplyParameterParameter)
+                        {
+                            // 2nd CASE: It continues to be a parameter in the actual component.
+                            SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+
+                            String varName = null;
+                            foreach (ParameterRenaming pr in parameterRenamingSupper)
+                            {
+                                if (pr.formFieldId.Equals(i.Parameter_top))
+                                {
+                                    varName = pr.varName;
+                                }
+                            }
+
+                            ParameterSupplyType supply = lookForSupplyForVarName(varName);
+                            if (supply != null)
+                            {
+                                InnerComponentType cReplace = lookForInnerComponent(supply.cRef);
+                                if (cReplace != null)
+                                {
+                                    includeAsInner.Add(cReplace);
+                                }
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        // 3rd CASE: 
+                        // NOT YET TESTED !!! 
+                        iNew.Id_abstract_inner = i.Id_abstract_inner;
+                        iNew.Parameter_top = null;
+                        iNew.Id_abstract_owner = absC.Id_abstract;
+                        iNew.Id_functor_app = liftFunctorApp(i.Id_functor_app, parsSuper);
+                        iNew.Id_inner = i.Id_inner;
+                        iNewDAO.insert(iNew);
+                    }
+                }
+            }
+        }
+
+
+
+        // NOT YET TESTED
+        private int liftFunctorApp(int id_functor_app, IDictionary<string, SupplyParameter> parsSuper)
+        {
+            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+            SupplyParameterDAO spdao = new SupplyParameterDAO();
+
+            AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app);
+
+            AbstractComponentFunctorApplication acfaNew = new AbstractComponentFunctorApplication();
+            acfaNew.Id_abstract = acfa.Id_abstract;
+            acfadao.insert(acfaNew);
+
+            IList<SupplyParameter> supplyList = spdao.list(id_functor_app);
+            foreach (SupplyParameter sp in supplyList)
+            {
+                if (sp is SupplyParameterComponent)
+                {
+                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                    SupplyParameterComponent spcNew = new SupplyParameterComponent();
+                    spcNew.Id_functor_app = acfaNew.Id_functor_app;
+                    spcNew.Id_functor_app_actual = liftFunctorApp(spc.Id_functor_app_actual, parsSuper);
+                    spcNew.Id_abstract = spc.Id_abstract;
+                    spcNew.Id_parameter = spc.Id_parameter;
+
+                }
+                else if (sp is SupplyParameterParameter)
+                {
+                    SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                    SupplyParameter spNew = null;
+                    SupplyParameter spSuper = null;
+
+                    parsSuper.TryGetValue(spp.Id_parameter_actual, out spSuper);
+
+                    if (spSuper is SupplyParameterComponent)
+                    {
+                        SupplyParameterComponent spcSuper = (SupplyParameterComponent)spSuper;
+                        spNew = new SupplyParameterComponent();
+                        SupplyParameterComponent spcNew = (SupplyParameterComponent)spNew;
+
+                        spcNew.Id_functor_app = acfaNew.Id_functor_app;
+                        spcNew.Id_abstract = spSuper.Id_abstract;
+                        spcNew.Id_parameter = spp.Id_parameter;
+                        spcNew.Id_functor_app_actual = spSuper.Id_functor_app;
+                    }
+                    else if (spSuper is SupplyParameterParameter)
+                    {
+                        SupplyParameterParameter sppSuper = (SupplyParameterParameter)spSuper;
+                        spNew = new SupplyParameterParameter();
+                        SupplyParameterParameter sppNew = (SupplyParameterParameter)spNew;
+
+                        sppNew.Id_functor_app = acfaNew.Id_functor_app;
+                        sppNew.Id_abstract = spSuper.Id_abstract;
+                        sppNew.Id_parameter = spp.Id_parameter_actual;
+                        sppNew.Id_parameter_actual = sppSuper.Id_parameter_actual;
+                        sppNew.FreeVariable = spp.FreeVariable;
+                    }
+                    spdao.insert(sp);
+                }
+            }
+            return acfaNew.Id_functor_app;
+        }
+
+        private ParameterType lookForParameterByParameterId(string parId)
+        {
+            if (parameter != null)
+            {
+                foreach (ParameterType p in parameter)
+                {
+                    if (p.formFieldId.Equals(parId))
+                    {
+                        return p;
+                    }
+                }
+            }
+            return null;
         }
 
          
@@ -527,6 +713,42 @@ namespace HPE_DGAC_LoadDB
             }
         }
 
+        internal void updateSources(ComponentType ct, AbstractComponentFunctor c)
+        {
+            UnitDAO udao = new UnitDAO();
+
+            LoadBodyItems(ct.componentInfo);
+
+            IDictionary<string, Unit> units = new Dictionary<string, Unit>();
+
+            SourceCodeDAO scdao = new SourceCodeDAO();
+
+            int id_abstract = c.Id_abstract;
+
+            // for each unit ...
+            foreach (UnitType u in unit)
+            {
+                string uref = u.uRef;
+                string iRef = u.iRef;
+                string urefSuper = u.super == null ? null : u.super.uRef;
+
+                InterfaceDAO idao = new InterfaceDAO();
+                Interface i = idao.retrieve(id_abstract, uref);
+                InterfaceType ui = lookForInterface(iRef);
+
+                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
+                {
+                    SourceCode ss = new SourceCode();
+                    ss.Type_owner = 'i';
+                    ss.Id_owner_container = c.Id_abstract;
+                    ss.Id_owner = i.Id_interface;
+                    ss.Contents = sft.contents;
+                    ss.File_type = "dll";
+                    ss.File_name = sft.name;
+                    scdao.update(ss);
+                }
+            }
+        }
  
        /* private Interface lookForUnit(AbstractComponentFunctor c, string uRefS)
         {

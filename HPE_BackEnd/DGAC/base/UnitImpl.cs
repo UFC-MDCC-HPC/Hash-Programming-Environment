@@ -136,22 +136,69 @@ namespace hpe.basic
 
             SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+
+            foreach (KeyValuePair<string, int> kkk in actualParameters)
+            {
+                if (kkk.Key.Contains("#"))
+                {
+                    ActualParameters.Add(kkk);
+                }
+            }
+
             foreach (SupplyParameter sp in spcList)
             {
                 if (sp is SupplyParameterParameter)
                 {
                     SupplyParameterParameter spp = (SupplyParameterParameter)sp;
                     int id_functor_app_actual;
-                    actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
-                    ActualParameters.Add(spp.Id_parameter, id_functor_app_actual);
+                    bool achou = actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+                    if (achou)
+                    {
+                        ActualParameters.Add(spp.Id_parameter, id_functor_app_actual);
+                    }
+                    else
+                    {
+/*                        Console.WriteLine("UNEXPECTED ERROR: " + spp.Id_parameter_actual + " NOT FOUND ! (In: setActualParameters - UnitImpl.cs)");
+                        foreach (KeyValuePair<string, int> yyy in actualParameters)
+                        {
+                            Console.Write("("+ yyy.Key + "," + yyy.Value + ");");
+                        } */
+                    }
                 }
                 else if (sp is SupplyParameterComponent)
                 {
                     SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                     ActualParameters.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+                    traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, ActualParameters);
                 }
-
             }
+        }
+
+        private void traverseParameters(int id_functor_app_top, 
+                                        int id_functor_app, 
+                                        IDictionary<string, int> actualParametersTop, 
+                                        IDictionary<string, int> actualParameters)
+        {
+
+            SupplyParameterDAO spdao = new SupplyParameterDAO();
+            IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+            foreach (SupplyParameter sp in spcList)
+            {
+                if (sp is SupplyParameterParameter)
+                {
+                    SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                    int id_functor_app_actual;
+                    bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+                    actualParameters.Add(spp.Id_parameter + "#" + id_functor_app_top, id_functor_app_actual);
+                }
+                else if (sp is SupplyParameterComponent)
+                {
+                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                    traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParametersTop, actualParameters);
+                }
+            }
+           
+        
         }
 
         public void setUpParameters(DGAC.database.Component c)
@@ -170,6 +217,14 @@ namespace hpe.basic
         {
             get { return enumeratorCardinality; }
             set { enumeratorCardinality = value; }
+        }
+
+        private int id_functor_app;
+
+        public int Id_functor_app
+        {
+            get { return id_functor_app; }
+            set { id_functor_app = value; }
         }
     }
 }

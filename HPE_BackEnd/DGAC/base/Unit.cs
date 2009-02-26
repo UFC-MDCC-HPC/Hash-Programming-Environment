@@ -12,6 +12,7 @@ namespace hpe.basic
 	public interface IUnit
 	{
         int Id_concrete {set; get;}
+        int Id_functor_app { set; get; }
 
         int GlobalRank { set; get; }                        // The rank of the process (application) where the unit is placed on
 

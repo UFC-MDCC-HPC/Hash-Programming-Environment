@@ -93,34 +93,49 @@ namespace DGAC.database
 				// analysing the inner component
 				InnerComponent innerComponent = icDAO.retrieve(acf.Id_abstract, id_inner);
 
-                int Id_functor_app_inner;
+                int Id_functor_app_inner = -1;
                 if (innerComponent.Parameter_top.Length == 0)
                 {
                     Id_functor_app_inner = innerComponent.Id_functor_app;
                 }
                 else
                 {
-                    unit.ActualParameters.TryGetValue(innerComponent.Parameter_top, out Id_functor_app_inner);
+                    bool achei = unit.ActualParameters.TryGetValue(innerComponent.Parameter_top, out Id_functor_app_inner);
+                    if (!achei)
+                    {
+                        achei = unit.ActualParameters.TryGetValue(innerComponent.Parameter_top + "#" + unit.Id_functor_app, out Id_functor_app_inner);
+                    }
+
+                    if (!achei)
+                    {
+                        Console.WriteLine("UNEXPECTED ERROR: " + innerComponent.Parameter_top + "#" + unit.Id_functor_app + " NOT FOUND !!! (In: resolveImpl - LoaderApp.cs)");
+                    }
                 }                                   
 
 				AbstractComponentFunctorApplication acfaRef = acfaDAO.retrieve(Id_functor_app_inner);
 				
 				// get inner component application
-				 if(acfaRef!=null){
-					IList<SupplyParameter> supplyParameters = spDAO.list(acfaRef.Id_functor_app); 
-						
-					foreach(SupplyParameter supplyParameter in supplyParameters){
-					 			
-					 	//if exist a supplied parameter, then check if it is suppllie for a component
-					 	SupplyParameterComponent spc = supplyParameterComponentDAO.retrieve(supplyParameter.Id_parameter,
-					 																		supplyParameter.Id_functor_app);	
-					 	
-						if(spc!=null){	
-					 		acfaRef.addParameter(spc.Id_parameter, spc.Id_functor_app_actual);
-					 	}else{
-					 		SupplyParameterParameter spp = supplyParameterParameterDAO.retrieve(supplyParameter.Id_parameter,
-					 																			supplyParameter.Id_functor_app);															   
-							if(spp!=null){
+                if (acfaRef != null)
+                {
+                    IList<SupplyParameter> supplyParameters = spDAO.list(acfaRef.Id_functor_app);
+
+                    foreach (SupplyParameter supplyParameter in supplyParameters)
+                    {
+
+                        //if exist a supplied parameter, then check if it is suppllie for a component
+                        SupplyParameterComponent spc = supplyParameterComponentDAO.retrieve(supplyParameter.Id_parameter,
+                                                                                            supplyParameter.Id_functor_app);
+
+                        if (spc != null)
+                        {
+                            acfaRef.addParameter(spc.Id_parameter, spc.Id_functor_app_actual);
+                        }
+                        else
+                        {
+                            SupplyParameterParameter spp = supplyParameterParameterDAO.retrieve(supplyParameter.Id_parameter,
+                                                                                                supplyParameter.Id_functor_app);
+                            if (spp != null)
+                            {
 
                                 int id_functor_app_actual_top;
                                 unit.ActualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
@@ -128,45 +143,56 @@ namespace DGAC.database
                                 {
                                     unit.ActualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
                                 }
-                                acfaRef.addParameter(spp.Id_parameter,id_functor_app_actual_top);
+                                acfaRef.addParameter(spp.Id_parameter, id_functor_app_actual_top);
 
-							} // else NOT EXPECTED !!! A parameter is either a supplied component or an enclosing parameter.
-					 					
-					 	}//else
-					 			
-					 }//for each SupplyParameter
-					 		
-					}//acfaRef!=null  // ELSE UNEXPECTED: An inner component withour a functor application.
-					 
+                            } // else NOT EXPECTED !!! A parameter is either a supplied component or an enclosing parameter.
+
+                        }//else
+
+                    }//for each SupplyParameter
+
+                }
+                else //acfaRef!=null  // ELSE UNEXPECTED: An inner component withour a functor application.
+                {
+                    Console.Out.WriteLine("UNEXPECTED ERROR: Inner component without functor application (id_functor_app_inner = " + Id_functor_app_inner + ")");
+                }					 
 					
-                    // AT THIS POINT, the FUNCTOR OF THE INNER COMPONENT, WITH PARAMETERS SUPPLIED, 
-					//    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure getHashComponent
-					//    descrito no artigo.
-					
-					
-					Component componentRef = Resolution.findHashComponent(unit,acfaRef);
-if (componentRef==null) {
-   Console.WriteLine("componentRef nulo !!! - " + id_concrete + " - " + id_inner + " - " + id_interface + " % " + Id_functor_app_inner);
-} 
+                // AT THIS POINT, the FUNCTOR OF THE INNER COMPONENT, WITH PARAMETERS SUPPLIED, 
+				//    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure getHashComponent
+				//    descrito no artigo.				
+				
+				Component componentRef = Resolution.findHashComponent(unit,acfaRef);
 
-                    string id_unit = null; // componentRef.getIdUnit(id_interface);
+                if (componentRef==null) {
+                    Console.WriteLine("componentRef NULL ! acfaRef = " + Id_functor_app_inner);
+                    return null;
+                } 
 
+                string id_unit = null; // componentRef.getIdUnit(id_interface);
 
-                    UnitDAO udao = new UnitDAO();
-                    InterfaceDAO idao = new InterfaceDAO();
-                    foreach (Interface i in idao.list(componentRef.Id_abstract)) {
-                        if (i.Id_interface_super_top.Equals(id_interface)) {
-                            id_unit = i.Id_interface;
-                        }
+                
+
+                UnitDAO udao = new UnitDAO();
+                InterfaceDAO idao = new InterfaceDAO();
+
+                Interface i2 = idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
+
+                foreach (Interface i in idao.list(componentRef.Id_abstract)) {
+                    if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top)) {
+                        id_unit = i.Id_interface;
                     }
+                }
 
-                    Unit u = udao.retrieve(componentRef.Id_concrete, id_unit, 1);
+                Unit u = udao.retrieve(componentRef.Id_concrete, id_unit, 1);
+                if (u == null)
+                {
+                    Console.WriteLine("u is NULL ! acfaRef = " + Id_functor_app_inner + " - (" + componentRef.Id_concrete + "," + id_unit + "," + id_interface + ")");
+                }
 
-					// IList innerParameters = acfaRef.getParametersList();
-					// //find a record in AbstractComponentFunctorApplication which matches with my object parameters
-					// Component componentRef = matchParameters(innerParameters,acfaDAO,spDAO,componentDAO);
-					return u;
-					
+				// IList innerParameters = acfaRef.getParametersList();
+				// //find a record in AbstractComponentFunctorApplication which matches with my object parameters
+				// Component componentRef = matchParameters(innerParameters,acfaDAO,spDAO,componentDAO);
+				return u;
 				
 			}//acf!=null
 			
@@ -215,7 +241,7 @@ if (componentRef==null) {
                 stringCompilationSet.Add(reference);
             }
             
-            string file_name_Interface = buildDllName(acf.Hash_component_UID,interfaceUnit.Assembly_string);
+            string file_name_Interface = buildDllName(acf.Library_path,interfaceUnit.Assembly_string);
             if (!stringCompilationSet.Contains(file_name_Interface))
                 stringCompilationSet.Add(file_name_Interface);
 			
@@ -230,6 +256,7 @@ if (componentRef==null) {
                 info.unitId = unit.Id_unit;
                 info.sourceCode = sc.Contents;
                 info.cuid = component.Hash_component_UID;
+                info.library_path = component.Library_path;
                 info.id = component.Id_concrete;
                 if (sc.File_type.Equals("exe")) {
                    string[] referencesArray_ = new string[referencesArray.Length + libRefs.Count];
@@ -239,7 +266,7 @@ if (componentRef==null) {
                    info.references = referencesArray_;
                 }
                 else {
-                    libRefs.Add(buildDllName(component.Hash_component_UID, info.moduleName.Split('.')[0]));
+                    libRefs.Add(buildDllName(component.Library_path, info.moduleName.Split('.')[0]));
                     info.output_type = Constants.DLL_OUT;
                     info.references = referencesArray;
                 }
@@ -289,6 +316,7 @@ if (componentRef==null) {
                 info.unitId = i.Id_interface;
                 info.sourceCode = sc.Contents;
                 info.cuid = acf1.Hash_component_UID;
+                info.library_path = acf1.Library_path;
                 info.id = acf1.Id_abstract;
                 info.output_type = sc.File_type.Equals("exe") ? Constants.EXE_OUT : Constants.DLL_OUT;
                 referencesSet.Add(info);
@@ -303,9 +331,9 @@ if (componentRef==null) {
     // Provides the DLL name from the assembly string but without the extension.
     // Ther assembly string contains a set of fields, separated by commas. The first fielt contains the name of the
     // assembly.
-    public static string buildDllName(string uid, string assemblyString)
+    public static string buildDllName(string library_path, string assemblyString)
     {
-        return uid + Path.DirectorySeparatorChar + assemblyString.Split(',')[0] /* + ".dll" */;
+        return library_path + Path.DirectorySeparatorChar + assemblyString.Split(',')[0] /* + ".dll" */;
         
     } // get references
 
@@ -325,6 +353,7 @@ public struct InfoCompile{
     public string unitId;
     public string sourceCode;
     public string cuid;
+    public string library_path;
     public int id;
     public int output_type; // Constants.EXE_OUT or Constants.DLL_OUT;
 

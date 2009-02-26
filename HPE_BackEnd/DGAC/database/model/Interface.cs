@@ -141,7 +141,7 @@ public class Interface {
             collectParameters(pars, cSuperApp, out parsSuper);
             Interface iSuper = idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super);
             refs = iSuper.fetchReferences(parsSuper);
-            string refname = LoaderApp.buildDllName(acfsuper.Hash_component_UID, iSuper.Assembly_string);
+            string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
             if (!refs.Contains(refname))
                 refs.Add(refname);
         }
@@ -181,7 +181,7 @@ public class Interface {
                     if (!refs.Contains(r))
                         refs.Add(r);
 
-                string refname = LoaderApp.buildDllName(acfSlice.Hash_component_UID, i.Assembly_string);
+                string refname = LoaderApp.buildDllName(acfSlice.Library_path, i.Assembly_string);
                 if (!refs.Contains(refname))
                     refs.Add(refname);
             }

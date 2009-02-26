@@ -17,10 +17,12 @@ namespace DGAC.database
 	{
 		public static TreeNode generate(IUnit unit, AbstractComponentFunctorApplication acfaRef){
 
+            IDictionary<string, TreeNode> memory = new Dictionary<string, TreeNode>();
+
             IList<AbstractComponentFunctorApplication> lll = new List<AbstractComponentFunctorApplication>();
             lll.Add(acfaRef);
 
-			TreeNode root = root = new TreeNode(lll,null);
+			TreeNode root = new TreeNode(lll,null);
 			ArrayList queue = new ArrayList();
 			queue.Add(root);
             
@@ -32,12 +34,12 @@ namespace DGAC.database
 			while(queue.Count!=0){
 				
 				TreeNode nodeRef = (TreeNode)queue[0];
-                int id_abs_ref = nodeRef.Functor_app.Id_abstract;
+                int id_abstract = nodeRef.Functor_app.Id_abstract;
                 int id_functor_app_actual = nodeRef.Functor_app.Id_functor_app;
                 queue.RemoveAt(0);		
 
-				IList<AbstractComponentFunctorParameter> parameterList = acfpDAO.list(id_abs_ref);
-				foreach(AbstractComponentFunctorParameter acfp in parameterList)
+				IList<AbstractComponentFunctorParameter> parameterList = acfpDAO.list(id_abstract);
+                foreach (AbstractComponentFunctorParameter acfp in parameterList)
 				{
                     string parameter_id = acfp.Id_parameter;
 					AbstractComponentFunctorApplication acfaTop = acfaDAO.retrieve(acfp.Bounds_of);
@@ -59,16 +61,22 @@ namespace DGAC.database
                             unit.ActualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
                         }
                         acfaActual = acfaDAO.retrieve(Id_functor_app_actual);
-                        
-
                     }
 
                     IList<AbstractComponentFunctorApplication> generalizeSteps = buildGeneralizationSteps(acfaActual, acfaTop);
 
-                    TreeNode node = new TreeNode(generalizeSteps, nodeRef);
-					node.Parameter_id = acfp.Id_parameter;
-					queue.Add(node);
-					nodeRef.addChild(node);
+                    TreeNode node = null;
+
+                    memory.TryGetValue(acfp.Id_parameter, out node);
+
+                    if (node == null)
+                    {
+                        node = new TreeNode(generalizeSteps, nodeRef);
+                        node.Parameter_id = acfp.Id_parameter;
+                        queue.Add(node);
+                        memory.Add(acfp.Id_parameter, node);
+                    }
+                    nodeRef.addChild(node);
 				}
 			}                                                    
 			

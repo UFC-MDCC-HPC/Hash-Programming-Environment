@@ -33,7 +33,7 @@ namespace DGAC
 		         *classe Constants 
 		         */ 
 		        [MethodImpl(MethodImplOptions.Synchronized)]
-		        public string compileClass(string cuid, string contents, string moduleName, string[] references, int outFile){
+		        public string compileClass(string library_path, string contents, string moduleName, string[] references, int outFile){
                     string publicKeyToken = null;
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
                     Console.WriteLine("Compiling " + moduleName);
@@ -45,7 +45,7 @@ namespace DGAC
                       //compile, generate dll 
 					  CommandLineUtil.compile_source(contents, moduleName, references);
 					  //installing on local GAC
-                      CommandLineUtil.gacutil_install(cuid, moduleNameWithoutExtension, 1);
+                      CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1);
 			        }
                     // Erase temporary files.
                     // CommandLineUtil.clean(moduleNameWithoutExtension);

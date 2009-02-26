@@ -11,7 +11,7 @@ namespace hpe.kinds
 {
 
 
-    public interface IDataKind : IUnit
+    public interface IDataStructureKind : IUnit
 	{
 	}
 }

@@ -45,10 +45,10 @@ namespace Back_End_WS
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
-                    if (c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
-                        dgac.registerAbstractComponent(c);
-                    else
+                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
                         dgac.registerConcreteComponent(c);
+                    else
+                        dgac.registerAbstractComponent(c);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);

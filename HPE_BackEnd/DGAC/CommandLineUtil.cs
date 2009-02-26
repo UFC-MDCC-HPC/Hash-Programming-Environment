@@ -74,14 +74,18 @@ public class CommandLineUtil{
 
       string nameWithoutExtension = name.Split('.')[0];
 
-      runCommand(Constants.key_generator, "-k " + Constants.PATH_TEMP_WORKER + nameWithoutExtension + ".snk");
+      String snkFileName = Constants.PATH_TEMP_WORKER + nameWithoutExtension + ".snk";
 
-      FileStream f = File.Open(Constants.PATH_TEMP_WORKER + nameWithoutExtension + ".snk",FileMode.Open);
+      if (!File.Exists(snkFileName))
+      {
+          runCommand(Constants.key_generator, "-k " + snkFileName);
+      }
+
+      FileStream f = File.Open(snkFileName, FileMode.Open);
 
       StrongNameKeyPair rr = new StrongNameKeyPair(f);
-      string skp = BitConverter.ToString(rr.PublicKey);      
+      string skp = BitConverter.ToString(rr.PublicKey);
       f.Close();
-      
 
      return skp.Replace("-","");
   }
@@ -113,7 +117,7 @@ public class CommandLineUtil{
 
           createFile(contents, moduleName);
 
-          runCommand(Constants.cs_compiler, "-r:mpibasicimpl\\IMPIBasicImpl.dll /noconfig /define:DEBUG;TRACE /debug+ /debug:full /optimize- -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references + " -r:MPI.NET" + Path.DirectorySeparatorChar + "MPI.dll");
+          runCommand(Constants.cs_compiler, "-r:jefferson.environment.impl.MPIBasicImpl\\IMPIBasicImpl.dll /noconfig /define:DEBUG;TRACE /debug+ /debug:full /optimize- -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references + " -r:MPI.NET" + Path.DirectorySeparatorChar + "MPI.dll");
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }
@@ -134,7 +138,7 @@ public class CommandLineUtil{
   /// <returns>bool</returns>
   public static bool gacutil_install(string cuid, string assembly, int gac){
 
-      runCommand(Constants.gac_util, "-u " + assembly);
+      // runCommand(Constants.gac_util, "-u " + assembly);
       runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid);
 
       
