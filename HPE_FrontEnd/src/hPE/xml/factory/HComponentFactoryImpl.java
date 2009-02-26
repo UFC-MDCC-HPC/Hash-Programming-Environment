@@ -340,6 +340,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 
 			HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false);
+
+			if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
+				innerC.setRemoteURI(locationUri);
+				
+			}
 			
 			if (copyToCache)
 				copyProjectToCache(innerC, version);
@@ -1302,7 +1307,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (ic.isParameter() && ic.getSupplied() == null) {
 				String formFieldId = null;
 				String cRef = null;
-				boolean isExistential = false;
 				String varName = null;
 
 				// SETUP VARIABLES

@@ -44,7 +44,7 @@ public class HPELocationEntry {
 			
 			String urlWS = locationSite.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
 	
-			URL url = new URL(urlWS);
+			URL url = new URL(urlWS);	
 			
 			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
 			

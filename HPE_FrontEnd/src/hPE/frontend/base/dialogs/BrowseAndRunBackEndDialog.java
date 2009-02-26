@@ -108,7 +108,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		
 	}
 
-	private static String EDIT_LABEL = "manage ...";
+	private static String EDIT_LABEL = "manage ...";  //  @jve:decl-index=0:
 	
 	private void loadBackEndsInfo() {
 		// TODO Auto-generated method stub
@@ -143,22 +143,30 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 							jButtonDeploy.setEnabled(false);
 						}
 						else {
-							try {
-								dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocalLocation(),dcListAbstract,dcListConcrete);
-							} catch (IOException e1) {
-								JOptionPane.showMessageDialog(rootPane, e1.getMessage());
-							} catch (ServiceException e1) {
-								JOptionPane.showMessageDialog(rootPane, e1.getMessage());
-							}							
+							dcList = new ArrayList<DeployedComponentInfo>();
 						    browseUpdate();
+//							loadComponents(b);
 							jButtonDeploy.setEnabled(c != null);
 						}
 					}
 
+
 				}
 		);
 	}
-	
+
+	private void loadComponents(BackEndLocationInfo b) {
+		try {
+			dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocalLocation(),dcListAbstract,dcListConcrete);
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+		} catch (ServiceException e1) {
+			JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+		}							
+	    browseUpdate();
+		
+	}
+
 	/**
 	 * This method initializes jContentPane
 	 * 
@@ -199,6 +207,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jContentPane.add(getJScrollPaneParameter(), null);
 			jContentPane.add(getJScrollPaneBrowse(), null);
 			jContentPane.add(jLabel1Parameters, null);
+			jContentPane.add(getJButtonLoad(), null);
 		}
 		return jContentPane;
 	}
@@ -238,6 +247,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JScrollPane jScrollPaneParameter = null;
 	private JTree jTreeParameter = null;
 	private JLabel jLabel1Parameters = null;
+	private JButton jButtonLoad = null;
 	/**
 	 * This method initializes jComboBoxBackEnd	
 	 * 	
@@ -612,8 +622,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
 			
 			String result = backend.deployHashComponent(t);
-			
-			JOptionPane.showMessageDialog(rootPane, result);
+			if (result != null)
+			    JOptionPane.showMessageDialog(rootPane, result);
+			else
+				JOptionPane.showMessageDialog(rootPane, "The component " + c.getComponentName() + " has succesfully been deployed !");
 			
 			this.browseUpdate();
 			
@@ -661,6 +673,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			if (deployed.enumerators.length > 0) {
 				SetEnumeratorsDialog dialog = new SetEnumeratorsDialog(null, deployed.enumerators, deployed.enumValuation);
 				dialog.setAlwaysOnTop(true);
+				dialog.setModal(true);
 				dialog.setVisible(true);
 				canceled = dialog.getCanceled();
 				deployed.enumValuation = dialog.getEnumValuation();
@@ -1028,6 +1041,44 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			model.setRoot(null);
 		}
 		return jTreeParameter;
+	}
+
+	/**
+	 * This method initializes jButtonLoad	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButtonLoad() {
+		if (jButtonLoad == null) {
+			jButtonLoad = new JButton();
+			jButtonLoad.setBounds(new Rectangle(660, 20, 66, 26));
+			jButtonLoad.setText("Load");
+			jButtonLoad.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					JComboBox jComboBoxBackEnd = getJComboBoxBackEnd();
+					BackEndLocationInfo b = (BackEndLocationInfo) jComboBoxBackEnd.getSelectedItem();							
+					if (b.name.equals(EDIT_LABEL)) {
+						dcList = new ArrayList<DeployedComponentInfo>();
+					    browseUpdate();
+						DeployComponentDialog dialog = new DeployComponentDialog(null);
+						dialog.setAlwaysOnTop(true);
+						dialog.setVisible(true);				
+						jButtonDeploy.setEnabled(false);
+					} else if (b.name.equals("")) {
+						dcList = new ArrayList<DeployedComponentInfo>();
+					    browseUpdate();
+						jButtonDeploy.setEnabled(false);
+					}
+					else {
+						dcList = new ArrayList<DeployedComponentInfo>();
+					    browseUpdate();
+						loadComponents(b);
+						jButtonDeploy.setEnabled(c != null);
+					}
+				}
+			});
+		}
+		return jButtonLoad;
 	}
 
 

@@ -252,13 +252,16 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         }
         
         programText += "\n} \n\n"; // end constructor body;
+        
+        HComponent c = (HComponent)i.getConfiguration();
+
+        programText += "public static string UID = \"" + c.getHashComponentUID() + "\";\n\n";
 
         programText += "override public void createSlices() {\n"; // begin constructor signature
 
         programText += tabs(1) + "base.createSlices();\n";
         
-        HComponent c = (HComponent)i.getConfiguration();
-    	List<HInterfaceSlice> ss = getSorted(theSlices);
+    	List<HInterfaceSlice> ss = getSorted(theSlices);	
     	
 	    for (HInterfaceSlice slice: ss) {
 	    	HPort portOfTheSlice = slice.getMyPort();
@@ -293,7 +296,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	String typeParams = "new Type[] {" + paramsStr + "}";
 		    	
 		    	String cast = "(" + typeName + ")";
-		    	programText += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, \"" + c.getHashComponentUID() + "\",\"" + unit_id + "\",\"" + unit_slice_id + "\"," + typeParams + ");\n";
+		    	programText += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, UID,\"" + unit_id + "\",\"" + unit_slice_id + "\"," + typeParams + ");\n";
 	    	} 
 	    }			
         
@@ -417,9 +420,9 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		public int compare(HInterfaceSlice o1, HInterfaceSlice o2) {
 			HComponent c1 = (HComponent)o1.getConfiguration();
 			HComponent c2 = (HComponent)o2.getConfiguration();
-			if (c1.isTransitiveInnerComponentIf(c2)) {
+			if (c1.isTransitiveInnerComponentOf(c2)) {
 				return +1;
-			} else if (c2.isTransitiveInnerComponentIf(c1)) {
+			} else if (c2.isTransitiveInnerComponentOf(c1)) {
 				return -1;
 			} else			 
 			    return c1.hashCode() < c2.hashCode() ? +1 : -1;

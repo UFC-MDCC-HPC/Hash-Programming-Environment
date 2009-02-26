@@ -1707,8 +1707,11 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	    	c1.setVariableName(newVarName);
     	    	c2.setVariableName(newVarName); 
    	    } else {
-    	    	c2.setVariableName(c1.getVariableName());
-    	    	c2.parameterIdentifier.putAll(c1.parameterIdentifier);
+   	    	if (c2.getVariableName().equals("?")) {
+   	    		if (!c1.getVariableName().equals("?"))
+   	    			c2.setVariableName(c1.getVariableName());	
+   	    	} 
+	    	c2.parameterIdentifier.putAll(c1.parameterIdentifier);
    	    }
             
         HComponent im_c1inc2 = (HComponent)c2.getSubTypeImageOf(c1);
@@ -2125,7 +2128,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	       	  if ((c.isParameter() && c.getSupplied()==null) && c.getVariableName().equals(varName)) {        		  
                    if (model.isSubTypeOf(c)) {
 //	                   	if ((model.isParameter()  || !model.isParameter())
-	         		           if (!componentsToSupply.contains(c)) componentsToSupply.add(c);
+	         		           if (!componentsToSupply.contains(c)) 
+	         		        	   componentsToSupply.add(c);
 	//                   	else {
 	  // 	                	JOptionPane.showMessageDialog(null, "Parameter identifiers does not match !", "Error in Supply Component Action", JOptionPane.ERROR_MESSAGE);
 	   	//                	return null;
@@ -3415,14 +3419,15 @@ public String getHashComponentUID() {
     return this.hash_component_UID;
 }
 
-public boolean isTransitiveInnerComponentIf(HComponent c2) {
+public boolean isTransitiveInnerComponentOf(HComponent c2) {
     
-	if (configurations == null) configurations = new ArrayList<HComponent>();
+	if (configurations == null) 
+		configurations = new ArrayList<HComponent>();
 	
 	HComponent c = this;
 	if (!c.isTopConfiguration()) {
 	    for (HComponent c_ : configurations) {
-		    if (c_==c2 || c_.isTransitiveInnerComponentIf(c2)) return true;
+		    if (c_==c2 || c_.isTransitiveInnerComponentOf(c2)) return true;
 	    }
 	} 
 	
