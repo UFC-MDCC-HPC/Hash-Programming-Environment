@@ -448,14 +448,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 		for (HComponent c : this.getComponents()) { 
 			if (!c.isSuperType() && (c.getExposed() || (!c.getExposed() && c.IsExposedFalsifiedContextTop()))) {
-			//	if (!c.isDirectSonOfTheTopConfiguration()) {
-			//	    if (!cs.contains(c)) cs.add(c);
-			//	} else {
 				if (!cs.contains(c)) cs.add(c);
 				for (HComponent c_ : c.getExposedComponents()) {
 					if (!cs.contains(c_)) cs.add(c_);	
 				}
-			//	}
 			} else {
 				for (HComponent c_ : c.getExposedComponents()) {
 					if (!cs.contains(c_)) cs.add(c_);	
@@ -465,6 +461,36 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 		return cs;
 	}
+	
+	public List<HComponent> getInnerComponents() {
+	   return getInnerComponents(this);
+	}
+	
+	public List<HComponent> getInnerComponents(HComponent context) {
+		
+		List<HComponent> cs = new ArrayList<HComponent>();
+		
+		for (HComponent c : this.getComponents()) { 
+			if (!c.isSuperType() && this.getWhoItImplements() != c && (c.getExposed() || (!c.getExposed() && (c.IsExposedFalsifiedContext(context)) || context.getComponents().contains(c) ))) {
+				if (!cs.contains(c)) 
+					cs.add(c);
+				for (HComponent c_ : c.getInnerComponents(context)) {
+					if (cs.contains(c_)) 
+						cs.remove(c_);
+					cs.add(c_);
+				}
+			} else { /* if (c.isSuperType() || this.getWhoItImplements() == c){ */
+				for (HComponent c_ : c.getInnerComponents(c)) {
+					if (cs.contains(c_))
+						cs.remove(c_);
+					cs.add(c_);	
+				}
+			}
+		}
+		
+		return cs;
+	}
+
 	
 	/**
 	 */
@@ -2985,10 +3011,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
 	       try {
 			updatePorts();
-		} catch (HPEAbortException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		   } catch (HPEAbortException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		   }
 	       
 	   	   listeners.firePropertyChange(this.PROPERTY_COLOR, null, name); //$NON-NLS-2$//$NON-NLS-1$
 

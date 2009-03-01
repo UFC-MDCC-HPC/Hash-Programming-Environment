@@ -13,6 +13,8 @@ import hPE.util.Triple;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -805,6 +807,37 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		}
 		return vIn;
 	}
+
+	public List<HInterfaceSlice> getSortedSlices(List<HInterfaceSlice> list) {
+		
+		Comparator<HInterfaceSlice> comparator = new CompareSliceByDependence(this.getConfiguration().getInnerComponents());
+		
+		Collections.sort(list, comparator) ;
+		
+		return list;
+	}
 	
+		
+	private class CompareSliceByDependence implements Comparator<HInterfaceSlice> {
+
+		private List<HComponent> cs = null;
+		
+		public CompareSliceByDependence(List<HComponent> cs) {
+			this.cs = cs;
+		}
+		
+		@Override
+		public int compare(HInterfaceSlice o1, HInterfaceSlice o2) {
+			HComponent c1 = (HComponent)o1.getConfiguration();
+			HComponent c2 = (HComponent)o2.getConfiguration();
+			
+			if (cs.indexOf(c1)>=(cs.indexOf(c2))) {
+				return +1;
+			} else {
+				return -1;
+			}
+		}
+		
+	}
 	
 }

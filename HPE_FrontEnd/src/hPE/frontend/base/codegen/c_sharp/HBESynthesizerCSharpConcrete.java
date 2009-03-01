@@ -232,7 +232,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 				    programText += tabs(1) + "set {\n";
 				    programText += tabs(2) + "this." + sliceName + " = value;\n";				    
 				    if (tt.containsKey(sliceName)) {
-					    for (HInterfaceSlice ss : tt.get(sliceName)) {
+					    for (HInterfaceSlice ss : i.getSortedSlices(tt.get(sliceName))) {
 					    	programText += tabs(2) + ss.getName() + "." + firstUpper(portOfTheSlice.getOriginalNameOf2(ss)) + " = value;\n";
 					    }				    
 				    }
@@ -261,7 +261,14 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
         programText += tabs(1) + "base.createSlices();\n";
         
-    	List<HInterfaceSlice> ss = getSorted(theSlices);	
+        
+		List<HInterfaceSlice> ss0 = new ArrayList<HInterfaceSlice>();
+        
+		for (List<HInterfaceSlice> ss_: theSlices.values()) {
+			ss0.addAll(ss_);
+		}
+        
+    	List<HInterfaceSlice> ss = i.getSortedSlices(ss0);	
     	
 	    for (HInterfaceSlice slice: ss) {
 	    	HPort portOfTheSlice = slice.getMyPort();
@@ -414,35 +421,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	       + Path.SEPARATOR + moduleName + ".dll";
 	}
 
-	private class CompareSliceByDependence implements Comparator<HInterfaceSlice> {
-
-		@Override
-		public int compare(HInterfaceSlice o1, HInterfaceSlice o2) {
-			HComponent c1 = (HComponent)o1.getConfiguration();
-			HComponent c2 = (HComponent)o2.getConfiguration();
-			if (c1.isTransitiveInnerComponentOf(c2)) {
-				return +1;
-			} else if (c2.isTransitiveInnerComponentOf(c1)) {
-				return -1;
-			} else			 
-			    return c1.hashCode() < c2.hashCode() ? +1 : -1;
-		}
-		
-	}
 	
-	private List<HInterfaceSlice> getSorted(Map<String, List<HInterfaceSlice>> theSlices2) {
-		List<HInterfaceSlice> ss = new ArrayList<HInterfaceSlice>();
-		
-		for (List<HInterfaceSlice> ss_: theSlices.values()) {
-			ss.addAll(ss_);
-		}
-		
-		Comparator<HInterfaceSlice> comparator = new CompareSliceByDependence();
-		
-		Collections.sort(ss, comparator) ;
-		
-		return ss;
-	}
 
 
 

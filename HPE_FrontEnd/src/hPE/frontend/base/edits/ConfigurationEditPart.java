@@ -103,8 +103,6 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		for (HComponent c : ((ModelType) getModel()).getExposedComponents()) 
 			if (!children.contains(c)) 
 				children.add(c);
-		
-		
 
 		for (HInterface an_interface : ((ModelType) getModel()).getInterfaces()) {
 			if (!(an_interface.getHidden())) { 
