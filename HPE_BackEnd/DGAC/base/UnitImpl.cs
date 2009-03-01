@@ -55,7 +55,17 @@ namespace hpe.basic
         public int GlobalRank { set { this.myGlobalRank = value; } get { return myGlobalRank; } }                        // The rank of the process (application) where the unit is placed on
 
         private int[] myRanks = null;
-        public int[] Ranks { set { this.myRanks = value; } get { return myRanks; } }                           // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
+        public int[] Ranks
+        {
+            set
+            {
+                this.myRanks = value;
+                Array.Sort<int>(this.myRanks);
+            }
+            get { return myRanks; }
+        }                           
+        
+        // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
 
         private IDictionary<string, IList<int>> myUnits = null;
         public IDictionary<string, IList<int>> Units { set { this.myUnits = value; } get { return myUnits; } }
