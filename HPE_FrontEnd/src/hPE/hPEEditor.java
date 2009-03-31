@@ -69,6 +69,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gef.ContextMenuProvider;
@@ -240,6 +241,11 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 	    factory.saveComponent(c,file,monitor);	
 	    
 	    // NAntBuilder.save(c,monitor);
+		 NAntBuilder builder = NAntBuilder.instance;
+   	     builder.setComponent(c);
+		 builder.setMonitor(monitor);
+		 (new Thread(builder)).start();
+	   
 
 	    getCommandStack().markSaveLocation();			
 	}

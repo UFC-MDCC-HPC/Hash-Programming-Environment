@@ -157,7 +157,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 
 	private void loadComponents(BackEndLocationInfo b) {
 		try {
-			dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocalLocation(),dcListAbstract,dcListConcrete);
+			dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocalLocation(),dcListAbstract,dcListConcrete,rootPane);
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(rootPane, e1.getMessage());
 		} catch (ServiceException e1) {

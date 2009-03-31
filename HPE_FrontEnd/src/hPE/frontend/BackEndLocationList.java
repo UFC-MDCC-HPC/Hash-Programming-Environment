@@ -18,6 +18,7 @@ import hPE.frontend.backend.locations.impl.DocumentRootImpl;
 import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
 import hPE.frontend.backend.locations.util.LocationsResourceImpl;
 
+import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
 import org.eclipse.core.resources.IFile;
@@ -192,7 +194,7 @@ public class BackEndLocationList {
 		public DeployedComponentInfoParameter[] parameter = null;
 	}
 	
-	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b, String rootPath, Map<Integer, DeployedComponentInfo> dcListAbstract, Map<Integer, DeployedComponentInfo> dcListConcrete) throws IOException, ServiceException {
+	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b, String rootPath, Map<Integer, DeployedComponentInfo> dcListAbstract, Map<Integer, DeployedComponentInfo> dcListConcrete, Component rootPane) throws IOException, ServiceException {
 	
 		List<DeployedComponentInfo> l = new ArrayList<DeployedComponentInfo>();
 		
@@ -220,25 +222,30 @@ public class BackEndLocationList {
 		    EnvironmentType env = loadEnvironment(data, rootPath);	
 						
 		    List<DeployedComponentInfoType> dcList = env.getDeployed();
-		    dcListAbstract.clear();
-		    dcListConcrete.clear();
+		    if (dcList.size() > 0) {
 		    
-		    for (DeployedComponentInfoType dc : dcList) {
-		    	boolean isAbstract = dc.isAbstract();
-		    	String[] package_ = (String[]) dc.getPackage().toArray();
-		    	String name_ = dc.getName();
-		    	int id_ = dc.getCid();;
-		    	int idBase_ = dc.isSetCidBase() ? dc.getCidBase() : -1;
-		    	String uri_ = dc.getLocationURI();
-		    	int kind_ = loadKind(dc.getKind());
-		    	String[] enumerators_ = (String[]) dc.getEnumerator().toArray();
-		    	DeployedComponentInfoParameter[] parameters_ = loadParameters(dc.getParameter());
-		    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,idBase_,uri_,kind_,enumerators_,parameters_); 
-		        l.add(dci);		    	
-		    	if (isAbstract) 
-		    		dcListAbstract.put(new Integer(id_), dci);
-		    	else
-		    		dcListConcrete.put(new Integer(id_), dci);
+			    dcListAbstract.clear();
+			    dcListConcrete.clear();
+			    
+			    for (DeployedComponentInfoType dc : dcList) {
+			    	boolean isAbstract = dc.isAbstract();
+			    	String[] package_ = (String[]) dc.getPackage().toArray();
+			    	String name_ = dc.getName();
+			    	int id_ = dc.getCid();;
+			    	int idBase_ = dc.isSetCidBase() ? dc.getCidBase() : -1;
+			    	String uri_ = dc.getLocationURI();
+			    	int kind_ = loadKind(dc.getKind());
+			    	String[] enumerators_ = (String[]) dc.getEnumerator().toArray();
+			    	DeployedComponentInfoParameter[] parameters_ = loadParameters(dc.getParameter());
+			    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,idBase_,uri_,kind_,enumerators_,parameters_); 
+			        l.add(dci);		    	
+			    	if (isAbstract) 
+			    		dcListAbstract.put(new Integer(id_), dci);
+			    	else
+			    		dcListConcrete.put(new Integer(id_), dci);
+			    }
+		    } else {
+		    	JOptionPane.showMessageDialog(rootPane, "No component is deployed at " + b.name, "Deployment", JOptionPane.INFORMATION_MESSAGE);	
 		    }
 		
 		} catch (IOException e) {
