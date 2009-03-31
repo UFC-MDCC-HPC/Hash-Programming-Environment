@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.editors">
+         point="org.eclipse.ui.editors"> 
       <editor
             class="hPE.hPEEditor"
             contributorClass="hPE.HPEEditorActionBarContributor"
