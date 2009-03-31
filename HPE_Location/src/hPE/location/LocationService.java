@@ -26,7 +26,7 @@ public class LocationService implements HLocationService, Subject {
 		this.parser = Parser.getInstance(); 
 		this.parser.setLS(this);
 		setPackages(this.parser.getLocationXml());
-		if (packages == null ) System.exit(1);
+		if (packages == null ) return;
 		attach(this.parser);
 		verifyConsistency(this.packages);
 	}
