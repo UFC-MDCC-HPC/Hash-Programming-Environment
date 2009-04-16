@@ -9,7 +9,6 @@ public class Constants {
 
     private static string getPropertiesFilePath()
     {
-        string[] args = Environment.GetCommandLineArgs();
         string properties_file_path = getArgVal("--properties");
         if (properties_file_path == null)
         {
@@ -36,6 +35,7 @@ public class Constants {
     public static string key_generator = FileUtil.readConstant("key_generator");
     public static string gac_util = FileUtil.readConstant("gac_util");
     public static string mpi_run = FileUtil.readConstant("mpi_run");
+    public static string connectionString = FileUtil.readConstant("connection_string");
 
     public static string getArgVal(string argId)
     {

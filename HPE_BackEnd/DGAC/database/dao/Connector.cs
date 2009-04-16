@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
+using DGAC.utils;
 
 
 namespace DGAC.database{
@@ -10,13 +11,13 @@ public class Connector {
  
  	 
 	 public static IDbConnection getConnection(){
-	 	string connectionString =
-          "Server=" + server + ";" +
+	 	string connectionString = Constants.connectionString;
+/*          "Server=" + server + ";" +
           "Database=" + database + ";" +
           "User ID=" + user + ";" +
           "Password=" + password + ";"  +
           "Pooling=" + pooling + ";" +
-          (port != null ? "Port=5001;" : "");
+          (port != null ? "Port=5001;" : ""); */
        IDbConnection dbcon;
        dbcon = new MySqlConnection(connectionString);
        return dbcon;
