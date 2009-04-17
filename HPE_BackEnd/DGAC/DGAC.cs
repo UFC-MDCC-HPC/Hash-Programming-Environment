@@ -11,6 +11,7 @@ using HPE_DGAC_LoadDB;
 using hpe.basic;
 using DGAC.utils;
 using DGAC.database;
+using System.Data;
 
 namespace DGAC
 {
@@ -41,8 +42,6 @@ namespace DGAC
 
         public BackEnd()
         {
-
-
             this.hosts = FileUtil.readProperty("host");
 
             //creating the channel
@@ -72,7 +71,6 @@ namespace DGAC
             }
 
             Console.WriteLine("DGAC is up and running.");
-
         }
 
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
@@ -233,14 +231,23 @@ namespace DGAC
             return worker.compileClass(library_path, contents, moduleName, refs, outFile);
         }
 
-        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums)
+        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id)
         {
             ServerObject worker = (ServerObject)remoteObject;
-            worker.runClass(files, enums);
+            worker.runClass(files, enums, session_id);
         }
+
+        public static int session_id = -1;
 
         public static void DGACInit(string hash_component_uid, string my_id_unit, hpe.basic.IUnit pmain, string[] args)
         {
+
+            session_id = getSessionID(args);
+
+            if (session_id >= 0)
+                RedirectOutput(session_id);
+            else
+                open_log_out = false;
 
             openConnection();
 
@@ -351,6 +358,65 @@ namespace DGAC
             closeConnection(true);
         }
 
+        private static int getSessionID(string[] args)
+        {
+            int step = 0;
+            foreach (string a in args)
+            {
+                if (step == 0 && a.Equals("--session"))
+                    step++;
+                else if (step == 1)
+                    return Int32.Parse(a);
+            }
+            return -1;
+        }
+
+        public void DGACFinalize()
+        {
+            Connector.closeConnection();
+            if (open_log_out)
+                log_out.Close();
+
+        }
+
+        private static StreamWriter log_out = null;
+        private static string output_log_filename = "output";
+        private static bool open_log_out = true;
+
+        private static readonly DateTime Jan1st1970 = new DateTime
+            (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static long currentTimeMillis()
+        {
+            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+        }
+
+        private static void RedirectOutput(int session_id)
+        {
+            try
+            {
+                string filename = Constants.PATH_BIN + output_log_filename + "." + session_id + "." + currentTimeMillis();
+                if (!File.Exists(filename))
+                {
+                    FileStream f = File.Create(filename);
+                    f.Close();
+                }
+                log_out = new StreamWriter(filename);
+                log_out.AutoFlush = true;                
+            }
+            catch (IOException exc)
+            {
+                Console.WriteLine(exc.Message + "Cannot open output file.");
+                open_log_out = false;
+                return;
+            }
+
+            // Direct standard output to the log file. 
+            if (open_log_out) 
+                Console.SetOut(log_out);
+               
+        }
+
         private static int globalRank(string[] args)
         {
             int step = 0;
@@ -363,6 +429,8 @@ namespace DGAC
             }
             return -1;
         }
+
+
 
         private static int enumeratorCardinality(string[] args, string var)
         {
@@ -434,6 +502,8 @@ namespace DGAC
             IList<SliceExposed> lse = null;
             SliceExposed se = null;
             string id_inner_container = id_inner;
+            IList<string> id_inner_container_list = new List<string>();
+            int count = 0;
             if (ic.Transitive)
             {
                 SliceExposedDAO sedao = new SliceExposedDAO();
@@ -442,30 +512,49 @@ namespace DGAC
                 foreach (SliceExposed se_ in lse)
                 {
                     id_inner_container = se_.Id_inner_owner;
+                    id_inner_container_list.Add(id_inner_container);
+
                     se = se_;
                     EnumeratorMapping em_ = emdao.retrieve(id_abstract, id_inner_container, re_Key);
                     if (em_ != null)
                     {
                         em = em_;
-                        break;
+                        //   break;
                     }
                 }
-
             }
-            else {
+            else
+            {
                 em = emdao.retrieve(id_abstract, id_inner_container, re_Key);
             }
+
+            if (id_inner_container_list.Count == 0)
+            {
+                id_inner_container_list.Add(id_inner_container);
+            }
+
 
             string re_Key_before = re_Key;
 
             if (em != null)
                 re_Key = em.Id_enumerator_inner;
 
-            int cc = re_Key.IndexOf(id_inner_container + ".");
-            if (cc >= 0)
-                re_Key = re_Key.Substring(cc + (id_inner_container + ".").Length);
-            else
-                throw new Exception("prefix not found ...");
+            int cc = -1;
+            foreach (string id_inner_container_ in id_inner_container_list)
+            {
+                cc = re_Key.IndexOf(id_inner_container_ + ".");
+                if (cc >= 0)
+                {
+                    id_inner_container = id_inner_container_;
+                    re_Key = re_Key.Substring(cc + (id_inner_container + ".").Length);
+                    break;
+                }
+            }
+            if (cc < 0)
+            {
+                throw new Exception("prefix not found: ");
+            }
+
 
             IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
 
@@ -544,7 +633,7 @@ namespace DGAC
 
             if (instanceCache == null || !instanceCache.ContainsKey(library_path))
             {
-                Connector.openConnection();
+      //          Connector.openConnection();
 
                 InterfaceDAO idao = new InterfaceDAO();
                 Interface i = idao.retrieve_libraryPath(library_path);
@@ -557,7 +646,7 @@ namespace DGAC
                 UnitDAO udao = new UnitDAO();
                 database.Unit u = udao.retrieve(c.Id_concrete, i.Id_interface, 1);
 
-                Connector.closeConnection();
+     //              Connector.closeConnection();
 
                 string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
                 string class_name = u.Class_name;  // the name of the class inside the DLL.
@@ -585,6 +674,8 @@ namespace DGAC
             
         }
 
+        
+
         /* REMARK: The type params MUST be provided externally, because the actual type information is not in the DGAC's database.
          */
 
@@ -596,7 +687,7 @@ namespace DGAC
                                                  )
         {
 
-            Connector.openConnection();
+    //        Connector.openConnection();
             ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
 
@@ -856,9 +947,8 @@ namespace DGAC
 
             o.setActualParameters(unit.ActualParameters, ic.Id_functor_app);
             o.ActualParametersTop = unit.ActualParametersTop;
-            // o.EnumeratorCardinality = ;
 
-            Connector.closeConnection();
+    //        Connector.closeConnection();
 
             o.createSlices();
 
@@ -1045,6 +1135,7 @@ namespace DGAC
             return r;
         }
 
+        // private string session_id = -1;
 
         public String runApplication(int id_concrete, String[] eIds, int[] eVls)
         {
@@ -1052,6 +1143,8 @@ namespace DGAC
             try
             {
                 Connector.openConnection();
+
+                session_id = getSessionID(id_concrete);
 
                 Object server = remObjects[0];
                 IDictionary<string, int> files = new Dictionary<string, int>();
@@ -1086,7 +1179,7 @@ namespace DGAC
                     files.Add(class_name_arr[class_name_arr.Length - 1], count);
                 }
 
-                sendRunCommandToWorker(server, files, enums);
+                sendRunCommandToWorker(server, files, enums, session_id);
             }
             catch (Exception e)
             {
@@ -1098,6 +1191,30 @@ namespace DGAC
             }
 
             return "finished execution !";
+        }
+
+        private int getSessionID(int id_concrete)
+        {
+            int session_id = -1;
+            String sql =
+                "INSERT INTO hashmodel.sessions (id_concrete)" +
+                " VALUES (" + id_concrete + ")";
+
+            Connector.performSQLUpdate(sql);
+
+            IDbCommand dbcmd = Connector.DBcon.CreateCommand();
+            dbcmd.CommandText = "SELECT MAX(session_id) AS NEW_SESSION_ID FROM sessions ";
+            IDataReader reader = dbcmd.ExecuteReader();
+            if (reader.Read())
+            {
+                session_id = (int)reader["NEW_SESSION_ID"];
+            }//if
+            // clean up
+            reader.Close();
+            reader = null;
+            dbcmd.Dispose();
+            dbcmd = null;
+            return session_id;
         }
 
     }//DGAC

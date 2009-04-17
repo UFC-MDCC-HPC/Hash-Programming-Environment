@@ -94,7 +94,11 @@ public class FileUtil{
   	return res;
   }
 
-  public static string readConstant(string property)
+   public static string readConstant(string property) {
+       return readConstant(property, null);
+   }
+
+  public static string readConstant(string property, string default_value)
   {
 
       string xml_file = Constants.PROPERTIES_FILE;
@@ -108,14 +112,14 @@ public class FileUtil{
               if (bankReader.LocalName.Equals(property))
               {
                   string s = bankReader.ReadString(); 
-                  Console.WriteLine("PROPERTY .... " + s);
+//                  Console.WriteLine("PROPERTY .... " + s);
                   return s;
               }
           }
       }
       bankReader.Close();
-      Console.WriteLine("PROPERTY NOT FOUND ....");
-      return null;
+//      Console.WriteLine("PROPERTY NOT FOUND ....");
+      return default_value;
   }
 
   

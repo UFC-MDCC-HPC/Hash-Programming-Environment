@@ -10,6 +10,7 @@ public class Constants {
     private static string getPropertiesFilePath()
     {
         string properties_file_path = getArgVal("--properties");
+        Console.WriteLine(properties_file_path);
         if (properties_file_path == null)
         {
             properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
@@ -35,6 +36,7 @@ public class Constants {
     public static string key_generator = FileUtil.readConstant("key_generator");
     public static string gac_util = FileUtil.readConstant("gac_util");
     public static string mpi_run = FileUtil.readConstant("mpi_run");
+    public static string hosts_file = FileUtil.readConstant("hosts_file",Path.DirectorySeparatorChar + "etc" + Path.DirectorySeparatorChar + "hpe_hosts");
     public static string connectionString = FileUtil.readConstant("connection_string");
 
     public static string getArgVal(string argId)

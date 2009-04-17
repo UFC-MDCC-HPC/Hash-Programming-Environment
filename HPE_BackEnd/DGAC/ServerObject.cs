@@ -56,9 +56,9 @@ namespace DGAC
 		         *Roda arquivos executáveis gerados pelo metodo anterior
                  */
 		        [MethodImpl(MethodImplOptions.Synchronized)]
-                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums)
+                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id)
                 {
-					CommandLineUtil.run_exe(files, enums);
+					CommandLineUtil.run_exe(files, enums, session_id);
 		        }
 				
 				//just for test

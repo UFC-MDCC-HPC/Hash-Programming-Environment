@@ -12,24 +12,12 @@ public class Connector {
  	 
 	 public static IDbConnection getConnection(){
 	 	string connectionString = Constants.connectionString;
-/*          "Server=" + server + ";" +
-          "Database=" + database + ";" +
-          "User ID=" + user + ";" +
-          "Password=" + password + ";"  +
-          "Pooling=" + pooling + ";" +
-          (port != null ? "Port=5001;" : ""); */
-       IDbConnection dbcon;
+        // Console.WriteLine(connectionString); 
+         IDbConnection dbcon;
        dbcon = new MySqlConnection(connectionString);
        return dbcon;
 	 }
 	 
-	private static string server = "localhost";
-	private static string database = "hashmodel";
-	private static string user = "root";
-	private static string password = "hashmodel";
-	private static string pooling = "true";
-	private static string port = null; 
-
     private static IDbConnection dbcon = null;
     private static IDbTransaction dbtrans = null;
 

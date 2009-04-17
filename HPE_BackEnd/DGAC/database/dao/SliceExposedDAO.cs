@@ -122,6 +122,42 @@ namespace DGAC.database
             return ll;
         }
 
+        internal SliceExposed retrieveContainer(string id_inner, string id_interface_slice, int id_abstract, int id_split_replica, string id_inner_owner)
+        {
+            IDbConnection dbcon = Connector.DBcon;
+            IDbCommand dbcmd = dbcon.CreateCommand();
+            SliceExposed se = null;
+            string sql =
+                "SELECT id_abstract, id_inner, id_interface_slice, id_split_replica, id_split_replica_owner, id_inner_owner, id_interface_slice_owner " +
+                "FROM hashmodel.sliceexposed " +
+                "WHERE id_inner like '" + id_inner + "' and " +
+                      "id_interface_slice like '" + id_interface_slice + "' and " +
+                      "id_abstract = " + id_abstract + " and " +
+                      "id_split_replica = " + id_split_replica + " and " +
+                      "id_inner_owner = " + id_inner_owner;
+            dbcmd.CommandText = sql;
+            IDataReader reader = dbcmd.ExecuteReader();
+            if (reader.Read())
+            {
+                se = new SliceExposed();
+                se.Id_inner = (string)reader["id_inner"];
+                se.Id_abstract = (int)reader["id_abstract"];
+                se.Id_interface_slice = (string)reader["id_interface_slice"];
+                se.Id_split_replica = (int)reader["id_split_replica"];
+                se.Id_inner_owner = (string)reader["id_inner_owner"];
+                se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
+                se.Id_split_replica_owner = (int)reader["id_split_replica_owner"];
+            }
+            //if
+            // clean up
+            reader.Close();
+            reader = null;
+            dbcmd.Dispose();
+            dbcmd = null;
+
+            return se;
+        }
+
         internal SliceExposed retrieve2(string id_inner, string id_interface_slice, int id_abstract, string id_interface_container)
         {
             IDbConnection dbcon = Connector.DBcon;

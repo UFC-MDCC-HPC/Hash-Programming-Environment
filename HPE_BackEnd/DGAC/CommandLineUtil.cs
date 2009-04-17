@@ -15,7 +15,7 @@ public class CommandLineUtil{
   /// </summary>
   /// <param file="path">The string that include the exe name.</param>
   /// <returns>bool</returns>
-    public static bool run_exe(IDictionary<string, int> files, IDictionary<string, int> enums)
+    public static bool run_exe(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id)
     {
      
      System.Diagnostics.Process proc = new System.Diagnostics.Process();
@@ -25,11 +25,14 @@ public class CommandLineUtil{
      foreach (KeyValuePair<string, int> k in enums)
          eStr += " --enumerator " + k.Key + " " + k.Value;
 
+     eStr += " --session " + session_id;
+
      string uStr = "";
      bool firstPass = true;
+     
      foreach (KeyValuePair<string, int> k in files)
      {
-         uStr += (firstPass ? "" : " :") + " -np " + k.Value + " " +  Constants.cli_runtime + " " + Constants.PATH_BIN + k.Key + "Main.exe " + eStr;
+         uStr += (firstPass ? "" : " :") + " -np " + k.Value + /* " --hostfile " + Constants.hosts_file */ " " + Constants.cli_runtime + " " + Constants.PATH_BIN + k.Key + "Main.exe " + eStr;
          firstPass = false;
      }
 
