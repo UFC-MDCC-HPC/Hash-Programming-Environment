@@ -249,7 +249,8 @@ namespace DGAC
             else
                 open_log_out = false;
 
-            openConnection();
+            //openConnection(); 
+            Connector.openConnection();
 
             ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
@@ -355,7 +356,7 @@ namespace DGAC
             pmain.setUpParameters(c);
             pmain.ActualParametersTop = pmain.ActualParameters;
 
-            closeConnection(true);
+           // closeConnection(true);
         }
 
         private static int getSessionID(string[] args)
@@ -1139,6 +1140,8 @@ namespace DGAC
 
         public String runApplication(int id_concrete, String[] eIds, int[] eVls)
         {
+            string str = null;
+
             // assert: eIds.Length = eVls.Length
             try
             {
@@ -1180,6 +1183,19 @@ namespace DGAC
                 }
 
                 sendRunCommandToWorker(server, files, enums, session_id);
+
+                DirectoryInfo di = new DirectoryInfo(Constants.PATH_BIN);
+                FileInfo[] rgFiles = di.GetFiles("output." + session_id + "*");
+                foreach (FileInfo fi in rgFiles)
+                {
+                    if (str == null)
+                        str = "";
+                    TextReader tr = new StreamReader(fi.DirectoryName + Path.DirectorySeparatorChar + fi.Name);
+                    str += "\n-------------------------" + fi.Name + "----------------------------\n";
+                    str += tr.ReadToEnd();
+                    tr.Close();
+                    
+                }
             }
             catch (Exception e)
             {
@@ -1190,7 +1206,7 @@ namespace DGAC
                 Connector.closeConnection();
             }
 
-            return "finished execution !";
+            return str == null ? "no output" : str; ;
         }
 
         private int getSessionID(int id_concrete)
