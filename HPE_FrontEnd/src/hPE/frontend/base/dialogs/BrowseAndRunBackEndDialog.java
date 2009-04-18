@@ -14,8 +14,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +53,17 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.xml.rpc.ServiceException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.editors.text.NonExistingFileEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
 
 public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener {
 
@@ -691,7 +706,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 				String result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation);
 				
 				JOptionPane.showMessageDialog(rootPane, result);
-				
+												    				
 				this.browseUpdate();
 			}
 			
@@ -701,10 +716,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(rootPane, e.getMessage());
-		}
+		} 
 		
 	}
-
+	
 	// based on current kinds and grouping ...
 	private void browseAbstractUpdate() {
 		
