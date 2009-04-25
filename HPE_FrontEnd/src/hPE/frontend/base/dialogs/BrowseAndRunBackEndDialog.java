@@ -8,6 +8,12 @@ import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfoParameter;
 import hPE.frontend.base.model.HComponent;
 
+import hPE.backend.BackEnd_WSCallbackHandler;
+import hPE.backend.BackEnd_WSStub;
+import hPE.backend.BackEnd_WSStub.ArrayOfInt;
+import hPE.backend.BackEnd_WSStub.ArrayOfString;
+import hPE.backend.BackEnd_WSStub.RunApplicationResponse;
+
 import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -23,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -695,29 +702,115 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			}
 			
 			if (!canceled) {
+				
+				BackEndLocationInfo loc = (BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem();
+				
+			    String urlWS = loc.locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
 			
-			    String urlWS = ((BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem()).locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
-			
-				BackEnd_WSLocator server = new BackEnd_WSLocator();
-				server.setBackEnd_WSSoapEndpointAddress(urlWS);
+			    RunApplicationThread runapp = new RunApplicationThread(urlWS, deployed, loc);
+
+				RunningApplicationDialog d = new RunningApplicationDialog(null);
+				d.setTitle("Running " + deployed.name + " on " + loc.name + ". Waiting ...");
+				runapp.setDialog(d);
+				runapp.start();
 				
-				BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+				d.setAlwaysOnTop(true);
+			    d.setVisible(true);
+
+				/* AXIS 2	
+			    
+			    BackEnd_WSStub service = new BackEnd_WSStub(urlWS); 
+			    
+				BackEnd_WSStub.RunApplication runapp = null;
+				runapp = (BackEnd_WSStub.RunApplication) getObject(BackEnd_WSStub.RunApplication.class);
+			    runapp.setId_concrete(deployed.cid);
+			    ArrayOfString EIds = new ArrayOfString();
+  	            EIds.setString(deployed.enumerators);
+				runapp.setEIds(EIds);
+			    ArrayOfInt EVls = new ArrayOfInt();
+                EVls.set_int(deployed.enumValuation);
+				runapp.setEVls(EVls);
 				
-				String result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation);
+			    MyCallBackHandler callback = new MyCallBackHandler();
+				service.startrunApplication(runapp, callback); // ASYNCHRONOUS 
+			    RunApplicationResponse response = service.runApplication(runapp); // SYNCHRONOUS 
+			    
+			    String[] result = response.getRunApplicationResult().getString();
 				
-				JOptionPane.showMessageDialog(rootPane, result);
-												    				
-				this.browseUpdate();
+			    */
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(rootPane, e.getMessage());
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		} 
 		
+	}
+	
+	class RunApplicationThread extends Thread {
+		
+		private String urlWS = null;
+		private RunningApplicationDialog d = null;
+		private BackEndLocationInfo loc = null;
+		private DeployedComponentInfo deployed = null;
+		
+		public RunApplicationThread(String urlWS, DeployedComponentInfo deployed, BackEndLocationInfo loc) {		
+			this.urlWS = urlWS;
+			this.loc = loc;
+			this.deployed = deployed;
+		}
+		
+		public void setDialog(RunningApplicationDialog d) {
+		    this.d = d;	
+		}
+		
+		public void run() {			
+			try {
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+	
+			BackEnd_WSSoap backend;
+				backend = server.getBackEnd_WSSoap();
+			
+			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation); 
+
+			if (result.length > 1) {
+				d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );
+				Integer i = 0;
+				for (String s : result) {
+					String processId = "Process " + i.toString(); i++;
+				    d.newTab(processId, s);
+				}
+			} else {
+				d.setTitle("Running of " + deployed.name + "has FAILED on " + loc.name + "!");
+			    if (result.length==1) 
+			    	d.newTab("Error Message", result[0]);
+			}	
+			
+			
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+    public org.apache.axis2.databinding.ADBBean getObject(java.lang.Class type) throws java.lang.Exception{
+        return (org.apache.axis2.databinding.ADBBean) type.newInstance();
+     }
+
+    public class MyCallBackHandler extends BackEnd_WSCallbackHandler {
+		 public MyCallBackHandler() {
+			 super();
+		 }
+         public void receiveResultrunApplication(BackEnd_WSStub.RunApplicationResponse result) {
+				for (String s : result.getRunApplicationResult().getString())
+			       JOptionPane.showMessageDialog(rootPane, s);  
+        	 
+        }
 	}
 	
 	// based on current kinds and grouping ...

@@ -1,8 +1,9 @@
-#Thu Feb 05 23:04:52 GMT-03:00 2009
+#Thu Apr 23 22:04:12 BRT 2009
 eclipse.preferences.version=1
 encoding//src/hPE/backend/BackEnd_WS.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSLocator.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoap.java=UTF-8
+encoding//src/hPE/backend/BackEnd_WSSoap12.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoap12Stub.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoapStub.java=UTF-8
 encoding//src/hPE/location/HPE_Location_Server.java=UTF-8

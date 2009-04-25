@@ -56,16 +56,16 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     return backEnd_WSSoap.readEnvironment();
   }
   
-  public java.lang.String runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls) throws java.rmi.RemoteException{
+  public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls) throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap.runApplication(id_concrete, eIds, eVls);
   }
   
-  public java.lang.String touchBackEnd(java.lang.String message) throws java.rmi.RemoteException{
+  public java.lang.String hosts() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
-    return backEnd_WSSoap.touchBackEnd(message);
+    return backEnd_WSSoap.hosts();
   }
   
   
