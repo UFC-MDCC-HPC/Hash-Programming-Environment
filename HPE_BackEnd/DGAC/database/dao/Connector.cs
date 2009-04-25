@@ -46,16 +46,29 @@ public class Connector {
         dbtrans = null;
     }
 
+    private static int r = 0;
+    private static String slock = "";
+
     public static void openConnection()
-    {
-        dbcon = Connector.getConnection();
-        dbcon.Open();
+    {      
+        lock (slock) {
+	        if (r==0) {
+	           dbcon = Connector.getConnection();
+	           dbcon.Open();
+	        }
+	        r++;
+        }
     }
 
     public static void closeConnection()
-    {
-        dbcon.Close();
-        dbcon = null;
+    {       
+        lock(slock) {  
+	        r--;
+	        if (r == 0) {
+	           dbcon.Close();
+	           dbcon = null;
+	        }
+        }
     }
     
 

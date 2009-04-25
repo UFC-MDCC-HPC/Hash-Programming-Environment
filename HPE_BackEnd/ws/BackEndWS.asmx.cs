@@ -9,6 +9,7 @@ using System.ComponentModel;
 using DGAC.database;
 using HPE_DGAC_LoadDB;
 using DGAC.utils;
+using System.IO;
 
 namespace Back_End_WS
 {
@@ -69,24 +70,30 @@ namespace Back_End_WS
         }
 
         [WebMethod]
-        public String runApplication(int id_concrete, String[] eIds, int[] eVls)
+        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls)
         {
+            String[] str_output = null;
             try
             {
-                return dgac.runApplication(id_concrete, eIds, eVls);
+                str_output = dgac.runApplication(id_concrete, eIds, eVls);
             }
             catch (Exception e)
             {
-                return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
+                str_output = new String[1];
+                str_output[0] = "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
             }
-
+            return str_output;
         }
 
 
         [WebMethod]
-        public String touchBackEnd(string message)
+        public String hosts()
         {
-            return message + " - Hi Client !";
+            TextReader tr = new StreamReader(Constants.PATH_BIN + "myhostfile");
+
+            String hstr = tr.ReadToEnd();
+            tr.Close();
+            return hstr;
         }
-    }
+     }
 }

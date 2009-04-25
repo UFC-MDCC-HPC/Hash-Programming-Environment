@@ -7,7 +7,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Collections.Generic;
 using System.Reflection;
-using HPE_DGAC_LoadDB;
+using HPE_DGAC_LoadDB;  
 using hpe.basic;
 using DGAC.utils;
 using DGAC.database;
@@ -23,7 +23,7 @@ namespace DGAC
         void registerConcreteComponent(ComponentType ct);
         void registerAbstractComponent(ComponentType ct);
         void deleteComponent(String ID);
-        String runApplication(int id_concrete, String[] eIds, int[] eVls);
+        String[] runApplication(int id_concrete, String[] eIds, int[] eVls);
         EnvironmentType readEnvironment();
 
     }//IDGAC
@@ -1138,10 +1138,9 @@ namespace DGAC
 
         // private string session_id = -1;
 
-        public String runApplication(int id_concrete, String[] eIds, int[] eVls)
+        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls)
         {
-            string str = null;
-
+            String[] str_output = null;
             // assert: eIds.Length = eVls.Length
             try
             {
@@ -1152,6 +1151,8 @@ namespace DGAC
                 Object server = remObjects[0];
                 IDictionary<string, int> files = new Dictionary<string, int>();
                 IDictionary<string, int> enums = new Dictionary<string, int>();
+
+                int nprocs = 0;
 
                 for (int i = 0; i < eIds.Length; i++)
                     enums.Add(eIds[i], eVls[i]);
@@ -1167,7 +1168,7 @@ namespace DGAC
 
                 foreach (DGAC.database.Unit u in uList)
                 {
-                    IList<EnumerationInterface> eiList = eidao.listByInterface(c.Id_abstract,u.Id_unit);
+                    IList<EnumerationInterface> eiList = eidao.listByInterface(c.Id_abstract, u.Id_unit);
                     int count = 1;
                     foreach (EnumerationInterface ei in eiList)
                     {
@@ -1180,21 +1181,22 @@ namespace DGAC
                     char[] char_sep = new char[] { '.' };
                     String[] class_name_arr = u.Class_name.Split(char_sep);
                     files.Add(class_name_arr[class_name_arr.Length - 1], count);
+                    nprocs += count;
                 }
 
                 sendRunCommandToWorker(server, files, enums, session_id);
 
+                str_output = new String[nprocs];
+
+                int count_procs = 0;
                 DirectoryInfo di = new DirectoryInfo(Constants.PATH_BIN);
                 FileInfo[] rgFiles = di.GetFiles("output." + session_id + "*");
                 foreach (FileInfo fi in rgFiles)
                 {
-                    if (str == null)
-                        str = "";
                     TextReader tr = new StreamReader(fi.DirectoryName + Path.DirectorySeparatorChar + fi.Name);
-                    str += "\n-------------------------" + fi.Name + "----------------------------\n";
-                    str += tr.ReadToEnd();
+                    str_output[count_procs++] = tr.ReadToEnd();
                     tr.Close();
-                    
+
                 }
             }
             catch (Exception e)
@@ -1206,7 +1208,7 @@ namespace DGAC
                 Connector.closeConnection();
             }
 
-            return str == null ? "no output" : str; ;
+            return str_output == null ? new String[] { } : str_output;
         }
 
         private int getSessionID(int id_concrete)
