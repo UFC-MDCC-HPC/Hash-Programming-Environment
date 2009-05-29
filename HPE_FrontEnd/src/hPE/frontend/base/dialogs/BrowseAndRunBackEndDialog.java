@@ -8,12 +8,6 @@ import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfoParameter;
 import hPE.frontend.base.model.HComponent;
 
-import hPE.backend.BackEnd_WSCallbackHandler;
-import hPE.backend.BackEnd_WSStub;
-import hPE.backend.BackEnd_WSStub.ArrayOfInt;
-import hPE.backend.BackEnd_WSStub.ArrayOfString;
-import hPE.backend.BackEnd_WSStub.RunApplicationResponse;
-
 import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -798,11 +792,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		}
 	}
 	
-    public org.apache.axis2.databinding.ADBBean getObject(java.lang.Class type) throws java.lang.Exception{
-        return (org.apache.axis2.databinding.ADBBean) type.newInstance();
-     }
+   // public org.apache.axis2.databinding.ADBBean getObject(java.lang.Class type) throws java.lang.Exception{
+   //     return (org.apache.axis2.databinding.ADBBean) type.newInstance();
+   //  }
 
-    public class MyCallBackHandler extends BackEnd_WSCallbackHandler {
+ /*   public class MyCallBackHandler extends BackEnd_WSCallbackHandler {
 		 public MyCallBackHandler() {
 			 super();
 		 }
@@ -811,7 +805,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			       JOptionPane.showMessageDialog(rootPane, s);  
         	 
         }
-	}
+	} */
 	
 	// based on current kinds and grouping ...
 	private void browseAbstractUpdate() {

@@ -46,19 +46,17 @@ public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPE
 			} catch (ServiceException e) {
 				e.printStackTrace();
 			}
-			Iterator<String> ipks = pks.iterator();
-		    while (ipks.hasNext()) {
-		    
-		    	String pkName = ipks.next();
-		    	
-			    if (allPks.containsKey(pkName)) {
-			       allPks.get(pkName).addLocation(locationSite);			       
-		        } else {
-		        	ILPackage pk = new LPackage(this,pkName.split(":"));
-		        	pk.addLocation(locationSite);
-		        	addChild(pk);
-		        }
-		    }
+			if (pks!=null) {			
+			   	for (String pkName : pks) {			    			    	
+				    if (allPks.containsKey(pkName)) {
+				       allPks.get(pkName).addLocation(locationSite);			       
+			        } else {
+			        	ILPackage pk = new LPackage(this,pkName.split(":"));
+			        	pk.addLocation(locationSite);
+			        	addChild(pk);
+			        }
+			    }
+			}
 		}
 	}
 	
