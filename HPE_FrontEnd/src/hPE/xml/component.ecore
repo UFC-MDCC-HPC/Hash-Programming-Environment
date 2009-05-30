@@ -163,7 +163,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComponentBodyType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="&#xD;&#xA;        &#x9;&#x9;The elements are in the &quot;workflow order&quot; ...&#xD;&#xA;        &#x9;"/>
+      <details key="documentation" value="&#xA;        &#x9;&#x9;The elements are in the &quot;workflow order&quot; ...&#xA;        &#x9;"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="ComponentBodyType"/>
@@ -312,6 +312,12 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="kind"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="locationURI" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//AnyURI">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="locationURI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">

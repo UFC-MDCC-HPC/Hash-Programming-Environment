@@ -1645,7 +1645,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     private void setSupplier(HComponent c) {
     	this.supplied = c;    	
     	this.isParameter = true;
-    	this.parameterIdentifier.putAll(c.parameterIdentifier); // DUVIDA... antes apenas atribuía ...
+    	this.parameterIdentifier.putAll(c.parameterIdentifier); // DUVIDA... antes apenas atribuï¿½a ...
     	this.variableName = c.getVariableName();
     }
     
@@ -1848,7 +1848,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	List<HLinkToReplicator> lrs = new ArrayList<HLinkToReplicator>();
     	HReplicator topR = null;
     	
-    	// Por enquanto, supõe-se que somente um replicador pode estar dividido ....
+    	// Por enquanto, supï¿½e-se que somente um replicador pode estar dividido ....
     	for (HReplicator r : u1.getReplicators()) {
     		if (r.getParentSplit() != null) {
     		   lrs = r.getSplitPath();
@@ -3624,7 +3624,7 @@ public static void runCommand(String[] cmd, String[] env, java.io.File file) {
 }
 
 public static URI getStandardLocationPath(String pk, String componentName, String version) {
-	return URI.createURI(pk + "." + componentName + "\\" + componentName + ".hpe");
+	return URI.createURI(pk + "." + componentName + java.io.File.separatorChar + componentName + ".hpe");
 }
 
 }

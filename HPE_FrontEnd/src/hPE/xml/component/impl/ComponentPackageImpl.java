@@ -968,7 +968,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Name() {
+	public EAttribute getComponentHeaderType_LocationURI() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -977,8 +977,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_PackagePath() {
+	public EAttribute getComponentHeaderType_Name() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentHeaderType_PackagePath() {
+		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2621,6 +2630,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__IS_ABSTRACT);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__KIND);
+		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__LOCATION_URI);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__NAME);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__PACKAGE_PATH);
 
@@ -2946,6 +2956,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentHeaderType_LocationURI(), theXMLTypePackage.getAnyURI(), "locationURI", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_PackagePath(), theXMLTypePackage.getAnyURI(), "packagePath", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3507,6 +3518,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "kind"
+		   });		
+		addAnnotation
+		  (getComponentHeaderType_LocationURI(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "locationURI"
 		   });		
 		addAnnotation
 		  (getComponentHeaderType_Name(), 

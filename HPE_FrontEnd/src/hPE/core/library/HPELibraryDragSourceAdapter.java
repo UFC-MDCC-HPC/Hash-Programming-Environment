@@ -130,7 +130,7 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
     public void dragSetData(DragSourceEvent event) {
     	
         Map<URI,java.io.File> resources = getSelectedComponentResources();
-        String[] fnames = new String[resources.size()*2];
+        String[] fnames = new String[resources.size()];
         // HComponent[] fnames = new HComponent[resources.length];
         
         int i = 0;
@@ -138,7 +138,7 @@ public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
         	String uri = f.getKey().toString();
         	String fname = f.getValue().getAbsolutePath();
         	
-            fnames[i++] = uri;
+           // fnames[i++] = uri;
             fnames[i++] = fname;
            
            //URI uri = URI.createFileURI(f.getAbsolutePath()); //

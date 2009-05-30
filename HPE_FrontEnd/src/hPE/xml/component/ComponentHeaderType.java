@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentHeaderType#getLocationURI <em>Location URI</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getPackagePath <em>Package Path</em>}</li>
  * </ul>
@@ -213,6 +214,33 @@ public interface ComponentHeaderType extends EObject {
 	 * @generated
 	 */
 	boolean isSetKind();
+
+	/**
+	 * Returns the value of the '<em><b>Location URI</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Location URI</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Location URI</em>' attribute.
+	 * @see #setLocationURI(String)
+	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_LocationURI()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.AnyURI"
+	 *        extendedMetaData="kind='attribute' name='locationURI'"
+	 * @generated
+	 */
+	String getLocationURI();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentHeaderType#getLocationURI <em>Location URI</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Location URI</em>' attribute.
+	 * @see #getLocationURI()
+	 * @generated
+	 */
+	void setLocationURI(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

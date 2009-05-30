@@ -42,13 +42,13 @@ public class NewComponentCommand extends Command {
 			components = new ArrayList<HComponent>();
 			locations = new ArrayList<String>();
 			String remoteURI = null;
-			for (int i = 1; i < files.length; i += 2) {
+			for (int i = 0; i < files.length; i++) {
 				if (files[i] instanceof String) {
-				   remoteURI = files[i-1];
+				  // remoteURI = files[i-1];
 				   String file = (String) files[i];
      			   URI uri = URI.createFileURI(file); 
      			   innerComponent = hPEEditor.getConfiguration(uri);
-     			   innerComponent.setRemoteURI(URI.createURI(remoteURI));
+     			   //innerComponent.setRemoteURI(URI.createURI(remoteURI));
      			   components.add(innerComponent);
 			       locations.add(innerComponent.getLocalLocation());
    				}

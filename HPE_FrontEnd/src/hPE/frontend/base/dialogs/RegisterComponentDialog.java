@@ -234,9 +234,10 @@ public class RegisterComponentDialog extends JDialog {
 					String ctName = c.getComponentName();			
 					
 					HComponentFactory factory = HComponentFactoryImpl.eInstance; 
+					c.setRemoteURI(uri);
 					ComponentType cX = factory.marshallComponent(c);
 					prepareForRegistering(cX, freeSource);
-					IPath filePath = (new Path(c.getLocalLocation())).removeLastSegments(1).append("temp").append("__temp__");
+					IPath filePath = (new Path(c.getLocalLocation())).removeLastSegments(1).append("temp").append("temp.xml");
 					IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(filePath); /*TODO: Which file ?*/
 					factory.saveComponent(cX, file, null);
 					String contents = readTextFile(file);

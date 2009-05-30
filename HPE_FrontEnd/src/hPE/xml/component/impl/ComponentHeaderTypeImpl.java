@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getKind <em>Kind</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getLocationURI <em>Location URI</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentHeaderTypeImpl#getPackagePath <em>Package Path</em>}</li>
  * </ul>
@@ -142,6 +143,26 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * @ordered
 	 */
 	protected boolean kindESet;
+
+	/**
+	 * The default value of the '{@link #getLocationURI() <em>Location URI</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLocationURI()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LOCATION_URI_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLocationURI() <em>Location URI</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLocationURI()
+	 * @generated
+	 * @ordered
+	 */
+	protected String locationURI = LOCATION_URI_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -375,6 +396,27 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getLocationURI() {
+		return locationURI;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLocationURI(String newLocationURI) {
+		String oldLocationURI = locationURI;
+		locationURI = newLocationURI;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI, oldLocationURI, locationURI));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		return name;
 	}
@@ -446,6 +488,8 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 				return isIsAbstract() ? Boolean.TRUE : Boolean.FALSE;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				return getKind();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
+				return getLocationURI();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
 				return getName();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__PACKAGE_PATH:
@@ -478,6 +522,9 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				setKind((SupportedKinds)newValue);
+				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
+				setLocationURI((String)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
 				setName((String)newValue);
@@ -512,6 +559,9 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				unsetKind();
 				return;
+			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
+				setLocationURI(LOCATION_URI_EDEFAULT);
+				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -540,6 +590,8 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 				return isSetIsAbstract();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				return isSetKind();
+			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
+				return LOCATION_URI_EDEFAULT == null ? locationURI != null : !LOCATION_URI_EDEFAULT.equals(locationURI);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__PACKAGE_PATH:
@@ -564,6 +616,8 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		if (isAbstractESet) result.append(isAbstract); else result.append("<unset>");
 		result.append(", kind: ");
 		if (kindESet) result.append(kind); else result.append("<unset>");
+		result.append(", locationURI: ");
+		result.append(locationURI);
 		result.append(", name: ");
 		result.append(name);
 		result.append(", packagePath: ");

@@ -840,13 +840,22 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_HEADER_TYPE__KIND = 4;
 
 	/**
+	 * The feature id for the '<em><b>Location URI</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_HEADER_TYPE__LOCATION_URI = 5;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__NAME = 5;
+	int COMPONENT_HEADER_TYPE__NAME = 6;
 
 	/**
 	 * The feature id for the '<em><b>Package Path</b></em>' attribute.
@@ -855,7 +864,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 6;
+	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 7;
 
 	/**
 	 * The number of structural features of the '<em>Header Type</em>' class.
@@ -864,7 +873,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 7;
+	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentInUseTypeImpl <em>In Use Type</em>}' class.
@@ -3472,6 +3481,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getComponentHeaderType_Kind();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#getLocationURI <em>Location URI</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Location URI</em>'.
+	 * @see hPE.xml.component.ComponentHeaderType#getLocationURI()
+	 * @see #getComponentHeaderType()
+	 * @generated
+	 */
+	EAttribute getComponentHeaderType_LocationURI();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5744,6 +5764,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT_HEADER_TYPE__KIND = eINSTANCE.getComponentHeaderType_Kind();
+
+		/**
+		 * The meta object literal for the '<em><b>Location URI</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_HEADER_TYPE__LOCATION_URI = eINSTANCE.getComponentHeaderType_LocationURI();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

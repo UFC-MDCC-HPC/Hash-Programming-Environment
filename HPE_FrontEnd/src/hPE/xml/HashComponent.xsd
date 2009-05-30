@@ -233,6 +233,7 @@
 		<attribute name="packagePath" type="anyURI"></attribute>
 		<attribute name="hash_component_UID" type="string"></attribute>
 		<attribute name="isAbstract" type="boolean"></attribute>
+		<attribute name="locationURI" type="anyURI" use="optional"></attribute>
 	</complexType>
 	<complexType name="InterfaceSliceType">
 		<sequence>

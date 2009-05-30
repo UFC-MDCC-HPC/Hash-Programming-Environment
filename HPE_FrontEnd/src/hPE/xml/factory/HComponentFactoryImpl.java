@@ -161,7 +161,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			// If there are no arguments, emit an appropriate usage message.
 			//
-			URI uri = URI.createFileURI(file.getFullPath().toPortableString());
+			URI uri = URI.createURI(file.getFullPath().toPortableString());
 			Resource resource = resourceSet.createResource(uri);
 
 			DocumentRoot dX = factory.createDocumentRoot();
@@ -785,7 +785,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String name = xCheader.getName();
 			SupportedKinds kind = xCheader.getKind();
 			String packagePath = xCheader.getPackagePath();
-			String hash_component_UID = xCheader.getHashComponentUID();
+			String hash_component_UID = xCheader.getHashComponentUID();			
+			String locationURI = xCheader.getLocationURI(); 
 			boolean isAbstract = xCheader.isIsAbstract();
 
 			this.isConcrete = false;
@@ -794,6 +795,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			component = this.createComponent(kind, name, uri);
 			component.setPackagePath(new Path(packagePath));
 			component.setHashComponentUID(hash_component_UID);
+			if (locationURI != null) 
+				component.setRemoteURI(URI.createURI(locationURI));
+			
 			if (isTop) 
 				checkKeyFile();
 			
@@ -815,7 +819,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				applyRenaming(xCinfo);
 				loadEnumerators(xCinfo);
 				loadSplits(xCinfo); // loadSplits pode ser antes de
-									// loadEnumerators uma vez que o split é
+									// loadEnumerators uma vez que o split ï¿½
 									// feito com um replicador herdado de um
 									// componente interno.
 				// ggg
@@ -1070,8 +1074,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		xH.setPackagePath(c.getPackagePath().toPortableString());
 		// save HashComponentUID
 		xH.setHashComponentUID(c.getHashComponentUID());
+		// save Remote Location UID
+		xH.setLocationURI(c.getRemoteLocation());
 
 		xH.setIsAbstract(c.isAbstract());
+		
+		
 
 		saveVersions(c, xH.getVersions());
 
@@ -2247,7 +2255,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 										+ ((this.component
 												.isAbstractConfiguration()) ? " Probably a reference to an inner component of the super type. "
 												: " Probably a reference to hidden inner component in a concrete configuration."));
-						// significa que a fatia é de um componente do super
+						// significa que a fatia ï¿½ de um componente do super
 						// tipo
 					}
 				}

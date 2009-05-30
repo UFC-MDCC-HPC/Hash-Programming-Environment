@@ -1,5 +1,7 @@
 package hPE;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -7,7 +9,8 @@ import java.util.Properties;
 public class HPEProperties {
 
 	    private Properties props;  
-	    private String propertiesFile = "hpe.frontend.properties";  
+	    private static final String propertiesFile = "hpe.frontend.properties";  
+		public static final String curDir =System.getProperty("user.dir")+File.separatorChar;
 	  
 	    static private HPEProperties eInstance = null;
 	    
@@ -20,10 +23,8 @@ public class HPEProperties {
 	    
 	    protected HPEProperties(){  
 	            props = new Properties();  
-	            InputStream in = this.getClass().getResourceAsStream(propertiesFile);  
 	            try{  
-	                    props.load(in);  
-	                    in.close();  
+	                    props.load(new FileInputStream(getPropertiesFile()));  
 	            }  
 	            catch(IOException e){e.printStackTrace();}  
 	    }  
@@ -32,4 +33,45 @@ public class HPEProperties {
 	            return (String)props.getProperty(key);  
 	    }  
 	    
+		 /*
+	     * Pegando o properties
+	     */
+	    public static String getPropertiesFile(){
+	    	 
+        	String s = null;
+
+        	s = getArgVal("--properties");
+        	if (s == null) {
+        		s = System.getenv("HPE_FRONTEND_PROPERTIES");
+        		if (s == null) {
+        			s = curDir + propertiesFile;
+        		}
+        	}	        		        	
+        	
+            return s;                	        
+	    }
+	    
+	    public static String[] args = {};
+	    
+	    public static String getArgVal(String argId)
+	    {      
+	        int pos = 0;
+	        for (String arg : args)
+	        {
+	            if (arg.equals(argId))
+	            {
+	                if (pos <= args.length)
+	                {
+	                    return args[pos+1];
+	                }
+	                else
+	                {
+	                    return null;
+	                }
+	            }
+	            pos++;
+	        }
+	        return null;
+	    }
+
 }

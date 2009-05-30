@@ -1,0 +1,6 @@
+backend_locations = h:\\runtime-workspace\\BackEndLocations.xml
+core_locations = h:\\runtime-workspace\\library.xml
+sn_path = C:\\Program Files\\Mono-2.0.1\\bin\\sn.bat
+gacutil_path = C:\\Program Files\\Mono-2.0.1\\bin\\gacutil.bat
+dgac_path = C:\\Program Files\\Mono-2.0.1\\lib\\mono\\DGAC\\DGAC.dll
+cache_root = C:\\Documents and Settings\\Heron\\hpe_cache

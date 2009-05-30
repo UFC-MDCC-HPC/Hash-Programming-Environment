@@ -27,7 +27,9 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.URLTransfer;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.GridData;
@@ -372,10 +374,12 @@ public class HPEComponentLibraryView extends ViewPart {
     protected void initDragAndDrop() {
         int ops = DND.DROP_COPY | DND.DROP_MOVE;
         Transfer[] transfers = new Transfer[] {
+        		TextTransfer.getInstance(),
                 LocalSelectionTransfer.getInstance(),
                 ResourceTransfer.getInstance(), 
                 FileTransfer.getInstance(),
-                PluginTransfer.getInstance() };
+                PluginTransfer.getInstance() 
+                };
         TreeViewer viewer = getTreeViewer();
         viewer.addDragSupport(ops, transfers, new HPELibraryDragSourceAdapter(viewer));
         //HPELibraryDropTargetAdapter adapter = new HPELibraryDropTargetAdapter(viewer);
