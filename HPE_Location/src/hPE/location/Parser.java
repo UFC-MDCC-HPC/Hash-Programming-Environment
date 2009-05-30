@@ -1,13 +1,20 @@
 package hPE.location;
 
 import hPE.location.interfaces.Observer;
+import hPE.location.xml.ComponentType;
 import hPE.location.xml.PackageListType;
+import hPE.location.xml.PackageType;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -48,9 +55,59 @@ public class Parser implements Observer{
 		try {
 			 jc = JAXBContext.newInstance("hPE.location.xml", this.getClass().getClassLoader());
 			 unmarshaller = jc.createUnmarshaller();
-			 //JAXBElement<PackageListType> o = (JAXBElement<PackageListType>) unmarshaller.unmarshal(file);
-			 return (PackageListType) unmarshaller.unmarshal(file);
-			 //return (PackageListType) o.getValue();
+
+			 Map<String,List<String>> pks = new HashMap<String, List<String>>();
+			 Map<String, String> cversions = new HashMap<String,String>();
+			 
+			 Properties properties = Parser.getPropertiesFile();
+			 File dir = new File(properties.getProperty("LOCATION_HOME"));
+			 File[] dirs = dir.listFiles();
+			 for (File d : dirs) if (d.isDirectory())  {			     
+				 String dname = d.getName();
+				 boolean isAbstract = dname.matches("(([A-Za-z0-9]+)\\.)*[A-Za-z0-9]+");
+				 boolean isConcrete = dname.matches("((([A-Za-z0-9]+)\\.)*[A-Za-z0-9]+)\\-([0-9]*\\.[0-9]*\\.[0-9]*\\.[0-9]*)");
+				 String version = null;
+				 if (isConcrete) {
+					 String s[] = dname.split("\\-");
+					 dname = s[0];
+					 version = s[1];
+				 }
+				 
+				 String cname = dname.substring(dname.lastIndexOf('.') + 1);
+			     String pkname = dname.substring(0, dname.lastIndexOf('.'));
+			     List<String> cs = null;
+				 if (!pks.containsKey(pkname)) {
+					 cs = new ArrayList<String>();					 
+					 pks.put(pkname, cs);
+				 } else {
+					 cs = pks.get(pkname);
+				 }
+				 cversions.put(pkname + "." + cname, version);
+				 cs.add(cname);
+			 }
+			 
+			 PackageListType pkList = new PackageListType();
+			 List<PackageType> packages = pkList.getPackage();
+			 
+			 for (Entry<String, List<String>> e : pks.entrySet()) {
+			     PackageType pk = new PackageType();
+			     String pkname = e.getKey();
+			     pk.setPath(pkname);
+			     List<ComponentType> cs = pk.getComponent();
+			     for (String cname : e.getValue()) {
+			    	 ComponentType ct = new ComponentType();
+			    	 ct.setName(cname);
+			    	 String version = cversions.get(pkname + "." + cname);
+			    	 File f = new File(dir.getAbsolutePath() + "/" + pkname + "." + cname + (version != null ? ("-" + version) : "") + "/" + "obsolete"); 
+			    	 ct.setObsolete(f.exists());
+			    	 ct.setVersion(version);
+			    	 cs.add(ct);
+			     }
+			     packages.add(pk);
+			 }
+			 
+			// return (PackageListType) unmarshaller.unmarshal(file);
+			 return pkList;
 		}
 		catch(Exception e){ 
 			e.printStackTrace();			

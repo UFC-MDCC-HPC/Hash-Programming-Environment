@@ -26,6 +26,14 @@ public class FileSystem {
 		return path;
 	}
 	
+	public static String getComponentDir(String pk, String componentName, String version) {
+		
+		String dirName = dirBase + pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
+		return dirName;
+		
+	}
+	
+	
 	public static void createFile(String pk, String componentName, String version){
 		
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");

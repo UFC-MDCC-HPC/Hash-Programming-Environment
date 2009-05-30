@@ -8,6 +8,8 @@ import hPE.location.xml.ObjectFactory;
 import hPE.location.xml.PackageListType;
 import hPE.location.xml.PackageType;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -269,6 +271,15 @@ public class LocationService implements HLocationService, Subject {
 			if (c!=null) {
 				if (!c.isObsolete()) {
 					c.setObsolete(true);
+					String cdir = FileSystem.getComponentDir(packageName, componentName, version);
+					cdir += "/obsolete";
+					File f = new File(cdir);
+					try {
+						f.createNewFile();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					Notify();			
 					return "Now, component " + packageName + "." + componentName + " is obsolete. It is inaccessible in the repository view.";
 				}
