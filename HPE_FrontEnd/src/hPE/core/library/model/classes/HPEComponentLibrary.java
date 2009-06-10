@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
 import org.eclipse.emf.common.util.URI;
@@ -42,6 +43,7 @@ public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPE
 			try {
 				pks = HPELocationEntry.fetchPackagesFromLocation(locationSite, showObsolete);
 			} catch (RemoteException e) {
+				JOptionPane.showMessageDialog(null, "Unable to reach location at \n" + locationSite, "Location Fetch Error", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 			} catch (ServiceException e) {
 				e.printStackTrace();
