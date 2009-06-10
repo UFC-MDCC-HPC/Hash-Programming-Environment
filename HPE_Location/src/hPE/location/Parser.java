@@ -30,7 +30,7 @@ public class Parser implements Observer{
 	private Unmarshaller unmarshaller;
 	private Marshaller marshaller;
 	private File file; 
-	public static final String curDir =System.getProperty("user.dir")+File.separatorChar;
+	public static final String homeDir =System.getProperty("user.home") + File.separatorChar;
 	
 	
 	public Parser() {
@@ -98,7 +98,7 @@ public class Parser implements Observer{
 			    	 ComponentType ct = new ComponentType();
 			    	 ct.setName(cname);
 			    	 String version = cversions.get(pkname + "." + cname);
-			    	 File f = new File(dir.getAbsolutePath() + "/" + pkname + "." + cname + (version != null ? ("-" + version) : "") + "/" + "obsolete"); 
+			    	 File f = new File(dir.getAbsolutePath() + File.separatorChar + pkname + "." + cname + (version != null ? ("-" + version) : "") + "/" + "obsolete"); 
 			    	 ct.setObsolete(f.exists());
 			    	 ct.setVersion(version);
 			    	 cs.add(ct);
@@ -147,7 +147,7 @@ public class Parser implements Observer{
         	if (s == null) {
         		s = System.getenv("HPE_LOCATION_PROPERTIES");
         		if (s == null) {
-        			s = curDir + "hpe.location.properties";
+        			s = homeDir + "hpe.location.properties";
         		}
         	}
         	
