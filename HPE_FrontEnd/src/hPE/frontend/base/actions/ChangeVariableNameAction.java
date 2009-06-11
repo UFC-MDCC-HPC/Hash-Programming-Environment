@@ -55,11 +55,20 @@ public class ChangeVariableNameAction extends SelectionAction {
 			if (!(part.getModel() instanceof HComponent)) return false;
 			HComponent c = (HComponent) part.getModel();
 			// if (c.getConfiguration() == null) return false;
+			
+			boolean allSupplied = true;
 			for (Entry<String,List<HComponent>> es : c.getParameters2().entrySet()) {
 				for (HComponent cc : es.getValue()) {
-					if (cc.getSupplied() != null) return false;
-				}
+					if (cc.getSupplied() == null) {
+						allSupplied = false;
+					    break;
+					}
+				}				
+				if (!allSupplied)
+					break;
 			}
+			if (allSupplied) return false;
+			
 			if (c.getParameters2().size() == 0) return false;
             if (!c.isDirectSonOfTheTopConfiguration() && !c.isTopConfiguration()) return false;
             if (((HComponent)c.getTopConfiguration()).getWhoItImplements() == c) return false;

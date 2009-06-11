@@ -41,21 +41,28 @@ public class ChangeVariableNameCommand extends Command {
         }
         this.newVarNameDialog.show();
         
-        varToBeChanged = (Pair) this.newVarNameDialog.getOldVarName();
-        newVarName = this.newVarNameDialog.getNewVarName();
-        
-        if (newVarName != null && !newVarName.equals("")) {
-	        if (c.isTopConfiguration() && (varToBeChanged.snd().size() > 1 || (varToBeChanged.snd().size() == 1 && !varToBeChanged.snd().get(0).isDirectSonOfTheTopConfiguration()) ) ) {
-	        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-	        }  else  {
-	        	for (HComponent innerC : varToBeChanged.snd()) {
-		            innerC.setVariableName(newVarName);
+        if (newVarNameDialog.getButtonPressed() == DialogChangeVarName.BUTTON_OK) {
+	        varToBeChanged = (Pair) this.newVarNameDialog.getOldVarName();
+	        newVarName = this.newVarNameDialog.getNewVarName();
+	        HComponent topC = (HComponent) c.getTopConfiguration();
+	        
+	        if (newVarName != null && !newVarName.equals("")) {
+		        if (c.isTopConfiguration() && (varToBeChanged.snd().size() > 1 || (varToBeChanged.snd().size() == 1 && !varToBeChanged.snd().get(0).isDirectSonOfTheTopConfiguration()) ) ) {
+		        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+		        } else {		        
+		        	for (HComponent innerC : varToBeChanged.snd()) {
+		        		if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName())) {
+				        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a bound variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+				        	break;
+				        }
+		        		innerC.setVariableName(newVarName);
+			        }
+			        c.adviceChangeParameterName();
 		        }
-		        c.adviceChangeParameterName();
+	        } else {
+	        	System.err.println("Invalid Variable Name !! (ChangeVariableNameCommand.execute())");
+	        	
 	        }
-        } else {
-        	System.err.println("Invalid Variable Name !! (ChangeVariableNameCommand.execute())");
-        	
         }
         
 		return;
