@@ -1436,8 +1436,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     }
     
     public void setVariableName(String varName) {
-    	this.variableName = varName;
-		listeners.firePropertyChange(PROPERTY_IS_PARAMETER,null,this.getBounds());
+    	if (!this.variableName.equals(varName)) {
+    	    this.variableName = varName;
+		    listeners.firePropertyChange(PROPERTY_IS_PARAMETER,null,this.getBounds());
+    	}
 
     }
     
@@ -1718,7 +1720,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     
  
     
-    static public void supersede(HComponent c1, HComponent c2, String newVarName) {
+    static public void supersede(HComponent c1, HComponent c2, String newVarName, HComponent oModel) {
 
     		// c2 <: c1;
     	    // c2 will replace its c1-image.
@@ -1735,7 +1737,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
    	    } else {
    	    	//if (c2.getVariableName().equals("?")) {
    	    		// if (!c1.getVariableName().equals("?"))
-   	    			c2.setVariableName(c1.getVariableName());	
+   	    			c2.setVariableName(c1.getVariableName());
+   	    			oModel.setVariableName(c1.getVariableName());
    	    	//} 
 	    	c2.parameterIdentifier.putAll(c1.parameterIdentifier);
    	    }
@@ -2220,9 +2223,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
              Iterator<Entry<String,HComponent>> fs_ = rsNext.entrySet().iterator();
              Stack<Entry<String,HComponent>> fs = new Stack<Entry<String,HComponent>>();
              while (fs_.hasNext()) fs.push(fs_.next()); 
-             
-             HComponent copyToRemember = null;
-             
+                          
              while (!fs.empty()) {
              
             	 Entry<String,HComponent> f = fs.pop();
@@ -2239,12 +2240,11 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			 		 
 			         for (int i=0; i<n; i++) {
 			        	 HComponent modelCopy = getMyCopy(value);
-			        	 copyToRemember = modelCopy;
 			        	 modelCopies.add(modelCopy);
 			        	 modelCopy.unlinkFromConfiguration();
 			         }
 			         
-			         Iterator mcs = modelCopies.iterator();
+			         Iterator<HComponent> mcs = modelCopies.iterator();
 			         Iterator<HComponent> cs = componentsToSupply.iterator();
 			         String newVarName = key + "@" + System.currentTimeMillis();
 			         while (mcs.hasNext()) {
@@ -2253,12 +2253,12 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			        	  for (HComponent pc : c.getDirectParentConfigurations()) {
 			  		          pc.loadComponent(modelCopy,new Point(0,0));
 			        	  }
-		                  HComponent.supersede(c,modelCopy,newVarName);
+		                  HComponent.supersede(c,modelCopy,newVarName, model);
 			         }			         
 			         this.invalidateInterfaceNames();
           	     }    	  
              }             
-             this.rememberSupply(varName, copyToRemember);
+             this.rememberSupply(varName, model);
        	     this.removeComponent(model);
     	  }
 //    	  System.err.println("Supply OK ! " + varName + "=" + model.getComponentName());

@@ -647,7 +647,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			HComponent baseC = mC2.get(mC1.get(sBaseC));
 			String varName = param.getVarName(); // q.getVarName();
 			baseC.setParameter(formFieldId);
-			baseC.setVariableName(varName);
+			// baseC.setVariableName(varName);
 		}
 
 	}
