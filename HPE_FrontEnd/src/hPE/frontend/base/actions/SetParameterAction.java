@@ -82,7 +82,7 @@ public class SetParameterAction extends SelectionAction {
             
             if (topConfig.getWhoItImplements() == x) return false;
             
-            if (topConfig.isAbstractConfiguration() && topConfig.getWhoItImplements() == null) return false;
+            if (!topConfig.isAbstractConfiguration() && topConfig.getWhoItImplements() == null) return false;
             
             Iterator<HInterface> is = x.getInterfaces().iterator();
 //            while (is.hasNext()) if (!is.next().noSources()) return false; 

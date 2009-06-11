@@ -1,6 +1,7 @@
 package hPE.frontend.base.actions;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.Request;
@@ -54,6 +55,11 @@ public class ChangeVariableNameAction extends SelectionAction {
 			if (!(part.getModel() instanceof HComponent)) return false;
 			HComponent c = (HComponent) part.getModel();
 			// if (c.getConfiguration() == null) return false;
+			for (Entry<String,List<HComponent>> es : c.getParameters2().entrySet()) {
+				for (HComponent cc : es.getValue()) {
+					if (cc.getSupplied() != null) return false;
+				}
+			}
 			if (c.getParameters2().size() == 0) return false;
             if (!c.isDirectSonOfTheTopConfiguration() && !c.isTopConfiguration()) return false;
             if (((HComponent)c.getTopConfiguration()).getWhoItImplements() == c) return false;

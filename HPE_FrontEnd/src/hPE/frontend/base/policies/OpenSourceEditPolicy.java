@@ -1,6 +1,20 @@
 package hPE.frontend.base.policies;
 
-import org.eclipse.core.internal.resources.File;
+import hPE.HPEVersionEditor;
+import hPE.frontend.NAntBuilder;
+import hPE.frontend.base.codegen.HBEAbstractFile;
+import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
+import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.dialogs.HBEVersionControlDialog;
+import hPE.frontend.base.edits.InterfaceEditPart;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import javax.swing.JOptionPane;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -12,41 +26,16 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
-import org.eclipse.gef.editparts.AbstractEditPart;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IEditorRegistry;
-import org.eclipse.ui.IFileEditorMapping;
-import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.internal.EditorManager;
 import org.eclipse.ui.internal.WorkbenchPage;
-import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.registry.EditorDescriptor;
 import org.eclipse.ui.part.FileEditorInput;
-
-// import fr.improve.csharp.editor.CSharpEditor;
-import hPE.HPEVersionEditor;
-import hPE.frontend.NAntBuilder;
-import hPE.frontend.base.codegen.HBEAbstractFile;
-import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
-import hPE.frontend.base.codegen.HBESourceVersion;
-import hPE.frontend.base.codegen.C.HBESynthesizerForC;
-import hPE.frontend.base.dialogs.HBEVersionControlDialog;
-import hPE.frontend.base.edits.InterfaceEditPart;
-import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HInterface;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.swing.JOptionPane;
 
 
 public class OpenSourceEditPolicy extends ComponentEditPolicy {

@@ -24,6 +24,7 @@ import net.sf.nant.release._0._86.beta1.nant.ProjectType;
 import net.sf.nant.release._0._86.beta1.nant.Target;
 import net.sf.nant.release._0._86.beta1.nant.util.NantResourceFactoryImpl;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -158,7 +159,7 @@ public class NAntBuilder implements Runnable {
 							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
 							if (!folderOutputExists) {
 								try {
-									folderOutput.create(true, true, null);
+									NAntBuilder.prepareFolder(folderOutput);
 								} catch (CoreException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -237,6 +238,22 @@ public class NAntBuilder implements Runnable {
 		return project;
 	}
 
+	public static void prepareFolder(IFolder folder) throws CoreException
+	{
+		IContainer parent = folder.getParent();
+		if (parent instanceof IFolder)
+		{
+			IFolder parentFolder = (IFolder) parent;
+			if (!parentFolder.exists())
+		        prepareFolder(parentFolder);
+		}
+		if (!folder.exists()) {
+			folder.create(true,true,null);
+		}
+
+	} 	
+	
+	
 	@Override
 	public void run() {
 		save(this.component, this.monitor);

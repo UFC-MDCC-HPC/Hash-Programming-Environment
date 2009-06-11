@@ -10,11 +10,13 @@ import java.util.List;
 import hPE.util.Pair;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 
 public class ChangeVariableNameCommand extends Command {
 
-	HComponent c;
-	String new_name;
+	private HComponent c;
+	private String new_name;
 	
 	public ChangeVariableNameCommand(HComponent c) {
 		super();
@@ -30,13 +32,11 @@ public class ChangeVariableNameCommand extends Command {
         this.newVarNameDialog.setAlwaysOnTop(true);
         this.newVarNameDialog.setModal(true);
         Map<String,List<HComponent>> m = c.getParameters2();
-        Iterator vs = m.keySet().iterator();
         
-        while (vs.hasNext()) {
-        	 String var = (String) vs.next();
+        for (String var : m.keySet()) {
         	 List<HComponent> innerCs = (List) m.get(var);
         	 HComponent cVar = (HComponent) ((List)innerCs).get(0) ;
-        	 if (cVar.getSupplied()==null) 
+        	 if (cVar.getSupplied()==null) // Só pode alterar se for filho direto da configuração ...
         		 this.newVarNameDialog.addVarName(new Pair(var,innerCs));
         }
         this.newVarNameDialog.show();
@@ -45,12 +45,14 @@ public class ChangeVariableNameCommand extends Command {
         newVarName = this.newVarNameDialog.getNewVarName();
         
         if (newVarName != null && !newVarName.equals("")) {
-	        Iterator cs = ((List) varToBeChanged.snd()).iterator();
-	        while (cs.hasNext()) {
-	        	HComponent innerC = (HComponent) cs.next();
-	            innerC.setVariableName(newVarName);
+	        if (c.isTopConfiguration() && (varToBeChanged.snd().size() > 1 || (varToBeChanged.snd().size() == 1 && !varToBeChanged.snd().get(0).isDirectSonOfTheTopConfiguration()) ) ) {
+	        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+	        }  else  {
+	        	for (HComponent innerC : varToBeChanged.snd()) {
+		            innerC.setVariableName(newVarName);
+		        }
+		        c.adviceChangeParameterName();
 	        }
-	        c.adviceChangeParameterName();
         } else {
         	System.err.println("Invalid Variable Name !! (ChangeVariableNameCommand.execute())");
         	
@@ -59,15 +61,13 @@ public class ChangeVariableNameCommand extends Command {
 		return;
 	}
 	
-    private Pair varToBeChanged = null;
+    private Pair<String, List<HComponent>> varToBeChanged = null;
     private String newVarName = null;
     
 	public void undo () {
         
 		String oldVarName = (String) varToBeChanged.fst();
-        Iterator cs = ((List) varToBeChanged.snd()).iterator();        
-        while (cs.hasNext()) {
-        	HComponent innerC = (HComponent) cs.next();
+		for (HComponent innerC : varToBeChanged.snd()) {
             innerC.setVariableName(oldVarName);
         }
         
@@ -76,9 +76,7 @@ public class ChangeVariableNameCommand extends Command {
 	
 	public void redo () {
 		
-        Iterator cs = ((List) varToBeChanged.snd()).iterator();        
-        while (cs.hasNext()) {
-        	HComponent innerC = (HComponent) cs.next();
+		for (HComponent innerC : varToBeChanged.snd()) {
             innerC.setVariableName(newVarName);
         }
         

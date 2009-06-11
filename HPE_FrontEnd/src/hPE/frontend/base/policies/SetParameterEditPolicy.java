@@ -70,6 +70,7 @@ public void execute(){
    this.dialog = new SetParameterDialog();
 
    dialog.setAlwaysOnTop(true);
+   dialog.setModal(true);
    dialog.pack();
    dialog.setVisible(true);
    
@@ -78,7 +79,7 @@ public void execute(){
    //boolean isUniversal   = this.dialog.isUniversal();
 	// END TODO: EXISTENTIAL TYPE
 
-   String  parId         = this.dialog.getParId();
+   String parId = this.dialog.getParId();
    
     if (dialog.getButtonPressed() == SetParameterDialog.BUTTON_OK) {
         varName = parId;        

@@ -886,7 +886,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	List<HComponent> Cs_ = this.getAllInnerConfigurations();
     	Cs.removeAll(Cs_);
     	this.removeComponent(c1, Cs, c1);
-		
+		listeners.firePropertyChange(UPDATE_NAME, null, name); //$NON-NLS-2$//$NON-NLS-1$
 	}
 
 	public void removeComponent(HComponent the_component,List<HComponent> C, HComponent c1) {
@@ -1733,10 +1733,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	    	c1.setVariableName(newVarName);
     	    	c2.setVariableName(newVarName); 
    	    } else {
-   	    	if (c2.getVariableName().equals("?")) {
-   	    		if (!c1.getVariableName().equals("?"))
+   	    	//if (c2.getVariableName().equals("?")) {
+   	    		// if (!c1.getVariableName().equals("?"))
    	    			c2.setVariableName(c1.getVariableName());	
-   	    	} 
+   	    	//} 
 	    	c2.parameterIdentifier.putAll(c1.parameterIdentifier);
    	    }
             
@@ -2221,6 +2221,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
              Stack<Entry<String,HComponent>> fs = new Stack<Entry<String,HComponent>>();
              while (fs_.hasNext()) fs.push(fs_.next()); 
              
+             HComponent copyToRemember = null;
              
              while (!fs.empty()) {
              
@@ -2237,7 +2238,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			 		 List<HComponent> modelCopies = new ArrayList<HComponent>();
 			 		 
 			         for (int i=0; i<n; i++) {
-			        	 HComponent modelCopy = getMyCopy(value); 
+			        	 HComponent modelCopy = getMyCopy(value);
+			        	 copyToRemember = modelCopy;
 			        	 modelCopies.add(modelCopy);
 			        	 modelCopy.unlinkFromConfiguration();
 			         }
@@ -2256,7 +2258,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			         this.invalidateInterfaceNames();
           	     }    	  
              }             
-             this.rememberSupply(varName, model);
+             this.rememberSupply(varName, copyToRemember);
        	     this.removeComponent(model);
     	  }
 //    	  System.err.println("Supply OK ! " + varName + "=" + model.getComponentName());
