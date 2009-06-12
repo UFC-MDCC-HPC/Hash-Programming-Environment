@@ -62,7 +62,8 @@ public class ExposedAction extends SelectionAction {
         
         if (topC.getSuperType() == c) return false;
             
-//        if (topC.isAbstractConfiguration() || topC.getWhoItImplements() != null) return false;
+        // por algum motivo estaca com comentário antes ...
+        if (!topC.isAbstractConfiguration() || topC.getWhoItImplements() != null) return false;
         
  
 		return true;

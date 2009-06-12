@@ -645,9 +645,20 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String formFieldId = param.getFormFieldId();
 			String sBaseC = param.getComponentRef();
 			HComponent baseC = mC2.get(mC1.get(sBaseC));
+			baseC.setParameter(formFieldId);			
+		}
+
+	}
+
+	private void setupVariableNamesOfTopLevelInners(ComponentBodyType xCinfo) {
+
+		for (ParameterType param : xCinfo.getParameter()) {
+			String sBaseC = param.getComponentRef();
+			HComponent baseC = mC2.get(mC1.get(sBaseC));
 			String varName = param.getVarName(); // q.getVarName();
-			baseC.setParameter(formFieldId);
-			// baseC.setVariableName(varName);
+			if (baseC.isDirectSonOfTheTopConfiguration()) {
+			   baseC.setVariableName(varName);			
+			}
 		}
 
 	}
@@ -825,6 +836,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				// ggg
 				setupParameters(xCinfo);
 				supplyParameters(xCinfo);
+				setupVariableNamesOfTopLevelInners(xCinfo);
 				laterFetchPorts();
 
 				if (this.isConcrete)
@@ -2066,7 +2078,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							usX.setCRef(s.getBinding().getEntry()
 									.getConfiguration().getRef());
 							usX.setSRef(s.getBinding().getEntry().getName2());
-							usX.setRef(s.getInterfaceSlice().getName());
+							if (s.getInterfaceSlice() != null) {
+							   usX.setRef(s.getInterfaceSlice().getName());
+							} else {
+							   // usX.setRef(???);
+							}
 							usX.setSplitReplica(u.isClone() ? u.cloneOf()
 									.getIndexOfClone(u) : 0);
 							linksX.add(usX);
