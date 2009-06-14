@@ -57,6 +57,7 @@ namespace HPE_DGAC_LoadDB
                     e.Id_enumerator = buildEnumeratorId(eX.originRef, eX.@ref);
                     e.From_split = eX.fromSplit;
                     e.Variable = eX.varId;
+                    e.Valuation = eX.cardinality > 1 ? -1 : 1;
 
                     rXs.Add(e.Id_enumerator, eX.links);
                     eList.Add(e.Id_enumerator, e);
@@ -241,7 +242,7 @@ namespace HPE_DGAC_LoadDB
                         ews.Id_split = ++splitIx;
                         ews.Id_enumerator = id_enumerator_group;
                         ews.Id_enumerator_split = id_enumerator_split_2;
-                        ews.Id_total_split = s.n;    // sem essa linha Id_total_split sempre é ZERO. Fiquei na dúvida ...
+                        ews.Id_total_split = s.n;    // sem essa linha Id_total_split sempre ï¿½ ZERO. Fiquei na dï¿½vida ...
 
                         EnumeratorSplitDAO splitdao = new EnumeratorSplitDAO();
                         splitdao.insert(ews);
