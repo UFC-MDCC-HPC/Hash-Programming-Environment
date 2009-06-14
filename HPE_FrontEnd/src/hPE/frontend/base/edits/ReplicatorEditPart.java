@@ -175,7 +175,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 		if (ev.getPropertyName().equals(HReplicator.EDIT_VARID)) {
 			this.refreshVisuals();
 			this.refreshSourceConnections();
-			this.refreshSourceConnections();
+			this.refreshTargetConnections();
 		}
 		if (ev.getPropertyName().equals(HReplicator.PROPERTY_JOINED)) {
 			ConfigurationEditPart c = (ConfigurationEditPart) this.getParent();

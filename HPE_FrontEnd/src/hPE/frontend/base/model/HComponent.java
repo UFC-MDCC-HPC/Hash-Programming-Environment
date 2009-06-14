@@ -760,7 +760,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 		for (HReplicator r : c.gettReplicators()) {
 			if (!r.isJoined()) {
-				if ((r.pointsToSomeUnitOf(c)) && r.getFactor() != 1) { 
+				if ((r.pointsToSomeUnitOf(c)) /* && r.getFactor() != 1*/) { 
 					this.newReplicator(r);
 					r.setConfiguration(this);
 					varsAdded.add(r.getVarId());
@@ -1303,6 +1303,21 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			return link.isReplicatorFactorDetermined();
 		else
 			return false; // RAISES EXCEPTION !!!! ERROR !!!
+	}
+	
+	public List<String> getModuleNames(String version) {
+		List<String> l = new ArrayList<String>();
+		for (IHUnit u : this.getUnits()) {
+			HInterface i = (HInterface) u.getInterface();
+		    for (HBESourceVersion<HBEAbstractFile> m : i.getSourceVersions()) {
+		    	if (m.getVersionID().equals(version == null ? "1.0.0.0" : version)) {
+		    		for (HBEAbstractFile f : m.getFiles()) {
+		    	        l.add(f.getBinaryPath().toString());		
+		    		}
+		    	}
+		    }
+		}
+		return l;
 	}
 
 	/**
@@ -3621,8 +3636,12 @@ public static void runCommand(String[] cmd, String[] env, java.io.File file) {
 		} 
 
 	} 
-	catch(IOException e1) {} 
-	catch(InterruptedException e2) {} 	
+	catch(IOException e1) {
+		e1.printStackTrace();
+	} 
+	catch(InterruptedException e2) {
+		e2.printStackTrace();
+	} 	
 }
 
 public static URI getStandardLocationPath(String pk, String componentName, String version) {

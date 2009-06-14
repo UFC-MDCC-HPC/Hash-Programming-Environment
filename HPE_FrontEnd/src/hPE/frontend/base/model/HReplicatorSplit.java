@@ -173,7 +173,16 @@ public class HReplicatorSplit extends HVisualElement implements IPointsToReplica
 	 * @uml.property  name="linkToReplicator"
 	 */
 	public List<HLinkToReplicator> getLinksToVisibleReplicators() {
-		return (List<HLinkToReplicator>) linksToReplicators;
+//		return (List<HLinkToReplicator>) linksToReplicators;
+		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
+		for (HLinkToReplicator l : linksToReplicators) {
+			HReplicator r = l.getReplicator();
+			if (!r.getHidden()) 
+				visibleLinks.add(l);
+		}
+		
+		return visibleLinks;
+		
 	}
 
 	public List<HLinkToReplicator> getLinksToReplicators() {

@@ -408,6 +408,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				
 		try {
 			copyDirectory(new File(path.toString()), new File(cachePath));
+  		    String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
+  		    List<String> l = innerC.getModuleNames(version);
+  		    for (String fileName : l) {
+	            HComponent.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, new String[] {}, path.toFile());
+  		    }
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -453,7 +459,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 		}
 		
-		System.out.println("Directory copied.");
+		// System.out.println("Directory copied.");
 
 }
 	

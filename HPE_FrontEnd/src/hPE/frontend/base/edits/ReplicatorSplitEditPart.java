@@ -72,8 +72,7 @@ public class ReplicatorSplitEditPart extends AbstractGraphicalEditPart
 		HReplicatorSplit model = (HReplicatorSplit) getModel();
 		
 		Rectangle parentBounds = ((AbstractGraphicalEditPart) getParent()).getFigure().getBounds();		 
-        figure.setBounds(model.getBounds().getTranslated(parentBounds.getLocation()));
-		
+        figure.setBounds(model.getBounds().getTranslated(parentBounds.getLocation()));		
 		
 	}
 

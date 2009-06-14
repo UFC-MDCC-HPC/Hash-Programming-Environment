@@ -540,12 +540,7 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
-	/*	for (HReplicatorSplit s : this.getSplits()) {
-			for (HLinkToReplicator l : s.getLinksToReplicators()) {
-				l.setInvisible(true);
-			}
-		} */
-		listeners.firePropertyChange(HReplicator.PROPERTY_BOUNDS,null,varid);
+		listeners.firePropertyChange(HReplicator.PROPERTY_JOINED, null, varid);
 		if (this.isJoined()) this.getJoined().setHidden(this.getJoined().getHidden());
 	}
 	

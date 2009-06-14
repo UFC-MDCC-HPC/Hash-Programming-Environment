@@ -88,11 +88,21 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	 			HInterface i1 = p.snd();
 	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
 	 			if (c.isParameter() && c.getSupplied() != null) {
-	 			   HInterface bound = p.snd();	 			   
+		 			   List<HInterface> bounds = new ArrayList<HInterface>();
+		 			   HInterface bound = p.snd();
+		 			   bounds.add(bound);
+		 			   traverseParams(bound,bounds);
+		 			   for (HInterface oneBound : bounds) {
+		 				  if (!paramBoundsName.contains(oneBound.getPrimName())) {
+		 					  paramBoundsName.add(oneBound.getPrimName());
+		 					  paramBounds.add(oneBound);
+		 				  }
+		 			   }
+/*	 			   HInterface bound = p.snd();	 			   
 	 			   if (!paramBoundsName.contains(bound.getPrimName())) { 
 	 				   paramBoundsName.add(bound.getPrimName());
 	 				   paramBounds.add(bound);
-	 			   }
+	 			   } */
 	               programTextVarBounds += "where " + varName.split("@")[0] + ":" + bound.getName2(false, varContext) + "\n";
 	 			}
 	 			varContext.add(varName);
@@ -337,6 +347,16 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		
 	    
 	}
+
+	protected void traverseParams(HInterface bound, List<HInterface> bounds) {
+		for (Triple<String,HInterface,String> p : bound.getParameters()) {
+			HInterface bound_ = p.snd();
+			bounds.add(bound_);
+			traverseParams(bound_, bounds);
+		}		
+	}
+
+
 
 	private String isParameter(String typeName2, List<String> varContext_) {
 

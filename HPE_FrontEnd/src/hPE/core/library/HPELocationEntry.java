@@ -112,7 +112,7 @@ public class HPELocationEntry {
 			}
 		}
 		
-		String str = htable.get(pk); //retorna todos o components numa string separados por espaço
+		String str = htable.get(pk); //retorna todos o components numa string separados por espaï¿½o
 		
 		if(str!=null){
 			StringTokenizer token= new StringTokenizer(str); 

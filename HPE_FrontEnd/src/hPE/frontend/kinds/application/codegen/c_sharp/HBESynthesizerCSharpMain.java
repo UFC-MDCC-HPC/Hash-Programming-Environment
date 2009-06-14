@@ -50,12 +50,17 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
  		
         List<String> paramActualsName = new ArrayList<String>();
  		for (Triple<String,HInterface,String> p : i.getParameters3()) {
- 			HInterface i1 = p.snd();
- 			if (!paramActualsName.contains(i1.getPrimName())) {
-	 			paramActualsName.add(i1.getPrimName());
-	 			HComponent c1 = (HComponent) i1.getConfiguration();
-	 			mainText += "using " + c1.getPackagePath() + "." + c1.getComponentName() + ";\n";
-	 			dependencies.add(buildDependencyName(c1.getPackagePath().toString(), c1.getComponentName(), i1.getPrimName()));
+ 			HInterface i1_ = p.snd();
+ 			List<HInterface> l = new ArrayList<HInterface>();
+ 			l.add(i1_);
+ 			this.traverseParams(i1_, l);
+ 			for (HInterface i1 : l) { 
+	 			if (!paramActualsName.contains(i1.getPrimName())) {
+		 			paramActualsName.add(i1.getPrimName());
+		 			HComponent c1 = (HComponent) i1.getConfiguration();
+		 			mainText += "using " + c1.getPackagePath() + "." + c1.getComponentName() + ";\n";
+		 			dependencies.add(buildDependencyName(c1.getPackagePath().toString(), c1.getComponentName(), i1.getPrimName()));
+	 			}
  			}
  		}
  		
@@ -72,6 +77,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
         mainText += "\t\t\t" + unitName + ".createSlices();\n";
         
         mainText += "\t\t\t" + unitName + ".compute();\n";
+        mainText += "\t\t\tBackEnd.DGACFinalize();\n";
         
         mainText += "\n\t\t}\n"; // end main method;        
         mainText += "\n\t}\n"; // end main class
