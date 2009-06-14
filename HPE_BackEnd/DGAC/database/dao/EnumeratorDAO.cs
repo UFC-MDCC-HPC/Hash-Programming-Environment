@@ -17,8 +17,8 @@ namespace DGAC.database
         public void insert(Enumerator ac)
         {
             String sql =
-                "INSERT INTO hashmodel.enumerator (id_abstract, id_enumerator, split_from, variable)" +
-                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_enumerator + "'," + ac.From_split + ",'" + ac.Variable + "')";
+                "INSERT INTO hashmodel.enumerator (id_abstract, id_enumerator, split_from, variable, valuation)" +
+                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_enumerator + "'," + ac.From_split + ",'" + ac.Variable + "'," + ac.Valuation + ")";
 
             Connector.performSQLUpdate(sql);
         }
@@ -30,7 +30,7 @@ namespace DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_enumerator, variable, split_from " +
+                "SELECT id_abstract, id_enumerator, variable, split_from, valuation " +
                 "FROM hashmodel.enumerator " +
                 "WHERE id_abstract=" + id_abstract;
             dbcmd.CommandText = sql;
@@ -42,6 +42,7 @@ namespace DGAC.database
                 u.Id_enumerator = (string)reader["id_enumerator"];
                 u.From_split = ((int)reader["split_from"])==0 ? false : true;
                 u.Variable = (string)reader["variable"];
+                u.Valuation = (int)reader["valuation"];
 
                 list.Add(u);
             }//while

@@ -372,7 +372,7 @@ namespace DGAC
             return -1;
         }
 
-        public void DGACFinalize()
+        public static void DGACFinalize()
         {
             Connector.closeConnection();
             if (open_log_out)
@@ -1106,7 +1106,10 @@ namespace DGAC
                 IList<EnumeratorSplit> esList = esdao.listSplits(e.Id_abstract, e.Id_enumerator);
                 if (esList.Count == 0)
                 {
-                    rList.Add(e.Variable);
+                    if (e.Valuation == -1)
+                    {
+                        rList.Add(e.Variable);
+                    }
                 }
             }
             string[] r = new string[rList.Count];
@@ -1174,9 +1177,9 @@ namespace DGAC
                     {
                         Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
 
-                        int v;
+                        int v = 1;
                         enums.TryGetValue(e.Variable, out v);
-                        count *= v;
+                        count *= v > 0 ? v : 1;
                     }
                     char[] char_sep = new char[] { '.' };
                     String[] class_name_arr = u.Class_name.Split(char_sep);

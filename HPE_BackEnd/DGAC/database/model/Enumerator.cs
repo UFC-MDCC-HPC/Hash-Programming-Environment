@@ -38,6 +38,14 @@ namespace DGAC.database
             get { return variable; }
             set { variable = value; }
         }
+
+        private int valuation;
+
+        public int Valuation
+        {
+            get { return valuation; }
+            set { valuation = value; }
+        }
        
 
     }
