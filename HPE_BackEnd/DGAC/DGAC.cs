@@ -1095,26 +1095,30 @@ namespace DGAC
         }
 
         private string[] readEnvironmentEnumerators(int id_abstract)
-        {            
+        {
             EnumeratorDAO edao = new EnumeratorDAO();
-            EnumeratorSplitDAO esdao = new EnumeratorSplitDAO();
+            EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
+            InterfaceDAO idao = new InterfaceDAO();
 
-            IList<Enumerator> eList = edao.list(id_abstract);
             IList<string> rList = new List<string>();
-            foreach (Enumerator e in eList)
+            IList<DGAC.database.Interface> iList = idao.list(id_abstract);
+
+            foreach (DGAC.database.Interface i in iList)
             {
-                IList<EnumeratorSplit> esList = esdao.listSplits(e.Id_abstract, e.Id_enumerator);
-                if (esList.Count == 0)
+                IList<EnumerationInterface> eiList = eidao.listByInterface(id_abstract, i.Id_interface);
+                foreach (EnumerationInterface ei in eiList)
                 {
+                    Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
                     if (e.Valuation == -1)
                     {
                         rList.Add(e.Variable);
                     }
                 }
             }
+
             string[] r = new string[rList.Count];
             rList.CopyTo(r, 0);
-
+            
             return r;
         }
 

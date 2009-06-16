@@ -60,7 +60,7 @@ namespace DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_enumerator, variable, split_from " +
+                "SELECT id_abstract, id_enumerator, variable, split_from, valuation " +
                 "FROM hashmodel.enumerator " +
                 "WHERE id_abstract=" + id_abstract + " AND " + 
                 "variable like '" + variable + "'";
@@ -73,6 +73,7 @@ namespace DGAC.database
                 u.Id_enumerator = (string)reader["id_enumerator"];
                 u.From_split = ((int)reader["split_from"]) == 0 ? false : true;
                 u.Variable = (string)reader["variable"];
+                u.Valuation = (int)reader["valuation"];
 
             }//while
             // clean up
@@ -89,7 +90,7 @@ namespace DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_enumerator, variable, split_from " +
+                "SELECT id_abstract, id_enumerator, variable, split_from, valuation " +
                 "FROM hashmodel.enumerator " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_enumerator like '" + id_enumerator + "'";
@@ -102,6 +103,7 @@ namespace DGAC.database
                 u.Id_enumerator = (string)reader["id_enumerator"];
                 u.From_split = ((int)reader["split_from"]) == 0 ? false : true;
                 u.Variable = (string)reader["variable"];
+                u.Valuation = (int)reader["valuation"];
 
             }//while
             // clean up
