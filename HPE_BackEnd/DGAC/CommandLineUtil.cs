@@ -62,7 +62,7 @@ public class CommandLineUtil{
 
           createFile(contents, moduleName);
 
-          runCommand(Constants.cs_compiler, " /noconfig /define:DEBUG;TRACE -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:exe /out:" + Constants.PATH_BIN + moduleNameWithoutExtension + ".exe " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs " + mounted_references);
+          runCommand(Constants.cs_compiler, " /noconfig -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:exe /out:" + Constants.PATH_BIN + moduleNameWithoutExtension + ".exe " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs " + mounted_references);
 
           return true;      
            
@@ -105,7 +105,6 @@ public class CommandLineUtil{
   public static bool compile_source(string contents, string moduleName, string[] references){
           string moduleNameWithoutExtension = moduleName.Split('.')[0];
           
-
           //references
 
           string mounted_references = "";
@@ -120,7 +119,7 @@ public class CommandLineUtil{
 
           createFile(contents, moduleName);
 
-          runCommand(Constants.cs_compiler, "-r:jefferson.environment.impl.MPIBasicImpl\\IMPIBasicImpl.dll /noconfig /define:DEBUG;TRACE /debug+ /debug:full /optimize- -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references + " -r:MPI.NET" + Path.DirectorySeparatorChar + "MPI.dll");
+          runCommand(Constants.cs_compiler, "-r:jefferson.environment.impl.MPIBasicImpl\\IMPIBasicImpl.dll /noconfig /optimize+ -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references + " -r:MPI.NET" + Path.DirectorySeparatorChar + "MPI.dll");
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }

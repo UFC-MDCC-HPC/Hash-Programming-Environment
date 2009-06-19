@@ -443,7 +443,7 @@ namespace DGAC
                 else if (step == 2) return Int32.Parse(a);
                 else step = 0;
             }
-            return -1;
+            return 1;
         }
 
         public static void openConnection()
@@ -1203,7 +1203,6 @@ namespace DGAC
                     TextReader tr = new StreamReader(fi.DirectoryName + Path.DirectorySeparatorChar + fi.Name);
                     str_output[count_procs++] = tr.ReadToEnd();
                     tr.Close();
-
                 }
             }
             catch (Exception e)
