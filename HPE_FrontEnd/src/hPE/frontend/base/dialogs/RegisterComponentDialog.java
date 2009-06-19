@@ -217,6 +217,8 @@ public class RegisterComponentDialog extends JDialog {
 
 	private void registerComponent(URI uri, String version, boolean freeSource) {
 		
+		String errorMessage= null;
+		
 		if (c.versionSupplied(version == null ? "1.0.0.0" : version)) {
 			if (c.versionCompiled(version == null ? "1.0.0.0" : version)){
 				try {
@@ -234,7 +236,6 @@ public class RegisterComponentDialog extends JDialog {
 					String ctName = c.getComponentName();			
 					
 					HComponentFactory factory = HComponentFactoryImpl.eInstance; 
-					c.setRemoteURI(uri);
 					ComponentType cX = factory.marshallComponent(c);
 					prepareForRegistering(cX, freeSource);
 					IPath filePath = (new Path(c.getLocalLocation())).removeLastSegments(1).append("temp").append("temp.xml");
@@ -249,25 +250,34 @@ public class RegisterComponentDialog extends JDialog {
 					String message = server.registerComponent(pkName, ctName, version, contents, resources);
 
 					JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+					c.setRemoteURI(uri);
 					
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					errorMessage = e.getMessage();
 				} catch (ServiceException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					errorMessage = e.getMessage();
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					errorMessage = e.getMessage();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					errorMessage = e.getMessage();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					errorMessage = e.getMessage();
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					errorMessage = e.getMessage();
+				} finally {
+					JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);

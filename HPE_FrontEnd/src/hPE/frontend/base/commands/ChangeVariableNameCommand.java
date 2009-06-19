@@ -47,7 +47,13 @@ public class ChangeVariableNameCommand extends Command {
 	        HComponent topC = (HComponent) c.getTopConfiguration();
 	        
 	        if (newVarName != null && !newVarName.equals("")) {
-		        if (c.isTopConfiguration() && (varToBeChanged.snd().size() > 1 || (varToBeChanged.snd().size() == 1 && !varToBeChanged.snd().get(0).isDirectSonOfTheTopConfiguration()) ) ) {
+	        	
+	        	boolean allowed = true;
+	        	for (HComponent c : varToBeChanged.snd()) {
+	        		allowed &= c.isDirectSonOfTheTopConfiguration();
+	        	}
+	        		        	
+		        if (c.isTopConfiguration() && !allowed) {
 		        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 		        } else {		        
 		        	for (HComponent innerC : varToBeChanged.snd()) {

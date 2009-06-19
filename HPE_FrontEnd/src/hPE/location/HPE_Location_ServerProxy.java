@@ -50,22 +50,16 @@ public class HPE_Location_ServerProxy implements hPE.location.HPE_Location_Serve
     return hPE_Location_Server.getName();
   }
   
-  public java.lang.String unregisterComponent(java.lang.String packageName, java.lang.String component, java.lang.String version) throws java.rmi.RemoteException{
+  public java.lang.String getComponent(java.lang.String packageName, java.lang.String componentName, java.lang.String version) throws java.rmi.RemoteException{
     if (hPE_Location_Server == null)
       _initHPE_Location_ServerProxy();
-    return hPE_Location_Server.unregisterComponent(packageName, component, version);
+    return hPE_Location_Server.getComponent(packageName, componentName, version);
   }
   
   public java.lang.String registerComponent(java.lang.String packageName, java.lang.String component, java.lang.String version, java.lang.String contents, java.util.HashMap binaries) throws java.rmi.RemoteException{
     if (hPE_Location_Server == null)
       _initHPE_Location_ServerProxy();
     return hPE_Location_Server.registerComponent(packageName, component, version, contents, binaries);
-  }
-  
-  public java.lang.String getComponent(java.lang.String packageName, java.lang.String componentName, java.lang.String version) throws java.rmi.RemoteException{
-    if (hPE_Location_Server == null)
-      _initHPE_Location_ServerProxy();
-    return hPE_Location_Server.getComponent(packageName, componentName, version);
   }
   
   public java.lang.String fetchPackages(boolean showObsolete) throws java.rmi.RemoteException{
@@ -78,6 +72,12 @@ public class HPE_Location_ServerProxy implements hPE.location.HPE_Location_Serve
     if (hPE_Location_Server == null)
       _initHPE_Location_ServerProxy();
     return hPE_Location_Server.getPresentationMessage();
+  }
+  
+  public java.lang.String unregisterComponent(java.lang.String packageName, java.lang.String component, java.lang.String version) throws java.rmi.RemoteException{
+    if (hPE_Location_Server == null)
+      _initHPE_Location_ServerProxy();
+    return hPE_Location_Server.unregisterComponent(packageName, component, version);
   }
   
   public java.lang.String markAsObsolete(java.lang.String packageName, java.lang.String componentName, java.lang.String version) throws java.rmi.RemoteException{

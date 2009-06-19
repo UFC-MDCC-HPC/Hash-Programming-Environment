@@ -312,7 +312,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			mC1.put(xInnerC.getLocalRef(), xInnerC);
 
-			String name = xInnerC.getName();
+			String name = xInnerC.getName();	
 			URI locationUri = URI.createURI(xInnerC.getLocation());
 			String package_ = xInnerC.getPackage();
 			String ref = xInnerC.getLocalRef();

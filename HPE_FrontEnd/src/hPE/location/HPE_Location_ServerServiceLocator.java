@@ -22,7 +22,7 @@ public class HPE_Location_ServerServiceLocator extends org.apache.axis.client.Se
     }
 
     // Use to get a proxy class for HPE_Location_Server
-    private java.lang.String HPE_Location_Server_address = "http://localhost:8081/HPE_Location/HPE_Location_Server.jws";
+    private java.lang.String HPE_Location_Server_address = "http://localhost:8080/HPE_Location/HPE_Location_Server.jws";
 
     public java.lang.String getHPE_Location_ServerAddress() {
         return HPE_Location_Server_address;
@@ -105,7 +105,7 @@ public class HPE_Location_ServerServiceLocator extends org.apache.axis.client.Se
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://localhost:8081/HPE_Location/HPE_Location_Server.jws", "HPE_Location_ServerService");
+        return new javax.xml.namespace.QName("http://localhost:8080/HPE_Location/HPE_Location_Server.jws", "HPE_Location_ServerService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class HPE_Location_ServerServiceLocator extends org.apache.axis.client.Se
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://localhost:8081/HPE_Location/HPE_Location_Server.jws", "HPE_Location_Server"));
+            ports.add(new javax.xml.namespace.QName("http://localhost:8080/HPE_Location/HPE_Location_Server.jws", "HPE_Location_Server"));
         }
         return ports.iterator();
     }

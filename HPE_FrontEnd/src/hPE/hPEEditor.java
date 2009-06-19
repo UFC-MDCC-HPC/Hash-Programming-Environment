@@ -803,7 +803,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		
 		// todo add your palette drawers and entries here
 
-		PaletteDrawer componentsDrawer = new PaletteDrawer("Elements");
+		PaletteDrawer componentsDrawer = new PaletteDrawer("Configuration Elements");
 
 		CombinedTemplateCreationEntry component = new CombinedTemplateCreationEntry(
 				"Unit",
@@ -815,8 +815,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		componentsDrawer.add(component);		
 
 		component = new CombinedTemplateCreationEntry(
-				"Replicator",
-				"Create a replicator", 
+				"Enumerator",
+				"Create an enumerator", 
 				HReplicator.class,
 				new SimpleFactory(HReplicator.class), 
 				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"), 
