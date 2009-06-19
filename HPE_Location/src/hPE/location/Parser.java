@@ -31,10 +31,11 @@ public class Parser implements Observer{
 	private Marshaller marshaller;
 	private File file; 
 	public static final String homeDir =System.getProperty("user.home") + File.separatorChar;
+	public static  Properties properties = null; // Parser.getPropertiesFile();
 	
 	
 	public Parser() {
-		Properties properties = Parser.getPropertiesFile();
+		properties = Parser.getPropertiesFile();
 		String path = properties.getProperty("LOCATION_HOME");
 		System.out.println("PATH: " + path);
 		

@@ -227,14 +227,14 @@ public class LocationService implements HLocationService, Subject {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return "Local Location";
+		String name = Parser.properties.getProperty("NAME");
+		return name == null ? "unamed" : name;
 	}
 
 	@Override
 	public String getPresentationMessage() {
-		// TODO Auto-generated method stub
-		return "I am the local location ...";
+		String message = Parser.properties.getProperty("MESSAGE");
+		return message == null ? "no message" : message; 
 	}
 
 	public void verifyConsistency(PackageListType packages){
