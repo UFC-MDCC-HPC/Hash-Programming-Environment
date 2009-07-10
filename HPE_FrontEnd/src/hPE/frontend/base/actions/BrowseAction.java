@@ -17,10 +17,10 @@ import hPE.HPEPlugin;
 public class BrowseAction extends SelectionAction {
 
 	private static final String
-		BROWSE_REQUEST = "Browse";
+		BROWSE_REQUEST = "Browse/Deploy/Run...";
 	
 	public static final String
-        BROWSE = "Browse";
+        BROWSE = "Browse/Deploy/Run...";
 
 	Request request;
 	boolean show;

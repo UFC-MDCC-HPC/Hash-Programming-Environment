@@ -17,7 +17,7 @@ public BrowseEditPolicy() {
 }
 	
 private static final String
-	BROWSE_REQUEST = "Browse";  //$NON-NLS-1$
+	BROWSE_REQUEST = "Browse/Deploy/Run...";  //$NON-NLS-1$
 
 public Command getCommand(Request request) {
 		

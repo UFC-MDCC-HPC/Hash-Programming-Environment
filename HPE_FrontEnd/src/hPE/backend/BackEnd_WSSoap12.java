@@ -8,8 +8,8 @@
 package hPE.backend;
 
 public interface BackEnd_WSSoap12 extends java.rmi.Remote {
-    public java.lang.String deployHashComponent(byte[] data) throws java.rmi.RemoteException;
+    public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password_) throws java.rmi.RemoteException;
     public byte[] readEnvironment() throws java.rmi.RemoteException;
-    public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls) throws java.rmi.RemoteException;
+    public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls, java.lang.String userName, java.lang.String password_) throws java.rmi.RemoteException;
     public java.lang.String hosts() throws java.rmi.RemoteException;
 }

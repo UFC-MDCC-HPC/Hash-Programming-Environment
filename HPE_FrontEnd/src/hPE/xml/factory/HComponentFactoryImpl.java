@@ -47,6 +47,7 @@ import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.util.CommandLine;
 import hPE.util.Pair;
 import hPE.xml.component.ActionActivateType;
 import hPE.xml.component.ActionCombinatorAltType;
@@ -411,7 +412,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
   		    String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
   		    List<String> l = innerC.getModuleNames(version);
   		    for (String fileName : l) {
-	            HComponent.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, new String[] {}, path.toFile());
+	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, new String[] {}, path.toFile());
   		    }
 
 		} catch (IOException e) {

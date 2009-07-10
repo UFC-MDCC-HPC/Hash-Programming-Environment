@@ -2,6 +2,7 @@ package hPE.frontend.base.dialogs;
 
 import hPE.backend.BackEnd_WSLocator;
 import hPE.backend.BackEnd_WSSoap;
+import hPE.backend.SecureString;
 import hPE.frontend.BackEndLocationList;
 import hPE.frontend.BackEndLocationList.BackEndLocationInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
@@ -65,6 +66,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.editors.text.NonExistingFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
+import java.awt.Dimension;
 
 public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener {
 
@@ -116,7 +118,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		myListener = new CheckBoxListener();
 		dcList = new ArrayList<DeployedComponentInfo>();
 		
-		this.setSize(1029, 306);
+		this.setSize(1026, 300);
 		this.setTitle("Back-End Connection");
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
@@ -194,10 +196,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jLabel1Parameters.setBounds(new Rectangle(685, 70, 326, 16));
 			jLabel1Parameters.setText("Parameters");
 			jLabel1 = new JLabel();
-			jLabel1.setBounds(new Rectangle(125, 50, 556, 16));
+			jLabel1.setBounds(new Rectangle(140, 50, 556, 16));
 			jLabel1.setText("Deployed Components");
 			jLabel = new JLabel();
-			jLabel.setBounds(new Rectangle(125, 10, 201, 16));
+			jLabel.setBounds(new Rectangle(140, 10, 201, 16));
 			jLabel.setText("Back-End");
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
@@ -221,9 +223,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jContentPane.add(getJTabbedPane(), null);
 			jContentPane.add(getJScrollPaneAbstract(), null);
 			jContentPane.add(getJScrollPaneParameter(), null);
-			jContentPane.add(getJScrollPaneBrowse(), null);
 			jContentPane.add(jLabel1Parameters, null);
 			jContentPane.add(getJButtonLoad(), null);
+			jContentPane.add(getJScrollPaneBrowse(), null);
 		}
 		return jContentPane;
 	}
@@ -272,7 +274,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JComboBox getJComboBoxBackEnd() {
 		if (jComboBoxBackEnd == null) {
 			jComboBoxBackEnd = new JComboBox();
-			jComboBoxBackEnd.setBounds(new Rectangle(125, 25, 201, 21));
+			jComboBoxBackEnd.setBounds(new Rectangle(140, 25, 201, 21));
 		}
 		return jComboBoxBackEnd;
 	}
@@ -391,8 +393,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JButton getJButtonRunApp() {
 		if (jButtonRunApp == null) {
 			jButtonRunApp = new JButton();
-			jButtonRunApp.setBounds(new Rectangle(730, 20, 126, 26));
-			jButtonRunApp.setText("Run Application");
+			jButtonRunApp.setBounds(new Rectangle(780, 20, 66, 26));
+			jButtonRunApp.setText("Run");
 			jButtonRunApp.addActionListener(this);
 			jButtonRunApp.setEnabled(false);
 }
@@ -417,7 +419,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			gridBagConstraints.gridy = 2;*/
 			jPanel = new JPanel();
 			jPanel.setLayout(null);
-			jPanel.setBounds(new Rectangle(357, 16, 278, 44));
+			jPanel.setBounds(new Rectangle(357, 16, 314, 44));
 			jPanel.setBorder(BorderFactory.createTitledBorder(null, "Sort", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
 			jPanel.add(getJRadioButtonByKind(), null);
 			jPanel.add(getJRadioButtonByPackage(), null);
@@ -435,7 +437,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jRadioButtonByPackage == null) {
 			jRadioButtonByPackage = new JRadioButton();
 			jRadioButtonByPackage.setText("By Package");
-			jRadioButtonByPackage.setBounds(new Rectangle(20, 15, 92, 24));
+			jRadioButtonByPackage.setBounds(new Rectangle(15, 15, 111, 24));
 			jRadioButtonByPackage.setSelected(true);
 			jRadioButtonByPackage.addActionListener(this);
 		}
@@ -452,7 +454,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jRadioButtonByName = new JRadioButton();
 			jRadioButtonByName.setText("By Name");
 			jRadioButtonByName.setHorizontalTextPosition(SwingConstants.RIGHT);
-			jRadioButtonByName.setBounds(new Rectangle(114, 15, 75, 24));
+			jRadioButtonByName.setBounds(new Rectangle(130, 15, 86, 24));
 			jRadioButtonByName.setHorizontalAlignment(SwingConstants.LEFT);
 			jRadioButtonByName.addActionListener(this);
 		}
@@ -468,7 +470,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jRadioButtonByKind == null) {
 			jRadioButtonByKind = new JRadioButton();
 			jRadioButtonByKind.setText("By Kind");
-			jRadioButtonByKind.setBounds(new Rectangle(192, 15, 67, 24));
+			jRadioButtonByKind.setBounds(new Rectangle(225, 15, 81, 24));
 			jRadioButtonByKind.addActionListener(this);
 		}
 		return jRadioButtonByKind;
@@ -482,7 +484,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxApplication() {
 		if (jCheckBoxApplication == null) {
 			jCheckBoxApplication = new JCheckBox();
-			jCheckBoxApplication.setBounds(new Rectangle(10, 25, 111, 21));
+			jCheckBoxApplication.setBounds(new Rectangle(5, 25, 111, 21));
 			jCheckBoxApplication.setText("Application");
 			jCheckBoxApplication.addItemListener(myListener);
 			jCheckBoxApplication.setSelected(true);
@@ -498,7 +500,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxComputation() {
 		if (jCheckBoxComputation == null) {
 			jCheckBoxComputation = new JCheckBox();
-			jCheckBoxComputation.setBounds(new Rectangle(10, 60, 111, 24));
+			jCheckBoxComputation.setBounds(new Rectangle(5, 60, 121, 24));
 			jCheckBoxComputation.setText("Computation");
 			jCheckBoxComputation.addItemListener(myListener);
 		}
@@ -513,7 +515,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxSynchronizer() {
 		if (jCheckBoxSynchronizer == null) {
 			jCheckBoxSynchronizer = new JCheckBox();
-			jCheckBoxSynchronizer.setBounds(new Rectangle(10, 95, 111, 24));
+			jCheckBoxSynchronizer.setBounds(new Rectangle(5, 95, 126, 24));
 			jCheckBoxSynchronizer.setText("Synchronizer");
 			jCheckBoxSynchronizer.addItemListener(myListener);
 		}
@@ -528,7 +530,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxData() {
 		if (jCheckBoxData == null) {
 			jCheckBoxData = new JCheckBox();
-			jCheckBoxData.setBounds(new Rectangle(10, 130, 111, 24));
+			jCheckBoxData.setBounds(new Rectangle(5, 130, 131, 24));
 			jCheckBoxData.setText("Data Structure");
 			jCheckBoxData.addItemListener(myListener);
 		}
@@ -543,7 +545,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxEnvironment() {
 		if (jCheckBoxEnvironment == null) {
 			jCheckBoxEnvironment = new JCheckBox();
-			jCheckBoxEnvironment.setBounds(new Rectangle(10, 165, 111, 24));
+			jCheckBoxEnvironment.setBounds(new Rectangle(5, 165, 126, 24));
 			jCheckBoxEnvironment.setText("Environment");
 			jCheckBoxEnvironment.addItemListener(myListener);
 		}
@@ -558,7 +560,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxArchitecture() {
 		if (jCheckBoxArchitecture == null) {
 			jCheckBoxArchitecture = new JCheckBox();
-			jCheckBoxArchitecture.setBounds(new Rectangle(10, 200, 111, 24));
+			jCheckBoxArchitecture.setBounds(new Rectangle(5, 200, 126, 24));
 			jCheckBoxArchitecture.setText("Architecture");
 			jCheckBoxArchitecture.addItemListener(myListener);
 		}
@@ -573,7 +575,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JCheckBox getJCheckBoxQualifier() {
 		if (jCheckBoxQualifier == null) {
 			jCheckBoxQualifier = new JCheckBox();
-			jCheckBoxQualifier.setBounds(new Rectangle(10, 235, 111, 24));
+			jCheckBoxQualifier.setBounds(new Rectangle(5, 235, 111, 24));
 			jCheckBoxQualifier.setText("Qualifier");
 			jCheckBoxQualifier.addItemListener(myListener);
 		}
@@ -637,7 +639,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
 			
-			String result = backend.deployHashComponent(t);
+			String userName = null;
+			String password = null;
+			String result = backend.deployHashComponent(t,userName, password);
 			if (result != null)
 			    JOptionPane.showMessageDialog(rootPane, result);
 			else
@@ -766,7 +770,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			BackEnd_WSSoap backend;
 				backend = server.getBackEnd_WSSoap();
 			
-			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation); 
+				
+				
+			String password = null;			
+			String userName = null;
+			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password); 
 
 			if (result.length > 1) {
 				d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );
@@ -985,7 +993,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JButton getJButtonClose() {
 		if (jButtonClose == null) {
 			jButtonClose = new JButton();
-			jButtonClose.setBounds(new Rectangle(945, 20, 66, 26));
+			jButtonClose.setBounds(new Rectangle(940, 20, 76, 26));
 			jButtonClose.setText("Close");
 			jButtonClose.addActionListener(this);
 		}
@@ -1057,7 +1065,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JButton getJButtonDeploy() {
 		if (jButtonDeploy == null) {
 			jButtonDeploy = new JButton();
-			jButtonDeploy.setBounds(new Rectangle(860, 20, 81, 26));
+			jButtonDeploy.setBounds(new Rectangle(850, 20, 86, 26));
 			jButtonDeploy.setText("Deploy");
 			jButtonDeploy.addActionListener(this);
 			jButtonDeploy.setEnabled(false);
@@ -1086,8 +1094,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JScrollPane getJScrollPaneBrowse() {
 		if (jScrollPaneBrowse == null) {
 			jScrollPaneBrowse = new JScrollPane(getJTabbedPane());
-			jScrollPaneBrowse.setBounds(new Rectangle(125, 70, 551, 191));
 			jScrollPaneBrowse.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			jScrollPaneBrowse.setBounds(new Rectangle(140, 70, 536, 191));
 		}
 		return jScrollPaneBrowse;
 	}	
@@ -1101,9 +1109,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JTabbedPane getJTabbedPane() {
 		if (jTabbedPane == null) {
 			jTabbedPane = new JTabbedPane();
-			jTabbedPane.setBounds(new Rectangle(345, -10, 526, 191));
+			jTabbedPane.setBounds(new Rectangle(140, 70, 526, 191));
 			jTabbedPane.addTab("Abstract",getJTableBrowseAbstract());
 			jTabbedPane.addTab("Concrete",getJTableBrowseConcrete());
+			//jTabbedPane.addTab(null, null, getJScrollPaneBrowse(), null);
 			jTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
 				public void stateChanged(javax.swing.event.ChangeEvent e) {
 					Object src = e.getSource();
@@ -1125,7 +1134,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JScrollPane getJScrollPaneParameter() {
 		if (jScrollPaneParameter == null) {
 			jScrollPaneParameter = new JScrollPane();
-			jScrollPaneParameter.setBounds(new Rectangle(685, 90, 326, 171));
+			jScrollPaneParameter.setBounds(new Rectangle(685, 90, 331, 171));
 			jScrollPaneParameter.setViewportView(getJTreeParameter());
 		}
 		return jScrollPaneParameter;
@@ -1153,8 +1162,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JButton getJButtonLoad() {
 		if (jButtonLoad == null) {
 			jButtonLoad = new JButton();
-			jButtonLoad.setBounds(new Rectangle(660, 20, 66, 26));
-			jButtonLoad.setText("Load");
+			jButtonLoad.setBounds(new Rectangle(685, 20, 91, 26));
+			jButtonLoad.setText("Browse");
 			jButtonLoad.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					JComboBox jComboBoxBackEnd = getJComboBoxBackEnd();
@@ -1189,4 +1198,4 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 
 
 	
-}  //  @jve:decl-index=0:visual-constraint="90,-6"
+}  //  @jve:decl-index=0:visual-constraint="149,-11"

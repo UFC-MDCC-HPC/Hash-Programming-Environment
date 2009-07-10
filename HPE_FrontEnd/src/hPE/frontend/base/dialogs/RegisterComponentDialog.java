@@ -76,7 +76,7 @@ public class RegisterComponentDialog extends JDialog {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(450, 168);
+		this.setSize(421, 168);
 		this.setTitle("Register " + c.getComponentName() + " in a Location");
 		this.setContentPane(getJContentPane());
 		HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
@@ -84,8 +84,12 @@ public class RegisterComponentDialog extends JDialog {
 		List<URI> l = locationFileTraversor.fetchLocations();
 		for (URI uri : l) {
 			String locationName = fetchLocationName(uri);
-			this.locations.put(locationName, uri);
-		    this.getJComboBoxLocations().addItem(locationName);
+			if (locationName != null) {
+			   this.locations.put(locationName, uri);
+		       this.getJComboBoxLocations().addItem(locationName);
+			} else {
+				JOptionPane.showMessageDialog(null, "Unable to reach location at \n" + uri.toString(), "Location Fetch Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		
 		List<Integer[]> vs = c.getVersions();
@@ -95,8 +99,8 @@ public class RegisterComponentDialog extends JDialog {
 		this.getJComboBoxVersions().setSelectedIndex(vs.size()-1);
 	}
 
-	private String fetchLocationName(URI uri) {
-		String name = "fail";
+	private String fetchLocationName(URI uri)  {
+		String name = null;
 		
 		try {
 
@@ -186,7 +190,7 @@ public class RegisterComponentDialog extends JDialog {
 	private JCheckBox getJCheckBoxFreeSource() {
 		if (jCheckBoxFreeSource == null) {
 			jCheckBoxFreeSource = new JCheckBox();
-			jCheckBoxFreeSource.setBounds(new Rectangle(15, 100, 100, 21));
+			jCheckBoxFreeSource.setBounds(new Rectangle(15, 100, 161, 21));
 			jCheckBoxFreeSource.setSelected(true);
 			jCheckBoxFreeSource.setText("Open Source");
 		}
@@ -201,8 +205,8 @@ public class RegisterComponentDialog extends JDialog {
 	private JButton getJButtonRegister() {
 		if (jButtonRegister == null) {
 			jButtonRegister = new JButton();
-			jButtonRegister.setBounds(new Rectangle(265, 40, 166, 26));
-			jButtonRegister.setText("Register Component");
+			jButtonRegister.setBounds(new Rectangle(265, 40, 141, 26));
+			jButtonRegister.setText("Register");
 			jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					String locationName = (String) getJComboBoxLocations().getSelectedItem();
@@ -344,8 +348,8 @@ public class RegisterComponentDialog extends JDialog {
 	private JButton getJButtonInfo() {
 		if (jButtonInfo == null) {
 			jButtonInfo = new JButton();
-			jButtonInfo.setBounds(new Rectangle(265, 10, 166, 26));
-			jButtonInfo.setText("About Location...");
+			jButtonInfo.setBounds(new Rectangle(265, 10, 141, 26));
+			jButtonInfo.setText("About Location");
 			jButtonInfo.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					String locationName = (String) getJComboBoxLocations().getSelectedItem();
@@ -415,8 +419,8 @@ public class RegisterComponentDialog extends JDialog {
 	private JButton getJButtonRegisterMarkObsolete() {
 		if (jButtonRegisterMarkObsolete == null) {
 			jButtonRegisterMarkObsolete = new JButton();
-			jButtonRegisterMarkObsolete.setBounds(new Rectangle(265, 100, 166, 26));
-			jButtonRegisterMarkObsolete.setText("Mark as Obsolete");
+			jButtonRegisterMarkObsolete.setBounds(new Rectangle(265, 100, 141, 26));
+			jButtonRegisterMarkObsolete.setText("Make Obsolete");
 			jButtonRegisterMarkObsolete
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -468,8 +472,8 @@ public class RegisterComponentDialog extends JDialog {
 	private JButton getJButtonUnregisterComponent() {
 		if (jButtonUnregisterComponent == null) {
 			jButtonUnregisterComponent = new JButton();
-			jButtonUnregisterComponent.setBounds(new Rectangle(265, 70, 166, 26));
-			jButtonUnregisterComponent.setText("Unregister Component");
+			jButtonUnregisterComponent.setBounds(new Rectangle(265, 70, 141, 26));
+			jButtonUnregisterComponent.setText("Unregister");
 			jButtonUnregisterComponent
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {

@@ -17,7 +17,7 @@ public class SplitReplicatorEditPolicy extends ComponentEditPolicy {
 	}
 	
 private static final String
-      SPLIT_REPLICATOR_REQUEST = "Split replicator";  //$NON-NLS-1$
+      SPLIT_REPLICATOR_REQUEST = "Split Enumeration";  //$NON-NLS-1$
 
 public Command getCommand(Request request) {
 	

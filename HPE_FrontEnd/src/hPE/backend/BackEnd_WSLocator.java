@@ -22,7 +22,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
     }
 
     // Use to get a proxy class for BackEnd_WSSoap
-    private java.lang.String BackEnd_WSSoap_address = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+    private java.lang.String BackEnd_WSSoap_address = "http://localhost:3494/BackEndWS.asmx";
 
     public java.lang.String getBackEnd_WSSoapAddress() {
         return BackEnd_WSSoap_address;
@@ -67,7 +67,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
 
 
     // Use to get a proxy class for BackEnd_WSSoap12
-    private java.lang.String BackEnd_WSSoap12_address = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+    private java.lang.String BackEnd_WSSoap12_address = "http://localhost:3494/BackEndWS.asmx";
 
     public java.lang.String getBackEnd_WSSoap12Address() {
         return BackEnd_WSSoap12_address;

@@ -13,6 +13,7 @@ import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
+import hPE.util.CommandLine;
 import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
 import hPE.util.ObjectOutputStream_;
@@ -3587,10 +3588,10 @@ public void createComponentKey() throws IOException  {
 		    java.io.File systemFile = new java.io.File(systemPath.toOSString());
 
 		    if (!okSNK)
-		    	runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
+		    	CommandLine.runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
 		    
 		    if (!okPUB) 
-		    	runCommand(new String[] {sn_path, "-p", this.getComponentName() + ".snk", this.getComponentName() + ".pub"}, new String[] {}, systemFile);
+		    	CommandLine.runCommand(new String[] {sn_path, "-p", this.getComponentName() + ".snk", this.getComponentName() + ".pub"}, new String[] {}, systemFile);
 		}
 	}
 
@@ -3620,29 +3621,6 @@ public static String getHexString(byte[] b) throws Exception {
 	  return result;
 	}
 
-public static void runCommand(String[] cmd, String[] env, java.io.File file) {
-	
-	try 
-	{ 
-		Process p = Runtime.getRuntime().exec(cmd, env, file); 
-		int r = p.waitFor(); 
-		
-		BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-		String line=reader.readLine(); 
-		while(line!=null) 
-		{ 
-			System.out.println(line); 
-			line=reader.readLine(); 
-		} 
-
-	} 
-	catch(IOException e1) {
-		e1.printStackTrace();
-	} 
-	catch(InterruptedException e2) {
-		e2.printStackTrace();
-	} 	
-}
 
 public static URI getStandardLocationPath(String pk, String componentName, String version) {
 	return URI.createURI(pk + "." + componentName + java.io.File.separatorChar + componentName + ".hpe");

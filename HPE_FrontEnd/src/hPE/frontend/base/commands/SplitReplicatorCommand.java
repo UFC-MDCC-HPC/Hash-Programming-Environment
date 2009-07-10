@@ -33,7 +33,7 @@ public class SplitReplicatorCommand extends Command {
 		if (link == null) {
 			throw new IllegalArgumentException();
 		}
-		setLabel("Unreplicate an element");
+		setLabel("Split an enumeration");
 		
 	    this.replicator = link.getReplicator();
 	    while (this.replicator.isJoined()) {

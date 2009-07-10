@@ -23,10 +23,10 @@ public class SplitReplicatorAction extends SelectionAction {
 
 
 	private static final String
-		SPLIT_REPLICATOR_REQUEST = "Split replicator";  //$NON-NLS-1$
+		SPLIT_REPLICATOR_REQUEST = "Split Enumeration";  //$NON-NLS-1$
 	
 	public static final String
-	    SPLIT_REPLICATOR = "Split replicator";   //$NON-NLS-1$
+	    SPLIT_REPLICATOR = "Split Enumeration";   //$NON-NLS-1$
 	
 	Request request;
 	
@@ -91,7 +91,7 @@ public class SplitReplicatorAction extends SelectionAction {
 		
 		
 /*		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Split replicator");//$NON-NLS-1$
+		cc.setDebugLabel("Split Enumeration");//$NON-NLS-1$
 		for (int i=0; i < editparts.size(); i++) {
 			EditPart part = (EditPart)editparts.get(i);
 			cc.add(part.getCommand(request));

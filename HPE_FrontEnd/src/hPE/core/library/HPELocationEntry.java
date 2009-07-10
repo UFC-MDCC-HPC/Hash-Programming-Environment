@@ -9,6 +9,7 @@ import hPE.frontend.base.model.HComponent;
 import hPE.location.HPE_Location_Server;
 import hPE.location.HPE_Location_ServerService;
 import hPE.location.HPE_Location_ServerServiceLocator;
+import hPE.util.CommandLine;
 import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.io.BufferedWriter;
@@ -217,7 +218,7 @@ public class HPELocationEntry {
 				  
 				  String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
 				  
- 			      HComponent.runCommand(new String[] {gacutil_path, "-i", fileName}, new String[] {}, folder);
+ 			      CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName}, new String[] {}, folder);
 			    }
 				catch(Exception e){
 					e.printStackTrace();
