@@ -1,9 +1,17 @@
 package hPE;
 
+import org.eclipse.emf.common.util.URI;
+
+import hPE.frontend.NAntBuilder;
+import hPE.frontend.base.model.HComponent;
 import hPE.util.CommandLine;
+import hPE.xml.factory.HComponentFactoryImpl;
+import hPE.xml.factory.HPEInvalidComponentResourceException;
 
 import org.eclipse.ui.plugin.*;
+import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -40,12 +48,32 @@ public class HPEPlugin extends AbstractUIPlugin {
 				               System.out.println("Build complete.");
 				               event.getDelta().accept(new DeltaPrinter());
 				               break;
-/*				            case IResourceChangeEvent.POST_CHANGE:
-					           System.out.println("Resources have changed.");
+				            case IResourceChangeEvent.PRE_BUILD:
+					           System.out.println("Starting build.");
+					           Object source = event.getSource();
+					           if (source instanceof IProject) {
+					        	   IProject project = (IProject) source;
+					        	   IPath path = project.getFullPath();
+					        	   String pathStr = path.toString();
+					        	   String[] pathStrArr = pathStr.replace(".", "#").split("#");
+					        	   String cName = pathStrArr[pathStrArr.length - 1];
+					        	   IPath path2 = path.append(cName + ".hpe");
+					        	   URI uri = URI.createURI(path2.toString()); 
+					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true);
+								   NAntBuilder builder = NAntBuilder.instance;
+							   	   builder.setComponent(c);								   
+								   builder.run();
+								   System.out.println("generated build.xml for " + path2);
+					           }
+
+					           
 					           event.getDelta().accept(new DeltaPrinter());
-					           break; */
+					           break; 
 				         }
 					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (HPEInvalidComponentResourceException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -86,7 +114,8 @@ public class HPEPlugin extends AbstractUIPlugin {
 		   IResourceChangeListener listener = new MyResourceChangeReporter();
 		   ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
                 IResourceChangeEvent.POST_BUILD
-		      | IResourceChangeEvent.POST_CHANGE);
+		      | IResourceChangeEvent.POST_CHANGE 
+		      | IResourceChangeEvent.PRE_BUILD);
 		
 	}
 
