@@ -33,19 +33,19 @@ namespace DGAC
 		         *classe Constants 
 		         */ 
 		        [MethodImpl(MethodImplOptions.Synchronized)]
-		        public string compileClass(string library_path, string contents, string moduleName, string[] references, int outFile){
+		        public string compileClass(string library_path, string contents, string moduleName, string[] references, int outFile, string userName, System.Security.SecureString password){
                     string publicKeyToken = null;
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
                     Console.WriteLine("Compiling " + moduleName);
 			        if(outFile==Constants.EXE_OUT){
-			           CommandLineUtil.compile_to_exe(contents,moduleName,references);
+			           CommandLineUtil.compile_to_exe(contents,moduleName,references,userName,password);
 			        }else{
                       //creates the strong key, for new assembly
-                      publicKeyToken = CommandLineUtil.create_strong_key(moduleName);
+                      publicKeyToken = CommandLineUtil.create_strong_key(moduleName,userName,password);
                       //compile, generate dll 
-					  CommandLineUtil.compile_source(contents, moduleName, references);
+					  CommandLineUtil.compile_source(contents, moduleName, references,userName,password);
 					  //installing on local GAC
-                      CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1);
+                      CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1, userName, password);
 			        }
                     // Erase temporary files.
                     // CommandLineUtil.clean(moduleNameWithoutExtension);
@@ -56,9 +56,9 @@ namespace DGAC
 		         *Roda arquivos executáveis gerados pelo metodo anterior
                  */
 		        [MethodImpl(MethodImplOptions.Synchronized)]
-                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id)
+                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password)
                 {
-					CommandLineUtil.run_exe(files, enums, session_id);
+					CommandLineUtil.run_exe(files, enums, session_id, userName, password);
 		        }
 				
 				//just for test

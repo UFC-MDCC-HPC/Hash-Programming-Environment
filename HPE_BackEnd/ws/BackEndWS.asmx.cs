@@ -36,8 +36,18 @@ namespace Back_End_WS
          * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
          * passado ao DGAC 
          */
-        public String deployHashComponent(byte[] data)
+        public string deployHashComponent(byte[] data, string userName, string password_)
         {
+			System.Security.SecureString password = null;
+			
+			if (password_ != null) {
+			   password = new System.Security.SecureString();
+			   foreach (char c in password_) 
+			   	  password.AppendChar(c);
+			}
+			
+			password.MakeReadOnly();
+		
             try
             {
                 string filename = "newConfig";
@@ -47,9 +57,9 @@ namespace Back_End_WS
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
                     if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
-                        dgac.registerConcreteComponent(c);
+                        dgac.registerConcreteComponent(c, userName, password);
                     else
-                        dgac.registerAbstractComponent(c);
+                        dgac.registerAbstractComponent(c, userName, password);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -70,12 +80,22 @@ namespace Back_End_WS
         }
 
         [WebMethod]
-        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls)
+        public string[] runApplication(int id_concrete, string[] eIds, int[] eVls, string userName, string password_)
         {
-            String[] str_output = null;
+			System.Security.SecureString password = null;
+			
+			if (password_ != null) {
+			   password = new System.Security.SecureString();
+			   foreach (char c in password_) 
+			   	  password.AppendChar(c);
+			}
+			
+			password.MakeReadOnly();
+			
+            string[] str_output = null;
             try
             {
-                str_output = dgac.runApplication(id_concrete, eIds, eVls);
+                str_output = dgac.runApplication(id_concrete, eIds, eVls, userName, password);
             }
             catch (Exception e)
             {
@@ -87,11 +107,11 @@ namespace Back_End_WS
 
 
         [WebMethod]
-        public String hosts()
+        public string hosts()
         {
             TextReader tr = new StreamReader(Constants.PATH_BIN + "myhostfile");
 
-            String hstr = tr.ReadToEnd();
+            string hstr = tr.ReadToEnd();
             tr.Close();
             return hstr;
         }
