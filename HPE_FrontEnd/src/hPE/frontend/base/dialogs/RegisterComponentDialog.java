@@ -261,25 +261,23 @@ public class RegisterComponentDialog extends JDialog {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (CoreException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					errorMessage = e.getMessage();
+				} catch (Exception e) {
+					e.printStackTrace();
+					errorMessage = e.getMessage();				
 				} finally {
 					if (errorMessage != null)
 					    JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
