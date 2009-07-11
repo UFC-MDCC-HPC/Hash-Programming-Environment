@@ -1,19 +1,20 @@
 package hPE.core.library;
 
 
+import hPE.HPEPlugin;
 import hPE.core.library.model.classes.HPEComponentLibrary;
 import hPE.core.library.model.classes.HPEComponentLibraryItem;
 import hPE.core.library.model.classes.LComponentView;
 
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
+import org.eclipse.core.runtime.Preferences.PropertyChangeEvent;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -22,14 +23,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.URLTransfer;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.GridData;
@@ -38,19 +36,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
-import org.eclipse.ui.views.navigator.NavigatorDragAdapter;
-import org.eclipse.ui.views.navigator.NavigatorDropAdapter;
 
 
 /**
  * Insert the type's description here.
  * @see ViewPart
  */
-public class HPEComponentLibraryView extends ViewPart {
+public class HPEComponentLibraryView extends ViewPart implements IPropertyChangeListener {
 	protected TreeViewer treeViewer;
 	protected Text text;
 	protected HPEComponentLibraryLabelProvider labelProvider;
@@ -63,6 +62,7 @@ public class HPEComponentLibraryView extends ViewPart {
 	 * The constructor.
 	 */
 	public HPEComponentLibraryView() {
+		//treeViewer.;
 	}
 
 	/*
@@ -105,27 +105,36 @@ public class HPEComponentLibraryView extends ViewPart {
 		treeViewer.getControl().setLayoutData(layoutData);
 		
 		// Create menu, toolbars, filters, sorters.
-		createFiltersAndSorters();
 		createActions();
 		createMenus();
 		createToolbar();
 		hookListeners();
         initDragAndDrop();
 
+        HPEPlugin plugin = HPEPlugin.getDefault();
+        plugin.addPropertyChangeListener(this);
+        
+ /*       IPropertyListener propertyListener = new IPropertyListener() {
+
+			@Override
+			public void propertyChanged(Object arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}};
+			
+		this.addPropertyListener(propertyListener);
+        
+        getSite().getWorkbenchWindow().getPartService().addPartListener(partListener); */
 		
 		treeViewer.setInput(getInitalInput());
 		// treeViewer.expandAll();
 	}
 	
-	protected void createFiltersAndSorters() {
-/*		atLeastThreeFilter = new ThreeItemFilter();
-		onlyBoardGamesFilter = new BoardgameFilter();
-		booksBoxesGamesSorter = new BookBoxBoardSorter();
-		noArticleSorter = new NoArticleSorter(); */
-	}
+	
 
 	protected void hookListeners() {
-				
+	
+		
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				// if the selection is empty clear the label
@@ -203,10 +212,7 @@ public class HPEComponentLibraryView extends ViewPart {
     protected void createActions() {
 		refreshAction = new Action("Refresh") {
 			public void run() {
-				treeViewer.setInput(getInitalInput());
-				treeViewer.refresh();
-				refreshAction.setChecked(false);
-				treeViewer.expandToLevel(2);
+				refreshLocation();
 			}
 		};
 		
@@ -396,5 +402,33 @@ public class HPEComponentLibraryView extends ViewPart {
     public TreeViewer getTreeViewer() {
         return treeViewer;
     }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		if( event.getProperty().equals(PROPERTY_LOCATION_CHANGED)) {
+			this.refreshLocation();
+		}
+
+	}
+	
+	public static String PROPERTY_LOCATION_CHANGED = "PROPERTY_LOCATION_CHANGED";
     
+	private void refreshLocation() 
+	{
+		try {
+     		treeViewer.setInput(getInitalInput());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+     		treeViewer.getControl().getDisplay().syncExec(new Runnable() {
+     			public void run() {
+                    treeViewer.refresh();
+        			refreshAction.setChecked(false);
+        			treeViewer.expandToLevel(2);
+                } 
+     		});			
+		}
+	}
+	
+	
 }

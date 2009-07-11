@@ -1,5 +1,7 @@
 package hPE.frontend.base.dialogs;
 
+import hPE.HPEPlugin;
+import hPE.core.library.HPEComponentLibraryView;
 import hPE.core.library.HPELocationFileTraversor;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
@@ -256,6 +258,10 @@ public class RegisterComponentDialog extends JDialog {
 					JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
 					c.setRemoteURI(uri);
 					
+ 			        HPEPlugin plugin = HPEPlugin.getDefault();
+ 			        plugin.notifyListeners(HPEComponentLibraryView.PROPERTY_LOCATION_CHANGED);
+
+					
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -275,9 +281,6 @@ public class RegisterComponentDialog extends JDialog {
 				} catch (CoreException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				} catch (Exception e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();				
 				} finally {
 					if (errorMessage != null)
 					    JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);

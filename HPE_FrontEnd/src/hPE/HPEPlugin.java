@@ -1,16 +1,15 @@
 package hPE;
 
-import org.eclipse.emf.common.util.URI;
-
+import hPE.core.library.HPEComponentLibraryView;
 import hPE.frontend.NAntBuilder;
 import hPE.frontend.base.model.HComponent;
 import hPE.util.CommandLine;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
 
-import org.eclipse.ui.plugin.*;
-import org.eclipse.core.internal.resources.Project;
-import org.eclipse.core.resources.IFile;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -20,8 +19,11 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
+import org.eclipse.core.runtime.Preferences.PropertyChangeEvent;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -39,7 +41,47 @@ public class HPEPlugin extends AbstractUIPlugin {
 		plugin = this;
 	}
 
-	   public class MyResourceChangeReporter implements IResourceChangeListener {
+	private List<IPropertyChangeListener> myListeners = new ArrayList<IPropertyChangeListener>();
+	
+	// A public method that allows listener registration
+	public void addPropertyChangeListener(IPropertyChangeListener listener) {
+		if(!myListeners.contains(listener))
+			myListeners.add(listener);
+	}
+
+	// A public method that allows listener registration
+	public void removePropertyChangeListener(IPropertyChangeListener listener) {
+		myListeners.remove(listener);
+	}
+
+	public void notifyListeners(String property) {
+		for (IPropertyChangeListener listener : myListeners) {
+			listener.propertyChange(new MyPropertyChangeEvent(
+					this, 
+					property, 
+					null, 
+					null
+					)
+			);
+		}
+	}
+
+	class MyPropertyChangeEvent extends PropertyChangeEvent {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4671328683246397820L;
+
+		public MyPropertyChangeEvent(Object arg0, String arg1, Object arg2,
+				Object arg3) {
+			super(arg0, arg1, arg2, arg3);
+			// TODO Auto-generated constructor stub
+		}
+	
+	}
+	
+	public class MyResourceChangeReporter implements IResourceChangeListener {
 		      public void resourceChanged(IResourceChangeEvent event) {
 	               try {
 				         IResource res = event.getResource();

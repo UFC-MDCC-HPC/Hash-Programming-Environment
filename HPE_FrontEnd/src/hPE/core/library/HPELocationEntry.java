@@ -5,7 +5,6 @@ package hPE.core.library;
 //import hPE.core.LocationService;
 import hPE.HPEProperties;
 import hPE.frontend.base.codegen.HBEAbstractFile;
-import hPE.frontend.base.model.HComponent;
 import hPE.location.HPE_Location_Server;
 import hPE.location.HPE_Location_ServerService;
 import hPE.location.HPE_Location_ServerServiceLocator;
@@ -35,7 +34,7 @@ import org.eclipse.emf.common.util.URI;
 
 public class HPELocationEntry {
 	
-	public static Hashtable <String, String>htable = new Hashtable<String, String>();	
+	public static Hashtable<String, String> htable = new Hashtable<String, String>();	
 	
 	
 	public static List<String> fetchPackagesFromLocation(URI locationSite, boolean showObsolete) throws RemoteException, ServiceException {
