@@ -221,7 +221,7 @@ public class RegisterComponentDialog extends JDialog {
 
 	private void registerComponent(URI uri, String version, boolean freeSource) {
 		
-		String errorMessage= null;
+		String errorMessage = null;
 		
 		if (c.versionSupplied(version == null ? "1.0.0.0" : version)) {
 			if (c.versionCompiled(version == null ? "1.0.0.0" : version)){
@@ -281,7 +281,8 @@ public class RegisterComponentDialog extends JDialog {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} finally {
-					JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
+					if (errorMessage != null)
+					    JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
