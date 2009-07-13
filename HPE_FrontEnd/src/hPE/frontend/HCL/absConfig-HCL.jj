@@ -1,0 +1,176 @@
+PARSER_BEGIN(HCLParser)
+public class HCLParser{}
+PARSER_END(HCLParser)
+
+TOKEN_MGR_DECLS:
+{
+	public static int numOfComment = 0;
+}
+
+
+TOKEN: {
+	< EXTENDS: "extends">
+	| <COMMA: ",">
+	| <COLON: ":">
+	| <OCURV: "("> 
+	| <CCURV: ")"> 
+	| <OSQUARE: "["> 
+	| <CSQUARE: "]"> 
+	| <SLICE: "slice">
+	| <FROM: "from">
+	| <UNIT: "unit">
+	| <DOT: ".">
+	| <COMPUTATION: "computation">
+	| <DATA: "data">
+	| <ARCHITECTURE: "architecture">
+	| <ENVIRONMENT: "environment">
+	| <QUALIFIER: "qualifier">
+	| <SYNCHRONIZER: "synchronizer">
+	| <APPLICATION: "application">
+	| < ID: (["a"-"z"]|["A" - "Z"])(["a"-"z"]|["A" - "Z"]|"_"|["0"-"9"])*>
+}
+
+<*>
+SPECIAL_TOKEN:{
+	<NEWLINE: (("\r\n")|("\r")|("\n"))> {if (curLexState==INSIDE_COMMENT_2) SwitchTo(DEFAULT);}
+}
+
+SPECIAL_TOKEN:{
+	<TABULATION: "\t">
+}
+
+
+SKIP:
+{
+	<"/*"> {numOfComment=1;}: INSIDE_COMMENT
+	|<"//"> : INSIDE_COMMENT_2
+	| <" ">
+}
+
+<INSIDE_COMMENT>
+SKIP:
+{
+	<"/*"> {numOfComment++;}
+	|<"*/"> {numOfComment--; if (numOfComment==0) SwitchTo(DEFAULT);}
+	| <~[]>
+}
+
+<INSIDE_COMMENT_2>
+SKIP:
+{
+	<~[]>
+}
+
+void absConfig():
+{}
+{ 
+	kind() header() (inner())* (unit())+
+}
+
+void header():
+{}
+{ 
+	<ID> (publicInnerS())? (paramTypeS())? (extend())?
+}
+
+void paramType():
+{}
+{ 
+	<ID> <COLON> cFunAppNoVar() 
+}
+
+void cFunApp():
+{}
+{ 
+	LOOKAHEAD(2)
+	cFunAppNoVar()
+	| <ID>
+}
+
+void cFunAppNoVar():
+{}
+{
+	<ID> (cFunAppS())?
+}
+
+void publicInner():
+{}
+{
+	<ID>
+}
+
+void inner():
+{Token id;}
+{
+	id=<ID> {if ((id.specialToken==null) || (id.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before <id> token in line "+id.beginLine+" and column "+id.beginColumn);} } <COLON> cFunApp()
+}
+
+void unit():
+{Token unit;}
+{
+	unit=<UNIT> {if ((unit.specialToken==null) || (unit.specialToken.kind != NEWLINE)) throw new ParseException("New line expected before <unit> token in line "+unit.beginLine+" and column "+unit.beginColumn);} <ID> (slice())*
+}
+
+void slice():
+{Token slice;}
+{
+	slice=<SLICE> { if ((slice.specialToken==null) || (slice.specialToken.kind != TABULATION)) {throw new ParseException("Tabulation expected before <slice> token in line "+slice.beginLine+" and column "+slice.beginColumn);} if ((slice.specialToken.specialToken==null) || (slice.specialToken.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before <slice> token in line "+slice.beginLine+" and column "+slice.beginColumn); } } <ID> <FROM> <ID> <DOT> <ID>
+}
+
+void kind():
+{}
+{
+	<COMPUTATION>
+	| <APPLICATION>
+	| <DATA>
+	| <QUALIFIER>
+	| <SYNCHRONIZER>
+	| <ARCHITECTURE>
+	| <ENVIRONMENT>
+}
+
+void paramTypeS():
+{}
+{
+	<OSQUARE> paramType() (paramTypeSRest())* <CSQUARE>
+}
+
+void paramTypeSRest():
+{}
+{
+	<COMMA> paramType()
+}
+
+void cFunAppS():
+{}
+{
+	<OSQUARE> cFunApp() (cFunAppSRest())* <CSQUARE>
+}
+
+void cFunAppSRest():
+{}
+{
+	<COMMA> cFunApp()
+}
+
+void publicInnerS():
+{}
+{
+	<OCURV> publicInner() (publicInnerSRest())* <CCURV>
+}
+
+void publicInnerSRest():
+{}
+{
+	<COMMA> publicInner()
+}
+
+void extend():
+{}
+{
+	<EXTENDS> cFunAppNoVar()
+}
+
+void Start() :
+{}
+{ absConfig()  <EOF>}
