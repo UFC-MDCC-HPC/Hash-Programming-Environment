@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link hPE.frontend.backend.locations.impl.LocationImpl#getCurdir <em>Curdir</em>}</li>
  *   <li>{@link hPE.frontend.backend.locations.impl.LocationImpl#getLogin <em>Login</em>}</li>
  *   <li>{@link hPE.frontend.backend.locations.impl.LocationImpl#getName <em>Name</em>}</li>
  *   <li>{@link hPE.frontend.backend.locations.impl.LocationImpl#getPassword <em>Password</em>}</li>
@@ -33,6 +34,26 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * @generated
  */
 public class LocationImpl extends EObjectImpl implements Location {
+	/**
+	 * The default value of the '{@link #getCurdir() <em>Curdir</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCurdir()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CURDIR_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCurdir() <em>Curdir</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCurdir()
+	 * @generated
+	 * @ordered
+	 */
+	protected String curdir = CURDIR_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getLogin() <em>Login</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -137,6 +158,27 @@ public class LocationImpl extends EObjectImpl implements Location {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCurdir() {
+		return curdir;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCurdir(String newCurdir) {
+		String oldCurdir = curdir;
+		curdir = newCurdir;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, LocationsPackage.LOCATION__CURDIR, oldCurdir, curdir));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getLogin() {
 		return login;
 	}
@@ -224,6 +266,8 @@ public class LocationImpl extends EObjectImpl implements Location {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case LocationsPackage.LOCATION__CURDIR:
+				return getCurdir();
 			case LocationsPackage.LOCATION__LOGIN:
 				return getLogin();
 			case LocationsPackage.LOCATION__NAME:
@@ -244,6 +288,9 @@ public class LocationImpl extends EObjectImpl implements Location {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case LocationsPackage.LOCATION__CURDIR:
+				setCurdir((String)newValue);
+				return;
 			case LocationsPackage.LOCATION__LOGIN:
 				setLogin((String)newValue);
 				return;
@@ -268,6 +315,9 @@ public class LocationImpl extends EObjectImpl implements Location {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case LocationsPackage.LOCATION__CURDIR:
+				setCurdir(CURDIR_EDEFAULT);
+				return;
 			case LocationsPackage.LOCATION__LOGIN:
 				setLogin(LOGIN_EDEFAULT);
 				return;
@@ -292,6 +342,8 @@ public class LocationImpl extends EObjectImpl implements Location {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case LocationsPackage.LOCATION__CURDIR:
+				return CURDIR_EDEFAULT == null ? curdir != null : !CURDIR_EDEFAULT.equals(curdir);
 			case LocationsPackage.LOCATION__LOGIN:
 				return LOGIN_EDEFAULT == null ? login != null : !LOGIN_EDEFAULT.equals(login);
 			case LocationsPackage.LOCATION__NAME:
@@ -314,7 +366,9 @@ public class LocationImpl extends EObjectImpl implements Location {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (login: ");
+		result.append(" (curdir: ");
+		result.append(curdir);
+		result.append(", login: ");
 		result.append(login);
 		result.append(", name: ");
 		result.append(name);

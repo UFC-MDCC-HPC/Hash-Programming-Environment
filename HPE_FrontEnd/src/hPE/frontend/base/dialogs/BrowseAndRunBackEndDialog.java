@@ -133,11 +133,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		backendList = new HashMap<String,BackEndLocationInfo>();
 		BackEndLocationList.loadBackEndsInfo(backendList);		
 		
-		getJComboBoxBackEnd().addItem(new BackEndLocationInfo("", null, null, null)); 
+		getJComboBoxBackEnd().addItem(new BackEndLocationInfo("", null, null, null, null)); 
 		for (BackEndLocationInfo b : backendList.values()) {
 			getJComboBoxBackEnd().addItem(b);
 		}			
-		getJComboBoxBackEnd().addItem(new BackEndLocationInfo(EDIT_LABEL, null, null, null)); 
+		getJComboBoxBackEnd().addItem(new BackEndLocationInfo(EDIT_LABEL, null, null, null, null)); 
 		
 		if (backendList.size() > 0) 
 			getJComboBoxBackEnd().setSelectedIndex(0);
@@ -641,7 +641,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 			String userName = null;
 			String password = null;
-			String result = backend.deployHashComponent(t,userName, password);
+			String result = backend.deployHashComponent(t,userName, password, null);
 			if (result != null)
 			    JOptionPane.showMessageDialog(rootPane, result);
 			else
@@ -768,13 +768,12 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			server.setBackEnd_WSSoapEndpointAddress(urlWS);
 	
 			BackEnd_WSSoap backend;
-				backend = server.getBackEnd_WSSoap();
-			
+				backend = server.getBackEnd_WSSoap();				
 				
-				
-			String password = null;			
-			String userName = null;
-			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password); 
+			String password = loc.password;			
+			String userName = loc.login;
+			String curdir = loc.curdir.toString();
+			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password, curdir); 
 
 			if (result.length > 1) {
 				d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );

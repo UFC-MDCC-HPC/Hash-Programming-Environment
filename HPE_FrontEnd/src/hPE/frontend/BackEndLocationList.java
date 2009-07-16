@@ -44,6 +44,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -94,7 +95,8 @@ public class BackEndLocationList {
 					String locURI = l.getUri();
 					String login = l.getLogin();
 					String password = l.getPassword();
-					BackEndLocationInfo bel = new BackEndLocationInfo(name, locURI, login, password);
+					IPath curdir = l.getCurdir() != null ? new Path(l.getCurdir()) : null;
+					BackEndLocationInfo bel = new BackEndLocationInfo(name, locURI, login, password, curdir);
 					backendList.put(name,bel);                	
 				}
 			}
@@ -150,6 +152,9 @@ public class BackEndLocationList {
 			   l.setLogin(b.login);
 			   l.setPassword(b.password);
 		   }
+		   if (b.curdir != null) 
+			   l.setCurdir(b.curdir.toString());
+		   
 		   s.getBackend().add(l);
 		}
 		
@@ -380,14 +385,16 @@ public class BackEndLocationList {
 		public String locURI = null;
 		public String login = null;
 		public String password = null;
+		public IPath curdir = null; 
 
 		public BackEndLocationInfo() {}
 		
-		public BackEndLocationInfo(String name, String locURI, String login, String password) {
+		public BackEndLocationInfo(String name, String locURI, String login, String password, IPath curdir) {
 		   this.name = name;
 		   this.locURI = locURI;
 		   this.login = login;
 		   this.password = password;
+		   this.curdir = curdir;
 		}
 		
 		public String toString() {

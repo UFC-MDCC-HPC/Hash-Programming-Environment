@@ -44,28 +44,28 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     return backEnd_WSSoap;
   }
   
+  public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password_, java.lang.String curDir) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.deployHashComponent(data, userName, password_, curDir);
+  }
+  
   public byte[] readEnvironment() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap.readEnvironment();
   }
   
+  public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls, java.lang.String userName, java.lang.String password_, java.lang.String curDir) throws java.rmi.RemoteException{
+    if (backEnd_WSSoap == null)
+      _initBackEnd_WSSoapProxy();
+    return backEnd_WSSoap.runApplication(id_concrete, eIds, eVls, userName, password_, curDir);
+  }
+  
   public java.lang.String hosts() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
     return backEnd_WSSoap.hosts();
-  }
-  
-  public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password_) throws java.rmi.RemoteException{
-    if (backEnd_WSSoap == null)
-      _initBackEnd_WSSoapProxy();
-    return backEnd_WSSoap.deployHashComponent(data, userName, password_);
-  }
-  
-  public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls, java.lang.String userName, java.lang.String password_) throws java.rmi.RemoteException{
-    if (backEnd_WSSoap == null)
-      _initBackEnd_WSSoapProxy();
-    return backEnd_WSSoap.runApplication(id_concrete, eIds, eVls, userName, password_);
   }
   
   

@@ -34,6 +34,9 @@ public class BackEnd_WSSoapStub extends org.apache.axis.client.Stub implements h
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://backend.hPE/", "password_"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://backend.hPE/", "curDir"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         oper.setReturnClass(java.lang.String.class);
         oper.setReturnQName(new javax.xml.namespace.QName("http://backend.hPE/", "deployHashComponentResult"));
@@ -66,6 +69,9 @@ public class BackEnd_WSSoapStub extends org.apache.axis.client.Stub implements h
         param.setOmittable(true);
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://backend.hPE/", "password_"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://backend.hPE/", "curDir"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://backend.hPE/", "ArrayOfString"));
@@ -201,7 +207,7 @@ public class BackEnd_WSSoapStub extends org.apache.axis.client.Stub implements h
         }
     }
 
-    public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password_) throws java.rmi.RemoteException {
+    public java.lang.String deployHashComponent(byte[] data, java.lang.String userName, java.lang.String password_, java.lang.String curDir) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -217,7 +223,7 @@ public class BackEnd_WSSoapStub extends org.apache.axis.client.Stub implements h
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {data, userName, password_});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {data, userName, password_, curDir});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -269,7 +275,7 @@ public class BackEnd_WSSoapStub extends org.apache.axis.client.Stub implements h
 }
     }
 
-    public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls, java.lang.String userName, java.lang.String password_) throws java.rmi.RemoteException {
+    public java.lang.String[] runApplication(int id_concrete, java.lang.String[] eIds, int[] eVls, java.lang.String userName, java.lang.String password_, java.lang.String curDir) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -285,7 +291,7 @@ public class BackEnd_WSSoapStub extends org.apache.axis.client.Stub implements h
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(id_concrete), eIds, eVls, userName, password_});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(id_concrete), eIds, eVls, userName, password_, curDir});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

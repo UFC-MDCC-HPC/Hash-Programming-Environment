@@ -179,7 +179,7 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLocation_Login() {
+	public EAttribute getLocation_Curdir() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -188,7 +188,7 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLocation_Name() {
+	public EAttribute getLocation_Login() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -197,7 +197,7 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLocation_Password() {
+	public EAttribute getLocation_Name() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -206,8 +206,17 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLocation_Uri() {
+	public EAttribute getLocation_Password() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLocation_Uri() {
+		return (EAttribute)locationEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -263,6 +272,7 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 		createEReference(documentRootEClass, DOCUMENT_ROOT__SERVICES);
 
 		locationEClass = createEClass(LOCATION);
+		createEAttribute(locationEClass, LOCATION__CURDIR);
 		createEAttribute(locationEClass, LOCATION__LOGIN);
 		createEAttribute(locationEClass, LOCATION__NAME);
 		createEAttribute(locationEClass, LOCATION__PASSWORD);
@@ -312,6 +322,7 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 		initEReference(getDocumentRoot_Services(), this.getServices(), null, "services", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(locationEClass, Location.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLocation_Curdir(), theXMLTypePackage.getString(), "curdir", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLocation_Login(), theXMLTypePackage.getString(), "login", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLocation_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLocation_Password(), theXMLTypePackage.getString(), "password", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -378,6 +389,13 @@ public class LocationsPackageImpl extends EPackageImpl implements LocationsPacka
 		   new String[] {
 			 "name", "Location",
 			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getLocation_Curdir(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "curdir"
 		   });		
 		addAnnotation
 		  (getLocation_Login(), 

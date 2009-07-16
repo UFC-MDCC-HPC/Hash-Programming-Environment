@@ -14,5 +14,6 @@
     	<attribute name="uri" type="anyURI"></attribute>
     	<attribute name="login" type="string"></attribute>
     	<attribute name="password" type="string"></attribute>
+    	<attribute name="curdir" type="string"></attribute>
     </complexType>
 </schema>

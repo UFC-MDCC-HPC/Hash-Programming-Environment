@@ -17,9 +17,14 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.eclipse.core.runtime.Path;
+
+import java.awt.Dimension;
 
 public class DeployComponentDialog extends JDialog 
                                    implements	ActionListener, ListSelectionListener {
@@ -32,7 +37,7 @@ public class DeployComponentDialog extends JDialog
 	private JLabel jLabelBackEndName = null;
 	private JTextField jTextFieldBackEndLogIn = null;
 	private JLabel jLabelBackEndLogin = null;
-	private JTextField jTextFieldBackEndPassword = null;
+	private JPasswordField jTextFieldBackEndPassword = null;
 	private JLabel jLabelBackEndPassword = null;
 	private JButton jButtonClose = null;
 	private JList jListBackEnds = null;
@@ -65,7 +70,7 @@ public class DeployComponentDialog extends JDialog
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(438, 328);
+		this.setSize(468, 331);
 		this.setTitle("Deploy Component");
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
@@ -91,18 +96,21 @@ public class DeployComponentDialog extends JDialog
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			jLabelBackEndCurDir = new JLabel();
+			jLabelBackEndCurDir.setBounds(new Rectangle(15, 149, 256, 16));
+			jLabelBackEndCurDir.setText("Current Directory");
 			jLabelBackEndDescription = new JLabel();
-			jLabelBackEndDescription.setBounds(new Rectangle(15, 150, 256, 16));
+			jLabelBackEndDescription.setBounds(new Rectangle(15, 210, 256, 16));
 			jLabelBackEndDescription.setText("Description");
 			jLabelBackEnds = new JLabel();
-			jLabelBackEnds.setBounds(new Rectangle(285, 15, 136, 16));
+			jLabelBackEnds.setBounds(new Rectangle(285, 15, 166, 16));
 			jLabelBackEnds.setText("Available Back-End's");
 			jLabelBackEndPassword = new JLabel();
 			jLabelBackEndPassword.setBounds(new Rectangle(150, 105, 121, 16));
 			jLabelBackEndPassword.setText("Password");
 			jLabelBackEndLogin = new JLabel();
 			jLabelBackEndLogin.setBounds(new Rectangle(15, 105, 106, 16));
-			jLabelBackEndLogin.setText("Login");
+			jLabelBackEndLogin.setText("User Name");
 			jLabelBackEndName = new JLabel();
 			jLabelBackEndName.setBounds(new Rectangle(15, 15, 170, 16));
 			jLabelBackEndName.setText("Back-End Site Name");
@@ -127,6 +135,8 @@ public class DeployComponentDialog extends JDialog
 			jContentPane.add(getJButtonAddBackEnd(), null);
 			jContentPane.add(getJButtonSaveBackEndInfo(), null);
 			jContentPane.add(getJButtonDeleteBackEnd(), null);
+			jContentPane.add(getJTextField_BackEndCurDir(), null);
+			jContentPane.add(jLabelBackEndCurDir, null);
 		}
 		return jContentPane;
 	}
@@ -179,7 +189,7 @@ public class DeployComponentDialog extends JDialog
 	 */
 	private JTextField getJTextFieldBackEndPassword() {
 		if (jTextFieldBackEndPassword == null) {
-			jTextFieldBackEndPassword = new JTextField();
+			jTextFieldBackEndPassword = new JPasswordField();
 			jTextFieldBackEndPassword.setBounds(new Rectangle(150, 120, 121, 20));
 		}
 		return jTextFieldBackEndPassword;
@@ -193,7 +203,7 @@ public class DeployComponentDialog extends JDialog
 	private JButton getJButtonClose() {
 		if (jButtonClose == null) {
 			jButtonClose = new JButton();
-			jButtonClose.setBounds(new Rectangle(345, 255, 76, 31));
+			jButtonClose.setBounds(new Rectangle(375, 255, 76, 31));
 			jButtonClose.setText("Close");
 			jButtonClose.addActionListener(this);
 		}
@@ -209,7 +219,7 @@ public class DeployComponentDialog extends JDialog
 		if (jListBackEnds == null) {
 			jListBackEnds = new JList();
 			jListBackEnds.addListSelectionListener(this);
-			jListBackEnds.setBounds(new Rectangle(285, 30, 136, 211));
+			jListBackEnds.setBounds(new Rectangle(285, 30, 166, 166));
 		}
 		return jListBackEnds;
 	}
@@ -222,7 +232,7 @@ public class DeployComponentDialog extends JDialog
 	private JEditorPane getJEditorPaneBackEndDescription() {
 		if (jEditorPaneBackEndDescription == null) {
 			jEditorPaneBackEndDescription = new JEditorPane();
-			jEditorPaneBackEndDescription.setBounds(new Rectangle(15, 165, 256, 76));
+			jEditorPaneBackEndDescription.setBounds(new Rectangle(15, 225, 256, 61));
 			jEditorPaneBackEndDescription.setEnabled(false);
 		}
 		return jEditorPaneBackEndDescription;
@@ -236,7 +246,7 @@ public class DeployComponentDialog extends JDialog
 	private JButton getJButtonAddBackEnd() {
 		if (jButtonAddBackEnd == null) {
 			jButtonAddBackEnd = new JButton();
-			jButtonAddBackEnd.setBounds(new Rectangle(15, 255, 76, 31));
+			jButtonAddBackEnd.setBounds(new Rectangle(285, 210, 76, 31));
 			jButtonAddBackEnd.setText("Clear");
 			jButtonAddBackEnd.addActionListener(this);
 		}
@@ -261,6 +271,7 @@ public class DeployComponentDialog extends JDialog
 		    b.locURI = jTextField_BackEndURI.getText();
 		    b.login = jTextFieldBackEndLogIn.getText();
 		    b.password = jTextFieldBackEndPassword.getText();
+		    b.curdir = jTextField_BackEndCurDir.getText() != null ? new Path(jTextField_BackEndCurDir.getText()) : null;
 		    backendList.put(b.name, b);
 		    
 		    BackEndLocationList.saveData(backendList);
@@ -277,6 +288,8 @@ public class DeployComponentDialog extends JDialog
 
 
 	private JButton jButtonDeleteBackEnd = null;
+	private JTextField jTextField_BackEndCurDir = null;
+	private JLabel jLabelBackEndCurDir = null;
 
 	private void clearFields() {
 		jTextFieldBackEndName.setText(null);
@@ -286,6 +299,7 @@ public class DeployComponentDialog extends JDialog
 		jTextFieldBackEndPassword.setEnabled(true);			
 	    jTextFieldBackEndPassword.setText(null);
 		jEditorPaneBackEndDescription.setText(null);
+		jTextField_BackEndCurDir.setText(null);
 	}
 
 	@Override
@@ -297,21 +311,29 @@ public class DeployComponentDialog extends JDialog
 				jTextFieldBackEndName.setText(bel.name);
 				jTextField_BackEndURI.setText(bel.locURI);
 				if (bel.login != null) { 
-					jTextFieldBackEndLogIn.setEnabled(true);
+				//	jTextFieldBackEndLogIn.setEnabled(true);
 					jTextFieldBackEndLogIn.setText(bel.login);
+					jLabelBackEndCurDir.setText("Current Directory (relative to ~" + bel.login + ")");
 				}
 				else  { 
-					jTextFieldBackEndLogIn.setEnabled(false);
+				//	jTextFieldBackEndLogIn.setEnabled(false);
 					jTextFieldBackEndLogIn.setText(null);
+					jLabelBackEndCurDir.setText("Current Directory");
 				}
 				if (bel.password != null) {
-					jTextFieldBackEndPassword.setEnabled(true);			
+				//	jTextFieldBackEndPassword.setEnabled(true);			
 				    jTextFieldBackEndPassword.setText(bel.password);
 				} else { 
-					jTextFieldBackEndPassword.setEnabled(false);
+				//	jTextFieldBackEndPassword.setEnabled(false);
 					jTextFieldBackEndPassword.setText(null);
 				}
+				if (bel.curdir != null) {
+					jTextField_BackEndCurDir.setText(bel.curdir.toString());
+				} else {
+					jTextField_BackEndCurDir.setText(null);
+				}
 				
+
 				jEditorPaneBackEndDescription.setText("NOT YET IMPLEMENTED !");
 			}
 		} else if (event.getSource() == jTextFieldBackEndName) {
@@ -332,7 +354,7 @@ public class DeployComponentDialog extends JDialog
 	private JButton getJButtonSaveBackEndInfo() {
 		if (jButtonSaveBackEndInfo == null) {
 			jButtonSaveBackEndInfo = new JButton();
-			jButtonSaveBackEndInfo.setBounds(new Rectangle(105, 255, 76, 31));
+			jButtonSaveBackEndInfo.setBounds(new Rectangle(375, 210, 76, 31));
 			jButtonSaveBackEndInfo.setText("Save");
 			jButtonSaveBackEndInfo.addActionListener(this);
 		}
@@ -347,12 +369,25 @@ public class DeployComponentDialog extends JDialog
 	private JButton getJButtonDeleteBackEnd() {
 		if (jButtonDeleteBackEnd == null) {
 			jButtonDeleteBackEnd = new JButton();
-			jButtonDeleteBackEnd.setBounds(new Rectangle(195, 255, 76, 31));
+			jButtonDeleteBackEnd.setBounds(new Rectangle(285, 255, 76, 31));
 			jButtonDeleteBackEnd.setText("Delete");
 			jButtonDeleteBackEnd.addActionListener(this);
 
 		}
 		return jButtonDeleteBackEnd;
+	}
+
+	/**
+	 * This method initializes jTextField_BackEndCurDir	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getJTextField_BackEndCurDir() {
+		if (jTextField_BackEndCurDir == null) {
+			jTextField_BackEndCurDir = new JTextField();
+			jTextField_BackEndCurDir.setBounds(new Rectangle(15, 165, 256, 20));
+		}
+		return jTextField_BackEndCurDir;
 	}
 	
 	

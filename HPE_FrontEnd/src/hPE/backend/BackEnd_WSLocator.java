@@ -22,7 +22,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
     }
 
     // Use to get a proxy class for BackEnd_WSSoap
-    private java.lang.String BackEnd_WSSoap_address = "http://localhost:3494/BackEndWS.asmx";
+    private java.lang.String BackEnd_WSSoap_address = "http://localhost:3494/teste/BackEndWS.asmx";
 
     public java.lang.String getBackEnd_WSSoapAddress() {
         return BackEnd_WSSoap_address;
@@ -67,7 +67,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
 
 
     // Use to get a proxy class for BackEnd_WSSoap12
-    private java.lang.String BackEnd_WSSoap12_address = "http://localhost:3494/BackEndWS.asmx";
+    private java.lang.String BackEnd_WSSoap12_address = "http://localhost:3494/teste/BackEndWS.asmx";
 
     public java.lang.String getBackEnd_WSSoap12Address() {
         return BackEnd_WSSoap12_address;
@@ -84,7 +84,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         BackEnd_WSSoap12WSDDServiceName = name;
     }
 
-    public hPE.backend.BackEnd_WSSoap12 getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException {
+    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(BackEnd_WSSoap12_address);
@@ -95,7 +95,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
         return getBackEnd_WSSoap12(endpoint);
     }
 
-    public hPE.backend.BackEnd_WSSoap12 getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
             hPE.backend.BackEnd_WSSoap12Stub _stub = new hPE.backend.BackEnd_WSSoap12Stub(portAddress, this);
             _stub.setPortName(getBackEnd_WSSoap12WSDDServiceName());
@@ -114,6 +114,8 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
      * For the given interface, get the stub implementation.
      * If this service has no port for the given interface,
      * then ServiceException is thrown.
+     * This service has multiple ports for a given interface;
+     * the proxy implementation returned may be indeterminate.
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
@@ -122,7 +124,7 @@ public class BackEnd_WSLocator extends org.apache.axis.client.Service implements
                 _stub.setPortName(getBackEnd_WSSoapWSDDServiceName());
                 return _stub;
             }
-            if (hPE.backend.BackEnd_WSSoap12.class.isAssignableFrom(serviceEndpointInterface)) {
+            if (hPE.backend.BackEnd_WSSoap.class.isAssignableFrom(serviceEndpointInterface)) {
                 hPE.backend.BackEnd_WSSoap12Stub _stub = new hPE.backend.BackEnd_WSSoap12Stub(new java.net.URL(BackEnd_WSSoap12_address), this);
                 _stub.setPortName(getBackEnd_WSSoap12WSDDServiceName());
                 return _stub;

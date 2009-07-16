@@ -47,6 +47,7 @@ public class ServicesImpl extends EObjectImpl implements Services {
 	 * @ordered
 	 */
 	protected EList<Location> backend;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

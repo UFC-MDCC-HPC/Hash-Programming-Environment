@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link hPE.frontend.backend.locations.Location#getCurdir <em>Curdir</em>}</li>
  *   <li>{@link hPE.frontend.backend.locations.Location#getLogin <em>Login</em>}</li>
  *   <li>{@link hPE.frontend.backend.locations.Location#getName <em>Name</em>}</li>
  *   <li>{@link hPE.frontend.backend.locations.Location#getPassword <em>Password</em>}</li>
@@ -28,6 +29,33 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Location extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Curdir</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Curdir</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Curdir</em>' attribute.
+	 * @see #setCurdir(String)
+	 * @see hPE.frontend.backend.locations.LocationsPackage#getLocation_Curdir()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='curdir'"
+	 * @generated
+	 */
+	String getCurdir();
+
+	/**
+	 * Sets the value of the '{@link hPE.frontend.backend.locations.Location#getCurdir <em>Curdir</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Curdir</em>' attribute.
+	 * @see #getCurdir()
+	 * @generated
+	 */
+	void setCurdir(String value);
+
 	/**
 	 * Returns the value of the '<em><b>Login</b></em>' attribute.
 	 * <!-- begin-user-doc -->

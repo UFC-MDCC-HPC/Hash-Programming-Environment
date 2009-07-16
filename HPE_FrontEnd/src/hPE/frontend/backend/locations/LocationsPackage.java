@@ -125,13 +125,22 @@ public interface LocationsPackage extends EPackage {
 	int LOCATION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Curdir</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCATION__CURDIR = 0;
+
+	/**
 	 * The feature id for the '<em><b>Login</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION__LOGIN = 0;
+	int LOCATION__LOGIN = 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -140,7 +149,7 @@ public interface LocationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION__NAME = 1;
+	int LOCATION__NAME = 2;
 
 	/**
 	 * The feature id for the '<em><b>Password</b></em>' attribute.
@@ -149,7 +158,7 @@ public interface LocationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION__PASSWORD = 2;
+	int LOCATION__PASSWORD = 3;
 
 	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
@@ -158,7 +167,7 @@ public interface LocationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION__URI = 3;
+	int LOCATION__URI = 4;
 
 	/**
 	 * The number of structural features of the '<em>Location</em>' class.
@@ -167,7 +176,7 @@ public interface LocationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION_FEATURE_COUNT = 4;
+	int LOCATION_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link hPE.frontend.backend.locations.impl.ServicesImpl <em>Services</em>}' class.
@@ -261,6 +270,17 @@ public interface LocationsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getLocation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.frontend.backend.locations.Location#getCurdir <em>Curdir</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Curdir</em>'.
+	 * @see hPE.frontend.backend.locations.Location#getCurdir()
+	 * @see #getLocation()
+	 * @generated
+	 */
+	EAttribute getLocation_Curdir();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.frontend.backend.locations.Location#getLogin <em>Login</em>}'.
@@ -400,6 +420,14 @@ public interface LocationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass LOCATION = eINSTANCE.getLocation();
+
+		/**
+		 * The meta object literal for the '<em><b>Curdir</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCATION__CURDIR = eINSTANCE.getLocation_Curdir();
 
 		/**
 		 * The meta object literal for the '<em><b>Login</b></em>' attribute feature.
