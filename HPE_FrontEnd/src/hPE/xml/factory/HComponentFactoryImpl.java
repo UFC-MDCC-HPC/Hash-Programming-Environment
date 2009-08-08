@@ -405,7 +405,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				
 		IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation().removeLastSegments(1);
 		
-		String cachePath = HPEProperties.getInstance().getValue("cache_root") + Path.SEPARATOR + pathC.removeLastSegments(1);
+		String cachePath = addSegment(HPEProperties.getInstance().getValue("cache_root"), pathC.removeLastSegments(1).toString());
 				
 		try {
 			copyDirectory(new File(path.toString()), new File(cachePath));
@@ -473,18 +473,30 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		if (!cacheFilePath.exists())
 			cacheFilePath.mkdir();
 
-		java.io.File configFilePath = new java.io.File(cachePath + Path.SEPARATOR + locationUri.toString());
+		String fileName = addSegment(cachePath,locationUri.toString()) ;
+		
+		java.io.File configFilePath = new java.io.File(fileName);
 		configFilePath = new java.io.File(configFilePath.getParent());
 		if (!configFilePath.exists())
 			configFilePath.mkdir();
 
-		java.io.File binFilePath = new java.io.File(configFilePath.getAbsolutePath() + Path.SEPARATOR + "bin");
+		java.io.File binFilePath = new java.io.File(addSegment(configFilePath.getAbsolutePath(),"bin"));
 		if (!binFilePath.exists())
 			binFilePath.mkdir();
 		
-		String fileName = cachePath + Path.SEPARATOR + locationUri.toString();
-
+		
+		// cachePath + Path.SEPARATOR + locationUri.toString();
+		
 		return new File(fileName);
+	}
+	
+	private static String addSegment(String path, String adding) {
+		int l = path.length() - 1;
+		if (path.charAt(l) == Path.SEPARATOR) {
+			return path + adding;
+		} else {
+			return path + Path.SEPARATOR + adding;
+		}			
 	}
 
 	public static File getCachePath(String pk, String componentName, String version) {
