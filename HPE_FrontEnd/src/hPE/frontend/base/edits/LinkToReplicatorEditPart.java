@@ -24,7 +24,6 @@ public class LinkToReplicatorEditPart extends AbstractConnectionEditPart impleme
 		// Makes the connection show a feedback, when selected by the user.
 		this.installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE, new ConnectionEndpointEditPolicy());
 		this.installEditPolicy("UnsetReplicatorEditPolicy", new UnsetReplicatorEditPolicy());
-		this.installEditPolicy("SplitReplicatorEditPolicy", new SplitReplicatorEditPolicy());
 		this.installEditPolicy("JoinReplicatorEditPolicy", new JoinReplicatorEditPolicy());
 		this.installEditPolicy("LiftReplicatorEditPolicy", new LiftReplicatorEditPolicy());
 

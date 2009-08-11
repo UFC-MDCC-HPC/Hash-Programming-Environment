@@ -7,7 +7,9 @@ import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 
 import hPE.frontend.base.commands.SplitReplicatorCommand;
 import hPE.frontend.base.edits.LinkToReplicatorEditPart;
+import hPE.frontend.base.edits.ReplicatorEditPart;
 import hPE.frontend.base.model.HLinkToReplicator;
+import hPE.frontend.base.model.HReplicator;
 
 public class SplitReplicatorEditPolicy extends ComponentEditPolicy {
 
@@ -21,10 +23,10 @@ private static final String
 
 public Command getCommand(Request request) {
 	
-	HLinkToReplicator link = (HLinkToReplicator) ((LinkToReplicatorEditPart) getHost()).getModel();
+	HReplicator replicator = (HReplicator) ((ReplicatorEditPart) getHost()).getModel();
 	
 	if (SPLIT_REPLICATOR_REQUEST.equals(request.getType()))
-		return new SplitReplicatorCommand(link);
+		return new SplitReplicatorCommand(replicator);
 	return 
 	    super.getCommand(request);
 	

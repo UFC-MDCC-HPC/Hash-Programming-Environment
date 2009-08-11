@@ -20,6 +20,7 @@ import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.NameDirectEditPolicy;
 import hPE.frontend.base.policies.RemoveElementEditPolicy;
 import hPE.frontend.base.policies.SetReplicatorFactorEditPolicy;
+import hPE.frontend.base.policies.SplitReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnfuseReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 
@@ -64,6 +65,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 		// allow the creation of connections and and the reconnection of connections between Shape instances
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		this.installEditPolicy("Fuse Replicator", new FuseReplicatorEditPolicy());
+		this.installEditPolicy("SplitReplicatorEditPolicy", new SplitReplicatorEditPolicy());
 		this.installEditPolicy("Unfuse Replicator", new UnfuseReplicatorEditPolicy());
 		this.installEditPolicy("Set Replicator Factor", new SetReplicatorFactorEditPolicy());
 	}

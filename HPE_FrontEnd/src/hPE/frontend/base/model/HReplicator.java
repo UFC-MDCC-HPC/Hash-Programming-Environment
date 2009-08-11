@@ -284,8 +284,12 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		linksToMe.addAll(this.linksToMe);
 	
 		for (List<HReplicator> rs : this.getAllMyJoined()) {
-		    for (HReplicator r : rs) {	
-				linksToMe.addAll(r.getLinksToMe());
+		    for (HReplicator r : rs) {
+		    	for (HLinkToReplicator lr : r.getLinksToMe()) {
+		    		if (!linksToMe.contains(lr)) {
+		    			linksToMe.add(lr);
+		    		}
+		    	}
 			}
 		}
 	

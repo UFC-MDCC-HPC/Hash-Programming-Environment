@@ -1,5 +1,6 @@
 package hPE.frontend.base.actions;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -56,21 +57,14 @@ public class SplitReplicatorAction extends SelectionAction {
 		if (getSelectedObjects().isEmpty())
 			return false;
 		List parts = getSelectedObjects();
+		
+		if (parts.size() != 1) return false;
+		Object o = parts.get(0);
+		if (!(o instanceof EditPart)) return false;
+		EditPart part = (EditPart)o;
+		if (!(part.getModel() instanceof HReplicator)) return false;
+		HReplicator r = (HReplicator) part.getModel();
 
-		HReplicator r = null;
-		for (int i=0; i<parts.size(); i++){
-			Object o = parts.get(i);
-			if (!(o instanceof EditPart)) return false;
-			EditPart part = (EditPart)o;
-			if (!(part.getModel() instanceof HLinkToReplicator)) return false;
-			HLinkToReplicator l = (HLinkToReplicator) part.getModel();
-			if (r==null) r = l.getReplicator();
-			else if (r != l.getReplicator()) return false;
-			if (!(l.getReplicated() instanceof IHUnit)) return false;
-			IHUnit u = (IHUnit) l.getReplicated();
-			if (!u.isEntry() || u.getBinding()!=null) return false;
-			
-		}	
 		return true;
 	}
 	
@@ -78,26 +72,14 @@ public class SplitReplicatorAction extends SelectionAction {
 		List editparts = getSelectedObjects();
 		List links = new ArrayList();
 		EditPart part = null;
-		for (int i=0; i < editparts.size(); i++) {
-			part = (EditPart)editparts.get(i);
-			links.add(part.getModel());
-		}
-		
+		part = (EditPart)editparts.get(0);
+				
 		SplitReplicatorCommand c = (SplitReplicatorCommand) part.getCommand(request);
-		c.setLinks(links);
 		c.setDialog(dialog);
 		
 		return c;
 		
-		
-/*		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Split Enumeration");//$NON-NLS-1$
-		for (int i=0; i < editparts.size(); i++) {
-			EditPart part = (EditPart)editparts.get(i);
-			cc.add(part.getCommand(request));
-		}
-		return cc; */
-	}
+}
 	
 	public void run() {
 		execute(getCommand());
