@@ -41,8 +41,8 @@ public class HEnvironmentUnit extends HQualifierUnit implements IHEnvironmentUni
 	public HUnitSlice newSlice(IHUnit the_unit, Point where) throws HPEAbortException{
 		return new HEnvironmentUnitSlice(the_unit, this, where);
 	}
-	
+	/*
     public HUnitStub createStub() {
     	return new HEnvironmentUnitStub(this);
-    }
+    } */
 }

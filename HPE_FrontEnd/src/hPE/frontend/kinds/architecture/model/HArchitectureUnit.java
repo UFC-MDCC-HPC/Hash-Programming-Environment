@@ -43,8 +43,9 @@ public class HArchitectureUnit extends HQualifierUnit implements IHQualifierUnit
 		return new HArchitectureUnitSlice(the_unit, this, where);
 	}
 	
+	/*
     public HUnitStub createStub() {
     	return new HArchitectureUnitStub(this);
-    }
+    }*/
 	
 }

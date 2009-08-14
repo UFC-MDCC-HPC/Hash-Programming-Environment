@@ -1,10 +1,6 @@
 package hPE.frontend.kinds.qualifier.edits;
 
-import java.util.List;
-
-import hPE.frontend.base.edits.InterfaceSliceEditPart;
 import hPE.frontend.kinds.base.edits.HasPortsInterfaceSliceEditPart;
-import hPE.frontend.kinds.data.model.HDataInterfaceSlice;
 import hPE.frontend.kinds.qualifier.figures.QualifierInterfaceSliceFigure;
 import hPE.frontend.kinds.qualifier.model.HQualifierInterfaceSlice;
 

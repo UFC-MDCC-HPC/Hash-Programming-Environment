@@ -33,8 +33,9 @@ public class HDataUnit extends HHasPortsUnit implements IHDataUnit {
 		return new HDataUnitSlice(the_unit, this, where);
 	}
 	
+	/*
     public HUnitStub createStub() {
     	return new HDataUnitStub(this);
-    }
+    }*/
 	
 }

@@ -42,7 +42,7 @@ public class HQualifierUnit extends HHasPortsUnit implements IHQualifierUnit {
 		return new HQualifierUnitSlice(the_unit, this, where);
 	}
 	
-    public HUnitStub createStub() {
+  /*  public HUnitStub createStub() {
     	return new HQualifierUnitStub(this);
-    }
+    } */
 }

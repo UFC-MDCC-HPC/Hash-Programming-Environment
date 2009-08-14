@@ -42,9 +42,9 @@ public class HComputationUnit extends HActivateUnit implements IHComputationUnit
 		return new HComputationUnitSlice(the_unit, this, where);
 	}
 	
-    public HUnitStub createStub() {
+ /*   public HUnitStub createStub() {
     	return new HComputationUnitStub(this);
-    }
+    } */
 
 }
 

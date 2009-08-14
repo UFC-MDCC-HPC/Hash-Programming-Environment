@@ -707,9 +707,9 @@ public abstract class HUnit extends HPrimUnit
 	    	this.setBounds(this.savedBounds);
 	    }
 	    
-	    public HUnitStub createStub() {
-	    	return new HUnitStub(this);
-	    }
+	//    public HUnitStub createStub() {
+	 //   	return new HUnitStub(this);
+	  //  }
 	    
 	    public HUnitStub createStub(HComponent enc) {
 	    	return new HUnitStub(this,enc);

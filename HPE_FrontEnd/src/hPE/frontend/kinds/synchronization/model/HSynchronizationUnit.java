@@ -50,7 +50,8 @@ public class HSynchronizationUnit extends HActivateUnit implements IHSynchroniza
 		return new HSynchronizationUnitSlice(the_unit, this, where);
 	}
 
+    /*
     public HUnitStub createStub() {
     	return new HSynchronizationUnitStub(this);
-    }
+    } */
 }
