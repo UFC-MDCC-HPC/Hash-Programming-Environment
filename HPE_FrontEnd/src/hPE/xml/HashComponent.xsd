@@ -134,6 +134,7 @@
 			<enumeration value="Environment"></enumeration>
 			<enumeration value="Qualifier"></enumeration>
 			<enumeration value="Application"></enumeration>
+			<enumeration value="Enumerator"></enumeration>
 		</restriction>
 	</simpleType>
 

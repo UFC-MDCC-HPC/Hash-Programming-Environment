@@ -126,9 +126,11 @@ public class SetVersionDialog extends Composite {
 		radioService.setSelection(false);
 		radioService.setBounds(new Rectangle(238, 58, 116, 16));
 		radioService.setText("Service");
+		
 		radioEnumerator = new Button(groupKinds, SWT.RADIO);
 		radioEnumerator.setBounds(new Rectangle(128, 58, 106, 16));
 		radioEnumerator.setText("Enumerator");
+		radioEnumerator.addSelectionListener(sl);
 		radioEnumerator.setSelection(false);
 	}
 

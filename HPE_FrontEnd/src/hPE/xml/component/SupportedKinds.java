@@ -88,7 +88,15 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	APPLICATION(6, "Application", "Application");
+	APPLICATION(6, "Application", "Application"), /**
+	 * The '<em><b>Enumerator</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ENUMERATOR_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ENUMERATOR(7, "Enumerator", "Enumerator");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -196,6 +204,21 @@ public enum SupportedKinds implements Enumerator {
 	public static final int APPLICATION_VALUE = 6;
 
 	/**
+	 * The '<em><b>Enumerator</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Enumerator</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ENUMERATOR
+	 * @model name="Enumerator"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ENUMERATOR_VALUE = 7;
+
+	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -210,6 +233,7 @@ public enum SupportedKinds implements Enumerator {
 			ENVIRONMENT,
 			QUALIFIER,
 			APPLICATION,
+			ENUMERATOR,
 		};
 
 	/**
@@ -267,6 +291,7 @@ public enum SupportedKinds implements Enumerator {
 			case ENVIRONMENT_VALUE: return ENVIRONMENT;
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
+			case ENUMERATOR_VALUE: return ENUMERATOR;
 		}
 		return null;
 	}

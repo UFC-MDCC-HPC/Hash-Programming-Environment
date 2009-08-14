@@ -3185,6 +3185,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENVIRONMENT);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUALIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
 
 		// Initialize data types
 		initEDataType(quantificationTypeObjectEDataType, QuantificationType.class, "QuantificationTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);

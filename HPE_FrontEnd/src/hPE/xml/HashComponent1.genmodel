@@ -19,6 +19,7 @@
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Environment"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Qualifier"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Application"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Enumerator"/>
     </genEnums>
     <genDataTypes ecoreDataType="component.ecore#//QuantificationTypeObject"/>
     <genDataTypes ecoreDataType="component.ecore#//SupportedKindsObject"/>

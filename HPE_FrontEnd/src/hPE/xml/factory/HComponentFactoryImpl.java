@@ -44,6 +44,7 @@ import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
@@ -2613,6 +2614,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			c = new HEnvironmentComponent(name, location, uri);
 		} else if (kind.getName().equals(HQualifierComponent.KIND)) {
 			c = new HQualifierComponent(name, location, uri);
+		} else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
+			c = new HEnumeratorComponent(name, location, uri);
 		} else {
 			throw new HPEUnknownKindException("Component Kind Not Supported !");
 		}
