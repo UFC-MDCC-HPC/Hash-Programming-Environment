@@ -5,6 +5,7 @@ import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
@@ -127,7 +128,19 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		URI uri = URI.createFileURI(absolutePath);
 		
 		HComponent c = null;
-		if (modelSelected1 == 1) {
+		switch (modelSelected1) {
+		case 1: c = new HDataComponent(s,null,uri); break;
+		case 2: c = new HComputationComponent(s,null,uri); break;
+		case 3: c = new HSynchronizationComponent(s,null,uri); break;
+		case 4: c = new HArchitectureComponent(s,null,uri); break;
+		case 5: c = new HEnvironmentComponent(s,null,uri); break;
+		case 6: c = new HQualifierComponent(s,null,uri); break;
+		case 7: c = new HApplicationComponent(s,null,uri); break;
+	 // case 8: c = new HServiceComponent(s,null,uri); break;
+		case 9: c = new HEnumeratorComponent(s,null,uri); break;
+		}
+		
+/*		if (modelSelected1 == 1) {
 	       c = new HDataComponent(s,null,uri);	       
 		} else if (modelSelected1 == 2) {
 		   c = new HComputationComponent(s,null,uri);		   
@@ -141,9 +154,13 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			   c = new HQualifierComponent(s,null,uri);		   
 		} else if (modelSelected1 == 7) {
 			   c = new HApplicationComponent(s,null,uri);		   
+//		} else if (modelSelected1 == 8) {
+//			   c = new HServiceComponent(s,null,uri);		   
+		} else if (modelSelected1 == 9) {
+			   c = new HEnumeratorComponent(s,null,uri);		   
 		} else {
 			// ERROR;
-		}
+		} */
 			
 		setComponentVersion(c);
 		try {
@@ -221,6 +238,9 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		} if( e.getSource() == composite2.getRadioService() ){
 			modelSelected1 = 8;
+			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
+		} if( e.getSource() == composite2.getRadioEnumerator() ){
+			modelSelected1 = 9;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		}
 	}	

@@ -30,6 +30,13 @@ import hPE.frontend.base.figures.InterfaceFigure;
 import hPE.frontend.base.figures.InterfaceSliceFigure;
 import hPE.frontend.base.figures.UnitFigure;
 import hPE.frontend.base.figures.UnitSliceFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorComponentFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorConfigurationFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorInterfaceFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorInterfaceSliceFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorUnitFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorUnitSliceFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorEntryFigure;
 import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
@@ -130,6 +137,19 @@ import hPE.frontend.kinds.data.model.HDataInterfaceSlice;
 import hPE.frontend.kinds.data.model.HDataUnit;
 import hPE.frontend.kinds.data.model.HDataUnitSlice;
 import hPE.frontend.kinds.data.model.IHDataUnit;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorInterface;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorUnit;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
+import hPE.frontend.kinds.enumerator.model.IHEnumeratorUnit;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorComponentEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorConfigurationEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorInterfaceEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorInterfaceSliceEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorUnitEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorUnitSliceEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorEntryEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentComponentEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentConfigurationEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentEntryEditPart;
@@ -221,6 +241,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierConfigurationEditPart<HQualifierComponent,QualifierConfigurationFigure>();
 				else if (model instanceof HEnvironmentComponent)
 					part = new EnvironmentConfigurationEditPart<HEnvironmentComponent,EnvironmentConfigurationFigure>();
+				else if (model instanceof HEnumeratorComponent)
+					part = new EnumeratorConfigurationEditPart<HEnumeratorComponent,EnumeratorConfigurationFigure>();
 				else 
 					part = new ConfigurationEditPart<HComponent,ConfigurationFigure>();
 			} else if (context instanceof ComponentEditPart) {
@@ -242,6 +264,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierComponentEditPart<HQualifierComponent,QualifierComponentFigure>();
 				else if (model instanceof HEnvironmentComponent)
 					part = new EnvironmentComponentEditPart<HEnvironmentComponent,EnvironmentComponentFigure>();
+				else if (model instanceof HEnumeratorComponent)
+					part = new EnumeratorComponentEditPart<HEnumeratorComponent,EnumeratorComponentFigure>();
 				else 
 					part = new ComponentEditPart<HComponent,ComponentFigure>();
 			}
@@ -261,6 +285,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentUnitEditPart<HEnvironmentUnit,EnvironmentUnitFigure>();
 				else if (model instanceof IHQualifierUnit) 
 					part = new QualifierUnitEditPart<HQualifierUnit,QualifierUnitFigure>();
+				else if (model instanceof IHEnumeratorUnit) 
+					part = new EnumeratorUnitEditPart<HEnumeratorUnit,EnumeratorUnitFigure>();
 				else 
 					part = new UnitEditPart<HUnit,UnitFigure>();
 		    } else {
@@ -278,6 +304,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentEntryEditPart<HEnvironmentUnit,EnvironmentEntryFigure>();
 				else if (model instanceof HQualifierUnit) 
 					part = new QualifierEntryEditPart<HQualifierUnit,QualifierEntryFigure>();
+				else if (model instanceof HEnumeratorUnit) 
+					part = new EnumeratorEntryEditPart<HEnumeratorUnit,EnumeratorEntryFigure>();
 				else 
 					part = new EntryEditPart<HUnit,EntryFigure>();
 		    }
@@ -297,6 +325,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 			    part = new EnvironmentUnitSliceEditPart<HEnvironmentUnitSlice,EnvironmentUnitSliceFigure>();
 			else if (model instanceof HQualifierUnitSlice) 
 			    part = new QualifierUnitSliceEditPart<HQualifierUnitSlice,QualifierUnitSliceFigure>();
+			else if (model instanceof HEnumeratorUnitSlice) 
+			    part = new EnumeratorUnitSliceEditPart<HEnumeratorUnitSlice,EnumeratorUnitSliceFigure>();
 			else 
 			    part = new UnitSliceEditPart<HUnitSlice,UnitSliceFigure>();
 		} else if (model instanceof HInterfaceSlice) {
@@ -314,6 +344,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 			    part = new EnvironmentInterfaceSliceEditPart<HEnvironmentInterfaceSlice,EnvironmentInterfaceSliceFigure>();
 			else if (model instanceof HQualifierInterfaceSlice) 
 			    part = new QualifierInterfaceSliceEditPart<HQualifierInterfaceSlice,QualifierInterfaceSliceFigure>();
+			else if (model instanceof HEnumeratorInterfaceSlice) 
+			    part = new EnumeratorInterfaceSliceEditPart<HEnumeratorInterfaceSlice,EnumeratorInterfaceSliceFigure>();
 			else 
 			    part = new InterfaceSliceEditPart<HInterfaceSlice,InterfaceSliceFigure>();
 		} else if (model instanceof HBinding) {
@@ -333,6 +365,8 @@ public class MainConfigurationEditPartFactory implements EditPartFactory {
 				part = new EnvironmentInterfaceEditPart<HEnvironmentInterface,EnvironmentInterfaceFigure>();
 			else if (model instanceof HQualifierInterface)
 				part = new QualifierInterfaceEditPart<HQualifierInterface,QualifierInterfaceFigure>();
+			else if (model instanceof HEnumeratorInterface)
+				part = new EnumeratorInterfaceEditPart<HEnumeratorInterface,EnumeratorInterfaceFigure>();
 			else 
 				part = new InterfaceEditPart<HInterface,InterfaceFigure>();
 		} else if (model instanceof HReplicator) {

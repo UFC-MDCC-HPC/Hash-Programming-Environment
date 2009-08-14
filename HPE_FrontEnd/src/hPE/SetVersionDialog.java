@@ -1,17 +1,15 @@
 package hPE;
 
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 
 public class SetVersionDialog extends Composite {
 
@@ -66,7 +64,7 @@ public class SetVersionDialog extends Composite {
 		this.setLayout(null);
 		createGroup();
 		createGroupKinds();
-		setSize(new Point(466, 101));
+		setSize(new Point(466, 116));
 	}
 
 	/**
@@ -78,47 +76,47 @@ public class SetVersionDialog extends Composite {
 		groupKinds.setText("Component Kinds");
 		groupKinds.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		groupKinds.setLayout(null);
-		groupKinds.setBounds(new Rectangle(5, 30, 361, 66));
+		groupKinds.setBounds(new Rectangle(5, 30, 361, 81));
 		
 		radioApplication = new Button(groupKinds, SWT.RADIO);
 		radioApplication.setText("Application");
-		radioApplication.setBounds(new Rectangle(8, 18, 73, 16));
+		radioApplication.setBounds(new Rectangle(13, 18, 111, 16));
 		radioApplication.addSelectionListener(sl);
 		radioApplication.setSelection(true);
 
 		radioComputation = new Button(groupKinds, SWT.RADIO);
 		radioComputation.setText("Computation");
-		radioComputation.setBounds(new Rectangle(94, 18, 82, 16));
+		radioComputation.setBounds(new Rectangle(128, 18, 106, 16));
 		radioComputation.addSelectionListener(sl);
 		radioComputation.setSelection(false);
 		
 		radioSynchronizer = new Button(groupKinds, SWT.RADIO);
 		radioSynchronizer.setText("Synchronizer");
-		radioSynchronizer.setBounds(new Rectangle(181, 18, 83, 16));
+		radioSynchronizer.setBounds(new Rectangle(238, 18, 116, 16));
 		radioSynchronizer.addSelectionListener(sl);
 		radioSynchronizer.setSelection(false);
 
 		radioDataStructure = new Button(groupKinds, SWT.RADIO);
 		radioDataStructure.setText("Data Structure");
-		radioDataStructure.setBounds(new Rectangle(269, 18, 92, 16));
+		radioDataStructure.setBounds(new Rectangle(13, 58, 111, 16));
 		radioDataStructure.addSelectionListener(sl);
 		radioDataStructure.setSelection(false);
 
 		radioEnvironment = new Button(groupKinds, SWT.RADIO);
 		radioEnvironment.setText("Environment");
-		radioEnvironment.setBounds(new Rectangle(8, 39, 81, 16));
+		radioEnvironment.setBounds(new Rectangle(13, 38, 111, 16));
 		radioEnvironment.addSelectionListener(sl);
 		radioEnvironment.setSelection(false);
 		
 		radioArchitecture = new Button(groupKinds, SWT.RADIO);
 		radioArchitecture.setText("Architecture");
-		radioArchitecture.setBounds(new Rectangle(94, 39, 80, 16));
+		radioArchitecture.setBounds(new Rectangle(128, 38, 106, 16));
 		radioArchitecture.addSelectionListener(sl);
 		radioArchitecture.setSelection(false);
 
 		radioQualifier = new Button(groupKinds, SWT.RADIO);
 		radioQualifier.setText("Qualifier");
-		radioQualifier.setBounds(new Rectangle(181, 39, 61, 16));
+		radioQualifier.setBounds(new Rectangle(238, 38, 116, 16));
 		radioQualifier.addSelectionListener(sl);
 		radioQualifier.setSelection(false);
 
@@ -126,8 +124,12 @@ public class SetVersionDialog extends Composite {
 		radioService.addSelectionListener(sl);
 		radioService.setEnabled(false);
 		radioService.setSelection(false);
-		radioService.setBounds(new Rectangle(269, 39, 56, 16));
+		radioService.setBounds(new Rectangle(238, 58, 116, 16));
 		radioService.setText("Service");
+		radioEnumerator = new Button(groupKinds, SWT.RADIO);
+		radioEnumerator.setBounds(new Rectangle(128, 58, 106, 16));
+		radioEnumerator.setText("Enumerator");
+		radioEnumerator.setSelection(false);
 	}
 
 	public Button getRadioApplication() {
@@ -144,6 +146,10 @@ public class SetVersionDialog extends Composite {
 
 	public Button getRadioDataStructure() {
   		return this.radioDataStructure;
+	}
+
+	public Button getRadioEnumerator() {
+  		return this.radioEnumerator;
 	}
 
 	public Button getRadioEnvironment() {
@@ -173,6 +179,7 @@ public class SetVersionDialog extends Composite {
 	}
 	
 	private Integer[] safeVersion = new Integer[] {1,0,0,0};
+	private Button radioEnumerator = null;
 	public void SetEnabledVersionSetting(boolean enable) {
 		if (!enable) {
 			if (!(spinnerV1.getSelection() == 1 && 
@@ -209,7 +216,7 @@ public class SetVersionDialog extends Composite {
 		group = new Group(this, SWT.NONE);
 		group.setLayout(null);
 		group.setText("");
-		group.setBounds(new Rectangle(375, 30, 85, 65));
+		group.setBounds(new Rectangle(375, 30, 85, 81));
 		org.eclipse.swt.events.SelectionListener sl = new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Object src = e.getSource();
@@ -221,12 +228,12 @@ public class SetVersionDialog extends Composite {
 		};
 		radioButtonAbstract = new Button(group, SWT.RADIO);
 		radioButtonAbstract.setText("Abstract");
-		radioButtonAbstract.setBounds(new Rectangle(8, 18, 62, 16));
+		radioButtonAbstract.setBounds(new Rectangle(8, 23, 62, 16));
 		radioButtonAbstract.setSelection(true);
 		radioButtonAbstract.addSelectionListener(sl);
 		radioButtonConcrete = new Button(group, SWT.RADIO);
 		radioButtonConcrete.setText("Concrete");
-		radioButtonConcrete.setBounds(new Rectangle(8, 39, 65, 16));
+		radioButtonConcrete.setBounds(new Rectangle(8, 53, 65, 16));
 		radioButtonConcrete.addSelectionListener(sl);
 	}
 	
