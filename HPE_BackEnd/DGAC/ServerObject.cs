@@ -31,22 +31,26 @@ namespace DGAC
 		         *Se o fonte resultar em uma dll, ela é instalada no GAC, na pasta "HASH"
                  *Se o fonte for um executável, então ele é salvo numa pasta temporária, definida pela 
 		         *classe Constants 
-		         */ 
-		        [MethodImpl(MethodImplOptions.Synchronized)]
-		        public string compileClass(string library_path, string contents, string moduleName, string[] references, int outFile, string userName, System.Security.SecureString password){
+		         */
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public string compileClass(string library_path, string contents, string moduleName, string[] references, int outFile, string userName, System.Security.SecureString password, String curDir)
+                {
                     string publicKeyToken = null;
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
                     Console.WriteLine("Compiling " + moduleName);
-			        if(outFile==Constants.EXE_OUT){
-			           CommandLineUtil.compile_to_exe(contents,moduleName,references,userName,password);
-			        }else{
-                      //creates the strong key, for new assembly
-                      publicKeyToken = CommandLineUtil.create_strong_key(moduleName,userName,password);
-                      //compile, generate dll 
-					  CommandLineUtil.compile_source(contents, moduleName, references,userName,password);
-					  //installing on local GAC
-                      CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1, userName, password);
-			        }
+                    if (outFile == Constants.EXE_OUT)
+                    {
+                        CommandLineUtil.compile_to_exe(contents, moduleName, references, userName, password, curDir);
+                    }
+                    else
+                    {
+                        //creates the strong key, for new assembly
+                        publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password);
+                        //compile, generate dll 
+                        CommandLineUtil.compile_source(contents, moduleName, references, userName, password, curDir);
+                        //installing on local GAC
+                        CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1, userName, password);
+                    }
                     // Erase temporary files.
                     // CommandLineUtil.clean(moduleNameWithoutExtension);
                     return publicKeyToken;
@@ -56,9 +60,9 @@ namespace DGAC
 		         *Roda arquivos executáveis gerados pelo metodo anterior
                  */
 		        [MethodImpl(MethodImplOptions.Synchronized)]
-                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password)
+                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password, String curDir)
                 {
-					CommandLineUtil.run_exe(files, enums, session_id, userName, password);
+					CommandLineUtil.run_exe(files, enums, session_id, userName, password, curDir);
 		        }
 				
 				//just for test

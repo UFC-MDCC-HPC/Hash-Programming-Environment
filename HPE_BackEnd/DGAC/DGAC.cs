@@ -20,10 +20,10 @@ namespace DGAC
     public interface IBackEnd
     {
 
-        void registerConcreteComponent(ComponentType ct, string userName, System.Security.SecureString password);
-        void registerAbstractComponent(ComponentType ct, string userName, System.Security.SecureString password);
+        void registerConcreteComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir);
+        void registerAbstractComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir);
         void deleteComponent(String ID);
-        String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, System.Security.SecureString password);
+        String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, System.Security.SecureString password, string curDir);
         EnvironmentType readEnvironment();
 
     }//IDGAC
@@ -76,7 +76,7 @@ namespace DGAC
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
         //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
         //o qual será enviado aos workers		
-        public void registerAbstractComponent(ComponentType ct, string userName, System.Security.SecureString password)
+        public void registerAbstractComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir)
         {
             Connector.openConnection();
             Connector.beginTransaction();
@@ -124,7 +124,8 @@ namespace DGAC
                                                                        interfaceToCompile.references,
                                                                        outputType,
 					                                                   userName,
-					                                                   password);
+					                                                   password,
+                                                                       curDir);
 
                     if (!exists)
                         idao.setPublicKey(id_abstract, interfaceName, publicKey);
@@ -152,7 +153,7 @@ namespace DGAC
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
         //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
         //o qual será enviado aos workers		
-        public void registerConcreteComponent(ComponentType ct, string userName, System.Security.SecureString password)
+        public void registerConcreteComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir)
         {
 
             Connector.openConnection();
@@ -202,7 +203,8 @@ namespace DGAC
                                                                        unitToCompile.references,
                                                                        outputType,
 					                                                   userName,
-					                                                   password);
+					                                                   password,
+                                                                       curDir);
                     if (!exists)
                         udao.setPublicKey(id_concrete, unitName, publicKey);
                 }
@@ -229,16 +231,16 @@ namespace DGAC
         }
 
 
-        private string sendCompileCommandToWorker(string library_path, object remoteObject, string contents, string moduleName, string[] refs, int outFile, string userName, System.Security.SecureString password)
+        private string sendCompileCommandToWorker(string library_path, object remoteObject, string contents, string moduleName, string[] refs, int outFile, string userName, System.Security.SecureString password, string curDir)
         {
             ServerObject worker = (ServerObject)remoteObject;
-            return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password);
+            return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password, curDir);
         }
 
-        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password)
+        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password, String curDir)
         {
             ServerObject worker = (ServerObject)remoteObject;
-            worker.runClass(files, enums, session_id, userName, password);
+            worker.runClass(files, enums, session_id, userName, password, curDir);
         }
 
         public static int session_id = -1;
@@ -508,7 +510,6 @@ namespace DGAC
             SliceExposed se = null;
             string id_inner_container = id_inner;
             IList<string> id_inner_container_list = new List<string>();
-            int count = 0;
             if (ic.Transitive)
             {
                 SliceExposedDAO sedao = new SliceExposedDAO();
@@ -1149,7 +1150,7 @@ namespace DGAC
 
         // private string session_id = -1;
 
-        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, System.Security.SecureString password)
+        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, System.Security.SecureString password, string curDir)
         {
             String[] str_output = null;
             // assert: eIds.Length = eVls.Length
@@ -1195,7 +1196,7 @@ namespace DGAC
                     nprocs += count;
                 }
 
-                sendRunCommandToWorker(server, files, enums, session_id, userName, password);
+                sendRunCommandToWorker(server, files, enums, session_id, userName, password, curDir);
 
                 str_output = new String[nprocs];
 
