@@ -207,6 +207,13 @@ public class ComponentSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentPackage.ENUMERABLE_ENTRY_TYPE: {
+				EnumerableEntryType enumerableEntryType = (EnumerableEntryType)theEObject;
+				T result = caseEnumerableEntryType(enumerableEntryType);
+				if (result == null) result = caseEnumerableType(enumerableEntryType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ComponentPackage.ENUMERABLE_TYPE: {
 				EnumerableType enumerableType = (EnumerableType)theEObject;
 				T result = caseEnumerableType(enumerableType);
@@ -710,6 +717,21 @@ public class ComponentSwitch<T> {
 	 * @generated
 	 */
 	public T caseEnumerableComponentType(EnumerableComponentType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Enumerable Entry Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Enumerable Entry Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEnumerableEntryType(EnumerableEntryType object) {
 		return null;
 	}
 

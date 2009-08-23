@@ -22,6 +22,7 @@ import org.eclipse.draw2d.ColorConstants;
 import hPE.frontend.base.exceptions.HPEInvalidNameException;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IReplicator;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 
 public class HReplicator  extends HVisualElement implements Serializable, HNamed, IReplicator {
@@ -638,13 +639,10 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	
 	public void newCurrentMyJoined(HComponent context) {
     	List<HReplicator> l = new ArrayList<HReplicator>();
-    	this.getAllMyJoined().push(l);
-    	
+    	this.getAllMyJoined().push(l);    	
 		List<List<HReplicator>> ls = this.fusionContexts.containsKey(context) ? this.fusionContexts.get(context) : new ArrayList<List<HReplicator>>();
 		ls.add(l);
 		this.fusionContexts.put(context, ls);
-    	
-//    	this.fusionContexts.put(, context);
 	}
 	
 	private void deleteCurrentMyJoined() {
@@ -786,6 +784,31 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 
 	public HComponent getRec() {
 		return rec;
+	}
+	
+	
+	public List<HReplicator> getFusionsClosureInCurrentContext() {
+	   return this.getFusionsClosureInContext((HComponent)this.getConfiguration().getTopConfiguration());
+	}
+
+	public List<HReplicator> getFusionsClosureInContext(HComponent topC) {
+		
+		List<HReplicator> replicators = new ArrayList<HReplicator>();
+		
+		List<List<HReplicator>> rss =  this.getFusionsInContext(topC);
+		
+		if (rss != null) {
+			for (List<HReplicator> rs : rss) {
+				for (HReplicator r : rs) {
+					replicators.add(r);
+					List<HReplicator> rs_ = r.getFusionsClosureInContext(topC);
+					replicators.addAll(rs_);
+				}
+			}	
+		}
+		
+		
+		return replicators;
 	}
 	
 }

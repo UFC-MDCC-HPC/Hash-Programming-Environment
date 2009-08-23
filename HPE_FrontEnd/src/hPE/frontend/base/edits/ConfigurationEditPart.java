@@ -3,6 +3,7 @@ package hPE.frontend.base.edits;
 import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.BendpointConnectionRouter;
+import org.eclipse.draw2d.Label;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
@@ -37,6 +38,8 @@ import hPE.frontend.kinds.data.model.HDataUnit;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gef.tools.DirectEditManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 
 
@@ -224,12 +227,49 @@ public class ConfigurationEditPart<ModelType extends HComponent,
             name = name + " extends " + config.getSuperType().getNameWithParameters(false, true, true);
         }
 		
-        config_figure.setName(name);
+        String name_ = breakLines(" " + name + " ");
+        
+		Label ff = new Label(" " + name_ + " ");
+		Font font = new Font(null, "Arial", 10, SWT.BOLD);
+		ff.setFont(font); 
+
+		config_figure.setName(name);
         config_figure.setColor(config.getColor());
+		config_figure.setToolTip(ff);
 		
 		super.refreshVisuals();
 	}
 	
+	private String breakLines(String name) {
+
+		String name_="";
+		
+		int level = 0;
+		int lastindex=0;		
+        for (int i=0; i<name.length();i++)  {
+        	if (name.charAt(i) == '<') { 
+        		if (level == 0) {
+            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
+            		lastindex = i+1;        		
+        		}
+        		level ++;
+        	}
+        	else if (name.charAt(i) == '>')  {
+        		if (level==1) {
+        		}
+        		level --;
+        	}
+        	else if (name.charAt(i) == ',' && level == 1) { 
+        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
+        		lastindex = i+1;        		
+        	}
+        }
+        		
+		name_ += name.substring(lastindex, name.length());
+
+		return name_;
+	}
+
 	public void propertyChange(PropertyChangeEvent ev) {
 		if (ev.getPropertyName().equals(ModelType.UPDATE_NAME)) this.refresh();
 		if (ev.getPropertyName().equals(ModelType.UPDATE_COLOR)) this.refresh();

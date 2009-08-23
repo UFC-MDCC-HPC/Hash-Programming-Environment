@@ -4,7 +4,9 @@ package hPE.frontend.base.figures;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Pattern;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -45,6 +47,8 @@ public class ComponentFigure extends ConfigurationNodeFigure {
     	    //g.fillGradient(r, true);
     	    g.drawRoundRectangle(r, 40, 40);
        }
+       
+		
 	}
 
 	private boolean isPort = false;
@@ -98,8 +102,7 @@ public class ComponentFigure extends ConfigurationNodeFigure {
 	public boolean isPort() {
 		return isPort;
 	}
-    
-    
+       
 //	private boolean existentialType = false;
 	
 // TODO: EXISTENTIAL TYPE

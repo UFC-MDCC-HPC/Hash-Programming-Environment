@@ -357,12 +357,12 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			
 			new HBinding(this,the_target,the_source);
 			
-			if (the_target instanceof HUnitSlice) {
+		/*	if (the_target instanceof HUnitSlice) {
 				HUnitSlice s = (HUnitSlice) the_target;
 				for (HLinkToReplicator l : s.getLinksToReplicators()) {
 				   l.liftReplicator();
 				}
-			} 
+			} */ 
 			
 			return the_target;
 		
@@ -2188,6 +2188,15 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
          
          return componentsToSupply;
     	 
+     }
+     
+     public IHUnit getUnitByName(String uname) {    	 
+    	 for (IHUnit u : this.getUnits()) {
+    		 if (u.getName2().equals(uname))
+    			 return u;
+    			 
+    	 }    	 
+    	 return null;
      }
      
      private Iterator<Entry<String,HComponent>> reverse (Iterator<Entry<String,HComponent>> is) {

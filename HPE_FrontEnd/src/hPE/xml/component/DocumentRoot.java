@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link hPE.xml.component.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
  *   <li>{@link hPE.xml.component.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
  *   <li>{@link hPE.xml.component.DocumentRoot#getComponent <em>Component</em>}</li>
+ *   <li>{@link hPE.xml.component.DocumentRoot#getNewAttribute <em>New Attribute</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,5 +112,32 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setComponent(ComponentType value);
+
+	/**
+	 * Returns the value of the '<em><b>New Attribute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>New Attribute</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>New Attribute</em>' attribute.
+	 * @see #setNewAttribute(String)
+	 * @see hPE.xml.component.ComponentPackage#getDocumentRoot_NewAttribute()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='NewAttribute' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	String getNewAttribute();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.DocumentRoot#getNewAttribute <em>New Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>New Attribute</em>' attribute.
+	 * @see #getNewAttribute()
+	 * @generated
+	 */
+	void setNewAttribute(String value);
 
 } // DocumentRoot

@@ -188,7 +188,7 @@ public abstract class HPrimUnit extends HVisualElement
 	 */
 	public void setReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException{
 		
-		if (!this.isReplicatedBy(the_replicator) || (this.isLinkedTo(the_replicator.getTopJoined()) && this.isLinkedTo(the_replicator))) {
+		if (!(this.isReplicatedBy(the_replicator) || (this.isLinkedTo(the_replicator.getTopJoined()) && this.isLinkedTo(the_replicator)))) {
 			
 			HUnitSlice s = this.someSliceIsReplicatedByVarIdOf(the_replicator);
 			if (s != null) {

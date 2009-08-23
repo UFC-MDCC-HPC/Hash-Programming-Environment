@@ -1,6 +1,7 @@
 package hPE.frontend.base.model;
 
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -174,6 +175,23 @@ public class HLinkToReplicator implements Serializable, IPropertyChangeListener 
 		    JOptionPane.showMessageDialog(null, e.getMessage(),"Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
 		}
 		
+	}
+
+	private HEnumeratorComponent permutationComponent = null;
+	
+
+	public void setPermutation(HEnumeratorComponent c) {
+		permutationComponent = c;
+		getListeners().firePropertyChange(PROPERTY_INVISIBLE,null,which_replicator);
+	}
+	
+	public void unsetPermutation() {
+		permutationComponent = null;
+		getListeners().firePropertyChange(PROPERTY_INVISIBLE,null,which_replicator);
+	}
+
+	public HEnumeratorComponent getPermutation() {
+		return permutationComponent;
 	}
 	
 }

@@ -12,6 +12,7 @@ import hPE.frontend.base.figures.LinkToReplicatorFigure;
 import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.frontend.base.policies.JoinReplicatorEditPolicy;
 import hPE.frontend.base.policies.LiftReplicatorEditPolicy;
+import hPE.frontend.base.policies.SetPermutationEditPolicy;
 import hPE.frontend.base.policies.SplitReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnsetReplicatorEditPolicy;
 
@@ -26,17 +27,20 @@ public class LinkToReplicatorEditPart extends AbstractConnectionEditPart impleme
 		this.installEditPolicy("UnsetReplicatorEditPolicy", new UnsetReplicatorEditPolicy());
 		this.installEditPolicy("JoinReplicatorEditPolicy", new JoinReplicatorEditPolicy());
 		this.installEditPolicy("LiftReplicatorEditPolicy", new LiftReplicatorEditPolicy());
+		this.installEditPolicy("SplitReplicatorEditPolicy", new SplitReplicatorEditPolicy());
+		this.installEditPolicy("Set Permutation", new SetPermutationEditPolicy());
 
 	}
 	
 	protected IFigure createFigure() {
-		
-		return new LinkToReplicatorFigure();
-		
+     	 return new LinkToReplicatorFigure();
 	}
 	
 	public void propertyChange(PropertyChangeEvent ev) {
-		if (ev.getPropertyName().equals(HLinkToReplicator.PROPERTY_INVISIBLE)) this.refreshVisuals();
+		if (ev.getPropertyName().equals(HLinkToReplicator.PROPERTY_INVISIBLE)) {
+			this.setFigure(createFigure());
+			this.refreshVisuals();
+		}
 	}
 	
 	public void refreshVisuals() {
@@ -45,12 +49,15 @@ public class LinkToReplicatorEditPart extends AbstractConnectionEditPart impleme
         
         link_fig.setForegroundColor(ColorConstants.lightGray/* link_mod.getWhich_replicator().getColor() */);
         link_fig.setVisible(!link_mod.isInvisible());
+        if (link_mod.getPermutation() != null)
+        		link_fig.setPermutation(link_mod.getPermutation());
         
 	}
 
 	public void activate() {
-        if (!isActive()) 
+        if (!isActive()) {
         	((HLinkToReplicator) getModel()).addPropertyChangeListener(this);
+        }
         super.activate();        
         
 	}

@@ -1,15 +1,10 @@
 package hPE.frontend.base.edits;
 
 
-import hPE.frontend.base.commands.AttachInterfaceCommand;
-import hPE.frontend.base.commands.SetReplicatorCommand;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
-import hPE.frontend.base.figures.InterfaceFigure;
 import hPE.frontend.base.figures.ReplicatorFigure;
-import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HLinkToReplicator;
-import hPE.frontend.base.model.HPrimUnit;
 import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HReplicatorSplit;
 import hPE.frontend.base.model.HUnitSlice;
@@ -19,15 +14,16 @@ import hPE.frontend.base.policies.FuseReplicatorEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.NameDirectEditPolicy;
 import hPE.frontend.base.policies.RemoveElementEditPolicy;
+import hPE.frontend.base.policies.SetPermutationEditPolicy;
 import hPE.frontend.base.policies.SetReplicatorFactorEditPolicy;
 import hPE.frontend.base.policies.SplitReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnfuseReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
@@ -38,11 +34,7 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
-import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
-import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
-import org.eclipse.gef.requests.CreateConnectionRequest;
-import org.eclipse.gef.requests.ReconnectRequest;
 import org.eclipse.gef.tools.DirectEditManager;
 
 public class ReplicatorEditPart extends AbstractGraphicalEditPart 
@@ -65,7 +57,6 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 		// allow the creation of connections and and the reconnection of connections between Shape instances
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		this.installEditPolicy("Fuse Replicator", new FuseReplicatorEditPolicy());
-		this.installEditPolicy("SplitReplicatorEditPolicy", new SplitReplicatorEditPolicy());
 		this.installEditPolicy("Unfuse Replicator", new UnfuseReplicatorEditPolicy());
 		this.installEditPolicy("Set Replicator Factor", new SetReplicatorFactorEditPolicy());
 	}
@@ -80,8 +71,8 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
   	    
   	    boolean flag = false;
   	    if (flag) {
-  	    HComponent cccc = (HComponent)replicator.getConfiguration().getTopConfiguration();
-  	    cccc.newReplicator(replicator);
+  	        HComponent cccc = (HComponent)replicator.getConfiguration().getTopConfiguration();
+  	        cccc.newReplicator(replicator);
   	    }
   	    
         replicator_figure.setBounds(replicator.getBounds().getTranslated(u_bounds.getLocation()));
@@ -96,6 +87,17 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
         }
         replicator_figure.setBackgroundColor(replicator.getColor());
         replicator_figure.setFactor(replicator.getFactor());
+        
+        // Take all joined replicators.
+        HComponent topC = (HComponent) replicator.getConfiguration().getTopConfiguration();        
+        List<HReplicator> rJoined = replicator.getFusionsClosureInContext(topC);
+                
+        replicator_figure.clean();
+        for (HReplicator r : rJoined) {
+        	replicator_figure.addFusedReplicator(r.getColor());
+        }
+        replicator_figure.addFusedReplicator(replicator.getColor());
+        
 	}
 	
 /*	

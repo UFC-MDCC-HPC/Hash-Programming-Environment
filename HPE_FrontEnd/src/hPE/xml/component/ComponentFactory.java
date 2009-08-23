@@ -188,6 +188,15 @@ public interface ComponentFactory extends EFactory {
 	EnumerableComponentType createEnumerableComponentType();
 
 	/**
+	 * Returns a new object of class '<em>Enumerable Entry Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Enumerable Entry Type</em>'.
+	 * @generated
+	 */
+	EnumerableEntryType createEnumerableEntryType();
+
+	/**
 	 * Returns a new object of class '<em>Enumerable Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -79,6 +79,7 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case ComponentPackage.ENTRY_TYPE: return createEntryType();
 			case ComponentPackage.ENUMERABLE_COMPONENT_TYPE: return createEnumerableComponentType();
+			case ComponentPackage.ENUMERABLE_ENTRY_TYPE: return createEnumerableEntryType();
 			case ComponentPackage.ENUMERABLE_TYPE: return createEnumerableType();
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE: return createEnumerableUnitSliceType();
 			case ComponentPackage.ENUMERABLE_UNIT_TYPE: return createEnumerableUnitType();
@@ -342,6 +343,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public EnumerableComponentType createEnumerableComponentType() {
 		EnumerableComponentTypeImpl enumerableComponentType = new EnumerableComponentTypeImpl();
 		return enumerableComponentType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EnumerableEntryType createEnumerableEntryType() {
+		EnumerableEntryTypeImpl enumerableEntryType = new EnumerableEntryTypeImpl();
+		return enumerableEntryType;
 	}
 
 	/**

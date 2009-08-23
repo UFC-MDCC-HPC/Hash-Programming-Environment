@@ -12,6 +12,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.text.FlowPage;
 import org.eclipse.draw2d.text.ParagraphTextLayout;
 import org.eclipse.draw2d.text.TextFlow;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 
 public abstract class ConfigurationNodeFigure extends Figure implements INameEditableFigure {
@@ -60,26 +62,39 @@ public abstract class ConfigurationNodeFigure extends Figure implements INameEdi
 		
 	protected abstract void drawFigure(Graphics g, Rectangle r); 
 	 
+	protected int dx = 0;
+	protected int dy = 0;
+	
 	public void setName(String the_name) {
 		Label aux = new Label(the_name);
-		aux.setFont(name.getFont());
+		Font font = name.getFont(); // new Font(null, "Arial", 12, SWT.BOLD);
+		aux.setFont(font); 
 		
-		int nOfLines = ((aux.getTextBounds().width) / (this.getBounds().width)) + 1;
+		Rectangle bounds = this.getBounds().getResized(dx, dy);
+				
+		int nOfLines = ((aux.getTextBounds().width) / (bounds.width)) + 1;
 
-		int sy = (this.getBounds().height - (aux.getTextBounds().height)*nOfLines)/2;
+		int sy = (bounds.height - (aux.getTextBounds().height)*nOfLines)/2;
 		
-		int sx = (this.getBounds().width - aux.getTextBounds().width)/2;
+		int sx = (bounds.width - aux.getTextBounds().width)/2;
 		
 		sx = sx > 0 ? sx : 10;
 		sy = sy > 0 ? sy : 10;
 		
-	    if (aux.getTextBounds() != null) flowPage.setBounds(this.getBounds().getCopy().shrink(sx,sy));
+		
+		
+	    if (aux.getTextBounds() != null) { 
+	    	flowPage.setBounds(bounds.getCopy().shrink(sx,sy));	    
+	    }
+	    
+	    textBounds = aux.getTextBounds();
 		
 		int x = sx == 0 ? flowPage.getLocation().x + 10 : flowPage.getLocation().x;
 		int y = sy == 0 ? flowPage.getLocation().y + 10 : flowPage.getLocation().y;
 
 	//	flowPage.setLocation(new Point(x,y));
 		name.setText(the_name);
+		
 	}
 	
 	public EllipseAnchor getConnectionAnchor() {
@@ -92,5 +107,10 @@ public abstract class ConfigurationNodeFigure extends Figure implements INameEdi
 	   return name.getText();	
 	}
 	
+	private Rectangle textBounds = null;
+	
+	public Rectangle getTextBounds() {
+		return textBounds;
+	}
 	
 }

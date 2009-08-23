@@ -26,6 +26,7 @@ import hPE.xml.component.ComponentType;
 import hPE.xml.component.DocumentRoot;
 import hPE.xml.component.EntryType;
 import hPE.xml.component.EnumerableComponentType;
+import hPE.xml.component.EnumerableEntryType;
 import hPE.xml.component.EnumerableType;
 import hPE.xml.component.EnumerableUnitSliceType;
 import hPE.xml.component.EnumerableUnitType;
@@ -210,6 +211,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass enumerableComponentTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass enumerableEntryTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -941,8 +949,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_HashComponentUID() {
-		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(2);
+	public EReference getComponentHeaderType_VisualAttributes() {
+		return (EReference)componentHeaderTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -950,7 +958,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_IsAbstract() {
+	public EAttribute getComponentHeaderType_HashComponentUID() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -959,7 +967,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Kind() {
+	public EAttribute getComponentHeaderType_IsAbstract() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -968,7 +976,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_LocationURI() {
+	public EAttribute getComponentHeaderType_Kind() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -977,7 +985,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_Name() {
+	public EAttribute getComponentHeaderType_LocationURI() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -986,8 +994,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentHeaderType_PackagePath() {
+	public EAttribute getComponentHeaderType_Name() {
 		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentHeaderType_PackagePath() {
+		return (EAttribute)componentHeaderTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1175,6 +1192,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDocumentRoot_NewAttribute() {
+		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getEntryType() {
 		return entryTypeEClass;
 	}
@@ -1195,6 +1221,42 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EClass getEnumerableComponentType() {
 		return enumerableComponentTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getEnumerableEntryType() {
+		return enumerableEntryTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEnumerableEntryType_CRef() {
+		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEnumerableEntryType_Permutation() {
+		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEnumerableEntryType_URef() {
+		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2627,6 +2689,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		componentHeaderTypeEClass = createEClass(COMPONENT_HEADER_TYPE);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__BASE_TYPE);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VERSIONS);
+		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__IS_ABSTRACT);
 		createEAttribute(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__KIND);
@@ -2656,11 +2719,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(documentRootEClass, DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
 		createEReference(documentRootEClass, DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
 		createEReference(documentRootEClass, DOCUMENT_ROOT__COMPONENT);
+		createEAttribute(documentRootEClass, DOCUMENT_ROOT__NEW_ATTRIBUTE);
 
 		entryTypeEClass = createEClass(ENTRY_TYPE);
 		createEReference(entryTypeEClass, ENTRY_TYPE__VISUAL_DESCRIPTION);
 
 		enumerableComponentTypeEClass = createEClass(ENUMERABLE_COMPONENT_TYPE);
+
+		enumerableEntryTypeEClass = createEClass(ENUMERABLE_ENTRY_TYPE);
+		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__CREF);
+		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__PERMUTATION);
+		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__UREF);
 
 		enumerableTypeEClass = createEClass(ENUMERABLE_TYPE);
 		createEAttribute(enumerableTypeEClass, ENUMERABLE_TYPE__REF);
@@ -2895,6 +2964,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		actionSkipTypeEClass.getESuperTypes().add(this.getActionType());
 		actionWaitTypeEClass.getESuperTypes().add(this.getActionType());
 		enumerableComponentTypeEClass.getESuperTypes().add(this.getEnumerableType());
+		enumerableEntryTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableUnitSliceTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableUnitTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		innerComponentTypeEClass.getESuperTypes().add(this.getComponentInUseType());
@@ -2953,6 +3023,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(componentHeaderTypeEClass, ComponentHeaderType.class, "ComponentHeaderType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentHeaderType_BaseType(), this.getBaseTypeType(), null, "baseType", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentHeaderType_Versions(), this.getVersionType(), null, "versions", null, 1, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponentHeaderType_VisualAttributes(), this.getVisualElementAttributes(), null, "visualAttributes", null, 1, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2982,11 +3053,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDocumentRoot_Component(), this.getComponentType(), null, "component", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDocumentRoot_NewAttribute(), theXMLTypePackage.getString(), "newAttribute", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(entryTypeEClass, EntryType.class, "EntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEntryType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, EntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(enumerableComponentTypeEClass, EnumerableComponentType.class, "EnumerableComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(enumerableEntryTypeEClass, EnumerableEntryType.class, "EnumerableEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getEnumerableEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEnumerableEntryType_Permutation(), theXMLTypePackage.getString(), "permutation", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEnumerableEntryType_URef(), theXMLTypePackage.getString(), "uRef", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(enumerableTypeEClass, EnumerableType.class, "EnumerableType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEnumerableType_Ref(), theXMLTypePackage.getString(), "ref", null, 1, 1, EnumerableType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3500,6 +3577,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "versions"
 		   });		
 		addAnnotation
+		  (getComponentHeaderType_VisualAttributes(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "visualAttributes"
+		   });		
+		addAnnotation
 		  (getComponentHeaderType_HashComponentUID(), 
 		   source, 
 		   new String[] {
@@ -3683,6 +3767,14 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
+		  (getDocumentRoot_NewAttribute(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "NewAttribute",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
 		  (entryTypeEClass, 
 		   source, 
 		   new String[] {
@@ -3702,6 +3794,34 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "name", "EnumerableComponentType",
 			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (enumerableEntryTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "EnumerableEntryType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getEnumerableEntryType_CRef(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "cRef"
+		   });		
+		addAnnotation
+		  (getEnumerableEntryType_Permutation(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "permutation"
+		   });		
+		addAnnotation
+		  (getEnumerableEntryType_URef(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "uRef"
 		   });		
 		addAnnotation
 		  (enumerableTypeEClass, 

@@ -182,7 +182,10 @@
 				type="tns:VisualElementAttributes">
 			</element>
 
-			<element name="fromRecursion" type="tns:EnumeratorFromRecursionType" maxOccurs="1" minOccurs="0"></element>
+			<element name="fromRecursion"
+				type="tns:EnumeratorFromRecursionType" maxOccurs="1"
+				minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="ref" type="string" use="required"></attribute>
 		<attribute name="varId" type="string" use="optional"
@@ -227,6 +230,7 @@
 			<element name="versions" type="tns:VersionType"
 				maxOccurs="unbounded" minOccurs="1">
 			</element>
+			<element name="visualAttributes" type="tns:VisualElementAttributes"></element>
 		</sequence>
 		<attribute name="kind" type="tns:SupportedKinds"></attribute>
 		<attribute name="name" type="string"></attribute>
@@ -571,5 +575,18 @@
     	<attribute name="field2" type="int"></attribute>
     	<attribute name="field3" type="int"></attribute>
     	<attribute name="field4" type="int"></attribute>
+    </complexType>
+
+    <attribute name="NewAttribute" type="string"></attribute>
+
+
+    <complexType name="EnumerableEntryType">
+    	<complexContent>
+    		<extension base="tns:EnumerableType">
+    			<attribute name="permutation" type="string" use="optional"></attribute>
+    			<attribute name="cRef" type="string"></attribute>
+    			<attribute name="uRef" type="string"></attribute>
+    		</extension>
+    	</complexContent>
     </complexType>
 </schema>

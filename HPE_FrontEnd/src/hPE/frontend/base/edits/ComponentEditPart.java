@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gef.ConnectionEditPart;
@@ -37,6 +38,8 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.tools.DirectEditManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 
 public class ComponentEditPart<ModelType extends HComponent,
@@ -72,10 +75,10 @@ public class ComponentEditPart<ModelType extends HComponent,
 		
 		ModelType component = (ModelType) getModel();
 		FigureType component_figure = (FigureType) getFigure();
-		String name = component.getName2() + ": ";
+		String name = ""; // component.getName2() + ": ";
 				
 		boolean showBounds = component.isDirectSonOfTheTopConfiguration();
-		boolean showParId  = component.isDirectSonOfTheTopConfiguration();
+		boolean showParId  = true; //component.isDirectSonOfTheTopConfiguration();
 		
         if (component.isParameter() && component.getSupplied()==null) { 
     	    component_figure.setAbstract();
@@ -97,9 +100,16 @@ public class ComponentEditPart<ModelType extends HComponent,
             name += component.getNameWithParameters(false, showBounds, showParId);
         }
 
-        component_figure.setPort(!component.isDirectSonOfTheTopConfiguration());
+        String name_ = breakLines(" " + name + " ");
+        
+		Label ff = new Label(" " + name_ + " ");
+		Font font = new Font(null, "Arial", 10, SWT.BOLD);
+		ff.setFont(font); 
+
+		component_figure.setPort(!component.isDirectSonOfTheTopConfiguration());
         component_figure.setBounds(calculateBounds(component));
-        component_figure.setName(name);
+        component_figure.setName(component.getRef() + (component.hasFreeVariables() ? " [?]" : ""));
+		component_figure.setToolTip(ff);
         component_figure.setRecursive(component.isRecursive());
         component_figure.setBackgroundColor(component.getColor());
         component_figure.setIsSuperType(component.isSuperType());
@@ -107,6 +117,36 @@ public class ComponentEditPart<ModelType extends HComponent,
 				
 	}
 	
+	private String breakLines(String name) {
+
+		String name_="";
+		
+		int level = 0;
+		int lastindex=0;		
+        for (int i=0; i<name.length();i++)  {
+        	if (name.charAt(i) == '<') { 
+        		if (level == 0) {
+            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
+            		lastindex = i+1;        		
+        		}
+        		level ++;
+        	}
+        	else if (name.charAt(i) == '>')  {
+        		if (level==1) {
+        		}
+        		level --;
+        	}
+        	else if (name.charAt(i) == ',' && level == 1) { 
+        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
+        		lastindex = i+1;        		
+        	}
+        }
+        		
+		name_ += name.substring(lastindex, name.length());
+
+		return name_;
+	}
+
 	private Rectangle calculateBounds(ModelType component) {
 		Rectangle bounds = component.getBounds();
 		//if (component.isDirectSonOfTheTopConfiguration()) {

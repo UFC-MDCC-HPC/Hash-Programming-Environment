@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getBaseType <em>Base Type</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getVersions <em>Versions</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentHeaderType#getVisualAttributes <em>Visual Attributes</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}</li>
@@ -76,6 +77,33 @@ public interface ComponentHeaderType extends EObject {
 	 * @generated
 	 */
 	EList<VersionType> getVersions();
+
+	/**
+	 * Returns the value of the '<em><b>Visual Attributes</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Visual Attributes</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Visual Attributes</em>' containment reference.
+	 * @see #setVisualAttributes(VisualElementAttributes)
+	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_VisualAttributes()
+	 * @model containment="true" required="true"
+	 *        extendedMetaData="kind='element' name='visualAttributes'"
+	 * @generated
+	 */
+	VisualElementAttributes getVisualAttributes();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentHeaderType#getVisualAttributes <em>Visual Attributes</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Visual Attributes</em>' containment reference.
+	 * @see #getVisualAttributes()
+	 * @generated
+	 */
+	void setVisualAttributes(VisualElementAttributes value);
 
 	/**
 	 * Returns the value of the '<em><b>Hash Component UID</b></em>' attribute.

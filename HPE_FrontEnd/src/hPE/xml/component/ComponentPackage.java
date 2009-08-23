@@ -813,13 +813,22 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_HEADER_TYPE__VERSIONS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Visual Attributes</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES = 2;
+
+	/**
 	 * The feature id for the '<em><b>Hash Component UID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = 2;
+	int COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID = 3;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -828,7 +837,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__IS_ABSTRACT = 3;
+	int COMPONENT_HEADER_TYPE__IS_ABSTRACT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -837,7 +846,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__KIND = 4;
+	int COMPONENT_HEADER_TYPE__KIND = 5;
 
 	/**
 	 * The feature id for the '<em><b>Location URI</b></em>' attribute.
@@ -846,7 +855,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__LOCATION_URI = 5;
+	int COMPONENT_HEADER_TYPE__LOCATION_URI = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -855,7 +864,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__NAME = 6;
+	int COMPONENT_HEADER_TYPE__NAME = 7;
 
 	/**
 	 * The feature id for the '<em><b>Package Path</b></em>' attribute.
@@ -864,7 +873,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 7;
+	int COMPONENT_HEADER_TYPE__PACKAGE_PATH = 8;
 
 	/**
 	 * The number of structural features of the '<em>Header Type</em>' class.
@@ -873,7 +882,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 8;
+	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentInUseTypeImpl <em>In Use Type</em>}' class.
@@ -1077,13 +1086,22 @@ public interface ComponentPackage extends EPackage {
 	int DOCUMENT_ROOT__COMPONENT = 3;
 
 	/**
+	 * The feature id for the '<em><b>New Attribute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__NEW_ATTRIBUTE = 4;
+
+	/**
 	 * The number of structural features of the '<em>Document Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 4;
+	int DOCUMENT_ROOT_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EntryTypeImpl <em>Entry Type</em>}' class.
@@ -1121,7 +1139,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableType()
 	 * @generated
 	 */
-	int ENUMERABLE_TYPE = 18;
+	int ENUMERABLE_TYPE = 19;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -1170,6 +1188,61 @@ public interface ComponentPackage extends EPackage {
 	int ENUMERABLE_COMPONENT_TYPE_FEATURE_COUNT = ENUMERABLE_TYPE_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableEntryTypeImpl <em>Enumerable Entry Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.EnumerableEntryTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableEntryType()
+	 * @generated
+	 */
+	int ENUMERABLE_ENTRY_TYPE = 18;
+
+	/**
+	 * The feature id for the '<em><b>Ref</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_ENTRY_TYPE__REF = ENUMERABLE_TYPE__REF;
+
+	/**
+	 * The feature id for the '<em><b>CRef</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_ENTRY_TYPE__CREF = ENUMERABLE_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Permutation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_ENTRY_TYPE__PERMUTATION = ENUMERABLE_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>URef</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_ENTRY_TYPE__UREF = ENUMERABLE_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Enumerable Entry Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_ENTRY_TYPE_FEATURE_COUNT = ENUMERABLE_TYPE_FEATURE_COUNT + 3;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableUnitSliceTypeImpl <em>Enumerable Unit Slice Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1177,7 +1250,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableUnitSliceType()
 	 * @generated
 	 */
-	int ENUMERABLE_UNIT_SLICE_TYPE = 19;
+	int ENUMERABLE_UNIT_SLICE_TYPE = 20;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -1241,7 +1314,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableUnitType()
 	 * @generated
 	 */
-	int ENUMERABLE_UNIT_TYPE = 20;
+	int ENUMERABLE_UNIT_TYPE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -1269,7 +1342,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumeratorFromRecursionType()
 	 * @generated
 	 */
-	int ENUMERATOR_FROM_RECURSION_TYPE = 21;
+	int ENUMERATOR_FROM_RECURSION_TYPE = 22;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1297,7 +1370,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumeratorRefType()
 	 * @generated
 	 */
-	int ENUMERATOR_REF_TYPE = 22;
+	int ENUMERATOR_REF_TYPE = 23;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1325,7 +1398,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumeratorType()
 	 * @generated
 	 */
-	int ENUMERATOR_TYPE = 23;
+	int ENUMERATOR_TYPE = 24;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' attribute list.
@@ -1416,7 +1489,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExposePortType()
 	 * @generated
 	 */
-	int EXPOSE_PORT_TYPE = 24;
+	int EXPOSE_PORT_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1462,7 +1535,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExtendsType()
 	 * @generated
 	 */
-	int EXTENDS_TYPE = 25;
+	int EXTENDS_TYPE = 26;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1490,7 +1563,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExtensionTypeType()
 	 * @generated
 	 */
-	int EXTENSION_TYPE_TYPE = 26;
+	int EXTENSION_TYPE_TYPE = 27;
 
 	/**
 	 * The feature id for the '<em><b>Implements</b></em>' attribute.
@@ -1527,7 +1600,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSION_OF_REPLICATORS_TYPE = 27;
+	int FUSION_OF_REPLICATORS_TYPE = 28;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -1564,7 +1637,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionsOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSIONS_OF_REPLICATORS_TYPE = 28;
+	int FUSIONS_OF_REPLICATORS_TYPE = 29;
 
 	/**
 	 * The feature id for the '<em><b>Fusion Of Replicators</b></em>' containment reference list.
@@ -1592,7 +1665,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionType()
 	 * @generated
 	 */
-	int FUSION_TYPE = 29;
+	int FUSION_TYPE = 30;
 
 	/**
 	 * The feature id for the '<em><b>CRefs</b></em>' attribute list.
@@ -1629,7 +1702,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getImplementsType()
 	 * @generated
 	 */
-	int IMPLEMENTS_TYPE = 30;
+	int IMPLEMENTS_TYPE = 31;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1657,7 +1730,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerComponentType()
 	 * @generated
 	 */
-	int INNER_COMPONENT_TYPE = 31;
+	int INNER_COMPONENT_TYPE = 32;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1784,7 +1857,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerRenamingType()
 	 * @generated
 	 */
-	int INNER_RENAMING_TYPE = 32;
+	int INNER_RENAMING_TYPE = 33;
 
 	/**
 	 * The feature id for the '<em><b>CNew Name</b></em>' attribute.
@@ -1830,7 +1903,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfacePortType()
 	 * @generated
 	 */
-	int INTERFACE_PORT_TYPE = 33;
+	int INTERFACE_PORT_TYPE = 34;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1876,7 +1949,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceRefType()
 	 * @generated
 	 */
-	int INTERFACE_REF_TYPE = 34;
+	int INTERFACE_REF_TYPE = 35;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1913,7 +1986,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceRefType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_REF_TYPE = 35;
+	int INTERFACE_SLICE_REF_TYPE = 36;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -1959,7 +2032,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_TYPE = 36;
+	int INTERFACE_SLICE_TYPE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' containment reference.
@@ -2005,7 +2078,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceType()
 	 * @generated
 	 */
-	int INTERFACE_TYPE = 37;
+	int INTERFACE_TYPE = 38;
 
 	/**
 	 * The feature id for the '<em><b>Slice</b></em>' containment reference list.
@@ -2087,7 +2160,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterRenaming()
 	 * @generated
 	 */
-	int PARAMETER_RENAMING = 38;
+	int PARAMETER_RENAMING = 39;
 
 	/**
 	 * The feature id for the '<em><b>CRef Bound</b></em>' containment reference.
@@ -2133,7 +2206,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterSupplyType()
 	 * @generated
 	 */
-	int PARAMETER_SUPPLY_TYPE = 39;
+	int PARAMETER_SUPPLY_TYPE = 40;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2170,7 +2243,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterType()
 	 * @generated
 	 */
-	int PARAMETER_TYPE = 40;
+	int PARAMETER_TYPE = 41;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2216,7 +2289,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortSliceType()
 	 * @generated
 	 */
-	int PORT_SLICE_TYPE = 41;
+	int PORT_SLICE_TYPE = 42;
 
 	/**
 	 * The feature id for the '<em><b>PRef</b></em>' attribute.
@@ -2253,7 +2326,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortType()
 	 * @generated
 	 */
-	int PORT_TYPE = 42;
+	int PORT_TYPE = 43;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2299,7 +2372,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationVarType()
 	 * @generated
 	 */
-	int QUANTIFICATION_VAR_TYPE = 43;
+	int QUANTIFICATION_VAR_TYPE = 44;
 
 	/**
 	 * The feature id for the '<em><b>QType</b></em>' attribute.
@@ -2336,7 +2409,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getRecursiveEntryType()
 	 * @generated
 	 */
-	int RECURSIVE_ENTRY_TYPE = 44;
+	int RECURSIVE_ENTRY_TYPE = 45;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2364,7 +2437,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceFileType()
 	 * @generated
 	 */
-	int SOURCE_FILE_TYPE = 45;
+	int SOURCE_FILE_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
@@ -2437,7 +2510,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceType()
 	 * @generated
 	 */
-	int SOURCE_TYPE = 46;
+	int SOURCE_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' containment reference list.
@@ -2483,7 +2556,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitEnumeratorType()
 	 * @generated
 	 */
-	int SPLIT_ENUMERATOR_TYPE = 47;
+	int SPLIT_ENUMERATOR_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -2511,7 +2584,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitLinkType()
 	 * @generated
 	 */
-	int SPLIT_LINK_TYPE = 48;
+	int SPLIT_LINK_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2548,7 +2621,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitType()
 	 * @generated
 	 */
-	int SPLIT_TYPE = 49;
+	int SPLIT_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>Split Link</b></em>' containment reference list.
@@ -2612,7 +2685,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitBoundsType()
 	 * @generated
 	 */
-	int UNIT_BOUNDS_TYPE = 50;
+	int UNIT_BOUNDS_TYPE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2658,7 +2731,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitRefType()
 	 * @generated
 	 */
-	int UNIT_REF_TYPE = 51;
+	int UNIT_REF_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2704,7 +2777,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitSliceType()
 	 * @generated
 	 */
-	int UNIT_SLICE_TYPE = 52;
+	int UNIT_SLICE_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2786,7 +2859,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitType()
 	 * @generated
 	 */
-	int UNIT_TYPE = 53;
+	int UNIT_TYPE = 54;
 
 	/**
 	 * The feature id for the '<em><b>Super</b></em>' containment reference.
@@ -2868,7 +2941,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
 	 * @generated
 	 */
-	int VERSION_TYPE = 54;
+	int VERSION_TYPE = 55;
 
 	/**
 	 * The feature id for the '<em><b>Field1</b></em>' attribute.
@@ -2923,7 +2996,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVisualElementAttributes()
 	 * @generated
 	 */
-	int VISUAL_ELEMENT_ATTRIBUTES = 55;
+	int VISUAL_ELEMENT_ATTRIBUTES = 56;
 
 	/**
 	 * The feature id for the '<em><b>Color</b></em>' containment reference.
@@ -2987,7 +3060,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationType()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE = 56;
+	int QUANTIFICATION_TYPE = 57;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.SupportedKinds <em>Supported Kinds</em>}' enum.
@@ -2997,7 +3070,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKinds()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS = 57;
+	int SUPPORTED_KINDS = 58;
 
 	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
@@ -3007,7 +3080,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 58;
+	int QUANTIFICATION_TYPE_OBJECT = 59;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -3017,7 +3090,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 59;
+	int SUPPORTED_KINDS_OBJECT = 60;
 
 
 	/**
@@ -3448,6 +3521,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getComponentHeaderType_Versions();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ComponentHeaderType#getVisualAttributes <em>Visual Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Visual Attributes</em>'.
+	 * @see hPE.xml.component.ComponentHeaderType#getVisualAttributes()
+	 * @see #getComponentHeaderType()
+	 * @generated
+	 */
+	EReference getComponentHeaderType_VisualAttributes();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentHeaderType#getHashComponentUID <em>Hash Component UID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3731,6 +3815,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getDocumentRoot_Component();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.DocumentRoot#getNewAttribute <em>New Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>New Attribute</em>'.
+	 * @see hPE.xml.component.DocumentRoot#getNewAttribute()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EAttribute getDocumentRoot_NewAttribute();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.EntryType <em>Entry Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3760,6 +3855,49 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getEnumerableComponentType();
+
+	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.EnumerableEntryType <em>Enumerable Entry Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Enumerable Entry Type</em>'.
+	 * @see hPE.xml.component.EnumerableEntryType
+	 * @generated
+	 */
+	EClass getEnumerableEntryType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.EnumerableEntryType#getCRef <em>CRef</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>CRef</em>'.
+	 * @see hPE.xml.component.EnumerableEntryType#getCRef()
+	 * @see #getEnumerableEntryType()
+	 * @generated
+	 */
+	EAttribute getEnumerableEntryType_CRef();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.EnumerableEntryType#getPermutation <em>Permutation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Permutation</em>'.
+	 * @see hPE.xml.component.EnumerableEntryType#getPermutation()
+	 * @see #getEnumerableEntryType()
+	 * @generated
+	 */
+	EAttribute getEnumerableEntryType_Permutation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.EnumerableEntryType#getURef <em>URef</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>URef</em>'.
+	 * @see hPE.xml.component.EnumerableEntryType#getURef()
+	 * @see #getEnumerableEntryType()
+	 * @generated
+	 */
+	EAttribute getEnumerableEntryType_URef();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.EnumerableType <em>Enumerable Type</em>}'.
@@ -5742,6 +5880,14 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_HEADER_TYPE__VERSIONS = eINSTANCE.getComponentHeaderType_Versions();
 
 		/**
+		 * The meta object literal for the '<em><b>Visual Attributes</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_HEADER_TYPE__VISUAL_ATTRIBUTES = eINSTANCE.getComponentHeaderType_VisualAttributes();
+
+		/**
 		 * The meta object literal for the '<em><b>Hash Component UID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5956,6 +6102,14 @@ public interface ComponentPackage extends EPackage {
 		EReference DOCUMENT_ROOT__COMPONENT = eINSTANCE.getDocumentRoot_Component();
 
 		/**
+		 * The meta object literal for the '<em><b>New Attribute</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOCUMENT_ROOT__NEW_ATTRIBUTE = eINSTANCE.getDocumentRoot_NewAttribute();
+
+		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.EntryTypeImpl <em>Entry Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5982,6 +6136,40 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ENUMERABLE_COMPONENT_TYPE = eINSTANCE.getEnumerableComponentType();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.EnumerableEntryTypeImpl <em>Enumerable Entry Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.EnumerableEntryTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableEntryType()
+		 * @generated
+		 */
+		EClass ENUMERABLE_ENTRY_TYPE = eINSTANCE.getEnumerableEntryType();
+
+		/**
+		 * The meta object literal for the '<em><b>CRef</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENUMERABLE_ENTRY_TYPE__CREF = eINSTANCE.getEnumerableEntryType_CRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Permutation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENUMERABLE_ENTRY_TYPE__PERMUTATION = eINSTANCE.getEnumerableEntryType_Permutation();
+
+		/**
+		 * The meta object literal for the '<em><b>URef</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENUMERABLE_ENTRY_TYPE__UREF = eINSTANCE.getEnumerableEntryType_URef();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.EnumerableTypeImpl <em>Enumerable Type</em>}' class.

@@ -144,6 +144,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createEnumerableComponentTypeAdapter();
 			}
 			@Override
+			public Adapter caseEnumerableEntryType(EnumerableEntryType object) {
+				return createEnumerableEntryTypeAdapter();
+			}
+			@Override
 			public Adapter caseEnumerableType(EnumerableType object) {
 				return createEnumerableTypeAdapter();
 			}
@@ -564,6 +568,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEnumerableComponentTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.EnumerableEntryType <em>Enumerable Entry Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.EnumerableEntryType
+	 * @generated
+	 */
+	public Adapter createEnumerableEntryTypeAdapter() {
 		return null;
 	}
 

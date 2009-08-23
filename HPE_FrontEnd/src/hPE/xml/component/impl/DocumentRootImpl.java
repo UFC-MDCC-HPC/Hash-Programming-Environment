@@ -10,6 +10,7 @@ import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ComponentType;
 import hPE.xml.component.DocumentRoot;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EMap;
@@ -19,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 
@@ -38,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.DocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
  *   <li>{@link hPE.xml.component.impl.DocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
  *   <li>{@link hPE.xml.component.impl.DocumentRootImpl#getComponent <em>Component</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.DocumentRootImpl#getNewAttribute <em>New Attribute</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,6 +76,26 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @ordered
 	 */
 	protected EMap<String, String> xSISchemaLocation;
+
+	/**
+	 * The default value of the '{@link #getNewAttribute() <em>New Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNewAttribute()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NEW_ATTRIBUTE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getNewAttribute() <em>New Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNewAttribute()
+	 * @generated
+	 * @ordered
+	 */
+	protected String newAttribute = NEW_ATTRIBUTE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,6 +184,27 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getNewAttribute() {
+		return newAttribute;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNewAttribute(String newNewAttribute) {
+		String oldNewAttribute = newAttribute;
+		newAttribute = newNewAttribute;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.DOCUMENT_ROOT__NEW_ATTRIBUTE, oldNewAttribute, newAttribute));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -195,6 +239,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				else return getXSISchemaLocation().map();
 			case ComponentPackage.DOCUMENT_ROOT__COMPONENT:
 				return getComponent();
+			case ComponentPackage.DOCUMENT_ROOT__NEW_ATTRIBUTE:
+				return getNewAttribute();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,6 +264,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return;
 			case ComponentPackage.DOCUMENT_ROOT__COMPONENT:
 				setComponent((ComponentType)newValue);
+				return;
+			case ComponentPackage.DOCUMENT_ROOT__NEW_ATTRIBUTE:
+				setNewAttribute((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -243,6 +292,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case ComponentPackage.DOCUMENT_ROOT__COMPONENT:
 				setComponent((ComponentType)null);
 				return;
+			case ComponentPackage.DOCUMENT_ROOT__NEW_ATTRIBUTE:
+				setNewAttribute(NEW_ATTRIBUTE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -263,6 +315,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return xSISchemaLocation != null && !xSISchemaLocation.isEmpty();
 			case ComponentPackage.DOCUMENT_ROOT__COMPONENT:
 				return getComponent() != null;
+			case ComponentPackage.DOCUMENT_ROOT__NEW_ATTRIBUTE:
+				return NEW_ATTRIBUTE_EDEFAULT == null ? newAttribute != null : !NEW_ATTRIBUTE_EDEFAULT.equals(newAttribute);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -279,6 +333,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (mixed: ");
 		result.append(mixed);
+		result.append(", newAttribute: ");
+		result.append(newAttribute);
 		result.append(')');
 		return result.toString();
 	}

@@ -22,6 +22,7 @@ import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.RegisterComponentAction;
 import hPE.frontend.base.actions.SetParameterAction;
+import hPE.frontend.base.actions.SetPermutationAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetReplicatorFactorAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
@@ -405,6 +406,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = FuseReplicatorAction.FUSE_REPLICATOR;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = SetPermutationAction.SET_PERMUTATION;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = LiftReplicatorAction.LIFT_REPLICATOR;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetReplicatorFactorAction.SET_REPLICATOR_FACTOR;
@@ -582,6 +585,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 		
+		action = new SetPermutationAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+
 		action = new LiftReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());

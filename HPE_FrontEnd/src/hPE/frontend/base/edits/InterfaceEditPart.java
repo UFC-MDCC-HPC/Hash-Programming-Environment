@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
@@ -26,6 +27,8 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.tools.DirectEditManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 
 public class InterfaceEditPart<ModelType extends HInterface, FigureType extends InterfaceFigure> extends AbstractGraphicalEditPart implements PropertyChangeListener, NodeEditPart {
@@ -61,10 +64,15 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		ModelType the_interface = (ModelType) getModel();
 		InterfaceFigure interface_figure = (InterfaceFigure) getFigure();
         
-	    interface_figure.setBounds(the_interface.getBounds());
-        interface_figure.setName(the_interface.getName(true,true));
+		Label ff = new Label(the_interface.getName(true,true));
+		Font font = new Font(null, "Arial", 8, SWT.NORMAL);
+		ff.setFont(font); 
+
+		interface_figure.setBounds(the_interface.getBounds());
+        interface_figure.setName(the_interface.getPrimName());
         interface_figure.setBackgroundColor(the_interface.getColor());
         interface_figure.setEditable(the_interface.isEditable());
+        interface_figure.setToolTip(ff);
 				
 	}
 	

@@ -18,6 +18,7 @@ import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.RegisterComponentAction;
 import hPE.frontend.base.actions.SetParameterAction;
+import hPE.frontend.base.actions.SetPermutationAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetReplicatorFactorAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
@@ -209,6 +210,11 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 		
+		action = getAction(SetPermutationAction.SET_PERMUTATION);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+
 		action = getAction(LiftReplicatorAction.LIFT_REPLICATOR);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
