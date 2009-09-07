@@ -237,7 +237,7 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 
 	}
 
-	public boolean matchForAttachment(HInterface i) {
+	public boolean matchForAttachment(HHasExternalReferences i) {
 		return unit.matchForAttachment(i);
 	}
 

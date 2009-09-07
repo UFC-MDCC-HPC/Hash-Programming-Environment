@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="externalreferences.xsd#/"
+    outputs="externalreferences.ecore#/" topToBottom="true">
+  <nested inputs="bundleentry://577/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="externalreferences.xsd#//ReferenceType;XSDComplexTypeDefinition=1"
+      outputs="externalreferences.ecore#//ReferenceType">
+    <nested inputs="externalreferences.xsd#//ReferenceType;XSDComplexTypeDefinition=1/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="externalreferences.ecore#//ReferenceType/alias"/>
+    <nested inputs="externalreferences.xsd#//ReferenceType;XSDComplexTypeDefinition=1/XSDAttributeUse=1"
+        outputs="externalreferences.ecore#//ReferenceType/description"/>
+    <nested inputs="externalreferences.xsd#//ReferenceType;XSDComplexTypeDefinition=1/XSDAttributeUse"
+        outputs="externalreferences.ecore#//ReferenceType/destailedName"/>
+    <nested inputs="externalreferences.xsd#//ReferenceType;XSDComplexTypeDefinition=1/XSDAttributeUse=2"
+        outputs="externalreferences.ecore#//ReferenceType/path"/>
+  </nested>
+  <nested inputs="externalreferences.xsd#//ReferenceListType;XSDComplexTypeDefinition"
+      outputs="externalreferences.ecore#//ReferenceListType">
+    <nested inputs="externalreferences.xsd#//ReferenceListType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="externalreferences.ecore#//ReferenceListType/reference"/>
+  </nested>
+  <nested inputs="externalreferences.xsd#//external;XSDElementDeclaration" outputs="externalreferences.ecore#//DocumentRoot/external"/>
+</xsd2ecore:XSD2EcoreMappingRoot>

@@ -11,6 +11,7 @@ import hPE.frontend.base.codegen.syntaxtree.HBESequentialBlock;
 import hPE.frontend.base.codegen.syntaxtree.HBESimpleTestBranch;
 import hPE.frontend.base.codegen.syntaxtree.HBESkipCommand;
 import hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree;
+import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
@@ -34,7 +35,7 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
 	private HBESyntaxTree p2p = null;
 	
 	
-	private void fillActivationSlices(HInterface i, Set<Entry<HInterface,HBEProcedureCall>> activations) {
+	private void fillActivationSlices(HHasExternalReferences i, Set<Entry<HInterface,HBEProcedureCall>> activations) {
 		List<HInterfaceSlice> slices = null;
 				
         for (Entry<HInterface,HBEProcedureCall> activation : activations) {

@@ -4,6 +4,7 @@ import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.figures.InterfaceFigure;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
+import hPE.frontend.base.policies.AddReferencesEditPolicy;
 import hPE.frontend.base.policies.ChangeColorEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.NameDirectEditPolicy;
@@ -50,6 +51,7 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		if (((ModelType) getModel()).isEditable()) {
 		   this.installEditPolicy("Change Color", new ChangeColorEditPolicy());
 		   this.installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new NameDirectEditPolicy());
+		   this.installEditPolicy(AddReferencesEditPolicy.ADD_REFERENCES, new AddReferencesEditPolicy());
 		} 
  	    if (((ModelType) this.getModel()).getIsEditableSource())
 	       this.installEditPolicy("OpenSourceEditPolicy", new OpenSourceEditPolicy());
@@ -64,8 +66,11 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		ModelType the_interface = (ModelType) getModel();
 		InterfaceFigure interface_figure = (InterfaceFigure) getFigure();
         
-		Label ff = new Label(the_interface.getName(true,true));
-		Font font = new Font(null, "Arial", 8, SWT.NORMAL);
+		String name = the_interface.getName(true,true);
+        String name_ = breakLines(" " + name + " ");
+
+        Label ff = new Label(name_);
+		Font font = new Font(null, "Arial", 10, SWT.BOLD);
 		ff.setFont(font); 
 
 		interface_figure.setBounds(the_interface.getBounds());
@@ -76,6 +81,36 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 				
 	}
 	
+	private String breakLines(String name) {
+
+		String name_="";
+		
+		int level = 0;
+		int lastindex=0;		
+        for (int i=0; i<name.length();i++)  {
+        	if (name.charAt(i) == '<') { 
+        		if (level == 0) {
+            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
+            		lastindex = i+1;        		
+        		}
+        		level ++;
+        	}
+        	else if (name.charAt(i) == '>')  {
+        		if (level==1) {
+        		}
+        		level --;
+        	}
+        	else if (name.charAt(i) == ',' && level == 1) { 
+        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
+        		lastindex = i+1;        		
+        	}
+        }
+        		
+		name_ += name.substring(lastindex, name.length());
+
+		return name_;
+	}
+
 	public void activate() {
         if (!isActive()) 
         	((ModelType) getModel()).addPropertyChangeListener(this);

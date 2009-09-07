@@ -1,5 +1,8 @@
 package hPE.frontend.base.codegen;
 
+import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
+import hPE.frontend.base.model.HHasExternalReferences;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,7 +10,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -23,16 +31,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 
-public abstract class HBEAbstractFile implements Serializable {
+public abstract class HBEAbstractFile implements Serializable, HHasExternalReferences {
 
 	static final long serialVersionUID = 1;
 
 	private String versionID=".";
 	
-	public HBEAbstractFile(String name, String contents, String rootPath, String versionID) {
+	private HHasExternalReferences i = null;
+	
+	public HBEAbstractFile(String name, String contents, String rootPath, String versionID, HHasExternalReferences i) {
 		
 		super();
 		
+		this.i = i;
 		this.fileName = name;
 		this.versionID = versionID;
 		this.contents = contents;
@@ -135,6 +146,47 @@ public abstract class HBEAbstractFile implements Serializable {
 
 	public List<String> getDependencies() {
 		return this.dependencies;		
+	}
+
+	private List<String> externalDependencies;
+
+	public void addExternalReferences(List<String> selectedReferences) {
+		if (externalDependencies == null) {
+			externalDependencies = new ArrayList<String>();
+		}
+		
+		for (String ref : selectedReferences) {
+			externalDependencies.add(ref);
+		}
+		
+	}
+
+	public Set<String> getExternalReferences() {
+		if (externalDependencies == null) {
+			externalDependencies = new ArrayList<String>();
+		}
+		Set<String> ss = new HashSet<String>();
+		
+		ss.addAll(i.getExternalReferences());
+		ss.addAll(externalDependencies);
+		return ss;
+	}
+	
+	@Override
+	public void removeExternalReferences(List<String> selectedReferences) {
+		if (externalDependencies == null) {
+			externalDependencies = new ArrayList<String>();
+		}
+		for (String ref : selectedReferences) {
+			if (this.externalDependencies.contains(ref)) {
+       		   this.externalDependencies.remove(ref);
+			} else {
+				if (i.getExternalReferences().contains(ref)) {
+   				   JOptionPane.showMessageDialog(null, "It is not possible to remove " + ref + " because it is a reference of the interface.", "Forbidden Operation", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		
 	}
 
 	public abstract String getFileType();

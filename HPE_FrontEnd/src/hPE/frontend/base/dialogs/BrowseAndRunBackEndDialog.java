@@ -104,7 +104,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		initialize();
 	}
 	
-	CheckBoxListener myListener = null;
+	private CheckBoxListener myListener = null;  //  @jve:decl-index=0:
 	
 	private Map<String,BackEndLocationInfo> backendList = null;  //  @jve:decl-index=0:
 
@@ -118,7 +118,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		myListener = new CheckBoxListener();
 		dcList = new ArrayList<DeployedComponentInfo>();
 		
-		this.setSize(1026, 300);
+		this.setSize(1043, 341);
 		this.setTitle("Back-End Connection");
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
@@ -226,6 +226,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			jContentPane.add(jLabel1Parameters, null);
 			jContentPane.add(getJButtonLoad(), null);
 			jContentPane.add(getJScrollPaneBrowse(), null);
+			jContentPane.add(getJCheckBoxEnumerator(), null);
 		}
 		return jContentPane;
 	}
@@ -251,10 +252,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	static private int ENVIRONMENT = 4;
 	static private int ARCHITECTURE = 5;
 	static private int QUALIFIER = 6;
+	static private int ENUMERATOR = 7;
 
-	boolean[] kinds = {true, false, false, false, false, false, false};
+	boolean[] kinds = {true, false, false, false, false, false, false, false};
 	
-	String[] kindsStr = {"application", "computation", "synchronizer", "data structure", "environment", "architecture", "qualifier"};
+	String[] kindsStr = {"application", "computation", "synchronizer", "data structure", "environment", "architecture", "qualifier", "enumerator"};
 	
 	private JButton jButtonClose = null;
 	// private JScrollPane jScrollPane = null;
@@ -266,6 +268,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JTree jTreeParameter = null;
 	private JLabel jLabel1Parameters = null;
 	private JButton jButtonLoad = null;
+	private JCheckBox jCheckBoxEnumerator = null;
 	/**
 	 * This method initializes jComboBoxBackEnd	
 	 * 	
@@ -978,6 +981,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			 } else if (source == jCheckBoxQualifier) {
 				 kinds[QUALIFIER] = event.getStateChange() == ItemEvent.SELECTED;
 				 browseUpdate();
+			 } else if (source == jCheckBoxEnumerator) {
+				 kinds[ENUMERATOR] = event.getStateChange() == ItemEvent.SELECTED;
+				 browseUpdate();
 			 }
 
         }
@@ -1094,7 +1100,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		if (jScrollPaneBrowse == null) {
 			jScrollPaneBrowse = new JScrollPane(getJTabbedPane());
 			jScrollPaneBrowse.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-			jScrollPaneBrowse.setBounds(new Rectangle(140, 70, 536, 191));
+			jScrollPaneBrowse.setBounds(new Rectangle(140, 70, 536, 223));
 		}
 		return jScrollPaneBrowse;
 	}	
@@ -1133,7 +1139,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private JScrollPane getJScrollPaneParameter() {
 		if (jScrollPaneParameter == null) {
 			jScrollPaneParameter = new JScrollPane();
-			jScrollPaneParameter.setBounds(new Rectangle(685, 90, 331, 171));
+			jScrollPaneParameter.setBounds(new Rectangle(685, 90, 331, 202));
 			jScrollPaneParameter.setViewportView(getJTreeParameter());
 		}
 		return jScrollPaneParameter;
@@ -1189,6 +1195,21 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			});
 		}
 		return jButtonLoad;
+	}
+
+	/**
+	 * This method initializes jCheckBoxEnumerator	
+	 * 	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getJCheckBoxEnumerator() {
+		if (jCheckBoxEnumerator == null) {
+			jCheckBoxEnumerator = new JCheckBox();
+			jCheckBoxEnumerator.setBounds(new Rectangle(6, 270, 100, 24));
+			jCheckBoxEnumerator.addItemListener(myListener);
+			jCheckBoxEnumerator.setText("Enumerator");
+		}
+		return jCheckBoxEnumerator;
 	}
 
 

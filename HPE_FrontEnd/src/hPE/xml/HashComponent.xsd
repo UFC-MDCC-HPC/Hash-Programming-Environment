@@ -541,7 +541,10 @@
 
     <complexType name="SourceFileType">
     	<sequence>
-    		<element name="dependency" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="dependency" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="externalDependency" type="string" maxOccurs="unbounded" minOccurs="0"></element>
     	</sequence>
     	<attribute name="uri" type="string"></attribute>
     	<attribute name="fileType" type="string"></attribute>

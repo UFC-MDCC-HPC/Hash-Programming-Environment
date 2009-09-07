@@ -1,6 +1,7 @@
 package hPE.frontend.base.edits;
 
 import hPE.frontend.base.figures.PortFigure;
+import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
@@ -23,7 +24,7 @@ public abstract class PortEditPart extends AbstractGraphicalEditPart implements 
 
 	protected void createEditPolicies() {
 		
-		HInterface model = (HInterface) getParent().getModel();
+		HHasExternalReferences model = (HHasExternalReferences) getParent().getModel();
 		HPort port = (HPort) getModel();
 		
 		this.installEditPolicy(EditPolicy.COMPONENT_ROLE, new ShowInterfaceEditPolicy());

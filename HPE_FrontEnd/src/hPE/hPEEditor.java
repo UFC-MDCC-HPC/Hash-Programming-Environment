@@ -2,8 +2,9 @@ package hPE;
 
 
 
-import hPE.frontend.MainConfigurationEditPartFactory;
+import hPE.frontend.ConfigurationEditPartFactory;
 import hPE.frontend.NAntBuilder;
+import hPE.frontend.base.actions.AddReferencesAction;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
@@ -211,7 +212,7 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 	protected EditPartFactory getEditPartFactory()
 	{
 		// todo return your EditPartFactory
-		return new MainConfigurationEditPartFactory();
+		return new ConfigurationEditPartFactory();
 	}
 	
 	
@@ -456,6 +457,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 //		bars.setGlobalActionHandler(id, registry.getAction(id));		
 		id = OpenSourceAction.EDIT_SOURCE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = AddReferencesAction.ADD_REFERENCES;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetRecursiveAction.SET_RECURSIVE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ImplementsAction.IMPLEMENTS;
@@ -685,6 +688,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 				
+		action = new AddReferencesAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+
 		action = new SetRecursiveAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());

@@ -2449,13 +2449,22 @@ public interface ComponentPackage extends EPackage {
 	int SOURCE_FILE_TYPE__DEPENDENCY = 0;
 
 	/**
+	 * The feature id for the '<em><b>External Dependency</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY = 1;
+
+	/**
 	 * The feature id for the '<em><b>Contents</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__CONTENTS = 1;
+	int SOURCE_FILE_TYPE__CONTENTS = 2;
 
 	/**
 	 * The feature id for the '<em><b>File Type</b></em>' attribute.
@@ -2464,7 +2473,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__FILE_TYPE = 2;
+	int SOURCE_FILE_TYPE__FILE_TYPE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2473,7 +2482,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__NAME = 3;
+	int SOURCE_FILE_TYPE__NAME = 4;
 
 	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
@@ -2482,7 +2491,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__URI = 4;
+	int SOURCE_FILE_TYPE__URI = 5;
 
 	/**
 	 * The feature id for the '<em><b>Version Id</b></em>' attribute.
@@ -2491,7 +2500,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__VERSION_ID = 5;
+	int SOURCE_FILE_TYPE__VERSION_ID = 6;
 
 	/**
 	 * The number of structural features of the '<em>Source File Type</em>' class.
@@ -2500,7 +2509,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE_FEATURE_COUNT = 6;
+	int SOURCE_FILE_TYPE_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SourceTypeImpl <em>Source Type</em>}' class.
@@ -4906,6 +4915,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getSourceFileType_Dependency();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link hPE.xml.component.SourceFileType#getExternalDependency <em>External Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>External Dependency</em>'.
+	 * @see hPE.xml.component.SourceFileType#getExternalDependency()
+	 * @see #getSourceFileType()
+	 * @generated
+	 */
+	EAttribute getSourceFileType_ExternalDependency();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.SourceFileType#getContents <em>Contents</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6978,6 +6998,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SOURCE_FILE_TYPE__DEPENDENCY = eINSTANCE.getSourceFileType_Dependency();
+
+		/**
+		 * The meta object literal for the '<em><b>External Dependency</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY = eINSTANCE.getSourceFileType_ExternalDependency();
 
 		/**
 		 * The meta object literal for the '<em><b>Contents</b></em>' attribute feature.

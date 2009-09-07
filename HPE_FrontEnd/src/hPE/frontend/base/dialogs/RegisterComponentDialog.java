@@ -6,6 +6,7 @@ import hPE.core.library.HPELocationFileTraversor;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
 import hPE.location.HPE_Location_Server;
 import hPE.location.HPE_Location_ServerService;
@@ -318,7 +319,7 @@ public class RegisterComponentDialog extends JDialog {
 		
 	}
 
-	private String makeFileID(HInterface i, HBEAbstractFile file) {
+	private String makeFileID(HHasExternalReferences i, HBEAbstractFile file) {
 		IPath filePath = new Path(file.getFileName());
 		String fileName = filePath.removeFileExtension().addFileExtension(file.getBinaryExtension()).toString();
 		

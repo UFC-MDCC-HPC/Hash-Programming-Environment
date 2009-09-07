@@ -641,7 +641,7 @@ public abstract class HPrimUnit extends HVisualElement
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#matchForAttachment(hPE.model.HInterface)
 	 */
-	public abstract boolean matchForAttachment(HInterface which_interface);
+	public abstract boolean matchForAttachment(HHasExternalReferences which_interface);
 	
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#detachFromInterface()
@@ -683,7 +683,7 @@ public abstract class HPrimUnit extends HVisualElement
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#createInterface(org.eclipse.draw2d.geometry.Point)
 	 */
-	public abstract HInterface createInterface(Point location) throws HPEAbortException;
+	public abstract HHasExternalReferences createInterface(Point location) throws HPEAbortException;
 	
 	protected void complyToInterface(HInterface which_interface) {
 	      HLinkToInterface li = new HLinkToInterface(this);

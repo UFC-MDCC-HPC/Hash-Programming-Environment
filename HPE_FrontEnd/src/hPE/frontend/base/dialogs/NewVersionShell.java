@@ -59,7 +59,7 @@ public class NewVersionShell {
 		buttonAdd.setText(">");
 		buttonAdd.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				String v =HInterface.toStringVersion(new Integer[] {spinner1.getSelection(), spinner2.getSelection(), spinner2.getSelection(), spinner4.getSelection()});
+				String v =HInterface.toStringVersion(new Integer[] {spinner1.getSelection(), spinner2.getSelection(), spinner3.getSelection(), spinner4.getSelection()});
 				if (!(listVersions.indexOf(v) >= 0)) 
 					listVersions.add(v);
 				else {

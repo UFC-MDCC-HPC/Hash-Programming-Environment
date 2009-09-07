@@ -2110,7 +2110,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Contents() {
+	public EAttribute getSourceFileType_ExternalDependency() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2119,7 +2119,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_FileType() {
+	public EAttribute getSourceFileType_Contents() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2128,7 +2128,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Name() {
+	public EAttribute getSourceFileType_FileType() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -2137,7 +2137,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Uri() {
+	public EAttribute getSourceFileType_Name() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -2146,8 +2146,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_VersionId() {
+	public EAttribute getSourceFileType_Uri() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSourceFileType_VersionId() {
+		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -2852,6 +2861,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		sourceFileTypeEClass = createEClass(SOURCE_FILE_TYPE);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__DEPENDENCY);
+		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__CONTENTS);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__FILE_TYPE);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__NAME);
@@ -3186,6 +3196,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(sourceFileTypeEClass, SourceFileType.class, "SourceFileType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSourceFileType_Dependency(), theXMLTypePackage.getString(), "dependency", null, 0, -1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSourceFileType_ExternalDependency(), theXMLTypePackage.getString(), "externalDependency", null, 0, -1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_Contents(), theXMLTypePackage.getString(), "contents", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_FileType(), theXMLTypePackage.getString(), "fileType", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4493,6 +4504,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "dependency"
+		   });		
+		addAnnotation
+		  (getSourceFileType_ExternalDependency(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "externalDependency"
 		   });		
 		addAnnotation
 		  (getSourceFileType_Contents(), 

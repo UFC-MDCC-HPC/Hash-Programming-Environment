@@ -7,7 +7,7 @@ import hPE.frontend.base.interfaces.IComputationInterface;
 import hPE.frontend.base.interfaces.IProtocol;
 import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterfaceSig;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HUnitSlice;
@@ -95,7 +95,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 		while (ias.hasNext()) {
 			
 		    HInterfaceSlice ia = (HInterfaceSlice) ias.next();
-		    HInterface i = (HInterface) ia.getInterface();
+		    HHasExternalReferences i = (HHasExternalReferences) ia.getInterface();
 		    
 		    if (i instanceof HActivateInterface) {
 		    	hasActivateSlice = true;
@@ -173,7 +173,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 			HProtocol protocol = (HProtocol) this.getProtocol();
 			
 			HInterfaceSlice ia = (HInterfaceSlice)uSlice.getInterfaceSlice();
-	        HInterface i = (HInterface) ia.getInterface();	        
+	        HHasExternalReferences i = (HHasExternalReferences) ia.getInterface();	        
 	        
 			if (protocol != null && i instanceof HActivateInterface) {
 				

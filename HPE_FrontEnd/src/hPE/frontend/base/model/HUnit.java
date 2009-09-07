@@ -374,7 +374,7 @@ public abstract class HUnit extends HPrimUnit
 	/* (non-Javadoc)
 	 * @see hPE.model.IHUnit#matchForAttachment(hPE.model.HInterface)
 	 */
-	public boolean matchForAttachment(HInterface i) {
+	public boolean matchForAttachment(HHasExternalReferences i) {
 		
 		if (i instanceof HInterface) {
 			
@@ -557,7 +557,7 @@ public abstract class HUnit extends HPrimUnit
 	    
   public static void supersede (IHPrimUnit u_,  IHPrimUnit new_u_) {
 	    
-    	HInterface i = (HInterface) u_.getInterface();
+    	HHasExternalReferences i = (HHasExternalReferences) u_.getInterface();
     	HInterface new_i = (HInterface) new_u_.getInterface();	        
     	
     	IHUnit u = (IHUnit) u_.getRealUnit();

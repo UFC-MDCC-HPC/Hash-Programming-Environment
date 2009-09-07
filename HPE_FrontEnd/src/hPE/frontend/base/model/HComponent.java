@@ -648,7 +648,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 	*/
 	 
-	public void removeInterface(HInterface i) {
+	public void removeInterface(HHasExternalReferences i) {
 	
 		List<HComponent> l = new ArrayList<HComponent>(); 
 		
@@ -2970,7 +2970,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		return null;
 	}
 	
-	public HInterface fetchInterface(String iName) {
+	public HHasExternalReferences fetchInterface(String iName) {
 		
 		for (HInterface i : this.getInterfaces()) {
 			if (i.getPrimName().equals(iName)) 
@@ -3586,6 +3586,8 @@ public void createComponentKey() throws IOException  {
 	IPath pathPubFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("pub");
 	boolean okSNK = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
 	boolean okPUB = ResourcesPlugin.getWorkspace().getRoot().exists(pathPubFile);
+	
+	boolean success = true;
 
 	if (!okSNK || !okPUB) {
 		String sn_path = HPEProperties.getInstance().getValue("sn_path");;
@@ -3596,27 +3598,39 @@ public void createComponentKey() throws IOException  {
 			IPath systemPath = loc.removeLastSegments(1);			
 		    java.io.File systemFile = new java.io.File(systemPath.toOSString());
 
-		    if (!okSNK)
-		    	CommandLine.runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
+		    if (success && !okSNK) {
+		    	int r = CommandLine.runCommand(new String[] {sn_path, "-k", this.getComponentName() + ".snk"}, new String[] {}, systemFile);
+		    	success = r == CommandLine.SUCESSFULL_COMMAND;
+                		    	
+		    }
 		    
-		    if (!okPUB) 
-		    	CommandLine.runCommand(new String[] {sn_path, "-p", this.getComponentName() + ".snk", this.getComponentName() + ".pub"}, new String[] {}, systemFile);
+		    if (success && !okPUB) { 
+		    	int r = CommandLine.runCommand(new String[] {sn_path, "-p", this.getComponentName() + ".snk", this.getComponentName() + ".pub"}, new String[] {}, systemFile);
+		    	success = r == CommandLine.SUCESSFULL_COMMAND;		    	
+		    }
 		}
 	}
 
-	IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
-	if (fileW.getLocation() != null) {
-		InputStream is = new FileInputStream(fileW.getLocation().toOSString());
-		byte[] pk = new byte[is.available()];
-		is.read(pk);
-		is.close();
-		String pkStr = null;
-		try {
-			pkStr = getHexString(pk);
-		} catch (Exception e) {
-			e.printStackTrace();
+	if (success) {
+		IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
+		if (fileW.getLocation() != null) {
+			InputStream is = new FileInputStream(fileW.getLocation().toOSString());
+			byte[] pk = new byte[is.available()];
+			is.read(pk);
+			is.close();
+			String pkStr = null;
+			try {
+				pkStr = getHexString(pk);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			this.setHashComponentUID(pkStr);
 		}
-		this.setHashComponentUID(pkStr);
+	} else {
+		JOptionPane.showMessageDialog(null, 
+				"Error creating key files. It will not be possible to build the component.", 
+				"Key Files Error", 
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 }

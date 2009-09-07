@@ -133,6 +133,8 @@
         outputs="component.ecore#//ComponentHeaderType/baseType"/>
     <nested inputs="HashComponent.xsd#//ComponentHeaderType;XSDComplexTypeDefinition=14/XSDParticle/XSDModelGroup/XSDParticle=1"
         outputs="component.ecore#//ComponentHeaderType/versions"/>
+    <nested inputs="HashComponent.xsd#//ComponentHeaderType;XSDComplexTypeDefinition=14/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="component.ecore#//ComponentHeaderType/visualAttributes"/>
     <nested inputs="HashComponent.xsd#//ComponentHeaderType;XSDComplexTypeDefinition=14/XSDAttributeUse=3"
         outputs="component.ecore#//ComponentHeaderType/hashComponentUID"/>
     <nested inputs="HashComponent.xsd#//ComponentHeaderType;XSDComplexTypeDefinition=14/XSDAttributeUse=4"
@@ -227,6 +229,8 @@
       outputs="component.ecore#//SourceFileType">
     <nested inputs="HashComponent.xsd#//SourceFileType;XSDComplexTypeDefinition=50/XSDParticle/XSDModelGroup/XSDParticle"
         outputs="component.ecore#//SourceFileType/dependency"/>
+    <nested inputs="HashComponent.xsd#//SourceFileType;XSDComplexTypeDefinition=50/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="component.ecore#//SourceFileType/externalDependency"/>
     <nested inputs="HashComponent.xsd#//SourceFileType;XSDComplexTypeDefinition=50/XSDAttributeUse=4"
         outputs="component.ecore#//SourceFileType/contents"/>
     <nested inputs="HashComponent.xsd#//SourceFileType;XSDComplexTypeDefinition=50/XSDAttributeUse=1"
@@ -385,6 +389,7 @@
         outputs="component.ecore#//ComponentType/componentInfo"/>
   </nested>
   <nested inputs="HashComponent.xsd#//component;XSDElementDeclaration" outputs="component.ecore#//DocumentRoot/component"/>
+  <nested inputs="HashComponent.xsd#//NewAttribute;XSDAttributeDeclaration" outputs="component.ecore#//DocumentRoot/newAttribute"/>
   <nested inputs="HashComponent.xsd#//ActionActivateType;XSDComplexTypeDefinition=21"
       outputs="component.ecore#//ActionActivateType">
     <nested inputs="HashComponent.xsd#//ActionActivateType;XSDComplexTypeDefinition=21/XSDAttributeUse"
@@ -421,6 +426,15 @@
   </nested>
   <nested inputs="HashComponent.xsd#//EnumerableComponentType;XSDComplexTypeDefinition=30"
       outputs="component.ecore#//EnumerableComponentType"/>
+  <nested inputs="HashComponent.xsd#//EnumerableEntryType;XSDComplexTypeDefinition=55"
+      outputs="component.ecore#//EnumerableEntryType">
+    <nested inputs="HashComponent.xsd#//EnumerableEntryType;XSDComplexTypeDefinition=55/XSDAttributeUse=1"
+        outputs="component.ecore#//EnumerableEntryType/cRef"/>
+    <nested inputs="HashComponent.xsd#//EnumerableEntryType;XSDComplexTypeDefinition=55/XSDAttributeUse"
+        outputs="component.ecore#//EnumerableEntryType/permutation"/>
+    <nested inputs="HashComponent.xsd#//EnumerableEntryType;XSDComplexTypeDefinition=55/XSDAttributeUse=2"
+        outputs="component.ecore#//EnumerableEntryType/uRef"/>
+  </nested>
   <nested inputs="HashComponent.xsd#//EnumerableUnitSliceType;XSDComplexTypeDefinition=31"
       outputs="component.ecore#//EnumerableUnitSliceType">
     <nested inputs="HashComponent.xsd#//EnumerableUnitSliceType;XSDComplexTypeDefinition=31/XSDAttributeUse=1"

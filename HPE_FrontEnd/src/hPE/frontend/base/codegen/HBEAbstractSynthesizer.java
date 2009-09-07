@@ -1,11 +1,11 @@
 package hPE.frontend.base.codegen;
 
-import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HHasExternalReferences;
 
 
 public abstract class HBEAbstractSynthesizer<FileType    extends HBEAbstractFile, 
                                              VersionType extends HBESourceVersion<FileType>, 
-                                             ModelType   extends HInterface> {
+                                             ModelType   extends HHasExternalReferences> {
 
 	public HBEAbstractSynthesizer() {
 		super();		

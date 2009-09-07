@@ -249,7 +249,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 	    
 	    String procFileName = i.getPrimName();
 	    
-		HBESourceCSharpClassDefinition sourceCode   = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID);
+		HBESourceCSharpClassDefinition sourceCode   = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID,i);
 		sourceCode.setDependencies(dependencies);
 		HBESourceVersionCSharp version = createNewSourceVersion();
 		version.setSource(sourceCode);

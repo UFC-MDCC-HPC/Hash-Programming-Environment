@@ -6,12 +6,16 @@ import java.io.InputStreamReader;
 
 public class CommandLine {
 
-	public static void runCommand(String[] cmd, String[] env, java.io.File file) {
+	public static int SUCESSFULL_COMMAND = 0;	
+	
+	public static int runCommand(String[] cmd, String[] env, java.io.File file) {
+		
+		int r = 0;
 		
 		try 
 		{ 
 			Process p = Runtime.getRuntime().exec(cmd, env, file); 
-			int r = p.waitFor(); 
+			r = p.waitFor(); 
 			
 			BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
 			String line=reader.readLine(); 
@@ -24,10 +28,15 @@ public class CommandLine {
 		} 
 		catch(IOException e1) {
 			e1.printStackTrace();
+			r = -1;
 		} 
 		catch(InterruptedException e2) {
 			e2.printStackTrace();
-		} 	
+			r = -2;
+		}
+		
+		return r;
+		
 	}
 
 }

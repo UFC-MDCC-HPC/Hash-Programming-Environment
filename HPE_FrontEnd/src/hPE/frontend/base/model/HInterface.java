@@ -4,29 +4,43 @@ import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.c_sharp.HBESourceVersionCSharp;
+import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IInterface;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.eclipse.draw2d.geometry.Point;
 
-public abstract class HInterface extends HPrimInterface implements IInterface {
+public abstract class HInterface extends HPrimInterface implements IInterface, HHasExternalReferences {
 
 	static final long serialVersionUID = 1;
 	
@@ -422,7 +436,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 			this.i = i;
 		}
 		
-		public HInterface getInterface() {
+		public HHasExternalReferences getInterface() {
 			return i;
 		}
 		
@@ -476,14 +490,14 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	    }
 
 	    public int getColumnCount() {
-	    	return 2;
+	    	return 3;
 	    }
 
 	    public String getColumnName(int columnIndex) {
 	    	switch (columnIndex) {
 	    	case 0: return "Version";
 	    	case 1: return "Source Type";
-	    	//case 2: return "Created";
+	    	case 2: return "Source File";
 	    	}
 	    	return "";
 	    }
@@ -499,11 +513,15 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	    	switch (columnIndex) {
 	    	case 0: return false; 
 	    	case 1: return srcVersion.getFiles().size() == 0;
-	    	case 2: return false; 
+	    	case 2: return srcVersion.getFiles().size() > 0; 
 	    	}
 	    	return false;
 	    }
-
+	    
+	    private JComboBox theComboBox = null;
+	    
+	    private Map<Integer, String> selectedFileNames = new HashMap<Integer, String>();
+	    
 	    public Object getValueAt(int rowIndex, int columnIndex) {
 	    	
 	    	HBESourceVersion<HBEAbstractFile> srcVersion = this.getSourceVersionList().get(rowIndex);
@@ -514,16 +532,69 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	    	
 	    	String type = srcVersion.getFiles().size() == 0 ? (srcsUndef.containsKey(srcVersion) ? srcsUndef.get(srcVersion) : "Undefined") : srcVersion.getSynthesizerType(abs);
 	    	
+	    	
+
 	    	switch (columnIndex) {
 	    	case 0: return srcVersion; 
 	    	case 1: return type;
-	    	//case 2: return srcVersion.getFiles().size() == 0 ? "no" : "yes"; 
+	    	// case 2: return srcVersion.getFiles().size() > 0 ? srcVersion.getFiles().get(0).getFileName() : ""; 
+	    	case 2: { 
+		    //	if (!cbs.containsKey(new Integer(rowIndex))) {
+		    //		cbs.put(new Integer(rowIndex), newComboBox(rowIndex, srcVersion.getFiles()));
+		    //	}
+		    	//JComboBox comboBox2 = cbs.get(new Integer(rowIndex));
+	    	    if (!getSelectedFileNames().containsKey(new Integer(rowIndex))) {
+	    	    	Object o = this.getComboBox().getSelectedItem();
+	    	    	if (o!=null && rowIndex == jTable.getSelectedRow())
+		    	         getSelectedFileNames().put(new Integer(rowIndex), this.getComboBox().getSelectedItem().toString());
+	    	    	else if (o == null && this.getComboBox().getItemCount() > 0) {
+	    	    		this.getComboBox().setSelectedIndex(0);
+	    	            getSelectedFileNames().put(new Integer(rowIndex), this.getComboBox().getSelectedItem().toString());
+	    	    	}
+	    	    	else {
+	    	                getSelectedFileNames().put(new Integer(rowIndex), "");
+	    	    	}
+		        }
+
+	    		return srcVersion.getFiles().size() > 0 ? getSelectedFileNames().get(new Integer(rowIndex)) : "";
 	    	}
+	    	}
+	    
 	    	
 	    	return null;	    	
 	    }
 
-	    private Map<HBESourceVersion<HBEAbstractFile>, String> srcsUndef = new HashMap<HBESourceVersion<HBEAbstractFile>, String>();
+	    
+	    	    
+	    public JComboBox newComboBox() {
+		    
+	    	JComboBox comboBox2 = new JComboBox();
+
+		    TableColumn c2 = jTable.getColumn("Source File");
+		    c2.setCellEditor(new DefaultCellEditor(comboBox2));		    
+
+		    DefaultTableCellRenderer renderer2 = new DefaultTableCellRenderer();  
+		    renderer2.setToolTipText("Click here to select source name ...");  
+		    comboBox2.setName("Source Name");  
+		    c2.setCellRenderer(renderer2);  
+
+		    comboBox2.addItemListener(ComboListener.getInstance());
+		    
+		    ComboListener.getInstance().setSelectedFileNames(getSelectedFileNames());
+		    ComboListener.getInstance().setCombo(comboBox2);
+		    ComboListener.getInstance().setTable(jTable);
+		     
+            this.setComboBox(comboBox2);
+		    
+			return comboBox2;
+		}
+
+	    public void clear() {
+	    	this.theComboBox = null;
+	    	this.setSelectedFileNames(null);
+	    }
+	    
+		private Map<HBESourceVersion<HBEAbstractFile>, String> srcsUndef = new HashMap<HBESourceVersion<HBEAbstractFile>, String>();
 	    
 	    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 	    	HBESourceVersion<HBEAbstractFile> srcVersion = this.getSourceVersionList().get(rowIndex);
@@ -542,6 +613,35 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		public void reset() {
 			srcsUndef.clear();			
 		}
+
+		private JTable jTable = null;
+		
+		public void setTable (JTable jTable) {
+			this.jTable = jTable;			
+		}
+
+		public void setComboBox(JComboBox theComboBox) {
+			this.theComboBox = theComboBox;
+		}
+
+		public JComboBox getComboBox() {
+			if (theComboBox == null) {
+				theComboBox = newComboBox();
+			}
+			return theComboBox;
+		}
+
+		public void setSelectedFileNames(Map<Integer, String> selectedFileNames) {
+			this.selectedFileNames = selectedFileNames;
+		}
+
+		public Map<Integer, String> getSelectedFileNames() {
+			if (this.selectedFileNames == null) {
+				this.selectedFileNames = new HashMap<Integer, String>();
+			}
+			return selectedFileNames;
+		}
+
 		
 		
 	}
@@ -597,7 +697,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 	}
 		
 	
-    public HInterface peekThatOneThatIsSubTypeOfTheOthers(List<HInterface> is) {
+    public HHasExternalReferences peekThatOneThatIsSubTypeOfTheOthers(List<HInterface> is) {
         
    	 // Among the components passed as parameters, peek the one that is subtype of the others. 
    	 // If such component does not exist, return null;
@@ -667,7 +767,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		for (HInterfaceSlice s : this.getSlices()) {
 			HComponent c = (HComponent) s.getInterface().getConfiguration();
 			if (c.getRef().equals(cRef)) {
-				HInterface i = c.fetchInterface(iRef);
+				HHasExternalReferences i = c.fetchInterface(iRef);
 				if (i==null) return null;
 				else return s;
 			}
@@ -839,5 +939,45 @@ public abstract class HInterface extends HPrimInterface implements IInterface {
 		}
 		
 	}
-	
+
+	private List<String> references;
+
+	/* (non-Javadoc)
+	 * @see hPE.frontend.base.model.HHasExternalReferences#addExternalReferences(java.util.List)
+	 */
+	public void addExternalReferences(List<String> selectedReferences) {
+		if (references == null) {
+			references = new ArrayList<String>();
+		}
+		
+		for (String ref : selectedReferences) {
+			references.add(ref);
+		}
+		
+	}
+
+	@Override
+	public void removeExternalReferences(List<String> selectedReferences) {
+		if (references == null) {
+			references = new ArrayList<String>();
+		}
+		for (String ref : selectedReferences) {
+       		this.references.remove(ref);
+		}
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see hPE.frontend.base.model.HHasExternalReferences#getExternalReferences()
+	 */
+	public Set<String> getExternalReferences() {
+		if (references == null) {
+			references = new ArrayList<String>();
+		}
+		
+		Set<String> ss = new HashSet<String>();
+        ss.addAll(references);
+        return ss;
+	}
+
 }

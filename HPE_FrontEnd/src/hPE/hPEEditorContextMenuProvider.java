@@ -1,5 +1,6 @@
 package hPE;
 
+import hPE.frontend.base.actions.AddReferencesAction;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
@@ -331,6 +332,11 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 		
+		action = getAction(AddReferencesAction.ADD_REFERENCES);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+
 		action = getAction(SetRecursiveAction.SET_RECURSIVE);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		

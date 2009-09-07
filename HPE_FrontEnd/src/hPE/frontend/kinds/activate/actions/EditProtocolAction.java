@@ -37,7 +37,7 @@ public class EditProtocolAction extends SelectionAction {
 			setId(SHOW_PROTOCOL);
 			setToolTipText(SHOW_PROTOCOL);
 			setImageDescriptor(
-			ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+			ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 			setHoverImageDescriptor(getImageDescriptor());
 		}
 		else {
@@ -46,7 +46,7 @@ public class EditProtocolAction extends SelectionAction {
 			setId(HIDE_PROTOCOL);
 			setToolTipText(HIDE_PROTOCOL);
 			setImageDescriptor(
-			ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
+			ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 			setHoverImageDescriptor(getImageDescriptor());
 		}
 	}

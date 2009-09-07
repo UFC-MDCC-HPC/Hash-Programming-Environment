@@ -47,7 +47,7 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		getListeners().firePropertyChange(ADD_UNIT_ITEM,null,unit_slice_abstraction);
 	}
 
-	public HInterface createInterface(Point location) throws HPEAbortException{
+	public HHasExternalReferences createInterface(Point location) throws HPEAbortException{
         return getRealUnit().createInterface(location);
 	}
 

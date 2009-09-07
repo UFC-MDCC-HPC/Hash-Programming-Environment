@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.SourceFileType#getDependency <em>Dependency</em>}</li>
+ *   <li>{@link hPE.xml.component.SourceFileType#getExternalDependency <em>External Dependency</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getContents <em>Contents</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getFileType <em>File Type</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getName <em>Name</em>}</li>
@@ -47,6 +48,23 @@ public interface SourceFileType extends EObject {
 	 * @generated
 	 */
 	EList<String> getDependency();
+
+	/**
+	 * Returns the value of the '<em><b>External Dependency</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>External Dependency</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>External Dependency</em>' attribute list.
+	 * @see hPE.xml.component.ComponentPackage#getSourceFileType_ExternalDependency()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='element' name='externalDependency'"
+	 * @generated
+	 */
+	EList<String> getExternalDependency();
 
 	/**
 	 * Returns the value of the '<em><b>Contents</b></em>' attribute.

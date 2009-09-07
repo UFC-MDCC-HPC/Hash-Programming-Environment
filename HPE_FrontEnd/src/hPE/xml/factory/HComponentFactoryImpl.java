@@ -12,6 +12,7 @@ import hPE.frontend.base.commands.SupersedeCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HLinkToReplicator;
@@ -1812,6 +1813,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				fX.setVersionId(checkVersion(versionIdF) ? versionIdF : "1.0.0.0");
 				List<String> deps = fX.getDependency();
 				deps.addAll(f.getDependencies());
+				List<String> edeps = fX.getExternalDependency();
+				edeps.addAll(f.getExternalReferences());
 				fsX.add(fX);
 			}
 
@@ -2537,8 +2540,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				String contents = f.getContents();
 
 				HBEAbstractFile ff = createFile(fileType, name, contents,
-						rootPath, versionIdF);
+						rootPath, versionIdF, i);
 				ff.setDependencies(new ArrayList<String>(f.getDependency()));
+				ff.addExternalReferences(new ArrayList<String>(f.getExternalDependency()));
 
 				try {
 					source.addFile(ff);
@@ -2555,13 +2559,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private HBEAbstractFile createFile(String fileType, String name,
-			String contents, String rootPath, String versionID) {
+			String contents, String rootPath, String versionID, HHasExternalReferences i) {
 		if (fileType.equals(HBESourceCSharpClassDefinition.getType())) {
 			return new HBESourceCSharpClassDefinition(name, contents, rootPath,
-					versionID);
+					versionID,i );
 		} else if (fileType.equals(HBESourceCSharpMainDefinition.getType())) {
 			return new HBESourceCSharpMainDefinition(name, contents, rootPath,
-					versionID);
+					versionID,i);
 		} else
 			return null;
 

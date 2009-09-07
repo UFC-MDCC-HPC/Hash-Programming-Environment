@@ -26,13 +26,11 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import java.awt.Dimension;
 
 
 public class HBEVersionControlDialog extends JDialog {
@@ -44,7 +42,11 @@ public class HBEVersionControlDialog extends JDialog {
 	private JPanel jContentPane = null;
 	private JTable jTable = null;
 	private JPanel jPanel = null;
+	private JButton jButtonRefs = null;
 	private JButton jButton2 = null;
+	private JButton jButtonSair = null;
+	
+	
 	/**
 	 * This is the default constructor
 	 * @param onlyEdit TODO
@@ -109,36 +111,45 @@ public class HBEVersionControlDialog extends JDialog {
 	private JTable getJTable() {
 		if (jTable == null) {
   		    
-  		    ListHBESourceVersion l = i.getSourceVersionList();
+		    JComboBox comboBox = new JComboBox(typesOfSource);		    
+
+		    ListHBESourceVersion l = i.getSourceVersionList();
   		    l.reset();
 			jTable = new JTable(l);
+			l.setTable(jTable);
 		    jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		    
+			ListSelectionModel selectionModel = jTable.getSelectionModel();
+			selectionModel.addListSelectionListener((ListSelectionListener) new SelectionListener(jTable, l));
+		    
+		    
 		    // jTable.setCellSelectionEnabled(true);
-		    JComboBox comboBox = new JComboBox(typesOfSource);		    
+
 		    comboBox.addComponentListener(new ComponentAdapter() {
 		      public void componentShown(ComponentEvent e) {
 		        final JComponent c = (JComponent)e.getSource();
 		        SwingUtilities.invokeLater(new Runnable() {
 		          public void run () {
 		            c.requestFocus();
-		            System.out.println(c);
-		            if (c instanceof JComboBox) {
-		              System.out.println("a");
-		            }
 		          }
 		        });
 		      }
 		    });
 		 
-		  //  EachRowEditor rowEditor = new EachRowEditor(jTable);
-		  //  rowEditor.setEditorAt(1, new DefaultCellEditor(comboBox));
+
 		    TableColumn c = jTable.getColumn("Source Type");
 		    c.setCellEditor(new DefaultCellEditor(comboBox));
 		
+
 		    DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();  
 		    renderer.setToolTipText("Click here to select source type ...");  
 		    comboBox.setName("Source Type");  
-		    c.setCellRenderer(renderer);  
+		    c.setCellRenderer(renderer);
+		    try {
+		    if (jTable.getRowCount() > 0)
+		        jTable.setRowSelectionInterval(0, 0);
+		    } catch (Exception e) {}
+
 	     }
 		return jTable;
 	}
@@ -155,6 +166,7 @@ public class HBEVersionControlDialog extends JDialog {
 			flowLayout.setAlignment(java.awt.FlowLayout.RIGHT);
 			jPanel = new JPanel();
 			jPanel.setLayout(flowLayout);
+			jPanel.add(getJButtonRefs(), null);
 			jPanel.add(getJButton2(), null);
 			jPanel.add(getJButtonSair(), null);
 			if (!onlyEdit)  {
@@ -177,6 +189,7 @@ public class HBEVersionControlDialog extends JDialog {
 	            	if (jTable.getSelectedColumn()>=0) {
 	            	   buttonPressed = BUTTON_EDIT;
 	            	   setVisible(false);            	
+	            	   i.getSourceVersionList().clear();
 	            	} else {
 	                	JOptionPane.showMessageDialog(null,
 	                		    "A source version must be selected.",
@@ -188,6 +201,52 @@ public class HBEVersionControlDialog extends JDialog {
 			});
 		}
 		return jButton2;
+	}
+
+	/**
+	 * This method initializes jButton2	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButtonRefs() {
+		if (jButtonRefs == null) {
+			jButtonRefs = new JButton();
+			jButtonRefs.setText("References");
+			jButtonRefs.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	if (jTable.getSelectedColumn()>=0) {
+	            		  int row = jTable.getSelectedRow();
+	            		  HBESourceVersion<HBEAbstractFile> version = (HBESourceVersion<HBEAbstractFile>) jTable.getValueAt(row, 0);
+	            		  String fileName = (String) jTable.getValueAt(row, 2);
+
+	            		  
+	            		  HBEAbstractFile ff = null;
+	            		  for (HBEAbstractFile f : version.getFiles()) {
+	            			  if (f.getFileName().equals(fileName)) {
+	            				  ff = f;
+	            			  }
+	            		  }
+	            		  if (ff != null) {
+		            		  AddReferencesDialog dialog = new AddReferencesDialog(null, ff);
+		            		  dialog.setAlwaysOnTop(true);
+		            		  dialog.setModal(true);
+		            		  dialog.setVisible(true);
+		            		  ff.addExternalReferences(dialog.getSelectedReferences());
+	            		  } else {
+	            			  JOptionPane.showMessageDialog(null, "File " + fileName + " not found.", "Unexpected Error", JOptionPane.ERROR_MESSAGE);
+	            		  }
+	            		  // addExternalReferences(dialog.getSelectedReferences());
+	            	} else {
+	                	JOptionPane.showMessageDialog(null,
+	                		    "A source version must be selected.",
+	                		    "Source Version Error",
+	                		    JOptionPane.ERROR_MESSAGE);
+	            	}
+	                
+	            }
+			});
+		}
+		return jButtonRefs;
 	}
 
 	public void addLine() {
@@ -222,7 +281,6 @@ public class HBEVersionControlDialog extends JDialog {
 	public static int BUTTON_EXIT = 0;
 	public static int BUTTON_EDIT = 1;
 	
-	private JButton jButtonSair = null;
 	/**
 	 * This method initializes jButtonSair	
 	 * 	
@@ -235,7 +293,8 @@ public class HBEVersionControlDialog extends JDialog {
 			jButtonSair.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	   buttonPressed = BUTTON_EXIT;
-	            	   setVisible(false);            		                
+	            	   setVisible(false);
+	            	   i.getSourceVersionList().clear();
 	            }
 			});
 		}

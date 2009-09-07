@@ -28,12 +28,14 @@ public class HPEProperties {
 	    protected HPEProperties(){
 	    	
 	    	    defaultValues.put("backend_locations", homeDir + "BackEndLocations.xml");
+	    	    defaultValues.put("references_location", homeDir + "extenalreferences.xml");
 	    	    defaultValues.put("core_locations", homeDir + "CoreLocations.xml");
 	    	    defaultValues.put("dgac_path", homeDir + "DGAC.dll");
 	    	    defaultValues.put("sn_path", "sn");
 	    	    defaultValues.put("gacutil_path", "gacutil");
 	    	    defaultValues.put("cache_root", homeDir + "hpe_cache");
-	    	 
+	    	    defaultValues.put("mono_path", null);
+	    	    defaultValues.put("mono_lib_version", "1.0");	    	 
 	            props = new Properties(); 	            
 	            try{  
 	                    props.load(new FileInputStream(getPropertiesFile()));  
@@ -48,7 +50,7 @@ public class HPEProperties {
 	    	if (s==null) {
 	    		return defaultValues.get(key);
 	    	} else {
-	    	    return s;	
+	    	    return s.trim();	
 	    	}	    	
 	    }  
 	    

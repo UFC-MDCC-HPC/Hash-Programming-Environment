@@ -19,6 +19,7 @@
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Environment"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Qualifier"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Application"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Enumerator"/>
     </genEnums>
     <genDataTypes ecoreDataType="component.ecore#//QuantificationTypeObject"/>
     <genDataTypes ecoreDataType="component.ecore#//SupportedKindsObject"/>
@@ -70,9 +71,11 @@
     <genClasses ecoreClass="component.ecore#//ComponentHeaderType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/baseType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/versions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/visualAttributes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/hashComponentUID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/isAbstract"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/kind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/locationURI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ComponentHeaderType/packagePath"/>
     </genClasses>
@@ -98,11 +101,17 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//DocumentRoot/xMLNSPrefixMap"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//DocumentRoot/xSISchemaLocation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//DocumentRoot/component"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//DocumentRoot/newAttribute"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//EntryType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//EntryType/visualDescription"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//EnumerableComponentType"/>
+    <genClasses ecoreClass="component.ecore#//EnumerableEntryType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//EnumerableEntryType/cRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//EnumerableEntryType/permutation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//EnumerableEntryType/uRef"/>
+    </genClasses>
     <genClasses ecoreClass="component.ecore#//EnumerableType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//EnumerableType/ref"/>
     </genClasses>
@@ -223,6 +232,7 @@
     </genClasses>
     <genClasses ecoreClass="component.ecore#//SourceFileType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/dependency"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/externalDependency"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/contents"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/fileType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SourceFileType/name"/>

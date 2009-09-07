@@ -79,7 +79,7 @@ public void execute(){
    //boolean isUniversal   = this.dialog.isUniversal();
 	// END TODO: EXISTENTIAL TYPE
 
-   String parId = this.dialog.getParId();
+   String parId = this.dialog.getParId().trim();
    
     if (dialog.getButtonPressed() == SetParameterDialog.BUTTON_OK) {
         varName = parId;        

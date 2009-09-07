@@ -28,13 +28,13 @@ public interface IHUnit extends IHPrimUnit, IUnit,
 	
     public abstract void addUnitSlice(HUnitSlice unit_slice_abstraction);
 
-	public abstract HInterface createInterface(Point location) throws HPEAbortException;
+	public abstract HHasExternalReferences createInterface(Point location) throws HPEAbortException;
 
 	public abstract void attachToInterface(HInterface i);
 
 	public abstract void detachFromInterface();
 
-	public abstract boolean matchForAttachment(HInterface i);
+	public abstract boolean matchForAttachment(HHasExternalReferences i);
 
 	public abstract void removeUnitSlice(HUnitSlice port);
 

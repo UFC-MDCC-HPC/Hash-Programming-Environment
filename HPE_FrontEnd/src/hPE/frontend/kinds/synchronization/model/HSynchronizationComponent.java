@@ -9,6 +9,7 @@ import hPE.frontend.kinds.activate.model.HActivateConfiguration;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
@@ -36,6 +37,7 @@ public class HSynchronizationComponent extends HActivateConfiguration {
     	if (c instanceof HDataComponent) return true;
     	if (c instanceof HArchitectureComponent) return true;
     	if (c instanceof HEnvironmentComponent) return true;
+    	if (c instanceof HEnumeratorComponent) return true;
     	return false;
     }	
 

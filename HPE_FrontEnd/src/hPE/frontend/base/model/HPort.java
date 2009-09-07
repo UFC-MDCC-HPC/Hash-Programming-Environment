@@ -78,8 +78,8 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 		
 	}
 	
-	public HInterface getPortType() {
-		return (HInterface)this.getInterfaceSlices().get(0).getInterface();
+	public HHasExternalReferences getPortType() {
+		return (HHasExternalReferences)this.getInterfaceSlices().get(0).getInterface();
 	}
 	
 	/* (non-Javadoc)

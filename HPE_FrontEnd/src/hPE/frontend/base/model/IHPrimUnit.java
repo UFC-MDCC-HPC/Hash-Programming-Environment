@@ -182,7 +182,7 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 
 	public abstract void attachToInterface(HInterface which_interface);
 
-	public abstract boolean matchForAttachment(HInterface which_interface);
+	public abstract boolean matchForAttachment(HHasExternalReferences which_interface);
 
 	public abstract void detachFromInterface();
 
@@ -200,7 +200,7 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 	 */
 	public abstract void setLinkToInterface(HLinkToInterface linkToInterface);
 
-	public abstract HInterface createInterface(Point location) throws HPEAbortException;
+	public abstract HHasExternalReferences createInterface(Point location) throws HPEAbortException;
 
 	public abstract IInterface getInterface();
 

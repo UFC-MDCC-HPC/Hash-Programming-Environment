@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getDependency <em>Dependency</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getExternalDependency <em>External Dependency</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getContents <em>Contents</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getFileType <em>File Type</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getName <em>Name</em>}</li>
@@ -47,6 +48,16 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	 * @ordered
 	 */
 	protected EList<String> dependency;
+
+	/**
+	 * The cached value of the '{@link #getExternalDependency() <em>External Dependency</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalDependency()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> externalDependency;
 
 	/**
 	 * The default value of the '{@link #getContents() <em>Contents</em>}' attribute.
@@ -184,6 +195,18 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getExternalDependency() {
+		if (externalDependency == null) {
+			externalDependency = new EDataTypeEList<String>(String.class, this, ComponentPackage.SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY);
+		}
+		return externalDependency;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getContents() {
 		return contents;
 	}
@@ -294,6 +317,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 		switch (featureID) {
 			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
 				return getDependency();
+			case ComponentPackage.SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY:
+				return getExternalDependency();
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				return getContents();
 			case ComponentPackage.SOURCE_FILE_TYPE__FILE_TYPE:
@@ -320,6 +345,10 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
 				getDependency().clear();
 				getDependency().addAll((Collection<? extends String>)newValue);
+				return;
+			case ComponentPackage.SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY:
+				getExternalDependency().clear();
+				getExternalDependency().addAll((Collection<? extends String>)newValue);
 				return;
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				setContents((String)newValue);
@@ -351,6 +380,9 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
 				getDependency().clear();
 				return;
+			case ComponentPackage.SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY:
+				getExternalDependency().clear();
+				return;
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				setContents(CONTENTS_EDEFAULT);
 				return;
@@ -380,6 +412,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 		switch (featureID) {
 			case ComponentPackage.SOURCE_FILE_TYPE__DEPENDENCY:
 				return dependency != null && !dependency.isEmpty();
+			case ComponentPackage.SOURCE_FILE_TYPE__EXTERNAL_DEPENDENCY:
+				return externalDependency != null && !externalDependency.isEmpty();
 			case ComponentPackage.SOURCE_FILE_TYPE__CONTENTS:
 				return CONTENTS_EDEFAULT == null ? contents != null : !CONTENTS_EDEFAULT.equals(contents);
 			case ComponentPackage.SOURCE_FILE_TYPE__FILE_TYPE:
@@ -406,6 +440,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (dependency: ");
 		result.append(dependency);
+		result.append(", externalDependency: ");
+		result.append(externalDependency);
 		result.append(", contents: ");
 		result.append(contents);
 		result.append(", fileType: ");
