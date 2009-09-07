@@ -57,7 +57,7 @@ public class FileSystem {
 		
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
 		String name = dirName + "/" + CONFIG_HPE;
-				
+		
 		File file = new File(dirBase + name.trim());
 		return file.exists();	
 	}
