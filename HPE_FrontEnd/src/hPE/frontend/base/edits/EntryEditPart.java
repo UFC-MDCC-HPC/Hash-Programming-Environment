@@ -15,6 +15,7 @@ import hPE.frontend.base.policies.LiftUnitEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Label;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -28,6 +29,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.EditPart;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 public class EntryEditPart<ModelType extends IHUnit,
                            FigureType extends EntryFigure> extends BindingEndsEditPart {
@@ -64,6 +67,11 @@ public class EntryEditPart<ModelType extends IHUnit,
         
         // entry_figure.setOpen(entry.isOpen());
         
+		Label ff = new Label(" unit " + entry.getName2() + " ");
+		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
+		ff.setFont(font);
+		
+		entry_figure.setToolTip(ff);
 
 	}
 	

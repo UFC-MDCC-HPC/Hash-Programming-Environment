@@ -69,7 +69,7 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		String name = the_interface.getName(true,true);
         String name_ = breakLines(" " + name + " ");
 
-        Label ff = new Label(name_);
+        Label ff = new Label(" interface " + name_);
 		Font font = new Font(null, "Arial", 10, SWT.BOLD);
 		ff.setFont(font); 
 

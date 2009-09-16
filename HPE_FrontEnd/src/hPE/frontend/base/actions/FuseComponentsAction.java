@@ -2,6 +2,7 @@ package hPE.frontend.base.actions;
 
 import hPE.HPEPlugin;
 import hPE.frontend.base.commands.SupersedeCommand;
+import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.model.HComponent;
 
 import java.util.ArrayList;
@@ -70,8 +71,9 @@ public class FuseComponentsAction extends SelectionAction {
 			if (c.getExposed() != c_.getExposed()) return false;
 			if (!c.getName2().equals(c_.getName2())) return false;
 	        // If they are parameters ...
+			HComponent topC = (HComponent) c.getTopConfiguration();
 	        if (c.isParameter() && c_.isParameter() && /*c.getSupplied() == null && c_.getSupplied() == null &&*/ 
-	        		!c.getVariableName().equals(c_.getVariableName()))  return false;
+	        		!c.getVariableName(topC).equals(c_.getVariableName(topC)))  return false;
 	        
 	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c_, c)) return false;
 	        

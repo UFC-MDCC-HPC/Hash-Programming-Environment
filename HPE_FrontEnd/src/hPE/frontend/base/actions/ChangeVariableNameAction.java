@@ -57,7 +57,7 @@ public class ChangeVariableNameAction extends SelectionAction {
 			// if (c.getConfiguration() == null) return false;
 			
 			boolean allSupplied = true;
-			for (Entry<String,List<HComponent>> es : c.getParameters2().entrySet()) {
+			for (Entry<String,List<HComponent>> es : c.getParameters().entrySet()) {
 				for (HComponent cc : es.getValue()) {
 					if (cc.getSupplied() == null) {
 						allSupplied = false;
@@ -69,7 +69,7 @@ public class ChangeVariableNameAction extends SelectionAction {
 			}
 			if (allSupplied) return false;
 			
-			if (c.getParameters2().size() == 0) return false;
+			if (c.getParameters().size() == 0) return false;
             if (!c.isDirectSonOfTheTopConfiguration() && !c.isTopConfiguration()) return false;
             if (((HComponent)c.getTopConfiguration()).getWhoItImplements() == c) return false;
             

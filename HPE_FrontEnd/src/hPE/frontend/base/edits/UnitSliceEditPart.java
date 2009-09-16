@@ -11,11 +11,15 @@ import hPE.frontend.kinds.activate.policies.SetNestingFactorEditPolicy;
 import java.beans.PropertyChangeEvent;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.*;
 import org.eclipse.draw2d.ColorConstants;
 
 
 import org.eclipse.gef.editparts.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+
 import java.util.List;
 import java.util.Collection;
 import java.util.ArrayList;
@@ -54,6 +58,15 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
             slice_abstraction_figure.setLabelText((new Integer(slice_abstraction.getNestingFactor())).toString());
         else
         	slice_abstraction_figure.setLabelText("");
+
+        try{
+	        Label ff = new Label(" slice " + (slice_abstraction.getName() == null ? "" : slice_abstraction.getName() ) + " ");
+			Font font = new Font(null, "Arial", 10, SWT.ITALIC);
+			ff.setFont(font);
+			slice_abstraction_figure.setToolTip(ff);
+        } catch (Exception e) {}
+		
+        
 	}
 	
 	public List getModelTargetConnections() {

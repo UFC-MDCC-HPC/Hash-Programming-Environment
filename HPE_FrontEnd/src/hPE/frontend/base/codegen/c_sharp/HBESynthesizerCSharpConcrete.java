@@ -57,7 +57,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 				HInterface i_ = (HInterface)slice.getInterface();
 				
 				// Na linha a seguir, isAbstract2 foi substituido por isAbstract ...
-				String sliceTypeName = i_.isAbstract() ? c.getVariableName().split("@")[0] :  i_.getName2(false, varContext);
+				String sliceTypeName = i_.isAbstract() ? c.getVariableName((HComponent) i.getConfiguration()).split("@")[0] :  i_.getName2(false, varContext);
 				if (theSlices.containsKey(sliceTypeName)) {
 					slices = theSlices.get(sliceTypeName);
 				} else {
@@ -293,7 +293,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	String unit_id = iSlice.getCompliantUnits().get(0).getConfiguration().getRef();
 		    	String unit_slice_id = iSlice.getCompliantUnits().get(0).getSupersededName();// slice.getName();		
 		    	
-		    	String typeName = iSlice.isAbstract() ? ((HComponent)slice.getConfiguration()).getVariableName().split("@")[0] :  ((HInterface)slice.getInterface()).getName2(false, varContext);
+		    	HComponent sc =((HComponent)slice.getConfiguration()); 
+		    	String typeName = iSlice.isAbstract() ? sc.getVariableName(c).split("@")[0] :  ((HInterface)slice.getInterface()).getName2(false, varContext);
 	    		
 		    	List<String> varContext_ = new ArrayList<String>();
 	    		varContext_.addAll(varContext);

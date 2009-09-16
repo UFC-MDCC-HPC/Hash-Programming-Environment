@@ -24,10 +24,10 @@ public class SetReplicatorFactorAction extends SelectionAction {
 
 
 	private static final String
-		SET_REPLICATOR_FACTOR_REQUEST = "Set Replicator Factor";  //$NON-NLS-1$
+		SET_REPLICATOR_FACTOR_REQUEST = "Make Unitary";  //$NON-NLS-1$
 	
 	public static final String
-	    SET_REPLICATOR_FACTOR = "Set Replicator Factor";   //$NON-NLS-1$
+	    SET_REPLICATOR_FACTOR = "Make Unitary";   //$NON-NLS-1$
 	
 	private Request request;
 	
@@ -68,6 +68,11 @@ public class SetReplicatorFactorAction extends SelectionAction {
 			if (!(part.getModel() instanceof HReplicator)) return false;
 			HReplicator r = (HReplicator) part.getModel();
 			
+			if (r.getSplits().size() > 0) return false;
+			
+			if ((r.getConfigurationWhereCreated() == r.getConfiguration().getTopConfiguration()) 
+					&& r.getParentSplit() == null) return false;
+			
 		}	
 		return true;
 	}
@@ -75,7 +80,7 @@ public class SetReplicatorFactorAction extends SelectionAction {
 	private Command getCommand() {
 		List editparts = getSelectedObjects();
 		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Set Replicator Factor");//$NON-NLS-1$
+		cc.setDebugLabel(SET_REPLICATOR_FACTOR);//$NON-NLS-1$
 		for (int i=0; i < editparts.size(); i++) {
 			EditPart part = (EditPart)editparts.get(i);
 			SetReplicatorFactorCommand c = (SetReplicatorFactorCommand) part.getCommand(request);

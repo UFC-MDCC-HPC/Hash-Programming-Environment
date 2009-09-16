@@ -8,12 +8,15 @@ import java.util.ArrayList;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 import hPE.frontend.base.figures.ReplicatorSplitFigure;
 import hPE.frontend.base.model.HReplicatorSplit;
@@ -74,6 +77,11 @@ public class ReplicatorSplitEditPart extends AbstractGraphicalEditPart
 		Rectangle parentBounds = ((AbstractGraphicalEditPart) getParent()).getFigure().getBounds();		 
         figure.setBounds(model.getBounds().getTranslated(parentBounds.getLocation()));		
 		
+		Label ff = new Label(" split x" + model.getN() + " of enumerator " + model.getOwnerReplicator().getVarId() + " ");
+		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
+		ff.setFont(font); 
+        	
+		figure.setToolTip(ff);
 	}
 
 	public void activate() {

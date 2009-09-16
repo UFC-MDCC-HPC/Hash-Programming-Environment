@@ -125,7 +125,7 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		}
 		
 		for (HReplicator r : ((HComponent)this.getConfiguration().getTopConfiguration()).gettReplicators()) {
-			if (r != this && r.getVarId().equals(this.getName2()) && r.getFactor() != factor) {
+			if (r != this && r.getVarId().equals(this.getName2()) && r.getFactor() != factor && !r.getVarId().equals("*")) {
 				r.setFactor(factor);
 			}
 		}
@@ -162,6 +162,10 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	 */
 	public HComponent getConfiguration() {
 		return configuration.get(0);
+	}
+
+	public HComponent getConfigurationWhereCreated() {
+		return configuration.get(configuration.size() - 1);
 	}
 
 	public List<HComponent> getConfigurations() {
@@ -271,7 +275,7 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	/**
 	 * @uml.property  name="linksToMe"
 	 */
-	private Collection<HLinkToReplicator> linksToMe = new ArrayList();
+	private Collection<HLinkToReplicator> linksToMe = new ArrayList<HLinkToReplicator>();
 
 	/**
 	 * Getter of the property <tt>linksToMe</tt>
@@ -540,7 +544,9 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	private boolean hidden = false;
 	
 	public boolean getHidden() {
-		return hidden;
+		return hidden || 
+	    	    (!((HComponent) this.getConfiguration()).showUnitaryReplicators() 
+		           && this.allSplitUnitaries());
 	}
 	
 	public void setHidden(boolean hidden) {
@@ -750,6 +756,11 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		return true;
 	}
     
+	public boolean isUnitaryAndNotShow() {
+		HComponent c = (HComponent) this.getConfiguration().getTopConfiguration();
+		return this.getFactor() == 1 && !c.showUnitaryReplicators();
+	}
+	
 	public Map<String,Integer> getSynonyms(Integer i) {
 
 		  Map<String,Integer> m = new HashMap<String,Integer>();
@@ -809,6 +820,19 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		
 		
 		return replicators;
+	}
+	
+	public boolean allSplitUnitaries() {
+		
+		
+		for (HReplicatorSplit split : this.getSplits()) {
+			for (HReplicator r : split.getReplicators()) {
+				if (r.getFactor() != 1) 
+					return false;
+			}
+		}
+		
+		return this.getSplits().size() > 0;
 	}
 	
 }

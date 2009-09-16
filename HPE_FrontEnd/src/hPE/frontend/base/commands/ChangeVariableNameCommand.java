@@ -31,7 +31,7 @@ public class ChangeVariableNameCommand extends Command {
 		this.newVarNameDialog = new DialogChangeVarName();
         this.newVarNameDialog.setAlwaysOnTop(true);
         this.newVarNameDialog.setModal(true);
-        Map<String,List<HComponent>> m = c.getParameters2();
+        Map<String,List<HComponent>> m = c.getParameters();
         
         for (String var : m.keySet()) {
         	 List<HComponent> innerCs = (List) m.get(var);
@@ -57,7 +57,7 @@ public class ChangeVariableNameCommand extends Command {
 		        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 		        } else {		        
 		        	for (HComponent innerC : varToBeChanged.snd()) {
-		        		if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName())) {
+		        		if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName(c))) {
 				        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a bound variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 				        	break;
 				        }

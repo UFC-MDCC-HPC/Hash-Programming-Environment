@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
+import hPE.frontend.base.exceptions.HPEInvalidNameException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
@@ -120,10 +121,12 @@ public class HReplicatorSplit extends HVisualElement implements IPointsToReplica
 	
 	private void createReplicators(int n, List<HLinkToReplicator> links) {
 		       
+		HReplicator ownerReplicator = this.getOwnerReplicator();
+		
 		for (int i=0;i<n;i++) {		
-			int width = this.getOwnerReplicator().getBounds().width; 
+			int width = ownerReplicator.getBounds().width; 
 			HReplicator r = new HReplicator((HComponent)this.getOwnerReplicator().getConfiguration().getTopConfiguration(),this,this.getOwnerReplicator().getBounds().getBottomLeft().getCopy().translate(i*(width+1),0));
-            this.setReplicator(r,true);	
+            this.setReplicator(r,true);
             
             for (HLinkToReplicator l : links) {
 				IHPrimUnit u = (IHPrimUnit) l.getReplicated();
@@ -177,7 +180,7 @@ public class HReplicatorSplit extends HVisualElement implements IPointsToReplica
 		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
 		for (HLinkToReplicator l : linksToReplicators) {
 			HReplicator r = l.getReplicator();
-			if (!r.getHidden()) 
+			if (!r.getHidden() && !r.isUnitaryAndNotShow()) 
 				visibleLinks.add(l);
 		}
 		

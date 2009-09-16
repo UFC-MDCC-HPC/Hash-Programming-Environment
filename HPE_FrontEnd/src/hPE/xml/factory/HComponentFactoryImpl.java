@@ -139,7 +139,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	public HComponentFactoryImpl() {
 		super();
-
 	}
 
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
@@ -677,7 +676,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (ParameterType param : xCinfo.getParameter()) {
 			String sBaseC = param.getComponentRef();
 			HComponent baseC = mC2.get(mC1.get(sBaseC));
-			String varName = param.getVarName(); // q.getVarName();
+			String varName = param.getVarName();
 			if (baseC.isDirectSonOfTheTopConfiguration()) {
 			   baseC.setVariableName(varName);			
 			}
@@ -690,8 +689,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (ParameterSupplyType xSupply : xCinfo.getSupplyParameter()) {
 			String varName = xSupply.getVarName();
 			String cRef = xSupply.getCRef();
-			HComponent cSupply = mC2.get(mC1.get(cRef));
-			component.supplyParameter(varName, cSupply);
+			ComponentInUseType c1 = mC1.get(cRef);
+			if (c1 != null) {
+			    HComponent cSupply = mC2.get(mC1.get(cRef));
+			    if (cSupply != null)
+			       component.supplyParameter(varName, cSupply);
+			} else {
+				System.err.print(cRef + " not found in suppyParameters (HComponentFactoryImpl)" );
+			}
 		}
 
 	}
@@ -817,8 +822,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String packagePath = xCheader.getPackagePath();
 			String hash_component_UID = xCheader.getHashComponentUID();			
 			String locationURI = xCheader.getLocationURI(); 
-			boolean isAbstract = xCheader.isIsAbstract();
-			
+			boolean isAbstract = xCheader.isIsAbstract();			
 			
 			this.isConcrete = false;
 			this.isSubType = false;
@@ -859,11 +863,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				applyRenaming(xCinfo);
 				loadEnumerators(xCinfo);
-				loadSplits(xCinfo); // loadSplits pode ser antes de
-									// loadEnumerators uma vez que o split �
-									// feito com um replicador herdado de um
-									// componente interno.
-				// ggg
+				loadSplits(xCinfo); 
 				setupParameters(xCinfo);
 				supplyParameters(xCinfo);
 				setupVariableNamesOfTopLevelInners(xCinfo);
@@ -963,7 +963,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			IPointsToReplicator pr = lookForEnumeratedItem(xL);
 			if (pr != null /* POG: && !(pr instanceof HUnitSlice) */)
 				try {
-					pr.setReplicator(r);
+					if (!pr.isReplicatedBy(r)) {
+						pr.setReplicator(r);
+					} else {
+					}
 					if (xL instanceof EnumerableEntryType) {
 						if (((EnumerableEntryType) xL).getPermutation() != null) {
 							String cRef = ((EnumerableEntryType) xL).getPermutation();
@@ -1347,9 +1350,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 		}
 
+		List<HComponent> ccs1 = new ArrayList<HComponent>();
+		List<HComponent> ccs2 = new ArrayList<HComponent>();
+		
 		for (Entry<HComponent, List<HComponent>> e : vcs.entrySet()) {
-			if (e.getValue().size() > 1) {
-				HComponent p = e.getKey();
+			if (e.getValue().size() <= 1) {
+				ccs1.add(e.getKey());
+			} else {
+				ccs2.add(e.getKey());
+			}
+		}
+		
+		for (HComponent cc : ccs1) {
+			vcs.remove(cc);
+		}
+		
+		for (Entry<HComponent, List<HComponent>> e : vcs.entrySet()) {
+			HComponent p = e.getKey();
+			boolean flag = false;
+			for (HComponent cc : ccs2) {
+				if (cc != p && cc.getAllInnerConfigurations().contains(p)) {
+					flag = true;
+					break;
+				}
+			}
+			if (!flag) {
 				FusionType f = factory.createFusionType();
 				xFs.add(f);
 				f.setPRef(p.getRef());
@@ -1357,7 +1382,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				for (HComponent _c : e.getValue()) {
 					ps.add(_c.getName2());
 				}
-
 			}
 		}
 	}
@@ -1367,8 +1391,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		List<HComponent> cs = new ArrayList<HComponent>();
 
 		cs.addAll(c.getComponents());
-		for (Pair<String, HComponent> p : c.getSupplierComponents())
-			cs.add(p.snd());
+		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
+			cs.add(p.getValue());
 
 		for (HComponent ic : cs) {
 
@@ -1381,7 +1405,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				formFieldId = ic.getParameterIdentifier(c);
 				cRef = ic.getRef();
-				varName = ic.getVariableName();
+				varName = ic.getVariableName(c);
 
 				// ---------------
 
@@ -1401,8 +1425,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		List<HComponent> cs = new ArrayList<HComponent>();
 
 		cs.addAll(c.getComponents());
-		for (Pair<String, HComponent> p : c.getSupplierComponents())
-			cs.add(0, p.snd());
+		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
+			cs.add(0, p.getValue());
 		
 		for (HReplicator r : c.gettReplicators()) {
 			for (HLinkToReplicator lr : r.getLinksToMe()) {
@@ -1603,8 +1627,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void saveParameterRenamings(HComponent c, EList parameterRenamings) {
 
-		for (Entry<String, List<HComponent>> param : c.getParameters()
-				.entrySet()) {
+		for (Entry<String, List<HComponent>> param : c.getParameters().entrySet()) {
 
 			String formField = null;
 			String varName = null;
@@ -1614,7 +1637,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			HComponent cc = param.getValue().get(0);
 
-			varName = cc.getVariableName();
+			varName = cc.getVariableName(component);
+//			if (varName.equals("?"))
+//			     varName = cc.getVariableName(c.getTopParentConfigurations().get(0));
+			
+			
 			if (varName.indexOf('@') >= 0)
 				varName = varName.substring(0, varName.indexOf('@'));
 			formField = cc.getParameterIdentifier(c);
@@ -2020,7 +2047,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void saveSupplyParameters(HComponent c, EList xI) {
 
-		for (Pair<String, HComponent> pair : c.getSupplierComponents()) {
+		for (Entry<String, HComponent> pair : c.getSupplierComponents().entrySet()) {
 
 			ParameterSupplyType s = factory.createParameterSupplyType();
 			String cRef = null;
@@ -2028,9 +2055,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			// SETUP VARIABLES
 
-			HComponent supplier = pair.snd();
+			HComponent supplier = pair.getValue();
 
-			varName = pair.fst();
+			varName = pair.getKey();
 			cRef = supplier.getRef();
 
 			// ---------------
@@ -2049,8 +2076,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (HReplicator e : replicators) {
 
-			List<HComponent> cs = new ArrayList<HComponent>(e
-					.getConfigurations());
+			List<HComponent> cs = new ArrayList<HComponent>(e.getConfigurations());
 			cs.remove(0);
 
 			EnumeratorType eX = factory.createEnumeratorType();
@@ -2179,7 +2205,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						  sX.setURef(s.getUnit().getName2());
 						  sX.setCRef(s.getBinding().getEntry().getConfiguration().getRef());
 						  sX.setSRef(s.getBinding().getEntry().getName2());
-						  sX.setRef(s.getInterfaceSlice().getName());
+						  if (s.getInterfaceSlice() != null) {
+						     sX.setRef(s.getInterfaceSlice().getName());
+						  } else {
+							 sX.setRef(sX.getSRef());
+						  }
 						  IHUnit u = s.getBinding().getEntry();
 						  sX.setSplitReplica(u.isClone() ? u.cloneOf().getIndexOfClone(u) : 0);
 					      linksX.add(sX); 

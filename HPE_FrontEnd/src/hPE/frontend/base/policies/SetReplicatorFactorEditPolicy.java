@@ -20,7 +20,7 @@ public class SetReplicatorFactorEditPolicy extends ComponentEditPolicy {
 	}
 	
 private static final String
-      SET_REPLICATOR_FACTOR_REQUEST = "Set Replicator Factor";  //$NON-NLS-1$
+      SET_REPLICATOR_FACTOR_REQUEST = "Make Unitary";  //$NON-NLS-1$
 
 public Command getCommand(Request request) {
 	

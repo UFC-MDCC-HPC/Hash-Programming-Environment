@@ -23,7 +23,8 @@ public class RemoveComponentCommand extends Command {
 	}
 
 	public boolean canExecute() {
-		return the_component.canRemoveMe(((HComponent)the_component.getTopConfiguration()).getAllInnerConfigurations(),(HComponent)the_component.getTopConfiguration());
+		//return the_component.canRemoveMe(((HComponent)the_component.getTopConfiguration()).getAllInnerConfigurations(),(HComponent)the_component.getTopConfiguration());
+		return true;
 	}
 	
 

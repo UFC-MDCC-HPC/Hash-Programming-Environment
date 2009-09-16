@@ -277,7 +277,8 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
 		for (HLinkToReplicator l : this.linkToReplicator) {
 			HReplicator r = l.getReplicator();
-			if (!r.getHidden()) visibleLinks.add(l);
+			if (!r.getHidden() && !r.isUnitaryAndNotShow()) 
+				visibleLinks.add(l);
 		}
 		
 		return visibleLinks;
@@ -549,7 +550,9 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
     }
     
 	public String getName() {		
-		return this.getInterfaceSlice() == null && this.name == null ? this.getBinding().getEntry().getName2() : (this.name != null ? this.name : this.getInterfaceSlice().getName());
+		return this.getInterfaceSlice() == null && this.name == null ? 
+				this.getBinding().getEntry().getName2() : 
+					(this.name != null ? this.name : this.getInterfaceSlice().getName());
 	}
 	
 

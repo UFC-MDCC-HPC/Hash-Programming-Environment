@@ -82,14 +82,14 @@ public class ComponentEditPart<ModelType extends HComponent,
 		
         if (component.isParameter() && component.getSupplied()==null) { 
     	    component_figure.setAbstract();
-    	    String varName = component.getVariableName();
     	    HComponent topC = (HComponent) component.getTopConfiguration();
+    	    String varName = component.getVariableName(topC);
     	    showBounds = showBounds && ((!topC.getVars().contains(varName)) || component.isTopConfiguration());
     	    if (varName.equals("?")) {
-    	        name += (showParId ? component.getParameterIdentifier((IComponent)component.getConfiguration()) : "") + (showBounds ? " = " + component.getVariableName() +  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
+    	        name += (showParId ? component.getParameterIdentifier((IComponent)component.getConfiguration()) : "") + (showBounds ? " = " + component.getVariableName(topC) +  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
     	    }
     	    else {
-    	    	name += component.getVariableName() + (showBounds ?  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
+    	    	name += component.getVariableName(topC) + (showBounds ?  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
     	    }
         }
         else if (component.isParameter() && component.getSupplied()!=null) { 

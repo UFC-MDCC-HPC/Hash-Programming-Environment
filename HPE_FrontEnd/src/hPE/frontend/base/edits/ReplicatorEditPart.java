@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
@@ -36,6 +37,8 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.tools.DirectEditManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 public class ReplicatorEditPart extends AbstractGraphicalEditPart 
                                 implements PropertyChangeListener, NodeEditPart 
@@ -58,7 +61,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		this.installEditPolicy("Fuse Replicator", new FuseReplicatorEditPolicy());
 		this.installEditPolicy("Unfuse Replicator", new UnfuseReplicatorEditPolicy());
-		this.installEditPolicy("Set Replicator Factor", new SetReplicatorFactorEditPolicy());
+		this.installEditPolicy("Make Unitary", new SetReplicatorFactorEditPolicy());
 	}
 	
 	
@@ -76,6 +79,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
   	    }
   	    
         replicator_figure.setBounds(replicator.getBounds().getTranslated(u_bounds.getLocation()));
+        
         if (replicator.isDetermined()) {
         	int r = replicator.getFactor(); 
             if (r > 1) 
@@ -98,6 +102,13 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
         }
         replicator_figure.addFusedReplicator(replicator.getColor());
         
+        String name = replicator.getVarId().equals("*") ? " unamed replicator " : " replicator " + replicator.getVarId() + " "; 
+        
+		Label ff = new Label(name);
+		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
+		ff.setFont(font); 
+        	
+		figure.setToolTip(ff);
 	}
 	
 /*	
@@ -180,6 +191,10 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 			this.refreshVisuals();
 			this.refreshSourceConnections();
 			this.refreshTargetConnections();
+			HReplicator r = (HReplicator) this.getModel();
+			HComponent c = r.getConfiguration();
+			c.fireRefreshChildren();
+			
 		}
 		if (ev.getPropertyName().equals(HReplicator.PROPERTY_JOINED)) {
 			ConfigurationEditPart c = (ConfigurationEditPart) this.getParent();

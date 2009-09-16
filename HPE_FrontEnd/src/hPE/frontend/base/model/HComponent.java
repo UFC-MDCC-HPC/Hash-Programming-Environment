@@ -35,9 +35,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.Map.Entry;
 
@@ -383,30 +385,39 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 	}
 
+	private static int lastInstanceId = 0;	
+	private static Map<Integer,HComponent> all_instances = new HashMap<Integer,HComponent>();
+	
+	private int myInstanceId = -1;
+
+	synchronized private static void addInstance(HComponent c) {
+		c.myInstanceId = lastInstanceId++;
+		all_instances.put(c.getMyInstanceId(), c);
+	}
+	
 	
 	/**
 	 * @param existentialType TODO
 	 */
 	public HComponent(String name, IPackageLocation location, URI uri) {
 		super();
+		addInstance(this);
 		this.name = name;
 		this.location = location;
  		this.setLocalURI(uri);
 		
-		listeners = new PropertyChangeSupport(this);
-		
+		listeners = new PropertyChangeSupport(this);		
 	}
 	
-	public HComponent(String name, IPackageLocation location, URI uriLocal, URI uriRemote) {
-		
+	public HComponent(String name, IPackageLocation location, URI uriLocal, URI uriRemote) {		
 		super();
+		addInstance(this);
 		this.name = name;
 		this.location = location;
  		this.setLocalURI(uriLocal);
  		this.setRemoteURI(uriRemote);
 		
-		listeners = new PropertyChangeSupport(this);
-		
+		listeners = new PropertyChangeSupport(this);		
 	}
 	
 	private String uriLocal = null;
@@ -615,6 +626,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 		listeners.firePropertyChange(NEW_REPLICATOR, null, name); //$NON-NLS-2$//$NON-NLS-1$		
 	}
+
+	public void fireRefreshChildren() {
+		listeners.firePropertyChange(NEW_REPLICATOR, null, name); //$NON-NLS-2$//$NON-NLS-1$		
+	}
 	
 /*	public HInterface getInterface(String id) {
 		
@@ -723,7 +738,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 	public void updateVariableName(String formFieldId, String varName) {
 		
-		 Map<String,List<HComponent>> m = this.getParameters2();
+		 Map<String,List<HComponent>> m = this.getParameters();
 		 for (HComponent cUpdate : m.get(formFieldId)) 
 			 cUpdate.setVariableName(varName);
 		 
@@ -736,6 +751,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		if (c.getRef() == null || c.getRef().equals("")) {
 		   c.setName(this.generateFreshRef());
 		}
+		
 		
 		c.setConfiguration(this);		
 		this.addComponent(c);
@@ -795,6 +811,16 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
   		    c.configureRecursion();					
 		}
 		 
+	//	for (HComponent cc : c.getAllInnerConfigurations()) {
+	//		cc.setVariableName(cc.getVariableName(c));
+	//	}
+
+		for (Entry<String, List<HComponent>> e : c.getParameters().entrySet()) {
+			for (HComponent cc : e.getValue()) {
+				cc.setVariableName(cc.getVariableName(c));
+			}
+		}
+
 		listeners.firePropertyChange(NEW_COMPONENT, null, name);		
 		listeners.firePropertyChange(UPDATE_NAME, null, name); 
 	}
@@ -1017,6 +1043,18 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		return ls;
 	}
 	
+	public Map<HComponent,HComponent> getAllInnerComponents() {
+		
+		Map<HComponent,HComponent> ls = new HashMap<HComponent,HComponent>();
+		ls.put(this, null);
+		for (HComponent c : this.getComponents()) {
+			for (Entry<HComponent,HComponent> c_ : c.getAllInnerComponents().entrySet()) 
+				if (!ls.containsKey(c_.getKey())) 
+					ls.put(c_.getKey(),c_.getValue() == null ? this : c_.getValue());			
+		}
+		return ls;
+	}
+
 	private void clean_unused_replicators() {
 		
 		Iterator rs = ((ArrayList)((ArrayList) this.replicators).clone()).iterator();
@@ -1141,7 +1179,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	 * @uml.property   name="linkToReplicator"
 	 * @uml.associationEnd   multiplicity="(0 -1)" inverse="hComponent:hPE.base.model.HLinkToReplicator"
 	 */
-	private Collection<HLinkToReplicator> linkToReplicator  = new ArrayList();
+	private Collection<HLinkToReplicator> linkToReplicator  = new ArrayList<HLinkToReplicator>();
 
 	/** 
 	 * Getter of the property <tt>linkToReplicator</tt>
@@ -1155,7 +1193,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		while (links.hasNext()) {
 			HLinkToReplicator l = links.next();
 			HReplicator r = l.getReplicator();
-			if (!r.getHidden()) visibleLinks.add(l);
+			if (!r.getHidden() && !r.isUnitaryAndNotShow())  
+				visibleLinks.add(l);
 		}
 		
 		return visibleLinks;
@@ -1164,11 +1203,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	public List<HLinkToReplicator> getLinksToReplicators() {
 		
 		List<HLinkToReplicator> theLinks = new ArrayList<HLinkToReplicator>();
-		Iterator<HLinkToReplicator> links = linkToReplicator.iterator(); 
-		while (links.hasNext()) {
-			HLinkToReplicator l = links.next();
+		
+		for (HLinkToReplicator l : linkToReplicator) {
 			HReplicator r = l.getReplicator();
-			theLinks.add(l);
+		   theLinks.add(l);
 		}
 		
 		return theLinks;
@@ -1432,7 +1470,6 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
 	private boolean isParameter = false;
 	private Map<String,String> parameterIdentifier = new HashMap<String,String>();
-	private String variableName = "?";
 	
     public void setParameter(String varName) {
     	
@@ -1446,19 +1483,66 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	
     }
     
+	private Map<Integer, String> variableName = null;
+
+    public String getVariableName(HComponent ctx) {
+    	if (this.variableName == null) 
+    		this.variableName = new HashMap<Integer,String>();
+    	
+    	Integer code = ctx.getMyInstanceId();
+    	if (this.variableName.containsKey(code))
+    	    return this.variableName.get(code);
+    	else {
+    		HComponent superType = getSuperType();
+   			return superType != null ? superType.getVariableName(ctx) : "?";
+    	}
+    	
+//    	return this.variableName.containsKey(ctx) ? this.variableName.get(ctx) : "?";
+    }
+    
+    public void setVariableName(/* HComponent ctx, */ String varName) {
+    	if (this.variableName == null) 
+    		this.variableName = new HashMap<Integer,String>(); ;
+
+    	HComponent ctx = (HComponent) this.getTopConfiguration();	
+    		
+    	String currVar = this.variableName.get(ctx.getMyInstanceId());
+    	if (currVar == null || (currVar != null && !currVar.equals(varName))) {
+    	    this.variableName.put(ctx.getMyInstanceId(), varName);
+		    listeners.firePropertyChange(PROPERTY_IS_PARAMETER,null,this.getBounds());    		
+    	}
+    	
+
+    }
+    public void setVariableName(Map<Integer,String> varName) {
+    	if (this.variableName == null) 
+    		this.variableName = new HashMap<Integer,String>();
+
+        this.variableName.putAll(varName);    	
+
+    }
+  
+  /*  
+	private String variableName = "?";
+    
     public String getVariableName() {
-    	if (this.variableName == null) this.variableName = "?" ;
+    	if (this.variableName == null) this.variableName = "?";
+    	
     	return this.variableName;
     }
     
     public void setVariableName(String varName) {
-    	if (!this.variableName.equals(varName)) {
+
+    	String currVar = this.variableName;
+    	if (!currVar.equals(varName)) {
     	    this.variableName = varName;
-		    listeners.firePropertyChange(PROPERTY_IS_PARAMETER,null,this.getBounds());
+		    listeners.firePropertyChange(PROPERTY_IS_PARAMETER,null,this.getBounds());    		
     	}
+    	
 
     }
     
+*/
     public void setNullVariableName() {
     	this.variableName = null;
 		listeners.firePropertyChange(PROPERTY_IS_PARAMETER,null,this.getBounds());
@@ -1530,15 +1614,20 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	
     	List<String> vs = new ArrayList<String>();
     	HComponent topC = (HComponent)this.getTopConfiguration();
-    	Iterator<Entry<String,List<HComponent>>> cs = this.getParameters().entrySet().iterator();
     	int parameterized = 0;
     	String nameWithParameters = "";
-    	while (cs.hasNext()) {
-    		    HComponent config = cs.next().getValue().get(0);
+    	
+    	for (Entry<String,List<HComponent>> entry : this.getParameters().entrySet()) {
+    	
+    		    HComponent config = entry.getValue().get(0);
+    		
     		    String parId = config.getParameterIdentifier(this);
-    		    if (parId.equals("type ?")) parId = config.getParameterIdentifier((IComponent)config.getTopConfiguration());
+    		    if (parId.equals("type ?")) 
+    		    	parId = config.getParameterIdentifier((IComponent)config.getTopConfiguration());
     		    // TODO (getConfiguration): de getConfiguration para getTopConfiguration...
-	    		String varName = config.getVariableName();
+	    		String varName = config.getVariableName((HComponent) this.getTopConfiguration());
+	    		if (varName.equals("?")) 
+	    			varName = config.getVariableName(this);
  	    		if (/*!complete  || config.getSupplied() == null */true) {
 		   	       if (parameterized == 0) nameWithParameters = nameWithParameters.concat("<");
 			       parameterized ++;
@@ -1611,11 +1700,12 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	    	}
     }
     
-    public Map<String,List<HComponent>> getParameters2() {
+/*    public Map<String,List<HComponent>> getParameters2() {
         List<String> vs = new ArrayList<String>();
         Map<String,List<HComponent>> m = new HashMap<String,List<HComponent>>();
         
-        for (Entry<String,List<HComponent>> p : this.getParameters().entrySet()) {
+        Map<String, List<HComponent>> pars = this.getParameters();
+        for (Entry<String,List<HComponent>> p : pars.entrySet()) {
                 	
         	String parId = p.getKey();
         	List<HComponent> c = p.getValue();
@@ -1635,7 +1725,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
         
     }
     
-    
+  */  
     /* (non-Javadoc)
 	 * @see hPE.base.model.IComponent#getParameter(java.lang.String)
 	 */
@@ -1650,7 +1740,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	
     	for (Entry<String,List<HComponent>> param : this.getParameters().entrySet()) {
     		for (HComponent c : param.getValue()) {
-    			String var = c.getVariableName();
+    			String var = c.getVariableName(this);
     		    if (!vars.contains(var)) vars.add(var);  
     		}
     	}
@@ -1664,7 +1754,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	this.supplied = c;    	
     	this.isParameter = true;
     	this.parameterIdentifier.putAll(c.parameterIdentifier); // DUVIDA... antes apenas atribu�a ...
-    	this.variableName = c.getVariableName();
+    	// this.setVariableName(c.getVariableName());
+    	this.setVariableName(c.variableName);
     }
     
     public IComponent getSupplied() {    
@@ -1736,26 +1827,27 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     
  
     
-    static public void supersede(HComponent c1, HComponent c2, String newVarName, HComponent oModel) {
+    static public void supersede(Entry<HComponent,HComponent> entry, HComponent c2, String newVarName, HComponent oModel) {
 
     		// c2 <: c1;
     	    // c2 will replace its c1-image.
 
+    	HComponent c1 = entry.getKey();
+    	HComponent c1Parent = entry.getValue();
+    	
     	c2.setName(c1.getName2());
     	if (c1.getSavedName()!=null) c2.setSavedName(c1.getSavedName());
     	c2.setExposed(c1.getExposed());
     	c2.exposedFalsifiedContext = c1.exposedFalsifiedContext;
     	
         if (!c2.isParameter()) { 
-    	    	c2.setSupplier(c1);
-    	    	c1.setVariableName(newVarName);
-    	    	c2.setVariableName(newVarName); 
+	    	c2.setSupplier(c1);
+	    	c1.setVariableName(newVarName);
+	    	c2.setVariableName(newVarName);
    	    } else {
-   	    	//if (c2.getVariableName().equals("?")) {
-   	    		// if (!c1.getVariableName().equals("?"))
-   	    			c2.setVariableName(c1.getVariableName());
-   	    			oModel.setVariableName(c1.getVariableName());
-   	    	//} 
+    		c2.variableName.putAll(c1.variableName);
+    		oModel.variableName.putAll(c1.variableName);
+    		//c2.setVariableName(c1.getVariableName(c1Parent));
 	    	c2.parameterIdentifier.putAll(c1.parameterIdentifier);
    	    }
             
@@ -2136,21 +2228,21 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
      }
     
     
-     public Map<String,List<HComponent>> getVariablesSubTyping(HComponent c) {
+     public Map<String,Set<HComponent>> getVariablesSubTyping(HComponent ctx, HComponent c) {
     	 
-    	 Map<String,List<HComponent>> ls = new HashMap<String,List<HComponent>>();
+    	 Map<String,Set<HComponent>> ls = new HashMap<String,Set<HComponent>>();
     	 
     	 for (Pair<HComponent,HComponent> p : this.getSubTypeImageOf2(c)) {
     		 HComponent c1 = p.fst();
     		 HComponent c2 = p.snd();
     		 if (c1.isParameter() && c.getSupplied() == null) {    			 
-    			 String varName = c1.getVariableName();
+    			 String varName = c1.getVariableName(ctx);
     			 if (ls.containsKey(varName)) {
     				ls.get(varName).add(c2); 
     			 } else {
-    				 List<HComponent> l = new ArrayList<HComponent>();
+    				 Set<HComponent> l = new HashSet<HComponent>();
     				 l.add(c2);
-    				 ls.put(c1.getVariableName(),l);	 
+    				 ls.put(varName,l);	 
     			 }    			 
     			
     		    
@@ -2163,26 +2255,34 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
      }
     
 
-     public List<HComponent> getComponentsToSupply(String varName, HComponent model) {
+     public Map<HComponent,HComponent> getComponentsToSupply(String varName, HComponent model) {
 
-    	 List<HComponent> componentsToSupply = new ArrayList<HComponent>();
+    	 Map<HComponent, HComponent> componentsToSupply = new HashMap<HComponent,HComponent>();
     	    	 
-    	 Collection<HComponent> allCs = this.getAllInnerConfigurations();
+    	 Map<HComponent, HComponent> allCs = this.getAllInnerComponents();
     	 
-    	 for (HComponent c : allCs) {
-	       	  if ((c.isParameter() && c.getSupplied()==null) && c.getVariableName().equals(varName)) {        		  
-                   if (model.isSubTypeOf(c)) {
-//	                   	if ((model.isParameter()  || !model.isParameter())
-	         		           if (!componentsToSupply.contains(c)) 
-	         		        	   componentsToSupply.add(c);
-	//                   	else {
-	  // 	                	JOptionPane.showMessageDialog(null, "Parameter identifiers does not match !", "Error in Supply Component Action", JOptionPane.ERROR_MESSAGE);
-	   	//                	return null;
-	                //   	}
-                   } else {
+    	 for (Entry<HComponent,HComponent> entry : allCs.entrySet()) {
+    		  HComponent c = entry.getKey();
+    		  HComponent cParent = entry.getValue();
+    		  String varName_of_c = c.getVariableName(this);
+/*    		  if (varName_of_c.equals("?")) {
+    			  String varName_of_c_old = null;
+    			  for (HComponent cD : c.getTopParentConfigurations()) {
+    				  varName_of_c = c.getVariableName(cD);
+    			      if (varName_of_c_old != null && !varName_of_c.equals(varName_of_c_old)) {
+    			    	  JOptionPane.showMessageDialog(null, "Supplying Conflicting (" + varName_of_c + "," + varName_of_c_old + ")", "Supplying Error", JOptionPane.ERROR_MESSAGE);
+    			      }
+    			      varName_of_c_old = varName_of_c;
+    			  }
+    		  } */
+	       	  if ((c.isParameter() && c.getSupplied() == null) && varName_of_c.equals(varName)) {        		  
+                  if (model.isSubTypeOf(c)) {
+     		           if (!componentsToSupply.containsKey(c)) 
+     		        	   componentsToSupply.put(c, cParent);
+                  } else {
 	                	JOptionPane.showMessageDialog(null, "Supplied component does not match to the parameter.", "Error in Supply Component Action ", JOptionPane.ERROR_MESSAGE);
                	        return null;
-                   }
+                  }
 	       	  }       	  
          }
          
@@ -2212,15 +2312,20 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
           
           Collection<HComponent> allInnerModel = model.getAllInnerConfigurations();
     	 
-   	      List<HComponent> componentsToSupply = this.getComponentsToSupply(varName,model);
+   	      Map<HComponent, HComponent> componentsToSupply = this.getComponentsToSupply(varName,model);
    	      
-   	      if (componentsToSupply == null || componentsToSupply.size() == 0) return;  
+   	      if (componentsToSupply == null || componentsToSupply.size() == 0) { 
+   	    	  JOptionPane.showMessageDialog(null, "No variables " + varName + " to supply.", "Supply Error", JOptionPane.WARNING_MESSAGE);
+   	    	  return;  
+   	      }
    	    	     
-          Map<String,List<HComponent>> rs = new HashMap<String,List<HComponent>>();
+          Map<String,Set<HComponent>> rs = new HashMap<String,Set<HComponent>>();
           
-          for (HComponent ct : componentsToSupply) {
-        	  Map<String,List<HComponent>> vs = model.getVariablesSubTyping(ct);
-        	  for (Entry<String,List<HComponent>> e : vs.entrySet()) {
+          for (Entry<HComponent,HComponent> entries : componentsToSupply.entrySet()) {
+        	  HComponent ct = entries.getKey();
+        	   Map<String,Set<HComponent>> vs = model.getVariablesSubTyping(this, ct);
+        	  
+        	  for (Entry<String,Set<HComponent>> e : vs.entrySet()) {
         		  String key  = e.getKey();
         		  if (rs.containsKey(key)) {
         			 rs.get(key).addAll(e.getValue());  
@@ -2232,7 +2337,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
           
           Map<String,HComponent> rsNext = new HashMap<String,HComponent>();
           
-          for (Entry<String,List<HComponent>> e : rs.entrySet()) {
+          for (Entry<String,Set<HComponent>> e : rs.entrySet()) {
     		  String key  = e.getKey();
     		  HComponent c = peekThatOneThatIsSubTypeOfTheOthers(e.getValue());
     		  if (c!=null) {
@@ -2256,7 +2361,9 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
             	 String key = f.getKey();
             	 HComponent value = f.getValue();
             	 componentsToSupply = this.getComponentsToSupply(key,value);
-            	 componentsToSupply.removeAll(allInnerModel);
+            	 for (HComponent c : allInnerModel) {
+            		 componentsToSupply.remove(c);
+            	 }
             	 
           	     if (componentsToSupply != null && componentsToSupply.size() > 0) {  
             	 
@@ -2270,15 +2377,16 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			         }
 			         
 			         Iterator<HComponent> mcs = modelCopies.iterator();
-			         Iterator<HComponent> cs = componentsToSupply.iterator();
+			         Iterator<Entry<HComponent,HComponent>> entries = componentsToSupply.entrySet().iterator();
 			         String newVarName = key + "@" + System.currentTimeMillis();
 			         while (mcs.hasNext()) {
-		         	      HComponent c = (HComponent) cs.next();
+			        	  Entry<HComponent,HComponent> entry = entries.next();
+		         	      HComponent c = (HComponent) entry.getKey();
 			        	  HComponent modelCopy = (HComponent) mcs.next();
 			        	  for (HComponent pc : c.getDirectParentConfigurations()) {
 			  		          pc.loadComponent(modelCopy,new Point(0,0));
 			        	  }
-		                  HComponent.supersede(c,modelCopy,newVarName, model);
+		                  HComponent.supersede(entry,modelCopy,newVarName, value);
 			         }			         
 			         this.invalidateInterfaceNames();
           	     }    	  
@@ -2374,11 +2482,11 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	 for (HReplicator r : this.replicators) that.replicators.add(r);
     	 that.superType = this.superType;
     	 that.supplied = this.supplied;
-    	 for (Pair<String,HComponent> sc : this.supplyMemory) that.supplyMemory.add(new Pair<String,HComponent>(sc.fst(),sc.snd()));
+    	 for (Entry<String,HComponent> sc : this.supplyMemory.entrySet()) that.supplyMemory.put(sc.getKey(),sc.getValue());
     	 //that.units;
     	 that.uriLocal = this.uriLocal;
     	 that.uriRemote = this.uriRemote;
-    	 that.variableName = this.variableName;
+    	 that.setVariableName(this.variableName);
     	 
     	 
     	 return null;
@@ -2437,20 +2545,17 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
 }
      
-     public HComponent peekThatOneThatIsSubTypeOfTheOthers(List<HComponent> cs) {
+     public HComponent peekThatOneThatIsSubTypeOfTheOthers(Set<HComponent> cs) {
     
     	 // Among the components passed as parameters, peek the one that is subtype of the others. 
     	 // If such component does not exist, return null;
     	 
     	 // ASSUME SINGLE INHERITANCE
     	 
-    	 HComponent c = cs.get(0);
+    	 HComponent c = null;
     	 
-    	 Iterator<HComponent> is = cs.iterator();
-    	 
-    	 while (is.hasNext()) {
-    		 HComponent i = is.next();
-    		 if (i.isSubTypeOf(c)) {
+    	 for (HComponent i : cs) {
+    		 if (c == null || i.isSubTypeOf(c)) {
     			 c = i;
     		 } else if (!c.isSubTypeOf(i)) {
     			 return null;
@@ -2986,7 +3091,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
      
     public boolean allSupplied() {
-    	Iterator<Entry<String,List<HComponent>>> t = this.getParameters2().entrySet().iterator();
+    	Iterator<Entry<String,List<HComponent>>> t = this.getParameters().entrySet().iterator();
     	boolean b = true;
     	
     	while (t.hasNext()) {
@@ -3090,7 +3195,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		}
 	    	
 	    if (c2.isParameter()) {
-	 	   	//c2.setVariableName(c1.getVariableName());
+	 	   	// c2.setVariableName(c1.getVariableName());
+	    	c2.variableName.putAll(c1.variableName);
 		   	if (c1.isParameter())
 		   		c2.parameterIdentifier.putAll(c1.parameterIdentifier);
 	    } 
@@ -3355,20 +3461,24 @@ public HComponent getExposedComponentByName(String name) {
 	
 }
 
-private List<Pair<String,HComponent>> supplyMemory = new ArrayList<Pair<String,HComponent>>();
+private Map<String,HComponent> supplyMemory = new HashMap<String,HComponent>();
 
-public void rememberSupply(String varName, HComponent c) {
-	if (supplyMemory == null) supplyMemory = new ArrayList<Pair<String,HComponent>>();
-	supplyMemory.add(new Pair<String,HComponent>(varName, ((HComponent)c.getTopConfiguration()).getMyCopy(c)));
+public boolean checkIfVariableWasSupplied(String varName) {
+	return supplyMemory.containsKey(varName);
 }
 
-public List<Pair<String,HComponent>> getSupplierComponents() {
+public void rememberSupply(String varName, HComponent c) {
+	if (supplyMemory == null) supplyMemory = new HashMap<String,HComponent>();
+	supplyMemory.put(varName, ((HComponent)c.getTopConfiguration()).getMyCopy(c));
+}
+
+public Map<String,HComponent> getSupplierComponents() {
 	 
 	 /* Todos os components que foram usados na configuracao para suprir parametros de componentes internos.
 	  * 
 	  * 
 	  */
-	if (supplyMemory == null) supplyMemory = new ArrayList<Pair<String,HComponent>>();
+	if (supplyMemory == null) supplyMemory = new HashMap<String,HComponent>();
 	return supplyMemory;
 	
 }
@@ -3533,7 +3643,7 @@ public boolean hasFreeVariables() {
 	
 	HComponent topC = (HComponent) this.getTopConfiguration();
 	
-	Map<String,List<HComponent>> params = this.getParameters2();
+	Map<String,List<HComponent>> params = this.getParameters();
 	
 	for (Entry<String,List<HComponent>> entry : params.entrySet()) {
 		List<HComponent> cs = entry.getValue();
@@ -3648,5 +3758,21 @@ public static String getHexString(byte[] b) throws Exception {
 public static URI getStandardLocationPath(String pk, String componentName, String version) {
 	return URI.createURI(pk + "." + componentName + java.io.File.separatorChar + componentName + ".hpe");
 }
+
+private boolean show_unitary_replicators = false;
+
+public boolean showUnitaryReplicators() {
+	return show_unitary_replicators;
+}
+
+public void setShowUnitaryReplicators(boolean show) {
+	show_unitary_replicators = show;
+}
+
+
+public int getMyInstanceId() {
+	return myInstanceId;
+}
+
 
 }

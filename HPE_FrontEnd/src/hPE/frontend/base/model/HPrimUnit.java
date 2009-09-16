@@ -326,7 +326,8 @@ public abstract class HPrimUnit extends HVisualElement
 		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
 		for (HLinkToReplicator l : linkToReplicator) {
 			HReplicator r = l.getReplicator();
-			if (!r.getHidden()) visibleLinks.add(l);
+			if (!r.getHidden()  && !r.isUnitaryAndNotShow()) 
+				visibleLinks.add(l);
 		}
 		
 		return visibleLinks;

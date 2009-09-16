@@ -47,7 +47,7 @@ public class SupersedeCommand extends Command {
         boolean cond2 = cond1 && source.getName2().equals(target.getName2());
         //boolean cond3 = ((source.isParameter() && target.isParameter() && source.getSupplied() == null && target.getSupplied() == null && 
         //		source.getVariableName().equals(target.getVariableName())) || (!source.isParameter() && !target.isParameter()));
-        boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !source.getVariableName().equals(target.getVariableName()));
+        boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !source.getVariableName(topC).equals(target.getVariableName(topC)));
         boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(target, source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 
         
 

@@ -114,7 +114,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		}
 		
 		for (HReplicator a_replicator : ((ModelType) getModel()).gettReplicators()) {
-			if (!(a_replicator.getHidden()) && !(a_replicator.isJoined())) { 
+			if (!(a_replicator.getHidden()) && !(a_replicator.isJoined()) && !a_replicator.isUnitaryAndNotShow()) { 
 				children.add(a_replicator);
 			} 
 		}

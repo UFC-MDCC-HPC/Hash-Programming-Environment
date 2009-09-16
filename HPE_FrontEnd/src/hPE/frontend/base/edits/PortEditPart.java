@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 
 public abstract class PortEditPart extends AbstractGraphicalEditPart implements PropertyChangeListener {
@@ -72,7 +75,15 @@ public abstract class PortEditPart extends AbstractGraphicalEditPart implements 
   	    Rectangle bounds = rp.getBounds().getCopy().setSize(15,15);
   	    bounds.setLocation(i.getBounds().getTranslated(rp.getBounds().getLocation()).getLocation());
   	    
-  	    rpf.setPrivate(rp.isPrivate());
+  	    String visibility = rp.isPrivate() ? "private" : "public";
+  	    
+		Label ff = new Label(" " + visibility + " slice " + rp.getName() + " ");
+		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
+		ff.setFont(font);
+		
+		rpf.setToolTip(ff);
+
+		rpf.setPrivate(rp.isPrivate());
   	//    rpf.setIn(rp.getPortIn());
      //   rpf.setOut(rp.getPortOut());  	    
 		rpf.setBounds(bounds);

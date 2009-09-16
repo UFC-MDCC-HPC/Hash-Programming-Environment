@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Iterator;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 import hPE.frontend.base.figures.InterfaceSliceFigure;
 import hPE.frontend.base.model.HInterface;
@@ -49,6 +52,12 @@ public class InterfaceSliceEditPart<ModelType extends HInterfaceSlice, FigureTyp
         if (slice_abstraction.getInterface() != null) { 
             slice_abstraction_figure.setBackgroundColor(((HInterface)slice_abstraction.getInterface()).getColor());
         }
+        
+		Label ff = new Label(" slice " + slice_abstraction.getName() + " ");
+		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
+		ff.setFont(font); 
+
+		slice_abstraction_figure.setToolTip(ff);
         
 	}
 	

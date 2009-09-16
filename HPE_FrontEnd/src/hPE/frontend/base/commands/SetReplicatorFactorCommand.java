@@ -36,26 +36,29 @@ public class SetReplicatorFactorCommand extends Command {
 	private boolean cancel = false;
 	
 	public void execute() {
+	
+		if (!replicator.getVarId().equals("*")) {
+           replicator.setFactor(1);
+		} else {
+		  JOptionPane.showMessageDialog(null, "Give an id to the enumerator.", "Forbidden Operation", JOptionPane.ERROR_MESSAGE);
+		}
 		
-	   dialog.open();
-	   int r = dialog.getReturnCode();
+		
+//	   dialog.open();
+//	   int r = dialog.getReturnCode();
 	   
-	   if (r == 0) {
-	      varName = dialog.getValue();
-	      int factor = Integer.parseInt(varName);
-	      //if (replicator.isNewFactorValid(factor)) {
-		      if (factor > 0) {
-	              replicator.setFactor(factor);
-		      } else {
-		    	  replicator.setUndeterminedFactor();
-		      }
-	      //} else {
-		//	   JOptionPane.showMessageDialog(null, "Cardinality of enumerators with the same id must be the same !", "Cardinality Updating Error", JOptionPane.ERROR_MESSAGE);   
-	     // }
-	   }
-	   else {
-		   cancel = true;
-	   }
+//	   if (r == 0) {
+//	      varName = dialog.getValue();
+//	      int factor = Integer.parseInt(varName);
+//	      if (factor > 0) {
+//	              replicator.setFactor(factor);
+//		      } else {
+//		    	  replicator.setUndeterminedFactor();
+//		      }
+//	   }
+//	   else {
+//		   cancel = true;
+//	   }
 		
 	}
 	

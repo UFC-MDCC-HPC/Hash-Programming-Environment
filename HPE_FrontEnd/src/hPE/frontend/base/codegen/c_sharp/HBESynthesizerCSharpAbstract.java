@@ -41,7 +41,8 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
         for (HPort port : ports) {
         	if (!port.isInherited()) {
-				String sliceTypeName = ((HInterface)port.getInterface()).isAbstract() ? ((HComponent)port.getConfiguration()).getVariableName():  ((HInterface)port.getInterface()).getName2(false,varContext);
+                HComponent pc = (HComponent)port.getConfiguration();
+        		String sliceTypeName = ((HInterface)port.getInterface()).isAbstract() ? pc.getVariableName((HComponent) i.getConfiguration()):  ((HInterface)port.getInterface()).getName2(false,varContext);
 				if (theSlices.containsKey(sliceTypeName)) {
 					slices = theSlices.get(sliceTypeName);
 				} else {

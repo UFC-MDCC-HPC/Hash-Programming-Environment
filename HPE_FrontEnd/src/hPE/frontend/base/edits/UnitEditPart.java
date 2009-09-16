@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.Path;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -21,6 +22,8 @@ import java.util.Iterator;
 import java.util.Collection;
 
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.*;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
@@ -124,11 +127,45 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
         
         unit_figure.setHidden(unit.getHidden());
         
+		Label ff = new Label(" unit " + unit.getName2() + (unit.getInterface() != null ? " :: " + this.breakLines(unit.getInterface().getName(true,true)) : "") + " ");
+		Font font = new Font(null, "Arial", 10, SWT.BOLD);
+		ff.setFont(font); 
         	
+		unit_figure.setToolTip(ff);
         
 				
 	}
 	
+	private String breakLines(String name) {
+
+		String name_="";
+		
+		int level = 0;
+		int lastindex=0;		
+        for (int i=0; i<name.length();i++)  {
+        	if (name.charAt(i) == '<') { 
+        		if (level == 0) {
+            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
+            		lastindex = i+1;        		
+        		}
+        		level ++;
+        	}
+        	else if (name.charAt(i) == '>')  {
+        		if (level==1) {
+        		}
+        		level --;
+        	}
+        	else if (name.charAt(i) == ',' && level == 1) { 
+        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
+        		lastindex = i+1;        		
+        	}
+        }
+        		
+		name_ += name.substring(lastindex, name.length());
+
+		return name_;
+	}
+
 	public List getModelChildren() {
 		
 		List children = new ArrayList();

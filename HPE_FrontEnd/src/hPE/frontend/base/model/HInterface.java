@@ -145,7 +145,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     		String parId = cc.getParameterIdentifier(cThis);
 
     	    if (cc.isParameter() && !parId.equals("type ?")) {
-     	       String varName = cc.getVariableName(); 
+     	       String varName = cc.getVariableName((HComponent) this.getConfiguration()); 
      	       p.add(new Triple<String,HInterface,String> (varName,ic, parId));
      	    }
     	}    	
@@ -166,7 +166,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     	    	p.add(innerParameter);
     	    }
     	    if (cc.isParameter() && !cc.getParameterIdentifier(cThis).equals("type ?")) {
-     	       String varName = cc.getVariableName(); //.getParameterIdentifier((HConfiguration)cc.getConfiguration());
+     	       String varName = cc.getVariableName((HComponent) this.getConfiguration()); //.getParameterIdentifier((HConfiguration)cc.getConfiguration());
      	       p.add(new Pair<String,HInterface> (varName,ic));
      	    }
     	}    	
@@ -264,7 +264,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     		String parId = cc.getParameterIdentifier(cThis);
 
     	    if (cc.isParameter() && !parId.equals("type ?")) {
-     	       String varName = cc.getVariableName(); 
+     	       String varName = cc.getVariableName((HComponent) this.getConfiguration()); 
      	       p.add(new Triple<String,HInterface,String> (varName,ic, parId));
      	    }
     	}    	
@@ -363,7 +363,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 		
 		HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
 		if (this.isAbstract()) {
-		   String varName = c.getVariableName();
+		   String varName = c.getVariableName((HComponent) this.getConfiguration().getTopConfiguration());
 		   String parId = c.getParameterIdentifier((HComponent)c.getTopConfiguration());
 		   return /*parId.concat(" = ").*/ varName + (showBounds ? ": " + this.getNonAbstractName(false,showBounds,depth) : "");
 		}
@@ -375,7 +375,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 	public String getName2(boolean showSuperType, List<String> varContext) {
 		
 	   HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
-	   String varName = c.getVariableName();
+	   String varName = c.getVariableName((HComponent) this.getConfiguration());
 	   boolean showVariable = varContext != null && varContext.contains(varName);
 	   boolean showBounds = !showVariable;
 	   
