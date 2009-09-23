@@ -1246,7 +1246,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEnumerableEntryType_Permutation() {
+	public EAttribute getEnumerableEntryType_Index() {
 		return (EAttribute)enumerableEntryTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2281,7 +2281,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSplitType_ERef() {
+	public EAttribute getSplitType_CRefPermutation() {
 		return (EAttribute)splitTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -2290,8 +2290,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSplitType_N() {
+	public EAttribute getSplitType_ERef() {
 		return (EAttribute)splitTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSplitType_N() {
+		return (EAttribute)splitTypeEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -2737,7 +2746,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		enumerableEntryTypeEClass = createEClass(ENUMERABLE_ENTRY_TYPE);
 		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__CREF);
-		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__PERMUTATION);
+		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__INDEX);
 		createEAttribute(enumerableEntryTypeEClass, ENUMERABLE_ENTRY_TYPE__UREF);
 
 		enumerableTypeEClass = createEClass(ENUMERABLE_TYPE);
@@ -2884,6 +2893,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(splitTypeEClass, SPLIT_TYPE__SPLIT_LINK);
 		createEAttribute(splitTypeEClass, SPLIT_TYPE__SPLIT_ENUMERATOR);
 		createEAttribute(splitTypeEClass, SPLIT_TYPE__ORIGIN_REF);
+		createEAttribute(splitTypeEClass, SPLIT_TYPE__CREF_PERMUTATION);
 		createEAttribute(splitTypeEClass, SPLIT_TYPE__EREF);
 		createEAttribute(splitTypeEClass, SPLIT_TYPE__N);
 
@@ -3072,7 +3082,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(enumerableEntryTypeEClass, EnumerableEntryType.class, "EnumerableEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEnumerableEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEnumerableEntryType_Permutation(), theXMLTypePackage.getString(), "permutation", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEnumerableEntryType_Index(), theXMLTypePackage.getInt(), "index", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEnumerableEntryType_URef(), theXMLTypePackage.getString(), "uRef", null, 0, 1, EnumerableEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(enumerableTypeEClass, EnumerableType.class, "EnumerableType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3219,6 +3229,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getSplitType_SplitLink(), this.getSplitLinkType(), null, "splitLink", null, 1, -1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSplitType_SplitEnumerator(), theXMLTypePackage.getString(), "splitEnumerator", null, 1, -1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSplitType_OriginRef(), theXMLTypePackage.getString(), "originRef", null, 0, -1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSplitType_CRefPermutation(), theXMLTypePackage.getString(), "cRefPermutation", null, 0, 1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSplitType_ERef(), theXMLTypePackage.getString(), "eRef", null, 1, 1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSplitType_N(), theXMLTypePackage.getInt(), "n", null, 0, 1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3821,11 +3832,11 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "cRef"
 		   });		
 		addAnnotation
-		  (getEnumerableEntryType_Permutation(), 
+		  (getEnumerableEntryType_Index(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
-			 "name", "permutation"
+			 "name", "index"
 		   });		
 		addAnnotation
 		  (getEnumerableEntryType_URef(), 
@@ -4637,6 +4648,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "originRef"
+		   });		
+		addAnnotation
+		  (getSplitType_CRefPermutation(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "cRefPermutation"
 		   });		
 		addAnnotation
 		  (getSplitType_ERef(), 

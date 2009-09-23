@@ -13,6 +13,8 @@ import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.util.CommandLine;
 import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
@@ -354,6 +356,12 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			}
 			
 			IBindingTarget the_target = the_source.newSlice(the_unit,where);
+			
+			if (the_target instanceof HUnitSlice) {
+				HUnitSlice uslice = (HUnitSlice) the_target;
+				createPermutationSlices(the_source, the_unit);
+			}
+			
 			HInterface i = (HInterface) the_source.getInterface();
 			i.setEditable(false);
 			
@@ -370,6 +378,24 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		
 	}
 	
+	private void createPermutationSlices(IHUnit the_source, IHUnit the_unit) throws HPEAbortException {
+
+		for (HReplicator r : the_source.getReplicators()) {
+			HReplicatorSplit rSplit = r.getParentSplit(); 
+			if (rSplit != null) {
+				HEnumeratorComponent cPermutation = rSplit.getPermutation();
+				if (cPermutation != null) {
+					HEnumeratorComponent cPermutationClone = (HEnumeratorComponent) HComponent.getMyCopy(cPermutation);
+					IHUnit uPermutation = cPermutationClone.getUnits().get(0);
+					 HEnumeratorUnitSlice the_target = (HEnumeratorUnitSlice) this.createBinding(uPermutation, the_unit, null);
+					the_target.setMappedReplicator(r);
+				}
+			}
+		}
+		
+	}
+
+
 	/**
 	 * @uml.property   name="name" readOnly="true"
 	 */
@@ -2299,6 +2325,18 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	 return null;
      }
      
+     public IHUnit getUnitByName(String uname, int index) {    	 
+    	 for (IHUnit u : this.getUnits()) {
+    		 if (u.getName2().equals(uname))
+    			 if (index > 0)
+    			    return (IHUnit) u.getClone(index);
+    			 else 
+    				 return u;
+    			 
+    	 }    	 
+    	 return null;
+     }
+
      private Iterator<Entry<String,HComponent>> reverse (Iterator<Entry<String,HComponent>> is) {
     	 Stack<Entry<String,HComponent>> l = new Stack<Entry<String,HComponent>>();
     	 while (is.hasNext()) l.push(is.next());
@@ -3603,9 +3641,11 @@ private Integer nextFreshRef=0;
 private String generateFreshRef() {
 	
 	
-	Integer max = 0; 
+	//Integer max = 0;
 	
-	max = (nextFreshRef++);
+	//max = (nextFreshRef++);
+	
+	Integer max = this.getAllInnerComponents().size();
 	
 /*	for (HComponent c : this.getComponents()) {
 		String name = c.getRef();
@@ -3773,6 +3813,24 @@ public void setShowUnitaryReplicators(boolean show) {
 public int getMyInstanceId() {
 	return myInstanceId;
 }
+
+public void hideInnerComponent(HComponent c) {
+	if (this.getInnerComponents().contains(c)) {
+		c.setHiddenInnerComponent(true);
+	}
+	listeners.firePropertyChange(NEW_COMPONENT, null, name); //$NON-NLS-2$//$NON-NLS-1$	
+}
+
+protected void setHiddenInnerComponent(boolean hiddenInnerComponent) {
+	this.hiddenInnerComponent = hiddenInnerComponent;
+}
+
+public boolean isHiddenInnerComponent() {
+	return hiddenInnerComponent;
+}
+
+
+private boolean hiddenInnerComponent = false;
 
 
 }

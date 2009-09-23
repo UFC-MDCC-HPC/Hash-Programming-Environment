@@ -16,6 +16,7 @@ import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
 import hPE.frontend.base.interfaces.IReplicator;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 import org.eclipse.draw2d.geometry.Rectangle;
 
@@ -141,6 +142,7 @@ public class HReplicatorSplit extends HVisualElement implements IPointsToReplica
  		        }
 			} 
 		}
+				
 	}
 	
 	private List<IHPrimUnit> splitElements = new ArrayList<IHPrimUnit>();
@@ -357,5 +359,18 @@ public class HReplicatorSplit extends HVisualElement implements IPointsToReplica
 	public void removeLinkToReplicator(HLinkToReplicator linkToReplicator) {
     	this.linksToReplicators.remove(linkToReplicator);
 	}
+
+	public final static String SET_PERMUTATION = "set_permutation";
+
+	private HEnumeratorComponent permutationComponent = null;
 	
+
+	public void setPermutation(HEnumeratorComponent c) {
+		permutationComponent = c;
+		listeners.firePropertyChange(SET_PERMUTATION,null,getBounds());
+	}
+	
+	public HEnumeratorComponent getPermutation() {
+		return permutationComponent;
+	}
 }

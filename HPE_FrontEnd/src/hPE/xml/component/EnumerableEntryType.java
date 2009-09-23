@@ -16,7 +16,7 @@ package hPE.xml.component;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.EnumerableEntryType#getCRef <em>CRef</em>}</li>
- *   <li>{@link hPE.xml.component.EnumerableEntryType#getPermutation <em>Permutation</em>}</li>
+ *   <li>{@link hPE.xml.component.EnumerableEntryType#getIndex <em>Index</em>}</li>
  *   <li>{@link hPE.xml.component.EnumerableEntryType#getURef <em>URef</em>}</li>
  * </ul>
  * </p>
@@ -54,31 +54,58 @@ public interface EnumerableEntryType extends EnumerableType {
 	void setCRef(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Permutation</b></em>' attribute.
+	 * Returns the value of the '<em><b>Index</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Permutation</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Index</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Permutation</em>' attribute.
-	 * @see #setPermutation(String)
-	 * @see hPE.xml.component.ComponentPackage#getEnumerableEntryType_Permutation()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='permutation'"
+	 * @return the value of the '<em>Index</em>' attribute.
+	 * @see #isSetIndex()
+	 * @see #unsetIndex()
+	 * @see #setIndex(int)
+	 * @see hPE.xml.component.ComponentPackage#getEnumerableEntryType_Index()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='index'"
 	 * @generated
 	 */
-	String getPermutation();
+	int getIndex();
 
 	/**
-	 * Sets the value of the '{@link hPE.xml.component.EnumerableEntryType#getPermutation <em>Permutation</em>}' attribute.
+	 * Sets the value of the '{@link hPE.xml.component.EnumerableEntryType#getIndex <em>Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Permutation</em>' attribute.
-	 * @see #getPermutation()
+	 * @param value the new value of the '<em>Index</em>' attribute.
+	 * @see #isSetIndex()
+	 * @see #unsetIndex()
+	 * @see #getIndex()
 	 * @generated
 	 */
-	void setPermutation(String value);
+	void setIndex(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.EnumerableEntryType#getIndex <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIndex()
+	 * @see #getIndex()
+	 * @see #setIndex(int)
+	 * @generated
+	 */
+	void unsetIndex();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.EnumerableEntryType#getIndex <em>Index</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Index</em>' attribute is set.
+	 * @see #unsetIndex()
+	 * @see #getIndex()
+	 * @see #setIndex(int)
+	 * @generated
+	 */
+	boolean isSetIndex();
 
 	/**
 	 * Returns the value of the '<em><b>URef</b></em>' attribute.

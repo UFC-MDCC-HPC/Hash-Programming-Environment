@@ -3,7 +3,9 @@ package hPE.frontend.base.edits;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.figures.InterfaceFigure;
 import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HLinkToInterface;
+import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.policies.AddReferencesEditPolicy;
 import hPE.frontend.base.policies.ChangeColorEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
@@ -215,8 +217,11 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		
 		ModelType i = (ModelType) getModel();
 		
-	    List slices = ((ModelType) i).getSlices();
-		l.addAll(slices);
+	    List<HInterfaceSlice> slices = ((ModelType) i).getSlices();
+	    for (HInterfaceSlice s : slices) {
+	    	if (!((HUnitSlice) s.getCompliantUnitSlices().get(0)).getHiddenSlice())
+			   l.add(s);
+	    }
 		   
 	    return l;
 			

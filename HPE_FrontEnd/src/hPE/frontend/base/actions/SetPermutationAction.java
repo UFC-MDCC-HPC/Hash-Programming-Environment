@@ -18,6 +18,9 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.frontend.base.model.HReplicator;
+import hPE.frontend.base.model.HReplicatorSplit;
+import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.base.model.IPointsToReplicator;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 public class SetPermutationAction extends SelectionAction {
@@ -52,9 +55,17 @@ public class SetPermutationAction extends SelectionAction {
 		if (parts.size() != 2) return false;
 		EditPart partEnumerator = (EditPart) parts.get(0);
 		EditPart partPermutation = (EditPart) parts.get(1);
-		if (!(partEnumerator.getModel() instanceof HLinkToReplicator)) return false; 
-		if (!(partPermutation.getModel() instanceof HEnumeratorComponent)) return false; 
+		if (!(partEnumerator.getModel() instanceof HReplicatorSplit)) return false; 
+		if (!(partPermutation.getModel() instanceof HEnumeratorComponent)) return false;
 		
+		HReplicatorSplit split = (HReplicatorSplit) partEnumerator.getModel();
+		   
+/*		IPointsToReplicator o = split.getReplicated();
+		   if (o instanceof IHUnit) {
+			   IHUnit ou = (IHUnit) o;
+			   return ou.isEntry();
+		   } else return false;
+*/
 		
 		return true;
 	}
@@ -66,7 +77,7 @@ public class SetPermutationAction extends SelectionAction {
 
 		EditPart partEnumerator = (EditPart) parts.get(0);
 		EditPart partPermutation = (EditPart) parts.get(1);
-		HLinkToReplicator r = (HLinkToReplicator) partEnumerator.getModel();
+		HReplicatorSplit r = (HReplicatorSplit) partEnumerator.getModel();
 		HEnumeratorComponent c = (HEnumeratorComponent) partPermutation.getModel();
 		
 		SetPermutationCommand command = (SetPermutationCommand) partEnumerator.getCommand(request);

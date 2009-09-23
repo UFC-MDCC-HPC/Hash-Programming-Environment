@@ -1216,13 +1216,13 @@ public interface ComponentPackage extends EPackage {
 	int ENUMERABLE_ENTRY_TYPE__CREF = ENUMERABLE_TYPE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Permutation</b></em>' attribute.
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENUMERABLE_ENTRY_TYPE__PERMUTATION = ENUMERABLE_TYPE_FEATURE_COUNT + 1;
+	int ENUMERABLE_ENTRY_TYPE__INDEX = ENUMERABLE_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -2660,13 +2660,22 @@ public interface ComponentPackage extends EPackage {
 	int SPLIT_TYPE__ORIGIN_REF = 2;
 
 	/**
+	 * The feature id for the '<em><b>CRef Permutation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPLIT_TYPE__CREF_PERMUTATION = 3;
+
+	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SPLIT_TYPE__EREF = 3;
+	int SPLIT_TYPE__EREF = 4;
 
 	/**
 	 * The feature id for the '<em><b>N</b></em>' attribute.
@@ -2675,7 +2684,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SPLIT_TYPE__N = 4;
+	int SPLIT_TYPE__N = 5;
 
 	/**
 	 * The number of structural features of the '<em>Split Type</em>' class.
@@ -2684,7 +2693,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SPLIT_TYPE_FEATURE_COUNT = 5;
+	int SPLIT_TYPE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitBoundsTypeImpl <em>Unit Bounds Type</em>}' class.
@@ -3887,15 +3896,15 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getEnumerableEntryType_CRef();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.EnumerableEntryType#getPermutation <em>Permutation</em>}'.
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.EnumerableEntryType#getIndex <em>Index</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Permutation</em>'.
-	 * @see hPE.xml.component.EnumerableEntryType#getPermutation()
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see hPE.xml.component.EnumerableEntryType#getIndex()
 	 * @see #getEnumerableEntryType()
 	 * @generated
 	 */
-	EAttribute getEnumerableEntryType_Permutation();
+	EAttribute getEnumerableEntryType_Index();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.EnumerableEntryType#getURef <em>URef</em>}'.
@@ -5120,6 +5129,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getSplitType_OriginRef();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.SplitType#getCRefPermutation <em>CRef Permutation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>CRef Permutation</em>'.
+	 * @see hPE.xml.component.SplitType#getCRefPermutation()
+	 * @see #getSplitType()
+	 * @generated
+	 */
+	EAttribute getSplitType_CRefPermutation();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.SplitType#getERef <em>ERef</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6176,12 +6196,12 @@ public interface ComponentPackage extends EPackage {
 		EAttribute ENUMERABLE_ENTRY_TYPE__CREF = eINSTANCE.getEnumerableEntryType_CRef();
 
 		/**
-		 * The meta object literal for the '<em><b>Permutation</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ENUMERABLE_ENTRY_TYPE__PERMUTATION = eINSTANCE.getEnumerableEntryType_Permutation();
+		EAttribute ENUMERABLE_ENTRY_TYPE__INDEX = eINSTANCE.getEnumerableEntryType_Index();
 
 		/**
 		 * The meta object literal for the '<em><b>URef</b></em>' attribute feature.
@@ -7158,6 +7178,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SPLIT_TYPE__ORIGIN_REF = eINSTANCE.getSplitType_OriginRef();
+
+		/**
+		 * The meta object literal for the '<em><b>CRef Permutation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SPLIT_TYPE__CREF_PERMUTATION = eINSTANCE.getSplitType_CRefPermutation();
 
 		/**
 		 * The meta object literal for the '<em><b>ERef</b></em>' attribute feature.

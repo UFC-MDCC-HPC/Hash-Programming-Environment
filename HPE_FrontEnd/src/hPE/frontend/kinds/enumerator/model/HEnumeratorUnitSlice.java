@@ -4,6 +4,7 @@ import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSig;
 import hPE.frontend.base.model.HInterfaceSlice;
+import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHUnit;
 
@@ -26,5 +27,15 @@ public class HEnumeratorUnitSlice extends HUnitSlice {
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
 		return new HEnumeratorInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
 	}
+	
+	public void setMappedReplicator(HReplicator mappedReplicator) {
+		this.mappedReplicator = mappedReplicator;
+	}
+
+	public HReplicator getMappedReplicator() {
+		return mappedReplicator;
+	}
+
+	private HReplicator mappedReplicator = null;
 
 }

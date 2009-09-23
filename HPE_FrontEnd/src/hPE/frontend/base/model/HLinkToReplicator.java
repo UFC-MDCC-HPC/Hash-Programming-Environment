@@ -177,21 +177,5 @@ public class HLinkToReplicator implements Serializable, IPropertyChangeListener 
 		
 	}
 
-	private HEnumeratorComponent permutationComponent = null;
-	
-
-	public void setPermutation(HEnumeratorComponent c) {
-		permutationComponent = c;
-		getListeners().firePropertyChange(PROPERTY_INVISIBLE,null,which_replicator);
-	}
-	
-	public void unsetPermutation() {
-		permutationComponent = null;
-		getListeners().firePropertyChange(PROPERTY_INVISIBLE,null,which_replicator);
-	}
-
-	public HEnumeratorComponent getPermutation() {
-		return permutationComponent;
-	}
 	
 }

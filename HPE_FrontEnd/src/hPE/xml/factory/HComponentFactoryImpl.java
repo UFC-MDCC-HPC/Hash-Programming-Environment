@@ -46,6 +46,8 @@ import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
@@ -617,9 +619,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			int n = xSplit.getN();
 
 			List<String> oRef = xSplit.getOriginRef();
-			HComponent c = !oRef.isEmpty() ? this.mC2.get(mC1.get(oRef.get(0)))
-					: this.component;
+			HComponent c = !oRef.isEmpty() ? this.mC2.get(mC1.get(oRef.get(0))) : this.component;
 			HReplicator enumerator = c.lookForReplicator(eRef, oRef);
+			
+			String cRefPermutation = xSplit.getCRefPermutation();
+			HEnumeratorComponent cPermutation = (HEnumeratorComponent) (cRefPermutation != null ? this.mC2.get(mC1.get(cRefPermutation)) : null);
 
 			EList<SplitLinkType> splitLinks = xSplit.getSplitLink();
 			EList<String> splitEnums = xSplit.getSplitEnumerator();
@@ -638,10 +642,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				} else
 					throw new HPEInvalidComponentResourceException(
 							"Link to Replicator not found");
+				
 			}
 
-			HReplicatorSplit split = enumerator.split(n, "", sLinks, component,
-					null);
+			HReplicatorSplit split = enumerator.split(n, "", sLinks, component, null);
+			if (cPermutation != null) {
+				split.setPermutation(cPermutation);
+				component.hideInnerComponent(cPermutation);
+			}
 			if (splitEnums.size() != split.getReplicators().size())
 				throw new HPEInvalidComponentResourceException();
 			Iterator<String> ses = splitEnums.iterator();
@@ -651,8 +659,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				HReplicator eSplit = eSplits.next();
 				eSplit.setRef(eRefSplit);
 				if (this.delayedSplits.containsKey(eRefSplit)) {
-					this.configureReplicator(eSplit, this.delayedSplits
-							.get(eRefSplit));
+					this.configureReplicator(eSplit, this.delayedSplits.get(eRefSplit));
 				}
 			}
 
@@ -750,7 +757,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				r = oC.lookForReplicator(ref, ss);
 				
 				
-				if (r == null)
+				if (r == null)	
 					throw new HPEInvalidComponentResourceException(
 							"Corrupt XML: Replicator not found in origin component");
 			} else if (fromSplit) {
@@ -824,7 +831,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String locationURI = xCheader.getLocationURI(); 
 			boolean isAbstract = xCheader.isIsAbstract();			
 			
-			this.isConcrete = false;
+			this.isConcrete = false;	
 			this.isSubType = false;
 
 			component = this.createComponent(kind, name, uri);
@@ -968,17 +975,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					} else {
 					}
 					if (xL instanceof EnumerableEntryType) {
-						if (((EnumerableEntryType) xL).getPermutation() != null) {
-							String cRef = ((EnumerableEntryType) xL).getPermutation();
-							HComponent ec = this.mC2.get(mC1.get(cRef));
-							if (!(ec instanceof HEnumeratorComponent)) {
-								throw new HPEInvalidComponentResourceException();
-							} else {
-								HLinkToReplicator lr = r.getLinkForItem(pr);
-								lr.setPermutation((HEnumeratorComponent) ec);
-								this.component.removeComponent(ec);
-							}
-						}
+						//if (((EnumerableEntryType) xL).getPermutation() != null) {
+							//String cRef = ((EnumerableEntryType) xL).getPermutation();
+							//HComponent ec = this.mC2.get(mC1.get(cRef));
+							//if (!(ec instanceof HEnumeratorComponent)) {
+							//	throw new HPEInvalidComponentResourceException();
+							//} else {
+							//	HLinkToReplicator lr = r.getLinkForItem(pr);
+								//lr.setPermutation((HEnumeratorComponent) ec);
+								//this.component.removeComponent(ec);
+							//}
+						//}
 					}
 				} catch (HPEUnmatchingEnumeratorsException e) {
 					throw new HPEInvalidComponentResourceException(e);
@@ -1111,7 +1118,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		ComponentType xC = factory.createComponentType();
 		ComponentHeaderType xH = factory.createComponentHeaderType();
 		ComponentBodyType xI = factory.createComponentBodyType();
-		xC.setHeader(xH);
+		xC.setHeader(xH); 
 		xC.setComponentInfo(xI);
 
 		saveHeader(c, xC.getHeader());
@@ -1228,19 +1235,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			HReplicator topR = r.getTopJoined();
 			if (topR != r && !touchedR.contains(topR)) {
 				touchedR.add(topR);
-				List<List<HReplicator>> ss = topR
-						.getFusionsInContext(this.component);
+				List<List<HReplicator>> ss = topR.getFusionsInContext(this.component);
 
-				// List<List<HReplicator>> ss = topR.getAllMyJoined();
 				for (List<HReplicator> rrs : ss) {
-					/*
-					 * boolean context = false; for (HReplicator r_ : rrs) {
-					 * context = true; HComponent cOfr = (HComponent)
-					 * r_.getConfiguration(); if
-					 * (!cOfr.isDirectSonOfTheTopConfiguration() &&
-					 * !cOfr.isTopConfiguration()) { context = false; break; } }
-					 */
-					// if (context) {
 					FusionsOfReplicatorsType fOfr = factory
 							.createFusionsOfReplicatorsType();
 					EList<FusionOfReplicatorsType> ffs = fOfr
@@ -1262,12 +1259,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						cRefs.add(ref);
 						cOfr_ = cOfr;
 					}
-					// if (cOfr.isDirectSonOfTheTopConfiguration())
-					// ff.setCRef(cOfr.getRef());
-					// else if (!cOfr.isTopConfiguration())
-					// JOptionPane.showMessageDialog(null,
-					// "Missing Replicator","saveEnumeratorFusions in HComponentFactoryImpl",
-					// JOptionPane.ERROR_MESSAGE);
 
 					ffs.add(ff);
 					for (HReplicator r_ : rrs) {
@@ -1428,11 +1419,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
 			cs.add(0, p.getValue());
 		
-		for (HReplicator r : c.gettReplicators()) {
-			for (HLinkToReplicator lr : r.getLinksToMe()) {
-				HEnumeratorComponent ec = lr.getPermutation();
-				if (ec != null && !cs.contains(ec)) {
-					cs.add(0,ec);
+		if (c.isAbstract()) {
+			for (HReplicator r : c.gettReplicators()) {
+				for (HReplicatorSplit lr : r.getSplits()) {
+					HEnumeratorComponent ec = lr.getPermutation();
+					if (ec != null && !cs.contains(ec)) {
+						cs.add(0,ec);
+					}
 				}
 			}
 		}
@@ -1562,9 +1555,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 					String eRef = r.getRef();
 					int n = split.getN();
+					String cRefPermutation = split.getPermutation() != null ? split.getPermutation().getRef() : null;
 
 					splitX.setERef(eRef);
 					splitX.setN(n);
+					if (cRefPermutation != null)
+						splitX.setCRefPermutation(cRefPermutation);
 
 					List<String> oRef = splitX.getOriginRef();
 					List<HComponent> cOfrs = new ArrayList<HComponent>(r
@@ -1872,7 +1868,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveInterfaceSlices(List<HInterfaceSlice> slices,
 			EList<InterfaceSliceType> slicesX) {
 
-		for (HInterfaceSlice slice : slices) {
+		for (HInterfaceSlice slice : slices) 
+		    if (!(slice instanceof HEnumeratorInterfaceSlice)) {
 
 			InterfaceSliceType sliceX = factory.createInterfaceSliceType();
 			VisualElementAttributes v = factory.createVisualElementAttributes();
@@ -1982,7 +1979,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveUnitSlices(List<HUnitSlice> directSlices,
 			List<HUnitSlice> transitiveSlices, EList slicesX) {
 
-		for (HUnitSlice slice : transitiveSlices) {
+		for (HUnitSlice slice : transitiveSlices) 
+			if (!(slice instanceof HEnumeratorUnitSlice)) {
 
 			// HComponent cSlice = (HComponent)
 			// slice.getBinding().getEntry().getConfiguration();
@@ -2157,9 +2155,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						replicatedOne.add(u);
 					} else if (u.isEntry() && u.getMyClones().isEmpty()) {
 						EnumerableEntryType usX = factory.createEnumerableEntryType();
-						HEnumeratorComponent ec = l.getPermutation();
+						HEnumeratorComponent ec = null; // l.getPermutation();
 						usX.setCRef(u.getConfiguration().getRef());
 						usX.setURef(u.getName2());
+						if (u.cloneOf() != null) {
+						  usX.setIndex(u.cloneOf().getIndexOfClone(u));
+						}
 						/*if (u.getBinding() != null) {
 							HUnitSlice s = (HUnitSlice) u.getBinding().getPort();
 							usX.setURef(s.getUnit().getName2());
@@ -2177,11 +2178,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
  						    	usX.setPermutation(ec.getRef());
 							linksX.add(usX);
 							replicatedOne.add(u);
-						} else */ if (ec != null) { 
- 						    usX.setPermutation(ec.getRef());
-							linksX.add(usX);
-							replicatedOne.add(u);
-						}
+						} else */ // if (ec != null) { 
+ 						   // usX.setPermutation(ec.getRef());
+							// linksX.add(usX);
+							// replicatedOne.add(u);
+						// }
 						
 						
 					}
@@ -2255,9 +2256,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		} else if (item instanceof EnumerableEntryType) {
 			EnumerableEntryType sItem = (EnumerableEntryType) item;
 			String uRef = sItem.getURef();
-			String cRef = sItem.getCRef();			
+			String cRef = sItem.getCRef();	
+			int index = sItem.getIndex();
 			HComponent c1 = mC2.get(mC1.get(cRef));
-			eItem = c1.getUnitByName(uRef);			
+			eItem = c1.getUnitByName(uRef, index);			
 		} else if (item instanceof EnumerableUnitSliceType) { // NOTE: returns
 																// the entry and
 																// not the unit

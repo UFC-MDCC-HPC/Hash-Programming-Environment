@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.draw2d.geometry.Point;
@@ -85,8 +87,13 @@ public class NewComponentCommand extends Command {
 	
 	public boolean canExecute() {
 		openComponents();
-		for (IComponent c : components) {
-			if (!c.isAbstract() || !the_configuration.accepts(c)) return false;
+		for (HComponent c : components) {
+			if (!c.isAbstract()) return false;
+			if (!the_configuration.accepts(c)) {
+				String message = the_configuration.kindString() + "s do not support inner components of kind " + c.kindString() + "."; 
+				JOptionPane.showMessageDialog(null, message , "New Inner Component Error", JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
 		}
 		return true;
 		

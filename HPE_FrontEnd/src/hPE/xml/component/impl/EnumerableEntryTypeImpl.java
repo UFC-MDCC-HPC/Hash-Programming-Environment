@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.EnumerableEntryTypeImpl#getCRef <em>CRef</em>}</li>
- *   <li>{@link hPE.xml.component.impl.EnumerableEntryTypeImpl#getPermutation <em>Permutation</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.EnumerableEntryTypeImpl#getIndex <em>Index</em>}</li>
  *   <li>{@link hPE.xml.component.impl.EnumerableEntryTypeImpl#getURef <em>URef</em>}</li>
  * </ul>
  * </p>
@@ -52,24 +52,33 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 	protected String cRef = CREF_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPermutation() <em>Permutation</em>}' attribute.
+	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPermutation()
+	 * @see #getIndex()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PERMUTATION_EDEFAULT = null;
+	protected static final int INDEX_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getPermutation() <em>Permutation</em>}' attribute.
+	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPermutation()
+	 * @see #getIndex()
 	 * @generated
 	 * @ordered
 	 */
-	protected String permutation = PERMUTATION_EDEFAULT;
+	protected int index = INDEX_EDEFAULT;
+
+	/**
+	 * This is true if the Index attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean indexESet;
 
 	/**
 	 * The default value of the '{@link #getURef() <em>URef</em>}' attribute.
@@ -136,8 +145,8 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPermutation() {
-		return permutation;
+	public int getIndex() {
+		return index;
 	}
 
 	/**
@@ -145,11 +154,36 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPermutation(String newPermutation) {
-		String oldPermutation = permutation;
-		permutation = newPermutation;
+	public void setIndex(int newIndex) {
+		int oldIndex = index;
+		index = newIndex;
+		boolean oldIndexESet = indexESet;
+		indexESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.ENUMERABLE_ENTRY_TYPE__PERMUTATION, oldPermutation, permutation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX, oldIndex, index, !oldIndexESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIndex() {
+		int oldIndex = index;
+		boolean oldIndexESet = indexESet;
+		index = INDEX_EDEFAULT;
+		indexESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX, oldIndex, INDEX_EDEFAULT, oldIndexESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIndex() {
+		return indexESet;
 	}
 
 	/**
@@ -183,8 +217,8 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 		switch (featureID) {
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__CREF:
 				return getCRef();
-			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__PERMUTATION:
-				return getPermutation();
+			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX:
+				return new Integer(getIndex());
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__UREF:
 				return getURef();
 		}
@@ -202,8 +236,8 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__CREF:
 				setCRef((String)newValue);
 				return;
-			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__PERMUTATION:
-				setPermutation((String)newValue);
+			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX:
+				setIndex(((Integer)newValue).intValue());
 				return;
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__UREF:
 				setURef((String)newValue);
@@ -223,8 +257,8 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__CREF:
 				setCRef(CREF_EDEFAULT);
 				return;
-			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__PERMUTATION:
-				setPermutation(PERMUTATION_EDEFAULT);
+			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX:
+				unsetIndex();
 				return;
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__UREF:
 				setURef(UREF_EDEFAULT);
@@ -243,8 +277,8 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 		switch (featureID) {
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__CREF:
 				return CREF_EDEFAULT == null ? cRef != null : !CREF_EDEFAULT.equals(cRef);
-			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__PERMUTATION:
-				return PERMUTATION_EDEFAULT == null ? permutation != null : !PERMUTATION_EDEFAULT.equals(permutation);
+			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX:
+				return isSetIndex();
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__UREF:
 				return UREF_EDEFAULT == null ? uRef != null : !UREF_EDEFAULT.equals(uRef);
 		}
@@ -263,8 +297,8 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (cRef: ");
 		result.append(cRef);
-		result.append(", permutation: ");
-		result.append(permutation);
+		result.append(", index: ");
+		if (indexESet) result.append(index); else result.append("<unset>");
 		result.append(", uRef: ");
 		result.append(uRef);
 		result.append(')');

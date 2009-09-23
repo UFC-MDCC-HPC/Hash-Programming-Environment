@@ -4,6 +4,7 @@ import hPE.frontend.base.edits.InterfaceEditPart;
 import hPE.frontend.base.figures.InterfaceFigure;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
+import hPE.frontend.base.model.HVisualElement;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class HasPortsInterfaceEditPart<ModelType extends HHasPortsInterface,
 
 	public List getModelChildren() { 
 		
-		List l = new ArrayList();
+		List l = new ArrayList<HVisualElement>();
 		List l1 = new ArrayList();
 		
 		ModelType i = (ModelType) getModel();

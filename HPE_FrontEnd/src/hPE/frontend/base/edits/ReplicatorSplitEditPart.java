@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
@@ -19,8 +20,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
 import hPE.frontend.base.figures.ReplicatorSplitFigure;
+import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.frontend.base.model.HReplicatorSplit;
 import hPE.frontend.base.model.IPointsToReplicator;
+import hPE.frontend.base.policies.SetPermutationEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 
 public class ReplicatorSplitEditPart extends AbstractGraphicalEditPart
@@ -37,14 +40,17 @@ public class ReplicatorSplitEditPart extends AbstractGraphicalEditPart
 
 	protected void createEditPolicies() {
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,new UnitFlowLayoutEditPolicy());
+		this.installEditPolicy("Set Permutation", new SetPermutationEditPolicy());
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals(HReplicatorSplit.PROPERTY_BOUNDS)) { 
 			this.refreshVisuals();
+		}		
+		else if (evt.getPropertyName().equals(HReplicatorSplit.SET_PERMUTATION)) { 
+			this.refreshVisuals();
 		}
-		
-		if (evt.getPropertyName().equals(HReplicatorSplit.NEW_REPLICATOR)) { 
+		else if (evt.getPropertyName().equals(HReplicatorSplit.NEW_REPLICATOR)) { 
 			this.refreshSourceConnections();
 		}
 		
@@ -69,19 +75,29 @@ public class ReplicatorSplitEditPart extends AbstractGraphicalEditPart
 		
 	}
 	
+
 	protected void refreshVisuals() {
 		
 		ReplicatorSplitFigure figure = (ReplicatorSplitFigure) getFigure();
 		HReplicatorSplit model = (HReplicatorSplit) getModel();
 		
 		Rectangle parentBounds = ((AbstractGraphicalEditPart) getParent()).getFigure().getBounds();		 
-        figure.setBounds(model.getBounds().getTranslated(parentBounds.getLocation()));		
+        figure.setBounds(model.getBounds().getTranslated(parentBounds.getLocation()));		        	
 		
-		Label ff = new Label(" split x" + model.getN() + " of enumerator " + model.getOwnerReplicator().getVarId() + " ");
-		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
-		ff.setFont(font); 
+        if (model.getPermutation() != null) {
+			figure.setBackgroundColor(model.getPermutation().getColor() != ColorConstants.white ? model.getPermutation().getColor() : ColorConstants.gray);
+    		Label ff = new Label(" permutation " + model.getPermutation().getNameWithParameters(true, true, true) + " assigned ");
+		    Font font = new Font(null, "Arial", 8, SWT.ITALIC);
+		    ff.setFont(font); 
+		    figure.setToolTip(ff);
+        } else {
+			figure.setBackgroundColor(ColorConstants.gray);
+        	Label ff = new Label(" no permutation assigned ");
+        	Font font = new Font(null, "Arial", 8, SWT.NORMAL);
+        	ff.setFont(font); 
+        	figure.setToolTip(ff);
+        }
         	
-		figure.setToolTip(ff);
 	}
 
 	public void activate() {

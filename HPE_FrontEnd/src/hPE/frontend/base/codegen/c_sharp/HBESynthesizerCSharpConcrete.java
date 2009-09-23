@@ -10,6 +10,7 @@ import hPE.frontend.base.model.HPort;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
@@ -197,9 +198,9 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		programText += "using " + packageNameImplements + "." + componentNameImplements + ";\n";
 		dependencies.add(buildDependencyName(cBase.getPackagePath().toString(), cBase.getComponentName(), primInheritedName));
 
-		programText += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
-
-		programText += "public class " + procName + ": Unit, " + inheritedName + "\n" + programTextVarBounds + "{\n\n";  // begin class
+		programText += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace		
+		
+		programText += "public class " + procName + ": " + i.getConfiguration().kindString() + ", " + inheritedName + this.getAdditionalExtendsListCode() + "\n" + programTextVarBounds + "{\n\n";  // begin class
         	
 		// por enquanto, a mudan�a do nome da interface est� bloqueada... assim, o nome da classe ser� sempre o nome da interface com um 
 		// underscore. 		
@@ -228,6 +229,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    }			
 		} */		
 
+		programText += "private Map<String, Enumerator> enumerator = new HashMap<String,Enumerator>();\n\n"; 
         
         for (Entry<String,List<HInterfaceSlice>> s : theSlices.entrySet()) {
 		    String typeName = s.getKey();
@@ -244,6 +246,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
                 //if (isPublic) {
 				    programText += (isPublic ? "public " : "private ") + typeName + " " + firstUpper(sliceName) + " {\n";
 				    programText += tabs(1) + "set {\n";
+				    				    
 				    programText += tabs(2) + "this." + sliceName + " = value;\n";				    
 				    if (tt.containsKey(sliceName)) {
 					    for (HInterfaceSlice ss : i.getSortedSlices(tt.get(sliceName))) {
@@ -256,8 +259,16 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 			    
 		    }			
 		}
-				
+				    
+/*	    HComponent c = (HComponent) slice.getConfiguration();
+	    if (c instanceof HEnumeratorComponent) {
+	    	HEnumeratorComponent ec = (HEnumeratorComponent) c;
+	    	String enumeratorId = ec.getLinkToReplicator().getReplicator().getVarId(); 
+	    	programText += tabs(2) + "enumerator.put(" + enumeratorId + "," + typeName + ");\n";
+	    } */
+        
 		programText += "\n"; // end declaration of inner slices
+		
 		
         programText += "public " + procName.split("<")[0] + "() { \n"; // begin constructor signature
 			
@@ -478,6 +489,31 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	public String toString() {
 		return "C# Language Class";
 	}
+
+	private List<String> additional_extends = null;
+	
+	public List<String> getAdditionalExtends() {
+		if (additional_extends == null) additional_extends = new ArrayList<String>();
+        return additional_extends;		
+	}
+	
+	public void addAdditionalExtends(String extendsName) {
+		if (additional_extends == null) additional_extends = new ArrayList<String>();
+		
+		additional_extends.add(extendsName);
+	}
+	
+	public String getAdditionalExtendsListCode() {
+		if (additional_extends == null) additional_extends = new ArrayList<String>();
+		
+		String result = "";
+		for (String extendsName : this.getAdditionalExtends()) {
+	     		result += ", " + extendsName;
+		}
+		
+	    return result;
+	}
+	
 
 	private List<String> methods = null;
 	

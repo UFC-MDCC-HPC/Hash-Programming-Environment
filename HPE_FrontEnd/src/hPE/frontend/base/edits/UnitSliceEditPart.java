@@ -2,6 +2,7 @@ package hPE.frontend.base.edits;
 
 import hPE.frontend.base.figures.UnitSliceFigure;
 import hPE.frontend.base.model.HBinding;
+import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
 import hPE.frontend.base.model.HUnitSlice;
@@ -75,7 +76,8 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
 
 		HBinding b = ((ModelType) getModel()).getBinding();
 		
-		if (b != null) r.add(b); 
+		if (b != null && (!((HComponent) b.getEntry().getConfiguration()).isHiddenInnerComponent())) 
+			r.add(b); 
 
 		return r;
 	}

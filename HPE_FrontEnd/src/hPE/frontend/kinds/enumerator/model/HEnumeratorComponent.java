@@ -4,9 +4,16 @@ import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
+import hPE.frontend.kinds.computation.model.HComputationComponent;
+import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
+import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 
 import org.eclipse.draw2d.geometry.Rectangle;
 import java.util.List;
@@ -22,9 +29,13 @@ public class HEnumeratorComponent extends HBaseKindComponent {
 
 	public static final String KIND = "Enumerator";
 
+	private HLinkToReplicator linkToReplicator = null;
+
 	public HEnumeratorComponent(String name, IPackageLocation location, URI uri) {
 		super(name, location, uri);
-		this.createUnit();
+		if (this.isAbstract()) {
+			this.createUnit();
+		}
 	}
 
 	@Override
@@ -49,7 +60,17 @@ public class HEnumeratorComponent extends HBaseKindComponent {
 	     
 	}
 	
-    public boolean accepts(IComponent c) {    	
+	public void setLinkToReplicator(HLinkToReplicator link) {
+		this.linkToReplicator  = link;
+	}
+	
+	public HLinkToReplicator getLinkToReplicator() {
+		return this.linkToReplicator;
+	}
+	
+    public boolean accepts(IComponent c) {  
+	   	if (c instanceof HQualifierComponent) return true;
+	   	if (c instanceof HEnumeratorComponent) return true;
     	return false;
     }
 

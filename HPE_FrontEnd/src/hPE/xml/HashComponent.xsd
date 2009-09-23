@@ -429,10 +429,14 @@
 			<element name="splitEnumerator" type="string"
 				maxOccurs="unbounded" minOccurs="1">
 			</element>
-			<element name="originRef" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="originRef" type="string"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="eRef" type="string" use="required"></attribute>
-		<attribute name="n" type="int"></attribute>
+		<attribute name="n" type="int"></attribute>
+
+		<attribute name="cRefPermutation" type="string" use="optional"></attribute>
 	</complexType>
 	<complexType name="SplitLinkType">
 		<sequence></sequence>
@@ -586,9 +590,9 @@
     <complexType name="EnumerableEntryType">
     	<complexContent>
     		<extension base="tns:EnumerableType">
-    			<attribute name="permutation" type="string" use="optional"></attribute>
     			<attribute name="cRef" type="string"></attribute>
     			<attribute name="uRef" type="string"></attribute>
+    			<attribute name="index" type="int" use="optional"></attribute>
     		</extension>
     	</complexContent>
     </complexType>

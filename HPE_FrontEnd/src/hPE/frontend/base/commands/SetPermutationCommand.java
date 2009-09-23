@@ -3,6 +3,9 @@ package hPE.frontend.base.commands;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.frontend.base.model.HReplicator;
+import hPE.frontend.base.model.HReplicatorSplit;
+import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.base.model.IPointsToReplicator;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 import javax.swing.JOptionPane;
@@ -11,15 +14,15 @@ import org.eclipse.gef.commands.Command;
 
 public class SetPermutationCommand extends Command {
 
-	private HLinkToReplicator link = null;
+	private HReplicatorSplit split = null;
 	private HEnumeratorComponent c = null;
 	
 	public SetPermutationCommand() {
 		super();
 	}
 
-	public void setLinkToReplicator(HLinkToReplicator r) {
-		this.link = r;
+	public void setLinkToReplicator(HReplicatorSplit r) {
+		this.split = r;
 	}
 	
 	public void setPermutation(HEnumeratorComponent c) {
@@ -28,10 +31,10 @@ public class SetPermutationCommand extends Command {
 
 	public void execute() {
   
-		link.setPermutation(c);
+		split.setPermutation(c);
 		
 		HComponent cTop = (HComponent) c.getTopConfiguration();
-		cTop.removeComponent(c);
+		cTop.hideInnerComponent(c);
 		
 		return;
 	}
@@ -43,9 +46,12 @@ public class SetPermutationCommand extends Command {
 	
 	public boolean canExecute() {
 		   if (c.hasFreeVariables()) {
-			   JOptionPane.showMessageDialog(null, "The inner component has free type variables. You must supply them before to lift units.","Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
+			   JOptionPane.showMessageDialog(null, 
+					   "The enumerator inner component has free type variables. You must supply them before to apply this operation.",
+					    "Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
 			   return false;
 		   }
+		   
 		   return true;
 	}
 

@@ -51,15 +51,23 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 	
 	public static int raio = 5;
 	public static int diameter = raio*2;
-
+	
+	
+	
+	
 	private void configureUnitSlice(IHUnit unit, IHUnit unitEntry, Point where) throws HPEAbortException{
 		
 		listeners = new PropertyChangeSupport(this);
 		
 		try {
+			
 			Rectangle r = new Rectangle(); // unit.getBounds().getCopy();
 			r.setSize(diameter,diameter);
-			r.setLocation(where);
+			if (where != null) {
+			    r.setLocation(where);			    
+			} else {
+				this.setHiddenSlice(true);
+			}
 			this.setBounds(r);
 			
 			unit.addUnitSlice(this);
@@ -538,9 +546,7 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 		return this.getInterface().getName2().equals(islice.getInterface().getName2()) && this.getNestingFactor() == islice.getNestingFactor();
 	}
 	
-	public abstract HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s); /*{
-		return new HInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
-	}*/
+	public abstract HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s); 
 
 
     private String name = null;
@@ -554,6 +560,10 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 				this.getBinding().getEntry().getName2() : 
 					(this.name != null ? this.name : this.getInterfaceSlice().getName());
 	}
+
+
+
+
 	
 
 }

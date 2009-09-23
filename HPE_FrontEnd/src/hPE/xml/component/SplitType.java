@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.SplitType#getSplitLink <em>Split Link</em>}</li>
  *   <li>{@link hPE.xml.component.SplitType#getSplitEnumerator <em>Split Enumerator</em>}</li>
  *   <li>{@link hPE.xml.component.SplitType#getOriginRef <em>Origin Ref</em>}</li>
+ *   <li>{@link hPE.xml.component.SplitType#getCRefPermutation <em>CRef Permutation</em>}</li>
  *   <li>{@link hPE.xml.component.SplitType#getERef <em>ERef</em>}</li>
  *   <li>{@link hPE.xml.component.SplitType#getN <em>N</em>}</li>
  * </ul>
@@ -81,6 +82,33 @@ public interface SplitType extends EObject {
 	 * @generated
 	 */
 	EList<String> getOriginRef();
+
+	/**
+	 * Returns the value of the '<em><b>CRef Permutation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>CRef Permutation</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>CRef Permutation</em>' attribute.
+	 * @see #setCRefPermutation(String)
+	 * @see hPE.xml.component.ComponentPackage#getSplitType_CRefPermutation()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='cRefPermutation'"
+	 * @generated
+	 */
+	String getCRefPermutation();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.SplitType#getCRefPermutation <em>CRef Permutation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>CRef Permutation</em>' attribute.
+	 * @see #getCRefPermutation()
+	 * @generated
+	 */
+	void setCRefPermutation(String value);
 
 	/**
 	 * Returns the value of the '<em><b>ERef</b></em>' attribute.

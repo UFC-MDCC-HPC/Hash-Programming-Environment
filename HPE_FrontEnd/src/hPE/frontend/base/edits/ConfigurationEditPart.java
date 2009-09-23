@@ -99,12 +99,13 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		List children = new ArrayList();
 		
 		children.addAll((List) ((ModelType) getModel()).getUnits());
+		
 		for (HComponent c : ((ModelType) getModel()).getComponents()) 
-			if (!children.contains(c)) 
+			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 				children.add(c);
 		
 		for (HComponent c : ((ModelType) getModel()).getExposedComponents()) 
-			if (!children.contains(c)) 
+			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 				children.add(c);
 
 		for (HInterface an_interface : ((ModelType) getModel()).getInterfaces()) {

@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.SplitTypeImpl#getSplitLink <em>Split Link</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SplitTypeImpl#getSplitEnumerator <em>Split Enumerator</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SplitTypeImpl#getOriginRef <em>Origin Ref</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.SplitTypeImpl#getCRefPermutation <em>CRef Permutation</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SplitTypeImpl#getERef <em>ERef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SplitTypeImpl#getN <em>N</em>}</li>
  * </ul>
@@ -74,6 +75,26 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 	 * @ordered
 	 */
 	protected EList<String> originRef;
+
+	/**
+	 * The default value of the '{@link #getCRefPermutation() <em>CRef Permutation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCRefPermutation()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CREF_PERMUTATION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCRefPermutation() <em>CRef Permutation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCRefPermutation()
+	 * @generated
+	 * @ordered
+	 */
+	protected String cRefPermutation = CREF_PERMUTATION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getERef() <em>ERef</em>}' attribute.
@@ -184,6 +205,27 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCRefPermutation() {
+		return cRefPermutation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCRefPermutation(String newCRefPermutation) {
+		String oldCRefPermutation = cRefPermutation;
+		cRefPermutation = newCRefPermutation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.SPLIT_TYPE__CREF_PERMUTATION, oldCRefPermutation, cRefPermutation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getERef() {
 		return eRef;
 	}
@@ -274,6 +316,8 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 				return getSplitEnumerator();
 			case ComponentPackage.SPLIT_TYPE__ORIGIN_REF:
 				return getOriginRef();
+			case ComponentPackage.SPLIT_TYPE__CREF_PERMUTATION:
+				return getCRefPermutation();
 			case ComponentPackage.SPLIT_TYPE__EREF:
 				return getERef();
 			case ComponentPackage.SPLIT_TYPE__N:
@@ -303,6 +347,9 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 				getOriginRef().clear();
 				getOriginRef().addAll((Collection<? extends String>)newValue);
 				return;
+			case ComponentPackage.SPLIT_TYPE__CREF_PERMUTATION:
+				setCRefPermutation((String)newValue);
+				return;
 			case ComponentPackage.SPLIT_TYPE__EREF:
 				setERef((String)newValue);
 				return;
@@ -330,6 +377,9 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 			case ComponentPackage.SPLIT_TYPE__ORIGIN_REF:
 				getOriginRef().clear();
 				return;
+			case ComponentPackage.SPLIT_TYPE__CREF_PERMUTATION:
+				setCRefPermutation(CREF_PERMUTATION_EDEFAULT);
+				return;
 			case ComponentPackage.SPLIT_TYPE__EREF:
 				setERef(EREF_EDEFAULT);
 				return;
@@ -354,6 +404,8 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 				return splitEnumerator != null && !splitEnumerator.isEmpty();
 			case ComponentPackage.SPLIT_TYPE__ORIGIN_REF:
 				return originRef != null && !originRef.isEmpty();
+			case ComponentPackage.SPLIT_TYPE__CREF_PERMUTATION:
+				return CREF_PERMUTATION_EDEFAULT == null ? cRefPermutation != null : !CREF_PERMUTATION_EDEFAULT.equals(cRefPermutation);
 			case ComponentPackage.SPLIT_TYPE__EREF:
 				return EREF_EDEFAULT == null ? eRef != null : !EREF_EDEFAULT.equals(eRef);
 			case ComponentPackage.SPLIT_TYPE__N:
@@ -376,6 +428,8 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 		result.append(splitEnumerator);
 		result.append(", originRef: ");
 		result.append(originRef);
+		result.append(", cRefPermutation: ");
+		result.append(cRefPermutation);
 		result.append(", eRef: ");
 		result.append(eRef);
 		result.append(", n: ");

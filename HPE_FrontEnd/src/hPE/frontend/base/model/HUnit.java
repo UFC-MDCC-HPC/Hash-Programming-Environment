@@ -806,10 +806,10 @@ public abstract class HUnit extends HPrimUnit
 			        System.out.print(true);
 			    }
 			    
-			    HComponent ccc = c.getTopParentConfigurations().get(0);
+			    HComponent ccc = !c.getTopParentConfigurations().isEmpty() ? c.getTopParentConfigurations().get(0) : null;
 			//else 
 			//	c = (HComponent)this.getStubs().get(0).getConfiguration();
-			return c.getExposed() || (!c.getExposed() && c.IsExposedFalsifiedContextTop()) || (!c.getExposed() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc);
+			return ccc != null && (c.getExposed() || (!c.getExposed() && c.IsExposedFalsifiedContextTop()) || (!c.getExposed() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc));
 		}
 		
 		public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {

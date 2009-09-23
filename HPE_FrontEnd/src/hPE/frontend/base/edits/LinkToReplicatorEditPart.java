@@ -28,7 +28,6 @@ public class LinkToReplicatorEditPart extends AbstractConnectionEditPart impleme
 		this.installEditPolicy("JoinReplicatorEditPolicy", new JoinReplicatorEditPolicy());
 		this.installEditPolicy("LiftReplicatorEditPolicy", new LiftReplicatorEditPolicy());
 		this.installEditPolicy("SplitReplicatorEditPolicy", new SplitReplicatorEditPolicy());
-		this.installEditPolicy("Set Permutation", new SetPermutationEditPolicy());
 
 	}
 	
@@ -38,7 +37,6 @@ public class LinkToReplicatorEditPart extends AbstractConnectionEditPart impleme
 	
 	public void propertyChange(PropertyChangeEvent ev) {
 		if (ev.getPropertyName().equals(HLinkToReplicator.PROPERTY_INVISIBLE)) {
-			this.setFigure(createFigure());
 			this.refreshVisuals();
 		}
 	}
@@ -49,8 +47,6 @@ public class LinkToReplicatorEditPart extends AbstractConnectionEditPart impleme
         
         link_fig.setForegroundColor(ColorConstants.lightGray/* link_mod.getWhich_replicator().getColor() */);
         link_fig.setVisible(!link_mod.isInvisible());
-        if (link_mod.getPermutation() != null)
-        		link_fig.setPermutation(link_mod.getPermutation());
         
 	}
 
