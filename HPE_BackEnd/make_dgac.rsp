@@ -13,6 +13,7 @@ DGAC/FileUtil.cs
 DGAC/DGAC.cs
 DGAC/ServerObject.cs
 DGAC/BackEndEnvironment.cs
+DGAC/externalreferences.cs
 
 -target:library
 
