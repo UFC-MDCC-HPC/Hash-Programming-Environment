@@ -7,20 +7,18 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
-import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Comparator;
 
 import org.eclipse.core.runtime.Path;
 
@@ -127,11 +125,13 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		programText += "using System;\n";
 		programText += "using DGAC;\n";
 		programText += "using hpe.basic;\n";
+		programText += "using hpe.kinds;\n";
 
  		Map<String, List<HInterfaceSlice>> tt = new HashMap<String, List<HInterfaceSlice>>();
 
  		List<String> usings = new ArrayList<String>();
  		List<String> refs = new ArrayList<String>();
+ 		
  		
 		for (Entry<String,List<HInterfaceSlice>> ss : theSlices.entrySet()) {
 						
@@ -228,13 +228,16 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	}
 		    }			
 		} */		
-
-		programText += "private Map<String, Enumerator> enumerator = new HashMap<String,Enumerator>();\n\n"; 
         
-        for (Entry<String,List<HInterfaceSlice>> s : theSlices.entrySet()) {
+ 		Map<String, HInterfaceSlice> memSlices = new HashMap<String, HInterfaceSlice>();
+
+ 		for (Entry<String,List<HInterfaceSlice>> s : theSlices.entrySet()) {
 		    String typeName = s.getKey();
-		    for (HInterfaceSlice slice : s.getValue()) {
+		    for (HInterfaceSlice slice : s.getValue()) 
+		    	//if (!memSlices.containsKey(slice.getName())) 
+		    {
 		    	String sliceName = slice.getName();
+		    	memSlices.put(sliceName, slice);
 		    	String defaultSliceName = slice.getOriginalName2();
 		    
 			    programText += "private " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
@@ -253,6 +256,14 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 					    	programText += tabs(2) + ss.getName() + "." + firstUpper(portOfTheSlice.getOriginalNameOf2(ss)) + " = value;\n";
 					    }				    
 				    }
+				    if (slice instanceof HEnumeratorInterfaceSlice) {
+				    	HEnumeratorInterfaceSlice permutationSlice = (HEnumeratorInterfaceSlice) slice;
+				    	String key = permutationSlice.getReplicatorID();
+				    	String value = "value";
+				    	String prefix = ((HEnumeratorUnitSlice)permutationSlice.getCompliantUnitSlices().get(0)).getAssocSlice().getBinding().getEntry().getConfiguration().getRef();
+				    	programText += tabs(2) + "this.addPermutation(\""  + prefix + "." + key + "\"," + value + ");\n	";
+				    }
+				    	
 				    programText += tabs(1) + "}\n";
 				    programText += "}\n\n";
                 //}

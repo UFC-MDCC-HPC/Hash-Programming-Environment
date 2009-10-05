@@ -8,6 +8,7 @@ import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IInterface;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
@@ -264,7 +265,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     		String parId = cc.getParameterIdentifier(cThis);
 
     	    if (cc.isParameter() && !parId.equals("type ?")) {
-     	       String varName = cc.getVariableName((HComponent) this.getConfiguration()); 
+     	       String varName = cc.getVariableName(cThis); 
      	       p.add(new Triple<String,HInterface,String> (varName,ic, parId));
      	    }
     	}    	
@@ -375,8 +376,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 	public String getName2(boolean showSuperType, List<String> varContext) {
 		
 	   HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
-	   String varName = c.getVariableName((HComponent) this.getConfiguration());
-	   boolean showVariable = varContext != null && varContext.contains(varName);
+	   String varName = c.getVariableName((HComponent) this.getConfiguration().getTopConfiguration());
+	   boolean showVariable = varContext != null && varContext.contains(varName.split("@")[0]);
 	   boolean showBounds = !showVariable;
 	   
 	   return (showVariable ? varName.split("@")[0] : "") + 
@@ -928,8 +929,14 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 		
 		@Override
 		public int compare(HInterfaceSlice o1, HInterfaceSlice o2) {
+			
+			if ((o1 instanceof HEnumeratorInterfaceSlice) && 
+					!(o2 instanceof HEnumeratorInterfaceSlice))
+				return +1;
+
 			HComponent c1 = (HComponent)o1.getConfiguration();
 			HComponent c2 = (HComponent)o2.getConfiguration();
+			
 			
 			if (cs.indexOf(c1)>=(cs.indexOf(c2))) {
 				return +1;

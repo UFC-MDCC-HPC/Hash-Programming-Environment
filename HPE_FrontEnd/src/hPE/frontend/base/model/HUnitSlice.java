@@ -557,8 +557,8 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
     
 	public String getName() {		
 		return this.getInterfaceSlice() == null && this.name == null ? 
-				this.getBinding().getEntry().getName2() : 
-					(this.name != null ? this.name : this.getInterfaceSlice().getName());
+				this.getBinding().getEntry().getName2() : this.getInterfaceSlice().getName();
+					// (this.name != null ? this.name : this.getInterfaceSlice().getName());
 	}
 
 

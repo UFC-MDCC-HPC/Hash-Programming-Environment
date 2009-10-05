@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
+import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEInvalidNameException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IConfiguration;
@@ -366,8 +367,41 @@ public class HReplicatorSplit extends HVisualElement implements IPointsToReplica
 	
 
 	public void setPermutation(HEnumeratorComponent c) {
+		try {
 		permutationComponent = c;
+		//c.removeMe();
+		c.setHiddenInnerComponent(true);
+		// para cada unidade de componente aninhado que já fatia de unidade, crie uma cópia de c, dê um load,  faça
+		// sua unidade ser fatia e replique pelo enumerador correspondente.
+		
+		for (HReplicator r : this.getReplicators()) {
+			for (HLinkToReplicator l : r.getLinksToMe()) {
+				IPointsToReplicator x = l.getReplicated();
+				if (x != this) {
+					if (x instanceof IHUnit) {
+						IHUnit xu = (IHUnit) x;
+						if (xu.isEntry()) {
+							HBinding b = xu.getBinding();
+							if (b != null) {
+								IBindingTarget port = b.getPort();
+								if (port instanceof HUnitSlice) {
+									HUnitSlice uport = (HUnitSlice) port;
+									IHUnit container_unit = uport.getUnit();
+										container_unit.createPermutationSlices(xu, r,this);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		listeners.firePropertyChange(SET_PERMUTATION,null,getBounds());
+		
+		} catch (HPEAbortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public HEnumeratorComponent getPermutation() {

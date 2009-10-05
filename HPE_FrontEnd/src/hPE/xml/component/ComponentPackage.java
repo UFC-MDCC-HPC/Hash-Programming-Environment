@@ -2126,13 +2126,22 @@ public interface ComponentPackage extends EPackage {
 	int INTERFACE_TYPE__PORT = 4;
 
 	/**
+	 * The feature id for the '<em><b>External References</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_TYPE__EXTERNAL_REFERENCES = 5;
+
+	/**
 	 * The feature id for the '<em><b>IRef</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERFACE_TYPE__IREF = 5;
+	int INTERFACE_TYPE__IREF = 6;
 
 	/**
 	 * The feature id for the '<em><b>NArgs</b></em>' attribute.
@@ -2141,7 +2150,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERFACE_TYPE__NARGS = 6;
+	int INTERFACE_TYPE__NARGS = 7;
 
 	/**
 	 * The number of structural features of the '<em>Interface Type</em>' class.
@@ -2150,7 +2159,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERFACE_TYPE_FEATURE_COUNT = 7;
+	int INTERFACE_TYPE_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterRenamingImpl <em>Parameter Renaming</em>}' class.
@@ -4635,6 +4644,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getInterfaceType_Port();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link hPE.xml.component.InterfaceType#getExternalReferences <em>External References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>External References</em>'.
+	 * @see hPE.xml.component.InterfaceType#getExternalReferences()
+	 * @see #getInterfaceType()
+	 * @generated
+	 */
+	EAttribute getInterfaceType_ExternalReferences();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceType#getIRef <em>IRef</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6786,6 +6806,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INTERFACE_TYPE__PORT = eINSTANCE.getInterfaceType_Port();
+
+		/**
+		 * The meta object literal for the '<em><b>External References</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERFACE_TYPE__EXTERNAL_REFERENCES = eINSTANCE.getInterfaceType_ExternalReferences();
 
 		/**
 		 * The meta object literal for the '<em><b>IRef</b></em>' attribute feature.

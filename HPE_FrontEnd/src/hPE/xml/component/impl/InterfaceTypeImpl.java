@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getSources <em>Sources</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getPort <em>Port</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getExternalReferences <em>External References</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getNArgs <em>NArgs</em>}</li>
  * </ul>
@@ -99,6 +101,16 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * @ordered
 	 */
 	protected EList<InterfacePortType> port;
+
+	/**
+	 * The cached value of the '{@link #getExternalReferences() <em>External References</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalReferences()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> externalReferences;
 
 	/**
 	 * The default value of the '{@link #getIRef() <em>IRef</em>}' attribute.
@@ -295,6 +307,18 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getExternalReferences() {
+		if (externalReferences == null) {
+			externalReferences = new EDataTypeEList<String>(String.class, this, ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES);
+		}
+		return externalReferences;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getIRef() {
 		return iRef;
 	}
@@ -397,6 +421,8 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return getVisualDescription();
 			case ComponentPackage.INTERFACE_TYPE__PORT:
 				return getPort();
+			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
+				return getExternalReferences();
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
@@ -432,6 +458,10 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				getPort().clear();
 				getPort().addAll((Collection<? extends InterfacePortType>)newValue);
 				return;
+			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
+				getExternalReferences().clear();
+				getExternalReferences().addAll((Collection<? extends String>)newValue);
+				return;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				setIRef((String)newValue);
 				return;
@@ -465,6 +495,9 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 			case ComponentPackage.INTERFACE_TYPE__PORT:
 				getPort().clear();
 				return;
+			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
+				getExternalReferences().clear();
+				return;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				setIRef(IREF_EDEFAULT);
 				return;
@@ -493,6 +526,8 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return visualDescription != null;
 			case ComponentPackage.INTERFACE_TYPE__PORT:
 				return port != null && !port.isEmpty();
+			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
+				return externalReferences != null && !externalReferences.isEmpty();
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return IREF_EDEFAULT == null ? iRef != null : !IREF_EDEFAULT.equals(iRef);
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
@@ -511,7 +546,9 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (iRef: ");
+		result.append(" (externalReferences: ");
+		result.append(externalReferences);
+		result.append(", iRef: ");
 		result.append(iRef);
 		result.append(", nArgs: ");
 		if (nArgsESet) result.append(nArgs); else result.append("<unset>");

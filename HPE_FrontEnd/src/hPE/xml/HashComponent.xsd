@@ -84,6 +84,7 @@
 			<element name="port" type="tns:InterfacePortType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
+			<element name="externalReferences" type="string" maxOccurs="unbounded" minOccurs="0"></element>
 		</sequence>
 		<attribute name="iRef" type="string" use="required"></attribute>
 		<attribute name="nArgs" type="int"></attribute>

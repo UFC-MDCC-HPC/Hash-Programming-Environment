@@ -1867,7 +1867,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getInterfaceType_IRef() {
+	public EAttribute getInterfaceType_ExternalReferences() {
 		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -1876,8 +1876,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getInterfaceType_NArgs() {
+	public EAttribute getInterfaceType_IRef() {
 		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInterfaceType_NArgs() {
+		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2835,6 +2844,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__SOURCES);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__VISUAL_DESCRIPTION);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PORT);
+		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__EXTERNAL_REFERENCES);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__IREF);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__NARGS);
 
@@ -3171,6 +3181,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getInterfaceType_Sources(), this.getSourceType(), null, "sources", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Port(), this.getInterfacePortType(), null, "port", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInterfaceType_ExternalReferences(), theXMLTypePackage.getString(), "externalReferences", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_NArgs(), theXMLTypePackage.getInt(), "nArgs", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4313,6 +4324,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "port"
+		   });		
+		addAnnotation
+		  (getInterfaceType_ExternalReferences(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "externalReferences"
 		   });		
 		addAnnotation
 		  (getInterfaceType_IRef(), 

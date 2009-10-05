@@ -65,13 +65,13 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	private String ref = null;
 	
 	public void setRef(String ref) {
-		this.ref = ref;
+		this.ref = ref.trim();
 	}
 	
 	public String getRef() {
 		if (ref == null) 
 			ref = this.toString() + System.currentTimeMillis(); 
-		return ref;
+		return ref.trim();
 	}
 	
 	public HReplicator(HComponent configuration, Point where) {

@@ -16,5 +16,15 @@ public class HEnumeratorInterfaceSlice extends HInterfaceSlice {
 		super(name, which_interface, interface_sig, nestingFactor);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String getName() {
+		HEnumeratorUnitSlice eus = (HEnumeratorUnitSlice) this.getCompliantUnitSlices().get(0);
+		return super.getName() + "_for_" + eus.getAssocSlice().getName();
+	}
+	
+	public String getReplicatorID() {
+		HEnumeratorUnitSlice eus = (HEnumeratorUnitSlice) this.getCompliantUnitSlices().get(0);
+		return eus.getMappedReplicator().getRef();
+	}
 
 }

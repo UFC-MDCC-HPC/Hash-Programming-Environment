@@ -85,6 +85,10 @@ public interface IHUnit extends IHPrimUnit, IUnit,
 
 	public abstract Map<HPrimUnit, Integer> whatIsThePath(HUnitSlice uslice);
 
+	public abstract void createPermutationSlices(IHUnit the_source, HReplicator r, HReplicatorSplit split) throws HPEAbortException;
+
+	public abstract void createAllPermutationSlices(IHUnit the_source) throws HPEAbortException;
+
 
 
 }

@@ -3,6 +3,7 @@ package hPE.frontend.base.edits;
 
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.figures.ReplicatorFigure;
+import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HLinkToReplicator;
 import hPE.frontend.base.model.HReplicator;
@@ -14,12 +15,9 @@ import hPE.frontend.base.policies.FuseReplicatorEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.NameDirectEditPolicy;
 import hPE.frontend.base.policies.RemoveElementEditPolicy;
-import hPE.frontend.base.policies.SetPermutationEditPolicy;
 import hPE.frontend.base.policies.SetReplicatorFactorEditPolicy;
-import hPE.frontend.base.policies.SplitReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnfuseReplicatorEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -151,7 +149,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 				}
 			} else if (p instanceof HComponent) {
 				HComponent c = (HComponent) p;
-				if ((c.isDirectSonOfTheTopConfiguration()) || topConfiguration.getExposedComponents().contains(c)) {
+				if (!c.isHiddenInnerComponent() && ((c.isDirectSonOfTheTopConfiguration()) || topConfiguration.getExposedComponents().contains(c))) {
 					r.add(l);
 				}
 			} else if (p instanceof HReplicatorSplit) {
@@ -159,8 +157,16 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 				if (!(rs.getOwnerReplicator().getHidden() || rs.getOwnerReplicator().isJoined()))
    				   r.add(l);
 			} else if (p instanceof HUnitSlice) {
-				if (((HUnitSlice) p).getUnit().getConfiguration() == topConfiguration)
-				    r.add(l);
+				HBinding binding = ((HUnitSlice) p).getBinding();
+				if (binding != null) {
+					IHUnit entry = binding.getEntry();
+	                HComponent c = (HComponent) entry.getConfiguration();
+	                if (c.isDirectSonOfTheTopConfiguration()) {
+	                	r.add(l);
+	                }
+				}
+//				if (((HUnitSlice) p).getUnit().getConfiguration() == topConfiguration)
+//				    r.add(l);
 			}
 		}
 		

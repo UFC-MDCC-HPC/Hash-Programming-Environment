@@ -217,5 +217,19 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		return this.getRealUnit().getSupersededName();
 	}
 
+	@Override
+	public void createAllPermutationSlices(IHUnit the_source)
+			throws HPEAbortException {
+		this.getRealUnit().createAllPermutationSlices(the_source);
+		
+	}
+
+	@Override
+	public void createPermutationSlices(IHUnit the_source, HReplicator r,
+			HReplicatorSplit split) throws HPEAbortException {
+		this.createPermutationSlices(the_source, r, split);
+		
+	}
+
 
 }

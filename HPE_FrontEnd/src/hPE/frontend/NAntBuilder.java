@@ -3,12 +3,16 @@ package hPE.frontend;
 import hPE.HPEProperties;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.dialogs.AddReferencesDialog;
+import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.nant.release._0._86.beta1.nant.DocumentRoot;
 import net.sf.nant.release._0._86.beta1.nant.NAntCoreTasksIfNotTask;
@@ -95,6 +99,12 @@ public class NAntBuilder implements Runnable {
 		}
 
 		
+	}
+	
+	private static Map<String, Reference> externalRefs = null;
+	
+	public static void clearExternalRefs () {
+		externalRefs = null; 
 	}
 
 	private static ProjectType makeBuilder(HComponent c) {
@@ -202,16 +212,29 @@ public class NAntBuilder implements Runnable {
 							
 							// References / Includes
 							List<NAntCoreTypesFileSetInclude> includeRefs = ref.getInclude();
-							if (src.getDependencies() != null)
+							if (src.getDependencies() != null) {
 								for (String dep : src.getDependencies())
 								{
-									//List<HBEAbstractFile> filesRef = dep.getSourceVersion("1.0.0.0").getFiles();
-									//for (HBEAbstractFile file : filesRef) {
-										NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
-										includeRef.setName(dep/*file.getBinaryPath().makeRelative()*/);
-										includeRefs.add(includeRef);
-									//}
+									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
+									includeRef.setName(dep/*file.getBinaryPath().makeRelative()*/);
+									includeRefs.add(includeRef);
 						    	}
+							}
+							if (src.getExternalReferences() != null) {
+								for (String dep : src.getExternalReferences())
+								{
+									if (externalRefs == null) {
+										externalRefs = new HashMap<String, Reference>();
+										AddReferencesDialog.loadExternalReferences(externalRefs);
+									}
+									Reference externalRef = externalRefs.get(dep);									
+									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
+									if (externalRef != null) {
+									   includeRef.setName(externalRef.getPath().toString() + Path.SEPARATOR + externalRef.getName() + ".dll");
+									   includeRefs.add(includeRef);
+									}
+								}
+							}
 							NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
 							includeRef.setName(HPEProperties.getInstance().getValue("dgac_path"));
 							includeRefs.add(includeRef);

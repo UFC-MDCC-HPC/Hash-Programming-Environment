@@ -5,6 +5,8 @@ import hPE.frontend.base.commands.LiftUnitCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IUnit;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -846,7 +848,37 @@ public abstract class HUnit extends HPrimUnit
 		}
 
 
+		public void createPermutationSlices(IHUnit the_source, HReplicator r, HReplicatorSplit rSplit) throws HPEAbortException {
 
+			HComponent c = (HComponent) this.getConfiguration();
+			HComponent topC = (HComponent) c.getTopConfiguration();
+
+			HEnumeratorComponent cPermutation = rSplit.getPermutation();
+			if (cPermutation != null) {
+				HEnumeratorComponent cPermutationClone = (HEnumeratorComponent) HComponent.getMyCopy(cPermutation);
+				cPermutationClone.setDerivedFromPermutation(true);
+				topC.loadComponent(cPermutationClone, new Point(0,0));
+			    try {
+					cPermutationClone.setReplicator(r);
+				} catch (HPEUnmatchingEnumeratorsException e) {						
+					e.printStackTrace();
+				}
+				IHUnit uPermutation = cPermutationClone.getUnits().get(0);					
+				HEnumeratorUnitSlice the_target = (HEnumeratorUnitSlice) c.createBinding(uPermutation, this, null);
+				the_target.setMappedReplicator(rSplit.getOwnerReplicator());
+				the_target.setAssocSlice((HUnitSlice)the_source.getBinding().getPort());			
+			}
+			
+		}
+
+		public void createAllPermutationSlices(IHUnit the_source) throws HPEAbortException {
+			for (HReplicator r : the_source.getReplicators()) {
+				HReplicatorSplit rSplit = r.getParentSplit(); 
+				if (rSplit != null) {
+					this.createPermutationSlices(the_source, r /*rSplit.getOwnerReplicator()*/, rSplit);
+				}
+			}
+		}
 		
 
 

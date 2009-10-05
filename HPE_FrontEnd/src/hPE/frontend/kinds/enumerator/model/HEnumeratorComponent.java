@@ -29,7 +29,6 @@ public class HEnumeratorComponent extends HBaseKindComponent {
 
 	public static final String KIND = "Enumerator";
 
-	private HLinkToReplicator linkToReplicator = null;
 
 	public HEnumeratorComponent(String name, IPackageLocation location, URI uri) {
 		super(name, location, uri);
@@ -60,6 +59,8 @@ public class HEnumeratorComponent extends HBaseKindComponent {
 	     
 	}
 	
+/*	private HLinkToReplicator linkToReplicator = null;
+
 	public void setLinkToReplicator(HLinkToReplicator link) {
 		this.linkToReplicator  = link;
 	}
@@ -72,10 +73,11 @@ public class HEnumeratorComponent extends HBaseKindComponent {
 	   	if (c instanceof HQualifierComponent) return true;
 	   	if (c instanceof HEnumeratorComponent) return true;
     	return false;
-    }
+    } */
 
     public String kindString() {
     	return "Enumerator";
-    }    
+    }
+
 
 }

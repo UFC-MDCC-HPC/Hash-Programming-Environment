@@ -1,6 +1,7 @@
 package hPE.frontend.base.dialogs;
 
 import hPE.HPEProperties;
+import hPE.frontend.NAntBuilder;
 import hPE.frontend.base.externalreferences.DocumentRoot;
 import hPE.frontend.base.externalreferences.ExternalreferencesFactory;
 import hPE.frontend.base.externalreferences.ExternalreferencesPackage;
@@ -148,7 +149,7 @@ public class AddReferencesDialog extends JDialog  implements ActionListener  {
 		return fileReferences;
 	}
 
-	private static void loadExternalReferences(Map<String, Reference> references) {
+	public static void loadExternalReferences(Map<String, Reference> references) {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put	(Resource.Factory.Registry.DEFAULT_EXTENSION, new ExternalreferencesResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(ExternalreferencesPackage.eNS_URI, ExternalreferencesPackage.eINSTANCE);
@@ -528,6 +529,7 @@ public class AddReferencesDialog extends JDialog  implements ActionListener  {
 			   if (r==JOptionPane.YES_OPTION) {
 				   this.getReferences().put(newRef.getName(), newRef);
 				   createNewReferenceFile(references);
+				   NAntBuilder.clearExternalRefs();
 				   browseReferencesUpdate();
 			   }
 			   

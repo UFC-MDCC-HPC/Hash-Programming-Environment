@@ -3,6 +3,8 @@ package hPE.frontend.base.interfaces;
 import java.util.Collection;
 
 import hPE.core.library.model.interfaces.ILComponentView;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 public interface IConfiguration {
 
@@ -23,5 +25,7 @@ public interface IConfiguration {
 	public IConfiguration getTopConfiguration();
 	
 	public abstract String kindString();
+
+	public void removeComponent(HComponent c);
 	
 }

@@ -276,6 +276,7 @@ public class BackEndLocationList {
 		    k.put("Environment",4);
 		    k.put("Architecture",5);
 		    k.put("Qualifier",6);
+		    k.put("Enumerator",7);
 		} 
 				
 		return k.get(kind);

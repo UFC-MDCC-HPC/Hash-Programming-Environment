@@ -357,43 +357,27 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			
 			IBindingTarget the_target = the_source.newSlice(the_unit,where);
 			
-			if (the_target instanceof HUnitSlice) {
-				HUnitSlice uslice = (HUnitSlice) the_target;
-				createPermutationSlices(the_source, the_unit);
-			}
 			
 			HInterface i = (HInterface) the_source.getInterface();
 			i.setEditable(false);
 			
 			new HBinding(this,the_target,the_source);
 			
-		/*	if (the_target instanceof HUnitSlice) {
+			if (the_target instanceof HUnitSlice) {
+				the_unit.createAllPermutationSlices(the_source);
+			}
+
+			if (the_target instanceof HUnitSlice) {
 				HUnitSlice s = (HUnitSlice) the_target;
 				for (HLinkToReplicator l : s.getLinksToReplicators()) {
 				   l.liftReplicator();
 				}
-			} */ 
+			}  
 			
 			return the_target;
 		
 	}
 	
-	private void createPermutationSlices(IHUnit the_source, IHUnit the_unit) throws HPEAbortException {
-
-		for (HReplicator r : the_source.getReplicators()) {
-			HReplicatorSplit rSplit = r.getParentSplit(); 
-			if (rSplit != null) {
-				HEnumeratorComponent cPermutation = rSplit.getPermutation();
-				if (cPermutation != null) {
-					HEnumeratorComponent cPermutationClone = (HEnumeratorComponent) HComponent.getMyCopy(cPermutation);
-					IHUnit uPermutation = cPermutationClone.getUnits().get(0);
-					 HEnumeratorUnitSlice the_target = (HEnumeratorUnitSlice) this.createBinding(uPermutation, the_unit, null);
-					the_target.setMappedReplicator(r);
-				}
-			}
-		}
-		
-	}
 
 
 	/**
@@ -843,7 +827,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 
 		for (Entry<String, List<HComponent>> e : c.getParameters().entrySet()) {
 			for (HComponent cc : e.getValue()) {
-				cc.setVariableName(cc.getVariableName(c));
+				if (cc.getVariableName((HComponent) this.getTopConfiguration()).equals("?"))
+				   cc.setVariableName(cc.getVariableName(c));
 			}
 		}
 
@@ -2534,7 +2519,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
      
   //   public abstract HComponent createComponent();
 
-	private static HComponent getMyCopy(HComponent model) {
+	public static HComponent getMyCopy(HComponent model) {
 
 		  HComponent modelCopy = null;
 		  
@@ -3832,5 +3817,20 @@ public boolean isHiddenInnerComponent() {
 
 private boolean hiddenInnerComponent = false;
 
+public void removeMe() {
+	this.getTopConfiguration().removeComponent(this);
+	
+}    
+
+private boolean derivedFromPermutation = false;
+
+public boolean isDerivedFromPermutation() {
+	return derivedFromPermutation;
+}
+
+public void setDerivedFromPermutation(boolean derivedFromPermutation) {
+	this.derivedFromPermutation = derivedFromPermutation;
+	this.setHiddenInnerComponent(true);
+}
 
 }

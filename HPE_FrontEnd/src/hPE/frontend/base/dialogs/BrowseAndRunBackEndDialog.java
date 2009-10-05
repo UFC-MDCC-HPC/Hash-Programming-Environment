@@ -623,8 +623,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private void deploy() {
 
 		try {
-			String fileName = c.getLocalLocation()
-			;
+			String fileName = c.getLocalLocation();
 		
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
 			
@@ -635,20 +634,23 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 			is.read(t);
 			
-			String urlWS = ((BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem()).locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+			BackEndLocationInfo backEndInfo = (BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem();
+			
+			String urlWS = backEndInfo.locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
 		
 			BackEnd_WSLocator server = new BackEnd_WSLocator();
 			server.setBackEnd_WSSoapEndpointAddress(urlWS);
 			
 			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
 			
-			String userName = null;
-			String password = null;
-			String result = backend.deployHashComponent(t,userName, password, null);
+			String userName = backEndInfo.login;
+			String password = backEndInfo.password;
+			String curDir = backEndInfo.curdir != null ? backEndInfo.curdir.toString() : null;
+			String result = backend.deployHashComponent(t,userName, password, curDir);
 			if (result != null)
 			    JOptionPane.showMessageDialog(rootPane, result);
 			else
-				JOptionPane.showMessageDialog(rootPane, "The component " + c.getComponentName() + " has succesfully been deployed !");
+				JOptionPane.showMessageDialog(rootPane, "The component " + c.getComponentName() + " has been succesfully deployed !");
 			
 			this.browseUpdate();
 			
@@ -775,7 +777,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 				
 			String password = loc.password;			
 			String userName = loc.login;
-			String curdir = loc.curdir.toString();
+			String curdir = loc.curdir != null ? loc.curdir.toString() : null;
 			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password, curdir); 
 
 			if (result.length > 1) {

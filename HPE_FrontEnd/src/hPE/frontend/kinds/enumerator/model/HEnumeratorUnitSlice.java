@@ -36,6 +36,17 @@ public class HEnumeratorUnitSlice extends HUnitSlice {
 		return mappedReplicator;
 	}
 
+	public void setAssocSlice(HUnitSlice assocSlice) {
+		this.assocSlice = assocSlice;
+	}
+
+	public HUnitSlice getAssocSlice() {
+		return assocSlice;
+	}
+
 	private HReplicator mappedReplicator = null;
 
+	private HUnitSlice assocSlice = null;
+	
+	
 }

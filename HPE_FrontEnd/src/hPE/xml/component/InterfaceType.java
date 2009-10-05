@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.InterfaceType#getSources <em>Sources</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getPort <em>Port</em>}</li>
+ *   <li>{@link hPE.xml.component.InterfaceType#getExternalReferences <em>External References</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getNArgs <em>NArgs</em>}</li>
  * </ul>
@@ -137,6 +138,23 @@ public interface InterfaceType extends EObject {
 	 * @generated
 	 */
 	EList<InterfacePortType> getPort();
+
+	/**
+	 * Returns the value of the '<em><b>External References</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>External References</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>External References</em>' attribute list.
+	 * @see hPE.xml.component.ComponentPackage#getInterfaceType_ExternalReferences()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='element' name='externalReferences'"
+	 * @generated
+	 */
+	EList<String> getExternalReferences();
 
 	/**
 	 * Returns the value of the '<em><b>IRef</b></em>' attribute.
