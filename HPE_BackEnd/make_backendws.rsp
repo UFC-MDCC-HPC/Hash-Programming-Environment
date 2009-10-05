@@ -7,4 +7,4 @@
 
 -target:library
 
--out:./bin/BackEndWS.asmx.dll
+-out:./ws/bin/BackEndWS.asmx.dll
