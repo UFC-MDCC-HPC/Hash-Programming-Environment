@@ -57,7 +57,7 @@ namespace HPE_DGAC_LoadDB
                     e.Id_enumerator = buildEnumeratorId(eX.originRef, eX.@ref);
                     e.From_split = eX.fromSplit;
                     e.Variable = eX.varId;
-                    e.Valuation = eX.cardinality > 1 ? -1 : 1;
+                    e.Valuation = eX.cardinality != 1 ? -1 : 1;
 
                     rXs.Add(e.Id_enumerator, eX.links);
                     eList.Add(e.Id_enumerator, e);
@@ -66,8 +66,10 @@ namespace HPE_DGAC_LoadDB
 
             EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
 
+            Dictionary<string, string> es = new Dictionary<string, string>();
+
             // APPLY FUSION OF REPLICATORS
-            Dictionary<string,string> es = new Dictionary<string,string>();
+            
             if (fusionOfReplicators != null)
             {
                 foreach (FusionsOfReplicatorsType f in fusionOfReplicators)
@@ -75,9 +77,9 @@ namespace HPE_DGAC_LoadDB
                     string id_enumerator_fst = null;
                     foreach (FusionOfReplicatorsType ff in f.fusionOfReplicators)
                     {
-                        string id_enumerator = buildEnumeratorId(ff.originRef, ff.eRef);
+                        string id_enumerator = buildEnumeratorId(ff.originRef, ff.eRef).Trim();
                         id_enumerator_fst = id_enumerator_fst == null ? id_enumerator : id_enumerator_fst;
-                        es.Add(id_enumerator, id_enumerator_fst);
+                        // es.Add(id_enumerator, id_enumerator_fst);
                         EnumeratorMapping em = new EnumeratorMapping(); 
                         if (ff.originRef != null && ff.originRef.Length > 0)
                         {
@@ -94,12 +96,12 @@ namespace HPE_DGAC_LoadDB
                             em.Id_enumerator_container = id_enumerator_fst;
                         }
                         emdao.insert(em);
-                        if (!id_enumerator.Equals(id_enumerator_fst)) 
-                            eList.Remove(id_enumerator);
+                        //if (!id_enumerator.Equals(id_enumerator_fst)) 
+                        //    eList.Remove(id_enumerator);
                     }
                 }
             }
-
+            
             EnumeratorDAO edao = new EnumeratorDAO();
             foreach (Enumerator e in eList.Values)
             {
@@ -165,13 +167,19 @@ namespace HPE_DGAC_LoadDB
                             if (uQ == null)
                                 udao.insert(u);
 
-                        }
-                        else if (rX is EnumerableUnitSliceType)
-                        {
-                            EnumerableUnitSliceType rX_s = (EnumerableUnitSliceType)rX;
+                        } else if (rX is EnumerableEntryType) {
+                            EnumerableEntryType rX_s = (EnumerableEntryType)rX;
                             string cRef = rX_s.cRef;
-                            string sRef = rX_s.sRef;
-                            int splitReplica = rX_s.splitReplica;
+                            string uRef = rX_s.uRef;
+                            string sRef = uRef;
+
+                            /* }
+                            else if (rX is EnumerableUnitSliceType)
+                            { 
+                                EnumerableUnitSliceType rX_s = (EnumerableUnitSliceType)rX;
+                                string cRef = rX_s.cRef;
+                                string sRef = rX_s.sRef; */
+                            int splitReplica = rX_s.index; //splitReplica;
                             
                             EnumerationSlice s = new EnumerationSlice();
                             s.Id_abstract = absC.Id_abstract;
@@ -225,7 +233,7 @@ namespace HPE_DGAC_LoadDB
             {
                 foreach (SplitType s in split)
                 {
-                    string id_enumerator = buildEnumeratorId(s.originRef, s.eRef);
+                    string id_enumerator = buildEnumeratorId(s.originRef, s.eRef).Trim();
                     foreach (string id_enumerator_split in s.splitEnumerator) // all these enumerators are enumerators of the top configuration ...
                     {
                         EnumeratorSplit ews = new EnumeratorSplit();
@@ -242,7 +250,7 @@ namespace HPE_DGAC_LoadDB
                         ews.Id_split = ++splitIx;
                         ews.Id_enumerator = id_enumerator_group;
                         ews.Id_enumerator_split = id_enumerator_split_2;
-                        ews.Id_total_split = s.n;    // sem essa linha Id_total_split sempre � ZERO. Fiquei na d�vida ...
+                        ews.Id_total_split = s.n;    // sem essa linha Id_total_split sempre é ZERO. Fiquei na dúvida ...
 
                         EnumeratorSplitDAO splitdao = new EnumeratorSplitDAO();
                         splitdao.insert(ews);
@@ -276,10 +284,13 @@ namespace HPE_DGAC_LoadDB
 
                     parameterRenamingSupper = baseC.parameter;
 
-                    // FOLLOW arrow subtype
-                    AbstractComponentFunctor superC = lookForAbstractComponentFunctor(baseC.hash_component_UID);
-
                     AbstractComponentFunctorApplication baseCapp = newAbstractComponentFunctorApplication(baseC);
+
+                    // FOLLOW arrow subtype
+                    if (baseCapp == null)
+                    {
+                        throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (extends) : " + baseC.name);
+                    }
 
                     c_.Id_functor_app_supertype = baseCapp.Id_functor_app;
                 }
@@ -318,6 +329,11 @@ namespace HPE_DGAC_LoadDB
 
                         // FOLLOW arrow has-parameters
                         AbstractComponentFunctorApplication app = newAbstractComponentFunctorApplication(c);
+                        if (app == null)
+                        {
+                            throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (inner component) : " + c.name);
+                        }
+
                         iNew.Id_functor_app = app.Id_functor_app;
                         iNew.Id_abstract_inner = app.Id_abstract;
 
@@ -343,6 +359,11 @@ namespace HPE_DGAC_LoadDB
                                 iNewPort.Transitive = true;
 
                                 AbstractComponentFunctorApplication appPort = newAbstractComponentFunctorApplication(port);
+                                if (appPort == null)
+                                {
+                                    throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (public inner component) : " + port.name);
+                                }
+
                                 iNewPort.Id_functor_app = appPort.Id_functor_app;
                                 iNewPort.Id_abstract_inner = appPort.Id_abstract;
 
@@ -586,6 +607,10 @@ namespace HPE_DGAC_LoadDB
 
                     ComponentInUseType cBound = lookForInnerComponent(parameter_.componentRef);
                     AbstractComponentFunctorApplication cApp = newAbstractComponentFunctorApplication(cBound);
+                    if (cApp == null)
+                    {
+                        throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (context parameter bound) : " + cBound.name);
+                    }
 
                     p.Bounds_of = cApp.Id_functor_app;
 
@@ -602,6 +627,7 @@ namespace HPE_DGAC_LoadDB
             SliceDAO sdao = new SliceDAO();
             SliceExposedDAO sedao = new SliceExposedDAO();
             SourceCodeDAO scdao = new SourceCodeDAO();
+            SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
             if (unit != null)
             {
@@ -623,9 +649,7 @@ namespace HPE_DGAC_LoadDB
                     i.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                     i.Class_nargs = nargs; // TODO
                     i.Assembly_string = iRef + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
-                    i.Source_code = ui.sources[ui.sources.Length-1].file[0].contents; // Suppose the existence of only one source with only one file...
                     i.Order = ++count;
-
 
                     foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
                     {
@@ -637,6 +661,31 @@ namespace HPE_DGAC_LoadDB
                         ss.File_name = sft.name;
                         ss.File_type = "dll";
                         scdao.insert(ss);
+                        int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
+                                   (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+                        if (size > 0)
+                        {
+                            string[] allRefs = new string[size];
+                            if (ui.externalReferences != null)
+                                ui.externalReferences.CopyTo(allRefs, 0);
+
+                            if (sft.externalDependency != null)
+                                sft.externalDependency.CopyTo(allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+
+                            foreach (string extRef in allRefs)
+                            {
+                                SourceCodeReference ssr = new SourceCodeReference();
+                                ssr.Type_owner = ss.Type_owner;
+                                ssr.Id_owner_container = ss.Id_owner_container;
+                                ssr.Id_owner = ss.Id_owner;
+                                ssr.File_name = ss.File_name;
+                                ssr.Reference = extRef;
+                                if (scrdao.retrieve(ssr) == null)
+                                {
+                                    scrdao.insert(ssr);
+                                }
+                            }
+                        }
                     }
 
                     InterfaceDAO idao = new InterfaceDAO();
@@ -706,8 +755,8 @@ namespace HPE_DGAC_LoadDB
                                     sedao.insert(se);
                                 }
                             }
-
-                            sdao.insert(s);
+                            //if (sdao.retrieve(s.Id_abstract,s.Id_inner,s.Id_interface_slice,s.Id_split_replica) == null) 
+                              sdao.insert(s);
                         }
                     }
                 }
@@ -723,6 +772,7 @@ namespace HPE_DGAC_LoadDB
             IDictionary<string, Unit> units = new Dictionary<string, Unit>();
 
             SourceCodeDAO scdao = new SourceCodeDAO();
+            SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
             int id_abstract = c.Id_abstract;
 
@@ -730,7 +780,7 @@ namespace HPE_DGAC_LoadDB
             foreach (UnitType u in unit)
             {
                 string uref = u.uRef;
-                string iRef = u.iRef;
+                string iRef = u.iRef; 
                 string urefSuper = u.super == null ? null : u.super.uRef;
 
                 InterfaceDAO idao = new InterfaceDAO();
@@ -747,6 +797,23 @@ namespace HPE_DGAC_LoadDB
                     ss.File_type = "dll";
                     ss.File_name = sft.name;
                     scdao.update(ss);
+                    foreach (string extRef in sft.externalDependency)
+                    {
+                        SourceCodeReference ssr = new SourceCodeReference();
+                        ssr.Type_owner = ss.Type_owner;
+                        ssr.Id_owner_container = ss.Id_owner_container;
+                        ssr.Id_owner = ss.Id_owner;
+                        ssr.File_name = ss.File_name;
+                        ssr.Reference = extRef;
+                        if (scrdao.retrieve(ssr) != null)
+                        {
+                            scrdao.update(ssr);
+                        }
+                        else
+                        {
+                            scrdao.insert(ssr);
+                        }
+                    }
                 }
             }
         }

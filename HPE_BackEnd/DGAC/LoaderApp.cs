@@ -206,6 +206,7 @@ namespace DGAC.database
 	public static ICollection<InfoCompile> getReferences_Concrete(int id_concrete){
 
         SourceCodeDAO scdao = new SourceCodeDAO();
+        SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
 		ComponentDAO cDAO = new ComponentDAO();		
 		Component component = cDAO.retrieve(id_concrete);
@@ -251,6 +252,11 @@ namespace DGAC.database
             IList<SourceCode> scList = scdao.list('u', unit.Id_concrete, unit.Id_unit);
             foreach (SourceCode sc in scList)
             {
+                IList<string> sourceRefs = sc.ExternalReferences;
+                string[] referencesArrayAll = new string[referencesArray.Length + sourceRefs.Count];
+                referencesArray.CopyTo(referencesArrayAll, 0);
+                sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
+
                 InfoCompile info = new InfoCompile();
                 info.moduleName = sc.File_name ; // buildDllName(unit.Assembly_string); ;
                 info.unitId = unit.Id_unit;
@@ -259,16 +265,16 @@ namespace DGAC.database
                 info.library_path = component.Library_path;
                 info.id = component.Id_concrete;
                 if (sc.File_type.Equals("exe")) {
-                   string[] referencesArray_ = new string[referencesArray.Length + libRefs.Count];
+                   string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
                    libRefs.CopyTo(referencesArray_,0);
-                   referencesArray.CopyTo(referencesArray_,libRefs.Count);
+                   referencesArrayAll.CopyTo(referencesArray_,libRefs.Count);
                    info.output_type = Constants.EXE_OUT;
                    info.references = referencesArray_;
                 }
                 else {
                     libRefs.Add(buildDllName(component.Library_path, info.moduleName.Split('.')[0]));
                     info.output_type = Constants.DLL_OUT;
-                    info.references = referencesArray;
+                    info.references = referencesArrayAll;
                 }
 
                 referencesSet.Add(info);
@@ -299,18 +305,28 @@ namespace DGAC.database
 
             IList<string> stringCompilationSet = new List<string>();
 
+//            foreach (string reference in i.ExternalReferences)
+//            {
+//                stringCompilationSet.Add(reference);
+//            }
+
             foreach (string reference in i.References) {
                 stringCompilationSet.Add(reference);
             }
-            
+
             string[] referencesArray = new string[stringCompilationSet.Count];
             stringCompilationSet.CopyTo(referencesArray, 0);
 
             IList<SourceCode> scList = scdao.list('i', i.Id_abstract,i.Id_interface);
             foreach (SourceCode sc in scList)
             {
+                IList<string> sourceRefs = sc.ExternalReferences;
+                string[] referencesArrayAll = new string[referencesArray.Length + sourceRefs.Count];
+                referencesArray.CopyTo(referencesArrayAll,0);
+                sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
+
                 InfoCompile info = new InfoCompile();
-                info.references = referencesArray;
+                info.references = referencesArrayAll;
                 AbstractComponentFunctor acf1 = acfDAO.retrieve(id_abstract);
                 info.moduleName = sc.File_name;//  buildDllName(i.Assembly_string);
                 info.unitId = i.Id_interface;

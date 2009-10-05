@@ -38,11 +38,11 @@ namespace HPE_DGAC_LoadDB
             this.xc = c;
             cConc = (Component) base.loadComponent(c);
             prepareForEnumeration(cConc);
-            unfoldEnumerators(cConc);
+            // unfoldEnumerators(cConc); //This is now done dynamically. 
             return cConc;
         }
 
-  
+  /*
 
        private void unfoldEnumerators(Component cConc)
        {
@@ -205,12 +205,10 @@ namespace HPE_DGAC_LoadDB
                    uNew.Id_interface_interface = u.Id_interface_interface;
                    uNew.Id_unit = u.Id_unit;
                    uNew.Id_unit_super = u.Id_unit_super;
-                   uNew.Source_code = u.Source_code;
                    uNew.Class_name = u.Class_name;
                    uNew.Class_nargs = u.Class_nargs; // TODO
                    uNew.Assembly_string = u.Assembly_string;
                    uNew.URI_Source = u.URI_Source;
-                   uNew.Source_code = u.Source_code;
 
                    udao.insert(uNew);
 
@@ -436,7 +434,7 @@ namespace HPE_DGAC_LoadDB
 
        private int tryEnter(Enumerator e, int i, EnumeratorSplit split)
        {
-           int k = /* (i+1) % */ split.Id_total_split == 0 ? split.Id_total_split : i % split.Id_total_split;
+           int k = split.Id_total_split == 0 ? split.Id_total_split : i % split.Id_total_split;
 
            if (k == split.Id_split-1)
            {
@@ -448,7 +446,7 @@ namespace HPE_DGAC_LoadDB
            }
 
        }
-
+*/
        private AbstractComponentFunctor lookForAbstractComponentFunctorOfConcreteComponent(Component cConc)
        {
            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
@@ -477,6 +475,10 @@ namespace HPE_DGAC_LoadDB
                 
                 // FOLLOW arrow implements
                 AbstractComponentFunctorApplication cApp = newAbstractComponentFunctorApplication(baseC);
+                if (cApp == null)
+                {
+                    throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (implements) : " + c.header.baseType.component.name);
+                }
                 
                 // FOLLOW arrow functor-app-of
                 // Make implements points to it ...
@@ -538,7 +540,7 @@ namespace HPE_DGAC_LoadDB
                icc.Id_inner = c.Id_inner;
                icc.Id_index = -1;
 
-               EnumerationItemConcreteInnerDAO eicidao = new EnumerationItemConcreteInnerDAO();
+ /*              EnumerationItemConcreteInnerDAO eicidao = new EnumerationItemConcreteInnerDAO();
                EnumerationInnerDAO eidao = new EnumerationInnerDAO();
                IList<EnumerationInner> eics = eidao.listByInner(id_abstract, c.Id_inner);
                foreach (EnumerationInner eic in eics)
@@ -552,12 +554,13 @@ namespace HPE_DGAC_LoadDB
 
                    eicidao.insert(eici);
                }
+               */
 
                iccdao.insert(icc);
 
                UnitSliceDAO usdao = new UnitSliceDAO();
                SliceDAO sdao = new SliceDAO();
-               IList<Slice> ss = sdao.list2(id_abstract, c.Id_inner);
+               IList<Slice> ss = sdao.listByInner(id_abstract, c.Id_inner);
                foreach (Slice s in ss) 
                {
                    UnitSlice us = new UnitSlice();
@@ -568,27 +571,28 @@ namespace HPE_DGAC_LoadDB
                    us.Split_replica = s.Id_split_replica;
                    us.Id_index = -1;
                    us.Id_unit = s.Id_interface;
-                   us.Id_index_unit = -1; 
+                   us.Id_index_unit = -1;
 
-                   EnumerationItemUnitSliceDAO eiusdao = new EnumerationItemUnitSliceDAO();
-                   EnumerationSliceDAO esdao = new EnumerationSliceDAO();
-                   IList<EnumerationSlice> ess = esdao.list(id_abstract, icc.Id_inner, us.Id_unit_slice, us.Split_replica);
-                   foreach (EnumerationSlice es in ess)
-                   {
-                       EnumerationItemUnitSlice eiu = new EnumerationItemUnitSlice();
 
-                       eiu.Id_concrete = cConc.Id_concrete;
-                       eiu.Id_inner = c.Id_inner;
-                       eiu.Index_inner = us.Id_index_inner;
-                       eiu.Id_index = us.Id_index = 1;
-                       eiu.Id_interface_slice = us.Id_unit_slice;
-                       eiu.Split_replica = us.Split_replica;
-                       eiu.Id_enumerator = es.Id_enumerator;
-                       eiu.Value = -1;
+                   /*                   EnumerationItemUnitSliceDAO eiusdao = new EnumerationItemUnitSliceDAO();
+                                      EnumerationSliceDAO esdao = new EnumerationSliceDAO();
+                                      IList<EnumerationSlice> ess = esdao.list(id_abstract, icc.Id_inner, us.Id_unit_slice, us.Split_replica);
+                                      foreach (EnumerationSlice es in ess)
+                                      {
+                                          EnumerationItemUnitSlice eiu = new EnumerationItemUnitSlice();
 
-                       eiusdao.insert(eiu);
-                   }
+                                          eiu.Id_concrete = cConc.Id_concrete;
+                                          eiu.Id_inner = c.Id_inner;
+                                          eiu.Index_inner = us.Id_index_inner;
+                                          eiu.Id_index = us.Id_index = 1;
+                                          eiu.Id_interface_slice = us.Id_unit_slice;
+                                          eiu.Split_replica = us.Split_replica;
+                                          eiu.Id_enumerator = es.Id_enumerator;
+                                          eiu.Value = -1;
 
+                                          eiusdao.insert(eiu);
+                                      }
+                   */
                    usdao.insert(us);
                }
            }
@@ -601,7 +605,9 @@ namespace HPE_DGAC_LoadDB
             AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
             AbstractComponentFunctorApplication absCapp = absCappdao.retrieve(c.Id_functor_app);
 
+            InterfaceDAO idao = new InterfaceDAO();
             SourceCodeDAO scdao = new SourceCodeDAO();
+            SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
             
             int id_abstract = absCapp.Id_abstract;
 
@@ -612,7 +618,6 @@ namespace HPE_DGAC_LoadDB
                 string iRef = u.iRef;
                 string urefSuper = u.super == null ? null : u.super.uRef;
 
-                InterfaceDAO idao = new InterfaceDAO();
                 Interface i = idao.retrieve(id_abstract, uref);
                 InterfaceType ui = lookForInterface(iRef);
 
@@ -640,11 +645,32 @@ namespace HPE_DGAC_LoadDB
                      ss.File_type= sft.fileType.Equals("exe") ? "exe" : "dll";
                      ss.File_name = sft.name ;
                      scdao.insert(ss);
-                }
-                
-          //      uu.Source_code = ui.sources[ui.sources.Length - 1].file[0].contents; // Suppose the existence of only one source with only one file...
 
-             
+                     int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
+                                (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+                     if (size > 0)
+                     {
+                         string[] allRefs = new string[size];
+                         if (ui.externalReferences != null)
+                             ui.externalReferences.CopyTo(allRefs, 0);
+
+                         if (sft.externalDependency != null)
+                             sft.externalDependency.CopyTo(allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+
+                         foreach (string extRef in allRefs)
+                         {
+                             SourceCodeReference ssr = new SourceCodeReference();
+                             ssr.Type_owner = ss.Type_owner;
+                             ssr.Id_owner_container = ss.Id_owner_container;
+                             ssr.Id_owner = ss.Id_owner;
+                             ssr.File_name = ss.File_name;
+                             ssr.Reference = extRef;
+                             scrdao.insert(ssr);
+                         }
+                     }
+
+                }
+/*                
                 EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
                 EnumerationItemUnitDAO eiudao = new EnumerationItemUnitDAO();
                 IList<EnumerationInterface> eis = eidao.listByInterface(id_abstract, uref);
@@ -659,7 +685,7 @@ namespace HPE_DGAC_LoadDB
 
                     eiudao.insert(eiu);
                 }
-                
+*/                
                 UnitDAO udao = new UnitDAO();
                 udao.insert(uu);
             }
@@ -692,6 +718,7 @@ namespace HPE_DGAC_LoadDB
                string urefSuper = u.super == null ? null : u.super.uRef;
 
                InterfaceDAO idao = new InterfaceDAO();
+               SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
                Interface i = idao.retrieve(id_abstract, uref);
                InterfaceType ui = lookForInterface(iRef);
 
@@ -705,6 +732,23 @@ namespace HPE_DGAC_LoadDB
                    ss.File_type = sft.fileType.Equals("exe") ? "exe" : "dll";
                    ss.File_name = sft.name;
                    scdao.update(ss);
+                   foreach (string extRef in sft.externalDependency)
+                   {
+                       SourceCodeReference ssr = new SourceCodeReference();
+                       ssr.Type_owner = ss.Type_owner;
+                       ssr.Id_owner_container = ss.Id_owner_container;
+                       ssr.Id_owner = ss.Id_owner;
+                       ssr.File_name = ss.File_name;
+                       ssr.Reference = extRef;
+                       if (scrdao.retrieve(ssr) != null)
+                       {
+                           scrdao.update(ssr);
+                       }
+                       else
+                       {
+                           scrdao.insert(ssr);
+                       }
+                   }
                }
            }
        }

@@ -15,7 +15,11 @@ public class CommandLineUtil{
   /// </summary>
   /// <param file="path">The string that include the exe name.</param>
   /// <returns>bool</returns>
-    public static bool run_exe(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password, String curDir)
+    public static bool run_exe(IDictionary<string, int> files, 
+                               IDictionary<string, int> enums, 
+                               int session_id, string userName, 
+                               string password, 
+                               String curDir)
     {
      
      System.Diagnostics.Process proc = new System.Diagnostics.Process();
@@ -46,7 +50,13 @@ public class CommandLineUtil{
   /// </summary>
   /// <param path="file">The string that include source name</param>
   /// <returns>bool</returns>
-  public static bool compile_to_exe(string contents, string moduleName, string[] references, string userName, System.Security.SecureString password, String curDir){
+  public static bool compile_to_exe
+      (string contents, 
+       string moduleName, 
+       string[] references,
+       string userName, 
+       string password, 
+       string curDir){
 
           string moduleNameWithoutExtension = moduleName.Split('.')[0];
           
@@ -54,7 +64,7 @@ public class CommandLineUtil{
           string mounted_references = "";
           if (references != null && references.Length > 0)
               foreach (string reference in references)
-                  mounted_references += " -r:" + reference + ".dll";
+                  mounted_references += " -r:\"" + reference + (reference.EndsWith(".dll") ? "" : ".dll") + "\"";
               
           Console.WriteLine(mounted_references);
 
@@ -73,7 +83,7 @@ public class CommandLineUtil{
   /// </summary>
   /// <param name="name">The string that include de source file name, wich will be the key file name. Null means that will be used the default name.</param>
   /// <returns>bool</returns>
-  public static string create_strong_key(string name, string userName, System.Security.SecureString password){
+  public static string create_strong_key(string name, string userName, string password, string curDir){
 
       string nameWithoutExtension = name.Split('.')[0];
 
@@ -81,7 +91,7 @@ public class CommandLineUtil{
 
       if (!File.Exists(snkFileName))
       {
-          runCommand(Constants.key_generator, "-k " + snkFileName, userName, password, null);
+          runCommand(Constants.key_generator, "-k " + snkFileName, userName, password, curDir);
       }
 
       FileStream f = File.Open(snkFileName, FileMode.Open);
@@ -103,7 +113,7 @@ public class CommandLineUtil{
   /// <returns>bool</returns>
   /// 
   public static bool compile_source(string contents, string moduleName, string[] references, 
-		                            string userName, System.Security.SecureString password, String curDir){
+		                            string userName, string password, String curDir){
           string moduleNameWithoutExtension = moduleName.Split('.')[0];
           
           //references
@@ -112,7 +122,7 @@ public class CommandLineUtil{
           if (references != null && references.Length > 0)
               foreach (string reference in references)
               {
-                  mounted_references += " -r:" + reference + ".dll";
+                  mounted_references += " -r:\"" + reference + (reference.EndsWith(".dll") ? "" : ".dll") + "\"";
               }
           Console.WriteLine(mounted_references);
 
@@ -120,7 +130,7 @@ public class CommandLineUtil{
 
           createFile(contents, moduleName);
 
-          runCommand(Constants.cs_compiler, "-r:jefferson.environment.impl.MPIBasicImpl\\IMPIBasicImpl.dll /noconfig /optimize+ -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references + " -r:MPI.NET" + Path.DirectorySeparatorChar + "MPI.dll", userName, password, curDir);
+          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + " -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references, userName, password, curDir);
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }
@@ -139,7 +149,7 @@ public class CommandLineUtil{
   /// </summary>
   /// <param name="assembly">The assembly name</param>
   /// <returns>bool</returns>
-  public static bool gacutil_install(string cuid, string assembly, int gac, string userName, System.Security.SecureString password){
+  public static bool gacutil_install(string cuid, string assembly, int gac, string userName, string password){
 
       // runCommand(Constants.gac_util, "-u " + assembly);
       runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid, userName, password, null);
@@ -153,7 +163,7 @@ public class CommandLineUtil{
   /// </summary>
   /// <param name="assemblyPath">The assembly path</param>
   /// <returns>bool</returns>
-  public static bool gacutil_uninstall(string assembly, string userName, System.Security.SecureString password){
+  public static bool gacutil_uninstall(string assembly, string userName, string password){
 
       runCommand(Constants.gac_util, "-u " + assembly, userName, password, null);
 
@@ -172,21 +182,30 @@ public class CommandLineUtil{
         return runCommand(cmd, args, null, null, null);			
     }
 
-    public static int runCommand(string cmd, string args, string userName, System.Security.SecureString password, String curDir)
+    public static int runCommand(string cmd, string args, string userName, string password_, String curDir)
     {
 
         int ExitCode;
 
+        System.Security.SecureString password = null;
+
+        if (password_ != null)
+        {
+            password = new System.Security.SecureString();
+            foreach (char c in password_)
+                password.AppendChar(c);
+            password.MakeReadOnly();
+        }
+
         System.Diagnostics.Process proc = new System.Diagnostics.Process();
         proc.EnableRaisingEvents = false;
         proc.StartInfo.CreateNoWindow = true;
-        proc.StartInfo.WorkingDirectory = Path.Combine("~" + userName, curDir);
         proc.StartInfo.UseShellExecute = false;
         proc.StartInfo.FileName = cmd;
         proc.StartInfo.Arguments = args;
         if (userName != null) proc.StartInfo.UserName = userName;
         if (password != null) proc.StartInfo.Password = password;
-        if (curDir != null) proc.StartInfo.WorkingDirectory = curDir;
+        if (curDir != null) proc.StartInfo.WorkingDirectory = Path.Combine("~" + userName, curDir);
 
         Console.WriteLine(userName + " runs: " + cmd + args);
 

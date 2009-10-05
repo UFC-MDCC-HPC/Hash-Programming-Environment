@@ -125,6 +125,40 @@ namespace DGAC.database
             dbcmd = null;
             return u;
         }
+
+        // ASSUMPTION: There is only one enumerator with a given variable linked to a given unit.
+
+        internal EnumerationSlice retrieveByVar(int id_abstract, string id_inner, string interface_slice, string varId)
+        {
+            EnumerationSlice u = null;
+            IDbConnection dbcon = Connector.DBcon;
+            IDbCommand dbcmd = dbcon.CreateCommand();
+            string sql =
+                "SELECT ES.* " +
+                "FROM hashmodel.enumeration_slice as ES, hashmodel.enumerator as E " +
+                "WHERE ES.id_abstract=" + id_abstract + " AND " +
+                "ES.id_inner like '" + id_inner + "' AND " +
+                "ES.id_interface_slice like '" + interface_slice + "' AND " +
+                "E.variable like '" + varId + "' AND " + 
+                "E.id_enumerator = ES.id_enumerator AND E.id_abstract = ES.id_abstract";
+            dbcmd.CommandText = sql;
+            IDataReader reader = dbcmd.ExecuteReader();
+            if (reader.Read())
+            {
+                u = new EnumerationSlice();
+                u.Id_abstract = (int)reader["id_abstract"];
+                u.Id_enumerator = (string)reader["id_enumerator"];
+                u.Id_interface_slice = (string)reader["id_interface_slice"];
+                u.Id_inner = (string)reader["id_inner"];
+                u.Id_split_replica = (int)reader["id_split_replica"];
+            }//while
+            // clean up
+            reader.Close();
+            reader = null;
+            dbcmd.Dispose();
+            dbcmd = null;
+            return u;
+        }
     }
 
 }

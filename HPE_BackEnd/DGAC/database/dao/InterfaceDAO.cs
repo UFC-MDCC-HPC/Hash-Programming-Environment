@@ -16,8 +16,8 @@ public class InterfaceDAO{
     public void insert(Interface ac)
     {
         String sql =
-            "INSERT INTO hashmodel.interface (id_interface, id_abstract, assembly_string, id_interface_super, class_name, class_nargs, uri_source, source_code, `order`)" +
-            " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.Assembly_string + "','" + ac.Id_interface_super + "','" + ac.Class_name + "'," + ac.Class_nargs + ",'" + ac.URI_Source + "','" + ac.Source_code + "'," + ac.Order + ")";
+            "INSERT INTO hashmodel.interface (id_interface, id_abstract, assembly_string, id_interface_super, class_name, class_nargs, uri_source, `order`)" +
+            " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.Assembly_string + "','" + ac.Id_interface_super + "','" + ac.Class_name + "'," + ac.Class_nargs + ",'" + ac.URI_Source + "'," + ac.Order + ")";
 
         Connector.performSQLUpdate(sql);
     }
@@ -30,7 +30,7 @@ public class InterfaceDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, source_code, `order` " +
+           "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
            "FROM interface "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
            "id_abstract=" + id_abstract;
@@ -54,8 +54,8 @@ public class InterfaceDAO{
            i.Class_name = (string)reader["class_name"];
            i.Class_nargs = (int)reader["class_nargs"];
            i.URI_Source = (string)reader["uri_source"];
-           i.Source_code = (string)reader["source_code"];
            i.Order = (int)reader["order"];
+           // i.ExternalReferences = 
        }
        else
        {
@@ -77,7 +77,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, source_code, `order` " +
+            "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract;
         dbcmd.CommandText = sql;
@@ -100,7 +100,6 @@ public class InterfaceDAO{
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
             i.URI_Source = (string)reader["uri_source"];
-            i.Source_code = (string)reader["source_code"];
             i.Order = (int)reader["order"];
             iList.Add(i);
         }
@@ -166,7 +165,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, source_code, `order` " +
+            "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
             "FROM interface " +
             "WHERE class_name like '" + library_path + "'";
         dbcmd.CommandText = sql;
@@ -189,7 +188,6 @@ public class InterfaceDAO{
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
             i.URI_Source = (string)reader["uri_source"];
-            i.Source_code = (string)reader["source_code"];
             i.Order = (int)reader["order"];
         }
         else

@@ -20,6 +20,7 @@ namespace DGAC.database
 
         public IList<SourceCode> list(char type_owner, int id_owner_container, string id_owner)
         {
+            SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
             IList<SourceCode> list = new List<SourceCode>();
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
@@ -37,7 +38,7 @@ namespace DGAC.database
                 sc.Id_owner = (string)reader["id_owner"];
                 sc.Contents = (string)reader["contents"];
                 sc.File_name = (string)reader["file_name"];
-                sc.File_type = (string)reader["file_type"];
+                sc.File_type = (string)reader["file_type"];               
 
                 list.Add(sc);
             }//while

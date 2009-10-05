@@ -2,7 +2,9 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
-
+using DGAC.utils;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace DGAC.database{
 
@@ -59,13 +61,6 @@ public class Interface {
     
     private int id_abstract;
 	private string assembly_string;
-    private string source_code = null;
-
-    public string Source_code
-    {
-        get { return source_code; }
-        set { source_code = value; }
-    }
 
     private string class_name; // Nome da interface no Front-End.
 
@@ -113,10 +108,14 @@ public class Interface {
         set {assembly_string = value;}
     }
 
+
+
+
     public IList<string> References
     {
-        get {
-            return fetchReferences(new Dictionary<string,AbstractComponentFunctorApplication>());
+        get
+        {
+            return fetchReferences(new Dictionary<string, AbstractComponentFunctorApplication>());
         }
     }
 
@@ -147,7 +146,7 @@ public class Interface {
         }
 
         // Traverse slices.
-        IList<Slice> slices = sdao.list(Id_abstract, Id_interface);
+        IList<Slice> slices = sdao.listByInterface(Id_abstract, Id_interface);
 
         foreach (Slice s in slices)
         {

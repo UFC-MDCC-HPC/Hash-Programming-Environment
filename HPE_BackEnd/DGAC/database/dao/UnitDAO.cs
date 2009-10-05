@@ -43,8 +43,8 @@ public class UnitDAO{
     public void insert(Unit ac)
     {
         String sql =
-            "INSERT INTO hashmodel.unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, source_code, `order`)" +
-            " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_interface_abstract + ",'" + ac.Id_interface_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "',"+  ac.Id_index + ",'" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"','" + ac.Source_code +"'," + ac.Order + ")";
+            "INSERT INTO hashmodel.unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, `order`)" +
+            " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_interface_abstract + ",'" + ac.Id_interface_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "',"+  ac.Id_index + ",'" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"'," + ac.Order + ")";
 
         Connector.performSQLUpdate(sql);
     }
@@ -55,7 +55,7 @@ public class UnitDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_unit, id_concrete, id_interface,id_abstract, assembly_string, `order`, id_unit_super, id_index, class_name, class_nargs, uri_source, source_code " +
+           "SELECT id_unit, id_concrete, id_interface,id_abstract, assembly_string, `order`, id_unit_super, id_index, class_name, class_nargs, uri_source " +
            "FROM unit "+
            "WHERE id_concrete="+id_concrete + " " +
            "ORDER BY id_unit, id_index";
@@ -77,7 +77,6 @@ public class UnitDAO{
            u.Class_name = (string)reader["class_name"];
            u.Class_nargs = (int)reader["class_nargs"];
            u.URI_Source = (string)reader["uri_source"];
-           u.Source_code = (string)reader["source_code"];
            u.Order = (int)reader["order"];
            list.Add(u);
        }//while
@@ -97,7 +96,7 @@ public class UnitDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, source_code " +
+            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source " +
             "FROM hashmodel.unit " +
             "WHERE id_concrete=" + id_concrete + " AND " + 
             "id_unit like '" + id_unit + "'" /*+ " AND " +
@@ -117,7 +116,6 @@ public class UnitDAO{
             u.Class_name = (string)reader["class_name"];
             u.Class_nargs = (int)reader["class_nargs"];
             u.URI_Source = (string)reader["uri_source"];
-            u.Source_code = (string)reader["source_code"];
             u.Order = (int)reader["order"];
         }
         else
@@ -142,7 +140,7 @@ public class UnitDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, source_code " +
+            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source " +
             "FROM hashmodel.unit " +
             "WHERE id_concrete=" + id_concrete + " AND " +
             "id_unit like '" + id_unit +"'";
@@ -162,7 +160,6 @@ public class UnitDAO{
             u.Class_name = (string)reader["class_name"];
             u.URI_Source = (string)reader["uri_source"];
             u.Order = (int)reader["order"];
-            u.Source_code = (string)reader["source_code"];
             l.Add(u);
         }
 
@@ -203,7 +200,7 @@ public class UnitDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_unit, id_concrete, id_interface, id_abstract, assembly_string, id_unit_super, id_index, `order`, class_name, class_nargs, uri_source, source_code " +
+            "SELECT id_unit, id_concrete, id_interface, id_abstract, assembly_string, id_unit_super, id_index, `order`, class_name, class_nargs, uri_source" +
             "FROM hashmodel.unit " +
             "WHERE id_concrete=" + Id_concrete + " AND " +
             "`order` = " + order /*+ " AND " +
@@ -224,7 +221,6 @@ public class UnitDAO{
             u.Class_name = (string)reader["class_name"];
             u.Class_nargs = (int)reader["class_nargs"];
             u.URI_Source = (string)reader["uri_source"];
-            u.Source_code = (string)reader["source_code"];
             u.Order = (int)reader["order"];
         }
         else

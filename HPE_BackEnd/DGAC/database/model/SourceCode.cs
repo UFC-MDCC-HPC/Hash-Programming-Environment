@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DGAC.utils;
+using System.IO;
 
 namespace DGAC.database
 {
@@ -47,6 +49,44 @@ namespace DGAC.database
         {
           get { return file_type; }
           set { file_type = value; }
+        }
+
+        private IList<string> externalReferences = null;
+
+        public IList<string> ExternalReferences
+        {
+            get
+            {
+                SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
+                if (externalReferences == null)
+                {
+                    externalReferences = scrdao.listRefs(this);
+                }
+                return resolveExternalReferences();
+            }
+        }
+
+
+        private IList<string> resolveExternalReferences()
+        {
+            IList<string> returnExternalReferences = new List<string>();
+
+            IDictionary<string, ReferenceType> refList = FileUtil.loadExternalReferences();
+
+            foreach (string extRef in this.externalReferences)
+            {
+                ReferenceType pathRef;
+                string path;
+                if (refList.TryGetValue(extRef, out pathRef))
+                    path = pathRef.path;
+                else
+                {
+                    path = Constants.UNIT_PACKAGE_PATH;
+                    Console.Error.WriteLine("External reference " + extRef + " not found. Using default " + path + ".");
+                }
+                returnExternalReferences.Add(path + Path.DirectorySeparatorChar + extRef + ".dll");
+            }
+            return returnExternalReferences;
         }
 
     }

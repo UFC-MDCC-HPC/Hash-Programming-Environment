@@ -36,17 +36,9 @@ namespace Back_End_WS
          * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
          * passado ao DGAC 
          */
-        public string deployHashComponent(byte[] data, string userName, string password_)
+        public string deployHashComponent(byte[] data, string userName, string password, string curDir)
         {
-			System.Security.SecureString password = null;
 			
-			if (password_ != null) {
-			   password = new System.Security.SecureString();
-			   foreach (char c in password_) 
-			   	  password.AppendChar(c);
-			}
-			
-			password.MakeReadOnly();
 		
             try
             {
@@ -57,9 +49,9 @@ namespace Back_End_WS
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
                     if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
-                        dgac.registerConcreteComponent(c, userName, password);
+                        dgac.registerConcreteComponent(c, userName, password, curDir);
                     else
-                        dgac.registerAbstractComponent(c, userName, password);
+                        dgac.registerAbstractComponent(c, userName, password, curDir);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -80,22 +72,13 @@ namespace Back_End_WS
         }
 
         [WebMethod]
-        public string[] runApplication(int id_concrete, string[] eIds, int[] eVls, string userName, string password_)
+        public string[] runApplication(int id_concrete, string[] eIds, int[] eVls, string userName, string password, string curDir)
         {
-			System.Security.SecureString password = null;
-			
-			if (password_ != null) {
-			   password = new System.Security.SecureString();
-			   foreach (char c in password_) 
-			   	  password.AppendChar(c);
-			}
-			
-			password.MakeReadOnly();
 			
             string[] str_output = null;
             try
             {
-                str_output = dgac.runApplication(id_concrete, eIds, eVls, userName, password);
+                str_output = dgac.runApplication(id_concrete, eIds, eVls, userName, password, curDir);
             }
             catch (Exception e)
             {

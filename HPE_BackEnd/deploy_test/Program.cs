@@ -129,7 +129,7 @@ namespace Back_End_Test
             {
                 FileUtil.saveByteArrayIntoFile(data, path);
                 ComponentType c = LoaderApp.DeserializeObject(path);
-                dgac.registerAbstractComponent(c);
+                dgac.registerAbstractComponent(c,null,null,null);
             }
 
             return "ok";
@@ -144,7 +144,7 @@ namespace Back_End_Test
             {
                 FileUtil.saveByteArrayIntoFile(data, path);
                 ComponentType c = LoaderApp.DeserializeObject(path);
-                dgac.registerConcreteComponent(c);
+                dgac.registerConcreteComponent(c,null,null,null);
             }
 
             return "ok";

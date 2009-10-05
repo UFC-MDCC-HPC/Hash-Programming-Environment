@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using hpe.kinds;
 
 namespace hpe.basic
 {
@@ -13,6 +14,8 @@ namespace hpe.basic
 	{
         int Id_concrete {set; get;}
         int Id_functor_app { set; get; }
+        int Id_abstract { set; get; }
+        string Id_interface { set; get; }
 
         int GlobalRank { set; get; }                        // The rank of the process (application) where the unit is placed on
 
@@ -45,5 +48,8 @@ namespace hpe.basic
 
         void addSlice(IUnit slice);
 
+        bool getPermutation(string varid, out hpe.kinds.IEnumeratorKind permutation);
+
+        void addPermutation(string varid, hpe.kinds.IEnumeratorKind u);
     }
 }

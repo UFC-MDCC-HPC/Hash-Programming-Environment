@@ -15,4 +15,8 @@ namespace hpe.kinds
 	{
 		 
 	}
+	
+	public abstract class Architecture : Unit {
+	   
+	}
 }

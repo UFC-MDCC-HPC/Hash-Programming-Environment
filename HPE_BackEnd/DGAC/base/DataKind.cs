@@ -14,4 +14,9 @@ namespace hpe.kinds
     public interface IDataStructureKind : IUnit
 	{
 	}
+	
+	public abstract class DataStructure : Unit {
+	   
+	}
+	
 }

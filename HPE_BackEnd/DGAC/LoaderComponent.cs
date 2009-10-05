@@ -118,6 +118,10 @@ namespace HPE_DGAC_LoadDB
      //       else
      //       {   // FIND functor-app-of image 
                 AbstractComponentFunctor a = lookForAbstractComponentFunctor(c.hash_component_UID);
+                if (a == null)
+                {
+                    return null;
+                }
 
                 // CREATE AbstractComponentFunctorApplication
 
@@ -163,6 +167,10 @@ namespace HPE_DGAC_LoadDB
                             // Look for the inner component that supplies that parameter.
                             InnerComponentType inner = lookForInnerComponent(cRef);
                             AbstractComponentFunctorApplication cPar = newAbstractComponentFunctorApplication(inner);
+                            if (cPar == null)
+                            {
+                                throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (context actual parameter) : " + inner.name);
+                            }
                             ((SupplyParameterComponent)p_).Id_functor_app_actual = cPar.Id_functor_app;
                         }
                         else

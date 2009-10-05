@@ -12,10 +12,12 @@ namespace hpe.kinds
 
 
     public interface IComputationKind : IUnit
-	{
-		
-		
-		void compute();
-		
+	{	
+		void compute();		
 	}
+	
+	public abstract class Computation : Unit {
+	   
+	}	
+	
 }

@@ -23,7 +23,23 @@ namespace hpe.basic
             set { id_concrete = value; }
         }
 
-        private IDictionary<string, int> actual_parameters = new Dictionary<string,int>();
+        private string id_interface;
+
+        public string Id_interface
+        {
+            get { return id_interface; }
+            set { id_interface = value; }
+        }
+
+        private int id_abstract;
+
+        public int Id_abstract
+        {
+            get { return id_abstract; }
+            set { id_abstract = value; }
+        }
+
+        private IDictionary<string, int> actual_parameters = new Dictionary<string, int>();
         private IDictionary<string, int> actual_parameters_top = new Dictionary<string, int>();
 
         public IDictionary<string, int> ActualParameters
@@ -123,7 +139,7 @@ namespace hpe.basic
                 {
                     ICollection<string> eKeysPeer = EnumRanks[i].Keys;
                     ICollection<string> eKey = EnumRank.Keys;
-                    if (eKeysPeer.Count == eKeysPeer.Count)
+                    if (eKeysPeer.Count == eKey.Count)
                     {
                         bool flag = true;
                         foreach (string k in eKeysPeer)                        
@@ -236,5 +252,26 @@ namespace hpe.basic
             get { return id_functor_app; }
             set { id_functor_app = value; }
         }
+
+        private IDictionary<string, hpe.kinds.IEnumeratorKind> permutations = null;
+
+        public bool getPermutation(string id_enumerator, out hpe.kinds.IEnumeratorKind permutation)
+        {
+            if (permutations == null)
+                permutations = new Dictionary<string, hpe.kinds.IEnumeratorKind>();
+            return permutations.TryGetValue(id_enumerator, out permutation);
+        }
+
+        public void addPermutation(string id_enumerator, hpe.kinds.IEnumeratorKind u) 
+        {
+            if (permutations == null)
+                permutations = new Dictionary<string, hpe.kinds.IEnumeratorKind>();
+            permutations.Add(id_enumerator, u);
+            u.V = id_enumerator;
+        }
+
+
+
+
     }
 }

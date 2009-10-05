@@ -29,14 +29,15 @@ namespace DGAC.database
 					
 			    Console.WriteLine("Starting Worker");
 		            TcpChannel ch = new TcpChannel(this.port);
+                    
 		            ChannelServices.RegisterChannel (ch,true);
-					
-		            
 		       
 		            ServerObject so = new ServerObject();
 		            string serviceName = Constants.SERVICE_NAME;
 		            RemotingServices.Marshal(so,serviceName);
-		
+
+                   // ch.StartListening(null);
+
 		            Console.WriteLine("Worker " + serviceName + " Running on port " + port + " and ip {0} "+addr[0].ToString());
 		            Console.ReadLine();
 		

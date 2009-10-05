@@ -3,6 +3,8 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 
 namespace DGAC.utils{
@@ -94,8 +96,27 @@ public class FileUtil{
   	return res;
   }
 
+  private static IDictionary<string, string> defaultProperties = loadDefaultProperties();
+
+  private static IDictionary<string, string> loadDefaultProperties()
+  {
+      IDictionary<string, string> defaultProperties = new Dictionary<string, string>();
+      defaultProperties.Add("external_references_file", Environment.CurrentDirectory + Path.DirectorySeparatorChar + "externalReferences.xml");
+      defaultProperties.Add("cs_compiler", "gmcs");
+      defaultProperties.Add("cs_compiler_flags", "");
+      defaultProperties.Add("cli_runtime", "mono");
+      defaultProperties.Add("gac_util", "gacutil");
+      defaultProperties.Add("mpi_run", "mpirun");
+      // etc ... add !
+      return defaultProperties;
+  }
+        
+
+
    public static string readConstant(string property) {
-       return readConstant(property, null);
+       string defaultValue;
+       defaultProperties.TryGetValue(property, out defaultValue);
+       return readConstant(property, defaultValue);
    }
 
   public static string readConstant(string property, string default_value)
@@ -122,7 +143,43 @@ public class FileUtil{
       return default_value;
   }
 
+
+
+
+
   
+
+  public static IDictionary<string, ReferenceType> loadExternalReferences()
+  {
+      Dictionary<string, ReferenceType> d = new Dictionary<string, ReferenceType>();
+      string filename = Constants.externalRefsFile;
+
+      // Create an instance of the XmlSerializer specifying type and namespace.
+      XmlSerializer serializer = new XmlSerializer(typeof(ReferenceListType));
+
+      // A FileStream is needed to read the XML document.
+      FileStream fs = new FileStream(filename, FileMode.Open);
+
+      XmlReader reader = new XmlTextReader(fs);
+
+
+      // Declare an object variable of the type to be deserialized.
+      ReferenceListType i;
+
+      // Use the Deserialize method to restore the object's state.
+      i = (ReferenceListType)serializer.Deserialize(reader);
+
+      foreach (ReferenceType extRef in i.reference)
+      {
+          d.Add(extRef.destailedName, extRef);
+      }
+
+      fs.Close();
+
+      return d;
+
+  }
+
 }//fileutil
 
 }//namespace

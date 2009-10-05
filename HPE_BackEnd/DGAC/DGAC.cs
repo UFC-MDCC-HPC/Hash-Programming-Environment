@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.IO;
 using System.Net;
 using System.Runtime.Remoting;
@@ -13,6 +13,7 @@ using DGAC.utils;
 using DGAC.database;
 using System.Data;
 
+
 namespace DGAC
 {
 
@@ -20,10 +21,10 @@ namespace DGAC
     public interface IBackEnd
     {
 
-        void registerConcreteComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir);
-        void registerAbstractComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir);
+        void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir);
+        void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir);
         void deleteComponent(String ID);
-        String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, System.Security.SecureString password, string curDir);
+        String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir);
         EnvironmentType readEnvironment();
 
     }//IDGAC
@@ -45,7 +46,7 @@ namespace DGAC
             this.hosts = FileUtil.readProperty("host");
 
             //creating the channel
-            TcpChannel ch;
+            TcpChannel ch;   
             try
             {
                 ch = new TcpChannel(this.channel);
@@ -76,7 +77,7 @@ namespace DGAC
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
         //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
         //o qual será enviado aos workers		
-        public void registerAbstractComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir)
+        public void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
         {
             Connector.openConnection();
             Connector.beginTransaction();
@@ -153,7 +154,7 @@ namespace DGAC
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
         //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
         //o qual será enviado aos workers		
-        public void registerConcreteComponent(ComponentType ct, string userName, System.Security.SecureString password, string curDir)
+        public void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
         {
 
             Connector.openConnection();
@@ -231,13 +232,13 @@ namespace DGAC
         }
 
 
-        private string sendCompileCommandToWorker(string library_path, object remoteObject, string contents, string moduleName, string[] refs, int outFile, string userName, System.Security.SecureString password, string curDir)
+        private string sendCompileCommandToWorker(string library_path, object remoteObject, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
         {
             ServerObject worker = (ServerObject)remoteObject;
             return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password, curDir);
         }
 
-        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password, String curDir)
+        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, string password, String curDir)
         {
             ServerObject worker = (ServerObject)remoteObject;
             worker.runClass(files, enums, session_id, userName, password, curDir);
@@ -265,9 +266,9 @@ namespace DGAC
             int id_concrete = c.Id_concrete;
 
             pmain.Id_concrete = id_concrete;
+            pmain.Id_interface = my_id_unit;
 
             AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(id_abstract);
 
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();
@@ -297,6 +298,8 @@ namespace DGAC
             pmain.Units = new Dictionary<string, IList<int>>();
             IList<IDictionary<string, int>> pmain_EnumRanks = new List<IDictionary<string, int>>();
             IList<int> pmain_Ranks = new List<int>();
+
+            IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(id_abstract);
 
             foreach (string id_unit in id_units_ordered)
             {
@@ -343,6 +346,7 @@ namespace DGAC
                     foreach (int eVal in eIXs)
                     {
                         pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
+                       // ???? insertEnumeratorFusions(o, id_unit_slice, pmain_EnumRanks[rank]);
                     }
                     pmain_Ranks.Add(rank);
                     ranks.Add(rank);
@@ -471,17 +475,26 @@ namespace DGAC
             }
         }
 
-        private static KeyValuePair<string, int> findReplicator(KeyValuePair<string, int> re,
-                                                                Slice s,
-                                                                InnerComponent ic,
-                                                                IDictionary<string, int> enumeratorCardinality,
-                                                                out IDictionary<string, int> enumeratorCardinality_return)
+        private static void dictReplaceKey(IDictionary<string,int> dict, string key, int value) 
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict.Remove(key);
+            }
+            dict.Add(key, value);
+        }
+
+        private static bool findReplicator(hpe.basic.IUnit unit, KeyValuePair<string, int> re,
+                                           Slice s,
+                                           InnerComponent ic,
+                                           IDictionary<string, int> enumeratorCardinality,
+                                           out IDictionary<string, int> enumeratorCardinality_return,
+                                           out KeyValuePair<string, int> replicator)
         {
             int id_abstract = ic.Id_abstract_owner;
             string id_inner = ic.Id_inner;
             string id_unit = s.Id_interface_slice;
             IDictionary<string, int> enumeratorCardinality_prime = new Dictionary<string, int>();
-
 
             // LOOK FOR THE ORIGINAL REPLICATOR FROM THE INNER COMPONENT THAT HAS BEEN SPLITTED...
             string re_Key;
@@ -492,24 +505,32 @@ namespace DGAC
             if (es != null && s.Id_split_replica > 0)
             {
                 re_Key = es.Id_enumerator;
-                re_Value = es.mapSplitEnumerationValue(re.Value, enumeratorCardinality, enumeratorCardinality_prime);
+                re_Value = es.mapSplitEnumerationValue(unit, re_Key, re, s, enumeratorCardinality, enumeratorCardinality_prime);
             }
             else
             {
                 re_Key = re.Key;
                 re_Value = re.Value;
-                foreach (KeyValuePair<string, int> ke in enumeratorCardinality)
-                    enumeratorCardinality_prime.Add(ke);
             }
+
+
+            foreach (KeyValuePair<string, int> ke in enumeratorCardinality)
+                dictReplaceKey(enumeratorCardinality_prime, ke.Key, ke.Value);
+
+           // if (!enumeratorCardinality_prime.ContainsKey(ke.Key))
+            //    {
+            //        enumeratorCardinality_prime.Add(ke);
+            //    }
+
+            string id_inner_container = id_inner;
+            IList<string> id_inner_container_list = new List<string>();
+            IList<SliceExposed> seMap = new List<SliceExposed>();
 
             // FIND THE ORIGINAL REPLICATOR OF THE INNER COMPONENT THAT HAS BEEN FUSED.
             EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
-            EnumeratorMapping em = null;
+//            EnumeratorMapping em = null;
 
             IList<SliceExposed> lse = null;
-            SliceExposed se = null;
-            string id_inner_container = id_inner;
-            IList<string> id_inner_container_list = new List<string>();
             if (ic.Transitive)
             {
                 SliceExposedDAO sedao = new SliceExposedDAO();
@@ -520,18 +541,8 @@ namespace DGAC
                     id_inner_container = se_.Id_inner_owner;
                     id_inner_container_list.Add(id_inner_container);
 
-                    se = se_;
-                    EnumeratorMapping em_ = emdao.retrieve(id_abstract, id_inner_container, re_Key);
-                    if (em_ != null)
-                    {
-                        em = em_;
-                        //   break;
-                    }
+                    seMap.Add(se_);
                 }
-            }
-            else
-            {
-                em = emdao.retrieve(id_abstract, id_inner_container, re_Key);
             }
 
             if (id_inner_container_list.Count == 0)
@@ -541,9 +552,6 @@ namespace DGAC
 
 
             string re_Key_before = re_Key;
-
-            if (em != null)
-                re_Key = em.Id_enumerator_inner;
 
             int cc = -1;
             foreach (string id_inner_container_ in id_inner_container_list)
@@ -558,9 +566,10 @@ namespace DGAC
             }
             if (cc < 0)
             {
-                throw new Exception("prefix not found: ");
+                replicator = new KeyValuePair<string,int>();
+                enumeratorCardinality_return = enumeratorCardinality;
+                return false;                
             }
-
 
             IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
 
@@ -569,25 +578,37 @@ namespace DGAC
             {
                 if (ke.Key.Equals(re_Key_before))
                 {
-                    enumeratorCardinalityTemp.Add(re_Key, ke.Value);
+                    dictReplaceKey(enumeratorCardinalityTemp, re_Key, ke.Value); 
+                    
+//                    if (!enumeratorCardinalityTemp.ContainsKey(re_Key))
+//                    {
+//                        enumeratorCardinalityTemp.Add(re_Key, ke.Value);                        
+//                    }
                 }
                 else
                 {
                     string re_Key_ = ke.Key;
                     int re_Value_ = ke.Value;
-                    EnumeratorMapping em_ = emdao.retrieve(id_abstract, id_inner_container, re_Key_);
-
-                    if (em_ != null)
-                        re_Key_ = em_.Id_enumerator_inner;
 
                     int cc_ = re_Key_.IndexOf(id_inner_container + ".");
                     if (cc_ >= 0)
                     {
                         re_Key_ = re_Key_.Substring(cc_ + (id_inner_container + ".").Length);
                         re_Value_ = ke.Value;
-                        enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                        dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
+                       // if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
+                       // {
+                       //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                       // }
                     }
-
+                    else
+                    {
+                        dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
+                        //if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
+                        //{
+                       //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                       // }
+                    }
                 }
             }
 
@@ -595,7 +616,7 @@ namespace DGAC
 
             KeyValuePair<string, int> ke_prime = new KeyValuePair<string, int>(re_Key, re_Value);
 
-            if (ic.Transitive && se != null)     // in fact, ic.Transitive <=> se != null
+            if (ic.Transitive && seMap.Count > 0)     // in fact, ic.Transitive <=> se != null
             {
                 InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
                 InnerComponentExposed ice = icedao.retrieve(id_abstract, id_inner_container, id_inner);
@@ -605,14 +626,69 @@ namespace DGAC
                 InnerComponent ic_prime = icdao.retrieve(ic_owner.Id_abstract_inner, ice.Id_inner);
 
                 SliceDAO sdao = new SliceDAO();
-                Slice s_prime = sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice, se.Id_interface_slice_owner);
+                Slice s_prime = null;
 
-                return findReplicator(ke_prime, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return);
+                foreach (SliceExposed se in seMap) {
+                    s_prime = sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice, se.Id_interface_slice_owner);
+                    if (s_prime != null) 
+                        break;
+                    else
+                        Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
+                }
+
+                IList<EnumeratorMapping> emList = emdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
+
+                int kkk;
+                enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
+
+
+                foreach (EnumeratorMapping em in emList)
+                {
+                    dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
+//                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
+//                    {
+//                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
+//                    }
+                }
+
+                    
+                foreach (EnumeratorMapping em in emList)
+                {
+                    KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string,int>(em.Id_enumerator_inner,ke_prime.Value);
+                    if (findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
+                    {
+                        return true;
+                    }
+                }
+                    
+                replicator = new KeyValuePair<string, int>(); ;
+
+                enumeratorCardinality_return = new Dictionary<string, int>();
+
+                return false;
             }
             else
             {
+                replicator = ke_prime;
+
+                IList<EnumeratorMapping> emList = emdao.list(ic.Id_abstract_inner, ke_prime.Key);
+
+                int kkk;
+                enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
+
+                foreach (EnumeratorMapping em in emList)
+                {
+                    dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
+
+//                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
+//                    {
+//                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
+//                    }
+                }
+
                 enumeratorCardinality_return = enumeratorCardinality_prime;
-                return ke_prime;
+
+                return true;
             }
 
         }
@@ -680,35 +756,24 @@ namespace DGAC
             
         }
 
-        
-
-        /* REMARK: The type params MUST be provided externally, because the actual type information is not in the DGAC's database.
-         */
-
-        public static hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
-                                                  string hash_component_uid,
-                                                  string id_inner,
-                                                  string id_interface,
-                                                  Type[] typeParams
-                                                 )
+        public static hpe.basic.IUnit loadImpl(hpe.basic.IUnit unit,
+                                       Component c,
+                                       string id_inner,
+                                       string id_interface,
+                                       Type[] typeParams)
         {
-
-    //        Connector.openConnection();
-            ComponentDAO cdao = new ComponentDAO();
-            Component c = cdao.retrieve_uid(hash_component_uid);
+            //        Connector.openConnection();
 
 
-           // Console.WriteLine(unit.GlobalRank + ": CREATE SLICE BEGIN !!! " + c.Library_path + " : " + id_inner + " : " + id_interface);
+            // Console.WriteLine(unit.GlobalRank + ": CREATE SLICE BEGIN !!! " + c.Library_path + " : " + id_inner + " : " + id_interface);
 
             int id_abstract = c.Id_abstract;
-
             database.Unit u = LoaderApp.resolveImpl(unit, c.Id_concrete, id_inner, id_interface);
 
             if (u == null)
             {
                 throw new ConcreteComponentNotFoundException(id_abstract, id_inner, c.Id_functor_app);
             }
-
 
             string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
             string class_name = u.Class_name;  // the name of the class inside the DLL.
@@ -726,11 +791,30 @@ namespace DGAC
             hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
             o.Id_concrete = u.Id_concrete;
-
+            o.Id_interface = u.Id_interface_interface;
             o.ContainerSlice = unit;
-
             o.GlobalRank = unit.GlobalRank;
 
+            return o;
+        }
+
+        /* REMARK: The type params MUST be provided externally, because the actual type information is not in the DGAC's database.
+         */
+
+        public static hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
+                                                  string hash_component_uid,
+                                                  string id_inner,
+                                                  string id_interface,
+                                                  Type[] typeParams
+                                                 )
+        {
+
+            ComponentDAO cdao = new ComponentDAO();
+            Component c = cdao.retrieve_uid(hash_component_uid);
+            int id_abstract = c.Id_abstract;
+
+            hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, typeParams); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
+            
             // Configure the knowledge of the slices about the topology.
 
             EnumerationSliceDAO esdao = new EnumerationSliceDAO();
@@ -738,22 +822,64 @@ namespace DGAC
 
             IDictionary<string, int> eix_inner = new Dictionary<string, int>();
 
+            EnumeratorDAO edao = new EnumeratorDAO();
+
+            Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
+
+            IDictionary<string,IList<KeyValuePair<string,int>>> enumsByVars= new Dictionary<string,IList<KeyValuePair<string,int>>>();
             foreach (KeyValuePair<string, int> index in unit.EnumRank)
             {
-                //string eix = index.Key.Substring(index.Key.IndexOf(".") + 1);
-                string eix = index.Key;
-                int val = index.Value;
-
-                // Check if the slice is enumerated by eix.
-                EnumerationSlice es = esdao.retrieve(id_abstract, id_inner, id_interface, eix);
-                if (es == null)      // If not, the inner component must be. Otherwise, this is stuck configuration.
-                {
-                    EnumerationInner ei = eidao.retrieve(id_abstract, id_inner, eix);
-                    if (ei != null)
-                        eix_inner.Add(eix, val);
-                    else
-                        throw new Exception("UNEXPECTED CONDITION: Stuck Configuration ...");
+                Enumerator e = edao.retrieve(id_abstract, index.Key);
+                if (enumsByVars.ContainsKey(e.Variable)) {
+                    IList<KeyValuePair<string,int>> l;
+                    enumsByVars.TryGetValue(e.Variable, out l);
+                    l.Add(index);
+                } else {
+                    IList<KeyValuePair<string,int>> l = new List<KeyValuePair<string,int>>();
+                    l.Add(index);
+                    enumsByVars.Add(e.Variable,l);
                 }
+            }
+
+            Console.WriteLine(" ------ enumByVars has " + enumsByVars.Count + " elements");
+
+            foreach (KeyValuePair<string, IList<KeyValuePair<string,int>>> k in enumsByVars)
+            {
+                int found = 0;
+                foreach (KeyValuePair<string, int> index in k.Value)
+                {
+                    string eix = index.Key;
+                    int val = index.Value;
+
+                    // Check if the slice is enumerated by eix.
+                    EnumerationSlice es = esdao.retrieve(id_abstract, id_inner, id_interface, eix);
+                    if (es == null)      // If not, the inner component must be. Otherwise, this is stuck configuration.
+                    // REMARK: With enumerators, this is possible now.
+                    {
+                        EnumerationInner ei = eidao.retrieve(id_abstract, id_inner, eix);
+                        if (ei != null)
+                        {
+                            eix_inner.Add(eix, val);
+                            found++;
+                        }
+                    }
+                    else
+                    {
+                        found++;
+                    }
+                }
+                if (found == 0)
+                {
+                    Console.WriteLine("k.Key = " + k.Key);
+
+                    foreach (KeyValuePair<string, int> xxx in k.Value)
+                    {
+                        Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
+                    }
+                    throw new Exception("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
+                }
+
+
             }
 
             SliceDAO sdao = new SliceDAO();
@@ -774,15 +900,6 @@ namespace DGAC
                     achei = unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + unit.Id_functor_app, out id_functor_app_inner_actual);
                 }
 
-/*                if (!achei)
-                {
-                    Console.WriteLine(ic.Parameter_top + " not found in unit.ActualParameters - " + unit.Id_functor_app);
-                    foreach (KeyValuePair<string, int> kkkk in unit.ActualParameters)
-                    {
-                        Console.Write("(" + kkkk.Key + "," + kkkk.Value + ") ,");
-                    }
-                }
-                */
                 int id_functor_app_old = ic.Id_functor_app;
                 ic.Id_functor_app = id_functor_app_inner_actual;
                 AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
@@ -792,8 +909,9 @@ namespace DGAC
             }
 
             o.Id_functor_app = ic.Id_functor_app;
+            o.Id_abstract = ic.Id_abstract_inner;
 
-            IList<Slice> ss = sdao.list2(id_abstract, id_inner);
+            IList<Slice> ss = sdao.listByInnerInInterface(id_abstract, id_inner, unit.Id_interface);
             IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
             Dictionary<string, int> countUnits = new Dictionary<string, int>();
             IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
@@ -818,16 +936,6 @@ namespace DGAC
                 // Ache todas as unidades que são id_interface.
                 unit.Units.TryGetValue(id_interface_of_slice, out ranks);
 
-           /*     if (ranks == null)
-                {
-                    Console.WriteLine("UNEXPECTED ERROR ! - ranks is null - id_interface_of_slice = " + id_interface_of_slice + " - In: (createSlice - DGAC.cs)");
-                    Console.WriteLine("id_abstract=" + id_abstract + " - id_inner=" + id_inner);
-                    foreach (KeyValuePair<string, IList<int>> rrr in unit.Units)
-                    {
-                        Console.Write(rrr.Key + ",");
-                    }
-                } */
-
                 // Percorra todas estas unidades e adicione somente aquelas cujos índice para algum enumerador em
                 // eix_inner seja o mesmo.
                 foreach (int r in ranks)
@@ -847,7 +955,6 @@ namespace DGAC
 
                     if (flag)
                     {
-
                         int count = 0;
                         if (countUnits.ContainsKey(id_interface_slice))
                         {
@@ -856,7 +963,7 @@ namespace DGAC
                             countUnits.Add(id_interface_slice, ++count);
                         }
                         else
-                            countUnits.Add(id_interface_slice, count + 1);
+                            countUnits.Add(id_interface_slice, ++count);
 
                         IList<int> _ranks;
                         if (ranksAll.ContainsKey(id_interface_slice))
@@ -870,18 +977,70 @@ namespace DGAC
                         }
                         _ranks.Add(unit.Ranks[r]);
 
-                        foreach (KeyValuePair<string, int> e in eix_inner)
-                            rE.Remove(e.Key);
+                        enumsByVars.Clear();
+                        // Group by variable
+                        foreach (KeyValuePair<string, int> index in rE)
+                        {
+                            Enumerator e = edao.retrieve(id_abstract, index.Key);
+                            if (enumsByVars.ContainsKey(e.Variable))
+                            {
+                                IList<KeyValuePair<string, int>> list;
+                                enumsByVars.TryGetValue(e.Variable, out list);
+                                list.Add(index);
+                            }
+                            else
+                            {
+                                IList<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>();
+                                list.Add(index);
+                                enumsByVars.Add(e.Variable, list);
+                            }
+                        }
 
+                        foreach (KeyValuePair<string, int> e in eix_inner)
+                        {
+                            Enumerator enumerator = edao.retrieve(id_abstract, e.Key);
+                            enumsByVars.Remove(enumerator.Variable);
+                        }
+                        
+                        
                         // point to the replicator identifiers of the inner component ....
                         IDictionary<string, int> rE_ = new Dictionary<string, int>();
-                        EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
-                        foreach (KeyValuePair<string, int> re in rE)
+
+                        foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
                         {
-                            IDictionary<string, int> enumeratorCardinalityNew;
-                            rE_.Add(findReplicator(re, s, ic, unit.EnumeratorCardinality, out enumeratorCardinalityNew));
-                            o.EnumeratorCardinality = enumeratorCardinalityNew;
+                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank +  "##################################### " + s.Id_inner);
+                            IList<KeyValuePair<string, int>> rElist = k.Value;
+
+                            int occurrences = 0;
+                            foreach (KeyValuePair<string, int> re in rElist)
+                            {
+                                IDictionary<string, int> enumeratorCardinalityNew;
+                                KeyValuePair<string, int> replicator;
+                                bool found = findReplicator(unit, re, s, ic, unit.EnumeratorCardinality, out enumeratorCardinalityNew, out replicator);
+                                if (found)
+                                {    if (!rE_.Contains(replicator))
+                                    {
+                                        rE_.Add(replicator);
+                                        o.EnumeratorCardinality = enumeratorCardinalityNew;
+                                        occurrences++;
+
+                                    }
+                                }
+                            }
+                            if (occurrences != 1)
+                            {
+                                Console.WriteLine("k.Key = " + k.Key);
+
+                                foreach (KeyValuePair<string, int> xxx in k.Value)
+                                {
+                                    Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
+                                }
+                                throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count);
+                            }
+                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank +  ": END LOOP !!!!!!!!");
                         }
+
+
                         IList<IDictionary<string, int>> l;
                         if (enumRanksL.ContainsKey(id_interface_slice))
                         {
@@ -914,21 +1073,32 @@ namespace DGAC
 
                 string id_unit_slice;
                 bool achei = unitsMapping.TryGetValue(id_unit_slice_, out id_unit_slice);
-                if (!achei)
-                {
-                    Console.WriteLine("UNEXPECTED ERROR : id_unit_slice_ not found in unitsMapping (In: createSlices - DGAC.cs)");
-                }
 
                 achei = ranksAll.TryGetValue(id_unit_slice, out ranks);
-                if (!achei)
+
+
+                if (ranks == null)
                 {
-                    Console.WriteLine("UNEXPECTED ERROR : id_unit_slice not found in ranksAll (In: createSlices - DGAC.cs)");
+                    ranks = new List<int>();
                 }
 
-                foreach (int r in ranks) ranksAllList.Insert(pos2++, r);
+
+                foreach (int r in ranks) 
+                    ranksAllList.Insert(pos2++, r);
 
                 IList<IDictionary<string, int>> enumRanks;
                 enumRanksL.TryGetValue(id_unit_slice, out enumRanks);
+
+
+                if (enumRanks == null)
+                {
+                    enumRanks = new List<IDictionary<string, int>>();
+                }
+                else
+                {
+                    insertEnumeratorFusions(o, id_unit_slice, enumRanks);
+                }
+
                 foreach (IDictionary<string, int> d in enumRanks)
                     enumRanksList.Insert(pos1++, /* removePrefixes( id_inner ,*/ d /* ) */);
 
@@ -944,6 +1114,7 @@ namespace DGAC
             int[] ranksAllArr = new int[ranksAllList.Count];
             IDictionary<string, int>[] enumRanksArr = new IDictionary<string, int>[enumRanksList.Count];
 
+
             ranksAllList.CopyTo(ranksAllArr, 0);
             enumRanksList.CopyTo(enumRanksArr, 0);
 
@@ -954,17 +1125,84 @@ namespace DGAC
             o.setActualParameters(unit.ActualParameters, ic.Id_functor_app);
             o.ActualParametersTop = unit.ActualParametersTop;
 
-    //        Connector.closeConnection();
-
             o.createSlices();
-
-            if (id_inner.Equals("e"))
-            {
-                Console.WriteLine(unit.GlobalRank + ": CREATE SLICE COMPLETE !!! " + c.Library_path + " : " + id_inner + " : " + id_interface);
-            }
 
 
             return o;
+        }
+
+        private static void insertEnumeratorFusions(IUnit o, string id_unit_slice, IList<IDictionary<string, int>> enumRanks)
+        {
+            int id_abstract = o.Id_abstract;
+            IDictionary<string, IList<string>> mapping = new Dictionary<string, IList<string>>();
+
+            EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
+            IDictionary<string, int> d0 = enumRanks[0];
+            foreach (KeyValuePair<string, int> k in d0)
+            {
+                IList<EnumeratorMapping> emList = emdao.list(id_abstract, k.Key);
+                if (emList.Count > 0) {
+                    IList<string> l = new List<string>();
+                    foreach (EnumeratorMapping em in emList) {
+                        if (!k.Key.Equals(em.Id_enumerator_inner))
+                        {
+                            l.Add(em.Id_enumerator_inner);
+                          /*  int cardinality;
+                            if (o.EnumeratorCardinality.TryGetValue(k.Key, out cardinality))
+                            {
+                                Console.WriteLine(":-) &&&&& CARDINALITY FOUND : " + k.Key + ", " + em.Id_enumerator_inner + ", " + o.Id_abstract + ", " + o.Id_interface);
+                                o.EnumeratorCardinality.Add(em.Id_enumerator_inner, cardinality);
+                            }
+                            else
+                            {
+                                Console.WriteLine(":-( &&&&& CARDINALITY NOT FOUND : " + k.Key + ", " + em.Id_enumerator_inner + ", " + o.Id_abstract + ", " + o.Id_interface);
+                                foreach (KeyValuePair<string, int> rrrr in o.EnumeratorCardinality)
+                                {
+                                    Console.WriteLine(":-( &&&&& " + rrrr.Key + " , " + rrrr.Value);
+                                }
+                            } */
+
+                            hpe.kinds.IEnumeratorKind ec;
+                            if (o.getPermutation(k.Key, out ec))
+                            {
+                                o.addPermutation(em.Id_enumerator_inner, ec);
+                            }
+                        }
+                    }
+                    mapping.Add(k.Key, l);
+                }
+            }
+
+            IDictionary<IDictionary<string, int>, 
+                        IDictionary<string, int>> ttt = new Dictionary<IDictionary<string, int>, 
+                                                                       IDictionary<string, int>>();
+
+            foreach (IDictionary<string, int> d in enumRanks)
+            {
+                IDictionary<string, int> aux = new Dictionary<string, int>();
+                foreach (KeyValuePair<string, int> k in d)
+                {
+                    IList<string> l;
+                    if (mapping.TryGetValue(k.Key, out l))
+                    {
+                        foreach (string ee in l)
+                        {
+                            aux.Add(ee, k.Value);
+                        }
+                    }
+                }
+                ttt.Add(d, aux);
+            }
+
+            foreach (KeyValuePair<IDictionary<string, int>, IDictionary<string, int>> aux in ttt) {
+                IDictionary<string, int> d = aux.Key;
+                foreach (KeyValuePair<string, int> a in aux.Value)
+                {
+                     d.Add(a);
+                     
+                }
+            }
+            
         }
 
         private static IDictionary<string, int> removePrefixes(string id_inner, IDictionary<string, int> d)
@@ -1150,7 +1388,7 @@ namespace DGAC
 
         // private string session_id = -1;
 
-        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, System.Security.SecureString password, string curDir)
+        public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
         {
             String[] str_output = null;
             // assert: eIds.Length = eVls.Length

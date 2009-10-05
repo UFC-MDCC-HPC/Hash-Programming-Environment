@@ -15,19 +15,12 @@ public class Unit {
     private int id_interface_abstract;
     private string id_interface_interface;
     private int id_index;
-    private string source_code = null;
     private int order;
 
     public int Order
     {
         get { return order; }
         set { order = value; }
-    }
-
-    public string Source_code
-    {
-        get { return source_code; }
-        set { source_code = value; }
     }
 
     //private string library_path = null; // this field can be computed ...

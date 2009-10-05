@@ -15,4 +15,9 @@ namespace hpe.kinds
 	{
 		void synchronize();
 	}
+	
+	public abstract class Synchronizer : Unit {
+	   
+	}
+	
 }

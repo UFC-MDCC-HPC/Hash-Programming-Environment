@@ -32,12 +32,14 @@ public class Constants {
     public static string SERVICE_NAME = FileUtil.readConstant("service_name");
 
     public static string cs_compiler = FileUtil.readConstant("cs_compiler"); // "mcs"
+    public static string cs_compiler_flags = FileUtil.readConstant("cs_compiler_flags"); // "mcs"
     public static string cli_runtime = FileUtil.readConstant("cli_runtime"); // "mono"
     public static string key_generator = FileUtil.readConstant("key_generator");
     public static string gac_util = FileUtil.readConstant("gac_util");
     public static string mpi_run = FileUtil.readConstant("mpi_run");
     public static string hosts_file = FileUtil.readConstant("hosts_file",Path.DirectorySeparatorChar + "etc" + Path.DirectorySeparatorChar + "hpe_hosts");
     public static string connectionString = FileUtil.readConstant("connection_string");
+    public static string externalRefsFile = FileUtil.readConstant("external_references_file");
 
     public static string getArgVal(string argId)
     {

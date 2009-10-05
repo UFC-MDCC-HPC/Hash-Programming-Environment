@@ -16,4 +16,9 @@ namespace hpe.kinds
 		void listen();
         void stopListen();
 	}
+	
+	public abstract class Environment : Unit {
+	   
+	}
+		
 }

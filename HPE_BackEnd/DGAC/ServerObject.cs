@@ -33,7 +33,15 @@ namespace DGAC
 		         *classe Constants 
 		         */
                 [MethodImpl(MethodImplOptions.Synchronized)]
-                public string compileClass(string library_path, string contents, string moduleName, string[] references, int outFile, string userName, System.Security.SecureString password, String curDir)
+                public string compileClass
+                    (string library_path,                                            
+                     string contents, 
+                     string moduleName, 
+                     string[] references, 
+                     int outFile, 
+                     string userName, 
+                     string password, 
+                     string curDir)
                 {
                     string publicKeyToken = null;
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
@@ -45,7 +53,7 @@ namespace DGAC
                     else
                     {
                         //creates the strong key, for new assembly
-                        publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password);
+                        publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password, curDir);
                         //compile, generate dll 
                         CommandLineUtil.compile_source(contents, moduleName, references, userName, password, curDir);
                         //installing on local GAC
@@ -60,7 +68,13 @@ namespace DGAC
 		         *Roda arquivos executáveis gerados pelo metodo anterior
                  */
 		        [MethodImpl(MethodImplOptions.Synchronized)]
-                public void runClass(IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, System.Security.SecureString password, String curDir)
+                public void runClass
+                    (IDictionary<string, int> files, 
+                     IDictionary<string, int> enums, 
+                     int session_id, 
+                     string userName, 
+                     string password, 
+                     String curDir)
                 {
 					CommandLineUtil.run_exe(files, enums, session_id, userName, password, curDir);
 		        }

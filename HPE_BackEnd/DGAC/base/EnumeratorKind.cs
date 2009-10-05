@@ -5,52 +5,100 @@ using System;
 using hpe.basic;
 
 namespace hpe.kinds{
-     interface IEnumeratorKind {
-       int N {get;set;}                     // Number of replicas
-       string IndexName {set;}              // Name of the enumerator
-       void permute(int x, int y);
+     public interface IEnumeratorKind : IUnit {
        int getValueAtIndex(int ix);
        int[] getPermutation();
+       int N {get;set;}
+       bool undefinedN();
+       string V { get; set; }
+       bool undefinedV();
    }
    
-   public abstract class EnumeratorUnitImpl {
+   public abstract class Enumerator : Unit, IEnumeratorKind {
+
       private int[] permutation = null;
-      private int N_;
-      
-      EnumeratorUnitImpl() {
-            
+      private int N_ = 0;
+
+      public Enumerator() { }
+
+      public Enumerator(int N) {
+            this.N = N;
       }
       
-      public int N {
-         set {
-               if (permutation == null) {
-	               N_ = value;
-	               permutation = new int[N];
-	               for (int i=0; i<N; i++) {
-	                  permutation[i] = i;
-	               } 
-               } else {
-                  throw new Exception("N is already set (EnumeratorKind.setN).");
-               }
-             }
-         get {return N_;}
-      }
+      protected abstract void permute();
       
-      public int[] getPermutation() {
-         return permutation;
+      protected void permute(int x, int y) {
+         int aux = permutation[x];
+         permutation[x] = permutation[y];
+         permutation[y] = aux;
       }
-      
-      public int getValueAtIndex(int index) {
-         if (permutation != null) {
+
+      public int N
+      {
+          set
+          {
+              N_ = value;
+              permutation = new int[N];
+              for (int i = 0; i < N; i++)
+              {
+                  permutation[i] = i;
+              }
+              permute();
+          }
+          get
+          {
+              if (!this.undefinedN())
+                  return N_;
+              else
+                  throw new Exception("undefined N (Enumerator.N).");
+          }
+      }
+
+      public bool undefinedN()
+      {
+          return this.N_ == 0;
+      }
+
+       public int getValueAtIndex(int index)
+      {
+         if (!this.undefinedN()) {
             if (permutation.Length < index)         
                return permutation[index];
             else {
                throw new Exception("Index does not exist in permutation (EnumeratorKind.getValueAtIndex).");
             }
          } else {
-            throw new Exception("N not set (EnumeratorKind.getValueAtIndex).");
+            throw new Exception("undefined N (Enumerator.getValueAtIndex).");
          }
       }
+      
+      public int[] getPermutation() {
+          return (int[]) permutation.Clone(); 
+      }
+
+      private string V_ = null;
+
+      public string V
+      {
+          set
+          {
+              V_ = value;
+          }
+          get
+          {
+              if (!this.undefinedV())
+                  return V_;
+              else
+                  throw new Exception("undefined variable name (Enumerator.V).");
+          }
+      }
+
+      public bool undefinedV()
+      {
+          return this.V_ == null;
+      }
+
+
    }
    
    
