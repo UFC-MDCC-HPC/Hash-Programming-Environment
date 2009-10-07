@@ -205,7 +205,11 @@ public class CommandLineUtil{
         proc.StartInfo.Arguments = args;
         if (userName != null) proc.StartInfo.UserName = userName;
         if (password != null) proc.StartInfo.Password = password;
-        if (curDir != null) proc.StartInfo.WorkingDirectory = Path.Combine("~" + userName, curDir);
+        if (curDir != null)
+        {
+            string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+            proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
+        }
 
         Console.WriteLine(userName + " runs: " + cmd + args);
 
