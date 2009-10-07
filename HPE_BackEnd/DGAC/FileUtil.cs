@@ -151,30 +151,39 @@ public class FileUtil{
 
   public static IDictionary<string, ReferenceType> loadExternalReferences()
   {
-      Dictionary<string, ReferenceType> d = new Dictionary<string, ReferenceType>();
-      string filename = Constants.externalRefsFile;
+          Dictionary<string, ReferenceType> d = new Dictionary<string, ReferenceType>();
 
-      // Create an instance of the XmlSerializer specifying type and namespace.
-      XmlSerializer serializer = new XmlSerializer(typeof(ReferenceListType));
+          try
+          {
+              string filename = Constants.externalRefsFile;
 
-      // A FileStream is needed to read the XML document.
-      FileStream fs = new FileStream(filename, FileMode.Open);
+              // Create an instance of the XmlSerializer specifying type and namespace.
+              XmlSerializer serializer = new XmlSerializer(typeof(ReferenceListType));
 
-      XmlReader reader = new XmlTextReader(fs);
+              // A FileStream is needed to read the XML document.
+              FileStream fs = new FileStream(filename, FileMode.Open);
+
+              XmlReader reader = new XmlTextReader(fs);
 
 
-      // Declare an object variable of the type to be deserialized.
-      ReferenceListType i;
+              // Declare an object variable of the type to be deserialized.
+              ReferenceListType i;
 
-      // Use the Deserialize method to restore the object's state.
-      i = (ReferenceListType)serializer.Deserialize(reader);
+              // Use the Deserialize method to restore the object's state.
+              i = (ReferenceListType)serializer.Deserialize(reader);
 
-      foreach (ReferenceType extRef in i.reference)
-      {
-          d.Add(extRef.destailedName, extRef);
-      }
+              foreach (ReferenceType extRef in i.reference)
+              {
+                  d.Add(extRef.destailedName, extRef);
+              }
 
-      fs.Close();
+              fs.Close();
+
+          }
+          catch (Exception e)
+          {
+              Console.WriteLine(e.Message);
+          }
 
       return d;
 
