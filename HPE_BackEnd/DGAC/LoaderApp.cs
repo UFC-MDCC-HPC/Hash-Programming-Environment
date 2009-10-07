@@ -203,7 +203,7 @@ namespace DGAC.database
 	
 	
 	//returns an icollection of 
-	public static ICollection<InfoCompile> getReferences_Concrete(int id_concrete){
+	public static IList<InfoCompile> getReferences_Concrete(int id_concrete){
 
         SourceCodeDAO scdao = new SourceCodeDAO();
         SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
@@ -287,7 +287,7 @@ namespace DGAC.database
 	}
 
     //returns an icollection of 
-    public static ICollection<InfoCompile> getReferences_Abstract(int id_abstract)
+    public static IList<InfoCompile> getReferences_Abstract(int id_abstract)
     {
         SourceCodeDAO scdao = new SourceCodeDAO();
 

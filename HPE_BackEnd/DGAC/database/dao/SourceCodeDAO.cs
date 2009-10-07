@@ -27,7 +27,8 @@ namespace DGAC.database
             string sql =
                 "SELECT type_owner, id_owner_container, id_owner, contents, file_type, file_name " +
                 "FROM sourcecode " +
-                "WHERE type_owner like '" + type_owner + "' AND id_owner_container=" + id_owner_container + " AND id_owner like '" + id_owner + "'";
+                "WHERE type_owner like '" + type_owner + "' AND id_owner_container=" + id_owner_container + " AND id_owner like '" + id_owner + "'" +
+                "ORDER BY file_type";
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())

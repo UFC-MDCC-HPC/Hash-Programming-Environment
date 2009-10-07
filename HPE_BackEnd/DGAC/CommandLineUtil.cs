@@ -208,7 +208,14 @@ public class CommandLineUtil{
         if (curDir != null)
         {
             string homeDir = System.Environment.GetEnvironmentVariable("HOME");
-            proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
+            if (homeDir != null)
+            {
+                proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
+            }
+            else
+            {
+                proc.StartInfo.WorkingDirectory = curDir;
+            }
         }
 
         Console.WriteLine(userName + " runs: " + cmd + args);
