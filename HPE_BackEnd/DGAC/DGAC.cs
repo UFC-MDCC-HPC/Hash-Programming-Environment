@@ -1412,8 +1412,16 @@ namespace DGAC
 
                 int nprocs = 0;
 
-                for (int i = 0; i < eIds.Length; i++)
-                    enums.Add(eIds[i], eVls[i]);
+                try
+                {
+                    for (int i = 0; i < eIds.Length; i++)
+                        enums.Add(eIds[i], eVls[i]);
+                }
+                catch (ArgumentException)
+                {
+                    throw new Exception("Argument Exception there 2 !!!!");
+                }
+
 
                 ComponentDAO cdao = new ComponentDAO();
                 UnitDAO udao = new UnitDAO();
