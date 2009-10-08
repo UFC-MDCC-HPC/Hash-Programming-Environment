@@ -115,7 +115,7 @@ namespace DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT ei.id_abstract, ei.id_interface, e.variable " +
+                "SELECT DISTINCT ei.id_abstract, ei.id_interface, e.variable " +
                 "FROM hashmodel.enumeration_interface ei, hashmodel.enumerator e " +
                 "WHERE ei.id_abstract=" + id_abstract + " AND " +
                 "ei.id_abstract=e.id_abstract AND " +
