@@ -1436,13 +1436,18 @@ namespace DGAC
                 {
                     IList<EnumerationInterface> eiList = eidao.listByInterface(c.Id_abstract, u.Id_unit);
                     int count = 1;
+                    IDictionary<string, int> m = new Dictionary<string, int>();
                     foreach (EnumerationInterface ei in eiList)
                     {
                         Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
-
-                        int v = 1;
-                        enums.TryGetValue(e.Variable, out v);
-                        count *= v > 0 ? v : 1;
+                        int v;
+                        if (!m.TryGetValue(e.Variable, out v))
+                        {
+                            v = 1;
+                            enums.TryGetValue(e.Variable, out v);
+                            count *= v > 0 ? v : 1;
+                            m.Add(e.Variable, v);
+                        }
                     }
                     char[] char_sep = new char[] { '.' };
                     String[] class_name_arr = u.Class_name.Split(char_sep);

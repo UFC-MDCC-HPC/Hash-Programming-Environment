@@ -109,35 +109,5 @@ namespace DGAC.database
             return list;
         }
         
-        public IList<EnumerationInterface> listVarsByInterface(int id_abstract, string id_interface)
-        {
-            List<EnumerationInterface> list = new List<EnumerationInterface>();
-            IDbConnection dbcon = Connector.DBcon;
-            IDbCommand dbcmd = dbcon.CreateCommand();
-            string sql =
-                "SELECT DISTINCT ei.id_abstract, ei.id_interface, e.variable " +
-                "FROM hashmodel.enumeration_interface ei, hashmodel.enumerator e " +
-                "WHERE ei.id_abstract=" + id_abstract + " AND " +
-                "ei.id_abstract=e.id_abstract AND " +
-                "ei.id_enumerator=e.id_enumerator AND " +
-                "ei.id_interface like '" + id_interface + "'";
-            dbcmd.CommandText = sql;
-            IDataReader reader = dbcmd.ExecuteReader();
-            while (reader.Read())
-            {
-                EnumerationInterface u = new EnumerationInterface();
-                u.Id_abstract = (int)reader["id_abstract"];
-                u.Id_enumerator = (string)reader["id_enumerator"];
-                u.Id_interface = (string)reader["id_interface"];
-
-                list.Add(u);
-            }//while
-            // clean up
-            reader.Close();
-            reader = null;
-            dbcmd.Dispose();
-            dbcmd = null;
-            return list;
-        }
     }
 }
