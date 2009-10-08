@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Runtime.Remoting;
@@ -7,7 +7,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Collections.Generic;
 using System.Reflection;
-using HPE_DGAC_LoadDB;  
+using HPE_DGAC_LoadDB;
 using hpe.basic;
 using DGAC.utils;
 using DGAC.database;
@@ -46,12 +46,12 @@ namespace DGAC
             this.hosts = FileUtil.readProperty("host");
 
             //creating the channel
-            TcpChannel ch;   
+            TcpChannel ch;
             try
             {
                 ch = new TcpChannel(this.channel);
                 ChannelServices.RegisterChannel(ch, true);
-                
+
             }
             catch (System.Runtime.Remoting.RemotingException re)
             {
@@ -96,7 +96,7 @@ namespace DGAC
                 else
                 {
                     Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
-                    cAbs = (AbstractComponentFunctor) cAbs_;
+                    cAbs = (AbstractComponentFunctor)cAbs_;
                     abstractloader.updateSources(ct, cAbs);
                     exists = true;
                 }
@@ -124,8 +124,8 @@ namespace DGAC
                                                                        moduleName,
                                                                        interfaceToCompile.references,
                                                                        outputType,
-					                                                   userName,
-					                                                   password,
+                                                                       userName,
+                                                                       password,
                                                                        curDir);
 
                     if (!exists)
@@ -203,8 +203,8 @@ namespace DGAC
                                                                        moduleName,
                                                                        unitToCompile.references,
                                                                        outputType,
-					                                                   userName,
-					                                                   password,
+                                                                       userName,
+                                                                       password,
                                                                        curDir);
                     if (!exists)
                         udao.setPublicKey(id_concrete, unitName, publicKey);
@@ -303,9 +303,9 @@ namespace DGAC
 
             foreach (string id_unit in id_units_ordered)
             {
-                if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)                
+                if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)
                     pmain.GlobalRank = rank;
-                
+
                 IList<EnumerationInterface> eiList = eidao.listByInterface(id_abstract, id_unit);
 
                 IList<IList<int>> x = new List<IList<int>>();
@@ -346,7 +346,7 @@ namespace DGAC
                     foreach (int eVal in eIXs)
                     {
                         pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
-                       // ???? insertEnumeratorFusions(o, id_unit_slice, pmain_EnumRanks[rank]);
+                        // ???? insertEnumeratorFusions(o, id_unit_slice, pmain_EnumRanks[rank]);
                     }
                     pmain_Ranks.Add(rank);
                     ranks.Add(rank);
@@ -366,7 +366,7 @@ namespace DGAC
             pmain.setUpParameters(c);
             pmain.ActualParametersTop = pmain.ActualParameters;
 
-           // closeConnection(true);
+            // closeConnection(true);
         }
 
         private static int getSessionID(string[] args)
@@ -413,7 +413,7 @@ namespace DGAC
                     f.Close();
                 }
                 log_out = new StreamWriter(filename);
-                log_out.AutoFlush = true;                
+                log_out.AutoFlush = true;
             }
             catch (IOException exc)
             {
@@ -423,9 +423,9 @@ namespace DGAC
             }
 
             // Direct standard output to the log file. 
-            if (open_log_out) 
+            if (open_log_out)
                 Console.SetOut(log_out);
-               
+
         }
 
         private static int globalRank(string[] args)
@@ -475,7 +475,7 @@ namespace DGAC
             }
         }
 
-        private static void dictReplaceKey(IDictionary<string,int> dict, string key, int value) 
+        private static void dictReplaceKey(IDictionary<string, int> dict, string key, int value)
         {
             if (dict.ContainsKey(key))
             {
@@ -517,7 +517,7 @@ namespace DGAC
             foreach (KeyValuePair<string, int> ke in enumeratorCardinality)
                 dictReplaceKey(enumeratorCardinality_prime, ke.Key, ke.Value);
 
-           // if (!enumeratorCardinality_prime.ContainsKey(ke.Key))
+            // if (!enumeratorCardinality_prime.ContainsKey(ke.Key))
             //    {
             //        enumeratorCardinality_prime.Add(ke);
             //    }
@@ -528,7 +528,7 @@ namespace DGAC
 
             // FIND THE ORIGINAL REPLICATOR OF THE INNER COMPONENT THAT HAS BEEN FUSED.
             EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
-//            EnumeratorMapping em = null;
+            //            EnumeratorMapping em = null;
 
             IList<SliceExposed> lse = null;
             if (ic.Transitive)
@@ -566,9 +566,9 @@ namespace DGAC
             }
             if (cc < 0)
             {
-                replicator = new KeyValuePair<string,int>();
+                replicator = new KeyValuePair<string, int>();
                 enumeratorCardinality_return = enumeratorCardinality;
-                return false;                
+                return false;
             }
 
             IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
@@ -578,12 +578,12 @@ namespace DGAC
             {
                 if (ke.Key.Equals(re_Key_before))
                 {
-                    dictReplaceKey(enumeratorCardinalityTemp, re_Key, ke.Value); 
-                    
-//                    if (!enumeratorCardinalityTemp.ContainsKey(re_Key))
-//                    {
-//                        enumeratorCardinalityTemp.Add(re_Key, ke.Value);                        
-//                    }
+                    dictReplaceKey(enumeratorCardinalityTemp, re_Key, ke.Value);
+
+                    //                    if (!enumeratorCardinalityTemp.ContainsKey(re_Key))
+                    //                    {
+                    //                        enumeratorCardinalityTemp.Add(re_Key, ke.Value);                        
+                    //                    }
                 }
                 else
                 {
@@ -596,18 +596,18 @@ namespace DGAC
                         re_Key_ = re_Key_.Substring(cc_ + (id_inner_container + ".").Length);
                         re_Value_ = ke.Value;
                         dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
-                       // if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
-                       // {
-                       //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
-                       // }
+                        // if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
+                        // {
+                        //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                        // }
                     }
                     else
                     {
                         dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
                         //if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
                         //{
-                       //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
-                       // }
+                        //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                        // }
                     }
                 }
             }
@@ -628,9 +628,10 @@ namespace DGAC
                 SliceDAO sdao = new SliceDAO();
                 Slice s_prime = null;
 
-                foreach (SliceExposed se in seMap) {
+                foreach (SliceExposed se in seMap)
+                {
                     s_prime = sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice, se.Id_interface_slice_owner);
-                    if (s_prime != null) 
+                    if (s_prime != null)
                         break;
                     else
                         Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
@@ -645,22 +646,22 @@ namespace DGAC
                 foreach (EnumeratorMapping em in emList)
                 {
                     dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
-//                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
-//                    {
-//                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
-//                    }
+                    //                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
+                    //                    {
+                    //                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
+                    //                    }
                 }
 
-                    
+
                 foreach (EnumeratorMapping em in emList)
                 {
-                    KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string,int>(em.Id_enumerator_inner,ke_prime.Value);
+                    KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string, int>(em.Id_enumerator_inner, ke_prime.Value);
                     if (findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
                     {
                         return true;
                     }
                 }
-                    
+
                 replicator = new KeyValuePair<string, int>(); ;
 
                 enumeratorCardinality_return = new Dictionary<string, int>();
@@ -680,10 +681,10 @@ namespace DGAC
                 {
                     dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
 
-//                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
-//                    {
-//                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
-//                    }
+                    //                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
+                    //                    {
+                    //                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
+                    //                    }
                 }
 
                 enumeratorCardinality_return = enumeratorCardinality_prime;
@@ -698,12 +699,12 @@ namespace DGAC
         // CREATE AN INSTANCE OF A SEQUENCIAL #-COMPONENT (Only one unit is assumed)
         public static Object createInstance(Type T)
         {
-            string library_path = T.FullName;            
+            string library_path = T.FullName;
 
             return createInstance(library_path);
         }
 
-        
+
         public static Object createInstance(string library_path)
         {
             return createInstance(library_path, new Type[] { });
@@ -715,7 +716,7 @@ namespace DGAC
 
             if (instanceCache == null || !instanceCache.ContainsKey(library_path))
             {
-      //          Connector.openConnection();
+                //          Connector.openConnection();
 
                 InterfaceDAO idao = new InterfaceDAO();
                 Interface i = idao.retrieve_libraryPath(library_path);
@@ -728,7 +729,7 @@ namespace DGAC
                 UnitDAO udao = new UnitDAO();
                 database.Unit u = udao.retrieve(c.Id_concrete, i.Id_interface, 1);
 
-     //              Connector.closeConnection();
+                //              Connector.closeConnection();
 
                 string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
                 string class_name = u.Class_name;  // the name of the class inside the DLL.
@@ -753,7 +754,7 @@ namespace DGAC
             hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
             return o;
-            
+
         }
 
         public static hpe.basic.IUnit loadImpl(hpe.basic.IUnit unit,
@@ -814,7 +815,7 @@ namespace DGAC
             int id_abstract = c.Id_abstract;
 
             hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, typeParams); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
-            
+
             // Configure the knowledge of the slices about the topology.
 
             EnumerationSliceDAO esdao = new EnumerationSliceDAO();
@@ -826,24 +827,27 @@ namespace DGAC
 
             Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
 
-            IDictionary<string,IList<KeyValuePair<string,int>>> enumsByVars= new Dictionary<string,IList<KeyValuePair<string,int>>>();
+            IDictionary<string, IList<KeyValuePair<string, int>>> enumsByVars = new Dictionary<string, IList<KeyValuePair<string, int>>>();
             foreach (KeyValuePair<string, int> index in unit.EnumRank)
             {
                 Enumerator e = edao.retrieve(id_abstract, index.Key);
-                if (enumsByVars.ContainsKey(e.Variable)) {
-                    IList<KeyValuePair<string,int>> l;
+                if (enumsByVars.ContainsKey(e.Variable))
+                {
+                    IList<KeyValuePair<string, int>> l;
                     enumsByVars.TryGetValue(e.Variable, out l);
                     l.Add(index);
-                } else {
-                    IList<KeyValuePair<string,int>> l = new List<KeyValuePair<string,int>>();
+                }
+                else
+                {
+                    IList<KeyValuePair<string, int>> l = new List<KeyValuePair<string, int>>();
                     l.Add(index);
-                    enumsByVars.Add(e.Variable,l);
+                    enumsByVars.Add(e.Variable, l);
                 }
             }
 
             Console.WriteLine(" ------ enumByVars has " + enumsByVars.Count + " elements");
 
-            foreach (KeyValuePair<string, IList<KeyValuePair<string,int>>> k in enumsByVars)
+            foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
             {
                 int found = 0;
                 foreach (KeyValuePair<string, int> index in k.Value)
@@ -892,7 +896,7 @@ namespace DGAC
             int id_functor_app_inner_actual = ic.Id_functor_app;
             int id_abstract_inner_original = ic.Id_abstract_inner;
             int id_abstract_inner_actual = ic.Id_abstract_inner;
-            if (!ic.Parameter_top.Equals("") && !(ic.Parameter_top == null))   
+            if (!ic.Parameter_top.Equals("") && !(ic.Parameter_top == null))
             {
                 bool achei = unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
                 if (!achei)
@@ -905,7 +909,7 @@ namespace DGAC
                 AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
                 AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_inner_actual);
                 id_abstract_inner_actual = acfa.Id_abstract;
-                ic.Id_abstract_inner = id_abstract_inner_actual;                
+                ic.Id_abstract_inner = id_abstract_inner_actual;
             }
 
             o.Id_functor_app = ic.Id_functor_app;
@@ -915,8 +919,8 @@ namespace DGAC
             IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
             Dictionary<string, int> countUnits = new Dictionary<string, int>();
             IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
-            
-            IDictionary<string,string> unitsMapping = new Dictionary<string, string>();
+
+            IDictionary<string, string> unitsMapping = new Dictionary<string, string>();
 
             AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
             IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(id_abstract_inner_original);
@@ -1001,14 +1005,14 @@ namespace DGAC
                             Enumerator enumerator = edao.retrieve(id_abstract, e.Key);
                             enumsByVars.Remove(enumerator.Variable);
                         }
-                        
-                        
+
+
                         // point to the replicator identifiers of the inner component ....
                         IDictionary<string, int> rE_ = new Dictionary<string, int>();
 
                         foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
                         {
-                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank +  "##################################### " + s.Id_inner);
+                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + "##################################### " + s.Id_inner);
                             IList<KeyValuePair<string, int>> rElist = k.Value;
 
                             int occurrences = 0;
@@ -1018,7 +1022,8 @@ namespace DGAC
                                 KeyValuePair<string, int> replicator;
                                 bool found = findReplicator(unit, re, s, ic, unit.EnumeratorCardinality, out enumeratorCardinalityNew, out replicator);
                                 if (found)
-                                {    if (!rE_.Contains(replicator))
+                                {
+                                    if (!rE_.Contains(replicator))
                                     {
                                         rE_.Add(replicator);
                                         o.EnumeratorCardinality = enumeratorCardinalityNew;
@@ -1037,7 +1042,7 @@ namespace DGAC
                                 }
                                 throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count);
                             }
-                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank +  ": END LOOP !!!!!!!!");
+                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + ": END LOOP !!!!!!!!");
                         }
 
 
@@ -1083,7 +1088,7 @@ namespace DGAC
                 }
 
 
-                foreach (int r in ranks) 
+                foreach (int r in ranks)
                     ranksAllList.Insert(pos2++, r);
 
                 IList<IDictionary<string, int>> enumRanks;
@@ -1141,26 +1146,28 @@ namespace DGAC
             foreach (KeyValuePair<string, int> k in d0)
             {
                 IList<EnumeratorMapping> emList = emdao.list(id_abstract, k.Key);
-                if (emList.Count > 0) {
+                if (emList.Count > 0)
+                {
                     IList<string> l = new List<string>();
-                    foreach (EnumeratorMapping em in emList) {
+                    foreach (EnumeratorMapping em in emList)
+                    {
                         if (!k.Key.Equals(em.Id_enumerator_inner))
                         {
                             l.Add(em.Id_enumerator_inner);
-                          /*  int cardinality;
-                            if (o.EnumeratorCardinality.TryGetValue(k.Key, out cardinality))
-                            {
-                                Console.WriteLine(":-) &&&&& CARDINALITY FOUND : " + k.Key + ", " + em.Id_enumerator_inner + ", " + o.Id_abstract + ", " + o.Id_interface);
-                                o.EnumeratorCardinality.Add(em.Id_enumerator_inner, cardinality);
-                            }
-                            else
-                            {
-                                Console.WriteLine(":-( &&&&& CARDINALITY NOT FOUND : " + k.Key + ", " + em.Id_enumerator_inner + ", " + o.Id_abstract + ", " + o.Id_interface);
-                                foreach (KeyValuePair<string, int> rrrr in o.EnumeratorCardinality)
-                                {
-                                    Console.WriteLine(":-( &&&&& " + rrrr.Key + " , " + rrrr.Value);
-                                }
-                            } */
+                            /*  int cardinality;
+                              if (o.EnumeratorCardinality.TryGetValue(k.Key, out cardinality))
+                              {
+                                  Console.WriteLine(":-) &&&&& CARDINALITY FOUND : " + k.Key + ", " + em.Id_enumerator_inner + ", " + o.Id_abstract + ", " + o.Id_interface);
+                                  o.EnumeratorCardinality.Add(em.Id_enumerator_inner, cardinality);
+                              }
+                              else
+                              {
+                                  Console.WriteLine(":-( &&&&& CARDINALITY NOT FOUND : " + k.Key + ", " + em.Id_enumerator_inner + ", " + o.Id_abstract + ", " + o.Id_interface);
+                                  foreach (KeyValuePair<string, int> rrrr in o.EnumeratorCardinality)
+                                  {
+                                      Console.WriteLine(":-( &&&&& " + rrrr.Key + " , " + rrrr.Value);
+                                  }
+                              } */
 
                             hpe.kinds.IEnumeratorKind ec;
                             if (o.getPermutation(k.Key, out ec))
@@ -1173,8 +1180,8 @@ namespace DGAC
                 }
             }
 
-            IDictionary<IDictionary<string, int>, 
-                        IDictionary<string, int>> ttt = new Dictionary<IDictionary<string, int>, 
+            IDictionary<IDictionary<string, int>,
+                        IDictionary<string, int>> ttt = new Dictionary<IDictionary<string, int>,
                                                                        IDictionary<string, int>>();
 
             foreach (IDictionary<string, int> d in enumRanks)
@@ -1194,15 +1201,16 @@ namespace DGAC
                 ttt.Add(d, aux);
             }
 
-            foreach (KeyValuePair<IDictionary<string, int>, IDictionary<string, int>> aux in ttt) {
+            foreach (KeyValuePair<IDictionary<string, int>, IDictionary<string, int>> aux in ttt)
+            {
                 IDictionary<string, int> d = aux.Key;
                 foreach (KeyValuePair<string, int> a in aux.Value)
                 {
-                     d.Add(a);
-                     
+                    d.Add(a);
+
                 }
             }
-            
+
         }
 
         private static IDictionary<string, int> removePrefixes(string id_inner, IDictionary<string, int> d)
@@ -1226,18 +1234,18 @@ namespace DGAC
 
         public EnvironmentType readEnvironment()
         {
-            Connector.openConnection(); 
-            
+            Connector.openConnection();
+
             EnvironmentType env = new EnvironmentType();
 
             IList<DeployedComponentInfoType> eabs = readEnvironmentAbstract();
             IList<DeployedComponentInfoType> econ = readEnvironmentConcrete();
-            
+
             Connector.closeConnection();
 
             env.deployed = new DeployedComponentInfoType[eabs.Count + econ.Count];
 
-            eabs.CopyTo(env.deployed,0);
+            eabs.CopyTo(env.deployed, 0);
             econ.CopyTo(env.deployed, eabs.Count);
 
             return env;
@@ -1268,7 +1276,7 @@ namespace DGAC
                 deployed.cidBaseSpecified = true;
                 deployed.cidBase = id_abstract;
                 deployed.kind = c.Kind;
-               // deployed.locationURI;
+                // deployed.locationURI;
                 deployed.enumerator = readEnvironmentEnumerators(id_abstract);
                 deployed.parameter = readEnvironmentConcreteParameters(c.Id_functor_app);
 
@@ -1282,7 +1290,7 @@ namespace DGAC
         {
             AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
             AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-            
+
             SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spList = spdao.list(id_functor_app);
 
@@ -1293,8 +1301,8 @@ namespace DGAC
             {
                 r[i] = new DeployedParameterType();
                 r[i].parameter_id = sp.Id_parameter;
-               // AbstractComponentFunctorParameter acfp = acfpdao.retrieve(sp.Id_abstract, sp.Id_parameter);
-               // r[i].bound = acfp.Bounds_of;
+                // AbstractComponentFunctorParameter acfp = acfpdao.retrieve(sp.Id_abstract, sp.Id_parameter);
+                // r[i].bound = acfp.Bounds_of;
                 AbstractComponentFunctorApplication acfa = acfadao.retrieve(sp.Id_functor_app_actual);
                 r[i].actualSpecified = true;
                 r[i].actual = acfa.Id_abstract;
@@ -1320,7 +1328,7 @@ namespace DGAC
 
                 deployed.abstractSpecified = true;
                 deployed.@abstract = true;
-                deployed.package = new string[packagePath.Length - 1]; 
+                deployed.package = new string[packagePath.Length - 1];
                 Array.Copy(packagePath, 0, deployed.package, 0, packagePath.Length - 1);
                 deployed.name = packagePath[packagePath.Length - 1];
                 deployed.cidSpecified = true;
@@ -1361,7 +1369,7 @@ namespace DGAC
 
             string[] r = new string[rList.Count];
             rList.CopyTo(r, 0);
-            
+
             return r;
         }
 
@@ -1380,7 +1388,7 @@ namespace DGAC
                 r[i].actualSpecified = true;
                 AbstractComponentFunctorApplication acfa = acfadao.retrieve(acfp.Bounds_of);
                 r[i].actual = acfa.Id_abstract;
-                r[i].parameter = readEnvironmentAbstractParameters(acfa.Id_abstract); 
+                r[i].parameter = readEnvironmentAbstractParameters(acfa.Id_abstract);
                 i++;
             }
             return r;
@@ -1430,7 +1438,14 @@ namespace DGAC
                     }
                     char[] char_sep = new char[] { '.' };
                     String[] class_name_arr = u.Class_name.Split(char_sep);
-                    files.Add(class_name_arr[class_name_arr.Length - 1], count);
+                    try
+                    {
+                        files.Add(class_name_arr[class_name_arr.Length - 1], count);
+                    }
+                    catch (ArgumentException)
+                    {
+                        throw new Exception("Argument Exception there !");
+                    }
                     nprocs += count;
                 }
 
@@ -1494,13 +1509,14 @@ namespace DGAC
 
         IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
 
-        public ConcreteComponentNotFoundException(int id_abstract, string id_inner, int id_functor_app_implements) : base()
+        public ConcreteComponentNotFoundException(int id_abstract, string id_inner, int id_functor_app_implements)
+            : base()
         {
             this.id_abstract = id_abstract;
             this.id_inner = id_inner;
             this.id_functor_app_implements = id_functor_app_implements;
 
-            AbstractComponentFunctorApplicationDAO acfadao= new AbstractComponentFunctorApplicationDAO();
+            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
             SupplyParameterDAO spdao = new SupplyParameterDAO();
 
             AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_implements);
@@ -1517,7 +1533,7 @@ namespace DGAC
         {
             get
             {
-               return setupMessage(id_abstract, id_inner);
+                return setupMessage(id_abstract, id_inner);
             }
         }
 
@@ -1530,7 +1546,7 @@ namespace DGAC
             string cname = buildName(ic.Id_functor_app);
 
             return "No implementation for " + cname + " was found !";
-        } 
+        }
 
         private string buildName(int id_functor_app)
         {
@@ -1544,14 +1560,14 @@ namespace DGAC
             AbstractComponentFunctor acf = acfdao.retrieve(acfa.Id_abstract);
 
             cname += acf.Library_path + "[";
-            
+
             IList<SupplyParameter> spList = spdao.list(id_functor_app);
-            foreach (SupplyParameter sp in spList) 
+            foreach (SupplyParameter sp in spList)
             {
                 if (sp is SupplyParameterComponent)
                 {
                     SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                    cname += spc.Id_parameter + "=" + buildName(spc.Id_functor_app_actual) + ",";                    
+                    cname += spc.Id_parameter + "=" + buildName(spc.Id_functor_app_actual) + ",";
                 }
                 else if (sp is SupplyParameterParameter)
                 {
@@ -1563,12 +1579,12 @@ namespace DGAC
                     cname += spp.Id_parameter_actual + "=" + buildName(spc_actual.Id_functor_app_actual) + ",";
                 }
             }
-            
+
 
             cname += "]";
 
             return cname;
-        }	
-	}	
+        }
+    }
 }//namespace
 
