@@ -1360,8 +1360,8 @@ namespace DGAC
                 foreach (EnumerationInterface ei in eiList)
                 {
                     Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
-                    if (e.Valuation == -1)
-                    {
+                    if (e.Valuation == -1 && !rList.Contains(e.Variable))
+                    {   
                         rList.Add(e.Variable);
                     }
                 }
