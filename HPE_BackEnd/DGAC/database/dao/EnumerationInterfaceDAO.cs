@@ -119,6 +119,7 @@ namespace DGAC.database
                 "FROM hashmodel.enumeration_interface ei, hashmodel.enumerator e " +
                 "WHERE ei.id_abstract=" + id_abstract + " AND " +
                 "ei.id_abstract=e.id_abstract AND " +
+                "ei.id_enumerator=e.id_enumerator AND " +
                 "ei.id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
