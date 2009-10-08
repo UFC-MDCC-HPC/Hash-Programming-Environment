@@ -218,7 +218,7 @@ public class CommandLineUtil{
             }
         }
 
-        Console.WriteLine(userName + " runs: " + cmd + args);
+        Console.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
 
         proc.Start();
         proc.WaitForExit();
