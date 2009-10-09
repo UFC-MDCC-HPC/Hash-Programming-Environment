@@ -665,7 +665,10 @@ namespace HPE_DGAC_LoadDB
                              ssr.Id_owner = ss.Id_owner;
                              ssr.File_name = ss.File_name;
                              ssr.Reference = extRef;
-                             scrdao.insert(ssr);
+                             if (scrdao.retrieve(ssr) == null)
+                             {
+                                scrdao.insert(ssr);
+							 }
                          }
                      }
 
