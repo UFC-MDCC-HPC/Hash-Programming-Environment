@@ -33,6 +33,7 @@ import hPE.frontend.base.actions.SupplyParameterAction;
 import hPE.frontend.base.actions.UnbindAction;
 import hPE.frontend.base.actions.UnfuseReplicatorAction;
 import hPE.frontend.base.actions.UnsetReplicatorAction;
+import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.dnd.FileTransferDropTargetListener;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HReplicator;
@@ -127,6 +128,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
@@ -149,13 +151,51 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		
 	private HComponent configuration = null; 
 	
+	public static HPEVersionEditor currentEditor = null;
+	
 	protected void initializeGraphicalViewer() {
 		
 		getGraphicalViewer().setEditPartFactory(getEditPartFactory());
 		getGraphicalViewer().setContents(configuration);
 		
 		getGraphicalViewer().addDropTargetListener(new FileTransferDropTargetListener(getGraphicalViewer()));
-		
+		getSite().getPage().addPartListener(new IPartListener() {
+
+			@Override
+			public void partActivated(IWorkbenchPart part) {
+				// TODO Auto-generated method stub
+				if (part instanceof HPEVersionEditor) {
+				   currentEditor = (HPEVersionEditor) part;
+				} else {
+					currentEditor = null;
+				}
+				
+				BrowseAndRunBackEndDialog.changeWindowName();
+			}
+
+			@Override
+			public void partBroughtToTop(IWorkbenchPart part) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void partClosed(IWorkbenchPart part) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void partDeactivated(IWorkbenchPart part) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void partOpened(IWorkbenchPart part) {
+				// TODO Auto-generated method stub
+				
+			}});
 		
 	}
 	

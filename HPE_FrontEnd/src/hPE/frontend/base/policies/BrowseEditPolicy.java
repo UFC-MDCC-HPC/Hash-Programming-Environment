@@ -1,6 +1,5 @@
 package hPE.frontend.base.policies;
 
-import hPE.HPEVersionEditor;
 import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.edits.ConfigurationEditPart;
 import hPE.frontend.base.model.HComponent;
@@ -33,24 +32,18 @@ public Command getCommand(Request request) {
 static class DeployCommand 
 extends org.eclipse.gef.commands.Command{
 
-private ConfigurationEditPart part;
-
 private HComponent c = null;
-private HPEVersionEditor editor = null;
-
-
 public DeployCommand(ConfigurationEditPart part){
 
-  this.part = part;
   c = (HComponent) part.getModel();
 
       
 }
 
 public void execute(){
-
-	BrowseAndRunBackEndDialog dialog = new BrowseAndRunBackEndDialog(null,c);
-
+	
+	BrowseAndRunBackEndDialog dialog = BrowseAndRunBackEndDialog.getInstance();
+	
 	dialog.setAlwaysOnTop(true);
 	dialog.setVisible(true);
 		

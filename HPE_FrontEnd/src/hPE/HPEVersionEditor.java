@@ -41,11 +41,11 @@ public class HPEVersionEditor extends MultiPageEditorPart implements IResourceCh
 	
 	protected void createPages() {
         try { 
-          editor = new hPEEditor();  
-		  int index = this.addPage(editor,this.getEditorInput());
+          setEditor(new hPEEditor());  
+		  int index = this.addPage(getEditor(),this.getEditorInput());
 		   
-		  setPageText(index, editor.getTitle());
-		  setTitle(editor.getTitle());
+		  setPageText(index, getEditor().getTitle());
+		  setTitle(getEditor().getTitle());
         }
         catch (PartInitException e) {
           System.err.println("ERROR opening HPE Editor");	
@@ -130,8 +130,8 @@ public class HPEVersionEditor extends MultiPageEditorPart implements IResourceCh
 				public void run(){
 					IWorkbenchPage[] pages = getSite().getWorkbenchWindow().getPages();
 					for (int i = 0; i<pages.length; i++){
-						if(((FileEditorInput)editor.getEditorInput()).getFile().getProject().equals(event.getResource())){
-							IEditorPart editorPart = pages[i].findEditor(editor.getEditorInput());
+						if(((FileEditorInput)getEditor().getEditorInput()).getFile().getProject().equals(event.getResource())){
+							IEditorPart editorPart = pages[i].findEditor(getEditor().getEditorInput());
 							pages[i].closeEditor(editorPart,true);
 						}
 					}
@@ -152,6 +152,18 @@ public class HPEVersionEditor extends MultiPageEditorPart implements IResourceCh
 		}
 		
 		
+	}
+
+
+
+	public void setEditor(hPEEditor editor) {
+		this.editor = editor;
+	}
+
+
+
+	public hPEEditor getEditor() {
+		return editor;
 	}
 	
 	

@@ -15,7 +15,7 @@ public interface BackEnd_WS extends javax.xml.rpc.Service {
     public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
     public java.lang.String getBackEnd_WSSoap12Address();
 
-    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException;
+    public hPE.backend.BackEnd_WSSoap12 getBackEnd_WSSoap12() throws javax.xml.rpc.ServiceException;
 
-    public hPE.backend.BackEnd_WSSoap getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+    public hPE.backend.BackEnd_WSSoap12 getBackEnd_WSSoap12(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
 }

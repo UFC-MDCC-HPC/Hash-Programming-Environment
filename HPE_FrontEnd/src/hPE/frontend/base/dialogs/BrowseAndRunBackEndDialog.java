@@ -1,5 +1,6 @@
 package hPE.frontend.base.dialogs;
 
+import hPE.hPEEditor;
 import hPE.backend.BackEnd_WSLocator;
 import hPE.backend.BackEnd_WSSoap;
 import hPE.backend.SecureString;
@@ -59,9 +60,15 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.draw2d.Label;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.editors.text.NonExistingFileEditorInput;
@@ -93,13 +100,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	/**
 	 * @param owner
 	 */
-	public BrowseAndRunBackEndDialog(Frame owner, HComponent c) {
-		super(owner);
-		this.c = c;
-		initialize();
-	}
 
-	public BrowseAndRunBackEndDialog(Frame owner) {
+	private BrowseAndRunBackEndDialog(Frame owner) {
 		super(owner);
 		initialize();
 	}
@@ -126,6 +128,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		
 	}
 
+	
+	
 	private static String EDIT_LABEL = "manage ...";  //  @jve:decl-index=0:
 	
 	private void loadBackEndsInfo() {
@@ -164,7 +168,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 							dcList = new ArrayList<DeployedComponentInfo>();
 						    browseUpdate();
 //							loadComponents(b);
-							jButtonDeploy.setEnabled(c != null);
+							jButtonDeploy.setEnabled(getCurrentComponent() != null);
 						}
 					}
 
@@ -175,7 +179,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 
 	private void loadComponents(BackEndLocationInfo b) {
 		try {
-			dcList = BackEndLocationList.loadDeployedComponentsInfo(b,c.getLocalLocation(),dcListAbstract,dcListConcrete,rootPane);
+			dcList = BackEndLocationList.loadDeployedComponentsInfo(b,getCurrentComponent().getLocalLocation(),dcListAbstract,dcListConcrete,rootPane);
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(rootPane, e1.getMessage());
 		} catch (ServiceException e1) {
@@ -596,6 +600,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			this.deploy();
 		} else if (source == jButtonClose) {
 			this.setVisible(false);
+			BrowseAndRunBackEndDialog.clearInstance();
 		} else if (source == jRadioButtonByPackage) {			
 			jRadioButtonByKind.setSelected(false);
 			jRadioButtonByName.setSelected(false);
@@ -615,6 +620,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		
 	}
 
+	private static void clearInstance() {
+		instance = null;		
+	}
+
 	private void browseUpdate() {
 		browseAbstractUpdate();
 		browseConcreteUpdate();
@@ -623,7 +632,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private void deploy() {
 
 		try {
-			String fileName = c.getLocalLocation();
+			String fileName = getCurrentComponent().getLocalLocation();
 		
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
 			
@@ -650,7 +659,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			if (result != null)
 			    JOptionPane.showMessageDialog(rootPane, result);
 			else
-				JOptionPane.showMessageDialog(rootPane, "The component " + c.getComponentName() + " has been succesfully deployed !");
+				JOptionPane.showMessageDialog(rootPane, "The component " + getCurrentComponent().getComponentName() + " has been succesfully deployed !");
 			
 			this.browseUpdate();
 			
@@ -1191,7 +1200,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 						dcList = new ArrayList<DeployedComponentInfo>();
 					    browseUpdate();
 						loadComponents(b);
-						jButtonDeploy.setEnabled(c != null);
+						jButtonDeploy.setEnabled(getCurrentComponent() != null);
 					}
 				}
 			});
@@ -1214,10 +1223,40 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		return jCheckBoxEnumerator;
 	}
 
+	private void setCurrentComponent(HComponent c) {
+		this.c = c;
+	}
+
+	public HComponent getCurrentComponent() {
+	    this.setCurrentComponent(hPEEditor.currentEditor.getEditor().getModel());
+						
+		return c;
+	}
+
 
 		
+	public static BrowseAndRunBackEndDialog getInstance() {
+		if (instance ==null) {
+			instance = new BrowseAndRunBackEndDialog(null);
+		}
+		
+		return instance;
+	}
 
-
+	private static BrowseAndRunBackEndDialog instance = null; 
+	
+	
+    public static void changeWindowName() {
+    	BrowseAndRunBackEndDialog instance = getInstance();
+    	if (instance != null) {
+    		if (instance.getCurrentComponent() != null) {
+         		instance.setTitle("Back-End Connection (deploy " + instance.getCurrentComponent().getComponentName() + ")");
+         		instance.getJButtonDeploy().setToolTipText(" deploy " + instance.getCurrentComponent().getComponentName() + " ");
+    		} else {
+        		instance.setTitle("Back-End Connection");
+    		}
+    	} 
+    }
 
 	
 }  //  @jve:decl-index=0:visual-constraint="149,-11"

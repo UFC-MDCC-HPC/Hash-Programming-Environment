@@ -20,8 +20,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ve.jfc;bundle-version="1.4.0",
  org.eclipse.ve.propertysheet;bundle-version="1.4.0",
  org.eclipse.ve.swt;bundle-version="1.4.0",
- javax.xml.rpc;bundle-version="1.1.0",
- org.apache.axis;bundle-version="1.4.0"
+ org.apache.axis;bundle-version="1.4.0",
+ javax.xml.rpc;bundle-version="1.1.0"
 Eclipse-AutoStart: true
 Bundle-ClassPath: C:\axis2-1.4.1\lib\axis2-kernel-1.4.1.jar,
  .
