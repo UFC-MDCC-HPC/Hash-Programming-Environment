@@ -107,6 +107,7 @@ public class FileUtil{
       defaultProperties.Add("cli_runtime", "mono");
       defaultProperties.Add("gac_util", "gacutil");
       defaultProperties.Add("mpi_run", "mpirun");
+      defaultProperties.Add("mpi_run_flags", "");
       // etc ... add !
       return defaultProperties;
   }

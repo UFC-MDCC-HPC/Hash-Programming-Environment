@@ -37,6 +37,7 @@ public class Constants {
     public static string key_generator = FileUtil.readConstant("key_generator");
     public static string gac_util = FileUtil.readConstant("gac_util");
     public static string mpi_run = FileUtil.readConstant("mpi_run");
+    public static string mpi_run_flags = FileUtil.readConstant("mpi_run_flags");
     public static string hosts_file = FileUtil.readConstant("hosts_file",Path.DirectorySeparatorChar + "etc" + Path.DirectorySeparatorChar + "hpe_hosts");
     public static string connectionString = FileUtil.readConstant("connection_string");
     public static string externalRefsFile = FileUtil.readConstant("external_references_file");

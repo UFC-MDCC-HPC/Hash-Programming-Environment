@@ -36,7 +36,7 @@ public class CommandLineUtil{
      
      foreach (KeyValuePair<string, int> k in files)
      {
-         uStr += (firstPass ? "" : " :") + " -np " + k.Value + /* " --hostfile " + Constants.hosts_file */ " " + Constants.cli_runtime + " " + Constants.PATH_BIN + k.Key + "Main.exe " + eStr;
+         uStr += (firstPass ? "" : " :") + " -np " + k.Value + " " + Constants.mpi_run_flags + " " + Constants.cli_runtime + " " + Constants.PATH_BIN + k.Key + "Main.exe " + eStr;
          firstPass = false;
      }
 
