@@ -223,7 +223,7 @@ namespace DGAC
             finally
             {
                 Connector.closeConnection();
-            }
+            } 
         }
 
         public void deleteComponent(String ID)
