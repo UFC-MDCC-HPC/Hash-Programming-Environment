@@ -437,8 +437,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 
 		}
 		
-		id = DeployAction.DEPLOY;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
+		//id = DeployAction.DEPLOY;
+		//bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = BrowseAction.BROWSE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = FuseComponentsAction.FUSE_COMPONENTS;
@@ -607,9 +607,9 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 			
 		}
 		
-		action = new DeployAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
+		//action = new DeployAction(this);
+		//registry.registerAction(action);
+		//getSelectionActions().add(action.getId());
 
 		action = new BrowseAction(this);
 		registry.registerAction(action);

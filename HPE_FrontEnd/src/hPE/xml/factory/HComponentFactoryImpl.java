@@ -11,6 +11,7 @@ import hPE.frontend.base.commands.FuseReplicatorCommand;
 import hPE.frontend.base.commands.SupersedeCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
+import hPE.frontend.base.interfaces.IInterfaceSlice;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
@@ -1769,8 +1770,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (action instanceof HDoAction) {
 				actionX = factory.createActionActivateType();
 				ActionActivateType actionXX = (ActionActivateType) actionX;
-				actionXX.setSliceRef(((HDoAction) action).getSliceAbstraction()
-						.getName());
+				IInterfaceSlice s = ((HDoAction) action).getSliceAbstraction();
+				if (s != null)
+				   actionXX.setSliceRef(s.getName()); 
 			} else if (action instanceof HWaitAction) {
 				actionX = factory.createActionWaitType();
 				ActionWaitType actionXX = (ActionWaitType) actionX;

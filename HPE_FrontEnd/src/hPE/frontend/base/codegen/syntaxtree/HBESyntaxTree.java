@@ -178,34 +178,35 @@ public class HBESyntaxTree {
         	HDoAction doAction = (HDoAction) action;
         	
         	HActivateInterfaceSlice is = (HActivateInterfaceSlice) doAction.getSliceAbstraction();
-        	HActivateInterface i = (HActivateInterface) is.getInterface(); 
-    
-        	pc.setActivateSlice(is);
-        	
-        	String calledProcName = is.getName(); // i.getPrimName();
-        	
-        	// BEGIN POG Block
-        	if (activations.containsKey(i)) {
-        		pc = activations.get(i);
-        	} else {
-        		activations.put(i, pc);
-        	} 
-        	// END POG Block
-        	
-        	
-        	
-        	pc.setName(calledProcName);
-        	
-        	List<HPort> ports = is.getPorts();
-        	
-        	for (HPort p : ports) {
-        		HBEVariable v = procedure.getVariable(p);
-        		if (v==null) {
-        		   System.out.print("NULL PORT !!!! HBEProtocol2Procedure");
-        		}
-            	pc.addParameter(v);
+        	if (is!=null) {
+	        	HActivateInterface i = (HActivateInterface) is.getInterface(); 
+	    
+	        	pc.setActivateSlice(is);
+	        	
+	        	String calledProcName = is.getName(); // i.getPrimName();
+	        	
+	        	// BEGIN POG Block
+	        	if (activations.containsKey(i)) {
+	        		pc = activations.get(i);
+	        	} else {
+	        		activations.put(i, pc);
+	        	} 
+	        	// END POG Block
+	        	
+	        	
+	        	
+	        	pc.setName(calledProcName);
+	        	
+	        	List<HPort> ports = is.getPorts();
+	        	
+	        	for (HPort p : ports) {
+	        		HBEVariable v = procedure.getVariable(p);
+	        		if (v==null) {
+	        		   System.out.print("NULL PORT !!!! HBEProtocol2Procedure");
+	        		}
+	            	pc.addParameter(v);
+	        	}
         	}
-
         	// HBEProtocol2Procedure innerProc = new HBEProtocol2Procedure(calledProcName,i);
             
         	// if (!this.externalReferences.contains(calledProcName)) this.externalReferences.add(calledProcName);   	

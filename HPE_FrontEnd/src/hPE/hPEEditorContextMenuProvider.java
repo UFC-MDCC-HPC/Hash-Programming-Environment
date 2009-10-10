@@ -185,10 +185,10 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 		}
 
 		
-		action = getAction(DeployAction.DEPLOY);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
+	//	action = getAction(DeployAction.DEPLOY);
+	//	if (action.isEnabled())	{ 
+	//		menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+	//	}
 
 		action = getAction(BrowseAction.BROWSE);
 		if (action.isEnabled())	{ 

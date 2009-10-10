@@ -145,8 +145,8 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
 			
 		} else if (block instanceof HBEProcedureCall) {
 			HBEProcedureCall pc = (HBEProcedureCall) block;
-
-			programText = programText.concat(hasBranch ? "" : tabs(l)) + pc.getName() + "." + ((HActivateInterface)pc.getActivateSlice().getInterface()).getActivateMethodName() + "();\n";
+            if (pc.getActivateSlice() != null)
+            	programText = programText.concat(hasBranch ? "" : tabs(l)) + pc.getName() + "." + ((HActivateInterface)pc.getActivateSlice().getInterface()).getActivateMethodName() + "();\n";
 			
 			
 		} else if (block instanceof HBESkipCommand) {

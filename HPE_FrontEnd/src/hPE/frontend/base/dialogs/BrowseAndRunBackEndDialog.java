@@ -121,7 +121,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		dcList = new ArrayList<DeployedComponentInfo>();
 		
 		this.setSize(1043, 341);
-		this.setTitle("Back-End Connection");
+		if (c != null) {
+		    this.setTitle("Back-End Connection (deploy " + c.getComponentName() + ")");
+		} else {
+			this.setTitle("Back-End Connection");
+		}
 		this.setContentPane(getJContentPane());
 		this.loadBackEndsInfo();
 		this.browseUpdate();
@@ -1228,7 +1232,11 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	}
 
 	public HComponent getCurrentComponent() {
-	    this.setCurrentComponent(hPEEditor.currentEditor.getEditor().getModel());
+		if (hPEEditor.currentEditor != null) {
+	        this.setCurrentComponent(hPEEditor.currentEditor.getEditor().getModel());
+		} else {
+			this.setCurrentComponent(null);
+		}
 						
 		return c;
 	}
