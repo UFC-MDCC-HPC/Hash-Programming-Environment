@@ -4,7 +4,7 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Threading;
 using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Ipc;
+// using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
 using System.Reflection;
 using HPE_DGAC_LoadDB;
@@ -46,39 +46,37 @@ namespace DGAC
             this.hosts = FileUtil.readProperty("host");
 
             //creating the channel
-            IpcChannel ch;
+//            IpcChannel ch;
             try
             {
              //   ch = new TcpChannel(this.channel);
              //   ChannelServices.RegisterChannel(ch, true);
-             ch = new IpcChannel("WorkerHost");
-             ChannelServices.RegisterChannel(ch, false);
+//             ch = new IpcChannel("WorkerHost");
+//             ChannelServices.RegisterChannel(ch, false);
+
+             //creating the objects to connect to workers
+             remObjects = new object[hosts.Length];
+
+             for (int i = 0; i < hosts.Length; i++)
+             {
+                    // remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
+//                     remObjects[i] = Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost");
+					
+		    RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost");
+					
+		    remObjects[i] = new ServerObject();
+					
+                   Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
+             }
+
+             Console.WriteLine("DGAC is up and running.");
             }
             catch (System.Runtime.Remoting.RemotingException re)
-            {
+            
 
-                Console.WriteLine("Channel already exists." + re);
+                Console.WriteLine("Remoting Error");
 
             }
-            finally
-            {
-                //creating the objects to connect to workers
-                remObjects = new object[hosts.Length];
-
-                for (int i = 0; i < hosts.Length; i++)
-                {
-                    // remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
-                    // remObjects[i] = Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost");
-					
-					RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost");
-					
-					remObjects[i] = new ServerObject();
-					
-                    Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
-                }
-            } 
-
-            Console.WriteLine("DGAC is up and running.");
         }
 
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
