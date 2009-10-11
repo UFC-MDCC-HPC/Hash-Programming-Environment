@@ -18,7 +18,7 @@ namespace DGAC.database
                  */
         		public RemotingServerWorker(int port){
         		
-        			this.port = port;
+         			this.port = port;
         			//String strHostName = "";
 					//strHostName = Dns.GetHostName();
 					//Console.WriteLine("--: "+strHostName);
@@ -45,7 +45,7 @@ namespace DGAC.database
         		
         		}
         		
-                public static void Main (string[] args) 
+                public static void Main2 (string[] args) 
                 {
                         int port = 5000;
                         if (args.Length > 0) {

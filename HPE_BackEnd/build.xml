@@ -30,7 +30,7 @@
   <target depends='dgac' name='worker'>
     <csc debug='true' optimize='true' output='${build}/worker.exe' target='exe'>
       <sources>
-        <include name='worker/RemotingServerWorker.cs'/>
+        <include name='worker/RemotingServerWorker2.cs'/>
       </sources>
       <resources dynamicprefix='true'>
         <include name='**/*.resx'/>
@@ -38,6 +38,7 @@
       </resources>
       <references>
         <include name='System.Runtime.Remoting.dll'/>
+        <include name='System.ServiceProcess.dll'/> 
         <include name='${build}/DGAC.dll'/>
       </references>
     </csc>

@@ -710,6 +710,7 @@ namespace HPE_DGAC_LoadDB
            AbstractComponentFunctorApplication absCapp = absCappdao.retrieve(c.Id_functor_app);
 
            SourceCodeDAO scdao = new SourceCodeDAO();
+           SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
            int id_abstract = absCapp.Id_abstract;
 
@@ -721,7 +722,6 @@ namespace HPE_DGAC_LoadDB
                string urefSuper = u.super == null ? null : u.super.uRef;
 
                InterfaceDAO idao = new InterfaceDAO();
-               SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
                Interface i = idao.retrieve(id_abstract, uref);
                InterfaceType ui = lookForInterface(iRef);
 
