@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Remoting.Channels.Ipc;
 using DGAC.utils;
 
 namespace DGAC.database
@@ -15,7 +15,7 @@ namespace DGAC.database
 		
                 private int port = 5000;		
 //		private System.Diagnostics.EventLog eventLog1;
-                private TcpChannel ch;
+                private IpcChannel ch;
 
 		public WorkerService()			
 		{
@@ -75,17 +75,24 @@ namespace DGAC.database
 	
 				
 		     Console.WriteLine("Starting Worker");
-	             ch = new TcpChannel(this.port);
+/*	             ch = new TcpChannel(this.port);
                 
 	             ChannelServices.RegisterChannel (ch,false);
 	       
 	             ServerObject so = new ServerObject();
 	             string serviceName = Constants.SERVICE_NAME;
 	             RemotingServices.Marshal(so,serviceName);
+*/
+	             ch = new IpcChannel("WorkerHost");
+                
+	             ChannelServices.RegisterChannel (ch,false);
+	       
+			     RemotingConfiguration.RegisterWellKnownServiceType(typeof(ServerObject),
+			                                                   "WorkerService",
+			                                                   WellKnownObjectMode.SingleCall);
+						
 
-                     ch.StartListening(null);
-
-	            Console.WriteLine("Worker " + serviceName + " Running on port " + port + " and ip {0} "+addr[0].ToString());
+	            Console.WriteLine("Worker " /* + serviceName */ + " Running on port " + port + " and ip {0} "+addr[0].ToString());
 		}		
 
 		protected override void OnStop()

@@ -4,7 +4,7 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Threading;
 using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
 using System.Reflection;
 using HPE_DGAC_LoadDB;
@@ -46,12 +46,13 @@ namespace DGAC
             this.hosts = FileUtil.readProperty("host");
 
             //creating the channel
-            TcpChannel ch;
+            IpcChannel ch;
             try
             {
-                ch = new TcpChannel(this.channel);
-                ChannelServices.RegisterChannel(ch, true);
-
+             //   ch = new TcpChannel(this.channel);
+             //   ChannelServices.RegisterChannel(ch, true);
+             ch = new IpcChannel("WorkerHost");
+             ChannelServices.RegisterChannel(ch, false);
             }
             catch (System.Runtime.Remoting.RemotingException re)
             {
@@ -66,7 +67,12 @@ namespace DGAC
 
                 for (int i = 0; i < hosts.Length; i++)
                 {
-                    remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
+                    // remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
+                    // remObjects[i] = Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost");
+					
+					RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost");
+					
+					
                     Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
                 }
             } 
