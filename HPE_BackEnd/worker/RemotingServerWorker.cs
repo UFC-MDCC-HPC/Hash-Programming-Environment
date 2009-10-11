@@ -27,7 +27,7 @@ namespace DGAC.database
 					IPAddress [] addr = ipEntry.AddressList;
 		
 					
-			    Console.WriteLine("Starting Worker");
+			        Console.WriteLine("Starting Worker");
 		            TcpChannel ch = new TcpChannel(this.port);
                     
 		            ChannelServices.RegisterChannel (ch,true);
@@ -36,7 +36,7 @@ namespace DGAC.database
 		            string serviceName = Constants.SERVICE_NAME;
 		            RemotingServices.Marshal(so,serviceName);
 
-                   // ch.StartListening(null);
+                    ch.StartListening(null);
 
 		            Console.WriteLine("Worker " + serviceName + " Running on port " + port + " and ip {0} "+addr[0].ToString());
 		            Console.ReadLine();

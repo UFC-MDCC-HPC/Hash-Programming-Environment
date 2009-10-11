@@ -46,7 +46,7 @@ namespace DGAC
             this.hosts = FileUtil.readProperty("host");
 
             //creating the channel
-/*            TcpChannel ch;
+            TcpChannel ch;
             try
             {
                 ch = new TcpChannel(this.channel);
@@ -69,7 +69,7 @@ namespace DGAC
                     remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
                     Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
                 }
-            } */
+            } 
 
             Console.WriteLine("DGAC is up and running.");
         }
@@ -115,8 +115,8 @@ namespace DGAC
                     string library_path = interfaceToCompile.library_path;
                     int outputType = interfaceToCompile.output_type;
 
-                    //portTurn %= remObjects.Length;
-                    Object remWorker = new ServerObject(); //remObjects[portTurn];
+                    portTurn %= remObjects.Length;
+                    Object remWorker = /* new ServerObject();*/ remObjects[portTurn];
 
                     string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                        remWorker,
@@ -194,8 +194,8 @@ namespace DGAC
                     string sourceCode = unitToCompile.sourceCode;
                     int outputType = unitToCompile.output_type;
 
-                   //portTurn %= remObjects.Length;
-                    Object remWorker = new ServerObject(); //remObjects[portTurn];
+                    portTurn %= remObjects.Length;
+                    Object remWorker = /* new ServerObject(); */ remObjects[portTurn];
 
                     string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                        remWorker,
@@ -1406,7 +1406,7 @@ namespace DGAC
 
                 session_id = getSessionID(id_concrete);
 
-                Object server = new ServerObject(); //remObjects[0];
+                Object server = /*new ServerObject();*/ remObjects[0];
                 IDictionary<string, int> files = new Dictionary<string, int>();
                 IDictionary<string, int> enums = new Dictionary<string, int>();
 
