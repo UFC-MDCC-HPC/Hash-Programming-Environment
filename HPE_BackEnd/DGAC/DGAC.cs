@@ -72,6 +72,7 @@ namespace DGAC
 					
 					RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost");
 					
+					remObjects[i] = new ServerObject();
 					
                     Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
                 }

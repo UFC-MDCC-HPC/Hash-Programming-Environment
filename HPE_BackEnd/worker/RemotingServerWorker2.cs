@@ -77,12 +77,12 @@ namespace DGAC.database
 		     Console.WriteLine("Starting Worker");
 /*	             ch = new TcpChannel(this.port);
                 
-	             ChannelServices.RegisterChannel (ch,false);
+	             ChannelServices.RegisterChannel (ch,false);        
 	       
 	             ServerObject so = new ServerObject();
 	             string serviceName = Constants.SERVICE_NAME;
 	             RemotingServices.Marshal(so,serviceName);
-*/
+*/ 
 	             ch = new IpcChannel("WorkerHost");
                 
 	             ChannelServices.RegisterChannel (ch,false);
