@@ -4,7 +4,7 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Threading;
 using System.Runtime.Remoting.Channels;
-// using System.Runtime.Remoting.Channels.Ipc;
+using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
 using System.Reflection;
 using HPE_DGAC_LoadDB;
@@ -33,6 +33,8 @@ namespace DGAC
     * Essa classe é chamada pelo WS. Nela, as referencias aos workers são inicializadas. Para isto, os workers
     * já devem ter sido inicializados manualmente e identificados dentro do arquivo properties.xml, na pasta config
     */
+
+   
     public class BackEnd : IBackEnd
     {
 
@@ -41,42 +43,56 @@ namespace DGAC
         private object[] remObjects;
         private int portTurn = 0;
 
+        IpcChannel ch;
+
         public BackEnd()
         {
-            this.hosts = FileUtil.readProperty("host");
+//           try {
 
-            //creating the channel
-//            IpcChannel ch;
-            try
-            {
+//            this.hosts = FileUtil.readProperty("host");
+
              //   ch = new TcpChannel(this.channel);
              //   ChannelServices.RegisterChannel(ch, true);
-//             ch = new IpcChannel("WorkerHost");
+//             ch = new IpcChannel("WorkerHostClient");
 //             ChannelServices.RegisterChannel(ch, false);
 
              //creating the objects to connect to workers
-             remObjects = new object[hosts.Length];
+//             remObjects = new object[hosts.Length];
 
-             for (int i = 0; i < hosts.Length; i++)
-             {
+//             RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
+
+//             for (int i = 0; i < hosts.Length; i++)
+//             {
                     // remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
 //                     remObjects[i] = Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost");
 					
-		    RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost");
+//		    remObjects[i] = new ServerObject();
 					
-		    remObjects[i] = new ServerObject();
-					
-                   Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
-             }
+//                   Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
+//             }
 
              Console.WriteLine("DGAC is up and running.");
-            }
-            catch (System.Runtime.Remoting.RemotingException re)
+//            }
+//            catch (System.Runtime.Remoting.RemotingException re) {
             
 
-                Console.WriteLine("Remoting Error");
+//                Console.WriteLine("Remoting Error");
 
-            }
+//            }
+        }
+
+        public ServerObject connectToWorker() {
+             ch = new IpcChannel("WorkerHostClient");
+             ChannelServices.RegisterChannel(ch, false);
+             if (RemotingConfiguration.IsWellKnownClientType(typeof(ServerObject)) == null) {
+                RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
+             }
+             return new ServerObject();
+        }
+
+        public void releaseWorker() {
+             ch.StopListening(null);
+             ChannelServices.UnregisterChannel(ch);
         }
 
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
@@ -84,10 +100,12 @@ namespace DGAC
         //o qual será enviado aos workers		
         public void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
         {
-            Connector.openConnection();
-            Connector.beginTransaction();
             try
             {
+                Connector.openConnection();
+                Connector.beginTransaction();
+                ServerObject worker = connectToWorker();
+
                 bool exists = false;
                 LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
                 AbstractComponentFunctor cAbs = null;
@@ -120,14 +138,14 @@ namespace DGAC
                     string library_path = interfaceToCompile.library_path;
                     int outputType = interfaceToCompile.output_type;
 
-                    portTurn %= remObjects.Length;
-                    Object remWorker = /* new ServerObject();*/ remObjects[portTurn];
+//                    portTurn %= remObjects.Length;
+//                    Object remWorker = /* new ServerObject();*/ remObjects[portTurn];
 
                     string publicKey = this.sendCompileCommandToWorker(library_path,
-                                                                       remWorker,
+                                                                       worker,
                                                                        sourceCode,
                                                                        moduleName,
-                                                                       interfaceToCompile.references,
+                                                                      interfaceToCompile.references,
                                                                        outputType,
                                                                        userName,
                                                                        password,
@@ -147,6 +165,7 @@ namespace DGAC
             }
             finally
             {
+                releaseWorker();
                 Connector.closeConnection();
             }
         }
@@ -162,10 +181,13 @@ namespace DGAC
         public void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
         {
 
-            Connector.openConnection();
-            Connector.beginTransaction();
             try
             {
+                Connector.openConnection();
+                Connector.beginTransaction();
+
+                ServerObject worker = connectToWorker();
+
                 bool exists = false;
                 LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
                 Component cConc = null;
@@ -199,11 +221,11 @@ namespace DGAC
                     string sourceCode = unitToCompile.sourceCode;
                     int outputType = unitToCompile.output_type;
 
-                    portTurn %= remObjects.Length;
-                    Object remWorker = /* new ServerObject(); */ remObjects[portTurn];
+//                    portTurn %= remObjects.Length;
+//                    Object remWorker = /* new ServerObject(); */ remObjects[portTurn];
 
                     string publicKey = this.sendCompileCommandToWorker(library_path,
-                                                                       remWorker,
+                                                                       worker,
                                                                        sourceCode,
                                                                        moduleName,
                                                                        unitToCompile.references,
@@ -214,8 +236,6 @@ namespace DGAC
                     if (!exists)
                         udao.setPublicKey(id_concrete, unitName, publicKey);
                 }
-
-
 
                 Connector.commitTransaction(); // if it is ok, commit ...
 
@@ -228,6 +248,7 @@ namespace DGAC
             finally
             {
                 Connector.closeConnection();
+                releaseWorker();
             } 
         }
 
@@ -237,15 +258,13 @@ namespace DGAC
         }
 
 
-        private string sendCompileCommandToWorker(string library_path, object remoteObject, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
+        private string sendCompileCommandToWorker(string library_path, ServerObject worker, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
         {
-            ServerObject worker = (ServerObject)remoteObject;
             return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password, curDir);
         }
 
-        private void sendRunCommandToWorker(object remoteObject, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, string password, String curDir)
+        private void sendRunCommandToWorker(ServerObject worker, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, string password, String curDir)
         {
-            ServerObject worker = (ServerObject)remoteObject;
             worker.runClass(files, enums, session_id, userName, password, curDir);
         }
 
@@ -1407,11 +1426,11 @@ namespace DGAC
             // assert: eIds.Length = eVls.Length
             try
             {
+                ServerObject server = connectToWorker();
                 Connector.openConnection();
 
                 session_id = getSessionID(id_concrete);
 
-                Object server = /*new ServerObject();*/ remObjects[0];
                 IDictionary<string, int> files = new Dictionary<string, int>();
                 IDictionary<string, int> enums = new Dictionary<string, int>();
 
@@ -1488,6 +1507,7 @@ namespace DGAC
             finally
             {
                 Connector.closeConnection();
+                releaseWorker();
             }
 
             return str_output == null ? new String[] { } : str_output;
