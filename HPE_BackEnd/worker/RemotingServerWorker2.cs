@@ -19,8 +19,8 @@ namespace DGAC.database
 		}
 		
 
-		public static void Main (string[] args) 
-        {
+		public static void Main (string[] args) { 
+        
 		    System.ServiceProcess.ServiceBase[] ServicesToRun; 
                     Console.WriteLine("STARTING WORKER SERVICE");	
 	

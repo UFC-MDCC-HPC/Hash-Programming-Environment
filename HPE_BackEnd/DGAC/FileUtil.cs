@@ -161,6 +161,8 @@ public class FileUtil{
               // Create an instance of the XmlSerializer specifying type and namespace.
               XmlSerializer serializer = new XmlSerializer(typeof(ReferenceListType));
 
+      Console.WriteLine(filename);
+
               // A FileStream is needed to read the XML document.
               FileStream fs = new FileStream(filename, FileMode.Open);
 

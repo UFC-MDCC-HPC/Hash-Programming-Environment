@@ -1,5 +1,5 @@
 ./ws/BackEndWS.asmx.cs
--lib:"C:\Program Files\Mono-2.0.1\lib\mono\DGAC"
+-lib:"/usr/lib/mono/DGAC"
 -r:System.Web.Services.dll 
 -r:System.Runtime.Remoting.dll
 -r:System.Data.dll 

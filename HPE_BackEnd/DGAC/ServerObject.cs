@@ -46,6 +46,7 @@ namespace DGAC
                     string publicKeyToken = null;
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
                     Console.WriteLine("Compiling " + moduleName);
+                    Console.WriteLine("password = " + password);
                     if (outFile == Constants.EXE_OUT)
                     {
                         CommandLineUtil.compile_to_exe(contents, moduleName, references, userName, password, curDir);
