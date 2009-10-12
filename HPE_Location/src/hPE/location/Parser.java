@@ -150,8 +150,7 @@ public class Parser implements Observer{
         		if (s == null) {
         			s = homeDir + "hpe.location.properties";
         		}
-        	}
-        	
+        	}      	
         	
         	
             properties.load(new FileInputStream(s));
