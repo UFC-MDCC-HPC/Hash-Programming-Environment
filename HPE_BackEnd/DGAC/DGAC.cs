@@ -47,38 +47,7 @@ namespace DGAC
 
         public BackEnd()
         {
-//           try {
-
-//            this.hosts = FileUtil.readProperty("host");
-
-             //   ch = new TcpChannel(this.channel);
-             //   ChannelServices.RegisterChannel(ch, true);
-//             ch = new IpcChannel("WorkerHostClient");
-//             ChannelServices.RegisterChannel(ch, false);
-
-             //creating the objects to connect to workers
-//             remObjects = new object[hosts.Length];
-
-//             RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
-
-//             for (int i = 0; i < hosts.Length; i++)
-//             {
-                    // remObjects[i] = Activator.GetObject(typeof(ServerObject), "tcp://" + hosts[i] + "/" + Constants.SERVICE_NAME);
-//                     remObjects[i] = Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost");
-					
-//		    remObjects[i] = new ServerObject();
-					
-//                   Console.WriteLine("DGAC conected to " + hosts[i] + " worker.");
-//             }
-
              Console.WriteLine("DGAC is up and running.");
-//            }
-//            catch (System.Runtime.Remoting.RemotingException re) {
-            
-
-//                Console.WriteLine("Remoting Error");
-
-//            }
         }
 
         public ServerObject connectToWorker() {
@@ -138,9 +107,6 @@ namespace DGAC
                     string library_path = interfaceToCompile.library_path;
                     int outputType = interfaceToCompile.output_type;
 
-//                    portTurn %= remObjects.Length;
-//                    Object remWorker = /* new ServerObject();*/ remObjects[portTurn];
-
                     string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                        worker,
                                                                        sourceCode,
@@ -170,17 +136,11 @@ namespace DGAC
             }
         }
 
-
-
-
-
-
         //TODO: este metodo ainda deve ser trabalhado para dinamicidade
         //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
         //o qual será enviado aos workers		
         public void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
         {
-
             try
             {
                 Connector.openConnection();
@@ -220,9 +180,6 @@ namespace DGAC
                     string unitName = unitToCompile.unitId;
                     string sourceCode = unitToCompile.sourceCode;
                     int outputType = unitToCompile.output_type;
-
-//                    portTurn %= remObjects.Length;
-//                    Object remWorker = /* new ServerObject(); */ remObjects[portTurn];
 
                     string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                        worker,
