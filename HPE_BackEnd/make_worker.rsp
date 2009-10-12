@@ -1,10 +1,11 @@
 -r:System.Runtime.Remoting.dll
+-r:System.ServiceProcess.dll
 
--lib:"C:\Program Files\Mono-2.0.1\lib\mono\DGAC"
+-lib:"/usr/lib/mono/DGAC"
+-pkg:dotnet
+-out:./bin/WorkerService.exe
 
--out:./bin/worker.exe
-
-worker/RemotingServerWorker.cs 
+worker/RemotingServerWorker2.cs 
 
 -r:DGAC
  
