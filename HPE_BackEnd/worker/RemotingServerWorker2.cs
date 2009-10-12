@@ -50,10 +50,11 @@ namespace DGAC.database
 		public static void Main (string[] args) 
         {
 		    System.ServiceProcess.ServiceBase[] ServicesToRun; 
-		
+                    Console.WriteLine("STARTING WORKER SERVICE");	
+	
 		    ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService() }; 
 		    System.ServiceProcess.ServiceBase.Run(ServicesToRun);  
-                    Console.WriteLine("SERVICE STARTED.");		
+                    Console.WriteLine("WORKER SERVICE FINISHED.");		
 	
 		}		
 		
@@ -70,8 +71,8 @@ namespace DGAC.database
 				//strHostName = Dns.GetHostName();
 				//Console.WriteLine("--: "+strHostName);
 				
-		     IPHostEntry ipEntry = Dns.GetHostEntry("localhost");
-		     IPAddress [] addr = ipEntry.AddressList;
+		     //IPHostEntry ipEntry = Dns.GetHostEntry("localhost");
+		     //IPAddress [] addr = ipEntry.AddressList;
 	
 				
 		     Console.WriteLine("Starting Worker");
@@ -88,11 +89,14 @@ namespace DGAC.database
 	             ChannelServices.RegisterChannel (ch,false);
 	       
 			     RemotingConfiguration.RegisterWellKnownServiceType(typeof(ServerObject),
-			                                                   "WorkerService",
+			                                                   "WorkerHost.rem",
 			                                                   WellKnownObjectMode.SingleCall);
+
+                     ServerObject o = (ServerObject) Activator.GetObject(typeof(ServerObject), 
+                                                                       "ipc://WorkerHost/WorkerHost.rem");
 						
 
-	            Console.WriteLine("Worker " /* + serviceName */ + " Running on port " + port + " and ip {0} "+addr[0].ToString());
+	            Console.WriteLine("Worker " /* + serviceName */ + " Running on port " + port + " and ip {0} " /*+addr[0].ToString()*/);
 		}		
 
 		protected override void OnStop()
