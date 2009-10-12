@@ -51,7 +51,7 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 	}
 	
 	protected void createEditPolicies() {
-		
+			
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,new UnitFlowLayoutEditPolicy());
 		this.installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new NameDirectEditPolicy());
 		this.installEditPolicy(EditPolicy.COMPONENT_ROLE, new RemoveElementEditPolicy());
