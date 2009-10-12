@@ -56,6 +56,7 @@ namespace DGAC.database
 		protected override void OnStop()
 		{ 
   		     ch.StopListening(null);
+  		     ChannelServices.UnregisterChannel(ch);
 		}		
 				
 	}
