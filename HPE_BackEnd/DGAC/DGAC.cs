@@ -993,7 +993,7 @@ namespace DGAC
 
                         foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
                         {
-                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + "##################################### " + s.Id_inner);
+                            // Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + "##################################### " + s.Id_inner);
                             IList<KeyValuePair<string, int>> rElist = k.Value;
 
                             int occurrences = 0;
