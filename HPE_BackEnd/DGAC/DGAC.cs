@@ -1023,7 +1023,7 @@ namespace DGAC
                                 }
                                 throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count);
                             }
-                            Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + ": END LOOP !!!!!!!!");
+                         //   Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + ": END LOOP !!!!!!!!");
                         }
 
 
