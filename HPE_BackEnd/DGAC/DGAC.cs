@@ -614,8 +614,8 @@ namespace DGAC
                     s_prime = sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice, se.Id_interface_slice_owner);
                     if (s_prime != null)
                         break;
-                    else
-                        Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
+                   // else
+                   //     Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
                 }
 
                 IList<EnumeratorMapping> emList = emdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
@@ -806,7 +806,7 @@ namespace DGAC
 
             EnumeratorDAO edao = new EnumeratorDAO();
 
-            Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
+            // Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
 
             IDictionary<string, IList<KeyValuePair<string, int>>> enumsByVars = new Dictionary<string, IList<KeyValuePair<string, int>>>();
             foreach (KeyValuePair<string, int> index in unit.EnumRank)
@@ -826,7 +826,7 @@ namespace DGAC
                 }
             }
 
-            Console.WriteLine(" ------ enumByVars has " + enumsByVars.Count + " elements");
+          //  Console.WriteLine(" ------ enumByVars has " + enumsByVars.Count + " elements");
 
             foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
             {
