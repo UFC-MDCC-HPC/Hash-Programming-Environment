@@ -87,10 +87,17 @@ namespace DGAC
                 }
                 else
                 {
-                    Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
-                    cAbs = (AbstractComponentFunctor)cAbs_;
-                    abstractloader.updateSources(ct, cAbs);
-                    exists = true;
+                
+                   cAbs = (AbstractComponentFunctor)cAbs_;
+                   ComponentDAO cdao = new ComponentDAO();
+				   IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
+				   if (cList.Count == 0) {	                        					
+                      Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
+                      abstractloader.updateSources(ct, cAbs);
+                      exists = true;
+				   } else {
+					  throw new Exception("DEPLOY ERROR: One or more concrete components already implement this abstract component.");	
+				   }
                 }
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
@@ -705,7 +712,7 @@ namespace DGAC
                 int id_abstract = i.Id_abstract;
 
                 ComponentDAO cdao = new ComponentDAO();
-                Component c = cdao.retrieveThatImplements(id_abstract);
+                Component c = cdao.retrieveThatImplements(id_abstract)[0];
 
                 UnitDAO udao = new UnitDAO();
                 database.Unit u = udao.retrieve(c.Id_concrete, i.Id_interface, 1);

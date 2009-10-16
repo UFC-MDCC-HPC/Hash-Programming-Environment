@@ -148,9 +148,9 @@ public class ComponentDAO{
 	}
 
 
-    internal Component retrieveThatImplements(int id_abstract)
+    internal IList<Component> retrieveThatImplements(int id_abstract)
     {
-        Component c = null;
+        IList<Component> cList = new List<Component>();
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -162,19 +162,20 @@ public class ComponentDAO{
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
-            c = new Component();
+            Component c = new Component();
             c.Id_concrete = (int)reader["id_concrete"];
             c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
+			cList.Add(c);
         }//while
         // clean up
         reader.Close();
         reader = null;
         dbcmd.Dispose();
         dbcmd = null;
-        return c;
+        return cList;
     }
 
     internal IList<Component> list()
