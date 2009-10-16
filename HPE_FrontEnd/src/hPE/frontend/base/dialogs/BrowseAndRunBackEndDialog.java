@@ -793,7 +793,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			String curdir = loc.curdir != null ? loc.curdir.toString() : null;
 			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password, curdir); 
 
-			if (result.length > 1) {
+			if (result.length >= 1) {
 				d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );
 				Integer i = 0;
 				for (String s : result) {

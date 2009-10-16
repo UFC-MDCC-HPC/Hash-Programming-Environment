@@ -75,8 +75,9 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 
 	protected void createEditPolicies() {
 		
-		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,new UnitFlowLayoutEditPolicy());
-		this.installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new NameDirectEditPolicy());
+		ModelType unit = (ModelType) getModel();
+		
+		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,new UnitFlowLayoutEditPolicy());		
 		this.installEditPolicy(EditPolicy.COMPONENT_ROLE, new RemoveElementEditPolicy());
 		this.installEditPolicy("BuildInterfaceFromSlicesEditPolicy", new BuildInterfaceEditPolicy());
 		this.installEditPolicy("DetachInterfaceEditPolicy", new DetachInterfaceEditPolicy());
@@ -84,6 +85,10 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		this.installEditPolicy("SetPrivateUnitEditPolicy", new SetPrivateUnitEditPolicy());
 		// allow the creation of connections and and the reconnection of connections between Shape instances
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
+		
+		if (unit.getComponent().isAbstract()) {
+			this.installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new NameDirectEditPolicy());
+		}
 	
 	}
 	
