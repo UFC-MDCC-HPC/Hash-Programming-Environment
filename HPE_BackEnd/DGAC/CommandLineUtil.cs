@@ -221,13 +221,18 @@ public class CommandLineUtil{
         Console.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
 
         proc.Start();
+
+        StreamReader reader = proc.StandardOutput;
         proc.WaitForExit();
+        
+        String output_str = reader.ReadToEnd();
+
         ExitCode = proc.ExitCode;
         proc.Close();
 
         if (ExitCode > 0)
         {
-            Console.WriteLine("Error executing command: " + cmd + " " + args);
+            Console.WriteLine("Error executing command: " + cmd + " " + args + "\n" + output_str);
             throw new Exception("Error executing command: " + cmd + " " + args);
         }
 

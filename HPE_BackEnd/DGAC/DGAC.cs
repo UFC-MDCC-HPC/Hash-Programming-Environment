@@ -96,14 +96,14 @@ namespace DGAC
                       abstractloader.updateSources(ct, cAbs);
                       exists = true;
 				   } else {
-					  throw new Exception("DEPLOY ERROR: One or more concrete components already implement this abstract component.");	
+					  throw new Exception("DEPLOY ERROR: One or more concrete components already implement this abstract component.\n Updates are not allowed for keeping consistency.");	
 				   }
                 }
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
 
                 InterfaceDAO idao = new InterfaceDAO();
-
+                    
                 foreach (LoaderApp.InfoCompile interfaceToCompile in infoCompile)
                 {
                     int id_abstract = interfaceToCompile.id;
