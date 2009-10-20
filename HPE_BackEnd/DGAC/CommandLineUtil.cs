@@ -203,6 +203,7 @@ public class CommandLineUtil{
         proc.StartInfo.UseShellExecute = false;
         proc.StartInfo.FileName = cmd;
         proc.StartInfo.Arguments = args;
+        proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler); 
         if (userName != null) proc.StartInfo.UserName = userName;
         if (password != null) proc.StartInfo.Password = password;
         if (curDir != null)
@@ -222,10 +223,8 @@ public class CommandLineUtil{
 
         proc.Start();
 
-        StreamReader reader = proc.StandardOutput;
         proc.WaitForExit();
         
-        String output_str = reader.ReadToEnd();
 
         ExitCode = proc.ExitCode;
         proc.Close();
@@ -233,13 +232,29 @@ public class CommandLineUtil{
         if (ExitCode > 0)
         {
             Console.WriteLine("Error executing command: " + cmd + " " + args + "\n" + output_str);
-            throw new Exception("Error executing command: " + cmd + " " + args);
+            throw new Exception("Error executing command: " + cmd + " " + args + "\n" + output_str);
         }
 
         return ExitCode;
 
     }
 
+    private static string output_str;
+
+    private static void OutputHandler(object sendingProcess,
+    DataReceivedEventArgs outLine)
+    {
+        //This event handler is not called until process is finished.
+        //When process is finished it gets called once for each line
+        if (!String.IsNullOrEmpty(outLine.Data))
+        {
+            output_str = outLine.Data;
+
+//            numOutputLines++;
+  //          Output.Append(Environment.NewLine +
+    //        "[" + numOutputLines.ToString() + "] - " + outLine.Data);
+        }
+    }
 
 }//CommandLineUtil
 
