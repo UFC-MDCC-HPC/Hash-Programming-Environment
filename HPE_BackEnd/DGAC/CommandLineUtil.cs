@@ -206,8 +206,8 @@ public class CommandLineUtil{
         proc.StartInfo.UseShellExecute = false;
         proc.StartInfo.FileName = cmd;
         proc.StartInfo.Arguments = args;
-        proc.StartInfo.RedirectStandardOutput = true;
-        proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+        proc.StartInfo.RedirectStandardError = true;
+        proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
         if (userName != null) proc.StartInfo.UserName = userName;
         if (password != null) proc.StartInfo.Password = password;
         if (curDir != null)
@@ -237,7 +237,7 @@ public class CommandLineUtil{
         if (ExitCode > 0)
         {
             string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
-           // Console.WriteLine(message);
+           //    Console.WriteLine(message);
             throw new Exception(message);
         }
 
