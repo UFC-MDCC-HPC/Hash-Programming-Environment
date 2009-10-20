@@ -735,21 +735,24 @@ namespace HPE_DGAC_LoadDB
                    ss.File_type = sft.fileType.Equals("exe") ? "exe" : "dll";
                    ss.File_name = sft.name;
                    scdao.update(ss);
-                   foreach (string extRef in sft.externalDependency)
+                   if (sft.externalDependency != null)
                    {
-                       SourceCodeReference ssr = new SourceCodeReference();
-                       ssr.Type_owner = ss.Type_owner;
-                       ssr.Id_owner_container = ss.Id_owner_container;
-                       ssr.Id_owner = ss.Id_owner;
-                       ssr.File_name = ss.File_name;
-                       ssr.Reference = extRef;
-                       if (scrdao.retrieve(ssr) != null)
+                       foreach (string extRef in sft.externalDependency)
                        {
-                           scrdao.update(ssr);
-                       }
-                       else
-                       {
-                           scrdao.insert(ssr);
+                           SourceCodeReference ssr = new SourceCodeReference();
+                           ssr.Type_owner = ss.Type_owner;
+                           ssr.Id_owner_container = ss.Id_owner_container;
+                           ssr.Id_owner = ss.Id_owner;
+                           ssr.File_name = ss.File_name;
+                           ssr.Reference = extRef;
+                           if (scrdao.retrieve(ssr) != null)
+                           {
+                               scrdao.update(ssr);
+                           }
+                           else
+                           {
+                               scrdao.insert(ssr);
+                           }
                        }
                    }
                }
