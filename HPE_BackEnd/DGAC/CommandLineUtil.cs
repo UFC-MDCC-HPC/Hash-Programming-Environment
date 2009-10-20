@@ -198,7 +198,7 @@ public class CommandLineUtil{
             password.MakeReadOnly();
         }
 
-        output_str = new StringBuilder("");
+        output_str = "";
 
         System.Diagnostics.Process proc = new System.Diagnostics.Process();
         proc.EnableRaisingEvents = false;
@@ -236,8 +236,8 @@ public class CommandLineUtil{
 
         if (ExitCode > 0)
         {
-            string message = "Error executing command: " + cmd + " " + args + "\n :" + output_str.ToString();
-            Console.WriteLine(message);
+            string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
+           // Console.WriteLine(message);
             throw new Exception(message);
         }
 
@@ -246,7 +246,7 @@ public class CommandLineUtil{
     }
 
 
-    private static StringBuilder output_str = null;
+    private static string output_str = null;
 
     private static void OutputHandler(object sendingProcess,
     DataReceivedEventArgs outLine)
@@ -255,9 +255,10 @@ public class CommandLineUtil{
         //When process is finished it gets called once for each line
         if (!String.IsNullOrEmpty(outLine.Data))
         {
-            output_str.Append(Environment.NewLine + outLine.Data);
+            output_str += (Environment.NewLine + outLine.Data);     
         }
     }
+
 
 }//CommandLineUtil
 
