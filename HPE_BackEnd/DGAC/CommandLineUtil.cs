@@ -4,6 +4,7 @@ using System.Net;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DGAC.utils{
 
@@ -197,13 +198,16 @@ public class CommandLineUtil{
             password.MakeReadOnly();
         }
 
+        output_str = new StringBuilder("");
+
         System.Diagnostics.Process proc = new System.Diagnostics.Process();
         proc.EnableRaisingEvents = false;
         proc.StartInfo.CreateNoWindow = true;
         proc.StartInfo.UseShellExecute = false;
         proc.StartInfo.FileName = cmd;
         proc.StartInfo.Arguments = args;
-        proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler); 
+        proc.StartInfo.RedirectStandardOutput = true;
+        proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
         if (userName != null) proc.StartInfo.UserName = userName;
         if (password != null) proc.StartInfo.Password = password;
         if (curDir != null)
@@ -223,23 +227,26 @@ public class CommandLineUtil{
 
         proc.Start();
 
+        proc.BeginOutputReadLine();
+
         proc.WaitForExit();
-        
 
         ExitCode = proc.ExitCode;
         proc.Close();
 
         if (ExitCode > 0)
         {
-            Console.WriteLine("Error executing command: " + cmd + " " + args + "\n" + output_str);
-            throw new Exception("Error executing command: " + cmd + " " + args + "\n" + output_str);
+            string message = "Error executing command: " + cmd + " " + args + "\n :" + output_str.ToString();
+            Console.WriteLine(message);
+            throw new Exception(message);
         }
 
         return ExitCode;
 
     }
 
-    private static string output_str;
+
+    private static StringBuilder output_str = null;
 
     private static void OutputHandler(object sendingProcess,
     DataReceivedEventArgs outLine)
@@ -248,11 +255,7 @@ public class CommandLineUtil{
         //When process is finished it gets called once for each line
         if (!String.IsNullOrEmpty(outLine.Data))
         {
-            output_str = outLine.Data;
-
-//            numOutputLines++;
-  //          Output.Append(Environment.NewLine +
-    //        "[" + numOutputLines.ToString() + "] - " + outLine.Data);
+            output_str.Append(Environment.NewLine + outLine.Data);
         }
     }
 
