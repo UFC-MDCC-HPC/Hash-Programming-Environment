@@ -227,7 +227,7 @@ public class CommandLineUtil{
 
         proc.Start();
 
-        proc.BeginOutputReadLine();
+        proc.BeginErrorReadLine();
 
         proc.WaitForExit();
 
