@@ -1,6 +1,0 @@
-backend_locations = /media/HERON/runtime-workspace/BackEndLocations.xml
-core_locations = /media/HERON/runtime-workspace/library.xml
-sn_path = /usr/bin/sn
-gacutil_path = /usr/bin/gacutil
-dgac_path = /usr/lib/mono/gac/DGAC.dll
-cache_root = /home/heron/hpe_cache

@@ -2449,6 +2449,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					i.setName(xI.getIRef());
 
 					ports.put(i, xI.getPort());
+					
+					i.addExternalReferences(xI.getExternalReferences());
 				}
 			}
 
