@@ -207,7 +207,9 @@ public class CommandLineUtil{
         proc.StartInfo.FileName = cmd;
         proc.StartInfo.Arguments = args;
         proc.StartInfo.RedirectStandardError = true;
+        proc.StartInfo.RedirectStandardOutput = true;
         proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+        proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
         if (userName != null) proc.StartInfo.UserName = userName;
         if (password != null) proc.StartInfo.Password = password;
         if (curDir != null)
@@ -228,6 +230,7 @@ public class CommandLineUtil{
         proc.Start();
 
         proc.BeginErrorReadLine();
+        proc.BeginOutputReadLine();
 
         proc.WaitForExit();
 
