@@ -287,11 +287,19 @@ public class RegisterComponentDialog extends JDialog {
 					    JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
+				if (!c.isAbstract()) {
+				   JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has unsupplied versions !", "Error",JOptionPane.ERROR_MESSAGE);
+			if (!c.isAbstract()) {
+   			     JOptionPane.showMessageDialog(null, " The sources for version " + version + " of " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);
+			} else {
+				 JOptionPane.showMessageDialog(null, " The sources for " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);	
+			}
 		} 
 		
 		
