@@ -15,6 +15,7 @@ import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
+import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.awt.Frame;
@@ -288,6 +289,9 @@ public class RegisterComponentDialog extends JDialog {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (DuplicatedRefInnerException e) {
+					e.printStackTrace();
+					errorMessage = e.getMessage();
+				} catch (DuplicatedSliceNamesException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} finally {

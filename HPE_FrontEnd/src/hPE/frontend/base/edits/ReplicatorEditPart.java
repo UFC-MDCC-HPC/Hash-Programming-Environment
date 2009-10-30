@@ -197,9 +197,9 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 			this.refreshVisuals();
 			this.refreshSourceConnections();
 			this.refreshTargetConnections();
-			HReplicator r = (HReplicator) this.getModel();
-			HComponent c = r.getConfiguration();
-			c.fireRefreshChildren();
+			//HReplicator r = (HReplicator) this.getModel();
+			//HComponent c = r.getConfiguration();
+			//c.fireRefreshChildren();
 			
 		}
 		if (ev.getPropertyName().equals(HReplicator.PROPERTY_JOINED)) {

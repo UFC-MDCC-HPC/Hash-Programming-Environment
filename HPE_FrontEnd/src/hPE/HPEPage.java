@@ -11,6 +11,7 @@ import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
+import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.io.ByteArrayInputStream;
@@ -176,6 +177,9 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (DuplicatedRefInnerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DuplicatedSliceNamesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

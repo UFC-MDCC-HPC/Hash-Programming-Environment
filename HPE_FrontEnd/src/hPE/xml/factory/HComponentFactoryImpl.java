@@ -140,6 +140,14 @@ import org.eclipse.swt.graphics.Color;
 
 public final class HComponentFactoryImpl implements HComponentFactory {
 
+	public static class DuplicatedSliceNamesException extends Exception {
+
+		public DuplicatedSliceNamesException(HUnitSlice slice) {
+			super("Duplicated slice name " + slice.getName() + " in the unit " + slice.getUnit().getName2() + ".");
+		}
+
+	}
+
 	public static class DuplicatedRefInnerException extends Exception {
 
 		public DuplicatedRefInnerException(String ref) {
@@ -206,7 +214,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException {
+	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
 
 		this.component = c;
 		ComponentType cX = marshallComponent(c);
@@ -1133,7 +1141,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private ComponentFactory factory = ComponentFactory.eINSTANCE;
 
 	// Saves a HComponent object in a ComponentType object
-	public ComponentType marshallComponent(HComponent c) throws UndefinedRefInnerException, DuplicatedRefInnerException {
+	public ComponentType marshallComponent(HComponent c) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
 
 		ComponentType xC = factory.createComponentType();
 		ComponentHeaderType xH = factory.createComponentHeaderType();
@@ -1231,7 +1239,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		saveUnitBounds(baseType.getAllUnits(), unitBounds);
 	}
 
-	private void saveInfo(HComponent c, ComponentBodyType xI) throws UndefinedRefInnerException, DuplicatedRefInnerException {
+	private void saveInfo(HComponent c, ComponentBodyType xI) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
 
 		saveInnerComponents(c, xI.getInnerComponent()); // OK !
 		saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
@@ -1962,7 +1970,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void saveUnits(HComponent c, EList xI) {
+	private void saveUnits(HComponent c, EList xI) throws DuplicatedSliceNamesException {
 
 		for (IHUnit u_ : c.getUnits()) {
 
@@ -2037,16 +2045,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveUnitSlices(List<HUnitSlice> directSlices,
-			List<HUnitSlice> transitiveSlices, EList slicesX) {
+			List<HUnitSlice> transitiveSlices, EList slicesX) throws DuplicatedSliceNamesException {
 
 		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
 		
-		for (HUnitSlice slice : transitiveSlices) 
-			/* if (!(slice instanceof HEnumeratorUnitSlice)) */ {
+		for (HUnitSlice slice : transitiveSlices) {
+			
+			if (savedSlices.containsKey(slice.getName())) {
+			    throw new DuplicatedSliceNamesException(slice);
+			}
 
-			// HComponent cSlice = (HComponent)
-			// slice.getBinding().getEntry().getConfiguration();
-			if /* (cSlice == null || cSlice.isDirectSonOfTheTopConfiguration()) */(!savedSlices.containsKey(slice.getName())) {
+			//if (!savedSlices.containsKey(slice.getName())) {
 				savedSlices.put(slice.getName(), slice);
 
 				// if (!slice.getHiddenSlice()) {
@@ -2072,8 +2081,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				cRef = uSource.getConfiguration().getRef();
 				uRef = uSource.getName2();
 
-				// sName = slice.getInterfaceSlice() != null ? slice
-				//		.getInterfaceSlice().getName() : uRef;
 				sName = slice.getName();
 
 				if (uSource.isClone()) {
@@ -2105,7 +2112,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				slicesX.add(sliceX);
 			}
 		}
-	}
+	
 
 	private void saveSupplyParameters(HComponent c, EList xI) {
 
@@ -2136,7 +2143,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		HComponent topC = null;
 
-		for (HReplicator e : replicators) if (e.getFactor() != 1) {
+		for (HReplicator e : replicators) /* if (e.getFactor() != 1) */ {
 
 			List<HComponent> cs = new ArrayList<HComponent>(e.getConfigurations());
 			cs.remove(0);

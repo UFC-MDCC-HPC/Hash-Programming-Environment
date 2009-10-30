@@ -57,6 +57,7 @@ import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
+import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.io.ByteArrayInputStream;
@@ -297,6 +298,9 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
 		} catch (DuplicatedRefInnerException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (DuplicatedSliceNamesException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}	
