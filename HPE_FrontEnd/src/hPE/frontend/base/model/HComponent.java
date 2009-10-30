@@ -3625,29 +3625,13 @@ private Integer nextFreshRef=0;
 
 private String generateFreshRef() {
 	
+	//Integer max = this.getAllInnerComponents().size();			
+	//return "c" + (max+1); 
 	
-	//Integer max = 0;
-	
-	//max = (nextFreshRef++);
-	
-	Integer max = this.getAllInnerComponents().size();
-	
-/*	for (HComponent c : this.getComponents()) {
-		String name = c.getRef();
-		if (name.matches("c[0-9]*")) {
-			Integer v = null;
-			try {
-			  v = Integer.valueOf(name.substring(1));
-			} catch (NumberFormatException e) {
-			  v = 0;
-			}
-			max = v > max ? v : max;
-		}				
-	}
-	*/
-		
-	return "c" + (max+1); 
+	return UNDEFINED_NAME;
 }
+
+public static String UNDEFINED_NAME = "?";
 
 private boolean checkLegalRef(String ref) {
 	

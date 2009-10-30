@@ -56,6 +56,8 @@ import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
+import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
+import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -66,6 +68,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -277,19 +281,25 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 	private HComponentFactory factory = HComponentFactory.eInstance;
 	
 	public void doSave(IProgressMonitor monitor) {
+	    try {
 		HComponent c = getModel();
 		IFile file = ((IFileEditorInput) getEditorInput()).getFile();
 		    
-	    factory.saveComponent(c,file,monitor);	
+			factory.saveComponent(c,file,monitor);
 	    
 	    // NAntBuilder.save(c,monitor);
 		 NAntBuilder builder = NAntBuilder.instance;
    	     builder.setComponent(c);
 		 builder.setMonitor(monitor);
 		 (new Thread(builder)).start();
-	   
-
-	    getCommandStack().markSaveLocation();			
+	      getCommandStack().markSaveLocation();			
+		} catch (UndefinedRefInnerException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
+		} catch (DuplicatedRefInnerException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}	
 	}
 	
 	

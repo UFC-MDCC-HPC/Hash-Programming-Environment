@@ -14,6 +14,8 @@ import hPE.location.HPE_Location_ServerServiceLocator;
 import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
+import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
+import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.awt.Frame;
 import java.awt.Rectangle;
@@ -280,6 +282,12 @@ public class RegisterComponentDialog extends JDialog {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (CoreException e) {
+					e.printStackTrace();
+					errorMessage = e.getMessage();
+				} catch (UndefinedRefInnerException e) {
+					e.printStackTrace();
+					errorMessage = e.getMessage();
+				} catch (DuplicatedRefInnerException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} finally {

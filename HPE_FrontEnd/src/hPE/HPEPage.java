@@ -10,6 +10,8 @@ import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.xml.factory.HComponentFactory;
+import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
+import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -168,7 +170,15 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		
 		IFile file = persistSourceFile("", path);
 		
-		factory.saveComponent(c,file,null);
+		try {
+			factory.saveComponent(c,file,null);
+		} catch (UndefinedRefInnerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (DuplicatedRefInnerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 
 		try {

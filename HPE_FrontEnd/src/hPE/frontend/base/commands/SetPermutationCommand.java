@@ -52,6 +52,11 @@ public class SetPermutationCommand extends Command {
 			   return false;
 		   }
 		   
+			if (c.getRef().equals(HComponent.UNDEFINED_NAME)) {
+				JOptionPane.showMessageDialog(null, "This component has an undefined identifier.", "Supply Error", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		   
 		   return true;
 	}
 

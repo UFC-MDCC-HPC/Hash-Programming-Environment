@@ -50,7 +50,7 @@ public Command getCommand(Request request) {
 public static class SupplyParameterCommand 
 extends org.eclipse.gef.commands.Command{
 
-HComponent model;
+private HComponent model;
 
 public SupplyParameterCommand(HComponent model){
 
@@ -58,16 +58,24 @@ public SupplyParameterCommand(HComponent model){
 
 }
 
-InputDialog dialog = null;
+private InputDialog dialog = null;
 
 public void setDialog(InputDialog dialog) {
 	this.dialog = dialog;
 }
 
-List unlift_info;
+private List unlift_info;
 
 private String varName = null;
 private boolean cancel = false;
+
+public boolean canExecute() {
+	if (this.model.getRef().equals(HComponent.UNDEFINED_NAME)) {
+		JOptionPane.showMessageDialog(null, "This component has an undefined identifier.", "Supply Error", JOptionPane.ERROR_MESSAGE);
+		return false;
+	}
+	return true;
+}
 
 public void execute(){
 
@@ -97,18 +105,6 @@ public void execute(){
 	   
 }
 
-/*
-private void changeVarNames(List<HConfiguration> componentsToSupply, String newVarName) {
-	
-	
-	Iterator<HConfiguration> cs = componentsToSupply.iterator();
-	while (cs.hasNext()) {
-	 	HConfiguration c = cs.next();
-		c.changeVarName("@@@".concat(newVarName));
-		
-	}
-}
-*/
 
 private IComponent getModelCopy() {
 

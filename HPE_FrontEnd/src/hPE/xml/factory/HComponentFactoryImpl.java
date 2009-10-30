@@ -140,6 +140,27 @@ import org.eclipse.swt.graphics.Color;
 
 public final class HComponentFactoryImpl implements HComponentFactory {
 
+	public static class DuplicatedRefInnerException extends Exception {
+
+		public DuplicatedRefInnerException(String ref) {
+			super("Duplicated ID " + ref + " for inner components.");
+		}
+
+	}
+
+	public static class UndefinedRefInnerException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public UndefinedRefInnerException(HComponent ic) {
+			super("Undefined ID for an inner component of type " + ic.getComponentName());
+		}
+
+	}
+
 	public HComponentFactoryImpl() {
 		super();
 	}
@@ -185,7 +206,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) {
+	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException {
 
 		this.component = c;
 		ComponentType cX = marshallComponent(c);
@@ -1112,7 +1133,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private ComponentFactory factory = ComponentFactory.eINSTANCE;
 
 	// Saves a HComponent object in a ComponentType object
-	public ComponentType marshallComponent(HComponent c) {
+	public ComponentType marshallComponent(HComponent c) throws UndefinedRefInnerException, DuplicatedRefInnerException {
 
 		ComponentType xC = factory.createComponentType();
 		ComponentHeaderType xH = factory.createComponentHeaderType();
@@ -1126,7 +1147,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return xC;
 	}
 
-	private void saveHeader(HComponent c, ComponentHeaderType xH) {
+	private void saveHeader(HComponent c, ComponentHeaderType xH) throws UndefinedRefInnerException {
 
 		// save name
 		xH.setName(c.getComponentName());
@@ -1168,7 +1189,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveBaseType(HComponent baseType, ComponentHeaderType xH,
-			boolean isAbstract) {
+			boolean isAbstract) throws UndefinedRefInnerException {
 
 		BaseTypeType baseTypeX = factory.createBaseTypeType();
 		ExtensionTypeType extType = factory.createExtensionTypeType();
@@ -1210,7 +1231,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		saveUnitBounds(baseType.getAllUnits(), unitBounds);
 	}
 
-	private void saveInfo(HComponent c, ComponentBodyType xI) {
+	private void saveInfo(HComponent c, ComponentBodyType xI) throws UndefinedRefInnerException, DuplicatedRefInnerException {
 
 		saveInnerComponents(c, xI.getInnerComponent()); // OK !
 		saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
@@ -1410,13 +1431,32 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveInnerComponents(HComponent c, EList xI) {
+	private void saveInnerComponents(HComponent c, EList xI) throws UndefinedRefInnerException, DuplicatedRefInnerException {
 
 		List<HComponent> cs = new ArrayList<HComponent>();
-
-		cs.addAll(c.getComponents());
-		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
-			cs.add(0, p.getValue());
+        int i = 0;
+        
+        List<String> cRefs = new ArrayList<String>();
+		
+        for (HComponent cInner : c.getComponents()) {
+		    cs.add(cInner);
+		    String cRef = cInner.getRef();
+			if (cRefs.contains(cRef)) {
+				   throw new DuplicatedRefInnerException(cRef); 
+			} else {
+			   cRefs.add(cRef);
+			}
+        }
+        
+		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet()) {
+			cs.add(i++, p.getValue());
+			String cRef = p.getValue().getRef();
+			if (cRefs.contains(cRef)) {
+				   throw new DuplicatedRefInnerException(cRef); 
+			} else {
+			   cRefs.add(cRef);
+			}
+		}
 		
 		if (c.isAbstract()) {
 			for (HReplicator r : c.gettReplicators()) {
@@ -1424,6 +1464,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					HEnumeratorComponent ec = lr.getPermutation();
 					if (ec != null && !cs.contains(ec)) {
 						cs.add(0,ec);
+						String cRef = ec.getRef();
+						if (cRefs.contains(cRef)) {
+							   throw new DuplicatedRefInnerException(cRef); 
+						} else {
+						   cRefs.add(cRef);
+						}
 					}
 				}
 			}
@@ -1434,7 +1480,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (!ic.isDerivedFromPermutation() && ic != c.getSuperType() && ic != c.getWhoItImplements()) {
                 
 				InnerComponentType d = factory.createInnerComponentType();
-
+				
 				saveInnerComponent(ic, d);
 
 				xI.add(d);
@@ -1456,7 +1502,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	 * }
 	 */
 
-	private void saveInnerComponent(HComponent ic, InnerComponentType d) {
+	private void saveInnerComponent(HComponent ic, InnerComponentType d) throws UndefinedRefInnerException {
 
 		VisualElementAttributes v = factory.createVisualElementAttributes();
 		String name = ic.getComponentName();
@@ -1469,6 +1515,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		String parameterId = ic.getParameterIdentifier(this.component);
 
+		if (localRef.equals(HComponent.UNDEFINED_NAME)) {
+			throw new UndefinedRefInnerException(ic);
+		}
+		
 		d.setLocalRef(localRef);
 		d.setLocation(location);
 		d.setPackage(package_);
@@ -1492,7 +1542,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void savePorts(HComponent ic, EList<InnerComponentType> ports) {
+	private void savePorts(HComponent ic, EList<InnerComponentType> ports) throws UndefinedRefInnerException {
 
 		for (HComponent c : ic.getExposedComponents()) 
 		{
