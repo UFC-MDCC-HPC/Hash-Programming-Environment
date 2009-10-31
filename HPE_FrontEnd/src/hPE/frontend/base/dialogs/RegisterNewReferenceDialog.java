@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -33,6 +35,7 @@ public class RegisterNewReferenceDialog extends JDialog implements ActionListene
 	private JTextField jTextFieldLocalPath = null;
 	private JButton jButtonRegister = null;
 	private JButton jButtonCancel = null;
+	private JButton jButtonFileChooser = null;
 
 	private Reference ref = null;
 	
@@ -85,6 +88,7 @@ public class RegisterNewReferenceDialog extends JDialog implements ActionListene
 			jContentPane.add(jLabelRequired, null);
 			jContentPane.add(getJTextFieldDetailedName(), null);
 			jContentPane.add(getJTextFieldLocalPath(), null);
+			jContentPane.add(getJButtonFileChooser(), null);
 			jContentPane.add(getJButtonRegister(), null);
 			jContentPane.add(getJButtonCancel(), null);
 		}
@@ -131,6 +135,22 @@ public class RegisterNewReferenceDialog extends JDialog implements ActionListene
 	}
 
 	/**
+	 * This method initializes JButtonFileChooser	
+	 * 	
+	 * @return javax.swing.JFileChooser
+	 */
+	private JButton getJButtonFileChooser() {
+		if (jButtonFileChooser == null) {
+			jButtonFileChooser = new JButton();
+			jButtonFileChooser.setBounds(new Rectangle(285, 30, 116, 31));
+			jButtonFileChooser.setToolTipText("Opens a file dialog.");
+			jButtonFileChooser.setText("File");
+			jButtonFileChooser.addActionListener(this);
+		}
+		return jButtonFileChooser;
+	}
+	
+	/**
 	 * This method initializes jButtonRegister	
 	 * 	
 	 * @return javax.swing.JButton	
@@ -138,7 +158,7 @@ public class RegisterNewReferenceDialog extends JDialog implements ActionListene
 	private JButton getJButtonRegister() {
 		if (jButtonRegister == null) {
 			jButtonRegister = new JButton();
-			jButtonRegister.setBounds(new Rectangle(285, 15, 116, 31));
+			jButtonRegister.setBounds(new Rectangle(285, 155, 116, 31));
 			jButtonRegister.setToolTipText("Register a new reference with the provided data and exit.");
 			jButtonRegister.setText("Register");
 			jButtonRegister.addActionListener(this);
@@ -154,7 +174,7 @@ public class RegisterNewReferenceDialog extends JDialog implements ActionListene
 	private JButton getJButtonCancel() {
 		if (jButtonCancel == null) {
 			jButtonCancel = new JButton();
-			jButtonCancel.setBounds(new Rectangle(285, 50, 116, 31));
+			jButtonCancel.setBounds(new Rectangle(285, 190, 116, 31));
 			jButtonCancel.setToolTipText("Ignore provided data and exit.");
 			jButtonCancel.setText("Cancel");
 			jButtonCancel.addActionListener(this);
@@ -165,6 +185,26 @@ public class RegisterNewReferenceDialog extends JDialog implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		Object source = event.getSource();
+		
+		if(source == this.getJButtonFileChooser()) {
+			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("DLL files", "dll", "DLL");
+			int returnVal;
+			
+			fileChooser.addChoosableFileFilter(fileFilter);
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			returnVal = fileChooser.showOpenDialog(this);
+			
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				String completePath = file.getPath();
+				String localPath = completePath.substring(0, completePath.lastIndexOf(File.separatorChar)+1);
+				String detailedName = completePath.substring(completePath.lastIndexOf(File.separatorChar)+1, completePath.length()-4);
+				
+				this.getJTextFieldDetailedName().setText(detailedName);
+				this.getJTextFieldLocalPath().setText(localPath);				
+			}
+		}
 		
 		if (source == this.getJButtonRegister()) {
 			String name = this.getJTextFieldDetailedName().getText();
