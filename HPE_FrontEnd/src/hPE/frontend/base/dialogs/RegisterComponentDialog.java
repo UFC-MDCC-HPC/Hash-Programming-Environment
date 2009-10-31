@@ -243,7 +243,9 @@ public class RegisterComponentDialog extends JDialog {
 				    HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
 						
 					String pkName = c.getPackagePath().toString();
-					String ctName = c.getComponentName();			
+					String ctName = c.getComponentName();	
+					String savedUri = c.getRemoteLocation();
+					c.setRemoteURI(uri);
 					
 					HComponentFactory factory = HComponentFactoryImpl.eInstance; 
 					ComponentType cX = factory.marshallComponent(c);
@@ -260,7 +262,11 @@ public class RegisterComponentDialog extends JDialog {
 					String message = server.registerComponent(pkName, ctName, version, contents, resources);
 
 					JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
-					c.setRemoteURI(uri);
+					if (savedUri!=null) {
+					   c.setRemoteURI(URI.createURI(savedUri));
+					} else {
+					   c.setRemoteURI(null);
+					}
 					
  			        HPEPlugin plugin = HPEPlugin.getDefault();
  			        plugin.notifyListeners(HPEComponentLibraryView.PROPERTY_LOCATION_CHANGED);

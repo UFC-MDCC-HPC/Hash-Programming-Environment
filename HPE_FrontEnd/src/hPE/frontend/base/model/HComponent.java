@@ -439,7 +439,11 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 	
 	public void setRemoteURI(URI uri) {
-		this.uriRemote = uri.toString();
+		if (uri!=null) { 
+      		this.uriRemote = uri.toString();
+		} else {
+		    this.uriRemote = null;	
+		}
 	}
 	
 //	public final static String PROPERTY_EXISTENTIAL = "PROPERTY_EXISTENTIAL";
