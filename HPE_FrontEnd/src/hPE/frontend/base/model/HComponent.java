@@ -1021,8 +1021,16 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		the_component.unsetConfiguration(this);
 		the_component.isRemoved = true;
 		
-		listeners.firePropertyChange(NEW_COMPONENT, null, name); //$NON-NLS-2$//$NON-NLS-1$		
+		((HComponent)this.getTopConfiguration()).fireEvent(NEW_COMPONENT);
+		
+		
 	}
+
+	private void fireEvent(String event) {
+		
+		listeners.firePropertyChange(event, null, name); //$NON-NLS-2$//$NON-NLS-1$		
+	}
+
 
 	private boolean isRemoved = false;
 	
@@ -3280,18 +3288,15 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	   //c2.setExposed(c1.getExposed());
 	   //c2.updatePorts();
 	
-	    for (HComponent c2_ : c2.getAllParentConfigurations()) {
-	        c2_.forceUpdateName();    	
-	    }
+	//    for (HComponent c2_ : c2.getAllParentConfigurations()) {
+	//        c2_.forceUpdateName();    	
+	//    }
 	    
-	    
-	        
-	/*    ((HComponent) c2.getTopConfiguration()).updateConnections(); 
-	
-	    for (HComponent c : c2.getInnerTopConfigurations()) {
-	    	c.updateConnections();
-	    } */
-	
+	  for (HComponent c : c2.getTopParentConfigurations()) {
+	     c.updateConnections();
+	     c.forceUpdateName();
+	  }
+	        	
      }
 }
 

@@ -143,7 +143,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	public static class DuplicatedSliceNamesException extends Exception {
 
 		public DuplicatedSliceNamesException(HUnitSlice slice) {
-			super("Duplicated slice name " + slice.getName() + " in the unit " + slice.getUnit().getName2() + ".");
+			super("Duplicated slice name " + slice.getName() + " in the unit " + slice.getUnit().getTopUnit(null).getName2() + ".");
 		}
 
 	}
@@ -2052,7 +2052,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (HUnitSlice slice : transitiveSlices) {
 			
 			if (savedSlices.containsKey(slice.getName())) {
-			    throw new DuplicatedSliceNamesException(slice);
+			//    throw new DuplicatedSliceNamesException(slice);
 			}
 
 			//if (!savedSlices.containsKey(slice.getName())) {
