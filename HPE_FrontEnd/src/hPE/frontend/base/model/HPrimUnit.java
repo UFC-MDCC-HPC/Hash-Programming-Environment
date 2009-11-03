@@ -16,6 +16,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.Collection;
 import java.util.Iterator;
@@ -323,11 +324,23 @@ public abstract class HPrimUnit extends HVisualElement
 	 * @see hPE.model.IHPrimUnit#getLinksToReplicators()
 	 */
 	public List<HLinkToReplicator> getLinksToVisibleReplicators() {
+		Map<HReplicator, HLinkToReplicator> rs = new HashMap<HReplicator,HLinkToReplicator>();
 		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
 		for (HLinkToReplicator l : linkToReplicator) {
 			HReplicator r = l.getReplicator();
-			if (!r.getHidden()  && !r.isUnitaryAndNotShow()) 
+			boolean check = true;
+	/*		if (rs.containsKey(r)) {
+			    HReplicator r_ = l.getTheReplicator();
+			    if (!r_.isJoined()) {
+			       visibleLinks.remove(rs.get(r));
+			    } else {
+			    	check = false;
+			    }
+			} */ 			
+			if (check && !r.getHidden()  && !r.isUnitaryAndNotShow()) { 
 				visibleLinks.add(l);
+				rs.put(r,l);
+			}
 		}
 		
 		return visibleLinks;

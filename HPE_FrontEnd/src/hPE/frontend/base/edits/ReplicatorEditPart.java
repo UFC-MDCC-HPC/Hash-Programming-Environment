@@ -150,12 +150,13 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 			} else if (p instanceof HComponent) {
 				HComponent c = (HComponent) p;
 				if (!c.isHiddenInnerComponent() && ((c.isDirectSonOfTheTopConfiguration()) || topConfiguration.getExposedComponents().contains(c))) {
-					r.add(l);
+					 r.add(l);
 				}
 			} else if (p instanceof HReplicatorSplit) {
 				HReplicatorSplit rs = (HReplicatorSplit) p;
-				if (!(rs.getOwnerReplicator().getHidden() || rs.getOwnerReplicator().isJoined()))
+				if (!(rs.getOwnerReplicator().getHidden() || rs.getOwnerReplicator().isJoined())) {
    				   r.add(l);
+				}
 			} else if (p instanceof HUnitSlice) {
 				HBinding binding = ((HUnitSlice) p).getBinding();
 				if (binding != null) {
@@ -165,8 +166,6 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 	                	r.add(l);
 	                }
 				}
-//				if (((HUnitSlice) p).getUnit().getConfiguration() == topConfiguration)
-//				    r.add(l);
 			}
 		}
 		

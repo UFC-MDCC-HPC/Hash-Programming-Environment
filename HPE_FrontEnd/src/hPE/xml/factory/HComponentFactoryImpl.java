@@ -142,6 +142,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	public static class DuplicatedSliceNamesException extends Exception {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7585695943859883441L;
+
+		/**
+		 * 
+		 */
+
 		public DuplicatedSliceNamesException(HUnitSlice slice) {
 			super("Duplicated slice name " + slice.getName() + " in the unit " + slice.getUnit().getTopUnit(null).getName2() + ".");
 		}
@@ -149,6 +158,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	public static class DuplicatedRefInnerException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8792075302351667897L;
 
 		public DuplicatedRefInnerException(String ref) {
 			super("Duplicated ID " + ref + " for inner components.");
@@ -161,7 +175,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
 
 		public UndefinedRefInnerException(HComponent ic) {
 			super("Undefined ID for an inner component of type " + ic.getComponentName());

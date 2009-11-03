@@ -8,13 +8,9 @@ import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IComputationConfiguration;
 import hPE.frontend.base.interfaces.IConfiguration;
-import hPE.frontend.base.interfaces.IInterface;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
-import hPE.frontend.kinds.base.model.HHasPortsInterface;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.util.CommandLine;
 import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
@@ -23,16 +19,11 @@ import hPE.util.Pair;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +38,6 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -565,7 +555,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	public void newReplicator(HReplicator new_replicator) {
 		if (!this.replicators.contains(new_replicator)) 
 			this.replicators.add(new_replicator);
-		listeners.firePropertyChange(NEW_REPLICATOR, null, name); //$NON-NLS-2$//$NON-NLS-1$		
+		((HComponent) this.getTopConfiguration()).fireEvent(NEW_REPLICATOR);
 	}
 
 	
@@ -638,12 +628,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			}
 		}		
 		
-		listeners.firePropertyChange(NEW_REPLICATOR, null, name); //$NON-NLS-2$//$NON-NLS-1$		
+		((HComponent) this.getTopConfiguration()).fireEvent(NEW_REPLICATOR);
+		
 	}
 
-	public void fireRefreshChildren() {
-		listeners.firePropertyChange(NEW_REPLICATOR, null, name); //$NON-NLS-2$//$NON-NLS-1$		
-	}
 	
 /*	public HInterface getInterface(String id) {
 		
@@ -1210,17 +1198,40 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	 * @uml.property  name="linkToReplicator"
 	 */
 	public List<HLinkToReplicator> getLinksToVisibleReplicators() {
+		Map<HReplicator, HLinkToReplicator> rs = new HashMap<HReplicator,HLinkToReplicator>();
+		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
+		for (HLinkToReplicator l : linkToReplicator) {
+			HReplicator r = l.getReplicator();
+			boolean check = true;
+		/*	if (rs.containsKey(r)) {
+			    HReplicator r_ = l.getTheReplicator();
+			    if (r == r_) {
+			       visibleLinks.remove(rs.get(r));
+			    } else {
+			    	check = false;
+			    }
+			} */ 			
+			if (check && !r.getHidden()  && !r.isUnitaryAndNotShow()) { 
+				visibleLinks.add(l);
+				rs.put(r,l);
+			}
+		}
 		
+		return visibleLinks;
+
+		/*		List<HReplicator> rs = new ArrayList<HReplicator>();
 		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
 		Iterator<HLinkToReplicator> links = linkToReplicator.iterator(); 
 		while (links.hasNext()) {
 			HLinkToReplicator l = links.next();
 			HReplicator r = l.getReplicator();
-			if (!r.getHidden() && !r.isUnitaryAndNotShow())  
+			if (!rs.contains(r) && !r.getHidden() && !r.isUnitaryAndNotShow())  {
 				visibleLinks.add(l);
+				rs.add(r);
+			}
 		}
 		
-		return visibleLinks;
+		return visibleLinks; */
 	}
 
 	public List<HLinkToReplicator> getLinksToReplicators() {
@@ -1271,6 +1282,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			for (HReplicator r : the_replicator.getMyJoined()) {
 				setReplicator(r);				
 			}
+			
+			the_replicator.fireEventUpdateConnections();
 			
 			listeners.firePropertyChange(REPLICATED,null,getComponentName());
 		} 

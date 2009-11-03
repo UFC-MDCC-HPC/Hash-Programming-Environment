@@ -283,16 +283,24 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	 * @uml.property  name="linksToMe"
 	 */
 	public Collection<HLinkToReplicator> getLinksToMe() {
-	
+		
+		List<IPointsToReplicator> rList = new ArrayList<IPointsToReplicator>();
 		
 		List<HLinkToReplicator> linksToMe = new ArrayList<HLinkToReplicator>();
-		linksToMe.addAll(this.linksToMe);
+		
+		for (HLinkToReplicator link : this.linksToMe) {
+			linksToMe.add(link);	
+			rList.add(link.getReplicated());
+		}
+		
+		
 	
 		for (List<HReplicator> rs : this.getAllMyJoined()) {
 		    for (HReplicator r : rs) {
 		    	for (HLinkToReplicator lr : r.getLinksToMe()) {
-		    		if (!linksToMe.contains(lr)) {
+		    		if (/*!rList.contains(lr.getReplicated()) && */ !linksToMe.contains(lr)) {
 		    			linksToMe.add(lr);
+		    			rList.add(lr.getReplicated());
 		    		}
 		    	}
 			}
@@ -310,16 +318,20 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		return linksToMe;
 	}
 	
+	public void fireEventUpdateConnections() {
+		listeners.firePropertyChange(CHANGE_LINK,null,varid);
+	}
+	
 	/**
 	 */
 	public void addLink(HLinkToReplicator link) {
 		this.linksToMe.add(link);
-		listeners.firePropertyChange(CHANGE_LINK,null,varid);
+		fireEventUpdateConnections();
 	}
 	
 	public void removeLink(HLinkToReplicator link) {
 		this.linksToMe.remove(link);
-		listeners.firePropertyChange(CHANGE_LINK,null,varid);
+		fireEventUpdateConnections();
 	}
 	
 	
@@ -659,7 +671,17 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
     public void join(HReplicator r) {
     	this.getMyJoined().add(r);
     	r.setJoined(this);
-		listeners.firePropertyChange(PROPERTY_JOINED,null,varid);        
+		this.fireEventFusion();
+		
+		for (HReplicatorSplit split : r.getSplits()) {
+			for (HReplicator rsplit : split.getReplicators()) {
+				rsplit.fireEventUpdateConnections();
+			}
+		}
+    }
+    
+    public void fireEventFusion() {
+    	listeners.firePropertyChange(PROPERTY_JOINED,null,varid);
     }
     
     public void unjoin() {
@@ -678,6 +700,7 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
     
     public void setJoined(HReplicator r) {
     	this.joined = r;
+    	//this.fireEventFusion();
     }
     
     public HReplicator getJoined() {
