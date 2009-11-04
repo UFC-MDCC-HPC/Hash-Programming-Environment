@@ -1,8 +1,14 @@
 package hPE.frontend.base.dialogs;
 
+import hPE.frontend.base.model.HComponent;
+import hPE.util.Pair;
+import java.util.List;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -83,6 +89,18 @@ public class DialogChangeVarName extends JDialog {
 			jComboBoxVarName = new JComboBox();
 			jComboBoxVarName.setLocation(new java.awt.Point(15,47));
 			jComboBoxVarName.setSize(new java.awt.Dimension(153,25));
+			jComboBoxVarName.addItemListener(new ItemListener() {
+
+				@Override
+				public void itemStateChanged(ItemEvent arg0) {
+					
+					Pair<String, List<HComponent>> item = (Pair<String,List<HComponent>>) getJComboBoxVarName().getSelectedItem();					
+					HComponent cVar = item.snd().get(0); 
+					String varId = cVar.getVariableName((HComponent) cVar.getTopConfiguration());
+					
+					jTextFieldNewVarName.setText(varId);
+					
+				}});
 		}
 		return jComboBoxVarName;
 	}

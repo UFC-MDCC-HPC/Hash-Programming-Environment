@@ -200,7 +200,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
 		programText += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace		
 		
-		programText += "public class " + procName + ": " + i.getConfiguration().kindString() + ", " + inheritedName + this.getAdditionalExtendsListCode() + "\n" + programTextVarBounds + "{\n\n";  // begin class
+		programText += "public class " + procName + ": " + i.getConfiguration().kindString().trim() + ", " + inheritedName + this.getAdditionalExtendsListCode() + "\n" + programTextVarBounds + "{\n\n";  // begin class
         	
 		// por enquanto, a mudan�a do nome da interface est� bloqueada... assim, o nome da classe ser� sempre o nome da interface com um 
 		// underscore. 		

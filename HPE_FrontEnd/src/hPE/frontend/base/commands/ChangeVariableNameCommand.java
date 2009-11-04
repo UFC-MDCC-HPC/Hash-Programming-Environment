@@ -37,7 +37,7 @@ public class ChangeVariableNameCommand extends Command {
         	 List<HComponent> innerCs = (List) m.get(var);
         	 HComponent cVar = (HComponent) ((List)innerCs).get(0) ;
         	 if (cVar.getSupplied()==null) // Só pode alterar se for filho direto da configuração ...
-        		 this.newVarNameDialog.addVarName(new Pair(var,innerCs));
+        		 this.newVarNameDialog.addVarName(new Pair<String,List<HComponent>>(var,innerCs));
         }
         this.newVarNameDialog.show();
         
