@@ -45,7 +45,7 @@ public class SelectionListener implements ListSelectionListener {
 	    theComboBox.setEnabled(true);
 	    
 	    
-	    if (!fileName.equals("")) {
+	    if (fileName != null && !fileName.equals("")) {
 	       selectedFileNames.put(new Integer(rowIndex), fileName);
 	       theComboBox.setSelectedItem(fileName);
 	    } else {

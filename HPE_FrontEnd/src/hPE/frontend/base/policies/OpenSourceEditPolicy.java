@@ -134,6 +134,7 @@ public void execute(){
 		System.err.print(e.getMessage());
 	} catch (Exception e) {
 		JOptionPane.showMessageDialog(null, (String) e.getMessage(), "Unexpected Exception", JOptionPane.ERROR_MESSAGE);		
+		System.err.print(e.getMessage());
 	}
 
 }

@@ -186,7 +186,7 @@ public class HBEVersionControlDialog extends JDialog {
 			jButton2.setText("Open");
 			jButton2.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	if (jTable.getSelectedColumn()>=0) {
+	            	if (jTable.getSelectedColumn()>=0 && getSeletectedSourceType() != null) {
 	            	   buttonPressed = BUTTON_EDIT;
 	            	   setVisible(false);            	
 	            	   i.getSourceVersionList().clear();
