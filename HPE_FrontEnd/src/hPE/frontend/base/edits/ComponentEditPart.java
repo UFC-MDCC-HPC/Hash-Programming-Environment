@@ -283,7 +283,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 	public void performRequest(Request request){
         super.performRequest(request);
 		ModelType c = (ModelType) this.getModel();
-		if (request.getType() == RequestConstants.REQ_DIRECT_EDIT && c.getTopConfiguration().isAbstractConfiguration())
+		if (request.getType() == RequestConstants.REQ_DIRECT_EDIT)
 			performDirectEdit();
 		return;
 	}
