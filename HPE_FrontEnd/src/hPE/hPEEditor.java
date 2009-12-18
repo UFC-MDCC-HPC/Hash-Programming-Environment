@@ -288,11 +288,11 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		    
 			factory.saveComponent(c,file,monitor);
 	    
-	    // NAntBuilder.save(c,monitor);
-		 NAntBuilder builder = NAntBuilder.instance;
-   	     builder.setComponent(c);
-		 builder.setMonitor(monitor);
-		 (new Thread(builder)).start();
+// comment: build.xml is always built before "build project".			
+		// NAntBuilder builder = NAntBuilder.instance;
+   	    // builder.setComponent(c);
+		// builder.setMonitor(monitor);
+		// (new Thread(builder)).start();
 	      getCommandStack().markSaveLocation();			
 		} catch (UndefinedRefInnerException e) {
 			e.printStackTrace();

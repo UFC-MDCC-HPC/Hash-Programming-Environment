@@ -105,6 +105,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 								   NAntBuilder builder = NAntBuilder.instance;
 							   	   builder.setComponent(c);								   
 								   builder.run();
+								   project.refreshLocal(IResource.DEPTH_INFINITE, null);
 								   System.out.println("generated build.xml for " + path2);
 					           }
 

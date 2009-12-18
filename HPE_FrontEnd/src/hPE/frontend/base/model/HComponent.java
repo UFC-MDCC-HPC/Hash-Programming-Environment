@@ -1529,8 +1529,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	if (this.variableName.containsKey(code))
     	    return this.variableName.get(code);
     	else {
-    		HComponent superType = getSuperType();
-   			return superType != null ? superType.getVariableName(ctx) : "?";
+    		HComponent ctxSuper = ctx.getSuperType();
+   			return ctxSuper != null ? this.getVariableName(ctxSuper) : "?";
     	}
     	
 //    	return this.variableName.containsKey(ctx) ? this.variableName.get(ctx) : "?";
@@ -1540,7 +1540,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     	if (this.variableName == null) 
     		this.variableName = new HashMap<Integer,String>(); ;
 
-    	HComponent ctx = (HComponent) this.getTopConfiguration();	
+    	HComponent ctx = (HComponent) this.getTopConfiguration();
+    	if (ctx.getComponentName().equals("PETSc_Solver")) {
+    		System.out.print(true);
+    	}
     		
     	String currVar = this.variableName.get(ctx.getMyInstanceId());
     	if (currVar == null || (currVar != null && !currVar.equals(varName))) {
@@ -1912,6 +1915,28 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
             }
         }
         
+        // Check visibility of inner components.
+        List<HComponent> innersOf_c2 = c2.getInnerComponents();
+        for (HComponent innerOf_c2 : innersOf_c2) {
+        	if (innerOf_c2.getExposed()) {
+        		HComponent innerOf_c1 = c1.getInnerComponent(innerOf_c2.getRef());
+        		if (innerOf_c1 != null) {
+        			innerOf_c2.setExposed(innerOf_c1.getExposed());
+        			innerOf_c2.exposedFalsifiedContext = innerOf_c1.exposedFalsifiedContext;
+        	        //if (!innerOf_c2.isParameter()) { 
+        	        //	innerOf_c2.setSupplier(innerOf_c1);
+        		    //	c1.setVariableName(newVarName);
+        		    //	innerOf_c2.setVariableName(newVarName);
+        	   	    //} else {
+        	   	    	innerOf_c2.variableName.putAll(innerOf_c1.variableName);
+        	    		oModel.variableName.putAll(innerOf_c1.variableName);
+        	    		//c2.setVariableName(c1.getVariableName(c1Parent));
+        	    		innerOf_c2.parameterIdentifier.putAll(innerOf_c1.parameterIdentifier);
+        	   	    //}
+        		}
+        	}
+        }
+        
                         
         for (Pair<HComponent,HComponent> p : c2.getSubTypeImageOf2(c1)) {
         	HComponent c1_ = p.fst();
@@ -1989,6 +2014,15 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 
     }
     
+
+	private HComponent getInnerComponent(String name) {
+		for (HComponent c : this.getInnerComponents()) {
+			if (name.equals(c.getRef())) {
+				return c;
+			}
+		}
+		return null;
+	}
 
 	private static Pair<IHPrimUnit, IHPrimUnit> alignUnits(IHPrimUnit u1, IHPrimUnit u2) {
     	

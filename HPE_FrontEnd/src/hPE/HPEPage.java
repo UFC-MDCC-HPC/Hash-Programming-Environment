@@ -110,105 +110,117 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 	public boolean finish() {
 
-		String ss = this.getContainerFullPath().toString();
-		String packageName = ss.substring(1,ss.lastIndexOf('.'));
-		String s = ss.substring(ss.lastIndexOf('.') + 1); 
+		try {
 
-		this.setFileName(s + ".hpe");
+			String ss = this.getContainerFullPath().toString();
 		
-		
-		String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
-				
-		URI uri = URI.createFileURI(absolutePath);
-		
-		HComponent c = null;
-		switch (modelSelected1) {
-		case 1: c = new HDataComponent(s,null,uri); break;
-		case 2: c = new HComputationComponent(s,null,uri); break;
-		case 3: c = new HSynchronizationComponent(s,null,uri); break;
-		case 4: c = new HArchitectureComponent(s,null,uri); break;
-		case 5: c = new HEnvironmentComponent(s,null,uri); break;
-		case 6: c = new HQualifierComponent(s,null,uri); break;
-		case 7: c = new HApplicationComponent(s,null,uri); break;
-	 // case 8: c = new HServiceComponent(s,null,uri); break;
-		case 9: c = new HEnumeratorComponent(s,null,uri); break;
-		}
-		
-/*		if (modelSelected1 == 1) {
-	       c = new HDataComponent(s,null,uri);	       
-		} else if (modelSelected1 == 2) {
-		   c = new HComputationComponent(s,null,uri);		   
-		} else if (modelSelected1 == 3) {
-			   c = new HSynchronizationComponent(s,null,uri);		   
-		} else if (modelSelected1 == 4) {
-			   c = new HArchitectureComponent(s,null,uri);		   
-		} else if (modelSelected1 == 5) {
-			   c = new HEnvironmentComponent(s,null,uri);		   
-		} else if (modelSelected1 == 6) {
-			   c = new HQualifierComponent(s,null,uri);		   
-		} else if (modelSelected1 == 7) {
-			   c = new HApplicationComponent(s,null,uri);		   
-//		} else if (modelSelected1 == 8) {
-//			   c = new HServiceComponent(s,null,uri);		   
-		} else if (modelSelected1 == 9) {
-			   c = new HEnumeratorComponent(s,null,uri);		   
-		} else {
-			// ERROR;
-		} */
+			if (!ss.contains(".")) {
+				JOptionPane.showMessageDialog(null, "Unrecognized component package. Use <package>.<name>", "Creation Error", JOptionPane.ERROR_MESSAGE);
+					throw new Exception("Unrecognized component name.");
+			}
 			
-		setComponentVersion(c);
-		try {
-			c.createComponentKey();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		c.setAbstract(composite2.isAbstract());
-		
-		IPath path = new Path(absolutePath);
-		// c.setPackagePath(path.removeFirstSegments(1).uptoSegment(1).makeRelative());
-		c.setPackagePath(new Path(packageName));
-		
-		IFile file = persistSourceFile("", path);
-		
-		try {
-			factory.saveComponent(c,file,null);
-		} catch (UndefinedRefInnerException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (DuplicatedRefInnerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DuplicatedSliceNamesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
-		try {
-			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			String packageName = ss.substring(1,ss.lastIndexOf('.'));
+			String s = ss.substring(ss.lastIndexOf('.') + 1); 
+	
+			this.setFileName(s + ".hpe");
+			
+			
+			String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
+					
+			URI uri = URI.createFileURI(absolutePath);
+			
+			HComponent c = null;
+			switch (modelSelected1) {
+			case 1: c = new HDataComponent(s,null,uri); break;
+			case 2: c = new HComputationComponent(s,null,uri); break;
+			case 3: c = new HSynchronizationComponent(s,null,uri); break;
+			case 4: c = new HArchitectureComponent(s,null,uri); break;
+			case 5: c = new HEnvironmentComponent(s,null,uri); break;
+			case 6: c = new HQualifierComponent(s,null,uri); break;
+			case 7: c = new HApplicationComponent(s,null,uri); break;
+		 // case 8: c = new HServiceComponent(s,null,uri); break;
+			case 9: c = new HEnumeratorComponent(s,null,uri); break;
+			}
+			
+	/*		if (modelSelected1 == 1) {
+		       c = new HDataComponent(s,null,uri);	       
+			} else if (modelSelected1 == 2) {
+			   c = new HComputationComponent(s,null,uri);		   
+			} else if (modelSelected1 == 3) {
+				   c = new HSynchronizationComponent(s,null,uri);		   
+			} else if (modelSelected1 == 4) {
+				   c = new HArchitectureComponent(s,null,uri);		   
+			} else if (modelSelected1 == 5) {
+				   c = new HEnvironmentComponent(s,null,uri);		   
+			} else if (modelSelected1 == 6) {
+				   c = new HQualifierComponent(s,null,uri);		   
+			} else if (modelSelected1 == 7) {
+				   c = new HApplicationComponent(s,null,uri);		   
+	//		} else if (modelSelected1 == 8) {
+	//			   c = new HServiceComponent(s,null,uri);		   
+			} else if (modelSelected1 == 9) {
+				   c = new HEnumeratorComponent(s,null,uri);		   
+			} else {
+				// ERROR;
+			} */
+				
+			setComponentVersion(c);
+			try {
+				c.createComponentKey();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			c.setAbstract(composite2.isAbstract());
+			
+			IPath path = new Path(absolutePath);
+			// c.setPackagePath(path.removeFirstSegments(1).uptoSegment(1).makeRelative());
+			c.setPackagePath(new Path(packageName));
+			
+			IFile file = persistSourceFile("", path);
+			
+			try {
+				factory.saveComponent(c,file,null);
+			} catch (UndefinedRefInnerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (DuplicatedRefInnerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DuplicatedSliceNamesException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	
+			try {
+				ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			// IFile newFile = createNewFile();
+			//if (newFile == null) 
+			//	return false;  // ie.- creation was unsuccessful
+	
+			// Since the file resource was created fine, open it for editing
+			// iff requested by the user
+			try {
+				IWorkbenchWindow dwindow = workbench.getActiveWorkbenchWindow();
+				IWorkbenchPage page = dwindow.getActivePage();
+				if (page != null) IDE.openEditor(page, file, true);
+				
+			} 
+			catch (org.eclipse.ui.PartInitException e) {
+				e.printStackTrace();
+				return false;
+			}
+			exampleCount++;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		// IFile newFile = createNewFile();
-		//if (newFile == null) 
-		//	return false;  // ie.- creation was unsuccessful
-
-		// Since the file resource was created fine, open it for editing
-		// iff requested by the user
-		try {
-			IWorkbenchWindow dwindow = workbench.getActiveWorkbenchWindow();
-			IWorkbenchPage page = dwindow.getActivePage();
-			if (page != null) IDE.openEditor(page, file, true);
-			
-		} 
-		catch (org.eclipse.ui.PartInitException e) {
-			e.printStackTrace();
-			return false;
-		}
-		exampleCount++;
 		return true;
 	}	
 
