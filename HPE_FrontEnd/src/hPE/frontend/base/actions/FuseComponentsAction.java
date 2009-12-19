@@ -69,11 +69,7 @@ public class FuseComponentsAction extends SelectionAction {
 			HComponent c_ = (HComponent) cs.get(i);
 			if (!c_.isEquivalentTo(c)) return false;
 			if (c.getExposed() != c_.getExposed()) return false;
-			if (!c.getName2().equals(c_.getName2())) return false;
-	        // If they are parameters ...
-			HComponent topC = (HComponent) c.getTopConfiguration();
-	        if (c.isParameter() && c_.isParameter() && /*c.getSupplied() == null && c_.getSupplied() == null &&*/ 
-	        		!c.getVariableName(topC).equals(c_.getVariableName(topC)))  return false;
+			// if (!c.getName2().equals(c_.getName2())) return false;
 	        
 	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c_, c)) return false;
 	        

@@ -42,18 +42,38 @@ public class SupersedeCommand extends Command {
 	
 	public boolean canExecute() {
         HComponent topC = (HComponent) target.getTopConfiguration();
+    	String varSource = source.getVariableName(topC);
+    	String varTarget = target.getVariableName(topC);
+    	varSource = !varSource.contains("@") ? varSource : varSource.substring(0,varSource.indexOf('@')); 
+    	varTarget = !varTarget.contains("@") ? varTarget : varTarget.substring(0,varTarget.indexOf('@'));
 
         boolean cond1 = source.isSubTypeOf(target) && source.getExposed() == target.getExposed() && topC.isAbstractConfiguration(); 
         boolean cond2 = cond1 && source.getName2().equals(target.getName2());
-        //boolean cond3 = ((source.isParameter() && target.isParameter() && source.getSupplied() == null && target.getSupplied() == null && 
-        //		source.getVariableName().equals(target.getVariableName())) || (!source.isParameter() && !target.isParameter()));
-        boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !source.getVariableName(topC).equals(target.getVariableName(topC)));
+        boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !varSource.equals(varTarget));
         boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(target, source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 
         
-
-     //   if (c.isParameter() && c_.isParameter() && c.getSupplied() == null && c_.getSupplied() == null && 
-      //  		!c.getVariableName().equals(c_.getVariableName()))  return false;
-        
+        if (!cond2) {
+        	
+       	  JOptionPane.showMessageDialog(null,
+    			  "The fused inner components have different names ("+source.getName2() + " e " +target.getName2()+ "). " +
+    			  "\nRename the inner components to make possible this operation.", 
+    			  "Fusion Error", 
+    			  JOptionPane.ERROR_MESSAGE);
+        } else if (!cond3) {
+        	String message = null;
+        	if (source.getSupplied() == null && target.getSupplied() == null) {
+        		message = "\nIt is still possible to rename one of these variables to make possible this operation.";
+        	} else {
+        		message = "\nHowever, since one of such context variables has been supplied before, the variables cannot be renamed. " + 
+        		          "\nBy consequence, it is not possible to complete this operation.";
+        	}
+            JOptionPane.showMessageDialog(null,
+        			  "The fused inner components are parameters bounded by different context variables ("+varSource+ " e " +varTarget+ "). " +
+        			  message, 
+        			  "Fusion Error", 
+        			  JOptionPane.ERROR_MESSAGE);
+        }
+                
 		return cond1 && cond2 && cond3 && cond4;
 
 		       //&& (((HComponent)target.getTopConfiguration()).getWhoItImplements() == target.getTopParentConfigurations().get(0))
