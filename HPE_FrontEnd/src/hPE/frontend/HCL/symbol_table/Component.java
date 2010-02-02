@@ -3,6 +3,7 @@ package hPE.frontend.HCL.symbol_table;
 public class Component {
 	private String name; 
 	private String kind;
+	private Imports_list import_list;
 	private Public_Component_list public_component_list;
 	private Inner_Component_list innercomplist;
 	private Unit_list unitlist;
@@ -10,16 +11,36 @@ public class Component {
 	private Extend extend;
 	private int beginLine;
 	private int beginColumn;
+	private boolean isAbstract;
+	private int[] version={1,0,0,0};
 
 	public Component(){
 		this.name=null;
 		this.kind=null;
+		this.import_list=null;
 		this.public_component_list=null;
 		this.innercomplist=null;
 		this.paramtypelist=null;
 		this.unitlist=null;
+		this.extend=null;
 		this.beginLine=0;
 		this.beginColumn=0;
+		this.isAbstract=true;
+	}
+	
+	public void print(){
+		System.out.println(name);
+		System.out.println(kind);
+		System.out.println(import_list);
+		System.out.println(public_component_list);
+		System.out.println(innercomplist);
+		System.out.println(unitlist);
+		System.out.println(paramtypelist);
+		System.out.println(extend);
+		System.out.println(beginLine);
+		System.out.println(beginColumn);
+		System.out.println(isAbstract);
+		System.out.println(version);
 	}
 
 	public Component(String name, Extend extend,String kind, Public_Component_list public_component_list, Inner_Component_list innercomplist,ParamType_list paramtypelist,Unit_list unitlist, int beginLine, int beginColumn){
@@ -32,6 +53,14 @@ public class Component {
 		this.beginLine=beginLine;
 		this.beginColumn=beginColumn;
 		this.extend=extend;
+	}	
+
+	public Imports_list getImports_list() {
+		return import_list;
+	}
+
+	public void setImports_list(Imports_list import_list) {
+		this.import_list = import_list;
 	}
 
 	public ParamType_list getParamtypelist() {
@@ -40,6 +69,14 @@ public class Component {
 
 	public void setParamtypelist(ParamType_list paramtypelist) {
 		this.paramtypelist = paramtypelist;
+	}
+	
+	public Extend getExtend() {
+		return extend;
+	}
+
+	public void setExtend(Extend extend) {
+		this.extend = extend;
 	}
 	
 	public String getName() {
@@ -104,5 +141,21 @@ public class Component {
 
 	public void setBeginColumn(int beginColumn) {
 		this.beginColumn = beginColumn;
+	}
+	
+	public boolean getIsAbstract (){
+		return isAbstract;
+	}
+	
+	public void setIsAbstract(boolean isAbstract){
+		this.isAbstract=isAbstract;
+	}
+	
+	public int[] getVersion() {
+		return version;
+	}
+
+	public void setVersion(int[] version) {
+		this.version = version;
 	}
 }

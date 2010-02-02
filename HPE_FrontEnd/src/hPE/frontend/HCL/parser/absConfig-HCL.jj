@@ -1,4 +1,7 @@
 PARSER_BEGIN(HCLParser)
+package hPE.frontend.HCL.parser;
+import hPE.frontend.HCL.symbol_table.*;
+
 public class HCLParser{}
 PARSER_END(HCLParser)
 
@@ -10,8 +13,10 @@ TOKEN_MGR_DECLS:
 
 TOKEN: {
 	< EXTENDS: "extends">
+	| < IMPLEMENTS: "implements">
 	| <SET: "=">
 	| <COMMA: ",">
+	| <DOT: ".">
 	| <COLON: ":">
 	| <OCURV: "("> 
 	| <CCURV: ")"> 
@@ -20,7 +25,7 @@ TOKEN: {
 	| <SLICE: "slice">
 	| <FROM: "from">
 	| <UNIT: "unit">
-	| <DOT: ".">
+	| <IMPORT: "import">
 	| <COMPUTATION: "computation">
 	| <DATA: "data">
 	| <ARCHITECTURE: "architecture">
@@ -29,7 +34,7 @@ TOKEN: {
 	| <SYNCHRONIZER: "synchronizer">
 	| <APPLICATION: "application">
 	| <ENUMERATOR: "enumerator">
-	| < ID: (["a"-"z"]|["A" - "Z"])(["a"-"z"]|["A" - "Z"]|"_"|["0"-"9"])*>
+	| <ID: (["a"-"z"]|["A" - "Z"])(["a"-"z"]|["A" - "Z"]|"_"|["0"-"9"])*>
 }
 
 <*>
@@ -66,13 +71,37 @@ SKIP:
 Component Start() :
 {Component component;}
 { 
-	component=absConfig()  <EOF> {return component;}
+	component=absConfig() <EOF> {return component;}
 }
 
 Component absConfig():
-{Component component = new Component();Token kind_tk;Public_Component_list public_component_list;Inner_Component inner_comp=null;Inner_Component_list inner_comp_list = new Inner_Component_list();Unit_list unit_list = new Unit_list();Unit unit;}
+{Component component = new Component();boolean flag=false;Import imp;Imports_list import_list = new Imports_list();Token kind_tk;Public_Component_list public_component_list;Inner_Component inner_comp=null;Inner_Component_list inner_comp_list = new Inner_Component_list();Unit_list unit_list = new Unit_list();Unit unit;}
 { 
-	kind_tk=kind() {component.setKind(kind_tk.image);component.setBeginLine(kind_tk.beginLine);component.setBeginColumn(kind_tk.beginColumn);} public_component_list=header(component) {component.setPublic_component_list(public_component_list);} (inner_comp=inner(public_component_list) {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);} (unit=unit() {unit_list.add(unit);})+ {component.setUnitlist(unit_list);return component;}
+	( imp=imports(flag) {flag=true;import_list.add(imp);} )* {component.setImports_list(import_list);} kind_tk=kind() {component.setKind(kind_tk.image);component.setBeginLine(kind_tk.beginLine);component.setBeginColumn(kind_tk.beginColumn);} public_component_list=header(component) {component.setPublic_component_list(public_component_list);} (inner_comp=inner(public_component_list) {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);} (unit=unit() {unit_list.add(unit);})+ {component.setUnitlist(unit_list);return component;}
+}
+
+Import imports(boolean flag):
+{Token import_tk;Token id_tk;String nPackage;}
+{
+	import_tk=<IMPORT> nPackage=namePackage() {if ( (flag) && ((import_tk.specialToken==null) || (import_tk.specialToken.kind != NEWLINE))) { throw new ParseException("New line expected before uses statement in line "+import_tk.beginLine+" and column "+import_tk.beginColumn);} } {return new Import(nPackage,import_tk.beginLine,import_tk.beginColumn);}
+}
+
+String namePackage():
+{Token id_tk;String pack="";}
+{
+	id_tk=<SLICE> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<FROM> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<UNIT> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<IMPORT> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<COMPUTATION> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<DATA> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<ARCHITECTURE> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<ENVIRONMENT> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<QUALIFIER> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<SYNCHRONIZER> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<APPLICATION> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<ENUMERATOR> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
+	| id_tk=<ID> {pack+=id_tk.image;} (<DOT> (id_tk=<ID> | id_tk=<FROM> | id_tk=<UNIT> | id_tk=<IMPORT> | id_tk=<COMPUTATION> | id_tk=<DATA> | id_tk=<ARCHITECTURE> | id_tk=<ENVIRONMENT> | id_tk=<QUALIFIER> | id_tk=<APPLICATION> | id_tk=<ENUMERATOR> | id_tk=<SYNCHRONIZER> | id_tk=<SLICE>) {pack+="."+id_tk.image;})+ {return pack;}
 }
 
 Public_Component_list header(Component component):
@@ -110,7 +139,7 @@ Public_Component publicInner():
 Inner_Component inner(Public_Component_list public_component_list):
 {Token id_tk;Token kind_tk;Type type;Public_Component_list public_inner_component_list = new Public_Component_list();}
 {
-	kind_tk=kind() id_tk=<ID> {if ((kind_tk.specialToken==null) || (kind_tk.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before kind of inner component in line "+id_tk.beginLine+" and column "+id_tk.beginColumn);} } <COLON> type=cFunApp() (public_inner_component_list=publicInnerS())?  {return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
+	kind_tk=kind() id_tk=<ID> {if ((kind_tk.specialToken==null) || (kind_tk.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before kind of inner component in line "+kind_tk.beginLine+" and column "+kind_tk.beginColumn);} } <COLON> type=cFunApp() (public_inner_component_list=publicInnerS())?  {return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
 }
 
 Unit unit():
@@ -142,7 +171,8 @@ Token kind():
 Extend extend():
 {Token extend_tk;Config config;}
 {
-	extend_tk=<EXTENDS> config=cFunAppNoVar() {return new Extend(config,extend_tk.beginLine,extend_tk.beginColumn);}
+	extend_tk=<EXTENDS> config=cFunAppNoVar() {return new Extend(config,extend_tk.beginLine,extend_tk.beginColumn,1);}
+	| extend_tk=<IMPLEMENTS> config=cFunAppNoVar() {return new Extend(config,extend_tk.beginLine,extend_tk.beginColumn,2);}
 }
 
 ParamType_list paramTypeS():
