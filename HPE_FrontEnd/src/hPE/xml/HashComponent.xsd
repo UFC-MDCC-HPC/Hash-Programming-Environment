@@ -394,9 +394,6 @@
 	</complexType>
 
 	<complexType name="ParameterRenaming">
-		<sequence>
-			<element name="cRefBound" type="tns:ComponentInUseType"></element>
-		</sequence>
 		<attribute name="formFieldId" type="string" use="required"></attribute>
 		<attribute name="varName" type="string" use="required"></attribute>
 	</complexType>
@@ -409,10 +406,7 @@
 
 	<complexType name="InnerComponentType">
 		<complexContent>
-			<extension base="tns:ComponentInUseType">
-				<sequence>
-
-				</sequence>
+			<extension base="tns:ComponentInUseType">
 				<attribute name="exposed" type="boolean"></attribute>
 			</extension>
 		</complexContent>

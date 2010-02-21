@@ -267,8 +267,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			   i.setImplements(); // mark versions to be overriden ...
 			   try {
 				   ((HUnit)the_source).updatePorts();
-			   } catch (HPEAbortException e) {
-				   // TODO Auto-generated catch block
+			   } catch (HPEAbortException e) {				
 				   e.printStackTrace();
 			   }
 		   }
@@ -1054,7 +1053,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		return ls;
 	}
 	
-	public Map<HComponent,HComponent> getAllInnerComponents() {
+	protected Map<HComponent,HComponent> getAllInnerComponents() {
 		
 		Map<HComponent,HComponent> ls = new HashMap<HComponent,HComponent>();
 		ls.put(this, null);
@@ -1923,20 +1922,25 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
         		if (innerOf_c1 != null) {
         			innerOf_c2.setExposed(innerOf_c1.getExposed());
         			innerOf_c2.exposedFalsifiedContext = innerOf_c1.exposedFalsifiedContext;
-        	        //if (!innerOf_c2.isParameter()) { 
-        	        //	innerOf_c2.setSupplier(innerOf_c1);
-        		    //	c1.setVariableName(newVarName);
-        		    //	innerOf_c2.setVariableName(newVarName);
-        	   	    //} else {
-        	   	    	innerOf_c2.variableName.putAll(innerOf_c1.variableName);
-        	    		oModel.variableName.putAll(innerOf_c1.variableName);
-        	    		//c2.setVariableName(c1.getVariableName(c1Parent));
-        	    		innerOf_c2.parameterIdentifier.putAll(innerOf_c1.parameterIdentifier);
-        	   	    //}
+    	   	    	innerOf_c2.variableName.putAll(innerOf_c1.variableName);
+    	    		oModel.variableName.putAll(innerOf_c1.variableName);
+    	    		innerOf_c2.parameterIdentifier.putAll(innerOf_c1.parameterIdentifier);
         		}
         	}
         }
         
+        List<HComponent> c1InnerList = new ArrayList<HComponent>();
+        c1InnerList.addAll(c1.getInnerComponents());
+   	    for (HComponent cc : c1InnerList) {
+ 		   List<HComponent> parents = cc.getDirectParentConfigurations();
+ 		   if (parents.size() > 1) {
+   		       String ref = cc.getRef(c1);
+   		       if (ref != null) {
+	 			   HComponent cc_ = c2.getInnerComponent(ref);
+	 			   c1.supersede2(cc, cc_);
+   		       }
+ 		   }
+ 	    }
                         
         for (Pair<HComponent,HComponent> p : c2.getSubTypeImageOf2(c1)) {
         	HComponent c1_ = p.fst();
@@ -1983,6 +1987,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 		       	}
 	       	}
      }
+ 	   
         
         
 /*        for (IHUnit _u : c2.getAllUnits()) {
@@ -2011,17 +2016,22 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
         	c.updateConnections();
         }
         
-
     }
     
 
 	private HComponent getInnerComponent(String name) {
 		for (HComponent c : this.getInnerComponents()) {
-			if (name.equals(c.getRef())) {
+			if (name.equals(c.getRef(this))) {
 				return c;
 			}
 		}
 		return null;
+	}
+
+	private String getRef(HComponent component) {
+		
+		return lOriginalInnerCRef.get(component);
+		
 	}
 
 	private static Pair<IHPrimUnit, IHPrimUnit> alignUnits(IHPrimUnit u1, IHPrimUnit u2) {
@@ -2335,16 +2345,6 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     		  HComponent c = entry.getKey();
     		  HComponent cParent = entry.getValue();
     		  String varName_of_c = c.getVariableName(this);
-/*    		  if (varName_of_c.equals("?")) {
-    			  String varName_of_c_old = null;
-    			  for (HComponent cD : c.getTopParentConfigurations()) {
-    				  varName_of_c = c.getVariableName(cD);
-    			      if (varName_of_c_old != null && !varName_of_c.equals(varName_of_c_old)) {
-    			    	  JOptionPane.showMessageDialog(null, "Supplying Conflicting (" + varName_of_c + "," + varName_of_c_old + ")", "Supplying Error", JOptionPane.ERROR_MESSAGE);
-    			      }
-    			      varName_of_c_old = varName_of_c;
-    			  }
-    		  } */
 	       	  if ((c.isParameter() && c.getSupplied() == null) && varName_of_c.equals(varName)) {        		  
                   if (model.isSubTypeOf(c)) {
      		           if (!componentsToSupply.containsKey(c)) 

@@ -197,7 +197,13 @@ public class HInterfaceSig implements Serializable, IHasColor  {
     	}
     	
     	
+    	// Remember updated port names
+    	
+    	List<HPort> old_ports = this.ports;
+    	
 		this.ports = new ArrayList<HPort>();
+		
+		
 		
     	Map<HInterfaceSlice,List<HPort>> ports2 = buildPortTable(ports1);
     	
@@ -211,9 +217,35 @@ public class HInterfaceSig implements Serializable, IHasColor  {
     		}
     	}
     	
+      adjustNames(this.ports,old_ports);
+    	
+    	// set updated port names
+    	
     }
     
-    private void updatePortsOfSlice(HInterfaceSlice s, Map<HInterfaceSlice,List<HPort>> ports2) {
+    private void adjustNames(List<HPort> newports, List<HPort> oldports) {
+		// TODO Auto-generated method stub
+    	Map<String, HInterfaceSlice> m1 = new HashMap<String, HInterfaceSlice>();
+    	for (HPort p : oldports) {
+    		m1.putAll(p.getSliceOwners());
+    	}
+    	
+    	Map<String, HInterfaceSlice> m2 = null;
+    	for (HPort p : newports) {
+    		m2 = p.getSliceOwners2();
+    		for (Entry<String, HInterfaceSlice> ee : m2.entrySet()) {
+    			HInterfaceSlice s1 = m1.get(ee.getKey());
+    			if (s1 != null) {
+	    			HInterfaceSlice s2 = ee.getValue();
+	    			HInterfaceSlice.copyNames(s2, s1);
+    			}
+    		}    		
+    	}
+    	
+		
+	}
+
+	private void updatePortsOfSlice(HInterfaceSlice s, Map<HInterfaceSlice,List<HPort>> ports2) {
     
 		List<HPort> _ports = ports2.get(s);
 		if (_ports != null) {

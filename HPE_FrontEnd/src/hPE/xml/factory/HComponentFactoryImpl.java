@@ -1792,7 +1792,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				pst.setPRef(pRef);
 				pst.setSRef(sRef);
 				portSliceL.add(pst);
-
 			}
 
 			/*

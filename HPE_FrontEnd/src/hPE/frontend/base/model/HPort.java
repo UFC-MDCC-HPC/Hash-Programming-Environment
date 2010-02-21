@@ -31,6 +31,7 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 		
 	private Map<HInterfaceSlice,List<HInterfaceSlice>> ss = new HashMap<HInterfaceSlice,List<HInterfaceSlice>>();
 	
+	
 	public void addInterfaceSlice(HInterfaceSlice sowner, HInterfaceSlice s) {
 		
 		if (sowner == null || sowner.hasSlice(s)) {
@@ -48,6 +49,35 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 			
 		}
 	}
+	
+	public Map<String, HInterfaceSlice> getSliceOwners() {
+
+		Map<String, HInterfaceSlice> m= new HashMap<String, HInterfaceSlice>();
+		for (Entry<HInterfaceSlice, List<HInterfaceSlice>> ppp : ss.entrySet()) {
+			HInterfaceSlice s = ppp.getKey();
+			for (HInterfaceSlice s2 : ppp.getValue()) {
+				String  str = s2.getName() + "." + s.getOriginalName2();
+				m.put(str, s);
+			}
+		}
+		return m;
+		
+	}
+
+	public Map<String, HInterfaceSlice> getSliceOwners2() {
+
+		Map<String, HInterfaceSlice> m= new HashMap<String, HInterfaceSlice>();
+		for (Entry<HInterfaceSlice, List<HInterfaceSlice>> ppp : ss.entrySet()) {
+			HInterfaceSlice s = ppp.getKey();
+			for (HInterfaceSlice s2 : ppp.getValue()) {
+				String  str = s2.getName() + "." + s.getName();
+				m.put(str, s);
+			}
+		}
+		return m;
+		
+	}
+
 	
 	public List<HInterfaceSlice> getInterfaceSlices() {
 		List<HInterfaceSlice> ss = new ArrayList<HInterfaceSlice>();

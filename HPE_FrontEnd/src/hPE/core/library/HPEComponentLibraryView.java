@@ -9,6 +9,8 @@ import hPE.core.library.model.classes.LComponentView;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
 import org.eclipse.core.runtime.Preferences.PropertyChangeEvent;
 import org.eclipse.emf.common.util.URI;
@@ -57,6 +59,7 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 	protected HPEComponentLibrary root;
 	private Action refreshAction;
 	private Action viewObsoleteAction;
+	private Action addLocationAction;
 	
 	/**
 	 * The constructor.
@@ -226,8 +229,17 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 			}
 		};
 		
+		addLocationAction = new Action("Manage Locations...") {
+            public void run() {
+               JOptionPane.showMessageDialog(null, "To Do" ,"To Do", JOptionPane.INFORMATION_MESSAGE);
+               refreshLocation();
+               addLocationAction.setChecked(false);
+            }
+		};
+		
 		refreshAction.setChecked(false);
 		viewObsoleteAction.setChecked(false);
+		addLocationAction.setChecked(false);
 	}
     
     private boolean showObsolete = false;
@@ -297,6 +309,7 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 		//IMenuManager filterSubmenu = new MenuManager("Refresh");
 		rootMenuManager.add(refreshAction);
 		rootMenuManager.add(viewObsoleteAction);
+		rootMenuManager.add(addLocationAction);
 		//filterSubmenu.add(refreshAction);
 		
 	}

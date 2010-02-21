@@ -99,9 +99,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 	
 	public HInterfaceSlice fetchSlice(String sliceRef) {
 		
-		Iterator<HInterfaceSlice> ss = this.getSlices().iterator();
-		while (ss.hasNext()) {
-			HInterfaceSlice s = ss.next();
+		for (HInterfaceSlice s : this.getSlices()) {
 			if (s.getName().equals(sliceRef)) return s;			
 		}
 		
