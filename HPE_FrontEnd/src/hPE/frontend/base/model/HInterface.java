@@ -802,7 +802,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 	private void setInheritedSlices() {
 	
 		for (HInterfaceSlice s : this.getSlices()) {
-			s.setInerited(true);
+			s.setInherited(true);
 			((HInterface)s.getInterface()).setInheritedSlices();
 		}
 		    
@@ -933,14 +933,19 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 				return +1;
 
 			HComponent c1 = (HComponent)o1.getConfiguration();
-			HComponent c2 = (HComponent)o2.getConfiguration();
+			HComponent c2 = (HComponent)o2.getConfiguration();			
 			
-			
-			if (cs.indexOf(c1)>=(cs.indexOf(c2))) {
-				return +1;
-			} else {
+			if (c2.isInnerComponentOf(c1)) {
 				return -1;
+			} else {
+				return +1;
 			}
+			
+		//	if (cs.indexOf(c1)>=(cs.indexOf(c2))) {
+		//		return +1;
+		//	} else {
+		//		return -1;
+		//	}
 		}
 		
 	}

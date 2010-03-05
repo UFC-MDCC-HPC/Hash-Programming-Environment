@@ -363,6 +363,15 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 				}
 			}  
 			
+			// Ao criar uma fatia, é necessário atualizar as portas da interfce para gerar as portas associadas a fatia sempre que o componente interno for público.
+		    try {
+					updatePorts();
+			} catch (HPEAbortException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+			}
+			
+			
 			return the_target;
 		
 	}
@@ -428,7 +437,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 	
 	public void setRemoteURI(URI uri) {
-		if (uri!=null) { 
+		if (uri != null) { 
       		this.uriRemote = uri.toString();
 		} else {
 		    this.uriRemote = null;	
@@ -1540,9 +1549,6 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     		this.variableName = new HashMap<Integer,String>(); ;
 
     	HComponent ctx = (HComponent) this.getTopConfiguration();
-    	if (ctx.getComponentName().equals("PETSc_Solver")) {
-    		System.out.print(true);
-    	}
     		
     	String currVar = this.variableName.get(ctx.getMyInstanceId());
     	if (currVar == null || (currVar != null && !currVar.equals(varName))) {
@@ -2469,6 +2475,9 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			  		          pc.loadComponent(modelCopy,new Point(0,0));
 			        	  }
 		                  HComponent.supersede(entry,modelCopy,newVarName, value);
+		                  if (model == value) {
+		                       this.addAdjustSupply(value, modelCopy);
+		                  }
 			         }			         
 			         this.invalidateInterfaceNames();
           	     }    	  
@@ -3540,6 +3549,35 @@ public HComponent getExposedComponentByName(String name) {
 	
 }
 
+private Map<HComponent, List<HComponent>> adjustSuppliers = null;
+
+private void addAdjustSupply(HComponent model, HComponent modelCopy) {
+	if (adjustSuppliers == null) {
+		adjustSuppliers = new HashMap<HComponent, List<HComponent>>();
+	}
+	if (adjustSuppliers.containsKey(model)) {
+		adjustSuppliers.get(model).add(modelCopy);
+	} else {
+		List<HComponent> ls = new ArrayList<HComponent>();
+		ls.add(modelCopy);
+		adjustSuppliers.put(model, ls);
+	}
+}
+
+public void performAdjustSupply() {
+	if (adjustSuppliers != null) {
+		Collection<HComponent> exposedOnes = this.getExposedComponents();
+		for (Entry<HComponent, List<HComponent>> adj : adjustSuppliers.entrySet()) {
+			HComponent model = adj.getKey();
+			for (HComponent modelCopy : adj.getValue()) {
+			    if (exposedOnes.contains(modelCopy) && modelCopy.isHiddenInnerComponent()) {
+			        model.setName(modelCopy.getName2());
+			    }
+			}
+		}
+	}
+}
+
 private Map<String,HComponent> supplyMemory = new HashMap<String,HComponent>();
 
 public boolean checkIfVariableWasSupplied(String varName) {
@@ -3872,5 +3910,23 @@ public void setDerivedFromPermutation(boolean derivedFromPermutation) {
 	this.derivedFromPermutation = derivedFromPermutation;
 	this.setHiddenInnerComponent(true);
 }
+
+public boolean isInnerComponentOf(HComponent c1) {
+	
+	List<HComponent> csParent = this.getDirectParentConfigurations();
+	if (csParent.contains(c1)) {
+		return true;
+	} else {
+		for (HComponent thisParent : csParent) {
+			if (thisParent.isInnerComponentOf(c1)) {
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+
 
 }

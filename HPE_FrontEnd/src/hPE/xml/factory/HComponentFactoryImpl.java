@@ -125,6 +125,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -314,7 +315,22 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					retrieveLibraries = true;
 				}
 			} else {
-				innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+				if (locationUri.scheme() == null
+						|| !locationUri.scheme().equals("http")) {
+					// COMPARE DATES OF THE PROJECT FILE AND CACHED FILE.
+					IPath pathC = new Path(locationUri.toString());	
+					IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
+					long lastDataCache = fileCache.lastModified();
+				    java.io.File fileProject = new File(path.toString());	
+				    long lastDateProject = fileProject.lastModified();			 
+	                if (lastDateProject > lastDataCache) {
+						innerUri = locationUri;
+						copyToCache = true;
+	                } else 
+					    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+				} else {
+					innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+				}
 			}
 			
 			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false);
@@ -384,12 +400,30 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					retrieveLibraries = true;
 				}
 			} else {
-				innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+				if (locationUri.scheme() == null
+						|| !locationUri.scheme().equals("http")) {
+					// COMPARE DATES OF THE PROJECT FILE AND CACHED FILE.
+					IPath pathC = new Path(locationUri.toString());	
+					IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
+					long lastDataCache = fileCache.lastModified();
+				    java.io.File fileProject = new File(path.toString());	
+				    long lastDateProject = fileProject.lastModified();			 
+	                if (lastDateProject > lastDataCache) {
+						innerUri = locationUri;
+						copyToCache = true;
+	                } else 
+					    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+				} else {
+					innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+				}
+				
 			}
 
-			HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false);
 
-			if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
+			 HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false);
+
+
+		    if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
 				innerC.setRemoteURI(locationUri);
 				
 			}
@@ -935,6 +969,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				applyFusions(xCinfo);
 
 				loadInterfacePorts();
+				
+				component.performAdjustSupply();
 			}
 
 			return component;
@@ -2450,8 +2486,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 								throw new HPEInvalidComponentResourceException();
 							} else {
 								try {
-									HUnitSlice uSlice = (HUnitSlice) component
-											.createBinding(u1, u, new Point(x, y));
+									HUnitSlice uSlice = (HUnitSlice) component.createBinding(u1, u, new Point(x, y));
 									uSlice.setBounds(new Rectangle(x, y, w, h));
 									if (sName != null)
 										uSlice.setName(sName);
@@ -2509,6 +2544,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 					i = (HInterface) u.getInterface();
 
+					updateSlices(i, xI);
 					loadSourceVersions(i, xI);
 
 					mI2.put(xI, i);

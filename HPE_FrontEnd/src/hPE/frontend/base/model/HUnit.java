@@ -559,9 +559,19 @@ public abstract class HUnit extends HPrimUnit
 	    
   public static void supersede (IHPrimUnit u_,  IHPrimUnit new_u_) {
 	    
-    	HHasExternalReferences i = (HHasExternalReferences) u_.getInterface();
-    	HInterface new_i = (HInterface) new_u_.getInterface();	        
-    	
+    	HInterface i = (HInterface) u_.getInterface();
+    	HInterface new_i = (HInterface) new_u_.getInterface();
+    	    	
+    	if (i != null) {
+    		try {
+				((HUnit)new_u_).updatePorts();
+			} catch (HPEAbortException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	  adjustTheNewInterface(new_i, i);
+    	}
+    	    	
     	IHUnit u = (IHUnit) u_.getRealUnit();
     	IHUnit new_u = (HUnit)new_u_.getRealUnit();
     	
@@ -664,7 +674,40 @@ public abstract class HUnit extends HPrimUnit
 	    	
 	    }
 	    
-	    private List<HUnitStub> stubs = new ArrayList<HUnitStub>(); //legacy
+	    private static void adjustTheNewInterface(HInterface new_i, HInterface i) {
+	    	
+	    	Map<String, Boolean> m = new HashMap<String, Boolean>();
+	    	
+	    	for (HInterfaceSlice is : i.getSlices()) {
+	    		m.put(is.getName(), is.isInherited()); 
+	    	}
+	    	
+	    	for (HInterfaceSlice is : new_i.getSlices()) {
+	    	   if (m.containsKey(is.getName())) {
+	    		   is.setInherited(m.get(is.getName()));
+	    		   if (is.getMyPort() != null)
+	    			   is.getMyPort().setInherited(true);
+	    	   }	    	   
+	    	}	    	
+	    	
+	    checkPortNames(new_i,i);
+	
+        }
+
+		private static void checkPortNames(HInterface new_i, HInterface i) {
+			Map<String, String> m = new HashMap<String,String>();
+			for (HPort port : i.getPorts()) {
+				m.put(port.getOriginalName(), port.getName());
+			}
+			for (HPort port : new_i.getPorts()) {
+				if (m.containsKey(port.getOriginalName())) 
+					port.setName(m.get(port.getOriginalName()));				
+			}
+			
+			
+		}
+
+		private List<HUnitStub> stubs = new ArrayList<HUnitStub>(); //legacy
 	    
 	    private Map<HUnitStub, HComponent> stubsEnc = new HashMap<HUnitStub,HComponent>();
 	    

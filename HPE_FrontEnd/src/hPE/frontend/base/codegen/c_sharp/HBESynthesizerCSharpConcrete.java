@@ -3,6 +3,7 @@ package hPE.frontend.base.codegen.c_sharp;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
@@ -30,27 +31,39 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	
 	// *******
 	
-    protected Map<String,List<HInterfaceSlice>> theSlices = new HashMap<String,List<HInterfaceSlice>>();
+    protected Map<String,List<HInterfaceSlice>> theSlices = null;
 
-    protected Map<HInterfaceSlice,HPort> portMapping = new HashMap<HInterfaceSlice,HPort>();
+    protected Map<HInterfaceSlice,HPort> portMapping = null;
     
 	private void fillPortSlices(HInterface i, List<String> varContext) {
 		
 		//this.theSlices.clear();
 		
+		try {
+			((HComponent)i.getConfiguration()).updatePorts();
+		} catch (HPEAbortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		List<HInterfaceSlice> slices = null;
-		
+
+		HComponent cc = (HComponent)i.getConfiguration();
+		boolean isImplement = cc.getWhoItImplements() != null && cc.getSuperType() == null;
+
 		List<HInterfaceSlice> iSlices = new ArrayList<HInterfaceSlice>();
 		iSlices.addAll(i.getSlices());
 		for (HPort port : i.getPorts()) {
-        	if (!port.isInherited() && !iSlices.contains(port.getMainSlice())) {
+        	if (!(port.isInherited() && !isImplement) && !iSlices.contains(port.getMainSlice())) {
 		       iSlices.add(port.getMainSlice());
-		       portMapping.put(port.getMainSlice(), port);
         	}
+		    portMapping.put(port.getMainSlice(), port);
+        	
 		}		
 		
+		
 		for (HInterfaceSlice slice : iSlices) {
-			if (!slice.isInerited()) {
+			if (!(slice.isInherited() && !isImplement)) {
 				
 				HComponent c = (HComponent)slice.getConfiguration();
 				HInterface i_ = (HInterface)slice.getInterface();
@@ -75,6 +88,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	public HBESourceVersionCSharp synthesize(HInterface i, String versionID) {
                 
 		List<String> varContext = new ArrayList<String>();
+		theSlices = new HashMap<String,List<HInterfaceSlice>>();
+		portMapping = new HashMap<HInterfaceSlice,HPort>();
 		
         HBESourceVersion<HBEAbstractFile> superVersion = i.getSourceVersion(versionID);
         
@@ -154,12 +169,12 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
  			}
 						
 		    for (HInterfaceSlice slice: ss.getValue()) {
-		    	if (slice instanceof HHasPortsInterfaceSlice && slice.getMyPort() == null) {		    	    
+		    	if (slice instanceof HHasPortsInterfaceSlice && !slice.isPublic()  /* && slice.getMyPort() == null */) {		    	    
 		    		// set ports
 		    		HHasPortsInterfaceSlice sliceWithPorts = (HHasPortsInterfaceSlice) slice;
 				    List<HPort> ps = sliceWithPorts.getPorts();
 				    for (HPort port : ps) {
-				    	if (!port.getInterfaceSlices().contains(slice)) {
+				   	if (!port.getInterfaceSlices().contains(slice)) {
 					    	 String portName = port.getName();
 					    	 if (tt.containsKey(portName)) {
 					    		 tt.get(portName).add(slice);
@@ -168,7 +183,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 					    		 l.add(slice);
 					    		 tt.put(portName, l);
 					    	 }
-				    	}
+				    }
 			        }	
 		    	}
 		    }			
@@ -200,7 +215,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
 		programText += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace		
 		
-		programText += "public class " + procName + ": " + i.getConfiguration().kindString().trim() + ", " + inheritedName + this.getAdditionalExtendsListCode() + "\n" + programTextVarBounds + "{\n\n";  // begin class
+		programText += "public class " + procName + ": " + i.getConfiguration().kindString().replace(" ", "") + ", " + inheritedName + this.getAdditionalExtendsListCode() + "\n" + programTextVarBounds + "{\n\n";  // begin class
         	
 		// por enquanto, a mudan�a do nome da interface est� bloqueada... assim, o nome da classe ser� sempre o nome da interface com um 
 		// underscore. 		
@@ -243,7 +258,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 			    programText += "private " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
 
 			    HPort portOfTheSlice = portMapping.get(slice); /*slice.getMyPort()*/;
-			    boolean isPublic = (portOfTheSlice != null && !portOfTheSlice.isPrivate()) /*|| !(slice instanceof HActivateInterfaceSlice)*/;
+			    boolean isPublic = ((portOfTheSlice != null && !portOfTheSlice.isPrivate()) /*|| (portOfTheSlice == null && slice.isPublic())*/) /*|| !(slice instanceof HActivateInterfaceSlice)*/;
 		        
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
                 //if (isPublic) {

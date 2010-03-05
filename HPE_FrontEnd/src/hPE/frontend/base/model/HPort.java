@@ -250,7 +250,7 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 			}
 		}
 		
-		return null;
+		return this.getOriginalName();
 	}
 }
 

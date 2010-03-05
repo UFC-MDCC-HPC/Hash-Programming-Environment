@@ -39,7 +39,7 @@ public class HBESynthesizerCSharpAbstract extends hPE.frontend.base.codegen.c_sh
 				
         for (Entry<HInterface,HBEProcedureCall> activation : activations) {
         	HBEProcedureCall call = activation.getValue();
-        	if (call!=null && !call.getActivateSlice().isInerited()) {
+        	if (call!=null && !call.getActivateSlice().isInherited()) {
 	        	HInterface icall = activation.getKey();
 				String sliceTypeName = icall.getName(false,true);
 				if (theSlices.containsKey(sliceTypeName)) {

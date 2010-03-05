@@ -257,15 +257,15 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		 
 	}
 	
-	public void setInerited(boolean isInerited) {
-		this.isInerited = isInerited;
+	public void setInherited(boolean isInerited) {
+		this.isInherited = isInerited;
 	}
 
-	public boolean isInerited() {
-		return isInerited;
+	public boolean isInherited() {
+		return isInherited;
 	}
 
-	private boolean isInerited = false;
+	private boolean isInherited = false;
 	
 	private List<HPort> portsOwnedByThisSlice = new ArrayList<HPort>();
 	
@@ -312,10 +312,23 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		return false;
 	}
 
-	public static void copyNames(HInterfaceSlice s2, HInterfaceSlice s1) {
+	public static void copyFeatures(HInterfaceSlice s2, HInterfaceSlice s1) {
 		s2.name = s1.name;
 		s2.originalName = s1.originalName;
 		s2.defaultName_ = s1.defaultName_;
+		s2.isInherited = s1.isInherited;
+	}
+
+	public boolean isPublic() {
+		HUnitSlice uslice = (HUnitSlice) this.getCompliantUnitSlices().get(0);
+		HBinding binding = uslice.getBinding();
+		if (binding != null) {
+			IHUnit unit = binding.getEntry();
+			HComponent cunit = (HComponent) unit.getConfiguration();
+			return cunit.getExposed();
+		}
+		
+		return false;
 	}
 
 		

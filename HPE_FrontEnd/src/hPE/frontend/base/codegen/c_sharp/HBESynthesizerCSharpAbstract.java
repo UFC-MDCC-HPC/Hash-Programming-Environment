@@ -4,6 +4,7 @@ package hPE.frontend.base.codegen.c_sharp;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.codegen.HBESourceVersion;
+import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
@@ -36,6 +37,14 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
     
 	private void fillPortSlices(HInterface i, List<String> varContext) {
 		List<HInterfaceSlice> slices = null;
+		
+		
+		try {
+			((HComponent)i.getConfiguration()).updatePorts();
+		} catch (HPEAbortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	    List<HPort> ports = i.getPorts();
 		

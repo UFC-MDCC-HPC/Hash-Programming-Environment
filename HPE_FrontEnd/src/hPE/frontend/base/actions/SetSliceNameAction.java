@@ -63,7 +63,7 @@ public class SetSliceNameAction extends SelectionAction {
 		//	if (!(part.getModel() instanceof HInterfaceSlice)) return false;
 			if (part.getModel() instanceof HInterfaceSlice) {			
  			   HInterfaceSlice s = (HInterfaceSlice) part.getModel();
- 			   if (s.isInerited()) return false;
+ 			   if (s.isInherited()) return false;
 			} 
 			
 		}	
