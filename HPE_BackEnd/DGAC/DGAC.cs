@@ -12,6 +12,7 @@ using hpe.basic;
 using DGAC.utils;
 using DGAC.database;
 using System.Data;
+using System.Collections;
 
 
 namespace DGAC
@@ -43,7 +44,7 @@ namespace DGAC
         private object[] remObjects;
         private int portTurn = 0;
 
-        IpcChannel ch;
+        IpcClientChannel ch;
 
         public BackEnd()
         {
@@ -51,7 +52,10 @@ namespace DGAC
         }
 
         public ServerObject connectToWorker() {
-             ch = new IpcChannel("WorkerHostClient");
+            IDictionary prop = new Hashtable();
+            prop["portName"] = "WorkerHostClient";
+            //prop["authorizedGroup"] = "Everyone";
+            ch = new IpcClientChannel(prop,null);
              ChannelServices.RegisterChannel(ch, false);
              if (RemotingConfiguration.IsWellKnownClientType(typeof(ServerObject)) == null) {
                 RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
@@ -60,7 +64,7 @@ namespace DGAC
         }
 
         public void releaseWorker() {
-             ch.StopListening(null);
+             //ch.StopListening(null);
              ChannelServices.UnregisterChannel(ch);
         }
 
@@ -488,6 +492,8 @@ namespace DGAC
             string re_Key;
             int re_Value;
 
+       //   Console.WriteLine("findReplicator:" + id_abstract + "," + id_inner + "," + id_unit + ", " + re.Key);
+
             EnumeratorSplitDAO esplitdao = new EnumeratorSplitDAO();
             EnumeratorSplit es = esplitdao.retrieve1(id_abstract, re.Key);
             if (es != null && s.Id_split_replica > 0)
@@ -528,7 +534,7 @@ namespace DGAC
                 {
                     id_inner_container = se_.Id_inner_owner;
                     id_inner_container_list.Add(id_inner_container);
-
+       //             Console.WriteLine("SLICE EXPOSED: " + id_inner_container);
                     seMap.Add(se_);
                 }
             }
@@ -545,10 +551,12 @@ namespace DGAC
             foreach (string id_inner_container_ in id_inner_container_list)
             {
                 cc = re_Key.IndexOf(id_inner_container_ + ".");
+          //      Console.WriteLine(" >>>> " + re_Key + " , " +  id_inner_container_);
                 if (cc >= 0)
                 {
                     id_inner_container = id_inner_container_;
                     re_Key = re_Key.Substring(cc + (id_inner_container + ".").Length);
+           //         Console.WriteLine(" *>>>> " + re_Key + " , " + id_inner_container_);
                     break;
                 }
             }
@@ -640,15 +648,26 @@ namespace DGAC
                     //                    }
                 }
 
-
-                foreach (EnumeratorMapping em in emList)
+           //     Console.WriteLine("emList.Count = " + emList.Count + " => " + ic_prime.Id_abstract_owner + " - " + ke_prime.Key + "," + ic_owner.Id_abstract_inner + "," + ice.Id_inner);
+                if (emList.Count > 0)
                 {
-                    KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string, int>(em.Id_enumerator_inner, ke_prime.Value);
-                    if (findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
+                    foreach (EnumeratorMapping em in emList)
+                    {
+                        KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string, int>(em.Id_enumerator_inner, ke_prime.Value);
+                        if (findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
+                        {
+                            return true;
+                        }
+                    }
+                } 
+                else                 
+                {
+                    if (findReplicator(unit, ke_prime, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
                     {
                         return true;
                     }
                 }
+
 
                 replicator = new KeyValuePair<string, int>(); ;
 
@@ -797,10 +816,11 @@ namespace DGAC
                                                   Type[] typeParams
                                                  )
         {
-
             ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
             int id_abstract = c.Id_abstract;
+
+            Console.WriteLine("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface);
 
             hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, typeParams); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
@@ -816,6 +836,9 @@ namespace DGAC
             // Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
 
             IDictionary<string, IList<KeyValuePair<string, int>>> enumsByVars = new Dictionary<string, IList<KeyValuePair<string, int>>>();
+
+            // Console.WriteLine("unit.EnumRank.Count = " + unit.EnumRank.Count);
+            
             foreach (KeyValuePair<string, int> index in unit.EnumRank)
             {
                 Enumerator e = edao.retrieve(id_abstract, index.Key);
@@ -851,23 +874,30 @@ namespace DGAC
                         EnumerationInner ei = eidao.retrieve(id_abstract, id_inner, eix);
                         if (ei != null)
                         {
+//                            Console.WriteLine("REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface + "," + eix);
                             eix_inner.Add(eix, val);
                             found++;
+                        }
+                        else
+                        {
+//                            Console.WriteLine("NON REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface +  ", "+ eix);
                         }
                     }
                     else
                     {
+//                        Console.WriteLine(" ES NON REPLICATE INNER : " + id_abstract + "," + id_inner + "," + eix);
                         found++;
                     }
                 }
                 if (found == 0)
                 {
-                    Console.WriteLine("k.Key = " + k.Key);
+                    Console.WriteLine("k.Key = " + k.Key);  
 
                     foreach (KeyValuePair<string, int> xxx in k.Value)
                     {
                         Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
                     }
+                    Console.WriteLine("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
                     throw new Exception("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
                 }
 
@@ -1028,7 +1058,8 @@ namespace DGAC
                                 {
                                     Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
                                 }
-                                throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count);
+                                Console.WriteLine("ERROR find replicator : " + occurrences + " - " + rElist.Count + " --- " + id_abstract);
+                                throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count + " --- " + id_abstract);
                             }
                          //   Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + ": END LOOP !!!!!!!!");
                         }
@@ -1117,6 +1148,8 @@ namespace DGAC
 
             o.setActualParameters(unit.ActualParameters, ic.Id_functor_app);
             o.ActualParametersTop = unit.ActualParametersTop;
+
+            Console.WriteLine("END createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface);
 
             o.createSlices();
 

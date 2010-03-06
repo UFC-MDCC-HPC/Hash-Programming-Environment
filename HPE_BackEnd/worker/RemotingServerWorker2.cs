@@ -57,7 +57,12 @@ namespace DGAC.database
 		{ 
   		     ch.StopListening(null);
   		     ChannelServices.UnregisterChannel(ch);
-		}		
+		}
+
+        private void InitializeComponent()
+        {
+
+        }		
 				
 	}
 }

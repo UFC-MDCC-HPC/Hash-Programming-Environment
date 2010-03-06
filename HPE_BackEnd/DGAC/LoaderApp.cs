@@ -68,10 +68,13 @@ namespace DGAC.database
 	//return -1 if the impl doesnt exist
 
 	public static Unit resolveImpl(IUnit unit, int id_concrete, string id_inner, string id_interface){
-	
-		//local daos
+
+
+       // Console.WriteLine("ENTER RESOLVEIMPL");
+
+        //local daos
 		ComponentDAO componentDAO = new ComponentDAO();
-		Component component = componentDAO.retrieve(id_concrete);
+	    Component component = componentDAO.retrieve(id_concrete);
 		AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();		
 		AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();		
 		SupplyParameterDAO spDAO = new SupplyParameterDAO();
@@ -81,7 +84,7 @@ namespace DGAC.database
 	
 		//get abstract component from received component for walking through its inner components
 		AbstractComponentFunctorApplication acfa = acfaDAO.retrieve(component.Id_functor_app);
-		
+
 		//INIT 
 		if(acfa!=null){
 			
@@ -92,6 +95,8 @@ namespace DGAC.database
 					
 				// analysing the inner component
 				InnerComponent innerComponent = icDAO.retrieve(acf.Id_abstract, id_inner);
+
+            //    Console.WriteLine("innerComponents is Null ? " + (innerComponent == null));
 
                 int Id_functor_app_inner = -1;
                 if (innerComponent.Parameter_top.Length == 0)
@@ -110,11 +115,13 @@ namespace DGAC.database
                     {
                         Console.WriteLine("UNEXPECTED ERROR: " + innerComponent.Parameter_top + "#" + unit.Id_functor_app + " NOT FOUND !!! (In: resolveImpl - LoaderApp.cs)");
                     }
-                }                                   
+                }
 
-				AbstractComponentFunctorApplication acfaRef = acfaDAO.retrieve(Id_functor_app_inner);
-				
-				// get inner component application
+                
+                AbstractComponentFunctorApplication acfaRef = acfaDAO.retrieve(Id_functor_app_inner);
+
+                
+                // get inner component application
                 if (acfaRef != null)
                 {
                     IList<SupplyParameter> supplyParameters = spDAO.list(acfaRef.Id_functor_app);
@@ -136,7 +143,6 @@ namespace DGAC.database
                                                                                                 supplyParameter.Id_functor_app);
                             if (spp != null)
                             {
-
                                 int id_functor_app_actual_top;
                                 unit.ActualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
                                 if (id_functor_app_actual_top == 0)
@@ -162,27 +168,28 @@ namespace DGAC.database
 				//    descrito no artigo.				
 				
 				Component componentRef = Resolution.findHashComponent(unit,acfaRef);
-
+                
                 if (componentRef==null) {
                     Console.WriteLine("componentRef NULL ! acfaRef = " + Id_functor_app_inner);
                     return null;
                 } 
 
-                string id_unit = null; // componentRef.getIdUnit(id_interface);
-
-                
+                string id_unit = null; // componentRef.getIdUnit(id_interface);                
 
                 UnitDAO udao = new UnitDAO();
                 InterfaceDAO idao = new InterfaceDAO();
 
                 Interface i2 = idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
+                
+                
 
                 foreach (Interface i in idao.list(componentRef.Id_abstract)) {
-                    if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top)) {
+               //     Console.WriteLine("i2 is null ? " + (i2 == null) + "," + innerComponent.Id_abstract_inner + "," + id_interface); 
+                    if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
+                    {
                         id_unit = i.Id_interface;
                     }
                 }
-
                 Unit u = udao.retrieve(componentRef.Id_concrete, id_unit, 1);
                 if (u == null)
                 {

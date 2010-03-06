@@ -34,15 +34,34 @@ namespace DGAC.database
 			while(queue.Count!=0){
 				
 				TreeNode nodeRef = (TreeNode)queue[0];
+                
                 int id_abstract = nodeRef.Functor_app.Id_abstract;
                 int id_functor_app_actual = nodeRef.Functor_app.Id_functor_app;
+
+                int id_abstract_top = nodeRef.Functor_app_top.Id_abstract;
+               // int id_functor_app_actual_top = nodeRef.Functor_app_top.Id_functor_app;
+
                 queue.RemoveAt(0);		
 
 				IList<AbstractComponentFunctorParameter> parameterList = acfpDAO.list(id_abstract);
                 foreach (AbstractComponentFunctorParameter acfp in parameterList)
 				{
                     string parameter_id = acfp.Id_parameter;
-					AbstractComponentFunctorApplication acfaTop = acfaDAO.retrieve(acfp.Bounds_of);
+
+                    AbstractComponentFunctorApplication acfaTop = null;
+                    if (id_abstract_top != id_abstract)
+                    {
+                       // Console.WriteLine(id_abstract + ","+ id_abstract_top + ":" + parameter_id);
+                        AbstractComponentFunctorParameter acfpTop = acfpDAO.retrieve(id_abstract_top, parameter_id);
+                        acfaTop = acfaDAO.retrieve(acfpTop.Bounds_of);
+                    }
+                    else
+                    {
+                      //  Console.WriteLine(id_abstract + "," + id_abstract_top + ":" + parameter_id);
+                        acfaTop = acfaDAO.retrieve(acfp.Bounds_of);
+                    }
+
+
                     SupplyParameter sp = spDAO.retrieve(parameter_id, id_functor_app_actual);
                     AbstractComponentFunctorApplication acfaActual = null;
                     if (sp is SupplyParameterComponent)
@@ -85,6 +104,7 @@ namespace DGAC.database
 
         private static IList<AbstractComponentFunctorApplication> buildGeneralizationSteps(AbstractComponentFunctorApplication acfActual, AbstractComponentFunctorApplication acfaTop)
         {
+
             AbstractComponentFunctorApplication id_abstract_step = acfActual;
             AbstractComponentFunctorApplication id_abstract_top = acfaTop;
             IList<AbstractComponentFunctorApplication> gs = new List<AbstractComponentFunctorApplication>();
@@ -95,10 +115,9 @@ namespace DGAC.database
             while (id_abstract_step.Id_abstract != id_abstract_top.Id_abstract)
             {
                 gs.Add(id_abstract_step);
-                AbstractComponentFunctor acf = acfdao.retrieve(id_abstract_step.Id_abstract);                
+                AbstractComponentFunctor acf = acfdao.retrieve(id_abstract_step.Id_abstract);
                 id_abstract_step = acfadao.retrieve(acf.Id_functor_app_supertype);
-            }
-            
+            }            
 
             gs.Add(id_abstract_step);
 

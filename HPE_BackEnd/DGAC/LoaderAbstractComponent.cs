@@ -53,14 +53,16 @@ namespace HPE_DGAC_LoadDB
                 foreach (EnumeratorType eX in enumerator)
                 {
                     Enumerator e = new Enumerator();
-                    e.Id_abstract = id_abstract;
-                    e.Id_enumerator = buildEnumeratorId(eX.originRef, eX.@ref);
-                    e.From_split = eX.fromSplit;
-                    e.Variable = eX.varId;
-                    e.Valuation = eX.cardinality != 1 ? -1 : 1;
-
-                    rXs.Add(e.Id_enumerator, eX.links);
-                    eList.Add(e.Id_enumerator, e);
+                    e.Valuation = eX.cardinality == 1 ? 1 : -1;
+                    if (eX.cardinality != 1) // Ignoring unitary enumerators ... 05/MAR/2010
+                    {
+                        e.Id_abstract = id_abstract;
+                        e.Id_enumerator = buildEnumeratorId(eX.originRef, eX.@ref);
+                        e.From_split = eX.fromSplit;
+                        e.Variable = eX.varId;
+                        rXs.Add(e.Id_enumerator, eX.links);
+                        eList.Add(e.Id_enumerator, e);
+                    }
                 }
             }
 
@@ -264,6 +266,9 @@ namespace HPE_DGAC_LoadDB
         protected override HashComponent loadComponent_(ComponentType c)
         {
             // CREATE Component
+            
+            InnerComponentExposedDAO iNewExpDAO = new InnerComponentExposedDAO();
+            InnerComponentDAO iNewDAO = new InnerComponentDAO();
 
             AbstractComponentFunctor c_ = new AbstractComponentFunctor();
             c_.Id_abstract = Connector.nextKey("id_abstract", "hashmodel.abstractcomponentfunctor");
@@ -294,6 +299,44 @@ namespace HPE_DGAC_LoadDB
 
                     c_.Id_functor_app_supertype = baseCapp.Id_functor_app;
                 }
+
+                // LOAD EXPOSED INNER COMPONENTS OF THE BASE
+                if (baseC.port != null)
+                {
+                    foreach (InnerComponentType port in baseC.port)
+                    {
+                        innerAll.Add(port);
+
+                        InnerComponent iNewPort = new InnerComponent();
+                        iNewPort.Id_abstract_owner = c_.Id_abstract;
+                        string old_port_localRef = port.localRef;
+                        port.localRef = lookForRenaming(baseC.localRef, port.localRef);
+                        iNewPort.Id_inner = port.localRef;
+                        iNewPort.Parameter_top = port.parameter_id;
+                        iNewPort.Transitive = true;
+
+                        AbstractComponentFunctorApplication appPort = newAbstractComponentFunctorApplication(port);
+                        if (appPort == null)
+                        {
+                            throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (public inner component) : " + port.name);
+                        }
+
+                        iNewPort.Id_functor_app = appPort.Id_functor_app;
+                        iNewPort.Id_abstract_inner = appPort.Id_abstract;
+
+                        InnerComponentExposed ice = new InnerComponentExposed();
+                        ice.Id_abstract = c_.Id_abstract;
+                        ice.Id_inner_rename = iNewPort.Id_inner;
+                        ice.Id_inner_owner = null;
+                        ice.Id_inner = old_port_localRef;
+
+                        iNewExpDAO.insert(ice);
+
+                        if (iNewDAO.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
+                            iNewDAO.insert(iNewPort);
+                    }
+                }
+
             }
 
             AbstractComponentFunctorDAO absCdao = new AbstractComponentFunctorDAO();
@@ -379,8 +422,8 @@ namespace HPE_DGAC_LoadDB
                                     iNewDAO.insert(iNewPort);
                             }
                         }
-
-                        iNewDAO.insert(iNew);
+                        if (iNewDAO.retrieve(iNew.Id_abstract_owner, iNew.Id_inner) == null)
+                            iNewDAO.insert(iNew);
 
                     }
                 }

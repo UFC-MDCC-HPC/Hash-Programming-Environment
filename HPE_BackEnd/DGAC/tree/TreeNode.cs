@@ -64,8 +64,15 @@ namespace DGAC.database
         {
 			get {return this.functor_app != null ? this.functor_app[this.current_id_functor_app] : null;}
 		}
-		
-		public IList<TreeNode> Children{
+
+        public AbstractComponentFunctorApplication Functor_app_top
+        {
+            get { return this.functor_app != null ? this.functor_app[this.functor_app.Count-1] : null; }
+        }
+
+        public IList<TreeNode> Children
+        
+{
 			get{return this.childList;}
 		}
 			
@@ -117,6 +124,11 @@ namespace DGAC.database
 		{
 			this.childList = new List<TreeNode>();
 		}
-		
-	}
+
+
+        internal string trace()
+        {
+            return " >" + this.onTop + "," + this.Functor_app.Id_abstract + "," + this.current_id_functor_app + "," + this.functor_app.Count;
+        }
+    }
 }
