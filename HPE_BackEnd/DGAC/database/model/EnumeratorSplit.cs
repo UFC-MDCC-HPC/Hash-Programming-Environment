@@ -82,7 +82,7 @@ namespace DGAC.database
             int re_Value_final = -1;
             EnumeratorSplitDAO esplitdao = new EnumeratorSplitDAO();
             IList<EnumeratorSplit> sList = esplitdao.listSplits(this.Id_abstract, this.Id_enumerator);
-            Console.WriteLine("SPLITS : " + this.Id_enumerator + " > " + sList.Count);
+          //  Console.WriteLine("SPLITS : " + this.Id_enumerator + " > " + sList.Count);
             int i = 0, count = 0, k;
             foreach (EnumeratorSplit es in sList)
             {

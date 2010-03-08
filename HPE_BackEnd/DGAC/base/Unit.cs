@@ -51,5 +51,7 @@ namespace hpe.basic
         bool getPermutation(string varid, out hpe.kinds.IEnumeratorKind permutation);
 
         void addPermutation(string varid, hpe.kinds.IEnumeratorKind u);
+
+        void destroySlice();
     }
 }

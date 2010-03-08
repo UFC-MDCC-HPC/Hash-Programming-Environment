@@ -15,7 +15,12 @@ namespace DGAC.database
 	
 	public class GenerateTree
 	{
+        private static IDictionary<String, String> mmm = null;
+
 		public static TreeNode generate(IUnit unit, AbstractComponentFunctorApplication acfaRef){
+
+            mmm = new Dictionary<String, String>();
+
 
             IDictionary<string, TreeNode> memory = new Dictionary<string, TreeNode>();
 
@@ -39,39 +44,37 @@ namespace DGAC.database
                 int id_functor_app_actual = nodeRef.Functor_app.Id_functor_app;
 
                 int id_abstract_top = nodeRef.Functor_app_top.Id_abstract;
-               // int id_functor_app_actual_top = nodeRef.Functor_app_top.Id_functor_app;
 
                 queue.RemoveAt(0);		
 
-				IList<AbstractComponentFunctorParameter> parameterList = acfpDAO.list(id_abstract);
-                foreach (AbstractComponentFunctorParameter acfp in parameterList)
+                IList<SupplyParameter> parameterList = spDAO.list(id_functor_app_actual);
+                foreach (SupplyParameter sp in parameterList)
 				{
-                    string parameter_id = acfp.Id_parameter;
+                    string parameter_id = sp.Id_parameter;
+
+                    AbstractComponentFunctorParameter acfp = acfpDAO.retrieve(id_abstract, parameter_id);
 
                     AbstractComponentFunctorApplication acfaTop = null;
                     if (id_abstract_top != id_abstract)
                     {
-                       // Console.WriteLine(id_abstract + ","+ id_abstract_top + ":" + parameter_id);
                         AbstractComponentFunctorParameter acfpTop = acfpDAO.retrieve(id_abstract_top, parameter_id);
                         acfaTop = acfaDAO.retrieve(acfpTop.Bounds_of);
                     }
                     else
                     {
-                      //  Console.WriteLine(id_abstract + "," + id_abstract_top + ":" + parameter_id);
-                        acfaTop = acfaDAO.retrieve(acfp.Bounds_of);
+                        acfaTop = acfaDAO.retrieve(acfp.Bounds_of);                        
                     }
 
 
-                    SupplyParameter sp = spDAO.retrieve(parameter_id, id_functor_app_actual);
                     AbstractComponentFunctorApplication acfaActual = null;
                     if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                         acfaActual = acfaDAO.retrieve(spc.Id_functor_app_actual);
+                        
                     }
                     else if (sp is SupplyParameterParameter)
-                    {
-
+                    {                       
                         int Id_functor_app_actual = 0;
                         acfaRef.ParametersList.TryGetValue(parameter_id, out Id_functor_app_actual);
                         if (Id_functor_app_actual <= 0) // LOOK AT THE TOP PARAMETERS
@@ -80,21 +83,61 @@ namespace DGAC.database
                             unit.ActualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
                         }
                         acfaActual = acfaDAO.retrieve(Id_functor_app_actual);
+                       // parameter_id = ((SupplyParameterParameter)sp).Id_parameter_actual; // this line has been included but was not tested.
                     }
+
+
+                    // LOOK FOR ACTUAL PARAMETER IDs for THE NEXT ITERATIONS !!!
+                    IList<SupplyParameter> sss = spDAO.list(acfaTop.Id_functor_app);
+                    foreach (SupplyParameter sssx in sss) 
+                    {
+                        if (sssx is SupplyParameterComponent) 
+                        {
+                            SupplyParameterComponent ssxc = (SupplyParameterComponent) sssx;
+                            if (!mmm.ContainsKey(acfaActual.Id_functor_app + "." + ssxc.Id_parameter))
+                                mmm.Add(acfaActual.Id_functor_app + "." + ssxc.Id_parameter, ssxc.Id_parameter);
+                        } else if (sssx is SupplyParameterParameter) 
+                        {
+                            SupplyParameterParameter ssxp = (SupplyParameterParameter) sssx;
+                            if (!mmm.ContainsKey(acfaActual.Id_functor_app + "." + ssxp.Id_parameter))
+                                mmm.Add(acfaActual.Id_functor_app + "." + ssxp.Id_parameter, ssxp.Id_parameter_actual);
+                        }
+                        
+                    }
+                    string parameter_id_2;
+                    mmm.TryGetValue(id_functor_app_actual + "." + parameter_id, out parameter_id_2);
+                    if (parameter_id_2 == null)
+                    {
+                        parameter_id_2 = parameter_id;
+                    }
+                    
 
                     IList<AbstractComponentFunctorApplication> generalizeSteps = buildGeneralizationSteps(acfaActual, acfaTop);
 
                     TreeNode node = null;
 
-                    memory.TryGetValue(acfp.Id_parameter, out node);
+                    bool b = memory.TryGetValue(parameter_id_2, out node);
+
 
                     if (node == null)
                     {
+                     //   foreach (KeyValuePair<String, TreeNode> n in memory)
+                      //  {
+                      //      Console.Write(n.Key + ",");
+                      //  }
+                      //  Console.WriteLine("LOOKING FOR " + /*acfp.Id_parameter*/parameter_id + " : " + b + " , " + memory.Count);
+                    //    Console.WriteLine("*****");
                         node = new TreeNode(generalizeSteps, nodeRef);
-                        node.Parameter_id = acfp.Id_parameter;
+                        node.addParameterIdSyn(parameter_id);
+                        node.Parameter_id = parameter_id;
                         queue.Add(node);
-                        memory.Add(acfp.Id_parameter, node);
+                        memory.Add(parameter_id, node);
                     }
+                    else
+                    {
+                        node.addParameterIdSyn(parameter_id);
+                    }
+
                     nodeRef.addChild(node);
 				}
 			}                                                    

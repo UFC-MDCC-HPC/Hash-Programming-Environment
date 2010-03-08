@@ -93,6 +93,10 @@ namespace hpe.basic
         {
         }
 
+        virtual public void destroySlice()
+        {
+        }
+
         private IUnit containerSlice;
 
         public IUnit ContainerSlice

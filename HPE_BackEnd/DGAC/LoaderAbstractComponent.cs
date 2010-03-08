@@ -44,6 +44,10 @@ namespace HPE_DGAC_LoadDB
         {
             int id_abstract = absC.Id_abstract;
 
+            EnumerationSliceDAO sdao = new EnumerationSliceDAO();
+            SliceExposedDAO esdao = new SliceExposedDAO();
+            SliceDAO sliceDAO = new SliceDAO();
+
             // COLLECT ENUMERATORS ...
 
             IDictionary<string, Enumerator> eList = new Dictionary<string, Enumerator>();
@@ -110,8 +114,10 @@ namespace HPE_DGAC_LoadDB
                     edao.insert(e);
             }
 
+            IDictionary<string, IList<SliceExposed>> lateExposedSlices = new Dictionary<string, IList<SliceExposed>>();
+
             // ENUMERATE ITEMS !!!
-            foreach (KeyValuePair<string, EnumerableType[]> rXp in rXs) 
+            foreach (KeyValuePair<string, EnumerableType[]> rXp in rXs)
             {
                 string Id_enumerator = null;
                 es.TryGetValue(rXp.Key, out Id_enumerator); // take the enumerator id of the fusion group representant ...
@@ -134,7 +140,7 @@ namespace HPE_DGAC_LoadDB
                             EnumerationInnerDAO idao = new EnumerationInnerDAO();
 
                             InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
-                            
+
                             // ALL EXPOSED INNER COMPONENTS ARE ENUMERATED BY THE ENUMERATION OF THE OWNER INNER COMPONENT !
                             IList<InnerComponentExposed> ports = icedao.listExposedInnerOfOwner(absC.Id_abstract, cRef);
                             foreach (InnerComponentExposed port in ports)
@@ -169,7 +175,9 @@ namespace HPE_DGAC_LoadDB
                             if (uQ == null)
                                 udao.insert(u);
 
-                        } else if (rX is EnumerableEntryType) {
+                        }
+                        else if (rX is EnumerableEntryType)
+                        {
                             EnumerableEntryType rX_s = (EnumerableEntryType)rX;
                             string cRef = rX_s.cRef;
                             string uRef = rX_s.uRef;
@@ -182,7 +190,7 @@ namespace HPE_DGAC_LoadDB
                                 string cRef = rX_s.cRef;
                                 string sRef = rX_s.sRef; */
                             int splitReplica = rX_s.index; //splitReplica;
-                            
+
                             EnumerationSlice s = new EnumerationSlice();
                             s.Id_abstract = absC.Id_abstract;
                             s.Id_inner = cRef;
@@ -190,36 +198,50 @@ namespace HPE_DGAC_LoadDB
                             s.Id_split_replica = splitReplica;
                             s.Id_enumerator = Id_enumerator;
 
-                            EnumerationSliceDAO sdao = new EnumerationSliceDAO();
-                            SliceExposedDAO esdao = new SliceExposedDAO();
-                            SliceDAO sliceDAO = new SliceDAO();
 
                             IList<SliceExposed> ses = esdao.listExposedSlicesByContainer(s.Id_abstract,
                                                                                          s.Id_inner,// owner
                                                                                          s.Id_interface_slice, //owner
                                                                                          s.Id_split_replica);
-                            foreach (SliceExposed se in ses)
-                            {
-                                // take the slice row of the exposed slice
-                                EnumerationSlice sexposed = new EnumerationSlice();
-                                sexposed.Id_abstract = se.Id_abstract;
-                                sexposed.Id_inner = se.Id_inner;
-                                sexposed.Id_interface_slice = se.Id_interface_slice;
-                                sexposed.Id_split_replica = se.Id_split_replica;
-                                sexposed.Id_enumerator = Id_enumerator;
 
-                                EnumerationSlice sQE = sdao.retrieve(sexposed.Id_abstract, 
-                                                                     sexposed.Id_inner, 
-                                                                     sexposed.Id_interface_slice, 
-                                                                     sexposed.Id_enumerator);
-                                if (sQE == null)
-                                    sdao.insert(sexposed);
-                            }
+                            lateExposedSlices.Add(Id_enumerator, ses);
+                            
 
                             EnumerationSlice sQ = sdao.retrieve(s.Id_abstract, s.Id_inner, s.Id_interface_slice, s.Id_enumerator);
                             if (sQ == null)
                                 sdao.insert(s);
                         }
+                    }
+                }
+            }
+
+
+            foreach (KeyValuePair<string, IList<SliceExposed>> pair in lateExposedSlices)
+            {
+                string Id_enumerator = pair.Key;
+                IList<SliceExposed> ses = pair.Value;
+
+                foreach (SliceExposed se in ses)
+                {
+                    EnumerationInnerDAO eidao = new EnumerationInnerDAO();
+
+                    EnumerationInner ei = eidao.retrieve(se.Id_abstract, se.Id_inner, Id_enumerator);
+                    if (ei == null)
+                    {
+                        // take the slice row of the exposed slice
+                        EnumerationSlice sexposed = new EnumerationSlice();
+                        sexposed.Id_abstract = se.Id_abstract;
+                        sexposed.Id_inner = se.Id_inner;
+                        sexposed.Id_interface_slice = se.Id_interface_slice;
+                        sexposed.Id_split_replica = se.Id_split_replica;
+                        sexposed.Id_enumerator = Id_enumerator;
+
+                        EnumerationSlice sQE = sdao.retrieve(sexposed.Id_abstract,
+                                                             sexposed.Id_inner,
+                                                             sexposed.Id_interface_slice,
+                                                             sexposed.Id_enumerator);
+                        if (sQE == null)
+                            sdao.insert(sexposed);
                     }
                 }
             }

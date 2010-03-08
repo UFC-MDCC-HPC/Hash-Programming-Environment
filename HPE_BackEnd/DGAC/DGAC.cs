@@ -240,6 +240,7 @@ namespace DGAC
 
         public static void DGACInit(string hash_component_uid, string my_id_unit, hpe.basic.IUnit pmain, string[] args)
         {
+            slices = new List<hpe.basic.IUnit>();
 
             session_id = getSessionID(args);
 
@@ -376,6 +377,11 @@ namespace DGAC
 
         public static void DGACFinalize()
         {
+            foreach (hpe.basic.IUnit slice in slices)
+            {
+                slice.destroySlice();
+            }
+
             Connector.closeConnection();
             if (open_log_out)
                 log_out.Close();
@@ -820,7 +826,7 @@ namespace DGAC
             Component c = cdao.retrieve_uid(hash_component_uid);
             int id_abstract = c.Id_abstract;
 
-            Console.WriteLine("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface);
+            Console.Write("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface + "..... ");
 
             hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, typeParams); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
@@ -1149,13 +1155,16 @@ namespace DGAC
             o.setActualParameters(unit.ActualParameters, ic.Id_functor_app);
             o.ActualParametersTop = unit.ActualParametersTop;
 
-            Console.WriteLine("END createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface);
+            Console.WriteLine("END");
 
             o.createSlices();
 
+            slices.Add(o);
 
             return o;
         }
+
+        private static IList<hpe.basic.IUnit> slices = null;
 
         private static void insertEnumeratorFusions(IUnit o, string id_unit_slice, IList<IDictionary<string, int>> enumRanks)
         {

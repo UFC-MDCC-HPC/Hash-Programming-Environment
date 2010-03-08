@@ -17,6 +17,7 @@ namespace DGAC.database
 		private TreeNode next;
 		private IList<TreeNode> childList;
         private string parameter_id;
+        private IList<string> parameter_id_syn;
 		private int current_id_functor_app = -1; /* it points to an index in the list id_functor_app */
         private IList<AbstractComponentFunctorApplication> functor_app = null; 
 		private int level;
@@ -41,6 +42,21 @@ namespace DGAC.database
 					this.Level = this.Parent.Level + 1;
 			}
 		}
+
+        public void addParameterIdSyn(String parid)
+        {
+            if (parameter_id_syn == null) 
+                parameter_id_syn = new List<string>();
+            if (!parameter_id_syn.Contains(parid))
+               parameter_id_syn.Add(parid);
+        }
+
+        public IList<string> getParameterIdSyns()
+        {
+            if (parameter_id_syn == null)
+                parameter_id_syn = new List<string>();
+            return parameter_id_syn;
+        }
 
         public string Parameter_id
         {
