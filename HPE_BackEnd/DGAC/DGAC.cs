@@ -38,7 +38,6 @@ namespace DGAC
    
     public class BackEnd : IBackEnd
     {
-
         private string[] hosts;
         private int channel = 0;
         private object[] remObjects;
@@ -93,7 +92,7 @@ namespace DGAC
                 {
                 
                    cAbs = (AbstractComponentFunctor)cAbs_;
-                   ComponentDAO cdao = new ComponentDAO();
+                  // ComponentDAO cdao = new ComponentDAO();
 				   IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
 				   if (cList.Count == 0) {	                        					
                       Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
@@ -106,7 +105,7 @@ namespace DGAC
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
 
-                InterfaceDAO idao = new InterfaceDAO();
+               // InterfaceDAO idao = new InterfaceDAO();
                     
                 foreach (LoaderApp.InfoCompile interfaceToCompile in infoCompile)
                 {
@@ -180,7 +179,7 @@ namespace DGAC
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
 
-                UnitDAO udao = new UnitDAO();
+           //     UnitDAO udao = new UnitDAO();
 
                 foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                 {
@@ -252,7 +251,7 @@ namespace DGAC
             //openConnection(); 
             Connector.openConnection();
 
-            ComponentDAO cdao = new ComponentDAO();
+          //  ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
 
             int id_abstract = c.Id_abstract;
@@ -261,14 +260,14 @@ namespace DGAC
             pmain.Id_concrete = id_concrete;
             pmain.Id_interface = my_id_unit;
 
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+            // AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
 
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();
 
             pmain.EnumeratorCardinality = new Dictionary<string, int>();
 
-            EnumeratorDAO edao = new EnumeratorDAO();
+          //  EnumeratorDAO edao = new EnumeratorDAO();
             IList<Enumerator> eList = edao.list(id_abstract);
             foreach (Enumerator e in eList)
             {
@@ -281,7 +280,7 @@ namespace DGAC
                     pmain.EnumeratorCardinality.Add(e.Id_enumerator, rangeSup_);
             }
 
-            EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
+          //  EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
 
             int rangeInf, rangeSup;
 
@@ -299,7 +298,7 @@ namespace DGAC
                 if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)
                     pmain.GlobalRank = rank;
 
-                IList<EnumerationInterface> eiList = eidao.listByInterface(id_abstract, id_unit);
+                IList<EnumerationInterface> eiList = exitdao.listByInterface(id_abstract, id_unit);
 
                 IList<IList<int>> x = new List<IList<int>>();
                 x.Add(new List<int>());
@@ -527,13 +526,13 @@ namespace DGAC
             IList<SliceExposed> seMap = new List<SliceExposed>();
 
             // FIND THE ORIGINAL REPLICATOR OF THE INNER COMPONENT THAT HAS BEEN FUSED.
-            EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
+        //    EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
             //            EnumeratorMapping em = null;
 
             IList<SliceExposed> lse = null;
             if (ic.Transitive)
             {
-                SliceExposedDAO sedao = new SliceExposedDAO();
+              //  SliceExposedDAO sedao = new SliceExposedDAO();
                 lse = sedao.listContainers(s.Id_inner, s.Id_interface_slice, s.Id_abstract, s.Id_split_replica);
 
                 foreach (SliceExposed se_ in lse)
@@ -620,14 +619,14 @@ namespace DGAC
 
             if (ic.Transitive && seMap.Count > 0)     // in fact, ic.Transitive <=> se != null
             {
-                InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
+             //   InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
                 InnerComponentExposed ice = icedao.retrieve(id_abstract, id_inner_container, id_inner);
 
-                InnerComponentDAO icdao = new InnerComponentDAO();
+              //  InnerComponentDAO icdao = new InnerComponentDAO();
                 InnerComponent ic_owner = icdao.retrieve(ic.Id_abstract_owner, ice.Id_inner_owner);
                 InnerComponent ic_prime = icdao.retrieve(ic_owner.Id_abstract_inner, ice.Id_inner);
 
-                SliceDAO sdao = new SliceDAO();
+              //  SliceDAO sdao = new SliceDAO();
                 Slice s_prime = null;
 
                 foreach (SliceExposed se in seMap)
@@ -639,7 +638,7 @@ namespace DGAC
                    //     Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
                 }
 
-                IList<EnumeratorMapping> emList = emdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
+                IList<EnumeratorMapping> emList = exmdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
 
                 int kkk;
                 enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
@@ -685,7 +684,7 @@ namespace DGAC
             {
                 replicator = ke_prime;
 
-                IList<EnumeratorMapping> emList = emdao.list(ic.Id_abstract_inner, ke_prime.Key);
+                IList<EnumeratorMapping> emList = exmdao.list(ic.Id_abstract_inner, ke_prime.Key);
 
                 int kkk;
                 enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
@@ -731,15 +730,15 @@ namespace DGAC
             {
                 //          Connector.openConnection();
 
-                InterfaceDAO idao = new InterfaceDAO();
+       //         InterfaceDAO idao = new InterfaceDAO();
                 Interface i = idao.retrieve_libraryPath(library_path);
 
                 int id_abstract = i.Id_abstract;
 
-                ComponentDAO cdao = new ComponentDAO();
+            //    ComponentDAO cdao = new ComponentDAO();
                 Component c = cdao.retrieveThatImplements(id_abstract)[0];
 
-                UnitDAO udao = new UnitDAO();
+       //         UnitDAO udao = new UnitDAO();
                 database.Unit u = udao.retrieve(c.Id_concrete, i.Id_interface, 1);
 
                 //              Connector.closeConnection();
@@ -822,7 +821,7 @@ namespace DGAC
                                                   Type[] typeParams
                                                  )
         {
-            ComponentDAO cdao = new ComponentDAO();
+         //   ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
             int id_abstract = c.Id_abstract;
 
@@ -832,12 +831,12 @@ namespace DGAC
 
             // Configure the knowledge of the slices about the topology.
 
-            EnumerationSliceDAO esdao = new EnumerationSliceDAO();
-            EnumerationInnerDAO eidao = new EnumerationInnerDAO();
+        //    EnumerationSliceDAO esdao = new EnumerationSliceDAO();
+         //   EnumerationInnerDAO eidao = new EnumerationInnerDAO();
 
             IDictionary<string, int> eix_inner = new Dictionary<string, int>();
 
-            EnumeratorDAO edao = new EnumeratorDAO();
+       //     EnumeratorDAO edao = new EnumeratorDAO();
 
             // Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
 
@@ -873,11 +872,11 @@ namespace DGAC
                     int val = index.Value;
 
                     // Check if the slice is enumerated by eix.
-                    EnumerationSlice es = esdao.retrieve(id_abstract, id_inner, id_interface, eix);
+                    EnumerationSlice es = exsdao.retrieve(id_abstract, id_inner, id_interface, eix);
                     if (es == null)      // If not, the inner component must be. Otherwise, this is stuck configuration.
                     // REMARK: With enumerators, this is possible now.
                     {
-                        EnumerationInner ei = eidao.retrieve(id_abstract, id_inner, eix);
+                        EnumerationInner ei = exindao.retrieve(id_abstract, id_inner, eix);
                         if (ei != null)
                         {
 //                            Console.WriteLine("REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface + "," + eix);
@@ -910,11 +909,11 @@ namespace DGAC
 
             }
 
-            SliceDAO sdao = new SliceDAO();
+       //     SliceDAO sdao = new SliceDAO();
 
             // Now, list all units of the inner component.
 
-            InnerComponentDAO icdao = new InnerComponentDAO();
+      //      InnerComponentDAO icdao = new InnerComponentDAO();
             InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
             int id_functor_app_inner_actual = ic.Id_functor_app;
@@ -930,7 +929,7 @@ namespace DGAC
 
                 int id_functor_app_old = ic.Id_functor_app;
                 ic.Id_functor_app = id_functor_app_inner_actual;
-                AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+           //     AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
                 AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_inner_actual);
                 id_abstract_inner_actual = acfa.Id_abstract;
                 ic.Id_abstract_inner = id_abstract_inner_actual;
@@ -946,7 +945,7 @@ namespace DGAC
 
             IDictionary<string, string> unitsMapping = new Dictionary<string, string>();
 
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+          //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
             IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(id_abstract_inner_original);
             IList<string> id_units_ordered_actual = acfdao.getIdUnitsOrdered(id_abstract_inner_actual);
             for (int k = 0; k < id_units_ordered.Count; k++)
@@ -1171,11 +1170,11 @@ namespace DGAC
             int id_abstract = o.Id_abstract;
             IDictionary<string, IList<string>> mapping = new Dictionary<string, IList<string>>();
 
-            EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
+        //    EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
             IDictionary<string, int> d0 = enumRanks[0];
             foreach (KeyValuePair<string, int> k in d0)
             {
-                IList<EnumeratorMapping> emList = emdao.list(id_abstract, k.Key);
+                IList<EnumeratorMapping> emList = exmdao.list(id_abstract, k.Key);
                 if (emList.Count > 0)
                 {
                     IList<string> l = new List<string>();
@@ -1285,7 +1284,7 @@ namespace DGAC
         {
             IList<DeployedComponentInfoType> l = new List<DeployedComponentInfoType>();
 
-            ComponentDAO cdao = new ComponentDAO();
+         //   ComponentDAO cdao = new ComponentDAO();
             IList<Component> cList = cdao.list();
 
             foreach (Component c in cList)
@@ -1318,10 +1317,10 @@ namespace DGAC
 
         private DeployedParameterType[] readEnvironmentConcreteParameters(int id_functor_app)
         {
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
+         //   AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+          //  AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
 
-            SupplyParameterDAO spdao = new SupplyParameterDAO();
+         //   SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spList = spdao.list(id_functor_app);
 
             DeployedParameterType[] r = new DeployedParameterType[spList.Count];
@@ -1347,7 +1346,7 @@ namespace DGAC
         {
             IList<DeployedComponentInfoType> l = new List<DeployedComponentInfoType>();
 
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+      //      AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
             IList<AbstractComponentFunctor> acfList = acfdao.list();
 
             foreach (AbstractComponentFunctor acf in acfList)
@@ -1377,16 +1376,16 @@ namespace DGAC
 
         private string[] readEnvironmentEnumerators(int id_abstract)
         {
-            EnumeratorDAO edao = new EnumeratorDAO();
-            EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
-            InterfaceDAO idao = new InterfaceDAO();
+       //     EnumeratorDAO edao = new EnumeratorDAO();
+         //   EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
+        //    InterfaceDAO idao = new InterfaceDAO();
 
             IList<string> rList = new List<string>();
             IList<DGAC.database.Interface> iList = idao.list(id_abstract);
 
             foreach (DGAC.database.Interface i in iList)
             {
-                IList<EnumerationInterface> eiList = eidao.listByInterface(id_abstract, i.Id_interface);
+                IList<EnumerationInterface> eiList = exitdao.listByInterface(id_abstract, i.Id_interface);
                 foreach (EnumerationInterface ei in eiList)
                 {
                     Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
@@ -1405,8 +1404,8 @@ namespace DGAC
 
         private DeployedParameterType[] readEnvironmentAbstractParameters(int id_abstract)
         {
-            AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+       //     AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
+       //     AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
 
             IList<AbstractComponentFunctorParameter> acfpList = acfpdao.list(id_abstract);
             DeployedParameterType[] r = new DeployedParameterType[acfpList.Count];
@@ -1453,10 +1452,10 @@ namespace DGAC
                 }
 
 
-                ComponentDAO cdao = new ComponentDAO();
-                UnitDAO udao = new UnitDAO();
-                EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
-                EnumeratorDAO edao = new EnumeratorDAO();
+              //  ComponentDAO cdao = new ComponentDAO();
+            //    UnitDAO udao = new UnitDAO();
+             //   EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
+              //  EnumeratorDAO edao = new EnumeratorDAO();
 
                 Component c = cdao.retrieve(id_concrete);
 
@@ -1464,7 +1463,7 @@ namespace DGAC
 
                 foreach (DGAC.database.Unit u in uList)
                 {
-                    IList<EnumerationInterface> eiList = eidao.listByInterface(c.Id_abstract, u.Id_unit);
+                    IList<EnumerationInterface> eiList = exitdao.listByInterface(c.Id_abstract, u.Id_unit);
                     int count = 1;
                     IDictionary<string, int> m = new Dictionary<string, int>();
                     foreach (EnumerationInterface ei in eiList)
@@ -1543,6 +1542,54 @@ namespace DGAC
             return session_id;
         }
 
+        private static AbstractComponentFunctorDAO acfdao_ = null;
+        private static AbstractComponentFunctorApplicationDAO acfadao_ = null;
+        private static AbstractComponentFunctorParameterDAO acfpdao_ = null;
+        private static InterfaceDAO idao_ = null;
+        private static UnitDAO udao_ = null;
+        private static SupplyParameterDAO spdao_ = null;
+        private static SupplyParameterComponentDAO spcdao_ = null;
+        private static SupplyParameterParameterDAO sppdao_ = null;
+        private static ComponentDAO cdao_ = null;
+        private static InnerComponentDAO icdao_ = null;
+        private static InnerConcreteComponentDAO iccdao_ = null;
+        private static InnerComponentExposedDAO icedao_ = null;
+        private static SliceDAO sdao_ = null;
+        private static UnitSliceDAO usdao_ = null;
+        private static SourceCodeDAO scdao_ = null;
+        private static SourceCodeReferenceDAO scrdao_ = null;
+        private static SliceExposedDAO sedao_ = null;
+        private static EnumeratorDAO exdao_ = null;
+        private static EnumerationInnerDAO exindao_ = null;
+        private static EnumerationSliceDAO exsdao_ = null;
+        private static EnumerationInterfaceDAO exitdao_ = null;
+        private static EnumeratorMappingDAO exmdao_ = null;
+        private static EnumeratorSplitDAO exldao_ = null;
+       
+        public static AbstractComponentFunctorDAO acfdao { get { if (acfdao_ == null) acfdao_ = new AbstractComponentFunctorDAO(); return acfdao_; } }
+        public static AbstractComponentFunctorApplicationDAO acfadao { get { if (acfadao_ == null) acfadao_ = new AbstractComponentFunctorApplicationDAO(); return acfadao_; } }
+        public static AbstractComponentFunctorParameterDAO acfpdao { get { if (acfpdao_ == null) acfpdao_ = new AbstractComponentFunctorParameterDAO(); return acfpdao_; } }
+        public static InterfaceDAO idao { get { if (idao_ == null) idao_ = new InterfaceDAO(); return idao_; } }
+        public static UnitDAO udao { get { if (udao_ == null) udao_ = new UnitDAO(); return udao_; } }
+        public static SupplyParameterDAO spdao { get { if (spdao_ == null) spdao_ = new SupplyParameterDAO(); return spdao_; } }
+        public static SupplyParameterComponentDAO spcdao { get { if (spcdao_ == null) spcdao_ = new SupplyParameterComponentDAO(); return spcdao_; } }
+        public static SupplyParameterParameterDAO sppdao { get { if (sppdao_ == null) sppdao_ = new SupplyParameterParameterDAO(); return sppdao_; } }
+        public static ComponentDAO cdao { get { if (cdao_ == null) cdao_ = new ComponentDAO(); return cdao_; } }
+        public static InnerComponentDAO icdao { get { if (icdao_ == null) icdao_ = new InnerComponentDAO(); return icdao_; } }
+        public static InnerConcreteComponentDAO iccdao { get { if (iccdao_ == null) iccdao_ = new InnerConcreteComponentDAO(); return iccdao_; } }
+        public static InnerComponentExposedDAO icedao { get { if (icedao_ == null) icedao_ = new InnerComponentExposedDAO(); return icedao_; } }
+        public static SliceDAO sdao { get { if (sdao_ == null) sdao_ = new SliceDAO(); return sdao_; } }
+        public static UnitSliceDAO usdao { get { if (usdao_ == null) usdao_ = new UnitSliceDAO(); return usdao_; } }
+        public static SourceCodeDAO scdao { get { if (scdao_ == null) scdao_ = new SourceCodeDAO(); return scdao_; } }
+        public static SourceCodeReferenceDAO scrdao { get { if (scrdao_ == null) scrdao_ = new SourceCodeReferenceDAO(); return scrdao_; } }
+        public static SliceExposedDAO sedao { get { if (sedao_ == null) sedao_ = new SliceExposedDAO(); return sedao_; } }
+        public static EnumeratorDAO edao { get { if (exdao_ == null) exdao_ = new EnumeratorDAO(); return exdao_; } }
+        public static EnumerationInnerDAO exindao { get { if (exindao_ == null) exindao_ = new EnumerationInnerDAO(); return exindao_; } }
+        public static EnumerationSliceDAO exsdao { get { if (exsdao_ == null) exsdao_ = new EnumerationSliceDAO(); return exsdao_; } }
+        public static EnumerationInterfaceDAO exitdao { get { if (exitdao_ == null) exitdao_ = new EnumerationInterfaceDAO(); return exitdao_; } }
+        public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
+        public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
+
     }//DGAC
 
     public class ConcreteComponentNotFoundException : Exception
@@ -1560,13 +1607,13 @@ namespace DGAC
             this.id_inner = id_inner;
             this.id_functor_app_implements = id_functor_app_implements;
 
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            SupplyParameterDAO spdao = new SupplyParameterDAO();
+         //   AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+         //   SupplyParameterDAO spdao = new SupplyParameterDAO();
 
-            AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_implements);
+            AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app_implements);
 
             // It is a parameter in the subtype. Check if it is supplied in the type.
-            IList<SupplyParameter> spList = spdao.list(acfa.Id_functor_app);
+            IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
             foreach (SupplyParameter sp in spList)
                 parsSuper.Add(sp.Id_parameter, sp);
 
@@ -1583,9 +1630,9 @@ namespace DGAC
 
         private String setupMessage(int id_abstract, string id_inner)
         {
-            InnerComponentDAO icdao = new InnerComponentDAO();
+         //   InnerComponentDAO icdao = new InnerComponentDAO();
 
-            InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
+            InnerComponent ic = DGAC.BackEnd.icdao.retrieve(id_abstract, id_inner);
 
             string cname = buildName(ic.Id_functor_app);
 
@@ -1596,16 +1643,16 @@ namespace DGAC
         {
             string cname = "";
 
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            SupplyParameterDAO spdao = new SupplyParameterDAO();
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+          //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+          //  SupplyParameterDAO spdao = new SupplyParameterDAO();
+          //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
 
-            AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app);
-            AbstractComponentFunctor acf = acfdao.retrieve(acfa.Id_abstract);
+            AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app);
+            AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
 
             cname += acf.Library_path + "[";
 
-            IList<SupplyParameter> spList = spdao.list(id_functor_app);
+            IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(id_functor_app);
             foreach (SupplyParameter sp in spList)
             {
                 if (sp is SupplyParameterComponent)
@@ -1629,6 +1676,8 @@ namespace DGAC
 
             return cname;
         }
+    
+
     }
 }//namespace
 

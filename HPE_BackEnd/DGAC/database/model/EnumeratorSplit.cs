@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DGAC.database
 {
-    class EnumeratorSplit
+    public class EnumeratorSplit
     {
         private string id_enumerator;
 

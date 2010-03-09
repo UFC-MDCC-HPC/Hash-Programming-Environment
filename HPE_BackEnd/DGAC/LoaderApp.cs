@@ -73,28 +73,28 @@ namespace DGAC.database
        // Console.WriteLine("ENTER RESOLVEIMPL");
 
         //local daos
-		ComponentDAO componentDAO = new ComponentDAO();
-	    Component component = componentDAO.retrieve(id_concrete);
-		AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();		
-		AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();		
-		SupplyParameterDAO spDAO = new SupplyParameterDAO();
-		InnerComponentDAO icDAO = new InnerComponentDAO();				 
-		SupplyParameterParameterDAO supplyParameterParameterDAO = new SupplyParameterParameterDAO();
-		SupplyParameterComponentDAO supplyParameterComponentDAO = new SupplyParameterComponentDAO();
+	//	ComponentDAO componentDAO = new ComponentDAO();
+	    Component component = DGAC.BackEnd.cdao.retrieve(id_concrete);
+	//	AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();		
+	//	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();		
+	//	SupplyParameterDAO spDAO = new SupplyParameterDAO();
+	//	InnerComponentDAO icDAO = new InnerComponentDAO();				 
+	//	SupplyParameterParameterDAO supplyParameterParameterDAO = new SupplyParameterParameterDAO();
+	//	SupplyParameterComponentDAO supplyParameterComponentDAO = new SupplyParameterComponentDAO();
 	
 		//get abstract component from received component for walking through its inner components
-		AbstractComponentFunctorApplication acfa = acfaDAO.retrieve(component.Id_functor_app);
+        AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);
 
 		//INIT 
 		if(acfa!=null){
 			
 			//get functor
-			AbstractComponentFunctor acf = acfDAO.retrieve(acfa.Id_abstract);			
+            AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);			
 			
 			if(acf!=null){
 					
 				// analysing the inner component
-				InnerComponent innerComponent = icDAO.retrieve(acf.Id_abstract, id_inner);
+                InnerComponent innerComponent = DGAC.BackEnd.icdao.retrieve(acf.Id_abstract, id_inner);
 
             //    Console.WriteLine("innerComponents is Null ? " + (innerComponent == null));
 
@@ -117,20 +117,20 @@ namespace DGAC.database
                     }
                 }
 
-                
-                AbstractComponentFunctorApplication acfaRef = acfaDAO.retrieve(Id_functor_app_inner);
+
+                AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.acfadao.retrieve(Id_functor_app_inner);
 
                 
                 // get inner component application
                 if (acfaRef != null)
                 {
-                    IList<SupplyParameter> supplyParameters = spDAO.list(acfaRef.Id_functor_app);
+                    IList<SupplyParameter> supplyParameters = DGAC.BackEnd.spdao.list(acfaRef.Id_functor_app);
 
                     foreach (SupplyParameter supplyParameter in supplyParameters)
                     {
 
                         //if exist a supplied parameter, then check if it is suppllie for a component
-                        SupplyParameterComponent spc = supplyParameterComponentDAO.retrieve(supplyParameter.Id_parameter,
+                        SupplyParameterComponent spc = DGAC.BackEnd.spcdao.retrieve(supplyParameter.Id_parameter,
                                                                                             supplyParameter.Id_functor_app);
 
                         if (spc != null)
@@ -139,7 +139,7 @@ namespace DGAC.database
                         }
                         else
                         {
-                            SupplyParameterParameter spp = supplyParameterParameterDAO.retrieve(supplyParameter.Id_parameter,
+                            SupplyParameterParameter spp = DGAC.BackEnd.sppdao.retrieve(supplyParameter.Id_parameter,
                                                                                                 supplyParameter.Id_functor_app);
                             if (spp != null)
                             {
@@ -176,21 +176,22 @@ namespace DGAC.database
 
                 string id_unit = null; // componentRef.getIdUnit(id_interface);                
 
-                UnitDAO udao = new UnitDAO();
-                InterfaceDAO idao = new InterfaceDAO();
+           //     UnitDAO udao = new UnitDAO();
+           //     InterfaceDAO idao = new InterfaceDAO();
 
-                Interface i2 = idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
-                
-                
+                Interface i2 = DGAC.BackEnd.idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
 
-                foreach (Interface i in idao.list(componentRef.Id_abstract)) {
+
+
+                foreach (Interface i in DGAC.BackEnd.idao.list(componentRef.Id_abstract))
+                {
                //     Console.WriteLine("i2 is null ? " + (i2 == null) + "," + innerComponent.Id_abstract_inner + "," + id_interface); 
                     if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
                     {
                         id_unit = i.Id_interface;
                     }
                 }
-                Unit u = udao.retrieve(componentRef.Id_concrete, id_unit, 1);
+                Unit u = DGAC.BackEnd.udao.retrieve(componentRef.Id_concrete, id_unit, 1);
                 if (u == null)
                 {
                     Console.WriteLine("u is NULL ! acfaRef = " + Id_functor_app_inner + " - (" + componentRef.Id_concrete + "," + id_unit + "," + id_interface + ")");
@@ -212,33 +213,33 @@ namespace DGAC.database
 	//returns an icollection of 
 	public static IList<InfoCompile> getReferences_Concrete(int id_concrete){
 
-        SourceCodeDAO scdao = new SourceCodeDAO();
-        SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
+      //  SourceCodeDAO scdao = new SourceCodeDAO();
+     //   SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
-		ComponentDAO cDAO = new ComponentDAO();		
-		Component component = cDAO.retrieve(id_concrete);
+	//	ComponentDAO cDAO = new ComponentDAO();		
+        Component component = DGAC.BackEnd.cdao.retrieve(id_concrete);
 		
 		IList<InfoCompile> referencesSet = new List<InfoCompile>();
         
-		AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
-		AbstractComponentFunctorApplication acfa = acfaDAO.retrieve(component.Id_functor_app);		
+	//	AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
+        AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);		
 	
-		AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
-		InnerComponentDAO innerDAO = new InnerComponentDAO();		
+	//	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
+	//	InnerComponentDAO innerDAO = new InnerComponentDAO();		
 	
 		int id_abstract = acfa.Id_abstract;
-		UnitDAO uDAO = new UnitDAO();
-		IList<Unit> unitList= uDAO.list(id_concrete);
+	//	UnitDAO uDAO = new UnitDAO();
+        IList<Unit> unitList = DGAC.BackEnd.udao.list(id_concrete);
 
-		UnitSliceDAO usDAO = new UnitSliceDAO(); 
-		InterfaceDAO interfaceDAO = new InterfaceDAO();
+	//	UnitSliceDAO usDAO = new UnitSliceDAO(); 
+	//	InterfaceDAO interfaceDAO = new InterfaceDAO();
 				
 		foreach (Unit unit in unitList){
 			
 			// IList<UnitSlice> unitSliceList = usDAO.listByUnit(id_concrete, unit.Id_unit, unit.Id_index);
-			Interface interfaceUnit = interfaceDAO.retrieve(unit.Id_interface_abstract,unit.Id_interface_interface);
-                        AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctor acf = acfdao.retrieve(interfaceUnit.Id_abstract);
+            Interface interfaceUnit = DGAC.BackEnd.idao.retrieve(unit.Id_interface_abstract, unit.Id_interface_interface);
+     //                   AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+            AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
 			IList<string> stringCompilationSet = new List<string>();
 
@@ -256,7 +257,7 @@ namespace DGAC.database
 			string[] referencesArray = new string[stringCompilationSet.Count];
             stringCompilationSet.CopyTo(referencesArray,0);
             IList<string> libRefs = new List<string>();
-            IList<SourceCode> scList = scdao.list('u', unit.Id_concrete, unit.Id_unit);
+            IList<SourceCode> scList = DGAC.BackEnd.scdao.list('u', unit.Id_concrete, unit.Id_unit);
             foreach (SourceCode sc in scList)
             {
                 IList<string> sourceRefs = sc.ExternalReferences;
@@ -296,16 +297,16 @@ namespace DGAC.database
     //returns an icollection of 
     public static IList<InfoCompile> getReferences_Abstract(int id_abstract)
     {
-        SourceCodeDAO scdao = new SourceCodeDAO();
+      //  SourceCodeDAO scdao = new SourceCodeDAO();
 
         IList<InfoCompile> referencesSet = new List<InfoCompile>();
-        InnerComponentDAO innerDAO = new InnerComponentDAO();
-        SliceDAO sDAO = new SliceDAO();
-        InterfaceDAO iDAO = new InterfaceDAO();
-        AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
-        AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
+       // InnerComponentDAO innerDAO = new InnerComponentDAO();
+      //  SliceDAO sDAO = new SliceDAO();
+      //  InterfaceDAO iDAO = new InterfaceDAO();
+       // AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
+      //  AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
 
-        IList<Interface> iList = iDAO.list(id_abstract);
+        IList<Interface> iList = DGAC.BackEnd.idao.list(id_abstract);
 
         foreach (Interface i in iList)
         {
@@ -324,7 +325,7 @@ namespace DGAC.database
             string[] referencesArray = new string[stringCompilationSet.Count];
             stringCompilationSet.CopyTo(referencesArray, 0);
 
-            IList<SourceCode> scList = scdao.list('i', i.Id_abstract,i.Id_interface);
+            IList<SourceCode> scList = DGAC.BackEnd.scdao.list('i', i.Id_abstract, i.Id_interface);
             foreach (SourceCode sc in scList)
             {
                 IList<string> sourceRefs = sc.ExternalReferences;
@@ -334,7 +335,7 @@ namespace DGAC.database
 
                 InfoCompile info = new InfoCompile();
                 info.references = referencesArrayAll;
-                AbstractComponentFunctor acf1 = acfDAO.retrieve(id_abstract);
+                AbstractComponentFunctor acf1 = DGAC.BackEnd.acfdao.retrieve(id_abstract);
                 info.moduleName = sc.File_name;//  buildDllName(i.Assembly_string);
                 info.unitId = i.Id_interface;
                 info.sourceCode = sc.Contents;

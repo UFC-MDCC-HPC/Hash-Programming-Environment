@@ -6,7 +6,7 @@ using System.IO;
 
 namespace DGAC.database
 {
-    class SourceCode
+    public class SourceCode
     {
         private char type_owner;
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DGAC.database
 {
-    class SourceCodeReference
+    public class SourceCodeReference
     {
         private char type_owner;
 

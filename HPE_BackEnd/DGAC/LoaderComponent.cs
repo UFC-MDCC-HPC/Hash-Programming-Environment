@@ -129,8 +129,8 @@ namespace HPE_DGAC_LoadDB
                 aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "hashmodel.abstractcomponentfunctorapplication");
                 aAppNew.Id_abstract = a.Id_abstract;
 
-                AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();
-                aAppNewDAO.insert(aAppNew);
+            //    AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();
+                DGAC.BackEnd.acfadao.insert(aAppNew);
 
                 // REGISTER parameters (follow supply-of, configure formal-parameter)
                 loadAbstractComponentFunctorApplicationParameters(c, aAppNew);
@@ -198,8 +198,8 @@ namespace HPE_DGAC_LoadDB
                     p_.Id_abstract = aNew.Id_abstract;
                     p_.Id_parameter = formFieldId;
 
-                    SupplyParameterDAO p_DAO = new SupplyParameterDAO();
-                    p_DAO.insert(p_);
+                 //   SupplyParameterDAO p_DAO = new SupplyParameterDAO();
+                    DGAC.BackEnd.spdao.insert(p_);
 
                     pars.Add(p_);
                 }

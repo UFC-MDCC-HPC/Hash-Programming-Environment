@@ -27,19 +27,19 @@ public class Interface {
     {
         get {
             if (id_interface_super_top == null) {
-                InterfaceDAO idao = new InterfaceDAO();
-                AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-                AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+              //  InterfaceDAO idao = new InterfaceDAO();
+              //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+              //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
 
                 if (id_interface_super.Equals("")) {
                     id_interface_super_top = id_interface;
                 } else {
                     string id_interface_super_ = Id_interface_super;
-                    AbstractComponentFunctor acf = acfdao.retrieve(id_abstract);
+                    AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract);
                     if (acf.Id_functor_app_supertype != 0)
                     {
-                        AbstractComponentFunctorApplication acfaSuper = acfadao.retrieve(acf.Id_functor_app_supertype);
-                        Interface iSuper = idao.retrieve(acfaSuper.Id_abstract, id_interface_super_);
+                        AbstractComponentFunctorApplication acfaSuper = DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+                        Interface iSuper = DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_);
                         id_interface_super_top = iSuper.Id_interface_super_top;
                     }
                     else
@@ -47,7 +47,7 @@ public class Interface {
                         id_interface_super_top = id_interface;
                     }
                 }
-                idao.setInterfaceSuperTop(id_abstract, id_interface,id_interface_super_top);
+                DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, id_interface_super_top);
                 return id_interface_super_top;
             } else {
                 return id_interface_super_top;
@@ -123,22 +123,22 @@ public class Interface {
 
         IList<string> refs = new List<string>();
 
-        InterfaceDAO idao = new InterfaceDAO();
-        InnerComponentDAO icdao = new InnerComponentDAO();
-        SliceDAO sdao = new SliceDAO();
-        AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-        AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+      //  InterfaceDAO idao = new InterfaceDAO();
+      //  InnerComponentDAO icdao = new InnerComponentDAO();
+      //  SliceDAO sdao = new SliceDAO();
+       // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+      //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
 
         // Look at super type.
 
-        AbstractComponentFunctor cThis = acfdao.retrieve(this.Id_abstract);
-        AbstractComponentFunctorApplication cSuperApp = acfadao.retrieve(cThis.Id_functor_app_supertype);
+        AbstractComponentFunctor cThis = DGAC.BackEnd.acfdao.retrieve(this.Id_abstract);
+        AbstractComponentFunctorApplication cSuperApp = DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app_supertype);
         if (cSuperApp != null)
         {
-            AbstractComponentFunctor acfsuper = acfdao.retrieve(cSuperApp.Id_abstract);
+            AbstractComponentFunctor acfsuper = DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
             IDictionary<string, AbstractComponentFunctorApplication> parsSuper = null;
             collectParameters(pars, cSuperApp, out parsSuper);
-            Interface iSuper = idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super);
+            Interface iSuper = DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super);
             refs = iSuper.fetchReferences(parsSuper);
             string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
             if (!refs.Contains(refname))
@@ -146,11 +146,11 @@ public class Interface {
         }
 
         // Traverse slices.
-        IList<Slice> slices = sdao.listByInterface(Id_abstract, Id_interface);
+        IList<Slice> slices = DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface);
 
         foreach (Slice s in slices)
         {
-            InnerComponent ic = icdao.retrieve(Id_abstract, s.Id_inner); // findInnerComponentOwnerOfSlice(Id_abstract, s.Id_inner); 
+            InnerComponent ic = DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); // findInnerComponentOwnerOfSlice(Id_abstract, s.Id_inner); 
             if (ic != null)
             {
                 AbstractComponentFunctorApplication acfa = null;
@@ -160,17 +160,17 @@ public class Interface {
                 if (!ic.Parameter_top.Equals(""))
                 {
                     pars.TryGetValue(ic.Parameter_top, out acfa);
-                    acfa = acfa == null ? acfadao.retrieve(ic.Id_functor_app) : acfa;                    
+                    acfa = acfa == null ? DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app) : acfa;                    
                 }
                 else
                 {
-                    acfa = acfadao.retrieve(ic.Id_functor_app);
+                    acfa = DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);
                 }
 
                 collectParameters(pars, acfa, out parsSlice);
 
-                Interface i = idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
-                AbstractComponentFunctor acfSlice = acfdao.retrieve(acfa.Id_abstract);
+                Interface i = DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
+                AbstractComponentFunctor acfSlice = DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
 
                 // ---------------------------------------------------------------------------------------
 
@@ -191,18 +191,18 @@ public class Interface {
 
     private InnerComponent findInnerComponentOwnerOfSlice(int Id_abstract, string id_inner)
     {
-        InnerComponentDAO icdao = new InnerComponentDAO();
-        AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-        AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+     //   InnerComponentDAO icdao = new InnerComponentDAO();
+      //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+      //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
         int Id_abstract_traverse = Id_abstract;
         InnerComponent ic = null;
         while (ic == null && Id_abstract_traverse != 0)
         {
-            ic = icdao.retrieve(Id_abstract_traverse, id_inner);
+            ic = DGAC.BackEnd.icdao.retrieve(Id_abstract_traverse, id_inner);
             if (ic == null)
             {
-                AbstractComponentFunctor cTraverse = acfdao.retrieve(Id_abstract_traverse);
-                AbstractComponentFunctorApplication cSuperApp = acfadao.retrieve(cTraverse.Id_functor_app_supertype);
+                AbstractComponentFunctor cTraverse = DGAC.BackEnd.acfdao.retrieve(Id_abstract_traverse);
+                AbstractComponentFunctorApplication cSuperApp = DGAC.BackEnd.acfadao.retrieve(cTraverse.Id_functor_app_supertype);
                 Id_abstract_traverse = cSuperApp.Id_abstract;
             }
         }
@@ -213,9 +213,9 @@ public class Interface {
                                    AbstractComponentFunctorApplication acfa, 
                                    out IDictionary<string, AbstractComponentFunctorApplication> parsSlice)
     {
-        SupplyParameterDAO spdao = new SupplyParameterDAO();
-        AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-        IList<SupplyParameter> spList = spdao.list(acfa.Id_functor_app);
+   //     SupplyParameterDAO spdao = new SupplyParameterDAO();
+     //   AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+        IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
 
         parsSlice = new Dictionary<string, AbstractComponentFunctorApplication>();
 
@@ -225,7 +225,7 @@ public class Interface {
             if (sp is SupplyParameterComponent)
             {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;
-                acfaPar = acfadao.retrieve(sp_.Id_functor_app_actual);
+                acfaPar = DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 parsSlice.Add(sp_.Id_parameter, acfaPar);
             }
             else if (sp is SupplyParameterParameter)
@@ -243,9 +243,9 @@ public class Interface {
                     else // if (sp_.FreeVariable)
                     {
                         // find bound ...
-                        AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-                        AbstractComponentFunctorParameter acfp = acfpdao.retrieve(sp_.Id_abstract, sp_.Id_parameter);
-                        acfaPar = acfadao.retrieve(acfp.Bounds_of);
+                     //   AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
+                        AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract, sp_.Id_parameter);
+                        acfaPar = DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
                     }
                 }
@@ -273,15 +273,15 @@ public class Interface {
                            IDictionary<string, AbstractComponentFunctorApplication> apars)
     {
         
-        SupplyParameterDAO spdao = new SupplyParameterDAO();
-        IList<SupplyParameter> sps = spdao.list(acfa.Id_functor_app);
+        //SupplyParameterDAO spdao = new SupplyParameterDAO();
+        IList<SupplyParameter> sps = DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
         foreach (SupplyParameter sp in sps)
         {
             if (sp is SupplyParameterComponent)
             {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent)sp;
-                AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-                AbstractComponentFunctorApplication acfaPar = acfadao.retrieve(sp_.Id_functor_app_actual);
+               // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+                AbstractComponentFunctorApplication acfaPar = DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 collectFV(acfaPar, pars, apars);
             }
             else if (sp is SupplyParameterParameter)

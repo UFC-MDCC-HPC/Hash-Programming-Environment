@@ -11,7 +11,7 @@ namespace DGAC.database
 {
 
     [Serializable()]
-    class EnumerationInterfaceDAO
+    public class EnumerationInterfaceDAO
     {
         public void insert(EnumerationInterface ac)
         {

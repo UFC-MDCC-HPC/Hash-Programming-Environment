@@ -31,10 +31,10 @@ namespace DGAC.database
 			ArrayList queue = new ArrayList();
 			queue.Add(root);
             
-			AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
-			AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
-			AbstractComponentFunctorParameterDAO acfpDAO = new AbstractComponentFunctorParameterDAO();
-            SupplyParameterDAO spDAO = new SupplyParameterDAO();
+		//	AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
+		//	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
+		//	AbstractComponentFunctorParameterDAO acfpDAO = new AbstractComponentFunctorParameterDAO();
+        //    SupplyParameterDAO spDAO = new SupplyParameterDAO();
 
 			while(queue.Count!=0){
 				
@@ -47,22 +47,22 @@ namespace DGAC.database
 
                 queue.RemoveAt(0);		
 
-                IList<SupplyParameter> parameterList = spDAO.list(id_functor_app_actual);
+                IList<SupplyParameter> parameterList = DGAC.BackEnd.spdao.list(id_functor_app_actual);
                 foreach (SupplyParameter sp in parameterList)
 				{
                     string parameter_id = sp.Id_parameter;
 
-                    AbstractComponentFunctorParameter acfp = acfpDAO.retrieve(id_abstract, parameter_id);
+                    AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
 
                     AbstractComponentFunctorApplication acfaTop = null;
                     if (id_abstract_top != id_abstract)
                     {
-                        AbstractComponentFunctorParameter acfpTop = acfpDAO.retrieve(id_abstract_top, parameter_id);
-                        acfaTop = acfaDAO.retrieve(acfpTop.Bounds_of);
+                        AbstractComponentFunctorParameter acfpTop = DGAC.BackEnd.acfpdao.retrieve(id_abstract_top, parameter_id);
+                        acfaTop = DGAC.BackEnd.acfadao.retrieve(acfpTop.Bounds_of);
                     }
                     else
                     {
-                        acfaTop = acfaDAO.retrieve(acfp.Bounds_of);                        
+                        acfaTop = DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);                        
                     }
 
 
@@ -70,7 +70,7 @@ namespace DGAC.database
                     if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                        acfaActual = acfaDAO.retrieve(spc.Id_functor_app_actual);
+                        acfaActual = DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
                         
                     }
                     else if (sp is SupplyParameterParameter)
@@ -82,13 +82,13 @@ namespace DGAC.database
                             SupplyParameterParameter spp = (SupplyParameterParameter) sp;
                             unit.ActualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
                         }
-                        acfaActual = acfaDAO.retrieve(Id_functor_app_actual);
+                        acfaActual = DGAC.BackEnd.acfadao.retrieve(Id_functor_app_actual);
                        // parameter_id = ((SupplyParameterParameter)sp).Id_parameter_actual; // this line has been included but was not tested.
                     }
 
 
                     // LOOK FOR ACTUAL PARAMETER IDs for THE NEXT ITERATIONS !!!
-                    IList<SupplyParameter> sss = spDAO.list(acfaTop.Id_functor_app);
+                    IList<SupplyParameter> sss = DGAC.BackEnd.spdao.list(acfaTop.Id_functor_app);
                     foreach (SupplyParameter sssx in sss) 
                     {
                         if (sssx is SupplyParameterComponent) 
@@ -152,14 +152,14 @@ namespace DGAC.database
             AbstractComponentFunctorApplication id_abstract_top = acfaTop;
             IList<AbstractComponentFunctorApplication> gs = new List<AbstractComponentFunctorApplication>();
 
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+       //     AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+        //    AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
 
             while (id_abstract_step.Id_abstract != id_abstract_top.Id_abstract)
             {
                 gs.Add(id_abstract_step);
-                AbstractComponentFunctor acf = acfdao.retrieve(id_abstract_step.Id_abstract);
-                id_abstract_step = acfadao.retrieve(acf.Id_functor_app_supertype);
+                AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract_step.Id_abstract);
+                id_abstract_step = DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
             }            
 
             gs.Add(id_abstract_step);

@@ -6,7 +6,7 @@ using System.Data;
 namespace DGAC.database
 {
     [Serializable()]
-    class EnumeratorMappingDAO
+    public class EnumeratorMappingDAO
     {
         public void insert(EnumeratorMapping ac)
         {

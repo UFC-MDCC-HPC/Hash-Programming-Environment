@@ -7,7 +7,7 @@ using System.Data;
 
 namespace DGAC.database
 {
-    class SourceCodeReferenceDAO
+    public class SourceCodeReferenceDAO
     {
         public void insert(SourceCodeReference ac)
         {

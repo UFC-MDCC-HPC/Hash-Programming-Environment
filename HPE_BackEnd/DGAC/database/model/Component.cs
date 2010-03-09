@@ -39,8 +39,8 @@ public class Component : HashComponent {
     public int Id_abstract
     {
         get { 
-             AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-             AbstractComponentFunctorApplication acfa = acfadao.retrieve(this.Id_functor_app);             
+             //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+            AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);             
              return acfa.Id_abstract; 
         
         }
@@ -49,10 +49,10 @@ public class Component : HashComponent {
     public string Kind
     {
         get {
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctorApplication acfa = acfadao.retrieve(this.Id_functor_app);
-            return acfdao.retrieve(acfa.Id_abstract).Kind;
+            //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+           // AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+            AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);
+            return DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract).Kind;
         }
     }
 
@@ -61,13 +61,13 @@ public class Component : HashComponent {
         get
         {
             IDictionary<string, AbstractComponentFunctorApplication> pars = new Dictionary<string, AbstractComponentFunctorApplication>();
-            SupplyParameterDAO spdao = new SupplyParameterDAO();
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            IList<SupplyParameter> sps = spdao.list(this.Id_functor_app);
+           // SupplyParameterDAO spdao = new SupplyParameterDAO();
+            //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+            IList<SupplyParameter> sps = DGAC.BackEnd.spdao.list(this.Id_functor_app);
             foreach (SupplyParameter sp in sps)
             {
-                SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;                
-                pars.Add(sp_.Id_parameter, acfadao.retrieve(sp_.Id_functor_app_actual));
+                SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;
+                pars.Add(sp_.Id_parameter, DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual));
             }
             return pars;   
         }
@@ -76,11 +76,11 @@ public class Component : HashComponent {
 
     internal Unit fetchUnit(string id_interface)
     {
-        InterfaceDAO idao = new InterfaceDAO();
-        Interface i = idao.retrieve(this.Id_abstract, id_interface);
+        //InterfaceDAO idao = new InterfaceDAO();
+        Interface i = DGAC.BackEnd.idao.retrieve(this.Id_abstract, id_interface);
 
-        UnitDAO udao = new UnitDAO();
-        return udao.retrieve(Id_concrete, i.Order);
+       // UnitDAO udao = new UnitDAO();
+        return DGAC.BackEnd.udao.retrieve(Id_concrete, i.Order);
     }
 }//class
 

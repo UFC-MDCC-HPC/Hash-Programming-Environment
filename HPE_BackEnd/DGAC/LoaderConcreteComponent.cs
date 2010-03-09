@@ -14,8 +14,8 @@ namespace HPE_DGAC_LoadDB
 
        public override bool componentExists(string hash_component_uid, out HashComponent cRef)
        {
-           ComponentDAO cdao = new ComponentDAO();
-           Component concC = cdao.retrieve_uid(hash_component_uid);
+       //    ComponentDAO cdao = new ComponentDAO();
+           Component concC = DGAC.BackEnd.cdao.retrieve_uid(hash_component_uid);
            if (concC == null)
            {
                cRef = null;
@@ -449,11 +449,11 @@ namespace HPE_DGAC_LoadDB
 */
        private AbstractComponentFunctor lookForAbstractComponentFunctorOfConcreteComponent(Component cConc)
        {
-           AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-           AbstractComponentFunctorApplication acfa = acfadao.retrieve(cConc.Id_functor_app);
+         //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+           AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(cConc.Id_functor_app);
            
-           AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-           AbstractComponentFunctor acf = acfdao.retrieve(acfa.Id_abstract);
+         //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
+           AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
            return acf;
        }
 
@@ -501,16 +501,16 @@ namespace HPE_DGAC_LoadDB
                 
             }
 
-            ComponentDAO c_dao = new ComponentDAO();
-            c_dao.insert(c_);
+          //  ComponentDAO c_dao = new ComponentDAO();
+            DGAC.BackEnd.cdao.insert(c_);
 
             return c_;
         }
 
        private Component lookForHashComponent(string hash_component_UID)
        {
-           ComponentDAO cdao = new ComponentDAO();
-           Component c = cdao.retrieve_uid(hash_component_UID);
+         //  ComponentDAO cdao = new ComponentDAO();
+           Component c = DGAC.BackEnd.cdao.retrieve_uid(hash_component_UID);
            return c;
        }
 
@@ -524,14 +524,14 @@ namespace HPE_DGAC_LoadDB
 
        private void loadInners(Component cConc)
        {
-           AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
-           AbstractComponentFunctorApplication absCapp = absCappdao.retrieve(cConc.Id_functor_app);
+         //  AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
+           AbstractComponentFunctorApplication absCapp = DGAC.BackEnd.acfadao.retrieve(cConc.Id_functor_app);
 
            int id_abstract = absCapp.Id_abstract;
 
-           InnerConcreteComponentDAO iccdao = new InnerConcreteComponentDAO();
-           InnerComponentDAO icdao = new InnerComponentDAO();
-           IList<InnerComponent> cs = icdao.list(id_abstract);
+     //      InnerConcreteComponentDAO iccdao = new InnerConcreteComponentDAO();
+      //     InnerComponentDAO icdao = new InnerComponentDAO();
+           IList<InnerComponent> cs = DGAC.BackEnd.icdao.list(id_abstract);
 
            foreach (InnerComponent c in cs)
            {
@@ -556,11 +556,11 @@ namespace HPE_DGAC_LoadDB
                }
                */
 
-               iccdao.insert(icc);
+               DGAC.BackEnd.iccdao.insert(icc);
 
-               UnitSliceDAO usdao = new UnitSliceDAO();
-               SliceDAO sdao = new SliceDAO();
-               IList<Slice> ss = sdao.listByInner(id_abstract, c.Id_inner);
+          //     UnitSliceDAO usdao = new UnitSliceDAO();
+          //     SliceDAO sdao = new SliceDAO();
+               IList<Slice> ss = DGAC.BackEnd.sdao.listByInner(id_abstract, c.Id_inner);
                foreach (Slice s in ss) 
                {
                    UnitSlice us = new UnitSlice();
@@ -593,7 +593,7 @@ namespace HPE_DGAC_LoadDB
                                           eiusdao.insert(eiu);
                                       }
                    */
-                   usdao.insert(us);
+                   DGAC.BackEnd.usdao.insert(us);
                }
            }
        }
@@ -602,13 +602,13 @@ namespace HPE_DGAC_LoadDB
         {
             IDictionary<string, Unit> units = new Dictionary<string, Unit>();
 
-            AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorApplication absCapp = absCappdao.retrieve(c.Id_functor_app);
+          //  AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
+            AbstractComponentFunctorApplication absCapp = DGAC.BackEnd.acfadao.retrieve(c.Id_functor_app);
 
-            InterfaceDAO idao = new InterfaceDAO();
-            SourceCodeDAO scdao = new SourceCodeDAO();
-            SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
-            
+          //  InterfaceDAO idao = new InterfaceDAO();
+         //   SourceCodeDAO scdao = new SourceCodeDAO();
+         //   SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
+
             int id_abstract = absCapp.Id_abstract;
 
             // for each unit ...
@@ -618,7 +618,7 @@ namespace HPE_DGAC_LoadDB
                 string iRef = u.iRef;
                 string urefSuper = u.super == null ? null : u.super.uRef;
 
-                Interface i = idao.retrieve(id_abstract, uref);
+                Interface i = DGAC.BackEnd.idao.retrieve(id_abstract, uref);
                 InterfaceType ui = lookForInterface(iRef);
 
                 Unit uu = new Unit();
@@ -644,7 +644,7 @@ namespace HPE_DGAC_LoadDB
                      ss.Contents = sft.contents;
                      ss.File_type= sft.fileType.Equals("exe") ? "exe" : "dll";
                      ss.File_name = sft.name ;
-                     scdao.insert(ss);
+                     DGAC.BackEnd.scdao.insert(ss);
 
                      int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
                                 (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
@@ -665,9 +665,9 @@ namespace HPE_DGAC_LoadDB
                              ssr.Id_owner = ss.Id_owner;
                              ssr.File_name = ss.File_name;
                              ssr.Reference = extRef;
-                             if (scrdao.retrieve(ssr) == null)
+                             if (DGAC.BackEnd.scrdao.retrieve(ssr) == null)
                              {
-                                scrdao.insert(ssr);
+                                 DGAC.BackEnd.scrdao.insert(ssr);
 							 }
                          }
                      }
@@ -700,17 +700,17 @@ namespace HPE_DGAC_LoadDB
 
        internal void updateSources(ComponentType ct, Component c)
        {
-           UnitDAO udao = new UnitDAO();
+        //   UnitDAO udao = new UnitDAO();
 
            LoadBodyItems(ct.componentInfo);
 
            IDictionary<string, Unit> units = new Dictionary<string, Unit>();
 
-           AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
-           AbstractComponentFunctorApplication absCapp = absCappdao.retrieve(c.Id_functor_app);
+        //   AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
+           AbstractComponentFunctorApplication absCapp = DGAC.BackEnd.acfadao.retrieve(c.Id_functor_app);
 
-           SourceCodeDAO scdao = new SourceCodeDAO();
-           SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
+        //   SourceCodeDAO scdao = new SourceCodeDAO();
+         //  SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
            int id_abstract = absCapp.Id_abstract;
 
@@ -721,8 +721,8 @@ namespace HPE_DGAC_LoadDB
                string iRef = u.iRef;
                string urefSuper = u.super == null ? null : u.super.uRef;
 
-               InterfaceDAO idao = new InterfaceDAO();
-               Interface i = idao.retrieve(id_abstract, uref);
+            //   InterfaceDAO idao = new InterfaceDAO();
+               Interface i = DGAC.BackEnd.idao.retrieve(id_abstract, uref);
                InterfaceType ui = lookForInterface(iRef);
 
                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
@@ -734,7 +734,7 @@ namespace HPE_DGAC_LoadDB
                    ss.Contents = sft.contents;
                    ss.File_type = sft.fileType.Equals("exe") ? "exe" : "dll";
                    ss.File_name = sft.name;
-                   scdao.update(ss);
+                   DGAC.BackEnd.scdao.update(ss);
                    if (sft.externalDependency != null)
                    {
                        foreach (string extRef in sft.externalDependency)
@@ -745,13 +745,13 @@ namespace HPE_DGAC_LoadDB
                            ssr.Id_owner = ss.Id_owner;
                            ssr.File_name = ss.File_name;
                            ssr.Reference = extRef;
-                           if (scrdao.retrieve(ssr) != null)
+                           if (DGAC.BackEnd.scrdao.retrieve(ssr) != null)
                            {
-                               scrdao.update(ssr);
+                               DGAC.BackEnd.scrdao.update(ssr);
                            }
                            else
                            {
-                               scrdao.insert(ssr);
+                               DGAC.BackEnd.scrdao.insert(ssr);
                            }
                        }
                    }

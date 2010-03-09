@@ -5,7 +5,7 @@ using System.Text;
 namespace DGAC.database
 {
     [Serializable()]
-    class EnumerationInterface
+    public class EnumerationInterface
     {
         private int id_abstract;
 

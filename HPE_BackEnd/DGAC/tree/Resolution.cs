@@ -15,26 +15,25 @@ namespace DGAC.database
 	public class Resolution
 	{
 
-        private static bool last_generalized = true;
-
 		public static Component tryGeneralize(TreeNode CTop, TreeNode C){
             
             Component CTopImpl = null;
-            CTopImpl = findImplementation(CTop);
+            //CTopImpl = findImplementation(CTop);
 			
-			if(C != null /* end of list */ && CTopImpl == null /* an implementation was not yet found */) {			
+			if(C != null) {			
 				C.reset();
 				do {
                     CTopImpl = tryGeneralize(CTop, C.Next);
-                  //  CTopImpl = findImplementation(CTop);
-                  //  if (CTopImpl != null) return CTopImpl;
-                  //  else
-                  //  {
+                    if (CTopImpl != null) return CTopImpl;
+                    CTopImpl = findImplementation(CTop);
+                    if (CTopImpl != null) return CTopImpl;
+                    else
+                    {
                 //    Console.Write("BEFORE GENERALIZE:"); writeTreeNode(CTop); Console.WriteLine("...");
                         C.generalize();
                 //        Console.Write("AFTER GENERALIZE:"); writeTreeNode(CTop); Console.WriteLine("...");
-                  //  }
-				} while (!C.OnTop && CTopImpl == null);
+                    }
+				} while (!C.OnTop);
 			}
 			
 			return CTopImpl;			
@@ -55,17 +54,17 @@ namespace DGAC.database
         {
 			int id_abstract = CTop.Functor_app.Id_abstract;
          
-            AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-			IList<AbstractComponentFunctorApplication> acfaList = acfadao.listByIdAbstract(id_abstract);
+           // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+            IList<AbstractComponentFunctorApplication> acfaList = DGAC.BackEnd.acfadao.listByIdAbstract(id_abstract);
 
 //            writeTreeNode(CTop); Console.Write("TESTING ... ");
             foreach (AbstractComponentFunctorApplication acfa in acfaList)
             {
 //                Console.Write(acfa.Id_functor_app + ",");
                 if (recMatchParameters(CTop, acfa)) {
-					ComponentDAO cdao = new ComponentDAO();
+					//ComponentDAO cdao = new ComponentDAO();
 //                    Console.WriteLine("... END TEST");
-					return cdao.retrieveByFunctorApp(acfa.Id_functor_app);
+                    return DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
 				}
             }
 //            Console.WriteLine("... END TEST");
@@ -77,24 +76,17 @@ namespace DGAC.database
         {
             AbstractComponentFunctorApplication acfaSon = null;
 
-			AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
+			//AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
+           // AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
 			
-            SupplyParameterComponentDAO spdao = new SupplyParameterComponentDAO();
-			IList<SupplyParameterComponent> spList = spdao.list(acfa.Id_functor_app);
+          //  SupplyParameterComponentDAO spdao = new SupplyParameterComponentDAO();
+            IList<SupplyParameterComponent> spList = DGAC.BackEnd.spcdao.list(acfa.Id_functor_app);
 			
 			IDictionary<string, int> ttt = new Dictionary<string,int>();
 			foreach (SupplyParameterComponent sp_ in spList) {
 				SupplyParameterComponent sp = (SupplyParameterComponent) sp_;
 				ttt.Add(sp.Id_parameter, sp.Id_functor_app_actual);				
 			}
-
-       //     IList<AbstractComponentFunctorParameter> spList2 = acfpdao.list(acfa.Id_abstract);
-       //     IDictionary<string, string> ttt2 = new Dictionary<string, string>();
-       //     foreach (AbstractComponentFunctorParameter sp2_ in spList2)
-       //     {   
-       //         ttt2.Add(sp.Id_parameter, sp.Id_functor_app_actual);
-       //     }
 			
             foreach (TreeNode nodeSon in node.Children)
             {
@@ -108,7 +100,7 @@ namespace DGAC.database
                     {
                         found = true;
                         ttt.TryGetValue(parid, out id_functor_app_actual); // TODO
-                        acfaSon = acfadao.retrieve(id_functor_app_actual);
+                        acfaSon = DGAC.BackEnd.acfadao.retrieve(id_functor_app_actual);
                         if (acfaSon.Id_abstract != nodeSon.Functor_app.Id_abstract)
                         {
                           //  Console.WriteLine("FAIL 1! ");

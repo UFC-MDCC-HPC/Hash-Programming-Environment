@@ -11,7 +11,7 @@ namespace DGAC.database
 {
 
     [Serializable()]
-    class EnumeratorSplitDAO
+    public class EnumeratorSplitDAO
     {
 
         public void insert(EnumeratorSplit ac)

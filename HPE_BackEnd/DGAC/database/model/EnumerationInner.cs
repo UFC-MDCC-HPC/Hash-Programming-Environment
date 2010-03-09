@@ -5,7 +5,7 @@ using System.Text;
 namespace DGAC.database
 {
     [Serializable()]
-    class EnumerationInner
+    public class EnumerationInner
     {
         private int id_abstract;
 

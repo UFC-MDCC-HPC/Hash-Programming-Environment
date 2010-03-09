@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DGAC.database
 {
-    class EnumeratorMapping
+    public class EnumeratorMapping
     {
         private int id_abstract;
 
