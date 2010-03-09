@@ -328,7 +328,10 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	
 		    	String sliceName = slice.getName();			    
 		    	String unit_id = iSlice.getCompliantUnits().get(0).getConfiguration().getRef();
-		    	String unit_slice_id = iSlice.getCompliantUnits().get(0).getSupersededName();// slice.getName();		
+
+		    	// TODO: ESTÁ ERRADO !! VERIFICAR PARA IRootImpl 
+		    	//String unit_slice_id = iSlice.getCompliantUnits().get(0).getSupersededName();// slice.getName();		
+		    	String unit_slice_id = iSlice.getCompliantUnits().get(0).getName2();// slice.getName();		
 		    	
 		    	HComponent sc =((HComponent)slice.getConfiguration()); 
 		    	String typeName = iSlice.isAbstract() ? sc.getVariableName(c).split("@")[0] :  ((HInterface)slice.getInterface()).getName2(false, varContext);
