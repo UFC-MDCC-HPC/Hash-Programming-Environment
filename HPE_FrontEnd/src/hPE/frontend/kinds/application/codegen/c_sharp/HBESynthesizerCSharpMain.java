@@ -103,7 +103,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
     
     
 	public String toString() {
-		return "C# Language";
+		return "C# Language Class";
 	}
 	
 }

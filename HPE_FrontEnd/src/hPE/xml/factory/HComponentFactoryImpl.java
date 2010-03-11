@@ -123,6 +123,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
@@ -243,6 +245,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			ComponentType component = loadComponentX(uri);
 			return buildComponent(component, uri, isTop);
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+        		    "Error loading component " + uri + " !", 
+        		    "Loading Component Error",
+        		    JOptionPane.ERROR_MESSAGE);
 			throw new HPEInvalidComponentResourceException(e);
 		}
 	}
