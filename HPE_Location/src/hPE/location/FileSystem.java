@@ -23,6 +23,7 @@ public class FileSystem {
 	private static String fetchDirBase() {
 		Properties properties = Parser.getPropertiesFile();
 		String path = properties.getProperty("LOCATION_HOME");
+		path = path + (path.endsWith(String.valueOf(File.separatorChar)) ? "" : File.separatorChar);
 		return path;
 	}
 	
@@ -37,9 +38,11 @@ public class FileSystem {
 	public static void createFile(String pk, String componentName, String version){
 		
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
-		String name = dirName + "/" + CONFIG_HPE;
+		String name = dirName + File.separatorChar + CONFIG_HPE;
 		
 		createDir(dirName);
+		
+		
 		
 		File file = new File(dirBase + name.trim());
 		if (!file.exists()){
@@ -56,7 +59,7 @@ public class FileSystem {
 	public static boolean testFile(String pk, String componentName, String version){
 		
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
-		String name = dirName + "/" + CONFIG_HPE;
+		String name = dirName + File.separatorChar + CONFIG_HPE;
 		
 		File file = new File(dirBase + name.trim());
 		return file.exists();	
@@ -65,7 +68,7 @@ public class FileSystem {
 	public static void deleteFile(String pk, String componentName, String version){		
 	   	    
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
-		String name = dirName + "/" + CONFIG_HPE;
+		String name = dirName + File.separatorChar + CONFIG_HPE;
 
 		File file = new File(dirBase + name.trim());
 		if (file.exists()){
@@ -109,7 +112,7 @@ public class FileSystem {
 	public static String getText(String pk, String componentName, String version){
 		
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
-		String path = dirName + "/" + CONFIG_HPE;
+		String path = dirName + File.separatorChar + CONFIG_HPE;
 
 		String texto="";
 		
@@ -132,7 +135,7 @@ public class FileSystem {
 	public static void setText(String pk, String componentName, String version, String content){
 
 		String dirName = pk.trim() + "." + componentName.trim() + (version != null ? "-" + version : "");
-		String path = dirName + "/" + CONFIG_HPE;
+		String path = dirName + File.separatorChar + CONFIG_HPE;
 
 		System.out.println("PATH = " + dirBase + path);
 		
@@ -147,7 +150,7 @@ public class FileSystem {
 	public static byte[] getDataBinaryFile(String path, String componentName, String version, String fileName) {
 		
 		String dirName = path.trim() + "." + componentName.trim() + (version != null ? "-" + version : "") + "/bin";
-		String name = dirName + "/" + fileName; 
+		String name = dirName + File.separatorChar + fileName; 
 		
 		try {
 	       InputStream is = new FileInputStream(dirBase + name.trim()); 
@@ -165,7 +168,7 @@ public class FileSystem {
 		
 		
 		String dirName = path.trim() + "." + componentName.trim() + (version != null ? "-" + version : "") + "/bin";
-		String name = dirName + "/" + fileName; 
+		String name = dirName + File.separatorChar + fileName; 
 		
 		createDir(dirName);
 		
