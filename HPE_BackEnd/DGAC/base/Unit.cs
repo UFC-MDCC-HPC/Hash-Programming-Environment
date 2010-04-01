@@ -37,7 +37,7 @@ namespace hpe.basic
 
         IDictionary<string, int> ActualParametersTop { get; set; }
 
-        void setActualParameters(IDictionary<string, int> actualParameters, int id_functor_app);
+        void setActualParameters(IDictionary<string, int> actualParameters_new);
 
         void setUpParameters(DGAC.database.Component c);
 

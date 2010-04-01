@@ -179,7 +179,18 @@ public class UnitDAO{
         IList<Unit> us = this.retrieveEnumeration(id_concrete, id_unit);
         
         foreach (Unit u in us) {
-            u.Assembly_string += ", PublicKey=" + publicKey;
+            String s = ", PublicKey=";
+
+            if (u.Assembly_string.IndexOf(s) < 0)
+            {
+                u.Assembly_string += ", PublicKey=" + publicKey;
+            }
+            else
+            {
+                int index = u.Assembly_string.IndexOf(s);
+                u.Assembly_string = u.Assembly_string.Substring(0, index) + s + publicKey;
+            }
+
             this.updatePublicKey(u);
         }
     }

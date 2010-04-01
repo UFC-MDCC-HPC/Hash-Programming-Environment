@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Runtime.Remoting;
-using System.Threading;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
@@ -13,6 +11,7 @@ using DGAC.utils;
 using DGAC.database;
 using System.Data;
 using System.Collections;
+using System.Reflection.Emit;
 
 
 namespace DGAC
@@ -773,7 +772,7 @@ namespace DGAC
                                        Component c,
                                        string id_inner,
                                        string id_interface,
-                                       Type[] typeParams)
+                                       string propertyName, IDictionary<string,int> actualParameters_new)
         {
             //        Connector.openConnection();
 
@@ -782,6 +781,20 @@ namespace DGAC
 
             int id_abstract = c.Id_abstract;
             database.Unit u = LoaderApp.resolveImpl(unit, c.Id_concrete, id_inner, id_interface);
+
+           // InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
+            Component cu = cdao.retrieve(u.Id_concrete);
+
+        /*    IDictionary<string, Interface> theParameters = null;
+            fetchParameters(actualParameters_new, 
+                            cu.Id_functor_app, 
+                            u.Id_interface_abstract, 
+                            idao.retrieve(u.Id_interface_abstract,
+                                          u.Id_interface_interface), 
+                            out theParameters); */
+            Type[] actualParams;
+
+
 
             if (u == null)
             {
@@ -794,12 +807,12 @@ namespace DGAC
 
             Assembly a = Assembly.Load(assembly_string);
 
-            // Type[] tt = a.GetTypes();
-
             string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
             Type t = a.GetType(strType);
 
-            Type closedT = typeParams.Length > 0 ? t.MakeGenericType(typeParams) : t;
+            buildParamTable(propertyName, unit.GetType(), out actualParams);
+
+            Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
 
             hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
@@ -811,32 +824,47 @@ namespace DGAC
             return o;
         }
 
+        private static IDictionary<int, Type> paramTable = new Dictionary<int, Type>();
+
+        private static void buildParamTable(String propertyName, Type myType, out Type[] actualParams)
+        {
+            
+            Type o = myType.BaseType.GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance).PropertyType;
+
+            actualParams = o.GetGenericArguments();
+        }
+
         /* REMARK: The type params MUST be provided externally, because the actual type information is not in the DGAC's database.
          */
+
+        private static bool firstPass = true;
 
         public static hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
                                                   string hash_component_uid,
                                                   string id_inner,
                                                   string id_interface,
-                                                  Type[] typeParams
+                                                  Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
                                                  )
         {
-         //   ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
             int id_abstract = c.Id_abstract;
 
             Console.Write("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface + "..... ");
 
-            hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, typeParams); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
+            InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
+            if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false;}
+
+            IDictionary<string, int> actualParameters_new = null;
+            hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
+
+            Slice slice = sdao.retrieve2(id_abstract,id_inner,id_interface,unit.Id_interface);
+
+            hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, slice.PropertyName, actualParameters_new); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
+            
             // Configure the knowledge of the slices about the topology.
 
-        //    EnumerationSliceDAO esdao = new EnumerationSliceDAO();
-         //   EnumerationInnerDAO eidao = new EnumerationInnerDAO();
-
             IDictionary<string, int> eix_inner = new Dictionary<string, int>();
-
-       //     EnumeratorDAO edao = new EnumeratorDAO();
 
             // Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
 
@@ -913,8 +941,6 @@ namespace DGAC
 
             // Now, list all units of the inner component.
 
-      //      InnerComponentDAO icdao = new InnerComponentDAO();
-            InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
             int id_functor_app_inner_actual = ic.Id_functor_app;
             int id_abstract_inner_original = ic.Id_abstract_inner;
@@ -1151,16 +1177,192 @@ namespace DGAC
             o.EnumRanks = enumRanksArr;
             o.Units = unitsRanks;
 
-            o.setActualParameters(unit.ActualParameters, ic.Id_functor_app);
             o.ActualParametersTop = unit.ActualParametersTop;
 
             Console.WriteLine("END");
 
+            o.setActualParameters(actualParameters_new);
             o.createSlices();
 
             slices.Add(o);
 
             return o;
+        }
+
+        private static IDictionary<string, Type> checked_types = new Dictionary<string, Type>();
+
+      
+        private static void fetchParameters(IDictionary<string, int> actualParameters,
+                                            int id_functor_app_owner,
+                                            int id_abstract, 
+                                            Interface the_interface, 
+                                            out IDictionary<string, Interface> parameters)
+        {
+            parameters = new Dictionary<string, Interface>();
+
+            foreach (Slice i in sdao.listByInterface(id_abstract, the_interface.Id_interface))
+            {
+                InnerComponent ic = icdao.retrieve(i.Id_abstract, i.Id_inner);
+
+                int id_abstract_inner = ic.Id_abstract_inner;
+
+                int id_functor_app_inner = ic.Id_functor_app;
+                string parameter_top = ic.Parameter_top;
+                string id_interface_slice = i.Id_interface_slice;
+
+                Interface iSlice = idao.retrieve(id_abstract_inner, id_interface_slice);
+
+                if (parameter_top != null && !parameter_top.Equals(""))
+                {
+                    bool achei = true;
+                    if (!actualParameters.TryGetValue(parameter_top, out id_functor_app_inner))                    
+                        if (!actualParameters.TryGetValue(parameter_top + "#" + id_functor_app_owner, out id_functor_app_inner))
+                        {
+                            achei = false;
+                        }
+
+                    if (achei)
+                    {
+                        iSlice = fetchActualInterface(actualParameters, id_functor_app_inner, parameter_top, i.Id_interface_slice);
+                        id_interface_slice = iSlice.Id_interface;
+
+                        if (!parameters.ContainsKey(parameter_top))
+                        {
+                            parameters.Add(parameter_top, iSlice);
+                        }
+
+                        AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_inner);
+                        id_abstract_inner = acfa.Id_abstract;
+                    }
+                }
+
+                IDictionary<string, Interface> sliceParameters = null;
+                IDictionary<string, int> actualParameters_new = null;
+                hpe.basic.Unit.determineActualParameters(actualParameters, ic.Id_functor_app, out actualParameters_new);
+                fetchParameters(actualParameters_new, id_functor_app_inner, id_abstract_inner, iSlice, out sliceParameters);
+
+                foreach (KeyValuePair<string, Interface> kvp in sliceParameters)
+                {
+                    string parid = kvp.Key;
+                    string id_interface_bound = kvp.Value.Id_interface;
+
+                    SupplyParameter sp = spdao.retrieve(parid, /*id_functor_app_inner*/ ic.Id_functor_app );
+                    
+                    if (sp is SupplyParameterParameter)
+                    {
+                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                        int id_functor_app_inner_;
+                        if (!actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_inner_))
+                            if (!actualParameters.TryGetValue(spp.Id_parameter_actual + "#" + id_functor_app_inner, out id_functor_app_inner_))
+                            {
+                            }
+                        if (id_functor_app_inner_ > 0 && !parameters.ContainsKey(spp.Id_parameter_actual)) 
+                             parameters.Add(spp.Id_parameter_actual, fetchActualInterface(actualParameters, id_functor_app_inner_, spp.Id_parameter_actual, id_interface_bound));
+                    }
+                }
+            }
+        }
+
+        private static Interface fetchActualInterface(IDictionary<string, int> actualParameters, 
+                                                      int id_functor_app_actual, 
+                                                      string parid, 
+                                                      string id_interface)
+        {
+/*            bool ok = true;
+            int id_functor_app_actual;
+            if (!actualParameters.TryGetValue(parid, out id_functor_app_actual))
+            {
+                if (!actualParameters.TryGetValue(parid + "#" + id_functor_app_inner, out id_functor_app_actual))
+                {
+                    ok = false;
+                }
+            }
+            */
+            if (true)
+            {
+                //                Interface i = null;
+                //                string id_interface_ = id_interface;
+                //                string id_interface_return = null;
+
+                IDictionary<string, Interface> mybot = new Dictionary<string, Interface>();
+                IDictionary<string, Interface> mysup = new Dictionary<string, Interface>();
+                IDictionary<string, int> myacf = new Dictionary<string, int>();
+                Stack<string> inames = new Stack<string>();
+                AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_actual);
+                AbstractComponentFunctor acf = acfdao.retrieve(acfa.Id_abstract);
+                foreach (Interface i in idao.list(acfa.Id_abstract))
+                {
+                    Interface iSuper = null;
+                    if (acf.Id_functor_app_supertype > 0)
+                    {
+                        AbstractComponentFunctorApplication acfa2 = acfadao.retrieve(acf.Id_functor_app_supertype);
+                        iSuper = idao.retrieve(acfa2.Id_abstract, i.Id_interface_super);
+                    }
+                    inames.Push(i.Id_interface);
+                    mybot.Add(i.Id_interface, i);
+                    mysup.Add(i.Id_interface, iSuper);
+                    myacf.Add(i.Id_interface, i.Id_abstract);
+                }
+
+                while (inames.Count > 0)
+                {
+                    string id_interface_ = inames.Pop();
+                    Interface interface_top = null;
+                    int id_abstract;
+
+                    mybot.TryGetValue(id_interface_, out interface_top);
+                    myacf.TryGetValue(id_interface_, out id_abstract);
+
+                    if (id_interface_.Equals(id_interface))
+                    {
+                        return interface_top;
+                    }
+                    else
+                    {
+                        AbstractComponentFunctor acf2 = acfdao.retrieve(id_abstract); 
+                        if (acf2.Id_functor_app_supertype > 0)
+                        {
+                            Interface iSuper = null;
+                            if (mysup.TryGetValue(id_interface_, out iSuper))
+                            {
+                                if (iSuper != null)
+                                {
+                                    Interface iSuperSuper = null;
+                                    AbstractComponentFunctorApplication acfa3 = acfadao.retrieve(acf2.Id_functor_app_supertype);
+                                    AbstractComponentFunctor acf3 = acfdao.retrieve(acfa3.Id_abstract);
+                                    if (acf3.Id_functor_app_supertype > 0)
+                                    {
+                                        AbstractComponentFunctorApplication acfa4 = acfadao.retrieve(acf3.Id_functor_app_supertype);
+                                        iSuperSuper = idao.retrieve(acfa4.Id_abstract, iSuper.Id_interface_super);
+                                    }
+                                    
+                                    inames.Push(iSuper.Id_interface);
+                                    mybot.Add(iSuper.Id_interface, interface_top);
+                                    mysup.Add(iSuper.Id_interface, iSuperSuper);
+                                    myacf.Add(iSuper.Id_interface, iSuper.Id_abstract);
+                                }
+                                else
+                                {
+                                    // top of the interface reached ... 
+                                }
+                            }
+                            else
+                            {
+                                Console.Error.WriteLine("(fetchActualInterface) id_functor_app_actual " + id_functor_app_actual + " not found in acfadao.");
+                                throw new Exception("(fetchActualInterface) id_functor_app_actual " + id_functor_app_actual + " not found in acfadao.");
+                            }
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                Console.Error.WriteLine("(fetchActualInterface) parameter " + parid + " not found in actualParameters.");
+                throw new Exception("(fetchActualInterface) parameter " + parid + " not found in actualParameters.");
+            }
+
+            return null;
         }
 
         private static IList<hpe.basic.IUnit> slices = null;
@@ -1547,6 +1749,7 @@ namespace DGAC
         private static AbstractComponentFunctorParameterDAO acfpdao_ = null;
         private static InterfaceDAO idao_ = null;
         private static UnitDAO udao_ = null;
+        private static InterfaceParameterDAO ipdao_ = null;
         private static SupplyParameterDAO spdao_ = null;
         private static SupplyParameterComponentDAO spcdao_ = null;
         private static SupplyParameterParameterDAO sppdao_ = null;
@@ -1570,6 +1773,7 @@ namespace DGAC
         public static AbstractComponentFunctorApplicationDAO acfadao { get { if (acfadao_ == null) acfadao_ = new AbstractComponentFunctorApplicationDAO(); return acfadao_; } }
         public static AbstractComponentFunctorParameterDAO acfpdao { get { if (acfpdao_ == null) acfpdao_ = new AbstractComponentFunctorParameterDAO(); return acfpdao_; } }
         public static InterfaceDAO idao { get { if (idao_ == null) idao_ = new InterfaceDAO(); return idao_; } }
+        public static InterfaceParameterDAO ipdao { get { if (ipdao_ == null) ipdao_ = new InterfaceParameterDAO(); return ipdao_; } }
         public static UnitDAO udao { get { if (udao_ == null) udao_ = new UnitDAO(); return udao_; } }
         public static SupplyParameterDAO spdao { get { if (spdao_ == null) spdao_ = new SupplyParameterDAO(); return spdao_; } }
         public static SupplyParameterComponentDAO spcdao { get { if (spcdao_ == null) spcdao_ = new SupplyParameterComponentDAO(); return spcdao_; } }

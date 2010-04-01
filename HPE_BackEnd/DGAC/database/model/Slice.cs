@@ -11,6 +11,7 @@ public class Slice {
     private int id_abstract;
     private string id_interface;
     private string id_interface_slice;
+    private string property_name;
     private int id_split_replica;
     private string id_inner;
     bool transitive;
@@ -33,12 +34,18 @@ public class Slice {
         set {id_interface = value;}
     }
 
-  /*  public int Id_abstract_slice
+    public string PropertyName
     {
-        get { return id_abstract_slice; }
-        set { id_abstract_slice = value; }
+        get { return property_name; }
+        set { property_name = value; }
     }
-    */
+    
+    /*  public int Id_abstract_slice
+      {
+          get { return id_abstract_slice; }
+          set { id_abstract_slice = value; }
+      }
+      */
 
     public string Id_interface_slice
     {

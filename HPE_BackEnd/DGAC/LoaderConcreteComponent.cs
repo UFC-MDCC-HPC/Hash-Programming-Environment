@@ -635,6 +635,7 @@ namespace HPE_DGAC_LoadDB
 
                 units.Add(uu.Id_unit, uu);
 
+                int order = 0;
                 foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file) 
                 {
                      SourceCode ss = new SourceCode();
@@ -644,6 +645,7 @@ namespace HPE_DGAC_LoadDB
                      ss.Contents = sft.contents;
                      ss.File_type= sft.fileType.Equals("exe") ? "exe" : "dll";
                      ss.File_name = sft.name ;
+                     ss.Order = order++;
                      DGAC.BackEnd.scdao.insert(ss);
 
                      int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +

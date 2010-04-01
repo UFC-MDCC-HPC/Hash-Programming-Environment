@@ -144,7 +144,20 @@ public class InterfaceDAO{
     {
         Interface i = this.retrieve(id_abstract,id_interface);
 
-        i.Assembly_string += ", PublicKey=" + publicKey;
+        String s = ", PublicKey=";
+
+        if (i.Assembly_string.IndexOf(s) < 0)
+        {
+            i.Assembly_string += ", PublicKey=" + publicKey;
+        }
+        else
+        {
+            int index =  i.Assembly_string.IndexOf(s);
+            i.Assembly_string = i.Assembly_string.Substring(0, index) + s + publicKey;
+        }
+
+        
+
         this.updatePublicKey(i);
 
     }

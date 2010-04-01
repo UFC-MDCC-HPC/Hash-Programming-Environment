@@ -716,6 +716,23 @@ namespace HPE_DGAC_LoadDB
                     i.Assembly_string = iRef + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
                     i.Order = ++count;
 
+                    if (ui.parameter != null)
+                    {
+                        foreach (InterfaceParameterType ipx in ui.parameter)
+                        {
+                            InterfaceParameter ip = new InterfaceParameter();
+                            ip.Id_abstract = i.Id_abstract;
+                            ip.Id_interface = i.Id_interface;
+                            ip.ParId = ipx.parid;
+                            ip.VarId = ipx.varid;
+                            ip.Id_interface_parameter = ipx.iname;
+                            ip.Id_unit_parameter = ipx.uname;
+                            ip.ParOrder = ipx.order;
+                            DGAC.BackEnd.ipdao.insert(ip);
+                        }
+                    }
+
+                    int order = 0;
                     foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
                     {
                         SourceCode ss = new SourceCode();
@@ -725,6 +742,8 @@ namespace HPE_DGAC_LoadDB
                         ss.Contents = sft.contents;
                         ss.File_name = sft.name;
                         ss.File_type = "dll";
+                        ss.Order = order++; 
+                        
                         DGAC.BackEnd.scdao.insert(ss);
                         int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
                                    (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
@@ -799,6 +818,12 @@ namespace HPE_DGAC_LoadDB
                             s.Id_inner = innerC.localRef;
                             s.Id_split_replica = uS.replica;
                             s.Transitive = mP.Contains(sname);
+
+                            string property_name = uS.sliceName;
+                            string fstletter = property_name.Substring(0, 1);
+                            property_name = fstletter.ToUpper() + property_name.Substring(1, property_name.Length - 1);
+
+                            s.PropertyName = property_name;
 
                             if (!s.Transitive && uS.port != null)
                             {

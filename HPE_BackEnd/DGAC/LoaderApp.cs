@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using DGAC.database;
 using DGAC.utils;
 using hpe.basic;
+using System.Threading;
 
 namespace DGAC.database
 {
@@ -65,7 +66,7 @@ namespace DGAC.database
 
 	//receives id_concrete and id inner wich belongs for that inner
 	//returns a impl of the inner
-	//return -1 if the impl doesnt exist
+	//return -1 if the impl doesnt exist    
 
 	public static Unit resolveImpl(IUnit unit, int id_concrete, string id_inner, string id_interface){
 
@@ -166,7 +167,8 @@ namespace DGAC.database
                 // AT THIS POINT, the FUNCTOR OF THE INNER COMPONENT, WITH PARAMETERS SUPPLIED, 
 				//    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure getHashComponent
 				//    descrito no artigo.				
-				
+
+               
 				Component componentRef = Resolution.findHashComponent(unit,acfaRef);
                 
                 if (componentRef==null) {
@@ -272,17 +274,19 @@ namespace DGAC.database
                 info.cuid = component.Hash_component_UID;
                 info.library_path = component.Library_path;
                 info.id = component.Id_concrete;
-                if (sc.File_type.Equals("exe")) {
-                   string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
-                   libRefs.CopyTo(referencesArray_,0);
-                   referencesArrayAll.CopyTo(referencesArray_,libRefs.Count);
+
+                string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
+                libRefs.CopyTo(referencesArray_, 0);
+                referencesArrayAll.CopyTo(referencesArray_, libRefs.Count);
+                info.references = referencesArray_;
+
+                if (sc.File_type.Equals("exe"))
+                {
                    info.output_type = Constants.EXE_OUT;
-                   info.references = referencesArray_;
                 }
                 else {
                     libRefs.Add(buildDllName(component.Library_path, info.moduleName.Split('.')[0]));
                     info.output_type = Constants.DLL_OUT;
-                    info.references = referencesArrayAll;
                 }
 
                 referencesSet.Add(info);
@@ -324,7 +328,8 @@ namespace DGAC.database
 
             string[] referencesArray = new string[stringCompilationSet.Count];
             stringCompilationSet.CopyTo(referencesArray, 0);
-
+            
+            IList<string> libRefs = new List<string>();
             IList<SourceCode> scList = DGAC.BackEnd.scdao.list('i', i.Id_abstract, i.Id_interface);
             foreach (SourceCode sc in scList)
             {
@@ -333,8 +338,14 @@ namespace DGAC.database
                 referencesArray.CopyTo(referencesArrayAll,0);
                 sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
 
+
                 InfoCompile info = new InfoCompile();
-                info.references = referencesArrayAll;
+
+                string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
+                libRefs.CopyTo(referencesArray_, 0);
+                referencesArrayAll.CopyTo(referencesArray_, libRefs.Count);
+                info.references = referencesArray_;
+                
                 AbstractComponentFunctor acf1 = DGAC.BackEnd.acfdao.retrieve(id_abstract);
                 info.moduleName = sc.File_name;//  buildDllName(i.Assembly_string);
                 info.unitId = i.Id_interface;
@@ -344,6 +355,7 @@ namespace DGAC.database
                 info.id = acf1.Id_abstract;
                 info.output_type = sc.File_type.Equals("exe") ? Constants.EXE_OUT : Constants.DLL_OUT;
                 referencesSet.Add(info);
+                libRefs.Add(buildDllName(acf1.Library_path, info.moduleName.Split('.')[0]));
             }
 
 

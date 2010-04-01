@@ -159,11 +159,14 @@ namespace hpe.basic
                 return arrRanks;
             }
         }
-
-        public void setActualParameters(IDictionary<string, int> actualParameters, int id_functor_app)
+        public void setActualParameters(IDictionary<string, int> actualParameters_new)
         {
-            IDictionary<string, int> p = new Dictionary<string,int>();
+            ActualParameters = actualParameters_new;
+        }
 
+        public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
+        {
+            actualParameters_new = new Dictionary<string,int>();;
             SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spcList = spdao.list(id_functor_app);
 
@@ -171,7 +174,7 @@ namespace hpe.basic
             {
                 if (kkk.Key.Contains("#"))
                 {
-                    ActualParameters.Add(kkk);
+                    actualParameters_new.Add(kkk);
                 }
             }
 
@@ -184,7 +187,7 @@ namespace hpe.basic
                     bool achou = actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
                     if (achou)
                     {
-                        ActualParameters.Add(spp.Id_parameter, id_functor_app_actual);
+                        actualParameters_new.Add(spp.Id_parameter, id_functor_app_actual);
                     }
                     else
                     {
@@ -198,13 +201,13 @@ namespace hpe.basic
                 else if (sp is SupplyParameterComponent)
                 {
                     SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                    ActualParameters.Add(spc.Id_parameter, spc.Id_functor_app_actual);
-                    traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, ActualParameters);
+                    actualParameters_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+                    traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
                 }
             }
         }
 
-        private void traverseParameters(int id_functor_app_top, 
+        private static void traverseParameters(int id_functor_app_top, 
                                         int id_functor_app, 
                                         IDictionary<string, int> actualParametersTop, 
                                         IDictionary<string, int> actualParameters)
@@ -219,7 +222,9 @@ namespace hpe.basic
                     SupplyParameterParameter spp = (SupplyParameterParameter)sp;
                     int id_functor_app_actual;
                     bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
-                    actualParameters.Add(spp.Id_parameter + "#" + id_functor_app_top, id_functor_app_actual);
+                    string key = spp.Id_parameter + "#" + id_functor_app_top;
+                    if (!actualParameters.ContainsKey(key)) 
+                       actualParameters.Add(key, id_functor_app_actual);
                 }
                 else if (sp is SupplyParameterComponent)
                 {
@@ -274,7 +279,7 @@ namespace hpe.basic
             u.V = id_enumerator;
         }
 
-
+   
 
 
     }

@@ -51,6 +51,14 @@ namespace DGAC.database
           set { file_type = value; }
         }
 
+        private int order;
+
+        public int Order
+        {
+            get { return order; }
+            set { order = value; }
+        }
+
         private IList<string> externalReferences = null;
 
         public IList<string> ExternalReferences

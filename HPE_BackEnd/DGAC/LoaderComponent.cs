@@ -22,8 +22,6 @@ namespace HPE_DGAC_LoadDB
         protected IList<EnumeratorType> enumerator = null;
         protected IList<FusionsOfReplicatorsType> fusionOfReplicators = null;
 
-
-
         public HashComponent loadComponent(ComponentType c)
         {
             //ComponentHeaderType ch = c.header;

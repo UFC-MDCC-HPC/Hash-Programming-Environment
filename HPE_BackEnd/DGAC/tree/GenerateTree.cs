@@ -19,6 +19,8 @@ namespace DGAC.database
 
 		public static TreeNode generate(IUnit unit, AbstractComponentFunctorApplication acfaRef){
 
+            Console.WriteLine("TESTE");
+
             mmm = new Dictionary<String, String>();
 
 
@@ -30,6 +32,7 @@ namespace DGAC.database
 			TreeNode root = new TreeNode(lll,null);
 			ArrayList queue = new ArrayList();
 			queue.Add(root);
+
             
 		//	AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
 		//	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
@@ -51,18 +54,22 @@ namespace DGAC.database
                 foreach (SupplyParameter sp in parameterList)
 				{
                     string parameter_id = sp.Id_parameter;
-
-                    AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
-
+ 
                     AbstractComponentFunctorApplication acfaTop = null;
                     if (id_abstract_top != id_abstract)
                     {
                         AbstractComponentFunctorParameter acfpTop = DGAC.BackEnd.acfpdao.retrieve(id_abstract_top, parameter_id);
-                        acfaTop = DGAC.BackEnd.acfadao.retrieve(acfpTop.Bounds_of);
+                        acfaTop = acfpTop == null ? null : DGAC.BackEnd.acfadao.retrieve(acfpTop.Bounds_of);
+                        if (acfaTop == null)
+                        {
+                            AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
+                            acfaTop = acfp == null ? null : DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
+                        }
                     }
                     else
                     {
-                        acfaTop = DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);                        
+                        AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
+                        acfaTop = acfp == null ? null : DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                     }
 
 

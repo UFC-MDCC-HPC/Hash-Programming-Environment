@@ -86,8 +86,7 @@ namespace DGAC.database
             get { return this.functor_app != null ? this.functor_app[this.functor_app.Count-1] : null; }
         }
 
-        public IList<TreeNode> Children
-        
+        public IList<TreeNode> Children        
 {
 			get{return this.childList;}
 		}
