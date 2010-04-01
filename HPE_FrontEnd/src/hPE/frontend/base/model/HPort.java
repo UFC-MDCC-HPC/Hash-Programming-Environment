@@ -35,7 +35,6 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 	public void addInterfaceSlice(HInterfaceSlice sowner, HInterfaceSlice s) {
 		
 		if (sowner == null || sowner.hasSlice(s)) {
-
 			if (ss.containsKey(s)) {
 				List<HInterfaceSlice> l = ss.get(s);
 				if (sowner != null) 
@@ -56,7 +55,7 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 		for (Entry<HInterfaceSlice, List<HInterfaceSlice>> ppp : ss.entrySet()) {
 			HInterfaceSlice s = ppp.getKey();
 			for (HInterfaceSlice s2 : ppp.getValue()) {
-				String  str = s2.getName() + "." + s.getOriginalName2();
+				String  str = s2.getName() + "." + s.getDefaultName();
 				m.put(str, s);
 			}
 		}
@@ -218,12 +217,12 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 		this.inherited = inherited;
 	}
 
-	public String getOriginalName() {
+	public String getDefaultName() {
 		
 		return this.getMainSlice().getDefaultName();
 	}
 	
-	public String getOriginalNameOf(HInterfaceSlice sOwner) {
+	public String getDefaultNameOf(HInterfaceSlice sOwner) {
 		
 		for (Entry<HInterfaceSlice, List<HInterfaceSlice>> e : this.ss.entrySet()) {
 		    HInterfaceSlice es = e.getKey();
@@ -238,20 +237,6 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 		return null;
 	}
 	
-	public String getOriginalNameOf2(HInterfaceSlice sOwner) {
-		
-		for (Entry<HInterfaceSlice, List<HInterfaceSlice>> e : this.ss.entrySet()) {
-		    HInterfaceSlice es = e.getKey();
-			List<HInterfaceSlice> eos = e.getValue();
-			for (HInterfaceSlice eo : eos) {
-			    if (eo.getName().equals(sOwner.getName())) {
-			    	return es.getOriginalName2();
-			    }
-			}
-		}
-		
-		return this.getOriginalName();
-	}
 }
 
 

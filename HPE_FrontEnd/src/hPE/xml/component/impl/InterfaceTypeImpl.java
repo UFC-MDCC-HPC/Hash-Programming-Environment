@@ -8,6 +8,8 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ActionType;
 import hPE.xml.component.ComponentPackage;
+import hPE.xml.component.InterfaceParameterType;
+import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.InterfaceType;
@@ -44,6 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getPort <em>Port</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getExternalReferences <em>External References</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getNArgs <em>NArgs</em>}</li>
  * </ul>
@@ -111,6 +114,16 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * @ordered
 	 */
 	protected EList<String> externalReferences;
+
+	/**
+	 * The cached value of the '{@link #getParameter() <em>Parameter</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameter()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<InterfaceParameterType> parameter;
 
 	/**
 	 * The default value of the '{@link #getIRef() <em>IRef</em>}' attribute.
@@ -319,6 +332,18 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<InterfaceParameterType> getParameter() {
+		if (parameter == null) {
+			parameter = new EObjectContainmentEList<InterfaceParameterType>(InterfaceParameterType.class, this, ComponentPackage.INTERFACE_TYPE__PARAMETER);
+		}
+		return parameter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getIRef() {
 		return iRef;
 	}
@@ -399,6 +424,8 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return basicSetVisualDescription(null, msgs);
 			case ComponentPackage.INTERFACE_TYPE__PORT:
 				return ((InternalEList<?>)getPort()).basicRemove(otherEnd, msgs);
+			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
+				return ((InternalEList<?>)getParameter()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -423,6 +450,8 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return getPort();
 			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
 				return getExternalReferences();
+			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
+				return getParameter();
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
@@ -462,6 +491,10 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				getExternalReferences().clear();
 				getExternalReferences().addAll((Collection<? extends String>)newValue);
 				return;
+			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
+				getParameter().clear();
+				getParameter().addAll((Collection<? extends InterfaceParameterType>)newValue);
+				return;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				setIRef((String)newValue);
 				return;
@@ -498,6 +531,9 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
 				getExternalReferences().clear();
 				return;
+			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
+				getParameter().clear();
+				return;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				setIRef(IREF_EDEFAULT);
 				return;
@@ -528,6 +564,8 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return port != null && !port.isEmpty();
 			case ComponentPackage.INTERFACE_TYPE__EXTERNAL_REFERENCES:
 				return externalReferences != null && !externalReferences.isEmpty();
+			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
+				return parameter != null && !parameter.isEmpty();
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return IREF_EDEFAULT == null ? iRef != null : !IREF_EDEFAULT.equals(iRef);
 			case ComponentPackage.INTERFACE_TYPE__NARGS:

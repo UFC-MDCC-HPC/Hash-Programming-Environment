@@ -194,17 +194,13 @@ public class HInterfaceSig implements Serializable, IHasColor  {
     	List<HPort> ports = this.getPorts();
     	for (HPort port : ports) {
     		savedPos.put(port.getName(), port.getBounds());
-    	}
-    	
+    	}    	
     	
     	// Remember updated port names
     	
     	List<HPort> old_ports = this.ports;
     	
 		this.ports = new ArrayList<HPort>();
-		
-		
-		
     	Map<HInterfaceSlice,List<HPort>> ports2 = buildPortTable(ports1);
     	
     	for (HInterfaceSlice s : this.getSlices()) {
@@ -272,7 +268,7 @@ public class HInterfaceSig implements Serializable, IHasColor  {
 				this.addPort(_port);
 				for (HInterfaceSlice slice_ : ((List<HInterfaceSlice>)((ArrayList<HInterfaceSlice>)_port.getInterfaceSlices()).clone())) {
 					if (slice_ == null) slice_ = s;
-					slice_.resetDefaultName();
+					//slice_.resetDefaultName();
 					_port.addInterfaceSlice(s,slice_);
 					slice_.setMyPort(_port);
 					_port.removeNull();
@@ -284,6 +280,7 @@ public class HInterfaceSig implements Serializable, IHasColor  {
 	private void buildSignature(IHUnit u, Map<HUnitSlice,List<HPort>> ports) {
 		
 		this.ports = new ArrayList<HPort>();
+
 
 		for (HUnitSlice usa : u.getSlices()) {
 			
@@ -299,6 +296,14 @@ public class HInterfaceSig implements Serializable, IHasColor  {
 		}
 		
 		updatePorts(ports);
+		
+		for (Entry<HUnitSlice,List<HPort>> s : ports.entrySet()) {
+			for (HPort port : s.getValue()) {
+				for (HInterfaceSlice slice : port.getInterfaceSlices()) {
+					slice.resetDefaultName();
+				}
+			}
+		}
 		
 		
 	}

@@ -54,11 +54,11 @@ public class SupersedeCommand extends Command {
         
         if (!cond2) {
         	
-       	  JOptionPane.showMessageDialog(null,
-    			  "The fused inner components have different names ("+source.getName2() + " e " +target.getName2()+ "). " +
-    			  "\nRename the inner components to make possible this operation.", 
-    			  "Fusion Error", 
-    			  JOptionPane.ERROR_MESSAGE);
+       	  //JOptionPane.showMessageDialog(null,
+    		//	  "The fused inner components have different names ("+source.getName2() + " e " +target.getName2()+ "). " +
+    	//		  "\nRename the inner components to make possible this operation.", 
+    		//	  "Fusion Error", 
+    		//	  JOptionPane.ERROR_MESSAGE);
         } else if (!cond3) {
         	String message = null;
         	if (source.getSupplied() == null && target.getSupplied() == null) {

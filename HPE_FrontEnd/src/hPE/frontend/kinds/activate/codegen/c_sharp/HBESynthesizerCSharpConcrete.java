@@ -22,10 +22,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-
-
-
-
 public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sharp.HBESynthesizerCSharpConcrete {
 
 	public HBESynthesizerCSharpConcrete() {
@@ -63,16 +59,18 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
 		this.setIsSubclass(i, versionID);
 		boolean subClass = super.getIsSubclass();
 		if (!subClass) {
-			String programText = "";
 			
+        	// activate method signature (base class)						
+			String baseActivateMethod = "abstract public void " + ((HActivateInterface)i).getActivateMethodName() + "(); \n\n";
+    		super.addBaseDeclaration(baseActivateMethod);
+    		
         	// activate method signature
-			programText += "public void " + ((HActivateInterface)i).getActivateMethodName() + "() { \n\n";			
+			String userActivateMethod = "public override void " + ((HActivateInterface)i).getActivateMethodName() + "() { \n";			
 	        HBEProcedure procedure = p2p.getMainProcedure(); 		
 		    HBECommandBlock block = procedure.getMainBlock();		    
-		    programText += translateBlockToC(1,block);	
-			programText += "\n} // end activate method \n"; // end activate method
-		    
-    		super.addMethod(programText);
+		    userActivateMethod += translateBlockToC(1,block);	
+		    userActivateMethod += "\n} // end activate method \n"; // end activate method
+    		super.addUserDeclaration(userActivateMethod);
 		}
 		
         return super.synthesize(i,versionID);

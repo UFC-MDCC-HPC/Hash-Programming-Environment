@@ -307,6 +307,12 @@ public class ComponentSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentPackage.INTERFACE_PARAMETER_TYPE: {
+				InterfaceParameterType interfaceParameterType = (InterfaceParameterType)theEObject;
+				T result = caseInterfaceParameterType(interfaceParameterType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ComponentPackage.INTERFACE_PORT_TYPE: {
 				InterfacePortType interfacePortType = (InterfacePortType)theEObject;
 				T result = caseInterfacePortType(interfacePortType);
@@ -957,6 +963,21 @@ public class ComponentSwitch<T> {
 	 * @generated
 	 */
 	public T caseInnerRenamingType(InnerRenamingType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Interface Parameter Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Interface Parameter Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInterfaceParameterType(InterfaceParameterType object) {
 		return null;
 	}
 

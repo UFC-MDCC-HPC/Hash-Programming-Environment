@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 
 
@@ -68,13 +70,149 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 
 	public HBESourceVersionCSharp synthesize(HInterface i, String versionID) {
                 
+        this.setIsSubclass(i, versionID);        
+
+        HBESourceCSharpClassDefinition baseInterfaceDef = this.synthesizeBaseInterface(i, versionID);
+        HBESourceCSharpClassDefinition userInterfaceDef = this.synthesizeUserInterface(i, versionID);
+		        
         HBESourceVersion<HBEAbstractFile> superVersion = i.getSourceVersion(versionID);
         
-        List<String> varContext = new ArrayList<String>();
+		HBESourceVersionCSharp version = createNewSourceVersion();
+		version.setBaseSource(baseInterfaceDef);
+		version.setUserSource(userInterfaceDef);
+		version.setVersionID(versionID);
 
+		if (subclass) 
+		   i.replaceSourceVersion(superVersion,version);		   
+		else
+		   i.addSourceVersion(version);
+	    
+		return version;
+		
+	    
+	}
+	
+	private HBESourceCSharpClassDefinition synthesizeUserInterface(HInterface i, String versionID) {
+		
+		String programText = "";
 		List<String> dependencies = new ArrayList<String>();
+        List<String> varContext = new ArrayList<String>();
+	    
+        String programTextVarBounds = "";
+        List<HInterface> paramBounds = new ArrayList<HInterface>();
+        List<String> paramBoundsName = new ArrayList<String>();
+                
+ 		for (Triple<String,HInterface,String> p : i.getParameters()) {
+ 			String varName = p.fst();
+ 			if (!varContext.contains(varName)) {
+	 			HInterface i1 = p.snd();
+	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
+	 			if (c.isParameter() && c.getSupplied() == null) {
+	 			   List<HInterface> bounds = new ArrayList<HInterface>();
+	 			   HInterface bound = p.snd();
+	 			   bounds.add(bound);
+	 			   traverseParams(bound,bounds);
+	 			   for (HInterface oneBound : bounds) {
+	 				  if (!paramBoundsName.contains(oneBound.getPrimName())) {
+	 					  paramBoundsName.add(oneBound.getPrimName());
+	 					  paramBounds.add(oneBound);
+	 				  }
+	 			   }
+	 				
+	               programTextVarBounds += "where " + varName + ":" + bound.getName2(false,varContext) + "\n";
+	 			}
+	 			varContext.add(varName);
+ 			}
+ 		} 
         
-        this.setIsSubclass(i, versionID);        
+        fillPortSlices(i,varContext);
+        
+		String procName = i.getName(false,false);
+		
+		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
+		String componentName = i.getConfiguration().getComponentName();
+		
+
+		programText += "using hpe.kinds;\n";
+
+		// GET REFERENCES - Begin ...
+		
+ 		List<String> usings = new ArrayList<String>();
+ 		List<String> refs = new ArrayList<String>();
+				
+		for (HInterface b : paramBounds) {
+			HComponent cb = (HComponent) b.getConfiguration();
+			String useStr = cb.getPackagePath() + "." + cb.getComponentName();
+			if (!usings.contains(useStr)) {
+				usings.add(useStr);
+			    programText += "using " + cb.getPackagePath().toString() + "." + cb.getComponentName() + ";\n";
+			}
+			String depStr = buildDependencyName(cb.getPackagePath().toString(), cb.getComponentName(), b.getPrimName());
+			if (!refs.contains(depStr))
+			{
+				refs.add(depStr);
+				dependencies.add(depStr);
+			}
+		}
+		
+		String primInheritedName = procName != null ? "Base" + procName.split("<")[0] : null;
+		
+		if (primInheritedName != null) {
+	        String pathD = "%WORKSPACE" + Path.SEPARATOR + buildDependencyName(packageName, componentName, primInheritedName);         		
+	        dependencies.add(pathD);
+		}
+		
+		String inheritedName2 = null;
+		String primInheritedName2 = i.getInheritedName() != null ? i.getInheritedName().split("<")[0] : null;
+		
+		if (primInheritedName2 != null) {
+			inheritedName2 = procName.replaceFirst(i.getPrimName(), primInheritedName2); 
+			HComponent cBase = ((HComponent) i.getConfiguration()).getSuperType();
+			String packageNameExtends = cBase.getPackagePath().toString();
+			String componentNameExtends = cBase.getComponentName();			
+			
+			programText += "using " + packageNameExtends + "." + componentNameExtends + ";\n";
+		    dependencies.add(buildDependencyName(packageNameExtends, componentNameExtends, primInheritedName2));
+		}
+		
+		
+		// GET REFERENCES - ... End 
+		
+		programText += "\n";	
+		
+ 		programText = programText += "namespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
+
+		programText += "public interface " + procName + " : " + "Base" + procName + (inheritedName2!=null ? ", " + inheritedName2 : "" ) + "\n";  // begin class
+
+ 		programText += programTextVarBounds;
+ 		
+ 		programText += "{\n\n";
+ 								
+       // for (String methodCode : this.getMethodSignatures()) {
+       // 	programText += methodCode;
+       // }        
+        
+	    programText += "\n} // end main interface \n"; // end main class	
+
+		programText += "\n} // end namespace \n"; // end namespace
+		
+		
+		
+		String l = i.getConfiguration().getLocalLocation();	   
+	    String procFileName = i.getPrimName();		
+		
+		HBESourceCSharpClassDefinition userInterfaceDef = new HBESourceCSharpClassDefinition (procFileName + ".cs", programText, l,versionID, i, "user");
+		userInterfaceDef.setDependencies(dependencies);
+
+		return userInterfaceDef;
+		
+	}
+	
+	private HBESourceCSharpClassDefinition synthesizeBaseInterface(HInterface i, String versionID) {
+		
+        List<String> varContext = new ArrayList<String>();
+		List<String> dependencies = new ArrayList<String>();
+		String programText = "/* AUTOMATICALLY GENERATE CODE */\n\n";
                        
         String programTextVarBounds = "";
         List<HInterface> paramBounds = new ArrayList<HInterface>();
@@ -111,7 +249,6 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
         fillPortSlices(i,varContext);
         
 		String procName = i.getName(false,false);
-		String programText = "";		
 		
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
@@ -181,10 +318,9 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 			HComponent cBase = ((HComponent) i.getConfiguration()).getSuperType();
 			String packageNameExtends = cBase.getPackagePath().toString();
 			String componentNameExtends = cBase.getComponentName();			
-	//		String inheritedName_ = inheritedName.split("<").length > 0 ? inheritedName =  inheritedName.split("<")[0] : inheritedName;
 			
 			programText += "using " + packageNameExtends + "." + componentNameExtends + ";\n";
-		    dependencies.add(buildDependencyName(packageNameExtends, componentNameExtends, primInheritedName));
+		    dependencies.add(buildDependencyName(packageNameExtends, componentNameExtends, "Base" + primInheritedName));
 		}
 		
 		// GET REFERENCES - ... End 
@@ -193,7 +329,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
  		programText = programText += "namespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
 
-		programText += "public interface " + procName + " : " + (inheritedName!=null ? inheritedName + ", " : "" )  + "I" + i.getConfiguration().kindString().replace(" ", "") + "Kind \n";  // begin class
+		programText += "public interface Base" + procName + " : " + (inheritedName!=null ? "Base" + inheritedName + ", " : "" )  + "I" + i.getConfiguration().kindString().replace(" ", "") + "Kind \n";  // begin class
 
  		programText += programTextVarBounds;
  		
@@ -259,23 +395,13 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 	    
 	    String procFileName = i.getPrimName();
 	    
-		HBESourceCSharpClassDefinition sourceCode   = new HBESourceCSharpClassDefinition (procFileName.concat(".cs"), programText,l,versionID,i);
+		HBESourceCSharpClassDefinition sourceCode   = new HBESourceCSharpClassDefinition ("Base" + procFileName.concat(".cs"), programText,l,versionID,i, "base");
 		sourceCode.setDependencies(dependencies);
-		HBESourceVersionCSharp version = createNewSourceVersion();
-		version.setSource(sourceCode);
-		version.setVersionID(versionID);
 
-		if (subclass) 
-		   i.replaceSourceVersion(superVersion,version);		   
-		else
-		   i.addSourceVersion(version);
-	    
-		return version;
+		return sourceCode;
 		
-	    
 	}
 	
-
 	private void traverseParams(HInterface bound, List<HInterface> bounds) {
 		for (Triple<String,HInterface,String> p : bound.getParameters()) {
 			HInterface bound_ = p.snd();

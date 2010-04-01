@@ -39,12 +39,13 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 	
 	private HHasExternalReferences i = null;
 	
-	public HBEAbstractFile(String name, String contents, String rootPath, String versionID, HHasExternalReferences i) {
+	public HBEAbstractFile(String name, String contents, String rootPath, String versionID, HHasExternalReferences i, String srcType) {
 		
 		super();
 		
 		this.i = i;
 		this.fileName = name;
+		this.setSrcType(srcType);
 		this.versionID = versionID;
 		this.contents = contents;
     	this.sPath = rootPath.substring(0,rootPath.lastIndexOf("/")).concat("/src/")/*.concat(this.getFileType()).concat("/")*/.concat(this.getVersionID()).concat("/").concat(this.getFileName());
@@ -54,6 +55,7 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 	}
 	
 	private String fileName;
+	private String srcType;
 	private String sPath;
 	
 	private String contents;
@@ -267,5 +269,13 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
         
     	return new org.eclipse.core.runtime.NullProgressMonitor();
     }
+
+	public void setSrcType(String srcType) {
+		this.srcType = srcType;
+	}
+
+	public String getSrcType() {
+		return srcType;
+	}
 
 }

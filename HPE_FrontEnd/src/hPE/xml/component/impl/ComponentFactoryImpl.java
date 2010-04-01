@@ -95,6 +95,7 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.IMPLEMENTS_TYPE: return createImplementsType();
 			case ComponentPackage.INNER_COMPONENT_TYPE: return createInnerComponentType();
 			case ComponentPackage.INNER_RENAMING_TYPE: return createInnerRenamingType();
+			case ComponentPackage.INTERFACE_PARAMETER_TYPE: return createInterfaceParameterType();
 			case ComponentPackage.INTERFACE_PORT_TYPE: return createInterfacePortType();
 			case ComponentPackage.INTERFACE_REF_TYPE: return createInterfaceRefType();
 			case ComponentPackage.INTERFACE_SLICE_REF_TYPE: return createInterfaceSliceRefType();
@@ -503,6 +504,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public InnerRenamingType createInnerRenamingType() {
 		InnerRenamingTypeImpl innerRenamingType = new InnerRenamingTypeImpl();
 		return innerRenamingType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InterfaceParameterType createInterfaceParameterType() {
+		InterfaceParameterTypeImpl interfaceParameterType = new InterfaceParameterTypeImpl();
+		return interfaceParameterType;
 	}
 
 	/**

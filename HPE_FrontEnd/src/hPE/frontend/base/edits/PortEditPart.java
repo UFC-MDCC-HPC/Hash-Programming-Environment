@@ -5,6 +5,8 @@ import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
+import hPE.frontend.base.model.HUnitSlice;
+import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.policies.SetSliceNameEditPolicy;
 import hPE.frontend.base.policies.ShowInterfaceEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
@@ -77,7 +79,20 @@ public abstract class PortEditPart extends AbstractGraphicalEditPart implements 
   	    
   	    String visibility = rp.isPrivate() ? "private" : "public";
   	    
-		Label ff = new Label(" " + visibility + " slice " + rp.getName() + " ");
+  	    
+        String uRef;
+        String cRef;
+        try {
+            IHUnit u = (IHUnit) ((HUnitSlice)rp.getInterfaceSlices().get(0).getCompliantUnitSlices().get(0)).getComponentEntry();
+            uRef = u.getName2();
+            cRef = u.getConfiguration().getRef();
+        } catch (NullPointerException e) {
+            uRef = "?";
+            cRef = "?";
+        }
+  	    
+		Label ff = new Label(" " + visibility + " slice " + rp.getName()+ " : " + cRef + "." + uRef + " ");
+		
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font);
 		

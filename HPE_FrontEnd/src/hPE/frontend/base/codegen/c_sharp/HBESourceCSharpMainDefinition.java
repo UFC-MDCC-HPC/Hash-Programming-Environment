@@ -5,8 +5,8 @@ import hPE.frontend.base.model.HHasExternalReferences;
 
 public class HBESourceCSharpMainDefinition extends HBESourceCSharpClassDefinition {
 
-	public HBESourceCSharpMainDefinition(String name, String contents, String path, String versionID, HHasExternalReferences i) {
-		super(name, contents, path, versionID, i);
+	public HBESourceCSharpMainDefinition(String name, String contents, String path, String versionID, HHasExternalReferences i, String srcType) {
+		super(name, contents, path, versionID, i, srcType);
 	}
 	
 	public String getBinaryExtension() {

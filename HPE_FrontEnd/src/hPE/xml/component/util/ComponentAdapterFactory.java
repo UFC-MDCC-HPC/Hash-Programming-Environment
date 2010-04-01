@@ -208,6 +208,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createInnerRenamingTypeAdapter();
 			}
 			@Override
+			public Adapter caseInterfaceParameterType(InterfaceParameterType object) {
+				return createInterfaceParameterTypeAdapter();
+			}
+			@Override
 			public Adapter caseInterfacePortType(InterfacePortType object) {
 				return createInterfacePortTypeAdapter();
 			}
@@ -792,6 +796,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createInnerRenamingTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.InterfaceParameterType <em>Interface Parameter Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.InterfaceParameterType
+	 * @generated
+	 */
+	public Adapter createInterfaceParameterTypeAdapter() {
 		return null;
 	}
 

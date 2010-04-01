@@ -40,13 +40,13 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
 		
 		methodCode = "public " + i.getName2() + "(int N) : base(N) {}\n\n";
 
-		super.addMethod(methodCode);
+		super.addBaseDeclaration(methodCode);
 
 		methodCode = "override protected void permute() {\n";
 		methodCode += "    // write your permutation code here.";
 		methodCode += "\n}\n";
 		
-		super.addMethod(methodCode);
+		super.addBaseDeclaration(methodCode);
 		
         return super.synthesize(i,versionID);
         		

@@ -41,8 +41,10 @@ public class HBESourceVersionCSharp extends hPE.frontend.base.codegen.c_sharp.HB
 	public void addFile(HBESourceCSharpClassDefinition f) throws Exception {
 	      if (f instanceof HBESourceCSharpMainDefinition && this.mainSrc ==null) 
 	    	  this.mainSrc = (HBESourceCSharpMainDefinition) f;
-	      else if (this.getSource()==null) 
-	    	  this.setSource(f);
+	      else if (this.getBaseSource()==null) 
+	    	  this.setBaseSource(f);
+	      else if (this.getUserSource()==null) 
+	    	  this.setUserSource(f);
 	      else 
 	    	  throw new Exception("HBESourceVersionCSharp.addFile: Source already defined !");
 	}

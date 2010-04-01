@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.InterfaceType#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getPort <em>Port</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getExternalReferences <em>External References</em>}</li>
+ *   <li>{@link hPE.xml.component.InterfaceType#getParameter <em>Parameter</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getNArgs <em>NArgs</em>}</li>
  * </ul>
@@ -155,6 +156,23 @@ public interface InterfaceType extends EObject {
 	 * @generated
 	 */
 	EList<String> getExternalReferences();
+
+	/**
+	 * Returns the value of the '<em><b>Parameter</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.InterfaceParameterType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parameter</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parameter</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getInterfaceType_Parameter()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='parameter'"
+	 * @generated
+	 */
+	EList<InterfaceParameterType> getParameter();
 
 	/**
 	 * Returns the value of the '<em><b>IRef</b></em>' attribute.

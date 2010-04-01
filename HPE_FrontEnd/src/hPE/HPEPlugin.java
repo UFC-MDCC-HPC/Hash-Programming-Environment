@@ -84,15 +84,16 @@ public class HPEPlugin extends AbstractUIPlugin {
 	public class MyResourceChangeReporter implements IResourceChangeListener {
 		      public void resourceChanged(IResourceChangeEvent event) {
 	               try {
+	            	    Object source = null;
 				         IResource res = event.getResource();
 				         switch (event.getType()) {
 				            case IResourceChangeEvent.POST_BUILD:
-				               System.out.println("Build complete.");
+					           source = event.getSource();
 				               event.getDelta().accept(new DeltaPrinter());
 				               break;
 				            case IResourceChangeEvent.PRE_BUILD:
 					           System.out.println("Starting build.");
-					           Object source = event.getSource();
+					           source = event.getSource();
 					           if (source instanceof IProject) {
 					        	   IProject project = (IProject) source;
 					        	   IPath path = project.getFullPath();
@@ -101,7 +102,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 					        	   String cName = pathStrArr[pathStrArr.length - 1];
 					        	   IPath path2 = path.append(cName + ".hpe");
 					        	   URI uri = URI.createURI(path2.toString()); 
-					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true);
+					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false);
 								   NAntBuilder builder = NAntBuilder.instance;
 							   	   builder.setComponent(c);								   
 								   builder.run();

@@ -29,6 +29,7 @@ import net.sf.nant.release._0._86.beta1.nant.Target;
 import net.sf.nant.release._0._86.beta1.nant.util.NantResourceFactoryImpl;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -216,7 +217,11 @@ public class NAntBuilder implements Runnable {
 								for (String dep : src.getDependencies())
 								{
 									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
-									includeRef.setName(dep/*file.getBinaryPath().makeRelative()*/);
+								    if (dep.startsWith("%WORKSPACE")) {
+								    	IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(dep.substring("%WORKSPACE".length())));
+								    	dep = fPathD.getLocation().toOSString();
+								    } 
+								    includeRef.setName(dep);
 									includeRefs.add(includeRef);
 						    	}
 							}

@@ -332,6 +332,15 @@ public interface ComponentFactory extends EFactory {
 	InnerRenamingType createInnerRenamingType();
 
 	/**
+	 * Returns a new object of class '<em>Interface Parameter Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Interface Parameter Type</em>'.
+	 * @generated
+	 */
+	InterfaceParameterType createInterfaceParameterType();
+
+	/**
 	 * Returns a new object of class '<em>Interface Port Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

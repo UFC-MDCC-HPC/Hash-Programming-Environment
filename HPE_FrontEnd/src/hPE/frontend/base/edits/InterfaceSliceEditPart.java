@@ -15,9 +15,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
 import hPE.frontend.base.figures.InterfaceSliceFigure;
+import hPE.frontend.base.interfaces.IComponentEntry;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HLinkToInterface;
+import hPE.frontend.base.model.HUnitSlice;
+import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IPropertyChangeListener;
 import hPE.frontend.base.policies.SetSliceNameEditPolicy;
 import hPE.frontend.base.policies.ShowInterfaceEditPolicy;
@@ -52,8 +55,18 @@ public class InterfaceSliceEditPart<ModelType extends HInterfaceSlice, FigureTyp
         if (slice_abstraction.getInterface() != null) { 
             slice_abstraction_figure.setBackgroundColor(((HInterface)slice_abstraction.getInterface()).getColor());
         }
+        String uRef;
+        String cRef;
+        try {
+            IHUnit u = (IHUnit) ((HUnitSlice)slice_abstraction.getCompliantUnitSlices().get(0)).getComponentEntry();
+            uRef = u.getName2();
+            cRef = u.getConfiguration().getRef();
+        } catch (NullPointerException e) {
+            uRef = "?";
+            cRef = "?";
+        }
         
-		Label ff = new Label(" slice " + slice_abstraction.getName() + " ");
+		Label ff = new Label(" slice " + slice_abstraction.getName() + " : " + cRef + "." + uRef + " ");
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font); 
 

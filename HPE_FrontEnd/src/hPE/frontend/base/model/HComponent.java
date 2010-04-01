@@ -11,6 +11,7 @@ import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
+import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.util.CommandLine;
 import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
@@ -148,9 +149,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
 	public void setSavedName(Map<HComponent,String> names) {
 		if (this.lOriginalInnerCRef == null) lOriginalInnerCRef = new HashMap<HComponent,String>();
-		for (Entry<HComponent,String> n : names.entrySet()) 
-			if (!this.lOriginalInnerCRef.containsKey(n.getKey())) 
-				this.lOriginalInnerCRef.put(n.getKey(),n.getValue());
+		this.lOriginalInnerCRef.putAll(names);
+		//for (Entry<HComponent,String> n : names.entrySet()) 
+			//if (!this.lOriginalInnerCRef.containsKey(n.getKey())) 
+				//this.lOriginalInnerCRef.put(n.getKey(),n.getValue());
 	}
 	
 	public Map<HComponent,String> getSavedName() {
@@ -921,7 +923,11 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	
     public void removeComponent(HComponent c1) {
     	List<HComponent> Cs = new ArrayList<HComponent>(((HComponent)this.getTopConfiguration()).getAllInnerConfigurations());
-    	List<HComponent> Cs_ = this.getAllInnerConfigurations();
+    	
+    	List<HComponent> Cs_ = c1.getAllInnerConfigurations();
+    	// Nessa linha foi corrigido um erro em 19Mar2010. Ao invés de "c1", tinha "this".
+    	// Sintoma: Não reconhecia o parâmetro de contexto ...
+    	
     	Cs.removeAll(Cs_);
     	this.removeComponent(c1, Cs, c1);
 		listeners.firePropertyChange(UPDATE_NAME, null, name); //$NON-NLS-2$//$NON-NLS-1$
@@ -929,7 +935,10 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 
 	public void removeComponent(HComponent the_component,List<HComponent> C, HComponent c1) {
 
-		if (the_component.canRemoveMe(C,c1)) {
+		components.remove(the_component);
+		the_component.unsetConfiguration(this);
+		
+   	    if (the_component.canRemoveMe(C,c1)) {   	    	
 
 			the_component.isRemoved = true;
 			
@@ -974,8 +983,6 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			
 		}	
 	
-		components.remove(the_component);
-		the_component.unsetConfiguration(this);
 		
 		listeners.firePropertyChange(NEW_COMPONENT, null, name); //$NON-NLS-2$//$NON-NLS-1$		
 	}
@@ -1498,7 +1505,8 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	}
 
 	public String getRelativeLocation() {
-		return Path.SEPARATOR + this.getPackagePath().toString() + "." + this.getComponentName() + Path.SEPARATOR + this.getComponentName() + ".hpe";
+		String r = Path.SEPARATOR + this.getPackagePath().toString() + "." + this.getComponentName() + Path.SEPARATOR + this.getComponentName() + ".hpe"; 
+		return r;
 	}
 	
 	
@@ -1840,7 +1848,13 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
     		configurations.add(configuration);
     		configuration = null;
     	}
-    	return this.getDirectParentConfigurations().contains(this.getTopConfiguration());
+    	HComponent topC = (HComponent) this.getTopConfiguration();
+    	
+    	if (this instanceof HComputationComponent && this.getDirectParentConfigurations().contains(topC) && !topC.getComponents().contains(this)) {
+    		System.out.print(true);
+    	}
+    	
+    	return this.getDirectParentConfigurations().contains(topC)  && topC.getComponents().contains(this);
     	// If the component is direct son of the top configuration, then it has only one parent configuration, the top configuration itself. 
     }
 
@@ -1916,37 +1930,53 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 	        		u2.unsetAllReplicators();
 	        		HUnit.supersede(u1,u2);
 	        	}
-
             }
         }
         
         // Check visibility of inner components.
         List<HComponent> innersOf_c2 = c2.getInnerComponents();
         for (HComponent innerOf_c2 : innersOf_c2) {
-        	if (innerOf_c2.getExposed()) {
-        		HComponent innerOf_c1 = c1.getInnerComponent(innerOf_c2.getRef());
-        		if (innerOf_c1 != null) {
+        	//if (innerOf_c2.getExposed()) {
+        		HComponent innerOf_c1 = c1.getInnerComponent2(innerOf_c2.getRef());
+        		if (innerOf_c1 != null && innerOf_c2.getExposed()) {
         			innerOf_c2.setExposed(innerOf_c1.getExposed());
         			innerOf_c2.exposedFalsifiedContext = innerOf_c1.exposedFalsifiedContext;
     	   	    	innerOf_c2.variableName.putAll(innerOf_c1.variableName);
     	    		oModel.variableName.putAll(innerOf_c1.variableName);
     	    		innerOf_c2.parameterIdentifier.putAll(innerOf_c1.parameterIdentifier);
+        		} else if (innerOf_c1 == null) {
+        			if (innerOf_c2.getExposed()) {
+       			       innerOf_c2.setExposed(c2.getExposed());
+        			}
+        			innerOf_c2.exposedFalsifiedContext = c2.exposedFalsifiedContext;
+        		//	innerOf_c2.setName(c2.getRef() + "." + innerOf_c2.getRef());
+        		//	System.out.println(innerOf_c2.getName2() + " : " + c2.getRef() + "." + innerOf_c2.getRef());
         		}
-        	}
+        	//} else {
+
+        	
+        	//}
         }
         
-        List<HComponent> c1InnerList = new ArrayList<HComponent>();
+        
+   	    List<HComponent> c1InnerList = new ArrayList<HComponent>();
         c1InnerList.addAll(c1.getInnerComponents());
    	    for (HComponent cc : c1InnerList) {
  		   List<HComponent> parents = cc.getDirectParentConfigurations();
- 		   if (parents.size() > 1) {
-   		       String ref = cc.getRef(c1);
+ 		  // if (parents.size() > 1) {
+   		       String ref = cc.getRef(c1) != null ? cc.getRef(c1) : cc.getRef() ;
+   		       //String ref = cc.getRef(c1);
    		       if (ref != null) {
-	 			   HComponent cc_ = c2.getInnerComponent(ref);
-	 			   c1.supersede2(cc, cc_);
-   		       }
- 		   }
+	 			   HComponent cc_ = c2.getInnerComponent2(ref);
+	 			   if (cc_ != null)
+	 			      c1.supersede2(cc, cc_);
+	 			   else {
+	 				  System.out.println("NOT FOUND INNER COMPONENT " + ref + " in " + c2.getRef());
+	 			   }
+   		  //     }
+ 		  }
  	    }
+            
                         
         for (Pair<HComponent,HComponent> p : c2.getSubTypeImageOf2(c1)) {
         	HComponent c1_ = p.fst();
@@ -1971,7 +2001,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
         
         List<HComponent> l = new ArrayList<HComponent>(c1.getDirectParentConfigurations());
         for (HComponent c1_ : l) {
-            c1_.removeComponent(c1);
+            c1_.removeComponent(c1); /* PROBLEMA FOI AQUI */
         }
   
  	   // Update ports
@@ -2027,7 +2057,19 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 
 	private HComponent getInnerComponent(String name) {
 		for (HComponent c : this.getInnerComponents()) {
-			if (name.equals(c.getRef(this))) {
+			//String name2 = c.getExposed() ? c.getRef(this) : c.getRef();
+			String name2 = c.getRef(this);
+			if (name.equals(name2)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	private HComponent getInnerComponent2(String name) {
+		for (HComponent c : this.getInnerComponents()) {
+			String name2 = c.getRef(this) != null ? c.getRef(this) : c.getRef();			
+			if (name.equals(name2)) {
 				return c;
 			}
 		}
@@ -2466,7 +2508,7 @@ public abstract class HComponent extends HVisualElement implements HNamed, Clone
 			         
 			         Iterator<HComponent> mcs = modelCopies.iterator();
 			         Iterator<Entry<HComponent,HComponent>> entries = componentsToSupply.entrySet().iterator();
-			         String newVarName = key + "@" + System.currentTimeMillis();
+			         String newVarName = key +      "@" + System.currentTimeMillis();
 			         while (mcs.hasNext()) {
 			        	  Entry<HComponent,HComponent> entry = entries.next();
 		         	      HComponent c = (HComponent) entry.getKey();

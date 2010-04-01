@@ -1,23 +1,15 @@
 package hPE.frontend.kinds.application.codegen.c_sharp;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.core.internal.resources.File;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
-
-import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
 import hPE.frontend.base.codegen.syntaxtree.HBESyntaxTree;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
-import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.util.Triple;
 
+import java.util.ArrayList;
+import java.util.List;
 
-
+import org.eclipse.core.runtime.Path;
 
 public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpConcrete {
 
@@ -38,16 +30,11 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
 		List<String> dependencies = new ArrayList<String>();
         
 		mainText += "using DGAC;\n";
- 		mainText += "using " + c.getWhoItImplements().getPackagePath().toString() + "." + c.getWhoItImplements().getComponentName() + ";\n";
+ 		// mainText += "using " + c.getWhoItImplements().getPackagePath().toString() + "." + c.getWhoItImplements().getComponentName() + ";\n";
 
- 		dependencies.add(super.buildDependencyName(c.getWhoItImplements().getPackagePath().toString(), c.getWhoItImplements().getComponentName(), i.getInheritedName().split("<")[0]));
- 		
- 		String pathD = super.buildDependencyName(c.getPackagePath().toString(), c.getComponentName(), i.getPrimName());
- 		
- 		IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(pathD));
- 		
- 		dependencies.add(fPathD.getLocation().toOSString());
- 		
+        String pathD = "%WORKSPACE" + Path.SEPARATOR + super.buildDependencyName(c.getPackagePath().toString(), c.getComponentName(), i.getPrimName());         		
+        dependencies.add(pathD);
+ 		 		
         List<String> paramActualsName = new ArrayList<String>();
  		for (Triple<String,HInterface,String> p : i.getParameters3()) {
  			HInterface i1_ = p.snd();
@@ -86,13 +73,11 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
         String procName = i.getPrimName();
 	    String l = i.getConfiguration().getLocalLocation();
         
-		HBESourceCSharpMainDefinition mainCode = new HBESourceCSharpMainDefinition  (procName+"Main.cs", mainText, l, versionID, i);
+		HBESourceCSharpMainDefinition mainCode = new HBESourceCSharpMainDefinition  (procName+"Main.cs", mainText, l, versionID, i, "main");
 		mainCode.setDependencies(dependencies);
-		version.setMainSource(mainCode);
-		
+		version.setMainSource(mainCode);		
 	
-		return version;
-	    
+		return version;	    
 	}
 	
     

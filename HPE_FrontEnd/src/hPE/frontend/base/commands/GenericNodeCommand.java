@@ -73,11 +73,11 @@ public class GenericNodeCommand extends Command {
 			SetReplicatorCommand cmd = new SetReplicatorCommand((HUnitSlice) source);
 			cmd.setTarget((HReplicator) target);
   		    actual_command = cmd;
-        } else if (source != target && source instanceof HComponent && target instanceof HComponent) {
+        }/* else if (source != target && source instanceof HComponent && target instanceof HComponent) {
         	System.out.println(target.hashCode() + "-" + source.hashCode());
         	SupersedeCommand cmd = new SupersedeCommand((HComponent)source, (HComponent)target);
         	actual_command = cmd;
-        }
+        } */
 		
 	}
 	

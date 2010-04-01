@@ -84,7 +84,10 @@
 			<element name="port" type="tns:InterfacePortType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
-			<element name="externalReferences" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="externalReferences" type="string"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="parameter" type="tns:InterfaceParameterType" maxOccurs="unbounded" minOccurs="0"></element>
 		</sequence>
 		<attribute name="iRef" type="string" use="required"></attribute>
 		<attribute name="nArgs" type="int"></attribute>
@@ -543,13 +546,16 @@
     		<element name="dependency" type="string"
     			maxOccurs="unbounded" minOccurs="0">
     		</element>
-    		<element name="externalDependency" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="externalDependency" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
     	</sequence>
     	<attribute name="uri" type="string"></attribute>
-    	<attribute name="fileType" type="string"></attribute>
+        <attribute name="srcType" type="string"></attribute>
+        <attribute name="fileType" type="string"></attribute>
     	<attribute name="versionId" type="string"></attribute>
     	<attribute name="name" type="string"></attribute>
-    	<attribute name="contents" type="string"></attribute>
+    	<attribute name="contents" type="string" use="optional"></attribute>
     </complexType>
 
     <complexType name="InterfacePortType">
@@ -590,5 +596,14 @@
     			<attribute name="index" type="int" use="optional"></attribute>
     		</extension>
     	</complexContent>
+    </complexType>
+
+    <complexType name="InterfaceParameterType">
+    	<sequence></sequence>
+    	<attribute name="parid" type="string"></attribute>
+    	<attribute name="varid" type="string"></attribute>
+    	<attribute name="iname" type="string"></attribute>
+        <attribute name="uname" type="string"></attribute>
+        <attribute name="order" type="int"></attribute>
     </complexType>
 </schema>

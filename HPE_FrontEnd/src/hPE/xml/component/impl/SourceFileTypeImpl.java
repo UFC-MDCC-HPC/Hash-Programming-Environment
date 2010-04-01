@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getContents <em>Contents</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getFileType <em>File Type</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getSrcType <em>Src Type</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getUri <em>Uri</em>}</li>
  *   <li>{@link hPE.xml.component.impl.SourceFileTypeImpl#getVersionId <em>Version Id</em>}</li>
  * </ul>
@@ -118,6 +119,26 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getSrcType() <em>Src Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSrcType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SRC_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSrcType() <em>Src Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSrcType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String srcType = SRC_TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getUri() <em>Uri</em>}' attribute.
@@ -270,6 +291,27 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSrcType() {
+		return srcType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSrcType(String newSrcType) {
+		String oldSrcType = srcType;
+		srcType = newSrcType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.SOURCE_FILE_TYPE__SRC_TYPE, oldSrcType, srcType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getUri() {
 		return uri;
 	}
@@ -325,6 +367,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 				return getFileType();
 			case ComponentPackage.SOURCE_FILE_TYPE__NAME:
 				return getName();
+			case ComponentPackage.SOURCE_FILE_TYPE__SRC_TYPE:
+				return getSrcType();
 			case ComponentPackage.SOURCE_FILE_TYPE__URI:
 				return getUri();
 			case ComponentPackage.SOURCE_FILE_TYPE__VERSION_ID:
@@ -359,6 +403,9 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 			case ComponentPackage.SOURCE_FILE_TYPE__NAME:
 				setName((String)newValue);
 				return;
+			case ComponentPackage.SOURCE_FILE_TYPE__SRC_TYPE:
+				setSrcType((String)newValue);
+				return;
 			case ComponentPackage.SOURCE_FILE_TYPE__URI:
 				setUri((String)newValue);
 				return;
@@ -392,6 +439,9 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 			case ComponentPackage.SOURCE_FILE_TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case ComponentPackage.SOURCE_FILE_TYPE__SRC_TYPE:
+				setSrcType(SRC_TYPE_EDEFAULT);
+				return;
 			case ComponentPackage.SOURCE_FILE_TYPE__URI:
 				setUri(URI_EDEFAULT);
 				return;
@@ -420,6 +470,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 				return FILE_TYPE_EDEFAULT == null ? fileType != null : !FILE_TYPE_EDEFAULT.equals(fileType);
 			case ComponentPackage.SOURCE_FILE_TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ComponentPackage.SOURCE_FILE_TYPE__SRC_TYPE:
+				return SRC_TYPE_EDEFAULT == null ? srcType != null : !SRC_TYPE_EDEFAULT.equals(srcType);
 			case ComponentPackage.SOURCE_FILE_TYPE__URI:
 				return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
 			case ComponentPackage.SOURCE_FILE_TYPE__VERSION_ID:
@@ -448,6 +500,8 @@ public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
 		result.append(fileType);
 		result.append(", name: ");
 		result.append(name);
+		result.append(", srcType: ");
+		result.append(srcType);
 		result.append(", uri: ");
 		result.append(uri);
 		result.append(", versionId: ");

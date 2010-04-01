@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link hPE.xml.component.impl.ParameterRenamingImpl#getCRefBound <em>CRef Bound</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterRenamingImpl#getFormFieldId <em>Form Field Id</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterRenamingImpl#getVarName <em>Var Name</em>}</li>
  * </ul>
@@ -35,16 +34,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * @generated
  */
 public class ParameterRenamingImpl extends EObjectImpl implements ParameterRenaming {
-	/**
-	 * The cached value of the '{@link #getCRefBound() <em>CRef Bound</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCRefBound()
-	 * @generated
-	 * @ordered
-	 */
-	protected ComponentInUseType cRefBound;
-
 	/**
 	 * The default value of the '{@link #getFormFieldId() <em>Form Field Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -109,49 +98,6 @@ public class ParameterRenamingImpl extends EObjectImpl implements ParameterRenam
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComponentInUseType getCRefBound() {
-		return cRefBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetCRefBound(ComponentInUseType newCRefBound, NotificationChain msgs) {
-		ComponentInUseType oldCRefBound = cRefBound;
-		cRefBound = newCRefBound;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.PARAMETER_RENAMING__CREF_BOUND, oldCRefBound, newCRefBound);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCRefBound(ComponentInUseType newCRefBound) {
-		if (newCRefBound != cRefBound) {
-			NotificationChain msgs = null;
-			if (cRefBound != null)
-				msgs = ((InternalEObject)cRefBound).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ComponentPackage.PARAMETER_RENAMING__CREF_BOUND, null, msgs);
-			if (newCRefBound != null)
-				msgs = ((InternalEObject)newCRefBound).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ComponentPackage.PARAMETER_RENAMING__CREF_BOUND, null, msgs);
-			msgs = basicSetCRefBound(newCRefBound, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PARAMETER_RENAMING__CREF_BOUND, newCRefBound, newCRefBound));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getFormFieldId() {
 		return formFieldId;
 	}
@@ -195,24 +141,8 @@ public class ParameterRenamingImpl extends EObjectImpl implements ParameterRenam
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ComponentPackage.PARAMETER_RENAMING__CREF_BOUND:
-				return basicSetCRefBound(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentPackage.PARAMETER_RENAMING__CREF_BOUND:
-				return getCRefBound();
 			case ComponentPackage.PARAMETER_RENAMING__FORM_FIELD_ID:
 				return getFormFieldId();
 			case ComponentPackage.PARAMETER_RENAMING__VAR_NAME:
@@ -229,9 +159,6 @@ public class ParameterRenamingImpl extends EObjectImpl implements ParameterRenam
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentPackage.PARAMETER_RENAMING__CREF_BOUND:
-				setCRefBound((ComponentInUseType)newValue);
-				return;
 			case ComponentPackage.PARAMETER_RENAMING__FORM_FIELD_ID:
 				setFormFieldId((String)newValue);
 				return;
@@ -250,9 +177,6 @@ public class ParameterRenamingImpl extends EObjectImpl implements ParameterRenam
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.PARAMETER_RENAMING__CREF_BOUND:
-				setCRefBound((ComponentInUseType)null);
-				return;
 			case ComponentPackage.PARAMETER_RENAMING__FORM_FIELD_ID:
 				setFormFieldId(FORM_FIELD_ID_EDEFAULT);
 				return;
@@ -271,8 +195,6 @@ public class ParameterRenamingImpl extends EObjectImpl implements ParameterRenam
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.PARAMETER_RENAMING__CREF_BOUND:
-				return cRefBound != null;
 			case ComponentPackage.PARAMETER_RENAMING__FORM_FIELD_ID:
 				return FORM_FIELD_ID_EDEFAULT == null ? formFieldId != null : !FORM_FIELD_ID_EDEFAULT.equals(formFieldId);
 			case ComponentPackage.PARAMETER_RENAMING__VAR_NAME:

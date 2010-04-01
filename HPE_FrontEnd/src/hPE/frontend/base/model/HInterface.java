@@ -71,13 +71,15 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
 		
 	public HPort fetchPort(String sliceOwner, String slicePortOriginalName) {
 		HInterfaceSlice sOwner = this.fetchSlice(sliceOwner);
-		for (HPort port_ : sOwner.getPorts()) {
-			String originalName = port_.getOriginalNameOf(sOwner);
-			if (originalName == null) 
-				System.out.println("aaa");
-			else if (originalName.equals(slicePortOriginalName)) {
-				return port_;
-			}
+		if (sOwner != null) {
+			for (HPort port_ : sOwner.getPorts()) {
+				String originalName = port_.getDefaultNameOf(sOwner);
+				if (originalName == null) 
+					System.out.println("aaa");
+				else if (originalName.equals(slicePortOriginalName)) {
+					return port_;
+				}
+			} 
 		}
 		
 		return null;
@@ -301,7 +303,6 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     	List<String> vs = new ArrayList<String>();	
     	
     	for (Triple<String,HInterface,String> triple : this.getParameters()) {
-    		String varName = triple.fst();
     		HInterface i = triple.snd();
     		String parId = triple.trd();
     		    		

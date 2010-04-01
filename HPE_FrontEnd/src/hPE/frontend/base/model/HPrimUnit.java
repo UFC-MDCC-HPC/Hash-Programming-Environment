@@ -894,6 +894,8 @@ public abstract class HPrimUnit extends HVisualElement
 	}
 
 	public IHPrimUnit getClone(int i) {
+		//if (myClones.size() < i)
+		//	return null;
 		return myClones.get(i-1);
 	}
 	

@@ -16,44 +16,16 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link hPE.xml.component.ParameterRenaming#getCRefBound <em>CRef Bound</em>}</li>
  *   <li>{@link hPE.xml.component.ParameterRenaming#getFormFieldId <em>Form Field Id</em>}</li>
  *   <li>{@link hPE.xml.component.ParameterRenaming#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
  *
  * @see hPE.xml.component.ComponentPackage#getParameterRenaming()
- * @model extendedMetaData="name='ParameterRenaming' kind='elementOnly'"
+ * @model extendedMetaData="name='ParameterRenaming' kind='empty'"
  * @generated
  */
 public interface ParameterRenaming extends EObject {
-	/**
-	 * Returns the value of the '<em><b>CRef Bound</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>CRef Bound</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>CRef Bound</em>' containment reference.
-	 * @see #setCRefBound(ComponentInUseType)
-	 * @see hPE.xml.component.ComponentPackage#getParameterRenaming_CRefBound()
-	 * @model containment="true" required="true"
-	 *        extendedMetaData="kind='element' name='cRefBound'"
-	 * @generated
-	 */
-	ComponentInUseType getCRefBound();
-
-	/**
-	 * Sets the value of the '{@link hPE.xml.component.ParameterRenaming#getCRefBound <em>CRef Bound</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>CRef Bound</em>' containment reference.
-	 * @see #getCRefBound()
-	 * @generated
-	 */
-	void setCRefBound(ComponentInUseType value);
-
 	/**
 	 * Returns the value of the '<em><b>Form Field Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

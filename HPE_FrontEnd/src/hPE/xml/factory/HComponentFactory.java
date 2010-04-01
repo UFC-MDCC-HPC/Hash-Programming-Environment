@@ -13,7 +13,7 @@ import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 public interface HComponentFactory {
 
-	HComponent loadComponent(URI uri, boolean isTop) throws HPEInvalidComponentResourceException ;
+	HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing) throws HPEInvalidComponentResourceException ;
 	ComponentType loadComponentX(URI uri) throws HPEInvalidComponentResourceException;
 	
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
@@ -24,5 +24,5 @@ public interface HComponentFactory {
 	
 	public ComponentType marshallComponent(HComponent c) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException;
 	
-	public HComponent buildComponent(ComponentType xC, URI uri, boolean isTop);
+	public HComponent buildComponent(ComponentType xC, URI uri, boolean isTop, boolean isExtending, boolean isImplementing);
 }

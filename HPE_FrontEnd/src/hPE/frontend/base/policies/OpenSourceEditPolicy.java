@@ -160,7 +160,7 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 	
 	try {
 
-	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) {
+	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) if (srcFile.getSrcType().equals("user")) {
 			
 		 String sPath = (String) srcFile.getSourcePath().toString();
 		 IPath path = new Path(sPath);

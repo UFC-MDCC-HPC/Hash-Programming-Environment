@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.SourceFileType#getContents <em>Contents</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getFileType <em>File Type</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getName <em>Name</em>}</li>
+ *   <li>{@link hPE.xml.component.SourceFileType#getSrcType <em>Src Type</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getUri <em>Uri</em>}</li>
  *   <li>{@link hPE.xml.component.SourceFileType#getVersionId <em>Version Id</em>}</li>
  * </ul>
@@ -146,6 +147,33 @@ public interface SourceFileType extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Src Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Src Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Src Type</em>' attribute.
+	 * @see #setSrcType(String)
+	 * @see hPE.xml.component.ComponentPackage#getSourceFileType_SrcType()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='srcType'"
+	 * @generated
+	 */
+	String getSrcType();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.SourceFileType#getSrcType <em>Src Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Src Type</em>' attribute.
+	 * @see #getSrcType()
+	 * @generated
+	 */
+	void setSrcType(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Uri</b></em>' attribute.

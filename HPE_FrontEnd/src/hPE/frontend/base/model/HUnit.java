@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
@@ -186,8 +188,6 @@ public abstract class HUnit extends HPrimUnit
     } */
     
     public void updatePorts() throws HPEAbortException {
-    	
-    	
     	Map<HUnitSlice,List<HPort>> newPorts = this.calculatePorts();
     	HInterface i =(HInterface) this.getInterface();
     	HInterfaceSig is = i.getSignature();
@@ -209,7 +209,7 @@ public abstract class HUnit extends HPrimUnit
 	    	List<HPort> ps = new ArrayList<HPort>();
 	    	for (HUnitSlice s : ss) {
 	    		HPort p = null;	 
-	    		checkFusionConsistency(s);
+	    		//checkFusionConsistency(s);
 	    		if (ll.containsKey(s.getBinding().getEntry())) {
 	    			p = ll.get(s.getBinding().getEntry());
 	    		} else {
@@ -690,18 +690,19 @@ public abstract class HUnit extends HPrimUnit
 	    	   }	    	   
 	    	}	    	
 	    	
-	    checkPortNames(new_i,i);
+	    // FOI RETIRADO, mas não sei o efeito.
+	    //checkPortNames(new_i,i);
 	
         }
 
 		private static void checkPortNames(HInterface new_i, HInterface i) {
 			Map<String, String> m = new HashMap<String,String>();
 			for (HPort port : i.getPorts()) {
-				m.put(port.getOriginalName(), port.getName());
+				m.put(port.getDefaultName(), port.getName());
 			}
 			for (HPort port : new_i.getPorts()) {
-				if (m.containsKey(port.getOriginalName())) 
-					port.setName(m.get(port.getOriginalName()));				
+				if (m.containsKey(port.getDefaultName())) 
+					port.setName(m.get(port.getDefaultName()));				
 			}
 			
 			
@@ -861,35 +862,83 @@ public abstract class HUnit extends HPrimUnit
 			
 			Map<HUnitSlice,List<HUnitSlice>> l = new HashMap<HUnitSlice,List<HUnitSlice>>();
 			
-			for (HUnitSlice s : this.getSlices()) {
+			List<HUnitSlice> sliceList = this.getSlices();
+			Stack<HUnitSlice> stackSlices = new Stack<HUnitSlice>();
+			stackSlices.addAll(sliceList);
+			
+			while (!stackSlices.isEmpty()) {
+			//for (HUnitSlice s : sliceList) {
+				HUnitSlice s = stackSlices.pop();
 				IHUnit u = (IHUnit)s.getBinding().getEntry();
-				if (u.isExposed()) 
+				if (u.isExposed()) {
 					if (l.containsKey(s)) {
 						List<HUnitSlice> _l = l.get(s);
-						if (!_l.contains(l)) _l.add(s);
+						if (!_l.contains(s)) 
+							_l.add(s);
 					} else {
 						List<HUnitSlice> _l = new ArrayList<HUnitSlice>();
-						if (!_l.contains(l)) _l.add(s);
+						if (!_l.contains(s)) 
+							_l.add(s);
 						l.put(s, _l);
 					}					
-				//else{
-					for (Entry<HUnitSlice,List<HUnitSlice>> e : u.getExposedSlices().entrySet()) {
-						List<HUnitSlice> _l = e.getValue();
-						if (l.containsKey(s)) {
-							List<HUnitSlice> _ll = l.get(s);
-							_ll.addAll(_l);
-						} else {
-							List<HUnitSlice> _ll = new ArrayList<HUnitSlice>();
-							_ll.addAll(_l);
-							l.put(s, _ll);
-						}					
-					}
-			    //}
+				}
+				 
+				Map<HUnitSlice,List<HUnitSlice>> exposedSlicesOf_u = u.getExposedSlices();
+				for (Entry<HUnitSlice,List<HUnitSlice>> e : exposedSlicesOf_u.entrySet()) {
+					//stackSlices.push(e.getKey());
+					List<HUnitSlice> _l = e.getValue();
+					if (l.containsKey(s)) {
+						List<HUnitSlice> _ll = l.get(s);
+						for (HUnitSlice _l_item : _l)
+						   if (!_ll.contains(_l_item)) 
+							   _ll.add(_l_item);
+					} else {
+						List<HUnitSlice> _ll = new ArrayList<HUnitSlice>();
+						for (HUnitSlice _l_item : _l)
+							   if (!_ll.contains(_l_item)) 
+								   _ll.add(_l_item);
+						l.put(s, _ll);
+					}					
+				}
 			}
 			
 			return l;			
 		}
 
+		
+/*        public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {
+            
+            Map<HUnitSlice,List<HUnitSlice>> l = new HashMap<HUnitSlice,List<HUnitSlice>>();
+            
+            for (HUnitSlice s : this.getSlices()) {
+                    IHUnit u = (IHUnit)s.getBinding().getEntry();
+                    if (u.isExposed()) 
+                            if (l.containsKey(s)) {
+                                    List<HUnitSlice> _l = l.get(s);
+                                    if (!_l.contains(s)) _l.add(s);
+                            } else {
+                                    List<HUnitSlice> _l = new ArrayList<HUnitSlice>();
+                                    if (!_l.contains(s)) _l.add(s);
+                                    l.put(s, _l);
+                            }                                       
+                    //else{
+                            for (Entry<HUnitSlice,List<HUnitSlice>> e : u.getExposedSlices().entrySet()) {
+                                    List<HUnitSlice> _l = e.getValue();
+                                    if (l.containsKey(s)) {
+                                            List<HUnitSlice> _ll = l.get(s);
+                                            _ll.addAll(_l);
+                                    } else {
+                                            List<HUnitSlice> _ll = new ArrayList<HUnitSlice>();
+                                            _ll.addAll(_l);
+                                            l.put(s, _ll);
+                                    }                                       
+                            }
+                //}
+            }
+            
+            return l;                       
+    }
+	*/	
 
 		public void createPermutationSlices(IHUnit the_source, HReplicator r, HReplicatorSplit rSplit) throws HPEAbortException {
 

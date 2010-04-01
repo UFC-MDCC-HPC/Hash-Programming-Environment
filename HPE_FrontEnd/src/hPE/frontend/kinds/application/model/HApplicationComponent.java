@@ -2,6 +2,7 @@ package hPE.frontend.kinds.application.model;
 
 import java.util.Iterator;
 
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.URI;
 
 import hPE.frontend.base.interfaces.IComponent;
@@ -69,5 +70,13 @@ public class HApplicationComponent extends HComputationComponent {
     	return null;
     }
     
+    public void loadComponent(HComponent c, Point where) {
+    	super.loadComponent(c, where);
+    	
+    	c.setExposed(false);
+    	for (HComponent cc : c.getExposedComponents()) {
+    		cc.setExposed(false);
+    	}
+    }
     
 }

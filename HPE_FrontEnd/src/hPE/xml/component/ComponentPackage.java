@@ -1896,6 +1896,70 @@ public interface ComponentPackage extends EPackage {
 	int INNER_RENAMING_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.InterfaceParameterTypeImpl <em>Interface Parameter Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.InterfaceParameterTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceParameterType()
+	 * @generated
+	 */
+	int INTERFACE_PARAMETER_TYPE = 34;
+
+	/**
+	 * The feature id for the '<em><b>Iname</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE__INAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE__ORDER = 1;
+
+	/**
+	 * The feature id for the '<em><b>Parid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE__PARID = 2;
+
+	/**
+	 * The feature id for the '<em><b>Uname</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE__UNAME = 3;
+
+	/**
+	 * The feature id for the '<em><b>Varid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE__VARID = 4;
+
+	/**
+	 * The number of structural features of the '<em>Interface Parameter Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE_FEATURE_COUNT = 5;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfacePortTypeImpl <em>Interface Port Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1903,7 +1967,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfacePortType()
 	 * @generated
 	 */
-	int INTERFACE_PORT_TYPE = 34;
+	int INTERFACE_PORT_TYPE = 35;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1949,7 +2013,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceRefType()
 	 * @generated
 	 */
-	int INTERFACE_REF_TYPE = 35;
+	int INTERFACE_REF_TYPE = 36;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1986,7 +2050,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceRefType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_REF_TYPE = 36;
+	int INTERFACE_SLICE_REF_TYPE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2032,7 +2096,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_TYPE = 37;
+	int INTERFACE_SLICE_TYPE = 38;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' containment reference.
@@ -2078,7 +2142,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceType()
 	 * @generated
 	 */
-	int INTERFACE_TYPE = 38;
+	int INTERFACE_TYPE = 39;
 
 	/**
 	 * The feature id for the '<em><b>Slice</b></em>' containment reference list.
@@ -2135,13 +2199,22 @@ public interface ComponentPackage extends EPackage {
 	int INTERFACE_TYPE__EXTERNAL_REFERENCES = 5;
 
 	/**
+	 * The feature id for the '<em><b>Parameter</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_TYPE__PARAMETER = 6;
+
+	/**
 	 * The feature id for the '<em><b>IRef</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERFACE_TYPE__IREF = 6;
+	int INTERFACE_TYPE__IREF = 7;
 
 	/**
 	 * The feature id for the '<em><b>NArgs</b></em>' attribute.
@@ -2150,7 +2223,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERFACE_TYPE__NARGS = 7;
+	int INTERFACE_TYPE__NARGS = 8;
 
 	/**
 	 * The number of structural features of the '<em>Interface Type</em>' class.
@@ -2159,7 +2232,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERFACE_TYPE_FEATURE_COUNT = 8;
+	int INTERFACE_TYPE_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterRenamingImpl <em>Parameter Renaming</em>}' class.
@@ -2169,16 +2242,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterRenaming()
 	 * @generated
 	 */
-	int PARAMETER_RENAMING = 39;
-
-	/**
-	 * The feature id for the '<em><b>CRef Bound</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER_RENAMING__CREF_BOUND = 0;
+	int PARAMETER_RENAMING = 40;
 
 	/**
 	 * The feature id for the '<em><b>Form Field Id</b></em>' attribute.
@@ -2187,7 +2251,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_RENAMING__FORM_FIELD_ID = 1;
+	int PARAMETER_RENAMING__FORM_FIELD_ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Var Name</b></em>' attribute.
@@ -2196,7 +2260,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_RENAMING__VAR_NAME = 2;
+	int PARAMETER_RENAMING__VAR_NAME = 1;
 
 	/**
 	 * The number of structural features of the '<em>Parameter Renaming</em>' class.
@@ -2205,7 +2269,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_RENAMING_FEATURE_COUNT = 3;
+	int PARAMETER_RENAMING_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterSupplyTypeImpl <em>Parameter Supply Type</em>}' class.
@@ -2215,7 +2279,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterSupplyType()
 	 * @generated
 	 */
-	int PARAMETER_SUPPLY_TYPE = 40;
+	int PARAMETER_SUPPLY_TYPE = 41;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2252,7 +2316,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterType()
 	 * @generated
 	 */
-	int PARAMETER_TYPE = 41;
+	int PARAMETER_TYPE = 42;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2298,7 +2362,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortSliceType()
 	 * @generated
 	 */
-	int PORT_SLICE_TYPE = 42;
+	int PORT_SLICE_TYPE = 43;
 
 	/**
 	 * The feature id for the '<em><b>PRef</b></em>' attribute.
@@ -2335,7 +2399,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortType()
 	 * @generated
 	 */
-	int PORT_TYPE = 43;
+	int PORT_TYPE = 44;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2381,7 +2445,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationVarType()
 	 * @generated
 	 */
-	int QUANTIFICATION_VAR_TYPE = 44;
+	int QUANTIFICATION_VAR_TYPE = 45;
 
 	/**
 	 * The feature id for the '<em><b>QType</b></em>' attribute.
@@ -2418,7 +2482,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getRecursiveEntryType()
 	 * @generated
 	 */
-	int RECURSIVE_ENTRY_TYPE = 45;
+	int RECURSIVE_ENTRY_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2446,7 +2510,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceFileType()
 	 * @generated
 	 */
-	int SOURCE_FILE_TYPE = 46;
+	int SOURCE_FILE_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
@@ -2494,13 +2558,22 @@ public interface ComponentPackage extends EPackage {
 	int SOURCE_FILE_TYPE__NAME = 4;
 
 	/**
+	 * The feature id for the '<em><b>Src Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_FILE_TYPE__SRC_TYPE = 5;
+
+	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__URI = 5;
+	int SOURCE_FILE_TYPE__URI = 6;
 
 	/**
 	 * The feature id for the '<em><b>Version Id</b></em>' attribute.
@@ -2509,7 +2582,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE__VERSION_ID = 6;
+	int SOURCE_FILE_TYPE__VERSION_ID = 7;
 
 	/**
 	 * The number of structural features of the '<em>Source File Type</em>' class.
@@ -2518,7 +2591,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FILE_TYPE_FEATURE_COUNT = 7;
+	int SOURCE_FILE_TYPE_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SourceTypeImpl <em>Source Type</em>}' class.
@@ -2528,7 +2601,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceType()
 	 * @generated
 	 */
-	int SOURCE_TYPE = 47;
+	int SOURCE_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' containment reference list.
@@ -2574,7 +2647,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitEnumeratorType()
 	 * @generated
 	 */
-	int SPLIT_ENUMERATOR_TYPE = 48;
+	int SPLIT_ENUMERATOR_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -2602,7 +2675,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitLinkType()
 	 * @generated
 	 */
-	int SPLIT_LINK_TYPE = 49;
+	int SPLIT_LINK_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2639,7 +2712,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitType()
 	 * @generated
 	 */
-	int SPLIT_TYPE = 50;
+	int SPLIT_TYPE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Split Link</b></em>' containment reference list.
@@ -2712,7 +2785,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitBoundsType()
 	 * @generated
 	 */
-	int UNIT_BOUNDS_TYPE = 51;
+	int UNIT_BOUNDS_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2758,7 +2831,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitRefType()
 	 * @generated
 	 */
-	int UNIT_REF_TYPE = 52;
+	int UNIT_REF_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2804,7 +2877,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitSliceType()
 	 * @generated
 	 */
-	int UNIT_SLICE_TYPE = 53;
+	int UNIT_SLICE_TYPE = 54;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2886,7 +2959,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitType()
 	 * @generated
 	 */
-	int UNIT_TYPE = 54;
+	int UNIT_TYPE = 55;
 
 	/**
 	 * The feature id for the '<em><b>Super</b></em>' containment reference.
@@ -2968,7 +3041,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
 	 * @generated
 	 */
-	int VERSION_TYPE = 55;
+	int VERSION_TYPE = 56;
 
 	/**
 	 * The feature id for the '<em><b>Field1</b></em>' attribute.
@@ -3023,7 +3096,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVisualElementAttributes()
 	 * @generated
 	 */
-	int VISUAL_ELEMENT_ATTRIBUTES = 56;
+	int VISUAL_ELEMENT_ATTRIBUTES = 57;
 
 	/**
 	 * The feature id for the '<em><b>Color</b></em>' containment reference.
@@ -3087,7 +3160,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationType()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE = 57;
+	int QUANTIFICATION_TYPE = 58;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.SupportedKinds <em>Supported Kinds</em>}' enum.
@@ -3097,7 +3170,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKinds()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS = 58;
+	int SUPPORTED_KINDS = 59;
 
 	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
@@ -3107,7 +3180,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 59;
+	int QUANTIFICATION_TYPE_OBJECT = 60;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -3117,7 +3190,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 60;
+	int SUPPORTED_KINDS_OBJECT = 61;
 
 
 	/**
@@ -4396,6 +4469,71 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getInnerRenamingType_CRef();
 
 	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.InterfaceParameterType <em>Interface Parameter Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Interface Parameter Type</em>'.
+	 * @see hPE.xml.component.InterfaceParameterType
+	 * @generated
+	 */
+	EClass getInterfaceParameterType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceParameterType#getIname <em>Iname</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Iname</em>'.
+	 * @see hPE.xml.component.InterfaceParameterType#getIname()
+	 * @see #getInterfaceParameterType()
+	 * @generated
+	 */
+	EAttribute getInterfaceParameterType_Iname();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceParameterType#getOrder <em>Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Order</em>'.
+	 * @see hPE.xml.component.InterfaceParameterType#getOrder()
+	 * @see #getInterfaceParameterType()
+	 * @generated
+	 */
+	EAttribute getInterfaceParameterType_Order();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceParameterType#getParid <em>Parid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Parid</em>'.
+	 * @see hPE.xml.component.InterfaceParameterType#getParid()
+	 * @see #getInterfaceParameterType()
+	 * @generated
+	 */
+	EAttribute getInterfaceParameterType_Parid();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceParameterType#getUname <em>Uname</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Uname</em>'.
+	 * @see hPE.xml.component.InterfaceParameterType#getUname()
+	 * @see #getInterfaceParameterType()
+	 * @generated
+	 */
+	EAttribute getInterfaceParameterType_Uname();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceParameterType#getVarid <em>Varid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Varid</em>'.
+	 * @see hPE.xml.component.InterfaceParameterType#getVarid()
+	 * @see #getInterfaceParameterType()
+	 * @generated
+	 */
+	EAttribute getInterfaceParameterType_Varid();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.InterfacePortType <em>Interface Port Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4655,6 +4793,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getInterfaceType_ExternalReferences();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.InterfaceType#getParameter <em>Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Parameter</em>'.
+	 * @see hPE.xml.component.InterfaceType#getParameter()
+	 * @see #getInterfaceType()
+	 * @generated
+	 */
+	EReference getInterfaceType_Parameter();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.InterfaceType#getIRef <em>IRef</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4685,17 +4834,6 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getParameterRenaming();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ParameterRenaming#getCRefBound <em>CRef Bound</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>CRef Bound</em>'.
-	 * @see hPE.xml.component.ParameterRenaming#getCRefBound()
-	 * @see #getParameterRenaming()
-	 * @generated
-	 */
-	EReference getParameterRenaming_CRefBound();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterRenaming#getFormFieldId <em>Form Field Id</em>}'.
@@ -4986,6 +5124,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSourceFileType_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.SourceFileType#getSrcType <em>Src Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Src Type</em>'.
+	 * @see hPE.xml.component.SourceFileType#getSrcType()
+	 * @see #getSourceFileType()
+	 * @generated
+	 */
+	EAttribute getSourceFileType_SrcType();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.SourceFileType#getUri <em>Uri</em>}'.
@@ -6614,6 +6763,56 @@ public interface ComponentPackage extends EPackage {
 		EAttribute INNER_RENAMING_TYPE__CREF = eINSTANCE.getInnerRenamingType_CRef();
 
 		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.InterfaceParameterTypeImpl <em>Interface Parameter Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.InterfaceParameterTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceParameterType()
+		 * @generated
+		 */
+		EClass INTERFACE_PARAMETER_TYPE = eINSTANCE.getInterfaceParameterType();
+
+		/**
+		 * The meta object literal for the '<em><b>Iname</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERFACE_PARAMETER_TYPE__INAME = eINSTANCE.getInterfaceParameterType_Iname();
+
+		/**
+		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERFACE_PARAMETER_TYPE__ORDER = eINSTANCE.getInterfaceParameterType_Order();
+
+		/**
+		 * The meta object literal for the '<em><b>Parid</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERFACE_PARAMETER_TYPE__PARID = eINSTANCE.getInterfaceParameterType_Parid();
+
+		/**
+		 * The meta object literal for the '<em><b>Uname</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERFACE_PARAMETER_TYPE__UNAME = eINSTANCE.getInterfaceParameterType_Uname();
+
+		/**
+		 * The meta object literal for the '<em><b>Varid</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERFACE_PARAMETER_TYPE__VARID = eINSTANCE.getInterfaceParameterType_Varid();
+
+		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.InterfacePortTypeImpl <em>Interface Port Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6816,6 +7015,14 @@ public interface ComponentPackage extends EPackage {
 		EAttribute INTERFACE_TYPE__EXTERNAL_REFERENCES = eINSTANCE.getInterfaceType_ExternalReferences();
 
 		/**
+		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INTERFACE_TYPE__PARAMETER = eINSTANCE.getInterfaceType_Parameter();
+
+		/**
 		 * The meta object literal for the '<em><b>IRef</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6840,14 +7047,6 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PARAMETER_RENAMING = eINSTANCE.getParameterRenaming();
-
-		/**
-		 * The meta object literal for the '<em><b>CRef Bound</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PARAMETER_RENAMING__CREF_BOUND = eINSTANCE.getParameterRenaming_CRefBound();
 
 		/**
 		 * The meta object literal for the '<em><b>Form Field Id</b></em>' attribute feature.
@@ -7078,6 +7277,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SOURCE_FILE_TYPE__NAME = eINSTANCE.getSourceFileType_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Src Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOURCE_FILE_TYPE__SRC_TYPE = eINSTANCE.getSourceFileType_SrcType();
 
 		/**
 		 * The meta object literal for the '<em><b>Uri</b></em>' attribute feature.

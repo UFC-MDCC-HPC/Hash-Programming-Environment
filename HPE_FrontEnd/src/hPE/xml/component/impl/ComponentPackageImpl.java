@@ -43,6 +43,8 @@ import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.ImplementsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
+import hPE.xml.component.InterfaceParameterType;
+import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceRefType;
 import hPE.xml.component.InterfaceSliceRefType;
@@ -323,6 +325,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass innerRenamingTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass interfaceParameterTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1660,6 +1669,60 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getInterfaceParameterType() {
+		return interfaceParameterTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInterfaceParameterType_Iname() {
+		return (EAttribute)interfaceParameterTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInterfaceParameterType_Order() {
+		return (EAttribute)interfaceParameterTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInterfaceParameterType_Parid() {
+		return (EAttribute)interfaceParameterTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInterfaceParameterType_Uname() {
+		return (EAttribute)interfaceParameterTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInterfaceParameterType_Varid() {
+		return (EAttribute)interfaceParameterTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getInterfacePortType() {
 		return interfacePortTypeEClass;
 	}
@@ -1876,8 +1939,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getInterfaceType_Parameter() {
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getInterfaceType_IRef() {
-		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1886,7 +1958,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EAttribute getInterfaceType_NArgs() {
-		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1903,17 +1975,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getParameterRenaming_CRefBound() {
-		return (EReference)parameterRenamingEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getParameterRenaming_FormFieldId() {
-		return (EAttribute)parameterRenamingEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)parameterRenamingEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1922,7 +1985,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EAttribute getParameterRenaming_VarName() {
-		return (EAttribute)parameterRenamingEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)parameterRenamingEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2155,7 +2218,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_Uri() {
+	public EAttribute getSourceFileType_SrcType() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -2164,8 +2227,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSourceFileType_VersionId() {
+	public EAttribute getSourceFileType_Uri() {
 		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSourceFileType_VersionId() {
+		return (EAttribute)sourceFileTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2819,6 +2891,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(innerRenamingTypeEClass, INNER_RENAMING_TYPE__COLD_NAME);
 		createEAttribute(innerRenamingTypeEClass, INNER_RENAMING_TYPE__CREF);
 
+		interfaceParameterTypeEClass = createEClass(INTERFACE_PARAMETER_TYPE);
+		createEAttribute(interfaceParameterTypeEClass, INTERFACE_PARAMETER_TYPE__INAME);
+		createEAttribute(interfaceParameterTypeEClass, INTERFACE_PARAMETER_TYPE__ORDER);
+		createEAttribute(interfaceParameterTypeEClass, INTERFACE_PARAMETER_TYPE__PARID);
+		createEAttribute(interfaceParameterTypeEClass, INTERFACE_PARAMETER_TYPE__UNAME);
+		createEAttribute(interfaceParameterTypeEClass, INTERFACE_PARAMETER_TYPE__VARID);
+
 		interfacePortTypeEClass = createEClass(INTERFACE_PORT_TYPE);
 		createEReference(interfacePortTypeEClass, INTERFACE_PORT_TYPE__VISUAL_DESCRIPTION);
 		createEReference(interfacePortTypeEClass, INTERFACE_PORT_TYPE__SLICE);
@@ -2845,11 +2924,11 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__VISUAL_DESCRIPTION);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PORT);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__EXTERNAL_REFERENCES);
+		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PARAMETER);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__IREF);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__NARGS);
 
 		parameterRenamingEClass = createEClass(PARAMETER_RENAMING);
-		createEReference(parameterRenamingEClass, PARAMETER_RENAMING__CREF_BOUND);
 		createEAttribute(parameterRenamingEClass, PARAMETER_RENAMING__FORM_FIELD_ID);
 		createEAttribute(parameterRenamingEClass, PARAMETER_RENAMING__VAR_NAME);
 
@@ -2884,6 +2963,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__CONTENTS);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__FILE_TYPE);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__NAME);
+		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__SRC_TYPE);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__URI);
 		createEAttribute(sourceFileTypeEClass, SOURCE_FILE_TYPE__VERSION_ID);
 
@@ -3156,6 +3236,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getInnerRenamingType_COldName(), theXMLTypePackage.getString(), "cOldName", null, 0, 1, InnerRenamingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInnerRenamingType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, InnerRenamingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(interfaceParameterTypeEClass, InterfaceParameterType.class, "InterfaceParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getInterfaceParameterType_Iname(), theXMLTypePackage.getString(), "iname", null, 0, 1, InterfaceParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInterfaceParameterType_Order(), theXMLTypePackage.getInt(), "order", null, 0, 1, InterfaceParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInterfaceParameterType_Parid(), theXMLTypePackage.getString(), "parid", null, 0, 1, InterfaceParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInterfaceParameterType_Uname(), theXMLTypePackage.getString(), "uname", null, 0, 1, InterfaceParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInterfaceParameterType_Varid(), theXMLTypePackage.getString(), "varid", null, 0, 1, InterfaceParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(interfacePortTypeEClass, InterfacePortType.class, "InterfacePortType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInterfacePortType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, InterfacePortType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfacePortType_Slice(), this.getPortSliceType(), null, "slice", null, 1, -1, InterfacePortType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3182,11 +3269,11 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getInterfaceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Port(), this.getInterfacePortType(), null, "port", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_ExternalReferences(), theXMLTypePackage.getString(), "externalReferences", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_Parameter(), this.getInterfaceParameterType(), null, "parameter", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_NArgs(), theXMLTypePackage.getInt(), "nArgs", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterRenamingEClass, ParameterRenaming.class, "ParameterRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getParameterRenaming_CRefBound(), this.getComponentInUseType(), null, "cRefBound", null, 1, 1, ParameterRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterRenaming_FormFieldId(), theXMLTypePackage.getString(), "formFieldId", null, 1, 1, ParameterRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterRenaming_VarName(), theXMLTypePackage.getString(), "varName", null, 1, 1, ParameterRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3221,6 +3308,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getSourceFileType_Contents(), theXMLTypePackage.getString(), "contents", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_FileType(), theXMLTypePackage.getString(), "fileType", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSourceFileType_SrcType(), theXMLTypePackage.getString(), "srcType", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_Uri(), theXMLTypePackage.getString(), "uri", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSourceFileType_VersionId(), theXMLTypePackage.getString(), "versionId", null, 0, 1, SourceFileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4179,6 +4267,48 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "cRef"
 		   });		
 		addAnnotation
+		  (interfaceParameterTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "InterfaceParameterType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getInterfaceParameterType_Iname(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "iname"
+		   });		
+		addAnnotation
+		  (getInterfaceParameterType_Order(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "order"
+		   });		
+		addAnnotation
+		  (getInterfaceParameterType_Parid(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "parid"
+		   });		
+		addAnnotation
+		  (getInterfaceParameterType_Uname(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "uname"
+		   });		
+		addAnnotation
+		  (getInterfaceParameterType_Varid(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "varid"
+		   });		
+		addAnnotation
 		  (interfacePortTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4333,6 +4463,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "externalReferences"
 		   });		
 		addAnnotation
+		  (getInterfaceType_Parameter(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "parameter"
+		   });		
+		addAnnotation
 		  (getInterfaceType_IRef(), 
 		   source, 
 		   new String[] {
@@ -4351,14 +4488,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   source, 
 		   new String[] {
 			 "name", "ParameterRenaming",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getParameterRenaming_CRefBound(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "cRefBound"
+			 "kind", "empty"
 		   });		
 		addAnnotation
 		  (getParameterRenaming_FormFieldId(), 
@@ -4561,6 +4691,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "name"
+		   });		
+		addAnnotation
+		  (getSourceFileType_SrcType(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "srcType"
 		   });		
 		addAnnotation
 		  (getSourceFileType_Uri(), 
