@@ -13,8 +13,6 @@ namespace hpe.kinds
 
     public interface IEnvironmentKind : IUnit
 	{
-		void listen();
-        void stopListen();
 	}
 	
 	public abstract class Environment : Unit {

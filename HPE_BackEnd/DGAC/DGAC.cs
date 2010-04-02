@@ -94,7 +94,7 @@ namespace DGAC
                   // ComponentDAO cdao = new ComponentDAO();
 				   IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
 				   if (cList.Count == 0) {	                        					
-                      Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
+                      Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
                       abstractloader.updateSources(ct, cAbs);
                       exists = true;
 				   } else {
@@ -264,6 +264,8 @@ namespace DGAC
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();
 
+//            if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false; }
+
             pmain.EnumeratorCardinality = new Dictionary<string, int>();
 
           //  EnumeratorDAO edao = new EnumeratorDAO();
@@ -286,7 +288,7 @@ namespace DGAC
             int num_procs = 0;
             int rank = 0;
 
-            pmain.Units = new Dictionary<string, IList<int>>();
+            pmain.Units = new Dictionary<string, int[]>();
             IList<IDictionary<string, int>> pmain_EnumRanks = new List<IDictionary<string, int>>();
             IList<int> pmain_Ranks = new List<int>();
 
@@ -299,49 +301,62 @@ namespace DGAC
 
                 IList<EnumerationInterface> eiList = exitdao.listByInterface(id_abstract, id_unit);
 
-                IList<IList<int>> x = new List<IList<int>>();
-                x.Add(new List<int>());
-                int j = 0;
-                string[] enumerator = new string[eiList.Count];
-                foreach (EnumerationInterface ei in eiList)
+                if (eiList.Count > 0)
                 {
-                    enumerator[j++] = ei.Id_enumerator;
-                    eInf.TryGetValue(ei.Id_enumerator, out rangeInf);
-                    eSup.TryGetValue(ei.Id_enumerator, out rangeSup);
-                    IList<IList<int>> y = new List<IList<int>>();
-                    foreach (IList<int> xx in x)
+                    IList<IList<int>> x = new List<IList<int>>();
+                    x.Add(new List<int>());
+                    int j = 0;
+                    string[] enumerator = new string[eiList.Count];
+                    foreach (EnumerationInterface ei in eiList)
                     {
-                        for (int yyy = rangeInf; yyy < rangeSup; yyy++)
+                        enumerator[j++] = ei.Id_enumerator;
+                        eInf.TryGetValue(ei.Id_enumerator, out rangeInf);
+                        eSup.TryGetValue(ei.Id_enumerator, out rangeSup);
+                        IList<IList<int>> y = new List<IList<int>>();
+                        foreach (IList<int> xx in x)
                         {
-                            IList<int> yy = new List<int>();
-                            foreach (int xxx in xx)
+                            for (int yyy = rangeInf; yyy < rangeSup; yyy++)
                             {
-                                yy.Add(xxx);
+                                IList<int> yy = new List<int>();
+                                foreach (int xxx in xx)
+                                {
+                                    yy.Add(xxx);
+                                }
+                                yy.Add(yyy);
+                                y.Add(yy);
                             }
-                            yy.Add(yyy);
-                            y.Add(yy);
                         }
+                        x = y;
                     }
-                    x = y;
-                }
 
-                num_procs += x.Count;
+                    num_procs += x.Count;
 
-                IList<int> ranks = new List<int>();
-                pmain.Units.Add(id_unit, ranks);
+                    IList<int> ranks = new List<int>();
 
-                foreach (IList<int> eIXs in x)
-                {
-                    j = 0;
-                    pmain_EnumRanks.Add(new Dictionary<string, int>());
-                    foreach (int eVal in eIXs)
+                    foreach (IList<int> eIXs in x)
                     {
-                        pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
-                        // ???? insertEnumeratorFusions(o, id_unit_slice, pmain_EnumRanks[rank]);
+                        j = 0;
+                        pmain_EnumRanks.Add(new Dictionary<string, int>());
+                        foreach (int eVal in eIXs)
+                        {
+                            pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
+                        }
+                        pmain_Ranks.Add(rank);
+                        ranks.Add(rank);
+                        rank++;
                     }
+                    int[] ranksArr = new int[ranks.Count];
+                    ranks.CopyTo(ranksArr, 0);
+                    pmain.Units.Add(id_unit, ranksArr);
+                }
+                else // Unitary unit ...
+                {
+                    num_procs++;
                     pmain_Ranks.Add(rank);
-                    ranks.Add(rank);
-                    rank++;
+                    pmain_EnumRanks.Add(new Dictionary<string, int>());
+                    int[] ranksArr = new int[1];
+                    ranksArr[0] = rank++;
+                    pmain.Units.Add(id_unit, ranksArr);
                 }
             }
 
@@ -853,7 +868,6 @@ namespace DGAC
 
             InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
-            if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false;}
 
             IDictionary<string, int> actualParameters_new = null;
             hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
@@ -964,7 +978,8 @@ namespace DGAC
             o.Id_functor_app = ic.Id_functor_app;
             o.Id_abstract = ic.Id_abstract_inner;
 
-            IList<Slice> ss = sdao.listByInnerInInterface(id_abstract, id_inner, unit.Id_interface);
+            //IList<Slice> ss = sdao.listByInnerInInterface(id_abstract, id_inner, unit.Id_interface);
+            IList<Slice> ss = sdao.listByInner(id_abstract, id_inner);
             IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
             Dictionary<string, int> countUnits = new Dictionary<string, int>();
             IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
@@ -984,9 +999,9 @@ namespace DGAC
                 string id_interface_slice = s.Id_interface_slice;
 
                 String id_interface_of_slice = s.Id_interface;
-                IList<int> ranks;
 
                 // Ache todas as unidades que são id_interface.
+                int[] ranks;
                 unit.Units.TryGetValue(id_interface_of_slice, out ranks);
 
                 // Percorra todas estas unidades e adicione somente aquelas cujos índice para algum enumerador em
@@ -1115,7 +1130,7 @@ namespace DGAC
             IList<int> ranksAllList = new List<int>();
             IList<IDictionary<string, int>> enumRanksList = new List<IDictionary<string, int>>();
 
-            IDictionary<string, IList<int>> unitsRanks = new Dictionary<string, IList<int>>();
+            IDictionary<string, int[]> unitsRanks = new Dictionary<string, int[]>();
 
             //ranksAll.CopyTo(ranksAllArr, 0);
 
@@ -1160,9 +1175,11 @@ namespace DGAC
                 // Calculate o.Units ...
                 int count;
                 countUnits.TryGetValue(id_unit_slice, out count);
-                IList<int> _ranks = new List<int>();
+
+                int[] _ranks = new int[count];
                 for (int k = 0; k < count; k++)
-                    _ranks.Add(i++);
+                    _ranks[k] = i++;
+
                 unitsRanks.Add(id_unit_slice_, _ranks);
             }
 
@@ -1190,7 +1207,6 @@ namespace DGAC
         }
 
         private static IDictionary<string, Type> checked_types = new Dictionary<string, Type>();
-
       
         private static void fetchParameters(IDictionary<string, int> actualParameters,
                                             int id_functor_app_owner,
@@ -1659,13 +1675,16 @@ namespace DGAC
              //   EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
               //  EnumeratorDAO edao = new EnumeratorDAO();
 
+
                 Component c = cdao.retrieve(id_concrete);
 
-                IList<DGAC.database.Unit> uList = udao.list(id_concrete);
+                // IList<DGAC.database.Unit> uList = udao.list(id_concrete);
+                IList<DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract); 
 
-                foreach (DGAC.database.Unit u in uList)
+                foreach (DGAC.database.Interface i in iList)
                 {
-                    IList<EnumerationInterface> eiList = exitdao.listByInterface(c.Id_abstract, u.Id_unit);
+                    DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
+                    IList<EnumerationInterface> eiList = exitdao.listByInterface(c.Id_abstract, i.Id_interface);
                     int count = 1;
                     IDictionary<string, int> m = new Dictionary<string, int>();
                     foreach (EnumerationInterface ei in eiList)

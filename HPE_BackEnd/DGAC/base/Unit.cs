@@ -17,41 +17,29 @@ namespace hpe.basic
         int Id_abstract { set; get; }
         string Id_interface { set; get; }
 
-        int GlobalRank { set; get; }                        // The rank of the process (application) where the unit is placed on
-
-        int[] Ranks { set; get; }                           // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
-
-        IDictionary<string, IList<int>> Units { get; set; }
-
+        int GlobalRank { set; get; }                         // The rank of the process (application) where the unit is placed on
+        int LocalRank { get; }                               // = RanksInv[globalRank]
+        int[] Ranks { set; get; }                            // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
+        int[] RanksInv { get; }                              // Ranks[i]==j iif RanksInv[j]==i
+        IDictionary<string, int[]> Units { get; set; }
         IDictionary<string, int>[] EnumRanks { set; get; }
-
-        int[] RanksInv { get; }                        // Ranks[i]==j iif RanksInv[j]==i
-        int LocalRank { get; }                         // = RanksInv[globalRank]
-        IDictionary<string, int> EnumRank { get; }     // = EnumRanks[localRank]
-
+        IDictionary<string, int> EnumRank { get; }           // = EnumRanks[localRank]
         int[] EnumPeers { get; }
-
-        void createSlices();
-
-        IDictionary<string, int> ActualParameters { get; set; }
-
-        IDictionary<string, int> ActualParametersTop { get; set; }
-
-        void setActualParameters(IDictionary<string, int> actualParameters_new);
-
-        void setUpParameters(DGAC.database.Component c);
-
         IDictionary<string, int> EnumeratorCardinality { get; set; }
 
+        void createSlices();
         IList<IUnit> Slices { get; }
         IUnit ContainerSlice { get; set; }
-
         void addSlice(IUnit slice);
+        void destroySlice();
+
+        IDictionary<string, int> ActualParameters { get; set; }
+        IDictionary<string, int> ActualParametersTop { get; set; }
+        void setActualParameters(IDictionary<string, int> actualParameters_new);
+        void setUpParameters(DGAC.database.Component c);
 
         bool getPermutation(string varid, out hpe.kinds.IEnumeratorKind permutation);
-
         void addPermutation(string varid, hpe.kinds.IEnumeratorKind u);
 
-        void destroySlice();
     }
 }

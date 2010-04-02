@@ -79,7 +79,7 @@ public class InterfaceDAO{
         string sql =
             "SELECT id_interface, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
             "FROM interface " +
-            "WHERE id_abstract=" + id_abstract;
+            "WHERE id_abstract=" + id_abstract + " ORDER BY `order`";
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())

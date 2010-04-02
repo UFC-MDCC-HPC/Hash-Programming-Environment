@@ -83,8 +83,8 @@ namespace hpe.basic
         
         // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
 
-        private IDictionary<string, IList<int>> myUnits = null;
-        public IDictionary<string, IList<int>> Units { set { this.myUnits = value; } get { return myUnits; } }
+        private IDictionary<string, int[]> myUnits = null;
+        public IDictionary<string, int[]> Units { set { this.myUnits = value; } get { return myUnits; } }
 
         private IDictionary<string, int>[] myEnumRanks = null;
         public IDictionary<string, int>[] EnumRanks { set { this.myEnumRanks = value; } get { return myEnumRanks; } }

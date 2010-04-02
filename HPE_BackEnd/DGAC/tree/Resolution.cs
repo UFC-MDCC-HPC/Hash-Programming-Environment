@@ -29,9 +29,9 @@ namespace DGAC.database
                     if (CTopImpl != null) return CTopImpl;
                     else
                     {
-                    Console.Write("BEFORE GENERALIZE:"); writeTreeNode(CTop); Console.WriteLine("...");
+                    //Console.Write("BEFORE GENERALIZE:"); writeTreeNode(CTop); Console.WriteLine("...");
                         C.generalize();
-                        Console.Write("AFTER GENERALIZE:"); writeTreeNode(CTop); Console.WriteLine("...");
+                      //  Console.Write("AFTER GENERALIZE:"); writeTreeNode(CTop); Console.WriteLine("...");
                     }
 				} while (!C.OnTop);
 			}
@@ -112,7 +112,7 @@ namespace DGAC.database
 
                 if (!found)
                 {
-                    Console.WriteLine("UNEXPECTED! ");
+                    // Console.WriteLine("UNEXPECTED! ");
                     //   return false; // UNEXPECTED CONDITION ...
                 }
                 else

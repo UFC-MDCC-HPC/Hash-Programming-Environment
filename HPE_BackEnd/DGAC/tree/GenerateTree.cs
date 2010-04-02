@@ -19,8 +19,6 @@ namespace DGAC.database
 
 		public static TreeNode generate(IUnit unit, AbstractComponentFunctorApplication acfaRef){
 
-            Console.WriteLine("TESTE");
-
             mmm = new Dictionary<String, String>();
 
 

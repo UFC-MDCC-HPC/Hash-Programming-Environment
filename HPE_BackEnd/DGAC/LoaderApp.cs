@@ -255,8 +255,12 @@ namespace DGAC.database
             string file_name_Interface = buildDllName(acf.Library_path,interfaceUnit.Assembly_string);
             if (!stringCompilationSet.Contains(file_name_Interface))
                 stringCompilationSet.Add(file_name_Interface);
-			
-			string[] referencesArray = new string[stringCompilationSet.Count];
+
+            string file_name_Interface_base = buildDllNameBase(acf.Library_path, interfaceUnit.Assembly_string);
+            if (!stringCompilationSet.Contains(file_name_Interface_base))
+                stringCompilationSet.Add(file_name_Interface_base);
+            
+            string[] referencesArray = new string[stringCompilationSet.Count];
             stringCompilationSet.CopyTo(referencesArray,0);
             IList<string> libRefs = new List<string>();
             IList<SourceCode> scList = DGAC.BackEnd.scdao.list('u', unit.Id_concrete, unit.Id_unit);
@@ -338,7 +342,6 @@ namespace DGAC.database
                 referencesArray.CopyTo(referencesArrayAll,0);
                 sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
 
-
                 InfoCompile info = new InfoCompile();
 
                 string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
@@ -373,7 +376,13 @@ namespace DGAC.database
         
     } // get references
 
-    public static string buildDllName(string assemblyString)
+    public static string buildDllNameBase(string library_path, string assemblyString)
+    {
+        return library_path + Path.DirectorySeparatorChar + "Base" + assemblyString.Split(',')[0] /* + ".dll" */;
+
+    } // get references
+
+        public static string buildDllName(string assemblyString)
     {
         return assemblyString.Split(',')[0] /* + ".dll" */;
 
