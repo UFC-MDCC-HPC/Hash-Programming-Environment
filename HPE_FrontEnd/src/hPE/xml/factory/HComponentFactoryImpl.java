@@ -1025,12 +1025,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		
 		for (Entry<HInterface, List<InterfacePortType>> e : ports.entrySet()) {
 			HInterface i = e.getKey();
-			try {
-				Map<HUnitSlice,List<HPort>> newPorts = ((HUnit)i.getCompliantUnits().get(0)).calculatePorts();
-			} catch (HPEAbortException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			// Iterator<HPort> iPorts = i.getPorts().iterator();
 			List<InterfacePortType> ps = e.getValue();
 			for (InterfacePortType xP : ps) {

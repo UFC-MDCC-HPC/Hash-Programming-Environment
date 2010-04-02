@@ -142,7 +142,7 @@ public abstract class HPrimUnit extends HVisualElement
 	public void killMe() {		
 		this.unsetAllReplicators();
 		if (this.getInterface() != null) this.detachFromInterface();
-		this.remove();
+		//this.remove();
 	}
 	
 

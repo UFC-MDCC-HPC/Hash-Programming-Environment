@@ -561,7 +561,7 @@ public abstract class HUnit extends HPrimUnit
 	    
     	HInterface i = (HInterface) u_.getInterface();
     	HInterface new_i = (HInterface) new_u_.getInterface();
-    	    	
+    	    	    	
     	if (i != null) {
     		try {
 				((HUnit)new_u_).updatePorts();
@@ -573,7 +573,7 @@ public abstract class HUnit extends HPrimUnit
     	}
     	    	
     	IHUnit u = (IHUnit) u_.getRealUnit();
-    	IHUnit new_u = (HUnit)new_u_.getRealUnit();
+    	IHUnit new_u = (HUnit)new_u_.getRealUnit();  	
     	
     	new_u_.setHidden(u.getHidden());	    	
     	new_u_.setSupersededName(u_.getName2());
@@ -615,7 +615,7 @@ public abstract class HUnit extends HPrimUnit
 	    			System.err.println("Unexpected Exception !" + e.getMessage());
 	    		}
 	    }
-	    	
+	    
     	u.killMe();
     	
     	for (HBinding b : u.getBindings()) {
@@ -642,16 +642,19 @@ public abstract class HUnit extends HPrimUnit
 			    	    if (iSlice.IsDefaultName() && new_u.getBinding() != null) { 
 			    	    	HUnitSlice uslice = (HUnitSlice) new_u.getBinding().getPort();
 			    	    	if (uslice.getInterfaceSlice() != null) {
-			    	    	  iSlice.setName(uSlice.getInterfaceSlice().getName());
+			    	    	  iSlice.setName(uslice.getInterfaceSlice().getName());
 			    	    	}
 			    	    }
-			    	    
-			    	    uSlice.hideInterface();
-			    	    uSlice.setInterface(new_i); // Updating interface of unit slice
-			            if (v) { 
-			        	    uSlice.showInterface();
-			            }
+		    	    } else {
+		    	    	System.out.print(uSlice.getName());
 		    	    }
+		    	    
+		    	    uSlice.hideInterface();
+		    	    uSlice.setInterface(new_i); // Updating interface of unit slice
+		            if (v) { 
+		        	    uSlice.showInterface();
+		            }
+		    	    
 		    	}
 	    	}
     	}
@@ -691,7 +694,7 @@ public abstract class HUnit extends HPrimUnit
 	    	}	    	
 	    	
 	    // FOI RETIRADO, mas não sei o efeito.
-	    //checkPortNames(new_i,i);
+	    checkPortNames(new_i,i);
 	
         }
 
@@ -858,7 +861,7 @@ public abstract class HUnit extends HPrimUnit
 			return ccc != null && (c.getExposed() || (!c.getExposed() && c.IsExposedFalsifiedContextTop()) || (!c.getExposed() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc));
 		}
 		
-		public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {
+/*		public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {
 			
 			Map<HUnitSlice,List<HUnitSlice>> l = new HashMap<HUnitSlice,List<HUnitSlice>>();
 			
@@ -904,9 +907,9 @@ public abstract class HUnit extends HPrimUnit
 			
 			return l;			
 		}
-
+*/
 		
-/*        public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {
+        public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {
             
             Map<HUnitSlice,List<HUnitSlice>> l = new HashMap<HUnitSlice,List<HUnitSlice>>();
             
@@ -938,7 +941,7 @@ public abstract class HUnit extends HPrimUnit
             
             return l;                       
     }
-	*/	
+		
 
 		public void createPermutationSlices(IHUnit the_source, HReplicator r, HReplicatorSplit rSplit) throws HPEAbortException {
 
