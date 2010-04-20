@@ -1,0 +1,18 @@
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\SequentialNumericalIntegration.exe
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\SequentialNumericalIntegration.pdb
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\IntegratingFunctions.dll
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\NINTLIB.dll
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\IntegratingFunctions.pdb
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\NINTLIB.pdb
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\obj\Debug\SequentialNumericalIntegration.exe
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\obj\Debug\SequentialNumericalIntegration.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\SequentialNumericalIntegration.exe
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\SequentialNumericalIntegration.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\IntegratingFunctions.dll
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\NINTLIB.dll
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\IntegratingFunctions.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\bin\Debug\NINTLIB.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\obj\Debug\SequentialNumericalIntegration.exe
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\SequentialNumericalIntegration\obj\Debug\SequentialNumericalIntegration.pdb

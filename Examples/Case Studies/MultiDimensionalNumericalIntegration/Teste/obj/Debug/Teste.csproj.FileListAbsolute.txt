@@ -1,0 +1,14 @@
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\Teste.exe
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\Teste.pdb
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\NINTLIB.dll
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\NINTLIB.pdb
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\obj\Debug\Teste.exe
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\obj\Debug\Teste.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\obj\Debug\Teste.exe
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\Teste.exe
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\Teste.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\NINTLIB.dll
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\bin\Debug\NINTLIB.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\Teste\obj\Debug\Teste.pdb

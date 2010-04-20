@@ -1,0 +1,10 @@
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\bin\Debug\IntegratingFunctions.dll
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\bin\Debug\IntegratingFunctions.pdb
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\obj\Debug\IntegratingFunctions.dll
+C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\obj\Debug\IntegratingFunctions.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\bin\Debug\IntegratingFunctions.dll
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\bin\Debug\IntegratingFunctions.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\obj\Debug\IntegratingFunctions.dll
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\IntegratingFunctions\obj\Debug\IntegratingFunctions.pdb
