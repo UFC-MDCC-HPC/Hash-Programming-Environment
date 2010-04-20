@@ -27,3 +27,10 @@ C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RA
 C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\ParallelNumericalIntegration\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.exe
 C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.pdb
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\ParallelNumericalIntegration.exe
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\ParallelNumericalIntegration.pdb
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\IntegratingFunctions.dll
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.dll
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\IntegratingFunctions.pdb
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.pdb

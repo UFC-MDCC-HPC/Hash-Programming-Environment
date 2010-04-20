@@ -28,8 +28,12 @@ namespace ParallelNumericalIntegration
                         
             // Set the number of dimensions
 
-            int dim_num = 6;
-            int dim_partition_size = 2;
+            int dim_num = 1;
+            int dim_partition_size = 1;
+            getargs(args, ref dim_num, ref dim_partition_size);
+
+            //int dim_num = 6;
+            //int dim_partition_size = 2;
             int num_jobs = (int) Math.Pow(dim_partition_size, dim_num);
             int num_local_jobs = num_jobs / size;
 
@@ -138,6 +142,24 @@ namespace ParallelNumericalIntegration
             }
 
             mpi.Dispose();
+        }
+
+        private static void getargs(string[] args, ref int dim_num, ref int dim_partition_size)
+        {
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (i + 1 < args.Length)
+                {
+                    if (args[i].Equals("--dim_num"))
+                    {
+                        dim_num = int.Parse(args[i + 1]);
+                    }
+                    else if (args[i].Equals("--dim_partition_size") && i + 1 < args.Length)
+                    {
+                        dim_partition_size = int.Parse(args[i + 1]);
+                    }
+                }
+            }
         }
 
 

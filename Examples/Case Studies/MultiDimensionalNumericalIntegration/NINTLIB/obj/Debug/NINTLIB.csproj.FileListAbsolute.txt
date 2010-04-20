@@ -8,3 +8,8 @@ C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RA
 C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NINTLIB\bin\Debug\NINTLIB.dll
 C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NINTLIB\bin\Debug\NINTLIB.pdb
 C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NINTLIB\obj\Debug\NINTLIB.pdb
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\NINTLIB\bin\Debug\NINTLIB.dll
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\NINTLIB\bin\Debug\NINTLIB.pdb
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\NINTLIB\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\NINTLIB\obj\Debug\NINTLIB.dll
+C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\NINTLIB\obj\Debug\NINTLIB.pdb
