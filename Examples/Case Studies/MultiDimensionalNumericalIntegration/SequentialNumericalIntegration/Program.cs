@@ -23,6 +23,8 @@ namespace SequentialNumericalIntegration
             int dim_num = 2;
             int number_of_partitions = 10;
             getargs(args, ref dim_num, ref number_of_partitions);
+            Console.WriteLine("dim_num = " + dim_num);
+            Console.WriteLine("number_of_partitions = " + number_of_partitions);
 
             // Set the interval
 
