@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003397dbe788db1ebd2ceaa5a0378327dca8d07fc4d69a5528f414e49023a21840fbd9d15a6748125806188aa89aa45fadccdabeb5cf0922e8c3c81f1ea0aa45aa7b118bd1f4a83de6698ae1609ea740a54f492117136b97b49674b4bce644eaba1991a9bac0121760391b2dac8d85fffd2b649358e2cd2be20a5d0789e7a4b183" isAbstract="true" kind="Computation" name="TrapeziumArea" packagePath="skeleton.Farm.Job">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000d909e0f6ce59f618d2e47f4f4651e4c2812022c41df3dbc4cd1d3b601cb1d454a70fd084e404124b2e6c8cb93c0addc9f2bad545bb98f7570423424d5417ab89fc1ef6bb3ee8f675cbb15a5162a495a911d6f1fb1a3b0698461af6054a4b0cedf8ef6960e003eddfa924ecc20cbf68b99302f4b1daa53672259ddd2a749499b" localRef="base" location="/skeleton.Farm.Job/Job.hpe" name="Job" package="skeleton.Farm" version="1.0.0.0">
+        <visualDescription h="69" w="174" x="201" y="271">
+          <color b="217" g="255" r="222"/>
+        </visualDescription>
+        <parameter formFieldId="input data" varName="I"/>
+        <parameter formFieldId="output data" varName="O"/>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" parameter_id="output data" exposed="true">
+          <visualDescription h="30" w="50" x="344" y="508">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="dataIn" location="/data.Interval/Interval.hpe" name="Interval" package="data" parameter_id="input data" exposed="true">
+          <visualDescription h="30" w="50" x="132" y="484">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xsup" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+            <visualDescription h="46" w="50" x="355" y="372">
+              <color b="255" g="255" r="255"/>
+            </visualDescription>
+            <unitBounds uRef="double">
+              <visualDescription h="10" w="10" x="21" y="5"/>
+            </unitBounds>
+          </port>
+          <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xinf" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+            <visualDescription h="50" w="50" x="136" y="332">
+              <color b="255" g="255" r="255"/>
+            </visualDescription>
+            <unitBounds uRef="double">
+              <visualDescription h="10" w="10" x="19" y="5"/>
+            </unitBounds>
+          </port>
+          <unitBounds uRef="interval">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xsup" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+          <visualDescription h="46" w="50" x="355" y="372">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="21" y="5"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xinf" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+          <visualDescription h="50" w="50" x="136" y="332">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="19" y="5"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="trapezium">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" parameter_id="output data" exposed="false">
+      <visualDescription h="30" w="50" x="342" y="139">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="double">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="dataIn" location="/data.Interval/Interval.hpe" name="Interval" package="data" parameter_id="input data" exposed="false">
+      <visualDescription h="56" w="117" x="162" y="80">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xsup" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+        <visualDescription h="46" w="50" x="334" y="315">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="double">
+          <visualDescription h="10" w="10" x="21" y="5"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xinf" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+        <visualDescription h="50" w="50" x="152" y="312">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="double">
+          <visualDescription h="10" w="10" x="19" y="5"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="interval">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="dataOut" varName="O"/>
+    <supplyParameter cRef="dataIn" varName="I"/>
+    <parameter componentRef="dataOut" formFieldId="output data" varName="O"/>
+    <parameter componentRef="dataIn" formFieldId="input data" varName="I"/>
+    <interface iRef="ITrapeziumArea" nArgs="2">
+      <slice isRef="input_data">
+        <originRef cRef="dataIn" iRef="IInterval"/>
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slice>
+      <slice isRef="output_data">
+        <originRef cRef="dataOut" iRef="IDouble"/>
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using data.Trapezium;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Job;&#xA;&#xA;namespace skeleton.Farm.Job.TrapeziumArea { &#xA;&#xA;public interface ITrapeziumArea&lt;I, O> : IJob&lt;I, O>, IComputationKind &#xA;where I:ITrapezium&#xA;where O:IDouble&#xA;{&#xA;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ITrapeziumArea.cs" srcType="base" uri="/skeleton.Farm.Job.TrapeziumArea/bin/1.0.0.0/ITrapeziumArea.dll" versionId="1.0.0.0">
+          <dependency>data.Trapezium/bin/1.0.0.0/ITrapezium.dll</dependency>
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>skeleton.Farm.Job/bin/1.0.0.0/IJob.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="75" w="92" x="252" y="127">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_data" sRef="input_data"/>
+      </port>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="41" y="0"/>
+        <slice pRef="output_data" sRef="output_data"/>
+      </port>
+    </interface>
+    <unit iRef="ITrapeziumArea" private="false" uRef="trapezium" visibleInterface="true">
+      <super cRef="base" uRef="work"/>
+      <slices cRef="dataIn" replica="0" uRef="interval" sliceName="input_data" transitive="false">
+        <visualDescription h="10" w="10" x="8" y="24"/>
+        <port>double</port>
+        <port>double</port>
+      </slices>
+      <slices cRef="xsup" replica="0" uRef="double" sliceName="double" transitive="true">
+        <visualDescription h="10" w="10" x="67" y="37"/>
+      </slices>
+      <slices cRef="xinf" replica="0" uRef="double" sliceName="double" transitive="true">
+        <visualDescription h="10" w="10" x="6" y="36"/>
+      </slices>
+      <slices cRef="dataOut" replica="0" uRef="double" sliceName="output_data" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="70" y="214"/>
+    </unit>
+  </componentInfo>
+</component:component>

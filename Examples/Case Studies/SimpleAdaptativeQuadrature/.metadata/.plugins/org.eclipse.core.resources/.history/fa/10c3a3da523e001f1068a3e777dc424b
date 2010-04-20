@@ -1,0 +1,32 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+using data.Function.TestingFunction;
+
+namespace skeleton.impl.example.QuadratureAdaptative { 
+
+public class IRootImpl<F> : BaseIRootImpl<F>
+where F:ITestingFunction
+{
+
+public IRootImpl() { 
+
+} 
+
+public override void compute() { 
+		
+	input_data.a = 0.0; 
+	input_data.b = 1.0;
+	
+	Console.WriteLine("STARTING ADAPTATIVE QUADRATURE");
+	
+	manager.compute();
+	
+	Console.WriteLine("FINISH ADAPTATIVE QUADRATURE")
+
+} // end activate method 
+
+}
+
+}

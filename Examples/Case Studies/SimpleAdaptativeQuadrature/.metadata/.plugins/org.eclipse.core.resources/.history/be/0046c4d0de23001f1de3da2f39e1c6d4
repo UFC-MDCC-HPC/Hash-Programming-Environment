@@ -1,0 +1,23 @@
+using hpe.kinds;
+using jefferson.data.Data;
+using environment.MPIDirect;
+using skeleton.Farm.Distribute;
+using skeleton.Farm.Collect;
+
+namespace skeleton.Farm { 
+
+public interface IManager<Ds, Ss, Dt, Gs> : IComputationKind 
+where Ds:IData
+where Ss:IDistribute<Ds>
+where Dt:IData
+where Gs:ICollect<Dt>
+{
+
+	Ds Data_input {set;}
+	IMPIDirect Mpi {set;}
+	Dt Data_output {set;}
+
+
+} // end main interface 
+
+} // end namespace 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000055bb2e29fdbcbc4fce36b21de86e1d85e6ef53f5b46aa0e00ff2820152c0a0633a9166e0c6a6436f062132c6c25605977193dbc5c2818bcd7428cae8c7c7d22cf371418dda694d1f24310fae44a8adbf9284d25e4b2e46dcddad8f705bd201403872ec248fec9fa43932045719424bf749e627a6f435029844d26af3436a05a8" isAbstract="false" kind="Computation" name="TrapeziumArea" packagePath="skeleton.impl.Farm.Job">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003397dbe788db1ebd2ceaa5a0378327dca8d07fc4d69a5528f414e49023a21840fbd9d15a6748125806188aa89aa45fadccdabeb5cf0922e8c3c81f1ea0aa45aa7b118bd1f4a83de6698ae1609ea740a54f492117136b97b49674b4bce644eaba1991a9bac0121760391b2dac8d85fffd2b649358e2cd2be20a5d0789e7a4b183" localRef="base" location="/skeleton.Farm.Job.TrapeziumArea/TrapeziumArea.hpe" name="TrapeziumArea" package="skeleton.Farm.Job" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="230" y="200">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="input data" varName="I"/>
+        <parameter formFieldId="output data" varName="O"/>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+          <visualDescription h="30" w="50" x="344" y="508">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000027e504f6a1fc21dba78644e15fde6102c75563a86933b94f6d1b16ec16de8a80fa3ae2c52eeb5b8508eba0cafacf7046588d6864215ac5a26854f816896dbf6a42aae2c7b0e857ef6ac10b673797b520eade6b94ca15659b214a46d1873c98d3509c9cd55fd6633a0a67b14eeba62646dc6a0508fd05fadc60e7c18b67c0ca8e" localRef="dataIn" location="/data.Trapezium/Trapezium.hpe" name="Trapezium" package="data" exposed="true">
+          <visualDescription h="30" w="50" x="132" y="484">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="trapezium">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="trapezium">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <versions field1="2" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="false">
+      <visualDescription h="30" w="50" x="220" y="75">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="double">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000027e504f6a1fc21dba78644e15fde6102c75563a86933b94f6d1b16ec16de8a80fa3ae2c52eeb5b8508eba0cafacf7046588d6864215ac5a26854f816896dbf6a42aae2c7b0e857ef6ac10b673797b520eade6b94ca15659b214a46d1873c98d3509c9cd55fd6633a0a67b14eeba62646dc6a0508fd05fadc60e7c18b67c0ca8e" localRef="dataIn" location="/data.Interval/Interval.hpe" name="Trapezium" package="data" exposed="false">
+      <visualDescription h="30" w="50" x="214" y="66">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="interval">
+        <visualDescription h="10" w="10" x="5" y="2"></visualDescription>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="dataOut" varName="O"/>
+    <supplyParameter cRef="dataIn" varName="I"/>
+    <interface iRef="ITrapeziumAreaImpl" nArgs="2">
+      <slice isRef="input_data">
+        <originRef cRef="dataIn" iRef="ITrapezium"/>
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slice>
+      <slice isRef="output_data">
+        <originRef cRef="dataOut" iRef="IDouble"/>
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@8be912" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="2.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Trapezium;&#xA;using skeleton.Farm.Job.TrapeziumArea;&#xA;&#xA;namespace skeleton.impl.Farm.Job.TrapeziumArea { &#xA;&#xA;public abstract class ITrapeziumAreaImpl&lt;I, O>: Computation, ITrapeziumArea&lt;I, O>&#xA;where I:ITrapezium&#xA;where O:IDouble&#xA;{&#xA;&#xA;private O output_data = default(O);&#xA;&#xA;public O Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private I input_data = default(I);&#xA;&#xA;public I Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public ITrapeziumAreaImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000055bb2e29fdbcbc4fce36b21de86e1d85e6ef53f5b46aa0e00ff2820152c0a0633a9166e0c6a6436f062132c6c25605977193dbc5c2818bcd7428cae8c7c7d22cf371418dda694d1f24310fae44a8adbf9284d25e4b2e46dcddad8f705bd201403872ec248fec9fa43932045719424bf749e627a6f435029844d26af3436a05a8&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITrapeziumAreaImpl.cs" uri="/skeleton.impl.Farm.Job.TrapeziumArea/bin/2.0.0.0/ITrapeziumAreaImpl.dll" versionId="2.0.0.0">
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>data.Trapezium/bin/1.0.0.0/ITrapezium.dll</dependency>
+          <dependency>skeleton.Farm.Job.TrapeziumArea/bin/1.0.0.0/ITrapeziumArea.dll</dependency>
+        </file>
+      </sources>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Trapezium;&#xA;using skeleton.Farm.Job.TrapeziumArea;&#xA;&#xA;namespace skeleton.impl.Farm.Job.TrapeziumArea { &#xA;&#xA;public class ITrapeziumAreaImpl&lt;I, O>: Computation, ITrapeziumArea&lt;I, O>&#xA;where I:ITrapezium&#xA;where O:IDouble&#xA;{&#xA;&#xA;private O output_data = default(O);&#xA;&#xA;public O Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private I input_data = default(I);&#xA;&#xA;public I Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public ITrapeziumAreaImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000055bb2e29fdbcbc4fce36b21de86e1d85e6ef53f5b46aa0e00ff2820152c0a0633a9166e0c6a6436f062132c6c25605977193dbc5c2818bcd7428cae8c7c7d22cf371418dda694d1f24310fae44a8adbf9284d25e4b2e46dcddad8f705bd201403872ec248fec9fa43932045719424bf749e627a6f435029844d26af3436a05a8&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;public void compute() { &#xA;&#xA;&#x9;double l1 = input_data.YLeft;&#xA;&#x9;double b = input_data.XRight - input_data.XLeft;&#xA;&#x9;double l2 = input_data.YRight;&#xA;&#x9;&#xA;&#x9;double area = (b * (l2 + l1))/2;&#xA;&#x9;&#xA;&#x9;output_data.Value = area;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITrapeziumAreaImpl.cs" uri="/skeleton.impl.Farm.Job.TrapeziumArea/bin/1.0.0.0/ITrapeziumAreaImpl.dll" versionId="1.0.0.0">
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>data.Trapezium/bin/1.0.0.0/ITrapezium.dll</dependency>
+          <dependency>skeleton.Farm.Job.TrapeziumArea/bin/1.0.0.0/ITrapeziumArea.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="75" w="92" x="260" y="110">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_data" sRef="input_data"/>
+      </port>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="41" y="0"/>
+        <slice pRef="output_data" sRef="output_data"/>
+      </port>
+    </interface>
+    <unit iRef="ITrapeziumAreaImpl" private="false" uRef="trapezium" visibleInterface="true">
+      <super cRef="base" uRef="trapezium"/>
+      <slices cRef="dataIn" replica="0" uRef="trapezium" sliceName="input_data" transitive="false">
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slices>
+      <slices cRef="dataOut" replica="0" uRef="double" sliceName="output_data" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="71" y="169"/>
+    </unit>
+  </componentInfo>
+</component:component>

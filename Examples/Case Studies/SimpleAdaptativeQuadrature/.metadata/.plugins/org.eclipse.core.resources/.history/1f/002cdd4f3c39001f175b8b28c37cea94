@@ -1,0 +1,18 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+
+namespace data.impl.Function { 
+
+public class IFunctionImpl : BaseIFunctionImpl
+{
+
+public IFunctionImpl() { 
+
+} 
+
+
+}
+
+}

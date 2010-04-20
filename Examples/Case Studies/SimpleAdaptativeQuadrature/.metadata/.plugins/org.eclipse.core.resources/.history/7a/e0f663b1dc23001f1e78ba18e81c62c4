@@ -1,0 +1,20 @@
+using hpe.kinds;
+using data.Function;
+using jefferson.data.Double;
+using environment.MPIDirect;
+
+namespace skeleton.example.QuadratureAdaptative { 
+
+public interface IRoot : IComputationKind 
+{
+
+	IFunction Function {set;}
+	IDouble Xinf {set;}
+	IDouble Xsup {set;}
+	IDouble Data {set;}
+	IMPIDirect Mpi {set;}
+
+
+} // end main interface 
+
+} // end namespace 

@@ -1,0 +1,13 @@
+using hpe.kinds;
+using MPI;
+
+namespace environment.MPIDirect { 
+
+public interface IMPIDirect : IEnvironmentKind, IDisposable 
+{
+
+   MPI.Environment MPI { get; }
+
+} // end main interface 
+
+} // end namespace 

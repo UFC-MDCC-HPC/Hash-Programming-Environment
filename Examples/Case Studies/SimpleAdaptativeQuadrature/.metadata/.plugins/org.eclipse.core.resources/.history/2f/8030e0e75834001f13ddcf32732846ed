@@ -1,0 +1,24 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+using jefferson.data.Double;
+
+namespace skeleton.impl.Farm.Collect.AQSumAreas { 
+
+public class ISumAreasSendImpl<Ds> : BaseISumAreasSendImpl<Ds>
+where Ds:IDouble
+{
+
+public ISumAreasSendImpl() { 
+
+} 
+
+public override void synchronize() { 
+	;
+
+} // end activate method 
+
+}
+
+}

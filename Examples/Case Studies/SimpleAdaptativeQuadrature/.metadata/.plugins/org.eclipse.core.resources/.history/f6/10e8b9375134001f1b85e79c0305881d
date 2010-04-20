@@ -1,0 +1,19 @@
+/* AUTOMATICALLY GENERATE CODE */
+
+using hpe.kinds;
+using data.Function;
+using data.Interval;
+using skeleton.Farm.Distribute;
+
+namespace skeleton.Farm.Distribute.AQPartitionInterval { 
+
+public interface BaseIPartitionIntervalReceive<F, Dt> : IReceive<F, Dt>, ISynchronizerKind 
+where F:IFunction
+where Dt:IInterval<F>
+{
+
+
+
+} // end main interface 
+
+} // end namespace 

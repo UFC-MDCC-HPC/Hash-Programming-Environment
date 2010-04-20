@@ -1,0 +1,16 @@
+using hpe.kinds;
+using jefferson.data.Data;
+
+namespace data.Trapezium { 
+
+public interface ITrapezium : IData, IDataStructureKind 
+{
+     int xLeft { get; set; }
+     int xRight { get; set; }
+     int yBottom {get; set; }
+     int yTopRight {get; set; }
+     int yTopLeft {get; set; }
+
+} // end main interface 
+
+} // end namespace 

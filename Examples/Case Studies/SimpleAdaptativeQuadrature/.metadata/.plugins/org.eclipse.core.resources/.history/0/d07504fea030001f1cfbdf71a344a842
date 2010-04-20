@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" isAbstract="true" kind="Data" name="Function" packagePath="data">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="base" location="/jefferson.data.Data/Data.hpe" name="Data" package="jefferson.data" version="1.0.0.0">
+        <visualDescription h="109" w="236" x="245" y="176">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="function">
+          <visualDescription h="10" w="10" x="47" y="51"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IFunction" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public delegate double MyFunction(double x);&#xA;&#xA;public interface IFunction : IData, IDataStructureKind &#xA;{&#xA;        &#xA;    MyFunction function {set; get;}&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" uri="/data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="277" y="379">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IFunction" private="false" uRef="function" visibleInterface="true">
+      <super cRef="base" uRef="data"/>
+      <visualDescription h="40" w="80" x="114" y="282"/>
+    </unit>
+  </componentInfo>
+</component:component>

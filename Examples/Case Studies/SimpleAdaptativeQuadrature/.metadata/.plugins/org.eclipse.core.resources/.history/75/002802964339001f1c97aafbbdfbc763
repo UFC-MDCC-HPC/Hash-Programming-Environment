@@ -1,0 +1,26 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+using data.Function;
+using data.IntegralCase;
+
+namespace skeleton.impl.Farm.Distribute.DistributeIntervalImpl { 
+
+public class IDistributeIntervalSendImpl<F, Ds> : BaseIDistributeIntervalSendImpl<F, Ds>
+where F:IFunction
+where Ds:IIntegralCase<F>
+{
+
+public IDistributeIntervalSendImpl() { 
+
+} 
+
+public override void synchronize() { 
+	;
+
+} // end activate method 
+
+}
+
+}

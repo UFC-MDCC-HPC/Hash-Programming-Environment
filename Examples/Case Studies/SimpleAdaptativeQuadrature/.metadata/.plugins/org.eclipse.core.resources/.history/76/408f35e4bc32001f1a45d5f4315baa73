@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000150ccd58370af704b2eb5f8982bb78cc5a7372e6410b5403023e92329007113aa3445e171e48f8ec2cbd2799c4f730e51dea75dadeff0d5835166f62d280a9945a09a73ca631165e347b753a03875a3c9536dc327492f943a79af598b658223398e397d69e18f6a2ab703a07ff6c6a9c67610454dc17d21a0c1c535913ddfb3" isAbstract="false" kind="Data" name="Interval" packagePath="data.impl">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="base" location="/data.IntegralArea/IntegralArea.hpe" name="IntegralArea" package="data" version="1.0.0.0">
+        <visualDescription h="51" w="89" x="250" y="210">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xsup" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+          <visualDescription h="37" w="50" x="355" y="313">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="xinf" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+          <visualDescription h="36" w="50" x="198" y="313">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function" location="/data.Function/Function.hpe" name="Function" package="data" exposed="true">
+          <visualDescription h="38" w="78" x="259" y="313">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="function">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="integralarea">
+          <visualDescription h="10" w="10" x="39" y="7"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IIntegralAreaImpl" nArgs="0">
+      <slice isRef="xsup">
+        <originRef cRef="xsup" iRef="IDouble"/>
+        <visualDescription h="10" w="10" x="56" y="10"/>
+      </slice>
+      <slice isRef="xinf">
+        <originRef cRef="xinf" iRef="IDouble"/>
+        <visualDescription h="10" w="10" x="52" y="45"/>
+      </slice>
+      <slice isRef="function">
+        <originRef cRef="function" iRef="IFunction"/>
+        <visualDescription h="10" w="10" x="147" y="50"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Double;&#xA;using data.IntegralArea;&#xA;&#xA;namespace data.impl.IntegralArea { &#xA;&#xA;public class IIntegralAreaImpl: DataStructure, IIntegralArea&#xA;{&#xA;&#xA;private IFunction function = null;&#xA;&#xA;public IFunction Function {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.function = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IDouble xsup = null;&#xA;&#xA;public IDouble Xsup {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.xsup = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IDouble xinf = null;&#xA;&#xA;public IDouble Xinf {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.xinf = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public IIntegralAreaImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000000150ccd58370af704b2eb5f8982bb78cc5a7372e6410b5403023e92329007113aa3445e171e48f8ec2cbd2799c4f730e51dea75dadeff0d5835166f62d280a9945a09a73ca631165e347b753a03875a3c9536dc327492f943a79af598b658223398e397d69e18f6a2ab703a07ff6c6a9c67610454dc17d21a0c1c535913ddfb3&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IIntegralAreaImpl.cs" uri="/data.impl.IntegralArea/bin/1.0.0.0/IIntegralAreaImpl.dll" versionId="1.0.0.0">
+          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>data.IntegralArea/bin/1.0.0.0/IIntegralArea.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="43" w="108" x="240" y="43">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+      <port name="xsup">
+        <visualDescription h="10" w="10" x="102" y="9"/>
+        <slice pRef="xsup" sRef="xsup"/>
+      </port>
+      <port name="xinf">
+        <visualDescription h="10" w="10" x="18" y="53"/>
+        <slice pRef="xinf" sRef="xinf"/>
+      </port>
+      <port name="function">
+        <visualDescription h="10" w="10" x="133" y="9"/>
+        <slice pRef="function" sRef="function"/>
+      </port>
+    </interface>
+    <unit iRef="IIntegralAreaImpl" private="false" uRef="integralarea" visibleInterface="true">
+      <super cRef="base" uRef="integralarea"/>
+      <slices cRef="xsup" replica="0" uRef="double" sliceName="xsup" transitive="false">
+        <visualDescription h="10" w="10" x="56" y="10"/>
+      </slices>
+      <slices cRef="xinf" replica="0" uRef="double" sliceName="xinf" transitive="false">
+        <visualDescription h="10" w="10" x="43" y="27"/>
+      </slices>
+      <slices cRef="function" replica="0" uRef="function" sliceName="function" transitive="false">
+        <visualDescription h="10" w="10" x="13" y="25"/>
+      </slices>
+      <visualDescription h="40" w="80" x="254" y="129"/>
+    </unit>
+  </componentInfo>
+</component:component>

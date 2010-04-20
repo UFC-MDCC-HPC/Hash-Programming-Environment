@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" isAbstract="true" kind="Synchronizer" name="Distribute" packagePath="skeleton.Farm">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="MPIDirect" package="environment" exposed="true">
+      <visualDescription h="57" w="81" x="370" y="260">
+        <color b="240" g="32" r="160"/>
+      </visualDescription>
+      <unitBounds replica="1" uRef="mpi">
+        <visualDescription h="10" w="10" x="14" y="26"/>
+      </unitBounds>
+      <unitBounds replica="2" uRef="mpi">
+        <visualDescription h="10" w="10" x="59" y="25"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_source" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data source" exposed="true">
+      <visualDescription h="46" w="117" x="40" y="270">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="96" y="19"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_target" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data target" exposed="true">
+      <visualDescription h="45" w="116" x="688" y="268">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="12" y="17"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="data_source" formFieldId="data source" varName="Ds"/>
+    <parameter componentRef="data_target" formFieldId="data target" varName="Dt"/>
+    <split eRef="hPE.frontend.base.model.HReplicator@1c777361255142002310" n="2">
+      <splitLink cRef="mpi" uRef="mpi"/>
+      <splitEnumerator>hPE.frontend.base.model.HReplicator@16f756e1257018157359</splitEnumerator>
+      <splitEnumerator>hPE.frontend.base.model.HReplicator@a123fb1257018157359</splitEnumerator>
+      <originRef>mpi</originRef>
+    </split>
+    <interface iRef="IDistribute" nArgs="1">
+      <slice isRef="mpi">
+        <originRef cRef="mpi" iRef="IMPIDirect"/>
+        <visualDescription h="10" w="10" x="73" y="10"/>
+      </slice>
+      <slice isRef="data">
+        <originRef cRef="data_source" iRef="IData"/>
+        <visualDescription h="10" w="10" x="9" y="10"/>
+      </slice>
+      <visualDescription h="71" w="92" x="207" y="156">
+        <color b="128" g="128" r="128"/>
+      </visualDescription>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="70" y="51"/>
+        <slice pRef="mpi" sRef="mpi"/>
+      </port>
+      <port name="data">
+        <visualDescription h="10" w="10" x="7" y="49"/>
+        <slice pRef="data" sRef="data"/>
+      </port>
+    </interface>
+    <interface iRef="IReceive" nArgs="1">
+      <slice isRef="mpi">
+        <originRef cRef="mpi" iRef="IMPIDirect"/>
+        <visualDescription h="10" w="10" x="10" y="8"/>
+      </slice>
+      <slice isRef="data">
+        <originRef cRef="data_target" iRef="IData"/>
+        <visualDescription h="10" w="10" x="70" y="7"/>
+      </slice>
+      <visualDescription h="71" w="88" x="523" y="153">
+        <color b="128" g="128" r="128"/>
+      </visualDescription>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="8" y="50"/>
+        <slice pRef="mpi" sRef="mpi"/>
+      </port>
+      <port name="data">
+        <visualDescription h="10" w="10" x="67" y="51"/>
+        <slice pRef="data" sRef="data"/>
+      </port>
+    </interface>
+    <unit iRef="IDistribute" private="false" uRef="distribute" visibleInterface="true">
+      <slices cRef="mpi" replica="1" uRef="mpi" sliceName="mpi" transitive="false">
+        <visualDescription h="10" w="10" x="76" y="15"/>
+      </slices>
+      <slices cRef="data_source" replica="0" uRef="data" sliceName="data" transitive="false">
+        <visualDescription h="10" w="10" x="6" y="16"/>
+      </slices>
+      <visualDescription h="40" w="92" x="208" y="272"/>
+    </unit>
+    <unit iRef="IReceive" private="false" uRef="receive" visibleInterface="true">
+      <slices cRef="mpi" replica="2" uRef="mpi" sliceName="mpi" transitive="false">
+        <visualDescription h="10" w="10" x="7" y="16"/>
+      </slices>
+      <slices cRef="data_target" replica="0" uRef="data" sliceName="data" transitive="false">
+        <visualDescription h="10" w="10" x="76" y="15"/>
+      </slices>
+      <visualDescription h="40" w="94" x="521" y="271"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="N">
+      <originRef>mpi</originRef>
+      <visualDescription h="20" w="20" x="600" y="470"/>
+    </enumerator>
+    <enumerator cardinality="1" fromSplit="true" ref="hPE.frontend.base.model.HReplicator@16f756e1257018157359" varId="N1">
+      <links xsi:type="component:EnumerableEntryType" cRef="mpi" index="1" uRef="mpi"/>
+      <links xsi:type="component:EnumerableUnitType" ref="distribute"/>
+      <visualDescription h="10" w="10" x="231" y="137"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="true" ref="hPE.frontend.base.model.HReplicator@a123fb1257018157359" varId="J">
+      <links xsi:type="component:EnumerableEntryType" cRef="mpi" index="2" uRef="mpi"/>
+      <links xsi:type="component:EnumerableUnitType" ref="receive"/>
+      <links xsi:type="component:EnumerableComponentType" ref="data_target"/>
+      <visualDescription h="20" w="20" x="562" y="370"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

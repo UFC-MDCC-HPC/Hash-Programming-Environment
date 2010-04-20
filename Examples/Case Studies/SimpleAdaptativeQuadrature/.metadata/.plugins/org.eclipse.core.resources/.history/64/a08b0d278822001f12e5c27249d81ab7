@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000055bb2e29fdbcbc4fce36b21de86e1d85e6ef53f5b46aa0e00ff2820152c0a0633a9166e0c6a6436f062132c6c25605977193dbc5c2818bcd7428cae8c7c7d22cf371418dda694d1f24310fae44a8adbf9284d25e4b2e46dcddad8f705bd201403872ec248fec9fa43932045719424bf749e627a6f435029844d26af3436a05a8" isAbstract="false" kind="Computation" name="TrapeziumArea" packagePath="skeleton.impl.Farm.Job">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>

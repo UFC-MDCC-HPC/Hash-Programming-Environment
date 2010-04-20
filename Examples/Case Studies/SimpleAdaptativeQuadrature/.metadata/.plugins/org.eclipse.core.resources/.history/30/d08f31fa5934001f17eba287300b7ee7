@@ -1,0 +1,28 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+using data.Function;
+using data.Interval;
+using jefferson.data.Double;
+
+namespace skeleton.impl.Farm.Work.TrapeziumArea { 
+
+public class ? : Base?
+where ?:IFunction
+where I:IInterval<IFunction>
+where O:IDouble
+{
+
+public ?() { 
+
+} 
+
+public override void compute() { 
+	;
+
+} // end activate method 
+
+}
+
+}

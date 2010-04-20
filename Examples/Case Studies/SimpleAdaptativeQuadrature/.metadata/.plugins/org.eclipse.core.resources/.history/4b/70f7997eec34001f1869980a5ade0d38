@@ -1,0 +1,15 @@
+using hpe.kinds;
+using data.Function;
+using data.Interval;
+
+namespace skeleton.Farm.Distribute.AQPartitionInterval { 
+
+public interface IPartitionIntervalDistribute<F, Ds> : BaseIPartitionIntervalDistribute<F, Ds>
+where F:IFunction
+where Ds:IInterval<F>
+{
+
+
+} // end main interface 
+
+} // end namespace 

@@ -1,0 +1,25 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+using data.Interval;
+using data.Function;
+
+namespace skeleton.impl.Farm.Distribute.AQPartitionIntervalImpl { 
+
+public class ? : Base?
+where Dt:IInterval<IFunction>
+{
+
+public ?() { 
+
+} 
+
+public override void synchronize() { 
+	;
+
+} // end activate method 
+
+}
+
+}

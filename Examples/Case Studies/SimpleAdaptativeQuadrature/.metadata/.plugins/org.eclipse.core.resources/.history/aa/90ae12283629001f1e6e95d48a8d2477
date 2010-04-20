@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1b7ef70a5d699e2c3ae014f2efeb8f9f544767d1139b4a1e98a63f90c3c4cda92b4dcaf979b8c8778db1f16f4bdd6bf9da2646dc987af9263bb0f7d05997d6dfc7f4f33bee700a7fa882b47e6761bf899e5837a43a55cca4167981780800e359a5c68a9e038718d6949e0b528ec2856f79a0125d76ce86c1227d8a7f1967c86" isAbstract="true" kind="Computation" name="Farm" packagePath="skeleton">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_source" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data manager input" exposed="false">
+      <visualDescription h="60" w="130" x="130" y="287">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_target" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data manager output" exposed="false">
+      <visualDescription h="39" w="141" x="213" y="201">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_worker_out" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data worker output" exposed="false">
+      <visualDescription h="37" w="127" x="67" y="219">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_worker_in" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data worker input" exposed="false">
+      <visualDescription h="44" w="95" x="260" y="259">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="gather" location="/skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" parameter_id="gather strategy" exposed="false">
+      <visualDescription h="30" w="201" x="256" y="507">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="data target" varName="Dt"/>
+      <parameter formFieldId="data source" varName="O"/>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="MPIDirect" package="environment" exposed="true">
+        <visualDescription h="30" w="50" x="364" y="207">
+          <color b="240" g="32" r="160"/>
+        </visualDescription>
+        <unitBounds replica="1" uRef="mpi">
+          <visualDescription h="10" w="10" x="29" y="2"/>
+        </unitBounds>
+        <unitBounds replica="2" uRef="mpi">
+          <visualDescription h="10" w="10" x="17" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_target" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data manager output" exposed="true">
+        <visualDescription h="48" w="97" x="54" y="322">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="data">
+          <visualDescription h="10" w="10" x="46" y="7"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_source" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data worker output" exposed="false">
+        <visualDescription h="30" w="127" x="498" y="381">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="data">
+          <visualDescription h="10" w="10" x="50" y="6"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="send">
+        <visualDescription h="10" w="10" x="150" y="14"/>
+      </unitBounds>
+      <unitBounds uRef="collect">
+        <visualDescription h="10" w="10" x="37" y="11"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="scatter" location="/skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" parameter_id="scatter strategy" exposed="false">
+      <visualDescription h="30" w="177" x="284" y="36">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="data target" varName="I"/>
+      <parameter formFieldId="data source" varName="Ds"/>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="MPIDirect" package="environment" exposed="true">
+        <visualDescription h="30" w="50" x="364" y="207">
+          <color b="240" g="32" r="160"/>
+        </visualDescription>
+        <unitBounds replica="1" uRef="mpi">
+          <visualDescription h="10" w="10" x="29" y="2"/>
+        </unitBounds>
+        <unitBounds replica="2" uRef="mpi">
+          <visualDescription h="10" w="10" x="17" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_source" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data manager input" exposed="true">
+        <visualDescription h="46" w="117" x="42" y="135">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="data">
+          <visualDescription h="10" w="10" x="56" y="6"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_target" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data worker input" exposed="false">
+        <visualDescription h="30" w="117" x="548" y="142">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="data">
+          <visualDescription h="10" w="10" x="53" y="10"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="distribute">
+        <visualDescription h="10" w="10" x="26" y="11"/>
+      </unitBounds>
+      <unitBounds uRef="receive">
+        <visualDescription h="10" w="10" x="139" y="12"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000d909e0f6ce59f618d2e47f4f4651e4c2812022c41df3dbc4cd1d3b601cb1d454a70fd084e404124b2e6c8cb93c0addc9f2bad545bb98f7570423424d5417ab89fc1ef6bb3ee8f675cbb15a5162a495a911d6f1fb1a3b0698461af6054a4b0cedf8ef6960e003eddfa924ecc20cbf68b99302f4b1daa53672259ddd2a749499b" localRef="job" location="/skeleton.Farm.Job/Job.hpe" name="Job" package="skeleton.Farm" parameter_id="job task" exposed="false">
+      <visualDescription h="30" w="50" x="653" y="271">
+        <color b="217" g="255" r="222"/>
+      </visualDescription>
+      <parameter formFieldId="input data" varName="I"/>
+      <parameter formFieldId="output data" varName="O"/>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data worker output" exposed="false">
+        <visualDescription h="30" w="127" x="498" y="381">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="data">
+          <visualDescription h="10" w="10" x="50" y="6"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="dataIn" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="data worker input" exposed="false">
+        <visualDescription h="30" w="117" x="548" y="142">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="data">
+          <visualDescription h="10" w="10" x="53" y="10"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="job">
+        <visualDescription h="10" w="10" x="26" y="7"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="data_source" varName="Ds"/>
+    <supplyParameter cRef="data_target" varName="Dt"/>
+    <supplyParameter cRef="data_worker_out" varName="O"/>
+    <supplyParameter cRef="data_worker_in" varName="I"/>
+    <parameter componentRef="gather" formFieldId="gather strategy" varName="Gs"/>
+    <parameter componentRef="scatter" formFieldId="scatter strategy" varName="Ss"/>
+    <parameter componentRef="job" formFieldId="job task" varName="J"/>
+    <parameter componentRef="data_source" formFieldId="data manager input" varName="Ds"/>
+    <parameter componentRef="data_target" formFieldId="data manager output" varName="Dt"/>
+    <parameter componentRef="data_worker_out" formFieldId="data worker output" varName="O"/>
+    <parameter componentRef="data_worker_in" formFieldId="data worker input" varName="I"/>
+    <innerRenaming cNewName="data_worker_out" cOldName="data_source" cRef="gather"/>
+    <innerRenaming cNewName="data_worker_out" cOldName="dataOut" cRef="job"/>
+    <innerRenaming cNewName="data_worker_in" cOldName="data_target" cRef="scatter"/>
+    <innerRenaming cNewName="data_worker_in" cOldName="dataIn" cRef="job"/>
+    <fusion>
+      <cRefs>scatter</cRefs>
+      <cRefs>gather</cRefs>
+      <pRef>mpi</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>job</cRefs>
+      <cRefs>gather</cRefs>
+      <pRef>data_worker_out</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>job</cRefs>
+      <cRefs>scatter</cRefs>
+      <pRef>data_worker_in</pRef>
+    </fusion>
+    <interface iRef="IManager" nArgs="4">
+      <slice isRef="distribute">
+        <originRef cRef="scatter" iRef="IDistribute"/>
+        <visualDescription h="10" w="10" x="23" y="7"/>
+      </slice>
+      <slice isRef="collect">
+        <originRef cRef="gather" iRef="ICollect"/>
+        <visualDescription h="10" w="10" x="68" y="7"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@1089f3b" repeat="0">
+        <visualDescription h="170" w="130" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@10dfde5" repeat="0" sliceRef="distribute">
+          <visualDescription h="50" w="50" x="32" y="19"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@197e2a6" repeat="0" sliceRef="collect">
+          <visualDescription h="50" w="50" x="32" y="96"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface IManager&lt;Ds, Ss, Dt, Gs> : IComputationKind &#xA;where Ds:IData&#xA;where Ss:IDistribute&lt;Ds>&#xA;where Dt:IData&#xA;where Gs:ICollect&lt;Dt>&#xA;{&#xA;&#xA;&#x9;Ds Data_input {set;}&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#x9;Dt Data_output {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IManager.cs" uri="/skeleton.Farm/bin/1.0.0.0/IManager.dll" versionId="1.0.0.0">
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll</dependency>
+          <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="95" w="106" x="197" y="653">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+      <port name="data_input">
+        <visualDescription h="10" w="10" x="11" y="35"/>
+        <slice pRef="data" sRef="distribute"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="41" y="26"/>
+        <slice pRef="mpi" sRef="distribute"/>
+        <slice pRef="mpi" sRef="collect"/>
+      </port>
+      <port name="data_output">
+        <visualDescription h="10" w="10" x="84" y="39"/>
+        <slice pRef="data" sRef="collect"/>
+      </port>
+    </interface>
+    <interface iRef="IWorker" nArgs="5">
+      <slice isRef="send">
+        <originRef cRef="gather" iRef="ISend"/>
+        <visualDescription h="10" w="10" x="164" y="19"/>
+      </slice>
+      <slice isRef="receive">
+        <originRef cRef="scatter" iRef="IReceive"/>
+        <visualDescription h="10" w="10" x="13" y="12"/>
+      </slice>
+      <slice isRef="job">
+        <originRef cRef="job" iRef="IJob"/>
+        <visualDescription h="10" w="10" x="86" y="15"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@d3e837" repeat="0">
+        <visualDescription h="229" w="102" x="115" y="125"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@328f00" repeat="0" sliceRef="receive">
+          <visualDescription h="50" w="50" x="34" y="20"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14a5255" repeat="0" sliceRef="job">
+          <visualDescription h="50" w="50" x="26" y="88"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6365c8" repeat="0" sliceRef="send">
+          <visualDescription h="50" w="50" x="24" y="159"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Job;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface IWorker&lt;O, Gs, I, Ss, J> : IComputationKind &#xA;where O:IData&#xA;where Gs:ISend&lt;O>&#xA;where I:IData&#xA;where Ss:IReceive&lt;I>&#xA;where J:IJob&lt;I, O>&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IWorker.cs" uri="/skeleton.Farm/bin/1.0.0.0/IWorker.dll" versionId="1.0.0.0">
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll</dependency>
+          <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IReceive.dll</dependency>
+          <dependency>skeleton.Farm.Job/bin/1.0.0.0/IJob.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="85" w="203" x="539" y="750">
+        <color b="0" g="165" r="255"/>
+      </visualDescription>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="127" y="8"/>
+        <slice pRef="data" sRef="send"/>
+        <slice pRef="output_data" sRef="job"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="88" y="61"/>
+        <slice pRef="mpi" sRef="send"/>
+        <slice pRef="mpi" sRef="receive"/>
+      </port>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="47" y="13"/>
+        <slice pRef="data" sRef="receive"/>
+        <slice pRef="input_data" sRef="job"/>
+      </port>
+    </interface>
+    <unit iRef="IManager" private="false" uRef="manager" visibleInterface="true">
+      <slices cRef="mpi" replica="1" uRef="mpi" sliceName="mpi" transitive="true">
+        <visualDescription h="10" w="10" x="63" y="1"/>
+      </slices>
+      <slices cRef="data_source" replica="0" uRef="data" sliceName="data_input" transitive="true">
+        <visualDescription h="10" w="10" x="20" y="24"/>
+      </slices>
+      <slices cRef="data_target" replica="0" uRef="data" sliceName="data_output" transitive="true">
+        <visualDescription h="10" w="10" x="45" y="28"/>
+      </slices>
+      <slices cRef="scatter" replica="0" uRef="distribute" sliceName="distribute" transitive="false">
+        <visualDescription h="10" w="10" x="23" y="7"/>
+        <port>mpi</port>
+        <port>data_input</port>
+      </slices>
+      <slices cRef="gather" replica="0" uRef="collect" sliceName="collect" transitive="false">
+        <visualDescription h="10" w="10" x="68" y="7"/>
+        <port>mpi</port>
+        <port>data_output</port>
+      </slices>
+      <visualDescription h="40" w="80" x="189" y="252"/>
+    </unit>
+    <unit iRef="IWorker" private="false" uRef="worker" visibleInterface="true">
+      <slices cRef="mpi" replica="2" uRef="mpi" sliceName="mpi" transitive="true">
+        <visualDescription h="10" w="10" x="59" y="9"/>
+      </slices>
+      <slices cRef="data_worker_out" replica="0" uRef="data" sliceName="output_data" transitive="true">
+        <visualDescription h="10" w="10" x="28" y="24"/>
+      </slices>
+      <slices cRef="data_worker_in" replica="0" uRef="data" sliceName="input_data" transitive="true">
+        <visualDescription h="10" w="10" x="23" y="23"/>
+      </slices>
+      <slices cRef="gather" replica="0" uRef="send" sliceName="send" transitive="false">
+        <visualDescription h="10" w="10" x="36" y="27"/>
+        <port>mpi</port>
+        <port>output_data</port>
+      </slices>
+      <slices cRef="scatter" replica="0" uRef="receive" sliceName="receive" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="6"/>
+        <port>mpi</port>
+        <port>input_data</port>
+      </slices>
+      <slices cRef="job" replica="0" uRef="job" sliceName="job" transitive="false">
+        <visualDescription h="10" w="10" x="0" y="22"/>
+        <port>input_data</port>
+        <port>output_data</port>
+      </slices>
+      <visualDescription h="40" w="80" x="413" y="282"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="N">
+      <originRef>gather</originRef>
+      <originRef>mpi</originRef>
+      <visualDescription h="20" w="20" x="85" y="541"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="true" ref="hPE.frontend.base.model.HReplicator@18119d71257018321109" varId="I">
+      <originRef>gather</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="gather" uRef="send"/>
+      <links xsi:type="component:EnumerableUnitType" ref="worker"/>
+      <links xsi:type="component:EnumerableComponentType" ref="job"/>
+      <visualDescription h="20" w="20" x="324" y="402"/>
+    </enumerator>
+    <enumerator cardinality="1" fromSplit="true" ref="hPE.frontend.base.model.HReplicator@164d36e1257018321109" varId="N2">
+      <originRef>gather</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="gather" uRef="collect"/>
+      <links xsi:type="component:EnumerableUnitType" ref="manager"/>
+      <visualDescription h="10" w="10" x="246" y="157"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="N">
+      <originRef>scatter</originRef>
+      <originRef>mpi</originRef>
+      <visualDescription h="20" w="20" x="122" y="59"/>
+    </enumerator>
+    <enumerator cardinality="1" fromSplit="true" ref="hPE.frontend.base.model.HReplicator@16f756e1257018157359" varId="N1">
+      <originRef>scatter</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="scatter" uRef="distribute"/>
+      <links xsi:type="component:EnumerableUnitType" ref="manager"/>
+      <visualDescription h="10" w="10" x="231" y="137"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="true" ref="hPE.frontend.base.model.HReplicator@a123fb1257018157359" varId="I">
+      <originRef>scatter</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="scatter" uRef="receive"/>
+      <links xsi:type="component:EnumerableUnitType" ref="worker"/>
+      <links xsi:type="component:EnumerableComponentType" ref="job"/>
+      <visualDescription h="20" w="20" x="304" y="244"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@a123fb1257018157359</eRef>
+        <originRef>scatter</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18119d71257018321109</eRef>
+        <originRef>gather</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>gather</originRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>scatter</originRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+  </componentInfo>
+</component:component>

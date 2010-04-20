@@ -1,0 +1,13 @@
+using hpe.kinds;
+using jefferson.data.Data;
+
+namespace data.Trapezium { 
+
+public interface ITrapezium : IData, IDataStructureKind 
+{
+
+
+
+} // end main interface 
+
+} // end namespace 

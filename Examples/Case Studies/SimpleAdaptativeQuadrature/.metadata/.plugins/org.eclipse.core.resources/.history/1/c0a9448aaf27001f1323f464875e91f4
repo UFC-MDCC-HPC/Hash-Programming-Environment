@@ -1,0 +1,17 @@
+using hpe.kinds;
+using data.Trapezium;
+using jefferson.data.Double;
+using skeleton.Farm.Job;
+
+namespace skeleton.Farm.Job.TrapeziumArea { 
+
+public interface ITrapezium<I, O> : IJob<I, O>, IComputationKind 
+where I:ITrapezium
+where O:IDouble
+{
+
+
+
+} // end main interface 
+
+} // end namespace 

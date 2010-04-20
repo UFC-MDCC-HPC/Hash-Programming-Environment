@@ -1,0 +1,14 @@
+using hpe.kinds;
+using environment.MPIDirect;
+
+namespace skeleton.example.QuadratureAdaptative { 
+
+public interface IPeer : IComputationKind 
+{
+
+	IMPIDirect Mpi {set;}
+
+
+} // end main interface 
+
+} // end namespace 

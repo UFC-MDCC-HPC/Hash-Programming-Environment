@@ -1,0 +1,21 @@
+/* AUTOMATICALLY GENERATE CODE */
+
+using hpe.kinds;
+using data.Function;
+using data.Interval;
+using jefferson.data.Double;
+using skeleton.Farm.Work;
+
+namespace skeleton.Farm.Work.TrapeziumArea { 
+
+public interface BaseITrapeziumArea<F, I, O> : IWork<F, I, O>, IComputationKind 
+where F:IFunction
+where I:IInterval<F>
+where O:IDouble
+{
+
+
+
+} // end main interface 
+
+} // end namespace 

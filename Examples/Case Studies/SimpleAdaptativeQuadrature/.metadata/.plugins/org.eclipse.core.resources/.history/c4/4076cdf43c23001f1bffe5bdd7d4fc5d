@@ -1,0 +1,16 @@
+using hpe.kinds;
+using jefferson.data.Double;
+using jefferson.data.Data;
+
+namespace data.IntegralArea { 
+
+public interface IIntegralArea : IData, IDataStructureKind 
+{
+
+	IDouble Xsup {set;}
+	IDouble Xinf {set;}
+
+
+} // end main interface 
+
+} // end namespace 

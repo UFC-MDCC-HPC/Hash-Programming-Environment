@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000001000100d944628f8c3c3ffb35f1a41e67dae983c74dea4a08aa438c286f754c956c8ae4b66a47cd5e4610e5584b37fec69aecbed9fbf7231fe748822f9f96cdebd74272c8b7f58d8d9e536d2f60544cec606a19de3c1a43c2aded6d4d43c6a8bbd83143a342fda08afae5b20d17957e82790260dad70241f9c775d95fe3f6841283d292" isAbstract="false" kind="Computation" name="TrapeziumArea" packagePath="skeleton.impl.Farm.Work">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003397dbe788db1ebd2ceaa5a0378327dca8d07fc4d69a5528f414e49023a21840fbd9d15a6748125806188aa89aa45fadccdabeb5cf0922e8c3c81f1ea0aa45aa7b118bd1f4a83de6698ae1609ea740a54f492117136b97b49674b4bce644eaba1991a9bac0121760391b2dac8d85fffd2b649358e2cd2be20a5d0789e7a4b183" localRef="base" location="/skeleton.Farm.Work.TrapeziumArea/TrapeziumArea.hpe" name="TrapeziumArea" package="skeleton.Farm.Work" version="1.0.0.0">
+        <visualDescription h="74" w="157" x="313" y="154">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="input data" varName="I"/>
+        <parameter formFieldId="output data" varName="O"/>
+        <parameter formFieldId="function" varName="F"/>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="true">
+          <visualDescription h="30" w="50" x="344" y="508">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="double">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="dataIn" location="/data.Interval/Interval.hpe" name="Interval" package="data" exposed="true">
+          <visualDescription h="30" w="50" x="132" y="484">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="function" varName="F"/>
+          <unitBounds uRef="interval">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="trapezium">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function" location="/data.Function/Function.hpe" name="Function" package="data" exposed="false">
+      <visualDescription h="73" w="147" x="321" y="351">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="function">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="data_out" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="false">
+      <visualDescription h="60" w="165" x="68" y="165">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="double">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_in" location="/data.Interval/Interval.hpe" name="Interval" package="data" exposed="false">
+      <visualDescription h="95" w="268" x="0" y="264">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="function" varName="F"/>
+      <unitBounds uRef="interval">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="function" varName="F"/>
+    <supplyParameter cRef="data_out" varName="O"/>
+    <supplyParameter cRef="data_in" varName="I"/>
+    <interface iRef="ITrapeziumAreaImpl" nArgs="3">
+      <slice isRef="input_data">
+        <originRef cRef="dataIn" iRef="IInterval"/>
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slice>
+      <slice isRef="output_data">
+        <originRef cRef="dataOut" iRef="IDouble"/>
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@7339db" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Interval;&#xA;using data.Function;&#xA;using skeleton.Farm.Work.TrapeziumArea;&#xA;&#xA;namespace skeleton.impl.Farm.Work.TrapeziumArea { &#xA;&#xA;public abstract class BaseITrapeziumAreaImpl&lt;F, I, O>: Computation, ITrapeziumArea&lt;F, I, O>&#xA;where F:IFunction&#xA;where I:IInterval&lt;F>&#xA;where O:IDouble&#xA;{&#xA;&#xA;protected O output_data = default(O);&#xA;&#xA;public O Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected I input_data = default(I);&#xA;&#xA;public I Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseITrapeziumAreaImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000001000100d944628f8c3c3ffb35f1a41e67dae983c74dea4a08aa438c286f754c956c8ae4b66a47cd5e4610e5584b37fec69aecbed9fbf7231fe748822f9f96cdebd74272c8b7f58d8d9e536d2f60544cec606a19de3c1a43c2aded6d4d43c6a8bbd83143a342fda08afae5b20d17957e82790260dad70241f9c775d95fe3f6841283d292&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITrapeziumAreaImpl.cs" srcType="base" uri="/skeleton.impl.Farm.Work.TrapeziumArea/bin/1.0.0.0/BaseITrapeziumAreaImpl.dll" versionId="1.0.0.0">
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>data.Interval/bin/1.0.0.0/IInterval.dll</dependency>
+          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
+          <dependency>skeleton.Farm.Work.TrapeziumArea/bin/1.0.0.0/ITrapeziumArea.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.Interval;&#xA;using jefferson.data.Double;&#xA;&#xA;namespace skeleton.impl.Farm.Work.TrapeziumArea { &#xA;&#xA;public class ITrapeziumAreaImpl&lt;F, I, O> : BaseITrapeziumAreaImpl&lt;F, I, O>&#xA;where F:IFunction&#xA;where I:IInterval&lt;F>&#xA;where O:IDouble&#xA;{&#xA;&#xA;public ITrapeziumAreaImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITrapeziumAreaImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Work.TrapeziumArea/bin/1.0.0.0/ITrapeziumAreaImpl.dll" versionId="1.0.0.0">
+          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
+          <dependency>data.Interval/bin/1.0.0.0/IInterval.dll</dependency>
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>%WORKSPACE/skeleton.impl.Farm.Work.TrapeziumArea/bin/1.0.0.0/BaseITrapeziumAreaImpl.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="75" w="92" x="158" y="48">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_data" sRef="input_data"/>
+      </port>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="41" y="0"/>
+        <slice pRef="output_data" sRef="output_data"/>
+      </port>
+    </interface>
+    <unit iRef="ITrapeziumAreaImpl" private="false" uRef="trapezium" visibleInterface="true">
+      <super cRef="base" uRef="trapezium"/>
+      <slices cRef="dataIn" replica="0" uRef="interval" sliceName="input_data" transitive="false">
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slices>
+      <slices cRef="dataOut" replica="0" uRef="double" sliceName="output_data" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="73" y="223"/>
+    </unit>
+  </componentInfo>
+</component:component>

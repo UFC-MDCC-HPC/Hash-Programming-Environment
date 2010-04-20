@@ -1,0 +1,29 @@
+using System;
+using DGAC;
+using hpe.basic;
+using hpe.kinds;
+using data.Trapezium;
+
+namespace data.impl.Trapezium { 
+
+public class ITrapeziumImpl: DataStructure, ITrapezium
+{
+
+     double XLeft  { get { return xleft; } set {xleft = value;} }
+     double XRight { get { return xright;} set {xright = value;} }
+     double YLeft  { get { return yleft;} set {yleft = value;} }
+     double YRight { get { return yright;} set {yright = value;} }
+public ITrapeziumImpl() { 
+
+} 
+
+public static string UID = "002400000480000094000000060200000024000052534131000400000100010035ff1bde69ab4ac5f90180ddbbc19eaeaf3ac28de5513aff5ca0bed9f1c86f39c584bbad40ff8d3186bdb49b35a966d10f14d0f12ff46113388933679fc832f5098c35171678ca4004df86f79b948a9412d130fa3629486ed8af0ec2b489688642af81d7a540dd66901b1d6dbd2c6fcdc9cf2588984eb3c4478633f839d072bb";
+
+override public void createSlices() {
+	base.createSlices();
+} 
+
+
+}
+
+}
