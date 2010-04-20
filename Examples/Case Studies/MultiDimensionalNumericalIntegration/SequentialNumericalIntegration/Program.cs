@@ -20,7 +20,9 @@ namespace SequentialNumericalIntegration
 
             // Set the number of dimensions
 
-            int dim_num = 6;
+            int dim_num = 2;
+            int number_of_partitions = 10;
+            getargs(args, ref dim_num, ref number_of_partitions);
 
             // Set the interval
 
@@ -40,7 +42,7 @@ namespace SequentialNumericalIntegration
             // sub_num(1:dim_num) = 10
             for (int i = 0; i < dim_num; i++)
             {
-                sub_num[i] = 8;
+                sub_num[i] = number_of_partitions;
             }
 
             // Perform work
@@ -60,18 +62,36 @@ namespace SequentialNumericalIntegration
         }
 
 
-        private static double[,] xs = new double[0,0];
+        private static double[,] xs = new double[0, 0];
 
         private static double function(double[] x)
         {
             double[,] x_ = new double[1, x.Length];
 
             int i = 0;
-            foreach (double e in x)            
+            foreach (double e in x)
                 x_[0, i++] = e;
-            
+
 
             return f(x_)[0];
+        }
+
+        private static void getargs(string[] args, ref int dim_num, ref int dim_partition_size)
+        {
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (i + 1 < args.Length)
+                {
+                    if (args[i].Equals("--dim_num"))
+                    {
+                        dim_num = int.Parse(args[i + 1]);
+                    }
+                    else if (args[i].Equals("--number_of_partitions") && i + 1 < args.Length)
+                    {
+                        dim_partition_size = int.Parse(args[i + 1]);
+                    }
+                }
+            }
         }
     }
 
