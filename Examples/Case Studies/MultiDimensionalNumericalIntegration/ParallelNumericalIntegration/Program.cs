@@ -32,12 +32,15 @@ namespace ParallelNumericalIntegration
             int dim_partition_size = 1;
             int number_of_partitions = 1;
             getargs(args, ref dim_num, ref dim_partition_size, ref number_of_partitions);
+            int num_jobs = (int)Math.Pow(dim_partition_size, dim_num);
+            int num_local_jobs = num_jobs / size;
+
             Console.WriteLine("dim_num = " + dim_num);
             Console.WriteLine("dim_partition_size = " + dim_partition_size);
             Console.WriteLine("number_of_partitions = " + number_of_partitions);
+            Console.WriteLine("num_jobs = " + num_jobs);
+            Console.WriteLine("num_local_jobs = " + num_local_jobs);
 
-            int num_jobs = (int) Math.Pow(dim_partition_size, dim_num);
-            int num_local_jobs = num_jobs / size;
 
 
             if (rank == 0) // MANAGER (the manager only distribute jobs and collect results)
