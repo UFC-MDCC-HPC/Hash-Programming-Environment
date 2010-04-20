@@ -1,0 +1,15 @@
+ParallelNumericalIntegration/Program.cs
+
+-target:exe
+
+-r:System
+-r:System.Data
+-r:System.Core
+-r:System.Data.DataSetExtensions
+-r:System.Xml
+-r:System.Xml.Linq
+-r:bin/NINTLIB.dll
+-r:bin/IntegratingFunctions.dll
+-r:"C:\Program Files\MPI.NET\Lib\MPI.dll"
+
+-out:bin/ParallelNumericalIntegration.exe
