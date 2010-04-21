@@ -1,0 +1,26 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ctype="Workspace" />
+  <MonoDevelop.Ide.DebuggingService>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService>
+  <MonoDevelop.Ide.Workbench ActiveDocument="NINTLIB\NINTLIB.cs" ctype="Workbench">
+    <Files>
+      <File FileName="NINTLIB\NINTLIB.cs" Line="465" Column="3" />
+      <File FileName="NINTLIB\nintlib.f90" Line="1" Column="1" />
+      <File FileName="Teste\Program.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True" selected="True">
+          <Node name="NINTLIB" expanded="True" />
+          <Node name="ParallelNumericalIntegration" expanded="True" />
+          <Node name="SequentialNumericalIntegration" expanded="True" />
+          <Node name="Teste" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>

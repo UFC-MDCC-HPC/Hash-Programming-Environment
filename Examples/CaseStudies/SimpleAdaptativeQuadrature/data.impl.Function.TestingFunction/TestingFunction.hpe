@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000001000100618fc854420abe31d8cfba13c89ae87d35efa93e350338f40c4c2915397b82daf3871a8c0469c1f14d612dd1bc0ed0b21aee77aedc323d9defec3f7aaea0a5ea2e90769fc24c7dba814ea2455611bba74a758e6316973414a94bd180397a3dd3f6d9efc41b1d285303b2ef49ed3d95dac7a2464ef16821d5d4c41a373c0beadb" isAbstract="false" kind="Data" name="TestingFunction" packagePath="data.impl.Function">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000001000100b9122f7d73f48b66cfa1e242e64e46991c09427f29a390f1e6a4ee903329b1fbefb192e13ca170c1008b7a87444077d4d38680bb5526cfb68afff47b924ad873cc488649c2cb7b5553b74ab30d3e55edc21b7c51e947d848b1f897c611e02055d6f8576e025cd578b39ccb93a4b6c9f492ae6d0fa2a848a2d6b6e9a08b651fec" localRef="base" location="/data.Function.TestingFunction/TestingFunction.hpe" name="TestingFunction" package="data.Function" version="1.0.0.0">
+        <visualDescription h="60" w="102" x="250" y="216">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="testing_function">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ITestingFunctionImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace data.impl.Function.TestingFunction { &#xA;&#xA;public abstract class BaseITestingFunctionImpl: DataStructure, BaseITestingFunction&#xA;{&#xA;&#xA;&#xA;public BaseITestingFunctionImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000001000100618fc854420abe31d8cfba13c89ae87d35efa93e350338f40c4c2915397b82daf3871a8c0469c1f14d612dd1bc0ed0b21aee77aedc323d9defec3f7aaea0a5ea2e90769fc24c7dba814ea2455611bba74a758e6316973414a94bd180397a3dd3f6d9efc41b1d285303b2ef49ed3d95dac7a2464ef16821d5d4c41a373c0beadb&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITestingFunctionImpl.cs" srcType="base" uri="/data.impl.Function.TestingFunction/bin/1.0.0.0/BaseITestingFunctionImpl.dll" versionId="1.0.0.0">
+          <dependency>data.Function.TestingFunction/bin/1.0.0.0/BaseITestingFunction.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace data.impl.Function.TestingFunction { &#xA;&#xA;public class ITestingFunctionImpl : BaseITestingFunctionImpl, ITestingFunction&#xA;{&#xA;&#xA;public ITestingFunctionImpl() { &#xA;&#xA;} &#xA;&#xA;public double f(double x) {&#xA;   return x;&#xD;&#xA;}&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITestingFunctionImpl.cs" srcType="user" uri="/data.impl.Function.TestingFunction/bin/1.0.0.0/ITestingFunctionImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/data.impl.Function.TestingFunction/bin/1.0.0.0/BaseITestingFunctionImpl.dll</dependency>
+          <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="68" w="148" x="210" y="120">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ITestingFunctionImpl" private="false" uRef="testing_function" visibleInterface="true">
+      <super cRef="base" uRef="testing_function"/>
+      <visualDescription h="40" w="137" x="308" y="342"/>
+    </unit>
+  </componentInfo>
+</component:component>

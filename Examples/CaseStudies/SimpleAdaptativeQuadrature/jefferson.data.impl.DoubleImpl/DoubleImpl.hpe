@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e314ca6567d410c166366d9b56173dbf7bb6487cb8a345c4e80b85ab2fa9d3e77324c0a90e0efc655b66793a072782012152c6ff062830e5a61932773b14bf8ceb6fd78018f178c1114a5a6953dec684c68b3e1708782e9f7b1560f60dddddd7cd155595b0fd05a5bad2382f9f43ef84e9ba223fcc5bc668c09e1f19ca7abda2" isAbstract="false" kind="Data" locationURI="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="DoubleImpl" packagePath="jefferson.data.impl">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="base" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" version="1.0.0.0">
+        <visualDescription h="89" w="242" x="238" y="323">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="double">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IDoubleImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;&#xA;namespace jefferson.data.impl.DoubleImpl { &#xA;&#xA;public abstract class BaseIDoubleImpl: DataStructure, BaseIDouble&#xA;{&#xA;&#xA;&#xA;public BaseIDoubleImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000e314ca6567d410c166366d9b56173dbf7bb6487cb8a345c4e80b85ab2fa9d3e77324c0a90e0efc655b66793a072782012152c6ff062830e5a61932773b14bf8ceb6fd78018f178c1114a5a6953dec684c68b3e1708782e9f7b1560f60dddddd7cd155595b0fd05a5bad2382f9f43ef84e9ba223fcc5bc668c09e1f19ca7abda2&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIDoubleImpl.cs" srcType="base" uri="/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/BaseIDoubleImpl.dll" versionId="1.0.0.0">
+          <dependency>jefferson.data.Double/bin/1.0.0.0/BaseIDouble.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;&#xA;namespace jefferson.data.impl.DoubleImpl { &#xA;&#xA;public class IDoubleImpl : BaseIDoubleImpl, IDouble&#xA;{&#xA;&#xA;public IDoubleImpl() { &#xA;&#xA;} &#xA;&#xA;private double number;&#xA;&#xA;public double Value{&#xA;&#x9;&#x9;set{&#xA;&#x9;&#x9;&#x9;this.number = value;&#xA;&#x9;&#x9;}&#xA;&#x9;    get{&#xA;&#x9;&#x9;   return this.number;&#xA;&#x9;    }&#xA;&#x9;}&#xA;public void plus(IDouble b) { this.number += b.Value; }&#xA;public void times(IDouble b) { this.number *= b.Value; }&#xA;public void minus(IDouble b) { this.number -= b.Value; }&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDoubleImpl.cs" srcType="user" uri="/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/IDoubleImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/BaseIDoubleImpl.dll</dependency>
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="171" x="200" y="108">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IDoubleImpl" private="false" uRef="double" visibleInterface="true">
+      <super cRef="base" uRef="double"/>
+      <visualDescription h="40" w="80" x="28" y="319"/>
+    </unit>
+  </componentInfo>
+</component:component>
