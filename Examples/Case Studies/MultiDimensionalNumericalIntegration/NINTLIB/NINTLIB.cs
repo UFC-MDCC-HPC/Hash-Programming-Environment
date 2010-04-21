@@ -6,7 +6,7 @@ using System.Text;
 namespace NINTLIB
 {
     public delegate double IntegratingFunction(double[] x);
-    public delegate double[] MultiPointsIntegratingFunction(double[,] x);
+    public delegate double[] MultiPointsIntegratingFunction(double[,] x);   
 
     public class NINTLIB
     {

@@ -34,3 +34,5 @@ C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case S
 C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.dll
 C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\IntegratingFunctions.pdb
 C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.pdb
+C:\Users\Heron\Documents\My Dropbox\Case Studies\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.exe
+C:\Users\Heron\Documents\My Dropbox\Case Studies\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.pdb
