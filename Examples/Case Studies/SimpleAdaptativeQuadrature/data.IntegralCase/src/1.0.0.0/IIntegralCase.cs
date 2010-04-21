@@ -8,11 +8,9 @@ public interface IIntegralCase<F> : BaseIIntegralCase<F>, IData
 where F:IFunction
 {
 
-	double[] a {get;}
-	double[] b {get;}
-	double f (double[] x); 
-	
-	int dim_num {get; set;}
+	double a {set;get;}
+	double b {set;get;}
+	double f (double x); 
 	
 } // end main interface 
 

@@ -12,12 +12,6 @@ where I:IIntegralCase<F>
 where O:IDouble
 {
 
-	int dim_partition_size {get; set;}
-	int number_of_partitions {get; set;}
-	int ind {get; set;}
-	double tol {get; set;}
-	int it_max {get; set;}
-
 
 } // end main interface 
 

@@ -18,20 +18,11 @@ public ISumAreasSendImpl() {
 public override void synchronize() { 
 
 	Intracommunicator localComm = mpi.localComm(this);
-	
-	int[] ranks_of_collector = mpi.ranksOf(this, "collect");
-	int root_collect = ranks_of_collector[0];
+	int[] a = mpi.ranksOf(this, "send");
 
-    double result = data.Value; // mudará para "double[] result". 
-   
-    int size = 0; // result.Length; 
-    Request req = localComm.ImmediateSend<int>(size, root_collect, 0);
+	int root = a[0];
 
-    localComm.Reduce<double>(result, Operation<double>.Add, root_collect);
-
-    if (/*!req.Test()*/ true) {
-       req.Cancel();
-    }
+	localComm.Reduce<double>(data.Value, Operation<double>.Add, root);
 
 } // end activate method 
 
