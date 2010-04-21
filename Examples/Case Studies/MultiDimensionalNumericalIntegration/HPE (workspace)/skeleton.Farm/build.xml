@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Farm">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Farm-1.0.0.0">
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/Farm.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/bin/1.0.0.0/BaseIManager.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/src/1.0.0.0/BaseIManager.cs"/>
+      </sources>
+      <references>
+        <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll"/>
+        <include name="skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/Farm.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/bin/1.0.0.0/IManager.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/src/1.0.0.0/IManager.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll"/>
+        <include name="skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\skeleton.Farm\bin\1.0.0.0\BaseIManager.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/Farm.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/bin/1.0.0.0/BaseIWorker.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/src/1.0.0.0/BaseIWorker.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll"/>
+        <include name="skeleton.Farm.Distribute/bin/1.0.0.0/IReceive.dll"/>
+        <include name="skeleton.Farm.Work/bin/1.0.0.0/IWork.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/Farm.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/bin/1.0.0.0/IWorker.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm/src/1.0.0.0/IWorker.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll"/>
+        <include name="skeleton.Farm.Distribute/bin/1.0.0.0/IReceive.dll"/>
+        <include name="skeleton.Farm.Work/bin/1.0.0.0/IWork.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\skeleton.Farm\bin\1.0.0.0\BaseIWorker.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Farm-1.0.0.0" name="all"/>
+</project>

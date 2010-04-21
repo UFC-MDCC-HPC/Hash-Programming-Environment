@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="IntegralCase">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="IntegralCase-1.0.0.0">
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/IntegralCase.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/bin/1.0.0.0/BaseIIntegralCase.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/src/1.0.0.0/BaseIIntegralCase.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
+        <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/BaseIData.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/IntegralCase.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.IntegralCase/src/1.0.0.0/IIntegralCase.cs"/>
+      </sources>
+      <references>
+        <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\data.IntegralCase\bin\1.0.0.0\BaseIIntegralCase.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="IntegralCase-1.0.0.0" name="all"/>
+</project>
