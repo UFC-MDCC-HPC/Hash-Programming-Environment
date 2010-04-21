@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000d909e0f6ce59f618d2e47f4f4651e4c2812022c41df3dbc4cd1d3b601cb1d454a70fd084e404124b2e6c8cb93c0addc9f2bad545bb98f7570423424d5417ab89fc1ef6bb3ee8f675cbb15a5162a495a911d6f1fb1a3b0698461af6054a4b0cedf8ef6960e003eddfa924ecc20cbf68b99302f4b1daa53672259ddd2a749499b" isAbstract="true" kind="Computation" name="Work" packagePath="skeleton.Farm">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="217" g="255" r="222"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="dataIn" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="input data" exposed="true">
+      <visualDescription h="30" w="50" x="132" y="484">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="dataOut" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="output data" exposed="true">
+      <visualDescription h="30" w="50" x="344" y="508">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="data">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="dataIn" formFieldId="input data" varName="I"/>
+    <parameter componentRef="dataOut" formFieldId="output data" varName="O"/>
+    <interface iRef="IWork" nArgs="2">
+      <slice isRef="input_data">
+        <originRef cRef="dataIn" iRef="IData"/>
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slice>
+      <slice isRef="output_data">
+        <originRef cRef="dataOut" iRef="IData"/>
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Job { &#xA;&#xA;public interface IJob&lt;I, O> : IComputationKind &#xA;where I:IData&#xA;where O:IData&#xA;{&#xA;&#xA;&#x9;O Output_data {set;}&#xA;&#x9;I Input_data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IJob.cs" srcType="base" uri="/skeleton.Farm.Job/bin/1.0.0.0/IJob.dll" versionId="1.0.0.0">
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="75" w="92" x="209" y="190">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="data" sRef="input_data"/>
+      </port>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="41" y="0"/>
+        <slice pRef="data" sRef="output_data"/>
+      </port>
+    </interface>
+    <unit iRef="IWork" private="false" uRef="work" visibleInterface="true">
+      <slices cRef="dataIn" replica="0" uRef="data" sliceName="input_data" transitive="false">
+        <visualDescription h="10" w="10" x="8" y="24"/>
+      </slices>
+      <slices cRef="dataOut" replica="0" uRef="data" sliceName="output_data" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="181" y="338"/>
+    </unit>
+  </componentInfo>
+</component:component>

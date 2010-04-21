@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Work">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Work-1.0.0.0">
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/Work.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/bin/1.0.0.0/BaseIWork.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/src/1.0.0.0/BaseIWork.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/Work.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/bin/1.0.0.0/IWork.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Work/src/1.0.0.0/IWork.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\skeleton.Farm.Work\bin\1.0.0.0\BaseIWork.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Work-1.0.0.0" name="all"/>
+</project>
