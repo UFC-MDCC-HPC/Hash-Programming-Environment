@@ -29,7 +29,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="a" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="false">
-      <visualDescription h="49" w="50" x="116" y="188">
+      <visualDescription h="49" w="50" x="107" y="188">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="double">
@@ -65,7 +65,7 @@
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/BaseIData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.IntegralCase { &#xA;&#xA;public interface IIntegralCase&lt;F> : BaseIIntegralCase&lt;F>, IData&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#x9;double a {set;get;}&#xA;&#x9;double b {set;get;}&#xA;&#x9;double f (double x); &#xA;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IIntegralCase.cs" srcType="user" uri="/data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.IntegralCase { &#xA;&#xA;public interface IIntegralCase&lt;F> : BaseIIntegralCase&lt;F>, IData&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#x9;double[,] a {get;}&#xA;&#x9;double[,] b {get;}&#xA;&#x9;double f (double[] x); &#xA;&#x9;&#xA;&#x9;int dim_num {get; set;}&#xA;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IIntegralCase.cs" srcType="user" uri="/data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>%WORKSPACE/data.IntegralCase/bin/1.0.0.0/BaseIIntegralCase.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>

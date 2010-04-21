@@ -5,7 +5,7 @@ namespace data.Function {
 public interface IFunction : BaseIFunction
 {
 
-    double f(double x);
+    double f(double[] x);
 
 } // end main interface 
 

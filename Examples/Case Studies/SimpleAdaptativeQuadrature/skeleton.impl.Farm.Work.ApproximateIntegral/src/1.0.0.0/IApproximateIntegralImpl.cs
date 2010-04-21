@@ -6,6 +6,7 @@ using data.Function;
 using data.IntegralCase;
 using jefferson.data.Double;
 using skeleton.Farm.Work.ApproximateIntegral;
+using NINTLIB;
 
 namespace skeleton.impl.Farm.Work.ApproximateIntegral { 
 
@@ -19,38 +20,59 @@ public IApproximateIntegralImpl() {
 
 } 
 
-public override void compute() { 
-	
-	double a = input_data.a;
-	double b = input_data.b;	
-	double fa = input_data.f(a);
-	double fb = input_data.f(b);
+        private const int UNDEFINED = 0;
+ 
+        private int dim_num_ = UNDEFINED;
+        private int dim_partition_size_ = UNDEFINED;
+        private int number_of_partitions_ = UNDEFINED;
+        private int ind_ = UNDEFINED;
+        private double tol_ = UNDEFINED;
+        private int it_max_ = UNDEFINED;
+        private int size_ = UNDEFINED;
+       
+	    public int dim_num {get { return dim_num_; } set { dim_num_ = value; }}
+	    public int dim_partition_size {get { return dim_partition_size_; } set {dim_partition_size_ = value; }}
+	    public int number_of_partitions {get { return number_of_partitions_; } set {number_of_partitions_ = value; }}
+	    public int ind {get { return ind_; } set {ind_ = value; }}
+	    public double tol {get { return tol_; } set { tol_ = value; }}
+	    public int it_max {get { return it_max_; } set { it_max_ = value; }}
+	    public int size { get { return size_; } set { size_ = value; } }
+
+        public int num_jobs { get { return (int) Math.Pow(dim_partition_size, dim_num); }}	    
+	    public int num_local_jobs { get {return num_jobs / size;}}
+
+		public override void compute() { 
+			
+            // Set the integrating function.
+            f = NINTLIB.IntegratingFunctions.p01_f;
+
+			double[] a = input_data.a;
+			double[] b = input_data.b;	
+            double[] result = new double[num_local_jobs];
+			
+            int[] sub_num = new int[dim_num];
+            for (int i = 0; i < dim_num; i++)                
+                sub_num[i] = number_of_partitions/dim_partition_size;
+                  
+            int eval_num = 0;
+            result[0] = NINTLIB.NINTLIB.romberg_nd(function, a, b, dim_num, sub_num, it_max, tol, ref ind_, out eval_num);
+						  
+		} // end activate method 
+
+        private static NINTLIB.MultiPointsIntegratingFunction f;
+
+        private static double function(double[] x)
+        {
+            double[,] x_ = new double[1, x.Length];
+
+            int i = 0;
+            foreach (double e in x)
+                x_[0, i++] = e;
+
+
+            return f(x_)[0];
+        }
 		
-    output_data.Value = approximateIntegral(a, b, fa, fb, (fa + fb)*(b-a)/2);
-  
-} // end activate method 
-
-private static double abs(double x) {
-   return x < 0 ? -x : x;
-}
-
-private double approximateIntegral(double a, double b, double fa, double fb, double area) 
-{
-	double  mid, fmid, larea, rarea, epsilon = 0.0001;
-	
-	mid = (a + b)/2;
-	fmid = input_data.f(mid);
-	larea = (fa + fmid) * (mid - a) / 2;
-	rarea = (fmid + fb) * (b - mid) / 2;	
-	
-	if (abs((larea+rarea) - area) > epsilon) {
-	   larea = approximateIntegral(a, mid, fa, fmid, larea);
-	   rarea = approximateIntegral(mid, b, fmid, fb, rarea);
-	}   
-	
-    return larea + rarea;
-}
-
 }
 
 }

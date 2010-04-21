@@ -23,11 +23,12 @@ public override void synchronize() {
 	Intracommunicator localComm = mpi.localComm(this);
 	int root = mpi.ranksOf(this, "distribute")[0];
 
-    double[] limits = new double[2];
-    localComm.Receive<double>(root, 0, ref limits);
+    double[,] a_local = localComm.Scatter<double[,]>(0);
+    double[,] b_local = localComm.Scatter<double[,]>(0);
+
     
-    data.a = limits[0];
-    data.b = limits[1];
+//    data.a = limits[0];
+  //  data.b = limits[1];
 
 } // end activate method 
 

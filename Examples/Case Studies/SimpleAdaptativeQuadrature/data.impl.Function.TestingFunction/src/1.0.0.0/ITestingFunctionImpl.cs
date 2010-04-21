@@ -13,8 +13,8 @@ public ITestingFunctionImpl() {
 
 } 
 
-public double f(double x) {
-   return x;
+public double f(double[] x) {
+   return x[0];
 }
 
 }
