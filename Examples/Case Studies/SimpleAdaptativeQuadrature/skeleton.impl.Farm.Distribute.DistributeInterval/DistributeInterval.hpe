@@ -93,7 +93,7 @@
         <originRef cRef="data_source" iRef="IIntegralCase"/>
         <visualDescription h="10" w="10" x="9" y="10"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@12c3979" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@11ea763" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -137,7 +137,7 @@
         <originRef cRef="data_target" iRef="IIntegralCase"/>
         <visualDescription h="10" w="10" x="70" y="7"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@10a36fc" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@192de7f" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">

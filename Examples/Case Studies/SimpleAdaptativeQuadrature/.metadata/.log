@@ -11133,3 +11133,458 @@ java.io.IOException: XML document structures must start and end within the same 
 
 !ENTRY org.eclipse.equinox.p2.ui.sdk 2 0 2010-04-18 09:26:06.671
 !MESSAGE Could not locate the running profile instance. The eclipse.p2.data.area and eclipse.p2.profile properties may not be set correctly in this application's config.ini file.
+!SESSION 2010-04-21 16:11:25.856 -----------------------------------------------
+eclipse.buildId=M20080911-1700
+java.version=1.6.0_17
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=pt_BR
+Framework arguments:  -product org.eclipse.sdk.ide
+Command-line arguments:  -product org.eclipse.sdk.ide -data C:\Users\Heron\Documents\My Dropbox\Case Studies\Case Studies\SimpleAdaptativeQuadrature -dev file:H:/workspace/.metadata/.plugins/org.eclipse.pde.core/Adaptative Quadrature Integration (Farm)/dev.properties -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE One or more bundles are not resolved because the following root constraints are not resolved:
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.ui_1.0.0.v200808221518.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ui 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.editor.core_1.0.0.v200808271350.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.editor.core 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.asa.ui_1.0.1.v200805310538.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.geoshapes_1.1.2.v20080911-1506.jar was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.geoshapes 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.actions_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.connectivity.oda.flatfile.ui_3.0.7.v200808130628.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.connectivity.oda.flatfile.ui 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.oda.flatfile_[3.0.6,4.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.connectivity.apache.derby.ui_1.0.1.v200807010433.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.connectivity.apache.derby.ui 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[0.9.1,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.providers_1.1.2.v20080916-2008.jar was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.providers 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.actions_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.ase.ui_1.0.1.v200806260315.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.010
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.010
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.hsqldb.ui_1.0.0.v200807220100.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.hsqldb.ui 2 0 2010-04-21 16:11:53.011
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.0.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.011
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.data.ui_1.1.0.v200808260630.jar was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.data.ui 2 0 2010-04-21 16:11:53.011
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[0.9.0,1.5.0).
+
+!ENTRY org.eclipse.osgi 2 0 2010-04-21 16:11:53.418
+!MESSAGE The following is a complete list of bundles which are not resolved, see the prior log entry for the root cause if it exists:
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.418
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.emf.ecoretools.diagram_0.8.0.v200806130600.jar [27] was not resolved.
+!SUBENTRY 2 org.eclipse.emf.ecoretools.diagram 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.emf.ecoretools.diagram 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.emf.ecoretools.diagram 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 2 org.eclipse.emf.ecoretools.diagram 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing_0.0.0.
+!SUBENTRY 2 org.eclipse.emf.ecoretools.diagram 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.418
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.asa.ui_1.0.1.v200805310538.jar [104] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.asa.models_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.1.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.asa_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.ui_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.ui 2 0 2010-04-21 16:11:53.418
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.ddlgen.ui_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.418
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.printing.render_1.1.2.v20080916-2008.jar [105] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.printing.render 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.419
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.deploy_0.8.0.v200806112132.jar [113] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.deploy 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.deploy 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.deploy 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.419
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.ui_1.0.0.v200808221518.jar [130] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ui 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.1.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ui 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ui 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.419
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.core_2.0.101.v200809020200.jar [201] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.core 2 0 2010-04-21 16:11:53.419
+!MESSAGE Missing required bundle org.eclipse.jpt.db_[1.1.1,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.tablewizard_1.0.0.v200808140615.jar [254] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.tablewizard 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.tablewizard 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.tablewizard 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.tablewizard 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.ddlgen.ui_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.ase_1.0.1.v200807010411.jar [282] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.ase.models_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.1,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.editor.core_1.0.0.v200808271350.jar [288] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.editor.core 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.db.generic_1.0.0.v200808140643.jar [310] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.db.generic 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.db.generic 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.db_1.1.3.v200810160200.jar [314] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.db 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.ui_2.0.102.v200810220200.jar [326] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.ui 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.jpt.core_[2.0.0,3.0.0).
+!SUBENTRY 2 org.eclipse.jpt.ui 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.jpt.db_[1.1.1,2.0.0).
+!SUBENTRY 2 org.eclipse.jpt.ui 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.jpt.db.ui_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.jpt.ui 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.jpt.gen_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.sqleditor_1.0.0.v200808271350.jar [393] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.sqleditor 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.420
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.statemachine_0.8.0.v200806112132.jar [414] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.statemachine 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.statemachine 2 0 2010-04-21 16:11:53.420
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.statemachine 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.421
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.ase.models_1.0.1.v200805152355.jar [437] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.models 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.1,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.421
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.component_0.8.0.v200806112132.jar [462] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.component 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.component 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.component 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.421
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.activity_0.8.0.v200806112132.jar [519] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.activity 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.activity 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.activity 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.421
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.db.ui_1.0.1.v200805020000.jar [521] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.db.ui 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.jpt.db_[1.1.1,2.0.0).
+!SUBENTRY 2 org.eclipse.jpt.db.ui 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.421
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.clazz_0.8.0.v200806112132.jar [542] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.clazz 2 0 2010-04-21 16:11:53.421
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.clazz 2 0 2010-04-21 16:11:53.422
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.clazz 2 0 2010-04-21 16:11:53.422
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.422
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.asa_1.0.1.v200805310538.jar [580] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa 2 0 2010-04-21 16:11:53.422
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.asa.models_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa 2 0 2010-04-21 16:11:53.422
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa 2 0 2010-04-21 16:11:53.422
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.423
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.clazz.search_0.7.0.v200806130939.jar [587] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.clazz.search 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.uml2.diagram.clazz_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.423
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.ase.ui_1.0.1.v200806260315.jar [603] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.ase_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.ase.models_[1.0.1,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.1.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase.ui_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.ase.ui 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.ddlgen.ui_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.423
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.eclipselink.core_1.0.0.v200806050000.jar [611] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.core 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.jpt.db_[1.1.1,2.0.0).
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.core 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.jpt.core_[2.0.0,3.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.423
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.csd_0.8.0.v200806112132.jar [623] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.csd 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.csd 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.csd 2 0 2010-04-21 16:11:53.423
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.423
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.sqlscrapbook_1.0.0.v200808271350.jar [629] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.sqlscrapbook 2 0 2010-04-21 16:11:53.630
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.sqlscrapbook 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.connectivity.oda.flatfile.ui_3.0.7.v200808130628.jar [630] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.connectivity.oda.flatfile.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.oda.flatfile_[3.0.6,4.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.providers.ide_1.1.0.v20080425-1959.jar [646] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.providers.ide 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.geoshapes_1.1.2.v20080911-1506.jar [662] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.geoshapes 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_[1.1.0,2.0.0).
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.geoshapes 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.actions_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.routineeditor_1.0.0.v200807211830.jar [664] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.routineeditor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.routineeditor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.data.ui_1.1.0.v200808260630.jar [674] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.data.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.ecore.editor_2.0.100.v20080610-1132.jar [678] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.ecore.editor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing.render_0.0.0.
+!SUBENTRY 2 org.eclipse.gmf.ecore.editor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing_0.0.0.
+!SUBENTRY 2 org.eclipse.gmf.ecore.editor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.gmf.ecore.editor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.gmf.ecore.editor 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.connectivity.apache.derby.ui_1.0.1.v200807010433.jar [687] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.connectivity.apache.derby.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[0.9.1,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.eclipselink.core.ddlgen_1.0.0.jar [688] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.core.ddlgen 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.jpt.eclipselink.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.providers_1.1.2.v20080916-2008.jar [691] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.providers 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.actions_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.eclipselink.ui_1.0.0.v200805300000.jar [699] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.jpt.db_[1.1.1,2.0.0).
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.jpt.core_[2.0.0,3.0.0).
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.jpt.ui_[2.0.0,3.0.0).
+!SUBENTRY 2 org.eclipse.jpt.eclipselink.ui 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.jpt.eclipselink.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.631
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.render_1.1.2.v20080903-1510.jar [719] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.render 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_[1.1.0,2.0.0).
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.render 2 0 2010-04-21 16:11:53.631
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing.render_[1.1.0,2.0.0).
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.render 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.printing_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.632
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase_1.0.1.v200805310538.jar [723] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.632
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.debugger.core_1.0.0.v200808140615.jar [726] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.debugger.core 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.debugger.core 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.debugger.core 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.routineeditor_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.632
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.sybase.asa.models_1.0.0.v200805152355.jar [734] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.sybase.asa.models 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.enablement.sybase_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.632
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.db.derby_1.0.0.v200805152355.jar [761] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.db.derby 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.db.derby 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.db.generic_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.db.derby 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.routineeditor_[0.9.0,1.5.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.db.derby 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[0.9.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.632
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.enablement.hsqldb.ui_1.0.0.v200807220100.jar [763] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.enablement.hsqldb.ui 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.datatools.connectivity.sqm.server.ui_[1.0.0,1.5.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.632
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.profile_0.8.0.v200806112132.jar [782] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.profile 2 0 2010-04-21 16:11:53.632
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.profile 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.profile 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.633
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.uml2.diagram.usecase_0.8.0.v200806112132.jar [792] was not resolved.
+!SUBENTRY 2 org.eclipse.uml2.diagram.usecase 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.usecase 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers.ide_0.0.0.
+!SUBENTRY 2 org.eclipse.uml2.diagram.usecase 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.render_0.0.0.
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.633
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.ddlgen.ui_1.0.0.v200808140615.jar [845] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.ddlgen.ui 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.ddlgen.ui 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.633
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.datatools.sqltools.sqlbuilder_1.0.0.v200808271350.jar [877] was not resolved.
+!SUBENTRY 2 org.eclipse.datatools.sqltools.sqlbuilder 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.editor.core_[1.0.0,2.0.0).
+!SUBENTRY 2 org.eclipse.datatools.sqltools.sqlbuilder 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.datatools.sqltools.sqleditor_[1.0.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.633
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.gmf.runtime.diagram.ui.printing_1.1.2.v20080911-1506.jar [894] was not resolved.
+!SUBENTRY 2 org.eclipse.gmf.runtime.diagram.ui.printing 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.gmf.runtime.diagram.ui.providers_[1.1.0,2.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.633
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.jpt.gen_1.1.0.v200805020000.jar [917] was not resolved.
+!SUBENTRY 2 org.eclipse.jpt.gen 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.jpt.db_[1.1.1,2.0.0).
+!SUBENTRY 2 org.eclipse.jpt.gen 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.jpt.core_[2.0.0,3.0.0).
+!SUBENTRY 1 org.eclipse.osgi 2 0 2010-04-21 16:11:53.633
+!MESSAGE Bundle reference:file:/H:/Eclipse-3.4.1/eclipse/plugins/org.eclipse.emf.ecoretools.diagram.search_0.7.0.v200806130939.jar [932] was not resolved.
+!SUBENTRY 2 org.eclipse.emf.ecoretools.diagram.search 2 0 2010-04-21 16:11:53.633
+!MESSAGE Missing required bundle org.eclipse.emf.ecoretools.diagram_0.0.0.
+
+!ENTRY org.eclipse.jface 2 0 2010-04-21 16:12:31.677
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2010-04-21 16:12:31.677
+!MESSAGE A conflict occurred for ALT+SHIFT+D R:
+Binding(ALT+SHIFT+D R,
+	ParameterizedCommand(Command(org.eclipse.rap.ui.launch.RAPLaunchShortcut.debug,Debug RAP Application,
+		Debug RAP Application,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+SHIFT+D R,
+	ParameterizedCommand(Command(org.eclipse.wst.server.launchShortcut.debug,Debug on Server,
+		Debug the current selection on a server,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2010-04-21 16:12:31.677
+!MESSAGE A conflict occurred for ALT+SHIFT+X R:
+Binding(ALT+SHIFT+X R,
+	ParameterizedCommand(Command(org.eclipse.rap.ui.launch.RAPLaunchShortcut.run,Run RAP Application,
+		Run RAP Application,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+SHIFT+X R,
+	ParameterizedCommand(Command(org.eclipse.wst.server.launchShortcut.run,Run on Server,
+		Run the current selection on a server,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.equinox.p2.engine 4 0 2010-04-21 16:12:36.561
+!MESSAGE Error parsing profile H:\Eclipse-3.4.1\eclipse\p2\org.eclipse.equinox.p2.engine\profileRegistry\SDKProfile.profile\1239046491921.profile.
+!STACK 0
+java.io.IOException: XML document structures must start and end within the same entity.
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry$Parser.parse(SimpleProfileRegistry.java:465)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry$Parser.parse(SimpleProfileRegistry.java:451)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.restore(SimpleProfileRegistry.java:338)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.getProfileMap(SimpleProfileRegistry.java:223)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.internalGetProfile(SimpleProfileRegistry.java:180)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.getProfile(SimpleProfileRegistry.java:171)
+	at org.eclipse.equinox.internal.p2.engine.SurrogateProfileHandler.createProfile(SurrogateProfileHandler.java:145)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.createSurrogateProfile(SimpleProfileRegistry.java:191)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.internalGetProfile(SimpleProfileRegistry.java:182)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.getProfile(SimpleProfileRegistry.java:171)
+	at org.eclipse.equinox.internal.provisional.p2.ui.operations.ProvisioningUtil.getProfile(ProvisioningUtil.java:161)
+	at org.eclipse.equinox.internal.p2.ui.sdk.ProvSDKUIActivator.getSelfProfileId(ProvSDKUIActivator.java:169)
+	at org.eclipse.equinox.internal.p2.ui.sdk.AutomaticUpdateScheduler.<init>(AutomaticUpdateScheduler.java:59)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at java.lang.Class.newInstance0(Unknown Source)
+	at java.lang.Class.newInstance(Unknown Source)
+	at org.eclipse.core.internal.registry.osgi.RegistryStrategyOSGI.createExecutableExtension(RegistryStrategyOSGI.java:170)
+	at org.eclipse.core.internal.registry.ExtensionRegistry.createExecutableExtension(ExtensionRegistry.java:867)
+	at org.eclipse.core.internal.registry.ConfigurationElement.createExecutableExtension(ConfigurationElement.java:243)
+	at org.eclipse.core.internal.registry.ConfigurationElementHandle.createExecutableExtension(ConfigurationElementHandle.java:51)
+	at org.eclipse.ui.internal.WorkbenchPlugin$1.run(WorkbenchPlugin.java:267)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:52)
+	at org.eclipse.ui.internal.WorkbenchPlugin.createExtension(WorkbenchPlugin.java:263)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.getExecutableExtension(EarlyStartupRunnable.java:117)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:66)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2169)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.equinox.p2.ui.sdk 2 0 2010-04-21 16:12:36.566
+!MESSAGE Could not locate the running profile instance. The eclipse.p2.data.area and eclipse.p2.profile properties may not be set correctly in this application's config.ini file.
