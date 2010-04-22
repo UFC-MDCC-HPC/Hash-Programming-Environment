@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="SumAreas">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="SumAreas-1.0.0.0">
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/SumAreas.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISendResultImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/src/1.0.0.0/BaseISendResultImpl.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
+        <include name="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISendResults.dll"/>
+        <include name="C:\Program Files (x86)\MPI.NET\Lib/MPI.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/SumAreas.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/ISendResultImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/src/1.0.0.0/ISendResultImpl.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.Farm.Collect.SumAreas\bin\1.0.0.0\BaseISendResultImpl.dll"/>
+        <include name="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISendResults.dll"/>
+        <include name="C:\Program Files (x86)\MPI.NET\Lib/MPI.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/SumAreas.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISumImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/src/1.0.0.0/BaseISumImpl.cs"/>
+      </sources>
+      <references>
+        <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISum.dll"/>
+        <include name="C:\Program Files (x86)\MPI.NET\Lib/MPI.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/SumAreas.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/ISumImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Collect.SumAreas/src/1.0.0.0/ISumImpl.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.Farm.Collect.SumAreas\bin\1.0.0.0\BaseISumImpl.dll"/>
+        <include name="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISum.dll"/>
+        <include name="C:\Program Files (x86)\MPI.NET\Lib/MPI.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="SumAreas-1.0.0.0" name="all"/>
+</project>

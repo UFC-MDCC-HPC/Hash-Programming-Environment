@@ -4,12 +4,12 @@
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="Collect-1.0.0.0">
-    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/bin/1.0.0.0">
-      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/bin/1.0.0.0"/>
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll" target="library">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/src/1.0.0.0/BaseISend.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/src/1.0.0.0/BaseISend.cs"/>
       </sources>
       <references>
         <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
@@ -18,19 +18,19 @@
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll" target="library">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/src/1.0.0.0/ISend.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/src/1.0.0.0/ISend.cs"/>
       </sources>
       <references>
         <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\skeleton.Farm.Collect\bin\1.0.0.0\BaseISend.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.Farm.Collect\bin\1.0.0.0\BaseISend.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/bin/1.0.0.0/BaseICollect.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/bin/1.0.0.0/BaseICollect.dll" target="library">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/src/1.0.0.0/BaseICollect.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/src/1.0.0.0/BaseICollect.cs"/>
       </sources>
       <references>
         <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
@@ -39,13 +39,13 @@
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/Collect.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll" target="library">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/skeleton.Farm.Collect/src/1.0.0.0/ICollect.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.Farm.Collect/src/1.0.0.0/ICollect.cs"/>
       </sources>
       <references>
         <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\skeleton.Farm.Collect\bin\1.0.0.0\BaseICollect.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.Farm.Collect\bin\1.0.0.0\BaseICollect.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>

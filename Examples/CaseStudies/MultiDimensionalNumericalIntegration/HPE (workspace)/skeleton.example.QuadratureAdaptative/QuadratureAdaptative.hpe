@@ -43,7 +43,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="my_gather" location="/skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" exposed="false">
+    <innerComponent hash_component_UID="" localRef="my_gather" location="/skeleton.Farm.Collect.SumAreas/SumAreas.hpe" name="SumAreas" package="skeleton.Farm" exposed="false">
       <visualDescription h="30" w="103" x="417" y="481">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -76,10 +76,10 @@
           <visualDescription h="10" w="10" x="50" y="6"/>
         </unitBounds>
       </port>
-      <unitBounds uRef="send">
+      <unitBounds uRef="send_result">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
-      <unitBounds uRef="collect">
+      <unitBounds uRef="sum">
         <visualDescription h="10" w="10" x="18" y="2"/>
       </unitBounds>
     </innerComponent>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="VectorOfDouble">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="VectorOfDouble-1.0.0.0">
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/VectorOfDouble.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/bin/1.0.0.0/BaseIVectorOfDoubleImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/src/1.0.0.0/BaseIVectorOfDoubleImpl.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="data.Integer/bin/1.0.0.0/IInteger.dll"/>
+        <include name="data.Vector.VectorOfDouble/bin/1.0.0.0/BaseIVectorOfDouble.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/VectorOfDouble.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/bin/1.0.0.0/IVectorOfDoubleImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.impl.Vector.VectorOfDouble/src/1.0.0.0/IVectorOfDoubleImpl.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\data.impl.Vector.VectorOfDouble\bin\1.0.0.0\BaseIVectorOfDoubleImpl.dll"/>
+        <include name="data.Vector.VectorOfDouble/bin/1.0.0.0/IVectorOfDouble.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="VectorOfDouble-1.0.0.0" name="all"/>
+</project>
