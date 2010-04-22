@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e9e08a0c981c2ee1fb455677f3e879a887fc631ae51a914eda915c73644ae49607079aa25fd2c6c7c751fd7fc8605224548413334b97819056cfd9c3be341682c384505048a7dc3b3f8304cfac4d9a7eeae5ecbacbf4594fbcfd9c5e6720b9909a9e5d00ddba9f1e086b609edbc6e6e7a5ce3d9d404ee77d4fcd4f4ad689caa5" isAbstract="true" kind="Qualifier" name="Library" packagePath="scientific">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="30" g="226" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ILibrary" nArgs="0">
+      <visualDescription h="40" w="80" x="148" y="131">
+        <color b="255" g="144" r="30"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ILibrary" private="false" uRef="library" visibleInterface="true">
+      <visualDescription h="40" w="80" x="148" y="211"/>
+    </unit>
+  </componentInfo>
+</component:component>

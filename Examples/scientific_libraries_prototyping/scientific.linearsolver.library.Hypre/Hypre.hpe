@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bfb35e53ad2ae40ebbf0464edef2f80675c25e7a5478554e0f6a1035c0409d779d301c23032c77b6a13e4351fd23095c9e98b64ee77812007a9e79c444ad48445774cfebdad088adf37aa4da7122c4d4553f9d83fd3c4dbe61043901b41d5195adef983144568cf7a138de449bc154295481f7065d058d2c91de54adec7357a7" isAbstract="true" kind="Qualifier" name="Hypre" packagePath="scientific.linearsolver.library">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b381e0a82d759fa46c5444afc27ea54daa87982700e4889802a652d99bd2aada0697b233adfb9fddaa46708bd646163094247c125f9eef161086f7ca3f8fcb9f03499edbc2b7980c564aa3f64ee300616fb62d83aaf70231a3a9a8c6d8f723694a98868bdc4569c169310e8efc53c4aaa09794b5a7e992ca3d5b3bdb7cd5eb3" localRef="hypre" location="/scientific.linearsolver.Library/Library.hpe" name="Library" package="scientific.linearsolver" version="1.0.0.0">
+        <visualDescription h="62" w="182" x="264" y="136">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002d724edd31b62564b803130e32df9c4f81d412cea798ad95373c091b60e127002898cf2427023bff797cf734c3c89edf7abf991866ac6cb6c6815625f0fb8943c3bd53086190339e85d4dc3edad97b9534e7dc57348494a52563b44147bdb06742f0393ec547fe3b04798cecfcd1c923e9f7a1cb7f9090d6ada88c5ab4526bad" localRef="matrix" location="/scientific.linearsolver.facet.Matrix/Matrix.hpe" name="Matrix" package="scientific.linearsolver.facet" exposed="true">
+          <visualDescription h="70" w="153" x="71" y="363">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="facet">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002dc5091f7b02cfb904003c8d84c8137c9ef3fee2de2990bffd04b787261aaf6a398e8edf0d9ad6ee9194d8a8bf8d81e6d9693f1be471348fb7fae89a71be013d6b60df7b7c7aee06f0b1e6f7a1e5814024db86acded4343a6af34edceff969b051ee978b2fade039d17677a70dc582ff93169e53222f9cb0f99143675453d780" localRef="setup" location="/scientific.linearsolver.facet.Setup/Setup.hpe" name="Setup" package="scientific.linearsolver.facet" exposed="true">
+          <visualDescription h="78" w="166" x="265" y="360">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="facet">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c780127fe66625e00cc578d9a40d3b61f275d2e2f2c9a544e02496397d93d895102bc80e55c435d1b8fcc41b8ad632c250e0fac2900c3c59db7e4cc565dcf4c2c8daa3197f872ee9bd6672db2f86d06c9eb32a275d16dc179f7252ef23b8339afff83fb1e95bda2454aea308f593865b2b1d2656eac800f22afacea49862c98a" localRef="solver" location="/scientific.linearsolver.facet.Solver/Solver.hpe" name="Solver" package="scientific.linearsolver.facet" exposed="true">
+          <visualDescription h="74" w="126" x="478" y="366">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="facet">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="library">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IHypre" nArgs="0">
+      <slice isRef="facet">
+        <originRef cRef="matrix" iRef="IFacetMatrix"/>
+        <visualDescription h="10" w="10" x="7" y="11"/>
+      </slice>
+      <visualDescription h="40" w="80" x="90" y="91">
+        <color b="255" g="144" r="30"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IHypre" private="false" uRef="library" visibleInterface="true">
+      <super cRef="hypre" uRef="library"/>
+      <slices cRef="matrix" replica="0" uRef="facet" sliceName="facet" transitive="false">
+        <visualDescription h="10" w="10" x="7" y="11"/>
+      </slices>
+      <slices cRef="setup" replica="0" uRef="facet" sliceName="facet" transitive="false">
+        <visualDescription h="10" w="10" x="33" y="25"/>
+      </slices>
+      <slices cRef="solver" replica="0" uRef="facet" sliceName="facet" transitive="false">
+        <visualDescription h="10" w="10" x="64" y="5"/>
+      </slices>
+      <visualDescription h="40" w="80" x="148" y="211"/>
+    </unit>
+  </componentInfo>
+</component:component>

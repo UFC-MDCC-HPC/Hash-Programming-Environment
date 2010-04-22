@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000611a0c5f312392a93185d201600e6831cbf218cdd9bbf3e467c81d66456122d238d761530308361d73a91d5c8fa0ee16251374975e7e50dad7158a541174cb64dfba003a14150b92292c3768f9d9cb0039c1a6467887db556de0d3c034da6f0de39ce21d5b053b5dfd15c003a4826bcfc3b208330603683f709e5335d222008a" isAbstract="false" kind="Computation" name="PETSc_Solver" packagePath="scientific.linearsolver.library">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000912cf1638fa981dda36ce0c3a227ed68f7516d9a129f84c3eff2e2355222701eb5f1ab65e0f456b3a775874a21c3d6d897bb939ce7a574729ef335b14bf9550fcd379ed12b0e94bf5688ee7d58b5dd1930029707330b361275ebcb4f9dfeba3ea967a6aa0155ac044ad10666877fbd5be490929a798e99e2eb6357a7767818a5" localRef="solver" location="/scientific.linearsolver.Solver/Solver.hpe" name="Solver" package="scientific.linearsolver" version="1.0.0.0">
+        <visualDescription h="86" w="175" x="267" y="145">
+          <color b="227" g="224" r="240"/>
+        </visualDescription>
+        <parameter formFieldId="matrix facet" varName="M"/>
+        <parameter formFieldId="solver facet" varName="S"/>
+        <parameter formFieldId="library" varName="L"/>
+        <parameter formFieldId="setup facet" varName="E"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bd41d25c32cde5db20c22461c167c2140cfdb14a276416702fee3df2df7495100d2ce9b21c9eb49988bf706851c3762d7d92940c788033b60e30f00b6120b7073431d693a873de1811b6ea637ff417111dddef9ea6a212e20ea4592b0a99b16f800437bdcb474b47a249f6944fb98271b26f4460e012998dc41f93648c983ab4" localRef="solver" location="/scientific.linearsolver.PETScSolverFacet/PETScSolverFacet.hpe" name="PETScSolverFacet" package="scientific.linearsolver" exposed="true">
+          <visualDescription h="74" w="126" x="478" y="366">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="facet">
+            <visualDescription h="10" w="10" x="24" y="31"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="solve">
+          <visualDescription h="10" w="10" x="37" y="43"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <versions field1="3" field2="0" field3="0" field4="0"/>
+    <versions field1="4" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b1c898e039f9edd6c5ac7818d0dd54067583e21f317b8ae7dfa241f7b4cb9fd263967f95f2122b1b54cda98538d074ad6c59d3a67a4bb1ca811bfcb5e977e6c555e8847aace5f9f998e1d121812d551a9a9ffae19e841b1b29824f107fed3994c408b71cbeddb13582c6306a59fa713b44788c7dd7e99b364a575baf9819f5d1" localRef="petsc" location="/scientific.linearsolver.library.PETSc/PETSc.hpe" name="PETSc" package="scientific.linearsolver.library" exposed="false">
+      <visualDescription h="30" w="50" x="108" y="256">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006fd899deb5d18418524856182749dd5da25b3f7d558e353051cee924f2fba783e3d73e283e2d5e854f3f73dc8c3d11b2f460071d9adb029e096dc519c2a756624b41994cfb08edfa061c4c2140830e2387ffcde7b9a0eef106c3a59daf72ce2640d3cfe888876876a526e3256a913e724e99a21453f5add91415a4b7baef2fa5" localRef="setup" location="/scientific.linearsolver.PETScSetupFacet/PETScSetupFacet.hpe" name="PETScSetupFacet" package="scientific.linearsolver" exposed="true">
+        <visualDescription h="78" w="166" x="265" y="360">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="facet">
+          <visualDescription h="10" w="10" x="36" y="35"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bd41d25c32cde5db20c22461c167c2140cfdb14a276416702fee3df2df7495100d2ce9b21c9eb49988bf706851c3762d7d92940c788033b60e30f00b6120b7073431d693a873de1811b6ea637ff417111dddef9ea6a212e20ea4592b0a99b16f800437bdcb474b47a249f6944fb98271b26f4460e012998dc41f93648c983ab4" localRef="solver" location="/scientific.linearsolver.PETScSolverFacet/PETScSolverFacet.hpe" name="PETScSolverFacet" package="scientific.linearsolver" exposed="true">
+        <visualDescription h="74" w="126" x="478" y="366">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="facet">
+          <visualDescription h="10" w="10" x="24" y="31"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000fbdf41ea9412c6a20bc46121c8dec63ce00ee35acb2376127e8d5706196147dd6272c24a13d9412c5778fc419859fb21fe76fbd12f569a282f09fd8ad49af47788bb181e891230fe137df3f75b7ab5fd41b78ef3482520351f1662598a81d78082d94bc345e8997e3ed83cea222b975db64296bef2af77b7494c34504b67b4a7" localRef="matrix" location="/scientific.linearsolver.PETScMatrixFacet/PETScMatrixFacet.hpe" name="PETScMatrixFacet" package="scientific.linearsolver" exposed="true">
+        <visualDescription h="70" w="153" x="71" y="363">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="facet">
+          <visualDescription h="10" w="10" x="27" y="34"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="petsc" varName="L"/>
+    <interface iRef="IPETScSolver" nArgs="4">
+      <slice isRef="library">
+        <originRef cRef="library" iRef="IPETSc"/>
+        <visualDescription h="10" w="10" x="53" y="23"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@19e0e7b" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="3.0.0.0"/>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <sources sourceType="C# Language" versionId="4.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using scientific.linearsolver.PETScSetupFacet;&#xA;using scientific.linearsolver.PETScSolverFacet;&#xA;using scientific.linearsolver.library.PETSc;&#xA;using scientific.linearsolver.PETScMatrixFacet;&#xA;using scientific.linearsolver.Solver;&#xA;&#xA;namespace scientific.linearsolver.library.PETSc_Solver { &#xA;&#xA;public class IPETScSolver&lt;M, E, S, L>: Computation, ISolve&lt;M, E, S, L>&#xA;where M:IPETScMatrixFacet&#xA;where E:IPETScSetupFacet&#xA;where S:IPETScSolverFacet&#xA;where L:IPETSc&#xA;{&#xA;&#xA;private E facet_setup = default(E);&#xA;&#xA;private E Facet_setup {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.facet_setup = value;&#xA;&#x9;&#x9;library.Facet_setup = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private S facet_solver = default(S);&#xA;&#xA;public S Facet_solver {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.facet_solver = value;&#xA;&#x9;&#x9;library.Facet_solver = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private L library = default(L);&#xA;&#xA;private L Library {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.library = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;private M facet_matrix = default(M);&#xA;&#xA;private M Facet_matrix {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.facet_matrix = value;&#xA;&#x9;&#x9;library.Facet_matrix = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public IPETScSolver() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000611a0c5f312392a93185d201600e6831cbf218cdd9bbf3e467c81d66456122d238d761530308361d73a91d5c8fa0ee16251374975e7e50dad7158a541174cb64dfba003a14150b92292c3768f9d9cb0039c1a6467887db556de0d3c034da6f0de39ce21d5b053b5dfd15c003a4826bcfc3b208330603683f709e5335d222008a&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Library = (L) BackEnd.createSlice(this, UID,&quot;library&quot;,&quot;library&quot;,new Type[] {});&#xA;&#x9;this.Facet_setup = (E) BackEnd.createSlice(this, UID,&quot;setup&quot;,&quot;facet&quot;,new Type[] {});&#xA;&#x9;this.Facet_matrix = (M) BackEnd.createSlice(this, UID,&quot;matrix&quot;,&quot;facet&quot;,new Type[] {});&#xA;} &#xA;&#xA;public void compute() { &#xA;&#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IPETScSolver.cs" uri="/scientific.linearsolver.library.PETSc_Solver/bin/4.0.0.0/IPETScSolver.dll" versionId="4.0.0.0">
+          <dependency>scientific.linearsolver.PETScSetupFacet/bin/1.0.0.0/IPETScSetupFacet.dll</dependency>
+          <dependency>scientific.linearsolver.PETScSolverFacet/bin/1.0.0.0/IPETScSolverFacet.dll</dependency>
+          <dependency>scientific.linearsolver.library.PETSc/bin/1.0.0.0/IPETSc.dll</dependency>
+          <dependency>scientific.linearsolver.PETScMatrixFacet/bin/1.0.0.0/IPETScMatrixFacet.dll</dependency>
+          <dependency>scientific.linearsolver.Solver/bin/1.0.0.0/ISolve.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="203" y="61">
+        <color b="144" g="238" r="144"/>
+      </visualDescription>
+      <port name="facet_solver">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="facet_solver" sRef="library"/>
+      </port>
+      <port name="facet_setup">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="facet_setup" sRef="library"/>
+      </port>
+      <port name="facet_matrix">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="facet_matrix" sRef="library"/>
+      </port>
+    </interface>
+    <unit iRef="IPETScSolver" private="false" uRef="solve" visibleInterface="true">
+      <super cRef="solver" uRef="solve"/>
+      <slices cRef="solver" replica="0" uRef="facet" sliceName="facet_solver" transitive="true">
+        <visualDescription h="10" w="10" x="64" y="5"/>
+      </slices>
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="68" y="20"/>
+        <port>facet_solver</port>
+      </slices>
+      <visualDescription h="40" w="80" x="88" y="219"/>
+    </unit>
+  </componentInfo>
+</component:component>

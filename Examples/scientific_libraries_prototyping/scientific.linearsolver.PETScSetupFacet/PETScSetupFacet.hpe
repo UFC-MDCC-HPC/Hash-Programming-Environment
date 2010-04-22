@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006fd899deb5d18418524856182749dd5da25b3f7d558e353051cee924f2fba783e3d73e283e2d5e854f3f73dc8c3d11b2f460071d9adb029e096dc519c2a756624b41994cfb08edfa061c4c2140830e2387ffcde7b9a0eef106c3a59daf72ce2640d3cfe888876876a526e3256a913e724e99a21453f5add91415a4b7baef2fa5" isAbstract="true" kind="Qualifier" name="PETScSetupFacet" packagePath="scientific.linearsolver">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002dc5091f7b02cfb904003c8d84c8137c9ef3fee2de2990bffd04b787261aaf6a398e8edf0d9ad6ee9194d8a8bf8d81e6d9693f1be471348fb7fae89a71be013d6b60df7b7c7aee06f0b1e6f7a1e5814024db86acded4343a6af34edceff969b051ee978b2fade039d17677a70dc582ff93169e53222f9cb0f99143675453d780" localRef="base" location="/scientific.linearsolver.facet.Setup/Setup.hpe" name="Setup" package="scientific.linearsolver.facet" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="241" y="243">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="facet">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IPETScSetupFacet" nArgs="0">
+      <visualDescription h="40" w="80" x="145" y="166">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IPETScSetupFacet" private="false" uRef="facet" visibleInterface="true">
+      <super cRef="base" uRef="facet"/>
+      <visualDescription h="40" w="80" x="145" y="246"/>
+    </unit>
+  </componentInfo>
+</component:component>

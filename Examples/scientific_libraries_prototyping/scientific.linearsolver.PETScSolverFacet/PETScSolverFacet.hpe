@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bd41d25c32cde5db20c22461c167c2140cfdb14a276416702fee3df2df7495100d2ce9b21c9eb49988bf706851c3762d7d92940c788033b60e30f00b6120b7073431d693a873de1811b6ea637ff417111dddef9ea6a212e20ea4592b0a99b16f800437bdcb474b47a249f6944fb98271b26f4460e012998dc41f93648c983ab4" isAbstract="true" kind="Qualifier" name="PETScSolverFacet" packagePath="scientific.linearsolver">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c780127fe66625e00cc578d9a40d3b61f275d2e2f2c9a544e02496397d93d895102bc80e55c435d1b8fcc41b8ad632c250e0fac2900c3c59db7e4cc565dcf4c2c8daa3197f872ee9bd6672db2f86d06c9eb32a275d16dc179f7252ef23b8339afff83fb1e95bda2454aea308f593865b2b1d2656eac800f22afacea49862c98a" localRef="base" location="/scientific.linearsolver.facet.Solver/Solver.hpe" name="Solver" package="scientific.linearsolver.facet" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="226" y="290">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="facet">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IPETScSolverFacet" nArgs="0">
+      <visualDescription h="40" w="80" x="67" y="235">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IPETScSolverFacet" private="false" uRef="facet" visibleInterface="true">
+      <super cRef="base" uRef="facet"/>
+      <visualDescription h="40" w="80" x="156" y="116"/>
+    </unit>
+  </componentInfo>
+</component:component>

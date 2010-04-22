@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Documents and Settings\Heron\hpe_cache" default="all" name="Library">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Library-1.0.0.0">
+    <ifnot targetexists="H:/runtime-workspace/scientific.linearsolver.Library/bin/1.0.0.0">
+      <mkdir dir="H:/runtime-workspace/scientific.linearsolver.Library/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="H:/runtime-workspace/scientific.linearsolver.Library/Library.snk" optimize="true" output="H:/runtime-workspace/scientific.linearsolver.Library/bin/1.0.0.0/ILSSLibrary.dll" target="library">
+      <sources>
+        <include name="H:/runtime-workspace/scientific.linearsolver.Library/src/1.0.0.0/ILSSLibrary.cs"/>
+      </sources>
+      <references>
+        <include name="scientific.linearsolver.facet.Matrix/bin/1.0.0.0/IFacetMatrix.dll"/>
+        <include name="scientific.linearsolver.facet.Setup/bin/1.0.0.0/IFacetSetup.dll"/>
+        <include name="scientific.linearsolver.facet.Solver/bin/1.0.0.0/IFacetSolver.dll"/>
+        <include name="scientific.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Library-1.0.0.0" name="all"/>
+</project>
