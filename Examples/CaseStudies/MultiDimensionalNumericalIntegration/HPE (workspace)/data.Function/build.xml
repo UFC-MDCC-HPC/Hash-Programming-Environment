@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Function">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Documents and Settings\Heron\hpe_cache" default="all" name="Function">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="Function-1.0.0.0">
-    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/bin/1.0.0.0">
-      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/bin/1.0.0.0"/>
+    <ifnot targetexists="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/bin/1.0.0.0">
+      <mkdir dir="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/Function.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/bin/1.0.0.0/BaseIFunction.dll" target="library">
+    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/Function.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/bin/1.0.0.0/BaseIFunction.dll" target="library">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/src/1.0.0.0/BaseIFunction.cs"/>
+        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/src/1.0.0.0/BaseIFunction.cs"/>
       </sources>
       <references>
         <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/Function.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/bin/1.0.0.0/IFunction.dll" target="library">
+    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/Function.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/bin/1.0.0.0/IFunction.dll" target="library">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/Alunos/Esqueletos FELIPE e RAFAEL/workspace_skeletons_improved/data.Function/src/1.0.0.0/IFunction.cs"/>
+        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/data.Function/src/1.0.0.0/IFunction.cs"/>
       </sources>
       <references>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\workspace_skeletons_improved\data.Function\bin\1.0.0.0\BaseIFunction.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\data.Function\bin\1.0.0.0\BaseIFunction.dll"/>
+        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
   </target>

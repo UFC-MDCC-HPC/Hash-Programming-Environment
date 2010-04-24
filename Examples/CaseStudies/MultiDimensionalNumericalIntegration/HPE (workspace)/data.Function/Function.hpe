@@ -25,7 +25,7 @@
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface BaseIFunction : IData, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIFunction.cs" srcType="base" uri="/data.Function/bin/1.0.0.0/BaseIFunction.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface IFunction : BaseIFunction&#xA;{&#xA;&#xA;    double f(double x);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" srcType="user" uri="/data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface IFunction : BaseIFunction&#xA;{&#xA;&#xA;    double f(double[] x);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" srcType="user" uri="/data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/data.Function/bin/1.0.0.0/BaseIFunction.dll</dependency>
         </file>
       </sources>
@@ -35,7 +35,7 @@
     </interface>
     <unit iRef="IFunction" private="false" uRef="function" visibleInterface="true">
       <super cRef="base" uRef="data"/>
-      <visualDescription h="40" w="80" x="94" y="298"/>
+      <visualDescription h="40" w="80" x="96" y="316"/>
     </unit>
   </componentInfo>
 </component:component>

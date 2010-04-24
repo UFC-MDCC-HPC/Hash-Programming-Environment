@@ -45,13 +45,13 @@
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>data.Vector/bin/1.0.0.0/BaseIVector.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Vector;&#xA;&#xA;namespace data.Vector.VectorOfDouble { &#xA;&#xA;public interface IVectorOfDouble&lt;T> : BaseIVectorOfDouble&lt;T>, IVector&lt;T>&#xA;where T:IDouble&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IVectorOfDouble.cs" srcType="user" uri="/data.Vector.VectorOfDouble/bin/1.0.0.0/IVectorOfDouble.dll" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Vector;&#xA;&#xA;namespace data.Vector.VectorOfDouble { &#xA;&#xA;public interface IVectorOfDouble&lt;T> : BaseIVectorOfDouble&lt;T>, IVector&lt;T>&#xA;where T:IDouble&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IVectorOfDouble.cs" srcType="user" uri="/data.Vector.VectorOfDouble/bin/1.0.0.0/IVectorOfDouble.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>%WORKSPACE/data.Vector.VectorOfDouble/bin/1.0.0.0/BaseIVectorOfDouble.dll</dependency>
           <dependency>data.Vector/bin/1.0.0.0/IVector.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="90" y="138">
+      <visualDescription h="40" w="80" x="98" y="121">
         <color b="0" g="255" r="255"/>
       </visualDescription>
       <parameter iname="IDouble" order="0" parid="T" uname="double" varid="element type"/>

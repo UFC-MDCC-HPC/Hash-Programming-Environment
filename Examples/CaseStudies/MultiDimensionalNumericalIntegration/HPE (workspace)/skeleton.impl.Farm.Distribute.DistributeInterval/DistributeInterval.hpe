@@ -24,7 +24,7 @@
           </unitBounds>
         </port>
         <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="true">
-          <visualDescription h="46" w="117" x="66" y="183">
+          <visualDescription h="46" w="117" x="72" y="115">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <parameter formFieldId="function" varName="F"/>
@@ -32,12 +32,12 @@
             <visualDescription h="10" w="10" x="96" y="19"/>
           </unitBounds>
         </port>
-        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_target" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="true">
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="data_target" location="/data.List/List.hpe" name="List" package="data" exposed="true">
           <visualDescription h="45" w="116" x="688" y="268">
             <color b="255" g="255" r="255"/>
           </visualDescription>
-          <parameter formFieldId="function" varName="F"/>
-          <unitBounds uRef="integral_case">
+          <parameter formFieldId="element type" varName="T"/>
+          <unitBounds uRef="list">
             <visualDescription h="10" w="10" x="12" y="17"/>
           </unitBounds>
         </port>
@@ -55,6 +55,15 @@
     </visualAttributes>
   </header>
   <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_target" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
+      <visualDescription h="50" w="101" x="105" y="457">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="function" varName="F"/>
+      <unitBounds uRef="integral_case">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function__" location="/data.Function/Function.hpe" name="Function" package="data" exposed="false">
       <visualDescription h="62" w="188" x="278" y="344">
         <color b="255" g="255" r="255"/>
@@ -72,18 +81,19 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_target" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
-      <visualDescription h="50" w="101" x="209" y="414">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="listofjobs2" location="/data.List/List.hpe" name="List" package="data" exposed="false">
+      <visualDescription h="30" w="226" x="150" y="108">
         <color b="255" g="255" r="255"/>
       </visualDescription>
-      <parameter formFieldId="function" varName="F"/>
-      <unitBounds uRef="integral_case">
+      <parameter formFieldId="element type" varName="T"/>
+      <unitBounds uRef="list">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <supplyParameter cRef="data_target" varName="T"/>
     <supplyParameter cRef="function__" varName="F"/>
     <supplyParameter cRef="data_source" varName="Ds"/>
-    <supplyParameter cRef="data_target" varName="Dt"/>
+    <supplyParameter cRef="listofjobs2" varName="Dt"/>
     <interface iRef="IDistributeIntervalSendImpl" nArgs="2">
       <slice isRef="mpi">
         <originRef cRef="mpi" iRef="IMPIDirect"/>
@@ -93,19 +103,18 @@
         <originRef cRef="data_source" iRef="IIntegralCase"/>
         <visualDescription h="10" w="10" x="9" y="10"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@7a51b3" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@a08b01" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Double;&#xA;using data.IntegralCase;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public abstract class BaseIDistributeIntervalSendImpl&lt;F, Ds>: Synchronizer, BaseIDistributeIntervalSend&lt;F, Ds>&#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;&#xA;protected Ds data = default(Ds);&#xA;&#xA;public Ds Data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIDistributeIntervalSendImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000003d592cd4591bfb7068fa3ed048fc6112292ae9f911e0e3db77bf5e6b815707f90b919ac9c481b699c25d1b9342fa1850cdeb8eccec15b95c5fdf078229b2ed29fb90e9387511ff816b5aa08067cdb437c7b1c6ee0bdc8d0864c60828f7e7fd525c7cbcd6465f223a7151bf3f598b05f9438862643a8ad1321bfcf7e13ce333ab&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void synchronize(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIDistributeIntervalSendImpl.cs" srcType="base" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSendImpl.dll" versionId="1.0.0.0">
-          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
-          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.IntegralCase;&#xA;using data.Function;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public abstract class BaseIDistributeIntervalSendImpl&lt;F, Ds>: Synchronizer, BaseIDistributeIntervalSend&lt;F, Ds>&#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;protected Ds data = default(Ds);&#xA;&#xA;public Ds Data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIDistributeIntervalSendImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000003d592cd4591bfb7068fa3ed048fc6112292ae9f911e0e3db77bf5e6b815707f90b919ac9c481b699c25d1b9342fa1850cdeb8eccec15b95c5fdf078229b2ed29fb90e9387511ff816b5aa08067cdb437c7b1c6ee0bdc8d0864c60828f7e7fd525c7cbcd6465f223a7151bf3f598b05f9438862643a8ad1321bfcf7e13ce333ab&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void synchronize(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIDistributeIntervalSendImpl.cs" srcType="base" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSendImpl.dll" versionId="1.0.0.0">
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
+          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSend.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using MPI;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public class IDistributeIntervalSendImpl&lt;F, Ds> : BaseIDistributeIntervalSendImpl&lt;F, Ds>, IDistributeIntervalSend&lt;F, Ds>&#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;public IDistributeIntervalSendImpl() { &#xA;&#xA;} &#xA;    const int UNDEFINED = 0;&#xA;&#xA;    private int dim_num_ = UNDEFINED;&#xA;    private int dim_partition_size_ = UNDEFINED;&#xA;    private int number_of_partitions_ = UNDEFINED;&#xA;    private int ind_ = UNDEFINED;&#xA;    private double tol_ = UNDEFINED;&#xA;    private int it_max_ = UNDEFINED;&#xA;    private int size_ = UNDEFINED;&#xA;   &#xA;    public int dim_num {get { return dim_num_; } set { dim_num_ = value; }}&#xA;    public int dim_partition_size {get { return dim_partition_size_; } set {dim_partition_size_ = value; }}&#xA;    public int number_of_partitions {get { return number_of_partitions_; } set {number_of_partitions_ = value; }}&#xA;    public int ind {get { return ind_; } set {ind_ = value; }}&#xA;    public double tol {get { return tol_; } set { tol_ = value; }}&#xA;    public int it_max {get { return it_max_; } set { it_max_ = value; }}&#xA;    public int size { get { return size_; } set { size_ = value; } }&#xA;&#xA;    public int num_jobs { get { return (int) Math.Pow(dim_partition_size, dim_num); }}&#x9;    &#xA;    public int num_local_jobs { get {return num_jobs / size;}}&#xA;&#xA;&#xA;public override void synchronize() { &#xA;&#xA;&#x9;Intracommunicator localComm = mpi.localComm(this);&#xA;&#x9;int[] peers = mpi.ranksOf(this, &quot;receive&quot;);&#xA;&#xA;    double[] a_input = data.a;&#xA;    double[] b_input = data.b;&#xA;    &#xA;    // Set/Divide the interval&#xA;    double[][,] a = new double[size + 1][,];&#xA;    double[][,] b = new double[size + 1][,];&#xA;&#xA;    a[0] = new double[0, 0];&#xA;    b[0] = new double[0, 0];&#xA;    for (int r = 1; r &lt; size + 1; r++)&#xA;    {&#xA;        a[r] = new double[num_local_jobs, dim_num];&#xA;        b[r] = new double[num_local_jobs, dim_num];&#xA;    }&#xA;&#xA;    int[] dims = new int[dim_num];&#xA;&#xA;    for (int job = 0; job &lt; num_jobs; job++)&#xA;    {&#xA;        int r = job % size + 1;&#xA;        int j = job / size;&#xA;        for (int i = 0; i &lt; dim_num; i++)&#xA;        {&#xA;            a[r][j,i] = a_input[i] + dims[i] * ((b_input[i] - a_input[i]) / dim_partition_size);&#xA;            b[r][j,i] = b_input[i] + (dims[i] + 1) * ((b_input[i] - a_input[i]) / dim_partition_size);&#xA;        }&#xA;&#xA;        // NEXT JOB&#xA;        int ii = 0;&#xA;        while (ii &lt; dim_num)&#xA;        {&#xA;            dims[ii] = (dims[ii] + 1) % dim_partition_size;&#xA;            if (dims[ii] == 0)&#xA;                ii++;&#xA;            else&#xA;                break;&#xA;        }&#xA;    }&#xA;    &#xA;    // Distribute jobs.&#xA;    &#xA;    DateTime startTime = DateTime.Now;&#xA;&#xA;    localComm.Scatter&lt;double[,]>(a);&#xA;    localComm.Scatter&lt;double[,]>(b);&#xA;    &#xA;    &#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDistributeIntervalSendImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalSendImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using MPI;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public class IDistributeIntervalSendImpl&lt;F, Ds> : BaseIDistributeIntervalSendImpl&lt;F, Ds>, IDistributeIntervalSend&lt;F, Ds>&#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;&#x9;public IDistributeIntervalSendImpl() { &#xA;&#x9;&#xA;&#x9;} &#xA;&#xA;    private int dim_partition_size = 2;&#xA;    private int number_of_partitions = 10;   &#xA;&#xA;&#x9;public override void synchronize() { &#xA;&#x9;&#xA;  &#x9;    getargs(System.Environment.GetCommandLineArgs(), ref dim_partition_size, ref number_of_partitions);&#xA;&#x9;&#xA;&#x9;&#x9;Intracommunicator localComm = mpi.localComm(this);&#xA;&#x9;&#x9;int[] peers = mpi.ranksOf(this, &quot;receive&quot;);&#xA;&#x9;&#x9;&#xA;&#x9;    double[] a_input = data.a;&#xA;&#x9;    double[] b_input = data.b;&#xA;&#x9;&#xA;&#x9;&#x9;int size = peers.Length;&#xA;&#x9;    int dim_num = a_input.Length;&#xA;&#x9;&#x9;int num_jobs = (int) Math.Pow(dim_partition_size, dim_num);&#xA;&#x9;&#x9;int num_local_jobs = num_jobs / size;    &#xA;&#x9;    &#xA;&#x9;    // Set/Divide the interval&#xA;&#x9;    double[][,] a = new double[size + 1][,];&#xA;&#x9;    double[][,] b = new double[size + 1][,];&#xA;&#x9;&#xA;&#x9;    a[0] = new double[0, 0];&#xA;&#x9;    b[0] = new double[0, 0];&#xA;&#x9;    for (int r = 1; r &lt; size + 1; r++)&#xA;&#x9;    {&#xA;&#x9;        a[r] = new double[num_local_jobs, dim_num];&#xA;&#x9;        b[r] = new double[num_local_jobs, dim_num];&#xA;&#x9;    }&#xA;&#x9;&#xA;&#x9;    int[] dims = new int[dim_num];&#xA;&#x9;&#xA;&#x9;    for (int job = 0; job &lt; num_jobs; job++)&#xA;&#x9;    {&#xA;&#x9;        int r = job % size + 1;&#xA;&#x9;        int j = job / size;&#xA;&#x9;        for (int i = 0; i &lt; dim_num; i++)&#xA;&#x9;        {&#xA;&#x9;            a[r][j,i] = a_input[i] + dims[i] * ((b_input[i] - a_input[i]) / dim_partition_size);&#xA;&#x9;            b[r][j,i] = a_input[i] + (dims[i] + 1) * ((b_input[i] - a_input[i]) / dim_partition_size);&#xA;&#x9;        }&#xA;&#x9;&#xA;&#x9;        // NEXT JOB&#xA;&#x9;        int ii = 0;&#xA;&#x9;        while (ii &lt; dim_num)&#xA;&#x9;        {&#xA;&#x9;            dims[ii] = (dims[ii] + 1) % dim_partition_size;&#xA;&#x9;            if (dims[ii] == 0)&#xA;&#x9;                ii++;&#xA;&#x9;            else&#xA;&#x9;                break;&#xA;&#x9;        }&#xA;&#x9;    }&#xA;&#x9;    &#xA;&#x9;    // Distribute jobs.&#xA;&#x9;    &#xA;&#x9;    localComm.Scatter&lt;double[,]>(a);&#xA;&#x9;    localComm.Scatter&lt;double[,]>(b);&#xA;&#x9;    &#xA;&#x9;} // end activate method &#xA;&#xA;        private static void getargs(string[] args, ref int dim_partition_size, ref int number_of_partitions)&#xA;        {&#xA;            for (int i = 0; i &lt; args.Length; i++)&#xA;            {&#xA;                if (i + 1 &lt; args.Length)&#xA;                {&#xA;                    if (args[i].Equals(&quot;--dim_partition_size&quot;) &amp;&amp; i + 1 &lt; args.Length)&#xA;                    {&#xA;                        dim_partition_size = int.Parse(args[i + 1]);&#xA;                    }&#xA;                    else if (args[i].Equals(&quot;--number_of_partitions&quot;) &amp;&amp; i + 1 &lt; args.Length)&#xA;                    {&#xA;                        number_of_partitions = int.Parse(args[i + 1]);&#xA;                    }&#xA;                }&#xA;            }&#xA;        }&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDistributeIntervalSendImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalSendImpl.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
           <dependency>%WORKSPACE/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSendImpl.dll</dependency>
@@ -113,7 +122,7 @@
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="71" w="92" x="240" y="418">
+      <visualDescription h="71" w="92" x="140" y="462">
         <color b="255" g="128" r="0"/>
       </visualDescription>
       <port name="mpi">
@@ -134,30 +143,31 @@
         <visualDescription h="10" w="10" x="10" y="8"/>
       </slice>
       <slice isRef="data">
-        <originRef cRef="data_target" iRef="IIntegralCase"/>
+        <originRef cRef="data_target" iRef="IList"/>
         <visualDescription h="10" w="10" x="70" y="7"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@88779" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@117dd1a" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Double;&#xA;using environment.MPIDirect;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public abstract class BaseIDistributeIntervalReceiveImpl&lt;F, Dt>: Synchronizer, BaseIDistributeIntervalReceive&lt;F, Dt>&#xA;where F:IFunction&#xA;where Dt:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected Dt data = default(Dt);&#xA;&#xA;public Dt Data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIDistributeIntervalReceiveImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000003d592cd4591bfb7068fa3ed048fc6112292ae9f911e0e3db77bf5e6b815707f90b919ac9c481b699c25d1b9342fa1850cdeb8eccec15b95c5fdf078229b2ed29fb90e9387511ff816b5aa08067cdb437c7b1c6ee0bdc8d0864c60828f7e7fd525c7cbcd6465f223a7151bf3f598b05f9438862643a8ad1321bfcf7e13ce333ab&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void synchronize(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIDistributeIntervalReceiveImpl.cs" srcType="base" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalReceiveImpl.dll" versionId="1.0.0.0">
-          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
-          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
-          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.List;&#xA;using data.IntegralCase;&#xA;using data.Function;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public abstract class BaseIDistributeIntervalReceiveImpl&lt;F, Dt>: Synchronizer, BaseIDistributeIntervalReceive&lt;F, Dt>&#xA;where F:IFunction&#xA;where Dt:IList&lt;IIntegralCase&lt;F>>&#xA;{&#xA;&#xA;protected Dt data = default(Dt);&#xA;&#xA;public Dt Data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIDistributeIntervalReceiveImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000003d592cd4591bfb7068fa3ed048fc6112292ae9f911e0e3db77bf5e6b815707f90b919ac9c481b699c25d1b9342fa1850cdeb8eccec15b95c5fdf078229b2ed29fb90e9387511ff816b5aa08067cdb437c7b1c6ee0bdc8d0864c60828f7e7fd525c7cbcd6465f223a7151bf3f598b05f9438862643a8ad1321bfcf7e13ce333ab&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void synchronize(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIDistributeIntervalReceiveImpl.cs" srcType="base" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalReceiveImpl.dll" versionId="1.0.0.0">
+          <dependency>data.List/bin/1.0.0.0/IList.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
+          <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalReceive.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using MPI;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public class IDistributeIntervalReceiveImpl&lt;F, Dt> : BaseIDistributeIntervalReceiveImpl&lt;F, Dt>, IDistributeIntervalReceive&lt;F, Dt>&#xA;where F:IFunction&#xA;where Dt:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;public IDistributeIntervalReceiveImpl() { &#xA;&#xA;} &#xA;&#xA;public override void synchronize() { &#xA;&#xA;&#x9;Intracommunicator localComm = mpi.localComm(this);&#xA;&#x9;int root = mpi.ranksOf(this, &quot;distribute&quot;)[0];&#xA;&#xA;    double[,] a_local = localComm.Scatter&lt;double[,]>(0);&#xA;    double[,] b_local = localComm.Scatter&lt;double[,]>(0);&#xA;&#xA;    &#xA;//    data.a = limits[0];&#xA;  //  data.b = limits[1];&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDistributeIntervalReceiveImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalReceiveImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.List;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using MPI;&#xA;&#xA;namespace skeleton.impl.Farm.Distribute.DistributeInterval { &#xA;&#xA;public class IDistributeIntervalReceiveImpl&lt;F, Dt> : BaseIDistributeIntervalReceiveImpl&lt;F, Dt>, IDistributeIntervalReceive&lt;F, Dt>&#xA;where F:IFunction&#xA;where Dt:IList&lt;IIntegralCase&lt;F>>&#xA;{&#xA;&#xA;public IDistributeIntervalReceiveImpl() { &#xA;&#xA;} &#xA;&#xA;public override void synchronize() { &#xA;&#xA;&#x9;Intracommunicator localComm = mpi.localComm(this);&#xA;&#x9;int root = mpi.ranksOf(this, &quot;distribute&quot;)[0];&#xA;&#xA;    double[,] a_local = localComm.Scatter&lt;double[,]>(root);&#xA;    double[,] b_local = localComm.Scatter&lt;double[,]>(root);&#xA;    &#xA;    int number_of_jobs = a_local.GetLength(0);&#xA;    int dim_num = a_local.GetLength(1);&#xA;&#xA;    for (int i = 0; i &lt; number_of_jobs; i++) {&#xA;        IIntegralCase&lt;F> ic = data.createNew();&#xA;        ic.dim_num = dim_num;&#xA;        for (int j = 0; j &lt; dim_num; j++) {&#xA;&#x9;        ic.a[j] = a_local[i,j];&#xA;&#x9;        ic.b[j] = b_local[i,j];&#xA;        }&#xA;    }&#xA;    &#xA;//    data.a = limits[0];&#xA;  //  data.b = limits[1];&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDistributeIntervalReceiveImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalReceiveImpl.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
+          <dependency>data.List/bin/1.0.0.0/IList.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
           <dependency>%WORKSPACE/skeleton.impl.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalReceiveImpl.dll</dependency>
           <dependency>skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalReceive.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="71" w="114" x="361" y="481">
+      <visualDescription h="71" w="88" x="400" y="456">
         <color b="0" g="255" r="0"/>
       </visualDescription>
       <port name="mpi">
@@ -169,8 +179,8 @@
         <slice pRef="data" sRef="data"/>
       </port>
       <externalReferences>MPI</externalReferences>
-      <parameter iname="IFunction" order="0" parid="F" uname="function" varid="function"/>
-      <parameter iname="IIntegralCase" order="1" parid="Dt" uname="integral_case" varid="data target"/>
+      <parameter iname="IFunction" order="0" parid="?" uname="function" varid="function"/>
+      <parameter iname="IList" order="1" parid="Dt" uname="list" varid="data target"/>
     </interface>
     <unit iRef="IDistributeIntervalSendImpl" private="false" uRef="distribute" visibleInterface="true">
       <super cRef="base" uRef="distribute"/>
@@ -187,7 +197,7 @@
       <slices cRef="mpi" replica="2" uRef="mpi" sliceName="mpi" transitive="false">
         <visualDescription h="10" w="10" x="7" y="16"/>
       </slices>
-      <slices cRef="data_target" replica="0" uRef="integral_case" sliceName="data" transitive="false">
+      <slices cRef="data_target" replica="0" uRef="list" sliceName="data" transitive="false">
         <visualDescription h="10" w="10" x="76" y="15"/>
       </slices>
       <visualDescription h="40" w="94" x="412" y="356"/>

@@ -55,7 +55,7 @@
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="43" w="108" x="66" y="119">
+      <visualDescription h="43" w="108" x="84" y="188">
         <color b="0" g="255" r="255"/>
       </visualDescription>
       <parameter iname="IFunction" order="0" parid="F" uname="function" varid="function"/>

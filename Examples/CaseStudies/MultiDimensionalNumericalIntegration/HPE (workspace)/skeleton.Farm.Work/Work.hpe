@@ -45,7 +45,7 @@
           <dependency>%WORKSPACE/skeleton.Farm.Work/bin/1.0.0.0/BaseIWork.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="75" w="92" x="227" y="173">
+      <visualDescription h="75" w="92" x="250" y="153">
         <color b="128" g="255" r="255"/>
       </visualDescription>
       <port name="input_data">
@@ -66,7 +66,7 @@
       <slices cRef="dataOut" replica="0" uRef="data" sliceName="output_data" transitive="false">
         <visualDescription h="10" w="10" x="60" y="24"/>
       </slices>
-      <visualDescription h="40" w="80" x="181" y="338"/>
+      <visualDescription h="40" w="80" x="180" y="305"/>
     </unit>
   </componentInfo>
 </component:component>

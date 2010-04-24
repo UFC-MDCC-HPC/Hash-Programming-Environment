@@ -4,9 +4,8 @@ using System;
 using DGAC;
 using hpe.basic;
 using hpe.kinds;
-using data.Function;
-using jefferson.data.Double;
 using data.IntegralCase;
+using data.Function;
 using environment.MPIDirect;
 using skeleton.Farm.Distribute.DistributeInterval;
 
@@ -16,7 +15,6 @@ public abstract class BaseIDistributeIntervalSendImpl<F, Ds>: Synchronizer, Base
 where F:IFunction
 where Ds:IIntegralCase<F>
 {
-
 
 protected Ds data = default(Ds);
 

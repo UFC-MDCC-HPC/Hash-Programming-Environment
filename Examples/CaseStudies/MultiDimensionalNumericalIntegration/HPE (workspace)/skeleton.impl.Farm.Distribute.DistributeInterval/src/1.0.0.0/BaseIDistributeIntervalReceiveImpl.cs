@@ -4,32 +4,32 @@ using System;
 using DGAC;
 using hpe.basic;
 using hpe.kinds;
-using data.Function;
-using jefferson.data.Double;
-using environment.MPIDirect;
+using data.List;
 using data.IntegralCase;
+using data.Function;
+using environment.MPIDirect;
 using skeleton.Farm.Distribute.DistributeInterval;
 
 namespace skeleton.impl.Farm.Distribute.DistributeInterval { 
 
 public abstract class BaseIDistributeIntervalReceiveImpl<F, Dt>: Synchronizer, BaseIDistributeIntervalReceive<F, Dt>
 where F:IFunction
-where Dt:IIntegralCase<F>
+where Dt:IList<IIntegralCase<F>>
 {
-
-protected IMPIDirect mpi = null;
-
-public IMPIDirect Mpi {
-	set {
-		this.mpi = value;
-	}
-}
 
 protected Dt data = default(Dt);
 
 public Dt Data {
 	set {
 		this.data = value;
+	}
+}
+
+protected IMPIDirect mpi = null;
+
+public IMPIDirect Mpi {
+	set {
+		this.mpi = value;
 	}
 }
 

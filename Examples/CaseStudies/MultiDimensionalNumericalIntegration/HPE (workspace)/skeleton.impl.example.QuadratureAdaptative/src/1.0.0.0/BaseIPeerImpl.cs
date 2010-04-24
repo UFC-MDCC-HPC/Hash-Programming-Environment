@@ -13,6 +13,7 @@ using data.Function.TestingFunction;
 using skeleton.Farm.Distribute.DistributeInterval;
 using skeleton.Farm.Work.ApproximateIntegral;
 using skeleton.example.QuadratureAdaptative;
+using data.List;
 
 namespace skeleton.impl.example.QuadratureAdaptative { 
 
@@ -29,9 +30,9 @@ protected IMPIDirect Mpi {
 	}
 }
 
-protected IWorker<IDouble, ISend<IDouble>, IIntegralCase<F>, IDistributeIntervalReceive<F, IIntegralCase<F>>, IApproximateIntegral<F, IIntegralCase<F>, IDouble>> worker = null;
+protected IWorker<IDouble, ISend<IDouble>, IList<IIntegralCase<F>>, IDistributeIntervalReceive<F, IList<IIntegralCase<F>>>, IApproximateIntetral<F, IList<IIntegralCase<F>>, IDouble>> worker = null;
 
-protected IWorker<IDouble, ISend<IDouble>, IIntegralCase<F>, IDistributeIntervalReceive<F, IIntegralCase<F>>, IApproximateIntegral<F, IIntegralCase<F>, IDouble>> Worker {
+protected IWorker<IDouble, ISend<IDouble>, IList<IIntegralCase<F>>, IDistributeIntervalReceive<F, IList<IIntegralCase<F>>>, IApproximateIntetral<F, IList<IIntegralCase<F>>, IDouble>> Worker {
 	set {
 		this.worker = value;
 	}
@@ -46,7 +47,7 @@ public static string UID = "0024000004800000940000000602000000240000525341310004
 
 override public void createSlices() {
 	base.createSlices();
-	this.Worker = (IWorker<IDouble, ISend<IDouble>, IIntegralCase<F>, IDistributeIntervalReceive<F, IIntegralCase<F>>, IApproximateIntegral<F, IIntegralCase<F>, IDouble>>) BackEnd.createSlice(this, UID,"farm","worker",new Type[] {typeof(IDouble),typeof(ISend<IDouble>),typeof( IIntegralCase<F>),typeof( IDistributeIntervalReceive<F, IIntegralCase<F>>),typeof(IApproximateIntegral<F, IIntegralCase<F>, IDouble>)});
+	this.Worker = (IWorker<IDouble, ISend<IDouble>, IList<IIntegralCase<F>>, IDistributeIntervalReceive<F, IList<IIntegralCase<F>>>, IApproximateIntetral<F, IList<IIntegralCase<F>>, IDouble>>) BackEnd.createSlice(this, UID,"farm","worker",new Type[] {typeof(IDouble),typeof(ISend<IDouble>),typeof( IList<IIntegralCase<F>>),typeof( IDistributeIntervalReceive<F, IList<IIntegralCase<F>>>),typeof(IApproximateIntetral<F, IList<IIntegralCase<F>>, IDouble>)});
 	this.Mpi = (IMPIDirect) BackEnd.createSlice(this, UID,"mpi","mpi",new Type[] {});
 } 
 

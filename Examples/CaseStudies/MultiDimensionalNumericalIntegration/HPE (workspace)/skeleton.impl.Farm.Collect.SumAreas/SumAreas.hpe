@@ -79,7 +79,7 @@
         <originRef cRef="data_source" iRef="IDouble"/>
         <visualDescription h="10" w="10" x="28" y="24"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@15ffded" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1ddf775" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -96,7 +96,7 @@
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="38" y="103">
+      <visualDescription h="40" w="80" x="50" y="75">
         <color b="128" g="128" r="128"/>
       </visualDescription>
       <port name="mpi">
@@ -119,7 +119,7 @@
         <originRef cRef="data_target" iRef="IDouble"/>
         <visualDescription h="10" w="10" x="45" y="28"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1197df2" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@9db371" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -129,7 +129,7 @@
           <dependency>skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISum.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect.SumAreas;&#xA;using MPI;&#xA;&#xA;namespace skeleton.impl.Farm.Collect.SumAreas { &#xA;&#xA;public class ISumImpl&lt;Dt> : BaseISumImpl&lt;Dt>, ISum&lt;Dt>&#xA;where Dt:IDouble&#xA;{&#xA;&#xA;public ISumImpl() { &#xA;&#xA;} &#xA;&#xA;public override void synchronize() { &#xA;   &#xA;&#x9;Intracommunicator localComm = mpi.localComm(this);&#xA;&#xA;&#x9;int[] ranks_of_collector = mpi.ranksOf(this, &quot;collect&quot;);&#xA;&#x9;int root_collect = ranks_of_collector[0];&#xA;    &#x9;&#xA;    double result = localComm.Reduce&lt;double>(dummy_result,Operation&lt;double>.Add, root_collect);&#xA;    &#xA;    data.Value = result;&#x9;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ISumImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/ISumImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect.SumAreas;&#xA;using MPI;&#xA;&#xA;namespace skeleton.impl.Farm.Collect.SumAreas { &#xA;&#xA;public class ISumImpl&lt;Dt> : BaseISumImpl&lt;Dt>, ISum&lt;Dt>&#xA;where Dt:IDouble&#xA;{&#xA;&#xA;public ISumImpl() { &#xA;&#xA;} &#xA;&#xA;public override void synchronize() { &#xA;   &#xA;&#x9;Intracommunicator localComm = mpi.localComm(this);&#xA;&#xA;&#x9;int[] ranks_of_collector = mpi.ranksOf(this, &quot;collect&quot;);&#xA;&#x9;int root_collect = ranks_of_collector[0];&#xA;    &#x9;&#xA;    double result = localComm.Reduce&lt;double>(0.0,Operation&lt;double>.Add, root_collect);&#xA;    &#xA;    data.Value = result;&#x9;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ISumImpl.cs" srcType="user" uri="/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/ISumImpl.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>%WORKSPACE/skeleton.impl.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISumImpl.dll</dependency>
           <dependency>skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISum.dll</dependency>

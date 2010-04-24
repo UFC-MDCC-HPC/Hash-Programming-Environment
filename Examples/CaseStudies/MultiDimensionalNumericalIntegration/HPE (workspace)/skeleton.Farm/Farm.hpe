@@ -157,16 +157,11 @@
     <parameter componentRef="data_source" formFieldId="input type" varName="I"/>
     <parameter componentRef="data_worker_in" formFieldId="job type" varName="J"/>
     <innerRenaming cNewName="input" cOldName="data_source" cRef="scatter"/>
+    <innerRenaming cNewName="result" cOldName="data_source" cRef="gather"/>
+    <innerRenaming cNewName="result" cOldName="dataOut" cRef="work"/>
     <innerRenaming cNewName="job" cOldName="data_target" cRef="scatter"/>
     <innerRenaming cNewName="job" cOldName="dataIn" cRef="work"/>
     <innerRenaming cNewName="output" cOldName="data_target" cRef="gather"/>
-    <innerRenaming cNewName="result" cOldName="data_source" cRef="gather"/>
-    <innerRenaming cNewName="result" cOldName="dataOut" cRef="work"/>
-    <fusion>
-      <cRefs>work</cRefs>
-      <cRefs>scatter</cRefs>
-      <pRef>job</pRef>
-    </fusion>
     <fusion>
       <cRefs>work</cRefs>
       <cRefs>gather</cRefs>
@@ -177,6 +172,11 @@
       <cRefs>gather</cRefs>
       <pRef>mpi</pRef>
     </fusion>
+    <fusion>
+      <cRefs>work</cRefs>
+      <cRefs>scatter</cRefs>
+      <pRef>job</pRef>
+    </fusion>
     <interface iRef="IManager" nArgs="4">
       <slice isRef="distribute">
         <originRef cRef="scatter" iRef="IDistribute"/>
@@ -186,12 +186,12 @@
         <originRef cRef="gather" iRef="ICollect"/>
         <visualDescription h="10" w="10" x="42" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@15c2306" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@41108b" repeat="0">
         <visualDescription h="90" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ff7527" repeat="0" sliceRef="distribute">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a54605" repeat="0" sliceRef="distribute">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@646b08" repeat="0" sliceRef="collect">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@197f31b" repeat="0" sliceRef="collect">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
       </protocol>
@@ -214,14 +214,14 @@
       <visualDescription h="85" w="189" x="121" y="380">
         <color b="0" g="0" r="255"/>
       </visualDescription>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="data" sRef="distribute"/>
+      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="84" y="8"/>
         <slice pRef="mpi" sRef="distribute"/>
         <slice pRef="mpi" sRef="collect"/>
-      </port>
-      <port name="input_data">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="data" sRef="distribute"/>
       </port>
       <port name="output_data">
         <visualDescription h="10" w="10" x="46" y="66"/>
@@ -245,15 +245,15 @@
         <originRef cRef="work" iRef="IWork"/>
         <visualDescription h="10" w="10" x="65" y="13"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@efa8de" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@148f4f" repeat="0">
         <visualDescription h="90" w="190" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@379aca" repeat="0" sliceRef="receive">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1cca11e" repeat="0" sliceRef="receive">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9364b6" repeat="0" sliceRef="work">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@165cf09" repeat="0" sliceRef="work">
           <visualDescription h="50" w="50" x="130" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@b8ea0c" repeat="0" sliceRef="send">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@fb5baa" repeat="0" sliceRef="send">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
       </protocol>
