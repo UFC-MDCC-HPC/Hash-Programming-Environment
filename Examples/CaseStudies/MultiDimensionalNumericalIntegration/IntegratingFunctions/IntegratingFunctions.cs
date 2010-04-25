@@ -1000,7 +1000,7 @@ namespace NINTLIB
             return value;
         } 
 		
-		public static double[] p15_f(double[,] x, int n)
+		public static double[] p15_f(double[,] x, int? pN)
 			/*!*****************************************************************************80
 			!
 			!! P15_F evaluates the integrand for problem 15.
@@ -1058,8 +1058,10 @@ namespace NINTLIB
 			!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
 			!*/
         {
-			//int n = 1;
 			//call p15_i4 ( 'G', 'N', n )
+			//Default value of n is 1:
+			int n = (pN == null) ? 1 : (int)pN;
+			
             int point_num = x.GetUpperBound(0) + 1;
             int dim_num = x.GetUpperBound(1) + 1;
             double[] value = new double[point_num];
@@ -1102,23 +1104,1107 @@ namespace NINTLIB
             }
             return value;
         }
-
-        public static double[] pxx_f(double[,] x)
+		
+		public static double[] p16_f(double[,] x, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P16_F evaluates the integrand for problem 16.
+		!
+		!  Discussion:
+		!
+		!    The integrand can be regarded as the L1 norm of X - Z.
+		!
+		!    It would be nice to allow the use to specify several
+		!    base points Z, to make the function more jagged more places!
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integrand can be regarded as the L1 norm of X - Z.
+		!
+		!    There is a basis point Z associated with the integrand.
+		!    Z(1:DIM_NUM) defaults to ( 0.5, 0.5, ..., 0.5 ).
+		!    The user can set, get, or randomize this value by calling
+		!    P16_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    sum ( abs ( x(1:dim_num) - z(1:dim_num) ) )
+		!
+		!  Exact Integral:
+		!
+		!    The integral is separable into
+		!
+		!       Int ( A(1) <= X(1) <= B(1) ) abs ( X(1) - Z(1) ) 
+		!     * Product ( B(1:N)-A(1:N), skip index 1 )
+		!     + Int ( A(2) <= X(2) <= B(2) ) abs ( X(2) - Z(2) )
+		!     * Product ( B(1:N)-A(1:N), skip index 2 )
+		!     ...
+		!     + Int ( A(N) <= X(N) <= B(N) ) abs ( X(N) - Z(N) )
+		!     * Product ( B(1:N)-A(1:N), skip index N )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
         {
             int point_num = x.GetUpperBound(0) + 1;
-            int dim_num = x.GetUpperBound(1) + 1; ;
+            int dim_num = x.GetUpperBound(1) + 1;
             double[] value = new double[point_num];
+			
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
 
             for (int point = 0; point < point_num; point++)
             {
+				//value(point) = sum ( abs ( x(1:dim_num,point) - z(1:dim_num) ) )
                 value[point] = 0.0D;
                 for (int i = 0; i < dim_num; i++)
                 {
-                    value[point] += x[point, i];
+                    value[point] += Math.Abs(x[point, i] - z[i]);
                 }
             }
             return value;
         }
+		
+		public static double[] p17_f(double[,] x, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P17_F evaluates the integrand for problem 17.
+		!
+		!  Discussion:
+		!
+		!    This integrand can be regarded as the square of the L2
+		!    norm of X - Z.
+		!
+		!    This integrand has the advantage of symmetry under rotation
+		!    about Z.  Thus, it is possible to test whether a particular
+		!    quadrature rule has an occasional advantage because it
+		!    "lines up" with the X and Y coordinate axes and hence can
+		!    integrate some separable integrals very well.
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    There is a basis point Z associated with the integrand.
+		!    Z(1:DIM_NUM) defaults to ( 0.5, 0.5, ..., 0.5 ).
+		!    The user can set, get, or randomize this value by calling
+		!    P17_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    sum ( ( x(1:dim_num) - z(1:dim_num) )**2 )
+		!
+		!  Exact Integral:
+		!
+		!    The integral may be broken into the sum of weighted 
+		!    one dimensional integrals.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
+
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = sum ( ( x(1:dim_num,point) - z(1:dim_num) )**2 )
+                value[point] = 0.0D;
+                for (int i = 0; i < dim_num; i++)
+                {
+                    value[point] += Math.Pow(x[point, i] - z[i], 2);
+                }
+            }
+            return value;
+        }
+		
+		public static double[] p18_f(double[,] x, double[] z, double? r)
+		/*!*****************************************************************************80
+		!
+		!! P18_F evaluates the integrand for problem 18.
+		!
+		!  Discussion:
+		!
+		!    This is the characteristic function of the interior of the 
+		!    N sphere of radius R and center Z, to be integrated within the
+		!    unit hypercube [0,1]^N.  If the user picks a combination of R
+		!    and Z that causes the volume of the sphere to lie at least
+		!    partially outside the unit hypercube, the formula for the
+		!    exact integral will no longer be correct.
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    R defaults to 0.50.  
+		!    You can change R by calling P18_R8.
+		!
+		!    Z(1:DIM_NUM) defaults to (0.5,0.5,...0.5).  
+		!    You can change Z by calling P18_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    f(x) = 1 if X(1:DIM_NUM) is less than R from Z(1:DIM_NUM),
+		!           0 otherwise.
+		!
+		!  Exact Integral:
+		!
+		!    The volume of the DIM_NUM sphere of radius R.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueR = (r == null) ? 0.5D : (double) r;
+			
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
+
+            for (int point = 0; point < point_num; point++)
+            {
+				//d = sqrt ( sum ( ( x(1:dim_num,point) - z(1:dim_num) )**2 ) )
+				double d = 0.0D;
+                for (int i = 0; i < dim_num; i++)
+                {
+                    d += Math.Pow(x[point, i] - z[i], 2);
+                }
+				d = Math.Sqrt(d);
+
+			    if ( d <= valueR ) {
+			      value[point] = 1.0D;
+			    } else {
+			      value[point] = 0.0D;
+				}
+            }
+            return value;
+        }
+		
+		public static double[] p19_f(double[,] x, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P19_F evaluates the integrand for problem 19.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    Z defaults to (1/3,1/3,...,1/3).  
+		!    You can reset Z by calling P19_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    f(x) = product ( sqrt ( abs ( x(1:dim_num) - z(1:dim_num) ) ) )
+		!
+		!  Exact Integral:
+		!
+		!    With Z as given, 
+		!
+		!      (2/3)**DIM_NUM * ( (2/3)**(3/2) + (1/3)**(3/2) )**DIM_NUM
+		!
+		!    or approximately 0.49**DIM_NUM.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Arnold Krommer, Christoph Ueberhuber,
+		!    Numerical Integration on Advanced Systems,
+		!    Springer, 1994,
+		!    ISBN: 3540584102,
+		!    LC: QA299.3.K76.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
+
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = product ( sqrt ( abs ( x(1:dim_num,point) - z(1:dim_num) ) ) )
+                value[point] = 1.0D;
+                for (int i = 0; i < dim_num; i++)
+                {
+                    value[point] *= Math.Sqrt(Math.Abs(x[point, i] - z[i]));
+                }
+            }
+            return value;
+        }
+		
+		public static double[] p20_f(double[,] x, double? p)
+		/*!*****************************************************************************80
+		!
+		!! P20_F evaluates the integrand for problem 20.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    A <= X(1:DIM_NUM) <= B
+		!
+		!  Integrand:
+		!
+		!    f(x) = ( sum ( x(1:dim_num) ) )**p
+		!
+		!    P is greater than -dim_num, and is not a negative integer.
+		!
+		!  Exact Integral:
+		!
+		!    sum ( 0 <= i <= dim_num ) (-1)**i * choose(dim_num,i) 
+		!      * ((dim_num-i)*b+i*a)**(dim_num+p)
+		!      / ( (t+1) * (t+2) * ... * (t+dim_num) )
+		!
+		!  Parameters:
+		!
+		!    A defaults to 0.0.  You can change A by calling P20_R8.
+		!
+		!    B defaults to 1.0.  You can change B by calling P20_R8.
+		!
+		!    P defaults to 2.0.  You can change P by calling P20_R8.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Philip Davis, Philip Rabinowitz,
+		!    Methods of Numerical Integration,
+		!    Second Edition,
+		!    Dover, 2007,
+		!    ISBN: 0486453391,
+		!    LC: QA299.3.D28.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueP = (p == null) ? 2.0D : (double)p;
+
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = ( sum ( x(1:dim_num,point) ) )**p
+                double sum = 0.0D;
+                for (int i = 0; i < dim_num; i++)
+                {
+                    sum += x[point, i];
+                }
+				value[point] = Math.Pow(sum, valueP);
+            }
+            return value;
+        }
+		
+		public static double[] p21_f(double[,] x, double? c, double[] e)
+		/*!*****************************************************************************80
+		!
+		!! P21_F evaluates the integrand for problem 21.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    The (surface of the) unit sphere
+		!
+		!  Integral Parameters:
+		!
+		!    C defaults to 1.  
+		!    Call P21_R8 to get or set this value.
+		!
+		!    E(1:DIM_NUM) defaults to (/ 2, 2, ..., 2 /).  
+		!    Call P21_I4VEC to get or set this value.
+		!
+		!  Integrand:
+		!
+		!    F(X) = C * X1^E1 * X2^E2 * ... * Xn^En
+		!
+		!    C is real, all exponents E are nonnegative integers.
+		!
+		!  Exact Integral:
+		!
+		!    0, if any exponent is odd.
+		!    2 * C * Gamma((E1+1)/2) * Gamma((E2+1)/2) * ... * Gamma((En+1)/2) 
+		!      / Gamma( (E1+E2+...+En+N)/2 ), otherwise.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Philip Davis, Philip Rabinowitz,
+		!    Methods of Numerical Integration,
+		!    Second Edition,
+		!    Dover, 2007,
+		!    ISBN: 0486453391,
+		!    LC: QA299.3.D28.
+		!
+		!    Gerald Folland,
+		!    How to Integrate a Polynomial Over a Sphere,
+		!    American Mathematical Monthly, 
+		!    May 2001, pages 446-448.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueC = (c == null) ? 1.0D : (double)c;
+
+			if (e == null) {
+				e = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					e[i] = 2.0D;
+				}
+			}
+			for (int i = 0; i < point_num; i++) {
+				value[i] = valueC;
+			}
+			
+            for (int dim = 0; dim < dim_num; dim++)
+            {
+				//value(1:point_num) = value(1:point_num) * x(dim,1:point_num)**e(dim)
+                for (int point = 0; point < point_num; point++)
+                {
+					value[point] = value[point] * Math.Pow(x[point, dim], e[dim]);
+				}
+            }
+            return value;
+        }
+		
+		public static double[] p22_f(double[,] x, double? c, double[] e)
+		/*!*****************************************************************************80
+		!
+		!! P22_F evaluates the integrand for problem 22.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    The interior of a sphere of radius R centered at the origin.
+		!
+		!  Integral Parameters:
+		!
+		!    C defaults to 1.0.  
+		!    Call P22_R8 to get or set this value.
+		!
+		!    R defaults to 1.0.  
+		!    Call P22_R8 to get or set this value.
+		!
+		!    E(1:DIM_NUM) defaults to (/ 2, 2, ..., 2 /).  
+		!    Call P22_I4VEC to get or set this value.
+		!
+		!  Integrand:
+		!
+		!    F(X) = C * X1^E1 * X2^E2 * ... * Xn^En
+		!
+		!    C is real, all exponents E are nonnegative integers.
+		!
+		!  Exact Integral:
+		!
+		!    0, if any exponent is odd.
+		!    2 * C * R^(E1+E2+...+EN+N) 
+		!      * Gamma((E1+1)/2) * Gamma((E2+1)/2) * ... * Gamma((En+1)/2) 
+		!      / ( Gamma( (E1+E2+...+En+N)/2 ) * ( E1+E2+...+EN+N) ), otherwise.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Philip Davis, Philip Rabinowitz,
+		!    Methods of Numerical Integration,
+		!    Second Edition,
+		!    Dover, 2007,
+		!    ISBN: 0486453391,
+		!    LC: QA299.3.D28.
+		!
+		!    Gerald Folland,
+		!    How to Integrate a Polynomial Over a Sphere,
+		!    American Mathematical Monthly, 
+		!    May 2001, pages 446-448.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueC = (c == null) ? 1.0D : (double)c;
+
+			if (e == null) {
+				e = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					e[i] = 2.0D;
+				}
+			}
+			for (int i = 0; i < point_num; i++) {
+				value[i] = valueC;
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					//value(point) = value(point) * x(dim,point)**e(dim)
+					value[point] = value[point] * Math.Pow(x[point, dim], e[dim]);
+				}
+            }
+            return value;
+        }
+		
+		public static double[] p23_f(double[,] x, double? c, double[] e)
+		/*!*****************************************************************************80
+		!
+		!! P23_F evaluates the integrand for problem 23.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    The interior of the unit simplex, for which all X's are nonnegative,
+		!    and sum ( X(1:N) ) <= 1.
+		!
+		!  Integral Parameters:
+		!
+		!    C defaults to 1.0.  
+		!    Call P23_R8 to get or set this value.
+		!
+		!    E(1:DIM_NUM) defaults to (/ 2, 2, ..., 2 /).  
+		!    Call P23_I4VEC to get or set this value.
+		!
+		!  Integrand:
+		!
+		!    F(X) = C * X1^E1 * X2^E2 * ... * Xn^En
+		!
+		!    C is real, all exponents E are nonnegative integers.
+		!
+		!  Exact Integral:
+		!
+		!    C * Gamma(E1+1) * Gamma(E2+1) * ... * Gamma(En+1) / Gamma(E1+E2+...+En+1)
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Philip Davis, Philip Rabinowitz,
+		!    Methods of Numerical Integration,
+		!    Second Edition,
+		!    Dover, 2007,
+		!    ISBN: 0486453391,
+		!    LC: QA299.3.D28.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueC = (c == null) ? 1.0D : (double)c;
+
+			if (e == null) {
+				e = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					e[i] = 2.0D;
+				}
+			}
+			for (int i = 0; i < point_num; i++) {
+				value[i] = valueC;
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					//value(point) = value(point) * x(dim,point)**e(dim)
+					value[point] = value[point] * Math.Pow(x[point, dim], e[dim]);
+				}
+            }
+            return value;
+        }
+		
+		public static double[] p24_f(double[,] x, double[] c)
+		/*!*****************************************************************************80
+		!
+		!! P24_F evaluates the integrand for problem 24.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    C(1:DIM_NUM) defaults to 0.0.
+		!
+		!    A typical, more difficult problem, has
+		!      C(I) = I**(1/3)
+		! 
+		!    Call P24_R8VEC to get or set C.
+		!
+		!  Integrand:
+		!
+		!    F(X) = product (   ( abs ( 4 * X(1:DIM_NUM) - 2 ) + C(1:DIM_NUM) ) 
+		!                     / ( 1 + C(1:DIM_NUM) ) 
+		!                   )
+		!
+		!  Exact Integral:
+		!
+		!    1
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Stephen Joe, Frances Kuo,
+		!    Remark on Algorithm 659:
+		!    Implementing Sobol's Quasirandom Seqence Generator,
+		!    ACM Transactions on Mathematical Software,
+		!    Volume 29, Number 1, March 2003, pages 49-57.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+
+			if (c == null) {
+				c = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = 0.0D;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = product ( ( abs ( 4.0D+00 * x(1:dim_num,point) - 2.0D+00 ) + c(1:dim_num) ) / ( 1.0D+00 + c(1:dim_num) ) )
+				value[point] = 1.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					value[point] *= (Math.Abs(4.0D * x[point, dim] - 2.0D) + c[dim]) / (1.0D + c[dim]);
+				}
+            }
+            return value;
+        }
+		
+		public static double[] p25_f(double[,] x, double? c)
+		/*!*****************************************************************************80
+		!
+		!! P25_F evaluates the integrand for problem 25.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integrand:
+		!
+		!    exp ( C * product ( X(1:N) ) )
+		!
+		!  Parameters:
+		!
+		!    C defaults to 0.3, and can be changed by calling P25_R8.
+		!
+		!  Exact Integral:
+		!
+		!    sum ( 1 <= i <= Infinity ) C**i / ( ( i + 1 )**N * i! )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Thomas Patterson,
+		!    [Integral #3],
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueC = (c == null) ? 0.3D : (double)c;
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = exp ( c * product ( x(1:dim_num,point) ) )
+				
+				double product = 1.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					product *= x[point, dim];
+				}
+				value[point] = Math.Exp(valueC * product);
+            }
+            return value;
+        }
+		
+		public static double[] p26_f(double[,] x, double[] c)
+		/*!*****************************************************************************80
+		!
+		!! P26_F evaluates the integrand for problem 26.
+		!
+		!  Discussion:
+		!
+		!    The integrand is similar to that for the Patterson integral #7,
+		!    except for a normalization of the constants, and a (random) constant
+		!    factor in the integrand.
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integral depends on a parameter vector C(1:N).
+		!
+		!    The reference suggests choosing C at random in [0,1].
+		!    C(1:N) defaults to 1/N.
+		!
+		!    To get or set C, call P26_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    product ( c(1:dim_num) * ( exp ( - c(1:dim_num) * x(1:dim_num) ) ) )
+		!    = product ( c(1:dim_num) ) * exp ( - sum ( c(1:dim_num) * x(1:dim_num) ) )
+		!
+		!  Exact Integral:
+		!
+		!    product ( 1 - exp ( c(1:n) ) )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Thomas Patterson,
+		!    [Integral #1],
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (c == null) {
+				c = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = 1.0D / dim_num;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = product ( c(1:dim_num) ) * exp ( - dot_product ( c(1:dim_num), x(1:dim_num,point) ) )
+				double product = 1.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					product *= c[dim];
+				}
+				
+				double dot_product = 0.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					dot_product += c[dim] * x[point, dim];
+				}
+				value[point] *= product * Math.Exp(-dot_product);
+            }
+            return value;
+        }
+		
+		
+		public static double[] p27_f(double[,] x, double? r, double[] c)
+		/*!*****************************************************************************80
+		!
+		!! P27_F evaluates the integrand for problem 27.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integral depends on a parameter R and vector C(1:N).
+		!
+		!    R defaults to 0.3.
+		!
+		!    The reference suggests choosing C at random in [0,1]
+		!    and then multiplying by the normalizing factor (25/N).
+		!    C(1:N) defaults to 1/N.
+		!
+		!    To get or set R, call P27_R8.
+		!    To get or set C, call P27_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    cos ( 2 * pi * R + sum ( c(1:n) * x(1:n) ) )
+		!
+		!  Exact Integral:
+		!
+		!    2**N * cos ( 2 * pi * R + 0.5 * sum ( c(1:n) ) )
+		!      * product ( sin ( 0.5 * c(1:n) ) / c(1:n) )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    03 June 2007
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Alan Genz,
+		!    [Integral #1]
+		!    A Package for Testing Multiple Integration Subroutines,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D Reidel, 1987, pages 337-340,
+		!    LC: QA299.3.N38.
+		!
+		!    Thomas Patterson,
+		!    [Integral #5],
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+			int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueR = (r == null) ? 1 : (double)r;
+			
+			if (c == null) {
+				c = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = 1.0D / dim_num;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//arg = 2.0D+00 * pi * r + dot_product ( c(1:dim_num), x(1:dim_num,point) )
+    			//value(point) = cos ( arg )
+				double dot_product = 0.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					dot_product += c[dim] * x[point, dim];
+				}
+				double arg = 2.0D * Math.PI * valueR + dot_product;
+				value[point] *= Math.Cos(arg);
+            }
+            return value;
+		}
 
         public static double[] p33_f(double[,] x)
      /* !*****************************************************************************80
