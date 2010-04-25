@@ -101,7 +101,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -176,7 +176,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -246,7 +246,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -346,7 +346,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -421,7 +421,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -496,7 +496,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -567,7 +567,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -610,10 +610,97 @@ namespace NINTLIB
             return value;
         }
 
-        public static double[] p09_f(double[,] x)
+        public static double[] p09_f(double[,] x, double[] c)
+		/*!*****************************************************************************80
+		!
+		!! P09_F evaluates the integrand for problem 09.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integral depends on a parameter vector C(1:N).
+		!
+		!    The reference suggests choosing C at random in [0,1]
+		!    and then multiplying by the normalizing factor (60/N).
+		!
+		!    To get or set C, call P09_R8VEC.
+		!
+		!    The default value of C(1:N) is 1/N.
+		!
+		!  Integrand:
+		!
+		!    exp ( sum ( c(1:dim_num) * x(1:dim_num) ) )
+		!
+		!  Exact Integral:
+		!
+		!    product ( ( exp ( c(1:n) - 1 ) / c(1:n) )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    25 April 2010
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Thomas Patterson,
+		!    [Integral #7]
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
         {
-            //TODO
-            return null;
+			int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1; ;
+            double[] value = new double[point_num];
+			
+			if (c == null) {
+				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = defaultC;
+				}
+			}
+
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = exp ( dot_product ( c(1:dim_num), x(1:dim_num,point) ) )
+				double dot_product = 0.0D;
+	            for (int dim = 0; dim < dim_num; dim++)
+	            {
+					dot_product += c[dim] * x[point, dim];
+				}
+				value[point] = Math.Exp(dot_product);
+            }
+            return value;
         }
 
         public static double[] p10_f(double[,] x)
@@ -643,7 +730,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -729,7 +816,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -807,7 +894,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -878,7 +965,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -958,7 +1045,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -1040,7 +1127,7 @@ namespace NINTLIB
 			!
 			!  Modified:
 			!
-			!    03 June 2007
+			!    25 April 2010
 			!
 			!  Author:
 			!
@@ -1073,7 +1160,7 @@ namespace NINTLIB
                 value[point] = 1.0D;
 				bool anyZero = false;
 
-				for (int j = 0; j <= x.GetUpperBound(1); j++)
+				for (int j = 0; j < dim_num; j++)
 				{
 					if (x[point,j] == 0.0D)
 					{
@@ -1154,7 +1241,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1178,8 +1265,9 @@ namespace NINTLIB
 			
 			if (z == null) {
 				z = new double[dim_num];
+				double defaultZ = 0.5D;
 				for (int i = 0; i < dim_num; i++) {
-					z[i] = 0.5D;
+					z[i] = defaultZ;
 				}
 			}
 
@@ -1239,7 +1327,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1263,8 +1351,9 @@ namespace NINTLIB
 			
 			if (z == null) {
 				z = new double[dim_num];
+				double defaultZ = 0.5D;
 				for (int i = 0; i < dim_num; i++) {
-					z[i] = 0.5D;
+					z[i] = defaultZ;
 				}
 			}
 
@@ -1323,7 +1412,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1348,8 +1437,9 @@ namespace NINTLIB
 			
 			if (z == null) {
 				z = new double[dim_num];
+				double defaultZ = 0.5D;
 				for (int i = 0; i < dim_num; i++) {
-					z[i] = 0.5D;
+					z[i] = defaultZ;
 				}
 			}
 
@@ -1408,7 +1498,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1440,8 +1530,9 @@ namespace NINTLIB
 			
 			if (z == null) {
 				z = new double[dim_num];
+				double defaultZ = 0.5D;
 				for (int i = 0; i < dim_num; i++) {
-					z[i] = 0.5D;
+					z[i] = defaultZ;
 				}
 			}
 
@@ -1496,7 +1587,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1580,7 +1671,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1681,7 +1772,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1777,7 +1868,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1868,7 +1959,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -1948,7 +2039,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -2038,7 +2129,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -2074,8 +2165,9 @@ namespace NINTLIB
 			
 			if (c == null) {
 				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
 				for (int i = 0; i < dim_num; i++) {
-					c[i] = 1.0D / dim_num;
+					c[i] = defaultC;
 				}
 			}
 			
@@ -2093,11 +2185,10 @@ namespace NINTLIB
                 {
 					dot_product += c[dim] * x[point, dim];
 				}
-				value[point] *= product * Math.Exp(-dot_product);
+				value[point] = product * Math.Exp(-dot_product);
             }
             return value;
         }
-		
 		
 		public static double[] p27_f(double[,] x, double? r, double[] c)
 		/*!*****************************************************************************80
@@ -2140,7 +2231,7 @@ namespace NINTLIB
 		!
 		!  Modified:
 		!
-		!    03 June 2007
+		!    25 April 2010
 		!
 		!  Author:
 		!
@@ -2182,12 +2273,13 @@ namespace NINTLIB
 			int point_num = x.GetUpperBound(0) + 1;
             int dim_num = x.GetUpperBound(1) + 1;
             double[] value = new double[point_num];
-			double valueR = (r == null) ? 1 : (double)r;
+			double valueR = (r == null) ? 0.3 : (double)r;
 			
 			if (c == null) {
 				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
 				for (int i = 0; i < dim_num; i++) {
-					c[i] = 1.0D / dim_num;
+					c[i] = defaultC;
 				}
 			}
 			
@@ -2201,11 +2293,604 @@ namespace NINTLIB
 					dot_product += c[dim] * x[point, dim];
 				}
 				double arg = 2.0D * Math.PI * valueR + dot_product;
-				value[point] *= Math.Cos(arg);
+				value[point] = Math.Cos(arg);
             }
             return value;
 		}
-
+		
+		public static double[] p28_f(double[,] x, double[] c, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P28_F evaluates the integrand for problem 28.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integral depends on vectors C(1:N) and Z(1:N).
+		!    To get or set C or Z, call P28_R8VEC.
+		!
+		!    The reference suggests choosing C by initializing
+		!    it to random values in [0,1], and then normalizing so that
+		!
+		!      sum ( 1/C(1:N)**2 ) = 170 / N**(7/2)
+		!
+		!    C(1:N) used to default to N**(9/4) / sqrt(170)
+		!    but this is INSUPPORTABLE for large dimension N.
+		!
+		!    So now we're setting C(1:N) to default to 1.0
+		!
+		!    The reference suggests choosing Z at random in [0,1].
+		!
+		!    Z(1:N) defaults to 0.5.
+		!
+		!  Integrand:
+		!
+		!    1 / product ( C(1:DIM_NUM)**2 + ( X(1:DIM_NUM) - Z(1:DIM_NUM) )**2 )
+		!
+		!  Exact Integral:
+		!
+		!    product ( (   arctan ( ( 1 - Z(1:DIM_NUM) ) / C(1:DIM_NUM) )
+		!                + arctan (       Z(1:DIM_NUM)   / C(1:DIM_NUM) ) 
+		!              ) / C(1:DIM_NUM)
+		!            )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    25 April 2010
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Alan Genz,
+		!    [Integral #2]
+		!    A Package for Testing Multiple Integration Subroutines,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D Reidel, 1987, pages 337-340,
+		!    LC: QA299.3.N38.
+		!
+		!    Thomas Patterson,
+		!    [Integral #6],
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+            int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (c == null) {
+				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = defaultC;
+				}
+			}
+			if (z == null) {
+				z = new double[dim_num];
+				double defaultZ = 0.5D / dim_num;
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = defaultZ;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = 1.0D+00 / product ( c(1:dim_num)**2 + ( x(1:dim_num,point) - z(1:dim_num) )**2 )
+				double product = 1.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					product *= Math.Pow(c[dim], 2) + Math.Pow(x[point, dim] - z[dim], 2);
+				}
+				value[point] = 1.0D / product;
+            }
+            return value;
+        }
+		
+		public static double[] p29_f(double[,] x, double? r, double[] c)
+		/*!*****************************************************************************80
+		!
+		!! P29_F evaluates the integrand for problem 29.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral parameters:
+		!
+		!    The integral depends on a parameter R,
+		!    and a vector C(1:N).
+		!
+		!    The Genz reference uses R = 1.  The Patterson reference
+		!    suggests using R = 0.3.  Note that R should NOT equal
+		!    any integer value between 1-DIM_NUM and 0, otherwise the
+		!    formula breaks down.  R should normally be strictly positive.
+		!
+		!    The Patterson reference suggests choosing C at random in [0,1]
+		!    and then multiplying by the normalizing factor (80/N**2).
+		!    This is what you will get if you "RANDOMIZE" C.
+		!
+		!    C defaults to 1/DIM_NUM.
+		!
+		!    To get or set R, call P29_R8.
+		!    To get or set C, call P29_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    1 / ( 1 + sum ( c(1:dim_num) * x(1:dim_num) ) )**(r+dim_num)
+		!
+		!  Exact Integral:
+		!
+		!    (1/A) * ( 1 / product ( c(1:dim_num) ) ) *
+		!    sum(0<=I(1)<=1) sum (0<=I(2)<=1) ... sum(0<=I(dim_num)<=1)
+		!    (-1)**sum(I(1:dim_num)) / ( 1 + sum ( i(1:dim_num)*c(1:dim_num) ) )**r
+		!
+		!    with A = r * ( r + 1 ) * ... * ( r + dim_num - 1 )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    25 April 2010
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Alan Genz,
+		!    [Integral #3]
+		!    A Package for Testing Multiple Integration Subroutines,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D Reidel, 1987, pages 337-340,
+		!    LC: QA299.3.N38.
+		!
+		!    Thomas Patterson,
+		!    [Integral #8],
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+			int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			double valueR = (r == null) ? 0.3 : (double)r;
+			
+			if (c == null) {
+				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = defaultC;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = 1.0D+00 / ( 1.0D+00 + dot_product ( c(1:dim_num), x(1:dim_num,point) ) )**( r + dim_num )
+				double dot_product = 0.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					dot_product += c[dim] * x[point, dim];
+				}
+				value[point] = 1.0D / Math.Pow(1.0D + dot_product, valueR + dim_num);
+            }
+            return value;
+		}
+		
+		public static double[] p30_f(double[,] x, double[] c, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P30_F evaluates the integrand for problem 30.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integral depends on vectors C(1:N) and Z(1:N).
+		!
+		!    The reference suggests choosing C at random in [0,1]
+		!    and then multiplying by the normalizing factor sqrt(140/N**(3/2)).
+		!
+		!    C(1:N) defaults to 1/N.
+		!    Z(1:N) defaults to 0.5.
+		!
+		!    To get or set C or Z, call P30_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    exp ( - sum ( c(1:n)**2 * ( x(1:n) - z(1:n) )**2 )
+		!
+		!  Exact Integral:
+		!
+		!    product
+		!    ( sqrt ( pi )
+		!      * (   erf ( c(1:n) * ( 1 - z(1:n) ) ) 
+		!          + erf ( c(1:n) *       z(1:n)   ) ) 
+		!      / ( 2 * c(1:n) )
+		!    )
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    25 April 2010
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Alan Genz,
+		!    [Integral #4]
+		!    A Package for Testing Multiple Integration Subroutines,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D Reidel, 1987, pages 337-340,
+		!    LC: QA299.3.N38.
+		!
+		!    Thomas Patterson,
+		!    [Integral #9],
+		!    On the Construction of a Practical Ermakov-Zolotukhin 
+		!    Multiple Integrator,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 269-290,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+			int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (c == null) {
+				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = defaultC;
+				}
+			}
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = exp ( - sum ( c(1:dim_num)**2 * ( x(1:dim_num,point) - z(1:dim_num) )**2 ) )
+				double sum = 0.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					sum += Math.Pow(c[dim], 2) * Math.Pow(x[point, dim] - z[dim], 2);
+				}
+				value[point] = - Math.Exp(-sum);
+            }
+            return value;
+		}
+		
+		public static double[] p31_f(double[,] x, double[] c, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P31_F evaluates the integrand for problem 31.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    There is a basis point Z associated with the integrand.
+		!    Z(1:DIM_NUM) defaults to ( 0.5, 0.5, ..., 0.5 ).
+		!    The user can set, get, or randomize this value by calling
+		!    P31_R8VEC.
+		!
+		!    The coefficient vector C (whose entries are usually positive)
+		!    controls the steepness and circularity of the pseudo-Gaussian.
+		!    C(1:DIM_NUM) defaults to 2.0.
+		!    The user can set, get, or randomize this value by calling
+		!    P31_R8VEC.
+		!
+		!  Integrand:
+		!
+		!    exp ( - sum ( c(1:dim_num) * abs ( x(1:dim_num) - z(1:dim_num) ) ) )
+		!
+		!  Exact Integral:
+		!
+		!    The integral is separable into
+		!
+		!      Int ( A(1) <= X(1) <= B(1) ) exp ( - C(1) * abs ( X(1) - Z(1) ) ) 
+		!        * Int ( A(2) <= X(2) <= B(2) ) exp ( - C(2) * abs ( X(2) - Z(2) ) )
+		!          * ...
+		!
+		!    Hence, the exact integral is computed as the product of
+		!    one dimensional integrals.  Each of these is easily computed
+		!    once the location of Z(I) with respect to A(I) and B(I) is
+		!    determined.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    25 April 2010
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Alan Genz,
+		!    [Integral #5]
+		!    A Package for Testing Multiple Integration Subroutines,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D. Reidel, 1987, pages 337-340,
+		!    LC: QA299.3.N38.
+		!
+		!    Kenneth Hanson,
+		!    Quasi-Monte Carlo: halftoning in high dimensions?
+		!    in Computatinal Imaging,
+		!    Edited by CA Bouman and RL Stevenson,
+		!    Proceedings SPIE,
+		!    Volume 5016, 2003, pages 161-172.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+			int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
+			if (c == null) {
+				c = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = 2.0D;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+				//value(point) = exp ( - sum ( c(1:dim_num) * abs ( x(1:dim_num,point) - z(1:dim_num) ) ) )
+				double sum = 0.0D;
+                for (int dim = 0; dim < dim_num; dim++)
+                {
+					sum += c[dim] * Math.Abs(x[point, dim] - z[dim]);
+				}
+				value[point] = - Math.Exp(-sum);
+            }
+            return value;
+		}
+		
+		public static double[] p32_f(double[,] x, double[] c, double[] z)
+		/*!*****************************************************************************80
+		!
+		!! P32_F evaluates the integrand for problem 32.
+		!
+		!  Discussion:
+		!
+		!    The spatial dimension DIM_NUM is arbitrary.
+		!
+		!  Region:
+		!
+		!    0 <= X(1:DIM_NUM) <= 1
+		!
+		!  Integral Parameters:
+		!
+		!    The integral depends on vectors C(1:N) and Z(1:N).
+		!
+		!    The reference suggests choosing C at random in [0,1]
+		!    and then multiplying by the normalizing factor sqrt(140/N**(3/2)).
+		!
+		!    The default value of C(1:N) is (1/2)^(1/N).
+		!
+		!    The default value of Z(1:N) is (1/2)^(1/N).
+		!
+		!  Integrand:
+		!
+		!    exp ( c(1:n)*x(1:n) ) if all x(1:n) <= z(1:n)
+		!    0                        otherwise
+		!
+		!  Exact Integral:
+		!
+		!    product ( g(1:n)(x,z,a,b,c) )
+		!
+		!    where g(i)(x,z,a,b,c) =
+		!
+		!      0                                         if z(i) <= a(i)
+		!      ( e^(c(i)*z(i) ) - e^(c(i)*a(i)) ) / c(i) if a(i) <= z(i) <= b(i)
+		!      ( e^(c(i)*b(i) ) - e^(c(i)*a(i)) ) / c(i) if b(i) <= z(i)
+		!      
+		!    with obvious modifications when c(i) = 0.
+		!
+		!  Licensing:
+		!
+		!    This code is distributed under the GNU LGPL license. 
+		!
+		!  Modified:
+		!
+		!    25 April 2010
+		!
+		!  Author:
+		!
+		!    John Burkardt
+		!    Rafael de Castro Dantas Sales (translation to C#)
+		!
+		!  Reference:
+		!
+		!    Alan Genz,
+		!    [Integral #6]
+		!    A Package for Testing Multiple Integration Subroutines,
+		!    in Numerical Integration: Recent Developments, Software
+		!    and Applications,
+		!    edited by Patrick Keast and Graeme Fairweather,
+		!    D Reidel, 1987, pages 337-340,
+		!    LC: QA299.3.N38.
+		!
+		!  Parameters:
+		!
+		!    Input, integer ( kind = 4 ) DIM_NUM, the dimension of the argument.
+		!
+		!    Input, integer ( kind = 4 ) POINT_NUM, the number of points.
+		!
+		!    Input, real ( kind = 8 ) X(DIM_NUM,POINT_NUM), the evaluation points.
+		!
+		!    Output, real ( kind = 8 ) VALUE(POINT_NUM), the function values.
+		!*/
+		{
+			int point_num = x.GetUpperBound(0) + 1;
+            int dim_num = x.GetUpperBound(1) + 1;
+            double[] value = new double[point_num];
+			
+			if (c == null) {
+				c = new double[dim_num];
+				double defaultC = 1.0D / dim_num;
+				for (int i = 0; i < dim_num; i++) {
+					c[i] = defaultC;
+				}
+			}
+			if (z == null) {
+				z = new double[dim_num];
+				for (int i = 0; i < dim_num; i++) {
+					z[i] = 0.5D;
+				}
+			}
+			
+            for (int point = 0; point < point_num; point++)
+            {
+//				if ( all ( x(1:dim_num,point) <= z(1:dim_num) ) ) then
+//			      value(point) = exp ( dot_product ( c(1:dim_num), x(1:dim_num,point) ) )
+//			    else
+//			      value(point) = 0.0D+00
+//			    end if
+				
+				bool allXLessOrEqualAllZ = true;
+				for (int dim = 0; dim <= dim_num; dim++)
+				{
+					if (x[point,dim] <= z[dim])
+					{
+						allXLessOrEqualAllZ = false;
+						break;
+					}
+				}
+				
+				if (allXLessOrEqualAllZ)
+				{
+					double dot_product = 0.0D;
+	                for (int dim = 0; dim < dim_num; dim++)
+	                {
+						dot_product += c[dim] * x[point, dim];
+					}
+					value[point] = Math.Exp(dot_product);
+				}
+				else
+				{
+					value[point] = 0.0D;
+				}
+            }
+            return value;
+		}
+		
         public static double[] p33_f(double[,] x)
      /* !*****************************************************************************80
         !
