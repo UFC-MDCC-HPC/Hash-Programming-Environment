@@ -600,8 +600,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void loadUnitBounds(ComponentInUseType xInnerC, HComponent innerC) {
 		// Configure unit bounds
 		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) {
-			unitBounds
-					.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
+			unitBounds.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
 		}
 	}
 
