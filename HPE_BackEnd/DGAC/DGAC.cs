@@ -259,7 +259,7 @@ namespace DGAC
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();
 
-            if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false; }
+           // if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false; }
 
             pmain.EnumeratorCardinality = new Dictionary<string, int>();
 
