@@ -164,7 +164,32 @@ namespace hpe.basic
             ActualParameters = actualParameters_new;
         }
 
-        public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
+        public static void determineActualParameters2(hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
+        {
+            int Id_functor_app_inner = -1;
+            if (innerComponent.Parameter_top.Length == 0)
+            {
+                Id_functor_app_inner = innerComponent.Id_functor_app;
+            }
+            else
+            {
+                bool achei = unit.ActualParameters.TryGetValue(innerComponent.Parameter_top, out Id_functor_app_inner);
+                if (!achei)
+                {
+                    achei = unit.ActualParameters.TryGetValue(innerComponent.Parameter_top + "#" + unit.Id_functor_app, out Id_functor_app_inner);
+                }
+
+                if (!achei)
+                {
+                    Console.WriteLine("UNEXPECTED ERROR: " + innerComponent.Parameter_top + "#" + unit.Id_functor_app + " NOT FOUND !!! (In: resolveImpl - LoaderApp.cs)");
+                }
+            }
+
+            determineActualParameters(unit.ActualParameters, Id_functor_app_inner, out actualParameters_new);
+
+        }
+
+            public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
         {
             actualParameters_new = new Dictionary<string,int>();;
             SupplyParameterDAO spdao = new SupplyParameterDAO();

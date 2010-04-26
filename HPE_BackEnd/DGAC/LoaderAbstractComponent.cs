@@ -899,7 +899,7 @@ namespace HPE_DGAC_LoadDB
                             ssr.Reference = extRef;
                             if (DGAC.BackEnd.scrdao.retrieve(ssr) != null)
                             {
-                                DGAC.BackEnd.scrdao.update(ssr);
+                                // DGAC.BackEnd.scrdao.update(ssr);
                             }
                             else
                             {

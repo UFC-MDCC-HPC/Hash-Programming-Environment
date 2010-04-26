@@ -93,7 +93,7 @@ namespace DGAC
                    cAbs = (AbstractComponentFunctor)cAbs_;
                   // ComponentDAO cdao = new ComponentDAO();
 				   IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
-				   if (cList.Count == 0) {	                        					
+				   if (true/*cList.Count == 0*/) {	                        					
                       Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
                       abstractloader.updateSources(ct, cAbs);
                       exists = true;
@@ -264,7 +264,7 @@ namespace DGAC
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();
 
-//            if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false; }
+            if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false; }
 
             pmain.EnumeratorCardinality = new Dictionary<string, int>();
 
@@ -868,10 +868,14 @@ namespace DGAC
 
             InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
+            if (id_inner.Equals("job")) {
+                Console.Write("");
+            }
 
             IDictionary<string, int> actualParameters_new = null;
-            hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
-
+            // hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
+            hpe.basic.Unit.determineActualParameters2(unit, ic, out actualParameters_new);
+           
             Slice slice = sdao.retrieve2(id_abstract,id_inner,id_interface,unit.Id_interface);
 
             hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, slice.PropertyName, actualParameters_new); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
@@ -1006,8 +1010,9 @@ namespace DGAC
 
                 // Percorra todas estas unidades e adicione somente aquelas cujos índice para algum enumerador em
                 // eix_inner seja o mesmo.
-                foreach (int r in ranks)
+                foreach (int r_ in ranks)
                 {
+                    int r = unit.RanksInv[r_]; // r is the local rank... r_ is the global rank.
                     IDictionary<string, int> rE = new Dictionary<string, int>();
                     foreach (KeyValuePair<string, int> re in unit.EnumRanks[r])
                         rE.Add(re);
@@ -1178,7 +1183,8 @@ namespace DGAC
 
                 int[] _ranks = new int[count];
                 for (int k = 0; k < count; k++)
-                    _ranks[k] = i++;
+                    //_ranks[k] = ranksAllList[i++];
+                    _ranks[k] = ranks[k];
 
                 unitsRanks.Add(id_unit_slice_, _ranks);
             }
@@ -1902,5 +1908,36 @@ namespace DGAC
     
 
     }
+
+    class XXXIData
+    {
+    }
+
+    class XXXIList<T> 
+        where T : XXXIData
+    {
+    }
+
+
+    class XXXIFunction : XXXIData { }
+
+    class XXXITestingFunction : XXXIFunction
+    {
+    }
+
+    class XXXIntegralCase<T> : XXXIData 
+        where T : XXXIData
+    {
+    }
+
+    class Teste
+    {
+        XXXIList<XXXIntegralCase<XXXITestingFunction>> ll = new XXXIList<XXXIntegralCase<XXXITestingFunction>>();
+
+
+    }
+
+
+
 }//namespace
 

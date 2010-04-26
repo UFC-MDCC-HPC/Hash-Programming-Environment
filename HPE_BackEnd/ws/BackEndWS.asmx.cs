@@ -38,8 +38,6 @@ namespace Back_End_WS
          */
         public string deployHashComponent(byte[] data, string userName, string password, string curDir)
         {
-			
-		
             try
             {
                 string filename = "newConfig";

@@ -111,7 +111,7 @@ namespace DGAC.database
                 "UPDATE sourcecode_references SET reference = '" + ss.Reference + "' WHERE type_owner like '" + ss.Type_owner + "'"
                                        + " and id_owner like '" + ss.Id_owner + "'"
                                        + " and file_name like '" + ss.File_name + "'"
-                                       + " and id_owner_container = " + ss.Id_owner_container;
+                                       + " and id_owner_container = " + ss.Id_owner_container ;
  
                 
                 
