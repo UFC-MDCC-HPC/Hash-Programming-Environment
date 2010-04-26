@@ -89,7 +89,7 @@ namespace DGAC.database
                     path = pathRef.path;
                 else
                 {
-                    path = Constants.UNIT_PACKAGE_PATH;
+                    path = Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + extRef;
                     Console.Error.WriteLine("External reference " + extRef + " not found. Using default " + path + ".");
                 }
                 returnExternalReferences.Add(path + Path.DirectorySeparatorChar + extRef + ".dll");
