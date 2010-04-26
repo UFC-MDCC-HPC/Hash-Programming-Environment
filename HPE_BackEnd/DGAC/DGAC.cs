@@ -27,7 +27,7 @@ namespace DGAC
         String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir);
         EnvironmentType readEnvironment();
 
-    }//IDGAC
+    }//IDGAC 
 
     /*
     * Essa classe é chamada pelo WS. Nela, as referencias aos workers são inicializadas. Para isto, os workers
@@ -37,11 +37,6 @@ namespace DGAC
    
     public class BackEnd : IBackEnd
     {
-        private string[] hosts;
-        private int channel = 0;
-        private object[] remObjects;
-        private int portTurn = 0;
-
         IpcClientChannel ch;
 
         public BackEnd()
@@ -1141,7 +1136,6 @@ namespace DGAC
 
             int pos1 = 0;
             int pos2 = 0;
-            int i = 0;
             foreach (string id_unit_slice_ in id_units_ordered_actual)
             {
                 IList<int> ranks;
@@ -1290,22 +1284,6 @@ namespace DGAC
                                                       string parid, 
                                                       string id_interface)
         {
-/*            bool ok = true;
-            int id_functor_app_actual;
-            if (!actualParameters.TryGetValue(parid, out id_functor_app_actual))
-            {
-                if (!actualParameters.TryGetValue(parid + "#" + id_functor_app_inner, out id_functor_app_actual))
-                {
-                    ok = false;
-                }
-            }
-            */
-            if (true)
-            {
-                //                Interface i = null;
-                //                string id_interface_ = id_interface;
-                //                string id_interface_return = null;
-
                 IDictionary<string, Interface> mybot = new Dictionary<string, Interface>();
                 IDictionary<string, Interface> mysup = new Dictionary<string, Interface>();
                 IDictionary<string, int> myacf = new Dictionary<string, int>();
@@ -1377,12 +1355,7 @@ namespace DGAC
                     }
                 }
 
-            }
-            else
-            {
-                Console.Error.WriteLine("(fetchActualInterface) parameter " + parid + " not found in actualParameters.");
-                throw new Exception("(fetchActualInterface) parameter " + parid + " not found in actualParameters.");
-            }
+            
 
             return null;
         }
