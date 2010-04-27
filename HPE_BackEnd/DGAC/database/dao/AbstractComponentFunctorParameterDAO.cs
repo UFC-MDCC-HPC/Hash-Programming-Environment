@@ -27,7 +27,6 @@ namespace DGAC.database
 
 	public IList<AbstractComponentFunctorParameter> list(int id_abstract)
     {
-
         IList<AbstractComponentFunctorParameter> list = null;
         
         if (cache_c_pars.TryGetValue(id_abstract, out list)) return list;
