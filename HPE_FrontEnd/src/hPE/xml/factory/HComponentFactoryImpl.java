@@ -244,16 +244,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	// Loads a ComponentType object from XML in a HComponent object
 	public HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing)
 			throws HPEInvalidComponentResourceException {
-		try {
 			ComponentType component = loadComponentX(uri);
 			return buildComponent(component, uri, isTop, isExtending, isImplementing);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null,
-        		    "Error loading component " + uri + " !", 
-        		    "Loading Component Error",
-        		    JOptionPane.ERROR_MESSAGE);
-			throw new HPEInvalidComponentResourceException(e);
-		}
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
@@ -377,96 +369,111 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private boolean isConcrete = false;
 	private boolean isSubType = false;
 
-	private void loadInnerComponents(ComponentBodyType xCinfo)
-			throws HPEInvalidComponentResourceException,
-			HPEComponentFileNotFound, IOException {
-
-		for (InnerComponentType xInnerC : xCinfo.getInnerComponent()) {
-
-			mC1.put(xInnerC.getLocalRef(), xInnerC);
-
-			String name = xInnerC.getName();	
-			URI locationUri = URI.createURI(xInnerC.getLocation());
-			String package_ = xInnerC.getPackage();
-			String ref = xInnerC.getLocalRef();
-			String version = xInnerC.getVersion();
-			boolean isExposed = xInnerC.isExposed();
-			java.io.File fileCache = getCachePath(package_,name,version);
-			URI innerUri = null;
-
-			boolean copyToCache = false;
-			boolean retrieveLibraries = false;
-			if (!fileCache.exists()) {
-				if (locationUri.scheme() == null
-						|| !locationUri.scheme().equals("http")) {
-					innerUri = locationUri;
-					copyToCache = true;
-				} else {
-					java.io.File file = HPELocationEntry.getComponent(package_
-							.replace(".", ":").split(":"), name, null,
-							locationUri);
-					innerUri = URI.createFileURI(file.getAbsolutePath());
-					retrieveLibraries = true;
-				}
-			} else {
-				if (locationUri.scheme() == null
-						|| !locationUri.scheme().equals("http")) {
-					// COMPARE DATES OF THE PROJECT FILE AND CACHED FILE.
-					IPath pathC = new Path(locationUri.toString());	
-					IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
-					long lastDataCache = fileCache.lastModified();
-				    java.io.File fileProject = new File(path.toString());	
-				    long lastDateProject = fileProject.lastModified();			 
-	                if (lastDateProject > lastDataCache) {
-						innerUri = locationUri;
-						copyToCache = true;
-	                } else 
-					    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
-				} else {
-					innerUri = URI.createFileURI(fileCache.getAbsolutePath());
-				}
+	private void loadInnerComponents(ComponentBodyType xCinfo) {
+			for (InnerComponentType xInnerC : xCinfo.getInnerComponent()) {
+				try {
+	
+					mC1.put(xInnerC.getLocalRef(), xInnerC);
+		
+					String name = xInnerC.getName();	
+					URI locationUri = URI.createURI(xInnerC.getLocation());
+					String package_ = xInnerC.getPackage();
+					String ref = xInnerC.getLocalRef();
+					String version = xInnerC.getVersion();
+					boolean isExposed = xInnerC.isExposed();
+					java.io.File fileCache = getCachePath(package_,name,version);
+					URI innerUri = null;
+		
+					boolean copyToCache = false;
+					boolean retrieveLibraries = false;
+					if (!fileCache.exists()) {
+						if (locationUri.scheme() == null
+								|| !locationUri.scheme().equals("http")) {
+							innerUri = locationUri;
+							copyToCache = true;
+						} else {
+							java.io.File file = HPELocationEntry.getComponent(package_
+									.replace(".", ":").split(":"), name, null,
+									locationUri);
+							innerUri = URI.createFileURI(file.getAbsolutePath());
+							retrieveLibraries = true;
+						}
+					} else {
+						if (locationUri.scheme() == null
+								|| !locationUri.scheme().equals("http")) {
+							// COMPARE DATES OF THE PROJECT FILE AND CACHED FILE.
+							IPath pathC = new Path(locationUri.toString());	
+							IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
+							long lastDataCache = fileCache.lastModified();
+						    java.io.File fileProject = new File(path.toString());	
+						    long lastDateProject = fileProject.lastModified();			 
+			                if (lastDateProject > lastDataCache) {
+								innerUri = locationUri;
+								copyToCache = true;
+			                } else 
+							    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+						} else {
+							innerUri = URI.createFileURI(fileCache.getAbsolutePath());
+						}
+						
+					}
+		
+		
+					 HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false);
+		
+		
+				    if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
+						innerC.setRemoteURI(locationUri);
+						
+					}
+					
+					if (copyToCache)
+						copyProjectToCache(innerC, version);
+					
+					if (retrieveLibraries)
+						retrieveLibraries(innerC, locationUri);
+					
+					mC2.put(xInnerC, innerC);
+		
+					int x = (int) xInnerC.getVisualDescription().getX();
+					int y = (int) xInnerC.getVisualDescription().getY();
+					int w = (int) xInnerC.getVisualDescription().getW();
+					int h = (int) xInnerC.getVisualDescription().getH();
+					int r = xInnerC.getVisualDescription().getColor().getR();
+					int g = xInnerC.getVisualDescription().getColor().getG();
+					int b = xInnerC.getVisualDescription().getColor().getB();
+					Color color = new Color(null, r, g, b);
+		
+					Point where = new Point(x, y);
+					component.loadComponent(innerC, where);
+					innerC.setBounds(new Rectangle(x, y, w, h));
+					innerC.setColor(color);
+					innerC.setName(ref);
+					innerC.setExposed(isExposed);
+					// innerC.setPackagePath(new Path(package_));
+		
+					loadParameterRenamings(xInnerC, innerC);
+					loadPorts(xInnerC, innerC);
+					loadUnitBounds(xInnerC, innerC);
 				
+				}
+				catch (HPEInvalidComponentResourceException e) {
+					String message = "ERROR loading component " + xInnerC.getPackage() + "." + xInnerC.getName() + " from " + xInnerC.getLocation() + "! (inner component " + xInnerC.getLocalRef() + ").";;
+					System.err.println(message);
+					JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+				} 
+				catch (HPEComponentFileNotFound e) {
+					String message = "Component " + xInnerC.getPackage() + "." + xInnerC.getName() + " NOT fuound in " + xInnerC.getLocation() + "! (inner component " + xInnerC.getLocalRef() + ").";
+					System.err.println(message);
+					JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+				} 
+	
 			}
-
-
-			 HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false);
-
-
-		    if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
-				innerC.setRemoteURI(locationUri);
-				
-			}
+		//catch (IOException e) {
 			
-			if (copyToCache)
-				copyProjectToCache(innerC, version);
-			
-			if (retrieveLibraries)
-				retrieveLibraries(innerC, locationUri);
-			
-			mC2.put(xInnerC, innerC);
+		//}
+		
 
-			int x = (int) xInnerC.getVisualDescription().getX();
-			int y = (int) xInnerC.getVisualDescription().getY();
-			int w = (int) xInnerC.getVisualDescription().getW();
-			int h = (int) xInnerC.getVisualDescription().getH();
-			int r = xInnerC.getVisualDescription().getColor().getR();
-			int g = xInnerC.getVisualDescription().getColor().getG();
-			int b = xInnerC.getVisualDescription().getColor().getB();
-			Color color = new Color(null, r, g, b);
-
-			Point where = new Point(x, y);
-			component.loadComponent(innerC, where);
-			innerC.setBounds(new Rectangle(x, y, w, h));
-			innerC.setColor(color);
-			innerC.setName(ref);
-			innerC.setExposed(isExposed);
-			// innerC.setPackagePath(new Path(package_));
-
-			loadParameterRenamings(xInnerC, innerC);
-			loadPorts(xInnerC, innerC);
-			loadUnitBounds(xInnerC, innerC);
-
-		}
 	}
 
 	private void retrieveLibraries(HComponent innerC, URI locationUri) {
@@ -682,15 +689,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				u = innerC.fetchUnit(uBound.getURef(), (int) uBound
 						.getReplica());
 				if (u == null)
-					throw new HPEInvalidComponentResourceException(
-							"Replicated unit not found in load inner components !");
+					System.err.println("Replicated unit " + uBound.getURef() + " not found when loading inner component " + innerC.getRef());
+					// throw new HPEInvalidComponentResourceException( "Replicated unit not found in load inner components !");
 			} else {
 				u = innerC.fetchUnit(uBound.getURef());
 				if (u == null)
-					throw new HPEInvalidComponentResourceException(
-							"Unit not found in load inner components !");
+					System.err.println("Unit " + uBound.getURef() + " not found when loading inner component " + innerC.getRef());
+					//throw new HPEInvalidComponentResourceException( "Unit not found in load inner components !");
 			}
-			u.setBounds(bounds);
+			if (u != null) {
+			   u.setBounds(bounds);
+			}
 		}
 
 	}
@@ -835,15 +844,24 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					ss.add(s);
 				String oCRef = ss.get(0);
 				HComponent oC = mC2.get(mC1.get(oCRef));
-				if (oC == null)
-					throw new HPEInvalidComponentResourceException(
-							"Corrupt XML: Origin component of replicator was not found.");
-				r = oC.lookForReplicator(ref, ss);
+				if (oC == null) {
+					System.err.println("Origin component " + oCRef + " of replicator " + ref + " was not found !");
+					JOptionPane.showMessageDialog(null,
+							"HComponentFactoryImpl.loadEnumerators(): Origin component " + oCRef + " of replicator " + ref + " was not found !", 
+		        		    "Loading Component Error",
+		        		    JOptionPane.ERROR_MESSAGE);
+				} else {
+					r = oC.lookForReplicator(ref, ss);				
+					
+					if (r == null) {	
+						System.err.println("Replicator " + ref + " not found in origin component " + oCRef + " !");
+						JOptionPane.showMessageDialog(null,
+								"HComponentFactoryImpl.loadEnumerators(): Replicator " + ref + " not found in origin component " + oCRef + " !", 
+			        		    "Loading Component Error",
+			        		    JOptionPane.ERROR_MESSAGE);
+					}
+				}
 				
-				
-				if (r == null)	
-					throw new HPEInvalidComponentResourceException(
-							"Corrupt XML: Replicator not found in origin component");
 			} else if (fromSplit) {
 				delayedSplits.put(ref, xE);
 			} else if (fromRecursion != null) {
@@ -1188,8 +1206,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 								(HComponent) source, (HComponent) target);
 						if (c_.canExecute())
 							c_.execute();
-						else
-							throw new HPEInvalidComponentResourceException();
+						else {
+							String message = "CANNOT FUSE INNER COMPONENTS ! source = " + source.getRef() + " (" + source.getComponentName() + ") target = " + target.getRef() + " (" + target.getComponentName() + ")";
+							System.err.println(message);
+							JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+							// throw new HPEInvalidComponentResourceException();
+						}
 					}
 				}
 			}
@@ -2430,9 +2452,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		String uNameSuper = xUsuper.getURef();
 		HComponent cSuper = component.getSuperType(); // mC2.get(mC1.get(cNameSuper));
 		if (cSuper == null) {
-			System.err.println("IHUnit " + uNameSuper + " not found in "
-					+ cNameSuper);
-			throw new HPEInvalidComponentResourceException();
+			String message = "IHUnit " + uNameSuper + " not found in " + cNameSuper;
+			System.err.println(message);
+			JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+			// throw new HPEInvalidComponentResourceException();
 		} else {
 			IHUnit u_ = cSuper.fetchUnit(uNameSuper);
 			u = (HUnit) u_.getTopUnit(null);
@@ -2447,9 +2470,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		String uNameSuper = xUsuper.getURef();
 		HComponent cSuper = component.getWhoItImplements(); // mC2.get(mC1.get(cNameSuper));
 		if (cSuper == null) {
-			System.err.println("IHUnit " + uNameSuper + " not found in "
-					+ cNameSuper);
-			throw new HPEInvalidComponentResourceException();
+			String message = "IHUnit " + uNameSuper + " not found in " + cNameSuper;
+			System.err.println(message);
+			JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+			// throw new HPEInvalidComponentResourceException();
 		} else {
 			IHUnit u_ = cSuper.fetchUnit(uNameSuper);
 			u = (HUnit) u_.getTopUnit(null);
@@ -2500,10 +2524,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							}
 	
 							if (u1 == null) {
-								System.err
-										.println("HComponentFactoryImpl.loadSlices(): IHUnit "
-												+ uRef + " not found in " + cRef);
-								throw new HPEInvalidComponentResourceException();
+								System.err.println("HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef);
+								JOptionPane.showMessageDialog(null,
+										"HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef, 
+					        		    "Loading Component Error",
+					        		    JOptionPane.ERROR_MESSAGE);
 							} else {
 								try {
 									HUnitSlice uSlice = (HUnitSlice) component.createBinding(u1, u, new Point(x, y));
@@ -2511,9 +2536,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 									if (sName != null)
 										uSlice.setName(sName);
 								} catch (HPEAbortException e) {
-									System.err
-											.println("Ih, fudeu ! Error creating binding ! ");
-									throw new HPEInvalidComponentResourceException();
+									System.err.println("HComponentFactoryImpl.loadSlices(): Error creating binding (source = " + u1.getName2() + " target = " + u.getName2());
+									JOptionPane.showMessageDialog(null,
+											"HComponentFactoryImpl.loadSlices(): Error creating binding (source = " + u1.getName2() + " target = " + u.getName2(), 
+						        		    "Loading Component Error",
+						        		    JOptionPane.ERROR_MESSAGE);									
 								}
 							}
 						}
@@ -2702,8 +2729,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							}
 						}
 					}
-					if (s == null)
-						throw new HPEInvalidComponentResourceException();
+					//if (s == null)
+					//	throw new HPEInvalidComponentResourceException();
 					Rectangle bounds = new Rectangle((int) ve.getX(), (int) ve.getY(),
 							(int) ve.getW(), (int) ve.getH());
 					s.setName(sRef);

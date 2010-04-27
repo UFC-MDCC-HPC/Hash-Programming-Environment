@@ -2556,7 +2556,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		if (componentsToSupply == null || componentsToSupply.size() == 0) {
 			JOptionPane.showMessageDialog(null, "No variables " + varName
-					+ " to supply.", "Supply Error",
+					+ " to supply (ref=" + model.getRef() + ") .", "Supply Error",
 					JOptionPane.WARNING_MESSAGE);
 			return;
 		}
