@@ -24,7 +24,7 @@ namespace ParallelNumericalIntegration
             int rank = Communicator.world.Rank;
 
             // Set the integrating function.
-            f = NINTLIB.IntegratingFunctions.p01_f;
+            f = NINTLIB.IntegratingFunctions.p33_f;
                         
             // Set the number of dimensions
 
@@ -45,6 +45,8 @@ namespace ParallelNumericalIntegration
 
             if (rank == 0) // MANAGER (the manager only distribute jobs and collect results)
             {
+                DateTime startTime = DateTime.Now;
+
                 // Set/Divide the interval
                 double[][,] a = new double[size + 1][,];
                 double[][,] b = new double[size + 1][,];
@@ -83,8 +85,6 @@ namespace ParallelNumericalIntegration
                 
                 // Distribute jobs.
                 
-                DateTime startTime = DateTime.Now;
-
                 Communicator.world.Scatter<double[,]>(a);
                 Communicator.world.Scatter<double[,]>(b);
 
