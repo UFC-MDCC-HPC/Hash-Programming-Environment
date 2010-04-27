@@ -13,6 +13,10 @@ public IDoubleImpl() {
 
 } 
 
+public Object createNew() {
+   return new IDoubleImpl();
+}
+
 private double number;
 
 public double Value{

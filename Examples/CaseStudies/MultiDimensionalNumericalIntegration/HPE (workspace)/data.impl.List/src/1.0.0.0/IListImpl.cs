@@ -5,21 +5,32 @@ using hpe.kinds;
 using jefferson.data.Data;
 using data.List;
 
+//using data.Function.TestingFunction;
+//using data.IntegralCase;
+//using data.Function;
+
 namespace data.impl.List { 
 
 public class IListImpl<T> : BaseIListImpl<T>, IList<T>
-where T:IData, new()
+where T:IData
 {
 
+	public Object createNew() {
+	   return new IListImpl<T>();
+	}
+	
     private System.Collections.Generic.IDictionary<T,T> dict = new System.Collections.Generic.Dictionary<T,T>();
 
 	public IListImpl() { 
-	
+//	     IListImpl<IIntegralCase<ITestingFunction>> ll1 = new IListImpl<IIntegralCase<ITestingFunction>>();
+//	     IListImpl<ITestingFunction> ll2 = new IListImpl<ITestingFunction>();
+//	     IListImpl<IFunction> ll3 = new IListImpl<IFunction>();
 	} 
-
-    public T createNew() {
-       T e = new T ();
-       return e;
+    
+    public T createElement() {
+         T element = (T) this.data.createNew();
+         this.add(element);
+         return (T) element;
     }
     
     public void add(T element) {
@@ -42,6 +53,7 @@ where T:IData, new()
        System.Collections.Generic.IList<T> r = new System.Collections.Generic.List<T>();
        foreach (T e in dict.Values) 
             r.Add(e);
+          
        return r;
     }
 

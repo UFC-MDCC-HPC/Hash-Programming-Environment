@@ -39,13 +39,13 @@
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/BaseIData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.List { &#xA;&#xA;public interface IList&lt;T> : BaseIList&lt;T>, IData&#xA;where T:IData&#xA;{   &#xD;&#xA;    T createNew();&#xA;    void add(T element);&#xA;    void remove(T element);&#xA;    bool contains(T element);&#xA;    bool isEmpty();&#xA;    System.Collections.Generic.IList&lt;T> getList();&#xA;    &#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IList.cs" srcType="user" uri="/data.List/bin/1.0.0.0/IList.dll" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.List { &#xA;&#xA;public interface IList&lt;T> : BaseIList&lt;T>, IData&#xA;where T:IData&#xA;{   &#xA;    T createElement();&#xA;    void add(T element);&#xA;    void remove(T element);&#xA;    bool contains(T element);&#xA;    bool isEmpty();&#xA;    System.Collections.Generic.IList&lt;T> getList();&#xA;    &#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IList.cs" srcType="user" uri="/data.List/bin/1.0.0.0/IList.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>%WORKSPACE/data.List/bin/1.0.0.0/BaseIList.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="274" y="192">
+      <visualDescription h="40" w="80" x="252" y="175">
         <color b="0" g="255" r="255"/>
       </visualDescription>
       <parameter iname="IData" order="0" parid="T" uname="data" varid="element type"/>
@@ -55,7 +55,7 @@
       <slices cRef="element factory" replica="0" uRef="data" sliceName="data" transitive="false">
         <visualDescription h="10" w="10" x="64" y="15"/>
       </slices>
-      <visualDescription h="40" w="80" x="77" y="330"/>
+      <visualDescription h="40" w="80" x="77" y="280"/>
     </unit>
   </componentInfo>
 </component:component>

@@ -9,11 +9,15 @@ namespace data.impl.Integer {
 public class IIntegerImpl : BaseIIntegerImpl, IInteger
 {
 
-private int value_;
+	public Object createNew() {
+	   return new IIntegerImpl();
+	}
 
-public int Value { get { return value_; } set { value_ = value; } }
-
-public IIntegerImpl() { 
+	private int value_;
+	
+	public int Value { get { return value_; } set { value_ = value; } }
+	
+	public IIntegerImpl() { 
 
 } 
 

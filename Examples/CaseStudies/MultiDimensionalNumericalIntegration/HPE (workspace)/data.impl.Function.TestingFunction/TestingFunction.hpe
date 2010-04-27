@@ -27,14 +27,14 @@
           <externalDependency>IntegratingFunctions</externalDependency>
           <externalDependency>NINTLIB</externalDependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;using NINTLIB;&#xA;&#xA;namespace data.impl.Function.TestingFunction { &#xA;&#xA;public class ITestingFunctionImpl : BaseITestingFunctionImpl, ITestingFunction&#xA;{&#xA;&#xA;public ITestingFunctionImpl() { &#xA;&#xA;} &#xA;&#xA;    private static NINTLIB.MultiPointsIntegratingFunction f_;&#xA;&#xA;&#x9;public double f(double[] x)&#xA;&#x9;{&#xA;&#x9;     double[,] x_ = new double[1, x.Length];&#xA;&#x9;&#xA;&#x9;     int i = 0;&#xA;&#x9;     foreach (double e in x)&#xA;&#x9;           x_[0, i++] = e;&#xA;&#x9;&#xA;&#x9;&#xA;&#x9;     return f_(x_)[0];&#xA;&#x9;}&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITestingFunctionImpl.cs" srcType="user" uri="/data.impl.Function.TestingFunction/bin/1.0.0.0/ITestingFunctionImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;using NINTLIB;&#xA;&#xA;namespace data.impl.Function.TestingFunction { &#xA;&#xA;public class ITestingFunctionImpl : BaseITestingFunctionImpl, ITestingFunction&#xA;{&#xA;&#xA;&#x9;public ITestingFunctionImpl() { &#xA;&#x9;&#xA;&#x9;} &#xA;&#x9;&#xA;&#x9;public Object createNew() {&#xA;&#x9;   return new ITestingFunctionImpl();&#xA;&#x9;}&#xA;&#x9;&#xA;    private static NINTLIB.MultiPointsIntegratingFunction f_ = NINTLIB.IntegratingFunctions.p33_f;&#xA;&#xA;&#x9;public double f(double[] x)&#xA;&#x9;{&#xA;&#x9;     double[,] x_ = new double[1, x.Length];&#xA;&#x9;&#xA;&#x9;     int i = 0;&#xA;&#x9;     foreach (double e in x)&#xA;&#x9;           x_[0, i++] = e;&#xA;&#x9;&#xA;&#x9;&#xA;&#x9;     return f_(x_)[0];&#xA;&#x9;}&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITestingFunctionImpl.cs" srcType="user" uri="/data.impl.Function.TestingFunction/bin/1.0.0.0/ITestingFunctionImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/data.impl.Function.TestingFunction/bin/1.0.0.0/BaseITestingFunctionImpl.dll</dependency>
           <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
           <externalDependency>IntegratingFunctions</externalDependency>
           <externalDependency>NINTLIB</externalDependency>
         </file>
       </sources>
-      <visualDescription h="68" w="148" x="210" y="120">
+      <visualDescription h="68" w="148" x="71" y="116">
         <color b="0" g="255" r="255"/>
       </visualDescription>
       <externalReferences>IntegratingFunctions</externalReferences>
@@ -42,7 +42,7 @@
     </interface>
     <unit iRef="ITestingFunctionImpl" private="false" uRef="testing_function" visibleInterface="true">
       <super cRef="base" uRef="testing_function"/>
-      <visualDescription h="40" w="137" x="209" y="367"/>
+      <visualDescription h="40" w="137" x="147" y="374"/>
     </unit>
   </componentInfo>
 </component:component>

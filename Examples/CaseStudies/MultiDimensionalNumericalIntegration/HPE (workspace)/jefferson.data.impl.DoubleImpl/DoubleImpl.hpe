@@ -25,7 +25,7 @@
         <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;&#xA;namespace jefferson.data.impl.DoubleImpl { &#xA;&#xA;public abstract class BaseIDoubleImpl: DataStructure, BaseIDouble&#xA;{&#xA;&#xA;&#xA;public BaseIDoubleImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000e314ca6567d410c166366d9b56173dbf7bb6487cb8a345c4e80b85ab2fa9d3e77324c0a90e0efc655b66793a072782012152c6ff062830e5a61932773b14bf8ceb6fd78018f178c1114a5a6953dec684c68b3e1708782e9f7b1560f60dddddd7cd155595b0fd05a5bad2382f9f43ef84e9ba223fcc5bc668c09e1f19ca7abda2&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIDoubleImpl.cs" srcType="base" uri="/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/BaseIDoubleImpl.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/BaseIDouble.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;&#xA;namespace jefferson.data.impl.DoubleImpl { &#xA;&#xA;public class IDoubleImpl : BaseIDoubleImpl, IDouble&#xA;{&#xA;&#xA;public IDoubleImpl() { &#xA;&#xA;} &#xA;&#xA;private double number;&#xA;&#xA;public double Value{&#xA;&#x9;&#x9;set{&#xA;&#x9;&#x9;&#x9;this.number = value;&#xA;&#x9;&#x9;}&#xA;&#x9;    get{&#xA;&#x9;&#x9;   return this.number;&#xA;&#x9;    }&#xA;&#x9;}&#xA;public void plus(IDouble b) { this.number += b.Value; }&#xA;public void times(IDouble b) { this.number *= b.Value; }&#xA;public void minus(IDouble b) { this.number -= b.Value; }&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDoubleImpl.cs" srcType="user" uri="/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/IDoubleImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;&#xA;namespace jefferson.data.impl.DoubleImpl { &#xA;&#xA;public class IDoubleImpl : BaseIDoubleImpl, IDouble&#xA;{&#xA;&#xA;public IDoubleImpl() { &#xA;&#xA;} &#xA;&#xA;public Object createNew() {&#xA;   return new IDoubleImpl();&#xD;&#xA;}&#xA;&#xA;private double number;&#xA;&#xA;public double Value{&#xA;&#x9;&#x9;set{&#xA;&#x9;&#x9;&#x9;this.number = value;&#xA;&#x9;&#x9;}&#xA;&#x9;    get{&#xA;&#x9;&#x9;   return this.number;&#xA;&#x9;    }&#xA;&#x9;}&#xA;public void plus(IDouble b) { this.number += b.Value; }&#xA;public void times(IDouble b) { this.number *= b.Value; }&#xA;public void minus(IDouble b) { this.number -= b.Value; }&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IDoubleImpl.cs" srcType="user" uri="/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/IDoubleImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/BaseIDoubleImpl.dll</dependency>
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
         </file>
@@ -36,7 +36,7 @@
     </interface>
     <unit iRef="IDoubleImpl" private="false" uRef="double" visibleInterface="true">
       <super cRef="base" uRef="double"/>
-      <visualDescription h="40" w="80" x="28" y="319"/>
+      <visualDescription h="40" w="80" x="37" y="257"/>
     </unit>
   </componentInfo>
 </component:component>

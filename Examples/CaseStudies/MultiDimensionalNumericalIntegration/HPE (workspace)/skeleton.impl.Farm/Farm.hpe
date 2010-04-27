@@ -202,8 +202,8 @@
     <supplyParameter cRef="o" varName="O"/>
     <supplyParameter cRef="i" varName="I"/>
     <supplyParameter cRef="j" varName="J"/>
-    <innerRenaming cNewName="data_target" cOldName="output" cRef="base"/>
     <innerRenaming cNewName="data_source" cOldName="input" cRef="base"/>
+    <innerRenaming cNewName="data_target" cOldName="output" cRef="base"/>
     <interface iRef="IManagerImpl" nArgs="4">
       <slice isRef="distribute">
         <originRef cRef="scatter" iRef="IDistribute"/>
@@ -213,12 +213,12 @@
         <originRef cRef="gather" iRef="ICollect"/>
         <visualDescription h="10" w="10" x="42" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@c7195b" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@5940" repeat="0">
         <visualDescription h="90" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@151c590" repeat="0" sliceRef="distribute">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e3a6e9" repeat="0" sliceRef="distribute">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@181719d" repeat="0" sliceRef="collect">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e3326e" repeat="0" sliceRef="collect">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
       </protocol>
@@ -237,7 +237,7 @@
           <dependency>%WORKSPACE/skeleton.impl.Farm/bin/1.0.0.0/BaseIManagerImpl.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="85" w="196" x="111" y="380">
+      <visualDescription h="85" w="196" x="80" y="358">
         <color b="0" g="0" r="255"/>
       </visualDescription>
       <port name="input_data">
@@ -271,15 +271,15 @@
         <originRef cRef="work" iRef="IWork"/>
         <visualDescription h="10" w="10" x="65" y="13"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@1814e6" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@12d3714" repeat="0">
         <visualDescription h="90" w="190" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1043746" repeat="0" sliceRef="receive">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17b1f5f" repeat="0" sliceRef="receive">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1c8edce" repeat="0" sliceRef="work">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@48baa2" repeat="0" sliceRef="work">
           <visualDescription h="50" w="50" x="130" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@74756d" repeat="0" sliceRef="send">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d5151d" repeat="0" sliceRef="send">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
       </protocol>
@@ -345,7 +345,7 @@
         <port>mpi</port>
         <port>output_data</port>
       </slices>
-      <visualDescription h="40" w="66" x="182" y="149"/>
+      <visualDescription h="40" w="66" x="217" y="126"/>
     </unit>
     <unit iRef="IWorkerImpl" private="false" uRef="worker" visibleInterface="true">
       <super cRef="base" uRef="worker"/>

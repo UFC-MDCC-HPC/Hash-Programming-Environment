@@ -10,11 +10,15 @@ namespace data.impl.Function.TestingFunction {
 public class ITestingFunctionImpl : BaseITestingFunctionImpl, ITestingFunction
 {
 
-public ITestingFunctionImpl() { 
-
-} 
-
-    private static NINTLIB.MultiPointsIntegratingFunction f_;
+	public ITestingFunctionImpl() { 
+	
+	} 
+	
+	public Object createNew() {
+	   return new ITestingFunctionImpl();
+	}
+	
+    private static NINTLIB.MultiPointsIntegratingFunction f_ = NINTLIB.IntegratingFunctions.p33_f;
 
 	public double f(double[] x)
 	{

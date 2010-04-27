@@ -115,7 +115,7 @@
       <slices cRef="data_source" replica="0" uRef="data" sliceName="data" transitive="false">
         <visualDescription h="10" w="10" x="28" y="24"/>
       </slices>
-      <visualDescription h="40" w="80" x="52" y="222"/>
+      <visualDescription h="40" w="80" x="52" y="234"/>
     </unit>
     <unit iRef="ICollect" private="false" uRef="collect" visibleInterface="true">
       <slices cRef="mpi" replica="2" uRef="mpi" sliceName="mpi" transitive="false">

@@ -20,10 +20,10 @@ public override void synchronize() {
    
 	Intracommunicator localComm = mpi.localComm(this);
 
-	int[] ranks_of_collector = mpi.ranksOf(this, "collect");
-	int root_collect = ranks_of_collector[0];
+	int[] ranks_of_collector = mpi.ranksOf(this, "sum");
+	int root_collect = this.RanksInv[ranks_of_collector[0]];
     	
-    double result = localComm.Reduce<double>(0.0,Operation<double>.Add, root_collect);
+    double result = localComm.Reduce<double>(0.0D,Operation<double>.Add, root_collect);
     
     data.Value = result;	
 

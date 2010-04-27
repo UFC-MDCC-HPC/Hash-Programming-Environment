@@ -192,7 +192,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ed57b0964d99038b51fdae01cbc9360f404ba6e41cd89aa9577d1b599f1ff072b795d183b1cfefa5dcb4f34c78130f347ab2d2b7ab63a7a75ba4740d79a232800aec54c18770f89e75ca197993aa8b1a2cb4c0e9a1a3bf62bf3fb14b8828ecb423585b89fc1286a4ed230eada080ae91d10c441391c7d2f075ea3b6d0eca81" localRef="output" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Double" package="jefferson.data" exposed="false">
-        <visualDescription h="22" w="97" x="23" y="293">
+        <visualDescription h="22" w="97" x="33" y="271">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="double">
@@ -200,7 +200,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="input" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
-        <visualDescription h="23" w="117" x="138" y="220">
+        <visualDescription h="23" w="117" x="165" y="205">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="function" varName="F"/>
@@ -232,9 +232,9 @@
         <originRef cRef="farm" iRef="IManager"/>
         <visualDescription h="10" w="10" x="60" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@15f252b" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@172bb1a" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1813d38" repeat="0" sliceRef="manager">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@159df12" repeat="0" sliceRef="manager">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -254,10 +254,6 @@
       <visualDescription h="40" w="80" x="107" y="342">
         <color b="0" g="255" r="0"/>
       </visualDescription>
-      <port name="output_data">
-        <visualDescription h="10" w="10" x="6" y="23"/>
-        <slice pRef="output_data" sRef="manager"/>
-      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="50" y="21"/>
         <slice pRef="mpi" sRef="manager"/>
@@ -266,6 +262,10 @@
         <visualDescription h="10" w="10" x="19" y="17"/>
         <slice pRef="input_data" sRef="manager"/>
       </port>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="6" y="23"/>
+        <slice pRef="output_data" sRef="manager"/>
+      </port>
       <parameter iname="IFunction" order="0" parid="F" uname="function" varid="function"/>
     </interface>
     <interface iRef="IPeer" nArgs="1">
@@ -273,9 +273,9 @@
         <originRef cRef="farm" iRef="IWorker"/>
         <visualDescription h="10" w="10" x="32" y="11"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@395a99" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7622e" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16b12b9" repeat="0" sliceRef="worker">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@bee935" repeat="0" sliceRef="worker">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>

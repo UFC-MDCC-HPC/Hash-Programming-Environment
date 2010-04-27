@@ -152,7 +152,7 @@
       <slices cRef="data_source" replica="0" uRef="double" sliceName="data" transitive="false">
         <visualDescription h="10" w="10" x="28" y="24"/>
       </slices>
-      <visualDescription h="40" w="80" x="52" y="222"/>
+      <visualDescription h="40" w="80" x="71" y="240"/>
     </unit>
     <unit iRef="ISum" private="false" uRef="sum" visibleInterface="true">
       <super cRef="base" uRef="collect"/>

@@ -20,13 +20,13 @@ public override void synchronize() {
    
 	Intracommunicator localComm = mpi.localComm(this);
 	
-	int[] ranks_of_collector = mpi.ranksOf(this, "collect");
-	int root_collect = ranks_of_collector[0];
+	int[] ranks_of_collector = mpi.ranksOf(this, "sum");
+	int root_collect = this.RanksInv[ranks_of_collector[0]];
 
     double result = data.Value; // mudará para "double[] result". 
    
     localComm.Reduce<double>(result, Operation<double>.Add, root_collect);
-
+    
 } // end activate method 
 
 }

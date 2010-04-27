@@ -16,23 +16,23 @@ where F:ITestingFunction
 		
 		public override void compute() { 
 				
+			Console.WriteLine("MANAGER - STARTING ADAPTATIVE QUADRATURE");
+			TimeSpan timeW = TimeSpan.FromSeconds(0);
+			DateTime startTimeW = DateTime.Now;
+			
 			int dim_num = 2;
 			int dim_partition_size = 2;
 			int number_of_partitions = 10;
 			getargs(System.Environment.GetCommandLineArgs(), ref dim_num, ref dim_partition_size, ref number_of_partitions);
-				
-			for (int i = 0; i < dim_num; i++) {
-			   input_data.a[i] = 0.0; 
-			   input_data.b[i] = 1.0;
-			}
-			
-			Console.WriteLine("MANAGER - STARTING ADAPTATIVE QUADRATURE");
-			
+								
+			input_data.dim_num = dim_num;
+			   						
 			manager.compute();
 			
-			Console.WriteLine("RESULT = " + output_data.Value);
-			
-			Console.WriteLine("WORKER - FINISH ADAPTATIVE QUADRATURE");
+			DateTime stopTimeW = DateTime.Now;
+			timeW = stopTimeW - startTimeW;
+						
+			Console.WriteLine("WORKER - FINISH ADAPTATIVE QUADRATURE - RESULT = " + output_data.Value + " - ELAPSED TIME = " + timeW.TotalMilliseconds + "ms");
 		
 		} // end activate method 
 

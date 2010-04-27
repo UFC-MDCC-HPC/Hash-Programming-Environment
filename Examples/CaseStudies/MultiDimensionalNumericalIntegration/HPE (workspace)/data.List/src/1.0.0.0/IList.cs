@@ -6,7 +6,7 @@ namespace data.List {
 public interface IList<T> : BaseIList<T>, IData
 where T:IData
 {   
-    T createNew();
+    T createElement();
     void add(T element);
     void remove(T element);
     bool contains(T element);

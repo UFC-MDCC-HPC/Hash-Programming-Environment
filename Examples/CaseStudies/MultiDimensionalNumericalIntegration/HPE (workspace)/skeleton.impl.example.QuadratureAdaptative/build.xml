@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Documents and Settings\Heron\hpe_cache" default="all" name="QuadratureAdaptative">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="QuadratureAdaptative">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="QuadratureAdaptative-1.0.0.0">
-    <ifnot targetexists="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0">
-      <mkdir dir="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0"/>
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRootImpl.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRootImpl.dll" target="library">
       <sources>
-        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/BaseIRootImpl.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/BaseIRootImpl.cs"/>
       </sources>
       <references>
         <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
@@ -20,32 +20,32 @@
         <include name="skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll"/>
         <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
         <include name="skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IRoot.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImpl.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImpl.dll" target="library">
       <sources>
-        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IRootImpl.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IRootImpl.cs"/>
       </sources>
       <references>
         <include name="data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll"/>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\BaseIRootImpl.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\BaseIRootImpl.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImplMain.exe" target="exe">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImplMain.exe" target="exe">
       <sources>
-        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IRootImplMain.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IRootImplMain.cs"/>
       </sources>
       <references>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\IRootImpl.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\IRootImpl.dll"/>
         <include name="data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeerImpl.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeerImpl.dll" target="library">
       <sources>
-        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/BaseIPeerImpl.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/BaseIPeerImpl.cs"/>
       </sources>
       <references>
         <include name="data.List/bin/1.0.0.0/IList.dll"/>
@@ -58,27 +58,27 @@
         <include name="skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalReceive.dll"/>
         <include name="skeleton.Farm.Work.ApproximateIntegral/bin/1.0.0.0/IApproximateIntetral.dll"/>
         <include name="skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IPeer.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImpl.dll" target="library">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImpl.dll" target="library">
       <sources>
-        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IPeerImpl.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IPeerImpl.cs"/>
       </sources>
       <references>
         <include name="data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll"/>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\BaseIPeerImpl.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\BaseIPeerImpl.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImplMain.exe" target="exe">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/QuadratureAdaptative.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImplMain.exe" target="exe">
       <sources>
-        <include name="C:/Documents and Settings/Heron/Desktop/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IPeerImplMain.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.example.QuadratureAdaptative/src/1.0.0.0/IPeerImplMain.cs"/>
       </sources>
       <references>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\IPeerImpl.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.example.QuadratureAdaptative\bin\1.0.0.0\IPeerImpl.dll"/>
         <include name="data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
   </target>

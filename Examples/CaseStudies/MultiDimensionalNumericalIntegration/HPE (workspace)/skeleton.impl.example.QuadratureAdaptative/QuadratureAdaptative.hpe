@@ -6,14 +6,14 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000af7ec24fd4f6e14cd0e388fec025242e4d2a692d029d0542b6d2d6a3d912354187fb61fd4101e600154cc64959d21d45e6b324763f5e1dcfee01f0c5ce5e0220a30ced00b8758d94098e3df20bdc4d445b9f9e36a159f23fc7103a774f8d924857050681cae0c9d95536bda3bc5e034307af216ed5d4c7417de86991ca55c0a0" localRef="base" location="/skeleton.example.QuadratureAdaptative/QuadratureAdaptative.hpe" name="QuadratureAdaptative" package="skeleton.example" version="1.0.0.0">
-        <visualDescription h="66" w="141" x="236" y="316">
+        <visualDescription h="66" w="141" x="269" y="269">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="function" varName="F"/>
         <unitBounds uRef="root">
           <visualDescription h="10" w="10" x="12" y="29"/>
         </unitBounds>
-        <unitBounds uRef="peers">
+        <unitBounds uRef="peer">
           <visualDescription h="10" w="10" x="120" y="28"/>
         </unitBounds>
       </component>
@@ -38,7 +38,7 @@
         <originRef cRef="farm" iRef="IManager"/>
         <visualDescription h="10" w="10" x="56" y="21"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2d4fab" repeat="0" sliceRef="manager">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13abac" repeat="0" sliceRef="manager">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Executable" versionId="1.0.0.0">
@@ -52,11 +52,11 @@
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IRoot.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;public class IRootImpl&lt;F> : BaseIRootImpl&lt;F>&#xA;where F:ITestingFunction&#xA;{&#xA;&#xA;&#x9;&#x9;public IRootImpl() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override void compute() { &#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;int dim_num = 2;&#xA;&#x9;&#x9;&#x9;int dim_partition_size = 2;&#xA;&#x9;&#x9;&#x9;int number_of_partitions = 10;&#xA;&#x9;&#x9;&#x9;getargs(System.Environment.GetCommandLineArgs(), ref dim_num, ref dim_partition_size, ref number_of_partitions);&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;for (int i = 0; i &lt; dim_num; i++) {&#xA;&#x9;&#x9;&#x9;   input_data.a[i] = 0.0; &#xA;&#x9;&#x9;&#x9;   input_data.b[i] = 1.0;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Console.WriteLine(&quot;MANAGER - STARTING ADAPTATIVE QUADRATURE&quot;);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;manager.compute();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Console.WriteLine(&quot;RESULT = &quot; + output_data.Value);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Console.WriteLine(&quot;WORKER - FINISH ADAPTATIVE QUADRATURE&quot;);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} // end activate method &#xA;&#xA;        private static void getargs(string[] args, ref int dim_num, ref int dim_partition_size, ref int number_of_partitions)&#xA;        {&#xA;            for (int i = 0; i &lt; args.Length; i++)&#xA;            {&#xA;                if (i + 1 &lt; args.Length)&#xA;                {&#xA;                    if (args[i].Equals(&quot;--dim_num&quot;))&#xA;                    {&#xA;                        dim_num = int.Parse(args[i + 1]);&#xA;                    }&#xA;                    else if (args[i].Equals(&quot;--dim_partition_size&quot;) &amp;&amp; i + 1 &lt; args.Length)&#xA;                    {&#xA;                        dim_partition_size = int.Parse(args[i + 1]);&#xA;                    }&#xA;                    else if (args[i].Equals(&quot;--number_of_partitions&quot;) &amp;&amp; i + 1 &lt; args.Length)&#xA;                    {&#xA;                        number_of_partitions = int.Parse(args[i + 1]); &#xA;                    }&#xA;                }&#xA;            }&#xA;        }&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IRootImpl.cs" srcType="user" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;public class IRootImpl&lt;F> : BaseIRootImpl&lt;F>&#xA;where F:ITestingFunction&#xA;{&#xA;&#xA;&#x9;&#x9;public IRootImpl() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override void compute() { &#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Console.WriteLine(&quot;MANAGER - STARTING ADAPTATIVE QUADRATURE&quot;);&#xA;&#x9;&#x9;&#x9;TimeSpan timeW = TimeSpan.FromSeconds(0);&#xA;&#x9;&#x9;&#x9;DateTime startTimeW = DateTime.Now;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;int dim_num = 2;&#xA;&#x9;&#x9;&#x9;int dim_partition_size = 2;&#xA;&#x9;&#x9;&#x9;int number_of_partitions = 10;&#xA;&#x9;&#x9;&#x9;getargs(System.Environment.GetCommandLineArgs(), ref dim_num, ref dim_partition_size, ref number_of_partitions);&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;input_data.dim_num = dim_num;&#xA;&#x9;&#x9;&#x9;   &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;manager.compute();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;DateTime stopTimeW = DateTime.Now;&#xA;&#x9;&#x9;&#x9;timeW = stopTimeW - startTimeW;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Console.WriteLine(&quot;WORKER - FINISH ADAPTATIVE QUADRATURE - RESULT = &quot; + output_data.Value + &quot; - ELAPSED TIME = &quot; + timeW.TotalMilliseconds + &quot;ms&quot;);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} // end activate method &#xA;&#xA;        private static void getargs(string[] args, ref int dim_num, ref int dim_partition_size, ref int number_of_partitions)&#xA;        {&#xA;            for (int i = 0; i &lt; args.Length; i++)&#xA;            {&#xA;                if (i + 1 &lt; args.Length)&#xA;                {&#xA;                    if (args[i].Equals(&quot;--dim_num&quot;))&#xA;                    {&#xA;                        dim_num = int.Parse(args[i + 1]);&#xA;                    }&#xA;                    else if (args[i].Equals(&quot;--dim_partition_size&quot;) &amp;&amp; i + 1 &lt; args.Length)&#xA;                    {&#xA;                        dim_partition_size = int.Parse(args[i + 1]);&#xA;                    }&#xA;                    else if (args[i].Equals(&quot;--number_of_partitions&quot;) &amp;&amp; i + 1 &lt; args.Length)&#xA;                    {&#xA;                        number_of_partitions = int.Parse(args[i + 1]); &#xA;                    }&#xA;                }&#xA;            }&#xA;        }&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IRootImpl.cs" srcType="user" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImpl.dll" versionId="1.0.0.0">
           <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
           <dependency>%WORKSPACE/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRootImpl.dll</dependency>
         </file>
-        <file contents="using DGAC;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;&#x9;public class IRootImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;IRootImpl&lt;ITestingFunction> root = new IRootImpl&lt;ITestingFunction>();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;,&quot;root&quot;,root,args);&#xA;&#x9;&#x9;&#x9;root.createSlices();&#xA;&#x9;&#x9;&#x9;root.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="IRootImplMain.cs" srcType="main" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImplMain.exe" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using DGAC;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;&#x9;public class IRootImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;IRootImpl&lt;ITestingFunction> root = new IRootImpl&lt;ITestingFunction>();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;,&quot;root&quot;,root,args);&#xA;            TimeSpan timeW = TimeSpan.FromSeconds(0);&#xA;&#x9;&#x9;&#x9;DateTime startTimeW = DateTime.Now;&#xA;&#x9;&#x9;&#x9;root.createSlices();&#xA;&#x9;&#x9;&#x9;DateTime stopTimeW = DateTime.Now;&#xA;&#x9;&#x9;&#x9;timeW = stopTimeW - startTimeW;&#xA;            Console.WriteLine(&quot;STARTUP TIME = &quot; + timeW.TotalMilliseconds + &quot;ms&quot;);&#xA;&#x9;&#x9;&#x9;root.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="IRootImplMain.cs" srcType="main" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImplMain.exe" versionId="1.0.0.0">
           <dependency>%WORKSPACE/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImpl.dll</dependency>
           <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
         </file>
@@ -64,17 +64,17 @@
       <visualDescription h="58" w="127" x="235" y="69">
         <color b="255" g="0" r="0"/>
       </visualDescription>
-      <port name="input_data">
-        <visualDescription h="10" w="10" x="38" y="46"/>
-        <slice pRef="input_data" sRef="manager"/>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="124" y="6"/>
+        <slice pRef="output_data" sRef="manager"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="manager"/>
       </port>
-      <port name="output_data">
-        <visualDescription h="10" w="10" x="124" y="6"/>
-        <slice pRef="output_data" sRef="manager"/>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="38" y="46"/>
+        <slice pRef="input_data" sRef="manager"/>
       </port>
       <parameter iname="ITestingFunction" order="0" parid="F" uname="testing_function" varid="function"/>
     </interface>
@@ -83,7 +83,7 @@
         <originRef cRef="farm" iRef="IWorker"/>
         <visualDescription h="10" w="10" x="14" y="8"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@825155" repeat="0" sliceRef="worker">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4bd298" repeat="0" sliceRef="worker">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Executable" versionId="1.0.0.0">
@@ -103,7 +103,7 @@
           <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
           <dependency>%WORKSPACE/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeerImpl.dll</dependency>
         </file>
-        <file contents="using DGAC;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;&#x9;public class IPeerImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;IPeerImpl&lt;ITestingFunction> peers = new IPeerImpl&lt;ITestingFunction>();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;,&quot;peers&quot;,peers,args);&#xA;&#x9;&#x9;&#x9;peers.createSlices();&#xA;&#x9;&#x9;&#x9;peers.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="IPeerImplMain.cs" srcType="main" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImplMain.exe" versionId="1.0.0.0">
+        <file contents="using DGAC;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;&#x9;public class IPeerImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;IPeerImpl&lt;ITestingFunction> peers = new IPeerImpl&lt;ITestingFunction>();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;,&quot;peer&quot;,peers,args);&#xA;&#x9;&#x9;&#x9;peers.createSlices();&#xA;&#x9;&#x9;&#x9;peers.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="IPeerImplMain.cs" srcType="main" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImplMain.exe" versionId="1.0.0.0">
           <dependency>%WORKSPACE/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IPeerImpl.dll</dependency>
           <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
         </file>
@@ -122,9 +122,9 @@
       <slices cRef="farm" replica="0" uRef="manager" sliceName="manager" transitive="false">
         <visualDescription h="10" w="10" x="60" y="6"/>
       </slices>
-      <visualDescription h="40" w="80" x="67" y="282"/>
+      <visualDescription h="40" w="80" x="87" y="337"/>
     </unit>
-    <unit iRef="IPeerImpl" private="false" uRef="peers" visibleInterface="true">
+    <unit iRef="IPeerImpl" private="false" uRef="peer" visibleInterface="true">
       <super cRef="base" uRef="peer"/>
       <slices cRef="farm" replica="0" uRef="worker" sliceName="worker" transitive="false">
         <visualDescription h="10" w="10" x="32" y="11"/>
@@ -156,7 +156,7 @@
       <originRef>base</originRef>
       <originRef>farm</originRef>
       <originRef>scatter</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="peers"/>
+      <links xsi:type="component:EnumerableUnitType" ref="peer"/>
       <visualDescription h="20" w="20" x="806" y="103"/>
     </enumerator>
   </componentInfo>

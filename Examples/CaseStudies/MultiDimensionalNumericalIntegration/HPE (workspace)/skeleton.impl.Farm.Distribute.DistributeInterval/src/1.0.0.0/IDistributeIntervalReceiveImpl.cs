@@ -29,9 +29,9 @@ public override void synchronize() {
     
     int number_of_jobs = a_local.GetLength(0);
     int dim_num = a_local.GetLength(1);
-
+    
     for (int i = 0; i < number_of_jobs; i++) {
-        IIntegralCase<F> ic = data.createNew();
+        IIntegralCase<F> ic = (IIntegralCase<F>) data.createElement();
         ic.dim_num = dim_num;
         for (int j = 0; j < dim_num; j++) {
 	        ic.a[j] = a_local[i,j];
