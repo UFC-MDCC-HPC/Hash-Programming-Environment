@@ -75,15 +75,7 @@ namespace DGAC.database
         int key = makeKey(id_abstract, id_parameter);
         if (cache_c_pars_2.TryGetValue(key, out acfp))
         {
-            if (acfp != null)
-            {
-                Console.WriteLine("ACFP IS NOT NULL !!!!!" + id_abstract + ", " + id_parameter);
                 return acfp;
-            } 
-            else
-            {
-                Console.WriteLine("ACFP IS NULL !!!!!" + id_abstract + ", " + id_parameter);
-            }
         }
         
         IDbConnection dbcon = Connector.DBcon;
