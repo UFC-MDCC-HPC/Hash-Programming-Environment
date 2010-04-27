@@ -28,14 +28,17 @@ public class ComponentDAO{
 
         return nextKey;
     }
-    
 
+
+    IDictionary<int, Component> cache_c_functor_app = new Dictionary<int, Component>();
 
 
 
 	public Component retrieveByFunctorApp(int id_functor_app){
 	   
 	   Component c = null;
+       if (cache_c_functor_app.TryGetValue(id_functor_app, out c)) return c;        
+
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
@@ -51,6 +54,7 @@ public class ComponentDAO{
        		c.Library_path = (string)reader["library_path"];
        		c.Id_functor_app = (int)reader["id_functor_app"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
+            cache_c_functor_app.Add(id_functor_app, c);
         }//while
        // clean up
        reader.Close();
@@ -60,10 +64,15 @@ public class ComponentDAO{
        return c;
 	}
 
+    IDictionary<string, Component> cache_c_uid = new Dictionary<string, Component>();
+
     public Component retrieve_uid(string hash_component_uid)
     {
 
         Component c = null;
+
+        if (cache_c_uid.TryGetValue(hash_component_uid, out c)) return c;        
+        
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -80,6 +89,7 @@ public class ComponentDAO{
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
             c.Hash_component_UID = (string) reader["hash_component_UID"];
+            cache_c_uid.Add(hash_component_uid, c);
         }//while
         // clean up
         reader.Close();
@@ -89,10 +99,15 @@ public class ComponentDAO{
         return c;
     }
 
+    IDictionary<string, Component> cache_c_lp = new Dictionary<string, Component>();
+
     public Component retrieve_libraryPath(string library_path)
     {
 
         Component c = null;
+
+        if (cache_c_lp.TryGetValue(library_path, out c)) return c;        
+        
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -109,6 +124,7 @@ public class ComponentDAO{
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
+            cache_c_lp.Add(library_path, c);
         }//while
         // clean up
         reader.Close();
@@ -117,13 +133,17 @@ public class ComponentDAO{
         dbcmd = null;
         return c;
     }
-    
-    
+
+    IDictionary<int, Component> cache_c_id = new Dictionary<int, Component>();
+
     public Component retrieve(int id_concrete)
     {
 	   
 	   Component c = null;
-	   IDbConnection dbcon = Connector.DBcon;
+
+       if (cache_c_id.TryGetValue(id_concrete, out c)) return c;
+       
+       IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
            "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
@@ -138,6 +158,7 @@ public class ComponentDAO{
        		c.Library_path = (string)reader["library_path"];
        		c.Id_functor_app = (int)reader["id_functor_app"];
        		c.Hash_component_UID = (string)reader["hash_component_UID"];
+            cache_c_id.Add(id_concrete, c);
        }//while
        // clean up
        reader.Close();
@@ -147,10 +168,18 @@ public class ComponentDAO{
        return c;
 	}
 
+    IDictionary<int, IList<Component>> cache_c_impl = new Dictionary<int, IList<Component>>();
 
     internal IList<Component> retrieveThatImplements(int id_abstract)
     {
-        IList<Component> cList = new List<Component>();
+        IList<Component> cList = null;
+
+        if (cache_c_impl.TryGetValue(id_abstract, out cList)) return cList;
+
+        cList = new List<Component>();
+
+        cache_c_impl.Add(id_abstract, cList);
+
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =

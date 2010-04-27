@@ -39,9 +39,21 @@ public class SupplyParameterDAO{
         Connector.performSQLUpdate(sql2);
     }
 
+    IDictionary<int, SupplyParameter> cache_c_pars_2 = new Dictionary<int, SupplyParameter>();
+
+    private int makeKey(int id_functor_app, string id_parameter)
+    {
+        return (id_functor_app.GetHashCode() + id_parameter.GetHashCode());
+    }
+
 	public SupplyParameter retrieve(string id_parameter, int id_functor_app){
 	
 	   SupplyParameter spc = null;
+
+       int key = makeKey(id_functor_app, id_parameter);
+
+       if (cache_c_pars_2.TryGetValue(key, out spc)) return spc;     
+
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        bool achou = false;
@@ -58,6 +70,7 @@ public class SupplyParameterDAO{
        	    spc_.Id_functor_app = (int)reader["id_functor_app"];
        	    spc_.Id_functor_app_actual = (int)reader["id_functor_app_actual"];
             spc = spc_;
+            cache_c_pars_2.Add(key, spc_);
        }
 
 
@@ -82,6 +95,7 @@ public class SupplyParameterDAO{
                spc_.Id_parameter_actual = (string)reader["id_parameter_actual"];
                spc_.FreeVariable= ((int)reader["freeVariable"])==0 ? false : true;
                spc = spc_;
+               cache_c_pars_2.Add(key, spc_);
            }
 
       }
@@ -107,11 +121,16 @@ public class SupplyParameterDAO{
        return spc;
        
 	}//list
-    
-    
+
+    IDictionary<int, IList<SupplyParameter>> cache_c_pars = new Dictionary<int, IList<SupplyParameter>>();
+
     public IList<SupplyParameter> list(int id_functor_app){
-	
-	   IList<SupplyParameter> list = new List<SupplyParameter>();
+
+        IList<SupplyParameter> list = null;
+        if (cache_c_pars.TryGetValue(id_functor_app, out list)) return list;
+        list = new List<SupplyParameter>();
+        cache_c_pars.Add(id_functor_app, list);
+
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        IList<string> parameters = new List<string>();

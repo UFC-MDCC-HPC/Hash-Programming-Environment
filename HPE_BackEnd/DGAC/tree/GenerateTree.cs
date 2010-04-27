@@ -159,11 +159,11 @@ namespace DGAC.database
 
        //     AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
         //    AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-
+            AbstractComponentFunctor acf;
             while (id_abstract_step.Id_abstract != id_abstract_top.Id_abstract)
             {
                 gs.Add(id_abstract_step);
-                AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract_step.Id_abstract);
+                acf = DGAC.BackEnd.acfdao.retrieve(id_abstract_step.Id_abstract);
                 id_abstract_step = DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
             }            
 

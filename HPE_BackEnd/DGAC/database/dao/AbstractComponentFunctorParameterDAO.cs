@@ -21,11 +21,21 @@ namespace DGAC.database
 
             Connector.performSQLUpdate(sql);
         }
-		
+
+
+        IDictionary<int, IList<AbstractComponentFunctorParameter>> cache_c_pars = new Dictionary<int, IList<AbstractComponentFunctorParameter>>();
+
 	public IList<AbstractComponentFunctorParameter> list(int id_abstract)
     {
-	
-	   IList<AbstractComponentFunctorParameter> list = new List<AbstractComponentFunctorParameter>();
+
+        IList<AbstractComponentFunctorParameter> list = null;
+        
+        if (cache_c_pars.TryGetValue(id_abstract, out list)) return list;
+
+        list = new List<AbstractComponentFunctorParameter>();
+
+        cache_c_pars.Add(id_abstract, list);
+
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
@@ -51,10 +61,31 @@ namespace DGAC.database
        
 	}//lis
 
+    IDictionary<int, AbstractComponentFunctorParameter> cache_c_pars_2 = new Dictionary<int, AbstractComponentFunctorParameter>();
+
+    private int makeKey(int id_abstract, string id_parameter)
+    {
+        return (id_abstract.GetHashCode() + id_parameter.GetHashCode());
+    }
 
     internal AbstractComponentFunctorParameter retrieve(int id_abstract, string id_parameter)
     {
         AbstractComponentFunctorParameter acfp = null;
+
+        int key = makeKey(id_abstract, id_parameter);
+        if (cache_c_pars_2.TryGetValue(key, out acfp))
+        {
+            if (acfp != null)
+            {
+                Console.WriteLine("ACFP IS NOT NULL !!!!!" + id_abstract + ", " + id_parameter);
+                return acfp;
+            } 
+            else
+            {
+                Console.WriteLine("ACFP IS NULL !!!!!" + id_abstract + ", " + id_parameter);
+            }
+        }
+        
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -69,6 +100,7 @@ namespace DGAC.database
             acfp.Bounds_of = (int)reader["bounds_of"];
             acfp.Id_abstract = (int)reader["id_abstract"];
             acfp.Id_parameter = (string)reader["id_parameter"];
+            cache_c_pars_2.Add(key, acfp);
         }//if
 
         // clean up

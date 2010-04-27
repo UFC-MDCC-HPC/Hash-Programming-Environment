@@ -30,9 +30,13 @@ public class AbstractComponentFunctorDAO{
         return nextKey;
     }
 
+    IDictionary<int, AbstractComponentFunctor> cache_acf = new Dictionary<int,AbstractComponentFunctor>();
+
 	public AbstractComponentFunctor retrieve(int id_abstract){
-	   
-	   AbstractComponentFunctor acfa = null;
+
+        AbstractComponentFunctor acf = null;
+        if (cache_acf.TryGetValue(id_abstract, out acf)) return acf;        
+        
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
@@ -43,12 +47,13 @@ public class AbstractComponentFunctorDAO{
        IDataReader reader = dbcmd.ExecuteReader();
        if (reader.Read())
        {
-           acfa = new AbstractComponentFunctor();
-           acfa.Hash_component_UID = (string)reader["hash_component_UID"]; /* LINE ADDED BY HERON (new field in abstractcomponentfunctor) */
-           acfa.Id_abstract = (int)reader["id_abstract"];
-           acfa.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
-           acfa.Library_path = (string)reader["library_path"];
-           acfa.Kind = (string)reader["kind"];
+           acf = new AbstractComponentFunctor();
+           acf.Hash_component_UID = (string)reader["hash_component_UID"]; /* LINE ADDED BY HERON (new field in abstractcomponentfunctor) */
+           acf.Id_abstract = (int)reader["id_abstract"];
+           acf.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
+           acf.Library_path = (string)reader["library_path"];
+           acf.Kind = (string)reader["kind"];
+           cache_acf.Add(acf.Id_abstract, acf);
        }//if
        else
        {
@@ -59,7 +64,7 @@ public class AbstractComponentFunctorDAO{
        reader = null;
        dbcmd.Dispose();
        dbcmd = null;
-       return acfa;
+       return acf;
 	}
 
 
@@ -67,7 +72,7 @@ public class AbstractComponentFunctorDAO{
     public AbstractComponentFunctor retrieveByUID(string hash_component_UID)
     {
 
-        AbstractComponentFunctor acfa = null;
+        AbstractComponentFunctor acf = null;
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -78,12 +83,13 @@ public class AbstractComponentFunctorDAO{
         IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
         {
-            acfa = new AbstractComponentFunctor();
-            acfa.Hash_component_UID = (string)reader["hash_component_UID"];
-            acfa.Id_abstract = (int)reader["id_abstract"];
-            acfa.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
-            acfa.Library_path = (string)reader["library_path"];
-            acfa.Kind = (string)reader["kind"];
+            acf = new AbstractComponentFunctor();
+            acf.Hash_component_UID = (string)reader["hash_component_UID"];
+            acf.Id_abstract = (int)reader["id_abstract"];
+            acf.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
+            acf.Library_path = (string)reader["library_path"];
+            acf.Kind = (string)reader["kind"];
+            if (!cache_acf.ContainsKey(acf.Id_abstract)) cache_acf.Add(acf.Id_abstract, acf);
         }
         else
         {
@@ -101,7 +107,7 @@ public class AbstractComponentFunctorDAO{
         reader = null;
         dbcmd.Dispose();
         dbcmd = null;
-        return acfa;
+        return acf;
     }
 
 
@@ -132,7 +138,7 @@ public class AbstractComponentFunctorDAO{
 
     internal AbstractComponentFunctor retrieve_libraryPath(string library_path)
     {
-        AbstractComponentFunctor acfa = null;
+        AbstractComponentFunctor acf = null;
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -143,12 +149,13 @@ public class AbstractComponentFunctorDAO{
         IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
         {
-            acfa = new AbstractComponentFunctor();
-            acfa.Hash_component_UID = (string)reader["hash_component_UID"];
-            acfa.Id_abstract = (int)reader["id_abstract"];
-            acfa.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
-            acfa.Library_path = (string)reader["library_path"];
-            acfa.Kind = (string)reader["kind"];
+            acf = new AbstractComponentFunctor();
+            acf.Hash_component_UID = (string)reader["hash_component_UID"];
+            acf.Id_abstract = (int)reader["id_abstract"];
+            acf.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
+            acf.Library_path = (string)reader["library_path"];
+            acf.Kind = (string)reader["kind"];
+            if (!cache_acf.ContainsKey(acf.Id_abstract)) cache_acf.Add(acf.Id_abstract, acf);
         }
         else
         {
@@ -166,7 +173,7 @@ public class AbstractComponentFunctorDAO{
         reader = null;
         dbcmd.Dispose();
         dbcmd = null;
-        return acfa;
+        return acf;
     }
 
     internal IList<AbstractComponentFunctor> list()
@@ -181,13 +188,14 @@ public class AbstractComponentFunctorDAO{
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
-            AbstractComponentFunctor acfa = new AbstractComponentFunctor();
-            acfa.Hash_component_UID = (string)reader["hash_component_UID"]; /* LINE ADDED BY HERON (new field in abstractcomponentfunctor) */
-            acfa.Id_abstract = (int)reader["id_abstract"];
-            acfa.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
-            acfa.Library_path = (string)reader["library_path"];
-            acfa.Kind = (string)reader["kind"];
-            acfaList.Add(acfa);
+            AbstractComponentFunctor acf = new AbstractComponentFunctor();
+            acf.Hash_component_UID = (string)reader["hash_component_UID"]; /* LINE ADDED BY HERON (new field in abstractcomponentfunctor) */
+            acf.Id_abstract = (int)reader["id_abstract"];
+            acf.Id_functor_app_supertype = (int)reader["id_functor_app_supertype"];
+            acf.Library_path = (string)reader["library_path"];
+            acf.Kind = (string)reader["kind"];
+            acfaList.Add(acf);
+            if (!cache_acf.ContainsKey(acf.Id_abstract)) cache_acf.Add(acf.Id_abstract, acf);
         }//if
 
         // clean up

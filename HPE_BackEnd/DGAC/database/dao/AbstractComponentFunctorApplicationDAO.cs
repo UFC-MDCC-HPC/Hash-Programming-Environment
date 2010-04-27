@@ -27,11 +27,15 @@ public class AbstractComponentFunctorApplicationDAO{
         return nextKey;
     }
 
+    IDictionary<int, AbstractComponentFunctorApplication> cache_acfa = new Dictionary<int, AbstractComponentFunctorApplication>();
+
 
     public AbstractComponentFunctorApplication retrieve(int id_functor_app)
     {
-	   
-	   AbstractComponentFunctorApplication acfa = null;
+
+        AbstractComponentFunctorApplication acfa = null;
+        if (cache_acfa.TryGetValue(id_functor_app, out acfa)) return acfa;        
+
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
@@ -44,7 +48,7 @@ public class AbstractComponentFunctorApplicationDAO{
        		acfa = new AbstractComponentFunctorApplication();
        		acfa.Id_functor_app = (int)reader["id_functor_app"];
        		acfa.Id_abstract = (int)reader["id_abstract"];
-       		
+            cache_acfa.Add(acfa.Id_functor_app, acfa);
        }//while
        // clean up
        reader.Close();
@@ -70,6 +74,7 @@ public class AbstractComponentFunctorApplicationDAO{
 	       		acfa.Id_functor_app = (int)reader["id_functor_app"];
 	       		acfa.Id_abstract = (int)reader["id_abstract"];
 	       		list.Add(acfa);
+                if (!cache_acfa.ContainsKey(acfa.Id_functor_app)) cache_acfa.Add(acfa.Id_functor_app, acfa);
 	       }//while
 	       // clean up
 	       reader.Close();
@@ -78,9 +83,16 @@ public class AbstractComponentFunctorApplicationDAO{
 	       dbcmd = null;
 	       return list;
 	}
+
+    IDictionary<int, IList<AbstractComponentFunctorApplication>> cache_acfa_list_byabstract = new Dictionary<int, IList<AbstractComponentFunctorApplication>>();
 	
 	public IList<AbstractComponentFunctorApplication> listByIdAbstract(int id_abstract){
-		  IList<AbstractComponentFunctorApplication> list = new List<AbstractComponentFunctorApplication>();
+		  
+          IList<AbstractComponentFunctorApplication> list = null;
+          if (cache_acfa_list_byabstract.TryGetValue(id_abstract, out list)) return list;
+          list = new List<AbstractComponentFunctorApplication>();
+          cache_acfa_list_byabstract.Add(id_abstract, list);
+
 		  AbstractComponentFunctorApplication acfa = null;
 		  IDbConnection dbcon = Connector.DBcon;
 	      IDbCommand dbcmd = dbcon.CreateCommand();
@@ -97,6 +109,7 @@ public class AbstractComponentFunctorApplicationDAO{
 	       		acfa.Id_functor_app = (int)reader["id_functor_app"];
 	       		acfa.Id_abstract = (int)reader["id_abstract"];
 	       		list.Add(acfa);
+                if (!cache_acfa.ContainsKey(acfa.Id_functor_app)) cache_acfa.Add(acfa.Id_functor_app, acfa);
 	       }//while
 	       // clean up
 	       reader.Close();
