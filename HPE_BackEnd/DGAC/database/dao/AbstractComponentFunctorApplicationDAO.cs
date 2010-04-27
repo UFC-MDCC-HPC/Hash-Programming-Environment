@@ -32,7 +32,6 @@ public class AbstractComponentFunctorApplicationDAO{
 
     public AbstractComponentFunctorApplication retrieve(int id_functor_app)
     {
-
         AbstractComponentFunctorApplication acfa = null;
         if (cache_acfa.TryGetValue(id_functor_app, out acfa)) return acfa;        
 

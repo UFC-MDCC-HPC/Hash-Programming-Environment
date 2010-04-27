@@ -110,12 +110,7 @@ namespace DGAC.database
                     }
                 }
 
-                if (!found)
-                {
-                    // Console.WriteLine("UNEXPECTED! ");
-                    //   return false; // UNEXPECTED CONDITION ...
-                }
-                else
+                if (found)
                 {
                     if (!recMatchParameters(nodeSon, acfaSon))
                         return false;

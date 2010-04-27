@@ -50,10 +50,15 @@ public class SupplyParameterComponentDAO{
        
 	}//list
 
+    private IDictionary<int, IList<SupplyParameterComponent>> cache_c_pars = new Dictionary<int, IList<SupplyParameterComponent>>();
+
     public IList<SupplyParameterComponent> list(int id_functor_app)
     {
+        IList<SupplyParameterComponent> list = null;
+        if (cache_c_pars.TryGetValue(id_functor_app, out list)) return list;
+        list = new List<SupplyParameterComponent>();
+        cache_c_pars.Add(id_functor_app, list);
 
-        IList<SupplyParameterComponent> list = new List<SupplyParameterComponent>();
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
