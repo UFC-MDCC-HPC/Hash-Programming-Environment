@@ -35,16 +35,14 @@ namespace ParallelNumericalIntegration
             int num_jobs = (int)Math.Pow(dim_partition_size, dim_num);
             int num_local_jobs = num_jobs / size;
 
-            Console.WriteLine("dim_num = " + dim_num);
-            Console.WriteLine("dim_partition_size = " + dim_partition_size);
-            Console.WriteLine("number_of_partitions = " + number_of_partitions);
-            Console.WriteLine("num_jobs = " + num_jobs);
-            Console.WriteLine("num_local_jobs = " + num_local_jobs);
-
-
-
             if (rank == 0) // MANAGER (the manager only distribute jobs and collect results)
             {
+                Console.WriteLine("dim_num = " + dim_num);
+                Console.WriteLine("dim_partition_size = " + dim_partition_size);
+                Console.WriteLine("number_of_partitions = " + number_of_partitions);
+                Console.WriteLine("num_jobs = " + num_jobs);
+                Console.WriteLine("num_local_jobs = " + num_local_jobs);
+               
                 DateTime startTime = DateTime.Now;
 
                 // Set/Divide the interval
@@ -116,7 +114,7 @@ namespace ParallelNumericalIntegration
 
                 int[] sub_num = new int[dim_num];
                 for (int i = 0; i < dim_num; i++)                
-                    sub_num[i] = 8/dim_partition_size;                
+                    sub_num[i] = number_of_partitions/dim_partition_size;                
 
                 double[] a = new double[dim_num];
                 double[] b = new double[dim_num];
