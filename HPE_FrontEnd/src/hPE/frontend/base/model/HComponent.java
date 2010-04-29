@@ -1577,33 +1577,47 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	private Map<Integer, String> variableName = null;
 
 	public String getVariableName(HComponent ctx) {
+		
 		if (this.variableName == null)
 			this.variableName = new HashMap<Integer, String>();
 
 		Integer code = ctx.getMyInstanceId();
+		
 		if (this.variableName.containsKey(code))
 			return this.variableName.get(code);
 		else {
-			HComponent ctxSuper = ctx.getSuperType();
-			return ctxSuper != null ? this.getVariableName(ctxSuper) : "?";
+			HComponent ctxTop = (HComponent) this.getTopConfiguration();
+			if (ctxTop.getWhoItImplements() == ctx) {
+				if (this.variableName.containsKey(ctxTop.getMyInstanceId())) {
+                   return this.getVariableName(ctxTop);
+				}
+			}
 		}
-
-		// return this.variableName.containsKey(ctx) ?
-		// this.variableName.get(ctx) : "?";
+		
+		HComponent ctxSuper = ctx.getSuperType();
+		return ctxSuper != null ? this.getVariableName(ctxSuper) : "?";
+		
 	}
 
 	public void setVariableName(/* HComponent ctx, */String varName) {
 		if (this.variableName == null)
 			this.variableName = new HashMap<Integer, String>();
-		;
+		
 
+		//HComponent ctxImpl = null;
 		HComponent ctx = (HComponent) this.getTopConfiguration();
+		//if (!ctx.isAbstractConfiguration()) {
+		//    ctxImpl = ctx;
+		//    ctx = ctx.getWhoItImplements();
+		//}
 
 		String currVar = this.variableName.get(ctx.getMyInstanceId());
 		if (currVar == null || (currVar != null && !currVar.equals(varName))) {
 			this.variableName.put(ctx.getMyInstanceId(), varName);
-			listeners.firePropertyChange(PROPERTY_IS_PARAMETER, null, this
-					.getBounds());
+			//if (ctxImpl != null) { 
+			//	this.variableName.put(ctxImpl.getMyInstanceId(), varName);
+			//}
+			listeners.firePropertyChange(PROPERTY_IS_PARAMETER, null, this.getBounds());
 		}
 
 	}

@@ -139,7 +139,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		 			   }
 	               programTextVarBounds += "where " + varName.split("@")[0] + ":" + bound.getName2(false, varContext) + "\n";
 	 			}
-	 			varContext.add(varName);
+	 			varContext.add(varName.split("@")[0]);
  			}
  		}
 
@@ -257,7 +257,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 	 			   } */
 	               programTextVarBounds += "where " + varName.split("@")[0] + ":" + bound.getName2(false, varContext) + "\n";
 	 			}
-	 			varContext.add(varName);
+	 			varContext.add(varName.split("@")[0]);
  			}
  		}
 

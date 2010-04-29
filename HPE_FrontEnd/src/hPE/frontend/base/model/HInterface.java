@@ -254,11 +254,15 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     	
     	List<Triple<String,HInterface,String>> p = new ArrayList<Triple<String,HInterface,String>>();
     	
-    	for (HInterfaceSlice c : this.getSlices()) {
+    	List<HInterfaceSlice> slices = this.getSlices();
+    	
+    	for (HInterfaceSlice c : slices) {
     		HInterface ic = (HInterface) c.getInterface();
     		HComponent cc = (HComponent)ic.getCompliantUnits().get(0).getConfiguration();
     		
-    		for (Triple<String,HInterface,String> innerParameter : ic.getParameters2(cThis)) {
+    		List<Triple<String,HInterface,String>> ic_parameters = ic.getParameters2(cThis);
+    		
+    		for (Triple<String,HInterface,String> innerParameter : ic_parameters) {
     	    	p.add(innerParameter);
     	    }
     		
