@@ -3456,7 +3456,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 					c2.parameterIdentifier.putAll(c1.parameterIdentifier);
 			}
 
-			c2.setSavedName(c1.getSavedName());
+			c2.setName(c1.getName2());
+			if (c1.getSavedName() != null)
+				c2.setSavedName(c1.getSavedName());
 			c2.exposedFalsifiedContext = c1.exposedFalsifiedContext;
 
 			HComponent im_c1inc2 = (HComponent) c2.getSubTypeImageOf(c1);
