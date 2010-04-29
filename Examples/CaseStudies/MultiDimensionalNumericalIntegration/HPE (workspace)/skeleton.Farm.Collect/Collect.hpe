@@ -62,7 +62,7 @@
           <dependency>%WORKSPACE/skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="72" y="128">
+      <visualDescription h="40" w="80" x="46" y="113">
         <color b="128" g="128" r="128"/>
       </visualDescription>
       <port name="mpi">

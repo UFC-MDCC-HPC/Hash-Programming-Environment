@@ -13,6 +13,7 @@
       </sources>
       <references>
         <include name="jefferson.data.Data/bin/1.0.0.0/BaseIData.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\NINTLIB/NINTLIB.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
@@ -23,6 +24,7 @@
       <references>
         <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\data.Function\bin\1.0.0.0\BaseIFunction.dll"/>
         <include name="jefferson.data.Data/bin/1.0.0.0/IData.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\NINTLIB/NINTLIB.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>

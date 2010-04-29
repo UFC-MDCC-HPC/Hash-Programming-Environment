@@ -24,19 +24,22 @@
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface BaseIFunction : BaseIData, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIFunction.cs" srcType="base" uri="/data.Function/bin/1.0.0.0/BaseIFunction.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/BaseIData.dll</dependency>
+          <externalDependency>NINTLIB</externalDependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface IFunction : BaseIFunction, IData&#xA;{&#xA;&#xA;   double f(double[] x);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" srcType="user" uri="/data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using NINTLIB;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface IFunction : BaseIFunction, IData&#xA;{&#xA;&#xA;   NINTLIB.IntegratingFunction F {get;}&#xA;   double f(double[] x);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" srcType="user" uri="/data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/data.Function/bin/1.0.0.0/BaseIFunction.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
+          <externalDependency>NINTLIB</externalDependency>
         </file>
       </sources>
       <visualDescription h="40" w="80" x="277" y="379">
         <color b="0" g="255" r="255"/>
       </visualDescription>
+      <externalReferences>NINTLIB</externalReferences>
     </interface>
     <unit iRef="IFunction" private="false" uRef="function" visibleInterface="true">
       <super cRef="base" uRef="data"/>
-      <visualDescription h="40" w="80" x="96" y="316"/>
+      <visualDescription h="40" w="80" x="51" y="264"/>
     </unit>
   </componentInfo>
 </component:component>

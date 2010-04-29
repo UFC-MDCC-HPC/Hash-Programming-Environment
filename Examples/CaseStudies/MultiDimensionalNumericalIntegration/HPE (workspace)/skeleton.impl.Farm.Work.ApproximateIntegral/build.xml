@@ -39,5 +39,38 @@
       </references>
     </csc>
   </target>
-  <target depends="ApproximateIntegral-1.0.0.0" name="all"/>
+  <target name="ApproximateIntegral-2.0.0.0">
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Work.ApproximateIntegral/ApproximateIntegral.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Work.ApproximateIntegral/bin/2.0.0.0/BaseIApproximateIntegralImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Work.ApproximateIntegral/src/2.0.0.0/BaseIApproximateIntegralImpl.cs"/>
+      </sources>
+      <references>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="data.List/bin/1.0.0.0/IList.dll"/>
+        <include name="data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll"/>
+        <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
+        <include name="skeleton.Farm.Work.ApproximateIntegral/bin/1.0.0.0/BaseIApproximateIntetral.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\IntegratingFunctions/IntegratingFunctions.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\NINTLIB/NINTLIB.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Work.ApproximateIntegral/ApproximateIntegral.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Work.ApproximateIntegral/bin/2.0.0.0/IApproximateIntegralImpl.dll" target="library">
+      <sources>
+        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/skeleton.impl.Farm.Work.ApproximateIntegral/src/2.0.0.0/IApproximateIntegralImpl.cs"/>
+      </sources>
+      <references>
+        <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
+        <include name="data.List/bin/1.0.0.0/IList.dll"/>
+        <include name="data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll"/>
+        <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\skeleton.impl.Farm.Work.ApproximateIntegral\bin\1.0.0.0\BaseIApproximateIntegralImpl.dll"/>
+        <include name="skeleton.Farm.Work.ApproximateIntegral/bin/1.0.0.0/IApproximateIntetral.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\IntegratingFunctions/IntegratingFunctions.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\NINTLIB/NINTLIB.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="ApproximateIntegral-1.0.0.0,ApproximateIntegral-2.0.0.0" name="all"/>
 </project>

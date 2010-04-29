@@ -15,6 +15,7 @@
         <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
         <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
         <include name="data.IntegralCase/bin/1.0.0.0/BaseIIntegralCase.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\NINTLIB/NINTLIB.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
@@ -26,6 +27,7 @@
         <include name="data.Function/bin/1.0.0.0/IFunction.dll"/>
         <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\data.impl.IntegralCase\bin\1.0.0.0\BaseIIntegralCaseImpl.dll"/>
         <include name="data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\NINTLIB/NINTLIB.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>

@@ -200,7 +200,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="input" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
-        <visualDescription h="23" w="117" x="165" y="205">
+        <visualDescription h="23" w="117" x="178" y="169">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="function" varName="F"/>
@@ -225,16 +225,14 @@
     <supplyParameter cRef="input" varName="I"/>
     <supplyParameter cRef="jobs" varName="J"/>
     <parameter componentRef="the_function" formFieldId="function" varName="F"/>
-    <innerRenaming cNewName="data_target" cOldName="output" cRef="farm"/>
-    <innerRenaming cNewName="data_source" cOldName="input" cRef="farm"/>
     <interface iRef="IRoot" nArgs="1">
       <slice isRef="manager">
         <originRef cRef="farm" iRef="IManager"/>
         <visualDescription h="10" w="10" x="60" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@172bb1a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@f38a27" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@159df12" repeat="0" sliceRef="manager">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f30a01" repeat="0" sliceRef="manager">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -254,6 +252,10 @@
       <visualDescription h="40" w="80" x="107" y="342">
         <color b="0" g="255" r="0"/>
       </visualDescription>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="6" y="23"/>
+        <slice pRef="output_data" sRef="manager"/>
+      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="50" y="21"/>
         <slice pRef="mpi" sRef="manager"/>
@@ -262,10 +264,6 @@
         <visualDescription h="10" w="10" x="19" y="17"/>
         <slice pRef="input_data" sRef="manager"/>
       </port>
-      <port name="output_data">
-        <visualDescription h="10" w="10" x="6" y="23"/>
-        <slice pRef="output_data" sRef="manager"/>
-      </port>
       <parameter iname="IFunction" order="0" parid="F" uname="function" varid="function"/>
     </interface>
     <interface iRef="IPeer" nArgs="1">
@@ -273,9 +271,9 @@
         <originRef cRef="farm" iRef="IWorker"/>
         <visualDescription h="10" w="10" x="32" y="11"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7622e" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@e0d92c" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@bee935" repeat="0" sliceRef="worker">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d2085d" repeat="0" sliceRef="worker">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -302,10 +300,10 @@
       <slices cRef="mpi" replica="1" uRef="mpi" sliceName="mpi" transitive="true">
         <visualDescription h="10" w="10" x="76" y="15"/>
       </slices>
-      <slices cRef="data_source" replica="0" uRef="integral_case" sliceName="input_data" transitive="true">
+      <slices cRef="input" replica="0" uRef="integral_case" sliceName="input_data" transitive="true">
         <visualDescription h="10" w="10" x="6" y="16"/>
       </slices>
-      <slices cRef="data_target" replica="0" uRef="double" sliceName="output_data" transitive="true">
+      <slices cRef="output" replica="0" uRef="double" sliceName="output_data" transitive="true">
         <visualDescription h="10" w="10" x="45" y="28"/>
       </slices>
       <slices cRef="farm" replica="0" uRef="manager" sliceName="manager" transitive="false">

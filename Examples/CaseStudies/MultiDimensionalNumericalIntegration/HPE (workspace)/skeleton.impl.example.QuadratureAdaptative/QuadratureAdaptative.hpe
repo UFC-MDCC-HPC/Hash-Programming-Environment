@@ -38,9 +38,30 @@
         <originRef cRef="farm" iRef="IManager"/>
         <visualDescription h="10" w="10" x="56" y="21"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13abac" repeat="0" sliceRef="manager">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1410758" repeat="0" sliceRef="manager">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
+      <sources sourceType="C# Executable" versionId="2.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm;&#xA;using data.IntegralCase;&#xA;using data.Function.TestingFunction;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using skeleton.Farm.Collect.SumAreas;&#xA;using environment.MPIDirect;&#xA;using skeleton.example.QuadratureAdaptative;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;public abstract class BaseIRootImpl&lt;F>: Application, BaseIRoot&lt;F>&#xA;where F:ITestingFunction&#xA;{&#xA;&#xA;protected IDouble output_data = null;&#xA;&#xA;protected IDouble Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;&#x9;manager.Output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IManager&lt;IIntegralCase&lt;F>, IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>, IDouble, ISum&lt;IDouble>> manager = null;&#xA;&#xA;protected IManager&lt;IIntegralCase&lt;F>, IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>, IDouble, ISum&lt;IDouble>> Manager {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.manager = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IIntegralCase&lt;F> input_data = null;&#xA;&#xA;protected IIntegralCase&lt;F> Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;&#x9;manager.Input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;manager.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIRootImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Manager = (IManager&lt;IIntegralCase&lt;F>, IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>, IDouble, ISum&lt;IDouble>>) BackEnd.createSlice(this, UID,&quot;farm&quot;,&quot;manager&quot;,new Type[] {typeof(IIntegralCase&lt;F>),typeof( IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>),typeof( IDouble),typeof(ISum&lt;IDouble>)});&#xA;&#x9;this.Mpi = (IMPIDirect) BackEnd.createSlice(this, UID,&quot;mpi&quot;,&quot;mpi&quot;,new Type[] {});&#xA;&#x9;this.Input_data = (IIntegralCase&lt;F>) BackEnd.createSlice(this, UID,&quot;input&quot;,&quot;integral_case&quot;,new Type[] {typeof(F)});&#xA;&#x9;this.Output_data = (IDouble) BackEnd.createSlice(this, UID,&quot;output&quot;,&quot;double&quot;,new Type[] {});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIRootImpl.cs" srcType="base" uri="/skeleton.impl.example.QuadratureAdaptative/bin/2.0.0.0/BaseIRootImpl.dll" versionId="2.0.0.0">
+          <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
+          <dependency>skeleton.Farm/bin/1.0.0.0/IManager.dll</dependency>
+          <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
+          <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
+          <dependency>skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalSend.dll</dependency>
+          <dependency>skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISum.dll</dependency>
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRoot.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Function.TestingFunction;&#xA;using skeleton.example.QuadratureAdaptative;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;public class IRootImpl&lt;F> : BaseIRootImpl&lt;F>, IRoot&lt;F>&#xA;where F:ITestingFunction&#xA;{&#xA;&#xA;public IRootImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;manager.compute();&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IRootImpl.cs" srcType="user" uri="/skeleton.impl.example.QuadratureAdaptative/bin/2.0.0.0/IRootImpl.dll" versionId="2.0.0.0">
+          <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
+          <dependency>%WORKSPACE/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRootImpl.dll</dependency>
+          <dependency>skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IRoot.dll</dependency>
+        </file>
+        <file contents="using DGAC;&#xA;using data.Function.TestingFunction;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;&#x9;public class IRootImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;IRootImpl&lt;ITestingFunction> root = new IRootImpl&lt;ITestingFunction>();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;,&quot;root&quot;,root,args);&#xA;&#x9;&#x9;&#x9;root.createSlices();&#xA;&#x9;&#x9;&#x9;root.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="IRootImplMain.cs" srcType="main" uri="/skeleton.impl.example.QuadratureAdaptative/bin/2.0.0.0/IRootImplMain.exe" versionId="2.0.0.0">
+          <dependency>%WORKSPACE/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/IRootImpl.dll</dependency>
+          <dependency>data.Function.TestingFunction/bin/1.0.0.0/ITestingFunction.dll</dependency>
+        </file>
+      </sources>
       <sources sourceType="C# Executable" versionId="1.0.0.0">
         <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm;&#xA;using data.IntegralCase;&#xA;using data.Function.TestingFunction;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using skeleton.Farm.Collect;&#xA;using environment.MPIDirect;&#xA;using skeleton.example.QuadratureAdaptative;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;public abstract class BaseIRootImpl&lt;F>: Application, IRoot&lt;F>&#xA;where F:ITestingFunction&#xA;{&#xA;&#xA;protected IDouble output_data = null;&#xA;&#xA;protected IDouble Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;&#x9;manager.Output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IManager&lt;IIntegralCase&lt;F>, IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>, IDouble, ICollect&lt;IDouble>> manager = null;&#xA;&#xA;protected IManager&lt;IIntegralCase&lt;F>, IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>, IDouble, ICollect&lt;IDouble>> Manager {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.manager = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IIntegralCase&lt;F> input_data = null;&#xA;&#xA;protected IIntegralCase&lt;F> Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;&#x9;manager.Input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;manager.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIRootImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Manager = (IManager&lt;IIntegralCase&lt;F>, IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>, IDouble, ICollect&lt;IDouble>>) BackEnd.createSlice(this, UID,&quot;farm&quot;,&quot;manager&quot;,new Type[] {typeof(IIntegralCase&lt;F>),typeof( IDistributeIntervalSend&lt;F, IIntegralCase&lt;F>>),typeof( IDouble),typeof(ICollect&lt;IDouble>)});&#xA;&#x9;this.Mpi = (IMPIDirect) BackEnd.createSlice(this, UID,&quot;mpi&quot;,&quot;mpi&quot;,new Type[] {});&#xA;&#x9;this.Input_data = (IIntegralCase&lt;F>) BackEnd.createSlice(this, UID,&quot;data_source&quot;,&quot;integral_case&quot;,new Type[] {typeof(F)});&#xA;&#x9;this.Output_data = (IDouble) BackEnd.createSlice(this, UID,&quot;data_target&quot;,&quot;double&quot;,new Type[] {});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIRootImpl.cs" srcType="base" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRootImpl.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
@@ -64,17 +85,17 @@
       <visualDescription h="58" w="127" x="235" y="69">
         <color b="255" g="0" r="0"/>
       </visualDescription>
-      <port name="output_data">
-        <visualDescription h="10" w="10" x="124" y="6"/>
-        <slice pRef="output_data" sRef="manager"/>
+      <port name="input_data">
+        <visualDescription h="10" w="10" x="38" y="46"/>
+        <slice pRef="input_data" sRef="manager"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="manager"/>
       </port>
-      <port name="input_data">
-        <visualDescription h="10" w="10" x="38" y="46"/>
-        <slice pRef="input_data" sRef="manager"/>
+      <port name="output_data">
+        <visualDescription h="10" w="10" x="124" y="6"/>
+        <slice pRef="output_data" sRef="manager"/>
       </port>
       <parameter iname="ITestingFunction" order="0" parid="F" uname="testing_function" varid="function"/>
     </interface>
@@ -83,9 +104,10 @@
         <originRef cRef="farm" iRef="IWorker"/>
         <visualDescription h="10" w="10" x="14" y="8"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4bd298" repeat="0" sliceRef="worker">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@eea92a" repeat="0" sliceRef="worker">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
+      <sources sourceType="C# Language" versionId="2.0.0.0"/>
       <sources sourceType="C# Executable" versionId="1.0.0.0">
         <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;using data.IntegralCase;&#xA;using data.Function.TestingFunction;&#xA;using skeleton.Farm.Distribute.DistributeInterval;&#xA;using skeleton.Farm.Work.ApproximateIntegral;&#xA;using skeleton.example.QuadratureAdaptative;&#xA;using data.List;&#xA;&#xA;namespace skeleton.impl.example.QuadratureAdaptative { &#xA;&#xA;public abstract class BaseIPeerImpl&lt;F>: Application, IPeer&lt;F>&#xA;where F:ITestingFunction&#xA;{&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;worker.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IWorker&lt;IDouble, ISend&lt;IDouble>, IList&lt;IIntegralCase&lt;F>>, IDistributeIntervalReceive&lt;F, IList&lt;IIntegralCase&lt;F>>>, IApproximateIntetral&lt;F, IList&lt;IIntegralCase&lt;F>>, IDouble>> worker = null;&#xA;&#xA;protected IWorker&lt;IDouble, ISend&lt;IDouble>, IList&lt;IIntegralCase&lt;F>>, IDistributeIntervalReceive&lt;F, IList&lt;IIntegralCase&lt;F>>>, IApproximateIntetral&lt;F, IList&lt;IIntegralCase&lt;F>>, IDouble>> Worker {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.worker = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIPeerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000006d05c82bff26ad72150a252c8c9742c86f6c62e6fe0cb696e223e19c0441a20a249526c60ee5553b2eddc609f73c569a23cfd334b51d25d1bd36d608dc901932e635a71bce017f93a1aabc8a129f65b9a7d3d384b42ae038d9d1006b984abdf11cc686520195bdac3acc399a24871f11885f37168f0ac04580fbce53d438e394&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Worker = (IWorker&lt;IDouble, ISend&lt;IDouble>, IList&lt;IIntegralCase&lt;F>>, IDistributeIntervalReceive&lt;F, IList&lt;IIntegralCase&lt;F>>>, IApproximateIntetral&lt;F, IList&lt;IIntegralCase&lt;F>>, IDouble>>) BackEnd.createSlice(this, UID,&quot;farm&quot;,&quot;worker&quot;,new Type[] {typeof(IDouble),typeof(ISend&lt;IDouble>),typeof( IList&lt;IIntegralCase&lt;F>>),typeof( IDistributeIntervalReceive&lt;F, IList&lt;IIntegralCase&lt;F>>>),typeof(IApproximateIntetral&lt;F, IList&lt;IIntegralCase&lt;F>>, IDouble>)});&#xA;&#x9;this.Mpi = (IMPIDirect) BackEnd.createSlice(this, UID,&quot;mpi&quot;,&quot;mpi&quot;,new Type[] {});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIPeerImpl.cs" srcType="base" uri="/skeleton.impl.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeerImpl.dll" versionId="1.0.0.0">
           <dependency>data.List/bin/1.0.0.0/IList.dll</dependency>
@@ -122,7 +144,7 @@
       <slices cRef="farm" replica="0" uRef="manager" sliceName="manager" transitive="false">
         <visualDescription h="10" w="10" x="60" y="6"/>
       </slices>
-      <visualDescription h="40" w="80" x="87" y="337"/>
+      <visualDescription h="40" w="80" x="76" y="276"/>
     </unit>
     <unit iRef="IPeerImpl" private="false" uRef="peer" visibleInterface="true">
       <super cRef="base" uRef="peer"/>

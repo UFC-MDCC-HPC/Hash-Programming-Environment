@@ -71,10 +71,11 @@ where F:IFunction
           } 
        } */
        
+        public new NINTLIB.IntegratingFunction Function { get { return function.F; } }
 
         public double f(double[] x)
         {        
-            return function.f(x);
+            return function.F(x);
         }
 
         public IIntegralCaseImpl()

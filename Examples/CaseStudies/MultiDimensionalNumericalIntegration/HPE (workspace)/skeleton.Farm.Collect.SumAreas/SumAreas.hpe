@@ -94,7 +94,7 @@
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="71" y="77">
+      <visualDescription h="40" w="80" x="85" y="66">
         <color b="128" g="128" r="128"/>
       </visualDescription>
       <port name="mpi">
