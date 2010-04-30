@@ -2,12 +2,14 @@ package br.ufc.mdcc.hclc.symboltable;
 
 public class Component {
 	private String name; 
+	private String packageName;
 	private String kind;
+	private Usings_list usings_list; /* TODO: create Usings_list */
 	private Public_Component_list public_component_list;
 	private Inner_Component_list innercomplist;
 	private Unit_list unitlist;
 	private ParamType_list paramtypelist;
-	private Extend extend;
+	private Extend base;
 	private int beginLine;
 	private int beginColumn;
 
@@ -31,7 +33,7 @@ public class Component {
 		this.unitlist=unitlist;
 		this.beginLine=beginLine;
 		this.beginColumn=beginColumn;
-		this.extend=extend;
+		this.base=extend;
 	}
 
 	public ParamType_list getParamtypelist() {
@@ -82,12 +84,12 @@ public class Component {
 		this.unitlist = unitlist;
 	}
 	
-	public Extend getName_extend() {
-		return extend;
+	public Extend getName_base() {
+		return base;
 	}
 
-	public void setName_extend(Extend extend) {
-		this.extend = extend;
+	public void setName_base(Extend extend) {
+		this.base = extend;
 	}
 	
 	public int getBeginLine() {
@@ -104,5 +106,21 @@ public class Component {
 
 	public void setBeginColumn(int beginColumn) {
 		this.beginColumn = beginColumn;
+	}
+
+	public void setPackage(String packageName) {
+		this.packageName = packageName;
+	}
+
+	public String getPackage() {
+		return packageName;
+	}
+
+	public void setUsings_list(Usings_list usings_list) {
+		this.usings_list = usings_list;
+	}
+
+	public Usings_list getUsings_list() {
+		return usings_list;
 	}
 }

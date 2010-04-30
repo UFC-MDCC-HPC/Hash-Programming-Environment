@@ -79,7 +79,7 @@ public class HCLParser implements HCLParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EXTENDS:
       name_extend = extend();
-                                                                                                                                                                                           component.setName_extend(name_extend);
+                                                                                                                                                                                           component.setName_base(name_extend);
       break;
     default:
       jj_la1[4] = jj_gen;
