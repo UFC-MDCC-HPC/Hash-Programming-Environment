@@ -1,0 +1,182 @@
+PARSER_BEGIN(HCLParser)
+public class HCLParser{}
+PARSER_END(HCLParser)
+
+TOKEN_MGR_DECLS:
+{
+	public static int numOfComment = 0;
+}
+
+
+TOKEN: {
+	< EXTENDS: "extends">
+	| <SET: "=">
+	| <COMMA: ",">
+	| <COLON: ":">
+	| <OCURV: "("> 
+	| <CCURV: ")"> 
+	| <OSQUARE: "["> 
+	| <CSQUARE: "]"> 
+	| <SLICE: "slice">
+	| <FROM: "from">
+	| <UNIT: "unit">
+	| <DOT: ".">
+	| <COMPUTATION: "computation">
+	| <DATA: "data">
+	| <ARCHITECTURE: "architecture">
+	| <ENVIRONMENT: "environment">
+	| <QUALIFIER: "qualifier">
+	| <SYNCHRONIZER: "synchronizer">
+	| <APPLICATION: "application">
+	| <ENUMERATOR: "enumerator">
+	| < ID: (["a"-"z"]|["A" - "Z"])(["a"-"z"]|["A" - "Z"]|"_"|["0"-"9"])*>
+}
+
+<*>
+SPECIAL_TOKEN:{
+	<NEWLINE: (("\r\n")|("\r")|("\n"))> {if (curLexState==INSIDE_COMMENT_2) SwitchTo(DEFAULT);}
+}
+
+SPECIAL_TOKEN:{
+	<TABULATION: "\t">
+	|<SPACE: " ">
+}
+
+
+SKIP:
+{
+	<"/*"> {numOfComment=1;}: INSIDE_COMMENT
+	|<"//"> : INSIDE_COMMENT_2
+}
+
+<INSIDE_COMMENT>
+SKIP:
+{
+	<"/*"> {numOfComment++;}
+	|<"*/"> {numOfComment--; if (numOfComment==0) SwitchTo(DEFAULT);}
+	| <~[]>
+}
+
+<INSIDE_COMMENT_2>
+SKIP:
+{
+	<~[]>
+}
+
+Component Start() :
+{Component component;}
+{ 
+	component=absConfig()  <EOF> {return component;}
+}
+
+Component absConfig():
+{Component component = new Component();Token kind_tk;Public_Component_list public_component_list;Inner_Component inner_comp=null;Inner_Component_list inner_comp_list = new Inner_Component_list();Unit_list unit_list = new Unit_list();Unit unit;}
+{ 
+	kind_tk=kind() {component.setKind(kind_tk.image);component.setBeginLine(kind_tk.beginLine);component.setBeginColumn(kind_tk.beginColumn);} public_component_list=header(component) {component.setPublic_component_list(public_component_list);} (inner_comp=inner(public_component_list) {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);} (unit=unit() {unit_list.add(unit);})+ {component.setUnitlist(unit_list);return component;}
+}
+
+Public_Component_list header(Component component):
+{Token name;ParamType_list param_list=new ParamType_list();Extend name_extend=null;Public_Component_list public_component_list=new Public_Component_list();}
+{ 
+	name=<ID> {component.setName(name.image);} (public_component_list=publicInnerS())?  ( param_list=paramTypeS() {component.setParamtypelist(param_list);} )? ( name_extend=extend() {component.setName_extend(name_extend);} )? {return public_component_list;}
+}
+
+ParamType paramType():
+{Token form_id;Token id;Config config;}
+{ 
+	form_id=<ID> <SET> id=<ID> <COLON> config=cFunAppNoVar() {return new ParamType(id.image,form_id.image,config,form_id.beginLine,form_id.beginColumn);}
+}
+
+Type cFunApp():
+{Config config;Token id_tk;}
+{ 
+	LOOKAHEAD(2)
+	config = cFunAppNoVar() {return config;}
+	| id_tk=<ID> {return new VarType(id_tk.image,id_tk.beginLine,id_tk.beginColumn);}
+}
+
+Config cFunAppNoVar():
+{Token id_tk;Type_list type_list=new Type_list();}
+{
+	id_tk=<ID> (type_list=cFunAppS())? {return new Config (id_tk.image,type_list,id_tk.beginLine,id_tk.beginColumn);}
+}
+
+Public_Component publicInner():
+{Token id_tk;}
+{
+	id_tk=<ID> {return new Public_Component(id_tk.image,id_tk.beginLine,id_tk.beginColumn);}
+}
+
+Inner_Component inner(Public_Component_list public_component_list):
+{Token id_tk;Token kind_tk;Type type;Public_Component_list public_inner_component_list = new Public_Component_list();}
+{
+	kind_tk=kind() id_tk=<ID> {if ((kind_tk.specialToken==null) || (kind_tk.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before kind of inner component in line "+id_tk.beginLine+" and column "+id_tk.beginColumn);} } <COLON> type=cFunApp() (public_inner_component_list=publicInnerS())?  {return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
+}
+
+Unit unit():
+{Token unit_tk;Token id_tk;Slice_list slice_list = new Slice_list();Slice slice;}
+{
+	unit_tk=<UNIT> {if ((unit_tk.specialToken==null) || (unit_tk.specialToken.kind != NEWLINE)) throw new ParseException("New line expected before <unit> token in line "+unit_tk.beginLine+" and column "+unit_tk.beginColumn);} id_tk=<ID> (slice=slice(id_tk.image) {slice_list.add(slice);})* {return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
+}
+
+Slice slice(String unit):
+{Token slice_tk;Token id_tk;Token id_inner_tk;Token id_unit_inner_tk;}
+{
+	slice_tk=<SLICE> { if ((slice_tk.specialToken==null) || ((slice_tk.specialToken.kind != TABULATION) && (slice_tk.specialToken.kind != SPACE))) {throw new ParseException("Tabulation or space expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn);} if ((slice_tk.specialToken.specialToken==null) || (slice_tk.specialToken.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn); } } id_tk=<ID> <FROM> id_inner_tk=<ID> <DOT> id_unit_inner_tk=<ID> {return new Slice(id_tk.image,id_inner_tk.image,id_unit_inner_tk.image,unit,slice_tk.beginLine,slice_tk.beginColumn);}
+}
+
+Token kind():
+{Token kind_tk;}
+{
+	kind_tk = <COMPUTATION>	   {return kind_tk;}
+	| kind_tk = <APPLICATION>  {return kind_tk;}
+	| kind_tk = <DATA>         {return kind_tk;}
+	| kind_tk = <QUALIFIER>    {return kind_tk;}
+	| kind_tk = <SYNCHRONIZER> {return kind_tk;}
+	| kind_tk = <ARCHITECTURE> {return kind_tk;}
+	| kind_tk = <ENVIRONMENT>  {return kind_tk;}
+	| kind_tk = <ENUMERATOR>   {return kind_tk;}
+	
+}
+
+Extend extend():
+{Token extend_tk;Config config;}
+{
+	extend_tk=<EXTENDS> config=cFunAppNoVar() {return new Extend(config,extend_tk.beginLine,extend_tk.beginColumn);}
+}
+
+ParamType_list paramTypeS():
+{ParamType_list paramtype_list = new ParamType_list();ParamType param_type;}
+{
+	<OSQUARE> param_type=paramType() {paramtype_list.add(param_type);} (param_type=paramTypeSRest() {paramtype_list.add(param_type);})* <CSQUARE> {return paramtype_list;}
+}
+
+ParamType paramTypeSRest():
+{ParamType param_type;}
+{
+	<COMMA> param_type=paramType() {return param_type;}
+}
+
+Type_list cFunAppS():
+{Type_list type_list= new Type_list();Type type;}
+{
+	<OSQUARE> type=cFunApp() {type_list.add(type);} (type=cFunAppSRest() {type_list.add(type);})* <CSQUARE> {return type_list;}
+}
+
+Type cFunAppSRest():
+{Type type;}
+{
+	<COMMA> type=cFunApp() {return type;}
+}
+
+Public_Component_list publicInnerS():
+{Public_Component_list public_component_list = new Public_Component_list();Public_Component public_component;}
+{
+	<OCURV> public_component=publicInner() {public_component_list.add(public_component);} (public_component=publicInnerSRest() {public_component_list.add(public_component);})* <CCURV> {return public_component_list;}
+}
+
+Public_Component publicInnerSRest():
+{Public_Component public_component;}
+{
+	<COMMA> public_component=publicInner() {return public_component;}
+}
