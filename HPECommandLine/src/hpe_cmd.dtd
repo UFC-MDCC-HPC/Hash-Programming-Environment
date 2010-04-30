@@ -1,0 +1,10 @@
+<!ELEMENT hpe (namespace,java+)>
+<!ELEMENT namespace (#PCDATA)>
+<!ELEMENT java (value,option+,argument+)>
+<!ELEMENT value (#PCDATA)>
+<!ELEMENT argument (type, cardinality)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT cardinality (#PCDATA)>
+<!ELEMENT option (cp+)>
+<!ELEMENT cp (value,list+)>
+<!ELEMENT list (argument+)>
