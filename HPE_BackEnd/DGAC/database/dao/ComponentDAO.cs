@@ -18,10 +18,10 @@ public class ComponentDAO{
     /* HERON */
     public int insert(Component ac)
     {
-        int nextKey = Connector.nextKey("id_concrete","hashmodel.component");
+        int nextKey = Connector.nextKey("id_concrete","component");
 
         String sql =
-            "INSERT INTO hashmodel.component (id_concrete, id_concrete_supertype, id_functor_app, library_path, hash_component_UID)" +
+            "INSERT INTO component (id_concrete, id_concrete_supertype, id_functor_app, library_path, hash_component_UID)" +
             " VALUES (" + nextKey + "," + ac.Id_concrete_supertype + "," + ac.Id_functor_app + ",'"+ ac.Library_path + "','"+ ac.Hash_component_UID +  "')";
 
         Connector.performSQLUpdate(sql);

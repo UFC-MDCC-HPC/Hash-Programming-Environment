@@ -14,7 +14,7 @@ public class UnitDeploymentDAO{
     public void insert(UnitDeployment ac)
     {
         String sql =
-            "INSERT INTO hashmodel.unitdeployment (id_deployment, id_unit, id_node)" +
+            "INSERT INTO unitdeployment (id_deployment, id_unit, id_node)" +
             "VALUES (" + ac.Id_deployment + "," + ac.Id_unit + "," + ac.Id_node + ")";
 
         Connector.performSQLUpdate(sql);

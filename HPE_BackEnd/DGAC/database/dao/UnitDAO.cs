@@ -20,7 +20,7 @@ public class UnitDAO{
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
              "SELECT MAX(id_index) AS fresh_index " +
-             "FROM hashmodel.unit " +
+             "FROM unit " +
              "WHERE id_concrete=" + id_concrete + " AND " +
              "id_unit like '" + id_unit + "' " +
              "GROUP BY id_concrete, id_unit";
@@ -43,7 +43,7 @@ public class UnitDAO{
     public void insert(Unit ac)
     {
         String sql =
-            "INSERT INTO hashmodel.unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, `order`)" +
+            "INSERT INTO unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, `order`)" +
             " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_interface_abstract + ",'" + ac.Id_interface_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "',"+  ac.Id_index + ",'" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"'," + ac.Order + ")";
 
         Connector.performSQLUpdate(sql);
@@ -97,7 +97,7 @@ public class UnitDAO{
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
             "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source " +
-            "FROM hashmodel.unit " +
+            "FROM unit " +
             "WHERE id_concrete=" + id_concrete + " AND " + 
             "id_unit like '" + id_unit + "'" /*+ " AND " +
             "id_index=" + id_index */;
@@ -141,7 +141,7 @@ public class UnitDAO{
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
             "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source " +
-            "FROM hashmodel.unit " +
+            "FROM unit " +
             "WHERE id_concrete=" + id_concrete + " AND " +
             "id_unit like '" + id_unit +"'";
         dbcmd.CommandText = sql;
@@ -197,7 +197,7 @@ public class UnitDAO{
 
     private void updatePublicKey(Unit u)
     {
-        String sql = "UPDATE hashmodel.unit SET assembly_string = '" + u.Assembly_string + "'" +
+        String sql = "UPDATE unit SET assembly_string = '" + u.Assembly_string + "'" +
                      " WHERE id_concrete=" + u.Id_concrete + " AND " +
                      " id_unit like '" + u.Id_unit + "' AND " +
                      " id_index=" + u.Id_index;
@@ -212,7 +212,7 @@ public class UnitDAO{
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
             "SELECT id_unit, id_concrete, id_interface, id_abstract, assembly_string, id_unit_super, id_index, `order`, class_name, class_nargs, uri_source" +
-            "FROM hashmodel.unit " +
+            "FROM unit " +
             "WHERE id_concrete=" + Id_concrete + " AND " +
             "`order` = " + order /*+ " AND " +
             "id_index=" + id_index */

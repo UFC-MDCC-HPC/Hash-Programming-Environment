@@ -124,7 +124,7 @@ namespace HPE_DGAC_LoadDB
                 // CREATE AbstractComponentFunctorApplication
 
                 AbstractComponentFunctorApplication aAppNew = new AbstractComponentFunctorApplication();
-                aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "hashmodel.abstractcomponentfunctorapplication");
+                aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
                 aAppNew.Id_abstract = a.Id_abstract;
 
             //    AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();

@@ -17,7 +17,7 @@ namespace DGAC.database
         public void insert(InnerComponentExposed ac)
         {
             String sql =
-                "INSERT INTO hashmodel.innercomponentexposed (id_abstract, id_inner_rename, id_inner_owner, id_inner)" +
+                "INSERT INTO innercomponentexposed (id_abstract, id_inner_rename, id_inner_owner, id_inner)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_inner_rename + "','" + ac.Id_inner_owner + "','" + ac.Id_inner + "')";
 
             Connector.performSQLUpdate(sql);
@@ -31,7 +31,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_inner_rename, id_inner_owner, id_inner " +
-                "FROM hashmodel.innercomponentexposed " +
+                "FROM innercomponentexposed " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner_owner like '" + id_inner_owner + "'";
             dbcmd.CommandText = sql;
@@ -62,7 +62,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_inner_rename, id_inner_owner, id_inner " +
-                "FROM hashmodel.innercomponentexposed  " +
+                "FROM innercomponentexposed  " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner_rename like '" + id_inner_rename + "'";
             dbcmd.CommandText = sql;
@@ -94,7 +94,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_inner_rename, id_inner_owner, id_inner " +
-                "FROM hashmodel.innercomponentexposed " +
+                "FROM innercomponentexposed " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                       "id_inner_rename like '" + id_inner_rename + "' AND " +
                       "id_inner_owner like '" + id_inner_container + "'";

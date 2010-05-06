@@ -17,7 +17,7 @@ namespace DGAC.database
         {
 
             String sql =
-                "INSERT INTO hashmodel.enumeration_inner (id_abstract, id_enumerator, id_inner)" +
+                "INSERT INTO enumeration_inner (id_abstract, id_enumerator, id_inner)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_enumerator + "','" + ac.Id_inner + "')";
 
             Connector.performSQLUpdate(sql);
@@ -30,7 +30,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_inner " +
-                "FROM hashmodel.enumeration_inner " +
+                "FROM enumeration_inner " +
                 "WHERE id_abstract=" + id_abstract + " AND " + 
                 "id_enumerator like '" + id_enumerator + "'";
             dbcmd.CommandText = sql;
@@ -59,7 +59,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_inner " +
-                "FROM hashmodel.enumeration_inner " +
+                "FROM enumeration_inner " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "'";
             dbcmd.CommandText = sql;
@@ -88,7 +88,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_inner " +
-                "FROM hashmodel.enumeration_inner " +
+                "FROM enumeration_inner " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
                 "id_enumerator like '" + id_enumerator + "'";

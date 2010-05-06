@@ -17,7 +17,7 @@ namespace DGAC.database
         public void insert(EnumeratorValuation ac)
         {
             String sql =
-                "INSERT INTO hashmodel.enumerator_valuation (id_concrete, id_enumerator, range_inf, range_sup)" +
+                "INSERT INTO enumerator_valuation (id_concrete, id_enumerator, range_inf, range_sup)" +
                 " VALUES (" + ac.Id_concrete + ",'" + ac.Id_enumerator + "'," + ac.Range_inf + "," + ac.Range_sup + ")";
 
             Connector.performSQLUpdate(sql);
@@ -31,7 +31,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_concrete, id_enumerator, range_inf, range_sup " +
-                "FROM hashmodel.enumeratorvaluation " +
+                "FROM enumeratorvaluation " +
                 "WHERE id_concrete=" + id_concrete;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
@@ -61,7 +61,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_concrete, id_enumerator, range_inf, range_sup " +
-                "FROM hashmodel.enumeratorvaluation " +
+                "FROM enumeratorvaluation " +
                 "WHERE id_concrete=" + id_concrete + 
                   "AND id_enumerator like '" + id_enumerator + "'";
             dbcmd.CommandText = sql;

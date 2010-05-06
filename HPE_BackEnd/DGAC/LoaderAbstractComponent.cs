@@ -293,7 +293,7 @@ namespace HPE_DGAC_LoadDB
          //   InnerComponentDAO iNewDAO = new InnerComponentDAO();
 
             AbstractComponentFunctor c_ = new AbstractComponentFunctor();
-            c_.Id_abstract = Connector.nextKey("id_abstract", "hashmodel.abstractcomponentfunctor");
+            c_.Id_abstract = Connector.nextKey("id_abstract", "abstractcomponentfunctor");
             c_.Hash_component_UID = c.header.hash_component_UID;
             c_.Library_path = c.header.packagePath + "." + c.header.name;
             c_.Kind = c.header.kind.ToString();

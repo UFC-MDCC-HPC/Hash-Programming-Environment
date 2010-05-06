@@ -16,7 +16,7 @@ namespace DGAC.database
         {
 
             String sql =
-                "INSERT INTO hashmodel.sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner,  id_split_replica,  id_split_replica_owner)" +
+                "INSERT INTO sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner,  id_split_replica,  id_split_replica_owner)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface_slice + "','" + ac.Id_interface_slice_owner + "','" + ac.Id_inner + "','" + ac.Id_inner_owner + "'," + ac.Id_split_replica + "," + ac.Id_split_replica_owner + ")";
 
             Connector.performSQLUpdate(sql);
@@ -32,7 +32,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_inner, id_inner_owner, id_interface_slice, id_interface_slice_owner, id_split_replica, id_split_replica_owner " +
-                "FROM hashmodel.sliceexposed " +
+                "FROM sliceexposed " +
                 "WHERE id_abstract=" + id_abstract + " and " + 
                       "id_inner_owner like '" + id_inner_owner + "' and " +
                       "id_interface_slice_owner like '" + id_interface_slice_owner + "' and " + 
@@ -66,7 +66,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT DISTINCT id_abstract, id_inner, id_interface_slice, id_inner_owner "  +
-                "FROM hashmodel.sliceexposed " +
+                "FROM sliceexposed " +
                 "WHERE id_abstract=" + id_abstract + " and " +
                       "id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_unit + "'";
@@ -93,7 +93,7 @@ namespace DGAC.database
             SliceExposed se = null;
             string sql =
                 "SELECT id_abstract, id_inner, id_interface_slice, id_split_replica, id_split_replica_owner, id_inner_owner, id_interface_slice_owner " +
-                "FROM hashmodel.sliceexposed " +
+                "FROM sliceexposed " +
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract + " and " +
@@ -129,7 +129,7 @@ namespace DGAC.database
             SliceExposed se = null;
             string sql =
                 "SELECT id_abstract, id_inner, id_interface_slice, id_split_replica, id_split_replica_owner, id_inner_owner, id_interface_slice_owner " +
-                "FROM hashmodel.sliceexposed " +
+                "FROM sliceexposed " +
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract + " and " +
@@ -165,7 +165,7 @@ namespace DGAC.database
             SliceExposed se = null;
             string sql =
                 "SELECT id_abstract, id_inner, id_interface_slice, id_split_replica, id_split_replica_owner, id_inner_owner, id_interface_slice_owner " +
-                "FROM hashmodel.sliceexposed " +
+                "FROM sliceexposed " +
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract + " and " +

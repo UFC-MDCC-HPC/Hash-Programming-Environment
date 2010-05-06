@@ -15,7 +15,7 @@ public class InnerComponentDAO{
     public void insert(InnerComponent ac)
     {
         String sql =
-            "INSERT INTO hashmodel.innercomponent (id_abstract_owner, id_functor_app, id_inner, id_abstract_inner, parameter_top, transitive)" +
+            "INSERT INTO innercomponent (id_abstract_owner, id_functor_app, id_inner, id_abstract_inner, parameter_top, transitive)" +
             " VALUES (" + ac.Id_abstract_owner + "," + ac.Id_functor_app + ",'" + ac.Id_inner + "'," + ac.Id_abstract_inner + ",'"+ ac.Parameter_top + "'," + (ac.Transitive ? -1 : 0) + ")";
 
         Connector.performSQLUpdate(sql);

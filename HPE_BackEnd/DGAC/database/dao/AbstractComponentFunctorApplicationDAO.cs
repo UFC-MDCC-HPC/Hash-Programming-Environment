@@ -16,10 +16,10 @@ public class AbstractComponentFunctorApplicationDAO{
     {
         int nextKey = ac.Id_functor_app;
         if (nextKey >= 0)
-            nextKey = Connector.nextKey("id_functor_app", "hashmodel.abstractcomponentfunctorapplication");
+            nextKey = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
 
         String sql =
-            "INSERT INTO hashmodel.abstractcomponentfunctorapplication (id_functor_app, id_abstract)" +
+            "INSERT INTO abstractcomponentfunctorapplication (id_functor_app, id_abstract)" +
             "VALUES (" + nextKey + "," + ac.Id_abstract + ")";
 
         Connector.performSQLUpdate(sql);

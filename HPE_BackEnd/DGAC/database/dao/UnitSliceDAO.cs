@@ -19,7 +19,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                  "SELECT MAX(id_index) AS fresh_index " +
-                 "FROM hashmodel.unitslice " +
+                 "FROM unitslice " +
                  "WHERE id_concrete=" + id_concrete + " AND " +
                  "id_inner like '" + id_inner + "' AND " +
                  "id_index_inner = " + id_index_inner + " AND " +
@@ -46,7 +46,7 @@ namespace DGAC.database
         public void insert(UnitSlice ac)
         {
             String sql =
-                "INSERT INTO hashmodel.unitslice (id_concrete, id_unit, id_index_unit, id_inner, id_index_inner, id_interface_slice, split_replica, id_index)" +
+                "INSERT INTO unitslice (id_concrete, id_unit, id_index_unit, id_inner, id_index_inner, id_interface_slice, split_replica, id_index)" +
                 " VALUES ("
                 + ac.Id_concrete + ",'"
                 + ac.Id_unit + "',"
@@ -67,7 +67,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_concrete, id_inner, id_index_inner, id_interface_slice, split_replica, id_index, id_unit, id_index_unit " +
-                "FROM hashmodel.unitslice " +
+                "FROM unitslice " +
                 "WHERE " +
                 "id_concrete=" + id_concrete + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
@@ -112,7 +112,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_concrete, id_inner, id_index_inner, id_interface_slice, split_replica, id_index, id_unit, id_index_unit " +
-                "FROM hashmodel.unitslice " +
+                "FROM unitslice " +
                 "WHERE id_concrete=" + id_concrete + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
                 "id_index_inner=" + id_index_inner ;
@@ -148,7 +148,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_concrete, id_inner, id_index_inner, id_interface_slice, split_replica, id_index, id_unit, id_index_unit " +
-                "FROM hashmodel.unitslice " +
+                "FROM unitslice " +
                 "WHERE id_concrete=" + id_concrete + " AND " +
                 "id_unit like '" + id_unit + "' AND " +
                 "id_index_unit=" + id_index;
@@ -184,7 +184,7 @@ namespace DGAC.database
            IDbCommand dbcmd = dbcon.CreateCommand();
            string sql =
                "SELECT id_concrete, id_inner, id_index_inner,id_interface_slice, split_replica, id_index, id_unit, id_index_unit "+
-               "FROM hashmodel.unitslice WHERE " +
+               "FROM unitslice WHERE " +
                "id_concrete=" + id_concrete + " AND " +
                "id_unit like '" + id_unit + "' AND " +
                "id_index_unit=" + id_index_unit + " AND " +
@@ -220,7 +220,7 @@ namespace DGAC.database
         internal void consolidateIdUnit(UnitSlice ac)
         {
             String sql =
-                "UPDATE hashmodel.unitslice" +
+                "UPDATE unitslice" +
                 " SET id_index_unit=" + ac.Id_index_unit+ 
                 " WHERE " +
                 "id_concrete=" + ac.Id_concrete + " AND " +

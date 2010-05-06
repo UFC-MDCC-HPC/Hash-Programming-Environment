@@ -16,10 +16,10 @@ public class AbstractComponentFunctorDAO{
 
         int nextKey = ac.Id_abstract;
         if (nextKey >= 0)
-            nextKey = Connector.nextKey("id_abstract", "hashmodel.abstractcomponentfunctor");
+            nextKey = Connector.nextKey("id_abstract", "abstractcomponentfunctor");
 
         String sql =
-            "INSERT INTO hashmodel.abstractcomponentfunctor (id_abstract, id_functor_app_supertype, library_path, hash_component_UID, kind)" +
+            "INSERT INTO abstractcomponentfunctor (id_abstract, id_functor_app_supertype, library_path, hash_component_UID, kind)" +
             " VALUES (" + nextKey + ","
             + ac.Id_functor_app_supertype + "," 
             + (ac.Library_path == null ? "null" : ("'" + ac.Library_path + "'")) + "," 
@@ -118,7 +118,7 @@ public class AbstractComponentFunctorDAO{
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
             "SELECT DISTINCT id_interface " +
-            "FROM hashmodel.interface " +
+            "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " "+ 
             "ORDER BY `order`";
         dbcmd.CommandText = sql;

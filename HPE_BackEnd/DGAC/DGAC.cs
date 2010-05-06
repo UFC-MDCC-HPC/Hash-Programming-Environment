@@ -1722,7 +1722,7 @@ namespace DGAC
         {
             int session_id = -1;
             String sql =
-                "INSERT INTO hashmodel.sessions (id_concrete)" +
+                "INSERT INTO sessions (id_concrete)" +
                 " VALUES (" + id_concrete + ")";
 
             Connector.performSQLUpdate(sql);

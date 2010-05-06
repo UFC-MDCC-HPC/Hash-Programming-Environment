@@ -462,7 +462,7 @@ namespace HPE_DGAC_LoadDB
             // CREATE Component
 
             Component c_ = new Component();
-            c_.Id_concrete = Connector.nextKey("id_concrete", "hashmodel.component");
+            c_.Id_concrete = Connector.nextKey("id_concrete", "component");
             c_.Hash_component_UID = c.header.hash_component_UID;
             c_.Library_path = c.header.packagePath + "." + c.header.name; 
             

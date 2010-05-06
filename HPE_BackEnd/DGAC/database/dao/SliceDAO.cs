@@ -16,7 +16,7 @@ namespace DGAC.database
         {
 
             String sql =
-                "INSERT INTO hashmodel.slice (id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name)" +
+                "INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Id_split_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PropertyName + "')";
 
             Connector.performSQLUpdate(sql);

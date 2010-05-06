@@ -19,7 +19,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                  "SELECT MAX(id_index) AS fresh_index " +
-                 "FROM hashmodel.innerconcrete " +
+                 "FROM innerconcrete " +
                  "WHERE id_concrete=" + id_concrete + " AND " +
                  "id_inner like '" + id_inner + "' " +
                  "GROUP BY id_concrete, id_inner";
@@ -41,7 +41,7 @@ namespace DGAC.database
         public void insert(InnerConcreteComponent ac)
         {
             String sql =
-                "INSERT INTO hashmodel.innerconcrete (id_concrete, id_inner, id_index, id_concrete_actual)" +
+                "INSERT INTO innerconcrete (id_concrete, id_inner, id_index, id_concrete_actual)" +
                 " VALUES (" + ac.Id_concrete + ",'" + ac.Id_inner + "'," + ac.Id_index + "," + ac.Id_concrete_actual + ")";
 
             Connector.performSQLUpdate(sql);
@@ -50,7 +50,7 @@ namespace DGAC.database
 		public void update(int id_concrete, string id_inner, int id_concrete_actual)
         {
             String sql =
-                "UPDATE hashmodel.innerconcrete" +
+                "UPDATE innerconcrete" +
 				" SET id_concrete_actual="+id_concrete_actual+
                 " WHERE id_concrete=" +id_concrete+ " AND id_inner='"+id_inner+"'";
 
@@ -65,7 +65,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                  "SELECT id_concrete, id_inner, id_index, id_concrete_actual " +
-                 "FROM hashmodel.innerconcrete " +
+                 "FROM innerconcrete " +
                  "WHERE id_concrete=" + id_concrete + " AND " + 
                  "id_inner like '" + id_inner + "' AND " + 
                  "id_index=" + id_index;
@@ -95,7 +95,7 @@ namespace DGAC.database
             IList<InnerConcreteComponent> l = new List<InnerConcreteComponent>();
             string sql =
                  "SELECT id_concrete, id_inner, id_index, id_concrete_actual " +
-                 "FROM hashmodel.innerconcrete " +
+                 "FROM innerconcrete " +
                  "WHERE id_concrete=" + id_concrete + " AND " +
                  "id_inner like '" + id_inner;
             dbcmd.CommandText = sql;

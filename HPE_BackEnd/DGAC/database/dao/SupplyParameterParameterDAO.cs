@@ -15,7 +15,7 @@ public class SupplyParameterParameterDAO{
     public void insert(SupplyParameterParameter ac)
     {
         String sql =
-            "INSERT INTO hashmodel.supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
+            "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
             " VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + ",'" + ac.Id_parameter_actual + "'," + ac.FreeVariable + ")";
 
         Connector.performSQLUpdate(sql);
@@ -54,7 +54,7 @@ public class SupplyParameterParameterDAO{
     public void remove(SupplyParameterParameter spp)
     {
         String sql =
-            "DELETE FROM hashmodel.supplyparameterparameter" +
+            "DELETE FROM supplyparameterparameter" +
             " WHERE id_functor_app like '" + spp.Id_functor_app + "' AND id_parameter like '" + spp.Id_parameter + "'" ;
 
         Connector.performSQLUpdate(sql);

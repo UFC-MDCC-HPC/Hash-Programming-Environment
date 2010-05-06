@@ -10,10 +10,10 @@ namespace DGAC.database
         /* HERON */
         public int insert(Deployment ac)
         {
-            int nextKey = Connector.nextKey("id_deployment", "hashmodel.deployment");
+            int nextKey = Connector.nextKey("id_deployment", "deployment");
 
             String sql =
-                "INSERT INTO hashmodel.deployment (id_deployment, id_concrete_deployed)" +
+                "INSERT INTO deployment (id_deployment, id_concrete_deployed)" +
                 "VALUES (" + nextKey + "," + ac.Id_concrete_deployed + ")";
 
             Connector.performSQLUpdate(sql);

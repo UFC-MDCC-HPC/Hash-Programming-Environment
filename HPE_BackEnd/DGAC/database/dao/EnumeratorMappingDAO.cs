@@ -11,7 +11,7 @@ namespace DGAC.database
         public void insert(EnumeratorMapping ac)
         {
             String sql =
-                "INSERT INTO hashmodel.enumerator_mapping (id_abstract, id_inner, id_enumerator_inner, id_enumerator_container)" +
+                "INSERT INTO enumerator_mapping (id_abstract, id_inner, id_enumerator_inner, id_enumerator_container)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_inner + "','" + ac.Id_enumerator_inner + "','" + ac.Id_enumerator_container + "')";
 
             Connector.performSQLUpdate(sql);
@@ -24,7 +24,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_inner, id_enumerator_inner, id_enumerator_container " +
-                "FROM hashmodel.enumerator_mapping " +
+                "FROM enumerator_mapping " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
                 "id_enumerator_inner like '" + id_enumerator_inner + "'";
@@ -55,7 +55,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_inner, id_enumerator_inner, id_enumerator_container " +
-                "FROM hashmodel.enumerator_mapping " +
+                "FROM enumerator_mapping " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_enumerator_container like '" + id_enumerator_container + "'";
 

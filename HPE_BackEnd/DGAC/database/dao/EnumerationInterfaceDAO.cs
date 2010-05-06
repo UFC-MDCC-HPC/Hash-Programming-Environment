@@ -16,7 +16,7 @@ namespace DGAC.database
         public void insert(EnumerationInterface ac)
         {
             String sql =
-                "INSERT INTO hashmodel.enumeration_interface (id_abstract, id_enumerator, id_interface)" +
+                "INSERT INTO enumeration_interface (id_abstract, id_enumerator, id_interface)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_enumerator + "','"+ ac.Id_interface + "')";
 
             Connector.performSQLUpdate(sql);
@@ -29,7 +29,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_interface " +
-                "FROM hashmodel.enumeration_interface " +
+                "FROM enumeration_interface " +
                 "WHERE id_abstract=" + id_abstract + " AND " + 
                 "id_enumerator like '" + id_enumerator + "'";
             dbcmd.CommandText = sql;
@@ -58,7 +58,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_interface " +
-                "FROM hashmodel.enumeration_interface " +
+                "FROM enumeration_interface " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_interface like '" + id_interface + "' AND " +             
                 "id_enumerator like '" + id_enumerator + "'";
@@ -87,7 +87,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_interface " +
-                "FROM hashmodel.enumeration_interface " +
+                "FROM enumeration_interface " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;

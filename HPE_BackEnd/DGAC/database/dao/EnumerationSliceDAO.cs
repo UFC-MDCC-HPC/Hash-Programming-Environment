@@ -17,7 +17,7 @@ namespace DGAC.database
         {
 
             String sql =
-                "INSERT INTO hashmodel.enumeration_slice (id_abstract, id_enumerator,id_interface_slice, id_inner, id_split_replica)" +
+                "INSERT INTO enumeration_slice (id_abstract, id_enumerator,id_interface_slice, id_inner, id_split_replica)" +
                 " VALUES ("
                 + ac.Id_abstract + ",'"
                 + ac.Id_enumerator + "','"
@@ -37,7 +37,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_interface_slice, id_inner, id_split_replica " +
-                "FROM hashmodel.enumeration_slice " +
+                "FROM enumeration_slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " + 
                 "id_enumerator like '" + id_enumerator + "'";
             dbcmd.CommandText = sql;
@@ -68,7 +68,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_interface_slice, id_inner, id_split_replica " +
-                "FROM hashmodel.enumeration_slice " +
+                "FROM enumeration_slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " + 
                 "id_interface_slice like '" +  unit_slice + "' AND " + 
@@ -101,7 +101,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_interface_slice, id_split_replica, id_inner " +
-                "FROM hashmodel.enumeration_slice " +
+                "FROM enumeration_slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " + 
                 "id_interface_slice like '" + interface_slice + "' AND " +
@@ -135,7 +135,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT ES.* " +
-                "FROM hashmodel.enumeration_slice as ES, hashmodel.enumerator as E " +
+                "FROM enumeration_slice as ES, enumerator as E " +
                 "WHERE ES.id_abstract=" + id_abstract + " AND " +
                 "ES.id_inner like '" + id_inner + "' AND " +
                 "ES.id_interface_slice like '" + interface_slice + "' AND " +

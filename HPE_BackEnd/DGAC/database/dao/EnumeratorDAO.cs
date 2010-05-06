@@ -17,7 +17,7 @@ namespace DGAC.database
         public void insert(Enumerator ac)
         {
             String sql =
-                "INSERT INTO hashmodel.enumerator (id_abstract, id_enumerator, split_from, variable, valuation)" +
+                "INSERT INTO enumerator (id_abstract, id_enumerator, split_from, variable, valuation)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_enumerator + "'," + ac.From_split + ",'" + ac.Variable + "'," + ac.Valuation + ")";
 
             Connector.performSQLUpdate(sql);
@@ -31,7 +31,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, variable, split_from, valuation " +
-                "FROM hashmodel.enumerator " +
+                "FROM enumerator " +
                 "WHERE id_abstract=" + id_abstract;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
@@ -61,7 +61,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, variable, split_from, valuation " +
-                "FROM hashmodel.enumerator " +
+                "FROM enumerator " +
                 "WHERE id_abstract=" + id_abstract + " AND " + 
                 "variable like '" + variable + "'";
             dbcmd.CommandText = sql;
@@ -91,7 +91,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, variable, split_from, valuation " +
-                "FROM hashmodel.enumerator " +
+                "FROM enumerator " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_enumerator like '" + id_enumerator + "'";
             dbcmd.CommandText = sql;

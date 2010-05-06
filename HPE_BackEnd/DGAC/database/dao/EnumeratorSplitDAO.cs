@@ -17,7 +17,7 @@ namespace DGAC.database
         public void insert(EnumeratorSplit ac)
         {
             String sql =
-                "INSERT INTO hashmodel.enumeratorsplit (id_abstract, id_enumerator, id_split, id_enumerator_split, id_total_split)" +
+                "INSERT INTO enumeratorsplit (id_abstract, id_enumerator, id_split, id_enumerator_split, id_total_split)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_enumerator + "'," + ac.Id_split + ",'" + ac.Id_enumerator_split + "'," + ac.Id_total_split + ")";
 
             Connector.performSQLUpdate(sql);
@@ -30,7 +30,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_split, id_enumerator_split, id_total_split " +
-                "FROM hashmodel.enumeratorsplit " +
+                "FROM enumeratorsplit " +
                 "WHERE id_abstract=" + id_abstract + 
                  " AND id_enumerator='" + id_enumerator + "'" + 
                  " AND id_split=" + id_split + 
@@ -64,7 +64,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_split, id_enumerator_split, id_total_split " +
-                "FROM hashmodel.enumeratorsplit " +
+                "FROM enumeratorsplit " +
                 "WHERE id_abstract=" + id_abstract +
                  " AND id_enumerator_split='" + id_enumerator_split + "'" /* +
                  " AND id_split=" + id_split */;
@@ -95,7 +95,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT id_abstract, id_enumerator, id_split, id_enumerator_split, id_total_split " +
-                "FROM hashmodel.enumeratorsplit " +
+                "FROM enumeratorsplit " +
                 "WHERE id_abstract=" + id_abstract +
                  " AND id_enumerator='" + id_enumerator + "'" +
                  " ORDER BY id_abstract, id_enumerator, id_split";
@@ -127,7 +127,7 @@ namespace DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
                 "SELECT DISTINCT id_abstract, id_enumerator, id_enumerator_split, id_split, id_total_split " +
-                "FROM hashmodel.enumeratorsplit " +
+                "FROM enumeratorsplit " +
                 "WHERE id_abstract=" + id_abstract +
                  " AND id_enumerator like '" + id_enumerator + "' " +
                 "ORDER BY id_split";

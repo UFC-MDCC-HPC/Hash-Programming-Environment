@@ -16,7 +16,7 @@ public class InterfaceDAO{
     public void insert(Interface ac)
     {
         String sql =
-            "INSERT INTO hashmodel.interface (id_interface, id_abstract, assembly_string, id_interface_super, class_name, class_nargs, uri_source, `order`)" +
+            "INSERT INTO interface (id_interface, id_abstract, assembly_string, id_interface_super, class_name, class_nargs, uri_source, `order`)" +
             " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.Assembly_string + "','" + ac.Id_interface_super + "','" + ac.Class_name + "'," + ac.Class_nargs + ",'" + ac.URI_Source + "'," + ac.Order + ")";
 
         Connector.performSQLUpdate(sql);
@@ -116,7 +116,7 @@ public class InterfaceDAO{
     internal void setInterfaceSuperTop(int id_abstract, string id_interface, string id_interface_super_top)
     {
         String sql =
-            "UPDATE hashmodel.interface SET id_interface_super_top = '" + id_interface_super_top + "'" +
+            "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "'" +
             " WHERE id_abstract=" + id_abstract + " AND id_interface like '" + id_interface + "'";
 
         Connector.performSQLUpdate(sql);
@@ -164,7 +164,7 @@ public class InterfaceDAO{
 
     private void updatePublicKey(Interface i)
     {
-        String sql = "UPDATE hashmodel.interface SET assembly_string = '" + i.Assembly_string + "' " +
+        String sql = "UPDATE interface SET assembly_string = '" + i.Assembly_string + "' " +
                      " WHERE id_abstract=" + i.Id_abstract + " AND " +
                      "id_interface like '" + i.Id_interface + "'";
 

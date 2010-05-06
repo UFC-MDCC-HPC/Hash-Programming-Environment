@@ -12,7 +12,7 @@ namespace DGAC.database
         public void insert(SourceCodeReference ac)
         {
             String sql =
-                "INSERT INTO hashmodel.sourcecode_references (type_owner, id_owner_container, id_owner, file_name, reference)" +
+                "INSERT INTO sourcecode_references (type_owner, id_owner_container, id_owner, file_name, reference)" +
                 " VALUES ('" + ac.Type_owner + "'," + ac.Id_owner_container + ",'" + ac.Id_owner + "','" + ac.File_name + "','" + ac.Reference + "')";
 
             Connector.performSQLUpdate(sql);

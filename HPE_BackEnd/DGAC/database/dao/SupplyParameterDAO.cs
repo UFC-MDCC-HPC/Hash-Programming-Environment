@@ -14,7 +14,7 @@ public class SupplyParameterDAO{
     public void insert(SupplyParameter ac)
     {
         String sql1 =
-            "INSERT INTO hashmodel.supplyparameter (id_parameter, id_functor_app, id_abstract)" +
+            "INSERT INTO supplyparameter (id_parameter, id_functor_app, id_abstract)" +
             "VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + "," + ac.Id_abstract + ")";
 
         String sql2 = null;
@@ -23,14 +23,14 @@ public class SupplyParameterDAO{
         {
             SupplyParameterComponent acc = (SupplyParameterComponent)ac;
             sql2 =
-            "INSERT INTO hashmodel.supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
+            "INSERT INTO supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
             " VALUES ('" + acc.Id_parameter + "'," + acc.Id_functor_app + "," + acc.Id_functor_app_actual + ")";
         }
         else if (ac is SupplyParameterParameter)
         {
             SupplyParameterParameter acp = (SupplyParameterParameter) ac;
             sql2 =
-            "INSERT INTO hashmodel.supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
+            "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
             " VALUES ('" + acp.Id_parameter + "'," + acp.Id_functor_app + ",'" + acp.Id_parameter_actual + "'," + (acp.FreeVariable ? 1 : 0) + ")";
 
         }

@@ -16,7 +16,7 @@ namespace DGAC.database
         public void insert(AbstractComponentFunctorParameter ac)
         {
             String sql =
-                "INSERT INTO hashmodel.abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of)" +
+                "INSERT INTO abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of)" +
                 " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + ")";
 
             Connector.performSQLUpdate(sql);
@@ -39,7 +39,7 @@ namespace DGAC.database
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
            "SELECT id_abstract, id_parameter, bounds_of " +
-           "FROM hashmodel.abstractcomponentfunctorparameter " +
+           "FROM abstractcomponentfunctorparameter " +
            "WHERE id_abstract="+id_abstract;
        dbcmd.CommandText = sql;
        IDataReader reader = dbcmd.ExecuteReader();
@@ -81,7 +81,7 @@ namespace DGAC.database
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
             "SELECT id_abstract, id_parameter, bounds_of " +
-            "FROM hashmodel.abstractcomponentfunctorparameter " +
+            "FROM abstractcomponentfunctorparameter " +
             "WHERE id_abstract=" + id_abstract + " AND id_parameter like '" + id_parameter + "'";
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();

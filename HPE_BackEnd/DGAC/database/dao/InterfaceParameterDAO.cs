@@ -16,7 +16,7 @@ public class InterfaceParameterDAO{
     public void insert(InterfaceParameter ac)
     {
         String sql =
-            "INSERT INTO hashmodel.interfaceparameters (id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order)" +
+            "INSERT INTO interfaceparameters (id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order)" +
             " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.ParId + "','" + ac.VarId + "','" + ac.Id_interface_parameter + "','" + ac.Id_unit_parameter + "'," + ac.ParOrder + ")";
 
         Connector.performSQLUpdate(sql);
@@ -31,7 +31,7 @@ public class InterfaceParameterDAO{
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
            "SELECT id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order " +
-           "FROM hashmodel.interfaceparameters "+
+           "FROM interfaceparameters "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
            "id_abstract=" + id_abstract + " AND " + 
            "parid like '" + parid+ "''";
@@ -70,7 +70,7 @@ public class InterfaceParameterDAO{
         IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
            "SELECT id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order " +
-           "FROM hashmodel.interfaceparameters "+
+           "FROM interfaceparameters "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
            "id_abstract=" + id_abstract;
         dbcmd.CommandText = sql;
