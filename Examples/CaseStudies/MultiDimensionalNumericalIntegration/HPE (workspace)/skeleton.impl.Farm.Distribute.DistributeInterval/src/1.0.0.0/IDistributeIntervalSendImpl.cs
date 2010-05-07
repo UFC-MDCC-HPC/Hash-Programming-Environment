@@ -16,6 +16,8 @@ where Ds:IIntegralCase<F>
 
 	public IDistributeIntervalSendImpl() { 
 	
+  	    getargs(System.Environment.GetCommandLineArgs(), ref dim_partition_size, ref number_of_partitions);
+
 	} 
 
     private int dim_partition_size = 2;
@@ -23,7 +25,6 @@ where Ds:IIntegralCase<F>
 
 	public override void synchronize() { 
 	
-  	    getargs(System.Environment.GetCommandLineArgs(), ref dim_partition_size, ref number_of_partitions);
 	
 		Intracommunicator localComm = mpi.localComm(this);
 		int[] peers = mpi.ranksOf(this, "receive");
