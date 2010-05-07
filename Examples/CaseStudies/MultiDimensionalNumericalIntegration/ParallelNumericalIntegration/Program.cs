@@ -125,9 +125,9 @@ namespace ParallelNumericalIntegration
                 for (int i = 0; i < dim_num; i++)                
                     sub_num[i] = number_of_partitions/dim_partition_size;                
 
-                double[] a = new double[dim_num];
-                double[] b = new double[dim_num];
                 result = new double[num_local_jobs];
+                double[] a;
+                double[] b;
 
                 System.Collections.Generic.IList<Thread> work_threads = new System.Collections.Generic.List<Thread>();
 
@@ -135,6 +135,9 @@ namespace ParallelNumericalIntegration
                 eval_num_total = 0;
                 for (int j = 0; j < num_local_jobs; j++)
                 {
+                    a = new double[dim_num];
+                    b = new double[dim_num];
+
                     for (int i = 0; i < dim_num; i++)
                     {
                         a[i] = a_local[j, i];
@@ -206,8 +209,6 @@ namespace ParallelNumericalIntegration
             }
         }
 
-
-        private static double[,] xs = new double[0, 0];
 
         private static double function(double[] x)
         {
