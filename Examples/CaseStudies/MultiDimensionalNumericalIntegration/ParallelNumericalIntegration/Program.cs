@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using MPI;
 using NINTLIB;
+using System.Collections;
+using System.Threading;
 
 namespace ParallelNumericalIntegration
 {
@@ -14,6 +16,19 @@ namespace ParallelNumericalIntegration
         const int TAG_RESULT = 3000;
 
         private static NINTLIB.MultiPointsIntegratingFunction f;
+
+        private static int it_max = 2;
+        private static int ind = 0;
+        private static double tol = 1e-5D;
+
+        private static int dim_num = 1;
+        private static int dim_partition_size = 1;
+        private static int number_of_partitions = 1;
+
+        private static double[] result;
+        private static int[] sub_num;
+        private static TimeSpan timeW;
+        private static int eval_num_total;
 
         static void Main(string[] args)
         {
@@ -28,9 +43,6 @@ namespace ParallelNumericalIntegration
                         
             // Set the number of dimensions
 
-            int dim_num = 1;
-            int dim_partition_size = 1;
-            int number_of_partitions = 1;
             getargs(args, ref dim_num, ref dim_partition_size, ref number_of_partitions);
             int num_jobs = (int)Math.Pow(dim_partition_size, dim_num);
             int num_local_jobs = num_jobs / size;
@@ -108,20 +120,19 @@ namespace ParallelNumericalIntegration
                 double[,] b_local = Communicator.world.Scatter<double[,]>(0);
 
                 // Perform work.
-                const int it_max = 2;   
-                int ind = 0;                             
-                double tol = 1e-5D;
 
-                int[] sub_num = new int[dim_num];
+                sub_num = new int[dim_num];
                 for (int i = 0; i < dim_num; i++)                
                     sub_num[i] = number_of_partitions/dim_partition_size;                
 
                 double[] a = new double[dim_num];
                 double[] b = new double[dim_num];
-                double[] result = new double[num_local_jobs];
-                
-                TimeSpan timeW = TimeSpan.FromSeconds(0);
-                int eval_num_total = 0;
+                result = new double[num_local_jobs];
+
+                System.Collections.Generic.IList<Thread> work_threads = new System.Collections.Generic.List<Thread>();
+
+                timeW = TimeSpan.FromSeconds(0);
+                eval_num_total = 0;
                 for (int j = 0; j < num_local_jobs; j++)
                 {
                     for (int i = 0; i < dim_num; i++)
@@ -130,21 +141,47 @@ namespace ParallelNumericalIntegration
                         b[i] = b_local[j, i];
                     }
 
-                    DateTime startTimeW = DateTime.Now;
-                    int eval_num = 0;
-                    result[j] = NINTLIB.NINTLIB.romberg_nd(function, a, b, dim_num, sub_num, it_max, tol, ref ind, out eval_num);
-                    DateTime stopTimeW = DateTime.Now;
-                    timeW += stopTimeW - startTimeW;
+                    DoWork worker = new DoWork(j, a, b);
+                    Thread workThread = new Thread(worker.perform);
+                    work_threads.Add(workThread);
+                    workThread.Start();								
 
-                    eval_num_total += eval_num;                    
                 }
 
-                Communicator.world.Reduce<double>(result,Operation<double>.Add,0);
+                foreach (Thread wt in work_threads)
+                    wt.Join();
+
+                Communicator.world.Reduce<double>(result, Operation<double>.Add, 0);
 
                 Console.WriteLine("ABSOLUTE WORKER TIME = " + timeW.TotalMilliseconds + "ms - eval_num = " + eval_num_total);
             }
 
             mpi.Dispose();
+        }
+
+        private class DoWork
+        {
+            private int j;
+            private double[] a;
+            private double[] b;
+
+            public DoWork(int j_, double[] a_, double[] b_)
+            {
+                this.a = a_;
+                this.b = b_;
+                this.j = j_;
+            }
+
+            public void perform()
+            {
+                int eval_num = 0;
+                DateTime startTimeW = DateTime.Now;
+                result[j] = NINTLIB.NINTLIB.romberg_nd(function, a, b, dim_num, sub_num, it_max, tol, ref ind, out eval_num);
+                DateTime stopTimeW = DateTime.Now;
+                timeW += stopTimeW - startTimeW;
+
+                eval_num_total += eval_num;
+            }
         }
 
         private static void getargs(string[] args, ref int dim_num, ref int dim_partition_size, ref int number_of_partitions)
@@ -180,6 +217,8 @@ namespace ParallelNumericalIntegration
             foreach (double e in x)
                 x_[0, i++] = e;
 
+          
+            
 
             return f(x_)[0];
         }

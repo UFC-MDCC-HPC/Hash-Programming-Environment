@@ -36,3 +36,14 @@ C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case S
 C:\Documents and Settings\Heron\HPE\hash-programming-environment\Examples\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.pdb
 C:\Users\Heron\Documents\My Dropbox\Case Studies\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.exe
 C:\Users\Heron\Documents\My Dropbox\Case Studies\Case Studies\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.pdb
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.exe
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.pdb
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.exe
+C:\Documents and Settings\Heron\Desktop\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ParallelNumericalIntegration.pdb
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\ParallelNumericalIntegration.exe
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\ParallelNumericalIntegration.pdb
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\IntegratingFunctions.dll
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.dll
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\IntegratingFunctions.pdb
+C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\ParallelNumericalIntegration\bin\Debug\NINTLIB.pdb
