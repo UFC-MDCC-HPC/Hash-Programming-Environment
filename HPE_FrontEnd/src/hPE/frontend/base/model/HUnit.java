@@ -284,7 +284,20 @@ public abstract class HUnit extends HPrimUnit
 		return path;
 	}
 
+    public void setInterfaceName(String interfaceName) {
+		this.interfaceName = interfaceName;
+	}
 
+	public String getInterfaceName() {
+		if (this.getInterface() == null)
+		  return interfaceName; 
+		else 
+			return this.getInterface().getName2();
+	}
+
+	private String interfaceName = null;
+    
+    
 
 	protected HInterface createInterfaceFromSlices(Point location) throws HPEAbortException {
 
@@ -294,6 +307,10 @@ public abstract class HUnit extends HPrimUnit
 		    
 			HInterface which_interface = newInterface((HComponent)this.getConfiguration(), isig, this, location); 
 			//which_interface.addCompliantUnit(this);
+			
+			if (this.getInterfaceName() != null) {
+				which_interface.setName(this.getInterfaceName());
+			}
 			
 			// HInterface();
 			Rectangle b = which_interface.getBounds();
@@ -310,9 +327,8 @@ public abstract class HUnit extends HPrimUnit
 			this.showInterface();
 			
   		    getListeners().firePropertyChange(PROPERTY_BOUNDS,null,this.getBounds());
-
-  		    return which_interface;
-			
+  		    
+  		    return which_interface;			
  		
 	}
 

@@ -36,7 +36,7 @@ public class HPEProperties {
 	    	    defaultValues.put("cache_root", homeDir + "hpe_cache");
 	    	    defaultValues.put("mono_path", null);
 	    	    defaultValues.put("mono_lib_version", "1.0");	    	 
-	            props = new Properties(); 	            
+	    	    defaultValues.put("local_location", "http://localhost:8081/HPE_Location/HPE_Location_Server.jws");	    	 	            props = new Properties(); 	            
 	            try{  
 	                    props.load(new FileInputStream(getPropertiesFile()));  
 	            }  

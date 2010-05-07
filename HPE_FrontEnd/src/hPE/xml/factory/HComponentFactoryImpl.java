@@ -2659,6 +2659,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		u.setName(uName);
 		u.setBounds(new Rectangle(x, y, w, h));
 		u.setHidden(xU.isPrivate());
+		if (xU.getIRef() != null)
+			u.setInterfaceName(xU.getIRef());
+		
 		if (this.component.isAbstractConfiguration())
 			loadSlices(xU, u);
 		// loadInterface(xU,u);
