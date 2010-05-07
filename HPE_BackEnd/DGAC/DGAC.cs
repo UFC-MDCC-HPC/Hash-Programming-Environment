@@ -859,13 +859,9 @@ namespace DGAC
             Component c = cdao.retrieve_uid(hash_component_uid);
             int id_abstract = c.Id_abstract;
 
-            Console.Write("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface + "..... ");
+        //    Console.Write("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface + "..... ");
 
             InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
-
-            if (id_inner.Equals("job")) {
-                Console.Write("");
-            }
 
             IDictionary<string, int> actualParameters_new = null;
             // hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
@@ -1196,7 +1192,7 @@ namespace DGAC
 
             o.ActualParametersTop = unit.ActualParametersTop;
 
-            Console.WriteLine("END");
+//            Console.WriteLine("END");
 
             o.setActualParameters(actualParameters_new);
             o.createSlices();
