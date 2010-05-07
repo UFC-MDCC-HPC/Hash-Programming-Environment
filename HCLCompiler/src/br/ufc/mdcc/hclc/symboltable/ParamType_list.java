@@ -1,9 +1,14 @@
 package br.ufc.mdcc.hclc.symboltable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class ParamType_list {
+public class ParamType_list implements Iterable<ParamType> {
 	private ArrayList <ParamType> paramType_list;
+	
+	public Iterator<ParamType> iterator() {
+		return paramType_list.iterator();
+	}
 	
 	public ParamType_list(){
 		paramType_list = new ArrayList <ParamType>();
@@ -50,4 +55,5 @@ public class ParamType_list {
 	public int size(){
 		return paramType_list.size();
 	}
-}
+
+	}

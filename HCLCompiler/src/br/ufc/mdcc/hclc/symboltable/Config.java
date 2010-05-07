@@ -1,6 +1,7 @@
 package br.ufc.mdcc.hclc.symboltable;
 
 public class Config extends Type{
+	private String formId;
 	private String id;
 	private Type_list type_list;
 	private int beginLine;

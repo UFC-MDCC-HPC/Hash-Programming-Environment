@@ -72,7 +72,9 @@ Component Start() :
 Component absConfig():
 {Component component = new Component();Token kind_tk;Public_Component_list public_component_list;Inner_Component inner_comp=null;Inner_Component_list inner_comp_list = new Inner_Component_list();Unit_list unit_list = new Unit_list();Unit unit;}
 { 
-	kind_tk=kind() {component.setKind(kind_tk.image);component.setBeginLine(kind_tk.beginLine);component.setBeginColumn(kind_tk.beginColumn);} public_component_list=header(component) {component.setPublic_component_list(public_component_list);} (inner_comp=inner(public_component_list) {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);} (unit=unit() {unit_list.add(unit);})+ {component.setUnitlist(unit_list);return component;}
+	kind_tk=kind() {component.setKind(kind_tk.image);
+	component.setBeginLine(kind_tk.beginLine);
+	component.setBeginColumn(kind_tk.beginColumn);} public_component_list=header(component) {component.setPublic_component_list(public_component_list);} (inner_comp=inner(public_component_list) {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);} (unit=unit() {unit_list.add(unit);})+ {component.setUnitlist(unit_list);return component;}
 }
 
 Public_Component_list header(Component component):

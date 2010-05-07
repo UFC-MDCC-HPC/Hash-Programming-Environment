@@ -138,7 +138,7 @@ public class HCLParser implements HCLParserConstants {
   final public Public_Component publicInner() throws ParseException {
  Token id_tk;
     id_tk = jj_consume_token(ID);
-                    {if (true) return new Public_Component(id_tk.image,id_tk.beginLine,id_tk.beginColumn);}
+                    {if (true) return new Public_Component(null,id_tk.image,id_tk.beginLine, id_tk.beginColumn);}
     throw new Error("Missing return statement in function");
   }
 
@@ -282,7 +282,7 @@ public class HCLParser implements HCLParserConstants {
  Type_list type_list= new Type_list();Type type;
     jj_consume_token(OSQUARE);
     type = cFunApp();
-                                  type_list.add(type);
+                                  type_list.add(null, type);
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -294,7 +294,7 @@ public class HCLParser implements HCLParserConstants {
         break label_5;
       }
       type = cFunAppSRest();
-                                                                              type_list.add(type);
+                                                                              type_list.add(null, type);
     }
     jj_consume_token(CSQUARE);
                                                                                                                  {if (true) return type_list;}

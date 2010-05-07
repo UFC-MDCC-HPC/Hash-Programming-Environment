@@ -1,11 +1,6 @@
 package br.ufc.mdcc.hclc.codegen.xml.factory;
 
 //import hPE.HPEProperties;
-import br.ufc.mdcc.hclc.codegen.xml.component.*;
-import br.ufc.mdcc.hclc.codegen.xml.component.util.*;
-import br.ufc.mdcc.hclc.hpeproperties.HPEProperties;
-import br.ufc.mdcc.hclc.symboltable.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,14 +10,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.swing.JOptionPane;
-
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -31,6 +22,61 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
+import sun.tools.jar.CommandLine;
+import br.ufc.mdcc.hclc.codegen.xml.component.ActionActivateType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ActionCombinatorType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ActionSignalType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ActionSkipType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ActionType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ActionWaitType;
+import br.ufc.mdcc.hclc.codegen.xml.component.BaseTypeType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ColorComplexType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentBodyType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentFactory;
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentHeaderType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentInUseType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentPackage;
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentType;
+import br.ufc.mdcc.hclc.codegen.xml.component.DocumentRoot;
+import br.ufc.mdcc.hclc.codegen.xml.component.EnumerableComponentType;
+import br.ufc.mdcc.hclc.codegen.xml.component.EnumerableEntryType;
+import br.ufc.mdcc.hclc.codegen.xml.component.EnumerableUnitSliceType;
+import br.ufc.mdcc.hclc.codegen.xml.component.EnumerableUnitType;
+import br.ufc.mdcc.hclc.codegen.xml.component.EnumeratorFromRecursionType;
+import br.ufc.mdcc.hclc.codegen.xml.component.EnumeratorType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ExtensionTypeType;
+import br.ufc.mdcc.hclc.codegen.xml.component.FusionOfReplicatorsType;
+import br.ufc.mdcc.hclc.codegen.xml.component.FusionType;
+import br.ufc.mdcc.hclc.codegen.xml.component.FusionsOfReplicatorsType;
+import br.ufc.mdcc.hclc.codegen.xml.component.InnerComponentType;
+import br.ufc.mdcc.hclc.codegen.xml.component.InnerRenamingType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ParameterRenaming;
+import br.ufc.mdcc.hclc.codegen.xml.component.ParameterSupplyType;
+import br.ufc.mdcc.hclc.codegen.xml.component.ParameterType;
+import br.ufc.mdcc.hclc.codegen.xml.component.RecursiveEntryType;
+import br.ufc.mdcc.hclc.codegen.xml.component.SplitLinkType;
+import br.ufc.mdcc.hclc.codegen.xml.component.SplitType;
+import br.ufc.mdcc.hclc.codegen.xml.component.SupportedKinds;
+import br.ufc.mdcc.hclc.codegen.xml.component.UnitBoundsType;
+import br.ufc.mdcc.hclc.codegen.xml.component.UnitRefType;
+import br.ufc.mdcc.hclc.codegen.xml.component.UnitSliceType;
+import br.ufc.mdcc.hclc.codegen.xml.component.UnitType;
+import br.ufc.mdcc.hclc.codegen.xml.component.VisualElementAttributes;
+import br.ufc.mdcc.hclc.codegen.xml.component.util.ComponentResourceFactoryImpl;
+import br.ufc.mdcc.hclc.hpeproperties.HPEProperties;
+import br.ufc.mdcc.hclc.symboltable.Component;
+import br.ufc.mdcc.hclc.symboltable.Config;
+import br.ufc.mdcc.hclc.symboltable.Extend;
+import br.ufc.mdcc.hclc.symboltable.Inner_Component;
+import br.ufc.mdcc.hclc.symboltable.ParamType;
+import br.ufc.mdcc.hclc.symboltable.Public_Component;
+import br.ufc.mdcc.hclc.symboltable.Slice;
+import br.ufc.mdcc.hclc.symboltable.Slice_list;
+import br.ufc.mdcc.hclc.symboltable.Type;
+import br.ufc.mdcc.hclc.symboltable.Unit;
+import br.ufc.mdcc.hclc.symboltable.Usings_list;
+import br.ufc.mdcc.hclc.symboltable.VarType;
 
 public final class HComponentFactoryImpl implements HComponentFactory {
 
@@ -104,25 +150,46 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		xC.setHeader(xH); 
 		xC.setComponentInfo(xI);
 
-		saveHeader(c, xC.getHeader());
+		saveHeader(c, xC.getHeader(), xC.getComponentInfo().getParameter(), xC.getComponentInfo().getSupplyParameter());
 		saveInfo(c, xC.getComponentInfo());
 
 		return xC;
 	}
 
-	private void saveHeader(Component c, ComponentHeaderType xH) {
+	private List<Config> innerComponents = new ArrayList<Config>(); 
+	private Map<String, Boolean> isExposed = new HashMap<String, Boolean>();
+	
+	private ParameterSupplyType newSupply(String var_id, String cRef) {		
+		ParameterSupplyType s = factory.createParameterSupplyType();
+		s.setCRef(cRef);
+		s.setVarName(var_id);			
+        return s;
+	}
+	
+	private ParameterType newParameter(String var_id, String form_id, String cRef) {
+		ParameterType p = factory.createParameterType();
+		p.setComponentRef(cRef);
+		p.setFormFieldId(form_id);
+		p.setVarName(var_id);
+		return p;
+	}
+	
+	private void saveHeader(Component c, ComponentHeaderType xH, EList<ParameterType> parameters, EList<ParameterSupplyType> supplies) {
 
 		Extend sC = c.getName_base();
-		Usings_list usings = c.getUsings_list();
+		Usings_list usings = c.getUsings_list();		
 		
 		boolean isAbstract = sC != null && sC.isImplements();
+		
 		// save name
 		xH.setName(c.getName());
+		
 		// save kind
 		xH.setKind(SupportedKinds.get(c.getKind()));
+		
 		// save base type
 		if (sC != null)
-			saveBaseType(sC,usings, xH, isAbstract);
+			saveBaseType(sC, usings, xH, isAbstract, supplies);
 
 		// save package path
 		xH.setPackagePath(c.getPackage());
@@ -139,11 +206,29 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		saveVisualDescription(c,v);		
 		xH.setVisualAttributes(v);
 
-		saveVersions(c, xH.getVersions());
+		//saveVersions(c, xH.getVersions());
 
 	}
 
-	private void saveVersions(Component sc, EList<VersionType> list) {
+    private void pickInnerComponentsFromCApp(Config config, List<Config> innerComponents, EList<br.ufc.mdcc.hclc.codegen.xml.component.ParameterSupplyType> supplies) {
+		
+    	  innerComponents.add(config);
+    	  
+		  for (Entry<String, Type> param : config.getType_list()) {
+			  Type type = param.getValue();
+			  if(type instanceof Config) {
+				  String form_id = param.getKey();
+				  String var_id = /* TODO: How to get ?? */ null;
+				  String cRef = /* TODO: How to get ?? */ null;
+				  Config cType = (Config) type;
+				  ParameterSupplyType s = newSupply(var_id, cRef);
+				  isExposed.put(cRef, false);
+				  pickInnerComponentsFromCApp(cType, innerComponents, supplies);
+		      }
+		  }
+    }
+
+/*	private void saveVersions(Component sc, EList<VersionType> list) {
 
 		for (Integer[] version : sc.getVersions()) {
 			VersionType v = factory.createVersionType();
@@ -155,10 +240,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 
 	}
+	*/
 
 	private static String BASE_DEFAULT_REF = "base";
 	
-	private void saveBaseType(Extend baseType, Usings_list usings, ComponentHeaderType xH, boolean isAbstract) {
+	private void saveBaseType(Extend baseType, Usings_list usings, ComponentHeaderType xH, boolean isAbstract, EList<ParameterSupplyType> supplies) {
 		
 		BaseTypeType baseTypeX = factory.createBaseTypeType();
 		ExtensionTypeType extType = factory.createExtensionTypeType();
@@ -190,61 +276,272 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		xH.setBaseType(baseTypeX);
 
-		EList parameterRenaming = superTypeX.getParameter();
-		saveVisualDescription(baseType, v);
+		EList<ParameterRenaming> parameterRenaming = superTypeX.getParameter();
+		// saveVisualDescription(baseType, v);
 
 		EList<UnitBoundsType> unitBounds = superTypeX.getUnitBounds();
 
-		saveParameterRenamings(baseType, parameterRenaming); // OK !
+		saveCAppParameters(baseType.getConfig(), parameterRenaming, supplies); // OK !
 		// savePorts(baseType, superTypeX.getPort());
 		// saveUnitBounds(baseType.getAllUnits(), unitBounds);
 	}
 
-	private void saveInfo(Component c, ComponentBodyType xI) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
+	private void saveInfo(Component c, ComponentBodyType xI) {
 
-		saveInnerComponents(c, xI.getInnerComponent()); // OK !
-		saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
-		saveParameters(c, xI.getParameter()); // OK !
-		saveInnerRenamings(c, xI.getInnerRenaming());
+		readInnerComponents(c, xI.getSupplyParameter(), xI.getInnerRenaming(), xI.getRecursiveEntry()); // OK !
+		saveParameters(c, xI.getParameter(), xI.getSupplyParameter()); // OK !
 		saveFusions(c, xI.getFusion());
+		saveInnerComponents(c, xI.getInnerComponent(), xI.getSupplyParameter());
 		saveSplits(c, xI.getSplit());
-		saveInterfaces(c, xI.getInterface());
 		saveUnits(c, xI.getUnit());
-		saveRecursiveEntries(c, xI.getRecursiveEntry());
-		saveEnumerator(c.gettReplicators(), xI.getEnumerator());
-		saveEnumeratorFusions(c.gettReplicators(), xI.getFusionsOfReplicators());
+		saveEnumerator(c, xI.getEnumerator());
+		saveEnumeratorFusions(c, xI.getFusionsOfReplicators());
 	}
 
-	private void saveEnumeratorFusions(List<HReplicator> rs,
-			EList<FusionsOfReplicatorsType> fRs) {
+	private void saveInnerComponents(Component c, EList<InnerComponentType> innerComponentsX, EList<ParameterSupplyType> supplies) {
+		
+		Usings_list usings = c.getUsings_list();
+
+		for (Config ic : innerComponents) {
+			InnerComponentType icx = factory.createInnerComponentType();
+			
+			String cName = ic.getId();
+			boolean exposed = isExposed.get(cName);
+			// String hash_component_uid;
+			String location = properties.getValue("local_location");
+			String packageName = usings.packageOf(cName);;
+
+			icx.setExposed(exposed);
+			// icx.setHashComponentUID(hash_component_uid);
+			icx.setLocation(location);
+			icx.setName(cName);
+			icx.setPackage(packageName);
+			icx.setVersion("1.0.0.0");
+			
+			saveCAppParameters(ic, icx.getParameter(), supplies);
+			innerComponentsX.add(icx);
+		}
+		
+	}
+
+
+	private void saveFusions(Component c, EList<FusionType> xFs) {
+
+         for (Entry<String, List<String>> port : ports.entrySet()) {
+        	 String port_id = port.getKey();
+        	 List<String> cRefs = port.getValue();
+        	 if (cRefs.size() > 1) 
+        	 {
+        		 FusionType f = factory.createFusionType();
+        		 f.setPRef(port_id);
+        		 EList<String> cRefsX = f.getCRefs();
+        		 for (String cRef : cRefs) 
+        		 {
+        			 cRefsX.add(cRef);
+        		 }
+            	 xFs.add(f);
+        	 }
+         }
+		
+	}
+
+	private void saveParameters(Component c, EList<ParameterType> parameters, EList<ParameterSupplyType> supplies) {
+
+		// Traverse the context parameters of the configuration
+		for (ParamType param : c.getParamtypelist()) 
+		{
+			String form_id = param.getForm_id();			
+			String var_id = param.getId();
+			Config config = param.getConfig();
+			String cRef = /* TODO : create unique */ null;
+			
+			ParameterType p = newParameter(var_id, form_id, form_id);
+			parameters.add(p);
+			
+			ParameterSupplyType s = newSupply(var_id, cRef);
+			supplies.add(s);
+			
+			pickInnerComponentsFromCApp(config, innerComponents, supplies);
+		}
+
+	} 
+
+	private Map<String, List<String>> ports = new HashMap<String, List<String>>();
+	
+	private void readInnerComponents(Component c, EList<ParameterSupplyType> supplies, EList<InnerRenamingType> renamings, EList<RecursiveEntryType> recursives) {
+
+		for (Inner_Component inner : c.getInnercomplist()) {
+			String access_type = inner.getAccess_type();
+			String cRef = inner.getId();
+			String kind = inner.getKind();
+			for (Public_Component pc : inner.getPublic_component_list()) {			
+				String pRef = pc.getNewId();
+				String old_pRef = pc.getOldId(); 
+				if (ports.containsKey(pRef)) 
+				{
+					ports.get(pRef).add(cRef);
+				} 
+				else 
+				{   
+					// This will cause a fusion of inner components.
+					List<String> l = new ArrayList<String>();
+					l.add(cRef);
+					ports.put(pRef, l);					
+				}
+				InnerRenamingType renaming = factory.createInnerRenamingType();
+				renaming.setCRef(cRef);
+				renaming.setCOldName(old_pRef);
+				renaming.setCNewName(pRef);		
+				renamings.add(renaming);
+			}
+			
+			if (inner.isRecursive()) {
+				RecursiveEntryType r = factory.createRecursiveEntryType();
+				r.setCRef(cRef);
+				recursives.add(r);
+			}
+			
+			Type cType = inner.getType();
+			if (cType instanceof VarType) {
+				VarType cvType = (VarType) cType;
+				// é acrescentado por saveParameters em innerComponents.
+			} else if (cType instanceof Config) {
+				Config ccType = (Config) cType;
+				isExposed.put(cRef, access_type.equals("public"));
+				this.pickInnerComponentsFromCApp(ccType, innerComponents, supplies);
+			}
+			
+		}
+		
+	}
+
+	private void saveCAppParameters(Config c, EList<ParameterRenaming> parameterRenamings, EList<ParameterSupplyType> supplies) {		
+
+		for (Entry<String,Type> param : c.getType_list()) {
+			Type type = param.getValue();
+			if (type instanceof Config) {
+				Config cType = (Config) type;
+				pickInnerComponentsFromCApp(cType, innerComponents, supplies);
+			}
+			else if (type instanceof VarType) {
+				String formField = param.getKey();
+				String varName = null;
+				VarType vType = (VarType) type;
+				varName = vType.getId();
+				ParameterRenaming r = factory.createParameterRenaming();
+				
+				r.setFormFieldId(formField);
+				r.setVarName(varName);				
+				
+				parameterRenamings.add(r);
+			}		
+		}
+
+	}
+
+	private void saveUnits(Component c, EList<UnitType> xI) {		
+		
+		for (Unit u : c.getUnitlist()) {
+
+			UnitType uX = factory.createUnitType();
+
+			String uRef = null;
+			String iRef = null;
+			boolean isPrivate = false;
+			boolean isSubUnit = false;
+			boolean visibleInterface = true;
+			String cRefSuper = null;
+			String uRefSuper = null;
+			Integer replica = null;
+
+			VisualElementAttributes v = factory.createVisualElementAttributes();
+
+			isSubUnit = u.getSuperId() != null;
+			isPrivate = u.isPrivate();
+			visibleInterface = false;
+			uRef = u.getId();
+			iRef = u.getInterfaceId();
+					
+			
+			uX.setURef(uRef);
+			uX.setIRef(iRef);
+			uX.setPrivate(isPrivate);
+			uX.setVisibleInterface(visibleInterface);
+			uX.setVisualDescription(v);
+
+			if (isSubUnit) {
+				UnitRefType superUnit = factory.createUnitRefType();
+				superUnit.setCRef("base");
+				superUnit.setURef(u.getSuperId());
+				//if (replica != null)
+				//	superUnit.setReplica(replica);
+				uX.setSuper(superUnit);
+			}
+			saveVisualDescription(u, v);
+			
+			EList slicesX = uX.getSlices();
+			saveUnitSlices(u.getSlice_list(), slicesX);
+
+			xI.add(uX);
+
+		}
+
+	}
+	
+	private void saveUnitSlices(Slice_list slice_list, EList slicesX) {
+
+				
+		for (Slice slice : slice_list) {
+			    
+			    UnitSliceType sliceX = factory.createUnitSliceType();
+			    
+				String cRef = null;
+				String uRef = null;
+				int replica = 0;
+				String sName = null;
+
+				cRef = slice.getIdInner();
+				uRef = slice.getIdUnitInner();
+				sName = slice.getId();
+				boolean transitive;
+
+				//sliceX.setReplica(replica);
+				sliceX.setCRef(cRef);
+				sliceX.setURef(uRef);
+				sliceX.setSliceName(sName);
+				//sliceX.setVisualDescription(v);
+				sliceX.setTransitive(this.ports.containsKey(cRef));
+
+				//saveVisualDescription(slice, v);
+
+				slicesX.add(sliceX);
+			}
+		}
+	
+
+	private void saveEnumeratorFusions(Component c, EList<FusionsOfReplicatorsType> fRs) {
 
 		List<HReplicator> touchedR = new ArrayList<HReplicator>();
 
 		for (HReplicator r : rs) {
 			HReplicator topR = r.getTopJoined();
 			if (topR != r && !touchedR.contains(topR)) {
-				touchedR.add(topR);
+				touchedR.add(null, topR);
 				List<List<HReplicator>> ss = topR.getFusionsInContext(this.component);
 
 				for (List<HReplicator> rrs : ss) {
-					FusionsOfReplicatorsType fOfr = factory
-							.createFusionsOfReplicatorsType();
-					EList<FusionOfReplicatorsType> ffs = fOfr
-							.getFusionOfReplicators();
-					FusionOfReplicatorsType ff = factory
-							.createFusionOfReplicatorsType();
+					FusionsOfReplicatorsType fOfr = factory.createFusionsOfReplicatorsType();
+					EList<FusionOfReplicatorsType> ffs = fOfr.getFusionOfReplicators();
+					FusionOfReplicatorsType ff = factory.createFusionOfReplicatorsType();
 					ff.setERef(topR.getRef());
-					List<Component> cOfrs = new ArrayList<Component>(topR
-							.getConfigurations()); // ;
+					List<Component> cOfrs = new ArrayList<Component>(topR.getConfigurations()); // ;
 													// (Component)topR.getConfiguration();
 					cOfrs.remove(0);
 					List<String> cRefs = ff.getOriginRef();
 					Component cOfr_ = null;
 					for (Component cOfr : cOfrs) {
 						String ref = cOfr_ != null
-								&& cOfr.getSavedName().containsKey(cOfr_) ? cOfr
-								.getSavedName().get(cOfr_)
-								: cOfr.getRef();
+								&& cOfr.getSavedName().containsKey(cOfr_) ? cOfr.getSavedName().get(cOfr_) : cOfr.getRef();
 						cRefs.add(ref);
 						cOfr_ = cOfr;
 					}
@@ -261,8 +558,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						cOfr_ = null;
 						for (Component cOfr : cOfrs) {
 							String ref = cOfr_ != null
-									&& cOfr.getSavedName().containsKey(cOfr_) ? cOfr
-									.getSavedName().get(cOfr_)
+									&& cOfr.getSavedName().containsKey(cOfr_) ? cOfr.getSavedName().get(cOfr_)
 									: cOfr.getRef();
 							cRefs.add(ref);
 							cOfr_ = cOfr;
@@ -278,293 +574,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveInnerRenamings(Component c, EList<InnerRenamingType> xRs) {
-
-		Map<Component, List<Component>> vcs = new HashMap<Component, List<Component>>();
-
-		for (Component vc : c.getComponents()) {
-			// vcs.(c,vc);
-			for (Component vc_ : vc.getExposedComponents())
-				if (!vcs.containsKey(vc_)) {
-					List<Component> l = new ArrayList<Component>();
-					l.add(vc);
-					vcs.put(vc_, l);
-				} else {
-					List<Component> l = vcs.get(vc_);
-					l.add(vc);
-				}
-		}
-
-		for (Entry<Component, List<Component>> vc : vcs.entrySet()) {
-			List<Component> d1s = vc.getValue();
-			Component d2 = vc.getKey();
-			for (Component d1 : d1s) {
-				String cRef = d1.getRef();
-				String oldName = d2.getSavedName().get(d1);
-				String newName = d2.getRef();
-				if (oldName != null && !oldName.equals(newName)) {
-					InnerRenamingType ir = factory.createInnerRenamingType();
-					ir.setCRef(cRef);
-					ir.setCOldName(oldName);
-					ir.setCNewName(newName);
-					xRs.add(ir);
-				}
-			}
-		}
-	}
-
-	private void saveFusions(Component c, EList<FusionType> xFs) {
-
-		Map<Component, List<Component>> vcs = new HashMap<Component, List<Component>>();
-
-		for (Component _c : c.getComponents()) {
-			for (Component __c : _c.getExposedComponents()) {
-				if (vcs.containsKey(__c)) {
-					List<Component> cs = vcs.get(__c);
-					cs.add(0, _c);
-				} else {
-					List<Component> cs = new ArrayList<Component>();
-					cs.add(_c);
-					vcs.put(__c, cs);
-				}
-			}
-		}
-
-		List<Component> ccs1 = new ArrayList<Component>();
-		List<Component> ccs2 = new ArrayList<Component>();
-		
-		for (Entry<Component, List<Component>> e : vcs.entrySet()) {
-			if (e.getValue().size() <= 1) {
-				ccs1.add(e.getKey());
-			} else {
-				ccs2.add(e.getKey());
-			}
-		}
-		
-		for (Component cc : ccs1) {
-			vcs.remove(cc);
-		}
-		
-		for (Entry<Component, List<Component>> e : vcs.entrySet()) {
-			Component p = e.getKey();
-			boolean flag = false;
-			for (Component cc : ccs2) {
-				if (cc != p && cc.getAllInnerConfigurations().contains(p)) {
-					flag = true;
-					break;
-				}
-			}
-			if (!flag) {
-				FusionType f = factory.createFusionType();
-				xFs.add(f);
-				f.setPRef(p.getRef());
-				EList<String> ps = f.getCRefs();
-				for (Component _c : e.getValue()) {
-					ps.add(_c.getName2());
-				}
-			}
-		}
-	}
-
-	private void saveParameters(Component c, EList<ParameterType> xI) {
-
-		List<Component> cs = new ArrayList<Component>();
-
-		cs.addAll(c.getComponents());
-		for (Entry<String, Component> p : c.getSupplierComponents().entrySet())
-			cs.add(p.getValue());
-
-		for (Component ic : cs) {
-
-			if (ic.isParameter() && ic.getSupplied() == null) {
-				String formFieldId = null;
-				String cRef = null;
-				String varName = null;
-
-				// SETUP VARIABLES
-
-				formFieldId = ic.getParameterIdentifier(c);
-				cRef = ic.getRef();
-				varName = ic.getVariableName(c);
-
-				// ---------------
-
-				ParameterType p = factory.createParameterType();
-				p.setFormFieldId(formFieldId);
-				p.setComponentRef(cRef);
-				p.setVarName(varName);
-
-				xI.add(p);
-			}
-		}
-
-	}
-
-	private void saveInnerComponents(Component c, EList xI) {
-
-		List<Component> cs = new ArrayList<Component>();
-        int i = 0;
-        
-        List<String> cRefs = new ArrayList<String>();
-		
-        for (Component cInner : c.getComponents()) {
-		    cs.add(cInner);
-		    String cRef = cInner.getRef();
-			if (cRefs.contains(cRef)) {
-				   throw new DuplicatedRefInnerException(cRef); 
-			} else {
-			   cRefs.add(cRef);
-			}
-        }
-        
-		for (Entry<String, Component> p : c.getSupplierComponents().entrySet()) {
-			cs.add(i++, p.getValue());
-			String cRef = p.getValue().getRef();
-			if (cRefs.contains(cRef)) {
-				   throw new DuplicatedRefInnerException(cRef); 
-			} else {
-			   cRefs.add(cRef);
-			}
-		}
-		
-		if (c.isAbstract()) {
-			for (HReplicator r : c.gettReplicators()) {
-				for (HReplicatorSplit lr : r.getSplits()) {
-					HEnumeratorComponent ec = lr.getPermutation();
-					if (ec != null && !cs.contains(ec)) {
-						cs.add(0,ec);
-						String cRef = ec.getRef();
-						if (cRefs.contains(cRef)) {
-							   throw new DuplicatedRefInnerException(cRef); 
-						} else {
-						   cRefs.add(cRef);
-						}
-					}
-				}
-			}
-		}
-
-		for (Component ic : cs) {
-
-			if (!ic.isDerivedFromPermutation() && ic != c.getSuperType() && ic != c.getWhoItImplements()) {
-                
-				InnerComponentType d = factory.createInnerComponentType();
-				
-				saveInnerComponent(ic, d);
-
-				xI.add(d);
-			}
-
-		}
-	}
-
-	/*
-	 * private void savePorts(Component ic, EList<PortType> ports) {
-	 * 
-	 * for (Component c : ic.getExposedComponents()) { PortType port =
-	 * factory.createPortType(); String pRef = c.getSavedName().get(ic);
-	 * port.setPRef(pRef != null ? pRef : c.getRef());
-	 * port.setExposed(c.getExposed()); ports.add(port); VisualElementAttributes
-	 * v = factory.createVisualElementAttributes();
-	 * port.setVisualDescription(v); saveVisualDescription(c,v); }
-	 * 
-	 * }
-	 */
-
-	private void saveInnerComponent(Component ic, InnerComponentType d) throws UndefinedRefInnerException {
-
-		VisualElementAttributes v = factory.createVisualElementAttributes();
-		String name = ic.getComponentName();
-		String localRef = ic.getRef();
-
-		String location = ic.getRemoteLocation() == null ? ic.getRelativeLocation() : ic.getRemoteLocation();
-		String package_ = ic.getPackagePath().toString();
-		boolean exposed = ic.getExposed();
-		String hash_component_UID = ic.getHasComponentUID();
-
-		String parameterId = ic.getParameterIdentifier(this.component);
-
-		if (localRef.equals(Component.UNDEFINED_NAME)) {
-			throw new UndefinedRefInnerException(ic);
-		}
-		
-		d.setLocalRef(localRef);
-		d.setLocation(location);
-		d.setPackage(package_);
-		d.setName(name);
-		//d.setVersion(version);
-		d.setExposed(exposed);
-		d.setHashComponentUID(hash_component_UID);
-		d.setVisualDescription(v);
-		if (!parameterId.equals("type ?"))
-			d.setParameterId(parameterId);
-
-		EList<ParameterRenaming> parameterRenaming = d.getParameter();
-		EList<UnitBoundsType> unitBounds = d.getUnitBounds();
-		// EList<PortType> ports = d.getPort();
-		EList<InnerComponentType> ports = d.getPort();
-
-		saveParameterRenamings(ic, parameterRenaming); // OK !
-		savePorts(ic, ports);
-		saveUnitBounds(ic.getAllUnits(), unitBounds);
-		saveVisualDescription(ic, v);
-
-	}
-
-	private void savePorts(Component ic, EList<InnerComponentType> ports) throws UndefinedRefInnerException {
-
-		for (Component c : ic.getExposedComponents()) 
-		{
-			InnerComponentType port = factory.createInnerComponentType();
-
-			saveInnerComponent(c, port);
-
-			String pRef = c.getSavedName().get(ic);
-			port.setLocalRef(pRef != null ? pRef : c.getRef());
-
-			ports.add(port);
-		}
-
-	}
-
-	private void saveUnitBounds(List<IHUnit> units, EList unitBounds) {
-
-		Integer replica = null;
-
-		for (IHUnit u : units) {
-
-			if (u.isClone()) {
-				replica = u.cloneOf().getIndexOfClone(u);
-			} else if (u.isCloned()) {
-				replica = 0;
-			}
-
-			UnitBoundsType b = factory.createUnitBoundsType();
-			VisualElementAttributes v = factory.createVisualElementAttributes();
-
-			b.setURef(u.getName2());
-			if (replica != null)
-				b.setReplica(replica);
-			b.setVisualDescription(v);
-
-			saveVisualDescription(u, v);
-
-			unitBounds.add(b);
-		}
-
-	}
-
-	private void saveRecursiveEntries(Component component, EList xI) {
-
-		for (Component c : component.getComponents()) {
-			if (c.isRecursive()) {
-				RecursiveEntryType r = factory.createRecursiveEntryType();
-				r.setCRef(c.getName2());
-				xI.add(r);
-			}
-		}
-	}
-
+	
 	private void saveSplits(Component c, EList<SplitType> splitsX) {
 
 		for (HReplicator r : c.gettReplicators()) {
@@ -634,157 +644,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveSplitEnumerators(Collection<HReplicator> rs, EList enumsX) {
-		for (HReplicator r : rs) {
-			enumsX.add(r.getRef());
-		}
-	}
 
-	private void saveParameterRenamings(Component c, EList parameterRenamings) {
 
-		for (Entry<String, List<Component>> param : c.getParameters().entrySet()) {
 
-			String formField = null;
-			String varName = null;
 
-			// SETUP VARIABLES: look for the current variable name of the
-			// parameter in the configuration
 
-			Component cc = param.getValue().get(0);
-
-			varName = cc.getVariableName(component);
-//			if (varName.equals("?"))
-//			     varName = cc.getVariableName(c.getTopParentConfigurations().get(0));
-			
-			
-			if (varName.indexOf('@') >= 0)
-				varName = varName.substring(0, varName.indexOf('@'));
-			formField = cc.getParameterIdentifier(c);
-
-			// ---------------
-
-			ParameterRenaming r = factory.createParameterRenaming();
-
-			r.setFormFieldId(formField);
-			r.setVarName(varName);
-
-			parameterRenamings.add(r);
-		}
-
-	}
-
-	private void saveInterfaces(Component c, EList<InterfaceType> xI) {
-
-		for (HInterface i : c.getInterfaces())
-			if (i.getConfiguration() == c) { // Only interfaces of the top
-												// configuration
-
-				ActionType a = null;
-				String iRef = null;
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
-
-				int nargs = i.getParametersCount();
-
-				InterfaceType iX = factory.createInterfaceType();
-
-				// SETUP VARIABLES
-
-				iRef = i.getPrimName();
-				if (i instanceof HActivateInterface) {
-					HActivateInterface ia = (HActivateInterface) i;
-					if (ia.getProtocol() != null) {
-						a = saveAction((HAction) ia.getProtocol().getAction());
-						iX.setProtocol(a);
-					}
-				}
-				// ---------------
-
-				iX.setIRef(iRef);
-				iX.setVisualDescription(v);
-				iX.setNArgs(nargs);
-
-				EList<InterfaceSliceType> slicesX = iX.getSlice();
-				EList<SourceType> sourcesX = iX.getSources();
-				EList<InterfacePortType> portsX = iX.getPort();
-				EList<InterfaceParameterType> parametersX = iX.getParameter();
-
-				saveInterfaceSlices(i.getSlices(), slicesX);
-				saveInterfacePorts(i.getPorts(), portsX);
-				saveSources(i.getSourceVersions(), sourcesX);
-				saveParameters(i.getParameters(), parametersX);
-				
-				saveVisualDescription(i, v);
-				
-				List<String> externalRefs = iX.getExternalReferences();
-				for (String eRef : i.getExternalReferences()) {
-					externalRefs.add(eRef);
-				}
-
-				xI.add(iX);
-			}
-
-	}
-
-	private void saveParameters(
-			List<Triple<String, HInterface, String>> parameters,
-			EList<InterfaceParameterType> parametersX) {
-		
-		Map<String,Integer> m = new HashMap<String,Integer>();
-		
-		int order = 0;
-		for (Triple<String,HInterface,String> parameter : parameters) {
-		    InterfaceParameterType parX = factory.createInterfaceParameterType();
-		    parX.setParid(parameter.fst());		   
-		    if (!m.containsKey(parX.getParid())) {
-			   parX.setVarid(parameter.trd());
-			   parX.setIname(parameter.snd().getPrimName());
-			   parX.setUname(parameter.snd().getCompliantUnits().get(0).getName2());
-	    	   parX.setOrder(order++);
-		       parametersX.add(parX);
-		       m.put(parX.getParid(),parX.getOrder());
-		    }
-		}
-		
-		
-	}
-
-	private void saveInterfacePorts(List<HPort> ports,
-			EList<InterfacePortType> portsX) {
-
-		for (HPort p : ports) {
-			InterfacePortType portX = factory.createInterfacePortType();
-			VisualElementAttributes v = factory.createVisualElementAttributes();
-			List<PortSliceType> portSliceL = portX.getSlice();
-
-			for (HInterfaceSlice sOwner : p.getOwners()) {
-
-				String sRef = sOwner.getName();
-				String pRef = p.getDefaultNameOf(sOwner);
-
-				PortSliceType pst = factory.createPortSliceType();
-				pst.setPRef(pRef);
-				pst.setSRef(sRef);
-				portSliceL.add(pst);
-			}
-
-			/*
-			 * List<PortSliceType> portSliceL = portX.getSlice();
-			 * Iterator<HInterfaceSlice> ss1 = p.getOwners().iterator();
-			 * Iterator<HInterfaceSlice> ss2 =
-			 * p.getInterfaceSlices().iterator(); while (ss1.hasNext() &&
-			 * ss2.hasNext()) { HInterfaceSlice s1 = ss1.next(); HInterfaceSlice
-			 * s2 = ss2.next(); String sRef = s1.getName(); String pRef =
-			 * s2.getName(); PortSliceType pst = factory.createPortSliceType();
-			 * pst.setPRef(pRef); pst.setSRef(sRef); portSliceL.add(pst); }
-			 */
-			portX.setName(p.getName());
-			portX.setVisualDescription(v);
-			saveVisualDescription(p, v);
-			portsX.add(portX);
-		}
-
-	}
 
 	private ActionType saveAction(HAction action) {
 
@@ -807,7 +671,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			HCombinatorAction combinatorAction = (HCombinatorAction) action;
 
 			for (HAction a : combinatorAction.getActions()) {
-				innerActionsX.add(saveAction(a));
+				innerActionsX.add(null, saveAction(a));
 			}
 
 		} else if (action instanceof HPrimitiveAction) {
@@ -865,269 +729,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveSources(
-			Collection<HBESourceVersion<HBEAbstractFile>> sources,
-			EList<SourceType> sourcesX) {
-
-		for (HBESourceVersion<HBEAbstractFile> src : sources) {
-			SourceType s = factory.createSourceType();
-
-			List<SourceFileType> fsX = s.getFile();
-
-			for (HBEAbstractFile f : src.getFiles()) {
-				SourceFileType fX = factory.createSourceFileType();
-				String uri = f.getBinaryPath().toString();
-				String fileType = f.getFileType();
-				String versionIdF = f.getVersionID();
-				String srcType = f.getSrcType();
-				fX.setUri(uri);
-				fX.setFileType(fileType);
-				fX.setName(f.getFileName());
-				fX.setContents(f.getCurrentContents());
-				fX.setVersionId(checkVersion(versionIdF) ? versionIdF : "1.0.0.0");
-				fX.setSrcType(srcType == null ? "base" : srcType);
-				List<String> deps = fX.getDependency();
-				deps.addAll(f.getDependencies());
-				List<String> edeps = fX.getExternalDependency();
-				edeps.addAll(f.getExternalReferences());
-				fsX.add(fX);
-			}
-
-			String version = src.getVersionID();
-			String srcType = src.getFileType();
-
-			s.setSourceType(srcType);
-			s.setVersionId(checkVersion(version) ? version : "1.0.0.0");
-
-			sourcesX.add(s);
+	private void saveSplitEnumerators(Collection<HReplicator> rs, EList enumsX) {
+		for (HReplicator r : rs) {
+			enumsX.add(null, r.getRef());
 		}
 	}
-
-	private boolean checkVersion(String version) {
-		try {
-			String[] v = version.split("[.]");
-			boolean ok = true;
-			for (String i : v) {
-				Integer.parseInt(i);
-			}
-			return v.length == 4;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-
-	}
-
-	private void saveInterfaceSlices(List<HInterfaceSlice> slices,
-			EList<InterfaceSliceType> slicesX) {
-		
-		Map<String, HInterfaceSlice> savedSlices = new HashMap<String, HInterfaceSlice>();
-		
-		for (HInterfaceSlice slice : slices) 
-			if (!savedSlices.containsKey(slice.getName()))
-		    /* if (!(slice instanceof HEnumeratorInterfaceSlice)) */ {
-			savedSlices.put(slice.getName(), slice);
-
-			InterfaceSliceType sliceX = factory.createInterfaceSliceType();
-			VisualElementAttributes v = factory.createVisualElementAttributes();
-
-			String sRef = null;
-			String cORef = null;
-			String iORef = null;
-
-			// SETUP VARIABLES
-
-			sRef = slice.getName();
-			cORef = slice.getInterface().getConfiguration().getRef();
-			iORef = ((HInterface) slice.getInterface()).getPrimName();
-
-			// ---------------
-
-			sliceX.setIsRef(sRef);
-
-			InterfaceRefType oRef = factory.createInterfaceRefType();
-			oRef.setCRef(cORef);
-			oRef.setIRef(iORef);
-
-			sliceX.setOriginRef(oRef);
-
-			sliceX.setVisualDescription(v);
-
-			saveVisualDescription(slice, v);
-
-			slicesX.add(sliceX);
-		}
-	}
-
-	private void saveUnits(Component c, EList xI) throws DuplicatedSliceNamesException {
-
-		for (IHUnit u_ : c.getUnits()) {
-
-			UnitType uX = factory.createUnitType();
-
-			String uRef = null;
-			String iRef = null;
-			boolean isPrivate = false;
-			boolean isSubUnit = false;
-			boolean visibleInterface = true;
-			String cRefSuper = null;
-			String uRefSuper = null;
-			Integer replica = null;
-
-			VisualElementAttributes v = factory.createVisualElementAttributes();
-
-			HUnit u = (HUnit) u_;
-
-			isSubUnit = u.hasStubs();
-			isPrivate = u.getHidden();
-			visibleInterface = u.visibleInterface();
-			uRef = u.getName2();
-			HInterface i = (HInterface) u.getInterface();
-
-			iRef = i != null ? i.getPrimName() : null;
-			if (isSubUnit) {
-				HUnitStub stubU = u.getMostRecentStub();
-				cRefSuper = ((Component) stubU.getConfiguration()).getRef();
-				uRefSuper = stubU.getOriginalName();
-				if (u.isClone()) {
-					replica = u.cloneOf().getIndexOfClone(u);
-				} else if (u.isCloned()) {
-					replica = 0;
-				}
-			}
-
-			// ---------------
-
-			uX.setURef(uRef);
-			uX.setIRef(iRef);
-			uX.setPrivate(isPrivate);
-			uX.setVisibleInterface(visibleInterface);
-			uX.setVisualDescription(v);
-
-			if (isSubUnit) {
-				UnitRefType superUnit = factory.createUnitRefType();
-				superUnit.setCRef(cRefSuper);
-				superUnit.setURef(uRefSuper);
-				if (replica != null)
-					superUnit.setReplica(replica);
-				uX.setSuper(superUnit);
-			}
-			saveVisualDescription(u, v);
-
-			EList slicesX = uX.getSlices();
-			List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
-			List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
-			List<HUnitSlice> ports = u.getPorts();
-			List<HUnitSlice> slices = u.getSlices();
-			transitiveSlices.addAll(ports);
-			for (HUnitSlice usx : slices) {
-				if (!transitiveSlices.contains(usx))
-					transitiveSlices.add(usx);
-			}
-			directSlices.addAll(slices);
-			saveUnitSlices(directSlices, transitiveSlices, slicesX);
-
-			xI.add(uX);
-
-		}
-
-	}
-
-	private void saveUnitSlices(List<HUnitSlice> directSlices,
-			List<HUnitSlice> transitiveSlices, EList slicesX) throws DuplicatedSliceNamesException {
-
-		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
-		
-		for (HUnitSlice slice : transitiveSlices) {
-			
-			if (savedSlices.containsKey(slice.getName())) {
-			//    throw new DuplicatedSliceNamesException(slice);
-			}
-
-			//if (!savedSlices.containsKey(slice.getName())) {
-				savedSlices.put(slice.getName(), slice);
-
-				// if (!slice.getHiddenSlice()) {
-				/*
-				 * Essa linha foi acrescentada devido a problema com fatias de
-				 * unidades herdadas de subtyping ...
-				 */
-
-				IHUnit e = slice.getBinding().getEntry();
-
-				UnitSliceType sliceX = factory.createUnitSliceType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
-				List<String> portsX = sliceX.getPort();
-
-				String cRef = null;
-				String uRef = null;
-				int replica = 0;
-				String sName = null;
-
-				HUnit uSource = (HUnit) slice.getComponentEntry();
-
-				cRef = uSource.getConfiguration().getRef();
-				uRef = uSource.getName2();
-
-				sName = slice.getName();
-
-				if (uSource.isClone()) {
-					replica = uSource.cloneOf().getIndexOfClone(uSource);
-				} else if (uSource.isCloned()) {
-					replica = 0;
-				}
-				sliceX.setReplica(replica);
-
-				// ---------------
-
-				sliceX.setCRef(cRef);
-				sliceX.setURef(uRef);
-				sliceX.setSliceName(sName);
-				sliceX.setVisualDescription(v);
-				sliceX.setTransitive(!directSlices.contains(slice));
-
-				List<HUnitSlice> usPorts = uSource.getPorts();
-				for (HUnitSlice usPort : usPorts) {
-					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
-					String usPortName = usPort.getInterfaceSlice() != null ? usPort
-							.getInterfaceSlice().getName()
-							: usPortSource.getName2();
-					portsX.add(usPortName);
-				}
-
-				saveVisualDescription(slice, v);
-
-				slicesX.add(sliceX);
-			}
-		}
 	
-
-	private void saveSupplyParameters(Component c, EList xI) {
-
-		for (Entry<String, Component> pair : c.getSupplierComponents().entrySet()) {
-
-			ParameterSupplyType s = factory.createParameterSupplyType();
-			String cRef = null;
-			String varName = null;
-
-			// SETUP VARIABLES
-
-			Component supplier = pair.getValue();
-
-			varName = pair.getKey();
-			cRef = supplier.getRef();
-
-			// ---------------
-
-			s.setCRef(cRef);
-			s.setVarName(varName);
-
-			xI.add(s);
-		}
-
-	}
-
-	private void saveEnumerator(Collection<HReplicator> replicators, EList xI) {
+	private void saveEnumerator(Component c, EList<EnumeratorType> xI) {
 
 		Component topC = null;
 
@@ -1193,8 +801,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveEnumeratorLinks(Collection<HLinkToReplicator> linksToMe,
-			EList linksX) {
+	private void saveEnumeratorLinks(Component c, EList linksX) {
 
 		List replicatedOne = new ArrayList();
 
@@ -1213,7 +820,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						EnumerableUnitType uX = factory.createEnumerableUnitType();
 						uX.setRef(u.getName2());
 						linksX.add(uX);
-						replicatedOne.add(u);
+						replicatedOne.add(null, u);
 					} else if (u.isEntry() && u.getMyClones().isEmpty()) {
 						Component innerOf_u = (Component) u.getConfiguration();
 				//		if (innerOf_u.isDirectSonOfTheTopConfiguration()) {
@@ -1225,7 +832,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							  usX.setIndex(u.cloneOf().getIndexOfClone(u));
 							}
 							linksX.add(usX);
-							replicatedOne.add(u);
+							replicatedOne.add(null, u);
 				//		} else {
 				//			System.out.print("UNEXPECTED GHOST INNER COMPONENT " + innerOf_u.getRef());
 				//		}
@@ -1239,7 +846,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						cX.setRef(c.getRef());
 						linksX.add(cX);
 						replicatedOne.add(c);
-						componentsReplicated.add(c.getRef());
+						componentsReplicated.add(null, c.getRef());
 					}
 
 				} 
@@ -1268,123 +875,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 
 
-	}
 
 
 
 
-
-
-private void retrieveLibraries(HComponent innerC, URI locationUri) {
-
-	// List<Integer[]> versions = innerC.getVersions();
-	
-	for (HInterface i : innerC.getInterfaces()) 
-		if (i.getConfiguration() == innerC) {
-			//for (Integer[] version : versions) {					
-		        String versionID = null; // HInterface.toStringVersion(version);
-				HBESourceVersion<HBEAbstractFile> sv = i.getSourceVersion(versionID == null ? "1.0.0.0" : versionID);
-				for (HBEAbstractFile file : sv.getFiles()) {
-					String packageName = innerC.getPackagePath().toString();
-					String componentName = innerC.getComponentName();
-					HPELocationEntry.getBinaryFile(packageName, componentName, versionID, file, locationUri);
-				}
-			//}
-	}
-	
-	
-}
-
-public static void copyProjectToCache(HComponent innerC, String version) {
-
-    IPath pathC = new Path(innerC.getLocalLocation());		
-			
-	IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation().removeLastSegments(1);
-	
-	String cachePath = addSegment(HPEProperties.getInstance().getValue("cache_root"), pathC.removeLastSegments(1).toString());
-			
-	try {
-		copyDirectory(new File(path.toString()), new File(cachePath));
-		    String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
-		    List<String> l = innerC.getModuleNames(version);
-		    for (String fileName : l) {
-            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, new String[] {}, path.toFile());
-		    }
-
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-}
-
-private static void copyDirectory(File srcPath, File dstPath) throws IOException {
-
-	if (srcPath.isDirectory()){
-	
-		if (!dstPath.exists()){			
-			dstPath.mkdir();			
-		}
-		
-		String files[] = srcPath.list();
-		
-		for(int i = 0; i < files.length; i++){
-			copyDirectory(new File(srcPath, files[i]), 
-			new File(dstPath, files[i]));			
-		}
-	}
-	else{
-		if(!srcPath.exists()){
-			System.out.println("File or directory does not exist.");
-			
-			System.exit(0);
-		}		
-		else
-		{
-			InputStream in = new FileInputStream(srcPath);
-			OutputStream out = new FileOutputStream(dstPath); 
-			// Transfer bytes from in to out
-			byte[] buf = new byte[1024];
-			
-			int len;
-			
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
-			}
-			in.close();
-			out.close();
-		}
-	}
-	
-	// System.out.println("Directory copied.");
-
-}
-
-
-private static File getCachePath(URI locationUri) {
-
-	String cachePath = HPEProperties.getInstance().getValue("cache_root");
-
-	java.io.File cacheFilePath = new java.io.File(cachePath);
-	if (!cacheFilePath.exists())
-		cacheFilePath.mkdir();
-
-	String fileName = addSegment(cachePath,locationUri.toString()) ;
-	
-	java.io.File configFilePath = new java.io.File(fileName);
-	configFilePath = new java.io.File(configFilePath.getParent());
-	if (!configFilePath.exists())
-		configFilePath.mkdir();
-
-	java.io.File binFilePath = new java.io.File(addSegment(configFilePath.getAbsolutePath(),"bin"));
-	if (!binFilePath.exists())
-		binFilePath.mkdir();
-	
-	
-	// cachePath + Path.SEPARATOR + locationUri.toString();
-	
-	return new File(fileName);
-}
 
 private static String addSegment(String path, String adding) {
 	int l = path.length() - 1;
@@ -1395,12 +889,6 @@ private static String addSegment(String path, String adding) {
 	}			
 }
 
-public static File getCachePath(String pk, String componentName, String version) {
-	
-	URI locationURI = HComponent.getStandardLocationPath(pk, componentName, version); 
-	
-	return getCachePath(locationURI);
-}
 
 
 

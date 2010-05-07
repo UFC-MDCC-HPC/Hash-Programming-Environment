@@ -1,8 +1,9 @@
 package br.ufc.mdcc.hclc.symboltable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Slice_list {
+public class Slice_list implements Iterable<Slice> {
 	private ArrayList <Slice> slice_list;
 	
 	public Slice_list(){
@@ -40,5 +41,11 @@ public class Slice_list {
 	
 	public int size(){
 		return slice_list.size();
+	}
+
+	@Override
+	public Iterator<Slice> iterator() {
+		
+		return this.slice_list.iterator();
 	}
 }

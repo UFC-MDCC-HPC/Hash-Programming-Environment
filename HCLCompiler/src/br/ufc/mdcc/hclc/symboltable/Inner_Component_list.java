@@ -1,8 +1,9 @@
 package br.ufc.mdcc.hclc.symboltable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Inner_Component_list {
+public class Inner_Component_list implements Iterable<Inner_Component> {
 	private ArrayList <Inner_Component> inner_component_list;
 	
 	public Inner_Component_list(){
@@ -40,5 +41,11 @@ public class Inner_Component_list {
 	
 	public int size(){
 		return inner_component_list.size();
+	}
+
+	@Override
+	public Iterator<Inner_Component> iterator() {
+		
+		return this.inner_component_list.iterator();
 	}
 }

@@ -3,6 +3,11 @@ package br.ufc.mdcc.hclc.symboltable;
 public class Unit {
 	private String id;
 	private Slice_list slice_list;
+	
+	private boolean isPrivate;
+	private String iName;
+	private String idSuper;
+	
 	private int beginLine;
 	private int beginColumn;
 	
@@ -43,5 +48,29 @@ public class Unit {
 
 	public void setBeginColumn(int beginColumn) {
 		this.beginColumn = beginColumn;
+	}
+
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public boolean isPrivate() {
+		return isPrivate;
+	}
+
+	public void setInterfaceId(String iName) {
+		this.iName = iName;
+	}
+
+	public String getInterfaceId() {
+		return iName;
+	}
+
+	public void setSuperId(String idSuper) {
+		this.idSuper = idSuper;
+	}
+
+	public String getSuperId() {
+		return idSuper;
 	}
 }

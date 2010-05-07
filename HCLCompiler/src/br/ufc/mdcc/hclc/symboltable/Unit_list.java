@@ -1,8 +1,9 @@
 package br.ufc.mdcc.hclc.symboltable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Unit_list {
+public class Unit_list implements Iterable<Unit>{
 	private ArrayList <Unit> unit_list;
 	
 	public Unit_list(){
@@ -40,5 +41,10 @@ public class Unit_list {
 	
 	public int size(){
 		return unit_list.size();
+	}
+
+	@Override
+	public Iterator<Unit> iterator() {
+		return this.unit_list.iterator();
 	}
 }

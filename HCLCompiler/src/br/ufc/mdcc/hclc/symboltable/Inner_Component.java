@@ -8,6 +8,7 @@ public class Inner_Component {
 	private String id;
 	private int beginLine;
 	private int beginColumn;
+	private boolean recursive;
 	
 	public Inner_Component(String id,Type type, String access_type, String kind, Public_Component_list public_component_list,int beginLine, int beginColumn){
 		this.type=type;
@@ -73,5 +74,13 @@ public class Inner_Component {
 
 	public void setBeginColumn(int beginColumn) {
 		this.beginColumn = beginColumn;
+	}
+
+	public void setRecursive(boolean recursive) {
+		this.recursive = recursive;
+	}
+
+	public boolean isRecursive() {
+		return recursive;
 	}
 }
