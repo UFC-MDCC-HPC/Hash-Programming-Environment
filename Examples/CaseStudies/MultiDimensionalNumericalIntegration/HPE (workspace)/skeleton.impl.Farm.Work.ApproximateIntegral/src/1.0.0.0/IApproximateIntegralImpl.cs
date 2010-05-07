@@ -3,6 +3,7 @@ using DGAC;
 using hpe.basic;
 using hpe.kinds;
 using data.Function;
+using data.List;
 using data.IntegralCase;
 using jefferson.data.Double;
 using skeleton.Farm.Work.ApproximateIntegral;
@@ -10,56 +11,25 @@ using NINTLIB;
 
 namespace skeleton.impl.Farm.Work.ApproximateIntegral { 
 
-public class IApproximateIntegralImpl<F, I, O> : BaseIApproximateIntegralImpl<F, I, O>, IApproximateIntegral<F, I, O>
+public class IApproximateIntegralImpl<F, I, O> : BaseIApproximateIntegralImpl<F, I, O>, IApproximateIntetral<F, I, O>
 where F:IFunction
-where I:IIntegralCase<F>
+where I:IList<IIntegralCase<F>>
 where O:IDouble
 {
 
-public IApproximateIntegralImpl() { 
-
-} 
-
-        private const int UNDEFINED = 0;
- 
-        private int dim_num_ = UNDEFINED;
-        private int dim_partition_size_ = UNDEFINED;
-        private int number_of_partitions_ = UNDEFINED;
-        private int ind_ = UNDEFINED;
-        private double tol_ = UNDEFINED;
-        private int it_max_ = UNDEFINED;
-        private int size_ = UNDEFINED;
+		public IApproximateIntegralImpl() {
+		
+				getargs(System.Environment.GetCommandLineArgs(), ref dim_partition_size, ref number_of_partitions);
+		} 
+		
+        private int ind = 0;
+        private double tol = 1e-15;
+        private int it_max = 2;
        
-	    public int dim_num {get { return dim_num_; } set { dim_num_ = value; }}
-	    public int dim_partition_size {get { return dim_partition_size_; } set {dim_partition_size_ = value; }}
-	    public int number_of_partitions {get { return number_of_partitions_; } set {number_of_partitions_ = value; }}
-	    public int ind {get { return ind_; } set {ind_ = value; }}
-	    public double tol {get { return tol_; } set { tol_ = value; }}
-	    public int it_max {get { return it_max_; } set { it_max_ = value; }}
-	    public int size { get { return size_; } set { size_ = value; } }
+        private int dim_partition_size = 2;
+        private int number_of_partitions = 10;
 
-        public int num_jobs { get { return (int) Math.Pow(dim_partition_size, dim_num); }}	    
-	    public int num_local_jobs { get {return num_jobs / size;}}
-
-		public override void compute() { 
-			
-            // Set the integrating function.
-            f = NINTLIB.IntegratingFunctions.p01_f;
-
-			double[] a = input_data.a;
-			double[] b = input_data.b;	
-            double[] result = new double[num_local_jobs];
-			
-            int[] sub_num = new int[dim_num];
-            for (int i = 0; i < dim_num; i++)                
-                sub_num[i] = number_of_partitions/dim_partition_size;
-                  
-            int eval_num = 0;
-            result[0] = NINTLIB.NINTLIB.romberg_nd(function, a, b, dim_num, sub_num, it_max, tol, ref ind_, out eval_num);
-						  
-		} // end activate method 
-
-        private static NINTLIB.MultiPointsIntegratingFunction f;
+  /*      private static NINTLIB.MultiPointsIntegratingFunction f = NINTLIB.IntegratingFunctions.p33_f;
 
         private static double function(double[] x)
         {
@@ -71,8 +41,60 @@ public IApproximateIntegralImpl() {
 
 
             return f(x_)[0];
+        }  */
+        
+        public override void compute() { 
+  			
+			System.Collections.Generic.IList<IIntegralCase<F>> jobList = input_data.getList();
+			
+			int dim_num = jobList[0].a.Length;
+			
+            int[] sub_num = new int[dim_num];
+            for (int i = 0; i < dim_num; i++)                
+                sub_num[i] = number_of_partitions/dim_partition_size;
+	                  
+            TimeSpan timeW = TimeSpan.FromSeconds(0);
+            double result = 0.0D;
+            int eval_num_total = 0;
+            foreach (IIntegralCase<F> job in jobList) {
+				double[] a = job.a;
+				double[] b = job.b;	
+				// int dim_num = a.Length;
+								
+	            int eval_num = 0;
+	            DateTime startTimeW = DateTime.Now;
+	            result += NINTLIB.NINTLIB.romberg_nd(job.f /*function */, a, b, dim_num, sub_num, it_max, tol, ref ind, out eval_num);
+                DateTime stopTimeW = DateTime.Now;
+                timeW += stopTimeW - startTimeW;            
+                
+                eval_num_total += eval_num; 
+            }
+            
+            output_data.Value = result;
+						  
+            Console.WriteLine("ABSOLUTE WORKER TIME = " + timeW.TotalMilliseconds + "ms - eval_num = " + eval_num_total);						  
+						  
+		} // end activate method 
+
+        private static void getargs(string[] args, ref int dim_partition_size, ref int number_of_partitions)
+        {
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (i + 1 < args.Length)
+                {
+                    if (args[i].Equals("--dim_partition_size") && i + 1 < args.Length)
+                    {
+                        dim_partition_size = int.Parse(args[i + 1]);
+                    }
+                    else if (args[i].Equals("--number_of_partitions") && i + 1 < args.Length)
+                    {
+                        number_of_partitions = int.Parse(args[i + 1]);
+                    }
+                }
+            }
         }
-		
+
+
 }
 
 }

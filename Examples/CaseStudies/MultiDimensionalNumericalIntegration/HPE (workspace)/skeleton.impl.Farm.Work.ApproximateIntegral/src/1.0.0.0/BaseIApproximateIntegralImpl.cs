@@ -4,16 +4,17 @@ using System;
 using DGAC;
 using hpe.basic;
 using hpe.kinds;
-using data.Function;
 using jefferson.data.Double;
+using data.List;
 using data.IntegralCase;
+using data.Function;
 using skeleton.Farm.Work.ApproximateIntegral;
 
 namespace skeleton.impl.Farm.Work.ApproximateIntegral { 
 
-public abstract class BaseIApproximateIntegralImpl<F, I, O>: Computation, BaseIApproximateIntegral<F, I, O>
+public abstract class BaseIApproximateIntegralImpl<F, I, O>: Computation, BaseIApproximateIntetral<F, I, O>
 where F:IFunction
-where I:IIntegralCase<F>
+where I:IList<IIntegralCase<F>>
 where O:IDouble
 {
 
