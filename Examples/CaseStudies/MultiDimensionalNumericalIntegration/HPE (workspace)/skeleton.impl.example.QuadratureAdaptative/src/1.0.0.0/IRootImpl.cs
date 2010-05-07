@@ -12,18 +12,20 @@ where F:ITestingFunction
 
 		public IRootImpl() { 
 		
+			getargs(System.Environment.GetCommandLineArgs(), ref dim_num, ref dim_partition_size, ref number_of_partitions);
+
 		} 
 		
+		private	int dim_num = 2;
+		private	int dim_partition_size = 2;
+		private	int number_of_partitions = 10;
+			
 		public override void compute() { 
 				
+
 			Console.WriteLine("MANAGER - STARTING ADAPTATIVE QUADRATURE");
 			TimeSpan timeW = TimeSpan.FromSeconds(0);
-			DateTime startTimeW = DateTime.Now;
-			
-			int dim_num = 2;
-			int dim_partition_size = 2;
-			int number_of_partitions = 10;
-			getargs(System.Environment.GetCommandLineArgs(), ref dim_num, ref dim_partition_size, ref number_of_partitions);
+			DateTime startTimeW = DateTime.Now;			
 								
 			input_data.dim_num = dim_num;
 			   						
