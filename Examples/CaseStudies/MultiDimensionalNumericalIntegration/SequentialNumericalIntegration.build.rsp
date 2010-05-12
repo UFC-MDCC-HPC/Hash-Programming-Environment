@@ -2,6 +2,8 @@ SequentialNumericalIntegration/Program.cs
 
 -target:exe
 
+-optimize+
+
 -r:System
 -r:System.Data
 -r:System.Core

@@ -30,13 +30,15 @@ namespace ParallelNumericalIntegration
         private static TimeSpan timeW;
         private static int eval_num_total;
 
+       private static int rank, size;
+
         static void Main(string[] args)
         {
             MPI.Environment mpi;
             mpi = new MPI.Environment(ref args);
 
-            int size = Communicator.world.Size - 1; // NUMBER OF WORKERS
-            int rank = Communicator.world.Rank;
+            size = Communicator.world.Size - 1; // NUMBER OF WORKERS
+            rank = Communicator.world.Rank;
 
             // Set the integrating function.
             f = NINTLIB.IntegratingFunctions.p33_f;
@@ -97,7 +99,6 @@ namespace ParallelNumericalIntegration
                 
                 Communicator.world.Scatter<double[,]>(a);
                 Communicator.world.Scatter<double[,]>(b);
-
                 // Collect/Combine results
 
                 double result = 0.0D;
@@ -113,7 +114,7 @@ namespace ParallelNumericalIntegration
 
             }
             else // WORKER !
-            {
+            { 
                 // Receive jobs.
 
                 double[,] a_local = Communicator.world.Scatter<double[,]>(0);
@@ -134,7 +135,7 @@ namespace ParallelNumericalIntegration
                 timeW = TimeSpan.FromSeconds(0);
                 eval_num_total = 0;
                 for (int j = 0; j < num_local_jobs; j++)
-                {
+                { 
                     a = new double[dim_num];
                     b = new double[dim_num];
 
@@ -144,11 +145,11 @@ namespace ParallelNumericalIntegration
                         b[i] = b_local[j, i];
                     }
 
-                    DoWork worker = new DoWork(j, a, b);
-                    Thread workThread = new Thread(worker.perform);
-                    work_threads.Add(workThread);
-                    workThread.Start();								
-
+                    DoWork worker = new DoWork(j, a, b);   
+                    worker.perform();
+                //    Thread workThread =  new Thread(worker.perform);
+                //    work_threads.Add(workThread);
+                //    workThread.Start();								
                 }
 
                 foreach (Thread wt in work_threads)
@@ -181,8 +182,7 @@ namespace ParallelNumericalIntegration
                 DateTime startTimeW = DateTime.Now;
                 result[j] = NINTLIB.NINTLIB.romberg_nd(function, a, b, dim_num, sub_num, it_max, tol, ref ind, out eval_num);
                 DateTime stopTimeW = DateTime.Now;
-                timeW += stopTimeW - startTimeW;
-
+                timeW += (stopTimeW - startTimeW);
                 eval_num_total += eval_num;
             }
         }

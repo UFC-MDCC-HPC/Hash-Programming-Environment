@@ -4,6 +4,8 @@ IntegratingFunctions/IntegratingFunctions.cs
 
 -keyfile:IntegratingFunctions/IntegratingFunctions.snk
 
+-optimize+
+
 -r:System
 -r:System.Data
 -r:System.Core

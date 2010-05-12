@@ -16,7 +16,7 @@ namespace SequentialNumericalIntegration
 
             // Set the integrating function.
 
-            f = NINTLIB.IntegratingFunctions.p01_f;
+            f = NINTLIB.IntegratingFunctions.p33_f;
 
             // Set the number of dimensions
 

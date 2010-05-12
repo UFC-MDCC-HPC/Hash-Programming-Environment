@@ -4,6 +4,8 @@ NINTLIB/NINTLIB.cs
 
 -keyfile:NINTLIB/NINTLIB.snk
 
+-optimize+
+
 -r:System
 -r:System.Data
 -r:System.Core

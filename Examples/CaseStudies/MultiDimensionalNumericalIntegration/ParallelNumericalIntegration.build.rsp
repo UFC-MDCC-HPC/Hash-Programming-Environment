@@ -2,6 +2,8 @@ ParallelNumericalIntegration/Program.cs
 
 -target:exe
 
+/optimize+
+
 -r:System
 -r:System.Data
 -r:System.Core
@@ -10,6 +12,6 @@ ParallelNumericalIntegration/Program.cs
 -r:System.Xml.Linq
 -r:bin/NINTLIB.dll
 -r:bin/IntegratingFunctions.dll
--r:"C:\Program Files\MPI.NET\Lib\MPI.dll"
+-r:"/usr/lib/mono/MPI/MPI.dll"
 
 -out:bin/ParallelNumericalIntegration.exe
