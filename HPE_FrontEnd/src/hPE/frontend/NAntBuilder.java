@@ -159,8 +159,9 @@ public class NAntBuilder implements Runnable {
 						
 							NAntDotNetTasksCscTask compile = factory.createNAntDotNetTasksCscTask();
 			
-							compile.setDebug("true");
-							compile.setOptimize("true");
+							compile.setDebug(HPEProperties.getInstance().getValue("compiler_flag_debug").equals("true"));
+							compile.setOptimize(HPEProperties.getInstance().getValue("compiler_flag_optimize").equals("true"));
+							compile.setUnsafe(HPEProperties.getInstance().getValue("compiler_flag_unsafe").equals("true"));
 							IPath path_output = ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
 
 							IPath path_output_folder = src.getBinaryPath().removeLastSegments(1);
