@@ -318,6 +318,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			icx.setPackage(packageName);
 			icx.setVersion("1.0.0.0");
 			
+			
 			saveCAppParameters(ic, icx.getParameter(), supplies);
 			innerComponentsX.add(icx);
 		}
@@ -368,52 +369,88 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private Map<String, List<String>> ports = new HashMap<String, List<String>>();
 	
+	private Map<Inner_Component, String> enumerators = new HashMap<Inner_Component, String>();
+	private Map<String, List<Public_Component>> imported_enumerators = new HashMap<String, List<Public_Component>> ();
+	private Map<String, List<Slice>> slice_enumerators = new HashMap<String, List<Slice>>();
+
+	private boolean isEnumerator(Inner_Component ic) {
+		
+		return false;
+	}
+	
+	private boolean isImportedEnumerator(Public_Component pc) {
+		
+		return false;
+	}
+	
+	private boolean isSliceEnumerator(Slice s) {
+		
+		return false;
+	}
+
 	private void readInnerComponents(Component c, EList<ParameterSupplyType> supplies, EList<InnerRenamingType> renamings, EList<RecursiveEntryType> recursives) {
 
 		for (Inner_Component inner : c.getInnercomplist()) {
-			String access_type = inner.getAccess_type();
-			String cRef = inner.getId();
-			String kind = inner.getKind();
-			for (Public_Component pc : inner.getPublic_component_list()) {			
-				String pRef = pc.getNewId();
-				String old_pRef = pc.getOldId(); 
-				if (ports.containsKey(pRef)) 
-				{
-					ports.get(pRef).add(cRef);
-				} 
-				else 
-				{   
-					// This will cause a fusion of inner components.
-					List<String> l = new ArrayList<String>();
-					l.add(cRef);
-					ports.put(pRef, l);					
+			if (!isEnumerator(inner)) {
+				String access_type = inner.getAccess_type();
+				String cRef = inner.getId();
+				String kind = inner.getKind();
+				for (Public_Component pc : inner.getPublic_component_list()) {
+					if (!isImportedEnumerator(pc)) {
+						String pRef = pc.getNewId();
+						String old_pRef = pc.getOldId(); 
+						if (ports.containsKey(pRef)) 
+						{
+							ports.get(pRef).add(cRef);
+						} 
+						else 
+						{   
+							// This will cause a fusion of inner components.
+							List<String> l = new ArrayList<String>();
+							l.add(cRef);
+							ports.put(pRef, l);					
+						}
+						InnerRenamingType renaming = factory.createInnerRenamingType();
+						renaming.setCRef(cRef);
+						renaming.setCOldName(old_pRef);
+						renaming.setCNewName(pRef);		
+						renamings.add(renaming);
+					} else {
+						List<Public_Component> list = null;
+						if (imported_enumerators.containsKey(pc.getNewId())) {
+							list = imported_enumerators.get(pc.getNewId());
+						} else {
+							list = new ArrayList<Public_Component>();
+							imported_enumerators.put(pc.getNewId(), list);
+						}
+						list.add(pc);
+					}
 				}
-				InnerRenamingType renaming = factory.createInnerRenamingType();
-				renaming.setCRef(cRef);
-				renaming.setCOldName(old_pRef);
-				renaming.setCNewName(pRef);		
-				renamings.add(renaming);
+				
+				if (inner.isRecursive()) {
+					RecursiveEntryType r = factory.createRecursiveEntryType();
+					r.setCRef(cRef);
+					recursives.add(r);
+				}
+				
+				Type cType = inner.getType();
+				if (cType instanceof VarType) {
+					VarType cvType = (VarType) cType;
+					// é acrescentado por saveParameters em innerComponents.
+				} else if (cType instanceof Config) {
+					Config ccType = (Config) cType;
+					isExposed.put(cRef, access_type.equals("public"));
+					this.pickInnerComponentsFromCApp(ccType, innerComponents, supplies);
+				}
 			}
-			
-			if (inner.isRecursive()) {
-				RecursiveEntryType r = factory.createRecursiveEntryType();
-				r.setCRef(cRef);
-				recursives.add(r);
-			}
-			
-			Type cType = inner.getType();
-			if (cType instanceof VarType) {
-				VarType cvType = (VarType) cType;
-				// é acrescentado por saveParameters em innerComponents.
-			} else if (cType instanceof Config) {
-				Config ccType = (Config) cType;
-				isExposed.put(cRef, access_type.equals("public"));
-				this.pickInnerComponentsFromCApp(ccType, innerComponents, supplies);
+			else {
+				enumerators.put(inner, inner.getId());
 			}
 			
 		}
 		
 	}
+
 
 	private void saveCAppParameters(Config c, EList<ParameterRenaming> parameterRenamings, EList<ParameterSupplyType> supplies) {		
 
@@ -460,8 +497,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			isPrivate = u.isPrivate();
 			visibleInterface = false;
 			uRef = u.getId();
-			iRef = u.getInterfaceId();
-					
+			iRef = u.getInterfaceId();					
 			
 			uX.setURef(uRef);
 			uX.setIRef(iRef);
@@ -492,29 +528,39 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				
 		for (Slice slice : slice_list) {
-			    
-			    UnitSliceType sliceX = factory.createUnitSliceType();
-			    
-				String cRef = null;
-				String uRef = null;
-				int replica = 0;
-				String sName = null;
-
-				cRef = slice.getIdInner();
-				uRef = slice.getIdUnitInner();
-				sName = slice.getId();
-				boolean transitive;
-
-				//sliceX.setReplica(replica);
-				sliceX.setCRef(cRef);
-				sliceX.setURef(uRef);
-				sliceX.setSliceName(sName);
-				//sliceX.setVisualDescription(v);
-				sliceX.setTransitive(this.ports.containsKey(cRef));
-
-				//saveVisualDescription(slice, v);
-
-				slicesX.add(sliceX);
+			    if (!this.isSliceEnumerator(slice)) {
+				    UnitSliceType sliceX = factory.createUnitSliceType();
+				    
+					String cRef = null;
+					String uRef = null;
+					int replica = 0;
+					String sName = null;
+	
+					cRef = slice.getIdInner();
+					uRef = slice.getIdUnitInner();
+					sName = slice.getId();
+					boolean transitive;
+	
+					//sliceX.setReplica(replica);
+					sliceX.setCRef(cRef);
+					sliceX.setURef(uRef);
+					sliceX.setSliceName(sName);
+					//sliceX.setVisualDescription(v);
+					sliceX.setTransitive(this.ports.containsKey(cRef));
+	
+					//saveVisualDescription(slice, v);
+	
+					slicesX.add(sliceX);
+			    } else {
+			    	List<Slice> list = null;
+			    	if (slice_enumerators.containsKey(slice.getIdInner())) {
+			    		list = slice_enumerators.get(slice.getIdInner());
+			    	} else {
+			    	    list = new ArrayList<Slice>();
+			    	    slice_enumerators.put(slice.getIdInner(), list);
+			    	}
+		    		list.add(slice);
+			    }
 			}
 		}
 	
@@ -737,7 +783,33 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	
 	private void saveEnumerator(Component c, EList<EnumeratorType> xI) {
 
-		Component topC = null;
+		for (Entry<Inner_Component, String> eentry : enumerators.entrySet()) {
+			// New enumerator.
+			// TODO: Treat SPLITS !!!!
+			Inner_Component e = eentry.getKey();
+			String eid = eentry.getValue();
+			
+			for (Slice es : slice_enumerators.get(eid)) {
+			    // new enumerario of unit (causes enumeration of entries and inners)
+				
+			}
+			
+			if (imported_enumerators.isEmpty()) {
+				// create new replicator
+				
+			} else {
+				// Fusions
+				for (Public_Component pc : this.imported_enumerators.get(eid)) {
+				}
+			}
+	
+		}
+		
+		
+		
+		// OLD ....
+		
+		Component topC = null;	
 
 		for (HReplicator e : replicators) /* if (e.getFactor() != 1) */ {
 
