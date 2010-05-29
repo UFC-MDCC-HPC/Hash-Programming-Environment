@@ -19,7 +19,7 @@ DGAC/externalreferences.cs
 
 -keyfile:DGAC/DGAC.snk
 
--debug+
+-optimize+
 
 -r:System.Data
 -r:DGAC/database/MySql.Data

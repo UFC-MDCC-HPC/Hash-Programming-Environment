@@ -227,22 +227,37 @@ public class CommandLineUtil{
 
         Console.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
 
-        proc.Start();
+        try {
 
-        proc.BeginErrorReadLine();
-        proc.BeginOutputReadLine();
+          proc.Start();
 
-        proc.WaitForExit();
+          proc.BeginErrorReadLine();
+          proc.BeginOutputReadLine();
 
-        ExitCode = proc.ExitCode;
-        proc.Close();
+          proc.WaitForExit();
 
-        if (ExitCode > 0)
-        {
-            string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
-           //    Console.WriteLine(message);
-            throw new Exception(message);
+          ExitCode = proc.ExitCode;
+          proc.Close();
+
+          if (ExitCode > 0)
+          {
+              string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
+              throw new Exception(message);
+          }
+        } catch(System.ComponentModel.Win32Exception w) {
+		Console.WriteLine(w.Message);
+		Console.WriteLine(w.ErrorCode.ToString());
+		Console.WriteLine(w.NativeErrorCode.ToString());
+		Console.WriteLine(w.StackTrace);
+		Console.WriteLine(w.Source);
+		Exception e = w.GetBaseException();
+		Console.WriteLine(e.Message);
+
+                throw w;
+ 	} finally {
         }
+
+
 
         return ExitCode;
 

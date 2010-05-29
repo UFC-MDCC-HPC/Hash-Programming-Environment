@@ -16,7 +16,12 @@ public class Constants {
             properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
             if (properties_file_path == null)
             {
-                properties_file_path = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "hpe.backend.properties";
+                string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || 
+                                   Environment.OSVersion.Platform == PlatformID.MacOSX)
+                                      ? Environment.GetEnvironmentVariable("HOME")
+                                      : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+
+                properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
             }
         }
         return properties_file_path;

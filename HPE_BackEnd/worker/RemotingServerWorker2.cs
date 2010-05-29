@@ -17,12 +17,13 @@ namespace DGAC.database
 		public WorkerService()			
 		{
 		}
-		
 
 		public static void Main (string[] args) { 
         
 		    System.ServiceProcess.ServiceBase[] ServicesToRun; 
                     Console.WriteLine("STARTING WORKER SERVICE");	
+                    Console.WriteLine("Using " + Constants.PROPERTIES_FILE);
+                    Console.WriteLine("cs_compiler_flags = " + Constants.cs_compiler_flags);
 	
 		    ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService() }; 
 		    System.ServiceProcess.ServiceBase.Run(ServicesToRun);  
