@@ -24,7 +24,7 @@ public class Component {
 		this.beginColumn=0;
 	}
 
-	public Component(String name, Extend extend,String kind, Public_Component_list public_component_list, Inner_Component_list innercomplist,ParamType_list paramtypelist,Unit_list unitlist, int beginLine, int beginColumn){
+	public Component(String name, Extend extend,String kind, Public_Component_list public_component_list, Inner_Component_list innercomplist,ParamType_list paramtypelist,Unit_list unitlist, int beginLine, int beginColumn, Usings_list usings_list){
 		this.name=name;
 		this.kind=kind;
 		this.public_component_list=public_component_list;
@@ -36,6 +36,10 @@ public class Component {
 		this.base=extend;
 	}
 
+	public boolean isVar(String id) {
+		return this.getParamtypelist().getById(id) != null;
+	}
+	
 	public ParamType_list getParamtypelist() {
 		return paramtypelist;
 	}

@@ -14,9 +14,9 @@ public interface HComponentFactory {
 	
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
 	
-	public void saveComponent(Component c, File file, IProgressMonitor monitor);
+	public void saveComponent(Component c, String path, IProgressMonitor monitor);
 	
-	public void saveComponent(ComponentType cX, File file, IProgressMonitor monitor);
+	public void saveComponent(ComponentType cX, String path, IProgressMonitor monitor);
 	
 	public ComponentType marshallComponent(Component c);
 	

@@ -10,8 +10,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import br.ufc.mdcc.hclc.codegen.xml.component.ComponentType;
+import br.ufc.mdcc.hclc.codegen.xml.factory.HComponentFactory;
+import br.ufc.mdcc.hclc.codegen.xml.factory.HComponentFactoryImpl;
 import br.ufc.mdcc.hclc.parser.HCLParser;
 import br.ufc.mdcc.hclc.parser.ParseException;
+import br.ufc.mdcc.hclc.symboltable.Component;
 
 /**
  * @author Heron
@@ -37,7 +41,17 @@ public final class HCLCompiler {
         
 		    HCLParser parser = new HCLParser(in);
 			
-			parser.Start();
+			Component c = parser.Start();
+			
+			HComponentFactory factory = HComponentFactoryImpl.eInstance;		
+			
+			File fileOut = File.createTempFile("hclc_testing", ".hpe", new File("h:\\temp\\"));
+									
+		
+			
+			factory.saveComponent(c, "file://" + fileOut.getAbsolutePath(), null);
+						
+			System.out.print("Finished !");
 			
 		} catch (ParseException e) {
 			
