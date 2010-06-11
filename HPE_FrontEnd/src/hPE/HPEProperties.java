@@ -37,9 +37,9 @@ public class HPEProperties {
 	    	    defaultValues.put("mono_path", null);
 	    	    defaultValues.put("mono_lib_version", "1.0");	    	 
 	    	    defaultValues.put("local_location", "http://localhost:8081/HPE_Location/HPE_Location_Server.jws");	    	 	            props = new Properties(); 	            
-	    	    defaultValues.put("gmcs_flag_unsafe","false");
-	    	    defaultValues.put("gmcs_flag_optimize","true");
-	    	    defaultValues.put("gmcs_flag_debug","true");
+	    	    defaultValues.put("compiler_flag_unsafe","false");
+	    	    defaultValues.put("compiler_flag_optimize","true");
+	    	    defaultValues.put("compiler_flag_debug","true");
 
 	    	    checkPropertiesFileUpdate();
 	    }  
