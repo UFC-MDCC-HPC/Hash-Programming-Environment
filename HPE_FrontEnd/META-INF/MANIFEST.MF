@@ -14,12 +14,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.editors,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.ve;bundle-version="1.4.0",
- org.eclipse.ve.cde;bundle-version="1.4.0",
- org.eclipse.ve.doc;bundle-version="1.4.0",
- org.eclipse.ve.java.core;bundle-version="1.4.0",
- org.eclipse.ve.jfc;bundle-version="1.4.0",
- org.eclipse.ve.propertysheet;bundle-version="1.4.0",
- org.eclipse.ve.swt;bundle-version="1.4.0",
  org.apache.axis;bundle-version="1.4.0",
  javax.xml.rpc;bundle-version="1.1.0"
 Eclipse-AutoStart: true

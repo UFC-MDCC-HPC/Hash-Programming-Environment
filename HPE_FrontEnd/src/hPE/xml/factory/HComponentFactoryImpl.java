@@ -1108,8 +1108,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			for (FusionOfReplicatorsType ff : f.getFusionOfReplicators()) {
 				String eRef = ff.getERef();
 				List<String> cRef = ff.getOriginRef();
-				HComponent c = !cRef.isEmpty() ? this.mC2.get(mC1.get(cRef
-						.get(0))) : this.component;
+				HComponent c = !cRef.isEmpty() ? this.mC2.get(mC1.get(cRef.get(0))) : this.component;
 				HReplicator r = c.lookForReplicator(eRef, cRef);
 				rs.add(r);
 			}
@@ -1118,8 +1117,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			HReplicator rTop = null;
 			for (HReplicator r : rs) {
-				FuseReplicatorCommand c = (FuseReplicatorCommand) new FuseReplicatorCommand(
-						r);
+				FuseReplicatorCommand c = (FuseReplicatorCommand) new FuseReplicatorCommand(r);
 				if (rTop == null)
 					rTop = r;
 				c.setTop(rTop);
