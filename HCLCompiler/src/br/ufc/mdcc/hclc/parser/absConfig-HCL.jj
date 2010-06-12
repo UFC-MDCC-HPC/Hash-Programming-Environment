@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class HCLParser{
 
+    private static String[] SUPPORTED_KINDS = {"application", "computation", "enumerator", "synchronizer", "service", "data", "qualifier", "environment", "architecture"};
+
     private static Component component = new Component();
 
 	private static String buildPackageName(List<Token> items)
@@ -20,6 +22,17 @@ public class HCLParser{
 	    return r;
 	}
 
+	private static void checkKind(String kind_str) throws ParseException	{
+	  boolean found = false;
+	  
+	  for (String kind : SUPPORTED_KINDS)
+          found = found || kind.equals(kind_str);
+
+      if (!found)      {           throw new Error("The kind " + kind_str + " is invalid or not supported !");
+      }
+	            }
+	  
+
 }
 PARSER_END(HCLParser)
 
@@ -32,27 +45,33 @@ TOKEN_MGR_DECLS:
 TOKEN: {
 	< EXTENDS: "extends">
 	| <SET: "=">
+	| <BEGIN: "{">
+	| <END: "}">
 	| <COMMA: ",">
 	| <COLON: ":">
+	| <SEMICOLON: ";">
 	| <OCURV: "("> 
 	| <CCURV: ")"> 
 	| <OSQUARE: "[">
+	| <QUOTECHAR: "\"">
 	| <STAR: "*" >
 	| <CSQUARE: "]"> 
 	| <SLICE: "slice">
 	| <FROM: "from">
+	| <PACKAGE: "package">
 	| <UNIT: "unit">
 	| <DOT: ".">
 	| <USING: "using">
-	| <COMPUTATION: "computation">
-	| <DATA: "data">
-	| <ARCHITECTURE: "architecture">
-	| <ENVIRONMENT: "environment">
-	| <QUALIFIER: "qualifier">
-	| <SYNCHRONIZER: "synchronizer">
-	| <APPLICATION: "application">
-	| <ENUMERATOR: "enumerator">
+//	| <COMPUTATION: "Computation">
+//	| <DATA: "Data">
+//	| <ARCHITECTURE: "Architecture">
+//	| <ENVIRONMENT: "Environment">
+//	| <QUALIFIER: "Qualifier">
+//	| <SYNCHRONIZER: "Synchronizer">
+//	| <APPLICATION: "Application">
+//	| <ENUMERATOR: "Enumerator">
 	| < ID: (["a"-"z"]|["A" - "Z"])(["a"-"z"]|["A" - "Z"]|"_"|["0"-"9"])*>
+	| < STRING_ID: < QUOTECHAR> (["a"-"z"]|["A" - "Z"])(["a"-"z"]|["A" - "Z"]|" "|"_"|["0"-"9"])* < QUOTECHAR > >
 }
 
 <*>
@@ -95,20 +114,28 @@ Component Start() :
 Component absConfig():
 {
  Token kind_tk;
+ Token package_tk;
  Usings_list usings_list;
  Public_Component_list public_component_list;
  Inner_Component inner_comp = null;
+ Token pack_tk = null;
+ List<Token> pkList = new ArrayList<Token>();
+ String pkName = null;
  Inner_Component_list inner_comp_list = new Inner_Component_list();Unit_list unit_list = new Unit_list();Unit unit;}
 {
+    package_tk = <PACKAGE> (LOOKAHEAD(2) pack_tk = <ID> <DOT> {pkList.add(pack_tk);})? pack_tk = <ID> {pkList.add(pack_tk); pkName = buildPackageName(pkList); } <SEMICOLON>
     usings_list = usings() { }
 	kind_tk=kind() {component.setKind(kind_tk.image);
+	                component.setPackage(pkName);
 	                component.setUsings_list(usings_list);
 	                component.setBeginLine(kind_tk.beginLine);
 	                component.setBeginColumn(kind_tk.beginColumn);
 	               }
 	public_component_list = header(component) { component.setPublic_component_list(public_component_list);}
-	(inner_comp = inner(public_component_list) {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);}
-	(unit=unit() {unit_list.add(unit);})+ {component.setUnitlist(unit_list);return component;}
+	< BEGIN >
+	(inner_comp = inner(public_component_list) <SEMICOLON> {inner_comp_list.add(inner_comp);})* {component.setInnercomplist(inner_comp_list);}
+	((LOOKAHEAD(2) (unit = unit()) | (unit = unit_primitive())) {unit_list.add(unit);})+ 
+	< END >  {component.setUnitlist(unit_list);return component;}
 }
 
 Usings_list usings():
@@ -117,25 +144,28 @@ Usings_list usings():
   Token packageItem;
   Token cName = null;}
 {   ( <USING> 
-	   ( LOOKAHEAD(2) packageItem = <ID> <DOT > { packageItens.add(packageItem); })+ ((cName = <ID>) | (<STAR> {cName = null;})) { usings_list.addComponent(cName != null ? cName.image : null, buildPackageName(packageItens)); packageItens = new ArrayList<Token>();})*  
+	   ( LOOKAHEAD(2) packageItem = <ID> <DOT > { packageItens.add(packageItem); })+ ((cName = <ID>) | (<STAR> {cName = null;})) <SEMICOLON> { usings_list.addComponent(cName != null ? cName.image : null, buildPackageName(packageItens)); packageItens = new ArrayList<Token>();})*  
   { return usings_list; }
 }
 
-
+Token id():
+{ Token id_tk; }
+{  ((id_tk = <ID>) | (id_tk = < STRING_ID > {id_tk.image = id_tk.image.substring(1,id_tk.image.length()-1);}))  { return id_tk; }
+}
 
 Public_Component_list header(Component component):
 {Token name;ParamType_list param_list=new ParamType_list();Extend name_extend=null;Public_Component_list public_component_list=new Public_Component_list();}
 { 
 	name=<ID> {component.setName(name.image);}
-	(public_component_list=publicInnerS())?
-	(param_list=paramTypeS() {component.setParamtypelist(param_list);} )?
+	(public_component_list=publicInnerS(null))?
+	{component.setParamtypelist(param_list);} (param_list=paramTypeS(param_list) )?
 	(name_extend=extend() {component.setName_base(name_extend);} )? {return public_component_list;}
 }
 
 ParamType paramType():
 {Token form_id;Token id;Config config;}
 { 
-	form_id=<ID> <SET> id=<ID> <COLON> config=cFunAppNoVar() {return new ParamType(id.image,form_id.image,config,form_id.beginLine,form_id.beginColumn);}
+	form_id=id() <SET> id=<ID> <COLON> config=cFunAppNoVar() {return new ParamType(id.image,form_id.image,config,form_id.beginLine,form_id.beginColumn);}
 }
 
 Type cFunApp():
@@ -149,54 +179,64 @@ Type cFunApp():
 Config cFunAppNoVar():
 {Token id_tk;Type_list type_list=new Type_list();}
 {
-	id_tk=<ID> (type_list=cFunAppS())? {return new Config (id_tk.image,type_list,id_tk.beginLine,id_tk.beginColumn);}
+	id_tk = <ID> (type_list=cFunAppS())? {return new Config (id_tk.image,type_list,id_tk.beginLine,id_tk.beginColumn);}
 }
 
-Public_Component publicInner():
-{Token id_tk_left = null, id_tk_right;}
-{
-    
-	(LOOKAHEAD(2) id_tk_left=<ID> <SET>)? id_tk_right=<ID>
-	                    {return new Public_Component(id_tk_left !=  null ? id_tk_left.image : id_tk_right.image, id_tk_right.image, null,id_tk_right.beginLine,id_tk_right.beginColumn);}
+Public_Component publicInner(String owner_ref):
+{Token id_tk_left = null, id_tk_right, tk_star = null;}
+{    
+	(LOOKAHEAD(2) id_tk_left = id()  <SET>)? id_tk_right=id() (tk_star = <STAR>)?
+	                    {return new Public_Component(id_tk_left !=  null ? id_tk_left.image : id_tk_right.image, id_tk_right.image, owner_ref, tk_star != null,id_tk_right.beginLine,id_tk_right.beginColumn);}
 }
 
 Inner_Component inner(Public_Component_list public_component_list):
 {Token id_tk;Token kind_tk;Type type;Public_Component_list public_inner_component_list = new Public_Component_list();}
 {
 	kind_tk = kind()
-	id_tk = <ID> {if ((kind_tk.specialToken == null) ||
-	                  (kind_tk.specialToken.kind != NEWLINE)
-	                 ) { throw new ParseException("New line expected before kind of inner component in line "+id_tk.beginLine+" and column "+id_tk.beginColumn);}
-	             }
+	id_tk = id() /* {if ((kind_tk.specialToken == null) || (kind_tk.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before kind of inner component in line "+id_tk.beginLine+" and column "+id_tk.beginColumn);}} */
 	<COLON> type = cFunApp()
-	(public_inner_component_list=publicInnerS())?  {return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
+	(public_inner_component_list=publicInnerS(id_tk.image))?  {return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
+}
+
+Unit unit_primitive():{Token unit_tk;Token id_tk;Slice_list slice_list = new Slice_list();}
+{   unit_tk=<UNIT> id_tk= id() <SEMICOLON> {return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
 }
 
 Unit unit():
 {Token unit_tk;Token id_tk;Slice_list slice_list = new Slice_list();Slice slice;}
 {
-	unit_tk=<UNIT> {if ((unit_tk.specialToken==null) || (unit_tk.specialToken.kind != NEWLINE)) throw new ParseException("New line expected before <unit> token in line " + unit_tk.beginLine+" and column "+unit_tk.beginColumn);}
-	id_tk=<ID>
-	(slice=slice(id_tk.image) {slice_list.add(slice);})* {return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
+	unit_tk=<UNIT>
+	/* {if ((unit_tk.specialToken==null) || (unit_tk.specialToken.kind != NEWLINE)) throw new ParseException("New line expected before <unit> token in line " + unit_tk.beginLine+" and column "+unit_tk.beginColumn);}*/
+	id_tk=id()
+	< BEGIN >	
+	(slice=slice(id_tk.image) {slice_list.add(slice);} )* 
+	< END > {return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
 }
 
 Slice slice(String unit):
 {Token slice_tk;Token id_tk;Token id_inner_tk;Token id_unit_inner_tk;}
 {
-	slice_tk=<SLICE> { if ((slice_tk.specialToken==null) || ((slice_tk.specialToken.kind != TABULATION) && (slice_tk.specialToken.kind != SPACE))) {throw new ParseException("Tabulation or space expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn);} if ((slice_tk.specialToken.specialToken==null) || (slice_tk.specialToken.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn); } } id_tk=<ID> <FROM> id_inner_tk=<ID> <DOT> id_unit_inner_tk=<ID> {return new Slice(id_tk.image,id_inner_tk.image,id_unit_inner_tk.image,unit,slice_tk.beginLine,slice_tk.beginColumn);}
+	slice_tk=<SLICE> id_tk=id() <FROM> id_inner_tk=id() <DOT> id_unit_inner_tk=id() <SEMICOLON>
+	           /* { if ((slice_tk.specialToken==null) ||
+	                  ((slice_tk.specialToken.kind != TABULATION) &&
+	                    (slice_tk.specialToken.kind != SPACE)))
+	                         {throw new ParseException("Tabulation or space expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn);} if ((slice_tk.specialToken.specialToken==null) || (slice_tk.specialToken.specialToken.kind != NEWLINE)) { throw new ParseException("New line expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn); } } */     
+	{return new Slice(id_tk.image,id_inner_tk.image,id_unit_inner_tk.image,unit,slice_tk.beginLine,slice_tk.beginColumn);}
 }
 
 Token kind():
 {Token kind_tk;}
 {
-	kind_tk = <COMPUTATION>	   {return kind_tk;}
+/*	kind_tk = <COMPUTATION>	   {return kind_tk;}
 	| kind_tk = <APPLICATION>  {return kind_tk;}
 	| kind_tk = <DATA>         {return kind_tk;}
 	| kind_tk = <QUALIFIER>    {return kind_tk;}
 	| kind_tk = <SYNCHRONIZER> {return kind_tk;}
 	| kind_tk = <ARCHITECTURE> {return kind_tk;}
 	| kind_tk = <ENVIRONMENT>  {return kind_tk;}
-	| kind_tk = <ENUMERATOR>   {return kind_tk;}
+	| kind_tk = <ENUMERATOR>   {return kind_tk;} */
+
+	kind_tk = <ID> { checkKind(kind_tk.image); return kind_tk; }
 	
 }
 
@@ -206,13 +246,13 @@ Extend extend():
 	extend_tk=<EXTENDS> config=cFunAppNoVar() {return new Extend(config,extend_tk.beginLine,extend_tk.beginColumn);}
 }
 
-ParamType_list paramTypeS():
-{ParamType_list paramtype_list = new ParamType_list();ParamType param_type;}
+ParamType_list paramTypeS(ParamType_list param_list):
+{ParamType param_type;}
 {
 	<OSQUARE>
-	param_type=paramType() {paramtype_list.add(param_type);}
-	(param_type=paramTypeSRest() {paramtype_list.add(param_type);})*
-	<CSQUARE> {return paramtype_list;}
+	param_type=paramType() {param_list.add(param_type);}
+	(param_type=paramTypeSRest() {param_list.add(param_type);})*
+	<CSQUARE> {return param_list;}
 }
 
 ParamType paramTypeSRest():
@@ -224,7 +264,7 @@ ParamType paramTypeSRest():
 Type_list cFunAppS():
 {Type_list type_list= new Type_list();Type type; Token form_id;}
 {
-	<OSQUARE> form_id = <ID> <SET> type=cFunApp() {type_list.add(form_id.image, type);} ( <COMMA> form_id = <ID> <SET> type=cFunApp() {type_list.add(form_id.image, type);})* <CSQUARE> {return type_list;}
+	<OSQUARE> form_id=id() <SET> type=cFunApp() {type_list.add(form_id.image, type);} ( <COMMA> form_id=id()  <SET> type=cFunApp() {type_list.add(form_id.image, type);})* <CSQUARE> {return type_list;}
 }
 
 Type cFunAppSRest():
@@ -233,18 +273,18 @@ Type cFunAppSRest():
 	 type=cFunApp() {return type;}
 }
 
-Public_Component_list publicInnerS():
+Public_Component_list publicInnerS(String owner_ref):
 {Public_Component_list public_component_list = new Public_Component_list();Public_Component public_component;}
 {
 	<OCURV>
-	public_component=publicInner() {public_component_list.add(public_component);}
-	(public_component=publicInnerSRest() {public_component_list.add(public_component);})*
+	public_component=publicInner(owner_ref) {public_component_list.add(public_component);}
+	(public_component=publicInnerSRest(owner_ref) {public_component_list.add(public_component);})*
 	<CCURV>
 	     {return public_component_list;}
 }
 
-Public_Component publicInnerSRest():
+Public_Component publicInnerSRest(String owner_ref):
 {Public_Component public_component;}
 {
-	<COMMA> public_component=publicInner() {return public_component;}
+	<COMMA> public_component=publicInner(owner_ref) {return public_component;}
 }

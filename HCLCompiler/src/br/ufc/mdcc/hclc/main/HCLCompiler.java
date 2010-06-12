@@ -35,7 +35,7 @@ public final class HCLCompiler {
         InputStreamReader in = null;
         
 		try {
-    	    file = new FileInputStream("h:\\temp\\teste.hcl");
+    	    file = new FileInputStream("/media/HERON/temp/teste.hcl");
     	    
     	    in = new InputStreamReader(file, "UTF-8");
         
@@ -45,10 +45,8 @@ public final class HCLCompiler {
 			
 			HComponentFactory factory = HComponentFactoryImpl.eInstance;		
 			
-			File fileOut = File.createTempFile("hclc_testing", ".hpe", new File("h:\\temp\\"));
+			File fileOut = File.createTempFile("hclc_testing", ".hpe", new File("/media/HERON/temp/"));
 									
-		
-			
 			factory.saveComponent(c, "file://" + fileOut.getAbsolutePath(), null);
 						
 			System.out.print("Finished !");

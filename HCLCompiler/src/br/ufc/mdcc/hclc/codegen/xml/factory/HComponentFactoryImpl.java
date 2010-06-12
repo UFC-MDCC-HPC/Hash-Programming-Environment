@@ -158,14 +158,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private Map<String,Config> innerComponents = new HashMap<String, Config>(); 
 	private Map<String, Boolean> isExposed = new HashMap<String, Boolean>();
 	
-	private HashMap<String, ParameterSupplyType> supplies = new HashMap<String,ParameterSupplyType>();
+	private HashMap<String, ParameterSupplyType> supplies_save = new HashMap<String,ParameterSupplyType>();
 	
 	private ParameterSupplyType newSupply(String var_id, String ref) {		
-		if (!supplies.containsKey(ref + var_id)) {
+		if (!supplies_save.containsKey(ref + var_id)) {
 			ParameterSupplyType s = factory.createParameterSupplyType();
 			s.setCRef(ref);
 			s.setVarName(var_id);			
-			supplies.put(ref + var_id, s);
+			supplies_save.put(ref + var_id, s);
 	        return s;
 		} else {
 			return null;
@@ -190,8 +190,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// save name
 		xH.setName(c.getName());
 		
+		
 		// save kind
-		xH.setKind(SupportedKinds.get(c.getKind()));
+		String kind = c.getKind();
+		kind = kind.substring(0,1).toUpperCase() + kind.substring(1,kind.length());
+		
+		xH.setKind(SupportedKinds.get(kind));
 		
 		// save base type
 		if (sC != null)
@@ -244,6 +248,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				  addParameterRenaming(ref, form_id,var_id);
 		    	  ParamType varParam = component.getParamtypelist().getById(var_id);
 		    	  this.var_applied.put(var_id, true);
+		    	  this.parameters.add(this.the_parameters.get(var_id));
+		    	  if (this.the_parameters_supplies.containsKey(var_id)) 
+		    	      this.supplies.add(the_parameters_supplies.get(var_id));
 				  ParameterSupplyType s = newSupply(var_id, refConfig.get(varParam.getConfig()));
 				  if (s != null)
 				     supplies.add(s);
@@ -314,7 +321,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		saveFusions(c, xI.getFusion());
 		saveInnerComponents(c, xI.getInnerComponent(), xI.getSupplyParameter(), xI.getParameter());
 		saveUnits(c, xI.getUnit());
-		saveEnumerator(c, xI.getEnumerator());
+		saveEnumerator(c, xI.getEnumerator(), xI.getSplit(), xI.getFusionsOfReplicators());
 	}
 
 	private void saveInnerComponents(Component c, EList<InnerComponentType> innerComponentsX, EList<ParameterSupplyType> supplies, EList<ParameterType> eList) {
@@ -323,27 +330,29 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		Usings_list usings = c.getUsings_list();
 
 		for (Entry<String, Config> icEntry : innerComponents.entrySet()) {
-			InnerComponentType icx = factory.createInnerComponentType();
-			
+			InnerComponentType icx = factory.createInnerComponentType();			
 			String cName = icEntry.getKey(); 
-			Config ic = icEntry.getValue();
+			if (!ports.containsKey(cName)) {
 			
-			boolean exposed = isExposed.containsKey(cName) ? isExposed.get(cName) : false;
-			// String hash_component_uid;
-			//String location = properties.getValue("local_location");
-			
-			String packageName = usings != null ? usings.packageOf(ic.getId()) : null;
-
-			icx.setExposed(exposed);
-			// icx.setHashComponentUID(hash_component_uid);
-			// icx.setLocation(location);
-			icx.setName(ic.getId());
-			icx.setLocalRef(cName);
-			icx.setPackage(packageName);
-			icx.setVersion("1.0.0.0");			
-			
-			saveCAppParameters(ic, icx.getParameter(), cName);
-			innerComponentsX.add(icx);
+				Config ic = icEntry.getValue();
+				
+				boolean exposed = isExposed.containsKey(cName) ? isExposed.get(cName) : false;
+				// String hash_component_uid;
+				//String location = properties.getValue("local_location");
+				
+				String packageName = usings != null ? usings.packageOf(ic.getId()) : null;
+	
+				icx.setExposed(exposed);
+				// icx.setHashComponentUID(hash_component_uid);
+				// icx.setLocation(location);
+				icx.setName(ic.getId());
+				icx.setLocalRef(cName);
+				icx.setPackage(packageName);
+				icx.setVersion("1.0.0.0");			
+				
+				saveCAppParameters(ic, icx.getParameter(), cName);
+				innerComponentsX.add(icx);
+			}
 		}
 		
 		
@@ -362,7 +371,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
         		 EList<String> cRefsX = f.getCRefs();
         		 for (String cRef : cRefs) 
         		 {
-        			 cRefsX.add(cRef);
+        			 if (this.direct_inner_components.containsKey(cRef)) {
+        			    cRefsX.add(cRef);
+        			 }
         		 }
             	 xFs.add(f);
         	 }
@@ -373,15 +384,24 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private Integer countUID = 0;
 	
 	private String uniqueID (String prefix) {
-		return prefix + "_" + countUID.toString();
+		return prefix + "_" + (countUID++).toString();
 	}
 	
 	private Map<String,Boolean> var_applied = new HashMap<String,Boolean>();
 	
 	private Map<Config, String> refConfig = new HashMap<Config,String>();
 	
-	private void saveParameters(Component c, EList<ParameterType> parameters, EList<ParameterSupplyType> supplies) {
+	private Map<String, ParameterType> the_parameters = new HashMap<String, ParameterType>();
+	private Map<String, ParameterSupplyType> the_parameters_supplies = new HashMap<String, ParameterSupplyType>();
+	
+	private EList<ParameterType> parameters = null;
+	private EList<ParameterSupplyType> supplies = null;
 
+	private void saveParameters(Component c,  EList<ParameterType> parameters,  EList<ParameterSupplyType> supplies) {
+
+		this.parameters = parameters;
+		this.supplies = supplies;
+		
 		// Traverse the context parameters of the configuration
 		if (c.getParamtypelist() != null) {
 			for (ParamType param : c.getParamtypelist()) 
@@ -395,15 +415,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				
 				refConfig.put(config, cRef);
 				
-				boolean applied = var_applied.containsKey(var_id);
-
-				if (applied) {
-					ParameterType p = newParameter(var_id, form_id, cRef);
-					parameters.add(p);
+				
+				ParameterType p = newParameter(var_id, form_id, cRef);
+				the_parameters.put(var_id, p);
 					
-					ParameterSupplyType s = newSupply(var_id, cRef);
-					if (s != null)
-					   supplies.add(s);
+				ParameterSupplyType s = newSupply(var_id, cRef);
+				if (s != null) {
+					the_parameters_supplies.put(var_id, s);
 				}
 				pickInnerComponentsFromCApp(cRef, config, innerComponents, supplies);
 			}
@@ -419,10 +437,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private Map<Inner_Component, List<String>> enumerator_splits = new HashMap<Inner_Component, List<String>>();
 
 	private Map<String, Inner_Component> actual_inner_components = new HashMap<String, Inner_Component>();
+	private Map<String, Inner_Component> direct_inner_components = new HashMap<String, Inner_Component>();
 
 	private boolean isEnumerator(Inner_Component ic) {		
 		String k = ic.getKind();
-		return k.equals(HCLParserConstants.ENUMERATOR);
+		String tkEnumerator = "enumerator";
+		boolean r = k.equals(tkEnumerator);;
+		return r; 
 	}
 	
 	private boolean isImportedEnumerator(Public_Component pc) {
@@ -432,20 +453,22 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	
 	private boolean isSliceEnumerator(Slice s) {        		
 		Inner_Component c = this.actual_inner_components.get(s.getIdInner());
-		String k = c.getKind();
-		return k.equals(HCLParserConstants.ENUMERATOR);		
+		String k = c.getKind() ;
+		String tkEnumerator = "enumerator";
+		boolean r = k.equals(tkEnumerator);;
+		return r; 
 	}
 
 	private boolean isEnumeratorSplit(Inner_Component ic) {
-		String k = ic.getKind();
-		return k.equals(HCLParserConstants.ENUMERATOR) && ic.getPublic_component_list().size() > 0;
+		return isEnumerator(ic) && ic.getPublic_component_list().size() > 0;
 	}
 
 	private void readInnerComponents(Component c, EList<ParameterSupplyType> supplies, EList<InnerRenamingType> renamings, EList<RecursiveEntryType> recursives, EList<ParameterType> parameters) {
 
 		for (Inner_Component inner : c.getInnercomplist()) {
+			actual_inner_components.put(inner.getId(), inner);
+			direct_inner_components.put(inner.getId(), inner);
 			if (!isEnumerator(inner)) {
-				actual_inner_components.put(inner.getId(), inner);
 				String access_type = inner.getAccess_type();
 				String cRef = inner.getId();
 				String kind = inner.getKind();
@@ -498,11 +521,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					Config config = param.getConfig();
 					innerComponents.put(cRef,config);
 					parameters.add(p);
-					// é acrescentado por saveParameters em innerComponents.
+					// ï¿½ acrescentado por saveParameters em innerComponents.
 				} else if (cType instanceof Config) {
 					Config ccType = (Config) cType;
 					isExposed.put(cRef, access_type.equals("public"));
-					this.pickInnerComponentsFromCApp(cRef, ccType, innerComponents, supplies);
+					delayedPickInnerComponentsFromCApp.put(cRef, ccType);
+					
 				}
 			}
 			else if (isEnumeratorSplit(inner)) {
@@ -520,8 +544,21 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				enumerators.put(inner, inner.getId());
 			}
 		}		
+		
+		for (Entry<String, List<String>> port : ports.entrySet()) {
+			this.direct_inner_components.remove(port.getKey());
+		}
+		
+		for (Entry<String,Config> p : delayedPickInnerComponentsFromCApp.entrySet()) {
+			String cRef = p.getKey();
+			Config ccType = p.getValue();
+			if (!ports.containsKey(cRef)) {
+		       this.pickInnerComponentsFromCApp(cRef, ccType, innerComponents, supplies);
+			}
+		}
 	}
 
+	private Map<String, Config> delayedPickInnerComponentsFromCApp = new HashMap<String, Config>();
 
 
 	private void saveCAppParameters(Config c, EList<ParameterRenaming> parameterRenamings, String cRef) {		
@@ -642,7 +679,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	
 	
-	private void saveEnumerator(Component c, EList<EnumeratorType> xI) {
+	private void saveEnumerator(Component c, EList<EnumeratorType> xI, EList<SplitType> splits, EList<FusionsOfReplicatorsType> fusions) {
 
 		for (Entry<Inner_Component, String> eentry : enumerators.entrySet()) {
 			// New enumerator.
@@ -653,7 +690,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			EList<EnumerableType> links = null;
 			
 			// create new replicator
-			EnumeratorType eX = factory.createEnumeratorType();
+			EnumeratorType eX = factory.createEnumeratorType(); xI.add(eX);
 			links = eX.getLinks();
 			eX.setCardinality(-1); // TODO: Support for unitary enumerators.
 			// eX.setFromRecursion(false); // TODO: Yet supposing no recursion.
@@ -665,24 +702,33 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String origin_str = null;
 			if (this.imported_enumerators.get(eid).size() > 1) {
 				// FUSED IMPORTED ENUMERATORS
-				FusionsOfReplicatorsType fOfr = factory.createFusionsOfReplicatorsType();
+				FusionsOfReplicatorsType fOfr = factory.createFusionsOfReplicatorsType(); 
 				EList<FusionOfReplicatorsType> fOfrList = fOfr.getFusionOfReplicators();
-
+            
+				int count = 0;
+				
 				boolean first = true;
 				for (Public_Component pc : this.imported_enumerators.get(eid)) {
-					if (first) {
-						eX.setRef(pc.getOldId());
-						eX.setVarId(pc.getNewId());
-						origin_str = pc.getOwnerInnerId();
-						origin.add(origin_str);
-						first = false;
+					if (!this.ports.containsKey(pc.getOwnerInnerId())) {
+						count ++;
+						if (first) {
+							eX.setRef(pc.getOldId());
+							eX.setVarId(pc.getNewId());
+							origin_str = pc.getOwnerInnerId();
+							origin.add(origin_str);
+							first = false;
+						}
+						FusionOfReplicatorsType ff = factory.createFusionOfReplicatorsType();
+						ff.setERef(pc.getOldId());
+						EList<String> orl = ff.getOriginRef();
+						orl.add(pc.getOwnerInnerId());
+						fOfrList.add(ff);
 					}
-					FusionOfReplicatorsType ff = factory.createFusionOfReplicatorsType();
-					ff.setERef(pc.getOldId());
-					EList<String> orl = ff.getOriginRef();
-					orl.add(pc.getOwnerInnerId());
-					fOfrList.add(ff);
 				}				
+				
+				if (count > 1)
+				   fusions.add(fOfr);
+				
 			} else if (this.imported_enumerators.get(eid).size() == 1) {
 				// SINGLE IMPORTED ENUMERATOR
 				Public_Component pc = this.imported_enumerators.get(eid).get(0);
@@ -698,9 +744,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			if (this.imported_enumerators.get(eid).size() >= 1) {
 				// ONLY IMPORTED UNITS MAY BE SPLIT
-				if (this.enumerator_splits.containsKey(eid)) {
-					List<String> esplit_list = this.enumerator_splits.get(eid);
-					SplitType split = factory.createSplitType();
+				if (this.enumerator_splits.containsKey(e)) {
+					List<String> esplit_list = this.enumerator_splits.get(e);
+					SplitType split = factory.createSplitType(); splits.add(split);
 					
 					EList<String> origin_list = split.getOriginRef();
 					EList<String> split_enum_list = split.getSplitEnumerator();
@@ -710,9 +756,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					split.setERef(eid);
 					split.setN(esplit_list.size());
 					origin_list.add(origin_str);
-					
+										
 					for (String eid_split : esplit_list) {
 						SplitLinkType split_link = factory.createSplitLinkType();
+						//split_link.setCRef(value);
+						//split_link.setURef(value);
+						split_link_list.add(split_link);
 						split_enum_list.add(eid_split);
 					}
 				}
@@ -720,23 +769,24 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				// ERROR !
 			}
 
-			
-			for (Slice es : slice_enumerators.get(eid)) {
-			    // new enumeration of unit (causes enumeration of entries and inners)
-				EnumerableUnitType link_unit = factory.createEnumerableUnitType(); 
-				link_unit.setRef(es.getUnit());
-			    links.add(link_unit);	
-			    if (!this.imported_enumerators.get(eid).contains(es.getIdInner())) { // ENTRY ENUMERATOR
-			    	EnumerableEntryType link_entry = factory.createEnumerableEntryType();
-			    	link_entry.setCRef(es.getIdInner());
-			    	link_entry.setURef(es.getIdUnitInner());
-			    	// link_entry.setIndex(??); //TODO:
-			    	links.add(link_entry);
-			    } else { // INNER ENUMERATOR
-			    	EnumerableComponentType link_inner = factory.createEnumerableComponentType();
-			    	link_inner.setRef(es.getIdInner());
-			    	links.add(link_inner);
-			    }
+			if (slice_enumerators.containsKey(eid)) {
+				for (Slice es : slice_enumerators.get(eid)) {
+				    // new enumeration of unit (causes enumeration of entries and inners)
+					EnumerableUnitType link_unit = factory.createEnumerableUnitType(); 
+					link_unit.setRef(es.getUnit());
+				    links.add(link_unit);	
+				    if (!this.imported_enumerators.get(eid).contains(es.getIdInner())) { // ENTRY ENUMERATOR
+				    	EnumerableEntryType link_entry = factory.createEnumerableEntryType();
+				    	link_entry.setCRef(es.getIdInner());
+				    	link_entry.setURef(es.getIdUnitInner());
+				    	// link_entry.setIndex(??); //TODO:
+				    	links.add(link_entry);
+				    } else { // INNER ENUMERATOR
+				    	EnumerableComponentType link_inner = factory.createEnumerableComponentType();
+				    	link_inner.setRef(es.getIdInner());
+				    	links.add(link_inner);
+				    }
+				}
 			}
 		}		
 			

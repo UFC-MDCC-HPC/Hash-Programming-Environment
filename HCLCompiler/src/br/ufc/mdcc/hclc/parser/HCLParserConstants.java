@@ -15,53 +15,49 @@ public interface HCLParserConstants {
   /** RegularExpression Id. */
   int SET = 2;
   /** RegularExpression Id. */
-  int COMMA = 3;
+  int BEGIN = 3;
   /** RegularExpression Id. */
-  int COLON = 4;
+  int END = 4;
   /** RegularExpression Id. */
-  int OCURV = 5;
+  int COMMA = 5;
   /** RegularExpression Id. */
-  int CCURV = 6;
+  int COLON = 6;
   /** RegularExpression Id. */
-  int OSQUARE = 7;
+  int SEMICOLON = 7;
   /** RegularExpression Id. */
-  int STAR = 8;
+  int OCURV = 8;
   /** RegularExpression Id. */
-  int CSQUARE = 9;
+  int CCURV = 9;
   /** RegularExpression Id. */
-  int SLICE = 10;
+  int OSQUARE = 10;
   /** RegularExpression Id. */
-  int FROM = 11;
+  int QUOTECHAR = 11;
   /** RegularExpression Id. */
-  int UNIT = 12;
+  int STAR = 12;
   /** RegularExpression Id. */
-  int DOT = 13;
+  int CSQUARE = 13;
   /** RegularExpression Id. */
-  int USING = 14;
+  int SLICE = 14;
   /** RegularExpression Id. */
-  int COMPUTATION = 15;
+  int FROM = 15;
   /** RegularExpression Id. */
-  int DATA = 16;
+  int PACKAGE = 16;
   /** RegularExpression Id. */
-  int ARCHITECTURE = 17;
+  int UNIT = 17;
   /** RegularExpression Id. */
-  int ENVIRONMENT = 18;
+  int DOT = 18;
   /** RegularExpression Id. */
-  int QUALIFIER = 19;
+  int USING = 19;
   /** RegularExpression Id. */
-  int SYNCHRONIZER = 20;
+  int ID = 20;
   /** RegularExpression Id. */
-  int APPLICATION = 21;
+  int STRING_ID = 21;
   /** RegularExpression Id. */
-  int ENUMERATOR = 22;
+  int NEWLINE = 22;
   /** RegularExpression Id. */
-  int ID = 23;
+  int TABULATION = 23;
   /** RegularExpression Id. */
-  int NEWLINE = 24;
-  /** RegularExpression Id. */
-  int TABULATION = 25;
-  /** RegularExpression Id. */
-  int SPACE = 26;
+  int SPACE = 24;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -75,27 +71,25 @@ public interface HCLParserConstants {
     "<EOF>",
     "\"extends\"",
     "\"=\"",
+    "\"{\"",
+    "\"}\"",
     "\",\"",
     "\":\"",
+    "\";\"",
     "\"(\"",
     "\")\"",
     "\"[\"",
+    "\"\\\"\"",
     "\"*\"",
     "\"]\"",
     "\"slice\"",
     "\"from\"",
+    "\"package\"",
     "\"unit\"",
     "\".\"",
     "\"using\"",
-    "\"computation\"",
-    "\"data\"",
-    "\"architecture\"",
-    "\"environment\"",
-    "\"qualifier\"",
-    "\"synchronizer\"",
-    "\"application\"",
-    "\"enumerator\"",
     "<ID>",
+    "<STRING_ID>",
     "<NEWLINE>",
     "\"\\t\"",
     "\" \"",
@@ -103,8 +97,8 @@ public interface HCLParserConstants {
     "\"//\"",
     "\"/*\"",
     "\"*/\"",
-    "<token of kind 31>",
-    "<token of kind 32>",
+    "<token of kind 29>",
+    "<token of kind 30>",
   };
 
 }

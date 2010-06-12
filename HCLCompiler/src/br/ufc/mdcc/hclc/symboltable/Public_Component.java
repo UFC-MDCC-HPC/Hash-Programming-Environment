@@ -7,10 +7,11 @@ public class Public_Component {
 	private int beginLine;
 	private int beginColumn;
 	
-	public Public_Component(String left_id, String right_id, String owner_id, int beginLine, int beginColumn){
+	public Public_Component(String left_id, String right_id, String owner_id, boolean is_imported_enumerator, int beginLine, int beginColumn){
 		this.right_id = right_id;
 		this.left_id = left_id;
 		this.setOwnerInnerId(owner_id);
+		this.setIsImportedEnumerator(is_imported_enumerator);
 		this.beginLine=beginLine;
 		this.beginColumn=beginColumn;
 	}

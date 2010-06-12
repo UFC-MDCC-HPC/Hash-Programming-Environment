@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class HCLParser implements HCLParserConstants {
 
+    private static String[] SUPPORTED_KINDS = {"application", "computation", "enumerator", "synchronizer", "service", "data", "qualifier", "environment", "architecture"};
+
     private static Component component = new Component();
 
         private static String buildPackageName(List<Token> items)
@@ -20,6 +22,20 @@ public class HCLParser implements HCLParserConstants {
             return r;
         }
 
+        private static void checkKind(String kind_str) throws ParseException
+        {
+          boolean found = false;
+
+          for (String kind : SUPPORTED_KINDS)
+          found = found || kind.equals(kind_str);
+
+      if (!found)
+      {
+           throw new Error("The kind " + kind_str + " is invalid or not supported !");
+      }
+
+    }
+
   static final public Component Start() throws ParseException {
  Component component;
     component = absConfig();
@@ -30,30 +46,40 @@ public class HCLParser implements HCLParserConstants {
 
   static final public Component absConfig() throws ParseException {
  Token kind_tk;
+ Token package_tk;
  Usings_list usings_list;
  Public_Component_list public_component_list;
  Inner_Component inner_comp = null;
+ Token pack_tk = null;
+ List<Token> pkList = new ArrayList<Token>();
+ String pkName = null;
  Inner_Component_list inner_comp_list = new Inner_Component_list();Unit_list unit_list = new Unit_list();Unit unit;
+    package_tk = jj_consume_token(PACKAGE);
+    if (jj_2_1(2)) {
+      pack_tk = jj_consume_token(ID);
+      jj_consume_token(DOT);
+                                                               pkList.add(pack_tk);
+    } else {
+      ;
+    }
+    pack_tk = jj_consume_token(ID);
+                                                                                                       pkList.add(pack_tk); pkName = buildPackageName(pkList);
+    jj_consume_token(SEMICOLON);
     usings_list = usings();
 
     kind_tk = kind();
                         component.setKind(kind_tk.image);
+                        component.setPackage(pkName);
                         component.setUsings_list(usings_list);
                         component.setBeginLine(kind_tk.beginLine);
                         component.setBeginColumn(kind_tk.beginColumn);
     public_component_list = header(component);
                                                     component.setPublic_component_list(public_component_list);
+    jj_consume_token(BEGIN);
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case COMPUTATION:
-      case DATA:
-      case ARCHITECTURE:
-      case ENVIRONMENT:
-      case QUALIFIER:
-      case SYNCHRONIZER:
-      case APPLICATION:
-      case ENUMERATOR:
+      case ID:
         ;
         break;
       default:
@@ -61,23 +87,37 @@ public class HCLParser implements HCLParserConstants {
         break label_1;
       }
       inner_comp = inner(public_component_list);
-                                                    inner_comp_list.add(inner_comp);
+      jj_consume_token(SEMICOLON);
+                                                                inner_comp_list.add(inner_comp);
     }
-                                                                                         component.setInnercomplist(inner_comp_list);
+                                                                                                     component.setInnercomplist(inner_comp_list);
     label_2:
     while (true) {
-      unit = unit();
-                      unit_list.add(unit);
+      if (jj_2_2(2)) {
+        unit = unit();
+      } else {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case UNIT:
+          unit = unit_primitive();
+          break;
+        default:
+          jj_la1[1] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+                                                                     unit_list.add(unit);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case UNIT:
         ;
         break;
       default:
-        jj_la1[1] = jj_gen;
+        jj_la1[2] = jj_gen;
         break label_2;
       }
     }
-                                               component.setUnitlist(unit_list);{if (true) return component;}
+    jj_consume_token(END);
+                  component.setUnitlist(unit_list);{if (true) return component;}
     throw new Error("Missing return statement in function");
   }
 
@@ -93,7 +133,7 @@ public class HCLParser implements HCLParserConstants {
         ;
         break;
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[3] = jj_gen;
         break label_3;
       }
       jj_consume_token(USING);
@@ -102,7 +142,7 @@ public class HCLParser implements HCLParserConstants {
         packageItem = jj_consume_token(ID);
         jj_consume_token(DOT);
                                                       packageItens.add(packageItem);
-        if (jj_2_1(2)) {
+        if (jj_2_3(2)) {
           ;
         } else {
           break label_4;
@@ -117,13 +157,33 @@ public class HCLParser implements HCLParserConstants {
                                                                                                                     cName = null;
         break;
       default:
-        jj_la1[3] = jj_gen;
+        jj_la1[4] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-                                                                                                                                       usings_list.addComponent(cName != null ? cName.image : null, buildPackageName(packageItens)); packageItens = new ArrayList<Token>();
+      jj_consume_token(SEMICOLON);
+                                                                                                                                                   usings_list.addComponent(cName != null ? cName.image : null, buildPackageName(packageItens)); packageItens = new ArrayList<Token>();
     }
     {if (true) return usings_list;}
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public Token id() throws ParseException {
+  Token id_tk;
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case ID:
+      id_tk = jj_consume_token(ID);
+      break;
+    case STRING_ID:
+      id_tk = jj_consume_token(STRING_ID);
+                                            id_tk.image = id_tk.image.substring(1,id_tk.image.length()-1);
+      break;
+    default:
+      jj_la1[5] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    {if (true) return id_tk;}
     throw new Error("Missing return statement in function");
   }
 
@@ -133,19 +193,19 @@ public class HCLParser implements HCLParserConstants {
                    component.setName(name.image);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case OCURV:
-      public_component_list = publicInnerS();
+      public_component_list = publicInnerS(null);
       break;
     default:
-      jj_la1[4] = jj_gen;
+      jj_la1[6] = jj_gen;
       ;
     }
+         component.setParamtypelist(param_list);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case OSQUARE:
-      param_list = paramTypeS();
-                                  component.setParamtypelist(param_list);
+      param_list = paramTypeS(param_list);
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[7] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -154,7 +214,7 @@ public class HCLParser implements HCLParserConstants {
                                component.setName_base(name_extend);
       break;
     default:
-      jj_la1[6] = jj_gen;
+      jj_la1[8] = jj_gen;
       ;
     }
                                                                          {if (true) return public_component_list;}
@@ -163,7 +223,7 @@ public class HCLParser implements HCLParserConstants {
 
   static final public ParamType paramType() throws ParseException {
  Token form_id;Token id;Config config;
-    form_id = jj_consume_token(ID);
+    form_id = id();
     jj_consume_token(SET);
     id = jj_consume_token(ID);
     jj_consume_token(COLON);
@@ -189,52 +249,67 @@ public class HCLParser implements HCLParserConstants {
       type_list = cFunAppS();
       break;
     default:
-      jj_la1[7] = jj_gen;
+      jj_la1[9] = jj_gen;
       ;
     }
-                                            {if (true) return new Config (id_tk.image,type_list,id_tk.beginLine,id_tk.beginColumn);}
+                                              {if (true) return new Config (id_tk.image,type_list,id_tk.beginLine,id_tk.beginColumn);}
     throw new Error("Missing return statement in function");
   }
 
-  static final public Public_Component publicInner() throws ParseException {
- Token id_tk_left = null, id_tk_right;
-    if (jj_2_2(2)) {
-      id_tk_left = jj_consume_token(ID);
+  static final public Public_Component publicInner(String owner_ref) throws ParseException {
+ Token id_tk_left = null, id_tk_right, tk_star = null;
+    if (jj_2_4(2)) {
+      id_tk_left = id();
       jj_consume_token(SET);
     } else {
       ;
     }
-    id_tk_right = jj_consume_token(ID);
-                             {if (true) return new Public_Component(id_tk_left !=  null ? id_tk_left.image : id_tk_right.image, id_tk_right.image, null,id_tk_right.beginLine,id_tk_right.beginColumn);}
+    id_tk_right = id();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case STAR:
+      tk_star = jj_consume_token(STAR);
+      break;
+    default:
+      jj_la1[10] = jj_gen;
+      ;
+    }
+                             {if (true) return new Public_Component(id_tk_left !=  null ? id_tk_left.image : id_tk_right.image, id_tk_right.image, owner_ref, tk_star != null,id_tk_right.beginLine,id_tk_right.beginColumn);}
     throw new Error("Missing return statement in function");
   }
 
   static final public Inner_Component inner(Public_Component_list public_component_list) throws ParseException {
  Token id_tk;Token kind_tk;Type type;Public_Component_list public_inner_component_list = new Public_Component_list();
     kind_tk = kind();
-    id_tk = jj_consume_token(ID);
-                      if ((kind_tk.specialToken == null) ||
-                          (kind_tk.specialToken.kind != NEWLINE)
-                         ) { {if (true) throw new ParseException("New line expected before kind of inner component in line "+id_tk.beginLine+" and column "+id_tk.beginColumn);}}
+    id_tk = id();
     jj_consume_token(COLON);
     type = cFunApp();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case OCURV:
-      public_inner_component_list = publicInnerS();
+      public_inner_component_list = publicInnerS(id_tk.image);
       break;
     default:
-      jj_la1[8] = jj_gen;
+      jj_la1[11] = jj_gen;
       ;
     }
-                                                        {if (true) return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
+                                                                   {if (true) return new Inner_Component(id_tk.image,type,public_component_list.indexOf(id_tk.image)!=-1 ? "public" : "private",kind_tk.image,public_inner_component_list,kind_tk.beginLine,kind_tk.beginColumn);}
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public Unit unit_primitive() throws ParseException {
+ Token unit_tk;Token id_tk;Slice_list slice_list = new Slice_list();
+    unit_tk = jj_consume_token(UNIT);
+    id_tk = id();
+    jj_consume_token(SEMICOLON);
+                                           {if (true) return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
     throw new Error("Missing return statement in function");
   }
 
   static final public Unit unit() throws ParseException {
  Token unit_tk;Token id_tk;Slice_list slice_list = new Slice_list();Slice slice;
     unit_tk = jj_consume_token(UNIT);
-                        if ((unit_tk.specialToken==null) || (unit_tk.specialToken.kind != NEWLINE)) {if (true) throw new ParseException("New line expected before <unit> token in line " + unit_tk.beginLine+" and column "+unit_tk.beginColumn);}
-    id_tk = jj_consume_token(ID);
+    /* {if ((unit_tk.specialToken==null) || (unit_tk.specialToken.kind != NEWLINE)) throw new ParseException("New line expected before <unit> token in line " + unit_tk.beginLine+" and column "+unit_tk.beginColumn);}*/
+            id_tk = id();
+    jj_consume_token(BEGIN);
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -242,69 +317,43 @@ public class HCLParser implements HCLParserConstants {
         ;
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[12] = jj_gen;
         break label_5;
       }
       slice = slice(id_tk.image);
                                    slice_list.add(slice);
     }
-                                                              {if (true) return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
+    jj_consume_token(END);
+                 {if (true) return new Unit(id_tk.image,slice_list,unit_tk.beginLine,unit_tk.beginColumn);}
     throw new Error("Missing return statement in function");
   }
 
   static final public Slice slice(String unit) throws ParseException {
  Token slice_tk;Token id_tk;Token id_inner_tk;Token id_unit_inner_tk;
     slice_tk = jj_consume_token(SLICE);
-                           if ((slice_tk.specialToken==null) || ((slice_tk.specialToken.kind != TABULATION) && (slice_tk.specialToken.kind != SPACE))) {{if (true) throw new ParseException("Tabulation or space expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn);}} if ((slice_tk.specialToken.specialToken==null) || (slice_tk.specialToken.specialToken.kind != NEWLINE)) { {if (true) throw new ParseException("New line expected before <slice> token in line "+slice_tk.beginLine+" and column "+slice_tk.beginColumn);} }
-    id_tk = jj_consume_token(ID);
+    id_tk = id();
     jj_consume_token(FROM);
-    id_inner_tk = jj_consume_token(ID);
+    id_inner_tk = id();
     jj_consume_token(DOT);
-    id_unit_inner_tk = jj_consume_token(ID);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          {if (true) return new Slice(id_tk.image,id_inner_tk.image,id_unit_inner_tk.image,unit,slice_tk.beginLine,slice_tk.beginColumn);}
+    id_unit_inner_tk = id();
+    jj_consume_token(SEMICOLON);
+         {if (true) return new Slice(id_tk.image,id_inner_tk.image,id_unit_inner_tk.image,unit,slice_tk.beginLine,slice_tk.beginColumn);}
     throw new Error("Missing return statement in function");
   }
 
   static final public Token kind() throws ParseException {
  Token kind_tk;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case COMPUTATION:
-      kind_tk = jj_consume_token(COMPUTATION);
-                                    {if (true) return kind_tk;}
-      break;
-    case APPLICATION:
-      kind_tk = jj_consume_token(APPLICATION);
-                                    {if (true) return kind_tk;}
-      break;
-    case DATA:
-      kind_tk = jj_consume_token(DATA);
-                                    {if (true) return kind_tk;}
-      break;
-    case QUALIFIER:
-      kind_tk = jj_consume_token(QUALIFIER);
-                                    {if (true) return kind_tk;}
-      break;
-    case SYNCHRONIZER:
-      kind_tk = jj_consume_token(SYNCHRONIZER);
-                                    {if (true) return kind_tk;}
-      break;
-    case ARCHITECTURE:
-      kind_tk = jj_consume_token(ARCHITECTURE);
-                                    {if (true) return kind_tk;}
-      break;
-    case ENVIRONMENT:
-      kind_tk = jj_consume_token(ENVIRONMENT);
-                                    {if (true) return kind_tk;}
-      break;
-    case ENUMERATOR:
-      kind_tk = jj_consume_token(ENUMERATOR);
-                                    {if (true) return kind_tk;}
-      break;
-    default:
-      jj_la1[10] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+    /*	kind_tk = <COMPUTATION>	   {return kind_tk;}
+    	| kind_tk = <APPLICATION>  {return kind_tk;}
+    	| kind_tk = <DATA>         {return kind_tk;}
+    	| kind_tk = <QUALIFIER>    {return kind_tk;}
+    	| kind_tk = <SYNCHRONIZER> {return kind_tk;}
+    	| kind_tk = <ARCHITECTURE> {return kind_tk;}
+    	| kind_tk = <ENVIRONMENT>  {return kind_tk;}
+    	| kind_tk = <ENUMERATOR>   {return kind_tk;} */
+    
+            kind_tk = jj_consume_token(ID);
+                         checkKind(kind_tk.image); {if (true) return kind_tk;}
     throw new Error("Missing return statement in function");
   }
 
@@ -316,11 +365,11 @@ public class HCLParser implements HCLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  static final public ParamType_list paramTypeS() throws ParseException {
- ParamType_list paramtype_list = new ParamType_list();ParamType param_type;
+  static final public ParamType_list paramTypeS(ParamType_list param_list) throws ParseException {
+ ParamType param_type;
     jj_consume_token(OSQUARE);
     param_type = paramType();
-                                paramtype_list.add(param_type);
+                                param_list.add(param_type);
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -328,14 +377,14 @@ public class HCLParser implements HCLParserConstants {
         ;
         break;
       default:
-        jj_la1[11] = jj_gen;
+        jj_la1[13] = jj_gen;
         break label_6;
       }
       param_type = paramTypeSRest();
-                                      paramtype_list.add(param_type);
+                                      param_list.add(param_type);
     }
     jj_consume_token(CSQUARE);
-                   {if (true) return paramtype_list;}
+                   {if (true) return param_list;}
     throw new Error("Missing return statement in function");
   }
 
@@ -350,10 +399,10 @@ public class HCLParser implements HCLParserConstants {
   static final public Type_list cFunAppS() throws ParseException {
  Type_list type_list= new Type_list();Type type; Token form_id;
     jj_consume_token(OSQUARE);
-    form_id = jj_consume_token(ID);
+    form_id = id();
     jj_consume_token(SET);
     type = cFunApp();
-                                                       type_list.add(form_id.image, type);
+                                                     type_list.add(form_id.image, type);
     label_7:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -361,17 +410,17 @@ public class HCLParser implements HCLParserConstants {
         ;
         break;
       default:
-        jj_la1[12] = jj_gen;
+        jj_la1[14] = jj_gen;
         break label_7;
       }
       jj_consume_token(COMMA);
-      form_id = jj_consume_token(ID);
+      form_id = id();
       jj_consume_token(SET);
       type = cFunApp();
-                                                                                                                                           type_list.add(form_id.image, type);
+                                                                                                                                        type_list.add(form_id.image, type);
     }
     jj_consume_token(CSQUARE);
-                                                                                                                                                                                             {if (true) return type_list;}
+                                                                                                                                                                                          {if (true) return type_list;}
     throw new Error("Missing return statement in function");
   }
 
@@ -382,11 +431,11 @@ public class HCLParser implements HCLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  static final public Public_Component_list publicInnerS() throws ParseException {
+  static final public Public_Component_list publicInnerS(String owner_ref) throws ParseException {
  Public_Component_list public_component_list = new Public_Component_list();Public_Component public_component;
     jj_consume_token(OCURV);
-    public_component = publicInner();
-                                        public_component_list.add(public_component);
+    public_component = publicInner(owner_ref);
+                                                 public_component_list.add(public_component);
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -394,22 +443,22 @@ public class HCLParser implements HCLParserConstants {
         ;
         break;
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[15] = jj_gen;
         break label_8;
       }
-      public_component = publicInnerSRest();
-                                              public_component_list.add(public_component);
+      public_component = publicInnerSRest(owner_ref);
+                                                       public_component_list.add(public_component);
     }
     jj_consume_token(CCURV);
               {if (true) return public_component_list;}
     throw new Error("Missing return statement in function");
   }
 
-  static final public Public_Component publicInnerSRest() throws ParseException {
+  static final public Public_Component publicInnerSRest(String owner_ref) throws ParseException {
  Public_Component public_component;
     jj_consume_token(COMMA);
-    public_component = publicInner();
-                                                {if (true) return public_component;}
+    public_component = publicInner(owner_ref);
+                                                         {if (true) return public_component;}
     throw new Error("Missing return statement in function");
   }
 
@@ -427,13 +476,59 @@ public class HCLParser implements HCLParserConstants {
     finally { jj_save(1, xla); }
   }
 
+  static private boolean jj_2_3(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_3(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  static private boolean jj_2_4(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_4(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
   static private boolean jj_3_2() {
-    if (jj_scan_token(ID)) return true;
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_10() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(20)) {
+    jj_scanpos = xsp;
+    if (jj_3R_11()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3_4() {
+    if (jj_3R_10()) return true;
     if (jj_scan_token(SET)) return true;
     return false;
   }
 
+  static private boolean jj_3R_9() {
+    if (jj_scan_token(UNIT)) return true;
+    if (jj_3R_10()) return true;
+    return false;
+  }
+
   static private boolean jj_3_1() {
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(DOT)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_11() {
+    if (jj_scan_token(STRING_ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_3() {
     if (jj_scan_token(ID)) return true;
     if (jj_scan_token(DOT)) return true;
     return false;
@@ -451,20 +546,15 @@ public class HCLParser implements HCLParserConstants {
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[14];
+  static final private int[] jj_la1 = new int[16];
   static private int[] jj_la1_0;
-  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
-      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x7f8000,0x1000,0x4000,0x800100,0x20,0x80,0x2,0x80,0x20,0x400,0x7f8000,0x8,0x8,0x8,};
+      jj_la1_0 = new int[] {0x100000,0x20000,0x20000,0x80000,0x101000,0x300000,0x100,0x400,0x2,0x400,0x1000,0x100,0x4000,0x20,0x20,0x20,};
    }
-   private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
-   }
-  static final private JJCalls[] jj_2_rtns = new JJCalls[2];
+  static final private JJCalls[] jj_2_rtns = new JJCalls[4];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -486,7 +576,7 @@ public class HCLParser implements HCLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -501,7 +591,7 @@ public class HCLParser implements HCLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -519,7 +609,7 @@ public class HCLParser implements HCLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -530,7 +620,7 @@ public class HCLParser implements HCLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -547,7 +637,7 @@ public class HCLParser implements HCLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -557,7 +647,7 @@ public class HCLParser implements HCLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -669,24 +759,21 @@ public class HCLParser implements HCLParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[33];
+    boolean[] la1tokens = new boolean[31];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 14; i++) {
+    for (int i = 0; i < 16; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
-          if ((jj_la1_1[i] & (1<<j)) != 0) {
-            la1tokens[32+j] = true;
-          }
         }
       }
     }
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < 31; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -713,7 +800,7 @@ public class HCLParser implements HCLParserConstants {
 
   static private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -722,6 +809,8 @@ public class HCLParser implements HCLParserConstants {
           switch (i) {
             case 0: jj_3_1(); break;
             case 1: jj_3_2(); break;
+            case 2: jj_3_3(); break;
+            case 3: jj_3_4(); break;
           }
         }
         p = p.next;
