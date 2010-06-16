@@ -185,7 +185,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		Extend sC = c.getName_base();
 		Usings_list usings = c.getUsings_list();		
 		
-		boolean isAbstract = sC != null && sC.isImplements();
+		boolean isAbstract = !(sC != null && sC.isImplements());
 		
 		// save name
 		xH.setName(c.getName());
@@ -248,7 +248,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				  addParameterRenaming(ref, form_id,var_id);
 		    	  ParamType varParam = component.getParamtypelist().getById(var_id);
 		    	  this.var_applied.put(var_id, true);
-		    	  this.parameters.add(this.the_parameters.get(var_id));
+		    	  ParameterType par = this.the_parameters.get(var_id);
+		    	  this.parameters.add(par);
 		    	  if (this.the_parameters_supplies.containsKey(var_id)) 
 		    	      this.supplies.add(the_parameters_supplies.get(var_id));
 				  ParameterSupplyType s = newSupply(var_id, refConfig.get(varParam.getConfig()));
@@ -322,6 +323,97 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		saveInnerComponents(c, xI.getInnerComponent(), xI.getSupplyParameter(), xI.getParameter());
 		saveUnits(c, xI.getUnit());
 		saveEnumerator(c, xI.getEnumerator(), xI.getSplit(), xI.getFusionsOfReplicators());
+		resolveSplitsLinks();
+	}
+
+	private void resolveSplitsLinks() {
+
+         for (Entry<Inner_Component, SplitType> entry : this.delayResolveSplits.entrySet()) {
+        	 Inner_Component e = entry.getKey();
+        	 SplitType split = entry.getValue();
+        	 EList<SplitLinkType> splitLinkList = split.getSplitLink();        	 
+        	 String eRef = split.getERef();
+        	 List<String> splitEnums = split.getSplitEnumerator();
+        	 
+        	 // 1. PARA TODO componentes direto C que expõe o enumerador eRef mas não expõe os enumeradores em splitEnums.        	 
+        	 List<String> rList1 = new ArrayList<String>();
+        	 List<Public_Component> l = this.imported_enumerators.get(eRef);
+        	 for (Public_Component pc1 : l) {
+        		 if (!rList1.contains(pc1.getOwnerInnerId())) {
+        		    rList1.add(pc1.getOwnerInnerId());
+        		 }
+        	 }
+        	 
+        	 for (String eRefSplitEnum : splitEnums) {
+            	 List<String> rList2 = new ArrayList<String>();
+            	 List<Public_Component> l2 = this.imported_enumerators.get(eRefSplitEnum);
+            	 for (Public_Component pc2 : l2) {
+            		 if (!rList2.contains(pc2.getOwnerInnerId())) {
+            		    rList2.add(pc2.getOwnerInnerId());
+            		 }
+            	 }
+            	 rList1.removeAll(rList2);        		 
+        	 }
+        	 // pegar somente os diretos ...
+        	 Map<String, String> cs = new HashMap<String, String>();
+        	 for (String pc : rList1) {
+        		 String cRef = pc;
+        		 if (!ports.containsKey(cRef)) {
+        			 cs.put(cRef, pc);
+        		 }
+        	 }        	         	 
+        	 
+        	 // 2. PARA CADA unidade U de C que é fatia de múltiplas unidades replicadas por enumeradores em splitEnums.
+        	 for (Entry<String, String> c : cs.entrySet()) 
+        	 {
+    			 boolean ok = true;
+    			 String uRef = null;
+    			 String cRef = null;
+    			 String uRefInner = null;
+        		 List<UnitSliceType> ss = this.slicesOfInner.get(c.getKey());
+        		 List<UnitSliceType> ssWriteReplica = new ArrayList<UnitSliceType>();
+        		 for (UnitSliceType s : ss) {
+        			 cRef = s.getCRef();
+        			 uRef = this.unitOfSlice.get(s);
+        			 uRefInner = s.getURef();
+        			 List<Slice> enum_ss = this.unitEnumerators.get(uRef);
+        			 List<String> ll = new ArrayList<String>();
+        			 for (Slice enum_s : enum_ss) {        				 
+        				 // Enumerator name
+        				 String eRef1 = enum_s.getIdInner();
+        				 if (splitEnums.contains(eRef1) && !ll.contains(eRef1)) {
+        			        ll.add(eRef1);
+        			        ssWriteReplica.add(s);
+        				 } else {
+        					 ok = false;
+        					 break;
+        				 }
+        			 }
+        		 }
+        		 if (ok) {
+               	   // 3. Criar splitLink cRef = C e uRef  = U.
+                    SplitLinkType splitLink = factory.createSplitLinkType();
+                    splitLink.setCRef(cRef);
+                    splitLink.setURef(uRefInner);
+                    splitLinkList.add(splitLink);
+                    int count = 1;
+                    for (UnitSliceType slicex : ssWriteReplica) {
+                    	slicex.setReplica(count++);
+                    }
+                    
+        		 } else {
+        			 ssWriteReplica.clear();
+        		 }
+        	 }
+        	 
+        	 
+        		 
+        	 
+        	 
+        	 
+        	 
+         }
+		
 	}
 
 	private void saveInnerComponents(Component c, EList<InnerComponentType> innerComponentsX, EList<ParameterSupplyType> supplies, EList<ParameterType> eList) {
@@ -413,8 +505,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				String cName = config.getId();
 				config.setId(cName);
 				
-				refConfig.put(config, cRef);
-				
+				refConfig.put(config, cRef);				
 				
 				ParameterType p = newParameter(var_id, form_id, cRef);
 				the_parameters.put(var_id, p);
@@ -438,6 +529,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private Map<String, Inner_Component> actual_inner_components = new HashMap<String, Inner_Component>();
 	private Map<String, Inner_Component> direct_inner_components = new HashMap<String, Inner_Component>();
+	private List<String> splitEnumerators = new ArrayList<String>();
 
 	private boolean isEnumerator(Inner_Component ic) {		
 		String k = ic.getKind();
@@ -520,7 +612,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					ParameterType p = newParameter(cvType.getId(), param.getForm_id(), cRef);
 					Config config = param.getConfig();
 					innerComponents.put(cRef,config);
-					parameters.add(p);
+					// parameters.add(p);
 					// ï¿½ acrescentado por saveParameters em innerComponents.
 				} else if (cType instanceof Config) {
 					Config ccType = (Config) cType;
@@ -537,7 +629,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				    // pc.getOldId() ignored.
 					eid_splits.add(pc.getNewId());
 				}
-				enumerator_splits.put(inner, eid_splits);		
+				enumerator_splits.put(inner, eid_splits);	
+				splitEnumerators.addAll(eid_splits);
+				
 				enumerators.put(inner, inner.getId());
 			} else {
 				// SIMPLE ENUMERATOR
@@ -559,6 +653,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private Map<String, Config> delayedPickInnerComponentsFromCApp = new HashMap<String, Config>();
+
 
 
 	private void saveCAppParameters(Config c, EList<ParameterRenaming> parameterRenamings, String cRef) {		
@@ -636,6 +731,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 	
+	private Map<String, List<UnitSliceType>> slicesOfInner = new HashMap<String, List<UnitSliceType>>();
+	private Map<String, List<Slice>> unitEnumerators = new HashMap<String, List<Slice>>();
+	private Map<UnitSliceType, String> unitOfSlice = new HashMap<UnitSliceType,String>();
+	
 	private void saveUnitSlices(Slice_list slice_list, EList slicesX) {
 
 				
@@ -653,51 +752,74 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					sName = slice.getId();
 					boolean transitive;
 	
-					//sliceX.setReplica(replica);
+					sliceX.setReplica(0);
 					sliceX.setCRef(cRef);
 					sliceX.setURef(uRef);
 					sliceX.setSliceName(sName);
-					//sliceX.setVisualDescription(v);
-					sliceX.setTransitive(this.ports.containsKey(cRef));
-	
-					//saveVisualDescription(slice, v);
+					sliceX.setTransitive(this.ports.containsKey(cRef));				
 	
 					slicesX.add(sliceX);
+					
+					List<UnitSliceType> slices = null;
+					if (!slicesOfInner.containsKey(cRef)) {
+						slices = new ArrayList<UnitSliceType>();
+						slicesOfInner.put(cRef, slices);
+					} else {
+						slices = slicesOfInner.get(cRef);
+					}
+					slices.add(sliceX);
+					this.unitOfSlice.put(sliceX, slice.getUnit());
+					
+					
 			    } else {
+			    	String cRef = slice.getIdInner();
+			    	String uRef = slice.getUnit();
 			    	List<Slice> list = null;
-			    	if (slice_enumerators.containsKey(slice.getIdInner())) {
-			    		list = slice_enumerators.get(slice.getIdInner());
+			    	
+			    	if (slice_enumerators.containsKey(cRef)) {
+			    		list = slice_enumerators.get(cRef);
 			    	} else {
 			    	    list = new ArrayList<Slice>();
-			    	    slice_enumerators.put(slice.getIdInner(), list);
+			    	    slice_enumerators.put(cRef, list);
 			    	}
 		    		list.add(slice);
+		    		
+		    		// Remember unit enumerators
+					if (!unitEnumerators.containsKey(uRef)) {
+						list = new ArrayList<Slice>();
+						unitEnumerators.put(uRef, list);
+					} else {
+						list = unitEnumerators.get(uRef);
+					}
+					list.add(slice);
+		    		
+		    		
 			    }
 			}
 		}
 	
 
-	
+	private Map<Inner_Component, SplitType> delayResolveSplits = new HashMap<Inner_Component, SplitType>();
+
 	
 	private void saveEnumerator(Component c, EList<EnumeratorType> xI, EList<SplitType> splits, EList<FusionsOfReplicatorsType> fusions) {
 
 		for (Entry<Inner_Component, String> eentry : enumerators.entrySet()) {
 			// New enumerator.
-			// TODO: Treat SPLITS !!!!
 			Inner_Component e = eentry.getKey();
 			String eid = eentry.getValue();
-				
-			EList<EnumerableType> links = null;
+			
+    		EList<EnumerableType> links = null;
 			
 			// create new replicator
 			EnumeratorType eX = factory.createEnumeratorType(); xI.add(eX);
 			links = eX.getLinks();
 			eX.setCardinality(-1); // TODO: Support for unitary enumerators.
 			// eX.setFromRecursion(false); // TODO: Yet supposing no recursion.
-			eX.setFromSplit(false);
+			eX.setFromSplit(splitEnumerators.contains(eid));
 			// eX.setVisualDescription(value);
-			links = eX.getLinks();
 			EList<String> origin = eX.getOriginRef();			
+			eX.setRef(eid);			
 			
 			String origin_str = null;
 			if (this.imported_enumerators.get(eid).size() > 1) {
@@ -708,22 +830,26 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				int count = 0;
 				
 				boolean first = true;
+				
+				// Fuse-me, too.
+				FusionOfReplicatorsType ffme = factory.createFusionOfReplicatorsType();
+				ffme.setERef(eid);
+				fOfrList.add(ffme);
+				
 				for (Public_Component pc : this.imported_enumerators.get(eid)) {
 					if (!this.ports.containsKey(pc.getOwnerInnerId())) {
 						count ++;
 						if (first) {
-							eX.setRef(pc.getOldId());
 							eX.setVarId(pc.getNewId());
 							origin_str = pc.getOwnerInnerId();
-							origin.add(origin_str);
 							first = false;
-						}
+						} 
 						FusionOfReplicatorsType ff = factory.createFusionOfReplicatorsType();
-						ff.setERef(pc.getOldId());
+						ff.setERef(pc.getNewId());
 						EList<String> orl = ff.getOriginRef();
 						orl.add(pc.getOwnerInnerId());
 						fOfrList.add(ff);
-					}
+					}					
 				}				
 				
 				if (count > 1)
@@ -743,14 +869,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 
 			if (this.imported_enumerators.get(eid).size() >= 1) {
+				
+				// CREATE IMPORTED ENUMERATORS
+				for (Public_Component imp_enum : this.imported_enumerators.get(eid)) { 
+					if (!ports.containsKey(imp_enum.getOwnerInnerId())) {
+						EnumeratorType eX_imp = factory.createEnumeratorType(); xI.add(eX_imp);
+						links = eX_imp.getLinks();
+						eX_imp.setCardinality(-1); // TODO: Support for unitary enumerators.
+						eX_imp.setFromSplit(false);
+						eX_imp.getOriginRef().add(imp_enum.getOwnerInnerId());
+						eX_imp.setRef(imp_enum.getOldId());
+						eX_imp.setVarId(imp_enum.getNewId());
+					}
+				}
+
 				// ONLY IMPORTED UNITS MAY BE SPLIT
 				if (this.enumerator_splits.containsKey(e)) {
 					List<String> esplit_list = this.enumerator_splits.get(e);
+					
 					SplitType split = factory.createSplitType(); splits.add(split);
 					
 					EList<String> origin_list = split.getOriginRef();
 					EList<String> split_enum_list = split.getSplitEnumerator();
-					EList<SplitLinkType> split_link_list = split.getSplitLink();
+					//EList<SplitLinkType> split_link_list = split.getSplitLink();
+					
+					delayResolveSplits.put(e, split);
 					
 					//split.setCRefPermutation(value);
 					split.setERef(eid);
@@ -758,13 +901,19 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					origin_list.add(origin_str);
 										
 					for (String eid_split : esplit_list) {
-						SplitLinkType split_link = factory.createSplitLinkType();
-						//split_link.setCRef(value);
-						//split_link.setURef(value);
-						split_link_list.add(split_link);
 						split_enum_list.add(eid_split);
 					}
+					
+					// SplitLinkType split_link = factory.createSplitLinkType();
+					//split_link.setCRef(value);
+					//split_link.setURef(value);
+					// split_link_list.add(split_link);
+					
 				}
+				
+				
+				
+				
 			} else {
 				// ERROR !
 			}
@@ -777,10 +926,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				    links.add(link_unit);	
 				    if (!this.imported_enumerators.get(eid).contains(es.getIdInner())) { // ENTRY ENUMERATOR
 				    	EnumerableEntryType link_entry = factory.createEnumerableEntryType();
-				    	link_entry.setCRef(es.getIdInner());
-				    	link_entry.setURef(es.getIdUnitInner());
-				    	// link_entry.setIndex(??); //TODO:
-				    	links.add(link_entry);
+				    	String cRef = es.getIdInner();
+				    	String uRef = es.getIdUnitInner();
+				    	Inner_Component inner = this.actual_inner_components.get(cRef);
+				    	if (inner != null && !this.isEnumerator(inner)) {
+					    	link_entry.setCRef(cRef);
+					    	link_entry.setURef(uRef);
+					    	// link_entry.setIndex(??); //TODO:
+					    	links.add(link_entry);
+				    	}
 				    } else { // INNER ENUMERATOR
 				    	EnumerableComponentType link_inner = factory.createEnumerableComponentType();
 				    	link_inner.setRef(es.getIdInner());
