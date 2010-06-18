@@ -32,7 +32,7 @@ public class HCLCompile {
 			
 			HComponentFactory factory = HComponentFactoryImpl.eInstance;		
 			
-			factory.saveComponent(c, pathOut, null);
+			factory.saveComponent(c, "file://" + pathOut, null);
 									
 		} catch (ParseException e) {
 			
@@ -45,6 +45,7 @@ public class HCLCompile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			HCLParser.ReInit(in);
 			in.close();
 			file.close();
 		}
