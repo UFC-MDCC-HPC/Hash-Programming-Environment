@@ -35,7 +35,7 @@ public final class HCLCompiler {
         InputStreamReader in = null;
         
 		try {
-    	    file = new FileInputStream("H:\\runtime-workspace\\jefferson.computation.AppExample\\AppExample.hcl");
+    	    file = new FileInputStream("/media/HERON/runtime-workspace/jefferson.computation.AppExample/AppExample.hcl");
     	    
     	    in = new InputStreamReader(file, "UTF-8");
         
@@ -47,7 +47,7 @@ public final class HCLCompiler {
 			
 			// File fileOut = File.createTempFile("AppExample", ".hpe", new File("H:\\runtime-workspace\\jefferson.computation.AppExample\\"));
 									
-			factory.saveComponent(c, "file://H:\\runtime-workspace\\jefferson.computation.AppExample\\AppExample.hpe", null);
+			factory.saveComponent(c, "file:///media/HERON/runtime-workspace/jefferson.computation.AppExample/AppExample.hpe", null);
 						
 			System.out.print("Finished !");
 			
