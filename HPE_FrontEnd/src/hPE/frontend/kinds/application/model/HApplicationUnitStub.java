@@ -17,7 +17,7 @@ public class HApplicationUnitStub extends HComputationUnitStub implements IHAppl
 	}
 	
 	public HArchitectureUnit getProcessor() {
-	    return ((HApplicationUnit)this.getRealUnit()).getProcessor();	
+	    return ((HApplicationUnit)this.getActualUnit()).getProcessor();	
 	}
 	
 

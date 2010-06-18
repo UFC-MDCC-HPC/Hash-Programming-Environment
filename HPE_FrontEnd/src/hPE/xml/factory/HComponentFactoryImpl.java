@@ -134,6 +134,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.util.EList;
@@ -376,7 +377,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					mC1.put(xInnerC.getLocalRef(), xInnerC);
 		
 					String name = xInnerC.getName();	
-					URI locationUri = URI.createURI(xInnerC.getLocation());
+					URI locationUri = xInnerC.getLocation() != null ?  URI.createURI(xInnerC.getLocation()) : 
+						                                               URI.createURI(HPEProperties.getInstance().getValue("local_location"));
 					String package_ = xInnerC.getPackage();
 					String ref = xInnerC.getLocalRef();
 					String version = xInnerC.getVersion();
@@ -435,14 +437,23 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					
 					mC2.put(xInnerC, innerC);
 		
-					int x = (int) xInnerC.getVisualDescription().getX();
-					int y = (int) xInnerC.getVisualDescription().getY();
-					int w = (int) xInnerC.getVisualDescription().getW();
-					int h = (int) xInnerC.getVisualDescription().getH();
-					int r = xInnerC.getVisualDescription().getColor().getR();
-					int g = xInnerC.getVisualDescription().getColor().getG();
-					int b = xInnerC.getVisualDescription().getColor().getB();
-					Color color = new Color(null, r, g, b);
+					int x,y,w,h,r,g,b;
+					Color color;
+					if (xInnerC.getVisualDescription() != null) {
+						x = (int) xInnerC.getVisualDescription().getX();
+						y = (int) xInnerC.getVisualDescription().getY();
+						w = (int) xInnerC.getVisualDescription().getW();
+						h = (int) xInnerC.getVisualDescription().getH();
+						r = xInnerC.getVisualDescription().getColor().getR();
+						g = xInnerC.getVisualDescription().getColor().getG();
+						b = xInnerC.getVisualDescription().getColor().getB();
+						color = new Color(null, r, g, b);
+					} else {
+					   	x = 0; y = 0; w = 100; h = 100;
+					   	color = ColorConstants.white;
+					}
+					
+					
 		
 					Point where = new Point(x, y);
 					component.loadComponent(innerC, where);
@@ -729,8 +740,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				String uRef = sl.getURef();
 
 				HComponent ic = mC2.get(mC1.get(cRef));
-				HLinkToReplicator l = enumerator.getLinkForItem(ic
-						.fetchUnit(uRef));
+				HLinkToReplicator l = enumerator.getLinkForItem(ic.fetchUnit(uRef));
 				if (l != null) {
 					sLinks.add(l);
 				} else
@@ -763,7 +773,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void setupParameters(ComponentBodyType xCinfo) {
 
-		for (ParameterType param : xCinfo.getParameter()) {
+		EList<ParameterType> parametersX = xCinfo.getParameter();
+		
+		for (ParameterType param : parametersX) {
 			String formFieldId = param.getFormFieldId();
 			String sBaseC = param.getComponentRef();
 			HComponent baseC = mC2.get(mC1.get(sBaseC));
@@ -832,6 +844,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		mR2 = new HashMap<EnumeratorType, HReplicator>();
 		prs = new ArrayList<Pair<HReplicator, EnumerableType>>();
 
+		Map<HReplicator, EnumeratorType> delayConfigureReplicator = new HashMap<HReplicator, EnumeratorType>();
+
 		for (EnumeratorType xE : xCinfo.getEnumerator()) {
 			String ref = xE.getRef().trim();
 			boolean fromSplit = xE.isFromSplit();
@@ -839,10 +853,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			List<String> oRef = xE.getOriginRef();
 			HReplicator r = null;
 			if (!oRef.isEmpty()) {
-				List<String> ss = new ArrayList<String>();
+				List<String> oRefCopy = new ArrayList<String>();
 				for (String s : oRef)
-					ss.add(s);
-				String oCRef = ss.get(0);
+					oRefCopy.add(s);
+				String oCRef = oRefCopy.get(0);
 				HComponent oC = mC2.get(mC1.get(oCRef));
 				if (oC == null) {
 					System.err.println("Origin component " + oCRef + " of replicator " + ref + " was not found !");
@@ -851,7 +865,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		        		    "Loading Component Error",
 		        		    JOptionPane.ERROR_MESSAGE);
 				} else {
-					r = oC.lookForReplicator(ref, ss);				
+					r = oC.lookForReplicator(ref, oRefCopy);				
 					
 					if (r == null) {	
 						System.err.println("Replicator " + ref + " not found in origin component " + oCRef + " !");
@@ -873,21 +887,32 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				r.setRef(ref);
 			}
 
-			if (r != null)
-				configureReplicator(r, xE);
-
+			if (r != null) {
+				delayConfigureReplicator.put(r,xE);
+			}
+		}
+		
+		for (Entry<HReplicator, EnumeratorType> e : delayConfigureReplicator.entrySet()) {
+			configureReplicator(e.getKey(), e.getValue());			
 		}
 	}
+	
+	
 
 	private void configureReplicator(HReplicator r, EnumeratorType xE) {
 
 		String varId = xE.getVarId();
 		int factor = xE.getCardinality();
-		int x = (int) xE.getVisualDescription().getX();
-		int y = (int) xE.getVisualDescription().getY();
-		int w = (int) xE.getVisualDescription().getW();
-		int h = (int) xE.getVisualDescription().getH();
-
+		int x, y, w, h;
+		if (xE.getVisualDescription() != null) {
+			x = (int) xE.getVisualDescription().getX();
+			y = (int) xE.getVisualDescription().getY();
+			w = (int) xE.getVisualDescription().getW();
+			h = (int) xE.getVisualDescription().getH();
+		} else {
+			x = y = w = h = 0;
+		}
+		
 		r.setVaridForced(varId);
 		if (factor > 0)
 			r.setFactor(factor);
@@ -942,10 +967,16 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			VisualElementAttributes v = xCheader.getVisualAttributes();
 			if (v!=null) {
-				int r = v.getColor().getR();
-				int g = v.getColor().getG();
-				int b = v.getColor().getB();
-				Color color = new Color(null, r, g, b);
+				Color color;
+				if (v.getColor() != null) {
+					int r = v.getColor().getR();
+					int g = v.getColor().getG();
+					int b = v.getColor().getB();
+					color = new Color(null, r, g, b);
+				} else {
+					color = ColorConstants.white;
+				}
+				
 				component.setColor(color);
 			}
 			
@@ -974,6 +1005,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				loadEnumerators(xCinfo);
 				loadSplits(xCinfo); 
 				setupParameters(xCinfo);
+//				fuseReplicators(xCinfo);
 				supplyParameters(xCinfo);
 				setupVariableNamesOfTopLevelInners(xCinfo);
 				laterFetchPorts();
@@ -1178,8 +1210,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			EList<String> cs = f.getCRefs();
 			String pRef = f.getPRef();
 			for (String cRef : cs) {
-				toFuse.add(mC2.get(mC1.get(cRef)).getExposedComponentByName(
-						pRef));
+				HComponent c = mC2.get(mC1.get(cRef)).getExposedComponentByName(pRef);
+				if (!toFuse.contains(c))
+					toFuse.add(c);
 			}
 
 			HComponent aux = null;
@@ -1204,7 +1237,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 								(HComponent) source, (HComponent) target);
 						if (c_.canExecute())
 							c_.execute();
-						else {
+						else {	
 							String message = "CANNOT FUSE INNER COMPONENTS ! source = " + source.getRef() + " (" + source.getComponentName() + ") target = " + target.getRef() + " (" + target.getComponentName() + ")";
 							System.err.println(message);
 							JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
@@ -1720,8 +1753,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					}
 
 					saveSplitLinks(split.getSplitLinks(), splitX.getSplitLink());
-					saveSplitEnumerators(split.getTheReplicators(), splitX
-							.getSplitEnumerator());
+					saveSplitEnumerators(split.getTheReplicators(), splitX.getSplitEnumerator());
 
 					splitsX.add(splitX);
 				}
@@ -2504,10 +2536,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 					// check.add(cRef + uRef);
 
-					int x = (int) uSliceX.getVisualDescription().getX();
-					int y = (int) uSliceX.getVisualDescription().getY();
-					int w = (int) uSliceX.getVisualDescription().getW();
-					int h = (int) uSliceX.getVisualDescription().getH();
+					int x, y, w, h;
+					if (uSliceX.getVisualDescription() != null) {
+						x = (int) uSliceX.getVisualDescription().getX();
+						y = (int) uSliceX.getVisualDescription().getY();
+						w = (int) uSliceX.getVisualDescription().getW();
+						h = (int) uSliceX.getVisualDescription().getH();
+					} else {
+						x = y = 0;
+						w = h = HUnitSlice.diameter;
+					}
+					
 
 					if (mC1.containsKey(cRef)) {
 						HComponent c1 = mC2.get(mC1.get(cRef));

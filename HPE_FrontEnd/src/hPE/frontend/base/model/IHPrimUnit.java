@@ -104,6 +104,7 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 	public abstract void setLinkToReplicator(Collection<HLinkToReplicator> linkToReplicator);
 
 	public abstract boolean isReplicatedBy(IReplicator which_replicator);
+	public abstract boolean isReplicatedByVar(String varId);
 
 	/**
 	 * Getter of the property <tt>observable</tt>
@@ -253,7 +254,7 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 	
 	public List<HPrimUnit> getTopUnits(Map<HPrimUnit,Integer> path);
 	
-	public IHPrimUnit getRealUnit();
+	public IHPrimUnit getActualUnit();
 
 	public boolean isClone();
 	

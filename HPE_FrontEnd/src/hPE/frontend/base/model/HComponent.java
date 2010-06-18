@@ -394,9 +394,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 		}
 
-		// Ao criar uma fatia, é necessário atualizar as portas da interfce para
+		// Ao criar uma fatia, ï¿½ necessï¿½rio atualizar as portas da interfce para
 		// gerar as portas associadas a fatia sempre que o componente interno
-		// for público.
+		// for pï¿½blico.
 		try {
 			updatePorts();
 		} catch (HPEAbortException e) {
@@ -964,9 +964,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				.getTopConfiguration()).getAllInnerConfigurations());
 
 		List<HComponent> Cs_ = c1.getAllInnerConfigurations();
-		// Nessa linha foi corrigido um erro em 19Mar2010. Ao invés de "c1",
+		// Nessa linha foi corrigido um erro em 19Mar2010. Ao invï¿½s de "c1",
 		// tinha "this".
-		// Sintoma: Não reconhecia o parâmetro de contexto ...
+		// Sintoma: Nï¿½o reconhecia o parï¿½metro de contexto ...
 
 		Cs.removeAll(Cs_);
 		this.removeComponent(c1, Cs, c1);
@@ -1969,14 +1969,19 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return l;
 	}
 
-	static public void supersede(Entry<HComponent, HComponent> entry,
-			HComponent c2, String newVarName, HComponent oModel) {
+	static public void supersede(HComponent c1,  HComponent c2) {
+				
+	    supersede(c1, c2, null, null);	
+	}
+	
+	
+	static public void supersede(HComponent c1, HComponent c2, String newVarName, HComponent oModel) {
 
 		// c2 <: c1;
 		// c2 will replace its c1-image.
 
-		HComponent c1 = entry.getKey();
-		HComponent c1Parent = entry.getValue();
+		//HComponent c1 = entry.getKey();
+		//HComponent c1Parent = entry.getValue();
 
 		c2.setName(c1.getName2());
 		if (c1.getSavedName() != null)
@@ -1986,11 +1991,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		if (!c2.isParameter()) {
 			c2.setSupplier(c1);
-			c1.setVariableName(newVarName);
-			c2.setVariableName(newVarName);
+			if (newVarName != null) {
+				c1.setVariableName(newVarName);
+				c2.setVariableName(newVarName);
+			}
 		} else {
 			c2.variableName.putAll(c1.variableName);
-			oModel.variableName.putAll(c1.variableName);
+			if (oModel != null) 
+				oModel.variableName.putAll(c1.variableName);
 			// c2.setVariableName(c1.getVariableName(c1Parent));
 			c2.parameterIdentifier.putAll(c1.parameterIdentifier);
 		}
@@ -2006,7 +2014,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 			if (!(u2 instanceof HUnitStub && u1 instanceof HUnitStub)) {
 
-				u2 = u2.getRealUnit();
+				u2 = u2.getActualUnit();
 
 				Pair<IHPrimUnit, IHPrimUnit> pair = alignUnits(u1, u2);
 				u1 = pair.fst();
@@ -2031,7 +2039,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				innerOf_c2.setExposed(innerOf_c1.getExposed());
 				innerOf_c2.exposedFalsifiedContext = innerOf_c1.exposedFalsifiedContext;
 				innerOf_c2.variableName.putAll(innerOf_c1.variableName);
-				oModel.variableName.putAll(innerOf_c1.variableName);
+				if (oModel != null) 
+					oModel.variableName.putAll(innerOf_c1.variableName);
 				innerOf_c2.parameterIdentifier
 						.putAll(innerOf_c1.parameterIdentifier);
 			} else if (innerOf_c1 == null) {
@@ -2059,7 +2068,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			if (ref != null) {
 				HComponent cc_ = c2.getInnerComponent2(ref);
 				if (cc_ != null)
-					supersede2(cc, cc_);
+					supersede2(cc, cc_, true);
 				else {
 					System.out.println("NOT FOUND INNER COMPONENT " + ref
 							+ " in " + c2.getRef());
@@ -2068,7 +2077,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 		}
 
-		for (Pair<HComponent, HComponent> p : c2.getSubTypeImageOf2(c1)) {
+		List<Pair<HComponent, HComponent>> ps = c2.getSubTypeImageOf2(c1);
+		
+		for (Pair<HComponent, HComponent> p : ps) {
 			HComponent c1_ = p.fst();
 			HComponent c2_ = p.snd();
 			if (c1 != c1_ && c2 != c2_) {
@@ -2650,7 +2661,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 						for (HComponent pc : c.getDirectParentConfigurations()) {
 							pc.loadComponent(modelCopy, new Point(0, 0));
 						}
-						HComponent.supersede(entry, modelCopy, newVarName, value);
+						HComponent.supersede(entry.getKey(), modelCopy, newVarName, value);
 						if (model == value) {
 							this.addAdjustSupply(value, modelCopy);
 						}
@@ -2725,7 +2736,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		}
 
 		Rectangle bounds = unit.getBounds().getCopy();
-		HUnitStub uStub = ((HUnit) unit.getRealUnit())
+		HUnitStub uStub = ((HUnit) unit.getActualUnit())
 				.createStub(topConfiguration);
 		uStub.setBounds(bounds);
 		uStub.setConfiguration(topConfiguration);
@@ -2917,7 +2928,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		List<IHUnit> ust = cSuper.getUnits();
 
 		for (IHUnit u_ : ust) {
-			HUnit u = (HUnit) u_.getRealUnit();
+			HUnit u = (HUnit) u_.getActualUnit();
 			uCs.put(u, new ArrayList<HUnit>());
 		}
 
@@ -2928,8 +2939,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				int i = 0;
 				while (cus.hasNext()) {
 					IHUnit cu_ = cus.next();
-					HUnit cu = (HUnit) cu_.getRealUnit();
-					HUnit base_cu = (HUnit) ust.get(i).getRealUnit();
+					HUnit cu = (HUnit) cu_.getActualUnit();
+					HUnit base_cu = (HUnit) ust.get(i).getActualUnit();
 					uCs.get(base_cu).add(cu);
 					uRs.put(cu, !cu.getBindings().isEmpty()); // TODO:
 																// getBinding
@@ -3275,7 +3286,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			List<HComponent> ps_r_ = sortComponentsByRef(ps_r);
 			ps_l_.add(pivot);
 			ps_l_.addAll(ps_r_);
-			return ps_l;
+			return ps_l_;
 		} else
 			return ps;
 
@@ -3292,15 +3303,26 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	}
 
-	public HReplicator lookForReplicator(String ref2) {
-		for (HReplicator r : this.gettReplicators())
-			if (r.getRef().equals(ref2))
-				return r;
-
-		return null;
+	
+	
+	public HReplicator lookForReplicator(String ref2, List<String> cRef) {
+		HReplicator res = this.lookForReplicatorByRef(ref2, cRef);
+		if (res == null) 
+			res = this.lookForReplicatorByVar(ref2); // POG !
+		return res;
 	}
 
-	public HReplicator lookForReplicator(String ref2, List<String> cRef) {
+	public HReplicator lookForReplicatorByVar(String varid) {
+		for (HReplicator r : this.gettReplicators()) 
+		{
+		   if (r.getVarId().equals(varid)) {
+		      return r.getTopJoined();	   
+		   }
+		}		
+		return null;
+	}
+	
+	public HReplicator lookForReplicatorByRef(String ref2, List<String> cRef) {
 		for (HReplicator r : this.gettReplicators())
 			if (r.getRef().equals(ref2)) {
 				Iterator<String> iCRef = cRef.iterator();
@@ -3438,7 +3460,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return me.exposedFalsifiedContext == c;
 	}
 
-	static public void supersede2(HComponent c1, HComponent c2) {
+	static public void supersede2(HComponent c1, HComponent c2, boolean forSupply) {
 
 		// c2 <: c1;
 		// c2 will replace its c1-image.
@@ -3479,6 +3501,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				for (Pair<IHPrimUnit, IHPrimUnit> e : pairs) {
 					u1 = e.fst();
 					u2 = e.snd();
+					if (forSupply) {
+						u2.unsetAllReplicators();
+					}
 					HUnit.supersede(u1, u2);
 				}
 			}
@@ -3509,7 +3534,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			while (c2s.hasNext() && c1s.hasNext()) {
 				HComponent c1_ = c1s.next();
 				HComponent c2_ = c2s.next();
-				HComponent.supersede2(c1_, c2_);
+				HComponent.supersede2(c1_, c2_, forSupply);
 			}
 
 			// Update ports
@@ -3537,13 +3562,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		if (u1.isCloned()) {
 
-			List<IHPrimUnit> us1 = new ArrayList<IHPrimUnit>(u1
-					.getMyClonesSorted());
-			// for (IHPrimUnit u : u1.getMyClones()) us1.add(u);
-
 			if (!u2.isCloned()) {
-				u1 = alignClones(u1, u2);
+				IHPrimUnit u1_;
+				u1_ = alignClones(u1, u2);
+				if (u1_ != u1) {
+					l.clear();
+					u1 = u1_;
+				} 
 			}
+			List<IHPrimUnit> us1 = new ArrayList<IHPrimUnit>(u1.getMyClonesSorted());
 			Iterator<IHPrimUnit> us2 = u2.getMyClonesSorted().iterator();
 			for (IHPrimUnit u1_ : us1) {
 				IHPrimUnit u2_ = us2.next();
@@ -3556,13 +3583,16 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 
 		} else if (u2.isCloned()) { // Symetric case ... POG
-			List<IHPrimUnit> us2 = new ArrayList<IHPrimUnit>(u2
-					.getMyClonesSorted());
-			// for (IHPrimUnit u : u2.getMyClones()) us2.add(u);
 
 			if (!u1.isCloned()) {
-				u2 = alignClones(u2, u1);
+				IHPrimUnit u2_;
+				u2_ = alignClones(u2, u1);
+				if (u2_ != u2) {
+					l.clear();
+					u2 = u2_;
+				} 
 			}
+			List<IHPrimUnit> us2 = new ArrayList<IHPrimUnit>(u2.getMyClonesSorted());
 			Iterator<IHPrimUnit> us1 = u1.getMyClonesSorted().iterator();
 			for (IHPrimUnit u2_ : us2) {
 				IHPrimUnit u1_ = us1.next();
@@ -3580,26 +3610,41 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	private static IHPrimUnit alignClones(IHPrimUnit u1, IHPrimUnit u2) {
 
-		HReplicator r = u1.getCloneBySplit().getOwnerReplicator();
-
-		if (u2.isReplicatedBy(r)) {
-			u2.splitBy(u1.getCloneBySplit());
+		IHPrimUnit u1_ = u1;
+		
+		HReplicatorSplit splitter = u1.getCloneBySplit();
+		if (splitter != null) {
+			HReplicator r = splitter.getOwnerReplicator();
+			
+			if (u2.isReplicatedByVar(r.getVarId())) {
+				u2.splitBy(u1.getCloneBySplit());
+			} else {
+				
+				List<IHPrimUnit> u1Clones = u1.getClones();
+				
+				List<HLinkToReplicator> split_links = splitter.getSplitLinks();
+				
+				for (IHPrimUnit u1Clone : u1Clones) {
+				    u1_ = alignClones(u1Clone, u2);
+				    if (u1_ != null) {
+				    	break;
+				    }
+				}
+			}
 		} else {
-			// try to align the units ...
-			/*
-			 * for (IHPrimUnit u : u1.getClones()) { if (u.isCloned()) {
-			 * HReplicator r1 = u.getCloneBySplit().getOwnerReplicator(); if
-			 * (u2.isReplicatedBy(r1)) { u1 = u;
-			 * u2.splitBy(u1.getCloneBySplit()); break; } } }
-			 */
-
-			// JOptionPane.showMessageDialog(null,
-			// "The cloned unit is not son of the replicator !!"
-			// ,"HComponent.adjustClones", JOptionPane.ERROR_MESSAGE);
-			u2.splitBy(u1.getCloneBySplit());
+			boolean flag = false;
+            for (HReplicator r : u1.getReplicators()) {
+            	if (u2.isReplicatedByVar(r.getVarId())) {
+            		flag = true;
+            		break;
+            	}
+            }
+            if (!flag) {
+            	u1_ = null;
+            }
 		}
-
-		return u1;
+		
+	    return u1_;
 
 	}
 

@@ -13,17 +13,18 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	static final long serialVersionUID = 1;
 
 	public void killMe() {
-		getRealUnit().killMe();
+		getActualUnit().killMe();
 	}
 	
-    public IHUnit getRealUnit() {
-        return (IHUnit) super.getRealUnit();    	
+    public IHUnit getActualUnit() {
+        return (IHUnit) super.getActualUnit();    	
     }
 
 	public HUnitStub(IHUnit unit) {
 		super(unit);
 		unit.addStub(this);
 	}
+	
 	
 	public HUnitStub(IHUnit unit, HComponent enc) {
 		super(unit);
@@ -32,52 +33,55 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	}
 	
 	public List<HUnitSlice> getSlices() {
-		return getRealUnit().getSlices();
+		return getActualUnit().getSlices();
 	}
 	
+	public boolean isReplicatedByVar(String varId) {
+	    return getActualUnit().isReplicatedByVar(varId);	
+	}
 
 	public HUnitSlice newSlice(IHUnit the_source, Point where) throws HPEAbortException{
-		return getRealUnit().newSlice(the_source,where);
+		return getActualUnit().newSlice(the_source,where);
 	}
 	
 	
 	
 	public void addUnitSlice(HUnitSlice unit_slice_abstraction) {
-		getRealUnit().addUnitSlice(unit_slice_abstraction);
+		getActualUnit().addUnitSlice(unit_slice_abstraction);
 		getListeners().firePropertyChange(ADD_UNIT_ITEM,null,unit_slice_abstraction);
 	}
 
 	public HHasExternalReferences createInterface(Point location) throws HPEAbortException{
-        return getRealUnit().createInterface(location);
+        return getActualUnit().createInterface(location);
 	}
 
 	public void removeUnitSlice(HUnitSlice port) {
-		getRealUnit().removeUnitSlice(port);
+		getActualUnit().removeUnitSlice(port);
 
 	}
 
 
 
 	public void lock() {
-		getRealUnit().lock();
+		getActualUnit().lock();
 
 	}
 
 	public void unlock() {
-		getRealUnit().unlock();
+		getActualUnit().unlock();
 
 	}
 
 	public List getInnerEntries() {
-		return getRealUnit().getInnerEntries();
+		return getActualUnit().getInnerEntries();
 	}
 
 	public IUnit fetchCorrespondingUnit() {
-		return getRealUnit().fetchCorrespondingUnit();
+		return getActualUnit().fetchCorrespondingUnit();
 	}
 
 	public void setHidden (boolean hidden) {
-		this.getRealUnit().setHidden(hidden);
+		this.getActualUnit().setHidden(hidden);
 		getListeners().firePropertyChange(HIDDEN_PROPERTY,null,getBounds());
 	}
 	
@@ -86,141 +90,141 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	}
 	
 	public boolean getHiddenBlocked() {
-		return this.getRealUnit().getHiddenBlocked();
+		return this.getActualUnit().getHiddenBlocked();
 	}
 	
 	public void setHiddenBlocked(boolean hiddenBlocked) {
-		this.getRealUnit().setHiddenBlocked(hiddenBlocked);
+		this.getActualUnit().setHiddenBlocked(hiddenBlocked);
 	}
 	
 	public boolean isInterfaceEditable() {
-		return this.getRealUnit().isInterfaceEditable();
+		return this.getActualUnit().isInterfaceEditable();
 	}
 	
 	public void setInterfaceEditable(boolean freezeInterface) {
-		this.getRealUnit().setInterfaceEditable(freezeInterface);
+		this.getActualUnit().setInterfaceEditable(freezeInterface);
 	}
 	
 	
 	public void loadSavedBounds() {
-		getRealUnit().loadSavedBounds();
+		getActualUnit().loadSavedBounds();
 	}
 	
 	public void saveBounds() {
-	    getRealUnit().saveBounds();	
+	    getActualUnit().saveBounds();	
 	}
 	
 	public List<HUnitStub> getStubs() {
-	    return getRealUnit().getStubs(); 	
+	    return getActualUnit().getStubs(); 	
 	}
 	
 	public void addStub(HUnitStub stub) {
-		getRealUnit().addStub(stub);
+		getActualUnit().addStub(stub);
 	}
 	
     public HComponent getStubEnc(HUnitStub stub) {
-    	return getRealUnit().getStubEnc(stub);
+    	return getActualUnit().getStubEnc(stub);
     }
     
     public void setStubEnc(HUnitStub stub, HComponent enc) {
-    	getRealUnit().setStubEnc(stub,enc);
+    	getActualUnit().setStubEnc(stub,enc);
     }
     
 	public void removeStub(HUnitStub stub) {
-		getRealUnit().removeStub(stub);
+		getActualUnit().removeStub(stub);
 	}
 
 	public List<HUnitSlice> getUnitSlices() {
-		return this.getRealUnit().getUnitSlices();
+		return this.getActualUnit().getUnitSlices();
 	}
 	
 	public HReplicator getReplicatorByVarId(String v) {
-		return this.getRealUnit().getReplicatorByVarId(v);
+		return this.getActualUnit().getReplicatorByVarId(v);
 	}
 	
 	public IHPrimUnit getClone(int i) {
-		return getRealUnit().getClone(i);
+		return getActualUnit().getClone(i);
 	}
 
 	@Override
 	public Map<HUnitSlice, List<HUnitSlice>> getExposedSlices() {
 		
-		return this.getRealUnit().getExposedSlices();
+		return this.getActualUnit().getExposedSlices();
 	}
 
 	@Override
 	public boolean isExposed() {
 		
-		return this.getRealUnit().isExposed();
+		return this.getActualUnit().isExposed();
 	}
 
 	@Override
 	public void addLinkToReplicator(HLinkToReplicator l) {
-		this.getRealUnit().addLinkToReplicator(l);
+		this.getActualUnit().addLinkToReplicator(l);
 		
 	}
 
 	@Override
 	public void removeLinkToReplicator(HLinkToReplicator linkToReplicator) {
-		this.getRealUnit().removeLinkToReplicator(linkToReplicator);
+		this.getActualUnit().removeLinkToReplicator(linkToReplicator);
 		
 	}
 
 	@Override
 	public Map<HPrimUnit, Integer> whatIsThePath(HUnitSlice uslice) {
 		
-		return this.getRealUnit().whatIsThePath(uslice);
+		return this.getActualUnit().whatIsThePath(uslice);
 	}
 
 	@Override
 	public List<IHPrimUnit> getMyClones() {
 		
-		return this.getRealUnit().getMyClones();
+		return this.getActualUnit().getMyClones();
 	}
 
 	@Override
 	public HReplicatorSplit splitBy(HReplicatorSplit cloneBySplit) {
-		return this.getRealUnit().splitBy(cloneBySplit);		
+		return this.getActualUnit().splitBy(cloneBySplit);		
 	}
 
 	@Override
 	public List<HPrimUnit> getTopUnits(Map<HPrimUnit, Integer> path) {
-		return this.getRealUnit().getTopUnits(path);
+		return this.getActualUnit().getTopUnits(path);
 	}
 
 	@Override
 	public void removeBinding(HBinding b) {
-		this.getRealUnit().removeBinding(b);
+		this.getActualUnit().removeBinding(b);
 		
 	}
 
 	@Override
 	public void align(HPrimUnit u1) {
-       this.getRealUnit().align(u1);
+       this.getActualUnit().align(u1);
 		
 	}
 
 	@Override
 	public List<IHPrimUnit> getMyClonesSorted() {
-		return this.getRealUnit().getMyClonesSorted();
+		return this.getActualUnit().getMyClonesSorted();
 	}
 
 	@Override
 	public void setSupersededName(String name2) {
-		this.getRealUnit().setSupersededName(name2);
+		this.getActualUnit().setSupersededName(name2);
 		
 	}
 
 	@Override
 	public String getSupersededName() {
 		// TODO Auto-generated method stub
-		return this.getRealUnit().getSupersededName();
+		return this.getActualUnit().getSupersededName();
 	}
 
 	@Override
 	public void createAllPermutationSlices(IHUnit the_source)
 			throws HPEAbortException {
-		this.getRealUnit().createAllPermutationSlices(the_source);
+		this.getActualUnit().createAllPermutationSlices(the_source);
 		
 	}
 

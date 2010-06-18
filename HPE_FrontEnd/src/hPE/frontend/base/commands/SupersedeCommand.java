@@ -22,7 +22,7 @@ public class SupersedeCommand extends Command {
 	public void execute() {
 
 			
-	    HComponent.supersede2(target, source);
+	    HComponent.supersede2(target, source, false);
 	    try {
 			source.updatePorts();
 		} catch (HPEAbortException e) {

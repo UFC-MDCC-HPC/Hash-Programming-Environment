@@ -66,5 +66,14 @@
             class="hPE.DropActionDelegate1"
             id="HPE.action1"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="HPE_FrontEnd.hclc"
+            nameFilter="HCL Compile"
+            objectClass="br.ufc.mdcc.hclc.frontend.HCLCompile">
+      </objectContribution>
+   </extension>
 
 </plugin>

@@ -73,7 +73,7 @@ public interface IHUnit extends IHPrimUnit, IUnit,
 	
 	public void setInterfaceEditable(boolean freezeInterface);
 	
-    public IHUnit getRealUnit();
+    public IHUnit getActualUnit();
     	
 	public abstract boolean isExposed();
 

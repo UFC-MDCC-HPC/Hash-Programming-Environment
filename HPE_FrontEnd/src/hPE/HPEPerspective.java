@@ -17,7 +17,7 @@ public class HPEPerspective implements IPerspectiveDescriptor,
 
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Hash Programming Enviroment - A High Performance Platform of Components";
 	}
 
 	public String getId() {

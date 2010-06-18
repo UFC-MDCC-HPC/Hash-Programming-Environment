@@ -588,8 +588,8 @@ public abstract class HUnit extends HPrimUnit
     	  adjustTheNewInterface(new_i, i);
     	}
     	    	
-    	IHUnit u = (IHUnit) u_.getRealUnit();
-    	IHUnit new_u = (HUnit)new_u_.getRealUnit();  	
+    	IHUnit u = (IHUnit) u_.getActualUnit();
+    	IHUnit new_u = (HUnit)new_u_.getActualUnit();  	
     	
     	new_u_.setHidden(u.getHidden());	    	
     	new_u_.setSupersededName(u_.getName2());
@@ -636,7 +636,7 @@ public abstract class HUnit extends HPrimUnit
     	
     	for (HBinding b : u.getBindings()) {
     	
-	    	if (b != null && b.getEntry() != new_u.getRealUnit() && !(b.getPort() instanceof HUnitStub)) {
+	    	if (b != null && b.getEntry() != new_u.getActualUnit() && !(b.getPort() instanceof HUnitStub)) {
 	    		
 	    		// A UNIT SLICE HAS BEEN REACHED. OTHERWISE, THE UNIT HAS NOT BEEN EXPOSED YET (create binding).
 	    		
@@ -709,7 +709,7 @@ public abstract class HUnit extends HPrimUnit
 	    	   }	    	   
 	    	}	    	
 	    	
-	    // FOI RETIRADO, mas não sei o efeito.
+	    // FOI RETIRADO, mas nï¿½o sei o efeito.
 	    checkPortNames(new_i,i);
 	
         }
@@ -812,7 +812,9 @@ public abstract class HUnit extends HPrimUnit
 	    		bcc.execute();
 	    		HUnitSlice uSlice = (HUnitSlice) bcc.getBindingTarget();
 	    		uSlice.getBinding().setCloneId(shift);
-	    		uSlice.setInterfaceSlice(s.getInterfaceSlice());
+	    		if (s.getInterfaceSlice() != null) {
+	    			uSlice.setInterfaceSlice(s.getInterfaceSlice());
+	    		}
 	    	}
 	    	List<HBinding> bsR = new ArrayList<HBinding>();
 	    	for (HBinding b : this.getBindings()) {
@@ -828,8 +830,8 @@ public abstract class HUnit extends HPrimUnit
 	    	return u;	    	
 	    }
 	    
-	    public IHUnit getRealUnit() {
-	    	return (IHUnit) super.getRealUnit();
+	    public IHUnit getActualUnit() {
+	    	return (IHUnit) super.getActualUnit();
 	    }
 	    
 

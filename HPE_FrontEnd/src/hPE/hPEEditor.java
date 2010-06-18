@@ -413,7 +413,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		
 		if (configuration instanceof HActivateConfiguration) {
 			
-			bars.setGlobalActionHandler(id, registry.getAction(id));		
+//			bars.setGlobalActionHandler(id, registry.getAction(id));		
 			id = EditProtocolAction.SHOW_PROTOCOL;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = EditProtocolAction.HIDE_PROTOCOL;

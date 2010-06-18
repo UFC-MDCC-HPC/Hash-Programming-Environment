@@ -24,7 +24,7 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 
 	private IHPrimUnit unit;	
 	
-    public IHPrimUnit getRealUnit() {
+    public IHPrimUnit getActualUnit() {
     	return unit;
     }
 	
@@ -369,11 +369,11 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
     }
 
 	public HReplicatorSplit getCloneBySplit() {
-		return this.getRealUnit().getCloneBySplit();
+		return this.getActualUnit().getCloneBySplit();
 	}
 	
 	public void setCloneBySplit(HReplicatorSplit cloneBySplit) {
-		this.getRealUnit().setCloneBySplit(cloneBySplit);
+		this.getActualUnit().setCloneBySplit(cloneBySplit);
 	}
     
 }

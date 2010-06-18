@@ -371,6 +371,18 @@ public abstract class HPrimUnit extends HVisualElement
 		return (findLink((HReplicator)which_replicator) != null);
 	}
 
+	public boolean isReplicatedByVar(String varId) {
+		
+		for (HLinkToReplicator rlink : this.getLinksToReplicators()) {
+			if (rlink.getReplicator().getVarId().equals(varId)) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+
 	/**
 	 * @uml.property  name="observable"
 	 */
@@ -835,28 +847,34 @@ public abstract class HPrimUnit extends HVisualElement
 	
 	public List<IHPrimUnit> getMyClonesSorted() {
 		
-		List<Pair<String,IHPrimUnit>> ps = new ArrayList<Pair<String,IHPrimUnit>>();
-		List<HReplicator> rs = this.getCloneBySplit().getReplicators();
-		for (IHPrimUnit u : this.getMyClones()) {
-			List<String> vars = new ArrayList<String>();
-			for (HReplicator r : u.getReplicators()) {
-				if (!vars.contains(r.getVarId())) {
-					vars.add(r.getVarId());
-					for (HReplicator r_ : rs) {
-						if (r == r_) {
-							ps.add(new Pair<String,IHPrimUnit>(r.getVarId(),u));
+		List<IHPrimUnit> clonesSorted = new ArrayList<IHPrimUnit>();
+		
+		if (this.getCloneBySplit() != null) {			
+			List<Pair<String,IHPrimUnit>> ps = new ArrayList<Pair<String,IHPrimUnit>>();
+			List<HReplicator> rs = this.getCloneBySplit().getReplicators();
+			for (IHPrimUnit u : this.getMyClones()) {
+				List<String> vars = new ArrayList<String>();
+				for (HReplicator r : u.getReplicators()) {
+					if (!vars.contains(r.getVarId())) {
+						vars.add(r.getVarId());
+						for (HReplicator r_ : rs) {
+							if (r == r_) {
+								ps.add(new Pair<String,IHPrimUnit>(r.getVarId(),u));
+							}
 						}
 					}
 				}
 			}
-		}
 		
-		ps = sortClones(ps);
+			ps = sortClones(ps);
+			
+			for (Pair<String,IHPrimUnit> p : ps) {
+				if (!clonesSorted.contains(p.snd())) 
+					clonesSorted.add(p.snd());
+			}
 		
-		List<IHPrimUnit> clonesSorted = new ArrayList<IHPrimUnit>();
-		for (Pair<String,IHPrimUnit> p : ps) {
-			if (!clonesSorted.contains(p.snd())) 
-				clonesSorted.add(p.snd());
+		} else {
+            clonesSorted.add(this);			
 		}
 		
 		return clonesSorted;
@@ -1021,7 +1039,7 @@ public abstract class HPrimUnit extends HVisualElement
 			   return u.getTopUnit(path);
 			} else {
 				IHPrimUnit u = (IHPrimUnit) getBinding().getPort();
-				return (HPrimUnit) u.getRealUnit();
+				return (HPrimUnit) u.getActualUnit();
 			}
 		} else {
 			return this;
@@ -1071,7 +1089,7 @@ public abstract class HPrimUnit extends HVisualElement
 	     	       
 	 			} else {
 	 				IHPrimUnit u = (IHPrimUnit) b.getPort();
-	 				us.add((HPrimUnit)u.getRealUnit());
+	 				us.add((HPrimUnit)u.getActualUnit());
 	 			}
 	       }
        } else {
@@ -1082,7 +1100,7 @@ public abstract class HPrimUnit extends HVisualElement
  	}
    
 
-    public IHPrimUnit getRealUnit() {
+    public IHPrimUnit getActualUnit() {
     	return this;
     }
  
