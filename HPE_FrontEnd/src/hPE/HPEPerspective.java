@@ -22,7 +22,7 @@ public class HPEPerspective implements IPerspectiveDescriptor,
 
 	public String getId() {
 		// TODO Auto-generated method stub
-		return null;
+		return "HPE";
 	}
 
 	public ImageDescriptor getImageDescriptor() {
@@ -32,7 +32,7 @@ public class HPEPerspective implements IPerspectiveDescriptor,
 
 	public String getLabel() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Hash Programming Environment";
 	}
 
 	public void createInitialLayout(IPageLayout layout) {
