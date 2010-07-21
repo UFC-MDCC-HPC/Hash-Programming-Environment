@@ -46,11 +46,14 @@ import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.util.CommandLine;
 import hPE.util.Pair;
@@ -2937,6 +2940,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			c = new HQualifierComponent(name, location, uri);
 		} else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
 			c = new HEnumeratorComponent(name, location, uri);
+		} else if (kind.getName().equals(HFacetComponent.KIND)) {
+			c = new HFacetComponent(name, location, uri);
+		} else if (kind.getName().equals(HDomainComponent.KIND)) {
+			c = new HDomainComponent(name, location, uri);
+		} else if (kind.getName().equals(HServiceComponent.KIND)) {
+			c = new HServiceComponent(name, location, uri);
 		} else {
 			throw new HPEUnknownKindException("Component Kind Not Supported !");
 		}

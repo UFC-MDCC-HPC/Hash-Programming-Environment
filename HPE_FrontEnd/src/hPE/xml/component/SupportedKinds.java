@@ -22,6 +22,8 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum SupportedKinds implements Enumerator {
+
+
 	/**
 	 * The '<em><b>Data</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -31,7 +33,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	DATA(0, "Data", "Data"),
-
+	
 	/**
 	 * The '<em><b>Computation</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -96,7 +98,37 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	ENUMERATOR(7, "Enumerator", "Enumerator");
+	ENUMERATOR(7, "Enumerator", "Enumerator"),
+
+	/**
+	 * The '<em><b>Facet</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #FACET_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	FACET(8, "Facet", "Facet"),
+
+	/**
+	 * The '<em><b>Domain</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DOMAIN_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DOMAIN(9, "Domain", "Domain"),
+
+	/**
+	 * The '<em><b>Domain</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DOMAIN_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SERVICE(9, "Service", "Service");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -218,6 +250,53 @@ public enum SupportedKinds implements Enumerator {
 	 */
 	public static final int ENUMERATOR_VALUE = 7;
 
+
+	/**
+	 * The '<em><b>Facet</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Facet</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #FACET
+	 * @model name="Facet"
+	 * @generated
+	 * @ordered
+	 */	
+	public static final int FACET_VALUE = 8;
+
+	/**
+	 * The '<em><b>Domain</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Domain</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #DOMAIN
+	 * @model name="Domain"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DOMAIN_VALUE = 9;
+	
+	
+	/**
+	 * The '<em><b>Service</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Service</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #SERVICE
+	 * @model name="Service"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SERVICE_VALUE = 10;
+
 	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
@@ -234,6 +313,9 @@ public enum SupportedKinds implements Enumerator {
 			QUALIFIER,
 			APPLICATION,
 			ENUMERATOR,
+			FACET,
+			DOMAIN,
+			SERVICE,
 		};
 
 	/**
@@ -292,6 +374,8 @@ public enum SupportedKinds implements Enumerator {
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
 			case ENUMERATOR_VALUE: return ENUMERATOR;
+			case DOMAIN_VALUE: return DOMAIN;
+			case FACET_VALUE: return FACET;
 		}
 		return null;
 	}

@@ -137,6 +137,26 @@ import hPE.frontend.kinds.data.model.HDataInterfaceSlice;
 import hPE.frontend.kinds.data.model.HDataUnit;
 import hPE.frontend.kinds.data.model.HDataUnitSlice;
 import hPE.frontend.kinds.data.model.IHDataUnit;
+import hPE.frontend.kinds.domain.edits.DomainComponentEditPart;
+import hPE.frontend.kinds.domain.edits.DomainConfigurationEditPart;
+import hPE.frontend.kinds.domain.edits.DomainEntryEditPart;
+import hPE.frontend.kinds.domain.edits.DomainInterfaceEditPart;
+import hPE.frontend.kinds.domain.edits.DomainInterfaceSliceEditPart;
+import hPE.frontend.kinds.domain.edits.DomainUnitEditPart;
+import hPE.frontend.kinds.domain.edits.DomainUnitSliceEditPart;
+import hPE.frontend.kinds.domain.figures.DomainComponentFigure;
+import hPE.frontend.kinds.domain.figures.DomainConfigurationFigure;
+import hPE.frontend.kinds.domain.figures.DomainEntryFigure;
+import hPE.frontend.kinds.domain.figures.DomainInterfaceFigure;
+import hPE.frontend.kinds.domain.figures.DomainInterfaceSliceFigure;
+import hPE.frontend.kinds.domain.figures.DomainUnitFigure;
+import hPE.frontend.kinds.domain.figures.DomainUnitSliceFigure;
+import hPE.frontend.kinds.domain.model.HDomainComponent;
+import hPE.frontend.kinds.domain.model.HDomainInterface;
+import hPE.frontend.kinds.domain.model.HDomainInterfaceSlice;
+import hPE.frontend.kinds.domain.model.HDomainUnit;
+import hPE.frontend.kinds.domain.model.HDomainUnitSlice;
+import hPE.frontend.kinds.domain.model.IHDomainUnit;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterface;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
@@ -170,6 +190,26 @@ import hPE.frontend.kinds.environment.model.HEnvironmentInterfaceSlice;
 import hPE.frontend.kinds.environment.model.HEnvironmentUnit;
 import hPE.frontend.kinds.environment.model.HEnvironmentUnitSlice;
 import hPE.frontend.kinds.environment.model.IHEnvironmentUnit;
+import hPE.frontend.kinds.facet.edits.FacetComponentEditPart;
+import hPE.frontend.kinds.facet.edits.FacetConfigurationEditPart;
+import hPE.frontend.kinds.facet.edits.FacetEntryEditPart;
+import hPE.frontend.kinds.facet.edits.FacetInterfaceEditPart;
+import hPE.frontend.kinds.facet.edits.FacetInterfaceSliceEditPart;
+import hPE.frontend.kinds.facet.edits.FacetUnitEditPart;
+import hPE.frontend.kinds.facet.edits.FacetUnitSliceEditPart;
+import hPE.frontend.kinds.facet.figures.FacetComponentFigure;
+import hPE.frontend.kinds.facet.figures.FacetConfigurationFigure;
+import hPE.frontend.kinds.facet.figures.FacetEntryFigure;
+import hPE.frontend.kinds.facet.figures.FacetInterfaceFigure;
+import hPE.frontend.kinds.facet.figures.FacetInterfaceSliceFigure;
+import hPE.frontend.kinds.facet.figures.FacetUnitFigure;
+import hPE.frontend.kinds.facet.figures.FacetUnitSliceFigure;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
+import hPE.frontend.kinds.facet.model.HFacetInterface;
+import hPE.frontend.kinds.facet.model.HFacetInterfaceSlice;
+import hPE.frontend.kinds.facet.model.HFacetUnit;
+import hPE.frontend.kinds.facet.model.HFacetUnitSlice;
+import hPE.frontend.kinds.facet.model.IHFacetUnit;
 import hPE.frontend.kinds.qualifier.edits.QualifierComponentEditPart;
 import hPE.frontend.kinds.qualifier.edits.QualifierConfigurationEditPart;
 import hPE.frontend.kinds.qualifier.edits.QualifierEntryEditPart;
@@ -190,6 +230,26 @@ import hPE.frontend.kinds.qualifier.model.HQualifierInterfaceSlice;
 import hPE.frontend.kinds.qualifier.model.HQualifierUnit;
 import hPE.frontend.kinds.qualifier.model.HQualifierUnitSlice;
 import hPE.frontend.kinds.qualifier.model.IHQualifierUnit;
+import hPE.frontend.kinds.service.edits.ServiceComponentEditPart;
+import hPE.frontend.kinds.service.edits.ServiceConfigurationEditPart;
+import hPE.frontend.kinds.service.edits.ServiceEntryEditPart;
+import hPE.frontend.kinds.service.edits.ServiceInterfaceEditPart;
+import hPE.frontend.kinds.service.edits.ServiceInterfaceSliceEditPart;
+import hPE.frontend.kinds.service.edits.ServiceUnitEditPart;
+import hPE.frontend.kinds.service.edits.ServiceUnitSliceEditPart;
+import hPE.frontend.kinds.service.figures.ServiceComponentFigure;
+import hPE.frontend.kinds.service.figures.ServiceConfigurationFigure;
+import hPE.frontend.kinds.service.figures.ServiceEntryFigure;
+import hPE.frontend.kinds.service.figures.ServiceInterfaceFigure;
+import hPE.frontend.kinds.service.figures.ServiceInterfaceSliceFigure;
+import hPE.frontend.kinds.service.figures.ServiceUnitFigure;
+import hPE.frontend.kinds.service.figures.ServiceUnitSliceFigure;
+import hPE.frontend.kinds.service.model.HServiceComponent;
+import hPE.frontend.kinds.service.model.HServiceInterface;
+import hPE.frontend.kinds.service.model.HServiceInterfaceSlice;
+import hPE.frontend.kinds.service.model.HServiceUnit;
+import hPE.frontend.kinds.service.model.HServiceUnitSlice;
+import hPE.frontend.kinds.service.model.IHServiceUnit;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationComponentEditPart;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationConfigurationEditPart;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationEntryEditPart;
@@ -229,6 +289,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			if (context == null) {
 				if (model instanceof HApplicationComponent)
 					part = new ApplicationConfigurationEditPart<HApplicationComponent,ApplicationConfigurationFigure>();
+				else if (model instanceof HServiceComponent)
+			        part = new ServiceConfigurationEditPart<HServiceComponent,ServiceConfigurationFigure>();
 				else if (model instanceof HComputationComponent)
 			        part = new ComputationConfigurationEditPart<HComputationComponent,ComputationConfigurationFigure>();
 				else if (model instanceof HArchitectureComponent)
@@ -243,6 +305,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentConfigurationEditPart<HEnvironmentComponent,EnvironmentConfigurationFigure>();
 				else if (model instanceof HEnumeratorComponent)
 					part = new EnumeratorConfigurationEditPart<HEnumeratorComponent,EnumeratorConfigurationFigure>();
+				else if (model instanceof HFacetComponent)
+					part = new FacetConfigurationEditPart<HFacetComponent,FacetConfigurationFigure>();
+				else if (model instanceof HDomainComponent)
+					part = new DomainConfigurationEditPart<HDomainComponent,DomainConfigurationFigure>();
 				else 
 					part = new ConfigurationEditPart<HComponent,ConfigurationFigure>();
 			} else if (context instanceof ComponentEditPart) {
@@ -252,6 +318,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			} else {
 				if (model instanceof HApplicationComponent)
 					part = new ApplicationComponentEditPart<HApplicationComponent,ApplicationComponentFigure>();
+				else if (model instanceof HServiceComponent)
+			        part = new ServiceComponentEditPart<HServiceComponent,ServiceComponentFigure>();
 				else if (model instanceof HComputationComponent)
 			        part = new ComputationComponentEditPart<HComputationComponent,ComputationComponentFigure>();
 				else if (model instanceof HDataComponent)
@@ -266,6 +334,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentComponentEditPart<HEnvironmentComponent,EnvironmentComponentFigure>();
 				else if (model instanceof HEnumeratorComponent)
 					part = new EnumeratorComponentEditPart<HEnumeratorComponent,EnumeratorComponentFigure>();
+				else if (model instanceof HFacetComponent)
+					part = new FacetComponentEditPart<HFacetComponent,FacetComponentFigure>();
+				else if (model instanceof HDomainComponent)
+					part = new DomainComponentEditPart<HDomainComponent,DomainComponentFigure>();
 				else 
 					part = new ComponentEditPart<HComponent,ComponentFigure>();
 			}
@@ -275,6 +347,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new ApplicationUnitEditPart<HApplicationUnit,ApplicationUnitFigure>();
 				else if (model instanceof IHComputationUnit)
 					part = new ComputationUnitEditPart<HComputationUnit,ComputationUnitFigure>();				
+				else if (model instanceof IHServiceUnit)
+					part = new ServiceUnitEditPart<HServiceUnit,ServiceUnitFigure>();				
 				else if (model instanceof IHDataUnit) 
 					part = new DataUnitEditPart<HDataUnit,DataUnitFigure>();
 				else if (model instanceof IHArchitectureUnit) 
@@ -287,6 +361,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierUnitEditPart<HQualifierUnit,QualifierUnitFigure>();
 				else if (model instanceof IHEnumeratorUnit) 
 					part = new EnumeratorUnitEditPart<HEnumeratorUnit,EnumeratorUnitFigure>();
+				else if (model instanceof IHFacetUnit) 
+					part = new FacetUnitEditPart<HFacetUnit,FacetUnitFigure>();
+				else if (model instanceof IHDomainUnit) 
+					part = new DomainUnitEditPart<HDomainUnit,DomainUnitFigure>();
 				else 
 					part = new UnitEditPart<HUnit,UnitFigure>();
 		    } else {
@@ -294,6 +372,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new ApplicationEntryEditPart<HApplicationUnit,ApplicationEntryFigure>();
 				else if (model instanceof HComputationUnit)
 			        part = new ComputationEntryEditPart<HComputationUnit,ComputationEntryFigure>();
+				else if (model instanceof HServiceUnit)
+			        part = new ServiceEntryEditPart<HServiceUnit,ServiceEntryFigure>();
 				else if (model instanceof HDataUnit) 
 					part = new DataEntryEditPart<HDataUnit,DataEntryFigure>();
 				else if (model instanceof HArchitectureUnit) 
@@ -306,6 +386,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierEntryEditPart<HQualifierUnit,QualifierEntryFigure>();
 				else if (model instanceof HEnumeratorUnit) 
 					part = new EnumeratorEntryEditPart<HEnumeratorUnit,EnumeratorEntryFigure>();
+				else if (model instanceof HFacetUnit) 
+					part = new FacetEntryEditPart<HFacetUnit,FacetEntryFigure>();
+				else if (model instanceof HDomainUnit) 
+					part = new DomainEntryEditPart<HDomainUnit,DomainEntryFigure>();
 				else 
 					part = new EntryEditPart<HUnit,EntryFigure>();
 		    }
@@ -313,6 +397,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		} else if (model instanceof HUnitSlice) {
 			if (model instanceof HApplicationUnitSlice) 
 			    part = new ApplicationUnitSliceEditPart<HApplicationUnitSlice,ApplicationUnitSliceFigure>();
+			else if (model instanceof HServiceUnitSlice)
+			    part = new ServiceUnitSliceEditPart<HServiceUnitSlice,ServiceUnitSliceFigure>();
 			else if (model instanceof HComputationUnitSlice)
 			    part = new ComputationUnitSliceEditPart<HComputationUnitSlice,ComputationUnitSliceFigure>();
 			else if (model instanceof HDataUnitSlice) 
@@ -327,11 +413,17 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new QualifierUnitSliceEditPart<HQualifierUnitSlice,QualifierUnitSliceFigure>();
 			else if (model instanceof HEnumeratorUnitSlice) 
 			    part = new EnumeratorUnitSliceEditPart<HEnumeratorUnitSlice,EnumeratorUnitSliceFigure>();
+			else if (model instanceof HFacetUnitSlice) 
+			    part = new FacetUnitSliceEditPart<HFacetUnitSlice,FacetUnitSliceFigure>();
+			else if (model instanceof HDomainUnitSlice) 
+			    part = new DomainUnitSliceEditPart<HDomainUnitSlice,DomainUnitSliceFigure>();
 			else 
 			    part = new UnitSliceEditPart<HUnitSlice,UnitSliceFigure>();
 		} else if (model instanceof HInterfaceSlice) {
 			if (model instanceof HApplicationInterfaceSlice) 
 			    part = new ApplicationInterfaceSliceEditPart<HApplicationInterfaceSlice,ApplicationInterfaceSliceFigure>();
+			else if (model instanceof HServiceInterfaceSlice)
+			    part = new ServiceInterfaceSliceEditPart<HServiceInterfaceSlice,ServiceInterfaceSliceFigure>();
 			else if (model instanceof HComputationInterfaceSlice)
 			    part = new ComputationInterfaceSliceEditPart<HComputationInterfaceSlice,ComputationInterfaceSliceFigure>();
 			else if (model instanceof HDataInterfaceSlice) 
@@ -346,6 +438,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new QualifierInterfaceSliceEditPart<HQualifierInterfaceSlice,QualifierInterfaceSliceFigure>();
 			else if (model instanceof HEnumeratorInterfaceSlice) 
 			    part = new EnumeratorInterfaceSliceEditPart<HEnumeratorInterfaceSlice,EnumeratorInterfaceSliceFigure>();
+			else if (model instanceof HFacetInterfaceSlice) 
+			    part = new FacetInterfaceSliceEditPart<HFacetInterfaceSlice,FacetInterfaceSliceFigure>();
+			else if (model instanceof HDomainInterfaceSlice) 
+			    part = new DomainInterfaceSliceEditPart<HDomainInterfaceSlice,DomainInterfaceSliceFigure>();
 			else 
 			    part = new InterfaceSliceEditPart<HInterfaceSlice,InterfaceSliceFigure>();
 		} else if (model instanceof HBinding) {
@@ -353,6 +449,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		} else if (model instanceof HInterface) {
 			if (model instanceof HApplicationInterface)
 				part = new ApplicationInterfaceEditPart<HApplicationInterface,ApplicationInterfaceFigure>();
+			else if (model instanceof HServiceInterface)
+			    part = new ServiceInterfaceEditPart<HServiceInterface,ServiceInterfaceFigure>();
 			else if (model instanceof HComputationInterface)
 			    part = new ComputationInterfaceEditPart<HComputationInterface,ComputationInterfaceFigure>();
 			else if (model instanceof HDataInterface)
@@ -367,6 +465,10 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				part = new QualifierInterfaceEditPart<HQualifierInterface,QualifierInterfaceFigure>();
 			else if (model instanceof HEnumeratorInterface)
 				part = new EnumeratorInterfaceEditPart<HEnumeratorInterface,EnumeratorInterfaceFigure>();
+			else if (model instanceof HFacetInterface)
+				part = new FacetInterfaceEditPart<HFacetInterface,FacetInterfaceFigure>();
+			else if (model instanceof HDomainInterface)
+				part = new DomainInterfaceEditPart<HDomainInterface,DomainInterfaceFigure>();
 			else 
 				part = new InterfaceEditPart<HInterface,InterfaceFigure>();
 		} else if (model instanceof HReplicator) {
@@ -408,12 +510,7 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			part = null;
 		}
 		
-
-		
 		part.setModel(model);
-		
-
-		
 		
 		return part;
 	}

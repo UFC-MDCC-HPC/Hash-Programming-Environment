@@ -5,9 +5,12 @@ import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
+import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
+import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
@@ -59,9 +62,6 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 	
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-
-		System.out.print("text");
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -123,8 +123,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			String s = ss.substring(ss.lastIndexOf('.') + 1); 
 	
 			this.setFileName(s + ".hpe");
-			
-			
+						
 			String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
 					
 			URI uri = URI.createFileURI(absolutePath);
@@ -138,32 +137,12 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			case 5: c = new HEnvironmentComponent(s,null,uri); break;
 			case 6: c = new HQualifierComponent(s,null,uri); break;
 			case 7: c = new HApplicationComponent(s,null,uri); break;
-		 // case 8: c = new HServiceComponent(s,null,uri); break;
+		    case 8: c = new HServiceComponent(s,null,uri); break;
 			case 9: c = new HEnumeratorComponent(s,null,uri); break;
+			case 10: c = new HFacetComponent(s,null,uri); break;
+			case 11: c = new HDomainComponent(s,null,uri); break;
 			}
 			
-	/*		if (modelSelected1 == 1) {
-		       c = new HDataComponent(s,null,uri);	       
-			} else if (modelSelected1 == 2) {
-			   c = new HComputationComponent(s,null,uri);		   
-			} else if (modelSelected1 == 3) {
-				   c = new HSynchronizationComponent(s,null,uri);		   
-			} else if (modelSelected1 == 4) {
-				   c = new HArchitectureComponent(s,null,uri);		   
-			} else if (modelSelected1 == 5) {
-				   c = new HEnvironmentComponent(s,null,uri);		   
-			} else if (modelSelected1 == 6) {
-				   c = new HQualifierComponent(s,null,uri);		   
-			} else if (modelSelected1 == 7) {
-				   c = new HApplicationComponent(s,null,uri);		   
-	//		} else if (modelSelected1 == 8) {
-	//			   c = new HServiceComponent(s,null,uri);		   
-			} else if (modelSelected1 == 9) {
-				   c = new HEnumeratorComponent(s,null,uri);		   
-			} else {
-				// ERROR;
-			} */
-				
 			setComponentVersion(c);
 			try {
 				c.createComponentKey();
@@ -259,7 +238,20 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		} if( e.getSource() == composite2.getRadioEnumerator() ){
 			modelSelected1 = 9;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
+		} if( e.getSource() == composite2.getRadioFacet() ){
+			modelSelected1 = 10;
+			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
+		} if( e.getSource() == composite2.getRadioDomain() ){
+			modelSelected1 = 11;
+			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		}
+		
+		Object source = e.getSource();
+		if (source instanceof Button) {
+			Button button = (Button) source;
+		    composite2.getRadioButtonConcrete().setEnabled(!button.getText().equals(HFacetComponent.KIND) && ! button.getText().equals(HQualifierComponent.KIND));
+		}
+		
 	}	
 	
 	public void widgetDefaultSelected(SelectionEvent e) {

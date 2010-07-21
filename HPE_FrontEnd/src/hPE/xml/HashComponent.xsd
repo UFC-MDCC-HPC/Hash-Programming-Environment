@@ -139,6 +139,9 @@
 			<enumeration value="Qualifier"></enumeration>
 			<enumeration value="Application"></enumeration>
 			<enumeration value="Enumerator"></enumeration>
+			<enumeration value="Facet"></enumeration>
+			<enumeration value="Domain"></enumeration>
+			<enumeration value="Service"></enumeration>
 		</restriction>
 	</simpleType>
 
