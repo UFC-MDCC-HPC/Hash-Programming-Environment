@@ -4,17 +4,31 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
 using System.Collections.Generic;
 using DGAC.utils;
+using MPI;
 
 namespace DGAC
-{
- 
+{ 
 		//WORKER
         public class ServerObject: MarshalByRefObject{
-				 
-				/**
-		        * Salva arquivo fonte lido como um array de bytes em data, com o nome filename
-                * em pasta definida pela classe Constants
-		        */
+
+            private MPI.Intracommunicator global_communicator = null;
+            public MPI.Intracommunicator GlobalCommunicator {set {this.global_communicator = value;}}
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void createInstance(/* THE ARGUMENTS */)
+            {
+                int size = global_communicator.Size;
+
+                for (int i = 0; i < size; i++) 
+                {
+                    global_communicator.Send<int>(MPIWorkerMessagingConstants.CREATE_INSTANCE, i, MPIWorkerMessagingConstants.DEFAULT_TAG);
+                }
+            }
+
+            /**
+            * Salva arquivo fonte lido como um array de bytes em data, com o nome filename
+            * em pasta definida pela classe Constants
+            */
                 [MethodImpl(MethodImplOptions.Synchronized)]
 				public void saveData(byte[] data, string filename){
 

@@ -20,7 +20,6 @@ namespace DGAC
 
     public interface IBackEnd
     {
-
         void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir);
         void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir);
         void deleteComponent(String ID);
@@ -35,6 +34,8 @@ namespace DGAC
     */
 
    
+
+
     public class BackEnd : IBackEnd
     {
         IpcClientChannel ch;
@@ -1616,9 +1617,17 @@ namespace DGAC
             return r;
         }
 
+
         // private string session_id = -1;
 
         public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
+        {     
+            ServerObject worker = connectToWorker();
+            worker.createInstance();
+            return new string[] { };
+        }
+
+        public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
         {
             String[] str_output = null;
             // assert: eIds.Length = eVls.Length
@@ -1643,12 +1652,6 @@ namespace DGAC
                 {
                     throw new Exception("Argument Exception there 2 !!!!");
                 }
-
-
-              //  ComponentDAO cdao = new ComponentDAO();
-            //    UnitDAO udao = new UnitDAO();
-             //   EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
-              //  EnumeratorDAO edao = new EnumeratorDAO();
 
 
                 Component c = cdao.retrieve(id_concrete);

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DGAC.utils{
 
-public class CommandLineUtil{
+public class CommandLineUtil {
 
     
   /// <summary>
