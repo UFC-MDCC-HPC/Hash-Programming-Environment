@@ -11,18 +11,28 @@ namespace DGAC
 		//WORKER
         public class ServerObject: MarshalByRefObject{
 
+            private int my_rank = -1;
+
             private MPI.Intracommunicator global_communicator = null;
-            public MPI.Intracommunicator GlobalCommunicator {set {this.global_communicator = value;}}
 
             [MethodImpl(MethodImplOptions.Synchronized)]
-            public void createInstance(/* THE ARGUMENTS */)
+            public void createInstance(int[] nodes)
             {
-                int size = global_communicator.Size;
+             try {
+                Console.WriteLine("CREATE INSTANCE" + nodes.Length);
 
-                for (int i = 0; i < size; i++) 
-                {
+                this.global_communicator = MPI.Communicator.world; 
+                my_rank = this.global_communicator.Rank;
+
+                foreach (int i in nodes) {
+                    Console.WriteLine(my_rank + ": SENDING TO " + i); Console.Out.Flush();
                     global_communicator.Send<int>(MPIWorkerMessagingConstants.CREATE_INSTANCE, i, MPIWorkerMessagingConstants.DEFAULT_TAG);
                 }
+             } 
+             catch (Exception e) 
+             {
+                Console.WriteLine(e.Message);
+             }
             }
 
             /**

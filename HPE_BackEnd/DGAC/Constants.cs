@@ -5,7 +5,7 @@ namespace DGAC.utils
 {
     public class MPIWorkerMessagingConstants
     {
-        public const int DEFAULT_TAG = -1;
+        public const int DEFAULT_TAG = 999;
         public const int CREATE_INSTANCE = 0;
     }
 
@@ -15,10 +15,13 @@ namespace DGAC.utils
 
         public static string PROPERTIES_FILE = getPropertiesFilePath(); // "h:\\temp\\hpe.backend.properties";
 
-        private static string getPropertiesFilePath()
+    private static string getPropertiesFilePath()
+    {
+        string properties_file_path = getArgVal("--properties");
+        Console.WriteLine(properties_file_path);
+        if (properties_file_path == null)
         {
-            string properties_file_path = getArgVal("--properties");
-            Console.WriteLine(properties_file_path);
+            properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
             if (properties_file_path == null)
             {
                 string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || 
@@ -28,8 +31,9 @@ namespace DGAC.utils
 
                 properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
             }
-            return properties_file_path;
         }
+        return properties_file_path;
+    }
 
         public const int DLL_OUT = 0;
         public const int EXE_OUT = 1;

@@ -13,71 +13,98 @@ namespace DGAC.database
 {
 	public class WorkerService : System.ServiceProcess.ServiceBase
 	{		
-        private IpcServerChannel ch;
+          private IpcChannel ch;
 
         private MPI.Environment mpi = null;
-        Intracommunicator global_communicator = null;
+        private Intracommunicator global_communicator = null;
         int number_of_workers = -1;
+        int my_rank = -1;
 
-		public WorkerService()			
-		{
+	public WorkerService()			
+	{
             string[] args = System.Environment.GetCommandLineArgs();
-            mpi = new MPI.Environment(ref args);
+            mpi = new MPI.Environment(ref args, Threading.Multiple);
             this.global_communicator = MPI.Communicator.world;
             number_of_workers = this.global_communicator.Size;
+            my_rank = this.global_communicator.Rank; 
+            Console.WriteLine("Threading = " + MPI.Environment.Threading);
+            
         }		
 
-		public static void Main (string[] args) { 
-		    System.ServiceProcess.ServiceBase[] ServicesToRun; 
-		    ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService() }; 
-		    System.ServiceProcess.ServiceBase.Run(ServicesToRun);  
-		}		
+	public static void Main (string[] args) { 
+   	       System.ServiceProcess.ServiceBase[] ServicesToRun; 
+	       ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService() }; 
+	       System.ServiceProcess.ServiceBase.Run(ServicesToRun);  
+	}		
 		
-		protected override void OnStart(string[] args)
-		{ 
-            IDictionary prop = new Hashtable();
-            prop["portName"] = "WorkerHost";
+	protected override void OnStart(string[] args)
+	{ 
 
-            Console.WriteLine("Starting Worker on node " + MPI.Environment.ProcessorName);
-            ch = new IpcServerChannel(prop, null);            
+            Console.WriteLine("Starting Worker ");
+            ch = new IpcChannel("WorkerHost");
                 
-	        ChannelServices.RegisterChannel(ch,false);
+	    ChannelServices.RegisterChannel(ch,false);
 	       
-			RemotingConfiguration.RegisterWellKnownServiceType(typeof(ServerObject),
-			                                                   "WorkerHost.rem",
-			                                                   WellKnownObjectMode.SingleCall);
+	    RemotingConfiguration.RegisterWellKnownServiceType(typeof(ServerObject),
+	                                                      "WorkerHost.rem",
+	                                                      WellKnownObjectMode.SingleCall);
+            try {
 
-            ServerObject o = (ServerObject) Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
-            o.GlobalCommunicator = this.global_communicator;
+                ServerObject o = (ServerObject) Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
+  
+                mpi_listener = new Thread(mpi_listening);
+                mpi_listener.Start();
 
-            mpi_listener = new Thread(mpi_listening);
-            mpi_listener.Start();
+                Console.WriteLine("Worker Service Running on ");
+            } 
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.Message);
+            }
 
-            Console.WriteLine("Worker Service Running ! on " + MPI.Environment.ProcessorName);
-		}
+        }
 
         protected Thread mpi_listener = null;
 
+        protected ReceiveRequest request = null;
+
+        protected bool cancel = false;
 
         protected void mpi_listening()
-        {
-            int req = this.global_communicator.Receive<int>(0, MPIWorkerMessagingConstants.DEFAULT_TAG);
-            switch (req)
-            {
-                case MPIWorkerMessagingConstants.CREATE_INSTANCE:
-                    Console.WriteLine("CREATE_INSTANCE on " + this.global_communicator.Rank);
-                    break;
-            }
+        {   
 
+            do {
+                Console.WriteLine("Worker " + my_rank + " is listening !");
 
+                request = this.global_communicator.ImmediateReceive<int>(Communicator.anySource, MPIWorkerMessagingConstants.DEFAULT_TAG);
+                request.Wait(); Console.Out.Flush();
+
+                if (!cancel) {
+
+                   int v = (int) request.GetValue();                  
+
+                   switch (v)
+                   {
+                       case MPIWorkerMessagingConstants.CREATE_INSTANCE:
+                           Console.WriteLine("CREATE_INSTANCE on " + this.global_communicator.Rank);
+                           break;
+                   }   
+                }
+            } while (!cancel);     
+
+             Console.WriteLine("Worker is no more listening !");
         }
 
         protected override void OnStop()
         {
-            mpi_listener.Abort();
+            Console.WriteLine("Worker is stopping !");
+            cancel = true;  
+            request.Cancel();          
+            mpi_listener.Join();
             mpi.Dispose();
-            ch.StopListening(null);
-            ChannelServices.UnregisterChannel(ch);
+            ch.StopListening(null); 
+            ChannelServices.UnregisterChannel(ch); 
+            Console.WriteLine("Worker Service Finished ");
         }
 
         private void InitializeComponent()
@@ -85,7 +112,7 @@ namespace DGAC.database
             // 
             // WorkerService
             // 
-            this.ServiceName = "HPE.BackEnd";
+            this.ServiceName = "HPE.BackEnd.Worker";
 
         }		
 				

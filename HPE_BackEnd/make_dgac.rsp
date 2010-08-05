@@ -25,4 +25,5 @@ DGAC/externalreferences.cs
 -r:DGAC/database/MySql.Data
 -r:System.Runtime.Remoting
 -r:System.Xml
+-r:MPI
 -out:bin/DGAC.dll

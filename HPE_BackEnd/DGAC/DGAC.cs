@@ -38,7 +38,7 @@ namespace DGAC
 
     public class BackEnd : IBackEnd
     {
-        IpcClientChannel ch;
+        IpcClientChannel ch = null;
 
         public BackEnd()
         {
@@ -46,15 +46,16 @@ namespace DGAC
         }
 
         public ServerObject connectToWorker() {
-            IDictionary prop = new Hashtable();
-            prop["portName"] = "WorkerHostClient";
-            //prop["authorizedGroup"] = "Everyone";
-            ch = new IpcClientChannel(prop,null);
-             ChannelServices.RegisterChannel(ch, false);
-             if (RemotingConfiguration.IsWellKnownClientType(typeof(ServerObject)) == null) {
-                RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
-             }
-             return new ServerObject();
+                IDictionary prop = new Hashtable();
+                prop["portName"] = "WorkerHostClient";
+                //prop["authorizedGroup"] = "Everyone";
+                ch = new IpcClientChannel(prop,null);
+                ChannelServices.RegisterChannel(ch, false);
+                if (RemotingConfiguration.IsWellKnownClientType(typeof(ServerObject)) == null) {
+                   RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
+                }
+                ServerObject obj = new ServerObject();
+                return obj;
         }
 
         public void releaseWorker() {
@@ -1621,10 +1622,22 @@ namespace DGAC
         // private string session_id = -1;
 
         public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
-        {     
+        {   
+            String result = "OK !!!" + eIds.Length + " - " + eVls.Length + " : " + eIds;        
             ServerObject worker = connectToWorker();
-            worker.createInstance();
-            return new string[] { };
+            try {
+              worker.createInstance(new int[] {1,2,3,4});
+            } 
+            catch (Exception e) 
+            {
+              Console.WriteLine(e.Message);
+              result = "EXCEPTION - " + e.Message;
+            } 
+            finally 
+            {
+              releaseWorker();
+            }
+            return new String[] {result};
         }
 
         public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)

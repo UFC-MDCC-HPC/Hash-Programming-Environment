@@ -8,6 +8,7 @@
 worker/RemotingServerWorker2.cs 
 
 -r:DGAC
+-r:MPI
  
 -target:exe
  
