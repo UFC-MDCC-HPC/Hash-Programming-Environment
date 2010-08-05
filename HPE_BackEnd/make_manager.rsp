@@ -5,7 +5,7 @@
 -pkg:dotnet
 -out:./bin/ManagerService.exe
 
-worker/RemotingServerManager.cs 
+manager/RemotingServerManager.cs 
 
 -r:DGAC
  

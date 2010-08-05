@@ -20,21 +20,21 @@ namespace DGAC
         int number_of_workers = -1;
         int my_rank = -1;
 
-	public WorkerService()			
+	public WorkerService(string[] args)			
 	{
-        InitializeComponent();
-    }		
-
-	public static void Main (string[] args) { 
-   	       System.ServiceProcess.ServiceBase[] ServicesToRun; 
-	       ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService() }; 
-	       System.ServiceProcess.ServiceBase.Run(ServicesToRun);
+           InitializeComponent();
 
            mpi = new MPI.Environment(ref args, Threading.Multiple);
            this.global_communicator = MPI.Communicator.world;
            number_of_workers = this.global_communicator.Size;
            my_rank = this.global_communicator.Rank;
            Console.WriteLine("Threading = " + MPI.Environment.Threading);
+     }		
+
+	public static void Main (string[] args) { 
+   	       System.ServiceProcess.ServiceBase[] ServicesToRun; 
+	       ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService(args) }; 
+	       System.ServiceProcess.ServiceBase.Run(ServicesToRun);
     }		
 		
 	protected override void OnStart(string[] args)
@@ -45,12 +45,12 @@ namespace DGAC
                 
 	    ChannelServices.RegisterChannel(ch,false);
 	       
-	    RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
+	    RemotingConfiguration.RegisterWellKnownServiceType(typeof(WorkerObject),
 	                                                      "WorkerHost.rem",
 	                                                      WellKnownObjectMode.SingleCall);
             try {
 
-                ManagerObject o = (ManagerObject) Activator.GetObject(typeof(ManagerObject), "ipc://WorkerHost/WorkerHost.rem");
+                WorkerObject o = (WorkerObject) Activator.GetObject(typeof(WorkerObject), "ipc://WorkerHost/WorkerHost.rem");
   
                 mpi_listener = new Thread(mpi_listening);
                 mpi_listener.Start();

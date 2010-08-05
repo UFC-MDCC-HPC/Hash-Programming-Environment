@@ -10,6 +10,8 @@ namespace DGAC
 {
     public partial class ManagerService : System.ServiceProcess.ServiceBase
     {
+        private IpcChannel ch;
+
         public ManagerService()
         {
             InitializeComponent();
@@ -53,7 +55,6 @@ namespace DGAC
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             this.ServiceName = "HPE.BackEnd.Manager";
         }
     }
