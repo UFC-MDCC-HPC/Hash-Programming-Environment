@@ -9,7 +9,7 @@ using System.Collections;
 using MPI;
 using System.Threading;
 
-namespace DGAC.database
+namespace DGAC
 {
 	public class WorkerService : System.ServiceProcess.ServiceBase
 	{		
@@ -22,20 +22,20 @@ namespace DGAC.database
 
 	public WorkerService()			
 	{
-            string[] args = System.Environment.GetCommandLineArgs();
-            mpi = new MPI.Environment(ref args, Threading.Multiple);
-            this.global_communicator = MPI.Communicator.world;
-            number_of_workers = this.global_communicator.Size;
-            my_rank = this.global_communicator.Rank; 
-            Console.WriteLine("Threading = " + MPI.Environment.Threading);
-            
-        }		
+        InitializeComponent();
+    }		
 
 	public static void Main (string[] args) { 
    	       System.ServiceProcess.ServiceBase[] ServicesToRun; 
 	       ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService() }; 
-	       System.ServiceProcess.ServiceBase.Run(ServicesToRun);  
-	}		
+	       System.ServiceProcess.ServiceBase.Run(ServicesToRun);
+
+           mpi = new MPI.Environment(ref args, Threading.Multiple);
+           this.global_communicator = MPI.Communicator.world;
+           number_of_workers = this.global_communicator.Size;
+           my_rank = this.global_communicator.Rank;
+           Console.WriteLine("Threading = " + MPI.Environment.Threading);
+    }		
 		
 	protected override void OnStart(string[] args)
 	{ 
@@ -45,12 +45,12 @@ namespace DGAC.database
                 
 	    ChannelServices.RegisterChannel(ch,false);
 	       
-	    RemotingConfiguration.RegisterWellKnownServiceType(typeof(ServerObject),
+	    RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
 	                                                      "WorkerHost.rem",
 	                                                      WellKnownObjectMode.SingleCall);
             try {
 
-                ServerObject o = (ServerObject) Activator.GetObject(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
+                ManagerObject o = (ManagerObject) Activator.GetObject(typeof(ManagerObject), "ipc://WorkerHost/WorkerHost.rem");
   
                 mpi_listener = new Thread(mpi_listening);
                 mpi_listener.Start();

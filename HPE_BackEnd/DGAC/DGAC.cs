@@ -45,16 +45,16 @@ namespace DGAC
              Console.WriteLine("DGAC is up and running.");
         }
 
-        public ServerObject connectToWorker() {
+        public ManagerObject connectToManager() {
                 IDictionary prop = new Hashtable();
-                prop["portName"] = "WorkerHostClient";
+                prop["portName"] = "ManagerHostClient";
                 //prop["authorizedGroup"] = "Everyone";
                 ch = new IpcClientChannel(prop,null);
                 ChannelServices.RegisterChannel(ch, false);
-                if (RemotingConfiguration.IsWellKnownClientType(typeof(ServerObject)) == null) {
-                   RemotingConfiguration.RegisterWellKnownClientType(typeof(ServerObject), "ipc://WorkerHost/WorkerHost.rem");
+                if (RemotingConfiguration.IsWellKnownClientType(typeof(ManagerObject)) == null) {
+                   RemotingConfiguration.RegisterWellKnownClientType(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
                 }
-                ServerObject obj = new ServerObject();
+                ManagerObject obj = new ManagerObject();
                 return obj;
         }
 
@@ -72,7 +72,7 @@ namespace DGAC
             {
                 Connector.openConnection();
                 Connector.beginTransaction();
-                ServerObject worker = connectToWorker();
+                ManagerObject worker = connectToManager();
 
                 bool exists = false;
                 LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
@@ -152,7 +152,7 @@ namespace DGAC
                 Connector.openConnection();
                 Connector.beginTransaction();
 
-                ServerObject worker = connectToWorker();
+                ManagerObject worker = connectToManager();
 
                 bool exists = false;
                 LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
@@ -221,12 +221,12 @@ namespace DGAC
         }
 
 
-        private string sendCompileCommandToWorker(string library_path, ServerObject worker, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
+        private string sendCompileCommandToWorker(string library_path, ManagerObject worker, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
         {
             return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password, curDir);
         }
 
-        private void sendRunCommandToWorker(ServerObject worker, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, string password, String curDir)
+        private void sendRunCommandToWorker(ManagerObject worker, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, string password, String curDir)
         {
             worker.runClass(files, enums, session_id, userName, password, curDir);
         }
@@ -1624,9 +1624,9 @@ namespace DGAC
         public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
         {   
             String result = "OK !!!" + eIds.Length + " - " + eVls.Length + " : " + eIds;        
-            ServerObject worker = connectToWorker();
+            ManagerObject manager = connectToManager();
             try {
-              worker.createInstance(new int[] {1,2,3,4});
+              manager.createInstance("instance name","class name");
             } 
             catch (Exception e) 
             {
@@ -1646,7 +1646,7 @@ namespace DGAC
             // assert: eIds.Length = eVls.Length
             try
             {
-                ServerObject server = connectToWorker();
+                ManagerObject server = connectToManager();
                 Connector.openConnection();
 
                 session_id = getSessionID(id_concrete);

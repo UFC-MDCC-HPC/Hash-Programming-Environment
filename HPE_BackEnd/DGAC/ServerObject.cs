@@ -9,8 +9,8 @@ using MPI;
 
 namespace DGAC
 { 
-		//WORKER
-        public class ServerObject: MarshalByRefObject{
+		//MANAGER
+        public class ManagerObject: MarshalByRefObject{
 
             private int my_rank = -1;
 
@@ -83,7 +83,7 @@ namespace DGAC
                      string password, 
                      string curDir)
                 {
-                    string publicKeyToken = null;
+                    string publicKeyToken = null; 
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
                     Console.WriteLine("Compiling " + moduleName);
                     Console.WriteLine("password = " + password);

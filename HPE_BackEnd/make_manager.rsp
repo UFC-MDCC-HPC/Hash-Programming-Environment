@@ -3,12 +3,11 @@
 
 -lib:"/usr/lib/mono/DGAC"
 -pkg:dotnet
--out:./bin/WorkerService.exe
+-out:./bin/ManagerService.exe
 
-worker/RemotingServerWorker.cs 
+worker/RemotingServerManager.cs 
 
 -r:DGAC
--r:MPI
  
 -target:exe
  
