@@ -11,7 +11,8 @@ DGAC/CommandLineUtil.cs
 DGAC/Constants.cs
 DGAC/FileUtil.cs
 DGAC/DGAC.cs
-DGAC/ServerObject.cs
+DGAC/ManagerObject.cs
+DGAC/WorkerObject.cs
 DGAC/BackEndEnvironment.cs
 DGAC/externalreferences.cs
 

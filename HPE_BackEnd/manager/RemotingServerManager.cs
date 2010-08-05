@@ -35,10 +35,6 @@ namespace DGAC
             try
             {
                 ManagerObject o = (ManagerObject)Activator.GetObject(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
-
-                mpi_listener = new Thread(mpi_listening);
-                mpi_listener.Start();
-
                 Console.WriteLine("Manager Service Running on ");
             }
             catch (Exception e)
