@@ -24,7 +24,7 @@ namespace DGAC
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
         }
 
-        protected override void OnStart(string[] args)
+        private void startManagerServer()
         {
             Console.WriteLine("Starting Manager ");
             ch = new IpcChannel("ManagerHost");
@@ -43,6 +43,38 @@ namespace DGAC
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        /* The Worker Object of each computing node */
+        private WorkerObject[] worker = null;
+        private string[] node = null;
+
+        private void startWorkerClients() 
+        {
+           int i = 0;
+           /* Read nodes file, and fill the node array */             
+           
+
+           /* Create each worker object and fill the worker array */
+           foreach (string n in node) 
+           {
+               worker[i++] = createWorkerObject(n);
+           }
+        }
+
+        private WorkerObject createWorkerObject(string node) 
+        {
+            WorkerObject wo = null;
+
+            return wo;
+        }
+
+
+
+        protected override void OnStart(string[] args)
+        {
+            startManagerServer();
+            startWorkerClients();
         }
 
         protected override void OnStop()
