@@ -5,6 +5,9 @@ using System.Runtime.Remoting;
 using System.Collections.Generic;
 using DGAC.utils;
 using MPI;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.IO;
+using System.Runtime.Remoting.Channels;
 // using cca;
 
 namespace DGAC
@@ -113,6 +116,76 @@ namespace DGAC
 				public void sayHi(){
 					Console.WriteLine("Hi!");
 				}
+
+                /* The Worker Object of each computing node */
+                private WorkerObject[] worker = null;
+                private string[] node = null;
+                private TcpChannel tcpChannel = null;
+
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public void startWorkerClients()
+                {
+                    Console.WriteLine("Starting worker clients !");
+
+                    try
+                    {
+                        int i = 0;
+
+                        /* Read nodes file, and fill the node array */
+                        TextReader tr = new StreamReader(Constants.hosts_file);
+
+                        string hstr = tr.ReadToEnd();
+                        tr.Close();
+                        node = hstr.Split('\n');
+
+                        worker = new WorkerObject[node.Length];
+
+                        tcpChannel = new TcpChannel();
+                        ChannelServices.RegisterChannel(tcpChannel, false);
+
+                        /* Create each worker object and fill the worker array */
+                        foreach (string n in node)
+                        {
+                            try
+                            {
+                                createWorkerObject(i++, n);
+                                Console.WriteLine("CONNECTED TO WORKER " + n);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("ERROR CONNECTING TO WORKER " + n + ". Exception : " + e.Message);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    Console.WriteLine("Worker clients started !");
+                }
+
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public void stopWorkerClients()
+                {
+                    TcpChannel ch = tcpChannel;
+                    ch.StopListening(null);
+                    ChannelServices.UnregisterChannel(ch);
+                }
+
+                private void createWorkerObject(int i, string node)
+                {
+                    WorkerObject wo = null;
+
+                    Type requiredType = typeof(WorkerObject);
+
+                    wo = (WorkerObject)Activator.GetObject(requiredType,
+                        "tcp://" + node + ":" + Constants.WORKER_PORT + "/" + Constants.WORKER_SERVICE_NAME);
+
+                    wo.sayHi();
+
+                    worker[i] = wo;
+                }
 
         }
 
