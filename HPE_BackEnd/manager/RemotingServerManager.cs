@@ -5,12 +5,13 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
 using DGAC.utils;
 using System.Collections;
+using System.Runtime.Remoting.Channels.Tcp;
 
 namespace DGAC
 {
     public partial class ManagerService : System.ServiceProcess.ServiceBase
     {
-        private IpcChannel ch;
+        private IpcChannel channelManagerServer;
 
         public ManagerService()
         {
@@ -27,9 +28,9 @@ namespace DGAC
         private void startManagerServer()
         {
             Console.WriteLine("Starting Manager ");
-            ch = new IpcChannel("ManagerHost");
+            channelManagerServer = new IpcChannel("ManagerHost");
 
-            ChannelServices.RegisterChannel(ch, false);
+            ChannelServices.RegisterChannel(channelManagerServer, false);
 
             RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
                                                               "ManagerHost.rem",
@@ -45,28 +46,61 @@ namespace DGAC
             }
         }
 
+        private void stopManagerServer() 
+        {
+            Console.WriteLine("Manager is stopping !");
+            channelManagerServer.StopListening(null);
+            ChannelServices.UnregisterChannel(channelManagerServer);
+            Console.WriteLine("Manager Service Finished ");
+        }
+
+
         /* The Worker Object of each computing node */
         private WorkerObject[] worker = null;
         private string[] node = null;
+        private TcpChannel[] channelWorkerServer = null;
 
         private void startWorkerClients() 
         {
            int i = 0;
-           /* Read nodes file, and fill the node array */             
-           
+           /* Read nodes file, and fill the node array */
+           TextReader tr = new StreamReader(Constants.hosts_file);
+
+           string hstr = tr.ReadToEnd();
+           tr.Close();
+           node = hstr.Split("\n");
 
            /* Create each worker object and fill the worker array */
            foreach (string n in node) 
            {
-               worker[i++] = createWorkerObject(n);
+               createWorkerObject(i++,n);
            }
         }
 
-        private WorkerObject createWorkerObject(string node) 
+
+        private void stopWorkerClients()
+        {
+            foreach (TcpChannel ch in channelWorkerServer)
+            {
+                ch.StopListening(null);
+                ChannelServices.UnregisterChannel(ch);
+            }
+        }
+
+        private void createWorkerObject(int i, string node)
         {
             WorkerObject wo = null;
 
-            return wo;
+            TcpChannel tcpChannel = new TcpChannel();
+            ChannelServices.RegisterChannel(tcpChannel, false);
+
+            Type requiredType = typeof(WorkerObject);
+
+            wo = (WorkerObject)Activator.GetObject(requiredType,
+                "tcp://" + node + ":" + Constants.WORKER_PORT + "/" + Constants.WORKER_SERVICE_NAME);
+
+            worker[i] = wo;
+            channelWorkerServer[i] = tcpChannel;            
         }
 
 
@@ -79,10 +113,8 @@ namespace DGAC
 
         protected override void OnStop()
         {
-            Console.WriteLine("Manager is stopping !");
-            ch.StopListening(null);
-            ChannelServices.UnregisterChannel(ch);
-            Console.WriteLine("Manager Service Finished ");
+            stopWorkerClients();
+            stopManagerServer();
         }
 
         private void InitializeComponent()

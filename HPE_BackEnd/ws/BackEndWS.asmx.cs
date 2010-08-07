@@ -90,7 +90,7 @@ namespace Back_End_WS
         [WebMethod]
         public string hosts()
         {
-            TextReader tr = new StreamReader(Constants.PATH_BIN + "myhostfile");
+            TextReader tr = new StreamReader(Constants.hosts_file);
 
             string hstr = tr.ReadToEnd();
             tr.Close();

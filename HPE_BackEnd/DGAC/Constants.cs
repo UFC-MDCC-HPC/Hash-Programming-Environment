@@ -15,26 +15,27 @@ namespace DGAC.utils
 
         public static string PROPERTIES_FILE = getPropertiesFilePath(); // "h:\\temp\\hpe.backend.properties";
 
-    private static string getPropertiesFilePath()
-    {
-        string properties_file_path = getArgVal("--properties");
-        Console.WriteLine(properties_file_path);
-        if (properties_file_path == null)
+        private static string getPropertiesFilePath()
         {
-            properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
+            string properties_file_path = getArgVal("--properties");
+            Console.WriteLine(properties_file_path);
             if (properties_file_path == null)
             {
-                string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || 
-                                   Environment.OSVersion.Platform == PlatformID.MacOSX)
-                                      ? Environment.GetEnvironmentVariable("HOME")
-                                      : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+                properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
+                if (properties_file_path == null)
+                {
+                    string homePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
+                                       Environment.OSVersion.Platform == PlatformID.MacOSX)
+                                          ? Environment.GetEnvironmentVariable("HOME")
+                                          : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
 
-                properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
+                    properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
+                }
             }
+            return properties_file_path;
         }
-        return properties_file_path;
-    }
-
+        public static int WORKER_PORT = 4865;
+        public static string WORKER_SERVICE_NAME = "WorkerService";
         public const int DLL_OUT = 0;
         public const int EXE_OUT = 1;
         public static string PATH_TEMP_WORKER = FileUtil.readConstant("path_temp_worker");
