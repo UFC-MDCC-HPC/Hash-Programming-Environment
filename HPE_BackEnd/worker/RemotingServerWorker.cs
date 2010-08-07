@@ -17,8 +17,8 @@ namespace DGAC
 
         private MPI.Environment mpi = null;
         private Intracommunicator global_communicator = null;
-        int number_of_workers = -1;
         int my_rank = -1;
+        int number_of_workers = -1;
 
         public WorkerService(string[] args)
         {
@@ -41,16 +41,21 @@ namespace DGAC
 
         private void startWorkerServer()
         {
-
+          try 
+          {
             Console.WriteLine("Starting Worker ");
-
 
             ch = new TcpChannel(Constants.WORKER_PORT);
             ChannelServices.RegisterChannel(ch, false);
 
-            Type commonInterfaceType = Type.GetType("WorkerObject");
+            Type commonInterfaceType = typeof(WorkerObject);
 
             RemotingConfiguration.RegisterWellKnownServiceType(commonInterfaceType, Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.SingleCall);
+          }
+          catch (Exception e)
+          {
+            Console.WriteLine(e.Message);
+          }
 
             /*            ch = new IpcChannel("WorkerHost");
 
