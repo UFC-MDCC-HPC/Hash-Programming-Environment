@@ -48,13 +48,15 @@ namespace DGAC
         public ManagerObject connectToManager() {
                 IDictionary prop = new Hashtable();
                 prop["portName"] = "ManagerHostClient";
-                //prop["authorizedGroup"] = "Everyone";
-                ch = new IpcClientChannel(prop,null);
+                ch = new IpcClientChannel(prop, null);
                 ChannelServices.RegisterChannel(ch, false);
-                if (RemotingConfiguration.IsWellKnownClientType(typeof(ManagerObject)) == null) {
-                   RemotingConfiguration.RegisterWellKnownClientType(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
-                }
-                ManagerObject obj = new ManagerObject();
+                Type requiredType = typeof(ManagerObject);
+//                if (RemotingConfiguration.IsWellKnownClientType(typeof(ManagerObject)) == null) {
+//                   RemotingConfiguration.RegisterWellKnownClientType(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
+//                }
+//                ManagerObject obj = new ManagerObject();
+                ManagerObject obj = (ManagerObject)Activator.GetObject(requiredType, "ipc://ManagerHost/ManagerHost.rem");
+//                        "tcp://" + node + ":" + Constants.WORKER_PORT + "/" + Constants.WORKER_SERVICE_NAME);
                 return obj;
         }
 
@@ -89,14 +91,14 @@ namespace DGAC
                 
                    cAbs = (AbstractComponentFunctor)cAbs_;
                   // ComponentDAO cdao = new ComponentDAO();
-				   IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
-				   if (true/*cList.Count == 0*/) {	                        					
+ 	           IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
+		   if (true/*cList.Count == 0*/) {	                        					
                       Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
                       abstractloader.updateSources(ct, cAbs);
                       exists = true;
-				   } else {
-					  throw new Exception("DEPLOY ERROR: One or more concrete components already implement this abstract component.\n Updates are not allowed for keeping consistency.");	
-				   }
+		   } else {
+			  throw new Exception("DEPLOY ERROR: One or more concrete components already implement this abstract component.\n Updates are not allowed for keeping consistency.");	
+		   }
                 }
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);

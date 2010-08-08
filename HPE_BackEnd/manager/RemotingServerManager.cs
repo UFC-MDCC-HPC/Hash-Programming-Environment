@@ -35,7 +35,7 @@ namespace DGAC
 
             RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
                                                               "ManagerHost.rem",
-                                                              WellKnownObjectMode.SingleCall);
+                                                              WellKnownObjectMode.Singleton);
             ManagerObject o = null;
 
             try

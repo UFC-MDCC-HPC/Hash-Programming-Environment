@@ -15,6 +15,7 @@ namespace DGAC
 		//MANAGER
         public class ManagerObject: MarshalByRefObject{
 
+            public ManagerObject() { Console.WriteLine("NEW MANAGER OBJECT"); }
  
     	    /**
 	     * 	Creates an instance of a CCA component of the type defined by the 
@@ -34,7 +35,11 @@ namespace DGAC
             public void createInstance(string instanceName, string className /*, cca.TypeMap properties */)
             {
              try {
-                Console.WriteLine("CREATE INSTANCE");
+                Console.WriteLine("CREATE INSTANCE: number of workers = " + worker.Length);
+                foreach (WorkerObject wo in worker) 
+                {
+                   wo.sayHi();
+                }
              } 
              catch (Exception e) 
              {
@@ -127,10 +132,10 @@ namespace DGAC
                 {
                     Console.WriteLine("Starting worker clients !");
 
+                    int i = 0;
+
                     try
                     {
-                        int i = 0;
-
                         /* Read nodes file, and fill the node array */
                         TextReader tr = new StreamReader(Constants.hosts_file);
 
@@ -138,7 +143,7 @@ namespace DGAC
                         tr.Close();
                         node = hstr.Split('\n');
 
-                        worker = new WorkerObject[node.Length];
+                        worker = new WorkerObject[node.Length - 1];
 
                         tcpChannel = new TcpChannel();
                         ChannelServices.RegisterChannel(tcpChannel, false);
@@ -153,6 +158,7 @@ namespace DGAC
                             }
                             catch (Exception e)
                             {
+                                i--;
                                 Console.WriteLine("ERROR CONNECTING TO WORKER " + n + ". Exception : " + e.Message);
                             }
                         }
@@ -162,7 +168,7 @@ namespace DGAC
                         Console.WriteLine(e.Message);
                     }
 
-                    Console.WriteLine("Worker clients started !");
+                    Console.WriteLine(worker.Length + " Worker clients started !");
                 }
 
                 [MethodImpl(MethodImplOptions.Synchronized)]
