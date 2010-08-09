@@ -50,22 +50,12 @@ namespace DGAC
 
             Type commonInterfaceType = typeof(WorkerObject);
 
-            RemotingConfiguration.RegisterWellKnownServiceType(commonInterfaceType, Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.SingleCall);
+            RemotingConfiguration.RegisterWellKnownServiceType(commonInterfaceType, Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.Singleton);
           }
           catch (Exception e)
           {
             Console.WriteLine(e.Message);
           }
-
-            /*            ch = new IpcChannel("WorkerHost");
-
-                        ChannelServices.RegisterChannel(ch, false);
-
-                        RemotingConfiguration.RegisterWellKnownServiceType(typeof(WorkerObject),
-                                                                          "WorkerHost.rem",
-                                                                          WellKnownObjectMode.SingleCall);
-
-                        WorkerObject o = (WorkerObject)Activator.GetObject(typeof(WorkerObject), "ipc://WorkerHost/WorkerHost.rem"); */
         }
 
         private void stopWorkerServer()
@@ -99,7 +89,6 @@ namespace DGAC
                 Console.WriteLine("Worker " + my_rank + " is listening !");
 
                 request = this.global_communicator.ImmediateReceive<int>(Communicator.anySource, MPIWorkerMessagingConstants.DEFAULT_TAG);
-                request.Wait(); Console.Out.Flush();
 
                 if (!cancel)
                 {

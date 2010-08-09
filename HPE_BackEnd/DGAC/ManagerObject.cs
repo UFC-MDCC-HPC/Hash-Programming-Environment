@@ -38,7 +38,7 @@ namespace DGAC
                 Console.WriteLine("CREATE INSTANCE: number of workers = " + worker.Length);
                 foreach (WorkerObject wo in worker) 
                 {
-                   wo.sayHi();
+                   wo.createInstance(instanceName, className);
                 }
              } 
              catch (Exception e) 

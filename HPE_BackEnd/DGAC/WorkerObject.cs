@@ -34,16 +34,10 @@ namespace DGAC
             public void createInstance(string instanceName, string className /*, cca.TypeMap properties */)
             {
              try {
-                int[] nodes = new int[] {1,2,3,4};
-                Console.WriteLine("CREATE INSTANCE" + nodes.Length);
-
                 this.global_communicator = MPI.Communicator.world; 
                 my_rank = this.global_communicator.Rank;
 
-                foreach (int i in nodes) {
-                    Console.WriteLine(my_rank + ": SENDING TO " + i); Console.Out.Flush();
-                    global_communicator.Send<int>(MPIWorkerMessagingConstants.CREATE_INSTANCE, i, MPIWorkerMessagingConstants.DEFAULT_TAG);
-                }
+                Console.WriteLine("CREATE INSTANCE " + my_rank);
              } 
              catch (Exception e) 
              {
