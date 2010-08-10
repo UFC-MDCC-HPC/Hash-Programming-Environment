@@ -786,38 +786,21 @@ namespace DGAC
                                        Component c,
                                        string id_inner,
                                        string id_interface,
-                                       string propertyName, IDictionary<string,int> actualParameters_new)
+                                       string propertyName, IDictionary<string, int> actualParameters_new)
         {
-            //        Connector.openConnection();
-
-
-            // Console.WriteLine(unit.GlobalRank + ": CREATE SLICE BEGIN !!! " + c.Library_path + " : " + id_inner + " : " + id_interface);
-
             int id_abstract = c.Id_abstract;
             database.Unit u = LoaderApp.resolveImpl(unit, c.Id_concrete, id_inner, id_interface);
 
-           // InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
             Component cu = cdao.retrieve(u.Id_concrete);
 
-        /*    IDictionary<string, Interface> theParameters = null;
-            fetchParameters(actualParameters_new, 
-                            cu.Id_functor_app, 
-                            u.Id_interface_abstract, 
-                            idao.retrieve(u.Id_interface_abstract,
-                                          u.Id_interface_interface), 
-                            out theParameters); */
-            Type[] actualParams;
-
-
-
             if (u == null)
-            {
                 throw new ConcreteComponentNotFoundException(id_abstract, id_inner, c.Id_functor_app);
-            }
 
             string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
             string class_name = u.Class_name;  // the name of the class inside the DLL.
             int class_nargs = u.Class_nargs;
+
+            Type[] actualParams;
 
             Assembly a = Assembly.Load(assembly_string);
 
@@ -838,13 +821,27 @@ namespace DGAC
             return o;
         }
 
+        private static IUnit loadUnitClass(DGAC.database.Unit u)
+        {
+            string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
+            string class_name = u.Class_name;  // the name of the class inside the DLL.
+            int class_nargs = u.Class_nargs;
+
+            Assembly a = Assembly.Load(assembly_string);
+
+            string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
+            Type t = a.GetType(strType);
+
+            hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(t);
+
+            return o;
+        }
+
         private static IDictionary<int, Type> paramTable = new Dictionary<int, Type>();
 
         private static void buildParamTable(String propertyName, Type myType, out Type[] actualParams)
-        {
-            
+        {            
             Type o = myType.BaseType.GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance).PropertyType;
-
             actualParams = o.GetGenericArguments();
         }
 
@@ -1625,21 +1622,46 @@ namespace DGAC
 
         public String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
         {   
-            String result = "OK !!!" + eIds.Length + " - " + eVls.Length + " : " + eIds;        
-            ManagerObject manager = connectToManager();
-            try {
-              manager.createInstance("instance name","class name");
-            } 
-            catch (Exception e) 
+            String[] str_output = null;
+            // assert: eIds.Length = eVls.Length
+            try
             {
-              Console.WriteLine(e.Message);
-              result = "EXCEPTION - " + e.Message;
-            } 
-            finally 
-            {
-              releaseWorker();
+                ManagerObject manager = connectToManager();
+                Connector.openConnection();
+
+                session_id = getSessionID(id_concrete);
+
+                IDictionary<string, int> enums = new Dictionary<string, int>();
+
+                for (int i = 0; i < eIds.Length; i++)
+                    enums.Add(eIds[i], eVls[i]);
+
+                Component c = cdao.retrieve(id_concrete);
+
+                int[] nodes = new int[0];
+                
+                /* BEGIN UNDER CONSTRUCTION */
+                IDictionary<string, Object> properties = new Dictionary<string, Object>();
+                properties.Add("Enums", enums);
+                properties.Add("Nodes", nodes);
+
+                manager.createInstance(session_id.ToString(), c.Library_path, properties);
+
+                /* END UNDER CONSTRUCTION */
+
             }
-            return new String[] {result};
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                Connector.closeConnection();
+                releaseWorker();
+            }
+
+            return str_output == null ? new String[] { } : str_output;
+        
         }
 
         public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using hpe.kinds;
+using MPI;
 
 namespace hpe.basic
 {

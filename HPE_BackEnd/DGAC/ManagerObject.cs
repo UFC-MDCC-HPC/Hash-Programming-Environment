@@ -4,10 +4,12 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
 using System.Collections.Generic;
 using DGAC.utils;
+using DGAC;
 using MPI;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.IO;
 using System.Runtime.Remoting.Channels;
+using DGAC.database;
 // using cca;
 
 namespace DGAC
@@ -32,19 +34,112 @@ namespace DGAC
 	     * 		see destroyInstance instead.
 	     */
             [MethodImpl(MethodImplOptions.Synchronized)]
-            public void createInstance(string instanceName, string className /*, cca.TypeMap properties */)
+            public void createInstance(string instanceName, string className , IDictionary<string,Object> properties )
             {
-             try {
-                Console.WriteLine("CREATE INSTANCE: number of workers = " + worker.Length);
-                foreach (WorkerObject wo in worker) 
-                {
-                   wo.createInstance(instanceName, className);
-                }
-             } 
-             catch (Exception e) 
-             {
-                Console.WriteLine(e.Message);
-             }
+  //           try {
+
+                 /* BEGIN FOM RunApplication */
+
+                 IDictionary<Unit, int> files = new Dictionary<Unit, int>();
+                 Object enumsObj = null;
+                 IDictionary<string, int> enums = null;
+
+                 if (!properties.TryGetValue("enums", out enumsObj))
+                     enums = new Dictionary<string, int>();
+                 else
+                 {
+                     enums = (IDictionary<string, int>)enumsObj;
+                 }
+
+                 Object nodesObj = null;
+                 int[] nodes = null;
+                 if (!properties.TryGetValue("nodes", out nodesObj))
+                 {
+                     nodes = new int[worker.Length];
+                     for (int i = 0; i < nodes.Length; i++)
+                     {
+                         nodes[i] = i;
+                     }
+                 }
+                 else
+                 {
+                     nodes = (int[])nodesObj;
+                 }
+
+                 Component c = BackEnd.cdao.retrieve_libraryPath(className);
+
+                 IList<DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
+
+                 int nprocs = 0;
+                 int aprocs = nodes.Length; // number of informed processors.
+
+                 foreach (DGAC.database.Interface i in iList)
+                 {
+                     DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
+                     IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(c.Id_abstract, i.Id_interface);
+                     int count = 1;
+                     IDictionary<string, int> m = new Dictionary<string, int>();
+                     foreach (EnumerationInterface ei in eiList)
+                     {
+                         Enumerator e = BackEnd.edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
+                         int v;
+                         if (!m.TryGetValue(e.Variable, out v))
+                         {
+                             v = 1;
+                             enums.TryGetValue(e.Variable, out v);
+                             count *= v > 0 ? v : 1;
+                             m.Add(e.Variable, v);
+                         }
+                     }
+                     try
+                     {
+                         files.Add(u, count);
+                     }
+                     catch (ArgumentException)
+                     {
+                         throw new Exception("Argument Exception there !");
+                     }
+                     nprocs += count;
+                 }
+
+
+                 if (nprocs != aprocs)
+                 {
+                     throw new Exception("Unmatching number of nodes.");
+                 }
+
+                 /* END FOM RunApplication */
+                 
+                 bool[] node_marking = new bool[worker.Length];
+                 for (int i = 0; i < node_marking.Length; i++)
+                     node_marking[i] = false;
+
+                 int k = 0;
+                 foreach (KeyValuePair<Unit, int> unit in files)
+                 {
+                     for (int j = 0; j < unit.Value; j++)
+                     {
+                         IDictionary<string, Object> worker_properties = new Dictionary<string, Object>(properties);
+                         worker_properties.Add("Key", k);
+                         worker[nodes[k]].createInstance(instanceName, unit.Key, properties);
+                         node_marking[nodes[k]] = true;
+                         k++;
+                     }
+                 }
+
+                 for (int i = 0; i < node_marking.Length; i++)
+                 {
+                     if (!node_marking[i])
+                     {
+                         worker[i].createInstanceNull();
+                     }
+
+                 }
+//             } 
+//             catch (Exception e) 
+//             {
+//                Console.WriteLine(e.Message);
+//             }
             }
 
             /**

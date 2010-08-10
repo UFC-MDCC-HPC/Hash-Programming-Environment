@@ -12,11 +12,18 @@ namespace hpe.kinds
 
 
     public interface IApplicationKind : IComputationKind, IUnit
-	{
-		 
-	}
-	
-	public abstract class Application : Computation {
-	   
-	}
+    {
+        MPI.Intracommunicator LocalCommunicator { set; get; }
+    }
+
+    public abstract class Application : Computation
+    {
+        private MPI.Intracommunicator local_comm = null;
+
+        public MPI.Intracommunicator LocalCommunicator
+        {
+            get { return local_comm; }
+            set { this.local_comm = value; }
+        }
+    }
 }
