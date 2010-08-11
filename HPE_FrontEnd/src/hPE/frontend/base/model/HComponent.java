@@ -12,6 +12,8 @@ import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
+import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.util.CommandLine;
 import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
@@ -3997,8 +3999,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			List<HComponent> cs = entry.getValue();
 			for (HComponent c : cs) {
 				String parIdAtTopC = c.getParameterIdentifier(topC);
-				if (parIdAtTopC.equals("type ?") && !c.isInnerOfFreeParameter()
-						&& c.getSupplied() == null)
+				if (parIdAtTopC.equals("type ?") && !c.isInnerOfFreeParameter() && c.getSupplied() == null)
 					return true;
 			}
 
@@ -4068,7 +4069,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				if (success && !okSNK) {
 					int r = CommandLine.runCommand(new String[] { sn_path,
 							"-k", this.getComponentName() + ".snk" },
-							new String[] {}, systemFile);
+							null, systemFile);
 					success = r == CommandLine.SUCESSFULL_COMMAND;
 
 				}

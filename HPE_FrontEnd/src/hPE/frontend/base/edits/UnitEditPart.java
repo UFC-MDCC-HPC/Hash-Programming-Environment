@@ -131,10 +131,20 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
            unit_figure.setBackgroundColor(HUnit.default_color);
         
         unit_figure.setHidden(unit.getHidden());
-        
-		Label ff = new Label(" unit " + unit.getName2() + (unit.getInterface() != null ? " :: " + this.breakLines(unit.getInterface().getName(true,true)) : "") + " ");
-		Font font = new Font(null, "Arial", 10, SWT.BOLD);
-		ff.setFont(font); 
+    
+        Label ff = null;
+        try {
+        	 ff = new Label(" unit " + unit.getName2() + (unit.getInterface() != null ? " :: " + this.breakLines(unit.getInterface().getName(true,true)) : "") + " ");
+        	 Font font = new Font(null, "Arial", 10, SWT.BOLD);
+        	 ff.setFont(font); 
+        } 
+        catch (Exception e) 
+        {
+        	 ff = new Label("ERROR Refreshing Visuals of UnitEditPart.");
+        	 Font font = new Font(null, "Arial", 10, SWT.BOLD);
+        	 ff.setFont(font); 
+             System.out.println("ERROR Refreshing Visuals of UnitEditPart.");
+        }
         	
 		unit_figure.setToolTip(ff);
         

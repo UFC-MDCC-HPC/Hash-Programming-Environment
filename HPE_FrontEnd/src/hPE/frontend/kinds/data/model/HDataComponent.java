@@ -35,7 +35,7 @@ public class HDataComponent extends HHasPortsConfiguration {
     	if (c instanceof HEnvironmentComponent) return true;
     	if (c instanceof HArchitectureComponent) return true;
     	if (c instanceof HEnumeratorComponent) return true;
-    	return false;
+    	return super.accepts(c);
     }	
 	
     public String kindString() {

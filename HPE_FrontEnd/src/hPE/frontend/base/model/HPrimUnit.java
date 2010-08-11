@@ -858,7 +858,7 @@ public abstract class HPrimUnit extends HVisualElement
 					if (!vars.contains(r.getVarId())) {
 						vars.add(r.getVarId());
 						for (HReplicator r_ : rs) {
-							if (r == r_) {
+							if (r_.getVarId().equals(r.getVarId())) {
 								ps.add(new Pair<String,IHPrimUnit>(r.getVarId(),u));
 							}
 						}

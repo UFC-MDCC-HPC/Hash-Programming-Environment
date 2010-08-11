@@ -9,6 +9,7 @@ import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
 
 public class HQualifierComponent extends HBaseKindComponent {
 
@@ -30,7 +31,8 @@ public class HQualifierComponent extends HBaseKindComponent {
     public boolean accepts(IComponent c) {
     	if (c instanceof HQualifierComponent) return true;
     	if (c instanceof HEnumeratorComponent) return true;
-    	return false;
+    	if (c instanceof HFacetComponent) return false;
+    	return super.accepts(c);
     }
 
     public String kindString() {

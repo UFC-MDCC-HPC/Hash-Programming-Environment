@@ -68,7 +68,13 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		ModelType the_interface = (ModelType) getModel();
 		InterfaceFigure interface_figure = (InterfaceFigure) getFigure();
         
-		String name = the_interface.getName(true,true);
+		String name = null;
+		try {
+		   name = the_interface.getName(true,true);
+		}
+		catch (Exception e) {
+		   name = "ERROR Refreshing Visuals (InterfaceEditPart)"; 
+		}
         String name_ = breakLines(" " + name + " ");
 
         Label ff = new Label(" interface " + name_);

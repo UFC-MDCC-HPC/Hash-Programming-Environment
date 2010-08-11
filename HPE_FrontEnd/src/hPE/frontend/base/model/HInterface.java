@@ -258,7 +258,11 @@ public abstract class HInterface extends HPrimInterface implements IInterface, H
     	
     	for (HInterfaceSlice c : slices) {
     		HInterface ic = (HInterface) c.getInterface();
-    		HComponent cc = (HComponent)ic.getCompliantUnits().get(0).getConfiguration();
+    		List<IHPrimUnit> uList = ic.getCompliantUnits();
+    		if (uList.isEmpty()) {
+    		   System.out.println();
+    		}
+    		HComponent cc = (HComponent) uList.get(0).getConfiguration();
     		
     		List<Triple<String,HInterface,String>> ic_parameters = ic.getParameters2(cThis);
     		

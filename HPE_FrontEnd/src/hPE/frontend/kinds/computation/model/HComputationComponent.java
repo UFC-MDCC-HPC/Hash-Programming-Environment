@@ -38,7 +38,7 @@ public class HComputationComponent extends HActivateConfiguration {
 	   	if (c instanceof HSynchronizationComponent) return true;
 	   	if (c instanceof HComputationComponent) return true;
 	   	if (c instanceof HEnumeratorComponent) return true;
-	   	return false;
+	   	return super.accepts(c);
    }
    
    public String kindString() {

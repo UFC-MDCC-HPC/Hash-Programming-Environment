@@ -29,7 +29,7 @@ public class HServiceComponent extends HBaseKindComponent {
 	
     public boolean accepts(IComponent c) {
     	if (c instanceof HApplicationComponent) return true;
-    	return false;
+    	return super.accepts(c);
     }
 
     public String kindString() {

@@ -523,7 +523,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
   		    String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
   		    List<String> l = innerC.getModuleNames(version);
   		    for (String fileName : l) {
-	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, new String[] {}, path.toFile());
+	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, null, path.toFile());
   		    }
 
 		} catch (IOException e) {

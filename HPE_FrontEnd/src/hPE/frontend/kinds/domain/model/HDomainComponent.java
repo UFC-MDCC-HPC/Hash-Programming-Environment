@@ -29,7 +29,7 @@ public class HDomainComponent extends HBaseKindComponent {
     public boolean accepts(IComponent c) {
     	if (c instanceof HFacetComponent) return true;
     	if (c instanceof HQualifierComponent) return true;
-    	return false;
+    	return super.accepts(c);
     }
 
     public String kindString() {

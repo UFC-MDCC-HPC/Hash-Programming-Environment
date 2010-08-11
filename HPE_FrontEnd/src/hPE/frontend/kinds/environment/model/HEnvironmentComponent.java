@@ -32,7 +32,7 @@ public class HEnvironmentComponent extends HQualifierComponent {
     	if (c instanceof HQualifierComponent) return true;
     	if (c instanceof HEnvironmentComponent) return true;
     	if (c instanceof HEnumeratorComponent) return true;
-    	return false;
+    	return super.accepts(c);
     }
 
     public String kindString() {

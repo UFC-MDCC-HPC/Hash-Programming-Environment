@@ -112,10 +112,11 @@ public class BindingCreateCommand extends Command {
 			   return false;
 		   }
 		   HComponent c = (HComponent) the_source.getConfiguration();
-		   if (c.hasFreeVariables()) {
+		 /*  if (c.hasFreeVariables()) {
 			   JOptionPane.showMessageDialog(null, "The inner component has free type variables. You must supply them before to lift units.","Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
 			   return false;
 		   }
+		   */
 		   
 		}
 				

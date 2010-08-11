@@ -134,7 +134,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 		         switch (delta.getKind()) {
 		            case IResourceDelta.ADDED:
 		               if (ext != null && fileName.getFileExtension().equals("dll"))
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()}, new String[] {}, null);		               
+		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()},null, null);		               
 		               break;
 		            case IResourceDelta.REMOVED:
 		               if (ext != null && fileName.getFileExtension().equals("dll"))

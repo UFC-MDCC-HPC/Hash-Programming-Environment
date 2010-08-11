@@ -217,7 +217,7 @@ public class HPELocationEntry {
 				  
 				  String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
 				  
- 			      CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName}, new String[] {}, folder);
+ 			      CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName}, null, folder);
 			    }
 				catch(Exception e){
 					e.printStackTrace();
