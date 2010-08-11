@@ -4078,7 +4078,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 					int r = CommandLine.runCommand(new String[] { sn_path,
 							"-p", this.getComponentName() + ".snk",
 							this.getComponentName() + ".pub" },
-							new String[] {}, systemFile);
+							null, systemFile);
 					success = r == CommandLine.SUCESSFULL_COMMAND;
 				}
 			}
