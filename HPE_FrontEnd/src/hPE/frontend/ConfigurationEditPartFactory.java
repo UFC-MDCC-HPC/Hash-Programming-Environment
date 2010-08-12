@@ -30,13 +30,6 @@ import hPE.frontend.base.figures.InterfaceFigure;
 import hPE.frontend.base.figures.InterfaceSliceFigure;
 import hPE.frontend.base.figures.UnitFigure;
 import hPE.frontend.base.figures.UnitSliceFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorComponentFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorConfigurationFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorInterfaceFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorInterfaceSliceFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorUnitFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorUnitSliceFigure;
-import hPE.frontend.kinds.enumerator.figures.EnumeratorEntryFigure;
 import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
@@ -49,6 +42,7 @@ import hPE.frontend.base.model.HReplicatorSplit;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HActionEntry;
 import hPE.frontend.kinds.activate.model.protocol.HActionExit;
@@ -157,19 +151,26 @@ import hPE.frontend.kinds.domain.model.HDomainInterfaceSlice;
 import hPE.frontend.kinds.domain.model.HDomainUnit;
 import hPE.frontend.kinds.domain.model.HDomainUnitSlice;
 import hPE.frontend.kinds.domain.model.IHDomainUnit;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorComponentEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorConfigurationEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorEntryEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorInterfaceEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorInterfaceSliceEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorUnitEditPart;
+import hPE.frontend.kinds.enumerator.edits.EnumeratorUnitSliceEditPart;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorComponentFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorConfigurationFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorEntryFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorInterfaceFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorInterfaceSliceFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorUnitFigure;
+import hPE.frontend.kinds.enumerator.figures.EnumeratorUnitSliceFigure;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterface;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorUnit;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.frontend.kinds.enumerator.model.IHEnumeratorUnit;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorComponentEditPart;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorConfigurationEditPart;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorInterfaceEditPart;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorInterfaceSliceEditPart;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorUnitEditPart;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorUnitSliceEditPart;
-import hPE.frontend.kinds.enumerator.edits.EnumeratorEntryEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentComponentEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentConfigurationEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentEntryEditPart;
@@ -282,8 +283,19 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 	}
 
 	public EditPart createEditPart(EditPart context, Object model) {
-		
 		EditPart part = null;
+		
+		Class<?> editPartClass = KindManager.getClassAssignableFrom(context.getClass(), model.getClass());
+		if (editPartClass != null) {
+			try {
+				part = (EditPart) editPartClass.newInstance();
+			} catch (Exception e) {
+				// TODO tratar...
+				e.printStackTrace();
+			}
+			part.setModel(model);
+			return part;
+		}
 		
 		if (model instanceof HComponent) {
 			if (context == null) {

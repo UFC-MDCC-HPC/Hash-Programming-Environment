@@ -12,6 +12,7 @@ import hPE.frontend.base.commands.SupersedeCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IInterfaceSlice;
+import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
@@ -29,6 +30,8 @@ import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
 import hPE.frontend.base.model.IPointsToReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
+import hPE.frontend.kinds.KindConfiguration;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HAltAction;
@@ -44,6 +47,7 @@ import hPE.frontend.kinds.activate.model.protocol.HSkipAction;
 import hPE.frontend.kinds.activate.model.protocol.HWaitAction;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
+import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
@@ -89,7 +93,6 @@ import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
-import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfaceParameterType;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceRefType;
@@ -121,6 +124,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -133,7 +137,6 @@ import javax.swing.JOptionPane;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -2947,6 +2950,18 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		} else if (kind.getName().equals(HServiceComponent.KIND)) {
 			c = new HServiceComponent(name, location, uri);
 		} else {
+			KindConfiguration kindConfiguration = KindManager.findByName(kind.getName());
+			if (kindConfiguration != null) {
+				try {
+					Constructor<? extends HBaseKindComponent> componentConstructor = kindConfiguration.getHBaseKindComponentClass().getConstructor(String.class, IPackageLocation.class, URI.class);
+					if (componentConstructor != null) {
+							c = componentConstructor.newInstance(name, location, uri);
+					}
+				} catch (Exception e) {
+					//TODO tratar...
+					e.printStackTrace();
+				}
+			}
 			throw new HPEUnknownKindException("Component Kind Not Supported !");
 		}
 
