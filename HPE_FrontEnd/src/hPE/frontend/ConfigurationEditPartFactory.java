@@ -42,6 +42,7 @@ import hPE.frontend.base.model.HReplicatorSplit;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.kinds.KindConfiguration;
 import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HActionEntry;
@@ -285,17 +286,7 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart part = null;
 		
-		Class<?> editPartClass = KindManager.getClassAssignableFrom(context.getClass(), model.getClass());
-		if (editPartClass != null) {
-			try {
-				part = (EditPart) editPartClass.newInstance();
-			} catch (Exception e) {
-				// TODO tratar...
-				e.printStackTrace();
-			}
-			part.setModel(model);
-			return part;
-		}
+		KindConfiguration kindConfiguration = KindManager.getKindConfiguration(model.getClass());
 		
 		if (model instanceof HComponent) {
 			if (context == null) {
@@ -321,7 +312,9 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new FacetConfigurationEditPart<HFacetComponent,FacetConfigurationFigure>();
 				else if (model instanceof HDomainComponent)
 					part = new DomainConfigurationEditPart<HDomainComponent,DomainConfigurationFigure>();
-				else 
+				else if (kindConfiguration != null)
+					part = kindConfiguration.newConfigurationEditPart();
+				else
 					part = new ConfigurationEditPart<HComponent,ConfigurationFigure>();
 			} else if (context instanceof ComponentEditPart) {
 				// TODO: Exposed INNER COMPONENTS !!!!
@@ -350,6 +343,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new FacetComponentEditPart<HFacetComponent,FacetComponentFigure>();
 				else if (model instanceof HDomainComponent)
 					part = new DomainComponentEditPart<HDomainComponent,DomainComponentFigure>();
+				else if (kindConfiguration != null)
+					part = kindConfiguration.newComponentEditPart();
 				else 
 					part = new ComponentEditPart<HComponent,ComponentFigure>();
 			}
@@ -377,6 +372,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new FacetUnitEditPart<HFacetUnit,FacetUnitFigure>();
 				else if (model instanceof IHDomainUnit) 
 					part = new DomainUnitEditPart<HDomainUnit,DomainUnitFigure>();
+				else if (kindConfiguration != null)
+					part = kindConfiguration.newUnitEditPart();
 				else 
 					part = new UnitEditPart<HUnit,UnitFigure>();
 		    } else {
@@ -402,6 +399,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new FacetEntryEditPart<HFacetUnit,FacetEntryFigure>();
 				else if (model instanceof HDomainUnit) 
 					part = new DomainEntryEditPart<HDomainUnit,DomainEntryFigure>();
+				else if (kindConfiguration != null)
+					part = kindConfiguration.newEntryEditPart();
 				else 
 					part = new EntryEditPart<HUnit,EntryFigure>();
 		    }
@@ -429,6 +428,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new FacetUnitSliceEditPart<HFacetUnitSlice,FacetUnitSliceFigure>();
 			else if (model instanceof HDomainUnitSlice) 
 			    part = new DomainUnitSliceEditPart<HDomainUnitSlice,DomainUnitSliceFigure>();
+			else if (kindConfiguration != null)
+				part = kindConfiguration.newUnitSliceEditPart();
 			else 
 			    part = new UnitSliceEditPart<HUnitSlice,UnitSliceFigure>();
 		} else if (model instanceof HInterfaceSlice) {
@@ -454,6 +455,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new FacetInterfaceSliceEditPart<HFacetInterfaceSlice,FacetInterfaceSliceFigure>();
 			else if (model instanceof HDomainInterfaceSlice) 
 			    part = new DomainInterfaceSliceEditPart<HDomainInterfaceSlice,DomainInterfaceSliceFigure>();
+			else if (kindConfiguration != null)
+				part = kindConfiguration.newInterfaceSliceEditPart();
 			else 
 			    part = new InterfaceSliceEditPart<HInterfaceSlice,InterfaceSliceFigure>();
 		} else if (model instanceof HBinding) {
@@ -481,6 +484,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				part = new FacetInterfaceEditPart<HFacetInterface,FacetInterfaceFigure>();
 			else if (model instanceof HDomainInterface)
 				part = new DomainInterfaceEditPart<HDomainInterface,DomainInterfaceFigure>();
+			else if (kindConfiguration != null)
+				part = kindConfiguration.newInterfaceEditPart();
 			else 
 				part = new InterfaceEditPart<HInterface,InterfaceFigure>();
 		} else if (model instanceof HReplicator) {

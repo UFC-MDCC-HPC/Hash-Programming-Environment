@@ -2952,15 +2952,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		} else {
 			KindConfiguration kindConfiguration = KindManager.findByName(kind.getName());
 			if (kindConfiguration != null) {
-				try {
-					Constructor<? extends HBaseKindComponent> componentConstructor = kindConfiguration.getHBaseKindComponentClass().getConstructor(String.class, IPackageLocation.class, URI.class);
-					if (componentConstructor != null) {
-							c = componentConstructor.newInstance(name, location, uri);
-					}
-				} catch (Exception e) {
-					//TODO tratar...
-					e.printStackTrace();
-				}
+				c = kindConfiguration.newHBaseKindComponent(name, location, uri);
 			}
 			throw new HPEUnknownKindException("Component Kind Not Supported !");
 		}

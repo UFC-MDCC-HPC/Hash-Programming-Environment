@@ -1,50 +1,42 @@
 package hPE.frontend.kinds;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class responsible to load kinds at runtime and make them accessible to the frontend.
  * @author Rafael Sales - rafaelcds@gmail.com
  */
 public final class KindManager {
+	
+	/**
+	 * Stores a set of KindConfiguration of every loaded kind. 
+	 */
+	private static Set<KindConfiguration> kindsConfiguration = new HashSet<KindConfiguration>();
+	
+	/**
+	 * Maps the kinds classes to its KindConfiguration class.
+	 * Used to discover the KindConfiguration class given a class belonging to the same kind.
+	 */
+	private static Map<Class<?>, KindConfiguration> kindsClasses = new HashMap<Class<?>, KindConfiguration>();
+	
 	private KindManager() {
 	}
-
-	public static List<KindConfiguration> getKinds() {
-		List<KindConfiguration> kinds = new ArrayList<KindConfiguration>();
-		
-		return kinds;
+	
+	public static Set<KindConfiguration> getKinds() {
+		//Load the kinds and stores its classes in kindsConfiguration and kindsClasses
+		return kindsConfiguration;
 	}
 	
 	/**
-	 * Search for the kind that defines the <code>relatedClass</code>
-	 * @param relatedClass - a class returned by any public get method of the KindConfiguration
-	 * @return
+	 * Gets the KindConfiguration of the kind owner of <code>kindClass</code>.
+	 * @param kindClass
+	 * @return returns the proper KindConfiguration, otherwise returns null (not expected)
 	 */
-	public static KindConfiguration findKindConfiguration(Class<?> relatedClass) {
-		for (KindConfiguration kindConfiguration : getKinds()) {
-			if (kindConfiguration.getClassAssignableFrom(relatedClass) != null) {
-				return kindConfiguration;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * Gets the class assignable from the <code>baseClass</code> of the kind that defines
-	 * the <code>relatedClass</code>
-	 * @param <T>
-	 * @param baseClass
-	 * @param relatedClass - a class returned by any public get method of the KindConfiguration
-	 * @return
-	 */
-	public static <T> Class<? extends T> getClassAssignableFrom(Class<T> baseClass, Class<?> relatedClass) {
-		KindConfiguration kindConfiguration = findKindConfiguration(relatedClass);
-		if (kindConfiguration != null) {
-			return findKindConfiguration(relatedClass).getClassAssignableFrom(baseClass);			
-		}
-		return null;
+	public static KindConfiguration getKindConfiguration(Class<?> kindClass) {
+		return kindsClasses.get(kindClass);
 	}
 	
 	public static KindConfiguration findByName(String name) {

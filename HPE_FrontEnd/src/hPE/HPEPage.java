@@ -1,11 +1,9 @@
 package hPE;
 
-import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
-import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
@@ -147,9 +145,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			}
 			//TODO RAFAEL: Obter o componente selecionado:
 			if (false) {
-				c = KindManager.findByName("").getClassAssignableFrom(HBaseKindComponent.class).
-						getConstructor(String.class, IPackageLocation.class, URI.class).
-						newInstance(s, null, uri);
+				c = KindManager.findByName("").newHBaseKindComponent(s, null, uri);
 			}
 			
 			setComponentVersion(c);
