@@ -18,7 +18,7 @@ namespace DGAC
 		//MANAGER
         public class ManagerObject: MarshalByRefObject{
 
-            public ManagerObject() { Console.WriteLine("NEW MANAGER OBJECT"); }
+            public ManagerObject() { }
  
     	    /**
 	     * 	Creates an instance of a CCA component of the type defined by the 
@@ -51,13 +51,11 @@ namespace DGAC
 
                  if (!properties.TryGetValue(Constants.ENUMS_KEY, out enumsObj))
                  {
-                     Console.WriteLine("no enums");
                      enums = new Dictionary<string, int>();
                  }
                  else
                  {
                      enums = (IDictionary<string, int>)enumsObj;
-                     Console.WriteLine("yes enums " + enums.Count);
                  }
 
                  Object nodesObj = null;
@@ -77,7 +75,6 @@ namespace DGAC
 
                  Component c = BackEnd.cdao.retrieve_libraryPath(className);
                  string hash_component_uid = c.Hash_component_UID;
-                 Console.WriteLine("HASH COMPONENT UID = " + hash_component_uid);
 
                  IList<DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
 
@@ -201,7 +198,6 @@ namespace DGAC
                 [MethodImpl(MethodImplOptions.Synchronized)]
 				public void saveData(byte[] data, string filename){
 
-                    Console.WriteLine("Worker writing file " + filename);
                     //saving source file
 					if(data!=null)
 						FileUtil.saveByteArrayIntoFile(data,Constants.PATH_TEMP_WORKER+filename+".cs");
@@ -228,8 +224,6 @@ namespace DGAC
                 {
                     string publicKeyToken = null; 
                     string moduleNameWithoutExtension = moduleName.Split('.')[0];
-                    Console.WriteLine("Compiling " + moduleName);
-                    Console.WriteLine("password = " + password);
                     if (outFile == Constants.EXE_OUT)
                     {
                         CommandLineUtil.compile_to_exe(contents, moduleName, references, userName, password, curDir);
@@ -238,7 +232,6 @@ namespace DGAC
                     {
                         //creates the strong key, for new assembly
                         publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password, curDir);
-                        Console.WriteLine("Publickey = " + publicKeyToken);
                         //compile, generate dll 
                         CommandLineUtil.compile_source(contents, moduleName, references, userName, password, curDir);
                         //installing on local GAC

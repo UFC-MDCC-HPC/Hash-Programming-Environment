@@ -7,7 +7,11 @@ using DGAC.utils;
 using MPI;
 using hpe.basic;
 using System.Reflection;
+using System.Threading;
 // using cca;
+
+
+delegate void GoMethod();
 
 namespace DGAC
 { 
@@ -37,13 +41,7 @@ namespace DGAC
             {
                 this.global_communicator = MPI.Communicator.world;
                 my_rank = this.global_communicator.Rank;
-
-                Console.WriteLine(my_rank + "CREATE COMMUNICATOR NULL - START");
-
                 this.global_communicator.Split(0, my_rank);
-
-                Console.WriteLine(my_rank + "CREATE COMMUNICATOR NULL - FINISH");
-                
             }
 
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -54,15 +52,27 @@ namespace DGAC
                     this.global_communicator = MPI.Communicator.world;
                     my_rank = this.global_communicator.Rank;
 
-                    // --- READING ENUMERATORS AND COPYING TO args OBJECT PASSED TO DGACInit
                     IList<string> eStrL = new List<string>();
+
+                    // READING SESSION ID
+                    object sessionObj = null;
+                    int session_id = -1;
+                    if (properties.TryGetValue(Constants.SESSION_KEY, out sessionObj)) 
+                    {
+                       session_id = (int) sessionObj;
+                       eStrL.Add("--session");
+                       eStrL.Add(session_id.ToString());
+                    }
+
+
+                    // --- READING ENUMERATORS AND COPYING TO args OBJECT PASSED TO DGACInit
                     Object enumsObj = null;
                     if (properties.TryGetValue(Constants.ENUMS_KEY, out enumsObj))
                     {
                         IDictionary<string, int> enums = (IDictionary<string, int>) enumsObj;
                         foreach (KeyValuePair<string, int> k in enums)
                         {
-                            eStrL.Add(" --enumerator ");
+                            eStrL.Add("--enumerator");
                             eStrL.Add(k.Key);
                             eStrL.Add(k.Value.ToString());
                         }
@@ -70,6 +80,7 @@ namespace DGAC
                     // ---------------------------------------------------------------------
 
                     string[] args = new string[eStrL.Count];
+                    
 
                     eStrL.CopyTo(args, 0);
 
@@ -85,7 +96,6 @@ namespace DGAC
                     if (properties.TryGetValue(Constants.UID_KEY, out hash_component_uid_obj)) {
                        hash_component_uid = (string) hash_component_uid_obj;
                     }
-                    Console.WriteLine("UID = " + (hash_component_uid != null ? hash_component_uid : "null") + "Count : " + properties.Count);
  
 
                     string my_id_unit = unit.Id_unit;
@@ -94,8 +104,6 @@ namespace DGAC
                     string assembly_string = unit.Assembly_string;      // where to found the DLL (retrieve from the component).
                     string class_name = unit.Class_name;  // the name of the class inside the DLL.
                     int class_nargs = unit.Class_nargs;
-
-                    Console.WriteLine("STARTING " + class_name);
 
                     Assembly a = Assembly.Load(assembly_string);
 
@@ -112,16 +120,16 @@ namespace DGAC
 
                     pmain = (hpe.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
 
-                    Console.WriteLine(my_rank + ": CREATE COMMUNICATOR - START");
                     pmain.LocalCommunicator = (MPI.Intracommunicator) this.global_communicator.Split(1,key);
-                    Console.WriteLine(my_rank + ": CREATE COMMUNICATOR - FINISH");
 
-                    Console.WriteLine(my_rank + ": PREPARING TO CALL INIT");
 
-                    BackEnd.DGACInit(hash_component_uid, my_id_unit, pmain, args); Console.WriteLine(my_rank + ": PREPARING TO CALL CREATE SLICES");
-                    pmain.createSlices(); Console.WriteLine(my_rank + ": PREPARING TO CALL COMPUTE");
-                    pmain.compute(); Console.WriteLine(my_rank + ": PREPARING TO CALL FINALZE");
-                    BackEnd.DGACFinalize(); Console.WriteLine(my_rank + ": FINISH");
+                    BackEnd.DGACInit(hash_component_uid, my_id_unit, pmain, args); 
+                    pmain.createSlices(); 
+
+                    Go go = new Go(my_rank, pmain.compute);
+                    Thread thread_go = new Thread(go.go); 
+                    thread_go.Start();
+                    // go.go();
 
                 }
                 catch (Exception e)
@@ -130,6 +138,28 @@ namespace DGAC
                 } 
             }
 
+
+            private class Go {
+
+               private GoMethod go_method = null;
+               private int my_rank;
+
+               public Go(int r, GoMethod gm) 
+               {
+                 this.go_method = gm;
+                 this.my_rank = r;
+               }
+
+               public void go () 
+               {
+                   go_method(); 
+                   BackEnd.DGACFinalize(); Console.WriteLine(my_rank + ": FINISH");
+               }
+
+            }
+
+
+
 			//just for test
 			[MethodImpl(MethodImplOptions.Synchronized)]
 			public void sayHi(){
@@ -137,6 +167,8 @@ namespace DGAC
 			}
 
         }
+
+       
 
         
 }

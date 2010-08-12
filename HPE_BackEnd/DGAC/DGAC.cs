@@ -12,7 +12,7 @@ using DGAC.database;
 using System.Data;
 using System.Collections;
 using System.Reflection.Emit;
-
+using MPI;
 
 namespace DGAC
 {
@@ -408,6 +408,7 @@ namespace DGAC
             try
             {
                 string filename = Constants.PATH_BIN + output_log_filename + "." + session_id + "." + currentTimeMillis();
+                Console.WriteLine("REDIRECTING OUTPUT TO " + filename);
                 if (!File.Exists(filename))
                 {
                     FileStream f = File.Create(filename);
@@ -424,8 +425,8 @@ namespace DGAC
             }
 
             // Direct standard output to the log file. 
-            if (open_log_out)
-                Console.SetOut(log_out);
+//            if (open_log_out)
+//                Console.SetOut(log_out);
 
         }
 
@@ -851,11 +852,14 @@ namespace DGAC
             Component c = cdao.retrieve_uid(hash_component_uid);
             int id_abstract = c.Id_abstract;
 
-        //    Console.Write("BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface + "..... ");
+            MPI.Intracommunicator global_communicator = MPI.Communicator.world;
+            int my_rank = global_communicator.Rank;
+            
+            if (my_rank==0) Console.Write(my_rank + ": BEGIN createSlice !!!! " + id_abstract + "," + id_inner + "," + id_interface + "..... ");
 
             InnerComponent ic = icdao.retrieve(id_abstract, id_inner);
 
-            IDictionary<string, int> actualParameters_new = null;
+           IDictionary<string, int> actualParameters_new = null;
             // hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
             hpe.basic.Unit.determineActualParameters2(unit, ic, out actualParameters_new);
            
@@ -938,10 +942,7 @@ namespace DGAC
 
             }
 
-       //     SliceDAO sdao = new SliceDAO();
-
             // Now, list all units of the inner component.
-
 
             int id_functor_app_inner_actual = ic.Id_functor_app;
             int id_abstract_inner_original = ic.Id_abstract_inner;
@@ -956,7 +957,6 @@ namespace DGAC
 
                 int id_functor_app_old = ic.Id_functor_app;
                 ic.Id_functor_app = id_functor_app_inner_actual;
-           //     AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
                 AbstractComponentFunctorApplication acfa = acfadao.retrieve(id_functor_app_inner_actual);
                 id_abstract_inner_actual = acfa.Id_abstract;
                 ic.Id_abstract_inner = id_abstract_inner_actual;
@@ -965,7 +965,6 @@ namespace DGAC
             o.Id_functor_app = ic.Id_functor_app;
             o.Id_abstract = ic.Id_abstract_inner;
 
-            //IList<Slice> ss = sdao.listByInnerInInterface(id_abstract, id_inner, unit.Id_interface);
             IList<Slice> ss = sdao.listByInner(id_abstract, id_inner);
             IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
             Dictionary<string, int> countUnits = new Dictionary<string, int>();
@@ -973,7 +972,6 @@ namespace DGAC
 
             IDictionary<string, string> unitsMapping = new Dictionary<string, string>();
 
-          //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
             IList<string> id_units_ordered = acfdao.getIdUnitsOrdered(id_abstract_inner_original);
             IList<string> id_units_ordered_actual = acfdao.getIdUnitsOrdered(id_abstract_inner_actual);
             for (int k = 0; k < id_units_ordered.Count; k++)
@@ -1184,7 +1182,7 @@ namespace DGAC
 
             o.ActualParametersTop = unit.ActualParametersTop;
 
-//            Console.WriteLine("END");
+            if (my_rank == 0)  Console.WriteLine("END");
 
             o.setActualParameters(actualParameters_new);
             o.createSlices();
@@ -1636,6 +1634,7 @@ namespace DGAC
                 IDictionary<int, Object> properties = new Dictionary<int, Object>();
                 properties.Add(Constants.ENUMS_KEY, enums);
                 properties.Add(Constants.NODES_KEY, nodes);
+                properties.Add(Constants.SESSION_KEY, session_id);
 
                 Console.WriteLine("before manager.createInstance");
 
@@ -1910,34 +1909,6 @@ namespace DGAC
             return cname;
         }
     
-
-    }
-
-    class XXXIData
-    {
-    }
-
-    class XXXIList<T> 
-        where T : XXXIData
-    {
-    }
-
-
-    class XXXIFunction : XXXIData { }
-
-    class XXXITestingFunction : XXXIFunction
-    {
-    }
-
-    class XXXIntegralCase<T> : XXXIData 
-        where T : XXXIData
-    {
-    }
-
-    class Teste
-    {
-        XXXIList<XXXIntegralCase<XXXITestingFunction>> ll = new XXXIList<XXXIntegralCase<XXXITestingFunction>>();
-
 
     }
 

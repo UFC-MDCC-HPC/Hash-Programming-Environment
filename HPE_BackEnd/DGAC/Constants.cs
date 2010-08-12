@@ -22,7 +22,7 @@ namespace DGAC.utils
             if (properties_file_path == null)
             {
                 properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
-                if (properties_file_path == null)
+               if (properties_file_path == null)
                 {
                     string homePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
                                        Environment.OSVersion.Platform == PlatformID.MacOSX)
@@ -60,6 +60,7 @@ namespace DGAC.utils
         public static int NODES_KEY = 2;
         public static int KEY_KEY = 3;      
         public static int UID_KEY = 4;
+        public static int SESSION_KEY = 5;
 
         public static string getArgVal(string argId)
         {
