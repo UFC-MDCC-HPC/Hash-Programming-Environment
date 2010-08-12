@@ -2,9 +2,9 @@
 (c) all rights reserved
 ================================================================*/
 using System;
-using hpe.basic;
+using DGAC.basic;
 
-namespace hpe.kinds{
+namespace DGAC.kinds{
      public interface IEnumeratorKind : IUnit {
        int getValueAtIndex(int ix);
        int[] getPermutation();

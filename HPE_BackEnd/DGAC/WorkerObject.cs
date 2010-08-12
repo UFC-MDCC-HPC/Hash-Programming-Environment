@@ -5,7 +5,7 @@ using System.Runtime.Remoting;
 using System.Collections.Generic;
 using DGAC.utils;
 using MPI;
-using hpe.basic;
+using DGAC.basic;
 using System.Reflection;
 using System.Threading;
 // using cca;
@@ -99,7 +99,7 @@ namespace DGAC
  
 
                     string my_id_unit = unit.Id_unit;
-                    hpe.kinds.IApplicationKind pmain = null;
+                    DGAC.kinds.IApplicationKind pmain = null;
 
                     string assembly_string = unit.Assembly_string;      // where to found the DLL (retrieve from the component).
                     string class_name = unit.Class_name;  // the name of the class inside the DLL.
@@ -118,15 +118,15 @@ namespace DGAC
 
                     // hpe.kinds.IApplicationKind o = (hpe.kinds.IApplicationKind) Activator.CreateInstance(t);
 
-                    pmain = (hpe.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
+                    pmain = (DGAC.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
 
                     pmain.LocalCommunicator = (MPI.Intracommunicator) this.global_communicator.Split(1,key);
 
 
-                    BackEnd.DGACInit(hash_component_uid, my_id_unit, pmain, args); 
+                    pmain.Context.Init(hash_component_uid, my_id_unit, pmain, args); 
                     pmain.createSlices(); 
 
-                    Go go = new Go(my_rank, pmain.compute);
+                    Go go = new Go(my_rank, pmain);
                     Thread thread_go = new Thread(go.go); 
                     thread_go.Start();
                     // go.go();
@@ -141,19 +141,19 @@ namespace DGAC
 
             private class Go {
 
-               private GoMethod go_method = null;
+                private DGAC.kinds.IApplicationKind pmain = null;
                private int my_rank;
 
-               public Go(int r, GoMethod gm) 
+               public Go(int r, DGAC.kinds.IApplicationKind pmain_) 
                {
-                 this.go_method = gm;
+                 this.pmain = pmain_;
                  this.my_rank = r;
                }
 
                public void go () 
                {
-                   go_method(); 
-                   BackEnd.DGACFinalize(); Console.WriteLine(my_rank + ": FINISH");
+                   pmain.compute(); 
+                   pmain.Context.Finalize(); Console.WriteLine(my_rank + ": FINISH");
                }
 
             }

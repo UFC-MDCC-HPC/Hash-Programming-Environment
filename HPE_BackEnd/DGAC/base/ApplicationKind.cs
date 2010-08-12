@@ -5,9 +5,10 @@
 //
 
 using System;
-using hpe.basic;
+using DGAC.basic;
+using DGAC;
 
-namespace hpe.kinds
+namespace DGAC.kinds
 {
 
 

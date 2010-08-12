@@ -6,13 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using hpe.kinds;
+using DGAC.kinds;
 using MPI;
 
-namespace hpe.basic
+namespace DGAC.basic
 {
 	public interface IUnit
 	{
+        BackEnd.RunTimeContext Context { set; get; }
+
         int Id_concrete {set; get;}
         int Id_functor_app { set; get; }
         int Id_abstract { set; get; }
@@ -39,8 +41,8 @@ namespace hpe.basic
         void setActualParameters(IDictionary<string, int> actualParameters_new);
         void setUpParameters(DGAC.database.Component c);
 
-        bool getPermutation(string varid, out hpe.kinds.IEnumeratorKind permutation);
-        void addPermutation(string varid, hpe.kinds.IEnumeratorKind u);
+        bool getPermutation(string varid, out DGAC.kinds.IEnumeratorKind permutation);
+        void addPermutation(string varid, DGAC.kinds.IEnumeratorKind u);
 
     }
 }

@@ -7,14 +7,26 @@
 using System;
 using System.Collections.Generic;
 using DGAC.database;
+using DGAC;
 
 
-namespace hpe.basic
+namespace DGAC.basic
 {
 
     [Serializable]
     public abstract class Unit : IUnit
 	{
+        private BackEnd.RunTimeContext dgac = null;
+
+        /* The context object contains DGAC services. It will be shared by all slices of an application, passed downwards the hierarchy */ 
+        public BackEnd.RunTimeContext Context { set { dgac = value; } get { return dgac; } }
+
+        public Unit()
+        {
+            dgac = new BackEnd.RunTimeContext();
+        }
+
+
         private int id_concrete;
 
         public int Id_concrete
@@ -164,7 +176,7 @@ namespace hpe.basic
             ActualParameters = actualParameters_new;
         }
 
-        public static void determineActualParameters2(hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
+        public static void determineActualParameters2(DGAC.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
         {
             int Id_functor_app_inner = -1;
             if (innerComponent.Parameter_top.Length == 0)
@@ -287,19 +299,19 @@ namespace hpe.basic
             set { id_functor_app = value; }
         }
 
-        private IDictionary<string, hpe.kinds.IEnumeratorKind> permutations = null;
+        private IDictionary<string, DGAC.kinds.IEnumeratorKind> permutations = null;
 
-        public bool getPermutation(string id_enumerator, out hpe.kinds.IEnumeratorKind permutation)
+        public bool getPermutation(string id_enumerator, out DGAC.kinds.IEnumeratorKind permutation)
         {
             if (permutations == null)
-                permutations = new Dictionary<string, hpe.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, DGAC.kinds.IEnumeratorKind>();
             return permutations.TryGetValue(id_enumerator, out permutation);
         }
 
-        public void addPermutation(string id_enumerator, hpe.kinds.IEnumeratorKind u) 
+        public void addPermutation(string id_enumerator, DGAC.kinds.IEnumeratorKind u) 
         {
             if (permutations == null)
-                permutations = new Dictionary<string, hpe.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, DGAC.kinds.IEnumeratorKind>();
             permutations.Add(id_enumerator, u);
             u.V = id_enumerator;
         }

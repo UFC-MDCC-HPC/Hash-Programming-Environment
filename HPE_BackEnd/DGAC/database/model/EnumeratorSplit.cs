@@ -46,13 +46,13 @@ namespace DGAC.database
             set { id_total_split = value; }
         }
 
-        internal int mapSplitEnumerationValue(hpe.basic.IUnit unit, string re_Key,
+        internal int mapSplitEnumerationValue(DGAC.basic.IUnit unit, string re_Key,
                                               KeyValuePair<string, int> re,
                                               Slice s,
                                               IDictionary<string, int> enumeratorCardinality,
                                               IDictionary<string, int> enumeratorCardinality_prime)
         {
-            hpe.kinds.IEnumeratorKind uPermutation = null;
+            DGAC.kinds.IEnumeratorKind uPermutation = null;
 
             int ix = mapSplitEnumerationValueDefault(re, s, enumeratorCardinality, enumeratorCardinality_prime);
             
