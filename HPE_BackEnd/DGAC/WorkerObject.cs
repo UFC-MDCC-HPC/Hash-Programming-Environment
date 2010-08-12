@@ -38,12 +38,16 @@ namespace DGAC
                 this.global_communicator = MPI.Communicator.world;
                 my_rank = this.global_communicator.Rank;
 
+                Console.WriteLine(my_rank + "CREATE COMMUNICATOR NULL - START");
+
                 this.global_communicator.Split(0, my_rank);
+
+                Console.WriteLine(my_rank + "CREATE COMMUNICATOR NULL - FINISH");
                 
             }
 
             [MethodImpl(MethodImplOptions.Synchronized)]
-            public void createInstance(string instanceName, DGAC.database.Unit unit, IDictionary<string, Object> properties)
+            public void createInstance(string instanceName, DGAC.database.Unit unit, IDictionary<int, Object> properties)
             {
                 try
                 {
@@ -53,7 +57,7 @@ namespace DGAC
                     // --- READING ENUMERATORS AND COPYING TO args OBJECT PASSED TO DGACInit
                     IList<string> eStrL = new List<string>();
                     Object enumsObj = null;
-                    if (properties.TryGetValue("Enums", out enumsObj))
+                    if (properties.TryGetValue(Constants.ENUMS_KEY, out enumsObj))
                     {
                         IDictionary<string, int> enums = (IDictionary<string, int>) enumsObj;
                         foreach (KeyValuePair<string, int> k in enums)
@@ -66,16 +70,24 @@ namespace DGAC
                     // ---------------------------------------------------------------------
 
                     string[] args = new string[eStrL.Count];
+
                     eStrL.CopyTo(args, 0);
 
                     int key = my_rank;
                     object keyObj = null;
-                    if (properties.TryGetValue("Key", out keyObj))
+                    if (properties.TryGetValue(Constants.KEY_KEY, out keyObj))
                     {
                         key = (int)keyObj;
                     }
 
                     string hash_component_uid = null;
+                    object hash_component_uid_obj = null;
+                    if (properties.TryGetValue(Constants.UID_KEY, out hash_component_uid_obj)) {
+                       hash_component_uid = (string) hash_component_uid_obj;
+                    }
+                    Console.WriteLine("UID = " + (hash_component_uid != null ? hash_component_uid : "null") + "Count : " + properties.Count);
+ 
+
                     string my_id_unit = unit.Id_unit;
                     hpe.kinds.IApplicationKind pmain = null;
 
@@ -83,27 +95,39 @@ namespace DGAC
                     string class_name = unit.Class_name;  // the name of the class inside the DLL.
                     int class_nargs = unit.Class_nargs;
 
+                    Console.WriteLine("STARTING " + class_name);
+
                     Assembly a = Assembly.Load(assembly_string);
 
-                    string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-                    Type t = a.GetType(strType);
+//                    string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 
-                    t = t.MakeGenericType(t.GetGenericArguments());
+                    int pos = class_name.LastIndexOf('.');
+                    string package_name = class_name.Substring(0,pos);
 
-                    hpe.kinds.IApplicationKind o = (hpe.kinds.IApplicationKind)Activator.CreateInstance(t);
+                    Type t = a.GetType(/*strType*/  package_name + ".Instantiator");
 
-                    o.LocalCommunicator = (MPI.Intracommunicator) this.global_communicator.Split(1,key);
+                    // t = t.MakeGenericType(t.GetGenericArguments());
 
-                    BackEnd.DGACInit(hash_component_uid, my_id_unit, pmain, args);
-                    pmain.createSlices();
-                    pmain.compute();
-                    BackEnd.DGACFinalize();
+                    // hpe.kinds.IApplicationKind o = (hpe.kinds.IApplicationKind) Activator.CreateInstance(t);
+
+                    pmain = (hpe.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
+
+                    Console.WriteLine(my_rank + ": CREATE COMMUNICATOR - START");
+                    pmain.LocalCommunicator = (MPI.Intracommunicator) this.global_communicator.Split(1,key);
+                    Console.WriteLine(my_rank + ": CREATE COMMUNICATOR - FINISH");
+
+                    Console.WriteLine(my_rank + ": PREPARING TO CALL INIT");
+
+                    BackEnd.DGACInit(hash_component_uid, my_id_unit, pmain, args); Console.WriteLine(my_rank + ": PREPARING TO CALL CREATE SLICES");
+                    pmain.createSlices(); Console.WriteLine(my_rank + ": PREPARING TO CALL COMPUTE");
+                    pmain.compute(); Console.WriteLine(my_rank + ": PREPARING TO CALL FINALZE");
+                    BackEnd.DGACFinalize(); Console.WriteLine(my_rank + ": FINISH");
 
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                }
+                } 
             }
 
 			//just for test

@@ -62,6 +62,8 @@ namespace Back_End_WS
         [WebMethod]
         public byte[] readEnvironment()
         {
+            Console.WriteLine("Reading Environment");
+
             EnvironmentType env = dgac.readEnvironment();
 
             byte[] xmlEnv = LoaderApp.SerializeObject(Constants.PATH_TEMP_WORKER + "environment.xml", env);
@@ -72,7 +74,8 @@ namespace Back_End_WS
         [WebMethod]
         public string[] runApplication(int id_concrete, string[] eIds, int[] eVls, string userName, string password, string curDir)
         {
-			
+		
+            Console.WriteLine("STEP -1");	
             string[] str_output = null;
             try
             {

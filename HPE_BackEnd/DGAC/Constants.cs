@@ -56,6 +56,11 @@ namespace DGAC.utils
         public static string connectionString = FileUtil.readConstant("connection_string");
         public static string externalRefsFile = FileUtil.readConstant("external_references_file");
 
+        public static int ENUMS_KEY = 1;
+        public static int NODES_KEY = 2;
+        public static int KEY_KEY = 3;      
+        public static int UID_KEY = 4;
+
         public static string getArgVal(string argId)
         {
             string[] args = Environment.GetCommandLineArgs();

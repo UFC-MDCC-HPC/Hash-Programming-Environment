@@ -73,7 +73,7 @@ public class CommandLineUtil {
 
           createFile(contents, moduleName);
 
-          runCommand(Constants.cs_compiler, " /noconfig -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:exe /out:" + Constants.PATH_BIN + moduleNameWithoutExtension + ".exe " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs " + mounted_references, userName, password, curDir);
+          runCommand(Constants.cs_compiler, " /noconfig -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:exe /out:" + Constants.PATH_BIN + moduleNameWithoutExtension + ".exe " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs " + mounted_references, userName, password, curDir);
 
           return true;      
            
@@ -131,7 +131,7 @@ public class CommandLineUtil {
 
           createFile(contents, moduleName);
 
-          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + " -lib:" + Constants.UNIT_PACKAGE_PATH + "," + Constants.PATH_DGAC + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references, userName, password, curDir);
+          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + " -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references, userName, password, curDir);
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }

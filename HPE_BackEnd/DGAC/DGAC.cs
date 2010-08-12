@@ -125,7 +125,7 @@ namespace DGAC
                                                                        password,
                                                                        curDir);
 
-                    if (!exists)
+                     if (!exists)
                         idao.setPublicKey(id_abstract, interfaceName, publicKey);
                 }
 
@@ -198,7 +198,7 @@ namespace DGAC
                                                                        userName,
                                                                        password,
                                                                        curDir);
-                    if (!exists)
+                     if (!exists && outputType != Constants.EXE_OUT)
                         udao.setPublicKey(id_concrete, unitName, publicKey);
                 }
 
@@ -246,10 +246,8 @@ namespace DGAC
             else
                 open_log_out = false;
 
-            //openConnection(); 
             Connector.openConnection();
 
-          //  ComponentDAO cdao = new ComponentDAO();
             Component c = cdao.retrieve_uid(hash_component_uid);
 
             int id_abstract = c.Id_abstract;
@@ -258,16 +256,11 @@ namespace DGAC
             pmain.Id_concrete = id_concrete;
             pmain.Id_interface = my_id_unit;
 
-            // AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();
 
-           // if (firstPass) { System.Threading.Thread.Sleep(20000); firstPass = false; }
-
             pmain.EnumeratorCardinality = new Dictionary<string, int>();
 
-          //  EnumeratorDAO edao = new EnumeratorDAO();
             IList<Enumerator> eList = edao.list(id_abstract);
             foreach (Enumerator e in eList)
             {
@@ -279,8 +272,6 @@ namespace DGAC
                 if (rangeSup_ > 0)
                     pmain.EnumeratorCardinality.Add(e.Id_enumerator, rangeSup_);
             }
-
-          //  EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
 
             int rangeInf, rangeSup;
 
@@ -1633,21 +1624,25 @@ namespace DGAC
 
                 IDictionary<string, int> enums = new Dictionary<string, int>();
 
-                for (int i = 0; i < eIds.Length; i++)
+                for (int i = 0; i < eIds.Length; i++) {
                     enums.Add(eIds[i], eVls[i]);
+                }
 
                 Component c = cdao.retrieve(id_concrete);
 
-                int[] nodes = new int[0];
+                int[] nodes = new int[] {0,1,2,3,4};
                 
                 /* BEGIN UNDER CONSTRUCTION */
-                IDictionary<string, Object> properties = new Dictionary<string, Object>();
-                properties.Add("Enums", enums);
-                properties.Add("Nodes", nodes);
+                IDictionary<int, Object> properties = new Dictionary<int, Object>();
+                properties.Add(Constants.ENUMS_KEY, enums);
+                properties.Add(Constants.NODES_KEY, nodes);
+
+                Console.WriteLine("before manager.createInstance");
 
                 manager.createInstance(session_id.ToString(), c.Library_path, properties);
 
                 /* END UNDER CONSTRUCTION */
+                releaseWorker();
 
             }
             catch (Exception e)

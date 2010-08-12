@@ -70,9 +70,7 @@ public class ComponentDAO{
     {
 
         Component c = null;
-
         if (cache_c_uid.TryGetValue(hash_component_uid, out c)) return c;        
-        
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -107,13 +105,14 @@ public class ComponentDAO{
         Component c = null;
 
         if (cache_c_lp.TryGetValue(library_path, out c)) return c;        
-        
+       
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
              "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
              "FROM component " +
              "WHERE library_path like '" + library_path + "'";
+
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())

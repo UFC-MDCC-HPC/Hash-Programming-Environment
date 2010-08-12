@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.IO;
 using System.Runtime.Remoting.Channels;
 using DGAC.database;
+using System.Threading;
 // using cca;
 
 namespace DGAC
@@ -34,26 +35,34 @@ namespace DGAC
 	     * 		see destroyInstance instead.
 	     */
             [MethodImpl(MethodImplOptions.Synchronized)]
-            public void createInstance(string instanceName, string className , IDictionary<string,Object> properties )
+            public void createInstance(string instanceName, string className , IDictionary<int,Object> properties )
             {
-  //           try {
+             try {
+
+                 Connector.openConnection();
 
                  /* BEGIN FOM RunApplication */
 
+                Console.WriteLine("ENTROU createInstance manager");
+               
                  IDictionary<Unit, int> files = new Dictionary<Unit, int>();
                  Object enumsObj = null;
                  IDictionary<string, int> enums = null;
 
-                 if (!properties.TryGetValue("enums", out enumsObj))
+                 if (!properties.TryGetValue(Constants.ENUMS_KEY, out enumsObj))
+                 {
+                     Console.WriteLine("no enums");
                      enums = new Dictionary<string, int>();
+                 }
                  else
                  {
                      enums = (IDictionary<string, int>)enumsObj;
+                     Console.WriteLine("yes enums " + enums.Count);
                  }
 
                  Object nodesObj = null;
                  int[] nodes = null;
-                 if (!properties.TryGetValue("nodes", out nodesObj))
+                 if (!properties.TryGetValue(Constants.NODES_KEY, out nodesObj))
                  {
                      nodes = new int[worker.Length];
                      for (int i = 0; i < nodes.Length; i++)
@@ -67,6 +76,8 @@ namespace DGAC
                  }
 
                  Component c = BackEnd.cdao.retrieve_libraryPath(className);
+                 string hash_component_uid = c.Hash_component_UID;
+                 Console.WriteLine("HASH COMPONENT UID = " + hash_component_uid);
 
                  IList<DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
 
@@ -105,7 +116,7 @@ namespace DGAC
 
                  if (nprocs != aprocs)
                  {
-                     throw new Exception("Unmatching number of nodes.");
+                     // throw new Exception("Unmatching number of nodes.");
                  }
 
                  /* END FOM RunApplication */
@@ -114,14 +125,21 @@ namespace DGAC
                  for (int i = 0; i < node_marking.Length; i++)
                      node_marking[i] = false;
 
+                 
+                 IList<Thread> wthreads = new List<Thread>();
                  int k = 0;
                  foreach (KeyValuePair<Unit, int> unit in files)
                  {
                      for (int j = 0; j < unit.Value; j++)
                      {
-                         IDictionary<string, Object> worker_properties = new Dictionary<string, Object>(properties);
-                         worker_properties.Add("Key", k);
-                         worker[nodes[k]].createInstance(instanceName, unit.Key, properties);
+                         IDictionary<int, Object> worker_properties = new Dictionary<int, Object>(properties);
+                         worker_properties.Add(Constants.KEY_KEY, k);
+                         worker_properties.Add(Constants.UID_KEY, hash_component_uid);
+                         GoWorker gw = new GoWorker(worker[nodes[k]], instanceName, unit.Key, worker_properties);
+                         Thread t = new Thread(gw.Run);
+                         t.Start();
+                         wthreads.Add(t);    
+                         // worker[nodes[k]].createInstance(instanceName, unit.Key, properties);
                          node_marking[nodes[k]] = true;
                          k++;
                      }
@@ -131,16 +149,50 @@ namespace DGAC
                  {
                      if (!node_marking[i])
                      {
-                         worker[i].createInstanceNull();
+                         Thread t = new Thread(worker[i].createInstanceNull);
+                         wthreads.Add(t);
+//                         worker[i].createInstanceNull();
+                         t.Start();
                      }
 
                  }
-//             } 
-//             catch (Exception e) 
-//             {
-//                Console.WriteLine(e.Message);
-//             }
+
+                 foreach (Thread t in wthreads) 
+                          t.Join();
+
+             } 
+             catch (Exception e) 
+             {
+                Console.WriteLine(e.Message);
+                throw e;
+             } 
+             finally 
+             {
+                Connector.closeConnection();
+             }
             }
+
+ 
+
+            protected class GoWorker 
+            {
+                 private string instanceName = null; 
+                 private DGAC.database.Unit key = null; 
+                 private IDictionary<int, Object> properties = null;
+                 private WorkerObject worker = null;
+                 public GoWorker(WorkerObject worker_, string instanceName_, DGAC.database.Unit key_, IDictionary<int, Object> properties_) 
+                 { 
+                     instanceName = instanceName_;
+                     key = key_;
+                     properties = properties_;
+                     worker = worker_;
+                 }
+
+                 public void Run() 
+                 {
+                         worker.createInstance(instanceName, key, properties);
+                 }
+            } 
 
             /**
             * Salva arquivo fonte lido como um array de bytes em data, com o nome filename
@@ -186,6 +238,7 @@ namespace DGAC
                     {
                         //creates the strong key, for new assembly
                         publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password, curDir);
+                        Console.WriteLine("Publickey = " + publicKeyToken);
                         //compile, generate dll 
                         CommandLineUtil.compile_source(contents, moduleName, references, userName, password, curDir);
                         //installing on local GAC
