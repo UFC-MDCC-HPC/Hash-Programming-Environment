@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using DGAC.database;
 using DGAC.utils;
-using DGAC.basic;
+using hpe.basic;
 using System.Threading;
 
 namespace DGAC.database

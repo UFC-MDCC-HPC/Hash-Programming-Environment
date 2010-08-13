@@ -10,7 +10,7 @@ using DGAC.database;
 using DGAC;
 
 
-namespace DGAC.basic
+namespace hpe.basic
 {
 
     [Serializable]
@@ -23,7 +23,6 @@ namespace DGAC.basic
 
         public Unit()
         {
-            dgac = new BackEnd.RunTimeContext();
         }
 
 
@@ -176,7 +175,7 @@ namespace DGAC.basic
             ActualParameters = actualParameters_new;
         }
 
-        public static void determineActualParameters2(DGAC.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
+        public static void determineActualParameters2(hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
         {
             int Id_functor_app_inner = -1;
             if (innerComponent.Parameter_top.Length == 0)
@@ -299,19 +298,19 @@ namespace DGAC.basic
             set { id_functor_app = value; }
         }
 
-        private IDictionary<string, DGAC.kinds.IEnumeratorKind> permutations = null;
+        private IDictionary<string, hpe.kinds.IEnumeratorKind> permutations = null;
 
-        public bool getPermutation(string id_enumerator, out DGAC.kinds.IEnumeratorKind permutation)
+        public bool getPermutation(string id_enumerator, out hpe.kinds.IEnumeratorKind permutation)
         {
             if (permutations == null)
-                permutations = new Dictionary<string, DGAC.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, hpe.kinds.IEnumeratorKind>();
             return permutations.TryGetValue(id_enumerator, out permutation);
         }
 
-        public void addPermutation(string id_enumerator, DGAC.kinds.IEnumeratorKind u) 
+        public void addPermutation(string id_enumerator, hpe.kinds.IEnumeratorKind u) 
         {
             if (permutations == null)
-                permutations = new Dictionary<string, DGAC.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, hpe.kinds.IEnumeratorKind>();
             permutations.Add(id_enumerator, u);
             u.V = id_enumerator;
         }

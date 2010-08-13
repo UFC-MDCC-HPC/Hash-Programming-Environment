@@ -6,7 +6,7 @@ using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
 using System.Reflection;
 using HPE_DGAC_LoadDB;
-using DGAC.basic;
+using hpe.basic;
 using DGAC.utils;
 using DGAC.database;
 using System.Data;
@@ -38,7 +38,7 @@ namespace DGAC
 
     public class BackEnd : IBackEnd
     {
-        IpcClientChannel ch = null;
+        private IpcClientChannel ch = null;
 
         public BackEnd()
         {
@@ -58,7 +58,6 @@ namespace DGAC
         public void deleteComponent(String ID) { }
 
         public void releaseWorker() {
-             //ch.StopListening(null);
              ChannelServices.UnregisterChannel(ch);
         }
 
@@ -87,7 +86,6 @@ namespace DGAC
                 {
 
                     cAbs = (AbstractComponentFunctor)cAbs_;
-                    // ComponentDAO cdao = new ComponentDAO();
                     IList<Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
                     if (true/*cList.Count == 0*/)
                     {
@@ -102,8 +100,6 @@ namespace DGAC
                 }
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
-
-                // InterfaceDAO idao = new InterfaceDAO();
 
                 foreach (LoaderApp.InfoCompile interfaceToCompile in infoCompile)
                 {
@@ -177,8 +173,6 @@ namespace DGAC
 
                 ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
 
-                //     UnitDAO udao = new UnitDAO();
-
                 foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                 {
                     int id_concrete = unitToCompile.id;
@@ -251,7 +245,6 @@ namespace DGAC
         {
             IList<DeployedComponentInfoType> l = new List<DeployedComponentInfoType>();
 
-            //   ComponentDAO cdao = new ComponentDAO();
             IList<Component> cList = cdao.list();
 
             foreach (Component c in cList)
@@ -284,10 +277,6 @@ namespace DGAC
 
         private DeployedParameterType[] readEnvironmentConcreteParameters(int id_functor_app)
         {
-            //   AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            //  AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-
-            //   SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spList = spdao.list(id_functor_app);
 
             DeployedParameterType[] r = new DeployedParameterType[spList.Count];
@@ -297,8 +286,6 @@ namespace DGAC
             {
                 r[i] = new DeployedParameterType();
                 r[i].parameter_id = sp.Id_parameter;
-                // AbstractComponentFunctorParameter acfp = acfpdao.retrieve(sp.Id_abstract, sp.Id_parameter);
-                // r[i].bound = acfp.Bounds_of;
                 AbstractComponentFunctorApplication acfa = acfadao.retrieve(sp.Id_functor_app_actual);
                 r[i].actualSpecified = true;
                 r[i].actual = acfa.Id_abstract;
@@ -313,7 +300,6 @@ namespace DGAC
         {
             IList<DeployedComponentInfoType> l = new List<DeployedComponentInfoType>();
 
-            //      AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
             IList<AbstractComponentFunctor> acfList = acfdao.list();
 
             foreach (AbstractComponentFunctor acf in acfList)
@@ -417,10 +403,10 @@ namespace DGAC
 
                 /* BEGIN UNDER CONSTRUCTION */
                 IDictionary<int, Object> properties = new Dictionary<int, Object>();
-                properties.Add(Constants.ENUMS_KEY, enums);
-                properties.Add(Constants.NODES_KEY, nodes);
-                properties.Add(Constants.SESSION_KEY, session_id);
-
+                properties[Constants.ENUMS_KEY] = enums;
+                properties[Constants.NODES_KEY] = nodes;
+                properties[Constants.SESSION_KEY] = session_id;
+                
                 Console.WriteLine("before manager.createInstance");
 
                 manager.createInstance(session_id.ToString(), c.Library_path, properties);
@@ -609,21 +595,37 @@ namespace DGAC
         public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
         public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
+        public static hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
+                                                      string hash_component_uid,
+                                                      string id_inner,
+                                                      string id_interface,
+                                                      Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
+                                                     )
+        {
+            return unit.Context.createSlice(unit, hash_component_uid, id_inner, id_interface, typeParams);
+        }
+
+
+
        /* RUN TIME ROUTINES */
 
         public class RunTimeContext
         {
 
-            public void Init(string hash_component_uid, string my_id_unit, DGAC.basic.IUnit pmain, string[] args)
+            public RunTimeContext(string hash_component_uid, string my_id_unit, hpe.basic.IUnit pmain, string[] args) {
+                   Init(hash_component_uid, my_id_unit, pmain, args);
+            }
+
+            private void Init(string hash_component_uid, string my_id_unit, hpe.basic.IUnit pmain, string[] args)
             {
-                slices = new List<DGAC.basic.IUnit>();
+                slices = new List<hpe.basic.IUnit>();
 
                 session_id = getSessionID(args);
 
-                if (session_id >= 0)
-                    RedirectOutput(session_id);
-                else
-                    open_log_out = false;
+//                if (session_id >= 0)
+//                    RedirectOutput(session_id);
+//                else
+//                    open_log_out = false;
 
                 Connector.openConnection();
 
@@ -757,9 +759,10 @@ namespace DGAC
                 return -1;
             }
 
-            public void Finalize()
+            ~RunTimeContext() 
             {
-                foreach (DGAC.basic.IUnit slice in slices)
+                Console.WriteLine("DESTRUCTOR " + session_id);
+                foreach (hpe.basic.IUnit slice in slices)
                 {
                     slice.destroySlice();
                 }
@@ -804,8 +807,8 @@ namespace DGAC
                 }
 
                 // Direct standard output to the log file. 
-                //            if (open_log_out)
-                //                Console.SetOut(log_out);
+                if (open_log_out)
+                      Console.SetOut(log_out);
 
             }
 
@@ -864,7 +867,7 @@ namespace DGAC
                 dict.Add(key, value);
             }
 
-            private bool findReplicator(DGAC.basic.IUnit unit, KeyValuePair<string, int> re,
+            private bool findReplicator(hpe.basic.IUnit unit, KeyValuePair<string, int> re,
                                                Slice s,
                                                InnerComponent ic,
                                                IDictionary<string, int> enumeratorCardinality,
@@ -1139,13 +1142,13 @@ namespace DGAC
                     instanceCache.TryGetValue(library_path, out closedT);
                 }
 
-                DGAC.basic.IUnit o = (DGAC.basic.IUnit)Activator.CreateInstance(closedT);
+                hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
                 return o;
 
             }
 
-            public DGAC.basic.IUnit loadImpl(DGAC.basic.IUnit unit,
+            public hpe.basic.IUnit loadImpl(hpe.basic.IUnit unit,
                                            Component c,
                                            string id_inner,
                                            string id_interface,
@@ -1174,7 +1177,7 @@ namespace DGAC
 
                 Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
 
-                DGAC.basic.IUnit o = (DGAC.basic.IUnit)Activator.CreateInstance(closedT);
+                hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
                 o.Id_concrete = u.Id_concrete;
                 o.Id_interface = u.Id_interface_interface;
@@ -1197,13 +1200,15 @@ namespace DGAC
 
             private bool firstPass = true;
 
-            public DGAC.basic.IUnit createSlice(DGAC.basic.IUnit unit,
+            public hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
                                                       string hash_component_uid,
                                                       string id_inner,
                                                       string id_interface,
                                                       Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
                                                      )
             {
+             try 
+             {
                 Component c = cdao.retrieve_uid(hash_component_uid);
                 int id_abstract = c.Id_abstract;
 
@@ -1216,11 +1221,11 @@ namespace DGAC
 
                 IDictionary<string, int> actualParameters_new = null;
                 // hpe.basic.Unit.determineActualParameters(unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
-                DGAC.basic.Unit.determineActualParameters2(unit, ic, out actualParameters_new);
+                hpe.basic.Unit.determineActualParameters2(unit, ic, out actualParameters_new);
 
                 Slice slice = sdao.retrieve2(id_abstract, id_inner, id_interface, unit.Id_interface);
 
-                DGAC.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, slice.PropertyName, actualParameters_new); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
+                hpe.basic.IUnit o = loadImpl(unit, c, id_inner, id_interface, slice.PropertyName, actualParameters_new); // (hpe.basic.IUnit)Activator.CreateInstance(closedT);
 
                 // Configure the knowledge of the slices about the topology.
 
@@ -1546,6 +1551,13 @@ namespace DGAC
                 slices.Add(o);
 
                 return o;
+             }
+             catch (Exception e) 
+             {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                throw e;
+             }
             }
 
             private IDictionary<string, Type> checked_types = new Dictionary<string, Type>();
@@ -1596,7 +1608,7 @@ namespace DGAC
 
                     IDictionary<string, Interface> sliceParameters = null;
                     IDictionary<string, int> actualParameters_new = null;
-                    DGAC.basic.Unit.determineActualParameters(actualParameters, ic.Id_functor_app, out actualParameters_new);
+                    hpe.basic.Unit.determineActualParameters(actualParameters, ic.Id_functor_app, out actualParameters_new);
                     fetchParameters(actualParameters_new, id_functor_app_inner, id_abstract_inner, iSlice, out sliceParameters);
 
                     foreach (KeyValuePair<string, Interface> kvp in sliceParameters)
@@ -1702,7 +1714,7 @@ namespace DGAC
                 return null;
             }
 
-            private IList<DGAC.basic.IUnit> slices = null;
+            private IList<hpe.basic.IUnit> slices = null;
 
             private void insertEnumeratorFusions(IUnit o, string id_unit_slice, IList<IDictionary<string, int>> enumRanks)
             {
@@ -1722,7 +1734,7 @@ namespace DGAC
                             {
                                 l.Add(em.Id_enumerator_inner);
 
-                                DGAC.kinds.IEnumeratorKind ec;
+                                hpe.kinds.IEnumeratorKind ec;
                                 if (o.getPermutation(k.Key, out ec))
                                 {
                                     o.addPermutation(em.Id_enumerator_inner, ec);

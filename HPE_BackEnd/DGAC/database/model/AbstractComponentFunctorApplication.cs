@@ -8,8 +8,6 @@ namespace DGAC.database{
 [Serializable()]
 public class AbstractComponentFunctorApplication{
  
-	
- 
 	private int id_functor_app = -1;
 	private int id_abstract = -1;
   	private IDictionary<string, int> parametersList = null;
@@ -30,6 +28,9 @@ public class AbstractComponentFunctorApplication{
     }
     
     public void addParameter(string id_parameter_actual, int id_functor_app_actual){
+        if (this.parametersList.ContainsKey(id_parameter_actual)) {
+           this.parametersList.Remove(id_parameter_actual);
+        }
         this.parametersList.Add(id_parameter_actual, id_functor_app_actual);
     }
     

@@ -5,7 +5,7 @@ using System.Runtime.Remoting;
 using System.Collections.Generic;
 using DGAC.utils;
 using MPI;
-using DGAC.basic;
+using hpe.basic;
 using System.Reflection;
 using System.Threading;
 // using cca;
@@ -99,7 +99,7 @@ namespace DGAC
  
 
                     string my_id_unit = unit.Id_unit;
-                    DGAC.kinds.IApplicationKind pmain = null;
+                    hpe.kinds.IApplicationKind pmain = null;
 
                     string assembly_string = unit.Assembly_string;      // where to found the DLL (retrieve from the component).
                     string class_name = unit.Class_name;  // the name of the class inside the DLL.
@@ -107,29 +107,21 @@ namespace DGAC
 
                     Assembly a = Assembly.Load(assembly_string);
 
-//                    string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-
                     int pos = class_name.LastIndexOf('.');
                     string package_name = class_name.Substring(0,pos);
 
-                    Type t = a.GetType(/*strType*/  package_name + ".Instantiator");
+                    Type t = a.GetType(package_name + ".Instantiator");
 
-                    // t = t.MakeGenericType(t.GetGenericArguments());
-
-                    // hpe.kinds.IApplicationKind o = (hpe.kinds.IApplicationKind) Activator.CreateInstance(t);
-
-                    pmain = (DGAC.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
+                    pmain = (hpe.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
 
                     pmain.LocalCommunicator = (MPI.Intracommunicator) this.global_communicator.Split(1,key);
+                    pmain.Context = new BackEnd.RunTimeContext(hash_component_uid, my_id_unit, pmain, args);
 
-
-                    pmain.Context.Init(hash_component_uid, my_id_unit, pmain, args); 
                     pmain.createSlices(); 
 
                     Go go = new Go(my_rank, pmain);
                     Thread thread_go = new Thread(go.go); 
                     thread_go.Start();
-                    // go.go();
 
                 }
                 catch (Exception e)
@@ -141,10 +133,10 @@ namespace DGAC
 
             private class Go {
 
-                private DGAC.kinds.IApplicationKind pmain = null;
+                private hpe.kinds.IApplicationKind pmain = null;
                private int my_rank;
 
-               public Go(int r, DGAC.kinds.IApplicationKind pmain_) 
+               public Go(int r, hpe.kinds.IApplicationKind pmain_) 
                {
                  this.pmain = pmain_;
                  this.my_rank = r;
@@ -152,11 +144,20 @@ namespace DGAC
 
                public void go () 
                {
+                 try 
+                 {
                    pmain.compute(); 
-                   pmain.Context.Finalize(); Console.WriteLine(my_rank + ": FINISH");
+                   Console.WriteLine(my_rank + ": FINISH");
+                 } 
+                 catch (Exception e) 
+                 {
+                    Console.WriteLine(my_rank + ": ABORTED THREAD");
+                 }
                }
 
             }
+
+
 
 
 

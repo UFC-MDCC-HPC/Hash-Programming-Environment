@@ -6,10 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using DGAC.kinds;
+using hpe.kinds;
 using MPI;
+using DGAC;
 
-namespace DGAC.basic
+namespace hpe.basic
 {
 	public interface IUnit
 	{
@@ -41,8 +42,8 @@ namespace DGAC.basic
         void setActualParameters(IDictionary<string, int> actualParameters_new);
         void setUpParameters(DGAC.database.Component c);
 
-        bool getPermutation(string varid, out DGAC.kinds.IEnumeratorKind permutation);
-        void addPermutation(string varid, DGAC.kinds.IEnumeratorKind u);
+        bool getPermutation(string varid, out hpe.kinds.IEnumeratorKind permutation);
+        void addPermutation(string varid, hpe.kinds.IEnumeratorKind u);
 
     }
 }

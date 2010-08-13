@@ -32,8 +32,6 @@ public class ComponentDAO{
 
     IDictionary<int, Component> cache_c_functor_app = new Dictionary<int, Component>();
 
-
-
 	public Component retrieveByFunctorApp(int id_functor_app){
 	   
 	   Component c = null;
