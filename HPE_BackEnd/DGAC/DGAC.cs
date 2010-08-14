@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
@@ -14,19 +14,46 @@ using System.Collections;
 using System.Reflection.Emit;
 using MPI;
 
+namespace cca {
+
+	public interface ComponentRepository {
+		EnvironmentType readEnvironment();
+        void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir);
+        void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir);
+        void deleteComponent(String ID);
+	}
+	
+    public interface BuilderService
+    {
+		// createInstance
+        String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir); 
+		 
+		// connect ??
+		
+		// ...
+		
+    }
+	
+	
+	public interface Services {
+		// registerUsesPort
+	   hpe.basic.IUnit registerUsesPort(hpe.basic.IUnit unit,
+                                        string hash_component_uid,
+                                        string id_inner,
+                                        string id_interface
+                                        );
+		// addProvidesPort ??
+		
+		// ...
+		
+	}
+}
+
 namespace DGAC
 {
 
 
-    public interface IBackEnd
-    {
-        void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir);
-        void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir);
-        void deleteComponent(String ID);
-        String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir);
-        EnvironmentType readEnvironment();
-
-    }//IDGAC 
+	
 
     /*
     * Essa classe é chamada pelo WS. Nela, as referencias aos workers são inicializadas. Para isto, os workers
@@ -36,7 +63,7 @@ namespace DGAC
    
 
 
-    public class BackEnd : IBackEnd
+    public class BackEnd : cca.BuilderService, cca.ComponentRepository
     {
         private IpcClientChannel ch = null;
 
@@ -595,21 +622,21 @@ namespace DGAC
         public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
         public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
-        public static hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
+        public static hpe.basic.IUnit createSlice(hpe.basic.IUnit ownerUnit,
                                                       string hash_component_uid,
                                                       string id_inner,
                                                       string id_interface,
                                                       Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
                                                      )
         {
-            return unit.Context.createSlice(unit, hash_component_uid, id_inner, id_interface, typeParams);
+            return ownerUnit.Context.registerUsesPort(ownerUnit, hash_component_uid, id_inner, id_interface);
         }
 
 
-
+		  
        /* RUN TIME ROUTINES */
 
-        public class RunTimeContext
+        public class RunTimeContext : cca.Services
         {
 
             public RunTimeContext(string hash_component_uid, string my_id_unit, hpe.basic.IUnit pmain, string[] args) {
@@ -1200,11 +1227,10 @@ namespace DGAC
 
             private bool firstPass = true;
 
-            public hpe.basic.IUnit createSlice(hpe.basic.IUnit unit,
+            public hpe.basic.IUnit registerUsesPort(hpe.basic.IUnit unit,
                                                       string hash_component_uid,
                                                       string id_inner,
-                                                      string id_interface,
-                                                      Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
+                                                      string id_interface
                                                      )
             {
              try 
