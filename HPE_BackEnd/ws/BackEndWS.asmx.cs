@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Web;
 using System.Collections;
@@ -22,7 +22,7 @@ namespace Back_End_WS
     public class BackEnd_WS : System.Web.Services.WebService
     {
 
-	    static DGAC.IBackEnd dgac = null;
+	    static DGAC.BuilderService dgac = null;
     	
 	    public BackEnd_WS(){
 
