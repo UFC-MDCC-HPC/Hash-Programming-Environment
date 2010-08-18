@@ -4,7 +4,7 @@ using hpe.kinds;
 
 namespace jefferson.data.Data { 
 
-public interface BaseIData : IDataStructureKind 
+public interface BaseIData : IDataStructureKind  
 {
 
 
