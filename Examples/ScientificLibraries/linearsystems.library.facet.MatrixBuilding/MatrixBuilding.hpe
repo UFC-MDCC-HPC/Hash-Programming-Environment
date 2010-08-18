@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c7d2480a928182fdc559cfaceb04c06a4580bcf1927ba1fcff8bb1304487972fc71e7795a3bcf8bcede64ae2ec054073da40285664d78918efc5733d4e270c44cc46c69c89338853bd9a507166d0526cc48f699c3e9e484b2e7e80c45dae8459f6272d49de852411b2e534f62d22ed68c4e83a3aade31bf74825abfdb15022b8" isAbstract="true" kind="Facet" name="MatrixBuilding" packagePath="linearsystems.library.facet">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000181629830699b7798b3f645dd0378d93981e0a173af8836c9957979e31a1e0247324a73713fc5996a839e31b71c5ffb7456a80ebb39174568afee2e1613786fae604d8d177bff2a92226e584a1d3cc184aeddefb1cc5dc130e164953f36597cafc11d8663f01f670358e9057b29918feeee96d730453e9567d0702d4fd70182" localRef="library" location="/linearsystems.qualifier.Library/Library.hpe" name="Library" package="linearsystems.qualifier" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="109" y="422">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="library" formFieldId="library" varName="L"/>
+    <interface iRef="IMatrixBuildingFacet" nArgs="1">
+      <slice isRef="library_unit">
+        <originRef cRef="library" iRef="ILibraryUnit"/>
+        <visualDescription h="10" w="10" x="71" y="24"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="40" w="80" x="204" y="131">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+      <parameter iname="ILibraryUnit" order="0" parid="L" uname="library_unit" varid="library"/>
+    </interface>
+    <unit iRef="IMatrixBuildingFacet" private="false" uRef="matrixbuilding_facet" visibleInterface="true">
+      <slices cRef="library" replica="0" uRef="library_unit" sliceName="library_unit" transitive="false">
+        <visualDescription h="10" w="10" x="71" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="159" y="217"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="N" varId="N">
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library_unit"/>
+      <links xsi:type="component:EnumerableUnitType" ref="matrixbuilding_facet"/>
+      <visualDescription h="20" w="20" x="145" y="150"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

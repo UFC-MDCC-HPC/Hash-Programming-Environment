@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ff7daada355489c635fb71eee011919f497b4361306d47512659c0fe6f24a8cfaecdf5050aefa1e3055be922857004d6359a4b09e8bb9066e3d593fcafbc715c9b72f71c602ad2e8e35b808c1131e9f595e3cc6bd74176ac9d0b84bd33706c2e5330dbaf1d9754b7883c21004c1c41b05ce1842387ee7a783326921e9f0797f1" isAbstract="true" kind="Qualifier" name="MatrixType" packagePath="linearsystems.application">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IMatrixType" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;&#xA;namespace linearsystems.application.MatrixType { &#xA;&#xA;public interface BaseIMatrixType : IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIMatrixType.cs" srcType="base" uri="/linearsystems.application.MatrixType/bin/1.0.0.0/BaseIMatrixType.dll" versionId="1.0.0.0"/>
+        <file contents="using hpe.kinds;&#xA;&#xA;namespace linearsystems.application.MatrixType { &#xA;&#xA;public interface IMatrixType : BaseIMatrixType&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IMatrixType.cs" srcType="user" uri="/linearsystems.application.MatrixType/bin/1.0.0.0/IMatrixType.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.application.MatrixType/bin/1.0.0.0/BaseIMatrixType.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="220" y="97">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IMatrixType" private="false" uRef="matrix_type" visibleInterface="true">
+      <visualDescription h="47" w="98" x="220" y="177"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@4bb12d631279842262451" varId="N">
+      <links xsi:type="component:EnumerableUnitType" ref="matrix_type"/>
+      <visualDescription h="20" w="20" x="59" y="137"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

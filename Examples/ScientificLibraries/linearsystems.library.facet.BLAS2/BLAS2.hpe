@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000eb9bccbb4fc90bea99321100be8f8af6fdd5db459a6077f33c27cf6d33244dc4eb2a3a2e8b4f69f560c89b03830c994f95f094248d32373315e4e86a45c3b15837d6967a910078a173ded806f8ff52112d4bfd30d9ddc29e5eb15229223433510632ab15d766bfb7999b77c92d2c16d9b7a16861e43f7436efb7921c7a174493" isAbstract="true" kind="Facet" name="BLAS2" packagePath="linearsystems.library.facet">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000181629830699b7798b3f645dd0378d93981e0a173af8836c9957979e31a1e0247324a73713fc5996a839e31b71c5ffb7456a80ebb39174568afee2e1613786fae604d8d177bff2a92226e584a1d3cc184aeddefb1cc5dc130e164953f36597cafc11d8663f01f670358e9057b29918feeee96d730453e9567d0702d4fd70182" localRef="library" location="/linearsystems.qualifier.Library/Library.hpe" name="Library" package="linearsystems.qualifier" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="52" y="445">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="library" formFieldId="library" varName="L"/>
+    <interface iRef="IBLAS2Facet" nArgs="1">
+      <slice isRef="library_unit">
+        <originRef cRef="library" iRef="ILibraryUnit"/>
+        <visualDescription h="10" w="10" x="18" y="16"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="40" w="80" x="198" y="189">
+        <color b="20" g="105" r="139"/>
+      </visualDescription>
+      <parameter iname="ILibraryUnit" order="0" parid="L" uname="library_unit" varid="library"/>
+    </interface>
+    <unit iRef="IBLAS2Facet" private="false" uRef="blas2_facet" visibleInterface="true">
+      <slices cRef="library" replica="0" uRef="library_unit" sliceName="library_unit" transitive="false">
+        <visualDescription h="10" w="10" x="18" y="16"/>
+      </slices>
+      <visualDescription h="40" w="80" x="198" y="269"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="N" varId="N">
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library_unit"/>
+      <links xsi:type="component:EnumerableUnitType" ref="blas2_facet"/>
+      <visualDescription h="20" w="20" x="145" y="150"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

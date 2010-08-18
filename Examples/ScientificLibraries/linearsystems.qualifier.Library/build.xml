@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe_cache" default="all" name="Library">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Library-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/Library.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/src/1.0.0.0/BaseILibraryUnit.cs"/>
+      </sources>
+      <references>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/Library.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/src/1.0.0.0/ILibraryUnit.cs"/>
+      </sources>
+      <references>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Library-1.0.0.0" name="all"/>
+</project>

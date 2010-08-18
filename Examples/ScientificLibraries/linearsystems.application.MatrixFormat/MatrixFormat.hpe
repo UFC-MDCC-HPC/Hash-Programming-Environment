@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019d09662f917c14e2a586b417a341a58a1319f415691b72ee871af16d19113961d57e0ed8215b72f4f37a7cdcabe60214c152756efbe7da86f8359ce06fcb6d16a395997f9942b28cdf7ddd2ff863fd007821b41810d3fc0372bcc9a2a3b187dee635eda44805058fff7600aba3db6bf8c0e2bfd8a31e98194fc0fe1fba75089" isAbstract="true" kind="Qualifier" name="MatrixFormat" packagePath="linearsystems.application">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ff7daada355489c635fb71eee011919f497b4361306d47512659c0fe6f24a8cfaecdf5050aefa1e3055be922857004d6359a4b09e8bb9066e3d593fcafbc715c9b72f71c602ad2e8e35b808c1131e9f595e3cc6bd74176ac9d0b84bd33706c2e5330dbaf1d9754b7883c21004c1c41b05ce1842387ee7a783326921e9f0797f1" localRef="matrix_type" location="/linearsystems.application.MatrixType/MatrixType.hpe" name="MatrixType" package="linearsystems.application" parameter_id="matrix type" exposed="false">
+      <visualDescription h="53" w="88" x="113" y="365">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="matrix_type">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="matrix_type" formFieldId="matrix type" varName="MT"/>
+    <interface iRef="IMatrixFormat" nArgs="1">
+      <slice isRef="matrix_type">
+        <originRef cRef="matrix_type" iRef="IMatrixType"/>
+        <visualDescription h="10" w="10" x="29" y="26"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="40" w="126" x="185" y="148">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+      <parameter iname="IMatrixType" order="0" parid="MT" uname="matrix_type" varid="matrix type"/>
+    </interface>
+    <unit iRef="IMatrixFormat" private="false" uRef="matrix_format" visibleInterface="true">
+      <slices cRef="matrix_type" replica="0" uRef="matrix_type" sliceName="matrix_type" transitive="false">
+        <visualDescription h="10" w="10" x="29" y="26"/>
+      </slices>
+      <visualDescription h="40" w="126" x="185" y="228"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@4bb12d631279842262451" varId="N">
+      <originRef>matrix_type</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matrix_type" uRef="matrix_type"/>
+      <links xsi:type="component:EnumerableUnitType" ref="matrix_format"/>
+      <visualDescription h="20" w="20" x="49" y="201"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
