@@ -1,4 +1,4 @@
-package br.ufc.hpecmd.exception;
+package hPE.frontend.commandline.exception;
 
 public class ArgException extends Exception{
  

@@ -1,4 +1,4 @@
-package br.ufc.hpecmd.util;
+package hPE.frontend.commandline.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,4 +22,7 @@ public class FileUtil {
         
         return properties;
     }
+    
+    
+    
 }

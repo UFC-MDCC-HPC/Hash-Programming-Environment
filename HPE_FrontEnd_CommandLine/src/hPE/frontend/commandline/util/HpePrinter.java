@@ -1,4 +1,4 @@
-package br.ufc.hpecmd.util;
+package hPE.frontend.commandline.util;
 
 public class HpePrinter {
 	

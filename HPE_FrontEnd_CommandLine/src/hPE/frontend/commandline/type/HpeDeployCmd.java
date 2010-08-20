@@ -1,6 +1,6 @@
-package br.ufc.hpecmd.type;
+package hPE.frontend.commandline.type;
 
-import br.ufc.hpecmd.exception.ArgException;
+import hPE.frontend.commandline.exception.ArgException;
 
 public class HpeDeployCmd implements HpeGenericCmd{
 

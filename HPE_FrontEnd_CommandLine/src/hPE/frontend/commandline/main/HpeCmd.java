@@ -1,4 +1,10 @@
-package br.ufc.hpecmd.main;
+package hPE.frontend.commandline.main;
+
+import hPE.frontend.commandline.exception.ArgException;
+import hPE.frontend.commandline.exception.CmdException;
+import hPE.frontend.commandline.type.HpeGenericCmd;
+import hPE.frontend.commandline.util.FileUtil;
+import hPE.frontend.commandline.util.HpePrinter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,11 +13,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
-import br.ufc.hpecmd.exception.ArgException;
-import br.ufc.hpecmd.exception.CmdException;
-import br.ufc.hpecmd.type.HpeGenericCmd;
-import br.ufc.hpecmd.util.FileUtil;
-import br.ufc.hpecmd.util.HpePrinter;
 
 public class HpeCmd {
 	
@@ -96,6 +97,8 @@ public class HpeCmd {
 			in = scanner.nextLine();
 			
 		};
+		
+		HpePrinter.out("Exiting Command Line");
 		 
 	}
 }
