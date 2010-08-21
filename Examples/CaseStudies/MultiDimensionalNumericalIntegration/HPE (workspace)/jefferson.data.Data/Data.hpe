@@ -19,7 +19,7 @@
       </visualDescription>
     </interface>
     <unit iRef="IData" private="false" uRef="data" visibleInterface="true">
-      <visualDescription h="40" w="80" x="113" y="150"/>
+      <visualDescription h="40" w="80" x="77" y="119"/>
     </unit>
   </componentInfo>
 </component:component>

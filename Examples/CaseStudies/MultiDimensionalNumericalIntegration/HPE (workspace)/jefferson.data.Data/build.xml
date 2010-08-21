@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe_cache" default="all" name="Data">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Data">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="Data-1.0.0.0">
-    <ifnot targetexists="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0">
-      <mkdir dir="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0"/>
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="false" keyfile="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/Data.snk" optimize="true" output="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0/BaseIData.dll" target="library" unsafe="true">
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/Data.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0/BaseIData.dll" target="library" unsafe="true">
       <sources>
-        <include name="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/src/1.0.0.0/BaseIData.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/src/1.0.0.0/BaseIData.cs"/>
       </sources>
       <references>
-        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="false" keyfile="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/Data.snk" optimize="true" output="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0/IData.dll" target="library" unsafe="true">
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/Data.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0/IData.dll" target="library" unsafe="true">
       <sources>
-        <include name="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/src/1.0.0.0/IData.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/src/1.0.0.0/IData.cs"/>
       </sources>
       <references>
-        <include name="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.Data/bin/1.0.0.0/BaseIData.dll"/>
-        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\HPE (workspace)\jefferson.data.Data\bin\1.0.0.0\BaseIData.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
   </target>
