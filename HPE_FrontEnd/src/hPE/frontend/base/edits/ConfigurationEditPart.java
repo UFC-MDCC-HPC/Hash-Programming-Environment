@@ -282,6 +282,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		if (ev.getPropertyName().equals(ModelType.NEW_COMPONENT)) this.refreshChildren();
 		if (ev.getPropertyName().equals(ModelType.UPDATE_CONNECTIONS)) this.refresh();
 		if (ev.getPropertyName().equals(ModelType.SUPPLY_PARAMETER)) this.refresh();
+		if (ev.getPropertyName().equals(ModelType.PROPERTY_IS_PARAMETER)) this.refresh();
 		if (ev.getPropertyName().equalsIgnoreCase("labelContents")) this.refreshVisuals();//$NON-NLS-1$
 	}
 	

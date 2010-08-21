@@ -28,74 +28,25 @@ public class ChangeVariableNameCommand extends Command {
 	
 	
 	public void execute() {
-		this.newVarNameDialog = new DialogChangeVarName();
+		this.newVarNameDialog = new DialogChangeVarName(c);
         this.newVarNameDialog.setAlwaysOnTop(true);
         this.newVarNameDialog.setModal(true);
         Map<String,List<HComponent>> m = c.getParameters();
         
         for (String var : m.keySet()) {
-        	 List<HComponent> innerCs = (List) m.get(var);
-        	 HComponent cVar = (HComponent) ((List)innerCs).get(0) ;
+        	 List<HComponent> innerCs = m.get(var);
+        	 HComponent cVar = ((List<HComponent>)innerCs).get(0) ;
         	 if (cVar.getSupplied()==null) // Só pode alterar se for filho direto da configuração ...
         		 this.newVarNameDialog.addVarName(new Pair<String,List<HComponent>>(var,innerCs));
         }
         this.newVarNameDialog.show();
-        
-        if (newVarNameDialog.getButtonPressed() == DialogChangeVarName.BUTTON_OK) {
-	        varToBeChanged = (Pair) this.newVarNameDialog.getOldVarName();
-	        newVarName = this.newVarNameDialog.getNewVarName();
-	        HComponent topC = (HComponent) c.getTopConfiguration();
-	        
-	        if (newVarName != null && !newVarName.equals("")) {
-	        	
-	        	boolean allowed = true;
-	        	for (HComponent c : varToBeChanged.snd()) {
-	        		allowed &= c.isDirectSonOfTheTopConfiguration();
-	        	}
-	        		        	
-		        if (c.isTopConfiguration() && !allowed) {
-		        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-		        } else {		        
-		        	for (HComponent innerC : varToBeChanged.snd()) {
-		        		if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName(c))) {
-				        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a bound variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-				        	break;
-				        }
-		        		innerC.setVariableName(newVarName);
-			        }
-			        c.adviceChangeParameterName();
-		        }
-	        } else {
-	        	System.err.println("Invalid Variable Name !! (ChangeVariableNameCommand.execute())");
-	        	
-	        }
-        }
-        
-		return;
-	}
-	
-    private Pair<String, List<HComponent>> varToBeChanged = null;
-    private String newVarName = null;
-    
-	public void undo () {
-        
-		String oldVarName = (String) varToBeChanged.fst();
-		for (HComponent innerC : varToBeChanged.snd()) {
-            innerC.setVariableName(oldVarName);
-        }
-        
+                
         c.adviceChangeParameterName();
+
+        return;
 	}
 	
-	public void redo () {
-		
-		for (HComponent innerC : varToBeChanged.snd()) {
-            innerC.setVariableName(newVarName);
-        }
-        
-        c.adviceChangeParameterName();
-	}
-	
+    	
 	public boolean canExecute() {
 		return true;
 	}

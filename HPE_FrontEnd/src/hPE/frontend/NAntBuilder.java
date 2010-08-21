@@ -215,8 +215,10 @@ public class NAntBuilder implements Runnable {
 							// References / Includes
 							List<NAntCoreTypesFileSetInclude> includeRefs = ref.getInclude();
 							if (src.getDependencies() != null) {
-								for (String dep : src.getDependencies())
+								for (String dep_ : src.getDependencies())
 								{
+									char path_separator = IPath.SEPARATOR;
+									String dep = dep_.replace('/', path_separator);
 									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
 								    if (dep.startsWith("%WORKSPACE")) {
 								    	IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(dep.substring("%WORKSPACE".length())));

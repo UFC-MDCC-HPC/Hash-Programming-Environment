@@ -30,10 +30,10 @@ public abstract class HPEComponentLibraryItem implements IHPEComponentLibraryIte
 		return parent;
 	}	
 	
-	private List children = new ArrayList();
+	private List<IHPEComponentLibraryItem> children = new ArrayList<IHPEComponentLibraryItem>();
 	
-	public List getChildren() {
-		return ((List) ((ArrayList) children).clone());
+	public List<IHPEComponentLibraryItem> getChildren() {
+		return ((List<IHPEComponentLibraryItem>) ((ArrayList<IHPEComponentLibraryItem>) children).clone());
 	}
 	
 	public void addChild(IHPEComponentLibraryItem child) {

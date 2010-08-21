@@ -118,6 +118,7 @@ import hPE.xml.component.util.ComponentResourceImpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -328,7 +329,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
 					long lastDataCache = fileCache.lastModified();
 				    java.io.File fileProject = new File(path.toString());	
-				    long lastDateProject = fileProject.lastModified();			 
+				    long lastDateProject = fileProject.lastModified();	
+				    // CHECK COMPILED SOURCES STATUS
+				    
+				    
 	                if (lastDateProject > lastDataCache) {
 						innerUri = locationUri;
 						copyToCache = true;
@@ -411,8 +415,19 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
 							long lastDataCache = fileCache.lastModified();
 						    java.io.File fileProject = new File(path.toString());	
-						    long lastDateProject = fileProject.lastModified();			 
-			                if (lastDateProject > lastDataCache) {
+						    long lastDateProject = fileProject.lastModified();
+						    // COMPARE BINARY FOLDERS
+						    java.io.File parentFileCache = new File(fileCache.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");
+						    java.io.File parentFileProject = new File(fileProject.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");						    
+						    FilenameFilter filter = new FilenameFilter () {
+								@Override
+								public boolean accept(File dir, String name) {									
+									return name.endsWith(".dll");
+								}};
+						    java.io.File[] fsCache = parentFileCache.listFiles(filter);
+							java.io.File[] fsProject = parentFileProject.listFiles(filter);
+						    
+			                if (lastDateProject > lastDataCache && fsProject.length > fsCache.length) {
 								innerUri = locationUri;
 								copyToCache = true;
 			                } else 
@@ -523,7 +538,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
   		    String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
   		    List<String> l = innerC.getModuleNames(version);
   		    for (String fileName : l) {
-	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, null, path.toFile());
+	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, path.toFile());
   		    }
 
 		} catch (IOException e) {
