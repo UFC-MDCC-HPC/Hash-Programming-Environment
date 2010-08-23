@@ -7,6 +7,7 @@ import hPE.frontend.base.dialogs.AddReferencesDialog;
 import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,13 +71,18 @@ public class NAntBuilder implements Runnable {
 				(NantPackage.eNS_URI, 
 				 NantPackage.eINSTANCE);
 	        
-			IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocalLocation()));		
+			// IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocalLocation()));		
 			
-			IPath systemPath = file.getLocation().removeLastSegments(1).append("build.xml");
+			// IPath systemPath = file.getLocation().removeLastSegments(1).append("build.xml");
+			
+			IPath systemPath = new Path(c.getLocalLocation());
+			systemPath = systemPath.removeLastSegments(1).append("build.xml");
+			
+			java.io.File file = HComponentFactoryImpl.getFileInWorkspace(systemPath);
 			
 	        // If there are no arguments, emit an appropriate usage message.
 			//
-			URI uri = URI.createFileURI(systemPath.toOSString());
+			URI uri = URI.createFileURI(file.toString());
 			Resource resource = resourceSet.createResource(uri);
 			
 			DocumentRoot dX = factory.createDocumentRoot();
@@ -168,7 +174,8 @@ public class NAntBuilder implements Runnable {
 							IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output_folder);
 							String path_output_folder_string = folderOutput.getLocation().toString();
 							
-							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
+							// boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
+							boolean folderOutputExists = HComponentFactoryImpl.existsInWorkspace(path_output_folder);
 							if (!folderOutputExists) {
 								try {
 									NAntBuilder.prepareFolder(folderOutput);

@@ -9,6 +9,7 @@ import hPE.frontend.BackEndLocationList.BackEndLocationInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfoParameter;
 import hPE.frontend.base.model.HComponent;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.awt.Frame;
 import java.awt.Rectangle;
@@ -638,10 +639,10 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		try {
 			String fileName = getCurrentComponent().getLocalLocation();
 		
-			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+			// IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+			java.io.File file = HComponentFactoryImpl.getFileInWorkspace(new Path(fileName));
 			
-			InputStream is;
-			is = file.getContents();
+			InputStream is = new FileInputStream(file);
 		
 			byte[] t = new byte[is.available()];
 			
@@ -667,9 +668,6 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 			this.browseUpdate();
 			
-		} catch (CoreException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(rootPane, e.getMessage());

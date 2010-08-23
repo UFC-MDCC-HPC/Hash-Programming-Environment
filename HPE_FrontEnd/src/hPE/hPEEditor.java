@@ -62,6 +62,7 @@ import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -285,8 +286,10 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 	    try {
 		HComponent c = getModel();
 		IFile file = ((IFileEditorInput) getEditorInput()).getFile();
+		
+		java.io.File file2 = new File(file.getLocation().toString());
 		    
-			factory.saveComponent(c,file,monitor);
+		factory.saveComponent(c,file2,monitor);
 	    
 // comment: build.xml is always built before "build project".			
 		// NAntBuilder builder = NAntBuilder.instance;
@@ -327,6 +330,7 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		if (path != null) {
 			// try to save the editor's contents under a different file name
 			final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+			//final java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
 			try {
 				new ProgressMonitorDialog(shell).run(
 						false, // don't fork
@@ -965,7 +969,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		HComponent c = null;
 				
 		try {
-			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false);
+			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false);
 		} catch (HPEInvalidComponentResourceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

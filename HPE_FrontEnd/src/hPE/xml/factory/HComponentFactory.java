@@ -13,14 +13,14 @@ import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 public interface HComponentFactory {
 
-	HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing) throws HPEInvalidComponentResourceException ;
-	ComponentType loadComponentX(URI uri) throws HPEInvalidComponentResourceException;
+	HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing, boolean cached) throws HPEInvalidComponentResourceException ;
+	ComponentType loadComponentX(URI uri, boolean cache) throws HPEInvalidComponentResourceException;
 	
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
 	
-	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException;
+	public void saveComponent(HComponent c, java.io.File file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException;
 	
-	public void saveComponent(ComponentType cX, IFile file, IProgressMonitor monitor);
+	public void saveComponent(ComponentType cX, java.io.File file, IProgressMonitor monitor);
 	
 	public ComponentType marshallComponent(HComponent c) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException;
 	

@@ -5,6 +5,7 @@ import hPE.HPEPlugin;
 import hPE.core.library.model.classes.HPEComponentLibrary;
 import hPE.core.library.model.classes.HPEComponentLibraryItem;
 import hPE.core.library.model.classes.LComponentView;
+import hPE.frontend.CoreLocationList;
 
 import java.util.Iterator;
 import java.util.List;
@@ -363,9 +364,9 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 		
 		List<URI> locations;
 		
-		HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
+		//HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
 		
-		locations = locationFileTraversor.fetchLocations();
+		locations = CoreLocationList.fetchLocations();
 		
 		// TODO: library (getInitialInput)
 		// Read machine locations, stored in a XML file whose 

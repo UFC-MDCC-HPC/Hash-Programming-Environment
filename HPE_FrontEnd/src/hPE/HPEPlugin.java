@@ -102,7 +102,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 					        	   String cName = pathStrArr[pathStrArr.length - 1];
 					        	   IPath path2 = path.append(cName + ".hpe");
 					        	   URI uri = URI.createURI(path2.toString()); 
-					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false);
+					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false);
 								   NAntBuilder builder = NAntBuilder.instance;
 							   	   builder.setComponent(c);								   
 								   builder.run();

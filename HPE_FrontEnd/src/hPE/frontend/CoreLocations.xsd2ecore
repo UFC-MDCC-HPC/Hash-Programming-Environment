@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="CoreLocations.xsd#/"
+    outputs="locations.ecore#/" topToBottom="true">
+  <nested inputs="bundleentry://456.fwk33311724/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="CoreLocations.xsd#//LocationType;XSDComplexTypeDefinition=1" outputs="locations.ecore#//LocationType">
+    <nested inputs="CoreLocations.xsd#//LocationType;XSDComplexTypeDefinition=1/XSDAttributeUse"
+        outputs="locations.ecore#//LocationType/name"/>
+    <nested inputs="CoreLocations.xsd#//LocationType;XSDComplexTypeDefinition=1/XSDAttributeUse=1"
+        outputs="locations.ecore#//LocationType/uri"/>
+  </nested>
+  <nested inputs="CoreLocations.xsd#//CoreType;XSDComplexTypeDefinition" outputs="locations.ecore#//CoreType">
+    <nested inputs="CoreLocations.xsd#//CoreType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="locations.ecore#//CoreType/location"/>
+  </nested>
+  <nested inputs="CoreLocations.xsd#//core;XSDElementDeclaration" outputs="locations.ecore#//DocumentRoot/core"/>
+</xsd2ecore:XSD2EcoreMappingRoot>

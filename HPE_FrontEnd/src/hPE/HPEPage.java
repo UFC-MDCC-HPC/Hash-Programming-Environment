@@ -13,6 +13,7 @@ import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.xml.factory.HComponentFactory;
+import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
@@ -158,8 +159,10 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			
 			IFile file = persistSourceFile("", path);
 			
+			java.io.File file2 = HComponentFactoryImpl.getFileInWorkspace(path);
+			
 			try {
-				factory.saveComponent(c,file,null);
+				factory.saveComponent(c,file2,null);
 			} catch (UndefinedRefInnerException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -278,7 +281,9 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 	public IFile persistSourceFile(String programText, IPath path) {
 		
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		// java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+		
 			    							
 		try {				
 			createFile(file,null,null);				
@@ -308,11 +313,6 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	    contents = new ByteArrayInputStream(new byte[0]);
 	
 	try {
-	    // Create a new file resource in the workspace
-	//    if (linkTargetPath != null)
-	//               fileHandle.createLink(linkTargetPath,
-	//                     IResource.ALLOW_MISSING_LOCAL, monitor);
-	//       else {
 	        IPath path = fileHandle.getFullPath();
 	        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 	        int numSegments= path.segmentCount();

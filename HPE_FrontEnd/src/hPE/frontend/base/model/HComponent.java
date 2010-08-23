@@ -19,6 +19,7 @@ import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
 import hPE.util.ObjectOutputStream_;
 import hPE.util.Pair;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -4031,9 +4032,12 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				for (Object obj : version.getFiles()) {
 					HBEAbstractFile file = (HBEAbstractFile) obj;
 					IPath binPath = file.getBinaryPath();
-					if (!ResourcesPlugin.getWorkspace().getRoot().exists(
-							binPath))
-						return false;
+									
+					return HComponentFactoryImpl.existsInWorkspace(binPath);
+					
+					
+					//if (!ResourcesPlugin.getWorkspace().getRoot().exists(binPath))
+					//	return false;
 				}
 			}
 		}
@@ -4043,28 +4047,25 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public void createComponentKey() throws IOException {
 
-		IPath pathKeyFile = (new Path(this.getLocalLocation()))
-				.removeFileExtension().addFileExtension("snk");
-		IPath pathPubFile = (new Path(this.getLocalLocation()))
-				.removeFileExtension().addFileExtension("pub");
-		boolean okSNK = ResourcesPlugin.getWorkspace().getRoot().exists(
-				pathKeyFile);
-		boolean okPUB = ResourcesPlugin.getWorkspace().getRoot().exists(
-				pathPubFile);
+		IPath pathKeyFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("snk");
+		IPath pathPubFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("pub");
+//		boolean okSNK = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
+//		boolean okPUB = ResourcesPlugin.getWorkspace().getRoot().exists(pathPubFile);
+		boolean okSNK = HComponentFactoryImpl.existsInWorkspace(pathKeyFile);
+		boolean okPUB = HComponentFactoryImpl.existsInWorkspace(pathPubFile);
 
 		boolean success = true;
 
 		if (!okSNK || !okPUB) {
 			String sn_path = HPEProperties.getInstance().getValue("sn_path");
-			;
-			IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(
-					new Path(this.getLocalLocation()));
+			
+			//IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(this.getLocalLocation()));
 
-			IPath loc = file.getLocation();
+			IPath loc = HComponentFactoryImpl.buildWPath(new Path(this.getLocalLocation())); // file.getLocation();
+			
 			if (loc != null) {
 				IPath systemPath = loc.removeLastSegments(1);
-				java.io.File systemFile = new java.io.File(systemPath
-						.toOSString());
+				java.io.File systemFile = new java.io.File(systemPath.toOSString());
 
 				if (success && !okSNK) {
 					int r = CommandLine.runCommand(new String[] { sn_path,
@@ -4085,11 +4086,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		}
 
 		if (success) {
-			IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(
-					pathPubFile);
-			if (fileW.getLocation() != null) {
-				InputStream is = new FileInputStream(fileW.getLocation()
-						.toOSString());
+			// IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
+			java.io.File fileW = HComponentFactoryImpl.getFileInWorkspace(pathPubFile);
+			if (fileW.getAbsolutePath() != null) {
+				InputStream is = new FileInputStream(fileW);
 				byte[] pk = new byte[is.available()];
 				is.read(pk);
 				is.close();

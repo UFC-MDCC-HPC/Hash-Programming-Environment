@@ -9,6 +9,7 @@ import hPE.frontend.base.dialogs.HBEVersionControlDialog;
 import hPE.frontend.base.edits.InterfaceEditPart;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -169,6 +170,7 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 		
 		 String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
 		
+		 // Nesso caso particular, é necessário acessar pela workspace.
     	 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
     	 FileEditorInput fei = new FileEditorInput(file); 
     	
@@ -218,28 +220,32 @@ public void closeSourceCodeFile(HBESourceVersion sourceVersion) {
 		HBEAbstractFile srcFile = (HBEAbstractFile) ss.next();			
 		String sPath = (String) srcFile.getSourcePath().toString();
 		IPath path = new Path(sPath);
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-		IFolder folder1 = ResourcesPlugin.getWorkspace().getRoot().getFolder(path.removeLastSegments(1));
-		IFolder folder2 = ResourcesPlugin.getWorkspace().getRoot().getFolder(path.removeLastSegments(2));
+		// IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+		
+		//IFolder folder1 = ResourcesPlugin.getWorkspace().getRoot().getFolder(path.removeLastSegments(1));
+		//IFolder folder2 = ResourcesPlugin.getWorkspace().getRoot().getFolder(path.removeLastSegments(2));
+		java.io.File folder1 = file.getParentFile();
+		java.io.File folder2 = folder1.getParentFile();
 		  		    		
 		editor.removePage(srcFile.getVersionID().concat(":").concat(path.lastSegment()));
 		
 		try {
-		   file.delete(true,getProgressMonitor());
-		   if (folder1.members().length == 0) {    		   
-		     folder1.delete(false,getProgressMonitor());
+		   file.delete();
+		   if (folder1.list().length == 0) {    		   
+		     folder1.delete();
 		   }
-		   if (folder2.members().length == 0) {    		   
-  		     folder2.delete(false,getProgressMonitor());
+		   if (folder2.list().length == 0) {    		   
+  		     folder2.delete();
   		   }
 		   
-		} catch (CoreException e) {
+		} catch (Exception e) {
 			
         	JOptionPane.showMessageDialog(null,
         		    "Error Deleting File - ".concat(sPath).concat(" - ").concat(e.getMessage()),
         		    "Error",
         		    JOptionPane.ERROR_MESSAGE);
-	}   		
+	     }   		
 		
 		
 	}
