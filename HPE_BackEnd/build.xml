@@ -24,6 +24,7 @@
         <include name='System.Xml.dll'/>
         <include name='System.Runtime.Remoting.dll'/>
         <include name='DGAC/database/MySql.Data.dll'/>
+        <include name='C:\Program Files (x86)\MPI.NET\Lib\MPI.dll'/>      	
       </references>
     </csc>
   </target>

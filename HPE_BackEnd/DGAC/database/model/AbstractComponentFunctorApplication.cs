@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace DGAC.database{
+namespace br.ufc.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class AbstractComponentFunctorApplication{

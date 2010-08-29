@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DGAC.database;
+using br.ufc.hpe.backend.DGAC.database;
 using System.Data;
 
 
-namespace DGAC.database
+namespace br.ufc.hpe.backend.DGAC.database
 {
     public class SourceCodeDAO
     {

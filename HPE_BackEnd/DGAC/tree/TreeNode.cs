@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace DGAC.database
+namespace br.ufc.hpe.backend.DGAC.database
 {	
 	
 	public class TreeNode

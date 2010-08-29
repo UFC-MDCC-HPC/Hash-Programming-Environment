@@ -3,10 +3,10 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
-using DGAC.utils;
+using br.ufc.hpe.backend.DGAC.utils;
 using System.Collections;
 
-namespace DGAC
+namespace br.ufc.hpe.backend.DGAC
 {
     public partial class ManagerService : System.ServiceProcess.ServiceBase
     {

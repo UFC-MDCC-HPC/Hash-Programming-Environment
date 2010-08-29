@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace DGAC.utils
+namespace br.ufc.hpe.backend.DGAC.utils
 {
     public class MPIWorkerMessagingConstants
     {

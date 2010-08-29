@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic; 
 using System.Collections;
-using hpe.basic;
+using br.ufc.hpe.basic;
 
-namespace DGAC.database
+namespace br.ufc.hpe.backend.DGAC.database
 {
 	
 	
@@ -48,7 +48,7 @@ namespace DGAC.database
 
                 queue.RemoveAt(0);		
 
-                IList<SupplyParameter> parameterList = DGAC.BackEnd.spdao.list(id_functor_app_actual);
+                IList<SupplyParameter> parameterList = br.ufc.hpe.backend.DGAC.BackEnd.spdao.list(id_functor_app_actual);
                 foreach (SupplyParameter sp in parameterList)
 				{
                     string parameter_id = sp.Id_parameter;
@@ -56,18 +56,18 @@ namespace DGAC.database
                     AbstractComponentFunctorApplication acfaTop = null;
                     if (id_abstract_top != id_abstract)
                     {
-                        AbstractComponentFunctorParameter acfpTop = DGAC.BackEnd.acfpdao.retrieve(id_abstract_top, parameter_id);
-                        acfaTop = acfpTop == null ? null : DGAC.BackEnd.acfadao.retrieve(acfpTop.Bounds_of);
+                        AbstractComponentFunctorParameter acfpTop = br.ufc.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(id_abstract_top, parameter_id);
+                        acfaTop = acfpTop == null ? null : br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfpTop.Bounds_of);
                         if (acfaTop == null)
                         {
-                            AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
-                            acfaTop = acfp == null ? null : DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
+                            AbstractComponentFunctorParameter acfp = br.ufc.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
+                            acfaTop = acfp == null ? null : br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                         }
                     }
                     else
                     {
-                        AbstractComponentFunctorParameter acfp = DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
-                        acfaTop = acfp == null ? null : DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
+                        AbstractComponentFunctorParameter acfp = br.ufc.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(id_abstract, parameter_id);
+                        acfaTop = acfp == null ? null : br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                     }
 
 
@@ -75,7 +75,7 @@ namespace DGAC.database
                     if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                        acfaActual = DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
+                        acfaActual = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
                         
                     }
                     else if (sp is SupplyParameterParameter)
@@ -87,13 +87,13 @@ namespace DGAC.database
                             SupplyParameterParameter spp = (SupplyParameterParameter) sp;
                             unit.ActualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
                         }
-                        acfaActual = DGAC.BackEnd.acfadao.retrieve(Id_functor_app_actual);
+                        acfaActual = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_actual);
                        // parameter_id = ((SupplyParameterParameter)sp).Id_parameter_actual; // this line has been included but was not tested.
                     }
 
 
                     // LOOK FOR ACTUAL PARAMETER IDs for THE NEXT ITERATIONS !!!
-                    IList<SupplyParameter> sss = DGAC.BackEnd.spdao.list(acfaTop.Id_functor_app);
+                    IList<SupplyParameter> sss = br.ufc.hpe.backend.DGAC.BackEnd.spdao.list(acfaTop.Id_functor_app);
                     foreach (SupplyParameter sssx in sss) 
                     {
                         if (sssx is SupplyParameterComponent) 
@@ -163,8 +163,8 @@ namespace DGAC.database
             while (id_abstract_step.Id_abstract != id_abstract_top.Id_abstract)
             {
                 gs.Add(id_abstract_step);
-                acf = DGAC.BackEnd.acfdao.retrieve(id_abstract_step.Id_abstract);
-                id_abstract_step = DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+                acf = br.ufc.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract_step.Id_abstract);
+                id_abstract_step = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
             }            
 
             gs.Add(id_abstract_step);

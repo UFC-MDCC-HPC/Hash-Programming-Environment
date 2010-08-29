@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Collections.Generic; 
 
 
-namespace DGAC.database{
+namespace br.ufc.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class SupplyParameterComponentDAO{

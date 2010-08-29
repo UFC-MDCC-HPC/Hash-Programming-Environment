@@ -4,12 +4,12 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using DGAC.utils;
+using br.ufc.hpe.backend.DGAC.utils;
 using System.Collections;
 using MPI;
 using System.Threading;
 
-namespace DGAC
+namespace br.ufc.hpe.backend.DGAC
 {
     public class WorkerService : System.ServiceProcess.ServiceBase
     {

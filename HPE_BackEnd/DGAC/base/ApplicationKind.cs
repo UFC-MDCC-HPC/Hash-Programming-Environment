@@ -5,9 +5,9 @@
 //
 
 using System;
-using hpe.basic;
+using br.ufc.hpe.basic;
 
-namespace hpe.kinds
+namespace br.ufc.hpe.kinds
 {
 
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DGAC.database
+namespace br.ufc.hpe.backend.DGAC.database
 {
     [Serializable()]
     class EnumeratorValuation

@@ -3,37 +3,169 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
 using System.Collections.Generic;
-using DGAC.utils;
-using DGAC;
+using br.ufc.hpe.backend.DGAC.utils;
+using br.ufc.hpe.backend.DGAC;
 using MPI;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.IO;
 using System.Runtime.Remoting.Channels;
-using DGAC.database;
+using br.ufc.hpe.backend.DGAC.database;
 using System.Threading;
-// using cca;
+using gov.cca;
 
-namespace DGAC
+namespace br.ufc.hpe.backend.DGAC
 { 
 		//MANAGER
-        public class ManagerObject: MarshalByRefObject{
+    public class ManagerObject : MarshalByRefObject, gov.cca.AbstractFramework, 
+	                                                 gov.cca.ports.BuilderService, 
+	                                                 gov.cca.ports.ComponentRepository
+    {
 
             public ManagerObject() { }
- 
-    	    /**
-	     * 	Creates an instance of a CCA component of the type defined by the 
-	     * 	string className.  The string classname uniquely defines the
-	     * 	"type" of the component, e.g.
-	     * 	    doe.cca.Library.GaussianElmination. 
-	     * 	It has an instance name given by the string instanceName.
-	     * 	The instanceName may be empty (zero length) in which case
-	     * 	the instanceName will be assigned to the component automatically.
-	     * 	@throws CCAException If the Component className is unknown, or if the
-	     * 		instanceName has already been used, a CCAException is thrown.
-	     * 	@return A ComponentID corresponding to the created component. Destroying
-	     * 		the returned ID does not destroy the component; 
-	     * 		see destroyInstance instead.
-	     */
+
+
+            // ABSTRACT FRAMEWORK ====================================================================================================
+
+            public TypeMap createTypeMap()
+            {
+                return null;
+            }
+
+            public gov.cca.Services getServices(string selfInstanceName, string selfClassName, TypeMap selfProperties)
+            {
+                return null;
+            }
+
+            public void releaseServices(gov.cca.Services services)
+            {
+            }
+
+
+            public void shutdownFramework()
+            {
+
+            }
+
+            public AbstractFramework createEmptyFramework()
+            {
+                return null;
+            }
+
+
+
+
+            // BUILDER SERVICE ====================================================================================================
+
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ComponentID createInstance(string instanceName, string className, TypeMap properties)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ComponentID[] getComponentIDs()
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public TypeMap getComponentProperties(ComponentID cid)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void setComponentProperties(ComponentID cid, TypeMap map)
+            {
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ComponentID getDeserialization(string s)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ComponentID getComponentID(string componentInstanceName)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void destroyInstance(ComponentID toDie, float timeout)
+            {
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public string[] getProvidedPortNames(ComponentID cid)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public string[] getUsedPortNames(ComponentID cid)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public TypeMap getPortProperties(ComponentID cid, string portName)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void setPortProperties(ComponentID cid, string portName, TypeMap map)
+            {
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ConnectionID connect(ComponentID user, string usingPortName, ComponentID provider, string providingPortName)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ConnectionID[] getConnectionIDs(ComponentID[] componentList)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public TypeMap getConnectionProperties(ConnectionID connID)
+            {
+                return null;
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void setConnectionProperties(ConnectionID connID, TypeMap map)
+            {
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void disconnect(ConnectionID connID, float timeout)
+            {
+            }
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public void disconnectAll(ComponentID id1, ComponentID id2, float timeout)
+            {
+            }
+
+
+
+            // COMPONENT REPOSITORY ====================================================================================================
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
+            public ComponentClassDescription[] getAvailableComponentClasses()
+            {
+                return null;
+            }
+
+
+
+
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void createInstance(string instanceName, string className , IDictionary<int,Object> properties )
             {
@@ -73,17 +205,17 @@ namespace DGAC
                      nodes = (int[])nodesObj;
                  }
 
-                 Component c = BackEnd.cdao.retrieve_libraryPath(className);
+                 br.ufc.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(className);
                  string hash_component_uid = c.Hash_component_UID;
 
-                 IList<DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
+                 IList<br.ufc.hpe.backend.DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
 
                  int nprocs = 0;
                  int aprocs = nodes.Length; // number of informed processors.
 
-                 foreach (DGAC.database.Interface i in iList)
+                 foreach (br.ufc.hpe.backend.DGAC.database.Interface i in iList)
                  {
-                     DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
+                     br.ufc.hpe.backend.DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
                      IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(c.Id_abstract, i.Id_interface);
                      int count = 1;
                      IDictionary<string, int> m = new Dictionary<string, int>();
@@ -148,7 +280,6 @@ namespace DGAC
                      {
                          Thread t = new Thread(worker[i].createInstanceNull);
                          wthreads.Add(t);
-//                         worker[i].createInstanceNull();
                          t.Start();
                      }
 
@@ -174,10 +305,10 @@ namespace DGAC
             protected class GoWorker 
             {
                  private string instanceName = null; 
-                 private DGAC.database.Unit key = null; 
+                 private br.ufc.hpe.backend.DGAC.database.Unit key = null; 
                  private IDictionary<int, Object> properties = null;
                  private WorkerObject worker = null;
-                 public GoWorker(WorkerObject worker_, string instanceName_, DGAC.database.Unit key_, IDictionary<int, Object> properties_) 
+                 public GoWorker(WorkerObject worker_, string instanceName_, br.ufc.hpe.backend.DGAC.database.Unit key_, IDictionary<int, Object> properties_) 
                  { 
                      instanceName = instanceName_;
                      key = key_;
@@ -187,7 +318,7 @@ namespace DGAC
 
                  public void Run() 
                  {
-                         worker.createInstance(instanceName, key, properties);
+                     worker.createInstance(instanceName, key, properties);
                  }
             } 
 
@@ -324,7 +455,7 @@ namespace DGAC
                 {
                     WorkerObject wo = null;
 
-                    Type requiredType = typeof(WorkerObject);
+                    System.Type requiredType = typeof(WorkerObject);
 
                     wo = (WorkerObject)Activator.GetObject(requiredType,
                         "tcp://" + node + ":" + Constants.WORKER_PORT + "/" + Constants.WORKER_SERVICE_NAME);

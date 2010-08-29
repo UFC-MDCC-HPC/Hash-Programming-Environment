@@ -6,9 +6,9 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 
-using DGAC.database;
+using br.ufc.hpe.backend.DGAC.database;
 using HPE_DGAC_LoadDB;
-using DGAC.utils;
+using br.ufc.hpe.backend.DGAC.utils;
 using System.IO;
 
 namespace Back_End_WS
@@ -22,11 +22,11 @@ namespace Back_End_WS
     public class BackEnd_WS : System.Web.Services.WebService
     {
 
-	    static DGAC.BuilderService dgac = null;
+	    static br.ufc.hpe.backend.DGAC.BuilderService dgac = null;
     	
 	    public BackEnd_WS(){
 
-              dgac = new DGAC.BackEnd();
+              dgac = new br.ufc.hpe.backend.DGAC.BackEnd();
     	
 	    }
     	
