@@ -422,7 +422,7 @@ namespace br.ufc.hpe.backend
                     int[] nodes = new int[] { 0, 1, 2, 3, 4 };
 
                     /* BEGIN UNDER CONSTRUCTION */
-                    IDictionary<int, Object> properties = new Dictionary<int, Object>();
+                    TypeMapImpl properties = new TypeMapImpl();
                     properties[Constants.ENUMS_KEY] = enums;
                     properties[Constants.NODES_KEY] = nodes;
                     properties[Constants.SESSION_KEY] = session_id;

@@ -31,21 +31,25 @@ namespace br.ufc.hpe.backend.DGAC
                 return null;
             }
 
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public gov.cca.Services getServices(string selfInstanceName, string selfClassName, TypeMap selfProperties)
             {
                 return null;
             }
 
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public void releaseServices(gov.cca.Services services)
             {
             }
 
 
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public void shutdownFramework()
             {
 
             }
 
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public AbstractFramework createEmptyFramework()
             {
                 return null;
@@ -60,7 +64,7 @@ namespace br.ufc.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ComponentID createInstance(string instanceName, string className, TypeMap properties)
             {
-                return null;
+                return this.createInstanceImpl(instanceName, className, (TypeMapImpl) properties);
             }
 
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -167,8 +171,10 @@ namespace br.ufc.hpe.backend.DGAC
 
 
             [MethodImpl(MethodImplOptions.Synchronized)]
-            public void createInstance(string instanceName, string className , IDictionary<int,Object> properties )
+            public ComponentID createInstanceImpl(string instanceName, string className, TypeMapImpl properties)
             {
+			 ComponentID cid = null;
+			
              try {
 
                  Connector.openConnection();
@@ -177,7 +183,7 @@ namespace br.ufc.hpe.backend.DGAC
 
                 Console.WriteLine("ENTROU createInstance manager");
                
-                 IDictionary<Unit, int> files = new Dictionary<Unit, int>();
+                 IDictionary<string, int> files = new Dictionary<string, int>();
                  Object enumsObj = null;
                  IDictionary<string, int> enums = null;
 
@@ -215,7 +221,7 @@ namespace br.ufc.hpe.backend.DGAC
 
                  foreach (br.ufc.hpe.backend.DGAC.database.Interface i in iList)
                  {
-                     br.ufc.hpe.backend.DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
+                     //br.ufc.hpe.backend.DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
                      IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(c.Id_abstract, i.Id_interface);
                      int count = 1;
                      IDictionary<string, int> m = new Dictionary<string, int>();
@@ -233,7 +239,7 @@ namespace br.ufc.hpe.backend.DGAC
                      }
                      try
                      {
-                         files.Add(u, count);
+                         files.Add(i.Id_interface, count);
                      }
                      catch (ArgumentException)
                      {
@@ -257,13 +263,13 @@ namespace br.ufc.hpe.backend.DGAC
                  
                  IList<Thread> wthreads = new List<Thread>();
                  int k = 0;
-                 foreach (KeyValuePair<Unit, int> unit in files)
+                 foreach (KeyValuePair<string, int> unit in files)
                  {
                      for (int j = 0; j < unit.Value; j++)
                      {
-                         IDictionary<int, Object> worker_properties = new Dictionary<int, Object>(properties);
-                         worker_properties.Add(Constants.KEY_KEY, k);
-                         worker_properties.Add(Constants.UID_KEY, hash_component_uid);
+                         TypeMapImpl worker_properties = new TypeMapImpl(properties);
+                         worker_properties[Constants.KEY_KEY] = k;
+                         worker_properties[Constants.UID_KEY] = hash_component_uid;
                          GoWorker gw = new GoWorker(worker[nodes[k]], instanceName, unit.Key, worker_properties);
                          Thread t = new Thread(gw.Run);
                          t.Start();
@@ -298,6 +304,9 @@ namespace br.ufc.hpe.backend.DGAC
              {
                 Connector.closeConnection();
              }
+			
+			  return cid;
+			
             }
 
  
@@ -305,20 +314,20 @@ namespace br.ufc.hpe.backend.DGAC
             protected class GoWorker 
             {
                  private string instanceName = null; 
-                 private br.ufc.hpe.backend.DGAC.database.Unit key = null; 
-                 private IDictionary<int, Object> properties = null;
+                 private string className = null; 
+                 private TypeMap properties = null;
                  private WorkerObject worker = null;
-                 public GoWorker(WorkerObject worker_, string instanceName_, br.ufc.hpe.backend.DGAC.database.Unit key_, IDictionary<int, Object> properties_) 
+                 public GoWorker(WorkerObject worker, string instanceName, string className, TypeMap properties) 
                  { 
-                     instanceName = instanceName_;
-                     key = key_;
-                     properties = properties_;
-                     worker = worker_;
+                     this.instanceName = instanceName;
+                     this.className = className;
+                     this.properties = properties;
+                     this.worker = worker;
                  }
 
                  public void Run() 
                  {
-                     worker.createInstance(instanceName, key, properties);
+                     worker.createInstance(instanceName, className, properties);
                  }
             } 
 

@@ -27,40 +27,54 @@ namespace br.ufc.hpe.backend.DGAC
         // BEGIN - CCA INTERFACES (Abstract Framework, Builder Services, Services) ==================================
 		// ==========================================================================================================
 		
+		private gov.cca.Services services = null;
+		
+		public WorkerObject() 
+		{
+			services = new ServicesImpl(this);
+		}
+		
         // ABSTRACT FRAMEWORK =======================================================================================
 
         public TypeMap createTypeMap()
         {
-            return null;
+            return new TypeMapImpl();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public gov.cca.Services getServices(string selfInstanceName, string selfClassName, TypeMap selfProperties)
         {
-            return null;
+            return services;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void releaseServices(gov.cca.Services services)
         {
+			// EMPTY
         }
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void shutdownFramework()
         {
-
+			// EMPTY
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public AbstractFramework createEmptyFramework()
         {
-            return null;
+            return new WorkerObject();
         }
 
         // BUILDER SERVICE ==============================================================================================
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public ComponentID createInstance(string instanceName, string className, TypeMap properties)
+        public ComponentID createInstance(string instanceName, // qualified component name (ex: br.ufc.hpe.data.Data)
+		                                  string className,    // unit name (IData)
+		                                  TypeMap properties)
         {
-            return null;
+            return createInstanceImpl(instanceName, className, (TypeMapImpl) properties);			
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -256,13 +270,28 @@ namespace br.ufc.hpe.backend.DGAC
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void createInstance(string instanceName, br.ufc.hpe.backend.DGAC.database.Unit unit, IDictionary<int, Object> properties)
+        private ComponentID createInstanceImpl(string instanceName, string className, TypeMapImpl properties)
         {
+			ComponentID cid = new ComponentIDImpl(instanceName);
+			
             try
             {
-                this.global_communicator = MPI.Communicator.world;
+				this.global_communicator = MPI.Communicator.world;
                 my_rank = this.global_communicator.Rank;
 
+				
+                string hash_component_uid = null;
+                object hash_component_uid_obj = null;
+                if (properties.TryGetValue(Constants.UID_KEY, out hash_component_uid_obj)) {
+                   hash_component_uid = (string) hash_component_uid_obj;
+                }
+
+				
+				br.ufc.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_uid(hash_component_uid);
+				int id_concrete = c.Id_concrete;
+				
+                br.ufc.hpe.backend.DGAC.database.Unit unit = BackEnd.udao.retrieve(id_concrete, className, -1);
+				
                 IList<string> eStrL = new List<string>();
 
                 // READING SESSION ID
@@ -302,11 +331,6 @@ namespace br.ufc.hpe.backend.DGAC
                     key = (int)keyObj;
                 }
 
-                string hash_component_uid = null;
-                object hash_component_uid_obj = null;
-                if (properties.TryGetValue(Constants.UID_KEY, out hash_component_uid_obj)) {
-                   hash_component_uid = (string) hash_component_uid_obj;
-                }
 
 
                 string my_id_unit = unit.Id_unit;
@@ -326,7 +350,7 @@ namespace br.ufc.hpe.backend.DGAC
                 pmain = (hpe.kinds.IApplicationKind) t.InvokeMember("getInstance", BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
 
                 pmain.LocalCommunicator = (MPI.Intracommunicator) this.global_communicator.Split(1,key);
-                pmain.setServices(new br.ufc.hpe.backend.DGAC.ServicesImpl(hash_component_uid, my_id_unit, pmain, args));
+                pmain.setServices(new br.ufc.hpe.backend.DGAC.ServicesImpl(this, hash_component_uid, my_id_unit, pmain, args));
 
                 pmain.createSlices(); 
 
@@ -339,6 +363,8 @@ namespace br.ufc.hpe.backend.DGAC
             {
                 Console.WriteLine(e.Message);
             } 
+			
+			return cid;
         }
 
 
