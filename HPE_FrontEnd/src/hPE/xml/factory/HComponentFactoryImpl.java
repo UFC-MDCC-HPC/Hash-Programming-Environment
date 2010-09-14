@@ -424,7 +424,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				    java.io.File[] fsCache = parentFileCache.listFiles(filter);
 					java.io.File[] fsProject = parentFileProject.listFiles(filter);
 				    
-	                if (lastDateProject > lastDataCache || fsProject.length > fsCache.length) 
+	                if ((fsCache != null || fsCache != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) 
 	                {
 						innerUri = locationUri;
 						copyToCache = true;
