@@ -1,7 +1,31 @@
-<?xml version='1.0'?>
-<project basedir='.' default='all' name='linearsystems.facet.Vector'>
-  <property name='src' value='src'/>
-  <property name='build' value='bin'/>
-  <property name='nant.settings.currentframework' value='mono-2.0'/>
-  <target depends='' name='all'/>
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Documents and Settings\Heron\hpe_cache" default="all" name="VectorBuilding">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="VectorBuilding-1.0.0.0">
+    <ifnot targetexists="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\bin\1.0.0.0">
+      <mkdir dir="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\bin\1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.VectorBuilding/VectorBuilding.snk" optimize="true" output="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\bin\1.0.0.0\BaseIVectorBuildingFacet.dll" target="library" unsafe="false">
+      <sources>
+        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\src\1.0.0.0\BaseIVectorBuildingFacet.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.VectorBuilding/VectorBuilding.snk" optimize="true" output="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\bin\1.0.0.0\IVectorBuildingFacet.dll" target="library" unsafe="false">
+      <sources>
+        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\src\1.0.0.0\IVectorBuildingFacet.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.VectorBuilding\bin\1.0.0.0\BaseIVectorBuildingFacet.dll"/>
+        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="VectorBuilding-1.0.0.0" name="all"/>
 </project>
