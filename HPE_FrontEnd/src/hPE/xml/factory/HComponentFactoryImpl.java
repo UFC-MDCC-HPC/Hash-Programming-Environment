@@ -249,9 +249,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
-	public HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing, boolean cached)
+	public HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing, boolean cached, boolean relativePath)
 			throws HPEInvalidComponentResourceException {
-			ComponentType component = loadComponentX(uri, cached);
+			ComponentType component = loadComponentX(uri, cached, relativePath);
 			return buildComponent(component, uri, isTop, isExtending, isImplementing);
 	}
 
@@ -267,7 +267,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
-	public ComponentType loadComponentX(URI uri, boolean cache)
+	public ComponentType loadComponentX(URI uri, boolean cache, boolean relativePath)
 			throws HPEInvalidComponentResourceException {
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -278,8 +278,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (this.workspace != null || cache) { 
 				resource = resourceSet.getResource(uri, true);
 			}
-			else {
+			else if (relativePath){
 				URI uriFull = URI.createFileURI(this.getWorkspacePath() + Path.SEPARATOR + uri.toString());
+				resource = resourceSet.getResource(uriFull, true);
+			} else {
+				URI uriFull = URI.createFileURI(uri.toString());
 				resource = resourceSet.getResource(uriFull, true);
 			}
 
@@ -298,18 +301,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-    public static IPath buildWPath(IPath path) {
-		IPath wpath = new Path(getWorkspacePath());			
-		IPath rrr = wpath.append(path);
-	    return rrr;   
+    public static IPath buildWPath(IPath path_) {
+    	IPath path = path_.setDevice(null);
+    	boolean isRoot = path.toFile().isAbsolute();
+    	if (!isRoot) {
+			IPath wpath = new Path(getWorkspacePath());			
+			IPath rrr = wpath.append(path_);
+			return rrr;
+    	} else
+    		return path_;   
     }
     
     public static java.io.File getFileInWorkspace(IPath path) {
-        File file = null;
-    	IPath wpath = new Path(getWorkspacePath());			
-		IPath fullpath = wpath.append(path);
-		file = fullpath.toFile();        
-        return file;
+    	
+    	if (path.toFile().isAbsolute()) {
+	        File file = null;
+			IPath fullpath = path;
+			file = fullpath.toFile();        
+	        return file;
+    	} else {
+	        File file = null;
+	    	IPath wpath = new Path(getWorkspacePath());			
+			IPath fullpath = wpath.append(path);
+			file = fullpath.toFile();        
+	        return file;
+    	}
     	
     	//IPath wpath = new Path(getWorkspacePath());			
 		//IPath rrr = wpath.append(path);
@@ -317,8 +333,16 @@ public final class HComponentFactoryImpl implements HComponentFactory {
     }
 
     public static boolean existsInWorkspace(IPath path) {
-    	IPath wpath = buildWPath(path);
-    	java.io.File path_bin = new java.io.File(wpath.toString());		
+    	IPath wpath = null;
+    	if (path.toFile().isAbsolute()) {
+    		wpath = path;
+    	} else {
+    		wpath = buildWPath(path);	
+    	}
+    	
+    	IPath wpath_ = new Path(wpath.toString().replaceAll("%20", " "));
+    	
+    	java.io.File path_bin = wpath_.toFile();		
 		return path_bin.exists();
     }
 	
@@ -368,7 +392,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (!fileCache.exists()) {
 				if (locationUri.scheme() == null
 						|| !locationUri.scheme().equals("http")) {
-					innerUri = locationUri;
+					// innerUri = locationUri;
+					IPath pathC = new Path(locationUri.toString());	
+					IPath path = HComponentFactoryImpl.buildWPath(pathC);
+					innerUri = URI.createFileURI(path.toString().replaceAll("%20", " "));
+
 					copyToCache = true;
 				} else {
 					java.io.File file = HPELocationEntry.getComponent(package_.replace(".", ":").split(":"), name, null,locationUri);
@@ -410,10 +438,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			this.isSubType = extType.isSetExtends() && extType.isExtends();
 			this.isConcrete = extType.isSetImplements()	&& extType.isImplements();
 			
-			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false, this.isSubType, this.isConcrete, !copyToCache);
+			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false, this.isSubType, this.isConcrete, !copyToCache, true);
 			
 			if (copyToCache)
-				copyProjectToCache(superType, version);
+				copyProjectToCache(superType, version, locationUri);
 			
 			if (retrieveLibraries)
 				retrieveLibraries(superType, locationUri);
@@ -462,7 +490,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					if (!fileCache.exists()) {
 						if (locationUri.scheme() == null
 								|| !locationUri.scheme().equals("http")) {
-							innerUri = locationUri;
+							IPath pathC = new Path(locationUri.toString());	
+							IPath path = HComponentFactoryImpl.buildWPath(pathC);
+							innerUri = URI.createFileURI(path.toString().replaceAll("%20", " "));
 							copyToCache = true;
 						} else {
 							java.io.File file = HPELocationEntry.getComponent(package_
@@ -492,28 +522,24 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						    java.io.File[] fsCache = parentFileCache.listFiles(filter);
 							java.io.File[] fsProject = parentFileProject.listFiles(filter);
 						    
-			                if (lastDateProject > lastDataCache || fsProject.length > fsCache.length) {
+			                if ((fsCache != null || fsCache != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) {
 								innerUri = locationUri;
 								copyToCache = true;
 			                } else 
 							    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
 						} else {
 							innerUri = URI.createFileURI(fileCache.getAbsolutePath());
-						}
-						
-					}
+						}						
+					}		
 		
-		
-					 HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false, !copyToCache);
-		
+					HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false, !copyToCache, true);		
 		
 				    if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
-						innerC.setRemoteURI(locationUri);
-						
+						innerC.setRemoteURI(locationUri);						
 					}
 					
 					if (copyToCache)
-						copyProjectToCache(innerC, version);
+						copyProjectToCache(innerC, version, locationUri);
 					
 					if (retrieveLibraries)
 						retrieveLibraries(innerC, locationUri);
@@ -590,14 +616,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		
 	}
 
-	public static void copyProjectToCache(HComponent innerC, String version) {
+	public static void copyProjectToCache(HComponent innerC, String version, URI locationURI) {
 
         IPath pathC = new Path(innerC.getLocalLocation());		
 				
 		//IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation().removeLastSegments(1);
-		IPath path = HComponentFactoryImpl.buildWPath(pathC).removeLastSegments(1);
+		IPath path = HComponentFactoryImpl.buildWPath(pathC.setDevice(null)).removeLastSegments(1);
 		
-		String cachePath = addSegment(HPEProperties.getInstance().getValue("cache_root"), pathC.removeLastSegments(1).toString());
+		String cachePath = addSegment(HPEProperties.getInstance().getValue("cache_root"), (new Path(locationURI.toString())).removeLastSegments(1).toString());
 				
 		try {
 			copyDirectory(new File(path.toString()), new File(cachePath));
@@ -2876,7 +2902,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			for (SourceFileType f : s.getFile()) {
 				String fileType = f.getFileType().equals("dll") ? "library" : f
 						.getFileType();
-				String rootPath = URI.createURI(this.component.getLocalLocation()).devicePath().replaceAll("%20", " ");
+				String locallocation = this.component.getLocalLocation();
+				URI uriRootPath = URI.createURI(locallocation);
+				String rootPath = uriRootPath.toString();
+				rootPath = rootPath.replaceAll("%20", " ");
 				
 				String versionIdF = f.getVersionId();
 				versionIdF = checkVersion(versionIdF) ? versionIdF : "1.0.0.0";

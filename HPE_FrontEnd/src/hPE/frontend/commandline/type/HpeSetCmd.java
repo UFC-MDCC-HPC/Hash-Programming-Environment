@@ -2,8 +2,8 @@ package hPE.frontend.commandline.type;
 
 import hPE.frontend.commandline.exception.ArgException;
 import hPE.frontend.commandline.exception.CmdException;
-import hPE.frontend.commandline.util.FileUtil;
 import hPE.frontend.commandline.util.HpePrinter;
+import hPE.frontend.commandline.util.Utilities;
 
 public class HpeSetCmd implements HpeGenericCmd {
 
@@ -25,7 +25,7 @@ public class HpeSetCmd implements HpeGenericCmd {
 		    String which_property = args[0];
 		    String which_value = args[1];
 		    HpeSettings.instance.properties.put(which_property, which_value);
-		    FileUtil.writeSettingsPropertiesFile(HpeSettings.instance.properties);
+		    Utilities.writeSettingsPropertiesFile(HpeSettings.instance.properties);
 		    HpePrinter.out(which_property + " = " + which_value);
 		}
 		
@@ -38,5 +38,4 @@ public class HpeSetCmd implements HpeGenericCmd {
 	}
 
 }
-
 

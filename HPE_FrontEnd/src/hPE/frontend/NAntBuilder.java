@@ -8,7 +8,9 @@ import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.xml.factory.HComponentFactoryImpl;
+import hPE.xml.factory.HPEInvalidComponentResourceException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +31,7 @@ import net.sf.nant.release._0._86.beta1.nant.ProjectType;
 import net.sf.nant.release._0._86.beta1.nant.Target;
 import net.sf.nant.release._0._86.beta1.nant.util.NantResourceFactoryImpl;
 
+import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -52,6 +55,22 @@ public class NAntBuilder implements Runnable {
 	
 	private HComponent component;
 	private IProgressMonitor monitor;
+	
+	public static void createBuildFile(String path, boolean relativePath) throws HPEInvalidComponentResourceException {
+		   
+		   URI uri = URI.createURI(path); 		   
+		   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, relativePath);
+		   createBuildFile(c);	   
+			
+		}
+	
+	public static void createBuildFile(HComponent c) throws HPEInvalidComponentResourceException {
+		   
+		   NAntBuilder builder = NAntBuilder.instance;
+	   	   builder.setComponent(c);								   
+		   builder.run();	   
+			
+		}
 	
 	public Resource save(HComponent c, IProgressMonitor monitor) {
 		try {
@@ -95,8 +114,9 @@ public class NAntBuilder implements Runnable {
 
 			try {
 				ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			} catch (IllegalStateException e) {
+
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -168,18 +188,25 @@ public class NAntBuilder implements Runnable {
 							compile.setDebug(HPEProperties.getInstance().getValue("compiler_flag_debug").equals("true"));
 							compile.setOptimize(HPEProperties.getInstance().getValue("compiler_flag_optimize").equals("true"));
 							compile.setUnsafe(HPEProperties.getInstance().getValue("compiler_flag_unsafe").equals("true"));
-							IPath path_output = ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
+							java.io.File binPath = HComponentFactoryImpl.getFileInWorkspace(src.getBinaryPath());
+							IPath path_output = Path.fromPortableString(binPath.toString()); // ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
 
-							IPath path_output_folder = src.getBinaryPath().removeLastSegments(1);
-							IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output_folder);
-							String path_output_folder_string = folderOutput.getLocation().toString();
+							//IPath path_output_folder = src.getBinaryPath().removeLastSegments(1);
+							
+							java.io.File folderOutput = binPath.getParentFile();
+							//IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output_folder);
+							
+							String path_output_folder_string = folderOutput.toString(); //folderOutput.getLocation().toString();
 							
 							// boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
-							boolean folderOutputExists = HComponentFactoryImpl.existsInWorkspace(path_output_folder);
-							if (!folderOutputExists) {
+							// boolean folderOutputExists = HComponentFactoryImpl.existsInWorkspace(path_output_folder);
+							if (!folderOutput.exists()) {
 								try {
 									NAntBuilder.prepareFolder(folderOutput);
 								} catch (CoreException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
@@ -199,8 +226,9 @@ public class NAntBuilder implements Runnable {
 							
 							compile.setOutput(path_output);
 							compile.setTarget(src.getFileType());
-						    String u = c.getRelativeLocation();
-							IPath path_snk = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(c.getRelativeLocation())).getLocation();
+						    IPath path_snk = new Path(HComponentFactoryImpl.getFileInWorkspace(new Path(c.getLocalLocation())).toString());
+						    
+							// IPath path_snk = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(c.getRelativeLocation())).getLocation();
 							compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk"));
 							
 							// Sources
@@ -211,7 +239,7 @@ public class NAntBuilder implements Runnable {
 							// Sources / Includes
 							List<NAntCoreTypesFileSetInclude> includesSrcs = source.getInclude();
 							NAntCoreTypesFileSetInclude includeSrc = factory.createNAntCoreTypesFileSetInclude();
-							includeSrc.setName(ResourcesPlugin.getWorkspace().getRoot().getFile(src.getSourcePath()).getLocation());
+							includeSrc.setName(HComponentFactoryImpl.getFileInWorkspace(src.getSourcePath())/*ResourcesPlugin.getWorkspace().getRoot().getFile(src.getSourcePath()).getLocation()*/);
 							includesSrcs.add(includeSrc);					
 							
 							// References
@@ -228,8 +256,9 @@ public class NAntBuilder implements Runnable {
 									String dep = dep_.replace('/', path_separator);
 									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
 								    if (dep.startsWith("%WORKSPACE")) {
-								    	IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(dep.substring("%WORKSPACE".length())));
-								    	dep = fPathD.getLocation().toOSString();
+								    	// IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(dep.substring("%WORKSPACE".length())));
+								    	File fpathD = HComponentFactoryImpl.getFileInWorkspace(new Path(dep.substring("%WORKSPACE".length())));
+								    	dep = fpathD.toString();
 								    } 
 								    includeRef.setName(dep);
 									includeRefs.add(includeRef);
@@ -276,18 +305,29 @@ public class NAntBuilder implements Runnable {
 		return project;
 	}
 
-	public static void prepareFolder(IFolder folder) throws CoreException
+	public static void prepareFolder(File folderOutput) throws CoreException, IOException
 	{
-		IContainer parent = folder.getParent();
+		File parent = folderOutput.getParentFile();
+		if (parent.isDirectory())
+		{
+			if (!parent.exists())
+		        prepareFolder(parent);
+		}
+		if (!folderOutput.exists()) {
+			folderOutput.createNewFile();
+		}
+		/*
+		IContainer parent = folderOutput.getParent();
 		if (parent instanceof IFolder)
 		{
 			IFolder parentFolder = (IFolder) parent;
 			if (!parentFolder.exists())
 		        prepareFolder(parentFolder);
 		}
-		if (!folder.exists()) {
-			folder.create(true,true,null);
+		if (!folderOutput.exists()) {
+			folderOutput.create(true,true,null);
 		}
+		*/
 
 	} 	
 	

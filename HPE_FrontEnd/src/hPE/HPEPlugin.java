@@ -81,6 +81,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 	
 	}
 	
+	
 	public class MyResourceChangeReporter implements IResourceChangeListener {
 		      public void resourceChanged(IResourceChangeEvent event) {
 	               try {
@@ -101,12 +102,10 @@ public class HPEPlugin extends AbstractUIPlugin {
 					        	   String[] pathStrArr = pathStr.replace(".", "#").split("#");
 					        	   String cName = pathStrArr[pathStrArr.length - 1];
 					        	   IPath path2 = path.append(cName + ".hpe");
-					        	   URI uri = URI.createURI(path2.toString()); 
-					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false);
-								   NAntBuilder builder = NAntBuilder.instance;
-							   	   builder.setComponent(c);								   
-								   builder.run();
-								   project.refreshLocal(IResource.DEPTH_INFINITE, null);
+					        	   
+					        	   NAntBuilder.createBuildFile(path2.toString(), true);
+					        	   
+								   project.refreshLocal(IResource.DEPTH_INFINITE, null);								   
 								   System.out.println("generated build.xml for " + path2);
 					           }
 

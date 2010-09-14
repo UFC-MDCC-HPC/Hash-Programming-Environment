@@ -352,11 +352,9 @@ public class HPELocationEntry {
 		
 	}
 
-	public static String fetchLocationName(URI uri)  {
+	public static String fetchLocationName(URI uri) throws MalformedURLException, RemoteException, ServiceException  {
 		String name = null;
 		
-		try {
-
 			List<String> packagesList = new ArrayList<String>();
 		
 			String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
@@ -370,26 +368,14 @@ public class HPELocationEntry {
 				
 			name = server.getName();
 		
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return name;
 	}
 
-	public static String getLocationPresentationMessage(URI uri) {
+	public static String getLocationPresentationMessage(URI uri) throws RemoteException, ServiceException, MalformedURLException {
 
 		String message = "fail";
 		
-		try {
-
 			List<String> packagesList = new ArrayList<String>();
 		
 			String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
@@ -403,16 +389,6 @@ public class HPELocationEntry {
 				
 			message = server.getPresentationMessage();
 		
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return message;
 	}

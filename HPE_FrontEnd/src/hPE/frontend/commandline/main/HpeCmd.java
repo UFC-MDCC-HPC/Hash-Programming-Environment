@@ -10,7 +10,7 @@ import java.util.Scanner;
 import hPE.frontend.commandline.exception.ArgException;
 import hPE.frontend.commandline.exception.CmdException;
 import hPE.frontend.commandline.type.HpeGenericCmd;
-import hPE.frontend.commandline.util.FileUtil;
+import hPE.frontend.commandline.util.Utilities;
 import hPE.frontend.commandline.util.HpePrinter;
 
 public class HpeCmd extends Thread {
@@ -20,7 +20,7 @@ public class HpeCmd extends Thread {
 	
 	public HpeCmd(String str) {
 		super(str);
-		this.commands = FileUtil.readCmdPropertiesFile();
+		this.commands = Utilities.readCmdPropertiesFile();
 		
 	}
 	
@@ -29,7 +29,7 @@ public class HpeCmd extends Thread {
 		HpeGenericCmd genericCmd = null;
 		try {
 			String className = findClassName(args[0]);
-			cmd =  (Class<HpeGenericCmd>) Class.forName(FileUtil.pkgName+className);
+			cmd =  (Class<HpeGenericCmd>) Class.forName(Utilities.pkgName+className);
 			
 			if(cmd!=null){
 				genericCmd = (HpeGenericCmd)cmd.newInstance();

@@ -93,7 +93,16 @@ public class RegisterComponentDialog extends JDialog {
 		
 		List<URI> l = CoreLocationList.fetchLocations();
 		for (URI uri : l) {
-			String locationName = HPELocationEntry.fetchLocationName(uri);
+			String locationName = null;
+			try {
+				locationName = HPELocationEntry.fetchLocationName(uri);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
 			if (locationName != null) {
 			   this.locations.put(locationName, uri);
 		       this.getJComboBoxLocations().addItem(locationName);
@@ -275,7 +284,16 @@ public class RegisterComponentDialog extends JDialog {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					String locationName = (String) getJComboBoxLocations().getSelectedItem();
 					URI uri = locations.get(locationName);
-					String message = HPELocationEntry.getLocationPresentationMessage(uri);					
+					String message = "Error connecting to location to fetch information.";
+					try {
+						message = HPELocationEntry.getLocationPresentationMessage(uri);
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					} catch (MalformedURLException e1) {
+						e1.printStackTrace();
+					} catch (ServiceException e1) {
+						e1.printStackTrace();
+					}					
 					
 					JOptionPane.showMessageDialog(null,message, "About " + locationName,JOptionPane.INFORMATION_MESSAGE);
 				}

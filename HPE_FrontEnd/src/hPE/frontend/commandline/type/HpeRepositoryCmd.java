@@ -1,12 +1,14 @@
 package hPE.frontend.commandline.type;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.rpc.ServiceException;
 
@@ -26,6 +28,7 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.commandline.exception.ArgException;
 import hPE.frontend.commandline.exception.CmdException;
 import hPE.frontend.commandline.util.HpePrinter;
+import hPE.frontend.commandline.util.Utilities;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
@@ -41,6 +44,7 @@ public class HpeRepositoryCmd implements HpeGenericCmd{
 	public static int REPOSITORY_LOCATION_COMMAND_INDEX = 0;
 	public static int REPOSITORY_LOCATION_ADD_COMMAND_INDEX = 1;
 	public static int REPOSITORY_LOCATION_REMOVE_COMMAND_INDEX = 1;
+	public static int REPOSITORY_LOCATION_LIST_COMMAND_INDEX = 1;
 
 	public static String REPOSITORY_LIST_COMMAND_TOKEN = "list";
 	public static String REPOSITORY_REGISTER_COMMAND_TOKEN = "register";
@@ -49,11 +53,12 @@ public class HpeRepositoryCmd implements HpeGenericCmd{
 	public static String REPOSITORY_LOCATION_COMMAND_TOKEN = "location";
 	public static String REPOSITORY_LOCATION_ADD_COMMAND_TOKEN = "add";
 	public static String REPOSITORY_LOCATION_REMOVE_COMMAND_TOKEN = "remove";
+	public static String REPOSITORY_LOCATION_LIST_COMMAND_TOKEN = "list";
 	
 	
 	@Override
 	public void action(String[] args) throws ArgException, CmdException{
-		// TODO Auto-generated method stub
+
 		if (args == null || args.length == 0) {
 			HpePrinter.out(help());
 			throw new ArgException();
@@ -82,40 +87,95 @@ public class HpeRepositoryCmd implements HpeGenericCmd{
 		   action_location_add(args);	
 		} else if (args[REPOSITORY_LOCATION_REMOVE_COMMAND_INDEX].equals(REPOSITORY_LOCATION_REMOVE_COMMAND_TOKEN)) {
 		   action_location_remove(args);
+		} else if (args[REPOSITORY_LOCATION_LIST_COMMAND_INDEX].equals(REPOSITORY_LOCATION_LIST_COMMAND_TOKEN)) {
+		   action_location_list(args);
 		} else {
 		   HpePrinter.out(this.help());
 		   throw new ArgException("unrecognized repository location command.");
 		}		
 	}
 
-   private static int REPOSITORY_LOCATION_ADD_URI_INDEX = 2;
-
-   private void action_location_add(String[] args) {
-	 String loc_uri = args[REPOSITORY_LOCATION_ADD_URI_INDEX];	
-	 String loc_name = HPELocationEntry.fetchLocationName(URI.createURI(loc_uri));
-	 String message = HPELocationEntry.getLocationPresentationMessage(URI.createURI(loc_uri));
-	 
-	 Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
-	 CoreLocationList.readCoreLocationsFile(coreLocations);
-	 if (coreLocations.containsKey(loc_name)) {
-		 HpePrinter.out("A locations named " + loc_name + " is already registered.");
-	 } else {
-		 CoreLocationInfo new_loc = new CoreLocationInfo();
-		 new_loc.name = loc_name;
-		 new_loc.locURI = loc_uri;
-		 coreLocations.put(loc_name, new_loc);	 
-		 CoreLocationList.saveData(coreLocations);
-		 HpePrinter.out("Location " + loc_name + " added !");
-	     HpePrinter.out(message);
-	 }
-	 
+   private void action_location_add(String[] args) throws ArgException, CmdException 
+   {
+	   try {
+//		 String loc_uri = args[REPOSITORY_LOCATION_ADD_URI_INDEX];
+	   
+		 List<String> allowedArgs = new ArrayList<String>();
+		 allowedArgs.add("-uri");		
+		 Map<String, String> options_register = traverseOptions(args, allowedArgs, 2);
+	   
+		 String loc_uri = null;
+		 if (options_register.containsKey("uri")) {
+			 loc_uri = options_register.get("uri");
+		 } else {
+		     String msg = "Location address must be specified after '-uri'\n";
+		     throw new ArgException(msg);
+		 }
+		
+		 String loc_name = HPELocationEntry.fetchLocationName(URI.createURI(loc_uri));
+		 String message = HPELocationEntry.getLocationPresentationMessage(URI.createURI(loc_uri));
+		 
+		 Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
+		 CoreLocationList.readCoreLocationsFile(coreLocations);
+		 if (coreLocations.containsKey(loc_name)) {
+			 HpePrinter.out("A locations named " + loc_name + " is already registered.");
+		 } else {
+			 CoreLocationInfo new_loc = new CoreLocationInfo();
+			 new_loc.name = loc_name;
+			 new_loc.locURI = loc_uri;
+			 coreLocations.put(loc_name, new_loc);	 
+			 CoreLocationList.saveData(coreLocations);
+			 HpePrinter.out("Location " + loc_name + " added !");
+		     HpePrinter.out(message);
+		 }
+	   } catch (ServiceException e) {
+		   String msg = "Connection error when fetching location information.";
+		   CmdException ee = new CmdException(msg);
+		   ee.initCause(e);
+		   throw ee;
+	   } catch (MalformedURLException e) {
+		   String msg = "Bad location address";
+		   CmdException ee = new CmdException(msg);
+		   ee.initCause(e);
+		   throw ee;
+		   
+	   } catch (RemoteException e) {
+		   String msg = "Connection error when fetching location information.";
+		   CmdException ee = new CmdException(msg);
+		   ee.initCause(e);
+		   throw ee;
+	   }
+		 
    }
 
-   private static int REPOSITORY_LOCATION_REMOVE_NAME_INDEX = 2;
-   
-   private void action_location_remove(String[] args) {
-	   String loc_name = args[REPOSITORY_LOCATION_REMOVE_NAME_INDEX];
-	
+   private void action_location_list(String[] args) throws ArgException {
+	 
+		List<String> allowedArgs = new ArrayList<String>();
+		Map<String, String> options_register = traverseOptions(args, allowedArgs, 2);
+
+		Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
+	    CoreLocationList.readCoreLocationsFile(coreLocations);
+	    for (Entry<String, CoreLocationInfo> cl : coreLocations.entrySet()) {
+		    CoreLocationInfo loc_info = cl.getValue();
+		    HpePrinter.out(loc_info.name + " at " + loc_info.locURI);
+	    }
+	 	 
+   }
+
+   private void action_location_remove(String[] args) throws ArgException {
+	   
+		List<String> allowedArgs = new ArrayList<String>();
+		allowedArgs.add("-name");
+		Map<String, String> options_register = traverseOptions(args, allowedArgs, 2);
+
+		 String loc_name = null;
+		 if (options_register.containsKey("name")) {
+			 loc_name = options_register.get("name");
+		 } else {
+		     String msg = "Location name must be specified after '-name'\n";
+		     throw new ArgException(msg);
+		 }
+	   
 		 Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
 		 CoreLocationList.readCoreLocationsFile(coreLocations);
 		 if (!coreLocations.containsKey(loc_name)) {
@@ -129,7 +189,11 @@ public class HpeRepositoryCmd implements HpeGenericCmd{
 
 
 private void action_obsolete(String[] args) throws CmdException, ArgException {
-		Map<String, String> options_register = traverseOptions_obsolete(args);
+	List<String> allowedArgs = new ArrayList<String>();
+	allowedArgs.add("-version");
+	allowedArgs.add("-location");
+	allowedArgs.add("-component");
+	Map<String, String> options_register = traverseOptions(args, allowedArgs, 1);
     	
 		String version = null;
 		if (options_register.containsKey("version")) {
@@ -137,8 +201,16 @@ private void action_obsolete(String[] args) throws CmdException, ArgException {
 		}
 		
 		URI location = null;
+		String location_name = null;
 		if (options_register.containsKey("location")) {
-			location = URI.createURI(options_register.get("location"));
+			location_name = options_register.get("location");
+			location = CoreLocationList.fetchURI(location_name);
+			if (location == null) {
+				String msg = "Location " + location_name + " not registered.";
+				HpePrinter.out(msg);
+				throw new ArgException(msg);
+			}
+			
 		} else {
 			throw new ArgException("A location is required to be specified by using -location.");
 		}
@@ -154,9 +226,7 @@ private void action_obsolete(String[] args) throws CmdException, ArgException {
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponentFactoryImpl.setWorkspacePath("C://Users//Heron//Documents//My Dropbox//Examples//MultiDimensionalNumericalIntegration//HPE (workspace)");
-			
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
 		
 			String message = HPELocationEntry.markAsObsolete(c, location, version);
 			
@@ -176,9 +246,6 @@ private void action_obsolete(String[] args) throws CmdException, ArgException {
 		
 	}
 
-private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgException {
-	return this.traverseOptions_register(args);
-}
 
 /*
 	* repository unregister <qualified_cref>  
@@ -187,7 +254,11 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 	*/
 	private void action_unregister(String[] args) throws ArgException, CmdException {
 
-		Map<String, String> options_register = traverseOptions_unregister(args);
+		List<String> allowedArgs = new ArrayList<String>();
+		allowedArgs.add("-version");
+		allowedArgs.add("-location");
+		allowedArgs.add("-component");
+		Map<String, String> options_register = traverseOptions(args, allowedArgs, 1);
     	
 		String version = null;
 		if (options_register.containsKey("version")) {
@@ -195,8 +266,16 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 		}
 		
 		URI location = null;
+		String location_name = null;
 		if (options_register.containsKey("location")) {
-			location = URI.createURI(options_register.get("location"));
+			location_name = options_register.get("location");
+			location = CoreLocationList.fetchURI(location_name);
+			if (location == null) {
+				String msg = "Location " + location_name + " not registered.";
+				HpePrinter.out(msg);
+				throw new ArgException(msg);
+			}
+			
 		} else {
 			throw new ArgException("A location is required to be specified by using -location.");
 		}
@@ -212,7 +291,7 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
 		
 			String message = HPELocationEntry.unregisterComponent(c, location, version);
 			
@@ -231,10 +310,6 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 		}
 	}
 
-   private Map<String, String> traverseOptions_unregister(String[] args) throws ArgException {
-	return this.traverseOptions_register(args);
-}
-
 /*
 	* repository register <qualified_cref> -component <qualified_name> -location <uri> [-version <version> -free_source]  
 	* 
@@ -242,7 +317,12 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 	*/
     private void action_register(String[] args) throws ArgException, CmdException {
 		
-		Map<String, String> options_register = traverseOptions_register(args);
+		List<String> allowedArgs = new ArrayList<String>();
+		allowedArgs.add("-free_source");
+		allowedArgs.add("-version");
+		allowedArgs.add("-location");
+		allowedArgs.add("-component");
+		Map<String, String> options_register = traverseOptions(args, allowedArgs, 1);
     	
 		boolean free_source = options_register.containsKey("free_source");
 		
@@ -252,8 +332,16 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 		}
 		
 		URI location = null;
+		String location_name = null;
 		if (options_register.containsKey("location")) {
-			location = URI.createURI(options_register.get("location"));
+			location_name = options_register.get("location");
+			location = CoreLocationList.fetchURI(location_name);
+			if (location == null) {
+				String msg = "Location " + location_name + " not registered.";
+				HpePrinter.out(msg);
+				throw new ArgException(msg);
+			}
+			
 		} else {
 			throw new ArgException("A location is required to be specified by using -location.");
 		}
@@ -269,9 +357,7 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 
 			URI innerUri = URI.createURI(Path.SEPARATOR + cName + Path.SEPARATOR + cName.substring(cName.lastIndexOf('.') + 1,cName.length()) + ".hpe");
 
-			HComponentFactoryImpl.setWorkspacePath("C://Users//Heron//Documents//My Dropbox//Examples//MultiDimensionalNumericalIntegration//HPE (workspace)");
-			
-			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false);
+			HComponent c = (new HComponentFactoryImpl()).loadComponent(innerUri ,false, false, false, false, true);
 		
 			String message = HPELocationEntry.registerComponent(c, location, version, free_source);
 			
@@ -314,42 +400,7 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 		}
     	
 	}
-
-	    
-   private Map<String, String> traverseOptions_register(String[] args) throws ArgException {
-		Map<String, String> options_register = new HashMap<String,String>();
-		 
-		int i = 0;
-		for (String arg : args) {
-		    if (arg.equals("-version")) {
-		    	if (i+1 >= args.length) {
-					HpePrinter.out(help());
-					throw new ArgException();
-		    	}
-		       options_register.put("version", args[i+1]);
-		    }
-		    else if (arg.equals("-component")) {
-		    	if (i+1 >= args.length) {
-					HpePrinter.out(help());
-					throw new ArgException();
-		    	}
-			   options_register.put("component", args[i+1]);
-		    }
-			else if (arg.equals("-location")) {
-		    	if (i+1 >= args.length) {
-					HpePrinter.out(help());
-					throw new ArgException();
-		    	}
-			   options_register.put("location", args[i+1]);    	
-		    } else if (arg.equals("-free_source")) {
-		       options_register.put("free_source", "true");
-		    }
-		    i++;
-		}		
-		
-		return options_register;
-}
-
+    
 /*
 	* repository list [-package <qualified_pattern_cref>] [-kind <kind_ref>] [-show_obsolete]  
 	* 
@@ -357,7 +408,10 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 	*/
 	private void action_list(String[] args) throws ArgException {
 
-		Map<String, String> options_list = traverseOptions_list(args);
+		List<String> allowedArgs = new ArrayList<String>();
+		allowedArgs.add("-package");
+		allowedArgs.add("-show_obsolete");
+		Map<String, String> options_list = traverseOptions(args, allowedArgs, 1);
 		
 		boolean showObsolete = options_list.containsKey("show_obsolete");
 		// HPEComponentLibrary lib = HPEComponentLibraryView.getInitialInput(showObsolete);
@@ -378,51 +432,97 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 						String[] cc = c_.split(":");
 						
 						String pkName = pk + "." + cc[0]; 
-						if (match(pkName, pattern) && (showObsolete || (!showObsolete && cc[2].equals("active")))) {
+						if (Utilities.match(pkName, pattern) && (showObsolete || (!showObsolete && cc[2].equals("active")))) {
 						   HpePrinter.out(pkName + (cc[1].equals("") ? "" : " - version " + cc[1]) + (showObsolete ? " - " + cc[2] : "") + "\n");
 						}
 					}
 				}
 				
 			} catch (RemoteException e) {
-				System.err.println("Location "+ locationSite + " not reachable !");
+				HpePrinter.out("Location "+ locationSite + " not reachable !");
 				// e.printStackTrace();
 			} catch (ServiceException e) {
-				System.err.println("Location "+ locationSite + " not reachable !");
+				HpePrinter.out("Location "+ locationSite + " not reachable !");
 				// e.printStackTrace();
 			}
 		}
 		
 				
 	}
-
-	private Map<String, String> traverseOptions_list(String[] args) throws ArgException 
-	{
-		Map<String, String> options_list = new HashMap<String,String>();
- 
-		int i = 0;
-		for (String arg : args) {
-		    if (arg.equals("-package")) {
-		    	if (i+1 >= args.length) {
-					HpePrinter.out(help());
-					throw new ArgException();
-		    	}
-		        options_list.put("package", args[i+1]);    	
-		    } else if (arg.equals("-kind")) {
-		    	if (i+1 >= args.length) {
-					HpePrinter.out(help());
-					throw new ArgException();
-		    	}
-			   options_list.put("kind", args[i+1]);
-		    } else if (arg.equals("-show_obsolete")) {
-		       options_list.put("show_obsolete", "true");
-		    }
-		    i++;
-		}		
+	private Map<String, String> traverseOptions(String[] args, List<String> allowedArgs, int beginIndex) throws ArgException {
 		
-		return options_list;
-    }
+		Map<String, String> options_register = new HashMap<String,String>();
+				
+		for (int i=beginIndex; i<args.length; i++) 
+		{
+			String arg = args[i];
+			if (allowedArgs.contains(arg)) {
+			    if (arg.equals("-version")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+			       options_register.put("version", args[++i]);
+			    }
+			    else if (arg.equals("-component")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+				   options_register.put("component", args[++i]);
+			    }
+			    else if (arg.equals("-uri")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+				   options_register.put("uri", args[++i]);
+			    }
+				else if (arg.equals("-location")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+				   options_register.put("location", args[++i]);    	
+			    } else if (arg.equals("-free_source")) {
+			       options_register.put("free_source", "true");
+			    } else if (arg.equals("-package")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+			    	options_register.put("package", args[++i]);    	
+			    } else if (arg.equals("-kind")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+			    	options_register.put("kind", args[++i]);
+			    } else if (arg.equals("-name")) {
+			    	if (i+1 >= args.length) {
+						HpePrinter.out(help());
+						throw new ArgException();
+			    	}
+			    	options_register.put("name", args[++i]);
+			    } else if (arg.equals("-show_obsolete")) {
+			    	options_register.put("show_obsolete", "true");
+			    }
 
+				else {
+			    	System.err.println("UNEXPECTED ERROR: argument is not included in the list of allowed arguments.");
+					throw new ArgException("unknown argument: " + arg);
+			    }
+			}
+			else {
+				HpePrinter.out(help());
+				throw new ArgException("unknown argument: " + arg + "\n");
+		    }
+		}
+				
+		return options_register;
+	}
+
+	
 	@Override
 	public String help() {
 		// TODO Auto-generated method stub
@@ -439,30 +539,7 @@ private Map<String, String> traverseOptions_obsolete(String[] args) throws ArgEx
 		       "  * <component_id> is a qualified name of a component (ex: skeleton.farm.Collector)\n" + 
 		       "  * <uri> is the uri address of the location \n" +
 		       "  * <version_id> is the version of component, whose format is \"X.X.X.X\" \n" + 
-		       "  * <pattern> is a <component_id> with the wildcard '*' \n";
+		       "  * <pattern> is a <component_id> with the wildcard '*' \n\n";
 	}
 
-	private static boolean match(String text, String pattern)
-    {
-        // Create the cards by splitting using a RegEx. If more speed 
-        // is desired, a simpler character based splitting can be done.
-        String [] cards = pattern.split("\\*");
-
-        // Iterate over the cards.
-        for (String card : cards)
-        {
-            int idx = text.indexOf(card);
-            
-            // Card not detected in the text.
-            if(idx == -1)
-            {
-                return false;
-            }
-            
-            // Move ahead, towards the right of the text.
-            text = text.substring(idx + card.length());
-        }
-        
-        return true;
-    }	
 }

@@ -49,7 +49,14 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 		this.setSrcType(srcType);
 		this.versionID = versionID;
 		this.contents = contents;
-    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf("/")).concat("/src/")/*.concat(this.getFileType()).concat("/")*/.concat(this.getVersionID()).concat("/").concat(this.getFileName());
+		
+		IPath path = new Path(rootPath);
+		this.sPath = path.removeLastSegments(1).append("src").append(this.getVersionID()).append(this.getFileName()).toString();
+		
+		
+		
+//    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf(Path.SEPARATOR)).concat(Path.SEPARATOR + "src" + Path.SEPARATOR)
+//    	                     .concat(this.getVersionID()).concat("" + Path.SEPARATOR).concat(this.getFileName());
 			
 	//	this.persistSourceFile(contents,rootPath);
 		

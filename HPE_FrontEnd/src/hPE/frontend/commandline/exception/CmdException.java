@@ -11,6 +11,6 @@ public class CmdException extends Exception{
 	@Override
 	public String getMessage() {
 		// TODO Auto-generated method stub
-		return "Invalid Command";
+		return "Invalid Command: " + super.getMessage();
 	}	
 }

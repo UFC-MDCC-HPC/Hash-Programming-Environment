@@ -1,6 +1,6 @@
 package hPE.frontend.commandline.type;
 
-import hPE.frontend.commandline.util.FileUtil;
+import hPE.frontend.commandline.util.Utilities;
 
 import java.util.Properties;
 
@@ -13,8 +13,8 @@ public class HpeSettings {
 	public String workspace_path = null;
 	
 	HpeSettings() {
-		properties = FileUtil.readSettingsPropertiesFile();
-		commands = FileUtil.readCmdPropertiesFile();
+		properties = Utilities.readSettingsPropertiesFile();
+		commands = Utilities.readCmdPropertiesFile();
 		workspace_path = properties.getProperty("workspace_path");
 	}
 	

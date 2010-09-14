@@ -1546,14 +1546,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public String getRelativeLocation() {
-		String r = Path.SEPARATOR + this.getPackagePath().toString() + "."
+		String r = /*Path.SEPARATOR + */ this.getPackagePath().toString() + "."
 				+ this.getComponentName() + Path.SEPARATOR
 				+ this.getComponentName() + ".hpe";
 		return r;
 	}
 
 	public String getLocalLocation() {
-		return uriLocal;
+		return uriLocal.replaceAll("%20", " ");
 	}
 
 	public String toString() {
@@ -4051,8 +4051,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		IPath pathPubFile = (new Path(this.getLocalLocation())).removeFileExtension().addFileExtension("pub");
 //		boolean okSNK = ResourcesPlugin.getWorkspace().getRoot().exists(pathKeyFile);
 //		boolean okPUB = ResourcesPlugin.getWorkspace().getRoot().exists(pathPubFile);
-		boolean okSNK = HComponentFactoryImpl.existsInWorkspace(pathKeyFile);
-		boolean okPUB = HComponentFactoryImpl.existsInWorkspace(pathPubFile);
+		boolean okSNK = HComponentFactoryImpl.existsInWorkspace(pathKeyFile.setDevice(null));
+		boolean okPUB = HComponentFactoryImpl.existsInWorkspace(pathPubFile.setDevice(null));
 
 		boolean success = true;
 
@@ -4087,7 +4087,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		if (success) {
 			// IFile fileW = ResourcesPlugin.getWorkspace().getRoot().getFile(pathPubFile);
-			java.io.File fileW = HComponentFactoryImpl.getFileInWorkspace(pathPubFile);
+			java.io.File fileW = HComponentFactoryImpl.getFileInWorkspace(pathPubFile.setDevice(null));
 			if (fileW.getAbsolutePath() != null) {
 				InputStream is = new FileInputStream(fileW);
 				byte[] pk = new byte[is.available()];

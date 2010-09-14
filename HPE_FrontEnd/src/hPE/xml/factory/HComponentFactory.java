@@ -13,8 +13,8 @@ import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 public interface HComponentFactory {
 
-	HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing, boolean cached) throws HPEInvalidComponentResourceException ;
-	ComponentType loadComponentX(URI uri, boolean cache) throws HPEInvalidComponentResourceException;
+	HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing, boolean cached, boolean relativePath) throws HPEInvalidComponentResourceException ;
+	ComponentType loadComponentX(URI uri, boolean cache, boolean relativePath) throws HPEInvalidComponentResourceException;
 	
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
 	

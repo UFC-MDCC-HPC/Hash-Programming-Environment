@@ -152,11 +152,7 @@ public class CoreLocationList {
 	        contents = new ByteArrayInputStream(new byte[0]);
 
 	    try {
-	        // Create a new file resource in the workspace
-//	        if (linkTargetPath != null)
-//	               fileHandle.createLink(linkTargetPath,
-//	                     IResource.ALLOW_MISSING_LOCAL, monitor);
-	 //       else {
+
 	            IPath path = fileHandle.getFullPath();
 	            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 	            int numSegments= path.segmentCount();
@@ -215,4 +211,16 @@ public class CoreLocationList {
 		return locations;
 	}
 	
+	public static URI fetchURI(String loc_name) {
+
+		Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
+		readCoreLocationsFile(coreLocations);
+
+		if (coreLocations.containsKey(loc_name)) {
+		    return URI.createURI(coreLocations.get(loc_name).locURI);
+		} else {
+			return null;
+		}
+	}
+
 }
