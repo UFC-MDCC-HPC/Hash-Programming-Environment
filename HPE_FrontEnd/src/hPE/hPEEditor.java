@@ -984,7 +984,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	protected void setInput(IEditorInput input) {
 		super.setInput(input);
 		IFile file = ((IFileEditorInput) input).getFile();
-		URI uri = URI.createURI(file.getFullPath().toPortableString());
+		URI uri = URI.createURI(file.getFullPath().makeRelative().toPortableString());
 		configuration = getConfiguration(uri);
 		setPartName(file.getName());
 	}

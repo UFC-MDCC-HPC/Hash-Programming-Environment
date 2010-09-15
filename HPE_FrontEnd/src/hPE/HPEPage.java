@@ -153,9 +153,11 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			}
 			c.setAbstract(composite2.isAbstract());
 			
-			IPath path = new Path(absolutePath);
+			IPath path = new Path(absolutePath); 
 			// c.setPackagePath(path.removeFirstSegments(1).uptoSegment(1).makeRelative());
 			c.setPackagePath(new Path(packageName));
+			
+			
 			
 			IFile file = persistSourceFile("", path);
 			

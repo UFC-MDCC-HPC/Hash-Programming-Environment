@@ -275,10 +275,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI, ComponentPackage.eINSTANCE);
 
 			Resource resource = null;
-			if (this.workspace != null || cache) { 
+			/*if (this.workspace != null || cache) { 
 				resource = resourceSet.getResource(uri, true);
 			}
-			else if (relativePath){
+			else*/ if (relativePath){
 				URI uriFull = URI.createFileURI(this.getWorkspacePath() + Path.SEPARATOR + uri.toString());
 				resource = resourceSet.getResource(uriFull, true);
 			} else {
