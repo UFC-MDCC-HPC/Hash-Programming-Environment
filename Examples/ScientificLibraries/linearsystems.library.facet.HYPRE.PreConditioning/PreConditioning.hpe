@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c547d88404aa78f2ea37d2f938e0d52744e5ffdf7429f207cc770c72c5ea80925fc16ce595636603156f151e069bf5362137681fd586abb1beb88bbe16ae1bb4aa0061377a9e4b6eab778f35922f51d83bedad4d6ff83fe826a281167bc38e3a9722ac320a0f2b378f63a61f21f70bfe75fe1080a02f81bc97b1d357353c79a0" isAbstract="true" kind="Facet" name="PreConditioning" packagePath="linearsystems.library.facet.HYPRE">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d5c4bbd8551be2c2084b5f2b6814c260062fe8fe70e7455a3cab9d90320c84f557aeebfaa14db3fea527e3bf74defd640bb4bb1aeddd3a9e2d8be2014ed2575a4e777ba709f2495bf7dd3f4c0a90b8dedf1e21f3bb12f6c8a6704ac92e95ac9ec3faa2e14bd51062acb7f6e63e2369183af78526850849a54b5652e9ee2194" localRef="base" location="linearsystems.library.facet.PreConditioning/PreConditioning.hpe" name="PreConditioning" package="linearsystems.library.facet" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="140" y="258">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="L"/>
+        <unitBounds uRef="preconditioning_facet">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b3657883f7a334d79610d9c7fb3f41ea51b3d644352159d132c379c1a6e285688f32c3b40755bec6b6d4b3f072d71511664ced1be8f5e8ac287dbda794121075cca2402fd73f335bea37cbb6612fd23b23d3ee7990c6403c5721ee160d8bdbaaefd0bc0d38d75830381bf221ad40126cbe93768ee109477aac2b56d10ca97ab1" localRef="hypre_lib" location="linearsystems.qualifier.HYPRE/HYPRE.hpe" name="HYPRE" package="linearsystems.qualifier" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="90" y="377">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="hypre">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="hypre_lib" varName="L"/>
+    <parameter componentRef="hypre_lib" formFieldId="library" varName="L"/>
+    <interface iRef="IHYPREPreConditioning" nArgs="1">
+      <slice isRef="library_unit">
+        <originRef cRef="library" iRef="IHYPRE"/>
+        <visualDescription h="10" w="10" x="7" y="24"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using linearsystems.qualifier.HYPRE;&#xA;using linearsystems.library.facet.PreConditioning;&#xA;&#xA;namespace linearsystems.library.facet.HYPRE.PreConditioning { &#xA;&#xA;public interface BaseIHYPREPreConditioning&lt;L> : BaseIPreConditioningFacet&lt;L>, IFacetKind &#xA;where L:IHYPRE&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIHYPREPreConditioning.cs" srcType="base" uri="/linearsystems.library.facet.HYPRE.PreConditioning/bin/1.0.0.0/BaseIHYPREPreConditioning.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll</dependency>
+          <dependency>linearsystems.library.facet.PreConditioning/bin/1.0.0.0/BaseIPreConditioningFacet.dll</dependency>
+        </file>
+        <file contents="using hpe.kinds;&#xA;using linearsystems.qualifier.HYPRE;&#xA;using linearsystems.library.facet.PreConditioning;&#xA;&#xA;namespace linearsystems.library.facet.HYPRE.PreConditioning { &#xA;&#xA;public interface IHYPREPreConditioning&lt;L> : BaseIHYPREPreConditioning&lt;L>, IPreConditioningFacet&lt;L>&#xA;where L:IHYPRE&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IHYPREPreConditioning.cs" srcType="user" uri="/linearsystems.library.facet.HYPRE.PreConditioning/bin/1.0.0.0/IHYPREPreConditioning.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.library.facet.HYPRE.PreConditioning/bin/1.0.0.0/BaseIHYPREPreConditioning.dll</dependency>
+          <dependency>linearsystems.library.facet.PreConditioning/bin/1.0.0.0/IPreConditioningFacet.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="191" y="105">
+        <color b="255" g="0" r="0"/>
+      </visualDescription>
+      <parameter iname="IHYPRE" order="0" parid="L" uname="hypre" varid="library"/>
+    </interface>
+    <unit iRef="IHYPREPreConditioning" private="false" uRef="preconditioning_facet" visibleInterface="true">
+      <super cRef="base" uRef="preconditioning_facet"/>
+      <slices cRef="library" replica="0" uRef="hypre" sliceName="library_unit" transitive="false">
+        <visualDescription h="10" w="10" x="7" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="191" y="185"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="N" varId="N">
+      <originRef>base</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="preconditioning_facet"/>
+      <visualDescription h="20" w="20" x="145" y="150"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

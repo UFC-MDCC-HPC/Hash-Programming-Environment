@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Solving">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Solving-1.0.0.0">
+    <ifnot targetexists="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0">
+      <mkdir dir="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.HYPRE.Solving/Solving.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0\BaseIHYPRESolving.dll" target="library" unsafe="true">
+      <sources>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\src\1.0.0.0\BaseIHYPRESolving.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="linearsystems.library.facet.Solving/bin/1.0.0.0/BaseISolvingFacet.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.HYPRE.Solving/Solving.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0\IHYPRESolving.dll" target="library" unsafe="true">
+      <sources>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\src\1.0.0.0\IHYPRESolving.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0\BaseIHYPRESolving.dll"/>
+        <include name="linearsystems.library.facet.Solving/bin/1.0.0.0/ISolvingFacet.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Solving-1.0.0.0" name="all"/>
+</project>

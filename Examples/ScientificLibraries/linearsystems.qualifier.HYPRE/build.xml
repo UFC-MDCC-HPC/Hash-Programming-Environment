@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="HYPRE">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="HYPRE-1.0.0.0">
+    <ifnot targetexists="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\bin\1.0.0.0">
+      <mkdir dir="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\bin\1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.HYPRE/HYPRE.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\bin\1.0.0.0\BaseIHYPRE.dll" target="library" unsafe="true">
+      <sources>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\src\1.0.0.0\BaseIHYPRE.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.qualifier.HYPRE/HYPRE.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\bin\1.0.0.0\IHYPRE.dll" target="library" unsafe="true">
+      <sources>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\src\1.0.0.0\IHYPRE.cs"/>
+      </sources>
+      <references>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.qualifier.HYPRE\bin\1.0.0.0\BaseIHYPRE.dll"/>
+        <include name="linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="HYPRE-1.0.0.0" name="all"/>
+</project>
