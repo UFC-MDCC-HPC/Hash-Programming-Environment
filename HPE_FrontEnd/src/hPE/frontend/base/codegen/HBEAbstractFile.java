@@ -53,6 +53,7 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 		IPath path = new Path(rootPath);
 		this.sPath = path.removeLastSegments(1).append("src").append(this.getVersionID()).append(this.getFileName()).toString();
 		
+		checkFile();
 		
 		
 //    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf(Path.SEPARATOR)).concat(Path.SEPARATOR + "src" + Path.SEPARATOR)
@@ -62,6 +63,14 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 		
 	}
 	
+	private void checkFile() {
+		
+    	IPath path = new Path(sPath);	
+    	// IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+    	java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+		
+	}
+
 	private String fileName;
 	private String srcType;
 	private String sPath;

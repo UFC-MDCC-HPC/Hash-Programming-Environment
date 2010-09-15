@@ -161,31 +161,33 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 	
 	try {
 
-	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) if (srcFile.getSrcType().equals("user")) {
+	for (HBEAbstractFile srcFile : sourceVersion.getFiles()) 
+	{ 
+		srcFile.persistSourceFile();
+		if (srcFile.getSrcType().equals("user"))  
+		{			
+			 String sPath = (String) srcFile.getSourcePath().toString();
+			 IPath path = new Path(sPath);
 			
-		 String sPath = (String) srcFile.getSourcePath().toString();
-		 IPath path = new Path(sPath);
-		
-		 srcFile.persistSourceFile();
-		
-		 String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
-		
-		 // Nesso caso particular, é necessário acessar pela workspace.
-    	 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-    	 FileEditorInput fei = new FileEditorInput(file); 
-    	
-    	 IWorkbench wb = PlatformUI.getWorkbench();    	
-    	 EditorDescriptor er = (EditorDescriptor) wb.getEditorRegistry().getDefaultEditor(sPath);
-    	    	
-    	
-    	 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-    	 EditorManager em = ((WorkbenchPage) page).getEditorManager();
-  		 IEditorReference editorRef = em.openEditor(er.getId(),fei,true,null);
-    	 IEditorPart te = editorRef.getEditor(true);
-    	 IEditorPart te2 = te.getClass().newInstance();
-    	 page.closeEditor(te,false);
-    	 
-		 editor.newPage(te2,fei,programName);
+			 String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
+			
+			 // Nesso caso particular, é necessário acessar pela workspace.
+	    	 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+	    	 FileEditorInput fei = new FileEditorInput(file); 
+	    	
+	    	 IWorkbench wb = PlatformUI.getWorkbench();    	
+	    	 EditorDescriptor er = (EditorDescriptor) wb.getEditorRegistry().getDefaultEditor(sPath);
+	    	    	
+	    	
+	    	 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	    	 EditorManager em = ((WorkbenchPage) page).getEditorManager();
+	  		 IEditorReference editorRef = em.openEditor(er.getId(),fei,true,null);
+	    	 IEditorPart te = editorRef.getEditor(true);
+	    	 IEditorPart te2 = te.getClass().newInstance();
+	    	 page.closeEditor(te,false);
+	    	 
+			 editor.newPage(te2,fei,programName);
+		}
 	}
 		
 	} /*catch (InstantiationException e) {
