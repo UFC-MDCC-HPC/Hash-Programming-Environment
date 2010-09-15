@@ -282,7 +282,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				URI uriFull = URI.createFileURI(this.getWorkspacePath() + Path.SEPARATOR + uri.toString());
 				resource = resourceSet.getResource(uriFull, true);
 			} else {
-				URI uriFull = URI.createFileURI(uri.toString());
+				URI uriFull = uri; // URI.createFileURI(uri.toString());
 				resource = resourceSet.getResource(uriFull, true);
 			}
 
@@ -424,7 +424,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				    java.io.File[] fsCache = parentFileCache.listFiles(filter);
 					java.io.File[] fsProject = parentFileProject.listFiles(filter);
 				    
-	                if ((fsCache != null || fsCache != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) 
+	                if ((fsCache != null && fsProject != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) 
 	                {
 						innerUri = locationUri;
 						copyToCache = true;
@@ -438,7 +438,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			this.isSubType = extType.isSetExtends() && extType.isExtends();
 			this.isConcrete = extType.isSetImplements()	&& extType.isImplements();
 			
-			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false, this.isSubType, this.isConcrete, !copyToCache, true);
+			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false, this.isSubType, this.isConcrete, !copyToCache, false);
 			
 			if (copyToCache)
 				copyProjectToCache(superType, version, locationUri);
@@ -522,7 +522,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						    java.io.File[] fsCache = parentFileCache.listFiles(filter);
 							java.io.File[] fsProject = parentFileProject.listFiles(filter);
 						    
-			                if ((fsCache != null || fsCache != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) {
+			                if ((fsCache != null && fsProject != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) {
 								innerUri = locationUri;
 								copyToCache = true;
 			                } else 
@@ -532,7 +532,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						}						
 					}		
 		
-					HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false, !copyToCache, true);		
+					HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false, !copyToCache, false);		
 		
 				    if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
 						innerC.setRemoteURI(locationUri);						
@@ -619,6 +619,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	public static void copyProjectToCache(HComponent innerC, String version, URI locationURI) {
 
         IPath pathC = new Path(innerC.getLocalLocation());		
+    	if (pathC.segment(0).equals("file:")) {
+    	    pathC = pathC.removeFirstSegments(1).makeAbsolute();
+    	}
 				
 		//IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation().removeLastSegments(1);
 		IPath path = HComponentFactoryImpl.buildWPath(pathC.setDevice(null)).removeLastSegments(1);
@@ -659,7 +662,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if(!srcPath.exists()){
 				System.out.println("File or directory does not exist.");
 				
-				System.exit(0);
+				// System.exit(0);
 			}		
 			else
 			{
