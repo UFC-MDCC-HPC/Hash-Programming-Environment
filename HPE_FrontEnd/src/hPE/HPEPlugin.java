@@ -97,7 +97,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 					           source = event.getSource();
 					           if (source instanceof IProject) {
 					        	   IProject project = (IProject) source;
-					        	   IPath path = project.getFullPath();
+					        	   IPath path = project.getFullPath().makeRelative();
 					        	   String pathStr = path.toString();
 					        	   String[] pathStrArr = pathStr.replace(".", "#").split("#");
 					        	   String cName = pathStrArr[pathStrArr.length - 1];
