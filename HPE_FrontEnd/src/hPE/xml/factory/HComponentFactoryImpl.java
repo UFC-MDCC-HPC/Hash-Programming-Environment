@@ -426,7 +426,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				    
 	                if ((fsCache != null && fsProject != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) 
 	                {
-						innerUri = locationUri;
+						IPath pathC1 = new Path(locationUri.toString());	
+						IPath path1 = HComponentFactoryImpl.buildWPath(pathC1);
+						innerUri = URI.createFileURI(path1.toString().replaceAll("%20", " "));
 						copyToCache = true;
 	                } else 
 					    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
@@ -523,7 +525,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							java.io.File[] fsProject = parentFileProject.listFiles(filter);
 						    
 			                if ((fsCache != null && fsProject != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) {
-								innerUri = locationUri;
+								IPath pathC1 = new Path(locationUri.toString());	
+								IPath path1 = HComponentFactoryImpl.buildWPath(pathC1);
+								innerUri = URI.createFileURI(path1.toString().replaceAll("%20", " "));
 								copyToCache = true;
 			                } else 
 							    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
