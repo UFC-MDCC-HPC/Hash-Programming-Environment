@@ -41,6 +41,7 @@
 	        <include name='System.Runtime.Remoting.dll'/>
 	        <include name='System.ServiceProcess.dll'/> 
 	        <include name='${build}/DGAC.dll'/>
+	        <include name='C:\Program Files (x86)\MPI.NET\Lib\MPI.dll'/>      	
 	      </references>
 	    </csc>
 	  </target>
@@ -57,6 +58,7 @@
         <include name='System.Runtime.Remoting.dll'/>
         <include name='System.ServiceProcess.dll'/> 
         <include name='${build}/DGAC.dll'/>
+        <include name='C:\Program Files (x86)\MPI.NET\Lib\MPI.dll'/>      	
       </references>
     </csc>
   </target>
