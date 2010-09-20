@@ -21,6 +21,15 @@
   </header>
   <componentInfo>
     <interface iRef="IPETSc" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.PETSc { &#xA;&#xA;public interface BaseIPETSc : BaseILibraryUnit, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPETSc.cs" srcType="base" uri="linearsystems.qualifier.PETSc/bin/1.0.0.0/BaseIPETSc.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll</dependency>
+        </file>
+        <file contents="using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.PETSc { &#xA;&#xA;public interface IPETSc : BaseIPETSc, ILibraryUnit&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPETSc.cs" srcType="user" uri="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.qualifier.PETSc/bin/1.0.0.0/BaseIPETSc.dll</dependency>
+          <dependency>linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="383" y="374">
         <color b="128" g="128" r="128"/>
       </visualDescription>
