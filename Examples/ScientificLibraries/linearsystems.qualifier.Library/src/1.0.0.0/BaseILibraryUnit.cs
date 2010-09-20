@@ -1,6 +1,6 @@
 /* AUTOMATICALLY GENERATE CODE */
 
-using hpe.kinds;
+using br.ufc.hpe.kinds;
 
 namespace linearsystems.qualifier.Library { 
 
