@@ -133,7 +133,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		String componentName = i.getConfiguration().getComponentName();
 		
 
-		programText += "using hpe.kinds;\n";
+		programText += "using br.ufc.hpe.kinds;\n";
 
 		// GET REFERENCES - Begin ...
 		
