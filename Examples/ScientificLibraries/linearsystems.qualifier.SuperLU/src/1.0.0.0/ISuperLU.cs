@@ -1,9 +1,9 @@
 using br.ufc.hpe.kinds;
 using linearsystems.qualifier.Library;
 
-namespace linearsystems.qualifier.HYPRE { 
+namespace linearsystems.qualifier.SuperLU { 
 
-public interface IHYPRE : BaseIHYPRE, ILibraryUnit
+public interface ISuperLU : BaseISuperLU, ILibraryUnit
 {
 
 

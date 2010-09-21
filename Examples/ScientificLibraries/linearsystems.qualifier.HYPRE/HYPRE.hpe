@@ -22,10 +22,10 @@
   <componentInfo>
     <interface iRef="IHYPRE" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.HYPRE { &#xA;&#xA;public interface BaseIHYPRE : BaseILibraryUnit, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIHYPRE.cs" srcType="base" uri="/linearsystems.qualifier.HYPRE/bin/1.0.0.0/BaseIHYPRE.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.HYPRE { &#xA;&#xA;public interface BaseIHYPRE : BaseILibraryUnit, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIHYPRE.cs" srcType="base" uri="linearsystems.qualifier.HYPRE/bin/1.0.0.0/BaseIHYPRE.dll" versionId="1.0.0.0">
           <dependency>linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.HYPRE { &#xA;&#xA;public interface IHYPRE : BaseIHYPRE, ILibraryUnit&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IHYPRE.cs" srcType="user" uri="/linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll" versionId="1.0.0.0">
+        <file contents="using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.HYPRE { &#xA;&#xA;public interface IHYPRE : BaseIHYPRE, ILibraryUnit&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IHYPRE.cs" srcType="user" uri="linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/linearsystems.qualifier.HYPRE/bin/1.0.0.0/BaseIHYPRE.dll</dependency>
           <dependency>linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll</dependency>
         </file>

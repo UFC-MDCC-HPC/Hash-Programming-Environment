@@ -9,7 +9,7 @@
         <visualDescription h="30" w="50" x="252" y="243">
           <color b="255" g="255" r="255"/>
         </visualDescription>
-        <unitBounds uRef="petsc">
+        <unitBounds uRef="superlu">
           <visualDescription h="10" w="10" x="5" y="2"/>
         </unitBounds>
       </component>
@@ -21,6 +21,15 @@
   </header>
   <componentInfo>
     <interface iRef="ISuperLU" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.SuperLU { &#xA;&#xA;public interface BaseISuperLU : BaseILibraryUnit, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISuperLU.cs" srcType="base" uri="linearsystems.qualifier.SuperLU/bin/1.0.0.0/BaseISuperLU.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll</dependency>
+        </file>
+        <file contents="using hpe.kinds;&#xA;using linearsystems.qualifier.Library;&#xA;&#xA;namespace linearsystems.qualifier.SuperLU { &#xA;&#xA;public interface ISuperLU : BaseISuperLU, ILibraryUnit&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISuperLU.cs" srcType="user" uri="linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.qualifier.SuperLU/bin/1.0.0.0/BaseISuperLU.dll</dependency>
+          <dependency>linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="383" y="374">
         <color b="128" g="128" r="128"/>
       </visualDescription>
