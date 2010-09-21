@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Documents and Settings\Heron\hpe_cache" default="all" name="Solving">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/mcc/davimf/cacheHPE/" default="all" name="Solving">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="Solving-1.0.0.0">
-    <ifnot targetexists="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\bin\1.0.0.0">
-      <mkdir dir="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\bin\1.0.0.0"/>
+    <ifnot targetexists="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0">
+      <mkdir dir="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.Solving/Solving.snk" optimize="true" output="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\bin\1.0.0.0\BaseISolvingFacet.dll" target="library" unsafe="false">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/Solving.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/BaseISolvingFacet.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\src\1.0.0.0\BaseISolvingFacet.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/src/1.0.0.0/BaseISolvingFacet.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Documents and Settings/Heron/Desktop/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.Solving/Solving.snk" optimize="true" output="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\bin\1.0.0.0\ISolvingFacet.dll" target="library" unsafe="false">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/Solving.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/ISolvingFacet.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\src\1.0.0.0\ISolvingFacet.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/src/1.0.0.0/ISolvingFacet.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
-        <include name="C:\Documents and Settings\Heron\Desktop\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.Solving\bin\1.0.0.0\BaseISolvingFacet.dll"/>
-        <include name="C:\Program Files\Mono-2.0.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/BaseISolvingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
   </target>
