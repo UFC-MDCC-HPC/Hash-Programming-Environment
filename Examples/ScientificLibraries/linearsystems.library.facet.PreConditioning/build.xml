@@ -1,7 +1,31 @@
-<?xml version='1.0'?>
-<project basedir='.' default='all' name='linearsystems.facet.PreConditioning'>
-  <property name='src' value='src'/>
-  <property name='build' value='bin'/>
-  <property name='nant.settings.currentframework' value='mono-2.0'/>
-  <target depends='' name='all'/>
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/mcc/davimf/cacheHPE/" default="all" name="PreConditioning">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="PreConditioning-1.0.0.0">
+    <ifnot targetexists="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/bin/1.0.0.0">
+      <mkdir dir="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/PreConditioning.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/bin/1.0.0.0/BaseIPreConditioningFacet.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/src/1.0.0.0/BaseIPreConditioningFacet.cs"/>
+      </sources>
+      <references>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/PreConditioning.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/bin/1.0.0.0/IPreConditioningFacet.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/src/1.0.0.0/IPreConditioningFacet.cs"/>
+      </sources>
+      <references>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PreConditioning/bin/1.0.0.0/BaseIPreConditioningFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="PreConditioning-1.0.0.0" name="all"/>
 </project>
