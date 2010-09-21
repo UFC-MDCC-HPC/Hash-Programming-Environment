@@ -123,7 +123,13 @@ namespace linearsystems.library.facet.SuperLU.MatrixBuilding {
 public interface ISuperLUMatrixBuilding<L> : BaseISuperLUMatrixBuilding<L>, IMatrixBuildingFacet<L>
 where L:ISuperLU
 {
+   unsafe void dCreate_CompRowLoc_Matrix_dist (SuperMatrix A, int m, int n, int nnz_loc, int m_loc,
+			                                                             int fst_row, double* nzval1, int* colind1, int* rowptr1,
+			                                                             Stype_t stype, Dtype_t dtype, Mtype_t mtype);
 
+   unsafe void zCreate_CompRowLoc_Matrix_dist (SuperMatrix A, int m, int n, int nnz_loc, int m_loc,
+			                                                             int fst_row, double* nzval1, int* colind1, int* rowptr1,
+			                                                             Stype_t stype, Dtype_t dtype, Mtype_t mtype);
 
 } // end main interface 
 
