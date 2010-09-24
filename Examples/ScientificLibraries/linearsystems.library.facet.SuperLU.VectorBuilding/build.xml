@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="VectorBuilding">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/mcc/davimf/cacheHPE/" default="all" name="VectorBuilding">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="VectorBuilding-1.0.0.0">
-    <ifnot targetexists="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\bin\1.0.0.0">
-      <mkdir dir="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\bin\1.0.0.0"/>
+    <ifnot targetexists="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/bin/1.0.0.0">
+      <mkdir dir="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.PETSc.VectorBuilding/VectorBuilding.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\bin\1.0.0.0\BaseIPETScVectorBuilding.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/VectorBuilding.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/bin/1.0.0.0/BaseISuperLUVectorBuilding.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\src\1.0.0.0\BaseIPETScVectorBuilding.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/src/1.0.0.0/BaseISuperLUVectorBuilding.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
-        <include name="linearsystems.library.facet.VectorBuilding/bin/1.0.0.0/BaseIVectorBuildingFacet.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.VectorBuilding/bin/1.0.0.0/BaseIVectorBuildingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"></include>
       </references>
     </csc>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.PETSc.VectorBuilding/VectorBuilding.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\bin\1.0.0.0\IPETScVectorBuilding.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/VectorBuilding.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/bin/1.0.0.0/ISuperLUVectorBuilding.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\src\1.0.0.0\IPETScVectorBuilding.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/src/1.0.0.0/ISuperLUVectorBuilding.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.VectorBuilding\bin\1.0.0.0\BaseIPETScVectorBuilding.dll"/>
-        <include name="linearsystems.library.facet.VectorBuilding/bin/1.0.0.0/IVectorBuildingFacet.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.VectorBuilding/bin/1.0.0.0/BaseISuperLUVectorBuilding.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.VectorBuilding/bin/1.0.0.0/IVectorBuildingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
   </target>
