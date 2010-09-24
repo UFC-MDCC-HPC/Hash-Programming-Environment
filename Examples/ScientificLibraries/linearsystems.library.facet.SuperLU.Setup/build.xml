@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Setup">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/mcc/davimf/cacheHPE/" default="all" name="Setup">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="Setup-1.0.0.0">
-    <ifnot targetexists="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\bin\1.0.0.0">
-      <mkdir dir="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\bin\1.0.0.0"/>
+    <ifnot targetexists="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/bin/1.0.0.0">
+      <mkdir dir="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.PETSc.Setup/Setup.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\bin\1.0.0.0\BaseIPETScSetup.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/Setup.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/bin/1.0.0.0/BaseISuperLUSetup.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\src\1.0.0.0\BaseIPETScSetup.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/src/1.0.0.0/BaseISuperLUSetup.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
-        <include name="linearsystems.library.facet.Setup/bin/1.0.0.0/BaseISetup.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Setup/bin/1.0.0.0/BaseISetup.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.PETSc.Setup/Setup.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\bin\1.0.0.0\IPETScSetup.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/Setup.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/bin/1.0.0.0/ISuperLUSetup.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\src\1.0.0.0\IPETScSetup.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/src/1.0.0.0/ISuperLUSetup.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.Setup\bin\1.0.0.0\BaseIPETScSetup.dll"/>
-        <include name="linearsystems.library.facet.Setup/bin/1.0.0.0/ISetup.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Setup/bin/1.0.0.0/BaseISuperLUSetup.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Setup/bin/1.0.0.0/ISetup.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
   </target>

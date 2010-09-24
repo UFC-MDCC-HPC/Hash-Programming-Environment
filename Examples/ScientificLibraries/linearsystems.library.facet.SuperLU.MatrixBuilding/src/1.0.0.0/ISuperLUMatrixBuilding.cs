@@ -195,7 +195,81 @@ where L:ISuperLU
                      double* h, int* i);
    unsafe int zger_ (int* a, int* b, double* c, double* d, int* e, double* f, int* g,
                      double* h, int* i);
- 	
+                     
+   void    Destroy_CompCol_Matrix_dist(SuperMatrix A);
+   
+   void    Destroy_SuperNode_Matrix_dist(SuperMatrix A);
+   
+   void    Destroy_SuperMatrix_Store_dist(SuperMatrix A);
+   
+   void    Destroy_CompCol_Permuted_dist(SuperMatrix A);
+   
+   void    Destroy_CompRowLoc_Matrix_dist(SuperMatrix A);
+   
+   void    Destroy_CompRow_Matrix_dist(SuperMatrix A);
+   
+   
+ 
+   unsafe void    sp_colorder (superlu_options_t a, SuperMatrix B, int* c,
+                              int* d, SuperMatrix E);
+                              
+   unsafe int  sp_coletree_dist (int* a, int* b, int* c, int d , int e,
+				                int* f);
+				                
+  // unsafe void    countnz_dist (const int a, int* b, int* c, int* d,
+	//		                    Glu_persist_t e, Glu_freeable_t f);
+			                    
+   //unsafe int   fixupL_dist (const int a, const int* b, Glu_persist_t c,
+	//		                Glu_freeable_t d);
+			                
+   unsafe int* TreePostorder_dist (int a, int* b);
+   
+   unsafe void    ifill_dist (int* a, int b, int c);
+   
+   unsafe void  get_perm_c_dist(int a, int b, SuperMatrix C, int* d);
+   
+   unsafe int symbfact(superlu_options_t a, int b, SuperMatrix C, int* d,
+                      int* e, Glu_persist_t f, Glu_freeable_t g);
+                      
+   unsafe int symbfact_SubInit(fact_t a, void* b, int c, int d, int e,
+                               int f, Glu_persist_t g, Glu_freeable_t h);
+                               
+   unsafe int symbfact_SubXpand(int a, int b, int c, MemType d, int* e,
+			                   Glu_freeable_t f);
+			                   
+   unsafe int symbfact_SubFree(Glu_freeable_t a);
+   
+   /* Prototypes for parallel symbolic factorization */
+  // unsafe float symbfact_dist (int a,  int b, SuperMatrix c, int* d,
+    //                         int* e,  int* f, int* g, Pslu_freeable_t h,
+      //                       MPI_Comm* i, MPI_Comm* j,  mem_usage_t l);
+
+   /* Get the column permutation using parmetis */
+ //  unsafe float get_perm_c_parmetis (SuperMatrix A, int* b, int* c, int d,
+   //                                int e, int** f, int** g, gridinfo_t* h,
+     //                              MPI_Comm* i);
+
+   /* Auxiliary routines for memory expansions used during
+	   the parallel symbolic factorization routine */
+
+   int psymbfact_LUXpandMem(int a, int b, int c, int d, int e, int f,
+                                int g, int h, Pslu_freeable_t i,
+                                Llu_symbfact_t j, vtcsInfo_symbfact_t l,
+                                psymbfact_stat_t m);
+
+   unsafe int psymbfact_LUXpand (int a, int b, int c, int d, int* e, int f,
+                               int g, int h, int i, Pslu_freeable_t j,
+                               Llu_symbfact_t l, vtcsInfo_symbfact_t m,
+                                psymbfact_stat_t n);
+
+   int psymbfact_LUXpand_RL(int a, int b, int c, int d, int e, int f,
+                                 Pslu_freeable_t g, Llu_symbfact_t h,
+                                 vtcsInfo_symbfact_t i, psymbfact_stat_t j);
+
+   unsafe int psymbfact_prLUXpand(int a, int b, MemType c, Llu_symbfact_t d,
+                                psymbfact_stat_t e);
+   
+    	
 } // end main interface 
 
 } // end namespace 
