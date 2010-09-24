@@ -2,6 +2,7 @@ using br.ufc.hpe.kinds;
 using linearsystems.qualifier.SuperLU;
 using linearsystems.library.facet.Setup;
 using System;
+using System.IO;
 using MPI;
 
 namespace linearsystems.library.facet.SuperLU.Setup { 
@@ -29,8 +30,8 @@ where L:ISuperLU
 	 
 	 
 	 unsafe void    super_stats_dist (int a, int* b);
-	// void    ScalePermstructInit(const int a, const int b, 
-		//			   ScalePermstruct_t c);
+	 void    ScalePermstructInit(int a, int b, 
+					   ScalePermstruct_t c);
 	 void    ScalePermstructFree(ScalePermstruct_t a);
 	 void  superlu_gridinit(Intracommunicator a, int b, int c, gridinfo_t d);
 	 void  superlu_gridmap(Intracommunicator a, int b, int c, int[] d, int e,
@@ -38,11 +39,11 @@ where L:ISuperLU
 	 void  superlu_gridexit(gridinfo_t a);
 	 
 	 
-	// unsafe void  a_plus_at_dist(const int a, const int b, int* c, int* d,
-		//		                int* e, int** f, int** g);
+	 unsafe void  a_plus_at_dist(int a, int b, int* c, int* d,
+				                int* e, int** f, int** g);
 	 
-	// unsafe void  bcast_tree(void* a, int b, MPI_Datatype c, int d, int e,
-		//		            gridinfo_t f, int g, int* h);
+	 unsafe void  bcast_tree(void* a, int b, DatatypeCache c, int d, int e,
+				            gridinfo_t f, int g, int* h);
 				            
 	 unsafe  void  get_diag_procs(int a, Glu_persist_t b, gridinfo_t c,
 	                             int* d, int** e, int** f);
@@ -69,7 +70,7 @@ where L:ISuperLU
 	 unsafe int CheckZeroDiagonal(int a, int* b, int* c, int* d);
 	 unsafe void  PrintDouble5(string a, int b, double* c);
 	 unsafe void  PrintInt10(string a, int b, int* c);
-	// unsafe int   file_PrintInt10(FILE* a, string b, int c, int* d);
+	 unsafe int   file_PrintInt10(StreamWriter a, string b, int c, int* d);
 
 
 } // end main interface 

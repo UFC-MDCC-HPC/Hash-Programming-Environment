@@ -3,6 +3,7 @@ using linearsystems.qualifier.SuperLU;
 using linearsystems.library.facet.MatrixBuilding;
 using System.Runtime.InteropServices;
 using MPI;
+using System.IO;
 
 
 namespace linearsystems.library.facet.SuperLU.MatrixBuilding { 
@@ -76,10 +77,10 @@ where L:ISuperLU
    unsafe void zFillRHS_dist (string a, int b, double* c, int d, SuperMatrix F,
                               double* g, int h);
    
- //  unsafe int dcreate_matrix (SuperMatrix A, int b, double** c, int* d, double** e,
-  //                            int* f, FILE* g, gridinfo_t* h);
-  // unsafe int zcreate_matrix (SuperMatrix A, int b, double** c, int* d, double** e,
-   //                           int* f, FILE* g, gridinfo_t* h);
+   unsafe int dcreate_matrix (SuperMatrix A, int b, double** c, int* d, double** e,
+                              int* f, StreamReader g, gridinfo_t h);
+   unsafe int zcreate_matrix (SuperMatrix A, int b, double** c, int* d, double** e,
+                              int* f, StreamReader g, gridinfo_t h);
                               
    //Equilibrar Matriz
    unsafe void dgsequ_dist (SuperMatrix A, double* r, double* c, double* rowcnd,
@@ -126,7 +127,7 @@ where L:ISuperLU
    unsafe void 	Destroy_LU (int a, gridinfo_t b, LUstruct_t c);
    
    //Allocate storage in LUstruct. 
-   //unsafe void LUstructInit (const int a, const int b, LUstruct_t c);
+   unsafe void LUstructInit (int a, int b, LUstruct_t c);
    
    //Deallocate LUstruct.
    unsafe void 	LUstructFree (LUstruct_t a);
@@ -148,10 +149,10 @@ where L:ISuperLU
                                   int g, gridinfo_t h);
  	
    // Read a DOUBLE PRECISION matrix stored in Harwell-Boeing format 
-  // unsafe void dreadhb_dist (int iam,FILE*	fp,	int*  	nrow, int*  ncol,int* nonz,
-	//	                     double** nzval, int**	rowind, int** colptr);
-   //unsafe void zreadhb_dist (int iam,FILE*	fp,	int*  	nrow, int*  ncol,int* nonz,
-	//	                     double** nzval, int**	rowind, int** colptr);
+   unsafe void dreadhb_dist (int iam,StreamReader	fp,	int*  	nrow, int*  ncol,int* nonz,
+		                     double** nzval, int**	rowind, int** colptr);
+   unsafe void zreadhb_dist (int iam,StreamReader	fp,	int*  	nrow, int*  ncol,int* nonz,
+		                     double** nzval, int**	rowind, int** colptr);
    
    //  Distribute the input matrix onto the 2D process mesh.		                     
    unsafe int ddist_psymbtonum	(fact_t fact, int 	n,	SuperMatrix A, ScalePermstruct_t ScalePermstruct,
@@ -216,11 +217,11 @@ where L:ISuperLU
    unsafe int  sp_coletree_dist (int* a, int* b, int* c, int d , int e,
 				                int* f);
 				                
-  // unsafe void    countnz_dist (const int a, int* b, int* c, int* d,
-	//		                    Glu_persist_t e, Glu_freeable_t f);
+   unsafe void    countnz_dist (int a, int* b, int* c, int* d,
+			                    Glu_persist_t e, Glu_freeable_t f);
 			                    
-   //unsafe int   fixupL_dist (const int a, const int* b, Glu_persist_t c,
-	//		                Glu_freeable_t d);
+   unsafe int   fixupL_dist (int a, int* b, Glu_persist_t c,
+			                Glu_freeable_t d);
 			                
    unsafe int* TreePostorder_dist (int a, int* b);
    

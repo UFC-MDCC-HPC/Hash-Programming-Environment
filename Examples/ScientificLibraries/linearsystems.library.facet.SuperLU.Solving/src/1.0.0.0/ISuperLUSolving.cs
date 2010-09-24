@@ -84,24 +84,24 @@ where L:ISuperLU
 		               int 	nrhs, SOLVEstruct_t	SOLVEstruct, SuperLUStat_t stat,int* info); 	
    
    //local block modifications: lsum[i] -= L_i,k * X[k].
-   //unsafe void dlsum_fmod(double* lsum,double*	x,double*  	xk,	double* rtemp,
-		        //          int  	nrhs,int  	knsupc,int	k,int*  	fmod, int nlb,
-		      //            int	lptr, int  	luptr,	int*  	xsup, gridinfo_t grid,
-		    //              LocalLU_t Llu, MPI_Request[] 	send_req, SuperLUStat_t	stat);
-  // unsafe void zlsum_fmod(double* lsum,double*	x,double*  	xk,	double* rtemp,
-	//	                  int  	nrhs,int  	knsupc,int	k,int*  	fmod, int nlb,
-		//                  int	lptr, int  	luptr,	int*  	xsup, gridinfo_t grid,
-		  //                LocalLU_t Llu, MPI_Request[] 	send_req, SuperLUStat_t	stat);
+   unsafe void dlsum_fmod(double* lsum,double*	x,double*  	xk,	double* rtemp,
+		                  int  	nrhs,int  	knsupc,int	k,int*  	fmod, int nlb,
+		                  int	lptr, int  	luptr,	int*  	xsup, gridinfo_t grid,
+		                  LocalLU_t Llu, Request[] 	send_req, SuperLUStat_t	stat);
+   unsafe void zlsum_fmod(double* lsum,double*	x,double*  	xk,	double* rtemp,
+		                  int  	nrhs,int  	knsupc,int	k,int*  	fmod, int nlb,
+		                  int	lptr, int  	luptr,	int*  	xsup, gridinfo_t grid,
+		                  LocalLU_t Llu, Request[] 	send_req, SuperLUStat_t	stat);
 		                  
    //local block modifications: lsum[i] -= U_i,k * X[k].
-   //unsafe void dlsum_bmod (double* lsum, double* x,double*	xk,	int nrhs, int k,
-		  //                int*	bmod, int* 	Urbs, Ucb_indptr_t Ucb_indptr,
-		//                  int**	Ucb_valptr, int* xsup, gridinfo_t grid, LocalLU_t Llu,
-	//	                  MPI_Request[] send_req, SuperLUStat_t	stat);
-  // unsafe void zlsum_bmod (double* lsum, double* x,double*	xk,	int nrhs, int k,
-	//	                  int*	bmod, int* 	Urbs, Ucb_indptr_t Ucb_indptr,
-	//	                  int**	Ucb_valptr, int* xsup, gridinfo_t grid, LocalLU_t Llu,
-	//	                  MPI_Request[] send_req, SuperLUStat_t	stat);
+   unsafe void dlsum_bmod (double* lsum, double* x,double*	xk,	int nrhs, int k,
+		                  int*	bmod, int* 	Urbs, Ucb_indptr_t Ucb_indptr,
+		                  int**	Ucb_valptr, int* xsup, gridinfo_t grid, LocalLU_t Llu,
+		                  Request[] send_req, SuperLUStat_t	stat);
+   unsafe void zlsum_bmod (double* lsum, double* x,double*	xk,	int nrhs, int k,
+		                  int*	bmod, int* 	Urbs, Ucb_indptr_t Ucb_indptr,
+		                  int**	Ucb_valptr, int* xsup, gridinfo_t grid, LocalLU_t Llu,
+		                  Request[] send_req, SuperLUStat_t	stat);
    
    
    unsafe void 	pdgsrfs (int a, SuperMatrix B, double c, LUstruct_t d,
