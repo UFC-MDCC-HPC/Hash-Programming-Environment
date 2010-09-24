@@ -1,6 +1,8 @@
 package hPE;
 
+import hPE.frontend.base.dialogs.DialogUtil;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.kinds.KindConfiguration;
 import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
@@ -79,6 +81,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 	private Button check = null;
 	private int modelSelected1 = 7;
+	private String selectedKindName = null;
 //	private int modelSelected2 = 1;
 	
 
@@ -119,7 +122,10 @@ public class HPEPage extends WizardNewFileCreationPage implements
 				JOptionPane.showMessageDialog(null, "Unrecognized component package. Use <package>.<name>", "Creation Error", JOptionPane.ERROR_MESSAGE);
 					throw new Exception("Unrecognized component name.");
 			}
-			
+			if (selectedKindName == null) {
+				DialogUtil.openError("Select a Component Kind.");
+				return false;
+			}
 			String packageName = ss.substring(1,ss.lastIndexOf('.'));
 			String s = ss.substring(ss.lastIndexOf('.') + 1); 
 	
@@ -130,22 +136,48 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			URI uri = URI.createFileURI(absolutePath);
 			
 			HComponent c = null;
-			switch (modelSelected1) {
-			case 1: c = new HDataComponent(s,null,uri); break;
-			case 2: c = new HComputationComponent(s,null,uri); break;
-			case 3: c = new HSynchronizationComponent(s,null,uri); break;
-			case 4: c = new HArchitectureComponent(s,null,uri); break;
-			case 5: c = new HEnvironmentComponent(s,null,uri); break;
-			case 6: c = new HQualifierComponent(s,null,uri); break;
-			case 7: c = new HApplicationComponent(s,null,uri); break;
-		    case 8: c = new HServiceComponent(s,null,uri); break;
-			case 9: c = new HEnumeratorComponent(s,null,uri); break;
-			case 10: c = new HFacetComponent(s,null,uri); break;
-			case 11: c = new HDomainComponent(s,null,uri); break;
-			}
-			//TODO RAFAEL: Obter o componente selecionado:
-			if (false) {
-				c = KindManager.findByName("").newHBaseKindComponent(s, null, uri);
+			//TODO RAFAEL: REMOVER SE ESTIVER OK:
+//			switch (modelSelected1) {
+//			case 1: c = new HDataComponent(s,null,uri); break;
+//			case 2: c = new HComputationComponent(s,null,uri); break;
+//			case 3: c = new HSynchronizationComponent(s,null,uri); break;
+//			case 4: c = new HArchitectureComponent(s,null,uri); break;
+//			case 5: c = new HEnvironmentComponent(s,null,uri); break;
+//			case 6: c = new HQualifierComponent(s,null,uri); break;
+//			case 7: c = new HApplicationComponent(s,null,uri); break;
+//		    case 8: c = new HServiceComponent(s,null,uri); break;
+//			case 9: c = new HEnumeratorComponent(s,null,uri); break;
+//			case 10: c = new HFacetComponent(s,null,uri); break;
+//			case 11: c = new HDomainComponent(s,null,uri); break;
+//			}
+
+			if (HDataComponent.KIND.equals(selectedKindName)) {
+				c = new HDataComponent(s, null, uri);
+			} else if (HComputationComponent.KIND.equals(selectedKindName)) {
+				c = new HComputationComponent(s, null, uri);
+			} else if (HSynchronizationComponent.KIND.equals(selectedKindName)) {
+				c = new HSynchronizationComponent(s, null, uri);
+			} else if (HArchitectureComponent.KIND.equals(selectedKindName)) {
+				c = new HArchitectureComponent(s, null, uri);
+			} else if (HEnvironmentComponent.KIND.equals(selectedKindName)) {
+				c = new HEnvironmentComponent(s, null, uri);
+			} else if (HQualifierComponent.KIND.equals(selectedKindName)) {
+				c = new HQualifierComponent(s, null, uri);
+			} else if (HApplicationComponent.KIND.equals(selectedKindName)) {
+				c = new HApplicationComponent(s, null, uri);
+			} else if (HServiceComponent.KIND.equals(selectedKindName)) {
+				c = new HServiceComponent(s, null, uri);
+			} else if (HEnumeratorComponent.KIND.equals(selectedKindName)) {
+				c = new HEnumeratorComponent(s, null, uri);
+			} else if (HFacetComponent.KIND.equals(selectedKindName)) {
+				c = new HFacetComponent(s, null, uri);
+			} else if (HDomainComponent.KIND.equals(selectedKindName)) {
+				c = new HDomainComponent(s, null, uri);
+			} else {
+				KindConfiguration kindConfiguration = KindManager.findByName(selectedKindName);
+				if (kindConfiguration != null) {
+					c = kindConfiguration.newHBaseKindComponent(s, null, uri);
+				}
 			}
 			
 			setComponentVersion(c);
@@ -250,7 +282,10 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			modelSelected1 = 11;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		}
-		
+		if (e.getSource() == composite2.getComboKinds() && composite2.getComboKinds().getSelectionIndex() != -1) {
+			selectedKindName = composite2.getComboKinds().getItem(composite2.getComboKinds().getSelectionIndex());
+		}
+			
 		Object source = e.getSource();
 		if (source instanceof Button) {
 			Button button = (Button) source;

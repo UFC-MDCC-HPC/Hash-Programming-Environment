@@ -286,7 +286,7 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart part = null;
 		
-		KindConfiguration kindConfiguration = KindManager.getKindConfiguration(model.getClass());
+		KindConfiguration kindConfiguration = KindManager.discoverKindConfiguration(model.getClass());
 		
 		if (model instanceof HComponent) {
 			if (context == null) {

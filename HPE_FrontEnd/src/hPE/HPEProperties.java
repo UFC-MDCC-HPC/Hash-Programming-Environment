@@ -1,11 +1,12 @@
 package hPE;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -110,4 +111,21 @@ public class HPEProperties {
 	        return null;
 	    }
 
+	    
+	    public List<File> getKindsPaths() throws IOException {
+	    	List<File> kindsJarFiles = new ArrayList<File>();
+	    	String kindsJarPaths = getValue("kinds_jars");
+	    	if (kindsJarPaths != null && !kindsJarPaths.isEmpty()) {
+		    	String[] arrayKindsJarPaths = kindsJarPaths.split(",");
+		    	for (int i = 0; i < arrayKindsJarPaths.length; i++) {
+		    		File file = new File(arrayKindsJarPaths[i]);
+		    		if (file.exists()) {
+		    			kindsJarFiles.add(file);
+		    		} else {
+		    			throw new FileNotFoundException("File or path not found: " + file.getAbsolutePath());
+		    		}
+		    	}
+	    	}
+	    	return kindsJarFiles;
+	    }
 }

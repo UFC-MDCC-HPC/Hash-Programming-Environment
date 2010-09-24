@@ -11,6 +11,8 @@ import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
+import hPE.frontend.kinds.KindConfiguration;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
@@ -2386,7 +2388,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public boolean accepts(IComponent c) {
-		return true;
+		//TODO RAFAEL: Check this code and the overriders of this method
+		KindConfiguration kindConfiguration = KindManager.discoverKindConfiguration(c.getClass());
+		for (Class<? extends HComponent> hComponent : kindConfiguration.getSupportedSuperComponents()) {
+			if (hComponent.isInstance(c)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*

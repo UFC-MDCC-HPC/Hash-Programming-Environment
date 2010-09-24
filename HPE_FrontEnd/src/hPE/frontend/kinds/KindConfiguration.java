@@ -8,7 +8,6 @@ import hPE.frontend.base.edits.InterfaceSliceEditPart;
 import hPE.frontend.base.edits.UnitEditPart;
 import hPE.frontend.base.edits.UnitSliceEditPart;
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.figures.ComponentFigure;
 import hPE.frontend.base.figures.ConfigurationFigure;
 import hPE.frontend.base.figures.EntryFigure;
@@ -42,6 +41,16 @@ public abstract class KindConfiguration {
 
 	public abstract String getName();
 	
+	/**
+	 * Gets the list of implementing HComponent classes of the kinds that should
+	 * accept this kind's components as inner components.
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public Class<? extends HComponent>[] getSupportedSuperComponents() {
+		return new Class[0];
+	}
+	
 	public abstract ComponentEditPart<?, ?> newComponentEditPart();
 
 	public abstract ConfigurationEditPart<?, ?> newConfigurationEditPart();
@@ -72,7 +81,7 @@ public abstract class KindConfiguration {
 
 	public abstract HBaseKindComponent newHBaseKindComponent(String name, IPackageLocation location, URI uri);
 
-	public abstract HBaseKindInterface newHBaseKindInterface(HComponent configuration, HInterfaceSig signature, IHPrimUnit unit, Point where) throws HPENotFusableSlicesException;
+	public abstract HBaseKindInterface newHBaseKindInterface(HComponent configuration, HInterfaceSig signature, IHPrimUnit unit, Point where) throws HPEAbortException;
 
 	public abstract HInterfaceSlice newHInterfaceSlice(String name, HInterface whichInterface, HInterfaceSig interfaceSig, int nestingFactor);
 
