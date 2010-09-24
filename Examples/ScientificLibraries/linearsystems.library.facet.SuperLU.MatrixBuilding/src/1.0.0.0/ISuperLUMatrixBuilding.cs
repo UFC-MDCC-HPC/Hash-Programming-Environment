@@ -2,7 +2,7 @@ using br.ufc.hpe.kinds;
 using linearsystems.qualifier.SuperLU;
 using linearsystems.library.facet.MatrixBuilding;
 using System.Runtime.InteropServices;
-
+using MPI;
 
 
 namespace linearsystems.library.facet.SuperLU.MatrixBuilding { 
@@ -240,14 +240,14 @@ where L:ISuperLU
    unsafe int symbfact_SubFree(Glu_freeable_t a);
    
    /* Prototypes for parallel symbolic factorization */
-  // unsafe float symbfact_dist (int a,  int b, SuperMatrix c, int* d,
-    //                         int* e,  int* f, int* g, Pslu_freeable_t h,
-      //                       MPI_Comm* i, MPI_Comm* j,  mem_usage_t l);
+   unsafe float symbfact_dist (int a,  int b, SuperMatrix c, int* d,
+                             int* e,  int* f, int* g, Pslu_freeable_t h,
+                             Intracommunicator i, Intracommunicator j,  mem_usage_t l);
 
    /* Get the column permutation using parmetis */
- //  unsafe float get_perm_c_parmetis (SuperMatrix A, int* b, int* c, int d,
-   //                                int e, int** f, int** g, gridinfo_t* h,
-     //                              MPI_Comm* i);
+   unsafe float get_perm_c_parmetis (SuperMatrix A, int* b, int* c, int d,
+                                   int e, int** f, int** g, gridinfo_t h,
+                                   Intracommunicator i);
 
    /* Auxiliary routines for memory expansions used during
 	   the parallel symbolic factorization routine */

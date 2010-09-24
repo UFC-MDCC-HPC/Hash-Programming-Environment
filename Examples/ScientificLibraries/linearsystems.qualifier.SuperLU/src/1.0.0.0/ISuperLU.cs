@@ -1,6 +1,8 @@
 using br.ufc.hpe.kinds;
 using linearsystems.qualifier.Library;
 using System.Runtime.InteropServices;
+using MPI;
+
 
 namespace linearsystems.qualifier.SuperLU { 
    
@@ -152,14 +154,14 @@ namespace linearsystems.qualifier.SuperLU {
    
    [StructLayout(LayoutKind.Sequential)]
    public class superlu_scope_t{
-	//    public Intracommunicator comm;        /* MPI communicator */
+	    public Intracommunicator comm;        /* MPI communicator */
 	    public int Np;               /* number of processes */
 	    public int Iam;              /* my process number */
    }
    
    [StructLayout(LayoutKind.Sequential)]
    public class gridinfo_t{
-	    // public Intracommunicator comm;        /* MPI communicator */
+	     public Intracommunicator comm;        /* MPI communicator */
 	     public superlu_scope_t rscp; /* row scope */
 	     public superlu_scope_t cscp; /* column scope */
 	     public int iam;              /* my process number in this scope */

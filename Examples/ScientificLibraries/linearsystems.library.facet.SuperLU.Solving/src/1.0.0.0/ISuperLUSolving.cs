@@ -1,6 +1,7 @@
 using br.ufc.hpe.kinds;
 using linearsystems.qualifier.SuperLU;
 using linearsystems.library.facet.Solving;
+using MPI;
 
 namespace linearsystems.library.facet.SuperLU.Solving { 
 

@@ -14,7 +14,9 @@
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/BaseISolvingFacet.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
     <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/Solving.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0/ISuperLUSolving.dll" target="library" unsafe="true">
@@ -25,7 +27,9 @@
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0/BaseISuperLUSolving.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/ISolvingFacet.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
   </target>

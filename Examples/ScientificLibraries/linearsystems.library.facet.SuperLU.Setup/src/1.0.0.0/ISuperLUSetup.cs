@@ -2,6 +2,7 @@ using br.ufc.hpe.kinds;
 using linearsystems.qualifier.SuperLU;
 using linearsystems.library.facet.Setup;
 using System;
+using MPI;
 
 namespace linearsystems.library.facet.SuperLU.Setup { 
 
@@ -31,9 +32,9 @@ where L:ISuperLU
 	// void    ScalePermstructInit(const int a, const int b, 
 		//			   ScalePermstruct_t c);
 	 void    ScalePermstructFree(ScalePermstruct_t a);
-	 //void  superlu_gridinit(MPI_Comm a, int b, int c, gridinfo_t d);
-	 //void  superlu_gridmap(MPI_Comm a, int b, int c, int[] d, int e,
-	//			           gridinfo_t f);
+	 void  superlu_gridinit(Intracommunicator a, int b, int c, gridinfo_t d);
+	 void  superlu_gridmap(Intracommunicator a, int b, int c, int[] d, int e,
+				           gridinfo_t f);
 	 void  superlu_gridexit(gridinfo_t a);
 	 
 	 
