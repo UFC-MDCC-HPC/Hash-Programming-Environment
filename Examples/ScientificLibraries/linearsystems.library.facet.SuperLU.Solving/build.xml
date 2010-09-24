@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="Solving">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/mcc/davimf/cacheHPE/" default="all" name="Solving">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="Solving-1.0.0.0">
-    <ifnot targetexists="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0">
-      <mkdir dir="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0"/>
+    <ifnot targetexists="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0">
+      <mkdir dir="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.HYPRE.Solving/Solving.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0\BaseIHYPRESolving.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/Solving.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0/BaseISuperLUSolving.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\src\1.0.0.0\BaseIHYPRESolving.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/src/1.0.0.0/BaseISuperLUSolving.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
-        <include name="linearsystems.library.facet.Solving/bin/1.0.0.0/BaseISolvingFacet.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/BaseISolvingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.HYPRE.Solving/Solving.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0\IHYPRESolving.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/Solving.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0/ISuperLUSolving.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\src\1.0.0.0\IHYPRESolving.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/src/1.0.0.0/ISuperLUSolving.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.HYPRE.Solving\bin\1.0.0.0\BaseIHYPRESolving.dll"/>
-        <include name="linearsystems.library.facet.Solving/bin/1.0.0.0/ISolvingFacet.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.SuperLU/bin/1.0.0.0/ISuperLU.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.SuperLU.Solving/bin/1.0.0.0/BaseISuperLUSolving.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Solving/bin/1.0.0.0/ISolvingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
       </references>
     </csc>
   </target>
