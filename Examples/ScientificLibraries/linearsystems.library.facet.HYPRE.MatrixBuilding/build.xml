@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="ASCII"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="C:\Users\Heron\hpe_cache" default="all" name="MatrixBuilding">
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/mcc/davimf/cacheHPE/" default="all" name="MatrixBuilding">
   <property name="nant.settings.currentframework" value="mono-2.0"/>
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="MatrixBuilding-1.0.0.0">
-    <ifnot targetexists="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\bin\1.0.0.0">
-      <mkdir dir="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\bin\1.0.0.0"/>
+    <ifnot targetexists="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/bin/1.0.0.0">
+      <mkdir dir="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.PETSc.MatrixBuilding/MatrixBuilding.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\bin\1.0.0.0\BaseIPETScMatrixBuilding.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/MatrixBuilding.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/bin/1.0.0.0/BaseIHYPREMatrixBuilding.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\src\1.0.0.0\BaseIPETScMatrixBuilding.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/src/1.0.0.0/BaseIHYPREMatrixBuilding.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
-        <include name="linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/BaseIMatrixBuildingFacet.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/BaseIMatrixBuildingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"></include><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
-    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_2/linearsystems.library.facet.PETSc.MatrixBuilding/MatrixBuilding.snk" optimize="true" output="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\bin\1.0.0.0\IPETScMatrixBuilding.dll" target="library" unsafe="true">
+    <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/MatrixBuilding.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/bin/1.0.0.0/IHYPREMatrixBuilding.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\src\1.0.0.0\IPETScMatrixBuilding.cs"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/src/1.0.0.0/IHYPREMatrixBuilding.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
-        <include name="C:\Users\Heron\Documents\My Dropbox\Alunos\Disserta&#xe7;&#xe3;o DAVI\workspace_libraries_2\linearsystems.library.facet.PETSc.MatrixBuilding\bin\1.0.0.0\BaseIPETScMatrixBuilding.dll"/>
-        <include name="linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/IMatrixBuildingFacet.dll"/>
-        <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.MatrixBuilding/bin/1.0.0.0/BaseIHYPREMatrixBuilding.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/IMatrixBuildingFacet.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
   </target>

@@ -14,7 +14,9 @@
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Setup/bin/1.0.0.0/BaseISetup.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
     <csc debug="false" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.Setup/Setup.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.Setup/bin/1.0.0.0/IHYPRESetup.dll" target="library" unsafe="true">
@@ -25,7 +27,9 @@
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.HYPRE.Setup/bin/1.0.0.0/BaseIHYPRESetup.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.Setup/bin/1.0.0.0/ISetup.dll"></include>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
   </target>

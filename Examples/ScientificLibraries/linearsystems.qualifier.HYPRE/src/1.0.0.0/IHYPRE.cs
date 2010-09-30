@@ -33,7 +33,7 @@ namespace linearsystems.qualifier.HYPRE {
 	   public hypre_BoxArray      regions;
 	   public int                 num_regions;      
 	   public unsafe int*                 proc_partitions;
-	   // preciso ver isso hypre_Index         *divisions;
+	   public unsafe int*[]         divisions = new int*[3];
 	   
 	   /* these entries are specific to each proc */
 	   public hypre_BoxArray      my_partition;
@@ -108,6 +108,7 @@ namespace linearsystems.qualifier.HYPRE {
 	   /* here is the table  that organizes the entries spatially (by index)*/
 	   
 	   //preciso ver isso public hypre_BoxManEntry **index_table;
+	   
 	    /* this points into 'entries' array  
 	                                            and corresponds to the index arays*/
 	   public unsafe int*[]                indexes = new int*[3]; /* here we have the x,y,z indexes (ordered) 
@@ -118,8 +119,10 @@ namespace linearsystems.qualifier.HYPRE {
 	                                      - x,y,z */ 
 	   public int[]                 last_index = new int[3]; /* the last index used in the indexes map */
 	   public int                 num_my_entries; /* number of entries with proc_id = myid */
-	   public unsafe  int*                 my_ids;        /* an array of ids corresponding to my entries */ 
+	   public unsafe  int*                 my_ids;        /* an array of ids corresponding to my entries */
+	    
 	  //preciso ver isso public hypre_BoxManEntry   **my_entries;
+	  
 	     /* points into *entries that are mine & corresponds to
 	                                          my_ids array.  This is destroyed in the assemble */   
 	   public unsafe void*               info_objects;    /* this is an array of info objects (of each is of 
@@ -199,7 +202,7 @@ namespace linearsystems.qualifier.HYPRE {
 	   public int                  global_size;  /* Total number of grid points */	
 	   public int[]          periodic = new int[3];     /* Indicates if grid is periodic */
 	   public int                  num_periods;  /* number of box set periods */	   
-	   // preciso ver public hypre_Index      *pshifts;      /* shifts of periodicity */	
+	   public unsafe int*[]      pshifts = new int*[3];      /* shifts of periodicity */	
 	   public int                  ref_count;	
 	   public int                 ghlocal_size;   /* Number of vars in box including ghosts */
 	   public int[] num_ghost = new int[6];   /* ghost layer size for each box  */	
