@@ -13,7 +13,9 @@
       </sources>
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
     <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/HYPRE.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/bin/1.0.0.0/IHYPRE.dll" target="library" unsafe="true">
@@ -23,7 +25,9 @@
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.HYPRE/bin/1.0.0.0/BaseIHYPRE.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/ILibraryUnit.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"></include><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
   </target>
