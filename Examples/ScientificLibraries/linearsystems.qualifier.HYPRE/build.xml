@@ -13,7 +13,7 @@
       </sources>
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.Library/bin/1.0.0.0/BaseILibraryUnit.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"></include><include
         	name="/home/mcc/davimf/HPEStuff/MPI.dll">
 </include>
       </references>
