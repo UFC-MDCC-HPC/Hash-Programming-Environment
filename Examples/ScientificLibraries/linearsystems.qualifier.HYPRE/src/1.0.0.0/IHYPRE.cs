@@ -61,6 +61,7 @@ namespace linearsystems.qualifier.HYPRE {
 	   public unsafe void* boxman; /* the owning manager (populated in addentry)*/
 	   
 	   //preciso ver isso struct hypre_BoxManEntry_struct  *next;
+	   public hypre_BoxManEntry  next;
 
    }
    
@@ -107,7 +108,7 @@ namespace linearsystems.qualifier.HYPRE {
 	   public int                local_proc_offset;  /*position of local information in offsets */
 	   /* here is the table  that organizes the entries spatially (by index)*/
 	   
-	   //preciso ver isso public hypre_BoxManEntry **index_table;
+	   public unsafe hypre_BoxManEntry index_table;
 	   
 	    /* this points into 'entries' array  
 	                                            and corresponds to the index arays*/
@@ -122,6 +123,7 @@ namespace linearsystems.qualifier.HYPRE {
 	   public unsafe  int*                 my_ids;        /* an array of ids corresponding to my entries */
 	    
 	  //preciso ver isso public hypre_BoxManEntry   **my_entries;
+	  public hypre_BoxManEntry   my_entries;
 	  
 	     /* points into *entries that are mine & corresponds to
 	                                          my_ids array.  This is destroyed in the assemble */   
@@ -275,7 +277,22 @@ namespace linearsystems.qualifier.HYPRE {
 	   public int                   ref_count;
    }
    
-
+   [StructLayout(LayoutKind.Sequential)]
+   public class HYPRE_StructSolver{
+      
+   }
+   
+   
+   public delegate int HYPRE_PtrToStructSolverFcn(HYPRE_StructSolver solve,
+                                          hypre_StructMatrix A,
+                                          hypre_StructVector b,
+                                          hypre_StructVector x);
+                                          
+   public delegate int pcg_precond_solve();
+                                          
+    
+   
+  
 public interface IHYPRE : BaseIHYPRE, ILibraryUnit
 {   
   

@@ -8,7 +8,7 @@ namespace linearsystems.library.facet.HYPRE.VectorBuilding {
 public interface IHYPREVectorBuilding<L> : BaseIHYPREVectorBuilding<L>, IVectorBuildingFacet<L>
 where L:IHYPRE
 {
-
+    //Interface Struct
 	int hypre_StructVectorCreate ( Intracommunicator comm , hypre_StructGrid grid , hypre_StructVector vector );
 	int hypre_StructVectorDestroy ( hypre_StructVector struct_vector );
 	int hypre_StructVectorInitialize ( hypre_StructVector vector );

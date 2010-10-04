@@ -96,7 +96,7 @@ where L:IHYPRE
 	int HYPRE_StructPCGSetMaxIter ( HYPRE_StructSolver solver , int max_iter );
 	int HYPRE_StructPCGSetTwoNorm ( HYPRE_StructSolver solver , int two_norm );
 	int HYPRE_StructPCGSetRelChange ( HYPRE_StructSolver solver , int rel_change );
-	//int HYPRE_StructPCGSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
+	int HYPRE_StructPCGSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
 	int HYPRE_StructPCGSetLogging ( HYPRE_StructSolver solver , int logging );
 	int HYPRE_StructPCGSetPrintLevel ( HYPRE_StructSolver solver , int print_level );
 	unsafe int HYPRE_StructPCGGetNumIterations ( HYPRE_StructSolver solver , int* num_iterations );
@@ -114,7 +114,7 @@ where L:IHYPRE
 	int HYPRE_StructLGMRESSetMaxIter ( HYPRE_StructSolver solver , int max_iter );
 	int HYPRE_StructLGMRESSetKDim ( HYPRE_StructSolver solver , int k_dim );
 	int HYPRE_StructLGMRESSetAugDim ( HYPRE_StructSolver solver , int aug_dim );
-	//int HYPRE_StructLGMRESSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
+	int HYPRE_StructLGMRESSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
 	int HYPRE_StructLGMRESSetLogging ( HYPRE_StructSolver solver , int logging );
 	int HYPRE_StructLGMRESSetPrintLevel ( HYPRE_StructSolver solver , int print_level );
 	unsafe int HYPRE_StructLGMRESGetNumIterations ( HYPRE_StructSolver solver , int* num_iterations );
@@ -129,7 +129,7 @@ where L:IHYPRE
 	int HYPRE_StructGMRESSetAbsoluteTol ( HYPRE_StructSolver solver , double atol );
 	int HYPRE_StructGMRESSetMaxIter ( HYPRE_StructSolver solver , int max_iter );
 	int HYPRE_StructGMRESSetKDim ( HYPRE_StructSolver solver , int k_dim );
-	//int HYPRE_StructGMRESSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
+	int HYPRE_StructGMRESSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
 	int HYPRE_StructGMRESSetLogging ( HYPRE_StructSolver solver , int logging );
 	int HYPRE_StructGMRESSetPrintLevel ( HYPRE_StructSolver solver , int print_level );
 	unsafe int HYPRE_StructGMRESGetNumIterations ( HYPRE_StructSolver solver , int* num_iterations );
@@ -143,7 +143,7 @@ where L:IHYPRE
 	int HYPRE_StructBiCGSTABSetTol ( HYPRE_StructSolver solver , double tol );
 	int HYPRE_StructBiCGSTABSetAbsoluteTol ( HYPRE_StructSolver solver , double tol );
 	int HYPRE_StructBiCGSTABSetMaxIter ( HYPRE_StructSolver solver , int max_iter );
-	//int HYPRE_StructBiCGSTABSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
+	int HYPRE_StructBiCGSTABSetPrecond ( HYPRE_StructSolver solver , HYPRE_PtrToStructSolverFcn precond , HYPRE_PtrToStructSolverFcn precond_setup , HYPRE_StructSolver precond_solver );
 	int HYPRE_StructBiCGSTABSetLogging ( HYPRE_StructSolver solver , int logging );
 	int HYPRE_StructBiCGSTABSetPrintLevel ( HYPRE_StructSolver solver , int level );
 	unsafe int HYPRE_StructBiCGSTABGetNumIterations ( HYPRE_StructSolver solver , int* num_iterations );
@@ -163,7 +163,7 @@ where L:IHYPRE
 	unsafe int hypre_HybridSetRelChange ( void* hybrid_vdata , int rel_change );
 	unsafe int hypre_HybridSetSolverType ( void* hybrid_vdata , int solver_type );
 	unsafe int hypre_HybridSetKDim ( void* hybrid_vdata , int k_dim );
-	//int hypre_HybridSetPrecond ( void* pcg_vdata , int (*pcg_precond_solve )(), int (*pcg_precond_setup )(), void* pcg_precond );
+	unsafe int hypre_HybridSetPrecond ( void* pcg_vdata , pcg_precond_solve precond_solve , pcg_precond_solve precond_setup , void* pcg_precond );
 	unsafe int hypre_HybridSetLogging ( void* hybrid_vdata , int logging );
 	unsafe int hypre_HybridSetPrintLevel ( void* hybrid_vdata , int print_level );
 	unsafe int hypre_HybridGetNumIterations ( void* hybrid_vdata , int* num_its );
