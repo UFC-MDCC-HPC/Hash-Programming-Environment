@@ -14,7 +14,9 @@
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/BaseIMatrixBuildingFacet.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
     <csc debug="true" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PETSc.MatrixBuilding/MatrixBuilding.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PETSc.MatrixBuilding/bin/1.0.0.0/IPETScMatrixBuilding.dll" target="library" unsafe="true">
@@ -24,8 +26,10 @@
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PETSc.MatrixBuilding/bin/1.0.0.0/BaseIPETScMatrixBuilding.dll"/>
-        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/IMatrixBuildingFacet.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.MatrixBuilding/bin/1.0.0.0/IMatrixBuildingFacet.dll"></include>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
   </target>

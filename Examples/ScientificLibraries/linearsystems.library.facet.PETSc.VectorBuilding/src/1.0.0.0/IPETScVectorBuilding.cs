@@ -8,7 +8,7 @@ namespace linearsystems.library.facet.PETSc.VectorBuilding {
  using PetscInt = System.Int32;
   using PetscMPIInt = System.Int32;
   using PetscScalar = System.Int32;
-  using PetscReal = System.Double;
+  using PetscReal = System.Single;
   using PetscLogDouble = System.Double;
   using PetscCookie = System.Int32;
   using PetscErrorCode = System.Int32;
