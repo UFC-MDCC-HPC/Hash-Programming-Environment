@@ -104,6 +104,166 @@ namespace linearsystems.qualifier.PETSc {
      MAT_GLOBAL_SUM=3
   }
   
+  public enum  MatSORType{
+     SOR_FORWARD_SWEEP=1,
+     SOR_BACKWARD_SWEEP=2,
+     SOR_SYMMETRIC_SWEEP=3,
+     SOR_LOCAL_FORWARD_SWEEP=4,
+     SOR_LOCAL_BACKWARD_SWEEP=8,
+     SOR_LOCAL_SYMMETRIC_SWEEP=12,
+     SOR_ZERO_INITIAL_GUESS=16,
+     SOR_EISENSTAT=32,
+     SOR_APPLY_UPPER=64,
+     SOR_APPLY_LOWER=128
+  }
+  
+  public enum  MPChacoGlobalType{
+     MP_CHACO_MULTILEVEL_KL,
+     MP_CHACO_SPECTRAL,
+     MP_CHACO_LINEAR,
+     MP_CHACO_RANDOM, 
+     MP_CHACO_SCATTERED
+  }
+  
+  public enum  MPChacoLocalType{
+      MP_CHACO_KERNIGHAN_LIN, 
+      MP_CHACO_NONE 
+  }
+  
+  public enum  MPChacoEigenType{
+      MP_CHACO_LANCZOS, 
+      MP_CHACO_RQI_SYMMLQ 
+  }
+  
+  public enum  MPScotchGlobalType{ 
+     MP_SCOTCH_GREEDY, 
+     MP_SCOTCH_GPS, 
+     MP_SCOTCH_GR_GPS 
+  }
+  public enum  MPScotchLocalType{
+      MP_SCOTCH_KERNIGHAN_LIN, 
+      MP_SCOTCH_NONE 
+  }
+  public enum  MatOperation{
+      MATOP_SET_VALUES=0,
+	   MATOP_GET_ROW=1,
+	   MATOP_RESTORE_ROW=2,
+	   MATOP_MULT=3,
+	   MATOP_MULT_ADD=4,
+	   MATOP_MULT_TRANSPOSE=5,
+	   MATOP_MULT_TRANSPOSE_ADD=6,
+	   MATOP_SOLVE=7,
+	   MATOP_SOLVE_ADD=8,
+	   MATOP_SOLVE_TRANSPOSE=9,
+	   MATOP_SOLVE_TRANSPOSE_ADD=10,
+	   MATOP_LUFACTOR=11,
+	   MATOP_CHOLESKYFACTOR=12,
+	   MATOP_RELAX=13,
+	   MATOP_TRANSPOSE=14,
+	   MATOP_GETINFO=15,
+	   MATOP_EQUAL=16,
+	   MATOP_GET_DIAGONAL=17,
+	   MATOP_DIAGONAL_SCALE=18,
+	   MATOP_NORM=19,
+	   MATOP_ASSEMBLY_BEGIN=20,
+	   MATOP_ASSEMBLY_END=21,
+	   MATOP_COMPRESS=22,
+	   MATOP_SET_OPTION=23,
+	   MATOP_ZERO_ENTRIES=24,
+	   MATOP_ZERO_ROWS=25,
+	   MATOP_LUFACTOR_SYMBOLIC=26,
+	   MATOP_LUFACTOR_NUMERIC=27,
+	   MATOP_CHOLESKY_FACTOR_SYMBOLIC=28,
+	   MATOP_CHOLESKY_FACTOR_NUMERIC=29,
+	   MATOP_SETUP_PREALLOCATION=30,
+	   MATOP_ILUFACTOR_SYMBOLIC=31,
+	   MATOP_ICCFACTOR_SYMBOLIC=32,
+	   MATOP_GET_ARRAY=33,
+	   MATOP_RESTORE_ARRAY=34,
+	   MATOP_DUPLICATE=35,
+	   MATOP_FORWARD_SOLVE=36,
+	   MATOP_BACKWARD_SOLVE=37,
+	   MATOP_ILUFACTOR=38,
+	   MATOP_ICCFACTOR=39,
+	   MATOP_AXPY=40,
+	   MATOP_GET_SUBMATRICES=41,
+	   MATOP_INCREASE_OVERLAP=42,
+	   MATOP_GET_VALUES=43,
+	   MATOP_COPY=44,
+	   MATOP_GET_ROW_MAX=45,
+	   MATOP_SCALE=46,
+	   MATOP_SHIFT=47,
+	   MATOP_DIAGONAL_SHIFT=48,
+	   MATOP_ILUDT_FACTOR=49,
+	   MATOP_SET_BLOCK_SIZE=50,
+	   MATOP_GET_ROW_IJ=51,
+	   MATOP_RESTORE_ROW_IJ=52,
+	   MATOP_GET_COLUMN_IJ=53,
+	   MATOP_RESTORE_COLUMN_IJ=54,
+	   MATOP_FDCOLORING_CREATE=55,
+	   MATOP_COLORING_PATCH=56,
+	   MATOP_SET_UNFACTORED=57,
+	   MATOP_PERMUTE=58,
+	   MATOP_SET_VALUES_BLOCKED=59,
+	   MATOP_GET_SUBMATRIX=60,
+	   MATOP_DESTROY=61,
+	   MATOP_VIEW=62,
+	   MATOP_CONVERT_FROM=63,
+	   MATOP_USE_SCALED_FORM=64,
+	   MATOP_SCALE_SYSTEM=65,
+	   MATOP_UNSCALE_SYSTEM=66,
+	   MATOP_SET_LOCAL_TO_GLOBAL_MAP=67,
+	   MATOP_SET_VALUES_LOCAL=68,
+	   MATOP_ZERO_ROWS_LOCAL=69,
+	   MATOP_GET_ROW_MAX_ABS=70,
+	   MATOP_GET_ROW_MIN_ABS=71,
+	   MATOP_CONVERT=72,
+	   MATOP_SET_COLORING=73,
+	   MATOP_SET_VALUES_ADIC=74,
+	   MATOP_SET_VALUES_ADIFOR=75,
+	   MATOP_FD_COLORING_APPLY=76,
+	   MATOP_SET_FROM_OPTIONS=77,
+	   MATOP_MULT_CON=78,
+	   MATOP_MULT_TRANSPOSE_CON=79,
+	   MATOP_PERMUTE_SPARSIFY=80,
+	   MATOP_MULT_MULTIPLE=81,
+	   MATOP_SOLVE_MULTIPLE=82,
+	   MATOP_GET_INERTIA=83,
+	   MATOP_LOAD=84,
+	   MATOP_IS_SYMMETRIC=85,
+	   MATOP_IS_HERMITIAN=86,
+	   MATOP_IS_STRUCTURALLY_SYMMETRIC=87,
+	   MATOP_PB_RELAX=88,
+	   MATOP_GET_VECS=89,
+	   MATOP_MAT_MULT=90,
+	   MATOP_MAT_MULT_SYMBOLIC=91,
+	   MATOP_MAT_MULT_NUMERIC=92,
+	   MATOP_PTAP=93,
+	   MATOP_PTAP_SYMBOLIC=94,
+	   MATOP_PTAP_NUMERIC=95,
+	   MATOP_MAT_MULTTRANSPOSE=96,
+	   MATOP_MAT_MULTTRANSPOSE_SYMBOLIC=97,
+	   MATOP_MAT_MULTTRANSPOSE_NUMERIC=98,
+	   MATOP_PTAP_SYMBOLIC_SEQAIJ=99,
+	   MATOP_PTAP_NUMERIC_SEQAIJ=100,
+	   MATOP_PTAP_SYMBOLIC_MPIAIJ=101,
+	   MATOP_PTAP_NUMERIC_MPIAIJ=102,
+	   MATOP_CONJUGATE=103,
+	   MATOP_SET_SIZES=104,
+	   MATOP_SET_VALUES_ROW = 105,
+	   MATOP_REAL_PART=106,
+	   MATOP_IMAG_PART=107,
+	   MATOP_GET_ROW_UTRIANGULAR=108,
+	   MATOP_RESTORE_ROW_UTRIANGULAR=109,
+	   MATOP_MATSOLVE=110,
+	   MATOP_GET_REDUNDANTMATRIX=111,
+	   MATOP_GET_ROW_MIN=112,
+	   MATOP_GET_COLUMN_VEC=113,
+	   MATOP_MISSING_DIAGONAL=114,
+	   MATOP_MATGETSEQNONZEROSTRUCTURE=115,
+	   MATOP_DESTROY_SOLVER=116
+  }
+  
   [StructLayout(LayoutKind.Sequential)]
   public class ISColoring {
 	  public PetscInt        refct;
@@ -113,6 +273,34 @@ namespace linearsystems.qualifier.PETSc {
 	  public ISColoringValue colors;          /* for each column indicates color */
 	  public PetscInt        N;                /* number of columns */
 	  public ISColoringType  ctype;
+   }
+  
+  [StructLayout(LayoutKind.Sequential)]
+  public class MatFDColoring{
+	  //PETSCHEADER(int);
+	  public PetscObject hdr;	       
+      public unsafe int*      ops;
+	  public PetscInt       M,N,m;            /* total rows, columns; local rows */
+	  public PetscInt       rstart;           /* first row owned by local processor */
+	  public PetscInt       ncolors;          /* number of colors */
+	  public unsafe PetscInt*       ncolumns;        /* number of local columns for a color */ 
+	  public unsafe PetscInt**       columns;        /* lists the local columns of each color (using global column numbering) */
+	  public unsafe PetscInt**       nrows;           /* number of local rows for each color */
+	  public unsafe PetscInt**       rows;           /* lists the local rows for each color (using the local row numbering) */
+	  public unsafe PetscInt**       columnsforrow;  /* lists the corresponding columns for those rows (using the global column) */ 
+	  public PetscReal      error_rel;        /* square root of relative error in computing function */
+	  public PetscReal      umin;             /* minimum allowable u'dx value */
+	  public Vec            w1,w2,w3;         /* work vectors used in computing Jacobian */
+	  public delegate PetscErrorCode f();       /* function that defines Jacobian */
+	  public unsafe void*           fctx;            /* optional user-defined context for use by the function f */
+	  public unsafe PetscInt**       vscaleforrow;   /* location in vscale for each columnsforrow[] entry */
+	  public Vec            vscale;           /* holds FD scaling, i.e. 1/dx for each perturbed column */
+	  public Vec            F;                /* current value of user provided function; can set with MatFDColoringSetF() */
+	  public PetscInt       currentcolor;     /* color for which function evaluation is being done now */
+	  public unsafe char*     htype;            /* "wp" or "ds" */
+	  public ISColoringType ctype;            /* IS_COLORING_GLOBAL or IS_COLORING_GHOSTED */
+	
+	  public unsafe void*           ftn_func_pointer,ftn_func_cntx; /* serve the same purpose as *fortran_func_pointers in PETSc objects */
    }
   
   [StructLayout(LayoutKind.Sequential)]
@@ -231,6 +419,27 @@ namespace linearsystems.qualifier.PETSc {
 	  public unsafe PetscInt*  range;      /* the offset of each processor */
 	  public PetscInt  bs;          /* number of elements in each block (generally for multi-component problems) Do NOT multiply above numbers by bs */
 	  public PetscInt  refcnt;      /* MPI Vecs obtained with VecDuplicate() and from MatGetVecs() reuse map of input object */
+   }
+   
+  [StructLayout(LayoutKind.Sequential)]
+  public class  MatPartitioningOps{
+	  public delegate PetscErrorCode apply(MatPartitioning a,IS b);
+	  public delegate PetscErrorCode setfromoptions(MatPartitioning a);
+	  public delegate PetscErrorCode destroy(MatPartitioning a);
+	  public delegate PetscErrorCode view(MatPartitioning a,PetscViewer b);
+   }
+
+  [StructLayout(LayoutKind.Sequential)]
+  public class  MatPartitioning {
+	  
+	  public PetscObject hdr;
+      public MatPartitioningOps     ops;
+	  public Mat         adj;
+	  public unsafe PetscInt*    vertex_weights;
+	  public unsafe PetscReal*   part_weights;
+	  public PetscInt    n;                                 /* number of partitions */
+	  public unsafe void*        data;
+	  public PetscInt    setupcalled;
    }
    
   [StructLayout(LayoutKind.Sequential)]
@@ -362,7 +571,12 @@ namespace linearsystems.qualifier.PETSc {
 	  public VecStash               stash,bstash; /* used for storing off-proc values during assembly */
 	  public PetscTruth             petscnative;  /* means the ->data starts with VECHEADER and can use VecGetArrayFast()*/
    }
-    
+   [StructLayout(LayoutKind.Sequential)]
+   public class Vecs{
+      public PetscInt n;
+      public Vec v;
+   }
+   
    [StructLayout(LayoutKind.Sequential)]
    public class MatInfo{
 	  public PetscLogDouble block_size;                         /* block size */
@@ -372,6 +586,23 @@ namespace linearsystems.qualifier.PETSc {
 	  public PetscLogDouble mallocs;                            /* number of mallocs during MatSetValues() */
 	  public PetscLogDouble fill_ratio_given,fill_ratio_needed; /* fill ratio for LU/ILU */
 	  public PetscLogDouble factor_mallocs;                     /* number of mallocs during factorization */
+   }
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class  MatFactorInfo{
+	  public PetscReal     shiftnz;        /* scaling of identity added to matrix to prevent zero pivots */
+	  public PetscReal     shiftpd;        /* if true, shift until positive pivots */
+	  public PetscReal     diagonal_fill;  /* force diagonal to fill in if initially not filled */
+	  public PetscReal     usedt;
+	  public PetscReal     dt;             /* drop tolerance */
+	  public PetscReal     dtcol;          /* tolerance for pivoting */
+	  public PetscReal     dtcount;        /* maximum nonzeros to be allowed per row */
+	  public PetscReal     fill;           /* expected fill, nonzeros in factored matrix/nonzeros in original matrix */
+	  public PetscReal     levels;         /* ICC/ILU(levels) */ 
+	  public PetscReal     pivotinblocks;  /* for BAIJ and SBAIJ matrices pivot in factorization on blocks, default 1.0 
+	                                   factorization may be faster if do not pivot */
+	  public PetscReal     shiftinblocks;  /* if block in block factorization has zero pivot then shift diagonal until non-singular */
+	  public PetscReal     zeropivot;      /* pivot is called zero if less than this */
    }
    
   [StructLayout(LayoutKind.Sequential)]

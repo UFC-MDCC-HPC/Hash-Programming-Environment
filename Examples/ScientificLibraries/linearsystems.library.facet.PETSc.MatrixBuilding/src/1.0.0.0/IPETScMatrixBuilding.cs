@@ -14,6 +14,11 @@ namespace linearsystems.library.facet.PETSc.MatrixBuilding {
   using MatSolverPackage = System.String;
   using MatType = System.String;
   using MatScalar = System.Single;
+  using MatOrderingType = System.String;
+  using MatColoringType = System.String;
+  using ISColoringValue = System.UInt32;
+  using MatPartitioningType = System.String;
+  using MatMFFDType = System.String;
 
 public interface IPETScMatrixBuilding<L> : BaseIPETScMatrixBuilding<L>, IMatrixBuildingFacet<L>
 where L:IPETSc
@@ -330,6 +335,224 @@ where L:IPETSc
 	 PetscErrorCode  MatRestrict(Mat a,Vec b,Vec c);
 	 PetscErrorCode  MatGetVecs(Mat a,Vec b,Vec c);
 	 PetscErrorCode  MatGetRedundantMatrix(Mat a,PetscInt b,Intracommunicator comm,PetscInt d,MatReuse e,Mat f);
+	 
+	  unsafe PetscErrorCode  MatShellGetContext(Mat a,void** b);
+	//PetscPolymorphicFunction(MatShellGetContext,(Mat A),(A,&t),void*,t)
+	
+	 PetscErrorCode  MatInodeAdjustForInodes(Mat a,IS b,IS c);
+	 unsafe PetscErrorCode  MatInodeGetInodeSizes(Mat a,PetscInt* b,PetscInt*[] c,PetscInt* d);
+	
+	 PetscErrorCode  MatSeqAIJSetColumnIndices(Mat a,PetscInt[] b);
+	 PetscErrorCode  MatSeqBAIJSetColumnIndices(Mat a,PetscInt[] b);
+	 PetscErrorCode  MatCreateSeqAIJWithArrays(Intracommunicator comm,PetscInt a,PetscInt b,PetscInt[] c,PetscInt[] d,PetscScalar[] e,Mat f);
+	 PetscErrorCode  MatCreateSeqBAIJWithArrays(Intracommunicator comm,PetscInt a,PetscInt b,PetscInt c,PetscInt[] d,PetscInt[] e,PetscScalar[] f,Mat g);
+	 PetscErrorCode  MatCreateSeqSBAIJWithArrays(Intracommunicator comm,PetscInt a,PetscInt b,PetscInt c,PetscInt[] d,PetscInt[] e,PetscScalar[] f,Mat g);
+	
+	
+	
+	 PetscErrorCode  MatSeqBAIJSetPreallocation(Mat a,PetscInt b,PetscInt c,PetscInt[] d);
+	//PetscPolymorphicSubroutine(MatSeqBAIJSetPreallocation,(Mat A,PetscInt bs,const PetscInt nnz[]),(A,bs,0,nnz))
+	 PetscErrorCode  MatSeqSBAIJSetPreallocation(Mat a,PetscInt b,PetscInt c,PetscInt[] d);
+	//PetscPolymorphicSubroutine(MatSeqSBAIJSetPreallocation,(Mat A,PetscInt bs,const PetscInt nnz[]),(A,bs,0,nnz))
+	 PetscErrorCode  MatSeqAIJSetPreallocation(Mat a,PetscInt b,PetscInt[] c);
+	//PetscPolymorphicSubroutine(MatSeqAIJSetPreallocation,(Mat A,const PetscInt nnz[]),(A,0,nnz))
+	
+	 PetscErrorCode  MatMPIBAIJSetPreallocation(Mat a,PetscInt b,PetscInt c,PetscInt[] d,PetscInt e,PetscInt[] f);
+	//PetscPolymorphicSubroutine(MatMPIBAIJSetPreallocation,(Mat A,PetscInt bs,const PetscInt nnz[],const PetscInt onz[]),(A,bs,0,nnz,0,onz))
+	 PetscErrorCode  MatMPISBAIJSetPreallocation(Mat a,PetscInt b,PetscInt c,PetscInt[] d,PetscInt e,PetscInt[] f);
+	 PetscErrorCode  MatMPIAIJSetPreallocation(Mat a,PetscInt b,PetscInt[] c,PetscInt d,PetscInt[] e);
+	 PetscErrorCode  MatSeqAIJSetPreallocationCSR(Mat a,PetscInt[] b,PetscInt[] c,PetscScalar[] d);
+	 PetscErrorCode  MatSeqBAIJSetPreallocationCSR(Mat a,PetscInt b,PetscInt[] c,PetscInt[] d,PetscScalar[] e);
+	 PetscErrorCode  MatMPIAIJSetPreallocationCSR(Mat a,PetscInt[] b,PetscInt[] c,PetscScalar[] d);
+	 PetscErrorCode  MatMPIBAIJSetPreallocationCSR(Mat a,PetscInt b,PetscInt[] c,PetscInt[] d,PetscScalar[] e);
+	 PetscErrorCode  MatMPIAdjSetPreallocation(Mat a,PetscInt[] b,PetscInt[] c,PetscInt[] d);
+	 PetscErrorCode  MatMPIDenseSetPreallocation(Mat a,PetscScalar[] b);
+	 PetscErrorCode  MatSeqDenseSetPreallocation(Mat a,PetscScalar[] b);
+	 PetscErrorCode  MatMPIRowbsSetPreallocation(Mat a,PetscInt b,PetscInt[] c);
+	 unsafe PetscErrorCode  MatMPIAIJGetSeqAIJ(Mat a,Mat b,Mat c,PetscInt*[] d);
+	 unsafe PetscErrorCode  MatMPIBAIJGetSeqBAIJ(Mat a,Mat b,Mat c,PetscInt*[] d);
+	 //Preciso ver isso PetscErrorCode  MatAdicSetLocalFunction(Mat a,void (*)(void));
+	
+	 PetscErrorCode  MatSeqDenseSetLDA(Mat a,PetscInt b);
+	 PetscErrorCode  MatDenseGetLocalMatrix(Mat a,Mat b);
+	
+	 PetscErrorCode  MatStoreValues(Mat a);
+	 PetscErrorCode  MatRetrieveValues(Mat b);
+	
+	 unsafe PetscErrorCode  MatDAADSetCtx(Mat a,void* b);
+	 
+	 PetscErrorCode  MatGetOrdering(Mat a,MatOrderingType b,IS c,IS d);
+	 PetscErrorCode  MatGetOrderingList(PetscFList list);
+	 //PetscErrorCode  MatOrderingRegister(char[] a,char[] b,char[] c,PetscErrorCode(*)(Mat,const MatOrderingType,IS*,IS*));
+	
+	
+	 PetscErrorCode  MatOrderingRegisterDestroy();
+	 PetscErrorCode  MatOrderingRegisterAll(char[] a);
+	
+	
+	 PetscErrorCode  MatReorderForNonzeroDiagonal(Mat a,PetscReal b,IS c,IS d);
+	 PetscErrorCode  MatFactorInfoInitialize(MatFactorInfo a);
+	 PetscErrorCode  MatCholeskyFactor(Mat a,IS b,MatFactorInfo c);
+	 PetscErrorCode  MatCholeskyFactorSymbolic(Mat a,Mat b,IS c,MatFactorInfo d);
+	 PetscErrorCode  MatCholeskyFactorNumeric(Mat a,Mat v,MatFactorInfo b);
+	 PetscErrorCode  MatLUFactor(Mat a,IS b,IS c,MatFactorInfo d);
+	 PetscErrorCode  MatILUFactor(Mat a,IS b,IS c,MatFactorInfo d);
+	 PetscErrorCode  MatLUFactorSymbolic(Mat a,Mat b,IS c,IS d,MatFactorInfo e);
+	 PetscErrorCode  MatILUFactorSymbolic(Mat a,Mat b,IS c,IS d,MatFactorInfo e);
+	 PetscErrorCode  MatICCFactorSymbolic(Mat a,Mat b,IS c,MatFactorInfo e);
+	 PetscErrorCode  MatICCFactor(Mat a,IS b,MatFactorInfo c);
+	 PetscErrorCode  MatLUFactorNumeric(Mat a,Mat b,MatFactorInfo c);
+	 PetscErrorCode  MatILUDTFactor(Mat a,IS b,IS c,MatFactorInfo d,Mat e);
+	 unsafe PetscErrorCode  MatGetInertia(Mat a,PetscInt* b,PetscInt* c,PetscInt* d);
+	 PetscErrorCode  MatSolve(Mat a,Vec b,Vec c);
+	 PetscErrorCode  MatForwardSolve(Mat a,Vec b,Vec c);
+	 PetscErrorCode  MatBackwardSolve(Mat a,Vec b,Vec c);
+	 PetscErrorCode  MatSolveAdd(Mat a,Vec b,Vec c,Vec d);
+	 PetscErrorCode  MatSolveTranspose(Mat a,Vec b,Vec c);
+	 PetscErrorCode  MatSolveTransposeAdd(Mat a,Vec b,Vec c,Vec d);
+	 PetscErrorCode  MatSolves(Mat a,Vecs b,Vecs c);
+	
+	 PetscErrorCode  MatSetUnfactored(Mat a);
+	 
+	 
+     PetscErrorCode  MatRelax(Mat a,Vec b,PetscReal c,MatSORType d,PetscReal e,PetscInt f,PetscInt g,Vec h);
+	 PetscErrorCode  MatPBRelax(Mat a,Vec b,PetscReal c,MatSORType d,PetscReal e,PetscInt f,PetscInt g,Vec h);
+     PetscErrorCode  MatGetColoring(Mat a,MatColoringType b,ISColoring c);
+	 //PetscErrorCode  MatColoringRegister(const char[],const char[],const char[],PetscErrorCode(*)(Mat,MatColoringType,ISColoring *));
+	
+	
+	 PetscErrorCode  MatColoringRegisterAll(char[] a);
+	 PetscErrorCode  MatColoringRegisterDestroy();
+	 PetscErrorCode  MatColoringPatch(Mat a,PetscInt b,PetscInt c,ISColoringValue[] d,ISColoring e);
+	
+	 PetscErrorCode  MatFDColoringCreate(Mat a,ISColoring b,MatFDColoring c);
+	 PetscErrorCode  MatFDColoringDestroy(MatFDColoring a);
+	 PetscErrorCode  MatFDColoringView(MatFDColoring a,PetscViewer b);
+	 //PetscErrorCode  MatFDColoringSetFunction(MatFDColoring a,PetscErrorCode (*)(void),void*);
+	 //PetscErrorCode  MatFDColoringGetFunction(MatFDColoring,PetscErrorCode (**)(void),void**);
+	 PetscErrorCode  MatFDColoringSetParameters(MatFDColoring a,PetscReal b,PetscReal c);
+	 PetscErrorCode  MatFDColoringSetFromOptions(MatFDColoring a);
+	 unsafe PetscErrorCode  MatFDColoringApply(Mat a,MatFDColoring b,Vec c,MatStructure d,void* e);
+	 unsafe PetscErrorCode  MatFDColoringApplyTS(Mat a,MatFDColoring b,PetscReal c,Vec d,MatStructure e,void* f);
+	 PetscErrorCode  MatFDColoringSetF(MatFDColoring a,Vec b);
+	 unsafe PetscErrorCode  MatFDColoringGetPerturbedColumns(MatFDColoring a,PetscInt* b,PetscInt*[] c);
+	 
+	 
+	 PetscErrorCode  MatPartitioningCreate(Intracommunicator comm,MatPartitioning a);
+	 PetscErrorCode  MatPartitioningSetType(MatPartitioning a,MatPartitioningType b);
+	 PetscErrorCode  MatPartitioningSetNParts(MatPartitioning a,PetscInt b);
+	 PetscErrorCode  MatPartitioningSetAdjacency(MatPartitioning b,Mat c);
+	 PetscErrorCode  MatPartitioningSetVertexWeights(MatPartitioning a,PetscInt[] b);
+	 PetscErrorCode  MatPartitioningSetPartitionWeights(MatPartitioning a,PetscReal[] b);
+	 PetscErrorCode  MatPartitioningApply(MatPartitioning a,IS b);
+	 PetscErrorCode  MatPartitioningDestroy(MatPartitioning a);
+	
+	 //PetscErrorCode  MatPartitioningRegister(const char[],const char[],const char[],PetscErrorCode (*)(MatPartitioning));
+	
+	
+	 PetscErrorCode  MatPartitioningRegisterAll(char[] a);
+	 PetscErrorCode  MatPartitioningRegisterDestroy();
+	
+	 PetscErrorCode  MatPartitioningView(MatPartitioning a,PetscViewer b);
+	 PetscErrorCode  MatPartitioningSetFromOptions(MatPartitioning a);
+	 PetscErrorCode  MatPartitioningGetType(MatPartitioning a,MatPartitioningType b);
+	
+	 PetscErrorCode  MatPartitioningParmetisSetCoarseSequential(MatPartitioning a);
+	 unsafe PetscErrorCode  MatPartitioningParmetisGetEdgeCut(MatPartitioning a, PetscInt* b);
+	
+	 PetscErrorCode  MatPartitioningJostleSetCoarseLevel(MatPartitioning a,PetscReal b);
+	 PetscErrorCode  MatPartitioningJostleSetCoarseSequential(MatPartitioning a);
+	
+	
+	 PetscErrorCode  MatPartitioningChacoSetGlobal(MatPartitioning a, MPChacoGlobalType b);
+	
+	 PetscErrorCode  MatPartitioningChacoSetLocal(MatPartitioning a, MPChacoLocalType b);
+	 PetscErrorCode  MatPartitioningChacoSetCoarseLevel(MatPartitioning a,PetscReal b);
+	
+	 PetscErrorCode  MatPartitioningChacoSetEigenSolver(MatPartitioning a,MPChacoEigenType b);
+	 PetscErrorCode  MatPartitioningChacoSetEigenTol(MatPartitioning a, PetscReal b);
+	 PetscErrorCode  MatPartitioningChacoSetEigenNumber(MatPartitioning a, PetscInt b);
+	
+	
+	 unsafe PetscErrorCode  MatPartitioningPartySetGlobal(MatPartitioning a,char* b);
+	
+	 unsafe PetscErrorCode  MatPartitioningPartySetLocal(MatPartitioning a, char* b);
+	 PetscErrorCode  MatPartitioningPartySetCoarseLevel(MatPartitioning a,PetscReal b);
+	 PetscErrorCode  MatPartitioningPartySetBipart(MatPartitioning a,PetscTruth b);
+	 PetscErrorCode  MatPartitioningPartySetMatchOptimization(MatPartitioning a,PetscTruth b);
+	
+	
+	 unsafe PetscErrorCode  MatPartitioningScotchSetArch(MatPartitioning a,char* b);
+	 PetscErrorCode  MatPartitioningScotchSetMultilevel(MatPartitioning a);
+	 PetscErrorCode  MatPartitioningScotchSetGlobal(MatPartitioning a,MPScotchGlobalType b);
+	 PetscErrorCode  MatPartitioningScotchSetCoarseLevel(MatPartitioning a,PetscReal b);
+	 unsafe PetscErrorCode  MatPartitioningScotchSetHostList(MatPartitioning a,char* b);
+	
+	 PetscErrorCode  MatPartitioningScotchSetLocal(MatPartitioning a,MPScotchLocalType b);
+	 PetscErrorCode  MatPartitioningScotchSetMapping(MatPartitioning a);
+	 unsafe PetscErrorCode  MatPartitioningScotchSetStrategy(MatPartitioning b,char* c);
+	
+	
+	 PetscErrorCode  MatHasOperation(Mat a,MatOperation b,PetscTruth c);
+	 //PetscErrorCode  MatShellSetOperation(Mat,MatOperation,void(*)(void));
+	 //PetscErrorCode  MatShellGetOperation(Mat,MatOperation,void(**)(void));
+	 unsafe PetscErrorCode  MatShellSetContext(Mat a,void* b);
+	
+	
+	 PetscErrorCode  MatMPIBAIJSetHashTableFactor(Mat a,PetscReal b);
+	 PetscErrorCode  MatISGetLocalMat(Mat a,Mat b);
+	
+	 PetscErrorCode  MatNullSpaceCreate(Intracommunicator comm,PetscTruth a,PetscInt b,Vec[] d,MatNullSpace c);
+	 //PetscErrorCode  MatNullSpaceSetFunction(MatNullSpace,PetscErrorCode (*)(Vec,void*),void*);
+	 PetscErrorCode  MatNullSpaceDestroy(MatNullSpace a);
+	 PetscErrorCode  MatNullSpaceRemove(MatNullSpace a,Vec b,Vec c);
+	 PetscErrorCode  MatNullSpaceAttach(Mat a,MatNullSpace b);
+	 unsafe PetscErrorCode  MatNullSpaceTest(MatNullSpace a,Mat b,PetscTruth c);
+	
+	 PetscErrorCode  MatReorderingSeqSBAIJ(Mat a,IS b);
+	 PetscErrorCode  MatMPISBAIJSetHashTableFactor(Mat a,PetscReal b);
+	 unsafe PetscErrorCode  MatSeqSBAIJSetColumnIndices(Mat a,PetscInt* b);
+	 PetscErrorCode  MatSeqBAIJInvertBlockDiagonal(Mat a);
+	
+	 PetscErrorCode  MatCreateMAIJ(Mat a,PetscInt b,Mat c);
+	 PetscErrorCode  MatMAIJRedimension(Mat a,PetscInt b,Mat c);
+	 PetscErrorCode  MatMAIJGetAIJ(Mat a,Mat b);
+	
+	 PetscErrorCode  MatComputeExplicitOperator(Mat a,Mat b);
+	
+	 PetscErrorCode  MatDiagonalScaleLocal(Mat a,Vec b);
+	
+	 PetscErrorCode  MatCreateMFFD(Intracommunicator comm,PetscInt a,PetscInt b,PetscInt c,PetscInt d,Mat e);
+	 PetscErrorCode  MatMFFDSetBase(Mat a,Vec b,Vec c);
+	 //PetscErrorCode  MatMFFDSetFunction(Mat,PetscErrorCode(*)(void*,Vec,Vec),void*);
+	 //PetscErrorCode  MatMFFDSetFunctioni(Mat,PetscErrorCode (*)(void*,PetscInt,Vec,PetscScalar*));
+	 //PetscErrorCode  MatMFFDSetFunctioniBase(Mat,PetscErrorCode (*)(void*,Vec));
+	 PetscErrorCode  MatMFFDAddNullSpace(Mat a,MatNullSpace b);
+	 PetscErrorCode  MatMFFDSetHHistory(Mat a,PetscScalar[] b,PetscInt c);
+	 PetscErrorCode  MatMFFDResetHHistory(Mat a);
+	 PetscErrorCode  MatMFFDSetFunctionError(Mat a,PetscReal b);
+	 PetscErrorCode  MatMFFDSetPeriod(Mat a,PetscInt b);
+	 unsafe PetscErrorCode  MatMFFDGetH(Mat a,PetscScalar* b);
+	 PetscErrorCode  MatMFFDSetFromOptions(Mat a);
+	 unsafe PetscErrorCode  MatMFFDCheckPositivity(void* a,Vec b,Vec c,PetscScalar* d);
+	 //PetscErrorCode  MatMFFDSetCheckh(Mat,PetscErrorCode (*)(void*,Vec,Vec,PetscScalar*),void*);
+	 PetscErrorCode  MatMFFDDSSetUmin(Mat a,PetscReal b);
+	
+	
+	
+	 PetscErrorCode  MatMFFDSetType(Mat a,MatMFFDType b);
+	 //PetscErrorCode  MatMFFDRegister(char[] a,char[] b,char[] c,PetscErrorCode (*)(MatMFFD));
+	
+	
+	
+	 PetscErrorCode  MatMFFDRegisterAll(char[] a);
+	 PetscErrorCode  MatMFFDRegisterDestroy();
+	 PetscErrorCode  MatMFFDDefaultSetUmin(Mat a,PetscReal b);
+	 PetscErrorCode  MatMFFDWPSetComputeNormU(Mat a,PetscTruth b);
+	
+	
+	 unsafe PetscErrorCode  PetscViewerMathematicaPutMatrix(PetscViewer a, PetscInt b, PetscInt c, PetscReal* d);
+	 unsafe PetscErrorCode  PetscViewerMathematicaPutCSRMatrix(PetscViewer a, PetscInt b, PetscInt c, PetscInt* d, PetscInt* e, PetscReal* f);
 		 
 	 
 	 
