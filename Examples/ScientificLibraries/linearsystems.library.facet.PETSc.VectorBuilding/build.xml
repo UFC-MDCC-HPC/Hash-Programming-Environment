@@ -14,7 +14,9 @@
       <references>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.VectorBuilding/bin/1.0.0.0/BaseIVectorBuildingFacet.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
     <csc debug="false" keyfile="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PETSc.VectorBuilding/VectorBuilding.snk" optimize="true" output="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PETSc.VectorBuilding/bin/1.0.0.0/IPETScVectorBuilding.dll" target="library" unsafe="true">
@@ -25,7 +27,9 @@
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.qualifier.PETSc/bin/1.0.0.0/IPETSc.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.PETSc.VectorBuilding/bin/1.0.0.0/BaseIPETScVectorBuilding.dll"/>
         <include name="/home/mcc/davimf/runtime-EclipseApplication/linearsystems.library.facet.VectorBuilding/bin/1.0.0.0/IVectorBuildingFacet.dll"/>
-        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/>
+        <include name="/home/mcc/davimf/HPEStuff/DGAC.dll"/><include
+        	name="/home/mcc/davimf/HPEStuff/MPI.dll">
+</include>
       </references>
     </csc>
   </target>
