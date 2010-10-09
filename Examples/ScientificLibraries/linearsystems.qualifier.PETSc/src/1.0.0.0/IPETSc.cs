@@ -14,6 +14,7 @@ namespace linearsystems.qualifier.PETSc {
   using PetscErrorCode = System.Int32;
   using MatSolverPackage = System.String;
   using ISColoringValue = System.UInt32;
+  using MatType = System.String;
  
   
   public enum  PetscTruth{
@@ -144,6 +145,35 @@ namespace linearsystems.qualifier.PETSc {
       MP_SCOTCH_KERNIGHAN_LIN, 
       MP_SCOTCH_NONE 
   }
+  
+  public enum PCSide{
+      PC_LEFT,
+      PC_RIGHT,
+      PC_SYMMETRIC
+  }
+  
+  public enum  KSPConvergedReason{/* converged */
+              KSP_CONVERGED_RTOL               =  2,
+              KSP_CONVERGED_ATOL               =  3,
+              KSP_CONVERGED_ITS                =  4,
+              KSP_CONVERGED_CG_NEG_CURVE       =  5,
+              KSP_CONVERGED_CG_CONSTRAINED     =  6,
+              KSP_CONVERGED_STEP_LENGTH        =  7,
+              KSP_CONVERGED_HAPPY_BREAKDOWN    =  8,
+              /* diverged */
+              KSP_DIVERGED_NULL                = -2,
+              KSP_DIVERGED_ITS                 = -3,
+              KSP_DIVERGED_DTOL                = -4,
+              KSP_DIVERGED_BREAKDOWN           = -5,
+              KSP_DIVERGED_BREAKDOWN_BICG      = -6,
+              KSP_DIVERGED_NONSYMMETRIC        = -7,
+              KSP_DIVERGED_INDEFINITE_PC       = -8,
+              KSP_DIVERGED_NAN                 = -9,
+              KSP_DIVERGED_INDEFINITE_MAT      = -10,
+ 
+              KSP_CONVERGED_ITERATING          =  0
+  }
+  
   public enum  MatOperation{
       MATOP_SET_VALUES=0,
 	   MATOP_GET_ROW=1,
@@ -264,6 +294,20 @@ namespace linearsystems.qualifier.PETSc {
 	   MATOP_DESTROY_SOLVER=116
   }
   
+  public enum  KSPNormType{
+     KSP_NORM_NO = 0,
+     KSP_NORM_PRECONDITIONED = 1,
+     KSP_NORM_UNPRECONDITIONED = 2,
+     KSP_NORM_NATURAL = 3
+  }
+  
+  public enum  PCRichardsonConvergedReason{
+              PCRICHARDSON_CONVERGED_RTOL               =  2,
+              PCRICHARDSON_CONVERGED_ATOL               =  3,
+              PCRICHARDSON_CONVERGED_ITS                =  4,
+              PCRICHARDSON_DIVERGED_DTOL                = -4
+  }
+  
   [StructLayout(LayoutKind.Sequential)]
   public class ISColoring {
 	  public PetscInt        refct;
@@ -273,6 +317,23 @@ namespace linearsystems.qualifier.PETSc {
 	  public ISColoringValue colors;          /* for each column indicates color */
 	  public PetscInt        N;                /* number of columns */
 	  public ISColoringType  ctype;
+   }
+
+  
+  [StructLayout(LayoutKind.Sequential)]
+  public class PetscDrawLG {
+     
+  }
+   
+   public enum  KSPGMRESCGSRefinementType{
+      KSP_GMRES_CGS_REFINE_NEVER, 
+      KSP_GMRES_CGS_REFINE_IFNEEDED, 
+      KSP_GMRES_CGS_REFINE_ALWAYS
+   }
+   
+   public enum  KSPCGType{
+      KSP_CG_SYMMETRIC=0,
+      KSP_CG_HERMITIAN=1
    }
   
   [StructLayout(LayoutKind.Sequential)]
@@ -668,6 +729,8 @@ namespace linearsystems.qualifier.PETSc {
    [StructLayout(LayoutKind.Sequential)]
    public class Mat {
 	  //PETSCHEADER(struct _MatOps);
+	  public PetscObject hdr;
+      public MatOps     ops;
 	  public PetscMap               rmap,cmap;
 	  public unsafe void*                   data;            /* implementation-specific data */
 	  public MatFactorType          factor;           /* MAT_FACTOR_LU, or MAT_FACTOR_CHOLESKY */
@@ -688,6 +751,284 @@ namespace linearsystems.qualifier.PETSc {
 	  public PetscTruth             symmetric_eternal;
 	  public unsafe void*                   spptr;          /* pointer for special library like SuperLU */
 	  public MatSolverPackage       solvertype;
+   }
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class MatOps {
+  /* 0*/
+	  public delegate PetscErrorCode setvalues(Mat a,PetscInt b, PetscInt[] c,PetscInt d, PetscInt[] e, PetscScalar[] f,InsertMode g);
+	  public unsafe delegate PetscErrorCode getrow(Mat a,PetscInt b,PetscInt* c,PetscInt*[] d,PetscScalar*[] e);
+	  public unsafe delegate PetscErrorCode restorerow(Mat a,PetscInt b,PetscInt* c,PetscInt*[] d,PetscScalar*[] e);
+	  public delegate PetscErrorCode mult(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode multadd(Mat a,Vec b,Vec c,Vec d);
+	  /* 5*/
+	  public delegate PetscErrorCode multtranspose(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode multtransposeadd(Mat a,Vec b,Vec c,Vec d);
+	  public delegate PetscErrorCode solve(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode solveadd(Mat a,Vec b,Vec c,Vec d);
+	  public delegate PetscErrorCode solvetranspose(Mat a,Vec b,Vec c);
+	  /*10*/
+	  public delegate PetscErrorCode solvetransposeadd(Mat a,Vec b,Vec c,Vec d);
+	  public delegate PetscErrorCode lufactor(Mat a,IS b,IS c, MatFactorInfo d);
+	  public delegate PetscErrorCode choleskyfactor(Mat a,IS b, MatFactorInfo c);
+	  public delegate PetscErrorCode relax(Mat a,Vec b,PetscReal c,MatSORType d,PetscReal e,PetscInt f,PetscInt g,Vec h);
+	  public delegate PetscErrorCode transpose(Mat a,MatReuse b,Mat c);
+	  /*15*/
+	  public delegate PetscErrorCode getinfo(Mat a,MatInfoType b,MatInfo c);
+	  public delegate PetscErrorCode equal(Mat a,Mat b,PetscTruth c);
+	  public delegate PetscErrorCode getdiagonal(Mat a,Vec b);
+	  public delegate PetscErrorCode diagonalscale(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode norm(Mat a,NormType b,PetscReal c);
+	  /*20*/
+	  public delegate PetscErrorCode assemblybegin(Mat a,MatAssemblyType b);
+	  public delegate PetscErrorCode assemblyend(Mat a,MatAssemblyType b);
+	  public delegate PetscErrorCode compress(Mat a);
+	  public delegate PetscErrorCode setoption(Mat a,MatOption b,PetscTruth c);
+	  public delegate PetscErrorCode zeroentries(Mat a);
+	  /*25*/
+	  public delegate PetscErrorCode zerorows(Mat a,PetscInt b, PetscInt[] c,PetscScalar d);
+	  public delegate PetscErrorCode lufactorsymbolic(Mat a,Mat b,IS c,IS d, MatFactorInfo e);
+	  public delegate PetscErrorCode lufactornumeric(Mat a,Mat b, MatFactorInfo c);
+	  public delegate PetscErrorCode choleskyfactorsymbolic(Mat a,Mat b,IS c, MatFactorInfo d);
+	  public delegate PetscErrorCode choleskyfactornumeric(Mat a,Mat b, MatFactorInfo c);
+	  /*30*/
+	  public delegate PetscErrorCode setuppreallocation(Mat a);
+	  public delegate PetscErrorCode ilufactorsymbolic(Mat a,Mat b,IS c,IS d, MatFactorInfo e);
+	  public delegate PetscErrorCode iccfactorsymbolic(Mat a,Mat b,IS c, MatFactorInfo d);
+	  public unsafe delegate PetscErrorCode getarray(Mat a,PetscScalar** b);
+	  public unsafe delegate PetscErrorCode restorearray(Mat a,PetscScalar** b);
+	  /*35*/
+	  public delegate PetscErrorCode duplicate(Mat a,MatDuplicateOption b,Mat c);
+	  public delegate PetscErrorCode forwardsolve(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode backwardsolve(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode ilufactor(Mat a,IS b,IS c, MatFactorInfo d);
+	  public delegate PetscErrorCode iccfactor(Mat a,IS b, MatFactorInfo c);
+	  /*40*/
+	  public delegate PetscErrorCode axpy(Mat a,PetscScalar b,Mat c,MatStructure d);
+	  public delegate PetscErrorCode getsubmatrices(Mat a,PetscInt b, IS[] c, IS[] d,MatReuse e,Mat[] f);
+	  public delegate PetscErrorCode increaseoverlap(Mat a,PetscInt b,IS[] c,PetscInt d);
+	  public delegate PetscErrorCode getvalues(Mat a,PetscInt b, PetscInt[] c,PetscInt d, PetscInt[] e,PetscScalar[] f);
+	  public delegate PetscErrorCode copy(Mat a,Mat b,MatStructure c);
+	  /*45*/
+	  public delegate PetscErrorCode getrowmax(Mat a,Vec b,PetscInt[] c);
+	  public delegate PetscErrorCode scale(Mat a,PetscScalar b);
+	  public delegate PetscErrorCode shift(Mat a,PetscScalar b);
+	  public delegate PetscErrorCode diagonalset(Mat a,Vec b,InsertMode c);
+	  public delegate PetscErrorCode iludtfactor(Mat a,IS b,IS c, MatFactorInfo d,Mat e);
+	  /*50*/
+	  public delegate PetscErrorCode setblocksize(Mat a,PetscInt b);
+	  public unsafe delegate PetscErrorCode getrowij(Mat a,PetscInt b,PetscTruth c,PetscTruth d,PetscInt* e,PetscInt*[] f,PetscInt*[] g,PetscTruth h);
+	  public unsafe delegate PetscErrorCode restorerowij(Mat a,PetscInt b,PetscTruth c,PetscTruth d,PetscInt* e,PetscInt*[] f,PetscInt*[] h,PetscTruth i);
+	  public unsafe delegate PetscErrorCode getcolumnij(Mat a,PetscInt b,PetscTruth c,PetscTruth d,PetscInt* e,PetscInt*[] f,PetscInt*[] h,PetscTruth* i);
+	  public unsafe delegate PetscErrorCode restorecolumnij(Mat a,PetscInt b,PetscTruth c,PetscTruth d,PetscInt* e,PetscInt*[] f,PetscInt*[] g,PetscTruth h);
+	  /*55*/
+	  public delegate PetscErrorCode fdcoloringcreate(Mat a,ISColoring b,MatFDColoring c);
+	  public delegate PetscErrorCode coloringpatch(Mat a,PetscInt b,PetscInt c,ISColoringValue[] d,ISColoring e);
+	  public delegate PetscErrorCode setunfactored(Mat a);
+	  public delegate PetscErrorCode permute(Mat a,IS b,IS c,Mat d);
+	  public delegate PetscErrorCode setvaluesblocked(Mat a,PetscInt b, PetscInt[] c,PetscInt d, PetscInt[] e, PetscScalar[] f,InsertMode g);
+	  /*60*/
+	  public delegate PetscErrorCode getsubmatrix(Mat a,IS b,IS c,PetscInt d,MatReuse e,Mat f);
+	  public delegate PetscErrorCode destroy(Mat a);
+	  public delegate PetscErrorCode view(Mat a,PetscViewer b);
+	  public delegate PetscErrorCode convertfrom(Mat a,  MatType b,MatReuse c,Mat d);
+	  public delegate PetscErrorCode usescaledform(Mat a,PetscTruth b);
+	  /*65*/
+	  public delegate PetscErrorCode scalesystem(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode unscalesystem(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode setlocaltoglobalmapping(Mat a,ISLocalToGlobalMapping b);
+	  public delegate PetscErrorCode setvalueslocal(Mat a,PetscInt b, PetscInt[] c,PetscInt d, PetscInt[] e, PetscScalar[] f,InsertMode g);
+	  public delegate PetscErrorCode zerorowslocal(Mat a,PetscInt b, PetscInt[] c,PetscScalar d);
+	  /*70*/
+	  public delegate PetscErrorCode getrowmaxabs(Mat a,Vec b,PetscInt[] c);
+	  public delegate PetscErrorCode getrowminabs(Mat a,Vec b,PetscInt[] c);
+	  public delegate PetscErrorCode convert(Mat a,  MatType b,MatReuse c,Mat d);
+	  public delegate PetscErrorCode setcoloring(Mat a,ISColoring b);
+	  public unsafe delegate PetscErrorCode setvaluesadic(Mat a,void* b);
+	  /*75*/
+	  public unsafe delegate PetscErrorCode setvaluesadifor(Mat a,PetscInt b,void* c);
+	  public unsafe delegate PetscErrorCode fdcoloringapply(Mat a,MatFDColoring b,Vec c,MatStructure d,void* e);
+	  public delegate PetscErrorCode setfromoptions(Mat a);
+	  public delegate PetscErrorCode multrained(Mat a,Vec b,Vec c);
+	  public delegate PetscErrorCode multtransposerained(Mat a,Vec b,Vec c);
+	  /*80*/
+	  public delegate PetscErrorCode permutesparsify(Mat a, PetscInt b, double c, double d, IS e, IS f, Mat g);
+	  public delegate PetscErrorCode mults(Mat a, Vecs b, Vecs c);
+	  public delegate PetscErrorCode solves(Mat a, Vecs b, Vecs c);
+	  public unsafe delegate PetscErrorCode getinertia(Mat a,PetscInt* b,PetscInt* c,PetscInt* d);
+	  public delegate PetscErrorCode load(PetscViewer a,  MatType b,Mat c);
+	  /*85*/
+	  public delegate PetscErrorCode issymmetric(Mat a,PetscReal b,PetscTruth c);
+	  public delegate PetscErrorCode ishermitian(Mat a,PetscReal b,PetscTruth c);
+	  public delegate PetscErrorCode isstructurallysymmetric(Mat a,PetscTruth c);
+	  public delegate PetscErrorCode pbrelax(Mat a,Vec b,PetscReal c,MatSORType d,PetscReal e,PetscInt f,PetscInt g,Vec h);
+	  public delegate PetscErrorCode getvecs(Mat a,Vec b,Vec c);
+	  /*90*/
+	  public delegate PetscErrorCode matmult(Mat a,Mat b,MatReuse c,PetscReal d,Mat f);
+	  public delegate PetscErrorCode matmultsymbolic(Mat a,Mat b,PetscReal c,Mat d);
+	  public delegate PetscErrorCode matmultnumeric(Mat a,Mat b,Mat c);
+	  public delegate PetscErrorCode ptap(Mat a,Mat b,MatReuse c,PetscReal d,Mat e);
+	  public delegate PetscErrorCode ptapsymbolic(Mat a,Mat b,PetscReal c,Mat d); /* double dispatch wrapper routine */
+	  /*95*/
+	  public delegate PetscErrorCode ptapnumeric(Mat a,Mat b,Mat c);             /* double dispatch wrapper routine */
+	  public delegate PetscErrorCode matmulttranspose(Mat a,Mat b,MatReuse c,PetscReal d,Mat e);
+	  public delegate PetscErrorCode matmulttransposesymbolic(Mat a,Mat b,PetscReal c,Mat d);
+	  public delegate PetscErrorCode matmulttransposenumeric(Mat a,Mat b,Mat c);
+	  public delegate PetscErrorCode ptapsymbolic_seqaij(Mat a,Mat b,PetscReal c,Mat d); /* actual implememtation, A=seqaij */
+	  /*100*/
+	  public delegate PetscErrorCode ptapnumeric_seqaij(Mat a,Mat b,Mat c);             /* actual implememtation, A=seqaij */
+	  public delegate PetscErrorCode ptapsymbolic_mpiaij(Mat a,Mat b,PetscReal c,Mat d); /* actual implememtation, A=mpiaij */
+	  public delegate PetscErrorCode ptapnumeric_mpiaij(Mat a,Mat b,Mat c);             /* actual implememtation, A=mpiaij */
+	  public delegate PetscErrorCode conjugate(Mat a);                              /* complex conjugate */
+	  public delegate PetscErrorCode setsizes(Mat a,PetscInt b,PetscInt c,PetscInt d,PetscInt e);
+	  /*105*/
+	  public delegate PetscErrorCode setvaluesrow(Mat a,PetscInt b, PetscScalar[] c);
+	  public delegate PetscErrorCode realpart(Mat a);
+	  public delegate PetscErrorCode imaginarypart(Mat a);
+	  public delegate PetscErrorCode getrowuppertriangular(Mat a);
+	  public delegate PetscErrorCode restorerowuppertriangular(Mat a);
+	  /*110*/
+	  public delegate PetscErrorCode matsolve(Mat a,Mat b,Mat c);
+	  public delegate PetscErrorCode getredundantmatrix(Mat a,PetscInt b,Intracommunicator comm,PetscInt c,MatReuse d,Mat e);
+	  public delegate PetscErrorCode getrowmin(Mat a,Vec b,PetscInt[] c);
+	  public delegate PetscErrorCode getcolumnvector(Mat a,Vec b,PetscInt c);
+	  public unsafe delegate PetscErrorCode missingdiagonal(Mat a,PetscTruth* b,PetscInt* c);
+	  /*115*/
+	  public delegate PetscErrorCode getseqnonzerostructure(Mat a,Mat[] b);
+	  public delegate PetscErrorCode create(Mat a);  
+   };
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class KSPOps {
+	  public delegate PetscErrorCode buildsolution(KSP a,Vec b,Vec c);       /* Returns a pointer to the solution, or
+	                                                calculates the solution in a 
+					                user-provided area. */
+	  public delegate PetscErrorCode buildresidual(KSP a,Vec b,Vec c,Vec d);   /* Returns a pointer to the residual, or
+					                calculates the residual in a 
+					                user-provided area.  */
+	  public delegate PetscErrorCode solve(KSP a);                        /* actual solver */
+	  public delegate PetscErrorCode setup(KSP a);
+	  public delegate PetscErrorCode setfromoptions(KSP a);
+	  public delegate PetscErrorCode publishoptions(KSP a);
+	  public unsafe delegate PetscErrorCode computeextremesingularvalues(KSP a,PetscReal* b,PetscReal* c);
+	  public unsafe delegate PetscErrorCode computeeigenvalues(KSP a,PetscInt b,PetscReal* c,PetscReal* d,PetscInt* e);
+	  public delegate PetscErrorCode destroy(KSP a);
+	  public delegate PetscErrorCode view(KSP a,PetscViewer b);
+   }
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class KSPFischerGuess{
+      public PetscInt method,curl,maxl,refcnt;
+      public PetscTruth monitor;
+      public Mat mat;
+      public KSP ksp;
+   }
+   
+   
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class KSP {
+	  //PETSCHEADER(struct _KSPOps);
+	  public PetscObject hdr;
+      public KSPOps     ops;
+	  /*------------------------- User parameters--------------------------*/
+	  public PetscInt        max_it;                     /* maximum number of iterations */
+	  public KSPFischerGuess guess;
+	  public PetscTruth      guess_zero, calc_sings, guess_knoll;
+	  public PCSide pc_side;                  /* flag for left, right, or symmetric 
+	                                      preconditioning */
+	  public PetscReal rtol, abstol, ttol, divtol;
+	  public PetscReal rnorm0;                   /* initial residual norm (used for divergence testing) */
+	  public PetscReal rnorm;                    /* current residual norm */
+	  public KSPConvergedReason reason;     
+	  public PetscTruth         printreason;     /* prints converged reason after solve */
+	
+	  public Vec vec_sol,vec_rhs;            /* pointer to where user has stashed 
+	                                      the solution and rhs, these are 
+	                                      never touched by the code, only 
+	                                      passed back to the user */ 
+	  public unsafe PetscReal*     res_hist;            /* If !0 stores residual at iterations*/
+	  public unsafe PetscReal*     res_hist_alloc;      /* If !0 means user did not provide buffer, needs deallocation */
+	  public PetscInt      res_hist_len;         /* current size of residual history array */
+	  public PetscInt      res_hist_max;         /* actual amount of data in residual_history */
+	  public PetscTruth    res_hist_reset;       /* reset history to size zero for each new solve */
+	
+	  public PetscInt      chknorm;             /* only compute/check norm if iterations is great than this */
+	  public PetscTruth    lagnorm;             /* Lag the residual norm calculation so that it is computed as part of the 
+	                                        MPI_Allreduce() for computing the inner products for the next iteration. */ 
+	  /* --------User (or default) routines (most return -1 on error) --------*/
+	  //preciso ver isso public unsafe delegate PetscErrorCode monitor[5](KSP a,PetscInt b,PetscReal c,void* a); /* returns control to user after */
+	  //preciso ver isso public unsafe delegate PetscErrorCode monitordestroy[5](void* a);         /* */
+	  //preciso ver isso public unsafe void* monitorcontext[5];                  /* residual calculation, allows user */
+	  public PetscInt  numbermonitors;                                   /* to, for instance, print residual norm, etc. */
+	
+	  public unsafe delegate PetscErrorCode converged(KSP a,PetscInt b,PetscReal c,KSPConvergedReason* d,void* e);
+	  public unsafe delegate PetscErrorCode convergeddestroy(void* a);
+	  public unsafe void*       cnvP; 
+	
+	  public   PC         pc;
+	
+	  public unsafe void*       data;                      /* holder for misc stuff associated 
+	                                   with a particular iterative solver */
+	
+	  /* ----------------Default work-area management -------------------- */
+	  public PetscInt    nwork;
+	  public Vec         work;
+	
+	  public PetscInt    setupcalled;
+	
+	  public PetscInt    its;       /* number of iterations so far computed */
+	
+	  public PetscTruth  transpose_solve;    /* solve transpose system instead */
+	
+	  public KSPNormType normtype;          /* type of norm used for convergence tests */
+	
+	  /*   Allow diagonally scaling the matrix before computing the preconditioner or using 
+	       the Krylov method. Note this is NOT just Jacobi preconditioning */
+	
+	  public PetscTruth   dscale;       /* diagonal scale system; used with KSPSetDiagonalScale() */
+	  public PetscTruth   dscalefix;    /* unscale system after solve */
+	  public PetscTruth   dscalefix2;   /* system has been unscaled */
+	  public Vec          diagonal;     /* 1/sqrt(diag of matrix) */
+	  public Vec          truediagonal;
+	
+	  public MatNullSpace nullsp;      /* Null space of the operator, removed from Krylov space */
+   }
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class PCOps {
+	  public delegate PetscErrorCode setup(PC a);
+	  public delegate PetscErrorCode apply(PC a,Vec b,Vec c);
+	  public unsafe delegate PetscErrorCode applyrichardson(PC a,Vec b,Vec c,Vec d,PetscReal e,PetscReal f,PetscReal g,PetscInt h,PetscInt* i,PCRichardsonConvergedReason* j);
+	  public delegate PetscErrorCode applyBA(PC a,PCSide b,Vec c,Vec d,Vec e);
+	  public delegate PetscErrorCode applytranspose(PC a,Vec b,Vec c);
+	  public delegate PetscErrorCode applyBAtranspose(PC a,PetscInt b,Vec c,Vec d,Vec e);
+	  public delegate PetscErrorCode setfromoptions(PC a);
+	  public delegate PetscErrorCode presolve(PC a,KSP b,Vec c,Vec d);
+	  public delegate PetscErrorCode postsolve(PC a,KSP b,Vec c,Vec d);  
+	  public delegate PetscErrorCode getfactoredmatrix(PC a,Mat b);
+	  public delegate PetscErrorCode applysymmetricleft(PC a,Vec b,Vec c);
+	  public delegate PetscErrorCode applysymmetricright(PC a,Vec b,Vec c);
+	  public delegate PetscErrorCode setuponblocks(PC a);
+	  public delegate PetscErrorCode destroy(PC a);
+	  public delegate PetscErrorCode view(PC a,PetscViewer b);
+   }
+   
+   [StructLayout(LayoutKind.Sequential)]
+   public class PC {
+      //PETSCHEADER(struct _PCOps);
+      public PetscObject hdr;
+      public PCOps     ops;
+	  public PetscInt       setupcalled;
+	  public PetscInt       setfromoptionscalled;
+	  public MatStructure   flag;
+	  public Mat            mat,pmat;
+	  public Vec            diagonalscaleright,diagonalscaleleft; /* used for time integration scaling */
+	  public PetscTruth     diagonalscale;
+	  public PetscTruth     nonzero_guess; /* used by PCKSP, PCREDUNDANT and PCOPENMP */
+	  public unsafe delegate PetscErrorCode modifysubmatrices(PC a,PetscInt b,IS[] c,IS[] d,Mat[] e,void* f); /* user provided routine */
+	  public unsafe void*           modifysubmatricesP; /* context for user routine */
+	  public unsafe void*           data;
    }
    
     public delegate PetscErrorCode PetscObjectFunction(PetscObject obj);
