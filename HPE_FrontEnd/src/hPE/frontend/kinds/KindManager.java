@@ -28,6 +28,10 @@ public final class KindManager {
 	private KindManager() {
 	}
 	
+	/**
+	 * Loads the extra kinds configured in HPE
+	 * @return
+	 */
 	public static Set<KindConfiguration> getKinds() {
 		//Load the kinds and stores its classes in kindsConfiguration and kindsClasses
 		if (kindsConfigurations.isEmpty()) {
@@ -47,8 +51,8 @@ public final class KindManager {
 						//The URI directory path always ends with File.separatorChar:
 						kindsUrls.add(new URL(kindPath.toURI().toString() + "bin" + File.separatorChar));
 						//The File absolute path never ends with File.separatorChar:
-						String absoluteManifestPath = kindPath.getAbsolutePath() + File.separatorChar + "META-INF" + File.separatorChar + "MANIFEST.MF";
-						manifestFile = new Manifest(new FileInputStream(absoluteManifestPath));
+						String manifestAbsolutePath = kindPath.getAbsolutePath() + File.separatorChar + "META-INF" + File.separatorChar + "MANIFEST.MF";
+						manifestFile = new Manifest(new FileInputStream(manifestAbsolutePath));
 					} else {
 						//This case is a path to a JAR file
 						kindsUrls.add(kindPath.toURI().toURL());
@@ -57,9 +61,9 @@ public final class KindManager {
 					Attributes kindManifestAttributes = manifestFile.getMainAttributes();
 					kindsConfigClassesNames.add(kindManifestAttributes.getValue("KindConfiguration-Class"));						
 				}
-				
 				//Loads the kinds classes:
 				URLClassLoader urlClassLoader = URLClassLoader.newInstance(kindsUrls.toArray(new URL[0]), Thread.currentThread().getContextClassLoader());
+
 				for (String kindConfigClassName : kindsConfigClassesNames) {
 					Class<?> kindConfigurationClass = urlClassLoader.loadClass(kindConfigClassName);
 					if (KindConfiguration.class.isAssignableFrom(kindConfigurationClass)) {
@@ -95,7 +99,7 @@ public final class KindManager {
 	}
 
 	/**
-	 * Discover the KindConfiguration of the kind owner of <code>clazz</code>.
+	 * Discover the KindConfiguration instance of the kind owner of <code>clazz</code>.
 	 * @param clazz
 	 * @return returns the proper KindConfiguration, otherwise returns null (not expected)
 	 */
