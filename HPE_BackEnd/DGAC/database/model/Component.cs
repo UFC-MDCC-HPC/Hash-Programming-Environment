@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Collections.Generic;
 
 
-namespace br.ufc.hpe.backend.DGAC.database{
+namespace br.ufc.lia.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class Component : HashComponent {
@@ -40,7 +40,7 @@ public class Component : HashComponent {
     {
         get { 
              //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorApplication acfa = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);             
+            AbstractComponentFunctorApplication acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);             
              return acfa.Id_abstract; 
         
         }
@@ -51,8 +51,8 @@ public class Component : HashComponent {
         get {
             //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
            // AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctorApplication acfa = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);
-            return br.ufc.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract).Kind;
+            AbstractComponentFunctorApplication acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);
+            return br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract).Kind;
         }
     }
 
@@ -63,11 +63,11 @@ public class Component : HashComponent {
             IDictionary<string, AbstractComponentFunctorApplication> pars = new Dictionary<string, AbstractComponentFunctorApplication>();
            // SupplyParameterDAO spdao = new SupplyParameterDAO();
             //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            IList<SupplyParameter> sps = br.ufc.hpe.backend.DGAC.BackEnd.spdao.list(this.Id_functor_app);
+            IList<SupplyParameter> sps = br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.list(this.Id_functor_app);
             foreach (SupplyParameter sp in sps)
             {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;
-                pars.Add(sp_.Id_parameter, br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual));
+                pars.Add(sp_.Id_parameter, br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual));
             }
             return pars;   
         }
@@ -77,10 +77,10 @@ public class Component : HashComponent {
     internal Unit fetchUnit(string id_interface)
     {
         //InterfaceDAO idao = new InterfaceDAO();
-        Interface i = br.ufc.hpe.backend.DGAC.BackEnd.idao.retrieve(this.Id_abstract, id_interface);
+        Interface i = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieve(this.Id_abstract, id_interface);
 
        // UnitDAO udao = new UnitDAO();
-        return br.ufc.hpe.backend.DGAC.BackEnd.udao.retrieve(Id_concrete, i.Order);
+        return br.ufc.lia.hpe.backend.DGAC.BackEnd.udao.retrieve(Id_concrete, i.Order);
     }
 }//class
 

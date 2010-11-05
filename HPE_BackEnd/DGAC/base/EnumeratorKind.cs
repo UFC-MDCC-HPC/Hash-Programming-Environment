@@ -2,10 +2,11 @@
 (c) all rights reserved
 ================================================================*/
 using System;
-using br.ufc.hpe.basic;
+using br.ufc.lia.hpe.basic;
 
-namespace br.ufc.hpe.kinds{
-     public interface IEnumeratorKind : IUnit {
+namespace br.ufc.lia.hpe.kinds{
+  
+   public interface IEnumeratorKind : IUnit {
        int getValueAtIndex(int ix);
        int[] getPermutation();
        int N {get;set;}

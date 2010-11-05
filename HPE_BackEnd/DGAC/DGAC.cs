@@ -6,44 +6,19 @@ using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
 using System.Reflection;
 using HPE_DGAC_LoadDB;
-using br.ufc.hpe.basic;
-using br.ufc.hpe.backend.DGAC.utils;
-using br.ufc.hpe.backend.DGAC.database;
+using br.ufc.lia.hpe.basic;
+using br.ufc.lia.hpe.backend.DGAC.utils;
+using br.ufc.lia.hpe.backend.DGAC.database;
 using System.Data;
 using System.Collections;
 using System.Reflection.Emit;
 using MPI;
 
 using gov.cca;
-using br.ufc.hpe.backend.ports;
+//using br.ufc.lia.hpe.backend.ports;
 
-namespace br.ufc.hpe.backend
+namespace br.ufc.lia.hpe.backend
 {
-
-    namespace ports
-    {
-
-        interface ComponentRepository 
-        {
-            EnvironmentType readEnvironment();
-            void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir);
-            void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir);
-            void deleteComponent(String ID);
-        }
-
-        interface BuilderService 
-        {
-            // createInstance
-            String[] runApplication(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir);
-
-            // connect ??
-
-            // ...
-
-        }
-
-
-    }
 
     namespace DGAC
     {
@@ -63,7 +38,7 @@ namespace br.ufc.hpe.backend
             }
 
 
-            public ManagerObject connectToManager()
+            public static ManagerObject connectToManager(out IpcClientChannel ch)
             {
                 IDictionary prop = new Hashtable();
                 prop["portName"] = "ManagerHostClient";
@@ -76,7 +51,7 @@ namespace br.ufc.hpe.backend
 
             public void deleteComponent(String ID) { }
 
-            public void releaseWorker()
+            public static void releaseManager(IpcClientChannel ch)
             {
                 ChannelServices.UnregisterChannel(ch);
             }
@@ -90,7 +65,7 @@ namespace br.ufc.hpe.backend
                 {
                     Connector.openConnection();
                     Connector.beginTransaction();
-                    ManagerObject worker = connectToManager();
+                    ManagerObject worker = connectToManager(out ch);
 
                     bool exists = false;
                     LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
@@ -155,7 +130,7 @@ namespace br.ufc.hpe.backend
                 }
                 finally
                 {
-                    releaseWorker();
+                    releaseManager(ch);
                     Connector.closeConnection();
                 }
             }
@@ -170,7 +145,7 @@ namespace br.ufc.hpe.backend
                     Connector.openConnection();
                     Connector.beginTransaction();
 
-                    ManagerObject worker = connectToManager();
+                    ManagerObject worker = connectToManager(out ch);
 
                     bool exists = false;
                     LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
@@ -227,7 +202,7 @@ namespace br.ufc.hpe.backend
                 finally
                 {
                     Connector.closeConnection();
-                    releaseWorker();
+                    releaseManager(ch);
                 }
             }
 
@@ -405,7 +380,7 @@ namespace br.ufc.hpe.backend
                 // assert: eIds.Length = eVls.Length
                 try
                 {
-                    ManagerObject manager = connectToManager();
+                    ManagerObject manager = connectToManager(out ch);
                     Connector.openConnection();
 
                     session_id = getSessionID(id_concrete);
@@ -432,7 +407,7 @@ namespace br.ufc.hpe.backend
                     manager.createInstance(session_id.ToString(), c.Library_path, properties);
 
                     /* END UNDER CONSTRUCTION */
-                    releaseWorker();
+                    releaseManager(ch);
 
                 }
                 catch (Exception e)
@@ -442,7 +417,7 @@ namespace br.ufc.hpe.backend
                 finally
                 {
                     Connector.closeConnection();
-                    releaseWorker();
+                    releaseManager(ch);
                 }
 
                 return str_output == null ? new String[] { } : str_output;
@@ -455,7 +430,7 @@ namespace br.ufc.hpe.backend
                 // assert: eIds.Length = eVls.Length
                 try
                 {
-                    ManagerObject server = connectToManager();
+                    ManagerObject server = connectToManager(out ch);
                     Connector.openConnection();
 
                     session_id = getSessionID(id_concrete);
@@ -533,7 +508,7 @@ namespace br.ufc.hpe.backend
                 finally
                 {
                     Connector.closeConnection();
-                    releaseWorker();
+                    releaseManager(ch);
                 }
 
                 return str_output == null ? new String[] { } : str_output;
@@ -615,14 +590,17 @@ namespace br.ufc.hpe.backend
             public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
             public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
-            public static hpe.basic.IUnit createSlice(hpe.basic.IUnit ownerUnit,
+            public static IUnit createSlice(IUnit ownerUnit,
                                                           string hash_component_uid,
                                                           string id_inner,
                                                           string id_interface,
                                                           System.Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
                                                          )
             {
-                return ((ServicesImpl)ownerUnit.Services).registerUsesPort(ownerUnit, hash_component_uid, id_inner, id_interface);
+                IUnit slice = ((WorkerServicesImpl)ownerUnit.Services).autoConnect(ownerUnit, id_inner, id_interface, hash_component_uid, id_inner, id_interface);
+                slice.createSlices();
+                return slice;
+
             }
 
 

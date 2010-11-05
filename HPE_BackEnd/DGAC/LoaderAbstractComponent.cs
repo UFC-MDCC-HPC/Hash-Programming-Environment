@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Text;
-using br.ufc.hpe.backend.DGAC.database;
+using br.ufc.lia.hpe.backend.DGAC.database;
 
 namespace HPE_DGAC_LoadDB
 {
@@ -16,7 +16,7 @@ namespace HPE_DGAC_LoadDB
         public override bool componentExists(string hash_component_uid, out HashComponent cRef)
         {
           //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctor absC = br.ufc.hpe.backend.DGAC.BackEnd.acfdao.retrieveByUID(hash_component_uid);
+            AbstractComponentFunctor absC = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieveByUID(hash_component_uid);
             if (absC == null)
             {
                 cRef = null;
@@ -101,7 +101,7 @@ namespace HPE_DGAC_LoadDB
                             em.Id_enumerator_inner = id_enumerator;
                             em.Id_enumerator_container = id_enumerator_fst;
                         }
-                        br.ufc.hpe.backend.DGAC.BackEnd.exmdao.insert(em);
+                        br.ufc.lia.hpe.backend.DGAC.BackEnd.exmdao.insert(em);
                         //if (!id_enumerator.Equals(id_enumerator_fst)) 
                         //    eList.Remove(id_enumerator);
                     }
@@ -111,7 +111,7 @@ namespace HPE_DGAC_LoadDB
          //   EnumeratorDAO edao = new EnumeratorDAO();
             foreach (Enumerator e in eList.Values)
             {
-                br.ufc.hpe.backend.DGAC.BackEnd.edao.insert(e);
+                br.ufc.lia.hpe.backend.DGAC.BackEnd.edao.insert(e);
             }
 
             IDictionary<string, IList<SliceExposed>> lateExposedSlices = new Dictionary<string, IList<SliceExposed>>();
@@ -142,7 +142,7 @@ namespace HPE_DGAC_LoadDB
                           //  InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
 
                             // ALL EXPOSED INNER COMPONENTS ARE ENUMERATED BY THE ENUMERATION OF THE OWNER INNER COMPONENT !
-                            IList<InnerComponentExposed> ports = br.ufc.hpe.backend.DGAC.BackEnd.icedao.listExposedInnerOfOwner(absC.Id_abstract, cRef);
+                            IList<InnerComponentExposed> ports = br.ufc.lia.hpe.backend.DGAC.BackEnd.icedao.listExposedInnerOfOwner(absC.Id_abstract, cRef);
                             foreach (InnerComponentExposed port in ports)
                             {
                                 EnumerationInner ip = new EnumerationInner();
@@ -150,14 +150,14 @@ namespace HPE_DGAC_LoadDB
                                 ip.Id_enumerator = Id_enumerator;
                                 ip.Id_inner = port.Id_inner_rename;
 
-                                EnumerationInner iQp = br.ufc.hpe.backend.DGAC.BackEnd.exindao.retrieve(ip.Id_abstract, ip.Id_inner, ip.Id_enumerator);
+                                EnumerationInner iQp = br.ufc.lia.hpe.backend.DGAC.BackEnd.exindao.retrieve(ip.Id_abstract, ip.Id_inner, ip.Id_enumerator);
                                 if (iQp == null)
-                                    br.ufc.hpe.backend.DGAC.BackEnd.exindao.insert(ip);
+                                    br.ufc.lia.hpe.backend.DGAC.BackEnd.exindao.insert(ip);
                             }
 
-                            EnumerationInner iQ = br.ufc.hpe.backend.DGAC.BackEnd.exindao.retrieve(i.Id_abstract, i.Id_inner, i.Id_enumerator);
+                            EnumerationInner iQ = br.ufc.lia.hpe.backend.DGAC.BackEnd.exindao.retrieve(i.Id_abstract, i.Id_inner, i.Id_enumerator);
                             if (iQ == null)
-                                br.ufc.hpe.backend.DGAC.BackEnd.exindao.insert(i);
+                                br.ufc.lia.hpe.backend.DGAC.BackEnd.exindao.insert(i);
                         }
                         else if (rX is EnumerableUnitType)
                         {
@@ -171,9 +171,9 @@ namespace HPE_DGAC_LoadDB
 
                          //   EnumerationInterfaceDAO udao = new EnumerationInterfaceDAO();
 
-                            EnumerationInterface uQ = br.ufc.hpe.backend.DGAC.BackEnd.exitdao.retrieve(u.Id_abstract, u.Id_interface, u.Id_enumerator);
+                            EnumerationInterface uQ = br.ufc.lia.hpe.backend.DGAC.BackEnd.exitdao.retrieve(u.Id_abstract, u.Id_interface, u.Id_enumerator);
                             if (uQ == null)
-                                br.ufc.hpe.backend.DGAC.BackEnd.exitdao.insert(u);
+                                br.ufc.lia.hpe.backend.DGAC.BackEnd.exitdao.insert(u);
 
                         }
                         else if (rX is EnumerableEntryType)
@@ -199,7 +199,7 @@ namespace HPE_DGAC_LoadDB
                             s.Id_enumerator = Id_enumerator;
 
 
-                            IList<SliceExposed> ses = br.ufc.hpe.backend.DGAC.BackEnd.sedao.listExposedSlicesByContainer(s.Id_abstract,
+                            IList<SliceExposed> ses = br.ufc.lia.hpe.backend.DGAC.BackEnd.sedao.listExposedSlicesByContainer(s.Id_abstract,
                                                                                          s.Id_inner,// owner
                                                                                          s.Id_interface_slice, //owner
                                                                                          s.Id_split_replica);
@@ -207,9 +207,9 @@ namespace HPE_DGAC_LoadDB
                             lateExposedSlices.Add(Id_enumerator, ses);
 
 
-                            EnumerationSlice sQ = br.ufc.hpe.backend.DGAC.BackEnd.exsdao.retrieve(s.Id_abstract, s.Id_inner, s.Id_interface_slice, s.Id_enumerator);
+                            EnumerationSlice sQ = br.ufc.lia.hpe.backend.DGAC.BackEnd.exsdao.retrieve(s.Id_abstract, s.Id_inner, s.Id_interface_slice, s.Id_enumerator);
                             if (sQ == null)
-                                br.ufc.hpe.backend.DGAC.BackEnd.exsdao.insert(s);
+                                br.ufc.lia.hpe.backend.DGAC.BackEnd.exsdao.insert(s);
                         }
                     }
                 }
@@ -225,7 +225,7 @@ namespace HPE_DGAC_LoadDB
                 {
                    // EnumerationInnerDAO eidao = new EnumerationInnerDAO();
 
-                    EnumerationInner ei = br.ufc.hpe.backend.DGAC.BackEnd.exindao.retrieve(se.Id_abstract, se.Id_inner, Id_enumerator);
+                    EnumerationInner ei = br.ufc.lia.hpe.backend.DGAC.BackEnd.exindao.retrieve(se.Id_abstract, se.Id_inner, Id_enumerator);
                     if (ei == null)
                     {
                         // take the slice row of the exposed slice
@@ -236,12 +236,12 @@ namespace HPE_DGAC_LoadDB
                         sexposed.Id_split_replica = se.Id_split_replica;
                         sexposed.Id_enumerator = Id_enumerator;
 
-                        EnumerationSlice sQE = br.ufc.hpe.backend.DGAC.BackEnd.exsdao.retrieve(sexposed.Id_abstract,
+                        EnumerationSlice sQE = br.ufc.lia.hpe.backend.DGAC.BackEnd.exsdao.retrieve(sexposed.Id_abstract,
                                                              sexposed.Id_inner,
                                                              sexposed.Id_interface_slice,
                                                              sexposed.Id_enumerator);
                         if (sQE == null)
-                            br.ufc.hpe.backend.DGAC.BackEnd.exsdao.insert(sexposed);
+                            br.ufc.lia.hpe.backend.DGAC.BackEnd.exsdao.insert(sexposed);
                     }
                 }
             }
@@ -277,7 +277,7 @@ namespace HPE_DGAC_LoadDB
                         ews.Id_total_split = s.n;    // sem essa linha Id_total_split sempre é ZERO. Fiquei na dúvida ...
 
                       //  EnumeratorSplitDAO splitdao = new EnumeratorSplitDAO();
-                        br.ufc.hpe.backend.DGAC.BackEnd.exldao.insert(ews);
+                        br.ufc.lia.hpe.backend.DGAC.BackEnd.exldao.insert(ews);
                     }
                 }
             }
@@ -352,17 +352,17 @@ namespace HPE_DGAC_LoadDB
                         ice.Id_inner_owner = null;
                         ice.Id_inner = old_port_localRef;
 
-                        br.ufc.hpe.backend.DGAC.BackEnd.icedao.insert(ice);
+                        br.ufc.lia.hpe.backend.DGAC.BackEnd.icedao.insert(ice);
 
-                        if (br.ufc.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
-                            br.ufc.hpe.backend.DGAC.BackEnd.icdao.insert(iNewPort);
+                        if (br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
+                            br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.insert(iNewPort);
                     }
                 }
 
             }
 
          //   AbstractComponentFunctorDAO absCdao = new AbstractComponentFunctorDAO();
-            br.ufc.hpe.backend.DGAC.BackEnd.acfdao.insert(c_);
+            br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.insert(c_);
 
             loadAbstractComponentFunctorParameters(c_);
             
@@ -438,21 +438,21 @@ namespace HPE_DGAC_LoadDB
                                 ice.Id_inner_owner = iNew.Id_inner;
                                 ice.Id_inner = old_port_localRef;
 
-                                br.ufc.hpe.backend.DGAC.BackEnd.icedao.insert(ice);
+                                br.ufc.lia.hpe.backend.DGAC.BackEnd.icedao.insert(ice);
 
-                                if (br.ufc.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
-                                    br.ufc.hpe.backend.DGAC.BackEnd.icdao.insert(iNewPort);
+                                if (br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
+                                    br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.insert(iNewPort);
                             }
                         }
-                        if (br.ufc.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNew.Id_abstract_owner, iNew.Id_inner) == null)
-                            br.ufc.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
+                        if (br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNew.Id_abstract_owner, iNew.Id_inner) == null)
+                            br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
 
                     }
                 }
             }
 
         //    SupplyParameterParameterDAO sppdao = new SupplyParameterParameterDAO();
-            IList<SupplyParameterParameter> sppList = br.ufc.hpe.backend.DGAC.BackEnd.sppdao.listFreeVariables(absC);
+            IList<SupplyParameterParameter> sppList = br.ufc.lia.hpe.backend.DGAC.BackEnd.sppdao.listFreeVariables(absC);
 
  
           //  InnerComponentDAO icdao = new InnerComponentDAO();
@@ -460,21 +460,21 @@ namespace HPE_DGAC_LoadDB
 
             foreach (SupplyParameterParameter spp in sppList)
             {
-                InnerComponent ic = br.ufc.hpe.backend.DGAC.BackEnd.icdao.retrieve2(absC.Id_abstract, spp.Id_functor_app);
-                IList<InnerComponentExposed> ice = br.ufc.hpe.backend.DGAC.BackEnd.icedao.listOwnerOfExposedInner(ic.Id_abstract_owner, ic.Id_inner);
-                InnerComponent icc = br.ufc.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract, ice[0].Id_inner_owner);
-                InnerComponent ic_ = br.ufc.hpe.backend.DGAC.BackEnd.icdao.retrieve(icc.Id_abstract_inner, ice[0].Id_inner);
+                InnerComponent ic = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve2(absC.Id_abstract, spp.Id_functor_app);
+                IList<InnerComponentExposed> ice = br.ufc.lia.hpe.backend.DGAC.BackEnd.icedao.listOwnerOfExposedInner(ic.Id_abstract_owner, ic.Id_inner);
+                InnerComponent icc = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract, ice[0].Id_inner_owner);
+                InnerComponent ic_ = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(icc.Id_abstract_inner, ice[0].Id_inner);
                // SupplyParameterComponentDAO spcdao = new SupplyParameterComponentDAO();
-                SupplyParameterComponent spc = br.ufc.hpe.backend.DGAC.BackEnd.spcdao.retrieve(spp.Id_parameter, ic_.Id_functor_app);
+                SupplyParameterComponent spc = br.ufc.lia.hpe.backend.DGAC.BackEnd.spcdao.retrieve(spp.Id_parameter, ic_.Id_functor_app);
 
                 SupplyParameterComponent spcNew = new SupplyParameterComponent();
                 spcNew.Id_abstract =spp.Id_abstract;
                 spcNew.Id_functor_app=spp.Id_functor_app;
                 spcNew.Id_functor_app_actual=spc.Id_functor_app_actual;
                 spcNew.Id_parameter=spp.Id_parameter;
-                br.ufc.hpe.backend.DGAC.BackEnd.spcdao.insert(spcNew);
+                br.ufc.lia.hpe.backend.DGAC.BackEnd.spcdao.insert(spcNew);
 
-                br.ufc.hpe.backend.DGAC.BackEnd.sppdao.remove(spp);
+                br.ufc.lia.hpe.backend.DGAC.BackEnd.sppdao.remove(spp);
 
             }
 
@@ -490,14 +490,14 @@ namespace HPE_DGAC_LoadDB
           //  SupplyParameterDAO spdao = new SupplyParameterDAO();
             if (absC.Id_functor_app_supertype > 0)
             {
-                AbstractComponentFunctorApplication acfa = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(absC.Id_functor_app_supertype);
+                AbstractComponentFunctorApplication acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(absC.Id_functor_app_supertype);
                 
                 // It is a parameter in the subtype. Check if it is supplied in the type.
-                IList<SupplyParameter> spList = br.ufc.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
+                IList<SupplyParameter> spList = br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
                 foreach (SupplyParameter sp in spList)
                     parsSuper.Add(sp.Id_parameter, sp);
 
-                IList<InnerComponent> iss = br.ufc.hpe.backend.DGAC.BackEnd.icdao.list(acfa.Id_abstract);
+                IList<InnerComponent> iss = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.list(acfa.Id_abstract);
                 foreach (InnerComponent i in iss)
                 {
                     InnerComponent iNew = new InnerComponent();
@@ -513,13 +513,13 @@ namespace HPE_DGAC_LoadDB
                             // NOT YET TESTED !!!
                             SupplyParameterComponent spc = (SupplyParameterComponent)sp;
 
-                            AbstractComponentFunctorApplication acfaReplace = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
+                            AbstractComponentFunctorApplication acfaReplace = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
                             iNew.Id_abstract_inner = acfaReplace.Id_abstract;
                             iNew.Parameter_top = null;
                             iNew.Id_abstract_owner = absC.Id_abstract;
                             iNew.Id_functor_app = liftFunctorApp(acfaReplace.Id_functor_app, parsSuper);
                             iNew.Id_inner = i.Id_inner;
-                            br.ufc.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
+                            br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
                         }
                         else if (sp is SupplyParameterParameter)
                         {
@@ -556,7 +556,7 @@ namespace HPE_DGAC_LoadDB
                         iNew.Id_abstract_owner = absC.Id_abstract;
                         iNew.Id_functor_app = liftFunctorApp(i.Id_functor_app, parsSuper);
                         iNew.Id_inner = i.Id_inner;
-                        br.ufc.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
+                        br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
                     }
                 }
             }
@@ -570,13 +570,13 @@ namespace HPE_DGAC_LoadDB
           //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
          //   SupplyParameterDAO spdao = new SupplyParameterDAO();
 
-            AbstractComponentFunctorApplication acfa = br.ufc.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app);
+            AbstractComponentFunctorApplication acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app);
 
             AbstractComponentFunctorApplication acfaNew = new AbstractComponentFunctorApplication();
             acfaNew.Id_abstract = acfa.Id_abstract;
-            br.ufc.hpe.backend.DGAC.BackEnd.acfadao.insert(acfaNew);
+            br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.insert(acfaNew);
 
-            IList<SupplyParameter> supplyList = br.ufc.hpe.backend.DGAC.BackEnd.spdao.list(id_functor_app);
+            IList<SupplyParameter> supplyList = br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.list(id_functor_app);
             foreach (SupplyParameter sp in supplyList)
             {
                 if (sp is SupplyParameterComponent)
@@ -620,7 +620,7 @@ namespace HPE_DGAC_LoadDB
                         sppNew.Id_parameter_actual = sppSuper.Id_parameter_actual;
                         sppNew.FreeVariable = spp.FreeVariable;
                     }
-                    br.ufc.hpe.backend.DGAC.BackEnd.spdao.insert(sp);
+                    br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.insert(sp);
                 }
             }
             return acfaNew.Id_functor_app;
@@ -679,7 +679,7 @@ namespace HPE_DGAC_LoadDB
 
                     p.Bounds_of = cApp.Id_functor_app;
 
-                    br.ufc.hpe.backend.DGAC.BackEnd.acfpdao.insert(p);
+                    br.ufc.lia.hpe.backend.DGAC.BackEnd.acfpdao.insert(p);
 
                     pars.Add(p);
                 }
@@ -728,7 +728,7 @@ namespace HPE_DGAC_LoadDB
                             ip.Id_interface_parameter = ipx.iname;
                             ip.Id_unit_parameter = ipx.uname;
                             ip.ParOrder = ipx.order;
-                            br.ufc.hpe.backend.DGAC.BackEnd.ipdao.insert(ip);
+                            br.ufc.lia.hpe.backend.DGAC.BackEnd.ipdao.insert(ip);
                         }
                     }
 
@@ -744,7 +744,7 @@ namespace HPE_DGAC_LoadDB
                         ss.File_type = "dll";
                         ss.Order = order++; 
                         
-                        br.ufc.hpe.backend.DGAC.BackEnd.scdao.insert(ss);
+                        br.ufc.lia.hpe.backend.DGAC.BackEnd.scdao.insert(ss);
                         int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
                                    (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
                         if (size > 0)
@@ -764,16 +764,16 @@ namespace HPE_DGAC_LoadDB
                                 ssr.Id_owner = ss.Id_owner;
                                 ssr.File_name = ss.File_name;
                                 ssr.Reference = extRef;
-                                if (br.ufc.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) == null)
+                                if (br.ufc.lia.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) == null)
                                 {
-                                    br.ufc.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
+                                    br.ufc.lia.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
                                 }
                             }
                         }
                     }
 
                 //    InterfaceDAO idao = new InterfaceDAO();
-                    br.ufc.hpe.backend.DGAC.BackEnd.idao.insert(i);
+                    br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.insert(i);
                     if (u.slices != null)
                     {
                         IList<string> mS = new List<string>();
@@ -842,11 +842,11 @@ namespace HPE_DGAC_LoadDB
                                     se.Id_split_replica = usPort.replica; // s.Id_split_replica;
                                     se.Id_interface_slice = usPort.uRef;
 
-                                    br.ufc.hpe.backend.DGAC.BackEnd.sedao.insert(se);
+                                    br.ufc.lia.hpe.backend.DGAC.BackEnd.sedao.insert(se);
                                 }
                             }
                             //if (sdao.retrieve(s.Id_abstract,s.Id_inner,s.Id_interface_slice,s.Id_split_replica) == null) 
-                            br.ufc.hpe.backend.DGAC.BackEnd.sdao.insert(s);
+                            br.ufc.lia.hpe.backend.DGAC.BackEnd.sdao.insert(s);
                         }
                     }
                 }
@@ -874,7 +874,7 @@ namespace HPE_DGAC_LoadDB
                 string urefSuper = u.super == null ? null : u.super.uRef;
 
              //   InterfaceDAO idao = new InterfaceDAO();
-                Interface i = br.ufc.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
+                Interface i = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
                 InterfaceType ui = lookForInterface(iRef);
 
                 foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
@@ -886,7 +886,7 @@ namespace HPE_DGAC_LoadDB
                     ss.Contents = sft.contents;
                     ss.File_type = "dll";
                     ss.File_name = sft.name;
-                    br.ufc.hpe.backend.DGAC.BackEnd.scdao.update(ss);
+                    br.ufc.lia.hpe.backend.DGAC.BackEnd.scdao.update(ss);
                     if (sft.externalDependency != null)
                     {
                         foreach (string extRef in sft.externalDependency)
@@ -897,13 +897,13 @@ namespace HPE_DGAC_LoadDB
                             ssr.Id_owner = ss.Id_owner;
                             ssr.File_name = ss.File_name;
                             ssr.Reference = extRef;
-                            if (br.ufc.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) != null)
+                            if (br.ufc.lia.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) != null)
                             {
                                 // DGAC.BackEnd.scrdao.update(ssr);
                             }
                             else
                             {
-                                br.ufc.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
+                                br.ufc.lia.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
                             }
                         }
                     }

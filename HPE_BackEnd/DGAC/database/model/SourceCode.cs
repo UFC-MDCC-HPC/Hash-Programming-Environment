@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using br.ufc.hpe.backend.DGAC.utils;
+using br.ufc.lia.hpe.backend.DGAC.utils;
 using System.IO;
 
-namespace br.ufc.hpe.backend.DGAC.database
+namespace br.ufc.lia.hpe.backend.DGAC.database
 {
     public class SourceCode
     {

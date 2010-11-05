@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace br.ufc.hpe.backend.DGAC.utils
+namespace br.ufc.lia.hpe.backend.DGAC.utils
 {
     public class MPIWorkerMessagingConstants
     {
@@ -61,6 +61,10 @@ namespace br.ufc.hpe.backend.DGAC.utils
         public static string KEY_KEY = "k";      
         public static string UID_KEY = "u";
         public static string SESSION_KEY = "s";
+        public static string AUTOMATIC_KEY = "auto";
+        public static string IS_COMPONENT_INSTANCE_KEY = "i";
+
+        public static string DEFAULT_PROVIDE_PORT_IMPLEMENTS = "implements";
 
         public static string getArgVal(string argId)
         {

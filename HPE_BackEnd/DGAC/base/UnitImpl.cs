@@ -6,11 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.hpe.backend.DGAC.database;
-using br.ufc.hpe.backend.DGAC;
+using br.ufc.lia.hpe.backend.DGAC.database;
+using br.ufc.lia.hpe.backend.DGAC;
 using gov.cca;
 
-namespace br.ufc.hpe.basic
+namespace br.ufc.lia.hpe.basic
 {
 
     [Serializable]
@@ -180,7 +180,7 @@ namespace br.ufc.hpe.basic
             ActualParameters = actualParameters_new;
         }
 
-        public static void determineActualParameters2(br.ufc.hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
+        public static void determineActualParameters2(br.ufc.lia.hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
         {
             int Id_functor_app_inner = -1;
             if (innerComponent.Parameter_top.Length == 0)
@@ -277,7 +277,7 @@ namespace br.ufc.hpe.basic
         
         }
 
-        public void setUpParameters(br.ufc.hpe.backend.DGAC.database.Component c)
+        public void setUpParameters(br.ufc.lia.hpe.backend.DGAC.database.Component c)
         {
             SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spcList = spdao.list(c.Id_functor_app);
@@ -303,19 +303,19 @@ namespace br.ufc.hpe.basic
             set { id_functor_app = value; }
         }
 
-        private IDictionary<string, br.ufc.hpe.kinds.IEnumeratorKind> permutations = null;
+        private IDictionary<string, br.ufc.lia.hpe.kinds.IEnumeratorKind> permutations = null;
 
-        public bool getPermutation(string id_enumerator, out br.ufc.hpe.kinds.IEnumeratorKind permutation)
+        public bool getPermutation(string id_enumerator, out br.ufc.lia.hpe.kinds.IEnumeratorKind permutation)
         {
             if (permutations == null)
-                permutations = new Dictionary<string, br.ufc.hpe.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, br.ufc.lia.hpe.kinds.IEnumeratorKind>();
             return permutations.TryGetValue(id_enumerator, out permutation);
         }
 
-        public void addPermutation(string id_enumerator, br.ufc.hpe.kinds.IEnumeratorKind u) 
+        public void addPermutation(string id_enumerator, br.ufc.lia.hpe.kinds.IEnumeratorKind u) 
         {
             if (permutations == null)
-                permutations = new Dictionary<string, br.ufc.hpe.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, br.ufc.lia.hpe.kinds.IEnumeratorKind>();
             permutations.Add(id_enumerator, u);
             u.V = id_enumerator;
         }

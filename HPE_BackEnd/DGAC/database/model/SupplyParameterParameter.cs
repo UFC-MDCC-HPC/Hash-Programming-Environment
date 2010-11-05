@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 
 
-namespace br.ufc.hpe.backend.DGAC.database{
+namespace br.ufc.lia.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class SupplyParameterParameter : SupplyParameter{

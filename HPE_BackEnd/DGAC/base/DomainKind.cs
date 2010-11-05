@@ -1,7 +1,7 @@
 ﻿using System;
-using br.ufc.hpe.basic;
+using br.ufc.lia.hpe.basic;
 
-namespace br.ufc.hpe.kinds
+namespace br.ufc.lia.hpe.kinds
 {
 
 

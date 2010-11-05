@@ -3,10 +3,10 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
-using br.ufc.hpe.backend.DGAC.utils;
+using br.ufc.lia.hpe.backend.DGAC.utils;
 using System.Collections;
 
-namespace br.ufc.hpe.backend.DGAC
+namespace br.ufc.lia.hpe.backend.DGAC
 {
     public partial class ManagerService : System.ServiceProcess.ServiceBase
     {
@@ -59,9 +59,6 @@ namespace br.ufc.hpe.backend.DGAC
             Console.WriteLine("Manager Service Finished ");
         }
 
-
-
-
         protected override void OnStart(string[] args)
         {
             manager = startManagerServer();
@@ -72,8 +69,7 @@ namespace br.ufc.hpe.backend.DGAC
             else
             {
                 Console.Error.WriteLine("Error initializing the manager object !");
-            }
-             
+            }             
         }
 
         protected override void OnStop()

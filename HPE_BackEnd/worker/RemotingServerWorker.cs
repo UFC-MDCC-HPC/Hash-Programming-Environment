@@ -4,12 +4,12 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using br.ufc.hpe.backend.DGAC.utils;
+using br.ufc.lia.hpe.backend.DGAC.utils;
 using System.Collections;
 using MPI;
 using System.Threading;
 
-namespace br.ufc.hpe.backend.DGAC
+namespace br.ufc.lia.hpe.backend.DGAC
 {
     public class WorkerService : System.ServiceProcess.ServiceBase
     {
@@ -68,7 +68,6 @@ namespace br.ufc.hpe.backend.DGAC
 
         protected override void OnStart(string[] args)
         {
-
             this.startWorkerServer();
 
             mpi_listener = new Thread(mpi_listening);
@@ -83,7 +82,6 @@ namespace br.ufc.hpe.backend.DGAC
 
         protected void mpi_listening()
         {
-
             do
             {
                 Console.WriteLine("Worker " + my_rank + " is listening !");

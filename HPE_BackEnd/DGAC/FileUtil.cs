@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 
-namespace br.ufc.hpe.backend.DGAC.utils{
+namespace br.ufc.lia.hpe.backend.DGAC.utils{
 
 public class FileUtil{
 
@@ -144,11 +144,6 @@ public class FileUtil{
       return default_value;
   }
 
-
-
-
-
-  
 
   public static IDictionary<string, ReferenceType> loadExternalReferences()
   {

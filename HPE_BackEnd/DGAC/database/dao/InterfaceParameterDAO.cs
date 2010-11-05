@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic; 
 
 
-namespace br.ufc.hpe.backend.DGAC.database{
+namespace br.ufc.lia.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class InterfaceParameterDAO{

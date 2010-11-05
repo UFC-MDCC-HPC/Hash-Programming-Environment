@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace br.ufc.hpe.backend.DGAC.database
+namespace br.ufc.lia.hpe.backend.DGAC.database
 {
     [Serializable()]
     public class EnumerationInterface

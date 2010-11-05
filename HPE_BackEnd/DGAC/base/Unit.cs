@@ -6,12 +6,12 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.hpe.kinds;
+using br.ufc.lia.hpe.kinds;
 using MPI;
-using br.ufc.hpe.backend.DGAC;
+using br.ufc.lia.hpe.backend.DGAC;
 using gov.cca;
 
-namespace br.ufc.hpe.basic
+namespace br.ufc.lia.hpe.basic
 {
 	public interface IUnit : Component
 	{
@@ -41,10 +41,10 @@ namespace br.ufc.hpe.basic
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }
         void setActualParameters(IDictionary<string, int> actualParameters_new);
-        void setUpParameters(br.ufc.hpe.backend.DGAC.database.Component c);
+        void setUpParameters(br.ufc.lia.hpe.backend.DGAC.database.Component c);
 
-        bool getPermutation(string varid, out br.ufc.hpe.kinds.IEnumeratorKind permutation);
-        void addPermutation(string varid, br.ufc.hpe.kinds.IEnumeratorKind u);
+        bool getPermutation(string varid, out br.ufc.lia.hpe.kinds.IEnumeratorKind permutation);
+        void addPermutation(string varid, br.ufc.lia.hpe.kinds.IEnumeratorKind u);
 
     }
 }

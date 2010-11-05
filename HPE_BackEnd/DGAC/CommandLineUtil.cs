@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
 
-namespace br.ufc.hpe.backend.DGAC.utils{
+namespace br.ufc.lia.hpe.backend.DGAC.utils{
 
 public class CommandLineUtil {
 
