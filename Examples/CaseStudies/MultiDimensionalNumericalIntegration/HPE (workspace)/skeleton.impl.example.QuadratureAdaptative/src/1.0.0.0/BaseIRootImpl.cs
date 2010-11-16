@@ -1,9 +1,9 @@
 /* Automatically Generated Code */
 
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using jefferson.data.Double;
 using skeleton.Farm;
 using data.IntegralCase;
@@ -65,8 +65,8 @@ override public void createSlices() {
 	base.createSlices();
 	this.Manager = (IManager<IIntegralCase<F>, IDistributeIntervalSend<F, IIntegralCase<F>>, IDouble, ICollect<IDouble>>) BackEnd.createSlice(this, UID,"farm","manager",new Type[] {typeof(IIntegralCase<F>),typeof( IDistributeIntervalSend<F, IIntegralCase<F>>),typeof( IDouble),typeof(ICollect<IDouble>)});
 	this.Mpi = (IMPIDirect) BackEnd.createSlice(this, UID,"mpi","mpi",new Type[] {});
-	this.Input_data = (IIntegralCase<F>) BackEnd.createSlice(this, UID,"data_source","integral_case",new Type[] {typeof(F)});
-	this.Output_data = (IDouble) BackEnd.createSlice(this, UID,"data_target","double",new Type[] {});
+	this.Input_data = (IIntegralCase<F>) BackEnd.createSlice(this, UID,"input","integral_case",new Type[] {typeof(F)});
+	this.Output_data = (IDouble) BackEnd.createSlice(this, UID,"output","double",new Type[] {});
 } 
 
 abstract public void compute(); 

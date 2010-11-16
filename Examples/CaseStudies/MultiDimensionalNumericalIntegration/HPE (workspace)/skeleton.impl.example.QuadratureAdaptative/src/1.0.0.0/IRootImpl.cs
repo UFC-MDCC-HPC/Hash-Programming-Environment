@@ -1,10 +1,14 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using data.Function.TestingFunction;
 
 namespace skeleton.impl.example.QuadratureAdaptative { 
+
+public class Instantiator {
+		public static IApplicationKind getInstance() { return new IRootImpl<ITestingFunction>(); }
+}
 
 public class IRootImpl<F> : BaseIRootImpl<F>
 where F:ITestingFunction
@@ -15,6 +19,7 @@ where F:ITestingFunction
 			getargs(System.Environment.GetCommandLineArgs(), ref dim_num, ref dim_partition_size, ref number_of_partitions);
 
 		} 
+		
 		
 		private	int dim_num = 2;
 		private	int dim_partition_size = 2;

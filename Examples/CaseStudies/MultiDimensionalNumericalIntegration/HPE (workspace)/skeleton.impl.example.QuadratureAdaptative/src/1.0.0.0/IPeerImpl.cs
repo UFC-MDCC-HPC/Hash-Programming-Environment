@@ -1,10 +1,16 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using data.Function.TestingFunction;
 
 namespace skeleton.impl.example.QuadratureAdaptative { 
+
+public class Instantiator {
+   
+   public static IApplicationKind getInstance() { return new IPeerImpl<ITestingFunction>(); }
+
+}
 
 public class IPeerImpl<F> : BaseIPeerImpl<F>
 where F:ITestingFunction
