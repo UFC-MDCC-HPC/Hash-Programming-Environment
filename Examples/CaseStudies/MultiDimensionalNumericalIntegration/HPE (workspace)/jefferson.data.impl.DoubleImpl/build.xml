@@ -4,24 +4,24 @@
   <property name="build" value="bin"/>
   <property name="src" value="src"/>
   <target name="DoubleImpl-1.0.0.0">
-    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/bin/1.0.0.0">
-      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/bin/1.0.0.0"/>
+    <ifnot targetexists="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/bin/1.0.0.0">
+      <mkdir dir="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/DoubleImpl.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/BaseIDoubleImpl.dll" target="library">
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/DoubleImpl.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/BaseIDoubleImpl.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/src/1.0.0.0/BaseIDoubleImpl.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/src/1.0.0.0/BaseIDoubleImpl.cs"/>
       </sources>
       <references>
         <include name="jefferson.data.Double/bin/1.0.0.0/BaseIDouble.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="true" keyfile="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/DoubleImpl.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/IDoubleImpl.dll" target="library">
+    <csc debug="false" keyfile="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/DoubleImpl.snk" optimize="true" output="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/bin/1.0.0.0/IDoubleImpl.dll" target="library" unsafe="true">
       <sources>
-        <include name="C:/Users/Heron/Documents/My Dropbox/CaseStudies/MultiDimensionalNumericalIntegration/jefferson.data.impl.DoubleImpl/src/1.0.0.0/IDoubleImpl.cs"/>
+        <include name="C:/Users/Heron/Documents/My Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/jefferson.data.impl.DoubleImpl/src/1.0.0.0/IDoubleImpl.cs"/>
       </sources>
       <references>
-        <include name="C:\Users\Heron\Documents\My Dropbox\CaseStudies\MultiDimensionalNumericalIntegration\jefferson.data.impl.DoubleImpl\bin\1.0.0.0\BaseIDoubleImpl.dll"/>
+        <include name="C:\Users\Heron\Documents\My Dropbox\Examples\MultiDimensionalNumericalIntegration\HPE (workspace)\jefferson.data.impl.DoubleImpl\bin\1.0.0.0\BaseIDoubleImpl.dll"/>
         <include name="jefferson.data.Double/bin/1.0.0.0/IDouble.dll"/>
         <include name="C:\Program Files (x86)\Mono-2.6.1\lib\mono\DGAC\DGAC.dll"/>
       </references>
