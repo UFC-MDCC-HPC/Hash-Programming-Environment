@@ -9,15 +9,15 @@
   <componentInfo>
     <interface iRef="IMPIDirect" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;&#xA;namespace environment.MPIDirect { &#xA;&#xA;public interface BaseIMPIDirect : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIMPIDirect.cs" srcType="base" uri="/environment.MPIDirect/bin/1.0.0.0/BaseIMPIDirect.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace environment.MPIDirect { &#xA;&#xA;public interface BaseIMPIDirect : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIMPIDirect.cs" srcType="base" uri="environment.MPIDirect/bin/1.0.0.0/BaseIMPIDirect.dll" versionId="1.0.0.0">
           <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using hpe.basic;&#xA;using MPI;&#xA;&#xA;namespace environment.MPIDirect { &#xA;&#xA;public interface IMPIDirect : BaseIMPIDirect&#xA;{&#xA;&#xA;   MPI.Environment MPI { get; }&#xA;   &#xA;   Intracommunicator worldComm();       // the global communicator&#xA;   Intracommunicator localComm(IUnit caller);       // a communicator for the units inside the components.&#xA;   Intracommunicator enumComm(IUnit caller);        // a communicator for the enumeration of the units.&#xA;   int[] ranksOf(IUnit caller, string id);          // the ranks of the units named id &#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IMPIDirect.cs" srcType="user" uri="/environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using MPI;&#xA;&#xA;namespace environment.MPIDirect { &#xA;&#xA;public interface IMPIDirect : BaseIMPIDirect&#xA;{&#xA;&#xA;   MPI.Environment MPI { get; }&#xA;   &#xA;   Intracommunicator worldComm();       // the global communicator&#xA;   Intracommunicator localComm(IUnit caller);       // a communicator for the units inside the components.&#xA;   Intracommunicator enumComm(IUnit caller);        // a communicator for the enumeration of the units.&#xA;   int[] ranksOf(IUnit caller, string id);          // the ranks of the units named id &#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IMPIDirect.cs" srcType="user" uri="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/environment.MPIDirect/bin/1.0.0.0/BaseIMPIDirect.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="95" y="136">
+      <visualDescription h="40" w="80" x="119" y="103">
         <color b="0" g="165" r="255"/>
       </visualDescription>
       <externalReferences>MPI</externalReferences>

@@ -1,5 +1,5 @@
-using hpe.kinds;
-using hpe.basic;
+using br.ufc.pargo.hpe.kinds;
+using br.ufc.pargo.hpe.basic;
 using MPI;
 
 namespace environment.MPIDirect { 
