@@ -22,15 +22,15 @@
   <componentInfo>
     <interface iRef="INumber" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace jefferson.data.Number { &#xA;&#xA;public interface BaseINumber : BaseIData, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseINumber.cs" srcType="base" uri="/jefferson.data.Number/bin/1.0.0.0/BaseINumber.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace jefferson.data.Number { &#xA;&#xA;public interface BaseINumber : BaseIData, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseINumber.cs" srcType="base" uri="jefferson.data.Number/bin/1.0.0.0/BaseINumber.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/BaseIData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace jefferson.data.Number { &#xA;&#xA;public interface INumber : BaseINumber, IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="INumber.cs" srcType="user" uri="/jefferson.data.Number/bin/1.0.0.0/INumber.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace jefferson.data.Number { &#xA;&#xA;public interface INumber : BaseINumber, IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="INumber.cs" srcType="user" uri="jefferson.data.Number/bin/1.0.0.0/INumber.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/jefferson.data.Number/bin/1.0.0.0/BaseINumber.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="171" x="82" y="140">
+      <visualDescription h="40" w="171" x="169" y="83">
         <color b="0" g="128" r="255"/>
       </visualDescription>
     </interface>
