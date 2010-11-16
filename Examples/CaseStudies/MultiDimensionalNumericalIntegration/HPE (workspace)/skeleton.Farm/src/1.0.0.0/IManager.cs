@@ -1,4 +1,4 @@
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using jefferson.data.Data;
 using skeleton.Farm.Distribute;
 using skeleton.Farm.Collect;

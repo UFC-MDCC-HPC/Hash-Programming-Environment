@@ -1,6 +1,6 @@
 /* AUTOMATICALLY GENERATE CODE */
 
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using environment.MPIDirect;
 using jefferson.data.Data;
 using skeleton.Farm.Distribute;

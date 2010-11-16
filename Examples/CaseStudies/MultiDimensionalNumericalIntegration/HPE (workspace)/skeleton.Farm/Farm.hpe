@@ -39,7 +39,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="gather" location="/skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" parameter_id="gather strategy" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="gather" location="skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" parameter_id="gather strategy" exposed="false">
       <visualDescription h="44" w="201" x="280" y="274">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -79,7 +79,7 @@
         <visualDescription h="10" w="10" x="37" y="11"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="scatter" location="/skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" parameter_id="scatter strategy" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="scatter" location="skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" parameter_id="scatter strategy" exposed="false">
       <visualDescription h="40" w="177" x="293" y="57">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -97,7 +97,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="data_source" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" parameter_id="input type" exposed="true">
-        <visualDescription h="46" w="117" x="36" y="50">
+        <visualDescription h="46" w="117" x="31" y="52">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="data">
@@ -119,7 +119,7 @@
         <visualDescription h="10" w="10" x="139" y="12"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400000100010065422fb7f33b4321e49243346d388ef04fac1bb418ee5d08053335f074ea9a06945b83378ad2bbed3f85733607de5d134f7a9d5855c38f8b4047e15ea560cf31d15000c7679db7752c9e7e9082ff9e68c0a5457b3b0f119733dfacb0ad053677f61aaaa3b874bce84f5bfc9e1c249a46cea40c68bbe6f105beeecb52c78accd0" localRef="work" location="/skeleton.Farm.Work/Work.hpe" name="Work" package="skeleton.Farm" parameter_id="work task" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400000100010065422fb7f33b4321e49243346d388ef04fac1bb418ee5d08053335f074ea9a06945b83378ad2bbed3f85733607de5d134f7a9d5855c38f8b4047e15ea560cf31d15000c7679db7752c9e7e9082ff9e68c0a5457b3b0f119733dfacb0ad053677f61aaaa3b874bce84f5bfc9e1c249a46cea40c68bbe6f105beeecb52c78accd0" localRef="work" location="skeleton.Farm.Work/Work.hpe" name="Work" package="skeleton.Farm" parameter_id="work task" exposed="false">
       <visualDescription h="39" w="118" x="650" y="161">
         <color b="217" g="255" r="222"/>
       </visualDescription>
@@ -156,17 +156,12 @@
     <parameter componentRef="data_target" formFieldId="output type" varName="O"/>
     <parameter componentRef="data_source" formFieldId="input type" varName="I"/>
     <parameter componentRef="data_worker_in" formFieldId="job type" varName="J"/>
-    <innerRenaming cNewName="job" cOldName="data_target" cRef="scatter"/>
-    <innerRenaming cNewName="job" cOldName="dataIn" cRef="work"/>
+    <innerRenaming cNewName="output" cOldName="data_target" cRef="gather"/>
     <innerRenaming cNewName="result" cOldName="data_source" cRef="gather"/>
     <innerRenaming cNewName="result" cOldName="dataOut" cRef="work"/>
+    <innerRenaming cNewName="job" cOldName="data_target" cRef="scatter"/>
+    <innerRenaming cNewName="job" cOldName="dataIn" cRef="work"/>
     <innerRenaming cNewName="input" cOldName="data_source" cRef="scatter"/>
-    <innerRenaming cNewName="output" cOldName="data_target" cRef="gather"/>
-    <fusion>
-      <cRefs>work</cRefs>
-      <cRefs>scatter</cRefs>
-      <pRef>job</pRef>
-    </fusion>
     <fusion>
       <cRefs>scatter</cRefs>
       <cRefs>gather</cRefs>
@@ -177,6 +172,11 @@
       <cRefs>gather</cRefs>
       <pRef>result</pRef>
     </fusion>
+    <fusion>
+      <cRefs>work</cRefs>
+      <cRefs>scatter</cRefs>
+      <pRef>job</pRef>
+    </fusion>
     <interface iRef="IManager" nArgs="4">
       <slice isRef="distribute">
         <originRef cRef="scatter" iRef="IDistribute"/>
@@ -186,17 +186,17 @@
         <originRef cRef="gather" iRef="ICollect"/>
         <visualDescription h="10" w="10" x="42" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@1839f48" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@83c633" repeat="0">
         <visualDescription h="90" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4e6302" repeat="0" sliceRef="distribute">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1497d1b" repeat="0" sliceRef="distribute">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@464492" repeat="0" sliceRef="collect">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b4a983" repeat="0" sliceRef="collect">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface BaseIManager&lt;I, S, O, G> : IComputationKind &#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#x9;O Output_data {set;}&#xA;&#x9;I Input_data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIManager.cs" srcType="base" uri="/skeleton.Farm/bin/1.0.0.0/BaseIManager.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface BaseIManager&lt;I, S, O, G> : IComputationKind &#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#x9;O Output_data {set;}&#xA;&#x9;I Input_data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIManager.cs" srcType="base" uri="skeleton.Farm/bin/1.0.0.0/BaseIManager.dll" versionId="1.0.0.0">
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
@@ -204,7 +204,7 @@
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface IManager&lt;I, S, O, G> : BaseIManager&lt;I, S, O, G>&#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IManager.cs" srcType="user" uri="/skeleton.Farm/bin/1.0.0.0/IManager.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface IManager&lt;I, S, O, G> : BaseIManager&lt;I, S, O, G>&#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IManager.cs" srcType="user" uri="skeleton.Farm/bin/1.0.0.0/IManager.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll</dependency>
@@ -245,20 +245,20 @@
         <originRef cRef="work" iRef="IWork"/>
         <visualDescription h="10" w="10" x="65" y="13"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@d4e53f" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@447cf0" repeat="0">
         <visualDescription h="90" w="190" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@116a217" repeat="0" sliceRef="receive">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@66832a" repeat="0" sliceRef="receive">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ebbb8b" repeat="0" sliceRef="work">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2d40c2" repeat="0" sliceRef="work">
           <visualDescription h="50" w="50" x="130" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@65a740" repeat="0" sliceRef="send">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f69008" repeat="0" sliceRef="send">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Work;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface BaseIWorker&lt;R, G, J, S, W> : IComputationKind &#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIWorker.cs" srcType="base" uri="/skeleton.Farm/bin/1.0.0.0/BaseIWorker.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Work;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface BaseIWorker&lt;R, G, J, S, W> : IComputationKind &#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIWorker.cs" srcType="base" uri="skeleton.Farm/bin/1.0.0.0/BaseIWorker.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
@@ -267,7 +267,7 @@
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IReceive.dll</dependency>
           <dependency>skeleton.Farm.Work/bin/1.0.0.0/IWork.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Work;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface IWorker&lt;R, G, J, S, W> : BaseIWorker&lt;R, G, J, S, W>&#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IWorker.cs" srcType="user" uri="/skeleton.Farm/bin/1.0.0.0/IWorker.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Work;&#xA;&#xA;namespace skeleton.Farm { &#xA;&#xA;public interface IWorker&lt;R, G, J, S, W> : BaseIWorker&lt;R, G, J, S, W>&#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IWorker.cs" srcType="user" uri="skeleton.Farm/bin/1.0.0.0/IWorker.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IReceive.dll</dependency>
