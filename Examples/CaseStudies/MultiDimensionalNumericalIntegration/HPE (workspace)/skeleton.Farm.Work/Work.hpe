@@ -35,17 +35,17 @@
         <visualDescription h="10" w="10" x="60" y="24"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Work { &#xA;&#xA;public interface BaseIWork&lt;I, O> : IComputationKind &#xA;where I:IData&#xA;where O:IData&#xA;{&#xA;&#xA;&#x9;O Output_data {set;}&#xA;&#x9;I Input_data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIWork.cs" srcType="base" uri="/skeleton.Farm.Work/bin/1.0.0.0/BaseIWork.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Work { &#xA;&#xA;public interface BaseIWork&lt;I, O> : IComputationKind &#xA;where I:IData&#xA;where O:IData&#xA;{&#xA;&#xA;&#x9;O Output_data {set;}&#xA;&#x9;I Input_data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIWork.cs" srcType="base" uri="skeleton.Farm.Work/bin/1.0.0.0/BaseIWork.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Work { &#xA;&#xA;public interface IWork&lt;I, O> : BaseIWork&lt;I, O>&#xA;where I:IData&#xA;where O:IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IWork.cs" srcType="user" uri="/skeleton.Farm.Work/bin/1.0.0.0/IWork.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Work { &#xA;&#xA;public interface IWork&lt;I, O> : BaseIWork&lt;I, O>&#xA;where I:IData&#xA;where O:IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IWork.cs" srcType="user" uri="skeleton.Farm.Work/bin/1.0.0.0/IWork.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>%WORKSPACE/skeleton.Farm.Work/bin/1.0.0.0/BaseIWork.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="75" w="92" x="250" y="153">
+      <visualDescription h="75" w="92" x="170" y="112">
         <color b="128" g="255" r="255"/>
       </visualDescription>
       <port name="input_data">
