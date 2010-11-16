@@ -1,7 +1,7 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using data.Function;
 using data.IntegralCase;
 
@@ -71,11 +71,11 @@ where F:IFunction
           } 
        } */
        
-        public new NINTLIB.IntegratingFunction Function { get { return function.F; } }
+        public new NINTLIB.IntegratingFunction Function { get { return f; } }
 
         public double f(double[] x)
         {        
-            return function.F(x);
+            return function.f(x);
         }
 
         public IIntegralCaseImpl()
