@@ -1,4 +1,4 @@
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 
 namespace data.Function { 
 

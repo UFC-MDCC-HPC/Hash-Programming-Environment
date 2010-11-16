@@ -1,11 +1,11 @@
 /* AUTOMATICALLY GENERATE CODE */
 
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using jefferson.data.Data;
 
 namespace data.Function { 
 
-public interface BaseIFunction : IData, IDataStructureKind 
+public interface BaseIFunction : BaseIData, IDataStructureKind 
 {
 
 

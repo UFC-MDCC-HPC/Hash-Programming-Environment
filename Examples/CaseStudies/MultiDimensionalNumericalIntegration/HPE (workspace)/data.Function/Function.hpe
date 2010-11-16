@@ -6,7 +6,7 @@
         <extends>true</extends>
       </extensionType>
       <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="base" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" version="1.0.0.0">
-        <visualDescription h="109" w="236" x="229" y="137">
+        <visualDescription h="109" w="236" x="284" y="101">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="function">
@@ -22,11 +22,11 @@
   <componentInfo>
     <interface iRef="IFunction" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface BaseIFunction : BaseIData, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIFunction.cs" srcType="base" uri="/data.Function/bin/1.0.0.0/BaseIFunction.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface BaseIFunction : BaseIData, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIFunction.cs" srcType="base" uri="data.Function/bin/1.0.0.0/BaseIFunction.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/BaseIData.dll</dependency>
           <externalDependency>NINTLIB</externalDependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using NINTLIB;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface IFunction : BaseIFunction, IData&#xA;{&#xA;&#xA;   NINTLIB.IntegratingFunction F {get;}&#xA;   double f(double[] x);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" srcType="user" uri="/data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace data.Function { &#xA;&#xA;public interface IFunction : BaseIFunction&#xA;{&#xA;&#xA;    double f(double[] x);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IFunction.cs" srcType="user" uri="data.Function/bin/1.0.0.0/IFunction.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/data.Function/bin/1.0.0.0/BaseIFunction.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <externalDependency>NINTLIB</externalDependency>
