@@ -1,4 +1,4 @@
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using data.Function;
 
 namespace skeleton.example.QuadratureAdaptative { 

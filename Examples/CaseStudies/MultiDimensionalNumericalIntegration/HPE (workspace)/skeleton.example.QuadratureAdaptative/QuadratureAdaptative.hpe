@@ -7,7 +7,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="onejob" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="onejob" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
       <visualDescription h="30" w="82" x="105" y="522">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -16,15 +16,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="the_function" location="/data.Function/Function.hpe" name="Function" package="data" parameter_id="function" exposed="false">
-      <visualDescription h="30" w="50" x="352" y="530">
-        <color b="255" g="255" r="255"/>
-      </visualDescription>
-      <unitBounds uRef="function">
-        <visualDescription h="10" w="10" x="5" y="2"/>
-      </unitBounds>
-    </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003397dbe788db1ebd2ceaa5a0378327dca8d07fc4d69a5528f414e49023a21840fbd9d15a6748125806188aa89aa45fadccdabeb5cf0922e8c3c81f1ea0aa45aa7b118bd1f4a83de6698ae1609ea740a54f492117136b97b49674b4bce644eaba1991a9bac0121760391b2dac8d85fffd2b649358e2cd2be20a5d0789e7a4b183" localRef="work" location="/skeleton.Farm.Work.ApproximateIntegral/ApproximateIntegral.hpe" name="ApproximateIntegral" package="skeleton.Farm.Work" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003397dbe788db1ebd2ceaa5a0378327dca8d07fc4d69a5528f414e49023a21840fbd9d15a6748125806188aa89aa45fadccdabeb5cf0922e8c3c81f1ea0aa45aa7b118bd1f4a83de6698ae1609ea740a54f492117136b97b49674b4bce644eaba1991a9bac0121760391b2dac8d85fffd2b649358e2cd2be20a5d0789e7a4b183" localRef="work" location="skeleton.Farm.Work.ApproximateIntegral/ApproximateIntegral.hpe" name="ApproximateIntegral" package="skeleton.Farm.Work" exposed="false">
       <visualDescription h="30" w="50" x="170" y="59">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -39,7 +31,7 @@
           <visualDescription h="10" w="10" x="5" y="2"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="dataIn" location="/data.List/List.hpe" name="List" package="data" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="dataIn" location="data.List/List.hpe" name="List" package="data" exposed="false">
         <visualDescription h="30" w="50" x="108" y="103">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -52,7 +44,15 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000041c3580bce765f5034ea3b234a92a039fc00498193102162387372a74d00edce3d1e62dade4b923ed6ffa6fbb593fda7537f778b1a7bf332b480cca67d9f8ef776ff037b09ab145eca4da5ac9472f3398b991bdeab8a22cadaca1e97ee2a8eba6d8e7a7ab26ecdcee855122d1930c211e55793f5ba785d7f8ddb516abd9af790" localRef="collect" location="/skeleton.Farm.Collect.SumAreas/SumAreas.hpe" name="SumAreas" package="skeleton.Farm.Collect" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="the_function" location="data.Function/Function.hpe" name="Function" package="data" parameter_id="function" exposed="false">
+      <visualDescription h="30" w="50" x="352" y="530">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="function">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000041c3580bce765f5034ea3b234a92a039fc00498193102162387372a74d00edce3d1e62dade4b923ed6ffa6fbb593fda7537f778b1a7bf332b480cca67d9f8ef776ff037b09ab145eca4da5ac9472f3398b991bdeab8a22cadaca1e97ee2a8eba6d8e7a7ab26ecdcee855122d1930c211e55793f5ba785d7f8ddb516abd9af790" localRef="collect" location="skeleton.Farm.Collect.SumAreas/SumAreas.hpe" name="SumAreas" package="skeleton.Farm.Collect" exposed="false">
       <visualDescription h="30" w="77" x="427" y="122">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -92,7 +92,7 @@
         <visualDescription h="10" w="10" x="18" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d592cd4591bfb7068fa3ed048fc6112292ae9f911e0e3db77bf5e6b815707f90b919ac9c481b699c25d1b9342fa1850cdeb8eccec15b95c5fdf078229b2ed29fb90e9387511ff816b5aa08067cdb437c7b1c6ee0bdc8d0864c60828f7e7fd525c7cbcd6465f223a7151bf3f598b05f9438862643a8ad1321bfcf7e13ce333ab" localRef="distribute" location="/skeleton.Farm.Distribute.DistributeInterval/DistributeInterval.hpe" name="DistributeInterval" package="skeleton.Farm.Distribute" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d592cd4591bfb7068fa3ed048fc6112292ae9f911e0e3db77bf5e6b815707f90b919ac9c481b699c25d1b9342fa1850cdeb8eccec15b95c5fdf078229b2ed29fb90e9387511ff816b5aa08067cdb437c7b1c6ee0bdc8d0864c60828f7e7fd525c7cbcd6465f223a7151bf3f598b05f9438862643a8ad1321bfcf7e13ce333ab" localRef="distribute" location="skeleton.Farm.Distribute.DistributeInterval/DistributeInterval.hpe" name="DistributeInterval" package="skeleton.Farm.Distribute" exposed="false">
       <visualDescription h="30" w="50" x="339" y="467">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -110,7 +110,7 @@
           <visualDescription h="10" w="10" x="59" y="25"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
         <visualDescription h="27" w="99" x="239" y="435">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -119,7 +119,7 @@
           <visualDescription h="10" w="10" x="96" y="19"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="data_target" location="/data.List/List.hpe" name="List" package="data" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="data_target" location="data.List/List.hpe" name="List" package="data" exposed="false">
         <visualDescription h="26" w="116" x="434" y="496">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -151,7 +151,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="input" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="input" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
       <visualDescription h="30" w="69" x="62" y="433">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -160,7 +160,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="jobs" location="/data.List/List.hpe" name="List" package="data" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="jobs" location="data.List/List.hpe" name="List" package="data" exposed="false">
       <visualDescription h="30" w="50" x="98" y="384">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -169,7 +169,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1b7ef70a5d699e2c3ae014f2efeb8f9f544767d1139b4a1e98a63f90c3c4cda92b4dcaf979b8c8778db1f16f4bdd6bf9da2646dc987af9263bb0f7d05997d6dfc7f4f33bee700a7fa882b47e6761bf899e5837a43a55cca4167981780800e359a5c68a9e038718d6949e0b528ec2856f79a0125d76ce86c1227d8a7f1967c86" localRef="farm" location="/skeleton.Farm/Farm.hpe" name="Farm" package="skeleton" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1b7ef70a5d699e2c3ae014f2efeb8f9f544767d1139b4a1e98a63f90c3c4cda92b4dcaf979b8c8778db1f16f4bdd6bf9da2646dc987af9263bb0f7d05997d6dfc7f4f33bee700a7fa882b47e6761bf899e5837a43a55cca4167981780800e359a5c68a9e038718d6949e0b528ec2856f79a0125d76ce86c1227d8a7f1967c86" localRef="farm" location="skeleton.Farm/Farm.hpe" name="Farm" package="skeleton" exposed="false">
       <visualDescription h="30" w="50" x="234" y="275">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -199,8 +199,8 @@
           <visualDescription h="10" w="10" x="46" y="7"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="input" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
-        <visualDescription h="23" w="117" x="178" y="169">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="input" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
+        <visualDescription h="23" w="117" x="178" y="145">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="function" varName="F"/>
@@ -216,8 +216,8 @@
       </unitBounds>
     </innerComponent>
     <supplyParameter cRef="onejob" varName="T"/>
-    <supplyParameter cRef="the_function" varName="F"/>
     <supplyParameter cRef="work" varName="W"/>
+    <supplyParameter cRef="the_function" varName="F"/>
     <supplyParameter cRef="collect" varName="G"/>
     <supplyParameter cRef="distribute" varName="S"/>
     <supplyParameter cRef="result" varName="R"/>
@@ -230,21 +230,21 @@
         <originRef cRef="farm" iRef="IManager"/>
         <visualDescription h="10" w="10" x="60" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@f38a27" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1ecf04c" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f30a01" repeat="0" sliceRef="manager">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@942e5d" repeat="0" sliceRef="manager">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.IntegralCase;&#xA;using data.Function;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface BaseIRoot&lt;F> : IApplicationKind &#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIRoot.cs" srcType="base" uri="/skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRoot.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.IntegralCase;&#xA;using data.Function;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface BaseIRoot&lt;F> : IApplicationKind &#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIRoot.cs" srcType="base" uri="skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRoot.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface IRoot&lt;F> : BaseIRoot&lt;F>&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IRoot.cs" srcType="user" uri="/skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IRoot.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface IRoot&lt;F> : BaseIRoot&lt;F>&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IRoot.cs" srcType="user" uri="skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IRoot.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>%WORKSPACE/skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIRoot.dll</dependency>
         </file>
@@ -271,18 +271,18 @@
         <originRef cRef="farm" iRef="IWorker"/>
         <visualDescription h="10" w="10" x="32" y="11"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@e0d92c" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@102ec55" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d2085d" repeat="0" sliceRef="worker">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e9da9d" repeat="0" sliceRef="worker">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using data.Function;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface BaseIPeer&lt;F> : IApplicationKind &#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPeer.cs" srcType="base" uri="/skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeer.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using data.Function;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface BaseIPeer&lt;F> : IApplicationKind &#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPeer.cs" srcType="base" uri="skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeer.dll" versionId="1.0.0.0">
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface IPeer&lt;F> : BaseIPeer&lt;F>&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPeer.cs" srcType="user" uri="/skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IPeer.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;&#xA;namespace skeleton.example.QuadratureAdaptative { &#xA;&#xA;public interface IPeer&lt;F> : BaseIPeer&lt;F>&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPeer.cs" srcType="user" uri="skeleton.example.QuadratureAdaptative/bin/1.0.0.0/IPeer.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>%WORKSPACE/skeleton.example.QuadratureAdaptative/bin/1.0.0.0/BaseIPeer.dll</dependency>
         </file>
