@@ -52,17 +52,17 @@
         <visualDescription h="10" w="10" x="28" y="24"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface BaseISend&lt;Ds> : ISynchronizerKind &#xA;where Ds:IData&#xA;{&#xA;&#xA;&#x9;Ds Data {set;}&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISend.cs" srcType="base" uri="/skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface BaseISend&lt;Ds> : ISynchronizerKind &#xA;where Ds:IData&#xA;{&#xA;&#xA;&#x9;Ds Data {set;}&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISend.cs" srcType="base" uri="skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface ISend&lt;Ds> : BaseISend&lt;Ds>&#xA;where Ds:IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISend.cs" srcType="user" uri="/skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface ISend&lt;Ds> : BaseISend&lt;Ds>&#xA;where Ds:IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISend.cs" srcType="user" uri="skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>%WORKSPACE/skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="46" y="113">
+      <visualDescription h="40" w="80" x="89" y="86">
         <color b="128" g="128" r="128"/>
       </visualDescription>
       <port name="mpi">
@@ -85,12 +85,12 @@
         <visualDescription h="10" w="10" x="45" y="28"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface BaseICollect&lt;Dt> : ISynchronizerKind &#xA;where Dt:IData&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#x9;Dt Data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseICollect.cs" srcType="base" uri="/skeleton.Farm.Collect/bin/1.0.0.0/BaseICollect.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface BaseICollect&lt;Dt> : ISynchronizerKind &#xA;where Dt:IData&#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {set;}&#xA;&#x9;Dt Data {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseICollect.cs" srcType="base" uri="skeleton.Farm.Collect/bin/1.0.0.0/BaseICollect.dll" versionId="1.0.0.0">
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface ICollect&lt;Dt> : BaseICollect&lt;Dt>&#xA;where Dt:IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICollect.cs" srcType="user" uri="/skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace skeleton.Farm.Collect { &#xA;&#xA;public interface ICollect&lt;Dt> : BaseICollect&lt;Dt>&#xA;where Dt:IData&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICollect.cs" srcType="user" uri="skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>%WORKSPACE/skeleton.Farm.Collect/bin/1.0.0.0/BaseICollect.dll</dependency>
         </file>
