@@ -1,7 +1,7 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using data.Function.TestingFunction;
 using NINTLIB;
 
@@ -14,7 +14,7 @@ public class ITestingFunctionImpl : BaseITestingFunctionImpl, ITestingFunction
 	
 	} 
 	
-	public Object createNew() {
+	public object createNew() {
 	   return new ITestingFunctionImpl();
 	}
 	
