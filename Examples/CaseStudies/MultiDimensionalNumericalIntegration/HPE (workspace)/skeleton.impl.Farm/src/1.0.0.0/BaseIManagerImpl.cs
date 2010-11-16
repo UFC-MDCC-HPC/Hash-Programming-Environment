@@ -1,9 +1,9 @@
 /* Automatically Generated Code */
 
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using skeleton.Farm.Collect;
 using jefferson.data.Data;
 using skeleton.Farm.Distribute;

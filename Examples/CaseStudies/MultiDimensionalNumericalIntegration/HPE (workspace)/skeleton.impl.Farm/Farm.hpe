@@ -5,7 +5,7 @@
       <extensionType>
         <implements>true</implements>
       </extensionType>
-      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1b7ef70a5d699e2c3ae014f2efeb8f9f544767d1139b4a1e98a63f90c3c4cda92b4dcaf979b8c8778db1f16f4bdd6bf9da2646dc987af9263bb0f7d05997d6dfc7f4f33bee700a7fa882b47e6761bf899e5837a43a55cca4167981780800e359a5c68a9e038718d6949e0b528ec2856f79a0125d76ce86c1227d8a7f1967c86" localRef="base" location="/skeleton.Farm/Farm.hpe" name="Farm" package="skeleton" version="1.0.0.0">
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1b7ef70a5d699e2c3ae014f2efeb8f9f544767d1139b4a1e98a63f90c3c4cda92b4dcaf979b8c8778db1f16f4bdd6bf9da2646dc987af9263bb0f7d05997d6dfc7f4f33bee700a7fa882b47e6761bf899e5837a43a55cca4167981780800e359a5c68a9e038718d6949e0b528ec2856f79a0125d76ce86c1227d8a7f1967c86" localRef="base" location="skeleton.Farm/Farm.hpe" name="Farm" package="skeleton" version="1.0.0.0">
         <visualDescription h="66" w="159" x="292" y="222">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -28,7 +28,7 @@
           </unitBounds>
         </port>
         <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="output" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" exposed="true">
-          <visualDescription h="38" w="97" x="67" y="249">
+          <visualDescription h="38" w="97" x="70" y="236">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="data">
@@ -36,7 +36,7 @@
           </unitBounds>
         </port>
         <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="input" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" exposed="true">
-          <visualDescription h="38" w="101" x="69" y="117">
+          <visualDescription h="38" w="101" x="60" y="92">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="data">
@@ -57,7 +57,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400000100010065422fb7f33b4321e49243346d388ef04fac1bb418ee5d08053335f074ea9a06945b83378ad2bbed3f85733607de5d134f7a9d5855c38f8b4047e15ea560cf31d15000c7679db7752c9e7e9082ff9e68c0a5457b3b0f119733dfacb0ad053677f61aaaa3b874bce84f5bfc9e1c249a46cea40c68bbe6f105beeecb52c78accd0" localRef="w" location="/skeleton.Farm.Work/Work.hpe" name="Work" package="skeleton.Farm" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400000100010065422fb7f33b4321e49243346d388ef04fac1bb418ee5d08053335f074ea9a06945b83378ad2bbed3f85733607de5d134f7a9d5855c38f8b4047e15ea560cf31d15000c7679db7752c9e7e9082ff9e68c0a5457b3b0f119733dfacb0ad053677f61aaaa3b874bce84f5bfc9e1c249a46cea40c68bbe6f105beeecb52c78accd0" localRef="w" location="skeleton.Farm.Work/Work.hpe" name="Work" package="skeleton.Farm" exposed="false">
       <visualDescription h="55" w="100" x="430" y="74">
         <color b="217" g="255" r="222"/>
       </visualDescription>
@@ -83,7 +83,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="c" location="/skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="c" location="skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" exposed="false">
       <visualDescription h="30" w="50" x="88" y="171">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -123,7 +123,7 @@
         <visualDescription h="10" w="10" x="18" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="d" location="/skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="d" location="skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" exposed="false">
       <visualDescription h="65" w="177" x="223" y="403">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -202,8 +202,8 @@
     <supplyParameter cRef="o" varName="O"/>
     <supplyParameter cRef="i" varName="I"/>
     <supplyParameter cRef="j" varName="J"/>
-    <innerRenaming cNewName="data_source" cOldName="input" cRef="base"/>
     <innerRenaming cNewName="data_target" cOldName="output" cRef="base"/>
+    <innerRenaming cNewName="data_source" cOldName="input" cRef="base"/>
     <interface iRef="IManagerImpl" nArgs="4">
       <slice isRef="distribute">
         <originRef cRef="scatter" iRef="IDistribute"/>
@@ -213,24 +213,24 @@
         <originRef cRef="gather" iRef="ICollect"/>
         <visualDescription h="10" w="10" x="42" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@5940" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@7bab46" repeat="0">
         <visualDescription h="90" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e3a6e9" repeat="0" sliceRef="distribute">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1299360" repeat="0" sliceRef="distribute">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e3326e" repeat="0" sliceRef="collect">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@8a9ddd" repeat="0" sliceRef="collect">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using skeleton.Farm.Collect;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public abstract class BaseIManagerImpl&lt;I, S, O, G>: Computation, IManager&lt;I, S, O, G>&#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;protected G collect = default(G);&#xA;&#xA;protected G Collect {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.collect = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected S distribute = default(S);&#xA;&#xA;protected S Distribute {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.distribute = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;distribute.Mpi = value;&#xA;&#x9;&#x9;collect.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected O output_data = default(O);&#xA;&#xA;public O Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;&#x9;collect.Data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected I input_data = default(I);&#xA;&#xA;public I Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;&#x9;distribute.Data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIManagerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000a9bb3475ce895bfeb3d5c921eaafb222dced80f493b177e788ba2919ff74d68ea17a8f32bad33623c27fe52c7b5e468a7c814bc358cc197f49d0b2f777cddbdb925473d394659718e6d0055c8c0856f0b94b1739cdee73686f38f4a30e72c67f73f90d1a30c587b1f8941021fa23e6031c9a280a9b03c2d928b261ab69775ac8&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Distribute = (S) BackEnd.createSlice(this, UID,&quot;scatter&quot;,&quot;distribute&quot;,new Type[] {typeof(I)});&#xA;&#x9;this.Collect = (G) BackEnd.createSlice(this, UID,&quot;gather&quot;,&quot;collect&quot;,new Type[] {typeof(O)});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIManagerImpl.cs" srcType="base" uri="/skeleton.impl.Farm/bin/1.0.0.0/BaseIManagerImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using skeleton.Farm.Collect;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public abstract class BaseIManagerImpl&lt;I, S, O, G>: Computation, IManager&lt;I, S, O, G>&#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;protected G collect = default(G);&#xA;&#xA;protected G Collect {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.collect = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected S distribute = default(S);&#xA;&#xA;protected S Distribute {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.distribute = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;distribute.Mpi = value;&#xA;&#x9;&#x9;collect.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected O output_data = default(O);&#xA;&#xA;public O Output_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.output_data = value;&#xA;&#x9;&#x9;collect.Data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected I input_data = default(I);&#xA;&#xA;public I Input_data {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.input_data = value;&#xA;&#x9;&#x9;distribute.Data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIManagerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000a9bb3475ce895bfeb3d5c921eaafb222dced80f493b177e788ba2919ff74d68ea17a8f32bad33623c27fe52c7b5e468a7c814bc358cc197f49d0b2f777cddbdb925473d394659718e6d0055c8c0856f0b94b1739cdee73686f38f4a30e72c67f73f90d1a30c587b1f8941021fa23e6031c9a280a9b03c2d928b261ab69775ac8&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Distribute = (S) BackEnd.createSlice(this, UID,&quot;scatter&quot;,&quot;distribute&quot;,new Type[] {typeof(I)});&#xA;&#x9;this.Collect = (G) BackEnd.createSlice(this, UID,&quot;gather&quot;,&quot;collect&quot;,new Type[] {typeof(O)});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIManagerImpl.cs" srcType="base" uri="skeleton.impl.Farm/bin/1.0.0.0/BaseIManagerImpl.dll" versionId="1.0.0.0">
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>skeleton.Farm/bin/1.0.0.0/IManager.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public class IManagerImpl&lt;I, S, O, G> : BaseIManagerImpl&lt;I, S, O, G>&#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;public IManagerImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;distribute.synchronize();&#xA;&#x9;collect.synchronize();&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IManagerImpl.cs" srcType="user" uri="/skeleton.impl.Farm/bin/1.0.0.0/IManagerImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public class IManagerImpl&lt;I, S, O, G> : BaseIManagerImpl&lt;I, S, O, G>&#xA;where I:IData&#xA;where S:IDistribute&lt;I>&#xA;where O:IData&#xA;where G:ICollect&lt;O>&#xA;{&#xA;&#xA;public IManagerImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;distribute.synchronize();&#xA;&#x9;collect.synchronize();&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IManagerImpl.cs" srcType="user" uri="skeleton.impl.Farm/bin/1.0.0.0/IManagerImpl.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IDistribute.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll</dependency>
@@ -271,20 +271,20 @@
         <originRef cRef="work" iRef="IWork"/>
         <visualDescription h="10" w="10" x="65" y="13"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@12d3714" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@11e22e" repeat="0">
         <visualDescription h="90" w="190" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17b1f5f" repeat="0" sliceRef="receive">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@186c4f" repeat="0" sliceRef="receive">
           <visualDescription h="50" w="50" x="70" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@48baa2" repeat="0" sliceRef="work">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16eb8a2" repeat="0" sliceRef="work">
           <visualDescription h="50" w="50" x="130" y="20"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d5151d" repeat="0" sliceRef="send">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1bc4a0" repeat="0" sliceRef="send">
           <visualDescription h="50" w="50" x="10" y="20"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using skeleton.Farm.Work;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public abstract class BaseIWorkerImpl&lt;R, G, J, S, W>: Computation, IWorker&lt;R, G, J, S, W>&#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;protected W work = default(W);&#xA;&#xA;protected W Work {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.work = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected G send = default(G);&#xA;&#xA;protected G Send {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.send = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected S receive = default(S);&#xA;&#xA;protected S Receive {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.receive = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected R result = default(R);&#xA;&#xA;protected R Result {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.result = value;&#xA;&#x9;&#x9;send.Data = value;&#xA;&#x9;&#x9;work.Output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;receive.Mpi = value;&#xA;&#x9;&#x9;send.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected J job = default(J);&#xA;&#xA;protected J Job {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.job = value;&#xA;&#x9;&#x9;receive.Data = value;&#xA;&#x9;&#x9;work.Input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIWorkerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000a9bb3475ce895bfeb3d5c921eaafb222dced80f493b177e788ba2919ff74d68ea17a8f32bad33623c27fe52c7b5e468a7c814bc358cc197f49d0b2f777cddbdb925473d394659718e6d0055c8c0856f0b94b1739cdee73686f38f4a30e72c67f73f90d1a30c587b1f8941021fa23e6031c9a280a9b03c2d928b261ab69775ac8&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Receive = (S) BackEnd.createSlice(this, UID,&quot;scatter&quot;,&quot;receive&quot;,new Type[] {typeof(J)});&#xA;&#x9;this.Send = (G) BackEnd.createSlice(this, UID,&quot;gather&quot;,&quot;send&quot;,new Type[] {typeof(R)});&#xA;&#x9;this.Work = (W) BackEnd.createSlice(this, UID,&quot;work&quot;,&quot;work&quot;,new Type[] {typeof(J),typeof(R)});&#xA;&#x9;this.Job = (J) BackEnd.createSlice(this, UID,&quot;job&quot;,&quot;data&quot;,new Type[] {});&#xA;&#x9;this.Result = (R) BackEnd.createSlice(this, UID,&quot;result&quot;,&quot;data&quot;,new Type[] {});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIWorkerImpl.cs" srcType="base" uri="/skeleton.impl.Farm/bin/1.0.0.0/BaseIWorkerImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using skeleton.Farm.Work;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using environment.MPIDirect;&#xA;using skeleton.Farm;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public abstract class BaseIWorkerImpl&lt;R, G, J, S, W>: Computation, IWorker&lt;R, G, J, S, W>&#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;protected W work = default(W);&#xA;&#xA;protected W Work {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.work = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected G send = default(G);&#xA;&#xA;protected G Send {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.send = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected S receive = default(S);&#xA;&#xA;protected S Receive {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.receive = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected R result = default(R);&#xA;&#xA;protected R Result {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.result = value;&#xA;&#x9;&#x9;send.Data = value;&#xA;&#x9;&#x9;work.Output_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.mpi = value;&#xA;&#x9;&#x9;receive.Mpi = value;&#xA;&#x9;&#x9;send.Mpi = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected J job = default(J);&#xA;&#xA;protected J Job {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.job = value;&#xA;&#x9;&#x9;receive.Data = value;&#xA;&#x9;&#x9;work.Input_data = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIWorkerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000a9bb3475ce895bfeb3d5c921eaafb222dced80f493b177e788ba2919ff74d68ea17a8f32bad33623c27fe52c7b5e468a7c814bc358cc197f49d0b2f777cddbdb925473d394659718e6d0055c8c0856f0b94b1739cdee73686f38f4a30e72c67f73f90d1a30c587b1f8941021fa23e6031c9a280a9b03c2d928b261ab69775ac8&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Receive = (S) BackEnd.createSlice(this, UID,&quot;scatter&quot;,&quot;receive&quot;,new Type[] {typeof(J)});&#xA;&#x9;this.Send = (G) BackEnd.createSlice(this, UID,&quot;gather&quot;,&quot;send&quot;,new Type[] {typeof(R)});&#xA;&#x9;this.Work = (W) BackEnd.createSlice(this, UID,&quot;work&quot;,&quot;work&quot;,new Type[] {typeof(J),typeof(R)});&#xA;&#x9;this.Job = (J) BackEnd.createSlice(this, UID,&quot;job&quot;,&quot;data&quot;,new Type[] {});&#xA;&#x9;this.Result = (R) BackEnd.createSlice(this, UID,&quot;result&quot;,&quot;data&quot;,new Type[] {});&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIWorkerImpl.cs" srcType="base" uri="skeleton.impl.Farm/bin/1.0.0.0/BaseIWorkerImpl.dll" versionId="1.0.0.0">
           <dependency>skeleton.Farm.Work/bin/1.0.0.0/IWork.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll</dependency>
@@ -292,7 +292,7 @@
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>skeleton.Farm/bin/1.0.0.0/IWorker.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Work;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public class IWorkerImpl&lt;R, G, J, S, W> : BaseIWorkerImpl&lt;R, G, J, S, W>&#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;public IWorkerImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;receive.synchronize();&#xA;&#x9;work.compute();&#xA;&#x9;send.synchronize();&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IWorkerImpl.cs" srcType="user" uri="/skeleton.impl.Farm/bin/1.0.0.0/IWorkerImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Data;&#xA;using skeleton.Farm.Collect;&#xA;using skeleton.Farm.Distribute;&#xA;using skeleton.Farm.Work;&#xA;&#xA;namespace skeleton.impl.Farm { &#xA;&#xA;public class IWorkerImpl&lt;R, G, J, S, W> : BaseIWorkerImpl&lt;R, G, J, S, W>&#xA;where R:IData&#xA;where G:ISend&lt;R>&#xA;where J:IData&#xA;where S:IReceive&lt;J>&#xA;where W:IWork&lt;J, R>&#xA;{&#xA;&#xA;public IWorkerImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;receive.synchronize();&#xA;&#x9;work.compute();&#xA;&#x9;send.synchronize();&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IWorkerImpl.cs" srcType="user" uri="skeleton.impl.Farm/bin/1.0.0.0/IWorkerImpl.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/IReceive.dll</dependency>
@@ -303,15 +303,15 @@
       <visualDescription h="85" w="196" x="397" y="308">
         <color b="0" g="165" r="255"/>
       </visualDescription>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="93" y="59"/>
-        <slice pRef="mpi" sRef="send"/>
-        <slice pRef="mpi" sRef="receive"/>
-      </port>
       <port name="result">
         <visualDescription h="10" w="10" x="156" y="38"/>
         <slice pRef="data" sRef="send"/>
         <slice pRef="output_data" sRef="work"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="93" y="59"/>
+        <slice pRef="mpi" sRef="send"/>
+        <slice pRef="mpi" sRef="receive"/>
       </port>
       <port name="job">
         <visualDescription h="10" w="10" x="162" y="9"/>
