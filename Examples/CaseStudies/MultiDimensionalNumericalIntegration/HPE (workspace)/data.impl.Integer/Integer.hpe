@@ -5,7 +5,7 @@
       <extensionType>
         <implements>true</implements>
       </extensionType>
-      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f65747ca2d1f350246339e2adf2c58acad4dbe5bc53b8da55ea6411bbf920a7a261cbb2ad84334b8f82f508c79c8b5599773de0b2f378c198d2a31f3eb9cd1f67043ebafcc792e478a2717fc6b3a63576f8db9a0236cc2eea447bca1403b69d160bf6c08797bc75ddc0d089c4122a8c52bb806481b59be6471da0dcea7904ad" localRef="base" location="/data.Integer/Integer.hpe" name="Integer" package="data" version="1.0.0.0">
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f65747ca2d1f350246339e2adf2c58acad4dbe5bc53b8da55ea6411bbf920a7a261cbb2ad84334b8f82f508c79c8b5599773de0b2f378c198d2a31f3eb9cd1f67043ebafcc792e478a2717fc6b3a63576f8db9a0236cc2eea447bca1403b69d160bf6c08797bc75ddc0d089c4122a8c52bb806481b59be6471da0dcea7904ad" localRef="base" location="data.Integer/Integer.hpe" name="Integer" package="data" version="1.0.0.0">
         <visualDescription h="30" w="50" x="211" y="291">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -22,15 +22,15 @@
   <componentInfo>
     <interface iRef="IIntegerImpl" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Integer;&#xA;&#xA;namespace data.impl.Integer { &#xA;&#xA;public abstract class BaseIIntegerImpl: DataStructure, BaseIInteger&#xA;{&#xA;&#xA;&#xA;public BaseIIntegerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000436acfbd8556c3788e84ff2e8f6a410b9e03ef53367903d904038ebf785f96c215e5477cf97e39bdd9903bf8516163164e259be746247392c2d0ff2f50bc973c4e888976e8e4475d8e219ee055d2d954a87742faed61160d5e654e142459b997e9323df340f0d3e57eac04a4cff3dfc0749c73613657245c3bca6191df39f5b7&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIIntegerImpl.cs" srcType="base" uri="/data.impl.Integer/bin/1.0.0.0/BaseIIntegerImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using data.Integer;&#xA;&#xA;namespace data.impl.Integer { &#xA;&#xA;public abstract class BaseIIntegerImpl: DataStructure, BaseIInteger&#xA;{&#xA;&#xA;&#xA;public BaseIIntegerImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000436acfbd8556c3788e84ff2e8f6a410b9e03ef53367903d904038ebf785f96c215e5477cf97e39bdd9903bf8516163164e259be746247392c2d0ff2f50bc973c4e888976e8e4475d8e219ee055d2d954a87742faed61160d5e654e142459b997e9323df340f0d3e57eac04a4cff3dfc0749c73613657245c3bca6191df39f5b7&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIIntegerImpl.cs" srcType="base" uri="data.impl.Integer/bin/1.0.0.0/BaseIIntegerImpl.dll" versionId="1.0.0.0">
           <dependency>data.Integer/bin/1.0.0.0/BaseIInteger.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using DGAC;&#xA;using hpe.basic;&#xA;using hpe.kinds;&#xA;using data.Integer;&#xA;&#xA;namespace data.impl.Integer { &#xA;&#xA;public class IIntegerImpl : BaseIIntegerImpl, IInteger&#xA;{&#xA;&#xA;public IIntegerImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IIntegerImpl.cs" srcType="user" uri="/data.impl.Integer/bin/1.0.0.0/IIntegerImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using data.Integer;&#xA;&#xA;namespace data.impl.Integer { &#xA;&#xA;public class IIntegerImpl : BaseIIntegerImpl, IInteger&#xA;{&#xA;&#xA;&#x9;public Object createNew() {&#xA;&#x9;   return new IIntegerImpl();&#xA;&#x9;}&#xA;&#xA;&#x9;private int value_;&#xA;&#x9;&#xA;&#x9;public int Value { get { return value_; } set { value_ = value; } }&#xA;&#x9;&#xA;&#x9;public IIntegerImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IIntegerImpl.cs" srcType="user" uri="data.impl.Integer/bin/1.0.0.0/IIntegerImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/data.impl.Integer/bin/1.0.0.0/BaseIIntegerImpl.dll</dependency>
           <dependency>data.Integer/bin/1.0.0.0/IInteger.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="171" x="82" y="140">
+      <visualDescription h="40" w="171" x="248" y="86">
         <color b="0" g="128" r="255"/>
       </visualDescription>
     </interface>
