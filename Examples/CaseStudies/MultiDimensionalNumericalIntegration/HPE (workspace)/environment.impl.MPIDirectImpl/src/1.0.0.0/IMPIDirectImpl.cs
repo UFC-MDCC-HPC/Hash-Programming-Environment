@@ -1,7 +1,7 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using environment.MPIDirect;
 using MPI;
 
@@ -14,8 +14,8 @@ public class IMPIDirectImpl : BaseIMPIDirectImpl, IMPIDirect
    
    public IMPIDirectImpl() { 
 
-       string[] args = System.Environment.GetCommandLineArgs();
-   	   mpi = new MPI.Environment(ref args);
+      // string[] args = System.Environment.GetCommandLineArgs();
+   	  // mpi = new MPI.Environment(ref args);
    	
    	   Console.WriteLine("MPI.NET Init for process #" + Communicator.world.Rank);
 
@@ -54,7 +54,7 @@ public class IMPIDirectImpl : BaseIMPIDirectImpl, IMPIDirect
 
    override public void destroySlice() {
        Console.Write("Finalizing MPI ...");
-       mpi.Dispose();
+       //mpi.Dispose();
        Console.WriteLine(" finished");
    }
 
