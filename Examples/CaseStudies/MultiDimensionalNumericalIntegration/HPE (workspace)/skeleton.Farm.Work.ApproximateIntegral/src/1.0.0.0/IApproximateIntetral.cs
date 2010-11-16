@@ -1,16 +1,15 @@
-/* AUTOMATICALLY GENERATE CODE */
-
 using br.ufc.pargo.hpe.kinds;
 using data.Function;
-using jefferson.data.Double;
+using data.List;
 using data.IntegralCase;
+using jefferson.data.Double;
 using skeleton.Farm.Work;
 
 namespace skeleton.Farm.Work.ApproximateIntegral { 
 
-public interface BaseIApproximateIntegral<F, I, O> : BaseIWork<I, O>, IComputationKind 
+public interface IApproximateIntetral<F, I, O> : BaseIApproximateIntetral<F, I, O>, IWork<I, O>
 where F:IFunction
-where I:IIntegralCase<F>
+where I:IList<IIntegralCase<F>>
 where O:IDouble
 {
 
