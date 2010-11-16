@@ -45,7 +45,7 @@
           <dependency>%WORKSPACE/skeleton.Farm.Work/bin/1.0.0.0/BaseIWork.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="75" w="92" x="170" y="112">
+      <visualDescription h="75" w="92" x="98" y="137">
         <color b="128" g="255" r="255"/>
       </visualDescription>
       <port name="input_data">
