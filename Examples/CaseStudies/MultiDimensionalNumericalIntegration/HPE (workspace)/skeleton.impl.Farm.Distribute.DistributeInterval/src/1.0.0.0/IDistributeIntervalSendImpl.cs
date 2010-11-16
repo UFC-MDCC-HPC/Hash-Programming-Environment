@@ -1,7 +1,7 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using data.Function;
 using data.IntegralCase;
 using skeleton.Farm.Distribute.DistributeInterval;
@@ -25,10 +25,16 @@ where Ds:IIntegralCase<F>
 
 	public override void synchronize() { 
 	
-	
 		Intracommunicator localComm = mpi.localComm(this);
 		int[] peers = mpi.ranksOf(this, "receive");
 		
+	    Console.Write("[]");
+	    foreach (int p in peers) {
+	       Console.Write("," + p);
+	    }
+	    Console.WriteLine("]");
+	    
+
 	    double[] a_input = data.a;
 	    double[] b_input = data.b;
 	

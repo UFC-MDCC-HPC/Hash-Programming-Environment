@@ -1,7 +1,7 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using data.Function;
 using data.List;
 using data.IntegralCase;
@@ -38,6 +38,7 @@ public override void synchronize() {
 	        ic.b[j] = b_local[i,j];
         }
     }
+    
     
 //    data.a = limits[0];
   //  data.b = limits[1];
