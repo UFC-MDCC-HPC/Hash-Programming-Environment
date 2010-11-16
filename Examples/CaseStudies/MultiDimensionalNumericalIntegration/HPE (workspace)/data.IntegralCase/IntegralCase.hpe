@@ -6,7 +6,7 @@
         <extends>true</extends>
       </extensionType>
       <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000035061a5591dc8f32bb4414644c34e6f8693f48e6f1b362a5db45ee00a5929101029ca834b2d34ff9f1135d22761f59a319869947243aa56dcb7342d8beb5d4cea3d308ce4c46bcecd45d0b2dc7895fc11f9d45f84f9c3e0625bc81c0871bb491a1ec55356aed3bb39f54c4c511cc0a5af3f8bb1c12f7cf3431e93ef6661c4da0" localRef="extends" location="http://localhost:8081/HPE_Location/HPE_Location_Server.jws" name="Data" package="jefferson.data" version="1.0.0.0">
-        <visualDescription h="64" w="86" x="140" y="63">
+        <visualDescription h="64" w="86" x="81" y="63">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="integral_case">
@@ -20,7 +20,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function" location="/data.Function/Function.hpe" name="Function" package="data" parameter_id="function" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function" location="data.Function/Function.hpe" name="Function" package="data" parameter_id="function" exposed="false">
       <visualDescription h="45" w="56" x="239" y="288">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -59,14 +59,14 @@
         <visualDescription h="10" w="10" x="34" y="32"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Function;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.IntegralCase { &#xA;&#xA;public interface BaseIIntegralCase&lt;F> : BaseIData, IDataStructureKind &#xA;where F:IFunction   &#xA;{&#xA;&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIIntegralCase.cs" srcType="base" uri="/data.IntegralCase/bin/1.0.0.0/BaseIIntegralCase.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using data.Function;&#xA;using jefferson.data.Data;&#xA;&#xA;namespace data.IntegralCase { &#xA;&#xA;public interface BaseIIntegralCase&lt;F> : BaseIData, IDataStructureKind &#xA;where F:IFunction   &#xA;{&#xA;&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIIntegralCase.cs" srcType="base" uri="data.IntegralCase/bin/1.0.0.0/BaseIIntegralCase.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/BaseIData.dll</dependency>
           <externalDependency>NINTLIB</externalDependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Data;&#xA;using NINTLIB;&#xA;&#xA;namespace data.IntegralCase { &#xA;&#xA;public interface IIntegralCase&lt;F> : BaseIIntegralCase&lt;F>, IData&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#x9;double[] a {get;}&#xA;&#x9;double[] b {get;}&#xA;&#x9;double f (double[] x); &#xA;&#x9;NINTLIB.IntegratingFunction Function { get; }&#xA;&#x9;int dim_num {get; set;}&#xA;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IIntegralCase.cs" srcType="user" uri="/data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Data;&#xA;using NINTLIB;&#xA;&#xA;namespace data.IntegralCase { &#xA;&#xA;public interface IIntegralCase&lt;F> : BaseIIntegralCase&lt;F>, IData&#xA;where F:IFunction&#xA;{&#xA;&#xA;&#x9;double[] a {get;}&#xA;&#x9;double[] b {get;}&#xA;&#x9;double f (double[] x); &#xA;&#x9;NINTLIB.IntegratingFunction Function { get; }&#xA;&#x9;int dim_num {get; set;}&#xA;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IIntegralCase.cs" srcType="user" uri="data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>%WORKSPACE/data.IntegralCase/bin/1.0.0.0/BaseIIntegralCase.dll</dependency>
           <dependency>jefferson.data.Data/bin/1.0.0.0/IData.dll</dependency>
