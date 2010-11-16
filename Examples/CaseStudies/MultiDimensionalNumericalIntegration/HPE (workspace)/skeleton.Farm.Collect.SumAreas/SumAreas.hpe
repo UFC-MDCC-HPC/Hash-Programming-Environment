@@ -5,7 +5,7 @@
       <extensionType>
         <extends>true</extends>
       </extensionType>
-      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="base" location="/skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" version="1.0.0.0">
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b929d92ede0e9a2e1366afb2f5ea2f1216aefe2da5a4976b605c173dd107cfb4cd3a2ef8189d58a357441d589fef99ffc5ec51148681be34915bf0018d94f10683f32052c0a2c0dfc62409949f3240b9b9c86df1e6ad44f54f2f414c3d1aadc224458ef141395d4a9b0011f48ac9cb39c88e7aa964aba2d8607fccc509d1ac" localRef="base" location="skeleton.Farm.Collect/Collect.hpe" name="Collect" package="skeleton.Farm" version="1.0.0.0">
         <visualDescription h="87" w="232" x="317" y="96">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -82,19 +82,19 @@
         <visualDescription h="10" w="10" x="28" y="24"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface BaseISendResults&lt;Ds> : BaseISend&lt;Ds>, ISynchronizerKind &#xA;where Ds:IDouble&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISendResults.cs" srcType="base" uri="/skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISendResults.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface BaseISendResults&lt;Ds> : BaseISend&lt;Ds>, ISynchronizerKind &#xA;where Ds:IDouble&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISendResults.cs" srcType="base" uri="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISendResults.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/BaseISend.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;using MPI;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface ISendResults&lt;Ds> : BaseISendResults&lt;Ds>, ISend&lt;Ds>&#xA;where Ds:IDouble&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISendResults.cs" srcType="user" uri="/skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISendResults.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;using MPI;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface ISendResults&lt;Ds> : BaseISendResults&lt;Ds>, ISend&lt;Ds>&#xA;where Ds:IDouble&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISendResults.cs" srcType="user" uri="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISendResults.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>%WORKSPACE/skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISendResults.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ISend.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="85" y="66">
+      <visualDescription h="40" w="80" x="71" y="89">
         <color b="128" g="128" r="128"/>
       </visualDescription>
       <port name="mpi">
@@ -118,12 +118,12 @@
         <visualDescription h="10" w="10" x="45" y="28"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface BaseISum&lt;Dt> : BaseICollect&lt;Dt>, ISynchronizerKind &#xA;where Dt:IDouble&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISum.cs" srcType="base" uri="/skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISum.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface BaseISum&lt;Dt> : BaseICollect&lt;Dt>, ISynchronizerKind &#xA;where Dt:IDouble&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISum.cs" srcType="base" uri="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISum.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/BaseICollect.dll</dependency>
           <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;using MPI;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface ISum&lt;Dt> : BaseISum&lt;Dt>, ICollect&lt;Dt>&#xA;where Dt:IDouble&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISum.cs" srcType="user" uri="/skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISum.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Double;&#xA;using skeleton.Farm.Collect;&#xA;using MPI;&#xA;&#xA;namespace skeleton.Farm.Collect.SumAreas { &#xA;&#xA;public interface ISum&lt;Dt> : BaseISum&lt;Dt>, ICollect&lt;Dt>&#xA;where Dt:IDouble&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISum.cs" srcType="user" uri="skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/ISum.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Double/bin/1.0.0.0/IDouble.dll</dependency>
           <dependency>%WORKSPACE/skeleton.Farm.Collect.SumAreas/bin/1.0.0.0/BaseISum.dll</dependency>
           <dependency>skeleton.Farm.Collect/bin/1.0.0.0/ICollect.dll</dependency>

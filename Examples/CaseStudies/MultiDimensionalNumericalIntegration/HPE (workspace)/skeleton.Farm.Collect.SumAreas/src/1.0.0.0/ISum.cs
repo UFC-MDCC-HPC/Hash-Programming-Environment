@@ -1,4 +1,4 @@
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using jefferson.data.Double;
 using skeleton.Farm.Collect;
 using MPI;
