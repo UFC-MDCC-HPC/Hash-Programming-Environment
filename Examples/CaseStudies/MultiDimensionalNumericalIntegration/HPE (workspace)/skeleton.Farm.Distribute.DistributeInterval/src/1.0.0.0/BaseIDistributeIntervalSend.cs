@@ -1,6 +1,6 @@
 /* AUTOMATICALLY GENERATE CODE */
 
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using data.Function;
 using jefferson.data.Double;
 using data.IntegralCase;

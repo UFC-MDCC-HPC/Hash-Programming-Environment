@@ -5,7 +5,7 @@
       <extensionType>
         <extends>true</extends>
       </extensionType>
-      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="base" location="/skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" version="1.0.0.0">
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd1a4054bdd8ed75706643e5adeee3cd39b3076281e6e61e9fd7ed39724fd9ff24e920aef0dda5430ac27abe106a5b4ae0dbc15852a7bcbb8dabc04ddf2fc2e8eb3ff36fa39de6e51d9b88c28b9e0b7c757c5a5564c813821af1ed2a54e09384bc8e55c7ae43e437abe56f9b4b6911830dbe037be113e8dcc459b9f1b8c767a2" localRef="base" location="skeleton.Farm.Distribute/Distribute.hpe" name="Distribute" package="skeleton.Farm" version="1.0.0.0">
         <visualDescription h="69" w="214" x="212" y="126">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -22,8 +22,8 @@
             <visualDescription h="10" w="10" x="59" y="25"/>
           </unitBounds>
         </port>
-        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" parameter_id="data source" exposed="true">
-          <visualDescription h="46" w="117" x="37" y="204">
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" parameter_id="data source" exposed="true">
+          <visualDescription h="46" w="117" x="45" y="135">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <parameter formFieldId="function" varName="F"/>
@@ -31,7 +31,7 @@
             <visualDescription h="10" w="10" x="96" y="19"/>
           </unitBounds>
         </port>
-        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="data_target" location="/data.List/List.hpe" name="List" package="data" parameter_id="data target" exposed="true">
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="data_target" location="data.List/List.hpe" name="List" package="data" parameter_id="data target" exposed="true">
           <visualDescription h="45" w="116" x="688" y="268">
             <color b="255" g="255" r="255"/>
           </visualDescription>
@@ -54,7 +54,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_target" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_target" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" exposed="false">
       <visualDescription h="84" w="191" x="236" y="381">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -63,7 +63,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function_" location="/data.Function/Function.hpe" name="Function" package="data" parameter_id="function" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e91e2e81b39c649bf0beb49b6e14afaa7ea3ed04de8f226b318b5b19b6aec79a88fe23700fd52933c049a1608974df11e1df938ed9e31865c251318d4e70a018fe4fabe09b170b4b0a71da19ecef1b5114ba0a35b259a70efce80273c1d3c156268b9ab5075787a8a829fa18656a959c2e053791a967bbd271d69522b908bf91" localRef="function_" location="data.Function/Function.hpe" name="Function" package="data" parameter_id="function" exposed="false">
       <visualDescription h="75" w="122" x="236" y="279">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -71,7 +71,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="/data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" parameter_id="data source" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006bb05122bacb885ebc06203e40d8b22d30db6ff98d5665b52320095c346c94e632c8caf9b07e9402a87229041a2510eb9fa0a96fcc7aef60d32c29e2b5053967fdef66748b3d0626b4d0c85aa007063e1c29c39f9b7c02e3f0f63ee1818b57aa61516041ca5a25b2b2a8d5856f8ea0f7a4545c50452c62cf33e75e07107d18b5" localRef="data_source" location="data.IntegralCase/IntegralCase.hpe" name="IntegralCase" package="data" parameter_id="data source" exposed="false">
       <visualDescription h="41" w="136" x="148" y="75">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -80,7 +80,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="listjobs" location="/data.List/List.hpe" name="List" package="data" parameter_id="data target" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f315c2c9a063e0ac331604a971caf7587a18017b146f0dfeecca5440cdc8f9f82e72d07c4686a5d9d041bba638bf2973955919e5fe4eaad63656af1bc2607b62abf68dd84ea90f8b07c4eabe9183fae012d2513aacd3ea67faf8270ea6adac5aa155d3b5ea2224b6d159c4d55adf7945be4f4462ed615241c5fcb5ab88eb287" localRef="listjobs" location="data.List/List.hpe" name="List" package="data" parameter_id="data target" exposed="false">
       <visualDescription h="30" w="50" x="56" y="410">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -106,12 +106,12 @@
         <visualDescription h="10" w="10" x="9" y="10"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface BaseIDistributeIntervalSend&lt;F, Ds> : BaseIDistribute&lt;Ds>, ISynchronizerKind &#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDistributeIntervalSend.cs" srcType="base" uri="/skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSend.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;using jefferson.data.Double;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface BaseIDistributeIntervalSend&lt;F, Ds> : BaseIDistribute&lt;Ds>, ISynchronizerKind &#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDistributeIntervalSend.cs" srcType="base" uri="skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSend.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/BaseIDistribute.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface IDistributeIntervalSend&lt;F, Ds> : BaseIDistributeIntervalSend&lt;F, Ds>, IDistribute&lt;Ds>&#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDistributeIntervalSend.cs" srcType="user" uri="/skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalSend.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface IDistributeIntervalSend&lt;F, Ds> : BaseIDistributeIntervalSend&lt;F, Ds>, IDistribute&lt;Ds>&#xA;where F:IFunction&#xA;where Ds:IIntegralCase&lt;F>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDistributeIntervalSend.cs" srcType="user" uri="skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalSend.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
           <dependency>%WORKSPACE/skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalSend.dll</dependency>
@@ -142,13 +142,13 @@
         <visualDescription h="10" w="10" x="70" y="7"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using data.Function;&#xA;using data.List;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface BaseIDistributeIntervalReceive&lt;F, Dt> : BaseIReceive&lt;Dt>, ISynchronizerKind &#xA;where F:IFunction&#xA;where Dt:IList&lt;IIntegralCase&lt;F>>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDistributeIntervalReceive.cs" srcType="base" uri="/skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalReceive.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;using data.List;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface BaseIDistributeIntervalReceive&lt;F, Dt> : BaseIReceive&lt;Dt>, ISynchronizerKind &#xA;where F:IFunction&#xA;where Dt:IList&lt;IIntegralCase&lt;F>>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDistributeIntervalReceive.cs" srcType="base" uri="skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/BaseIDistributeIntervalReceive.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>data.List/bin/1.0.0.0/IList.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
           <dependency>skeleton.Farm.Distribute/bin/1.0.0.0/BaseIReceive.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using data.Function;&#xA;using data.List;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface IDistributeIntervalReceive&lt;F, Dt> : BaseIDistributeIntervalReceive&lt;F, Dt>, IReceive&lt;Dt>&#xA;where F:IFunction&#xA;where Dt:IList&lt;IIntegralCase&lt;F>>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDistributeIntervalReceive.cs" srcType="user" uri="/skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalReceive.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using data.Function;&#xA;using data.List;&#xA;using data.IntegralCase;&#xA;using skeleton.Farm.Distribute;&#xA;&#xA;namespace skeleton.Farm.Distribute.DistributeInterval { &#xA;&#xA;public interface IDistributeIntervalReceive&lt;F, Dt> : BaseIDistributeIntervalReceive&lt;F, Dt>, IReceive&lt;Dt>&#xA;where F:IFunction&#xA;where Dt:IList&lt;IIntegralCase&lt;F>>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDistributeIntervalReceive.cs" srcType="user" uri="skeleton.Farm.Distribute.DistributeInterval/bin/1.0.0.0/IDistributeIntervalReceive.dll" versionId="1.0.0.0">
           <dependency>data.Function/bin/1.0.0.0/IFunction.dll</dependency>
           <dependency>data.List/bin/1.0.0.0/IList.dll</dependency>
           <dependency>data.IntegralCase/bin/1.0.0.0/IIntegralCase.dll</dependency>
