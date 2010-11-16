@@ -1,4 +1,4 @@
-using hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using jefferson.data.Number;
 
 namespace jefferson.data.Double { 

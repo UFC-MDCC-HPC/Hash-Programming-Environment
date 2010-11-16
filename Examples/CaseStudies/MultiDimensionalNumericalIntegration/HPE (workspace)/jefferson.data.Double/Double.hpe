@@ -22,15 +22,15 @@
   <componentInfo>
     <interface iRef="IDouble" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using hpe.kinds;&#xA;using jefferson.data.Number;&#xA;&#xA;namespace jefferson.data.Double { &#xA;&#xA;public interface BaseIDouble : BaseINumber, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDouble.cs" srcType="base" uri="/jefferson.data.Double/bin/1.0.0.0/BaseIDouble.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Number;&#xA;&#xA;namespace jefferson.data.Double { &#xA;&#xA;public interface BaseIDouble : BaseINumber, IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDouble.cs" srcType="base" uri="jefferson.data.Double/bin/1.0.0.0/BaseIDouble.dll" versionId="1.0.0.0">
           <dependency>jefferson.data.Number/bin/1.0.0.0/BaseINumber.dll</dependency>
         </file>
-        <file contents="using hpe.kinds;&#xA;using jefferson.data.Number;&#xA;&#xA;namespace jefferson.data.Double { &#xA;&#xA;public interface IDouble : BaseIDouble, INumber&#xA;{&#xA;&#x9;double Value{&#xA;&#x9;&#x9;&#x9;set;&#xA;&#x9;&#x9;    get;&#xA;&#x9;&#x9;}&#xA;&#xA;    // Optimized operations ...&#xA;    void plus(IDouble b);&#xA;    void times(IDouble b);&#xA;    void minus(IDouble b);&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDouble.cs" srcType="user" uri="/jefferson.data.Double/bin/1.0.0.0/IDouble.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using jefferson.data.Number;&#xA;&#xA;namespace jefferson.data.Double { &#xA;&#xA;public interface IDouble : BaseIDouble, INumber&#xA;{&#xA;&#x9;double Value{&#xA;&#x9;&#x9;&#x9;set;&#xA;&#x9;&#x9;    get;&#xA;&#x9;&#x9;}&#xA;&#xA;    // Optimized operations ...&#xA;    void plus(IDouble b);&#xA;    void times(IDouble b);&#xA;    void minus(IDouble b);&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDouble.cs" srcType="user" uri="jefferson.data.Double/bin/1.0.0.0/IDouble.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/jefferson.data.Double/bin/1.0.0.0/BaseIDouble.dll</dependency>
           <dependency>jefferson.data.Number/bin/1.0.0.0/INumber.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="171" x="77" y="119">
+      <visualDescription h="40" w="171" x="96" y="80">
         <color b="0" g="0" r="255"/>
       </visualDescription>
     </interface>
