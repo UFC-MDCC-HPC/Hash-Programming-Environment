@@ -1,7 +1,7 @@
 using System;
-using DGAC;
-using hpe.basic;
-using hpe.kinds;
+using br.ufc.pargo.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.kinds;
 using jefferson.data.Double;
 using MPI;
 
