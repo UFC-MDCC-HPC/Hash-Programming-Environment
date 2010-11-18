@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000b1fe940e9cdb7db4cac7f4e93a2e50a0101aee60745d5b2e924aa212ed9902ba0de7ec005f8833629169332bd366498cc1af2e660a8ad6df1a459f4762866aa4df1bb56a6398ef67ee64bf26e74500eb92ccbfc7d2958baffb2981838e687df748ad1b5d1833e099a0ae4c74a5439a95ded47f5da3625350dce186d9b0a7cde" isAbstract="true" kind="Computation" name="Solver" packagePath="linearsystems.user.computation">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000291e2ba80efdeec39dac71fb881d049e3e6cdf53f6be9c54d25b46653ba9e60c489d1c3744ff8a9fe69673a7e0d945428b14cb4045d1ee7ee621da5808f765d21335d370d0b7a9daba45d936035d24af4e2ab7f333550f99d566232ecf2161eff12b4fadbe344715a665d72d4db9ff8a03ac8dd4c6e25bbe1419c37c78a97bce" localRef="matrix" location="linearsystems.user.data.Matrix/Matrix.hpe" name="Matrix" package="linearsystems.user.data" parameter_id="matrix_type" exposed="true">
+      <visualDescription h="61" w="110" x="139" y="334">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="matrix_property" varName="MPT"/>
+      <parameter formFieldId="numeric_type" varName="NUM"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="unit">
+        <visualDescription h="10" w="10" x="47" y="9"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" localRef="rhs" location="linearsystems.user.data.Vector/Vector.hpe" name="Vector" package="linearsystems.user.data" parameter_id="vector_type" exposed="true">
+      <visualDescription h="62" w="101" x="259" y="332">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="numeric_type" varName="NUM"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="unit">
+        <visualDescription h="10" w="10" x="47" y="11"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" localRef="solution" location="linearsystems.user.data.Vector/Vector.hpe" name="Vector" package="linearsystems.user.data" parameter_id="vector_type" exposed="true">
+      <visualDescription h="61" w="107" x="376" y="332">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="numeric_type" varName="NUM"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" localRef="library" location="linearsystems.library.basic.Library/Library.hpe" name="Library" package="linearsystems.library.basic" parameter_id="library" exposed="false">
+      <visualDescription h="55" w="86" x="17" y="206">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="68" y="26"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d5915a213e2dec164ef25d506e8431f94ffc2ff5c9ff30a5af8d37b7576b26a64807a518c80294e53e4d356f1cb7bae10cdd312719074d1e3383d8e410feeb061b4732dd5ce7755101162e72b6c808595e2bcc87bcb647e63365e1fab7997833c773de46c66e87be246d4c7c0ac15de57c9232160265d40650856a29b9cc1e92" localRef="matrix_property" location="linearsystems.user.qualifier.MatrixProperty/MatrixProperty.hpe" name="MatrixProperty" package="linearsystems.user.qualifier" parameter_id="matrix_property" exposed="false">
+      <visualDescription h="48" w="148" x="206" y="62">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="matrix_property">
+        <visualDescription h="10" w="10" x="67" y="33"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ba0f16b915cc3b546da4b2320cc8ac7b939ebf8536bdf0cd821b75fa45544380fcfe7764eba9e8332f37dc30e943845cef3ea1b45409b9ee8c560d1ed7e7ea471cfc6a14b075e46a2990f8514423c1f754eb660015cd917e9fa65e82184937270068735dd25ed9019aeb367723ea53db0d174237f8df0ebf5aa9955bfe509a" localRef="pre_conditioner" location="linearsystems.user.qualifier.PreConditioner/PreConditioner.hpe" name="PreConditioner" package="linearsystems.user.qualifier" parameter_id="pre_conditioner" exposed="false">
+      <visualDescription h="49" w="146" x="56" y="60">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="matrix_property" varName="MPT"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="pre_conditioner">
+        <visualDescription h="10" w="10" x="66" y="33"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000063cd2c8dbcd9c4f38d5275f61a8cb998f735d4a0b30cdf43d9ee5d73f65d0e60c45d810d19e3d02f78c9b5a38cb0e0aeb515617c676a48e8870651476d88b342bfa65b75425b8b425749c27f6ce1dfea7c99266ee1a74b72fea2522d2cdc8da9caa83be26d05c249898a5ecae332ff9ebd8cce37fd30b74fc031864dd5ad8c82" localRef="numeric_type" location="linearsystems.user.qualifier.ElementDataType/ElementDataType.hpe" name="ElementDataType" package="linearsystems.user.qualifier" parameter_id="numeric_type" exposed="false">
+      <visualDescription h="43" w="111" x="517" y="65">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="element_type">
+        <visualDescription h="10" w="10" x="52" y="30"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000063cd2c8dbcd9c4f38d5275f61a8cb998f735d4a0b30cdf43d9ee5d73f65d0e60c45d810d19e3d02f78c9b5a38cb0e0aeb515617c676a48e8870651476d88b342bfa65b75425b8b425749c27f6ce1dfea7c99266ee1a74b72fea2522d2cdc8da9caa83be26d05c249898a5ecae332ff9ebd8cce37fd30b74fc031864dd5ad8c82" localRef="solution_method" location="linearsystems.user.qualifier.SolutionMethod/SolutionMethod.hpe" name="SolutionMethod" package="linearsystems.user.qualifier" parameter_id="method" exposed="false">
+      <visualDescription h="45" w="150" x="360" y="64">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="matrix_property" varName="MPT"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <parameter formFieldId="pre_conditioner" varName="PRC"/>
+      <unitBounds uRef="solution_method">
+        <visualDescription h="10" w="10" x="72" y="31"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="matrix" formFieldId="matrix_type" varName="MAT"/>
+    <parameter componentRef="rhs" formFieldId="vector_type" varName="VEC"/>
+    <parameter componentRef="solution" formFieldId="vector_type" varName="?"/>
+    <parameter componentRef="library" formFieldId="library" varName="LIB"/>
+    <parameter componentRef="matrix_property" formFieldId="matrix_property" varName="MPT"/>
+    <parameter componentRef="pre_conditioner" formFieldId="pre_conditioner" varName="PRC"/>
+    <parameter componentRef="numeric_type" formFieldId="numeric_type" varName="NUM"/>
+    <parameter componentRef="solution_method" formFieldId="method" varName="MTH"/>
+    <interface iRef="ISolver" nArgs="8">
+      <slice isRef="a">
+        <originRef cRef="matrix" iRef="IMatrix"/>
+        <visualDescription h="10" w="10" x="45" y="79"/>
+      </slice>
+      <slice isRef="v">
+        <originRef cRef="rhs" iRef="IVector"/>
+        <visualDescription h="10" w="11" x="20" y="23"/>
+      </slice>
+      <slice isRef="x">
+        <originRef cRef="solution" iRef="IVector"/>
+        <visualDescription h="10" w="10" x="59" y="25"/>
+      </slice>
+      <slice isRef="pre_conditioner">
+        <originRef cRef="pre_conditioner" iRef="IPreConditioner"/>
+        <visualDescription h="10" w="10" x="15" y="5"/>
+      </slice>
+      <slice isRef="matrix_property">
+        <originRef cRef="matrix_property" iRef="IMatrixProperty"/>
+        <visualDescription h="10" w="10" x="34" y="4"/>
+      </slice>
+      <slice isRef="solution_method">
+        <originRef cRef="solution_method" iRef="ISolutionMethod"/>
+        <visualDescription h="10" w="10" x="52" y="1"/>
+      </slice>
+      <slice isRef="element_type">
+        <originRef cRef="numeric_type" iRef="IElementDataType"/>
+        <visualDescription h="10" w="10" x="66" y="11"/>
+      </slice>
+      <slice isRef="library">
+        <originRef cRef="library" iRef="ILibrary"/>
+        <visualDescription h="10" w="10" x="1" y="11"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="111" w="271" x="151" y="427">
+        <color b="255" g="255" r="0"/>
+      </visualDescription>
+      <port name="a">
+        <visualDescription h="10" w="10" x="63" y="38"/>
+        <slice pRef="unit" sRef="a"/>
+      </port>
+      <port name="v">
+        <visualDescription h="10" w="10" x="85" y="78"/>
+        <slice pRef="unit" sRef="v"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="15" y="44"/>
+        <slice pRef="unit" sRef="x"/>
+      </port>
+      <parameter iname="IMatrix" order="0" parid="MAT" uname="unit" varid="matrix_type"/>
+      <parameter iname="IVector" order="1" parid="VEC" uname="unit" varid="vector_type"/>
+      <parameter iname="IVector" order="2" parid="?" uname="unit" varid="vector_type"/>
+      <parameter iname="IPreConditioner" order="3" parid="PRC" uname="pre_conditioner" varid="pre_conditioner"/>
+      <parameter iname="IMatrixProperty" order="4" parid="MPT" uname="matrix_property" varid="matrix_property"/>
+      <parameter iname="ISolutionMethod" order="5" parid="MTH" uname="solution_method" varid="method"/>
+      <parameter iname="IElementDataType" order="6" parid="NUM" uname="element_type" varid="numeric_type"/>
+      <parameter iname="ILibrary" order="7" parid="LIB" uname="library" varid="library"/>
+    </interface>
+    <unit iRef="ISolver" private="false" uRef="unit" visibleInterface="true">
+      <slices cRef="matrix" replica="0" uRef="unit" sliceName="a" transitive="false">
+        <visualDescription h="10" w="10" x="4" y="25"/>
+      </slices>
+      <slices cRef="rhs" replica="0" uRef="unit" sliceName="v" transitive="false">
+        <visualDescription h="10" w="10" x="20" y="23"/>
+      </slices>
+      <slices cRef="solution" replica="0" uRef="unit" sliceName="x" transitive="false">
+        <visualDescription h="10" w="10" x="59" y="25"/>
+      </slices>
+      <slices cRef="pre_conditioner" replica="0" uRef="pre_conditioner" sliceName="pre_conditioner" transitive="false">
+        <visualDescription h="10" w="10" x="15" y="5"/>
+      </slices>
+      <slices cRef="matrix_property" replica="0" uRef="matrix_property" sliceName="matrix_property" transitive="false">
+        <visualDescription h="10" w="10" x="34" y="4"/>
+      </slices>
+      <slices cRef="solution_method" replica="0" uRef="solution_method" sliceName="solution_method" transitive="false">
+        <visualDescription h="10" w="10" x="52" y="1"/>
+      </slices>
+      <slices cRef="numeric_type" replica="0" uRef="element_type" sliceName="element_type" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="11"/>
+      </slices>
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="1" y="11"/>
+      </slices>
+      <visualDescription h="40" w="80" x="256" y="241"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>matrix</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matrix" uRef="unit"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>matrix</originRef>
+      <originRef>matrix_property</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matrix" uRef="unit"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>rhs</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="rhs" uRef="unit"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="347" y="242"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>solution</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="solution" uRef="unit"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="433" y="225"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="315" y="250"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>matrix_property</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matrix_property" uRef="matrix_property"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="265" y="281"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>pre_conditioner</originRef>
+      <originRef>matrix_property</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="pre_conditioner" uRef="pre_conditioner"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="334" y="212"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f765611290012082327" varId="n">
+      <originRef>numeric_type</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="numeric_type" uRef="element_type"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="480" y="191"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>solution_method</originRef>
+      <originRef>matrix_property</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="solution_method" uRef="solution_method"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="79" w="93" x="491" y="236"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>solution_method</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="solution_method" uRef="solution_method"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="301" y="210"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>solution_method</originRef>
+      <originRef>pre_conditioner</originRef>
+      <originRef>matrix_property</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="solution_method" uRef="solution_method"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="305" y="270"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>solution_method</originRef>
+        <originRef>matrix_property</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>matrix_property</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>solution_method</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>matrix</originRef>
+        <originRef>matrix_property</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>solution_method</originRef>
+        <originRef>pre_conditioner</originRef>
+        <originRef>matrix_property</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>pre_conditioner</originRef>
+        <originRef>matrix_property</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>rhs</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>solution</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1f765611290012082327</eRef>
+        <originRef>numeric_type</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>solution_method</originRef>
+        <originRef>matrix_property</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>matrix</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+  </componentInfo>
+</component:component>

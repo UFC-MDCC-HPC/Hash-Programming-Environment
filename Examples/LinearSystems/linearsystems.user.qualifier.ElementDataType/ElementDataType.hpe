@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000063cd2c8dbcd9c4f38d5275f61a8cb998f735d4a0b30cdf43d9ee5d73f65d0e60c45d810d19e3d02f78c9b5a38cb0e0aeb515617c676a48e8870651476d88b342bfa65b75425b8b425749c27f6ce1dfea7c99266ee1a74b72fea2522d2cdc8da9caa83be26d05c249898a5ecae332ff9ebd8cce37fd30b74fc031864dd5ad8c82" isAbstract="true" kind="Qualifier" name="ElementDataType" packagePath="linearsystems.user.qualifier">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IElementDataType" nArgs="0">
+      <visualDescription h="40" w="123" x="91" y="169">
+        <color b="64" g="128" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IElementDataType" private="false" uRef="element_type" visibleInterface="true">
+      <visualDescription h="40" w="123" x="91" y="249"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f765611290012082327" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="element_type"/>
+      <visualDescription h="20" w="20" x="366" y="140"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

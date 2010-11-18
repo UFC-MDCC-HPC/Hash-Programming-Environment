@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ba0f16b915cc3b546da4b2320cc8ac7b939ebf8536bdf0cd821b75fa45544380fcfe7764eba9e8332f37dc30e943845cef3ea1b45409b9ee8c560d1ed7e7ea471cfc6a14b075e46a2990f8514423c1f754eb660015cd917e9fa65e82184937270068735dd25ed9019aeb367723ea53db0d174237f8df0ebf5aa9955bfe509a" isAbstract="true" kind="Qualifier" name="PreConditioner" packagePath="linearsystems.user.qualifier">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" localRef="library" location="linearsystems.library.basic.Library/Library.hpe" name="Library" package="linearsystems.library.basic" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="124" y="563">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d5915a213e2dec164ef25d506e8431f94ffc2ff5c9ff30a5af8d37b7576b26a64807a518c80294e53e4d356f1cb7bae10cdd312719074d1e3383d8e410feeb061b4732dd5ce7755101162e72b6c808595e2bcc87bcb647e63365e1fab7997833c773de46c66e87be246d4c7c0ac15de57c9232160265d40650856a29b9cc1e92" localRef="matrix_property" location="linearsystems.user.qualifier.MatrixProperty/MatrixProperty.hpe" name="MatrixProperty" package="linearsystems.user.qualifier" parameter_id="matrix_property" exposed="false">
+      <visualDescription h="81" w="182" x="204" y="383">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="matrix_property">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="library" varName="LIB"/>
+    <parameter componentRef="matrix_property" formFieldId="matrix_property" varName="MPT"/>
+    <parameter componentRef="library" formFieldId="library" varName="LIB"/>
+    <interface iRef="IPreConditioner" nArgs="2">
+      <slice isRef="matrix_property">
+        <originRef cRef="matrix_property" iRef="IMatrixProperty"/>
+        <visualDescription h="10" w="10" x="75" y="30"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="40" w="123" x="91" y="169">
+        <color b="64" g="128" r="128"/>
+      </visualDescription>
+      <parameter iname="ILibrary" order="0" parid="LIB" uname="library" varid="library"/>
+      <parameter iname="IMatrixProperty" order="1" parid="MPT" uname="matrix_property" varid="matrix_property"/>
+    </interface>
+    <unit iRef="IPreConditioner" private="false" uRef="pre_conditioner" visibleInterface="true">
+      <slices cRef="matrix_property" replica="0" uRef="matrix_property" sliceName="matrix_property" transitive="false">
+        <visualDescription h="10" w="10" x="75" y="30"/>
+      </slices>
+      <visualDescription h="40" w="123" x="91" y="249"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>matrix_property</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matrix_property" uRef="matrix_property"/>
+      <links xsi:type="component:EnumerableUnitType" ref="pre_conditioner"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

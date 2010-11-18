@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f9761b6eaee1a43448366b5026e21a96adcec5ad8ed22cf68583dcf11c9465768b58ad1e7c4f44d51a74ef7430e3f252dbcf281711378f07d7fab8ebc6a4a6fed263ef0b6af268cc77024c22b065e1a3645071e6b706a4d7f4cb7b0735dc4e65277f41059c4b6877b2b0b342a75d01e535a75ba665d592b0599f082fe48c61b6" isAbstract="true" kind="Facet" name="PETScMatrix" packagePath="linearsystems.library.PETSc.facet">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000077e7957dc01a34ed77aa0d454f4f2694f83034d18361da1826e24760b222bbfa111ff17b0d0d3a89a5664480a30a01874728169b0e2a16984875bc3f6830781671eeab57a746b8925340aadf26696ecb50f778e70b536e76bddeaae15999f24193f9da765534645ae2b6ef6d0d7eac770c350511d7c0db3714cf1bf7aaf24799" localRef="extends" location="linearsystems.library.basic.facet.LSSFacetMatrix/LSSFacetMatrix.hpe" name="LSSFacetMatrix" package="linearsystems.library.basic.facet" version="1.0.0.0">
+        <visualDescription h="47" w="119" x="114" y="130">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="L"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="56" y="32"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000472b78b0c4eb688c789e3df5cf2590c54ba6221b434f5303ca4837a9795c54dd254864cebcca1b998bf27c12d3b276340d0e1e5e2dae3da11fca87fb75dac269f91893327e1ccba8bc6cd61461107a01f38f9ce6dccf78f4c8b1c8e7397afc8eea679bbbc9adca0b8c708233bd654263e3f31c35742367324505beae4af2b594" localRef="library" location="linearsystems.library.PETSc/PETSc.hpe" name="PETSc" package="linearsystems.library" exposed="false">
+      <visualDescription h="30" w="50" x="153" y="284">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="library" varName="L"/>
+    <interface iRef="IPETScMatrix" nArgs="0">
+      <slice isRef="library">
+        <originRef cRef="library" iRef="IPETSc"/>
+        <visualDescription h="10" w="10" x="27" y="27"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetMatrix;&#xA;&#xA;namespace linearsystems.library.PETSc.facet.PETScMatrix { &#xA;&#xA;public interface BaseIPETScMatrix : BaseIFacetMatrix, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPETScMatrix.cs" srcType="base" uri="linearsystems.library.PETSc.facet.PETScMatrix/bin/1.0.0.0/BaseIPETScMatrix.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.facet.LSSFacetMatrix/bin/1.0.0.0/BaseIFacetMatrix.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetMatrix;&#xA;&#xA;namespace linearsystems.library.PETSc.facet.PETScMatrix { &#xA;&#xA;public interface IPETScMatrix : BaseIPETScMatrix, IFacetMatrix&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPETScMatrix.cs" srcType="user" uri="linearsystems.library.PETSc.facet.PETScMatrix/bin/1.0.0.0/IPETScMatrix.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.library.PETSc.facet.PETScMatrix/bin/1.0.0.0/BaseIPETScMatrix.dll</dependency>
+          <dependency>linearsystems.library.basic.facet.LSSFacetMatrix/bin/1.0.0.0/IFacetMatrix.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="37" y="220">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IPETScMatrix" private="false" uRef="facet_unit" visibleInterface="true">
+      <super cRef="extends" uRef="facet_unit"/>
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="27" y="27"/>
+      </slices>
+      <visualDescription h="40" w="80" x="97" y="345"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>extends</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@6f6c01289951162553" varId="n">
+      <originRef>extends</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
+      <visualDescription h="20" w="20" x="312" y="166"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

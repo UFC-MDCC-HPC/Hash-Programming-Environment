@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ad882112b2dce5174a598798ed42ad4922b9b3216323a8856c98107709c8668b2b8f27eb9ea4385c41fe820631721d7edca5676ca53aee4bdc7cc5f09db5bd3c43e98e95912199e0262f12788c39d8dc35cb85a4571ccaf7ac921aa697118e07169c11bf9b8afd65235ed1c1c893685a0fb49823e6c527eff5125d4006aa87a1" isAbstract="true" kind="Qualifier" name="SuperLU" packagePath="linearsystems.library">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" localRef="extends" location="linearsystems.library.basic.Library/Library.hpe" name="Library" package="linearsystems.library.basic" version="1.0.0.0">
+        <visualDescription h="109" w="228" x="150" y="315">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="library">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ISuperLU" nArgs="0">
+      <visualDescription h="40" w="80" x="160" y="119">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ISuperLU" private="false" uRef="library" visibleInterface="true">
+      <super cRef="extends" uRef="library"/>
+      <visualDescription h="40" w="80" x="83" y="198"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>extends</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="library"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

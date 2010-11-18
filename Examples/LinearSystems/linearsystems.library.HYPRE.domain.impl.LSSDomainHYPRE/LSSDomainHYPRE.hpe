@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095a06bfdd6dbd1f996fd9e941901d88366e679c7ef57494113587ef0f53d7d001660606c6a94772827c103d9243e05eb4ac03915655c0f759d5ad274413f10b51a652fb5b9c9b52d4b88163a3ece348a5ddcad77d5f58f8cd39a454f6c5f0dc1451ebb8a21224bbd8d3403bc575cd4c4ee7ec62b8b05e682d8be340317c58e88" isAbstract="false" kind="Domain" name="LSSDomainHYPRE" packagePath="linearsystems.library.HYPRE.domain.impl">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>

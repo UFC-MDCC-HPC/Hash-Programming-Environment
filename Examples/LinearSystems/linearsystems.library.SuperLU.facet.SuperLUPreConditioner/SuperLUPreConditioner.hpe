@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000deb2e32081e4adae83623704ae9f8be326e0d70a0e8adf034e31c4d3715d91d12bce67de4744e1d482d0c53023872f76a436ec6ad46a5412b15678ae003f318986991089e868305928397b8c994fc955c66362ca3a88130c66b0134cfe88641eb602f701597c964c05ec6ef61df108360ca5953de2548ca67b46eb9975dc58a" isAbstract="true" kind="Facet" name="SuperLUPreConditioner" packagePath="linearsystems.library.SuperLU.facet">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d116e71f63e1950665cac287514e07251d36eb701970b51a56365cef3b55775c65b2de3ee1fe82b1fa7145b4ba158b96b04893952a9940dfb75dec9d2211f6ac9d2ba6ac2cc9b13b7a752efece4be15656901ade22ee8169ba50fbfe61395fbe334a9bdb67b12e72a0ac84b922627f5e0469aaae71cccd90338cbdefeede1593" localRef="extends" location="linearsystems.library.basic.facet.LSSFacetPreConditioner/LSSFacetPreConditioner.hpe" name="LSSFacetPreConditioner" package="linearsystems.library.basic.facet" version="1.0.0.0">
+        <visualDescription h="66" w="112" x="109" y="298">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="L"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ad882112b2dce5174a598798ed42ad4922b9b3216323a8856c98107709c8668b2b8f27eb9ea4385c41fe820631721d7edca5676ca53aee4bdc7cc5f09db5bd3c43e98e95912199e0262f12788c39d8dc35cb85a4571ccaf7ac921aa697118e07169c11bf9b8afd65235ed1c1c893685a0fb49823e6c527eff5125d4006aa87a1" localRef="library" location="linearsystems.library.SuperLU/SuperLU.hpe" name="SuperLU" package="linearsystems.library" exposed="false">
+      <visualDescription h="30" w="50" x="109" y="160">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="library" varName="L"/>
+    <interface iRef="ISuperLUPreConditioner" nArgs="0">
+      <slice isRef="library">
+        <originRef cRef="library" iRef="ISuperLU"/>
+        <visualDescription h="10" w="10" x="54" y="32"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetPreConditioner;&#xA;&#xA;namespace linearsystems.library.SuperLU.facet.SuperLUPreConditioner { &#xA;&#xA;public interface BaseISuperLUPreConditioner : BaseIFacetPreConditioner, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISuperLUPreConditioner.cs" srcType="base" uri="linearsystems.library.SuperLU.facet.SuperLUPreConditioner/bin/1.0.0.0/BaseISuperLUPreConditioner.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/BaseIFacetPreConditioner.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetPreConditioner;&#xA;&#xA;namespace linearsystems.library.SuperLU.facet.SuperLUPreConditioner { &#xA;&#xA;public interface ISuperLUPreConditioner : BaseISuperLUPreConditioner, IFacetPreConditioner&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISuperLUPreConditioner.cs" srcType="user" uri="linearsystems.library.SuperLU.facet.SuperLUPreConditioner/bin/1.0.0.0/ISuperLUPreConditioner.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.library.SuperLU.facet.SuperLUPreConditioner/bin/1.0.0.0/BaseISuperLUPreConditioner.dll</dependency>
+          <dependency>linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/IFacetPreConditioner.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="140" x="147" y="86">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ISuperLUPreConditioner" private="false" uRef="facet_unit" visibleInterface="true">
+      <super cRef="extends" uRef="facet_unit"/>
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="54" y="32"/>
+      </slices>
+      <visualDescription h="40" w="80" x="155" y="182"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>extends</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ebfeaf1289951179537" varId="n">
+      <originRef>extends</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
+      <visualDescription h="20" w="20" x="361" y="179"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>extends</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ebfeaf1289951179537</eRef>
+        <originRef>extends</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+  </componentInfo>
+</component:component>

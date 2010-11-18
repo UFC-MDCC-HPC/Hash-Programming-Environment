@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000fd22528ee25efb80cf7c187a5ab3c6be690a3ccb76df7350ca4f987c5425186b5bc9e6e695d155d0cc49cc91089f2b74b4185d0751019d703800ac9c7db5fabd363938ea343eb52a7337c00ba4af53f59be218ad3ad773e299e86655e33a1074c5dd21bd18f4c981419820f2a05840939bf365016137c8e584800924fadb74ed" isAbstract="true" kind="Facet" name="LSSFacetVector" packagePath="linearsystems.library.basic.facet">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" localRef="library" location="linearsystems.library.basic.Library/Library.hpe" name="Library" package="linearsystems.library.basic" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="32" y="403">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="library" formFieldId="library" varName="L"/>
+    <interface iRef="IFacetVector" nArgs="1">
+      <slice isRef="library">
+        <originRef cRef="library" iRef="ILibrary"/>
+        <visualDescription h="10" w="10" x="15" y="14"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="40" w="80" x="174" y="135">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+      <parameter iname="ILibrary" order="0" parid="L" uname="library" varid="library"/>
+    </interface>
+    <unit iRef="IFacetVector" private="false" uRef="facet_unit" visibleInterface="true">
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="15" y="14"/>
+      </slices>
+      <visualDescription h="40" w="80" x="174" y="215"/>
+    </unit>
+  </componentInfo>
+</component:component>

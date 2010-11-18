@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004736a3fed13d05f1e23451c8eba8a76701b13cb48b0cea349054f69fde73516f4f0743434c1c2ce4270520ecede07f2e9fad038e4e07a1787fa9809bf6cfc8ceb38542282794fb6731746a890cf17df9030b009b6d0bcc93711ba2716945947f69ef35d3c3a56aa057b6905fa7100826d9d6c72c380aefaa387c6d1f8a083688" isAbstract="true" kind="Environment" name="Communicator" packagePath="environment.messagepassing">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ICommunicator" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace environment.messagepassing.Communicator { &#xA;&#xA;public interface BaseICommunicator : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseICommunicator.cs" srcType="base" uri="environment.messagepassing.Communicator/bin/1.0.0.0/BaseICommunicator.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace environment.messagepassing.Communicator { &#xA;&#xA;public interface ICommunicator : BaseICommunicator&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICommunicator.cs" srcType="user" uri="environment.messagepassing.Communicator/bin/1.0.0.0/ICommunicator.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/environment.messagepassing.Communicator/bin/1.0.0.0/BaseICommunicator.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="78" w="116" x="131" y="144">
+        <color b="64" g="255" r="0"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ICommunicator" private="false" uRef="comm" visibleInterface="true">
+      <visualDescription h="40" w="80" x="167" y="262"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@96cb3e1289957059997" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="comm"/>
+      <visualDescription h="20" w="20" x="448" y="280"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

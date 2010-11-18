@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b918890c65e915c39314e4db045792984181c82a016d993ad461e990e329db0627357e98a6b9f5cefe958f5d621c4671d396d19df7106f0c4906d2a45f45d80710794b0b150ffb935689f53e3788d705908f76fe191c3e63f4a7ee0e0362aaf9d5ae91fe8a68e1faaad5084654e57e57d89f628e44dd8fa85cf01860d59e6dad" isAbstract="true" kind="Facet" name="SuperLUSolver" packagePath="linearsystems.library.SuperLU.facet">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d9c65f0faa8b2f5725a8216433ad298055b10bf90ec1333a195a637a33a8227b7d8fe6fe9296222bfa6de81aec7c84e8c426ef1b2291b227c043d7fafd016d9304910274396410d19a63911e4221eb49c2d28ab400ad27ce0af732bde5b99542b2d96f370a5a1d7c31ae0ec4ed53ef9969d7063da01b703393bef9c487080080" localRef="extends" location="linearsystems.library.basic.facet.LSSFacetSolver/LSSFacetSolver.hpe" name="LSSFacetSolver" package="linearsystems.library.basic.facet" version="1.0.0.0">
+        <visualDescription h="78" w="152" x="173" y="272">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="L"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ad882112b2dce5174a598798ed42ad4922b9b3216323a8856c98107709c8668b2b8f27eb9ea4385c41fe820631721d7edca5676ca53aee4bdc7cc5f09db5bd3c43e98e95912199e0262f12788c39d8dc35cb85a4571ccaf7ac921aa697118e07169c11bf9b8afd65235ed1c1c893685a0fb49823e6c527eff5125d4006aa87a1" localRef="library" location="linearsystems.library.SuperLU/SuperLU.hpe" name="SuperLU" package="linearsystems.library" exposed="false">
+      <visualDescription h="30" w="50" x="261" y="383">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="library" varName="L"/>
+    <interface iRef="ISuperLUSolver" nArgs="0">
+      <slice isRef="library">
+        <originRef cRef="library" iRef="ISuperLU"/>
+        <visualDescription h="10" w="10" x="22" y="28"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetSolver;&#xA;&#xA;namespace linearsystems.library.SuperLU.facet.SuperLUSolver { &#xA;&#xA;public interface BaseISuperLUSolver : BaseIFacetSolver, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISuperLUSolver.cs" srcType="base" uri="linearsystems.library.SuperLU.facet.SuperLUSolver/bin/1.0.0.0/BaseISuperLUSolver.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.facet.LSSFacetSolver/bin/1.0.0.0/BaseIFacetSolver.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetSolver;&#xA;&#xA;namespace linearsystems.library.SuperLU.facet.SuperLUSolver { &#xA;&#xA;public interface ISuperLUSolver : BaseISuperLUSolver, IFacetSolver&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISuperLUSolver.cs" srcType="user" uri="linearsystems.library.SuperLU.facet.SuperLUSolver/bin/1.0.0.0/ISuperLUSolver.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.library.SuperLU.facet.SuperLUSolver/bin/1.0.0.0/BaseISuperLUSolver.dll</dependency>
+          <dependency>linearsystems.library.basic.facet.LSSFacetSolver/bin/1.0.0.0/IFacetSolver.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="175" y="59">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ISuperLUSolver" private="false" uRef="facet_unit" visibleInterface="true">
+      <super cRef="extends" uRef="facet_unit"/>
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="22" y="28"/>
+      </slices>
+      <visualDescription h="40" w="80" x="175" y="139"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>extends</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

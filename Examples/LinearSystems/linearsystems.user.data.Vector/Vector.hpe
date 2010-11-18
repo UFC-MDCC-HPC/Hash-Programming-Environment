@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" isAbstract="true" kind="Data" name="Vector" packagePath="linearsystems.user.data">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e54a1cd76c56f37564e556d5517b2d561d570943a9bf7a0b8b581e4d460948db74148f8bfec29cd3099ab23362f6af475c87d8e6587054ba6f285c11cac304a3234a744282e035e268295e9981c0e6c4b819b5e0fe59f1bcc0f7c051ca64fbafdec8c2536bc6e4a87932b2fbe1aa9dae3cedbce7a976051c7e0f7d8601801887" localRef="element_type" location="linearsystems.user.qualifier.ElementDataType/ElementDataType.hpe" name="ElementDataType" package="linearsystems.user.qualifier" parameter_id="numeric_type" exposed="false">
+      <visualDescription h="83" w="152" x="217" y="447">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="element_type">
+        <visualDescription h="10" w="10" x="98" y="12"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" localRef="library" location="linearsystems.library.basic.Library/Library.hpe" name="Library" package="linearsystems.library.basic" parameter_id="library" exposed="false">
+      <visualDescription h="70" w="102" x="100" y="411">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="48" y="15"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="element_type" formFieldId="numeric_type" varName="NUM"/>
+    <parameter componentRef="library" formFieldId="library" varName="LIB"/>
+    <interface iRef="IVector" nArgs="2">
+      <slice isRef="library">
+        <originRef cRef="library" iRef="ILibrary"/>
+        <visualDescription h="10" w="10" x="3" y="28"/>
+      </slice>
+      <slice isRef="element_type">
+        <originRef cRef="element_type" iRef="IElementDataType"/>
+        <visualDescription h="10" w="10" x="61" y="18"/>
+      </slice>
+      <visualDescription h="40" w="80" x="106" y="140">
+        <color b="64" g="128" r="255"/>
+      </visualDescription>
+      <parameter iname="ILibrary" order="0" parid="LIB" uname="library" varid="library"/>
+      <parameter iname="IElementDataType" order="1" parid="NUM" uname="element_type" varid="numeric_type"/>
+    </interface>
+    <unit iRef="IVector" private="false" uRef="unit" visibleInterface="true">
+      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
+        <visualDescription h="10" w="10" x="3" y="28"/>
+      </slices>
+      <slices cRef="element_type" replica="0" uRef="element_type" sliceName="element_type" transitive="false">
+        <visualDescription h="10" w="10" x="61" y="18"/>
+      </slices>
+      <visualDescription h="40" w="80" x="106" y="220"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f765611290012082327" varId="n">
+      <originRef>element_type</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="element_type" uRef="element_type"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="366" y="140"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library"/>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1f765611290012082327</eRef>
+        <originRef>element_type</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+  </componentInfo>
+</component:component>
