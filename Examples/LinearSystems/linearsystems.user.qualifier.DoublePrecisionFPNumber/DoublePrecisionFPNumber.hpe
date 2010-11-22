@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000025c6f8b948fa813a90f77ef4ec1ace9a912cea55bfc8a38a555c5b62f2d47e043a17440c5cf2e20a2a3c8b9b1f3c4ff87c442f9173a5d09c9cd06a7f9d6d039487bdf860a566ea1ed7920e107844bff07c95da9f650b3b8df94f7f1c501cec1e9c258c8f43442fb3e390951aac9fa320a95b2d361f5d4c1633567d04d007918f" isAbstract="true" kind="Qualifier" name="DoublePrecisionFPNumber" packagePath="linearsystems.user.qualifier">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e54a1cd76c56f37564e556d5517b2d561d570943a9bf7a0b8b581e4d460948db74148f8bfec29cd3099ab23362f6af475c87d8e6587054ba6f285c11cac304a3234a744282e035e268295e9981c0e6c4b819b5e0fe59f1bcc0f7c051ca64fbafdec8c2536bc6e4a87932b2fbe1aa9dae3cedbce7a976051c7e0f7d8601801887" localRef="base" location="linearsystems.user.qualifier.ElementDataType/ElementDataType.hpe" name="ElementDataType" package="linearsystems.user.qualifier" version="1.0.0.0">
+        <visualDescription h="72" w="156" x="196" y="247">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="element_type">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IDoublePrecisionFPNumber" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.user.qualifier.ElementDataType;&#xA;&#xA;namespace linearsystems.user.qualifier.DoublePrecisionFPNumber { &#xA;&#xA;public interface BaseIDoublePrecisionFPNumber : BaseIElementDataType, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDoublePrecisionFPNumber.cs" srcType="base" uri="linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/BaseIDoublePrecisionFPNumber.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/BaseIElementDataType.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.user.qualifier.ElementDataType;&#xA;&#xA;namespace linearsystems.user.qualifier.DoublePrecisionFPNumber { &#xA;&#xA;public interface IDoublePrecisionFPNumber : BaseIDoublePrecisionFPNumber, IElementDataType&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDoublePrecisionFPNumber.cs" srcType="user" uri="linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/IDoublePrecisionFPNumber.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/BaseIDoublePrecisionFPNumber.dll</dependency>
+          <dependency>linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="123" x="65" y="82">
+        <color b="64" g="128" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IDoublePrecisionFPNumber" private="false" uRef="element_type" visibleInterface="true">
+      <super cRef="base" uRef="element_type"/>
+      <visualDescription h="40" w="123" x="53" y="236"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f765611290012082327" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="element_type"/>
+      <visualDescription h="20" w="20" x="366" y="140"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

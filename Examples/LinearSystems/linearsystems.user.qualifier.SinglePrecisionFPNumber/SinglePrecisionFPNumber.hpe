@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005b061c999772c0f433d6cdf08de7f9a188b1577fc6de147656d8f0afe8ad78d570ecd7c6eac9dd34e7e8d6b6793ea2bf0f40b079c3ab91bf6b1f8548dbbb5d4f00c32ec311a0f938501bc7476d30fbb239bf547dc2765fb5709be078b67046b2cf58bb003845f6a6ab329533b94090ef6234be5df5bc37c7959cdf2f7f3a4183" isAbstract="true" kind="Qualifier" name="SinglePrecisionFPNumber" packagePath="linearsystems.user.qualifier">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000025c6f8b948fa813a90f77ef4ec1ace9a912cea55bfc8a38a555c5b62f2d47e043a17440c5cf2e20a2a3c8b9b1f3c4ff87c442f9173a5d09c9cd06a7f9d6d039487bdf860a566ea1ed7920e107844bff07c95da9f650b3b8df94f7f1c501cec1e9c258c8f43442fb3e390951aac9fa320a95b2d361f5d4c1633567d04d007918f" localRef="base" location="linearsystems.user.qualifier.DoublePrecisionFPNumber/DoublePrecisionFPNumber.hpe" name="DoublePrecisionFPNumber" package="linearsystems.user.qualifier" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="200" y="192">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="element_type">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ISinglePrecisionFPNumber" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.user.qualifier.DoublePrecisionFPNumber;&#xA;&#xA;namespace linearsystems.user.qualifier.SinglePrecisionFPNumber { &#xA;&#xA;public interface BaseISinglePrecisionFPNumber : BaseIDoublePrecisionFPNumber, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISinglePrecisionFPNumber.cs" srcType="base" uri="linearsystems.user.qualifier.SinglePrecisionFPNumber/bin/1.0.0.0/BaseISinglePrecisionFPNumber.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/BaseIDoublePrecisionFPNumber.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.user.qualifier.DoublePrecisionFPNumber;&#xA;&#xA;namespace linearsystems.user.qualifier.SinglePrecisionFPNumber { &#xA;&#xA;public interface ISinglePrecisionFPNumber : BaseISinglePrecisionFPNumber, IDoublePrecisionFPNumber&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISinglePrecisionFPNumber.cs" srcType="user" uri="linearsystems.user.qualifier.SinglePrecisionFPNumber/bin/1.0.0.0/ISinglePrecisionFPNumber.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.user.qualifier.SinglePrecisionFPNumber/bin/1.0.0.0/BaseISinglePrecisionFPNumber.dll</dependency>
+          <dependency>linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/IDoublePrecisionFPNumber.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="123" x="65" y="82">
+        <color b="64" g="128" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ISinglePrecisionFPNumber" private="false" uRef="element_type" visibleInterface="true">
+      <super cRef="base" uRef="element_type"/>
+      <visualDescription h="40" w="123" x="53" y="236"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f765611290012082327" varId="n">
+      <originRef>base</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="element_type"/>
+      <visualDescription h="20" w="20" x="366" y="140"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
