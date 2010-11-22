@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D6E7DE7B-5DE0-457E-862E-F1F381C974BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HYPREVector</RootNamespace>
+    <AssemblyName>HYPREVector</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIHYPREVector.cs">
+      <Link>BaseIHYPREVector.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IHYPREVector.cs">
+      <Link>IHYPREVector.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\linearsystems.library.HYPRE\HYPRE\library.HYPRE.csproj">
+      <Project>{1CF1EA71-7C8B-4A9A-934B-4AC786A568EF}</Project>
+      <Name>library.HYPRE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.Library\Library\library.Library.csproj">
+      <Project>{91435CBB-268E-4AB5-AB01-2BF9A7655C21}</Project>
+      <Name>library.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.facet.LSSFacetVector\LSSFacetVector\library.LSSFacetVector.csproj">
+      <Project>{D50D0CD7-460A-4505-8556-384D8E31423B}</Project>
+      <Name>library.LSSFacetVector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\media\HERON\HPE\hashmodel_monodevelop\Back-End HPE Windows\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" />
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

@@ -68,14 +68,13 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <supplyParameter cRef="library" varName="L"/>
+    <parameter componentRef="library" formFieldId="library" varName="L"/>
     <parameter componentRef="matrix" formFieldId="matrix" varName="M"/>
     <parameter componentRef="pre_conditioner" formFieldId="pre_conditioner" varName="P"/>
     <parameter componentRef="setup" formFieldId="setup" varName="S"/>
     <parameter componentRef="solver" formFieldId="solver" varName="R"/>
     <parameter componentRef="vector" formFieldId="vector" varName="V"/>
-    <parameter componentRef="library" formFieldId="library" varName="L"/>
-    <interface iRef="ILSSDomain" nArgs="6">
+    <interface iRef="ILSSDomain" nArgs="5">
       <slice isRef="v">
         <originRef cRef="vector" iRef="IFacetVector"/>
         <visualDescription h="10" w="10" x="24" y="25"/>
@@ -122,12 +121,11 @@
       <visualDescription h="40" w="80" x="49" y="79">
         <color b="255" g="128" r="0"/>
       </visualDescription>
-      <parameter iname="ILibrary" order="0" parid="L" uname="library" varid="library"/>
-      <parameter iname="IFacetVector" order="1" parid="V" uname="facet_unit" varid="vector"/>
-      <parameter iname="IFacetSetup" order="2" parid="S" uname="facet_unit" varid="setup"/>
-      <parameter iname="IFacetMatrix" order="3" parid="M" uname="facet_unit" varid="matrix"/>
-      <parameter iname="IFacetPreConditioner" order="4" parid="P" uname="facet_unit" varid="pre_conditioner"/>
-      <parameter iname="IFacetSolver" order="5" parid="R" uname="facet_unit" varid="solver"/>
+      <parameter iname="IFacetVector" order="0" parid="V" uname="facet_unit" varid="vector"/>
+      <parameter iname="IFacetSetup" order="1" parid="S" uname="facet_unit" varid="setup"/>
+      <parameter iname="IFacetMatrix" order="2" parid="M" uname="facet_unit" varid="matrix"/>
+      <parameter iname="IFacetPreConditioner" order="3" parid="P" uname="facet_unit" varid="pre_conditioner"/>
+      <parameter iname="IFacetSolver" order="4" parid="R" uname="facet_unit" varid="solver"/>
     </interface>
     <unit iRef="ILSSDomain" private="false" uRef="lssdomain" visibleInterface="true">
       <slices cRef="vector" replica="0" uRef="facet_unit" sliceName="v" transitive="false">
@@ -150,35 +148,45 @@
       </slices>
       <visualDescription h="40" w="80" x="49" y="159"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@6f6c01289951162553" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library"/>
+      <visualDescription h="20" w="20" x="396" y="201"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>matrix</originRef>
+      <originRef>library</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="matrix" uRef="facet_unit"/>
       <links xsi:type="component:EnumerableUnitType" ref="lssdomain"/>
-      <visualDescription h="53" w="58" x="338" y="166"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ebfeaf1289951179537" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>pre_conditioner</originRef>
+      <originRef>library</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="pre_conditioner" uRef="facet_unit"/>
       <links xsi:type="component:EnumerableUnitType" ref="lssdomain"/>
-      <visualDescription h="20" w="20" x="361" y="179"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f440e71289951255972" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>setup</originRef>
+      <originRef>library</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="setup" uRef="facet_unit"/>
       <links xsi:type="component:EnumerableUnitType" ref="lssdomain"/>
-      <visualDescription h="20" w="20" x="312" y="183"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@aba78f1289951641353" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>solver</originRef>
+      <originRef>library</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="solver" uRef="facet_unit"/>
       <links xsi:type="component:EnumerableUnitType" ref="lssdomain"/>
-      <visualDescription h="20" w="20" x="403" y="292"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@17bc4bc1289951661484" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>vector</originRef>
+      <originRef>library</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="vector" uRef="facet_unit"/>
       <links xsi:type="component:EnumerableUnitType" ref="lssdomain"/>
-      <visualDescription h="20" w="20" x="353" y="282"/>
+      <visualDescription h="20" w="20" x="300" y="239"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@96cb3e1289957059997" varId="n">
       <originRef>comm</originRef>
@@ -188,34 +196,37 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@6f6c01289951162553</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
         <originRef>matrix</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1f440e71289951255972</eRef>
-        <originRef>setup</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ebfeaf1289951179537</eRef>
-        <originRef>pre_conditioner</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@17bc4bc1289951661484</eRef>
-        <originRef>vector</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@aba78f1289951641353</eRef>
-        <originRef>solver</originRef>
-      </fusionOfReplicators>
-    </fusionsOfReplicators>
-    <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@6f6c01289951162553</eRef>
-        <originRef>matrix</originRef>
+        <originRef>library</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@96cb3e1289957059997</eRef>
         <originRef>comm</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>solver</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>vector</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>pre_conditioner</originRef>
+        <originRef>library</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
+        <originRef>setup</originRef>
+        <originRef>library</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

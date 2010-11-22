@@ -30,7 +30,7 @@
           <dependency>%WORKSPACE/linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/BaseIFacetPreConditioner.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="140" x="147" y="86">
+      <visualDescription h="40" w="140" x="154" y="85">
         <color b="0" g="0" r="255"/>
       </visualDescription>
       <parameter iname="ILibrary" order="0" parid="L" uname="library" varid="library"/>

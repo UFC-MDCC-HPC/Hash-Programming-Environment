@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
-  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" isAbstract="true" kind="Qualifier" name="Library" packagePath="linearsystems.library.basic">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" isAbstract="true" kind="Environment" name="Library" packagePath="linearsystems.library.basic">
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>

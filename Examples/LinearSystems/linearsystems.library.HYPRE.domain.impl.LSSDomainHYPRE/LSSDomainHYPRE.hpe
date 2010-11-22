@@ -1,10 +1,165 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:component="http://www.example.org/HashComponent">
   <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095a06bfdd6dbd1f996fd9e941901d88366e679c7ef57494113587ef0f53d7d001660606c6a94772827c103d9243e05eb4ac03915655c0f759d5ad274413f10b51a652fb5b9c9b52d4b88163a3ece348a5ddcad77d5f58f8cd39a454f6c5f0dc1451ebb8a21224bbd8d3403bc575cd4c4ee7ec62b8b05e682d8be340317c58e88" isAbstract="false" kind="Domain" name="LSSDomainHYPRE" packagePath="linearsystems.library.HYPRE.domain.impl">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009dab4dcbd62180562726075498b0a6acf1c456f47d2d53e8470cbd165e4e6831761e622b6fdd0a2003fefb13831fab4622f1e0f1e11d509cec57074c763ad48e4ee78e21f22cbf3381639e17233a6522bcaad9e98e0a30d69d9998e885e9d0a01830f83fda26f4c2edc9f158316b2be9446574eb0b13b38c6e95a5abbf138ac5" localRef="implements" location="linearsystems.library.basic.domain.LSSDomain/LSSDomain.hpe" name="LSSDomain" package="linearsystems.library.basic.domain" version="1.0.0.0">
+        <visualDescription h="32" w="111" x="183" y="114">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="solver" varName="R"/>
+        <parameter formFieldId="vector" varName="V"/>
+        <parameter formFieldId="matrix" varName="M"/>
+        <parameter formFieldId="setup" varName="S"/>
+        <parameter formFieldId="library" varName="L"/>
+        <parameter formFieldId="pre_conditioner" varName="P"/>
+        <unitBounds uRef="lssdomain">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>
     </visualAttributes>
   </header>
-  <componentInfo/>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000001ab49fed1aba8a7d970db1a037315cc6be80971331396a5f6df951be3f2d2c6256dcda1cd3a1b9f0fff13a2a80a0c51dfee00300b99efcfaf4befef8aeddf8a7bd47688911dddfb6fb1ec36843b05cd49ae4117533a58330c55f71aae642d5d86630264d2b324495768c76cba4876b9cca8697f0df98353b8d3630496386f9c" localRef="hypre_vector" location="linearsystems.library.HYPRE.facet.HYPREVector/HYPREVector.hpe" name="HYPREVector" package="linearsystems.library.HYPRE.facet" exposed="false">
+      <visualDescription h="39" w="105" x="238" y="351">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004534177466119355fc921324d53b97a533570c913fca370c3784846341c55c8ab44383da5a44a4431bb996d8913149e357277366523b4558fa98aa7fec071370ac70239fbb3c29719577c822a787abe0b8edfbdf6b40a6d6418c43385ea3e87366146c6d62f07fcb439a2c45dcb070c3db62c53ba65e1c2694409651ba054c9d" localRef="hypre_preconditioner" location="linearsystems.library.HYPRE.facet.HYPREPreConditioner/HYPREPreConditioner.hpe" name="HYPREPreConditioner" package="linearsystems.library.HYPRE.facet" exposed="false">
+      <visualDescription h="60" w="128" x="77" y="180">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081e14b78c4e8a69a5bceff6553a07f8c1fa6f4a61b3488e0b6956e7bc1c3eef445fcb57bc5d1084aa1c4068e2e019db03fdc10c9eea9cbbde5b831b583261f1f7f7eac552477b9b1cf137909633bc9b69002625ec77b85a5f0f6e026975657731ea1b7133e334a407707d0a5516214ed1188364a3ba2912b8bfa6ee2d841beba" localRef="hypre_setup" location="linearsystems.library.HYPRE.facet.HYPRESetup/HYPRESetup.hpe" name="HYPRESetup" package="linearsystems.library.HYPRE.facet" exposed="false">
+      <visualDescription h="42" w="105" x="141" y="426">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d82824268c2e5a1cfc0d9a57285d899eacd1b210351550eb6825dd93b433cb961a0e65b6e33423a82d856d8a0f3ee0b33650754c23e5e14ee7c6e3ccaad47569fd70ce022bbe5cf2167668f8e10fa1c1d09f2ecc85431ef0fd3af1f8ce05e953b45f660105e718be84d35d0ca1c89a32e610fe7e0426df0382e6ef01b9b3584" localRef="hypre_solver" location="linearsystems.library.HYPRE.facet.HYPRESolver/HYPRESolver.hpe" name="HYPRESolver" package="linearsystems.library.HYPRE.facet" exposed="false">
+      <visualDescription h="56" w="117" x="267" y="433">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000053ca23a56dd8a6c06d1767e99731ba0461457111ad79f61d906a159486541134af71d74412de72e6a68343ed0c8464e238fef04b03d703c1890276f370fe86b4a78950286563ab5c6ffc1e30c1bffc8599e96c404a91aa682e533695db7038b95510dbcedee5d427eb6123684c4866bb6837bb39de5e4cedd387c6ae08179b96" localRef="hypre" location="linearsystems.library.HYPRE/HYPRE.hpe" name="HYPRE" package="linearsystems.library" exposed="false">
+      <visualDescription h="51" w="85" x="174" y="259">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d734c8e2d8b352c6b4011a422529083dcb89d0edebf8b45fef794dfe4d63510b7150da769fb5dee97da4cdd38f9900a49c5026b38f0421ccb1d35cb40b053756c03f7537f2be2906bbf017230dc296f171da659053058ff5cadff4fca4175362922d7f888ee3d955a1f63a46be4c22bab4c20ec29e326f0ebe9ce3cd442fe1c0" localRef="hypre_matrix" location="linearsystems.library.HYPRE.facet.HYPREMatrix/HYPREMatrix.hpe" name="HYPREMatrix" package="linearsystems.library.HYPRE.facet" exposed="false">
+      <visualDescription h="53" w="119" x="67" y="318">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="hypre_vector" varName="V"/>
+    <supplyParameter cRef="hypre_preconditioner" varName="P"/>
+    <supplyParameter cRef="hypre_setup" varName="S"/>
+    <supplyParameter cRef="hypre_solver" varName="R"/>
+    <supplyParameter cRef="hypre" varName="L"/>
+    <supplyParameter cRef="hypre_matrix" varName="M"/>
+    <interface iRef="LSSDomainHYPRE" nArgs="5">
+      <slice isRef="v">
+        <originRef cRef="vector" iRef="IHYPREVector"/>
+        <visualDescription h="10" w="10" x="24" y="25"/>
+      </slice>
+      <slice isRef="s">
+        <originRef cRef="setup" iRef="IHYPRESetup"/>
+        <visualDescription h="10" w="10" x="52" y="29"/>
+      </slice>
+      <slice isRef="m">
+        <originRef cRef="matrix" iRef="IHYPREMatrix"/>
+        <visualDescription h="10" w="10" x="52" y="6"/>
+      </slice>
+      <slice isRef="p">
+        <originRef cRef="pre_conditioner" iRef="IHYPREPreConditioner"/>
+        <visualDescription h="10" w="10" x="66" y="20"/>
+      </slice>
+      <slice isRef="r">
+        <originRef cRef="solver" iRef="IHYPRESolver"/>
+        <visualDescription h="10" w="10" x="37" y="27"/>
+      </slice>
+      <slice isRef="comm">
+        <originRef cRef="comm" iRef="ICommunicator"/>
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.HYPRE.facet.HYPREVector;&#xA;using linearsystems.library.HYPRE.facet.HYPREPreConditioner;&#xA;using linearsystems.library.HYPRE.facet.HYPRESetup;&#xA;using linearsystems.library.HYPRE.facet.HYPRESolver;&#xA;using environment.messagepassing.Communicator;&#xA;using linearsystems.library.HYPRE.facet.HYPREMatrix;&#xA;using linearsystems.library.basic.domain.LSSDomain;&#xA;&#xA;namespace linearsystems.library.HYPRE.domain.impl.LSSDomainHYPRE { &#xA;&#xA;public abstract class BaseLSSDomainHYPRE: Domain, &#xA;                                          BaseILSSDomain&lt;HYPRE>,&#xA;                                          IHYPREVector,&#xA;                                          IHYPRESetup,&#xA;                                          IHYPREMatrix,&#xA;                                          IHYPREPreConditioner,&#xA;                                          IHYPRESolver&#xA;{&#xA;&#xA;&#xA;protected ICommunicator comm = null;&#xA;&#xA;protected ICommunicator Comm {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.comm = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;public BaseLSSDomainHYPRE() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000095a06bfdd6dbd1f996fd9e941901d88366e679c7ef57494113587ef0f53d7d001660606c6a94772827c103d9243e05eb4ac03915655c0f759d5ad274413f10b51a652fb5b9c9b52d4b88163a3ece348a5ddcad77d5f58f8cd39a454f6c5f0dc1451ebb8a21224bbd8d3403bc575cd4c4ee7ec62b8b05e682d8be340317c58e88&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Comm = (ICommunicator) BackEnd.createSlice(this, UID,&quot;comm&quot;,&quot;comm&quot;,new Type[] {});&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseLSSDomainHYPRE.cs" srcType="base" uri="linearsystems.library.HYPRE.domain.impl.LSSDomainHYPRE/bin/1.0.0.0/BaseLSSDomainHYPRE.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.HYPRE.facet.HYPREVector/bin/1.0.0.0/IHYPREVector.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPREPreConditioner/bin/1.0.0.0/IHYPREPreConditioner.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/IHYPRESetup.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPRESolver/bin/1.0.0.0/IHYPRESolver.dll</dependency>
+          <dependency>environment.messagepassing.Communicator/bin/1.0.0.0/ICommunicator.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPREMatrix/bin/1.0.0.0/IHYPREMatrix.dll</dependency>
+          <dependency>linearsystems.library.basic.domain.LSSDomain/bin/1.0.0.0/BaseILSSDomain.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.HYPRE.facet.HYPREVector;&#xA;using linearsystems.library.HYPRE.facet.HYPRESetup;&#xA;using linearsystems.library.HYPRE.facet.HYPREMatrix;&#xA;using linearsystems.library.HYPRE.facet.HYPREPreConditioner;&#xA;using linearsystems.library.HYPRE.facet.HYPRESolver;&#xA;using linearsystems.library.basic.domain.LSSDomain;&#xA;&#xA;namespace linearsystems.library.HYPRE.domain.impl.LSSDomainHYPRE { &#xA;&#xA;public class LSSDomainHYPRE&lt;V, S, M, P, R> : BaseLSSDomainHYPRE, &#xA;                                             ILSSDomain&lt;HYPRE>&#xA;{&#xA;&#xA;public LSSDomainHYPRE() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="LSSDomainHYPRE.cs" srcType="user" uri="linearsystems.library.HYPRE.domain.impl.LSSDomainHYPRE/bin/1.0.0.0/LSSDomainHYPRE.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.HYPRE.facet.HYPREVector/bin/1.0.0.0/IHYPREVector.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/IHYPRESetup.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPREMatrix/bin/1.0.0.0/IHYPREMatrix.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPREPreConditioner/bin/1.0.0.0/IHYPREPreConditioner.dll</dependency>
+          <dependency>linearsystems.library.HYPRE.facet.HYPRESolver/bin/1.0.0.0/IHYPRESolver.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.library.HYPRE.domain.impl.LSSDomainHYPRE/bin/1.0.0.0/BaseLSSDomainHYPRE.dll</dependency>
+          <dependency>linearsystems.library.basic.domain.LSSDomain/bin/1.0.0.0/ILSSDomain.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="155" x="299" y="384">
+        <color b="255" g="128" r="0"/>
+      </visualDescription>
+      <parameter iname="IHYPREVector" order="0" parid="V" uname="facet_unit" varid="vector"/>
+      <parameter iname="IHYPRESetup" order="1" parid="S" uname="facet_unit" varid="setup"/>
+      <parameter iname="IHYPREMatrix" order="2" parid="M" uname="facet_unit" varid="matrix"/>
+      <parameter iname="IHYPREPreConditioner" order="3" parid="P" uname="facet_unit" varid="pre_conditioner"/>
+      <parameter iname="IHYPRESolver" order="4" parid="R" uname="facet_unit" varid="solver"/>
+    </interface>
+    <unit iRef="LSSDomainHYPRE" private="false" uRef="lssdomain" visibleInterface="true">
+      <super cRef="implements" uRef="lssdomain"/>
+      <slices cRef="vector" replica="0" uRef="facet_unit" sliceName="v" transitive="false">
+        <visualDescription h="10" w="10" x="24" y="25"/>
+      </slices>
+      <slices cRef="setup" replica="0" uRef="facet_unit" sliceName="s" transitive="false">
+        <visualDescription h="10" w="10" x="52" y="29"/>
+      </slices>
+      <slices cRef="matrix" replica="0" uRef="facet_unit" sliceName="m" transitive="false">
+        <visualDescription h="10" w="10" x="52" y="6"/>
+      </slices>
+      <slices cRef="pre_conditioner" replica="0" uRef="facet_unit" sliceName="p" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="20"/>
+      </slices>
+      <slices cRef="solver" replica="0" uRef="facet_unit" sliceName="r" transitive="false">
+        <visualDescription h="10" w="10" x="37" y="27"/>
+      </slices>
+      <slices cRef="comm" replica="0" uRef="comm" sliceName="comm" transitive="false">
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slices>
+      <visualDescription h="40" w="80" x="49" y="159"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>implements</originRef>
+      <originRef>library</originRef>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+  </componentInfo>
 </component:component>

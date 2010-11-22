@@ -4,7 +4,7 @@ using linearsystems.library.HYPRE;
 
 namespace linearsystems.library.HYPRE.facet.HYPREPreConditioner { 
 
-public interface IHYPREPreConditioner : BaseIHYPREPreConditioner, IFacetPreConditioner<HYPRE>
+public interface IHYPREPreConditioner : BaseIHYPREPreConditioner, IFacetPreConditioner<IHYPRE>
 {
 
 

@@ -21,8 +21,8 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000472b78b0c4eb688c789e3df5cf2590c54ba6221b434f5303ca4837a9795c54dd254864cebcca1b998bf27c12d3b276340d0e1e5e2dae3da11fca87fb75dac269f91893327e1ccba8bc6cd61461107a01f38f9ce6dccf78f4c8b1c8e7397afc8eea679bbbc9adca0b8c708233bd654263e3f31c35742367324505beae4af2b594" localRef="library" location="linearsystems.library.PETSc/PETSc.hpe" name="PETSc" package="linearsystems.library" exposed="false">
-      <visualDescription h="30" w="50" x="109" y="160">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000472b78b0c4eb688c789e3df5cf2590c54ba6221b434f5303ca4837a9795c54dd254864cebcca1b998bf27c12d3b276340d0e1e5e2dae3da11fca87fb75dac269f91893327e1ccba8bc6cd61461107a01f38f9ce6dccf78f4c8b1c8e7397afc8eea679bbbc9adca0b8c708233bd654263e3f31c35742367324505beae4af2b594" localRef="library" location="linearsystems.library.PETSc/PETSc.hpe" name="PETSc" package="linearsystems.library" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="305" y="313">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="library">
@@ -30,16 +30,16 @@
       </unitBounds>
     </innerComponent>
     <supplyParameter cRef="library" varName="L"/>
-    <interface iRef="IPETScPreConditioner" nArgs="0">
+    <interface iRef="IPETScPreConditioner" nArgs="1">
       <slice isRef="library">
         <originRef cRef="library" iRef="IPETSc"/>
         <visualDescription h="10" w="10" x="54" y="32"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetPreConditioner;&#xA;&#xA;namespace linearsystems.library.PETSc.facet.PETScPreConditioner { &#xA;&#xA;public interface BaseIPETScPreConditioner : BaseIFacetPreConditioner, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPETScPreConditioner.cs" srcType="base" uri="linearsystems.library.PETSc.facet.PETScPreConditioner/bin/1.0.0.0/BaseIPETScPreConditioner.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetPreConditioner;&#xA;using linearsystems.library.PETSc;&#xA;&#xA;namespace linearsystems.library.PETSc.facet.PETScPreConditioner { &#xA;&#xA;public interface BaseIPETScPreConditioner : BaseIFacetPreConditioner&lt;PETSc>, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPETScPreConditioner.cs" srcType="base" uri="linearsystems.library.PETSc.facet.PETScPreConditioner/bin/1.0.0.0/BaseIPETScPreConditioner.dll" versionId="1.0.0.0">
           <dependency>linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/BaseIFacetPreConditioner.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetPreConditioner;&#xA;&#xA;namespace linearsystems.library.PETSc.facet.PETScPreConditioner { &#xA;&#xA;public interface IPETScPreConditioner : BaseIPETScPreConditioner, IFacetPreConditioner&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPETScPreConditioner.cs" srcType="user" uri="linearsystems.library.PETSc.facet.PETScPreConditioner/bin/1.0.0.0/IPETScPreConditioner.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetPreConditioner;&#xA;using linearsystems.library.PETSc;&#xA;&#xA;namespace linearsystems.library.PETSc.facet.PETScPreConditioner { &#xA;&#xA;public interface IPETScPreConditioner : BaseIPETScPreConditioner, IFacetPreConditioner&lt;PETSc>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPETScPreConditioner.cs" srcType="user" uri="linearsystems.library.PETSc.facet.PETScPreConditioner/bin/1.0.0.0/IPETScPreConditioner.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/linearsystems.library.PETSc.facet.PETScPreConditioner/bin/1.0.0.0/BaseIPETScPreConditioner.dll</dependency>
           <dependency>linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/IFacetPreConditioner.dll</dependency>
         </file>
@@ -47,6 +47,7 @@
       <visualDescription h="40" w="140" x="147" y="86">
         <color b="0" g="0" r="255"/>
       </visualDescription>
+      <parameter iname="IPETSc" order="0" parid="L" uname="library" varid="library"/>
     </interface>
     <unit iRef="IPETScPreConditioner" private="false" uRef="facet_unit" visibleInterface="true">
       <super cRef="extends" uRef="facet_unit"/>
@@ -55,27 +56,5 @@
       </slices>
       <visualDescription h="40" w="80" x="155" y="182"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
-      <originRef>extends</originRef>
-      <originRef>library</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
-      <visualDescription h="20" w="20" x="300" y="239"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ebfeaf1289951179537" varId="n">
-      <originRef>extends</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
-      <visualDescription h="20" w="20" x="361" y="179"/>
-    </enumerator>
-    <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@18498961289951685812</eRef>
-        <originRef>extends</originRef>
-        <originRef>library</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ebfeaf1289951179537</eRef>
-        <originRef>extends</originRef>
-      </fusionOfReplicators>
-    </fusionsOfReplicators>
   </componentInfo>
 </component:component>

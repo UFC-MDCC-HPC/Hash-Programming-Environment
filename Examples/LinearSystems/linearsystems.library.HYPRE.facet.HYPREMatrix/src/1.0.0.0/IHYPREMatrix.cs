@@ -4,27 +4,26 @@ using linearsystems.library.HYPRE;
 
 namespace linearsystems.library.HYPRE.facet.HYPREMatrix { 
 
-public interface IHYPREMatrix : BaseIHYPREMatrix, IFacetMatrix<HYPRE>
-{
-	int hypre_StructMatrixCreate ( Intracommunicator comm , hypre_StructGrid grid , hypre_StructStencil stencil , hypre_StructMatrix  matrix );
-	int hypre_StructMatrixDestroy ( hypre_StructMatrix matrix );
-	int hypre_StructMatrixInitialize ( hypre_StructMatrix matrix );
-	unsafe int  hypre_StructMatrixSetValues ( hypre_StructMatrix matrix , int* grid_index , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixGetValues ( hypre_StructMatrix matrix , int* grid_index , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixSetBoxValues ( hypre_StructMatrix matrix , int* ilower , int* iupper , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixGetBoxValues ( hypre_StructMatrix matrix , int* ilower , int* iupper , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixSetConstantValues ( hypre_StructMatrix matrix , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixAddToValues ( hypre_StructMatrix matrix , int* grid_index , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixAddToBoxValues ( hypre_StructMatrix matrix , int* ilower , int* iupper , int num_stencil_indices , int* stencil_indices , double* values );
-	unsafe int hypre_StructMatrixAddToConstantValues ( hypre_StructMatrix matrix , int num_stencil_indices , int* stencil_indices , double* values );
-	int hypre_StructMatrixAssemble ( hypre_StructMatrix matrix );
-	unsafe int hypre_StructMatrixSetNumGhost ( hypre_StructMatrix matrix , int* num_ghost );
-	int hypre_StructMatrixGetGrid ( hypre_StructMatrix matrix , hypre_StructGrid  grid );
-	int hypre_StructMatrixSetSymmetric ( hypre_StructMatrix matrix , int symmetric );
-	unsafe int hypre_StructMatrixSetConstantEntries ( hypre_StructMatrix matrix , int nentries , int* entries );
-	int hypre_StructMatrixPrint ( string filename , hypre_StructMatrix matrix , int all );
-	int hypre_StructMatrixMatvec ( double alpha , hypre_StructMatrix A , hypre_StructVector x , double beta , hypre_StructVector y );
+using MPI_Comm = System.IntPtr;
 
+public interface IHYPREMatrix : BaseIHYPREMatrix, IFacetMatrix<IHYPRE>
+{
+	int HYPRE_IJMatrixCreate(MPI_Comm comm, int ilower, int iupper, int jlower, int jupper, out HYPRE_IJMatrix matrix);
+  	int HYPRE_IJMatrixPrint(HYPRE_IJMatrix matrix, string filename);
+    int HYPRE_IJMatrixDestroy(HYPRE_IJMatrix matrix);
+    int HYPRE_IJMatrixInitialize(HYPRE_IJMatrix matrix);
+    int HYPRE_IJMatrixSetValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values);
+    int HYPRE_IJMatrixAddToValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values);
+    int HYPRE_IJMatrixAssemble(HYPRE_IJMatrix matrix);
+    int HYPRE_IJMatrixGetRowCounts(HYPRE_IJMatrix matrix, int nrows, int[] rows, int[] ncols);
+    int HYPRE_IJMatrixGetValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values);
+    int HYPRE_IJMatrixSetObjectType(HYPRE_IJMatrix matrix, int type);
+    int HYPRE_IJMatrixGetObjectType(HYPRE_IJMatrix matrix, out int type);
+    int HYPRE_IJMatrixGetLocalRange(HYPRE_IJMatrix matrix, ref int ilower, ref int iupper, ref int jlower, ref int jupper);
+    int HYPRE_IJMatrixGetObject(HYPRE_IJMatrix matrix, out HYPRE_ParCSR_matrix mtx_object);
+    int HYPRE_IJMatrixSetRowSizes(HYPRE_IJMatrix matrix, int[] sizes); 
+    int HYPRE_IJMatrixSetDiagOffdSizes(HYPRE_IJMatrix matrix, int[] diag_sizes, int[] offdiag_sizes);
+    int HYPRE_IJMatrixSetMaxOffProcElmts(HYPRE_IJMatrix matrix, int max_off_proc_elmts);
 
 } // end main interface 
 

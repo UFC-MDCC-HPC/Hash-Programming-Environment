@@ -6,7 +6,7 @@ using linearsystems.library.PETSc;
 
 namespace linearsystems.library.PETSc.facet.PETScMatrix { 
 
-public interface BaseIPETScMatrix : BaseIFacetMatrix<PETSc>, IFacetKind 
+public interface BaseIPETScMatrix : BaseIFacetMatrix<IPETSc>, IFacetKind 
 {
 
 

@@ -20,7 +20,7 @@ using ISColoringValue = System.UInt32;
 using MatPartitioningType = System.String;
 using MatMFFDType = System.String;
 
-public interface IPETScMatrix : BaseIPETScMatrix, IFacetMatrix<PETSc>
+public interface IPETScMatrix : BaseIPETScMatrix, IFacetMatrix<IPETSc>
 {
 
 	 PetscErrorCode  MatGetFactor(Mat a,MatSolverPackage b,MatFactorType c,Mat d);

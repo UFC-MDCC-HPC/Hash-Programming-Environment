@@ -6,7 +6,7 @@
         <extends>true</extends>
       </extensionType>
       <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000089c4442e94f068d3b15d8deafa11b3781a30c3b67ef92a16d8771f35922e0ca874ff32cf58ec1cb7c8d5945d923e0633d5e89aecca31bbdc21d9b1685de26008b96c937c0fee68caa0da39d1433b3dc06a6c0f85d4a2c69a247e3c0ecf59d0a405c5bade67f9f87df5028149304b7f20a1df51c52959a99183dd3f97528a7292" localRef="extends" location="linearsystems.library.basic.facet.LSSFacetSetup/LSSFacetSetup.hpe" name="LSSFacetSetup" package="linearsystems.library.basic.facet" version="1.0.0.0">
-        <visualDescription h="51" w="146" x="132" y="132">
+        <visualDescription h="51" w="146" x="84" y="106">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="library" varName="L"/>
@@ -36,10 +36,10 @@
         <visualDescription h="10" w="10" x="43" y="27"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetSetup;&#xA;&#xA;namespace linearsystems.library.HYPRE.facet.HYPRESetup { &#xA;&#xA;public interface BaseIHYPRESetup : BaseIFacetSetup, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIHYPRESetup.cs" srcType="base" uri="linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/BaseIHYPRESetup.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetSetup;&#xA;using linearsystems.library.HYPRE;&#xA;&#xA;namespace linearsystems.library.HYPRE.facet.HYPRESetup { &#xA;&#xA;public interface BaseIHYPRESetup : BaseIFacetSetup&lt;HYPRE>, IFacetKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIHYPRESetup.cs" srcType="base" uri="linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/BaseIHYPRESetup.dll" versionId="1.0.0.0">
           <dependency>linearsystems.library.basic.facet.LSSFacetSetup/bin/1.0.0.0/BaseIFacetSetup.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetSetup;&#xA;&#xA;namespace linearsystems.library.HYPRE.facet.HYPRESetup { &#xA;&#xA;public interface IHYPRESetup : BaseIHYPRESetup, IFacetSetup&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IHYPRESetup.cs" srcType="user" uri="linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/IHYPRESetup.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.facet.LSSFacetSetup;&#xA;using linearsystems.library.HYPRE;&#xA;&#xA;namespace linearsystems.library.HYPRE.facet.HYPRESetup { &#xA;&#xA;public interface IHYPRESetup : BaseIHYPRESetup, IFacetSetup&lt;HYPRE>&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IHYPRESetup.cs" srcType="user" uri="linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/IHYPRESetup.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/BaseIHYPRESetup.dll</dependency>
           <dependency>linearsystems.library.basic.facet.LSSFacetSetup/bin/1.0.0.0/IFacetSetup.dll</dependency>
         </file>

@@ -6,7 +6,7 @@ using linearsystems.library.HYPRE;
 
 namespace linearsystems.library.HYPRE.facet.HYPRESolver { 
 
-public interface BaseIHYPRESolver : BaseIFacetSolver<HYPRE>, IFacetKind 
+public interface BaseIHYPRESolver : BaseIFacetSolver<IHYPRE>, IFacetKind 
 {
 
 

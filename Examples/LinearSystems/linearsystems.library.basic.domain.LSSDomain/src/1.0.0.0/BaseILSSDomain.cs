@@ -10,13 +10,18 @@ using linearsystems.library.basic.facet.LSSFacetSolver;
 
 namespace linearsystems.library.basic.domain.LSSDomain { 
 
-public interface BaseILSSDomain<L, V, S, M, P, R> : IDomainKind 
+public interface BaseILSSDomain<L>/*<L, V, S, M, P, R>*/ : IDomainKind,
+                                                    IFacetVector<L>,
+                                                    IFacetSetup<L>,
+                                                    IFacetMatrix<L>,
+                                                    IFacetPreConditioner<L>,
+                                                    IFacetSolver<L>
 where L:ILibrary
-where V:IFacetVector<L>
-where S:IFacetSetup<L>
-where M:IFacetMatrix<L>
-where P:IFacetPreConditioner<L>
-where R:IFacetSolver<L>
+//where V:IFacetVector<L>
+//where S:IFacetSetup<L>
+//where M:IFacetMatrix<L>
+//where P:IFacetPreConditioner<L>
+//where R:IFacetSolver<L>
 {
 
 

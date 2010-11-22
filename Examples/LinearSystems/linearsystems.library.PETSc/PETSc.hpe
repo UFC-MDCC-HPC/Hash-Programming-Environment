@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
-  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000472b78b0c4eb688c789e3df5cf2590c54ba6221b434f5303ca4837a9795c54dd254864cebcca1b998bf27c12d3b276340d0e1e5e2dae3da11fca87fb75dac269f91893327e1ccba8bc6cd61461107a01f38f9ce6dccf78f4c8b1c8e7397afc8eea679bbbc9adca0b8c708233bd654263e3f31c35742367324505beae4af2b594" isAbstract="true" kind="Qualifier" name="PETSc" packagePath="linearsystems.library">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000472b78b0c4eb688c789e3df5cf2590c54ba6221b434f5303ca4837a9795c54dd254864cebcca1b998bf27c12d3b276340d0e1e5e2dae3da11fca87fb75dac269f91893327e1ccba8bc6cd61461107a01f38f9ce6dccf78f4c8b1c8e7397afc8eea679bbbc9adca0b8c708233bd654263e3f31c35742367324505beae4af2b594" isAbstract="true" kind="Environment" name="PETSc" packagePath="linearsystems.library">
     <baseType>
       <extensionType>
         <extends>true</extends>
@@ -21,6 +21,15 @@
   </header>
   <componentInfo>
     <interface iRef="IPETSc" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;&#xA;namespace linearsystems.library.PETSc { &#xA;&#xA;public interface BaseIPETSc : BaseILibrary, IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPETSc.cs" srcType="base" uri="linearsystems.library.PETSc/bin/1.0.0.0/BaseIPETSc.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/BaseILibrary.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;&#xA;namespace linearsystems.library.PETSc { &#xA;&#xA;public interface IPETSc : BaseIPETSc, ILibrary&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPETSc.cs" srcType="user" uri="linearsystems.library.PETSc/bin/1.0.0.0/IPETSc.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.library.PETSc/bin/1.0.0.0/BaseIPETSc.dll</dependency>
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="167" y="96">
         <color b="0" g="255" r="255"/>
       </visualDescription>

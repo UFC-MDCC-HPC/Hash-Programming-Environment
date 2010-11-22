@@ -55,16 +55,5 @@
       </slices>
       <visualDescription h="40" w="80" x="97" y="345"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
-      <originRef>extends</originRef>
-      <originRef>library</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
-      <visualDescription h="20" w="20" x="300" y="239"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@6f6c01289951162553" varId="n">
-      <originRef>extends</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="facet_unit"/>
-      <visualDescription h="20" w="20" x="312" y="166"/>
-    </enumerator>
   </componentInfo>
 </component:component>

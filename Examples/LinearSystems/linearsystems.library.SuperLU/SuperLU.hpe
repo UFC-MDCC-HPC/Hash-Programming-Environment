@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
-  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ad882112b2dce5174a598798ed42ad4922b9b3216323a8856c98107709c8668b2b8f27eb9ea4385c41fe820631721d7edca5676ca53aee4bdc7cc5f09db5bd3c43e98e95912199e0262f12788c39d8dc35cb85a4571ccaf7ac921aa697118e07169c11bf9b8afd65235ed1c1c893685a0fb49823e6c527eff5125d4006aa87a1" isAbstract="true" kind="Qualifier" name="SuperLU" packagePath="linearsystems.library">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ad882112b2dce5174a598798ed42ad4922b9b3216323a8856c98107709c8668b2b8f27eb9ea4385c41fe820631721d7edca5676ca53aee4bdc7cc5f09db5bd3c43e98e95912199e0262f12788c39d8dc35cb85a4571ccaf7ac921aa697118e07169c11bf9b8afd65235ed1c1c893685a0fb49823e6c527eff5125d4006aa87a1" isAbstract="true" kind="Environment" name="SuperLU" packagePath="linearsystems.library">
     <baseType>
       <extensionType>
         <extends>true</extends>
@@ -21,6 +21,15 @@
   </header>
   <componentInfo>
     <interface iRef="ISuperLU" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;&#xA;namespace linearsystems.library.SuperLU { &#xA;&#xA;public interface BaseISuperLU : BaseILibrary, IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISuperLU.cs" srcType="base" uri="linearsystems.library.SuperLU/bin/1.0.0.0/BaseISuperLU.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/BaseILibrary.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;&#xA;namespace linearsystems.library.SuperLU { &#xA;&#xA;public interface ISuperLU : BaseISuperLU, ILibrary&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISuperLU.cs" srcType="user" uri="linearsystems.library.SuperLU/bin/1.0.0.0/ISuperLU.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/linearsystems.library.SuperLU/bin/1.0.0.0/BaseISuperLU.dll</dependency>
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="160" y="119">
         <color b="0" g="255" r="255"/>
       </visualDescription>

@@ -1,10 +1,165 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:component="http://www.example.org/HashComponent">
   <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000049bddda308c4f2a8b5fcd4fc155331fa3b6fc605e1591fcb59925795280bdedfe115d60d452e3897fd589236b90c44c8c0a74bd1e12c47ace94fc933f93b68b8e24c4eb347bacbad930ea570c41c5e612d1408c9c54d8027e48522bc57384fa9f59b6f90b844d31532dbfdc65db2ef2e970db1d145351a04ed7689b5c3a7f6a0" isAbstract="false" kind="Domain" name="LSSDomainSuperLU" packagePath="linearsystems.library.SuperLU.domain.impl">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009dab4dcbd62180562726075498b0a6acf1c456f47d2d53e8470cbd165e4e6831761e622b6fdd0a2003fefb13831fab4622f1e0f1e11d509cec57074c763ad48e4ee78e21f22cbf3381639e17233a6522bcaad9e98e0a30d69d9998e885e9d0a01830f83fda26f4c2edc9f158316b2be9446574eb0b13b38c6e95a5abbf138ac5" localRef="implements" location="linearsystems.library.basic.domain.LSSDomain/LSSDomain.hpe" name="LSSDomain" package="linearsystems.library.basic.domain" version="1.0.0.0">
+        <visualDescription h="32" w="111" x="183" y="114">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="solver" varName="R"/>
+        <parameter formFieldId="vector" varName="V"/>
+        <parameter formFieldId="matrix" varName="M"/>
+        <parameter formFieldId="setup" varName="S"/>
+        <parameter formFieldId="library" varName="L"/>
+        <parameter formFieldId="pre_conditioner" varName="P"/>
+        <unitBounds uRef="lssdomain">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>
     </visualAttributes>
   </header>
-  <componentInfo/>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000029d82c8abc4527242809dace430e44938d20dc41872fa394c7fdc415b3ba2e7b514d2594be9ef33f3621c59a8084c7c726f5248425996e4ef48af4189984cc56d9e18b72733c81b1ee635df217259054e45682676be688ad8e07c0df657d7c44ccf2c68e79420771f1a5ca92f16b37766b69113f3d4c6d0b1b9add20eaec37b3" localRef="superlu_vector" location="linearsystems.library.SuperLU.facet.SuperLUVector/SuperLUVector.hpe" name="SuperLUVector" package="linearsystems.library.SuperLU.facet" exposed="false">
+      <visualDescription h="39" w="105" x="238" y="351">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000deb2e32081e4adae83623704ae9f8be326e0d70a0e8adf034e31c4d3715d91d12bce67de4744e1d482d0c53023872f76a436ec6ad46a5412b15678ae003f318986991089e868305928397b8c994fc955c66362ca3a88130c66b0134cfe88641eb602f701597c964c05ec6ef61df108360ca5953de2548ca67b46eb9975dc58a" localRef="superlu_preconditioner" location="linearsystems.library.SuperLU.facet.SuperLUPreConditioner/SuperLUPreConditioner.hpe" name="SuperLUPreConditioner" package="linearsystems.library.SuperLU.facet" exposed="false">
+      <visualDescription h="60" w="128" x="77" y="180">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000dafc8d413f1ab99c585af442c6e02970dd433569016c490d8b453e48056a687a8ea3c597b8bdefb523c32f8c05594cc96f148c57b72fc0fc65731db9101e4855d20a48837e632bf83a607457667917f1ac2c2f0509b795882655c58944693781f54a73bc6e4513c2f111879a10aa27fb42398f6f53fadd778a82d6cd1202bc2" localRef="superlu_setup" location="linearsystems.library.SuperLU.facet.SuperLUSetup/SuperLUSetup.hpe" name="SuperLUSetup" package="linearsystems.library.SuperLU.facet" exposed="false">
+      <visualDescription h="42" w="105" x="141" y="426">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b918890c65e915c39314e4db045792984181c82a016d993ad461e990e329db0627357e98a6b9f5cefe958f5d621c4671d396d19df7106f0c4906d2a45f45d80710794b0b150ffb935689f53e3788d705908f76fe191c3e63f4a7ee0e0362aaf9d5ae91fe8a68e1faaad5084654e57e57d89f628e44dd8fa85cf01860d59e6dad" localRef="superlu_solver" location="linearsystems.library.SuperLU.facet.SuperLUSolver/SuperLUSolver.hpe" name="SuperLUSolver" package="linearsystems.library.SuperLU.facet" exposed="false">
+      <visualDescription h="56" w="117" x="267" y="433">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ad882112b2dce5174a598798ed42ad4922b9b3216323a8856c98107709c8668b2b8f27eb9ea4385c41fe820631721d7edca5676ca53aee4bdc7cc5f09db5bd3c43e98e95912199e0262f12788c39d8dc35cb85a4571ccaf7ac921aa697118e07169c11bf9b8afd65235ed1c1c893685a0fb49823e6c527eff5125d4006aa87a1" localRef="superlu" location="linearsystems.library.SuperLU/SuperLU.hpe" name="SuperLU" package="linearsystems.library" exposed="false">
+      <visualDescription h="51" w="85" x="174" y="259">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c52a2461cddb49b362448b0068d89670da485fc262d892a8758debd15c094c834044cfef1bdb2561e92570f5f56ba8d7b61003938de158f36b4c1cd286e077b405de08ac691efa5feee26b88d9d78279821137d12ad0791fa21c2c4601e0b813ea005f7815c46af5ed3d1ce2927234840554af544b06c1f531a55dd9e77a4cc6" localRef="superlu_matrix" location="linearsystems.library.SuperLU.facet.SuperLUMatrix/SuperLUMatrix.hpe" name="SuperLUMatrix" package="linearsystems.library.SuperLU.facet" exposed="false">
+      <visualDescription h="53" w="119" x="67" y="318">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="facet_unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="superlu_vector" varName="V"/>
+    <supplyParameter cRef="superlu_preconditioner" varName="P"/>
+    <supplyParameter cRef="superlu_setup" varName="S"/>
+    <supplyParameter cRef="superlu_solver" varName="R"/>
+    <supplyParameter cRef="superlu" varName="L"/>
+    <supplyParameter cRef="superlu_matrix" varName="M"/>
+    <interface iRef="LSSDomainSuperLU" nArgs="5">
+      <slice isRef="v">
+        <originRef cRef="vector" iRef="ISuperLUVector"/>
+        <visualDescription h="10" w="10" x="24" y="25"/>
+      </slice>
+      <slice isRef="s">
+        <originRef cRef="setup" iRef="ISuperLUSetup"/>
+        <visualDescription h="10" w="10" x="52" y="29"/>
+      </slice>
+      <slice isRef="m">
+        <originRef cRef="matrix" iRef="ISuperLUMatrix"/>
+        <visualDescription h="10" w="10" x="52" y="6"/>
+      </slice>
+      <slice isRef="p">
+        <originRef cRef="pre_conditioner" iRef="ISuperLUPreConditioner"/>
+        <visualDescription h="10" w="10" x="66" y="20"/>
+      </slice>
+      <slice isRef="r">
+        <originRef cRef="solver" iRef="ISuperLUSolver"/>
+        <visualDescription h="10" w="10" x="37" y="27"/>
+      </slice>
+      <slice isRef="comm">
+        <originRef cRef="comm" iRef="ICommunicator"/>
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.SuperLU.facet.SuperLUVector;&#xA;using linearsystems.library.SuperLU.facet.SuperLUPreConditioner;&#xA;using linearsystems.library.SuperLU.facet.SuperLUSetup;&#xA;using linearsystems.library.SuperLU.facet.SuperLUSolver;&#xA;using environment.messagepassing.Communicator;&#xA;using linearsystems.library.SuperLU.facet.SuperLUMatrix;&#xA;using linearsystems.library.basic.domain.LSSDomain;&#xA;&#xA;namespace linearsystems.library.SuperLU.domain.impl.LSSDomainSuperLU { &#xA;&#xA;public abstract class BaseLSSDomainSuperLU&lt;V, S, M, P, R>: Domain, BaseILSSDomain&lt;V, S, M, P, R>&#xA;where V:ISuperLUVector&#xA;where S:ISuperLUSetup&#xA;where M:ISuperLUMatrix&#xA;where P:ISuperLUPreConditioner&#xA;where R:ISuperLUSolver&#xA;{&#xA;&#xA;protected V v = default(V);&#xA;&#xA;protected V V {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.v = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected P p = default(P);&#xA;&#xA;protected P P {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.p = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected S s = default(S);&#xA;&#xA;protected S S {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.s = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected R r = default(R);&#xA;&#xA;protected R R {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.r = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICommunicator comm = null;&#xA;&#xA;protected ICommunicator Comm {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.comm = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected M m = default(M);&#xA;&#xA;protected M M {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.m = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseLSSDomainSuperLU() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000049bddda308c4f2a8b5fcd4fc155331fa3b6fc605e1591fcb59925795280bdedfe115d60d452e3897fd589236b90c44c8c0a74bd1e12c47ace94fc933f93b68b8e24c4eb347bacbad930ea570c41c5e612d1408c9c54d8027e48522bc57384fa9f59b6f90b844d31532dbfdc65db2ef2e970db1d145351a04ed7689b5c3a7f6a0&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.M = (M) BackEnd.createSlice(this, UID,&quot;matrix&quot;,&quot;facet_unit&quot;,new Type[] {});&#xA;&#x9;this.Comm = (ICommunicator) BackEnd.createSlice(this, UID,&quot;comm&quot;,&quot;comm&quot;,new Type[] {});&#xA;&#x9;this.R = (R) BackEnd.createSlice(this, UID,&quot;solver&quot;,&quot;facet_unit&quot;,new Type[] {});&#xA;&#x9;this.S = (S) BackEnd.createSlice(this, UID,&quot;setup&quot;,&quot;facet_unit&quot;,new Type[] {});&#xA;&#x9;this.P = (P) BackEnd.createSlice(this, UID,&quot;pre_conditioner&quot;,&quot;facet_unit&quot;,new Type[] {});&#xA;&#x9;this.V = (V) BackEnd.createSlice(this, UID,&quot;vector&quot;,&quot;facet_unit&quot;,new Type[] {});&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseLSSDomainSuperLU.cs" srcType="base" uri="linearsystems.library.SuperLU.domain.impl.LSSDomainSuperLU/bin/1.0.0.0/BaseLSSDomainSuperLU.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUVector/bin/1.0.0.0/ISuperLUVector.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUPreConditioner/bin/1.0.0.0/ISuperLUPreConditioner.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUSetup/bin/1.0.0.0/ISuperLUSetup.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUSolver/bin/1.0.0.0/ISuperLUSolver.dll</dependency>
+          <dependency>environment.messagepassing.Communicator/bin/1.0.0.0/ICommunicator.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUMatrix/bin/1.0.0.0/ISuperLUMatrix.dll</dependency>
+          <dependency>linearsystems.library.basic.domain.LSSDomain/bin/1.0.0.0/BaseILSSDomain.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.SuperLU.facet.SuperLUVector;&#xA;using linearsystems.library.SuperLU.facet.SuperLUSetup;&#xA;using linearsystems.library.SuperLU.facet.SuperLUMatrix;&#xA;using linearsystems.library.SuperLU.facet.SuperLUPreConditioner;&#xA;using linearsystems.library.SuperLU.facet.SuperLUSolver;&#xA;using linearsystems.library.basic.domain.LSSDomain;&#xA;&#xA;namespace linearsystems.library.SuperLU.domain.impl.LSSDomainSuperLU { &#xA;&#xA;public class LSSDomainSuperLU&lt;V, S, M, P, R> : BaseLSSDomainSuperLU&lt;V, S, M, P, R>, ILSSDomain&lt;V, S, M, P, R>&#xA;where V:ISuperLUVector&#xA;where S:ISuperLUSetup&#xA;where M:ISuperLUMatrix&#xA;where P:ISuperLUPreConditioner&#xA;where R:ISuperLUSolver&#xA;{&#xA;&#xA;public LSSDomainSuperLU() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="LSSDomainSuperLU.cs" srcType="user" uri="linearsystems.library.SuperLU.domain.impl.LSSDomainSuperLU/bin/1.0.0.0/LSSDomainSuperLU.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUVector/bin/1.0.0.0/ISuperLUVector.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUSetup/bin/1.0.0.0/ISuperLUSetup.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUMatrix/bin/1.0.0.0/ISuperLUMatrix.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUPreConditioner/bin/1.0.0.0/ISuperLUPreConditioner.dll</dependency>
+          <dependency>linearsystems.library.SuperLU.facet.SuperLUSolver/bin/1.0.0.0/ISuperLUSolver.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.library.SuperLU.domain.impl.LSSDomainSuperLU/bin/1.0.0.0/BaseLSSDomainSuperLU.dll</dependency>
+          <dependency>linearsystems.library.basic.domain.LSSDomain/bin/1.0.0.0/ILSSDomain.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="155" x="299" y="384">
+        <color b="255" g="128" r="0"/>
+      </visualDescription>
+      <parameter iname="ISuperLUVector" order="0" parid="V" uname="facet_unit" varid="vector"/>
+      <parameter iname="ISuperLUSetup" order="1" parid="S" uname="facet_unit" varid="setup"/>
+      <parameter iname="ISuperLUMatrix" order="2" parid="M" uname="facet_unit" varid="matrix"/>
+      <parameter iname="ISuperLUPreConditioner" order="3" parid="P" uname="facet_unit" varid="pre_conditioner"/>
+      <parameter iname="ISuperLUSolver" order="4" parid="R" uname="facet_unit" varid="solver"/>
+    </interface>
+    <unit iRef="LSSDomainSuperLU" private="false" uRef="lssdomain" visibleInterface="true">
+      <super cRef="implements" uRef="lssdomain"/>
+      <slices cRef="vector" replica="0" uRef="facet_unit" sliceName="v" transitive="false">
+        <visualDescription h="10" w="10" x="24" y="25"/>
+      </slices>
+      <slices cRef="setup" replica="0" uRef="facet_unit" sliceName="s" transitive="false">
+        <visualDescription h="10" w="10" x="52" y="29"/>
+      </slices>
+      <slices cRef="matrix" replica="0" uRef="facet_unit" sliceName="m" transitive="false">
+        <visualDescription h="10" w="10" x="52" y="6"/>
+      </slices>
+      <slices cRef="pre_conditioner" replica="0" uRef="facet_unit" sliceName="p" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="20"/>
+      </slices>
+      <slices cRef="solver" replica="0" uRef="facet_unit" sliceName="r" transitive="false">
+        <visualDescription h="10" w="10" x="37" y="27"/>
+      </slices>
+      <slices cRef="comm" replica="0" uRef="comm" sliceName="comm" transitive="false">
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slices>
+      <visualDescription h="40" w="80" x="49" y="159"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>implements</originRef>
+      <originRef>library</originRef>
+      <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+  </componentInfo>
 </component:component>
