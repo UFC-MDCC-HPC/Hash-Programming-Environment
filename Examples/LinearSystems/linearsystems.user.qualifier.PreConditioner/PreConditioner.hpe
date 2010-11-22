@@ -32,7 +32,17 @@
         <originRef cRef="matrix_property" iRef="IMatrixProperty"/>
         <visualDescription h="10" w="10" x="75" y="30"/>
       </slice>
-      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;&#xA;namespace linearsystems.user.qualifier.PreConditioner { &#xA;&#xA;public interface BaseIPreConditioner&lt;LIB, MPT> : IQualifierKind &#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIPreConditioner.cs" srcType="base" uri="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/BaseIPreConditioner.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;&#xA;namespace linearsystems.user.qualifier.PreConditioner { &#xA;&#xA;public interface IPreConditioner&lt;LIB, MPT> : BaseIPreConditioner&lt;LIB, MPT>&#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPreConditioner.cs" srcType="user" uri="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/BaseIPreConditioner.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="123" x="91" y="169">
         <color b="64" g="128" r="128"/>
       </visualDescription>

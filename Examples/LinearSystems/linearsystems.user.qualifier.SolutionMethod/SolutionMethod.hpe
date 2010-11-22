@@ -34,6 +34,8 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <supplyParameter cRef="library" varName="LIB"></supplyParameter>
+    <supplyParameter cRef="matrix_property" varName="MPT"></supplyParameter>        
     <parameter componentRef="matrix_property" formFieldId="matrix_property" varName="MPT"/>
     <parameter componentRef="library" formFieldId="library" varName="LIB"/>
     <parameter componentRef="pre_conditioner" formFieldId="pre_conditioner" varName="PRC"/>
@@ -74,34 +76,7 @@
       <slices cRef="pre_conditioner" replica="0" uRef="pre_conditioner" sliceName="pre_conditioner" transitive="false">
         <visualDescription h="10" w="10" x="32" y="29"/>
       </slices>
-      <slices cRef="matrix_property" replica="0" uRef="matrix_property" sliceName="matrix_property" transitive="false">
-        <visualDescription h="10" w="10" x="60" y="28"/>
-      </slices>
-      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
-        <visualDescription h="10" w="10" x="97" y="26"/>
-      </slices>
       <visualDescription h="40" w="123" x="91" y="249"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
-      <originRef>matrix_property</originRef>
-      <originRef>library</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="matrix_property" uRef="matrix_property"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solution_method"/>
-      <visualDescription h="20" w="20" x="300" y="239"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
-      <originRef>library</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solution_method"/>
-      <visualDescription h="20" w="20" x="300" y="239"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
-      <originRef>pre_conditioner</originRef>
-      <originRef>matrix_property</originRef>
-      <originRef>library</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="pre_conditioner" uRef="pre_conditioner"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solution_method"/>
-      <visualDescription h="20" w="20" x="300" y="239"/>
-    </enumerator>
   </componentInfo>
 </component:component>

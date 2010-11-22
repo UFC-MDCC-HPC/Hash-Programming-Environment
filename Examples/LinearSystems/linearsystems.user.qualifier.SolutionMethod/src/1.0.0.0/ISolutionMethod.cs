@@ -6,7 +6,7 @@ using linearsystems.user.qualifier.MatrixProperty;
 namespace linearsystems.user.qualifier.SolutionMethod { 
 
 public interface ISolutionMethod<PRC, MPT, LIB> : BaseISolutionMethod<PRC, MPT, LIB>
-where PRC:IPreConditioner<LIB, IMatrixProperty<LIB>>
+where PRC:IPreConditioner<LIB, MPT>
 where MPT:IMatrixProperty<LIB>
 where LIB:ILibrary
 {

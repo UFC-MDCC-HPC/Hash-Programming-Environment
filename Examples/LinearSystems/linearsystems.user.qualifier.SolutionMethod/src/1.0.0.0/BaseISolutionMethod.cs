@@ -8,8 +8,8 @@ using linearsystems.user.qualifier.MatrixProperty;
 namespace linearsystems.user.qualifier.SolutionMethod { 
 
 public interface BaseISolutionMethod<PRC, MPT, LIB> : IQualifierKind 
-where PRC:IPreConditioner<ILibrary, IMatrixProperty<ILibrary>>
-where MPT:IMatrixProperty<ILibrary>
+where PRC:IPreConditioner<LIB, MPT>
+where MPT:IMatrixProperty<LIB>
 where LIB:ILibrary
 {
 

@@ -7,7 +7,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e54a1cd76c56f37564e556d5517b2d561d570943a9bf7a0b8b581e4d460948db74148f8bfec29cd3099ab23362f6af475c87d8e6587054ba6f285c11cac304a3234a744282e035e268295e9981c0e6c4b819b5e0fe59f1bcc0f7c051ca64fbafdec8c2536bc6e4a87932b2fbe1aa9dae3cedbce7a976051c7e0f7d8601801887" localRef="element_type" location="linearsystems.user.qualifier.ElementDataType/ElementDataType.hpe" name="ElementDataType" package="linearsystems.user.qualifier" parameter_id="numeric_type" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000063cd2c8dbcd9c4f38d5275f61a8cb998f735d4a0b30cdf43d9ee5d73f65d0e60c45d810d19e3d02f78c9b5a38cb0e0aeb515617c676a48e8870651476d88b342bfa65b75425b8b425749c27f6ce1dfea7c99266ee1a74b72fea2522d2cdc8da9caa83be26d05c249898a5ecae332ff9ebd8cce37fd30b74fc031864dd5ad8c82" localRef="element_type" location="linearsystems.user.qualifier.ElementDataType/ElementDataType.hpe" name="ElementDataType" package="linearsystems.user.qualifier" parameter_id="numeric_type" exposed="false">
       <visualDescription h="83" w="152" x="217" y="447">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -34,6 +34,17 @@
         <originRef cRef="element_type" iRef="IElementDataType"/>
         <visualDescription h="10" w="10" x="61" y="18"/>
       </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.ElementDataType;&#xA;&#xA;namespace linearsystems.user.data.Vector { &#xA;&#xA;public interface BaseIVector&lt;LIB, NUM> : IDataStructureKind &#xA;where LIB:ILibrary&#xA;where NUM:IElementDataType&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIVector.cs" srcType="base" uri="linearsystems.user.data.Vector/bin/1.0.0.0/BaseIVector.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.ElementDataType;&#xA;&#xA;namespace linearsystems.user.data.Vector { &#xA;&#xA;public interface IVector&lt;LIB, NUM> : BaseIVector&lt;LIB, NUM>&#xA;where LIB:ILibrary&#xA;where NUM:IElementDataType&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IVector.cs" srcType="user" uri="linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.user.data.Vector/bin/1.0.0.0/BaseIVector.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="106" y="140">
         <color b="64" g="128" r="255"/>
       </visualDescription>

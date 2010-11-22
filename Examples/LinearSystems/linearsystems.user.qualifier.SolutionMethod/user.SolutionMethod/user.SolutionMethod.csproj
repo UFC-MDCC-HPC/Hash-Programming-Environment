@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FAA3411F-CA14-4E53-A421-C8968C701323}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>user.SolutionMethod</RootNamespace>
+    <AssemblyName>user.SolutionMethod</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseISolutionMethod.cs">
+      <Link>BaseISolutionMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\ISolutionMethod.cs">
+      <Link>ISolutionMethod.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\linearsystems.user.qualifier.MatrixProperty\user.MatrixProperty\user.MatrixProperty.csproj">
+      <Project>{0AAF78EC-11E3-4C77-BB10-908335BBA5EF}</Project>
+      <Name>user.MatrixProperty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.user.qualifier.PreConditioner\user.PreConditioner\user.PreConditioner.csproj">
+      <Project>{220FF608-240B-4011-8E3E-E4D2C27C8A96}</Project>
+      <Name>user.PreConditioner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.Library\Library\library.Library.csproj">
+      <Project>{91435CBB-268E-4AB5-AB01-2BF9A7655C21}</Project>
+      <Name>library.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\media\HERON\HPE\hashmodel_monodevelop\Back-End HPE Windows\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" />
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

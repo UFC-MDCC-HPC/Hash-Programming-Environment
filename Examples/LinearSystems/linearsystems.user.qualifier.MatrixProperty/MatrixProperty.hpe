@@ -21,7 +21,15 @@
         <originRef cRef="library" iRef="ILibrary"/>
         <visualDescription h="10" w="10" x="63" y="22"/>
       </slice>
-      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;&#xA;namespace linearsystems.user.qualifier.MatrixProperty { &#xA;&#xA;public interface BaseIMatrixProperty&lt;LIB> : IQualifierKind &#xA;where LIB:ILibrary&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIMatrixProperty.cs" srcType="base" uri="linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/BaseIMatrixProperty.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;&#xA;namespace linearsystems.user.qualifier.MatrixProperty { &#xA;&#xA;public interface IMatrixProperty&lt;LIB> : BaseIMatrixProperty&lt;LIB>&#xA;where LIB:ILibrary&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IMatrixProperty.cs" srcType="user" uri="linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/BaseIMatrixProperty.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="123" x="91" y="169">
         <color b="64" g="128" r="128"/>
       </visualDescription>
@@ -36,6 +44,7 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>library</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library"/>
+      <links xsi:type="component:EnumerableUnitType" ref="matrix_property"/>
       <visualDescription h="20" w="20" x="300" y="239"/>
     </enumerator>
   </componentInfo>
