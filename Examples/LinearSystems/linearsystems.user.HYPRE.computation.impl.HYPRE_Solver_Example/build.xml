@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe_cache" default="all" name="HYPRE_Solver_Example">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="HYPRE_Solver_Example-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/HYPRE_Solver_Example.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/BaseIHyprePCGSolver.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/src/1.0.0.0/BaseIHyprePCGSolver.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll"/>
+        <include name="linearsystems.library.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="linearsystems.user.qualifier.SparseMatrix/bin/1.0.0.0/ISparseMatrix.dll"/>
+        <include name="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll"/>
+        <include name="linearsystems.user.computation.Solver/bin/1.0.0.0/BaseISolver.dll"/>
+        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/HYPRE_Solver_Example.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/IHyprePCGSolver.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/src/1.0.0.0/IHyprePCGSolver.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.library.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="linearsystems.user.qualifier.SparseMatrix/bin/1.0.0.0/ISparseMatrix.dll"/>
+        <include name="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll"/>
+        <include name="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll"/>
+        <include name="/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/BaseIHyprePCGSolver.dll"/>
+        <include name="linearsystems.user.computation.Solver/bin/1.0.0.0/ISolver.dll"/>
+        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="HYPRE_Solver_Example-1.0.0.0" name="all"/>
+</project>
