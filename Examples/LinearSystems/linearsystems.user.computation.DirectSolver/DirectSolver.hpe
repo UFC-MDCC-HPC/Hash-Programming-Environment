@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019ec743a3c98e965a6b076efd94a3b48d71ff072d25b4352c6e95093ec01e9e32dea98d497f4718cf9cc628aacb9254e7bd929d116d549dd876ced04c86681a1e64bf67f00bbb7ea3c67f6940fa699bf7d97227d19e7dc016039a22cf72fca7e7432c95a00cef39a9df4e8cef0f82dc4d8b7fa1d4167be91dd7ae48ee36a1e9b" isAbstract="true" kind="Computation" name="DirectSolver" packagePath="linearsystems.user.computation">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000b1fe940e9cdb7db4cac7f4e93a2e50a0101aee60745d5b2e924aa212ed9902ba0de7ec005f8833629169332bd366498cc1af2e660a8ad6df1a459f4762866aa4df1bb56a6398ef67ee64bf26e74500eb92ccbfc7d2958baffb2981838e687df748ad1b5d1833e099a0ae4c74a5439a95ded47f5da3625350dce186d9b0a7cde" localRef="base" location="linearsystems.user.computation.Solver/Solver.hpe" name="Solver" package="linearsystems.user.computation" version="1.0.0.0">
+        <visualDescription h="54" w="122" x="122" y="117">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="matrix_type" varName="MAT"/>
+        <parameter formFieldId="matrix_property" varName="MPT"/>
+        <parameter formFieldId="numeric_type" varName="NUM"/>
+        <parameter formFieldId="communicator_type" varName="COM"/>
+        <parameter formFieldId="library" varName="LIB"/>
+        <parameter formFieldId="method" varName="MTH"/>
+        <parameter formFieldId="pre_conditioner" varName="PRC"/>
+        <parameter formFieldId="vector_type" varName="VEC"/>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" localRef="rhs" location="linearsystems.user.data.Vector/Vector.hpe" name="Vector" package="linearsystems.user.data" parameter_id="vector_type" exposed="true">
+          <visualDescription h="62" w="101" x="270" y="336">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="numeric_type" varName="NUM"/>
+          <parameter formFieldId="library" varName="LIB"/>
+          <unitBounds uRef="unit">
+            <visualDescription h="10" w="10" x="47" y="11"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" localRef="solution" location="linearsystems.user.data.Vector/Vector.hpe" name="Vector" package="linearsystems.user.data" parameter_id="vector_type" exposed="true">
+          <visualDescription h="61" w="107" x="427" y="365">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="numeric_type" varName="NUM"/>
+          <parameter formFieldId="library" varName="LIB"/>
+          <unitBounds uRef="unit">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000291e2ba80efdeec39dac71fb881d049e3e6cdf53f6be9c54d25b46653ba9e60c489d1c3744ff8a9fe69673a7e0d945428b14cb4045d1ee7ee621da5808f765d21335d370d0b7a9daba45d936035d24af4e2ab7f333550f99d566232ecf2161eff12b4fadbe344715a665d72d4db9ff8a03ac8dd4c6e25bbe1419c37c78a97bce" localRef="matrix" location="linearsystems.user.data.Matrix/Matrix.hpe" name="Matrix" package="linearsystems.user.data" parameter_id="matrix_type" exposed="true">
+          <visualDescription h="61" w="110" x="139" y="334">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="matrix_property" varName="MPT"/>
+          <parameter formFieldId="numeric_type" varName="NUM"/>
+          <parameter formFieldId="library" varName="LIB"/>
+          <unitBounds uRef="unit">
+            <visualDescription h="10" w="10" x="47" y="9"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" localRef="vector_type" location="linearsystems.user.data.Vector/Vector.hpe" name="Vector" package="linearsystems.user.data" parameter_id="vector_type" exposed="false">
+      <visualDescription h="30" w="101" x="52" y="316">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="numeric_type" varName="NUM"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d5915a213e2dec164ef25d506e8431f94ffc2ff5c9ff30a5af8d37b7576b26a64807a518c80294e53e4d356f1cb7bae10cdd312719074d1e3383d8e410feeb061b4732dd5ce7755101162e72b6c808595e2bcc87bcb647e63365e1fab7997833c773de46c66e87be246d4c7c0ac15de57c9232160265d40650856a29b9cc1e92" localRef="matrix_property" location="linearsystems.user.qualifier.MatrixProperty/MatrixProperty.hpe" name="MatrixProperty" package="linearsystems.user.qualifier" parameter_id="matrix_property" exposed="false">
+      <visualDescription h="38" w="177" x="87" y="431">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="matrix_property">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000291e2ba80efdeec39dac71fb881d049e3e6cdf53f6be9c54d25b46653ba9e60c489d1c3744ff8a9fe69673a7e0d945428b14cb4045d1ee7ee621da5808f765d21335d370d0b7a9daba45d936035d24af4e2ab7f333550f99d566232ecf2161eff12b4fadbe344715a665d72d4db9ff8a03ac8dd4c6e25bbe1419c37c78a97bce" localRef="matrix_type" location="linearsystems.user.data.Matrix/Matrix.hpe" name="Matrix" package="linearsystems.user.data" parameter_id="matrix_type" exposed="false">
+      <visualDescription h="40" w="119" x="65" y="259">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="matrix_property" varName="MPT"/>
+      <parameter formFieldId="numeric_type" varName="NUM"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="unit">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000081ba0f16b915cc3b546da4b2320cc8ac7b939ebf8536bdf0cd821b75fa45544380fcfe7764eba9e8332f37dc30e943845cef3ea1b45409b9ee8c560d1ed7e7ea471cfc6a14b075e46a2990f8514423c1f754eb660015cd917e9fa65e82184937270068735dd25ed9019aeb367723ea53db0d174237f8df0ebf5aa9955bfe509a" localRef="pre_conditioner" location="linearsystems.user.qualifier.PreConditioner/PreConditioner.hpe" name="PreConditioner" package="linearsystems.user.qualifier" parameter_id="pre_conditioner" exposed="false">
+      <visualDescription h="72" w="170" x="233" y="446">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="matrix_property" varName="MPT"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <unitBounds uRef="pre_conditioner">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005da7b5209ea66382439f5c26938291e2dd2073bb2494ecd2c3d325858f9ba8575a7926a4c68e184902293de80ee64224cf588c648a1f4b1b3fd1b6e8aa96fdb4fed31ed809a8d5c8a6053842253a4d3d860a93744d2a441323c4ea9e6905459c340cd181f98742b8f37142b6850c8a2ebc5ea581014d35ff426207e9d8c2ddb7" localRef="communicator" location="environment.messagepassing.Communicator/Communicator.hpe" name="Communicator" package="environment.messagepassing" parameter_id="communicator_type" exposed="false">
+      <visualDescription h="30" w="50" x="87" y="72">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="comm">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007d0591b621d802920dd0e885f6f5314c74830555aaa8bb1e2259db07521f2f06f7237ef419fb51a9aee9a03d718a3bf512ce5940743aaf005f4e5cd5a1b7e15e15fbd001179c816250f241c003cc8573fc65a3579686fdcb3572e428e23ae054909123cdf7f98101b276be6e0b1c73399139b6a11971bb980d65483c17ce67a3" localRef="library" location="linearsystems.library.basic.Library/Library.hpe" name="Library" package="linearsystems.library.basic" parameter_id="library" exposed="false">
+      <visualDescription h="30" w="50" x="48" y="159">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="library">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000063cd2c8dbcd9c4f38d5275f61a8cb998f735d4a0b30cdf43d9ee5d73f65d0e60c45d810d19e3d02f78c9b5a38cb0e0aeb515617c676a48e8870651476d88b342bfa65b75425b8b425749c27f6ce1dfea7c99266ee1a74b72fea2522d2cdc8da9caa83be26d05c249898a5ecae332ff9ebd8cce37fd30b74fc031864dd5ad8c82" localRef="solution_method" location="linearsystems.user.qualifier.SolutionMethod/SolutionMethod.hpe" name="SolutionMethod" package="linearsystems.user.qualifier" parameter_id="method" exposed="false">
+      <visualDescription h="30" w="162" x="112" y="471">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="matrix_property" varName="MPT"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <parameter formFieldId="pre_conditioner" varName="PRC"/>
+      <unitBounds uRef="solution_method">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e54a1cd76c56f37564e556d5517b2d561d570943a9bf7a0b8b581e4d460948db74148f8bfec29cd3099ab23362f6af475c87d8e6587054ba6f285c11cac304a3234a744282e035e268295e9981c0e6c4b819b5e0fe59f1bcc0f7c051ca64fbafdec8c2536bc6e4a87932b2fbe1aa9dae3cedbce7a976051c7e0f7d8601801887" localRef="numeric_type" location="linearsystems.user.qualifier.ElementDataType/ElementDataType.hpe" name="ElementDataType" package="linearsystems.user.qualifier" parameter_id="numeric_type" exposed="false">
+      <visualDescription h="30" w="50" x="70" y="199">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="element_type">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="vector_type" varName="VEC"/>
+    <supplyParameter cRef="matrix_property" varName="MPT"/>
+    <supplyParameter cRef="matrix_type" varName="MAT"/>
+    <supplyParameter cRef="pre_conditioner" varName="PRC"/>
+    <supplyParameter cRef="communicator" varName="COM"/>
+    <supplyParameter cRef="library" varName="LIB"/>
+    <supplyParameter cRef="solution_method" varName="MTH"/>
+    <supplyParameter cRef="numeric_type" varName="NUM"/>
+    <parameter componentRef="vector_type" formFieldId="vector_type" varName="VEC"/>
+    <parameter componentRef="matrix_property" formFieldId="matrix_property" varName="MPT"/>
+    <parameter componentRef="matrix_type" formFieldId="matrix_type" varName="MAT"/>
+    <parameter componentRef="pre_conditioner" formFieldId="pre_conditioner" varName="PRC"/>
+    <parameter componentRef="communicator" formFieldId="communicator_type" varName="COM"/>
+    <parameter componentRef="library" formFieldId="library" varName="LIB"/>
+    <parameter componentRef="solution_method" formFieldId="method" varName="MTH"/>
+    <parameter componentRef="numeric_type" formFieldId="numeric_type" varName="NUM"/>
+    <interface iRef="IDirectSolver" nArgs="8">
+      <slice isRef="matrix">
+        <originRef cRef="matrix" iRef="IMatrix"/>
+        <visualDescription h="10" w="10" x="30" y="1"/>
+      </slice>
+      <slice isRef="rhs">
+        <originRef cRef="rhs" iRef="IVector"/>
+        <visualDescription h="10" w="10" x="64" y="9"/>
+      </slice>
+      <slice isRef="solution">
+        <originRef cRef="solution" iRef="IVector"/>
+        <visualDescription h="11" w="19" x="33" y="24"/>
+      </slice>
+      <slice isRef="solution_method">
+        <originRef cRef="solution_method" iRef="ISolutionMethod"/>
+        <visualDescription h="10" w="10" x="13" y="18"/>
+      </slice>
+      <slice isRef="comm">
+        <originRef cRef="comm" iRef="ICommunicator"/>
+        <visualDescription h="10" w="10" x="48" y="4"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;using linearsystems.user.qualifier.ElementDataType;&#xA;using linearsystems.user.data.Matrix;&#xA;using linearsystems.user.data.Vector;&#xA;using linearsystems.user.qualifier.PreConditioner;&#xA;using linearsystems.user.qualifier.SolutionMethod;&#xA;using linearsystems.user.computation.Solver;&#xA;&#xA;namespace linearsystems.user.computation.DirectSolver { &#xA;&#xA;public interface BaseIDirectSolver&lt;LIB, MPT, NUM, MAT, VEC, PRC, MTH> : BaseISolver&lt;LIB, MPT, NUM, MAT, VEC, PRC, MTH>, IComputationKind &#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;where NUM:IElementDataType&#xA;where MAT:IMatrix&lt;LIB, MPT, NUM>&#xA;where VEC:IVector&lt;LIB, NUM>&#xA;where PRC:IPreConditioner&lt;LIB, MPT>&#xA;where MTH:ISolutionMethod&lt;PRC, MPT, LIB>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDirectSolver.cs" srcType="base" uri="linearsystems.user.computation.DirectSolver/bin/1.0.0.0/BaseIDirectSolver.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll</dependency>
+          <dependency>linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll</dependency>
+          <dependency>linearsystems.user.data.Matrix/bin/1.0.0.0/IMatrix.dll</dependency>
+          <dependency>linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll</dependency>
+          <dependency>linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll</dependency>
+          <dependency>linearsystems.user.qualifier.SolutionMethod/bin/1.0.0.0/ISolutionMethod.dll</dependency>
+          <dependency>linearsystems.user.computation.Solver/bin/1.0.0.0/BaseISolver.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;using linearsystems.user.qualifier.ElementDataType;&#xA;using linearsystems.user.data.Matrix;&#xA;using linearsystems.user.data.Vector;&#xA;using linearsystems.user.qualifier.PreConditioner;&#xA;using linearsystems.user.qualifier.SolutionMethod;&#xA;using linearsystems.user.computation.Solver;&#xA;&#xA;namespace linearsystems.user.computation.DirectSolver { &#xA;&#xA;public interface IDirectSolver&lt;LIB, MPT, NUM, MAT, VEC, PRC, MTH> : BaseIDirectSolver&lt;LIB, MPT, NUM, MAT, VEC, PRC, MTH>, ISolver&lt;LIB, MPT, NUM, MAT, VEC, PRC, MTH>&#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;where NUM:IElementDataType&#xA;where MAT:IMatrix&lt;LIB, MPT, NUM>&#xA;where VEC:IVector&lt;LIB, NUM>&#xA;where PRC:IPreConditioner&lt;LIB, MPT>&#xA;where MTH:ISolutionMethod&lt;PRC, MPT, LIB>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDirectSolver.cs" srcType="user" uri="linearsystems.user.computation.DirectSolver/bin/1.0.0.0/IDirectSolver.dll" versionId="1.0.0.0">
+          <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
+          <dependency>linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll</dependency>
+          <dependency>linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll</dependency>
+          <dependency>linearsystems.user.data.Matrix/bin/1.0.0.0/IMatrix.dll</dependency>
+          <dependency>linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll</dependency>
+          <dependency>linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll</dependency>
+          <dependency>linearsystems.user.qualifier.SolutionMethod/bin/1.0.0.0/ISolutionMethod.dll</dependency>
+          <dependency>%WORKSPACE/linearsystems.user.computation.DirectSolver/bin/1.0.0.0/BaseIDirectSolver.dll</dependency>
+          <dependency>linearsystems.user.computation.Solver/bin/1.0.0.0/ISolver.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="15" y="179">
+        <color b="20" g="105" r="139"/>
+      </visualDescription>
+      <port name="matrix">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="unit" sRef="matrix"/>
+      </port>
+      <port name="rhs">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="unit" sRef="rhs"/>
+      </port>
+      <port name="solution">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="unit" sRef="solution"/>
+      </port>
+      <parameter iname="ILibrary" order="0" parid="LIB" uname="library" varid="library"/>
+      <parameter iname="IMatrixProperty" order="1" parid="MPT" uname="matrix_property" varid="matrix_property"/>
+      <parameter iname="IElementDataType" order="2" parid="NUM" uname="element_type" varid="numeric_type"/>
+      <parameter iname="IMatrix" order="3" parid="MAT" uname="unit" varid="matrix_type"/>
+      <parameter iname="IVector" order="4" parid="VEC" uname="unit" varid="vector_type"/>
+      <parameter iname="IPreConditioner" order="5" parid="PRC" uname="pre_conditioner" varid="pre_conditioner"/>
+      <parameter iname="ISolutionMethod" order="6" parid="MTH" uname="solution_method" varid="method"/>
+      <parameter iname="ICommunicator" order="7" parid="COM" uname="comm" varid="communicator_type"/>
+    </interface>
+    <unit iRef="IDirectSolver" private="false" uRef="unit" visibleInterface="true">
+      <super cRef="base" uRef="unit"/>
+      <slices cRef="matrix" replica="0" uRef="unit" sliceName="matrix" transitive="false">
+        <visualDescription h="10" w="10" x="30" y="1"/>
+      </slices>
+      <slices cRef="rhs" replica="0" uRef="unit" sliceName="rhs" transitive="false">
+        <visualDescription h="10" w="10" x="64" y="9"/>
+      </slices>
+      <slices cRef="solution" replica="0" uRef="unit" sliceName="solution" transitive="false">
+        <visualDescription h="10" w="10" x="33" y="24"/>
+      </slices>
+      <slices cRef="solution_method" replica="0" uRef="solution_method" sliceName="solution_method" transitive="false">
+        <visualDescription h="10" w="10" x="13" y="18"/>
+      </slices>
+      <slices cRef="comm" replica="0" uRef="comm" sliceName="comm" transitive="false">
+        <visualDescription h="10" w="10" x="48" y="4"/>
+      </slices>
+      <visualDescription h="40" w="80" x="35" y="439"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@96cb3e1289957059997" varId="n">
+      <originRef>base</originRef>
+      <originRef>comm</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="67" w="99" x="402" y="150"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
