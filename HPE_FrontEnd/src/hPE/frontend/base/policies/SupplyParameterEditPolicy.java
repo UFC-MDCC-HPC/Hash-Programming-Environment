@@ -100,10 +100,8 @@ public void execute(){
 	   } else {
 		   cancel = true;
 	   }
-   
-
-	   
 }
+
 
 
 private IComponent getModelCopy() {
@@ -134,7 +132,14 @@ private IComponent getModelCopy() {
 
 public void undo(){
 	
+	HComponent topModel = (HComponent) model.getTopConfiguration();
+	
+	topModel.undoSupplyParameter(varName,model);
 	   
+}
+
+public boolean canUndo() {
+	return true;
 }
 
 public void redo(){

@@ -85,7 +85,7 @@ public void execute(){
 	editor = (HPEVersionEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 
 	boolean isSubTyping = i.hasSuperType();
-	boolean isImplementing = !i.isAbstractInterface();
+	boolean isImplementing = !i.isAbstract();
 	
 	boolean onlyEdit = isSubTyping || isImplementing;
 

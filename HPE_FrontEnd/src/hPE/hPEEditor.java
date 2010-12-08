@@ -969,7 +969,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		HComponent c = null;
 				
 		try {
-			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, true);
+			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
 		} catch (HPEInvalidComponentResourceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -984,7 +984,9 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	protected void setInput(IEditorInput input) {
 		super.setInput(input);
 		IFile file = ((IFileEditorInput) input).getFile();
-		URI uri = URI.createURI(file.getFullPath().makeRelative().toPortableString());
+		IPath path = HComponentFactoryImpl.buildWPath(file.getFullPath());
+		
+		URI uri = URI.createFileURI(path.makeAbsolute().toOSString());
 		configuration = getConfiguration(uri);
 		setPartName(file.getName());
 	}

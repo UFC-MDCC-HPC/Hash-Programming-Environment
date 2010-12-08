@@ -100,7 +100,7 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 	
 	public boolean isPrivate() {
 		try {
-	   	  return !((HComponent)((HInterface)this.getMainSlice().getInterface()).getCompliantUnits().get(0).getConfiguration()).getExposed();
+	   	  return !((HComponent)((HInterface)this.getMainSlice().getInterface()).getCompliantUnits().get(0).getConfiguration()).isPublic();
 		} catch (IndexOutOfBoundsException e) {
 			return false;
 		}

@@ -1,5 +1,9 @@
 package hPE.frontend.base.actions;
 
+import hPE.HPEPlugin;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.policies.SupplyParameterEditPolicy;
+
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
@@ -9,12 +13,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.ui.IWorkbenchPart;
-
-import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.policies.SupplyParameterEditPolicy;
-import hPE.HPEPlugin;
 
 public class SupplyParameterAction extends SelectionAction {
 
@@ -55,7 +54,11 @@ public class SupplyParameterAction extends SelectionAction {
 			if (!(part.getModel() instanceof HComponent)) return false;
 			HComponent c = (HComponent) part.getModel();
 			if (c.isTopConfiguration()) return false;
-			if (c.isConnected()) return false;
+			
+			//  // TODO: TOP LEVEL PARAMETERS ...
+			// if (c.isConnected()) return false; 
+			if (c.isParameter()) return false;
+			
 			if (c.isReplicated())return false;
 			if (!c.isAbstractConfiguration()) return false; // only abstract configurations are parameterized ... 
 		}	

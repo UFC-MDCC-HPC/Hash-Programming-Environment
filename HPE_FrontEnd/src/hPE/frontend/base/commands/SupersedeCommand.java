@@ -47,7 +47,7 @@ public class SupersedeCommand extends Command {
     	varSource = !varSource.contains("@") ? varSource : varSource.substring(0,varSource.indexOf('@')); 
     	varTarget = !varTarget.contains("@") ? varTarget : varTarget.substring(0,varTarget.indexOf('@'));
 
-        boolean cond1 = source.isSubTypeOf(target) && source.getExposed() == target.getExposed() && topC.isAbstractConfiguration(); 
+        boolean cond1 = source.isSubTypeOf(target) && source.isPublic() == target.isPublic() && topC.isAbstractConfiguration(); 
         boolean cond2 = cond1 && source.getName2().equals(target.getName2());
         boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !varSource.equals(varTarget));
         boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(target, source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 
@@ -61,7 +61,7 @@ public class SupersedeCommand extends Command {
     		//	  JOptionPane.ERROR_MESSAGE);
         } else if (!cond3) {
         	String message = null;
-        	if (source.getSupplied() == null && target.getSupplied() == null) {
+        	if (source.getSupplier() == null && target.getSupplier() == null) {
         		message = "\nIt is still possible to rename one of these variables to make possible this operation.";
         	} else {
         		message = "\nHowever, since one of such context variables has been supplied before, the variables cannot be renamed. " + 

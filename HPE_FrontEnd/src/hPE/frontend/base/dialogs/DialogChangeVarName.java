@@ -106,7 +106,7 @@ public class DialogChangeVarName extends JDialog {
 					
 					Pair<String, List<HComponent>> item = (Pair<String,List<HComponent>>) getJComboBoxVarName().getSelectedItem();					
 					HComponent cVar = item.snd().get(0); 
-					String varId = cVar.getVariableName((HComponent) cVar.getTopConfiguration());
+					String varId = cVar.getVariableName((HComponent) cVar.getConfiguration());
 					
 					jTextFieldNewVarName.setText(varId);
 					
@@ -203,28 +203,32 @@ public class DialogChangeVarName extends JDialog {
 		return jButtonClose;
 	}
 	
-    private void changeVarName(Pair<String, List<HComponent>> varToBeChanged,
-			String newVarName) {
+    private void changeVarName(Pair<String, List<HComponent>> varToBeChanged, String newVarName) {
         HComponent topC = (HComponent) c.getTopConfiguration();
         
-        if (newVarName != null && !newVarName.equals("")) {
-        	
-        	boolean allowed = true;
-        	for (HComponent c : varToBeChanged.snd()) {
-        		allowed &= c.isDirectSonOfTheTopConfiguration();
-        	}
+        if (newVarName != null && !newVarName.equals("")) 
+        {
+            boolean allowed = true;
+	        // TODO: TOP LEVEL PARAMETERS ...
+	        //	for (HComponent c : varToBeChanged.snd()) {
+	        //		allowed &= c.isDirectSonOfTheTopConfiguration();
+	        //	}
         		        	
 	        if (c.isTopConfiguration() && !allowed) {
 	        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 	        } else {		        
 	        	for (HComponent innerC : varToBeChanged.snd()) {
-	        		if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName(c))) {
-			        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a bound variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-			        	break;
-			        }
-	        		innerC.setVariableName(newVarName);
+	        		//if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName(c))) {
+			        //	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a bound variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+			        //	break;
+			        //} 
+	        		
+	        		// innerC.setVariableName(newVarName);
+	        		String oldVarName = innerC.getVariableName((HComponent) innerC.getTopConfiguration());
+	        		HComponent ownerOfinnerC = (HComponent) innerC.getConfiguration();
+	        		ownerOfinnerC.changeVariableName(oldVarName, newVarName);
+	        		
 		        }
-		        c.adviceChangeParameterName();
 	        }
         } else {
         	System.err.println("Invalid Variable Name !! (ChangeVariableNameCommand.execute())");

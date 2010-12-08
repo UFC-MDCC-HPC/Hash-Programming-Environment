@@ -25,6 +25,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
@@ -73,79 +74,53 @@ public class ComponentEditPart<ModelType extends HComponent,
 	
 	protected void refreshVisuals() {
 		
-		ModelType component = (ModelType) getModel();
+		ModelType component_ = (ModelType) getModel();
+		HComponent component = (HComponent) (component_.getSupplier() == null ? component_ : component_.getSupplier()); 
 		FigureType component_figure = (FigureType) getFigure();
 		String name = ""; // component.getName2() + ": ";
 				
-		boolean showBounds = component.isDirectSonOfTheTopConfiguration();
+		boolean showBounds = true; //component.isDirectSonOfTheTopConfiguration();
 		boolean showParId  = true; //component.isDirectSonOfTheTopConfiguration();
 		
-        if (component.isParameter() && component.getSupplied()==null) { 
-    	    component_figure.setAbstract();
+        if (component.isParameter() && component.getSupplier()==null) {
+        	/* CHECK NEW BOUND AT TOP CONFIGURATION */
     	    HComponent topC = (HComponent) component.getTopConfiguration();
+    	   // HComponent ownerC = component.getParentConfiguration();
     	    String varName = component.getVariableName(topC);
+    	    Map<String, HComponent> ccc = topC.getParametersByDefinedVarNames();
+        	component = (HComponent) (ccc.containsKey(varName) ? ccc.get(varName) : component);
+        	
+    	    component_figure.setAbstract();
     	    showBounds = showBounds && ((!topC.getVars().contains(varName)) || component.isTopConfiguration());
     	    if (varName.equals("?")) {
     	        name += (showParId ? component.getParameterIdentifier((IComponent)component.getConfiguration()) : "") + (showBounds ? " = " + component.getVariableName(topC) +  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
     	    }
     	    else {
-    	    	name += component.getVariableName(topC) + (showBounds ?  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
+    	    	name += varName + (showBounds ?  ": " + component.getNameWithParameters(false, showBounds, showParId) : "");
     	    }
         }
-        else if (component.isParameter() && component.getSupplied()!=null) { 
-        	component_figure.setNonAbstract();
-            name /*+ component.getParameterIdentifier((IComponent)component.getConfiguration()) + " is " */ += component.getNameWithParameters(false, showBounds, showParId);
-        } else {
+        else {
         	component_figure.setNonAbstract();
             name += component.getNameWithParameters(false, showBounds, showParId);
         }
 
-        String name_ = breakLines(" " + name + " ");
+        String name_ = HComponent.breakLines(" " + name + " ");
         
 		Label ff = new Label(" " + name_ + " ");
-		Font font = new Font(null, "Arial", 10, SWT.BOLD);
+		Font font = new Font(null, "Courier New", 8, SWT.BOLD);
 		ff.setFont(font); 
 
-		component_figure.setPort(!component.isDirectSonOfTheTopConfiguration());
-        component_figure.setBounds(calculateBounds(component));
-        component_figure.setName(component.getRef() + (component.hasFreeVariables() ? " [?]" : ""));
+		component_figure.setPort(!component_.isDirectSonOfTheTopConfiguration());
+        component_figure.setBounds(calculateBounds(component_));
+        component_figure.setName(component_.getRef() + (component.hasFreeVariables() ? " [?]" : ""));
 		component_figure.setToolTip(ff);
-        component_figure.setRecursive(component.isRecursive());
-        component_figure.setBackgroundColor(component.getColor());
-        component_figure.setIsSuperType(component.isSuperType());
-        component_figure.setExposed(component.getExposed());
+        component_figure.setRecursive(component_.isRecursive());
+        component_figure.setBackgroundColor(component_.getColor());
+        component_figure.setIsSuperType(component_.isSuperType());
+        component_figure.setExposed(component_.isPublic());
 				
 	}
 	
-	private String breakLines(String name) {
-
-		String name_="";
-		
-		int level = 0;
-		int lastindex=0;		
-        for (int i=0; i<name.length();i++)  {
-        	if (name.charAt(i) == '<') { 
-        		if (level == 0) {
-            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
-            		lastindex = i+1;        		
-        		}
-        		level ++;
-        	}
-        	else if (name.charAt(i) == '>')  {
-        		if (level==1) {
-        		}
-        		level --;
-        	}
-        	else if (name.charAt(i) == ',' && level == 1) { 
-        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
-        		lastindex = i+1;        		
-        	}
-        }
-        		
-		name_ += name.substring(lastindex, name.length());
-
-		return name_;
-	}
 
 	private Rectangle calculateBounds(ModelType component) {
 		Rectangle bounds = component.getBounds();

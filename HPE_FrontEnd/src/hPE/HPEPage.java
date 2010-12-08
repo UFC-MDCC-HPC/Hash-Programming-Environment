@@ -115,6 +115,12 @@ public class HPEPage extends WizardNewFileCreationPage implements
 
 			String ss = this.getContainerFullPath().toString();
 		
+			
+			IPath containerRelativePath = this.getContainerFullPath();
+			IPath containerAbsolutePath = HComponentFactoryImpl.buildWPath(containerRelativePath);
+			
+			//URI uri = URI.createFileURI(path.makeAbsolute().toOSString());
+			
 			if (!ss.contains(".")) {
 				JOptionPane.showMessageDialog(null, "Unrecognized component package. Use <package>.<name>", "Creation Error", JOptionPane.ERROR_MESSAGE);
 					throw new Exception("Unrecognized component name.");
@@ -125,43 +131,46 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 			this.setFileName(s + ".hpe");
 						
-			String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
+			// String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
+			String absolutePathString = containerAbsolutePath.append(s + ".hpe").toString();
+			String relativePathString = containerRelativePath.append(s + ".hpe").toString();
 					
-			URI uri = URI.createFileURI(absolutePath);
+			URI uriAbsolutePath = URI.createFileURI(absolutePathString);
 			
 			HComponent c = null;
 			switch (modelSelected1) {
-			case 1: c = new HDataComponent(s,null,uri); break;
-			case 2: c = new HComputationComponent(s,null,uri); break;
-			case 3: c = new HSynchronizationComponent(s,null,uri); break;
-			case 4: c = new HArchitectureComponent(s,null,uri); break;
-			case 5: c = new HEnvironmentComponent(s,null,uri); break;
-			case 6: c = new HQualifierComponent(s,null,uri); break;
-			case 7: c = new HApplicationComponent(s,null,uri); break;
-		    case 8: c = new HServiceComponent(s,null,uri); break;
-			case 9: c = new HEnumeratorComponent(s,null,uri); break;
-			case 10: c = new HFacetComponent(s,null,uri); break;
-			case 11: c = new HDomainComponent(s,null,uri); break;
+			case 1: c = new HDataComponent(s,null,uriAbsolutePath); break;
+			case 2: c = new HComputationComponent(s,null,uriAbsolutePath); break;
+			case 3: c = new HSynchronizationComponent(s,null,uriAbsolutePath); break;
+			case 4: c = new HArchitectureComponent(s,null,uriAbsolutePath); break;
+			case 5: c = new HEnvironmentComponent(s,null,uriAbsolutePath); break;
+			case 6: c = new HQualifierComponent(s,null,uriAbsolutePath); break;
+			case 7: c = new HApplicationComponent(s,null,uriAbsolutePath); break;
+		    case 8: c = new HServiceComponent(s,null,uriAbsolutePath); break;
+			case 9: c = new HEnumeratorComponent(s,null,uriAbsolutePath); break;
+			case 10: c = new HFacetComponent(s,null,uriAbsolutePath); break;
+			case 11: c = new HDomainComponent(s,null,uriAbsolutePath); break;
 			}
 			
 			setComponentVersion(c);
+			c.setAbstract(composite2.isAbstract());
+			
+			IPath absolutePath = new Path(absolutePathString); 
+			IPath relativePath = new Path(relativePathString); 
+			c.setPackagePath(new Path(packageName));
+			
 			try {
 				c.createComponentKey();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			c.setAbstract(composite2.isAbstract());
-			
-			IPath path = new Path(absolutePath); 
-			// c.setPackagePath(path.removeFirstSegments(1).uptoSegment(1).makeRelative());
-			c.setPackagePath(new Path(packageName));
 			
 			
 			
-			IFile file = persistSourceFile("", path);
+			IFile file = persistSourceFile("", relativePath);
 			
-			java.io.File file2 = HComponentFactoryImpl.getFileInWorkspace(path);
+			java.io.File file2 = HComponentFactoryImpl.getFileInWorkspace(absolutePath);
 			
 			try {
 				factory.saveComponent(c,file2,null);

@@ -303,16 +303,27 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
     public static IPath buildWPath(IPath path_) {
     	IPath path = path_.setDevice(null);
-    	boolean isRoot = path.toFile().isAbsolute();
+    	File file = path.toFile();    	
+    	boolean isRoot = file.exists() && path.toFile().isAbsolute();
     	if (!isRoot) {
 			IPath wpath = new Path(getWorkspacePath());			
 			IPath rrr = wpath.append(path_);
+			File fileW = rrr.toFile();
+			System.out.print(fileW.exists());
 			return rrr;
     	} else
     		return path_;   
     }
     
     public static java.io.File getFileInWorkspace(IPath path) {
+    	
+    	if (path.segment(0).equals("file:")) {
+    		String pathString = path.toString();
+    		path = path.removeFirstSegments(1);
+    		if (pathString.startsWith("file:" + Path.SEPARATOR)) {
+    		   path = path.makeAbsolute();
+    		}
+    	}
     	
     	if (path.toFile().isAbsolute()) {
 	        File file = null;
@@ -334,7 +345,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
     public static boolean existsInWorkspace(IPath path) {
     	IPath wpath = null;
-    	if (path.toFile().isAbsolute()) {
+    	if (path.segment(0).equals("file:")) {
+    		String pathString = path.toString();
+    		path = path.removeFirstSegments(1);
+    		if (pathString.startsWith("file:" + Path.SEPARATOR)) {
+    		   path = path.makeAbsolute();
+    		}
+    	}
+    	File file = path.toFile();
+    	if (file.isAbsolute()) {
     		wpath = path;
     	} else {
     		wpath = buildWPath(path);	
@@ -745,7 +764,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (ParameterRenaming p : xInnerC.getParameter()) {
 			String formFieldId = p.getFormFieldId();
 			String varName = p.getVarName();
-			innerC.updateVariableName(formFieldId, varName);
+			if (!formFieldId.equals("type ?"))
+			   innerC.updateVariableName(formFieldId, varName);
 		}
 	}
 
@@ -1116,36 +1136,36 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			loadVersions(xCheader.getVersions());
 
 			if (xCinfo != null) {
+
 				loadInnerComponents(xCinfo);
 
 				applyRenaming(xCinfo);
 				loadEnumerators(xCinfo);
 				loadSplits(xCinfo); 
-				setupParameters(xCinfo);
-//				fuseReplicators(xCinfo);
-				supplyParameters(xCinfo);
 				setupVariableNamesOfTopLevelInners(xCinfo);
 				laterFetchPorts();
 
 				if (this.isConcrete)
 					component.setImplements(this.basetype);
-
 				if (this.isSubType)
 					component.setExtends(this.basetype);
 
 				readInterfaces(xCinfo); //
 				loadUnits(xCinfo);//
+				setupParameters(xCinfo);
+				supplyParameters(xCinfo);
 				setRecursive(xCinfo);
 				loadInterfaces(xCinfo, isTop, isImplementing);
 				linksToReplicators(); //
 				fuseReplicators(xCinfo);
 				loadUnitBounds();
 
+				
 				applyFusions(xCinfo);
 
 				loadInterfacePorts();
 				
-				component.performAdjustSupply();
+				//component.performAdjustSupply();
 			}
 
 			return component;
@@ -1472,9 +1492,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveInfo(HComponent c, ComponentBodyType xI) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
 
 		saveInnerComponents(c, xI.getInnerComponent()); // OK !
-		saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
+	    saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
 		saveParameters(c, xI.getParameter()); // OK !
-		saveInnerRenamings(c, xI.getInnerRenaming());
+		saveInnerRenamings(c, xI.getInnerRenaming()); 
 		saveFusions(c, xI.getFusion());
 		saveSplits(c, xI.getSplit());
 		saveInterfaces(c, xI.getInterface());
@@ -1645,7 +1665,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (HComponent ic : cs) {
 
-			if (ic.isParameter() && ic.getSupplied() == null) {
+			if (ic.isParameter() && ic.getSupplier() == null) {
 				String formFieldId = null;
 				String cRef = null;
 				String varName = null;
@@ -1675,6 +1695,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
         int i = 0;
         
         List<String> cRefs = new ArrayList<String>();
+        List<String> cRefsSupply = new ArrayList<String>();
 		
         for (HComponent cInner : c.getComponents()) {
 		    cs.add(cInner);
@@ -1687,12 +1708,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
         }
         
 		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet()) {
-			cs.add(i++, p.getValue());
 			String cRef = p.getValue().getRef();
-			if (cRefs.contains(cRef)) {
-				   throw new DuplicatedRefInnerException(cRef); 
+			if (cRefsSupply.contains(cRef)) {
+				   throw new DuplicatedRefInnerException(cRef);  
 			} else {
-			   cRefs.add(cRef);
+				if (!cRefs.contains(cRef)) {
+ 				   cs.add(i++, p.getValue());
+				   cRefs.add(cRef);
+				   cRefsSupply.add(cRef);
+				}
 			}
 		}
 		
@@ -1748,7 +1772,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		String location = ic.getRemoteLocation() == null ? ic.getRelativeLocation() : ic.getRemoteLocation();
 		String package_ = ic.getPackagePath().toString();
-		boolean exposed = ic.getExposed();
+		boolean exposed = ic.isPublic();
 		String hash_component_UID = ic.getHashComponentUID();
 
 		String parameterId = ic.getParameterIdentifier(this.component);
@@ -2909,7 +2933,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			for (SourceFileType f : s.getFile()) {
 				String fileType = f.getFileType().equals("dll") ? "library" : f
 						.getFileType();
-				String locallocation = this.component.getLocalLocation();
+				String locallocation = this.component.getRelativeLocation();
 				URI uriRootPath = URI.createURI(locallocation);
 				String rootPath = uriRootPath.toString();
 				rootPath = rootPath.replaceAll("%20", " ");
