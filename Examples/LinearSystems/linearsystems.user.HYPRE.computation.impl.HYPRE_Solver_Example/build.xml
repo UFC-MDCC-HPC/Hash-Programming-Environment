@@ -7,29 +7,49 @@
     <ifnot targetexists="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0">
       <mkdir dir="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0"/>
     </ifnot>
-    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/HYPRE_Solver_Example.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/BaseIHyprePCGSolver.dll" target="library" unsafe="true">
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/HYPRE_Solver_Example.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/BaseHYPRE_PCGSolver.dll" target="library" unsafe="true">
       <sources>
-        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/src/1.0.0.0/BaseIHyprePCGSolver.cs"/>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/src/1.0.0.0/BaseHYPRE_PCGSolver.cs"/>
       </sources>
       <references>
-        <include name="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll"/>
+        <include name="linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll"/>
         <include name="linearsystems.library.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
+        <include name="linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/IDoublePrecisionFPNumber.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPREVector/bin/1.0.0.0/IFacetHYPREVector.dll"/>
+        <include name="linearsystems.library.HYPRE.domain.LSSDomainHYPRE/bin/1.0.0.0/ILSSDomainHYPRE.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/IFacetHYPRESetup.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPREMatrix/bin/1.0.0.0/IFacetHYPREMatrix.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPREPreConditioner/bin/1.0.0.0/IFacetHYPREPreConditioner.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPRESolver/bin/1.0.0.0/IFacetHYPRESolver.dll"/>
+        <include name="linearsystems.user.data.MatrixCSR/bin/1.0.0.0/IMatrixCSR.dll"/>
         <include name="linearsystems.user.qualifier.SparseMatrix/bin/1.0.0.0/ISparseMatrix.dll"/>
+        <include name="environment.messagepassing.MPICommunicator/bin/1.0.0.0/IMPICommunicator.dll"/>
+        <include name="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll"/>
         <include name="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll"/>
         <include name="linearsystems.user.computation.Solver/bin/1.0.0.0/BaseISolver.dll"/>
         <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
       </references>
     </csc>
-    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/HYPRE_Solver_Example.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/IHyprePCGSolver.dll" target="library" unsafe="true">
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/HYPRE_Solver_Example.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/HYPRE_PCGSolver.dll" target="library" unsafe="true">
       <sources>
-        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/src/1.0.0.0/IHyprePCGSolver.cs"/>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/src/1.0.0.0/HYPRE_PCGSolver.cs"/>
       </sources>
       <references>
         <include name="linearsystems.library.HYPRE/bin/1.0.0.0/IHYPRE.dll"/>
         <include name="linearsystems.user.qualifier.SparseMatrix/bin/1.0.0.0/ISparseMatrix.dll"/>
+        <include name="linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/IDoublePrecisionFPNumber.dll"/>
+        <include name="linearsystems.user.data.MatrixCSR/bin/1.0.0.0/IMatrixCSR.dll"/>
+        <include name="linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll"/>
         <include name="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll"/>
         <include name="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll"/>
-        <include name="/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/BaseIHyprePCGSolver.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPREVector/bin/1.0.0.0/IFacetHYPREVector.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPRESetup/bin/1.0.0.0/IFacetHYPRESetup.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPREMatrix/bin/1.0.0.0/IFacetHYPREMatrix.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPREPreConditioner/bin/1.0.0.0/IFacetHYPREPreConditioner.dll"/>
+        <include name="linearsystems.library.HYPRE.facet.HYPRESolver/bin/1.0.0.0/IFacetHYPRESolver.dll"/>
+        <include name="environment.messagepassing.MPICommunicator/bin/1.0.0.0/IMPICommunicator.dll"/>
+        <include name="linearsystems.library.HYPRE.domain.LSSDomainHYPRE/bin/1.0.0.0/ILSSDomainHYPRE.dll"/>
+        <include name="/linearsystems.user.HYPRE.computation.impl.HYPRE_Solver_Example/bin/1.0.0.0/BaseHYPRE_PCGSolver.dll"/>
         <include name="linearsystems.user.computation.Solver/bin/1.0.0.0/ISolver.dll"/>
         <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
       </references>

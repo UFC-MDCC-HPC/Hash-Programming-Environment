@@ -46,4 +46,10 @@
       <Properties InternalTargetFrameworkVersion="3.5" />
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\media\HERON\HPE\hashmodel_monodevelop\Back-End HPE Windows\DGAC\DGAC.csproj">
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
+      <Name>DGAC</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -57,6 +57,14 @@
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\environment.messagepassing.Communicator\Communicator\Communicator.csproj">
+      <Project>{13A4C628-F6BD-4BBD-8A66-A995F0DF2686}</Project>
+      <Name>Communicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.domain.LSSDomain\LSSDomain\library.LSSDomain.csproj">
+      <Project>{B5E5F31A-EC3E-4EB8-BE42-EBF43BF17ECC}</Project>
+      <Name>library.LSSDomain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

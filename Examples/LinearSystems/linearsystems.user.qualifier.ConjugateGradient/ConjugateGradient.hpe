@@ -5,7 +5,7 @@
       <extensionType>
         <extends>true</extends>
       </extensionType>
-      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000063cd2c8dbcd9c4f38d5275f61a8cb998f735d4a0b30cdf43d9ee5d73f65d0e60c45d810d19e3d02f78c9b5a38cb0e0aeb515617c676a48e8870651476d88b342bfa65b75425b8b425749c27f6ce1dfea7c99266ee1a74b72fea2522d2cdc8da9caa83be26d05c249898a5ecae332ff9ebd8cce37fd30b74fc031864dd5ad8c82" localRef="base" location="linearsystems.user.qualifier.SolutionMethod/SolutionMethod.hpe" name="SolutionMethod" package="linearsystems.user.qualifier" version="1.0.0.0">
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000051fd2994bea1d784a1aa863839e51b37e18b0730837041ddfd8d983505602224a2c93ca57baa1dedd2fa96c51bf27fe6bd74fd17d8947b16fdbd45476192f3c8e2c638df34f0c32720d500374392eeb42dfb4e31f33e95183c2282b81db82b55a0c5929e6c5bfd3e64b7f80f5838949f0fb57c1c7bfd1a707c21cb16510e76a2" localRef="base" location="linearsystems.user.qualifier.IterativeMethod/IterativeMethod.hpe" name="IterativeMethod" package="linearsystems.user.qualifier" version="1.0.0.0">
         <visualDescription h="41" w="97" x="248" y="129">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -62,13 +62,13 @@
         <visualDescription h="10" w="10" x="32" y="29"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;using linearsystems.user.qualifier.PreConditioner;&#xA;using linearsystems.user.qualifier.SolutionMethod;&#xA;&#xA;namespace linearsystems.user.qualifier.ConjugateGradient { &#xA;&#xA;public interface BaseIConjugateGradient&lt;LIB, MPT, PRC> : BaseISolutionMethod&lt;LIB, MPT, PRC>, IQualifierKind &#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;where PRC:IPreConditioner&lt;LIB, MPT>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIConjugateGradient.cs" srcType="base" uri="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/BaseIConjugateGradient.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;using linearsystems.user.qualifier.PreConditioner;&#xA;using linearsystems.user.qualifier.SolutionMethod;&#xA;&#xA;namespace linearsystems.user.qualifier.ConjugateGradient { &#xA;&#xA;public interface BaseIConjugateGradient&lt;LIB, MPT, PRC> : BaseISolutionMethod&lt;PRC, MPT, LIB>, IQualifierKind &#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;where PRC:IPreConditioner&lt;LIB, MPT>&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIConjugateGradient.cs" srcType="base" uri="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/BaseIConjugateGradient.dll" versionId="1.0.0.0">
           <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
           <dependency>linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll</dependency>
           <dependency>linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll</dependency>
           <dependency>linearsystems.user.qualifier.SolutionMethod/bin/1.0.0.0/BaseISolutionMethod.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;using linearsystems.user.qualifier.PreConditioner;&#xA;using linearsystems.user.qualifier.SolutionMethod;&#xA;&#xA;namespace linearsystems.user.qualifier.ConjugateGradient { &#xA;&#xA;public interface IConjugateGradient&lt;LIB, MPT, PRC> : BaseIConjugateGradient&lt;LIB, MPT, PRC>, ISolutionMethod&lt;LIB, MPT, PRC>&#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;where PRC:IPreConditioner&lt;LIB, MPT>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IConjugateGradient.cs" srcType="user" uri="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.basic.Library;&#xA;using linearsystems.user.qualifier.MatrixProperty;&#xA;using linearsystems.user.qualifier.PreConditioner;&#xA;using linearsystems.user.qualifier.SolutionMethod;&#xA;&#xA;namespace linearsystems.user.qualifier.ConjugateGradient { &#xA;&#xA;public interface IConjugateGradient&lt;LIB, MPT, PRC> : BaseIConjugateGradient&lt;LIB, MPT, PRC>, ISolutionMethod&lt;PRC, MPT, LIB>&#xA;where LIB:ILibrary&#xA;where MPT:IMatrixProperty&lt;LIB>&#xA;where PRC:IPreConditioner&lt;LIB, MPT>&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IConjugateGradient.cs" srcType="user" uri="linearsystems.user.qualifier.ConjugateGradient/bin/1.0.0.0/IConjugateGradient.dll" versionId="1.0.0.0">
           <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
           <dependency>linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll</dependency>
           <dependency>linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll</dependency>
@@ -76,7 +76,7 @@
           <dependency>linearsystems.user.qualifier.SolutionMethod/bin/1.0.0.0/ISolutionMethod.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="123" x="76" y="106">
+      <visualDescription h="40" w="123" x="44" y="73">
         <color b="64" g="128" r="128"/>
       </visualDescription>
       <parameter iname="ILibrary" order="0" parid="LIB" uname="library" varid="library"/>
@@ -91,6 +91,7 @@
       <visualDescription h="40" w="123" x="91" y="249"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>base</originRef>
       <originRef>base</originRef>
       <originRef>pre_conditioner</originRef>
       <originRef>matrix_property</originRef>

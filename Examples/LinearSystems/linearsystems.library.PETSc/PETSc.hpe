@@ -30,7 +30,7 @@
           <dependency>linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="167" y="96">
+      <visualDescription h="40" w="80" x="235" y="84">
         <color b="0" g="255" r="255"/>
       </visualDescription>
     </interface>

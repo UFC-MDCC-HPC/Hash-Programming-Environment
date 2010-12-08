@@ -6,11 +6,44 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005d19e9a0b4601d752120e7980db524877fcc162acb759bb69ce9f2917dabc5b491b9769109e086c3ebbd7b02cfe3e9072fe0ff95b71beb3bdcdbfaf561dabdf8a772472d4f37a8350a53231a2f347e9dd0079aad1dee9d1efc9bc52dfc2f9faec5611be7c5fb733fce524e8a5261a722a91eceb159ae7f051bff77446be037a4" localRef="impl" location="linearsystems.user.data.Vector/Vector.hpe" name="Vector" package="linearsystems.user.data" version="1.0.0.0">
-        <visualDescription h="67" w="107" x="105" y="88">
+        <visualDescription h="67" w="107" x="160" y="86">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="numeric_type" varName="NUM"/>
+        <parameter formFieldId="domain" varName="DOM"/>
         <parameter formFieldId="library" varName="LIB"/>
+        <parameter formFieldId="communicator_type" varName="COM"/>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009dab4dcbd62180562726075498b0a6acf1c456f47d2d53e8470cbd165e4e6831761e622b6fdd0a2003fefb13831fab4622f1e0f1e11d509cec57074c763ad48e4ee78e21f22cbf3381639e17233a6522bcaad9e98e0a30d69d9998e885e9d0a01830f83fda26f4c2edc9f158316b2be9446574eb0b13b38c6e95a5abbf138ac5" localRef="domain" location="linearsystems.library.basic.domain.LSSDomain/LSSDomain.hpe" name="LSSDomain" package="linearsystems.library.basic.domain" exposed="true">
+          <visualDescription h="30" w="50" x="73" y="346">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="setup_facet" varName="S"/>
+          <parameter formFieldId="vector_facet" varName="V"/>
+          <parameter formFieldId="preconditioner_facet" varName="P"/>
+          <parameter formFieldId="solver_facet" varName="R"/>
+          <parameter formFieldId="library" varName="LIB"/>
+          <parameter formFieldId="communicator_type" varName="COM"/>
+          <parameter formFieldId="matrix_facet" varName="M"/>
+          <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004736a3fed13d05f1e23451c8eba8a76701b13cb48b0cea349054f69fde73516f4f0743434c1c2ce4270520ecede07f2e9fad038e4e07a1787fa9809bf6cfc8ceb38542282794fb6731746a890cf17df9030b009b6d0bcc93711ba2716945947f69ef35d3c3a56aa057b6905fa7100826d9d6c72c380aefaa387c6d1f8a083688" localRef="comm" location="environment.messagepassing.Communicator/Communicator.hpe" name="Communicator" package="environment.messagepassing" exposed="true">
+            <visualDescription h="39" w="66" x="135" y="437">
+              <color b="255" g="255" r="255"/>
+            </visualDescription>
+            <unitBounds uRef="comm">
+              <visualDescription h="10" w="10" x="5" y="2"/>
+            </unitBounds>
+          </port>
+          <unitBounds uRef="lssdomain">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004736a3fed13d05f1e23451c8eba8a76701b13cb48b0cea349054f69fde73516f4f0743434c1c2ce4270520ecede07f2e9fad038e4e07a1787fa9809bf6cfc8ceb38542282794fb6731746a890cf17df9030b009b6d0bcc93711ba2716945947f69ef35d3c3a56aa057b6905fa7100826d9d6c72c380aefaa387c6d1f8a083688" localRef="comm" location="environment.messagepassing.Communicator/Communicator.hpe" name="Communicator" package="environment.messagepassing" exposed="true">
+          <visualDescription h="39" w="66" x="135" y="437">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="comm">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
         <unitBounds uRef="unit">
           <visualDescription h="10" w="10" x="50" y="49"/>
         </unitBounds>
@@ -38,24 +71,102 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bd2ca5475309f9973c2603f659fc236364121ecc32cf025cf21e7570ab02a10a14723ca9aaf8f6fb71301f9134f8219bd5c751172b7698a76e214b056b74192be2afc6c4361e91ebcf9165c895d9017e3da47bb024ca66b3a83d721c33c8e4e39c68245bc31900c173be1b1b7e55e75088648c1fb69ff592dd07f1905ff9ffa1" localRef="mpi" location="environment.messagepassing.MPICommunicator/MPICommunicator.hpe" name="MPICommunicator" package="environment.messagepassing" exposed="false">
+      <visualDescription h="30" w="50" x="61" y="287">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="comm">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ddd35a206e86765c030c48c0f0bf921058d18612a42dcef7d3b24872c4cc426794758010411cab1ac1808667b2f481b9d0296fd2a39a63adea7e41cf883f7c063cd95e639c72878da3ddde77419cadf8d377960bdb0bc62dba24ea227dfacd70fb41dd4f8526adb9fa8c7dcc03a9160050f0466babb02c021ef4bb388f55d09a" localRef="domain_hypre" location="linearsystems.library.HYPRE.domain.LSSDomainHYPRE/LSSDomainHYPRE.hpe" name="LSSDomainHYPRE" package="linearsystems.library.HYPRE.domain" exposed="false">
+      <visualDescription h="30" w="50" x="62" y="396">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="setup_facet" varName="S"/>
+      <parameter formFieldId="vector_facet" varName="V"/>
+      <parameter formFieldId="preconditioner_facet" varName="P"/>
+      <parameter formFieldId="solver_facet" varName="R"/>
+      <parameter formFieldId="communicator_type" varName="COM"/>
+      <parameter formFieldId="library" varName="LIB"/>
+      <parameter formFieldId="matrix_facet" varName="M"/>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000077e7957dc01a34ed77aa0d454f4f2694f83034d18361da1826e24760b222bbfa111ff17b0d0d3a89a5664480a30a01874728169b0e2a16984875bc3f6830781671eeab57a746b8925340aadf26696ecb50f778e70b536e76bddeaae15999f24193f9da765534645ae2b6ef6d0d7eac770c350511d7c0db3714cf1bf7aaf24799" localRef="matrix" location="linearsystems.library.basic.facet.LSSFacetMatrix/LSSFacetMatrix.hpe" name="LSSFacetMatrix" package="linearsystems.library.basic.facet" exposed="true">
+        <visualDescription h="54" w="134" x="376" y="84">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="LIB"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d116e71f63e1950665cac287514e07251d36eb701970b51a56365cef3b55775c65b2de3ee1fe82b1fa7145b4ba158b96b04893952a9940dfb75dec9d2211f6ac9d2ba6ac2cc9b13b7a752efece4be15656901ade22ee8169ba50fbfe61395fbe334a9bdb67b12e72a0ac84b922627f5e0469aaae71cccd90338cbdefeede1593" localRef="pre_conditioner" location="linearsystems.library.basic.facet.LSSFacetPreConditioner/LSSFacetPreConditioner.hpe" name="LSSFacetPreConditioner" package="linearsystems.library.basic.facet" exposed="true">
+        <visualDescription h="61" w="152" x="304" y="216">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="LIB"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000089c4442e94f068d3b15d8deafa11b3781a30c3b67ef92a16d8771f35922e0ca874ff32cf58ec1cb7c8d5945d923e0633d5e89aecca31bbdc21d9b1685de26008b96c937c0fee68caa0da39d1433b3dc06a6c0f85d4a2c69a247e3c0ecf59d0a405c5bade67f9f87df5028149304b7f20a1df51c52959a99183dd3f97528a7292" localRef="setup" location="linearsystems.library.basic.facet.LSSFacetSetup/LSSFacetSetup.hpe" name="LSSFacetSetup" package="linearsystems.library.basic.facet" exposed="true">
+        <visualDescription h="33" w="102" x="160" y="241">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="LIB"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d9c65f0faa8b2f5725a8216433ad298055b10bf90ec1333a195a637a33a8227b7d8fe6fe9296222bfa6de81aec7c84e8c426ef1b2291b227c043d7fafd016d9304910274396410d19a63911e4221eb49c2d28ab400ad27ce0af732bde5b99542b2d96f370a5a1d7c31ae0ec4ed53ef9969d7063da01b703393bef9c487080080" localRef="solver" location="linearsystems.library.basic.facet.LSSFacetSolver/LSSFacetSolver.hpe" name="LSSFacetSolver" package="linearsystems.library.basic.facet" exposed="true">
+        <visualDescription h="30" w="119" x="273" y="459">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="LIB"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000fd22528ee25efb80cf7c187a5ab3c6be690a3ccb76df7350ca4f987c5425186b5bc9e6e695d155d0cc49cc91089f2b74b4185d0751019d703800ac9c7db5fabd363938ea343eb52a7337c00ba4af53f59be218ad3ad773e299e86655e33a1074c5dd21bd18f4c981419820f2a05840939bf365016137c8e584800924fadb74ed" localRef="vector" location="linearsystems.library.basic.facet.LSSFacetVector/LSSFacetVector.hpe" name="LSSFacetVector" package="linearsystems.library.basic.facet" exposed="true">
+        <visualDescription h="30" w="127" x="154" y="399">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="library" varName="LIB"/>
+        <unitBounds uRef="facet_unit">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004736a3fed13d05f1e23451c8eba8a76701b13cb48b0cea349054f69fde73516f4f0743434c1c2ce4270520ecede07f2e9fad038e4e07a1787fa9809bf6cfc8ceb38542282794fb6731746a890cf17df9030b009b6d0bcc93711ba2716945947f69ef35d3c3a56aa057b6905fa7100826d9d6c72c380aefaa387c6d1f8a083688" localRef="comm" location="environment.messagepassing.Communicator/Communicator.hpe" name="Communicator" package="environment.messagepassing" exposed="true">
+        <visualDescription h="39" w="66" x="96" y="478">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="comm">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="lssdomain">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="domain_hypre" varName="DOM"/>
+    <supplyParameter cRef="mpi" varName="COM"/>
     <supplyParameter cRef="library" varName="LIB"/>
     <supplyParameter cRef="numeric_type" varName="NUM"/>
     <interface iRef="IHYPREVector" nArgs="2">
-      <slice isRef="library">
-        <originRef cRef="library" iRef="IHYPRE"/>
-        <visualDescription h="10" w="10" x="3" y="28"/>
+      <slice isRef="lssdomain">
+        <originRef cRef="domain" iRef="ILSSDomain"/>
+        <visualDescription h="10" w="10" x="9" y="8"/>
       </slice>
       <slice isRef="element_type">
-        <originRef cRef="element_type" iRef="IDoublePrecisionFPNumber"/>
+        <originRef cRef="element_type" iRef="IElementDataType"/>
         <visualDescription h="10" w="10" x="61" y="18"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.HYPRE;&#xA;using linearsystems.user.qualifier.DoublePrecisionFPNumber;&#xA;using linearsystems.user.data.Vector;&#xA;&#xA;namespace linearsystems.user.HYPRE.data.impl.HYPRE_Vector { &#xA;&#xA;public abstract class BaseIHYPREVector&lt;LIB, NUM>: DataStructure, BaseIVector&lt;LIB, NUM>&#xA;where LIB:IHYPRE&#xA;where NUM:IDoublePrecisionFPNumber&#xA;{&#xA;&#xA;protected LIB library = default(LIB);&#xA;&#xA;protected LIB Library {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.library = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected NUM element_type = default(NUM);&#xA;&#xA;protected NUM Element_type {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.element_type = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIHYPREVector() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000abf9e670f763dde111fa28a6e105ccc7e427a679e5fd8ed71e4369748aa6898f89965353db22c699f62af32dce8fffff0980efe17f8a111571a44d5bf286307fbe29bd5c97fae2157f3445fe527ddb3827eafd796d25db05de6c0b793f58c530cbdb114210794b3e30a4db3896b5c45b5f1438fc79bbe6b09d3e30266d721fa2&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Element_type = (NUM) BackEnd.createSlice(this, UID,&quot;element_type&quot;,&quot;element_type&quot;,new Type[] {});&#xA;&#x9;this.Library = (LIB) BackEnd.createSlice(this, UID,&quot;library&quot;,&quot;library&quot;,new Type[] {});&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIHYPREVector.cs" srcType="base" uri="linearsystems.user.HYPRE.data.impl.HYPRE_Vector/bin/1.0.0.0/BaseIHYPREVector.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.HYPRE;&#xA;using linearsystems.user.qualifier.DoublePrecisionFPNumber;&#xA;using linearsystems.user.data.Vector;&#xA;using linearsystems.library.HYPRE.domain.LSSDomainHYPRE;&#xA;using environment.messagepassing.MPICommunicator;&#xA;&#xA;namespace linearsystems.user.HYPRE.data.impl.HYPRE_Vector { &#xA;&#xA;public abstract class BaseIHYPREVector&lt;LIB, NUM, COM>: DataStructure, BaseIVector&lt;LIB, NUM, COM, ILSSDomainHYPRE&lt;LIB, COM>>&#xA;where LIB:IHYPRE&#xA;where NUM:IDoublePrecisionFPNumber&#xA;where COM:IMPICommunicator&#xA;{&#xA;&#xA;protected LIB library = default(LIB);&#xA;&#xA;protected LIB Library {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.library = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected NUM element_type = default(NUM);&#xA;&#xA;protected NUM Element_type {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.element_type = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ILSSDomainHYPRE&lt;LIB, COM> lssdomain = null;&#xA;&#xA;protected ILSSDomainHYPRE&lt;LIB, COM> Lssdomain {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.lssdomain = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected COM comm = default(COM);&#xA;&#xA;public COM Comm {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.comm = value;&#xA;&#x9;&#x9;lssdomain.Comm = value;&#xA;&#x9;}&#xA;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#xA;public BaseIHYPREVector() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000abf9e670f763dde111fa28a6e105ccc7e427a679e5fd8ed71e4369748aa6898f89965353db22c699f62af32dce8fffff0980efe17f8a111571a44d5bf286307fbe29bd5c97fae2157f3445fe527ddb3827eafd796d25db05de6c0b793f58c530cbdb114210794b3e30a4db3896b5c45b5f1438fc79bbe6b09d3e30266d721fa2&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Element_type = (NUM) BackEnd.createSlice(this, UID,&quot;element_type&quot;,&quot;element_type&quot;,new Type[] {});&#xA;&#x9;this.Library = (LIB) BackEnd.createSlice(this, UID,&quot;library&quot;,&quot;library&quot;,new Type[] {});&#xA;&#x9;this.Lssdomain = (ILSSDomainHYPRE&lt;LIB, COM>) BackEnd.createSlice(this, UID,&quot;domain&quot;,&quot;lssdomain&quot;, null);&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIHYPREVector.cs" srcType="base" uri="linearsystems.user.HYPRE.data.impl.HYPRE_Vector/bin/1.0.0.0/BaseIHYPREVector.dll" versionId="1.0.0.0">
           <dependency>linearsystems.library.HYPRE/bin/1.0.0.0/IHYPRE.dll</dependency>
           <dependency>linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/IDoublePrecisionFPNumber.dll</dependency>
           <dependency>linearsystems.user.data.Vector/bin/1.0.0.0/BaseIVector.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.HYPRE;&#xA;using linearsystems.user.qualifier.DoublePrecisionFPNumber;&#xA;using linearsystems.user.data.Vector;&#xA;&#xA;namespace linearsystems.user.HYPRE.data.impl.HYPRE_Vector { &#xA;&#xA;public class IHYPREVector&lt;LIB, NUM> : BaseIHYPREVector&lt;LIB, NUM>, IVector&lt;LIB, NUM>&#xA;where LIB:IHYPRE&#xA;where NUM:IDoublePrecisionFPNumber&#xA;{&#xA;&#xA;public IHYPREVector() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IHYPREVector.cs" srcType="user" uri="linearsystems.user.HYPRE.data.impl.HYPRE_Vector/bin/1.0.0.0/IHYPREVector.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using linearsystems.library.HYPRE;&#xA;using linearsystems.user.qualifier.DoublePrecisionFPNumber;&#xA;using linearsystems.user.data.Vector;&#xA;using linearsystems.library.HYPRE.facet.HYPREVector;&#xA;using linearsystems.library.HYPRE.domain.LSSDomainHYPRE;&#xA;using environment.messagepassing.MPICommunicator;&#xA;&#xA;&#xA;namespace linearsystems.user.HYPRE.data.impl.HYPRE_Vector { &#xA;&#xA;public class IHYPREVector&lt;LIB, NUM, COM> : BaseIHYPREVector&lt;LIB, NUM, COM>, IVector&lt;LIB, NUM, COM, ILSSDomainHYPRE&lt;LIB, COM>>&#xA;where LIB:IHYPRE&#xA;where NUM:IDoublePrecisionFPNumber&#xA;where COM:IMPICommunicator&#xA;{&#xA;&#x9;&#x9;private bool initialized;&#xA;&#xA;&#x9;&#x9;private HYPRE_IJVector b_IJ;&#xA;&#x9;&#x9;private HYPRE_ParCRS_vector b_ParCRS;&#xA;        private int ilower, iupper;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IHYPREVector() { &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;        public void initialize() &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;System.IntPtr prim_comm = comm.BaseComm;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;   lssdomain.HYPRE_IJVectorCreate(prim_comm, ilower, iupper, out b_IJ);&#xA;&#x9;&#x9;&#x9;&#x9;   lssdomain.HYPRE_IJVectorSetObjectType(b_IJ,lssdomain.HYPRE_PARCSR);&#xA;&#x9;&#x9;&#x9;&#x9;   lssdomain.HYPRE_IJVectorInitialize(b_IJ);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setIndexes(int ilower, int iupper) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;    this.ilower = ilower;&#xA;&#x9;&#x9;&#x9;this.iupper = iupper;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setValues(int size, object[] values) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;int[] rows = new int[size];&#xA;&#x9;&#x9;&#x9;double[] values_ = Array.ConvertAll&lt;object,double>(values, v => (double) v);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;for (int i=0; i&lt;size; i++) &#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;rows[i] = i;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;lssdomain.HYPRE_IJVectorSetValues(b_IJ, size, rows, values_);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setValues(int size, int[] rows, object[] values) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;double[] values_ = Array.ConvertAll&lt;object,double>(values, v => (double) v);&#xA;&#x9;&#x9;   lssdomain.HYPRE_IJVectorSetValues(b_IJ, size, rows, values_);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void assemble() &#xA;&#x9;&#x9;{&#xA;   &#x9;       lssdomain.HYPRE_IJVectorAssemble(b_IJ);&#xA;&#x9;&#x9;   lssdomain.HYPRE_IJVectorGetObject(b_IJ,out b_ParCRS);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public object Primitive { get { return (HYPRE_ParCRS_vector) b_ParCRS; } }&#xA;&#x9;&#x9;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="library" name="IHYPREVector.cs" srcType="user" uri="linearsystems.user.HYPRE.data.impl.HYPRE_Vector/bin/1.0.0.0/IHYPREVector.dll" versionId="1.0.0.0">
           <dependency>linearsystems.library.HYPRE/bin/1.0.0.0/IHYPRE.dll</dependency>
           <dependency>linearsystems.user.qualifier.DoublePrecisionFPNumber/bin/1.0.0.0/IDoublePrecisionFPNumber.dll</dependency>
           <dependency>%WORKSPACE/linearsystems.user.HYPRE.data.impl.HYPRE_Vector/bin/1.0.0.0/BaseIHYPREVector.dll</dependency>
@@ -65,13 +176,45 @@
       <visualDescription h="40" w="80" x="364" y="140">
         <color b="64" g="128" r="255"/>
       </visualDescription>
-      <parameter iname="IHYPRE" order="0" parid="LIB" uname="library" varid="library"/>
-      <parameter iname="IDoublePrecisionFPNumber" order="1" parid="NUM" uname="element_type" varid="numeric_type"/>
+      <port name="lssdomain">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="lssdomain" sRef="lssdomain"/>
+      </port>
+      <port name="preconditioner_facet">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="preconditioner_facet" sRef="lssdomain"/>
+      </port>
+      <port name="matrix_facet">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="matrix_facet" sRef="lssdomain"/>
+      </port>
+      <port name="setup_facet">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="setup_facet" sRef="lssdomain"/>
+      </port>
+      <port name="comm">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="comm" sRef="lssdomain"/>
+      </port>
+      <port name="vector_facet">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="vector_facet" sRef="lssdomain"/>
+      </port>
+      <port name="solver_facet">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="solver_facet" sRef="lssdomain"/>
+      </port>
+      <parameter iname="ILSSDomain" order="0" parid="DOM" uname="lssdomain" varid="domain"/>
+      <parameter iname="IElementDataType" order="1" parid="NUM" uname="element_type" varid="numeric_type"/>
     </interface>
     <unit iRef="IHYPREVector" private="false" uRef="unit" visibleInterface="true">
       <super cRef="impl" uRef="unit"/>
-      <slices cRef="library" replica="0" uRef="library" sliceName="library" transitive="false">
-        <visualDescription h="10" w="10" x="3" y="28"/>
+      <slices cRef="domain" replica="0" uRef="lssdomain" sliceName="lssdomain" transitive="false">
+        <visualDescription h="10" w="10" x="9" y="8"/>
+        <port>comm</port>
+      </slices>
+      <slices cRef="comm" replica="0" uRef="comm" sliceName="comm" transitive="true">
+        <visualDescription h="10" w="10" x="6" y="25"/>
       </slices>
       <slices cRef="element_type" replica="0" uRef="element_type" sliceName="element_type" transitive="false">
         <visualDescription h="10" w="10" x="61" y="18"/>
@@ -80,9 +223,37 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
       <originRef>impl</originRef>
+      <originRef>domain</originRef>
+      <originRef>solver</originRef>
       <originRef>library</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="unit"/>
+      <visualDescription h="20" w="20" x="488" y="414"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>library</originRef>
+      <originRef>extends</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="library" uRef="library"/>
       <visualDescription h="20" w="20" x="300" y="239"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1f765611290012082327" varId="n">
+      <originRef>numeric_type</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="numeric_type" uRef="element_type"/>
+      <visualDescription h="20" w="20" x="366" y="140"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@96cb3e1289957059997" varId="n">
+      <originRef>mpi</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="mpi" uRef="comm"/>
+      <visualDescription h="20" w="20" x="448" y="280"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@18498961289951685812" varId="n">
+      <originRef>domain_hypre</originRef>
+      <originRef>base</originRef>
+      <originRef>solver</originRef>
+      <originRef>library</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="domain_hypre" uRef="lssdomain"/>
+      <visualDescription h="20" w="20" x="414" y="411"/>
     </enumerator>
   </componentInfo>
 </component:component>

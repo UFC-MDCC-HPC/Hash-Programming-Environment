@@ -73,6 +73,34 @@
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\environment.messagepassing.Communicator\Communicator\Communicator.csproj">
+      <Project>{13A4C628-F6BD-4BBD-8A66-A995F0DF2686}</Project>
+      <Name>Communicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.facet.LSSFacetVector\LSSFacetVector\library.LSSFacetVector.csproj">
+      <Project>{D50D0CD7-460A-4505-8556-384D8E31423B}</Project>
+      <Name>library.LSSFacetVector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.facet.LSSFacetSolver\LSSFacetSolver\library.LSSFacetSolver.csproj">
+      <Project>{9BD98532-FDEA-457F-8F88-D4708602396A}</Project>
+      <Name>library.LSSFacetSolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.facet.LSSFacetSetup\LSSFacetSetup\library.LSSFacetSetup.csproj">
+      <Project>{0BFE13CE-C527-432D-8C30-46FB097BD753}</Project>
+      <Name>library.LSSFacetSetup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.facet.LSSFacetPreConditioner\LSSFacetPreConditioner\library.LSSFacetPreConditioner.csproj">
+      <Project>{D362C20A-FA3C-4D9E-9850-51053487A78A}</Project>
+      <Name>library.LSSFacetPreConditioner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.facet.LSSFacetMatrix\LSSFacetMatrix\library.LSSFacetMatrix.csproj">
+      <Project>{65164D98-4E40-498F-BE2B-BEF2A8DC8F89}</Project>
+      <Name>library.LSSFacetMatrix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.basic.domain.LSSDomain\LSSDomain\library.LSSDomain.csproj">
+      <Project>{B5E5F31A-EC3E-4EB8-BE42-EBF43BF17ECC}</Project>
+      <Name>library.LSSDomain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

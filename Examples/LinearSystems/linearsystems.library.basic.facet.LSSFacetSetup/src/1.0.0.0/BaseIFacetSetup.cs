@@ -5,7 +5,7 @@ using linearsystems.library.basic.Library;
 
 namespace linearsystems.library.basic.facet.LSSFacetSetup { 
 
-public interface BaseIFacetSetup<L> : IFacetKind 
+public interface BaseIFacetSetup<L> /*: IFacetKind */
 where L:ILibrary
 {
 

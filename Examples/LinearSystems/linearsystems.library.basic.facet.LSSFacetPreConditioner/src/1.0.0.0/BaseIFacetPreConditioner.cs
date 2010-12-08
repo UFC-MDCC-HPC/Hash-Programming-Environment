@@ -5,7 +5,7 @@ using linearsystems.library.basic.Library;
 
 namespace linearsystems.library.basic.facet.LSSFacetPreConditioner { 
 
-public interface BaseIFacetPreConditioner<L> : IFacetKind 
+public interface BaseIFacetPreConditioner<L> /*: IFacetKind */
 where L:ILibrary
 {
 

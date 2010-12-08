@@ -15,7 +15,7 @@ public struct HYPRE_Solver {
 }
 
 public struct HYPRE_IJMatrix {
-    public IntPtr p;
+    public bool initialized;
 }
 
 public struct HYPRE_IJVector {

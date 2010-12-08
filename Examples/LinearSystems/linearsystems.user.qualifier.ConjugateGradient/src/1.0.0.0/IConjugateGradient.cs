@@ -2,11 +2,11 @@ using br.ufc.pargo.hpe.kinds;
 using linearsystems.library.basic.Library;
 using linearsystems.user.qualifier.MatrixProperty;
 using linearsystems.user.qualifier.PreConditioner;
-using linearsystems.user.qualifier.SolutionMethod;
+using linearsystems.user.qualifier.IterativeMethod;
 
 namespace linearsystems.user.qualifier.ConjugateGradient { 
 
-public interface IConjugateGradient<LIB, MPT, PRC> : BaseIConjugateGradient<LIB, MPT, PRC>, ISolutionMethod<LIB, MPT, PRC>
+public interface IConjugateGradient<LIB, MPT, PRC> : BaseIConjugateGradient<LIB, MPT, PRC>, IIterativeMethod<LIB, MPT, PRC>
 where LIB:ILibrary
 where MPT:IMatrixProperty<LIB>
 where PRC:IPreConditioner<LIB, MPT>

@@ -8,13 +8,16 @@ using linearsystems.user.qualifier.SparseMatrix;
 using linearsystems.library.HYPRE;
 using linearsystems.user.qualifier.DoublePrecisionFPNumber;
 using linearsystems.user.data.MatrixCSR;
+using environment.messagepassing.MPICommunicator;
+using linearsystems.library.HYPRE.domain.LSSDomainHYPRE;
 
 namespace linearsystems.user.HYPRE.data.impl.HYPRE_Matrix { 
 
-public abstract class BaseIHYPREMatrix<LIB, MPT, NUM>: DataStructure, BaseIMatrixCSR<LIB, MPT, NUM>
+public abstract class BaseIHYPREMatrix<LIB, MPT, NUM, COM>: DataStructure, BaseIMatrixCSR<LIB, MPT, NUM, COM, ILSSDomainHYPRE<LIB, COM>>
 where LIB:IHYPRE
 where MPT:ISparseMatrix<LIB>
 where NUM:IDoublePrecisionFPNumber
+where COM:IMPICommunicator
 {
 
 protected MPT matrix_property = default(MPT);
@@ -25,6 +28,7 @@ protected MPT Matrix_property {
 	}
 }
 
+		
 protected NUM element_type = default(NUM);
 
 protected NUM Element_type {
@@ -33,6 +37,23 @@ protected NUM Element_type {
 	}
 }
 
+protected ILSSDomainHYPRE<LIB, COM> lssdomain = null;
+
+protected ILSSDomainHYPRE<LIB, COM> Lssdomain {
+	set {
+		this.lssdomain = value;
+	}
+}
+
+protected COM comm = default(COM);
+
+public COM Comm {
+	set {
+		this.comm = value;
+		lssdomain.Comm = value;
+	}
+}
+		
 
 public BaseIHYPREMatrix() { 
 
@@ -44,6 +65,8 @@ override public void createSlices() {
 	base.createSlices();
 	this.Element_type = (NUM) BackEnd.createSlice(this, UID,"numeric_type","element_type",new Type[] {});
 	this.Matrix_property = (MPT) BackEnd.createSlice(this, UID,"matrix_property","matrix_property",new Type[] {typeof(LIB)});
+	this.Lssdomain = (ILSSDomainHYPRE<LIB, COM>) BackEnd.createSlice(this, UID,"domain","lssdomain", null);
+			
 } 
 
 

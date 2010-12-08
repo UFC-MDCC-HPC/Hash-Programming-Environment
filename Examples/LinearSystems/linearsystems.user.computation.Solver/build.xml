@@ -1,7 +1,76 @@
-<?xml version='1.0'?>
-<project basedir='.' default='all' name='linearsystems.user.computation.Solver'>
-  <property name='src' value='src'/>
-  <property name='build' value='bin'/>
-  <property name='nant.settings.currentframework' value='mono-2.0'/>
-  <target depends='' name='all'/>
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe_cache" default="all" name="Solver">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Solver-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/Solver.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/bin/1.0.0.0/BaseISolver.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/src/1.0.0.0/BaseISolver.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetVector/bin/1.0.0.0/IFacetVector.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/IFacetPreConditioner.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.user.data.Matrix/bin/1.0.0.0/IMatrix.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll"/>
+        <include name="linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetSetup/bin/1.0.0.0/IFacetSetup.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetSolver/bin/1.0.0.0/IFacetSolver.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetMatrix/bin/1.0.0.0/IFacetMatrix.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="environment.messagepassing.Communicator/bin/1.0.0.0/ICommunicator.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll"/>
+        <include name="linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll"/>
+        <include name="linearsystems.user.data.Matrix/bin/1.0.0.0/IMatrix.dll"/>
+        <include name="linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll"/>
+        <include name="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll"/>
+        <include name="linearsystems.user.qualifier.SolutionMethod/bin/1.0.0.0/ISolutionMethod.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetVector/bin/1.0.0.0/IFacetVector.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetSetup/bin/1.0.0.0/IFacetSetup.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetMatrix/bin/1.0.0.0/IFacetMatrix.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/IFacetPreConditioner.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetSolver/bin/1.0.0.0/IFacetSolver.dll"/>
+        <include name="environment.messagepassing.Communicator/bin/1.0.0.0/ICommunicator.dll"/>
+        <include name="linearsystems.library.basic.domain.LSSDomain/bin/1.0.0.0/ILSSDomain.dll"/>
+        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/Solver.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/bin/1.0.0.0/ISolver.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Disserta&#xe7;&#xe3;o DAVI/workspace_libraries_3/linearsystems.user.computation.Solver/src/1.0.0.0/ISolver.cs"/>
+      </sources>
+      <references>
+        <include name="linearsystems.library.basic.Library/bin/1.0.0.0/ILibrary.dll"/>
+        <include name="linearsystems.user.qualifier.MatrixProperty/bin/1.0.0.0/IMatrixProperty.dll"/>
+        <include name="linearsystems.user.qualifier.ElementDataType/bin/1.0.0.0/IElementDataType.dll"/>
+        <include name="linearsystems.user.data.Matrix/bin/1.0.0.0/IMatrix.dll"/>
+        <include name="linearsystems.user.data.Vector/bin/1.0.0.0/IVector.dll"/>
+        <include name="linearsystems.user.qualifier.PreConditioner/bin/1.0.0.0/IPreConditioner.dll"/>
+        <include name="linearsystems.user.qualifier.SolutionMethod/bin/1.0.0.0/ISolutionMethod.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetVector/bin/1.0.0.0/IFacetVector.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetSetup/bin/1.0.0.0/IFacetSetup.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetMatrix/bin/1.0.0.0/IFacetMatrix.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetPreConditioner/bin/1.0.0.0/IFacetPreConditioner.dll"/>
+        <include name="linearsystems.library.basic.facet.LSSFacetSolver/bin/1.0.0.0/IFacetSolver.dll"/>
+        <include name="environment.messagepassing.Communicator/bin/1.0.0.0/ICommunicator.dll"/>
+        <include name="linearsystems.library.basic.domain.LSSDomain/bin/1.0.0.0/ILSSDomain.dll"/>
+        <include name="/linearsystems.user.computation.Solver/bin/1.0.0.0/BaseISolver.dll"/>
+        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Solver-1.0.0.0" name="all"/>
 </project>

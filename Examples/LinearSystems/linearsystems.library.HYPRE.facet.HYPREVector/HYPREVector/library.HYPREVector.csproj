@@ -33,11 +33,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="..\src\1.0.0.0\BaseIHYPREVector.cs">
-      <Link>BaseIHYPREVector.cs</Link>
+    <Compile Include="..\src\1.0.0.0\IFacetHYPREVector.cs">
+      <Link>IFacetHYPREVector.cs</Link>
     </Compile>
-    <Compile Include="..\src\1.0.0.0\IHYPREVector.cs">
-      <Link>IHYPREVector.cs</Link>
+    <Compile Include="..\src\1.0.0.0\BaseIFacetHYPREVector.cs">
+      <Link>BaseIFacetHYPREVector.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

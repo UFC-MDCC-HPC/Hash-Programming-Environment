@@ -101,6 +101,14 @@
       <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\linearsystems.library.HYPRE.domain.LSSDomainHYPRE\library.LSSDomainHYPRE\library.LSSDomainHYPRE.csproj">
+      <Project>{CF351D58-FA78-4BF2-98EC-B15028AC72D6}</Project>
+      <Name>library.LSSDomainHYPRE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.messagepassing.MPICommunicator\MPICommunicator\MPICommunicator.csproj">
+      <Project>{6D3E604A-19B6-42BE-B469-5ACF046019C5}</Project>
+      <Name>MPICommunicator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

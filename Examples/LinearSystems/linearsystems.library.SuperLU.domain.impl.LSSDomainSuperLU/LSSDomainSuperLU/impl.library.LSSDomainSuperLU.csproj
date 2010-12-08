@@ -32,7 +32,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\src\1.0.0.0\BaseLSSDomainSuperLU.cs">
       <Link>BaseLSSDomainSuperLU.cs</Link>

@@ -7,96 +7,103 @@ using linearsystems.library.HYPRE.facet.HYPRESetup;
 using linearsystems.library.HYPRE.facet.HYPREMatrix;
 using linearsystems.library.HYPRE.facet.HYPREPreConditioner;
 using linearsystems.library.HYPRE.facet.HYPRESolver;
-using linearsystems.library.basic.domain.LSSDomain;
+using linearsystems.library.HYPRE.domain.LSSDomainHYPRE;
 using System.Runtime.InteropServices;
+using environment.messagepassing.MPICommunicator;
 
 namespace linearsystems.library.HYPRE.domain.impl.LSSDomainHYPRE { 
 
-		using MPI_Comm = System.IntPtr;
+			using MPI_Comm = System.IntPtr;
 
-public class LSSDomainHYPRE : BaseLSSDomainHYPRE, 
-                              ILSSDomain<IHYPRE>
+public class LSSDomainHYPRE<L, COM> : BaseLSSDomainHYPRE<L, COM>, 
+	                                  ILSSDomainHYPRE<L, COM>
+where L:IHYPRE
+where COM:IMPICommunicator			
 {
 
-public LSSDomainHYPRE() { 
-
-} 
-
-
-
-#region IHYPRESolver members
-
-		public override int HYPRE_ParCSRPCGCreate(MPI_Comm com, out  HYPRE_Solver solver){
+		public LSSDomainHYPRE() { 
+					
+		}
+		
+		#region constants
+		
+		public int HYPRE_PARCSR { get { return 5555; } }
+		
+		#endregion
+				
+		#region Solver Facet
+		
+		public int HYPRE_ParCSRPCGCreate(MPI_Comm com, out  HYPRE_Solver solver){
 			return ParCSRPCGCreate(com, out  solver);
 		}
 
               
-        public override int HYPRE_ParCSRPCGDestroy(HYPRE_Solver solver){
+        public int HYPRE_ParCSRPCGDestroy(HYPRE_Solver solver){
 			return ParCSRPCGDestroy( solver);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetup(HYPRE_Solver solver, HYPRE_ParCSR_matrix ParCSRMatrix_A, HYPRE_ParCRS_vector ParVector_b, HYPRE_ParCRS_vector ParVector_x){
+        public int HYPRE_ParCSRPCGSetup(HYPRE_Solver solver, HYPRE_ParCSR_matrix ParCSRMatrix_A, HYPRE_ParCRS_vector ParVector_b, HYPRE_ParCRS_vector ParVector_x){
 			return ParCSRPCGSetup( solver,  ParCSRMatrix_A,  ParVector_b,  ParVector_x);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSolve(HYPRE_Solver solver, HYPRE_ParCSR_matrix ParCSRMatrix_A, HYPRE_ParCRS_vector ParVector_b, HYPRE_ParCRS_vector ParVector_x){
+        public int HYPRE_ParCSRPCGSolve(HYPRE_Solver solver, HYPRE_ParCSR_matrix ParCSRMatrix_A, HYPRE_ParCRS_vector ParVector_b, HYPRE_ParCRS_vector ParVector_x){
 			return ParCSRPCGSolve( solver,  ParCSRMatrix_A,  ParVector_b,  ParVector_x);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetTol(HYPRE_Solver solver, double tol){
+        public int HYPRE_ParCSRPCGSetTol(HYPRE_Solver solver, double tol){
 			return ParCSRPCGSetTol( solver, tol);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetAbsoluteTol(HYPRE_Solver solver, double tol){
+        public int HYPRE_ParCSRPCGSetAbsoluteTol(HYPRE_Solver solver, double tol){
 			return ParCSRPCGSetAbsoluteTol( solver, tol);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetMaxIter(HYPRE_Solver solver, int max_iter){
+        public int HYPRE_ParCSRPCGSetMaxIter(HYPRE_Solver solver, int max_iter){
 			return ParCSRPCGSetMaxIter( solver, max_iter);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetTwoNorm(HYPRE_Solver solver, int two_norm){
+        public int HYPRE_ParCSRPCGSetTwoNorm(HYPRE_Solver solver, int two_norm){
 			return ParCSRPCGSetTwoNorm( solver, two_norm);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetRelChange(HYPRE_Solver solver, int rel_change){
+        public int HYPRE_ParCSRPCGSetRelChange(HYPRE_Solver solver, int rel_change){
 			return ParCSRPCGSetRelChange( solver,rel_change);
 		}
 
         
-        public override int HYPRE_ParCSRPCGSetPrecond(HYPRE_Solver solver, IntPtr PtrToParSolverFcn_precond, IntPtr PtrToParSolverFcn_precond_setup, IntPtr precond_solver){
+        public int HYPRE_ParCSRPCGSetPrecond(HYPRE_Solver solver, IntPtr PtrToParSolverFcn_precond, IntPtr PtrToParSolverFcn_precond_setup, IntPtr precond_solver){
 			return ParCSRPCGSetPrecond( solver, PtrToParSolverFcn_precond, PtrToParSolverFcn_precond_setup, precond_solver);
 		}
 
         
-        public override int HYPRE_ParCSRPCGGetPrecond(HYPRE_Solver solver, out IntPtr precond_data){
+        public int HYPRE_ParCSRPCGGetPrecond(HYPRE_Solver solver, out IntPtr precond_data){
 			return ParCSRPCGGetPrecond( solver, out precond_data);
 		}
 
         
-        public override int HYPRE_ParCSRPCGGetNumIterations(HYPRE_Solver solver, out int num_iterations){
+        public int HYPRE_ParCSRPCGGetNumIterations(HYPRE_Solver solver, out int num_iterations){
 			return ParCSRPCGGetNumIterations( solver, out num_iterations);
 		}
 
         
-        public override int HYPRE_ParCSRPCGGetFinalRelativeResidualNorm(HYPRE_Solver solver, out double norm){
+        public int HYPRE_ParCSRPCGGetFinalRelativeResidualNorm(HYPRE_Solver solver, out double norm){
 			return ParCSRPCGGetFinalRelativeResidualNorm( solver, out norm);
 		}
 
         
-        public override int HYPRE_ParCSRDiagScaleSetup(HYPRE_Solver solver, IntPtr ParCSRMatrix_A, IntPtr ParVector_y, IntPtr ParVector_x){
+        public int HYPRE_ParCSRDiagScaleSetup(HYPRE_Solver solver, IntPtr ParCSRMatrix_A, IntPtr ParVector_y, IntPtr ParVector_x){
 			return ParCSRDiagScaleSetup( solver, ParCSRMatrix_A, ParVector_y, ParVector_x);
 		}
 
         
-        public override int HYPRE_ParCSRDiagScale(HYPRE_Solver solver, IntPtr ParCSRMatrix_HA, IntPtr ParVector_Hy, IntPtr ParVector_Hx){
+        public int HYPRE_ParCSRDiagScale(HYPRE_Solver solver, IntPtr ParCSRMatrix_HA, IntPtr ParVector_Hy, IntPtr ParVector_Hx){
 			return ParCSRDiagScale( solver, ParCSRMatrix_HA, ParVector_Hy, ParVector_Hx);
 		}
         
@@ -161,73 +168,195 @@ public LSSDomainHYPRE() {
         [DllImport("libHYPRE_parcsr_ls.so", EntryPoint = "HYPRE_ParCSRDiagScale")]
         private static extern int ParCSRDiagScale(HYPRE_Solver solver, IntPtr ParCSRMatrix_HA, IntPtr ParVector_Hy, IntPtr ParVector_Hx);
 
-#endregion
+		#endregion
+		
+		#region Vector Facet
+		
+		public int HYPRE_IJVectorCreate(MPI_Comm comm, int jlower, int jupper, out HYPRE_IJVector vector){
+			return Create(comm, jlower, jupper, out vector);
+		}
+       
 
-#region IHYPREMatrix members
+        public int HYPRE_IJVectorPrint(HYPRE_IJVector vector, string file){
+			return PrintVector(vector, file);
+		}
+		
+		
+        public int HYPRE_IJVectorDestroy(HYPRE_IJVector vector){
+			return Destroy(vector);
+		}
 
-		public override int HYPRE_IJMatrixCreate(MPI_Comm comm, int ilower, int iupper, int jlower, int jupper, out HYPRE_IJMatrix matrix){
+        
+        public int HYPRE_IJVectorInitialize(HYPRE_IJVector vector){
+			return Initialize(vector);
+		}
+
+        
+        public int HYPRE_IJVectorSetMaxOffProcElmts(HYPRE_IJVector vector, int max_off_proc_elmts){
+			return SetMaxOffProcElmts(vector, max_off_proc_elmts);
+		}
+
+        
+        public int HYPRE_IJVectorSetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values){
+			return SetValues(vector, nvalues, indices, values);
+		}
+
+        
+        public int HYPRE_IJVectorAddToValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values){
+			return AddToValues(vector, nvalues, indices, values);
+		}
+
+        
+        public int HYPRE_IJVectorAssemble(HYPRE_IJVector vector){
+			return Assemble(vector);
+		}
+
+        
+        public int HYPRE_IJVectorGetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values){
+			return GetValues(vector, nvalues, indices,  values);
+		}
+
+        
+        public int HYPRE_IJVectorSetObjectType(HYPRE_IJVector vector, int type){
+			return SetObjectType(vector, type);
+		}
+
+        
+        public int HYPRE_IJVectorGetObjectType(HYPRE_IJVector vector, out int type){
+			return GetObjectType(vector, out type);
+		}
+
+        
+        public int HYPRE_IJVectorGetLocalRange(HYPRE_IJVector vector, out int jlower, out int jupper){
+			return GetLocalRange(vector, out jlower, out jupper);
+		}
+
+        
+        public int HYPRE_IJVectorGetObject(HYPRE_IJVector vector, out HYPRE_ParCRS_vector mtx_object){
+			return GetObject(vector, out mtx_object);
+		}
+		
+		
+		//chamada nativa
+		
+		[DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorCreate")]
+        private static extern int Create(MPI_Comm comm, int jlower, int jupper, out HYPRE_IJVector vector);
+       
+
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorPrint")]
+        private static extern int PrintVector(HYPRE_IJVector MPI_Comm, string file);
+		
+		
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorDestroy")]
+        private static extern int Destroy(HYPRE_IJVector vector);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorInitialize")]
+        private static extern int Initialize(HYPRE_IJVector vector);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorSetMaxOffProcElmts")]
+        private static extern int SetMaxOffProcElmts(HYPRE_IJVector vector, int max_off_proc_elmts);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorSetValues")]
+        private static extern int SetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorAddToValues")]
+        private static extern int AddToValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorAssemble")]
+        private static extern int Assemble(HYPRE_IJVector vector);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetValues")]
+        private static extern int GetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorSetObjectType")]
+        private static extern int SetObjectType(HYPRE_IJVector vector, int type);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetObjectType")]
+        private static extern int GetObjectType(HYPRE_IJVector vector, out int type);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetLocalRange")]
+        private static extern int GetLocalRange(HYPRE_IJVector vector, out int jlower, out int jupper);
+
+        
+        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetObject")]
+        private static extern int GetObject(HYPRE_IJVector vector, out HYPRE_ParCRS_vector mtx_object);
+
+		#endregion
+
+		#region Matrix Facet
+		
+		public int HYPRE_IJMatrixCreate(MPI_Comm comm, int ilower, int iupper, int jlower, int jupper, out HYPRE_IJMatrix matrix){
 			return Create(comm, ilower, iupper, jlower, jupper, out matrix);
 		}
 
-      	public override int HYPRE_IJMatrixPrint(HYPRE_IJMatrix matrix, string filename){
+      	public int HYPRE_IJMatrixPrint(HYPRE_IJMatrix matrix, string filename){
 			return Print(matrix, filename);
 		}
 
-        public override int HYPRE_IJMatrixDestroy(HYPRE_IJMatrix matrix){
+        public int HYPRE_IJMatrixDestroy(HYPRE_IJMatrix matrix){
 			return Destroy(matrix);
 		}
 
-        public override int HYPRE_IJMatrixInitialize(HYPRE_IJMatrix matrix){
+        public int HYPRE_IJMatrixInitialize(HYPRE_IJMatrix matrix){
 			return Initialize(matrix);
 		}
 
-        public override int HYPRE_IJMatrixSetValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values){
+        public int HYPRE_IJMatrixSetValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values){
 			return SetValues(matrix, nrows, ncols, rows, cols, values);
 		}
 
-        public override int HYPRE_IJMatrixAddToValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values){
+        public int HYPRE_IJMatrixAddToValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values){
 			return AddToValues(matrix, nrows, ncols, rows, cols, values);
 			
 		}
 
-        public override int HYPRE_IJMatrixAssemble(HYPRE_IJMatrix matrix){
+        public int HYPRE_IJMatrixAssemble(HYPRE_IJMatrix matrix){
 			return Assemble(matrix);
 		}
 
-        public override int HYPRE_IJMatrixGetRowCounts(HYPRE_IJMatrix matrix, int nrows, int[] rows, int[] ncols){
+        public int HYPRE_IJMatrixGetRowCounts(HYPRE_IJMatrix matrix, int nrows, int[] rows, int[] ncols){
 			return GetRowCounts(matrix,nrows,rows, ncols);
 			
 		}
 
-        public override int HYPRE_IJMatrixGetValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values){
+        public int HYPRE_IJMatrixGetValues(HYPRE_IJMatrix matrix, int nrows, int[] ncols, int[] rows, int[] cols, double[] values){
 			return GetValues(matrix, nrows, ncols, rows, cols, values);
 		}
  
-        public override int HYPRE_IJMatrixSetObjectType(HYPRE_IJMatrix matrix, int type){
+        public int HYPRE_IJMatrixSetObjectType(HYPRE_IJMatrix matrix, int type){
 			return SetObjectType(matrix, type);
 		}
 
-        public override int HYPRE_IJMatrixGetObjectType(HYPRE_IJMatrix matrix, out int type){
+        public int HYPRE_IJMatrixGetObjectType(HYPRE_IJMatrix matrix, out int type){
 			return GetObjectType(matrix, out type);
 		}
 
-        public override int HYPRE_IJMatrixGetLocalRange(HYPRE_IJMatrix matrix, ref int ilower, ref int iupper, ref int jlower, ref int jupper){
+        public int HYPRE_IJMatrixGetLocalRange(HYPRE_IJMatrix matrix, ref int ilower, ref int iupper, ref int jlower, ref int jupper){
 			return GetLocalRange(matrix, ref ilower, ref iupper, ref jlower, ref jupper);
 		}
 
-        public override int HYPRE_IJMatrixGetObject(HYPRE_IJMatrix matrix, out HYPRE_ParCSR_matrix mtx_object){
+        public int HYPRE_IJMatrixGetObject(HYPRE_IJMatrix matrix, out HYPRE_ParCSR_matrix mtx_object){
 			return GetObject(matrix, out mtx_object);
 		}
 
-        public override int HYPRE_IJMatrixSetRowSizes(HYPRE_IJMatrix matrix, int[] sizes){
+        public int HYPRE_IJMatrixSetRowSizes(HYPRE_IJMatrix matrix, int[] sizes){
 			return SetRowSizes(matrix, sizes);
 		}
  
-        public override int HYPRE_IJMatrixSetDiagOffdSizes(HYPRE_IJMatrix matrix, int[] diag_sizes, int[] offdiag_sizes){
+        public int HYPRE_IJMatrixSetDiagOffdSizes(HYPRE_IJMatrix matrix, int[] diag_sizes, int[] offdiag_sizes){
 			return SetDiagOffdSizes(matrix,diag_sizes, offdiag_sizes);
 		}
 
-        public override int HYPRE_IJMatrixSetMaxOffProcElmts(HYPRE_IJMatrix matrix, int max_off_proc_elmts){
+        public int HYPRE_IJMatrixSetMaxOffProcElmts(HYPRE_IJMatrix matrix, int max_off_proc_elmts){
 			return SetMaxOffProcElmts(matrix, max_off_proc_elmts);
 		}
 		
@@ -295,139 +424,15 @@ public LSSDomainHYPRE() {
         
 		[DllImport("libHYPRE_IJ_mv.so", EntryPoint = "HYPRE_IJMatrixSetMaxOffProcElmts")]
         extern private static int SetMaxOffProcElmts(HYPRE_IJMatrix matrix, int max_off_proc_elmts);
-
-#endregion
-
-#region IHYPREVector members
-
-		public override int HYPRE_IJVectorCreate(MPI_Comm comm, int jlower, int jupper, out HYPRE_IJVector vector){
-			return Create(comm, jlower, jupper, out vector);
-		}
-       
-
-        public override int HYPRE_IJVectorPrint(HYPRE_IJVector vector, string file){
-			return PrintVector(vector, file);
-		}
 		
+		#endregion
+
+		#region Setup Facet
 		
-        public override int HYPRE_IJVectorDestroy(HYPRE_IJVector vector){
-			return Destroy(vector);
-		}
-
-        
-        public override int HYPRE_IJVectorInitialize(HYPRE_IJVector vector){
-			return Initialize(vector);
-		}
-
-        
-        public override int HYPRE_IJVectorSetMaxOffProcElmts(HYPRE_IJVector vector, int max_off_proc_elmts){
-			return SetMaxOffProcElmts(vector, max_off_proc_elmts);
-		}
-
-        
-        public override int HYPRE_IJVectorSetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values){
-			return SetValues(vector, nvalues, indices, values);
-		}
-
-        
-        public override int HYPRE_IJVectorAddToValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values){
-			return AddToValues(vector, nvalues, indices, values);
-		}
-
-        
-        public override int HYPRE_IJVectorAssemble(HYPRE_IJVector vector){
-			return Assemble(vector);
-		}
-
-        
-        public override int HYPRE_IJVectorGetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values){
-			return GetValues(vector, nvalues, indices,  values);
-		}
-
-        
-        public override int HYPRE_IJVectorSetObjectType(HYPRE_IJVector vector, int type){
-			return SetObjectType(vector, type);
-		}
-
-        
-        public override int HYPRE_IJVectorGetObjectType(HYPRE_IJVector vector, out int type){
-			return GetObjectType(vector, out type);
-		}
-
-        
-        public override int HYPRE_IJVectorGetLocalRange(HYPRE_IJVector vector, out int jlower, out int jupper){
-			return GetLocalRange(vector, out jlower, out jupper);
-		}
-
-        
-        public override int HYPRE_IJVectorGetObject(HYPRE_IJVector vector, out HYPRE_ParCRS_vector mtx_object){
-			return GetObject(vector, out mtx_object);
-		}
+		#endregion
 		
+		#region Pre-Conditioner Facet
 		
-		//chamada nativa
-		
-		[DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorCreate")]
-        private static extern int Create(MPI_Comm comm, int jlower, int jupper, out HYPRE_IJVector vector);
-       
-
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorPrint")]
-        private static extern int PrintVector(HYPRE_IJVector MPI_Comm, string file);
-		
-		
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorDestroy")]
-        private static extern int Destroy(HYPRE_IJVector vector);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorInitialize")]
-        private static extern int Initialize(HYPRE_IJVector vector);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorSetMaxOffProcElmts")]
-        private static extern int SetMaxOffProcElmts(HYPRE_IJVector vector, int max_off_proc_elmts);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorSetValues")]
-        private static extern int SetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorAddToValues")]
-        private static extern int AddToValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorAssemble")]
-        private static extern int Assemble(HYPRE_IJVector vector);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetValues")]
-        private static extern int GetValues(HYPRE_IJVector vector, int nvalues, int[] indices, double[] values);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorSetObjectType")]
-        private static extern int SetObjectType(HYPRE_IJVector vector, int type);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetObjectType")]
-        private static extern int GetObjectType(HYPRE_IJVector vector, out int type);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetLocalRange")]
-        private static extern int GetLocalRange(HYPRE_IJVector vector, out int jlower, out int jupper);
-
-        
-        [DllImport("HYPRE", EntryPoint = "HYPRE_IJVectorGetObject")]
-        private static extern int GetObject(HYPRE_IJVector vector, out HYPRE_ParCRS_vector mtx_object);
-
-#endregion
-
-#region IHYPRESetup members
-
-#endregion
-
-#region IHYPREPreconditioner members
-
-#endregion
-
+		#endregion
 }
-
 }

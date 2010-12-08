@@ -7,12 +7,15 @@ using br.ufc.pargo.hpe.kinds;
 using linearsystems.library.HYPRE;
 using linearsystems.user.qualifier.DoublePrecisionFPNumber;
 using linearsystems.user.data.Vector;
+using linearsystems.library.HYPRE.domain.LSSDomainHYPRE;
+using environment.messagepassing.MPICommunicator;
 
 namespace linearsystems.user.HYPRE.data.impl.HYPRE_Vector { 
 
-public abstract class BaseIHYPREVector<LIB, NUM>: DataStructure, BaseIVector<LIB, NUM>
+public abstract class BaseIHYPREVector<LIB, NUM, COM>: DataStructure, BaseIVector<LIB, NUM, COM, ILSSDomainHYPRE<LIB, COM>>
 where LIB:IHYPRE
 where NUM:IDoublePrecisionFPNumber
+where COM:IMPICommunicator
 {
 
 protected LIB library = default(LIB);
@@ -31,6 +34,24 @@ protected NUM Element_type {
 	}
 }
 
+protected ILSSDomainHYPRE<LIB, COM> lssdomain = null;
+
+protected ILSSDomainHYPRE<LIB, COM> Lssdomain {
+	set {
+		this.lssdomain = value;
+	}
+}
+
+protected COM comm = default(COM);
+
+public COM Comm {
+	set {
+		this.comm = value;
+		lssdomain.Comm = value;
+	}
+}
+		
+		
 
 public BaseIHYPREVector() { 
 
@@ -42,6 +63,7 @@ override public void createSlices() {
 	base.createSlices();
 	this.Element_type = (NUM) BackEnd.createSlice(this, UID,"element_type","element_type",new Type[] {});
 	this.Library = (LIB) BackEnd.createSlice(this, UID,"library","library",new Type[] {});
+	this.Lssdomain = (ILSSDomainHYPRE<LIB, COM>) BackEnd.createSlice(this, UID,"domain","lssdomain", null);
 } 
 
 
