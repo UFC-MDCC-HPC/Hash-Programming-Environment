@@ -397,7 +397,7 @@ public class HpeBuilderServiceCmd implements HpeGenericCmd{
 		
 		for (String actualProperty : actualProperties) 
     	{
-    	    String[] property_split = actualProperty.split(",");
+    	    String[] property_split = actualProperty.split("-");
     	    String key = property_split[0];
     	    String value = property_split[1];
     	    String type = property_split[2];
@@ -700,7 +700,7 @@ public class HpeBuilderServiceCmd implements HpeGenericCmd{
 						HpePrinter.out(help());
 						throw new ArgException("A pair in the form '<key> <value>' must be specified after '-property'");
 			    	}
-			    	addOption(options_register, "property", args[i+1] + "," + args[i+2] + "," + args[i+3]);
+			    	addOption(options_register, "property", args[i+1] + "-" + args[i+2] + "-" + args[i+3]);
 				   i+=3;
 			    }
 				else if (arg.equals("-location")) {

@@ -1837,14 +1837,20 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 
-	protected Map<String, HComponent> getParametersSetup() {
+	protected Map<String, List<HComponent>> getParametersSetup() {
 
-		Map<String, HComponent> parameters = new HashMap<String, HComponent>();
+		Map<String, List<HComponent>> parameters = new HashMap<String, List<HComponent>>();
 	    
 		for (HComponent c: this.getComponents()) {		 
 			if (c.isParameter()) {				
 			   String parId = c.getParameterIdentifier(this);
-			   parameters.put(parId, c);
+			   if (parameters.containsKey(parId)) {
+				   parameters.get(parId).add(c);
+			   } else {
+				   List<HComponent> cs = new ArrayList<HComponent>();
+				   cs.add(c);
+				   parameters.put(parId, cs);				   
+			   }
 			}
 			   
 		}		
@@ -1862,15 +1868,17 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	    	ccc = cThis.getParametersByDefinedVarNames();
 	    }
 	    
-	    for (Entry<String, HComponent> parameter_setup : this.getParametersSetup().entrySet()) {
+	    for (Entry<String, List<HComponent>> parameter_setup : this.getParametersSetup().entrySet()) {
 	    	String parId = parameter_setup.getKey();
-	    	HComponent c = parameter_setup.getValue();
-    	    String varName = c.getVariableName(cThis);
-	    	HComponent c_ = (HComponent) (ccc != null && (ccc.containsKey(varName)) ? ccc.get(varName) : c);
-		    addParameter(parId, c_, parameters);
-			if (c != c_) 
-			   addParameter(parId, c, parameters);
-			vars.put(varName, parId);
+	    	List<HComponent> cList = parameter_setup.getValue();
+	    	for (HComponent c : cList) {
+	    	    String varName = c.getVariableName(cThis);
+		    	HComponent c_ = (HComponent) (ccc != null && (ccc.containsKey(varName)) ? ccc.get(varName) : c);
+			    addParameter(parId, c_, parameters);
+				if (c != c_) 
+				   addParameter(parId, c, parameters);
+				vars.put(varName, parId);
+	    	}
 	    }
 	    
 /*		for (HComponent c: this.getComponents()) {		 
@@ -1953,11 +1961,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		
 		Map<String, HComponent> parameters = new HashMap<String,HComponent>();
 		
-		for (Entry<String, HComponent> par : cThis.getParametersSetup().entrySet()) {
-			HComponent c = par.getValue();
-			String varName = c.getVariableName();
-			if (!varName.equals(HComponent.UNDEFINED_NAME)) { // only variables with defined names.
-				parameters.put(varName, c);
+		for (Entry<String, List<HComponent>> par : cThis.getParametersSetup().entrySet()) {
+			List<HComponent> cList = par.getValue();
+			for (HComponent c : cList) {
+				String varName = c.getVariableName();
+				if (!varName.equals(HComponent.UNDEFINED_NAME)) { // only variables with defined names.
+					parameters.put(varName, c);
+				}
 			}
 		}
 		
@@ -2517,14 +2527,16 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	private void setSupplied(HComponent model, String varName) {
 		
 		for (HComponent c : this.getComponents()) {
-		    Map<String, List<HComponent>> c_parameters = c.getParameters();
+		    Map<String, List<HComponent>> c_parameters = c.getParametersSetup();
 		    for (Entry<String, List<HComponent>> c_par : c_parameters.entrySet()) {
-		    	HComponent c_ = c_par.getValue().get(0);
-		    	if (c_.getSupplier() == null) {
-			    	String varName_ = c_.getVariableName();
-			    	if (varName_.equals(varName)) {
-			    		c_.setSupplier(model);
-			    		c.setSupplied(model, varName_);
+		    	List<HComponent> cList_ = c_par.getValue();
+		    	for (HComponent c_ : cList_) {
+			    	if (c_.getSupplier() == null) {
+				    	String varName_ = c_.getVariableName();
+				    	if (varName_.equals(varName)) {
+				    		c_.setSupplier(model);
+				    		c.setSupplied(model, varName_);
+				    	}
 			    	}
 		    	}
 		    }
