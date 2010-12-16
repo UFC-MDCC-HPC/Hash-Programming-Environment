@@ -1,10 +1,10 @@
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
-using br.ufc.lia.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 
 
-namespace br.ufc.lia.hpe.backend.DGAC.database{
+namespace br.ufc.pargo.hpe.backend.DGAC.database{
 
 [Serializable]
 public class Connector {

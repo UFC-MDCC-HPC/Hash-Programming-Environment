@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections.Generic; 
 
-namespace br.ufc.lia.hpe.backend.DGAC.database
+namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
 
     [Serializable()]

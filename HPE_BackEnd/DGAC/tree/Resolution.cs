@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.lia.hpe.basic; 
+using br.ufc.pargo.hpe.basic; 
 
-namespace br.ufc.lia.hpe.backend.DGAC.database
+namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
 	
 	
@@ -55,7 +55,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
 			int id_abstract = CTop.Functor_app.Id_abstract;
          
            // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            IList<AbstractComponentFunctorApplication> acfaList = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.listByIdAbstract(id_abstract);
+            IList<AbstractComponentFunctorApplication> acfaList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.listByIdAbstract(id_abstract);
 
 //            writeTreeNode(CTop); Console.Write("TESTING ... ");
             foreach (AbstractComponentFunctorApplication acfa in acfaList)
@@ -64,7 +64,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                 if (recMatchParameters(CTop, acfa)) {
 					//ComponentDAO cdao = new ComponentDAO();
 //                    Console.WriteLine("... END TEST");
-                    return br.ufc.lia.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
+                    return br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
 				}
             }
 //            Console.WriteLine("... END TEST");
@@ -80,7 +80,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
            // AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
 			
           //  SupplyParameterComponentDAO spdao = new SupplyParameterComponentDAO();
-            IList<SupplyParameterComponent> spList = br.ufc.lia.hpe.backend.DGAC.BackEnd.spcdao.list(acfa.Id_functor_app);
+            IList<SupplyParameterComponent> spList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spcdao.list(acfa.Id_functor_app);
 			
 			IDictionary<string, int> ttt = new Dictionary<string,int>();
 			foreach (SupplyParameterComponent sp_ in spList) {
@@ -100,7 +100,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                     {
                         found = true;
                         ttt.TryGetValue(parid, out id_functor_app_actual); // TODO
-                        acfaSon = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app_actual);
+                        acfaSon = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app_actual);
                         if (acfaSon.Id_abstract != nodeSon.Functor_app.Id_abstract)
                         {
                           //  Console.WriteLine("FAIL 1! ");

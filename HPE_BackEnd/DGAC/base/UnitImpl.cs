@@ -6,23 +6,23 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.lia.hpe.backend.DGAC.database;
-using br.ufc.lia.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 
-namespace br.ufc.lia.hpe.basic
+namespace br.ufc.pargo.hpe.basic
 {
 
     [Serializable]
     public abstract class Unit : IUnit
-	{
+    {
         public Unit()
         {
         }
 
         private gov.cca.Services services = null;
 
-        /* The context object contains DGAC services. It will be shared by all slices of an application, passed downwards the hierarchy */ 
+        /* The context object contains DGAC services. It will be shared by all slices of an application, passed downwards the hierarchy */
         public gov.cca.Services Services { get { return services; } }
 
 
@@ -95,8 +95,8 @@ namespace br.ufc.lia.hpe.basic
                 Array.Sort<int>(this.myRanks);
             }
             get { return myRanks; }
-        }                           
-        
+        }
+
         // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
 
         private IDictionary<string, int[]> myUnits = null;
@@ -124,34 +124,35 @@ namespace br.ufc.lia.hpe.basic
                 value.addSlice(this);
             }
         }
-        
-        
+
+
 
         private int[] myRanksInv = null;
         public int[] RanksInv
         {
             get
             {
-                if (myRanksInv != null) 
+                if (myRanksInv != null)
                     return myRanksInv;
                 else if (myRanks != null)
                 {
                     int max = 0;
-                    for (int i = 0; i < Ranks.Length; i++)                    
+                    for (int i = 0; i < Ranks.Length; i++)
                         max = Ranks[i] > max ? Ranks[i] : max;
-                    myRanksInv = new int[max+1];
+                    myRanksInv = new int[max + 1];
                     for (int i = 0; i < Ranks.Length; i++)
                         myRanksInv[Ranks[i]] = i;
                     return myRanksInv;
                 }
-                else 
+                else
                     return null;
             }
         }                        // Ranks[i]==j iif RanksInv[j]==i
         public int LocalRank { get { return RanksInv[GlobalRank]; } }                         // = RanksInv[globalRank]
         public IDictionary<string, int> EnumRank { get { return EnumRanks[LocalRank]; } }     // = EnumRanks[localRank]
 
-        public int[] EnumPeers {
+        public int[] EnumPeers
+        {
             get
             {
                 IList<int> ranks = new List<int>();
@@ -162,11 +163,11 @@ namespace br.ufc.lia.hpe.basic
                     if (eKeysPeer.Count == eKey.Count)
                     {
                         bool flag = true;
-                        foreach (string k in eKeysPeer)                        
-                            flag = (eKey.Contains(k));                        
-                        if (flag)                        
-                            ranks.Add(Ranks[i]);                        
-                    }                    
+                        foreach (string k in eKeysPeer)
+                            flag = (eKey.Contains(k));
+                        if (flag)
+                            ranks.Add(Ranks[i]);
+                    }
                 }
 
                 int[] arrRanks = new int[ranks.Count];
@@ -180,7 +181,7 @@ namespace br.ufc.lia.hpe.basic
             ActualParameters = actualParameters_new;
         }
 
-        public static void determineActualParameters2(br.ufc.lia.hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
+        public static void determineActualParameters2(br.ufc.pargo.hpe.basic.IUnit unit, InnerComponent innerComponent, out IDictionary<string, int> actualParameters_new)
         {
             int Id_functor_app_inner = -1;
             if (innerComponent.Parameter_top.Length == 0)
@@ -205,9 +206,9 @@ namespace br.ufc.lia.hpe.basic
 
         }
 
-            public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
+        public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
         {
-            actualParameters_new = new Dictionary<string,int>();;
+            actualParameters_new = new Dictionary<string, int>(); ;
             SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spcList = spdao.list(id_functor_app);
 
@@ -232,11 +233,11 @@ namespace br.ufc.lia.hpe.basic
                     }
                     else
                     {
-/*                        Console.WriteLine("UNEXPECTED ERROR: " + spp.Id_parameter_actual + " NOT FOUND ! (In: setActualParameters - UnitImpl.cs)");
-                        foreach (KeyValuePair<string, int> yyy in actualParameters)
-                        {
-                            Console.Write("("+ yyy.Key + "," + yyy.Value + ");");
-                        } */
+                        /*                        Console.WriteLine("UNEXPECTED ERROR: " + spp.Id_parameter_actual + " NOT FOUND ! (In: setActualParameters - UnitImpl.cs)");
+                                                foreach (KeyValuePair<string, int> yyy in actualParameters)
+                                                {
+                                                    Console.Write("("+ yyy.Key + "," + yyy.Value + ");");
+                                                } */
                     }
                 }
                 else if (sp is SupplyParameterComponent)
@@ -248,9 +249,9 @@ namespace br.ufc.lia.hpe.basic
             }
         }
 
-        private static void traverseParameters(int id_functor_app_top, 
-                                        int id_functor_app, 
-                                        IDictionary<string, int> actualParametersTop, 
+        private static void traverseParameters(int id_functor_app_top,
+                                        int id_functor_app,
+                                        IDictionary<string, int> actualParametersTop,
                                         IDictionary<string, int> actualParameters)
         {
 
@@ -264,8 +265,8 @@ namespace br.ufc.lia.hpe.basic
                     int id_functor_app_actual;
                     bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
                     string key = spp.Id_parameter + "#" + id_functor_app_top;
-                    if (!actualParameters.ContainsKey(key)) 
-                       actualParameters.Add(key, id_functor_app_actual);
+                    if (!actualParameters.ContainsKey(key))
+                        actualParameters.Add(key, id_functor_app_actual);
                 }
                 else if (sp is SupplyParameterComponent)
                 {
@@ -273,15 +274,15 @@ namespace br.ufc.lia.hpe.basic
                     traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParametersTop, actualParameters);
                 }
             }
-           
-        
+
+
         }
 
-        public void setUpParameters(br.ufc.lia.hpe.backend.DGAC.database.Component c)
+        public void setUpParameters(br.ufc.pargo.hpe.backend.DGAC.database.Component c)
         {
             SupplyParameterDAO spdao = new SupplyParameterDAO();
             IList<SupplyParameter> spcList = spdao.list(c.Id_functor_app);
-            foreach (SupplyParameterComponent spc in spcList) 
+            foreach (SupplyParameterComponent spc in spcList)
             {
                 ActualParameters.Add(spc.Id_parameter, spc.Id_functor_app_actual);
             }
@@ -303,25 +304,39 @@ namespace br.ufc.lia.hpe.basic
             set { id_functor_app = value; }
         }
 
-        private IDictionary<string, br.ufc.lia.hpe.kinds.IEnumeratorKind> permutations = null;
+        private IDictionary<string, br.ufc.pargo.hpe.kinds.IEnumeratorKind> permutations = null;
 
-        public bool getPermutation(string id_enumerator, out br.ufc.lia.hpe.kinds.IEnumeratorKind permutation)
+        public bool getPermutation(string id_enumerator, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation)
         {
             if (permutations == null)
-                permutations = new Dictionary<string, br.ufc.lia.hpe.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, br.ufc.pargo.hpe.kinds.IEnumeratorKind>();
             return permutations.TryGetValue(id_enumerator, out permutation);
         }
 
-        public void addPermutation(string id_enumerator, br.ufc.lia.hpe.kinds.IEnumeratorKind u) 
+        public void addPermutation(string id_enumerator, br.ufc.pargo.hpe.kinds.IEnumeratorKind u)
         {
             if (permutations == null)
-                permutations = new Dictionary<string, br.ufc.lia.hpe.kinds.IEnumeratorKind>();
+                permutations = new Dictionary<string, br.ufc.pargo.hpe.kinds.IEnumeratorKind>();
             permutations.Add(id_enumerator, u);
             u.V = id_enumerator;
         }
 
-   
+        #region IUnit Members
 
+        private ComponentID cid = null;
 
+        public ComponentID CID
+        {
+            set
+            {
+                this.cid = value;
+            }
+            get
+            {
+                return cid;
+            }
+        }
+
+        #endregion
     }
 }

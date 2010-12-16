@@ -3,25 +3,28 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
 using System.Collections.Generic;
-using br.ufc.lia.hpe.backend.DGAC.utils;
-using br.ufc.lia.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC;
 using MPI;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.IO;
 using System.Runtime.Remoting.Channels;
-using br.ufc.lia.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Threading;
 using gov.cca;
 
 
-namespace br.ufc.lia.hpe.backend.DGAC
+namespace br.ufc.pargo.hpe.backend.DGAC
 { 
 		//MANAGER
     public class ManagerObject : MarshalByRefObject, gov.cca.AbstractFramework, 
 	                                                 gov.cca.ports.BuilderService, 
 	                                                 gov.cca.ports.ComponentRepository
     {
-            public ManagerObject() { }
+            public ManagerObject() 
+            {
+                Console.Out.WriteLine("Manager Object UP !");
+            }
 
             private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
             private IDictionary<ComponentID, TypeMap> componentProperties = new Dictionary<ComponentID, TypeMap>();
@@ -467,7 +470,7 @@ namespace br.ufc.lia.hpe.backend.DGAC
 	            ComponentClassDescription[] classArray;
 	            IList<ComponentClassDescription> classList = new List<ComponentClassDescription>();
 	
-	            foreach (br.ufc.lia.hpe.backend.DGAC.database.Component c in BackEnd.cdao.list())
+	            foreach (br.ufc.pargo.hpe.backend.DGAC.database.Component c in BackEnd.cdao.list())
 	            {
                     string cname = c.Library_path;
                     classList.Add(new ManagerComponentClassDescriptionImpl(cname));
@@ -491,6 +494,7 @@ namespace br.ufc.lia.hpe.backend.DGAC
                 int[] nodes = null;
                 if (!properties.TryGetValue(Constants.NODES_KEY, out nodesObj))
                 {
+                    // Se NODES_KEY não está disponível, considerar todos.
                     nodes = new int[worker.Length];
                     for (int i = 0; i < nodes.Length; i++)
                     {
@@ -528,29 +532,21 @@ namespace br.ufc.lia.hpe.backend.DGAC
                     Console.WriteLine("ENTROU createInstance manager");
 
                     IDictionary<string, int> files = new Dictionary<string, int>();
-                    Object enumsObj = null;
-                    IDictionary<string, int> enums = null;
 
-                    if (!properties.TryGetValue(Constants.ENUMS_KEY, out enumsObj))
-                    {
-                        enums = new Dictionary<string, int>();
-                    }
-                    else
-                    {
-                        enums = (IDictionary<string, int>)enumsObj;
-                    }
+                    IDictionary<string, int>  enums = readEnumerators(properties);
+
 
                     int[] nodes = this.fetchNodes(properties);
 
-                    br.ufc.lia.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(className);
+                    br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(className);
                     string hash_component_uid = c.Hash_component_UID;
 
-                    IList<br.ufc.lia.hpe.backend.DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
+                    IList<br.ufc.pargo.hpe.backend.DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
 
                     int nprocs = 0;
                     int aprocs = nodes.Length; // number of informed processors.
 
-                    foreach (br.ufc.lia.hpe.backend.DGAC.database.Interface i in iList)
+                    foreach (br.ufc.pargo.hpe.backend.DGAC.database.Interface i in iList)
                     {
                         //br.ufc.lia.hpe.backend.DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
                         IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(c.Id_abstract, i.Id_interface);
@@ -605,7 +601,7 @@ namespace br.ufc.lia.hpe.backend.DGAC
                             TypeMapImpl worker_properties = new TypeMapImpl(properties);
                             worker_properties[Constants.KEY_KEY] = k;
                             worker_properties[Constants.UID_KEY] = hash_component_uid;
-                            GoWorker gw = new GoWorker(worker[nodes[k]], instanceName, unit.Key, worker_properties);
+                            GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, unit.Key, worker_properties);
                             Thread t = new Thread(gw.Run);
                             t.Start();
                             wthreads.Add(t);
@@ -668,6 +664,26 @@ namespace br.ufc.lia.hpe.backend.DGAC
                 unit_ids_list.CopyTo(unit_ids, 0);
                 return cid_nodes;
 
+            }
+
+            private IDictionary<string, int> readEnumerators(HPETypeMap properties)
+            {
+                IDictionary<string, int> enums = new Dictionary<string, int>();
+                string[] enums_ = null;
+                object enumsObj;
+                if (!properties.TryGetValue(Constants.ENUMS_KEY, out enumsObj))
+                {
+                    enums_ = new string[0];
+                }
+                else
+                {
+                    enums_ = (string[])enumsObj;
+                    for (int i = 0; i < enums_.Length; i += 2)
+                    {
+                        enums.Add(enums_[i], int.Parse(enums_[i + 1]));
+                    }
+                }
+                return enums;
             }
 
 
@@ -775,7 +791,10 @@ namespace br.ufc.lia.hpe.backend.DGAC
                 /* The Worker Object of each computing node */
                 private WorkerObject[] worker = null;
                 private string[] node = null;
-                private TcpChannel tcpChannel = null;
+               // private TcpChannel tcpChannel = null;
+
+                private string workerFails = null;
+                private int failsCount = 0;
 
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public void startWorkerClients()
@@ -787,16 +806,27 @@ namespace br.ufc.lia.hpe.backend.DGAC
                     try
                     {
                         /* Read nodes file, and fill the node array */
-                        TextReader tr = new StreamReader(Constants.hosts_file);
 
-                        string hstr = tr.ReadToEnd();
-                        tr.Close();
-                        node = hstr.Split('\n');
+                        System.Threading.Thread.Sleep(10000);
 
-                        worker = new WorkerObject[node.Length - 1];
+                        IList<string> nodeList = new List<string>();
+                        using (TextReader tr = new StreamReader(Constants.hosts_file))
+                        {
+                            string one_line;
+                            while ((one_line = tr.ReadLine()) != null)
+                            {
+                                nodeList.Add(one_line);
+                                Console.WriteLine(one_line); // Write to console.
+                            }
+                            node = new string[nodeList.Count];
+                            nodeList.CopyTo(node, 0);
+                        }
+                        
 
-                        tcpChannel = new TcpChannel();
-                        ChannelServices.RegisterChannel(tcpChannel, false);
+                        worker = new WorkerObject[node.Length];
+
+                       // tcpChannel = new TcpChannel();
+                       // ChannelServices.RegisterChannel(tcpChannel, false);
 
                         /* Create each worker object and fill the worker array */
                         foreach (string n in node)
@@ -809,6 +839,8 @@ namespace br.ufc.lia.hpe.backend.DGAC
                             catch (Exception e)
                             {
                                 i--;
+                                failsCount++;
+                                workerFails = (e.Message == null ? "NULL" : e.Message) + "  ---  "; // + e.InnerException.Message == null ? "NULL" : e.InnerException.Message;
                                 Console.WriteLine("ERROR CONNECTING TO WORKER " + n + ". Exception : " + e.Message);
                             }
                         }
@@ -824,9 +856,9 @@ namespace br.ufc.lia.hpe.backend.DGAC
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public void stopWorkerClients()
                 {
-                    TcpChannel ch = tcpChannel;
-                    ch.StopListening(null);
-                    ChannelServices.UnregisterChannel(ch);
+                 //   TcpChannel ch = tcpChannel;
+                 //   ch.StopListening(null);
+                 //   ChannelServices.UnregisterChannel(ch);
                 }
 
                 private void createWorkerObject(int i, string node)

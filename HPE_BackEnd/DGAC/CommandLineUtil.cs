@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
 
-namespace br.ufc.lia.hpe.backend.DGAC.utils{
+namespace br.ufc.pargo.hpe.backend.DGAC.utils{
 
 public class CommandLineUtil {
 
@@ -153,9 +153,15 @@ public class CommandLineUtil {
   public static bool gacutil_install(string cuid, string assembly, int gac, string userName, string password){
 
       // runCommand(Constants.gac_util, "-u " + assembly);
-      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid, userName, password, null);
+      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" /* + " -package " + cuid */, userName, password, null);
 
-      
+//      runCommand("copy", Constants.PATH_TEMP_WORKER + assembly + ".dll" + " " + Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + cuid );
+
+      string package_path = Constants.UNIT_PACKAGE_PATH.Replace("\"", "");
+      string fileSource = Constants.PATH_TEMP_WORKER + assembly + ".dll";
+      string fileTarget = package_path + Path.DirectorySeparatorChar + cuid + Path.DirectorySeparatorChar + assembly + ".dll";
+      File.Copy(fileSource, fileTarget, true);
+
       return true;
   }
   
@@ -227,40 +233,41 @@ public class CommandLineUtil {
 
         Console.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
 
-        try {
+        try
+        {
 
-          proc.Start();
+            proc.Start();
 
-          proc.BeginErrorReadLine();
-          proc.BeginOutputReadLine();
+            proc.BeginErrorReadLine();
+            proc.BeginOutputReadLine();
 
-          proc.WaitForExit();
+            proc.WaitForExit();
 
-          ExitCode = proc.ExitCode;
-          proc.Close();
+            ExitCode = proc.ExitCode;
+            proc.Close();
 
-          if (ExitCode > 0)
-          {
-              string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
-              throw new Exception(message);
-          }
-        } catch(System.ComponentModel.Win32Exception w) {
-		Console.WriteLine(w.Message);
-		Console.WriteLine(w.ErrorCode.ToString());
-		Console.WriteLine(w.NativeErrorCode.ToString());
-		Console.WriteLine(w.StackTrace);
-		Console.WriteLine(w.Source);
-		Exception e = w.GetBaseException();
-		Console.WriteLine(e.Message);
-
-                throw w;
- 	} finally {
+            if (ExitCode > 0)
+            {
+                string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
+                throw new Exception(message);
+            }
         }
+        catch (System.ComponentModel.Win32Exception w)
+        {
+            Console.WriteLine(w.Message);
+            Console.WriteLine(w.ErrorCode.ToString());
+            Console.WriteLine(w.NativeErrorCode.ToString());
+            Console.WriteLine(w.StackTrace);
+            Console.WriteLine(w.Source);
+            Exception e = w.GetBaseException();
+            Console.WriteLine(e.Message);
 
-
-
+            throw w;
+        }
+        finally
+        {
+        }
         return ExitCode;
-
     }
 
 

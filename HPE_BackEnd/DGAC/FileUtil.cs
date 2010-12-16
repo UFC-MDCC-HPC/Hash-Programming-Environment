@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 
-namespace br.ufc.lia.hpe.backend.DGAC.utils{
+namespace br.ufc.pargo.hpe.backend.DGAC.utils{
 
 public class FileUtil{
 

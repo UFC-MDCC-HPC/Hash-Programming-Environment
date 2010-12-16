@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Collections.Generic; 
 
 
-namespace br.ufc.lia.hpe.backend.DGAC.database{
+namespace br.ufc.pargo.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class AbstractComponentFunctorApplicationDAO{
@@ -23,6 +23,12 @@ public class AbstractComponentFunctorApplicationDAO{
             "VALUES (" + nextKey + "," + ac.Id_abstract + ")";
 
         Connector.performSQLUpdate(sql);
+
+        if (cache_acfa.ContainsKey(ac.Id_functor_app))
+        {
+            cache_acfa.Remove(ac.Id_functor_app);
+            cache_acfa.Add(ac.Id_functor_app, ac);
+        }
 
         return nextKey;
     }

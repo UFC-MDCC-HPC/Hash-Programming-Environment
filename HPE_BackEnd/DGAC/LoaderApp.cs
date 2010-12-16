@@ -4,12 +4,12 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using br.ufc.lia.hpe.backend.DGAC.database;
-using br.ufc.lia.hpe.backend.DGAC.utils;
-using br.ufc.lia.hpe.basic;
+using br.ufc.pargo.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.basic;
 using System.Threading;
 
-namespace br.ufc.lia.hpe.backend.DGAC.database
+namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
     public class LoaderApp
     {
@@ -73,21 +73,21 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
 
        // Console.WriteLine("ENTER RESOLVEIMPL");
 
-	    Component component = br.ufc.lia.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
+	    Component component = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
 	
 		//get abstract component from received component for walking through its inner components
-        AbstractComponentFunctorApplication acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);
+        AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);
 
 		//INIT 
 		if(acfa!=null){
 			
 			//get functor
-            AbstractComponentFunctor acf = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);			
+            AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);			
 			
 			if(acf!=null){
 					
 				// analysing the inner component
-                InnerComponent innerComponent = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(acf.Id_abstract, id_inner);
+                InnerComponent innerComponent = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(acf.Id_abstract, id_inner);
 
             //    Console.WriteLine("innerComponents is Null ? " + (innerComponent == null));
 
@@ -111,19 +111,19 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                 }
 
 
-                AbstractComponentFunctorApplication acfaRef = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_inner);
+                AbstractComponentFunctorApplication acfaRef = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_inner);
 
                 
                 // get inner component application
                 if (acfaRef != null)
                 {
-                    IList<SupplyParameter> supplyParameters = br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.list(acfaRef.Id_functor_app);
+                    IList<SupplyParameter> supplyParameters = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfaRef.Id_functor_app);
 
                     foreach (SupplyParameter supplyParameter in supplyParameters)
                     {
 
                         //if exist a supplied parameter, then check if it is suppllie for a component
-                        SupplyParameterComponent spc = br.ufc.lia.hpe.backend.DGAC.BackEnd.spcdao.retrieve(supplyParameter.Id_parameter,
+                        SupplyParameterComponent spc = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spcdao.retrieve(supplyParameter.Id_parameter,
                                                                                             supplyParameter.Id_functor_app);
 
                         if (spc != null)
@@ -132,7 +132,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                         }
                         else
                         {
-                            SupplyParameterParameter spp = br.ufc.lia.hpe.backend.DGAC.BackEnd.sppdao.retrieve(supplyParameter.Id_parameter,
+                            SupplyParameterParameter spp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sppdao.retrieve(supplyParameter.Id_parameter,
                                                                                                 supplyParameter.Id_functor_app);
                             if (spp != null)
                             {
@@ -169,9 +169,9 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
 
                 string id_unit = null; 
 
-                Interface i2 = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
+                Interface i2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
 
-                foreach (Interface i in br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.list(componentRef.Id_abstract))
+                foreach (Interface i in br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(componentRef.Id_abstract))
                 {
                //     Console.WriteLine("i2 is null ? " + (i2 == null) + "," + innerComponent.Id_abstract_inner + "," + id_interface); 
                     if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
@@ -181,7 +181,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                 }
 
 
-                Unit u = br.ufc.lia.hpe.backend.DGAC.BackEnd.udao.retrieve(componentRef.Id_concrete, id_unit, 1);
+                Unit u = br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(componentRef.Id_concrete, id_unit, 1);
                 if (u == null)
                 {
                     Console.WriteLine("u is NULL ! acfaRef = " + Id_functor_app_inner + " - (" + componentRef.Id_concrete + "," + id_unit + "," + id_interface + ")");
@@ -207,19 +207,19 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
      //   SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
 	//	ComponentDAO cDAO = new ComponentDAO();		
-        Component component = br.ufc.lia.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
+        Component component = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
 		
 		IList<InfoCompile> referencesSet = new List<InfoCompile>();
         
 	//	AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
-        AbstractComponentFunctorApplication acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);		
+        AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);		
 	
 	//	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
 	//	InnerComponentDAO innerDAO = new InnerComponentDAO();		
 	
 		int id_abstract = acfa.Id_abstract;
 	//	UnitDAO uDAO = new UnitDAO();
-        IList<Unit> unitList = br.ufc.lia.hpe.backend.DGAC.BackEnd.udao.list(id_concrete);
+        IList<Unit> unitList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.list(id_concrete);
 
 	//	UnitSliceDAO usDAO = new UnitSliceDAO(); 
 	//	InterfaceDAO interfaceDAO = new InterfaceDAO();
@@ -227,9 +227,9 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
 		foreach (Unit unit in unitList){
 			
 			// IList<UnitSlice> unitSliceList = usDAO.listByUnit(id_concrete, unit.Id_unit, unit.Id_index);
-            Interface interfaceUnit = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_interface_abstract, unit.Id_interface_interface);
+            Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_interface_abstract, unit.Id_interface_interface);
      //                   AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctor acf = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
+            AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
 			IList<string> stringCompilationSet = new List<string>();
 
@@ -251,7 +251,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
             string[] referencesArray = new string[stringCompilationSet.Count];
             stringCompilationSet.CopyTo(referencesArray,0);
             IList<string> libRefs = new List<string>();
-            IList<SourceCode> scList = br.ufc.lia.hpe.backend.DGAC.BackEnd.scdao.list('u', unit.Id_concrete, unit.Id_unit);
+            IList<SourceCode> scList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.list('u', unit.Id_concrete, unit.Id_unit);
             foreach (SourceCode sc in scList)
             {
                 IList<string> sourceRefs = sc.ExternalReferences;
@@ -302,7 +302,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
        // AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
       //  AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
 
-        IList<Interface> iList = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.list(id_abstract);
+        IList<Interface> iList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(id_abstract);
 
         foreach (Interface i in iList)
         {
@@ -322,7 +322,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
             stringCompilationSet.CopyTo(referencesArray, 0);
             
             IList<string> libRefs = new List<string>();
-            IList<SourceCode> scList = br.ufc.lia.hpe.backend.DGAC.BackEnd.scdao.list('i', i.Id_abstract, i.Id_interface);
+            IList<SourceCode> scList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.list('i', i.Id_abstract, i.Id_interface);
             foreach (SourceCode sc in scList)
             {
                 IList<string> sourceRefs = sc.ExternalReferences;
@@ -337,7 +337,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                 referencesArrayAll.CopyTo(referencesArray_, libRefs.Count);
                 info.references = referencesArray_;
                 
-                AbstractComponentFunctor acf1 = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+                AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                 info.moduleName = sc.File_name;//  buildDllName(i.Assembly_string);
                 info.unitId = i.Id_interface;
                 info.sourceCode = sc.Contents;

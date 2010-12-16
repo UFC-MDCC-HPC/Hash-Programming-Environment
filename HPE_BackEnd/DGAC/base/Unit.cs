@@ -6,18 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using br.ufc.lia.hpe.kinds;
+using br.ufc.pargo.hpe.kinds;
 using MPI;
-using br.ufc.lia.hpe.backend.DGAC;
+using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 
-namespace br.ufc.lia.hpe.basic
+namespace br.ufc.pargo.hpe.basic
 {
-	public interface IUnit : Component
-	{
+    public interface IUnit : Component, Port
+    {
         gov.cca.Services Services { get; }
 
-        int Id_concrete {set; get;}
+        int Id_concrete { set; get; }
         int Id_functor_app { set; get; }
         int Id_abstract { set; get; }
         string Id_interface { set; get; }
@@ -41,10 +41,12 @@ namespace br.ufc.lia.hpe.basic
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }
         void setActualParameters(IDictionary<string, int> actualParameters_new);
-        void setUpParameters(br.ufc.lia.hpe.backend.DGAC.database.Component c);
+        void setUpParameters(br.ufc.pargo.hpe.backend.DGAC.database.Component c);
 
-        bool getPermutation(string varid, out br.ufc.lia.hpe.kinds.IEnumeratorKind permutation);
-        void addPermutation(string varid, br.ufc.lia.hpe.kinds.IEnumeratorKind u);
+        bool getPermutation(string varid, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation);
+        void addPermutation(string varid, br.ufc.pargo.hpe.kinds.IEnumeratorKind u);
 
+
+        ComponentID CID { get; set; }
     }
 }

@@ -6,10 +6,11 @@ namespace gov
 {
     namespace cca
     {
-
+        [Serializable]
         public abstract class HPETypeMap : gov.cca.TypeMap, IDictionary<string, object>
         {
             protected IDictionary<string, object> dict = null;
+            protected IDictionary<string, Type> property_type = null;
 
             #region IDictionary<string,object> Members
 
@@ -116,27 +117,69 @@ namespace gov
             #endregion
         }
 
-        //[Serializable]
+        [Serializable]
         public class TypeMapImpl : HPETypeMap
         {
-            public int teste = 0;
+           // public int teste = 0;
 
-            public static TypeMap NEW_EMPTY_TYPEMAP { get { return new TypeMapImpl(); } }
+           // public static TypeMap NEW_EMPTY_TYPEMAP { get { return new TypeMapImpl(); } }
             
             public TypeMapImpl()
             {
                 dict = new Dictionary<string, object>();
+                property_type = new Dictionary<string, Type>();
+				fill_typeMapTypes();
             }
+
 
             public TypeMapImpl(TypeMap properties)
             {
                 dict = new Dictionary<string, object>();
-                foreach (KeyValuePair<string, object> property in (TypeMapImpl)properties)
-                {
-                    dict.Add(property);
-                }
+                property_type = new Dictionary<string, Type>();
+
+                addPropertiesOfType(Type.Bool, properties);
+                addPropertiesOfType(Type.BoolArray, properties);
+                addPropertiesOfType(Type.Double, properties);
+                addPropertiesOfType(Type.DoubleArray, properties);
+                addPropertiesOfType(Type.Float, properties);
+                addPropertiesOfType(Type.FloatArray, properties);
+                addPropertiesOfType(Type.Int, properties);
+                addPropertiesOfType(Type.IntArray, properties);
+                addPropertiesOfType(Type.Long, properties);
+                addPropertiesOfType(Type.LongArray, properties);
+                addPropertiesOfType(Type.String, properties);
+                addPropertiesOfType(Type.StringArray, properties);
+				fill_typeMapTypes();
             }
 
+            private void addPropertiesOfType(Type type, TypeMap properties)
+            {
+                properties = properties == null ? new TypeMapImpl() : properties;
+
+                foreach (string key in properties.getAllKeys(type))
+                {
+                    switch (type)
+                    {
+                        case Type.Bool: this.putBool(key, properties.getBool(key, false)); break;
+                        case Type.BoolArray: this.putBoolArray(key, properties.getBoolArray(key, null)); break;
+                        case Type.Double: this.putDouble(key, properties.getDouble(key, 0)); break;
+                        case Type.DoubleArray: this.putDoubleArray(key, properties.getDoubleArray(key, null)); break;
+                        case Type.Float: this.putFloat(key, properties.getFloat(key, 0)); break;
+                        case Type.FloatArray: this.putFloatArray(key, properties.getFloatArray(key, null)); break;
+                        case Type.Int: this.putInt(key, properties.getInt(key, 0)); break;
+                        case Type.IntArray: this.putIntArray(key, properties.getIntArray(key, null)); break;
+                        case Type.Long: this.putLong(key, properties.getLong(key, 0)); break;
+                        case Type.LongArray: this.putLongArray(key, properties.getLongArray(key, null)); break;
+                        case Type.String: this.putString(key, properties.getString(key, null)); break;
+                        case Type.StringArray:
+                            {
+                                string[] arr_str = properties.getStringArray(key, null);
+                                //  string[] arr_str = arr_str.Split(',');
+                                this.putStringArray(key, arr_str); break;
+                            }
+                    }
+                }
+            }
 
             public override TypeMap cloneTypeMap() { return null; }
 
@@ -156,25 +199,33 @@ namespace gov
             public override string[] getStringArray(string key, string[] dflt) { object v; dict.TryGetValue(key, out v); return (string[])v; }
             public override bool[] getBoolArray(string key, bool[] dflt) { object v; dict.TryGetValue(key, out v); return (bool[])v; }
 
-            public override void putInt(string key, int value) { dict.Add(key, value); }
-            public override void putLong(string key, long value) { dict.Add(key, value); }
-            public override void putFloat(string key, float value) { dict.Add(key, value); }
-            public override void putDouble(string key, double value) { dict.Add(key, value); }
-            public override void putString(string key, string value) { dict.Add(key, value); }
+            public override void putInt(string key, int value) { dict.Add(key, value); property_type.Add(key,Type.Int); }
+            public override void putLong(string key, long value) { dict.Add(key, value); property_type.Add(key, Type.Long); }
+            public override void putFloat(string key, float value) { dict.Add(key, value); property_type.Add(key, Type.Double); }
+            public override void putDouble(string key, double value) { dict.Add(key, value); property_type.Add(key, Type.String); }
+            public override void putString(string key, string value) { dict.Add(key, value); property_type.Add(key, Type.Bool); }
             public override void putBool(string key, bool value) { dict.Add(key, value); }
 
-            public override void putIntArray(string key, int[] value) { dict.Add(key, value); }
-            public override void putLongArray(string key, long[] value) { dict.Add(key, value); }
-            public override void putFloatArray(string key, float[] value) { dict.Add(key, value); }
-            public override void putDoubleArray(string key, double[] value) { dict.Add(key, value); }
-            public override void putStringArray(string key, string[] value) { dict.Add(key, value); }
-            public override void putBoolArray(string key, bool[] value) { dict.Add(key, value); }
+            public override void putIntArray(string key, int[] value) { dict.Add(key, value); property_type.Add(key, Type.IntArray); }
+            public override void putLongArray(string key, long[] value) { dict.Add(key, value); property_type.Add(key, Type.LongArray); }
+            public override void putFloatArray(string key, float[] value) { dict.Add(key, value); property_type.Add(key, Type.FloatArray); }
+            public override void putDoubleArray(string key, double[] value) { dict.Add(key, value); property_type.Add(key, Type.DoubleArray); }
+            public override void putStringArray(string key, string[] value) { dict.Add(key, value); property_type.Add(key, Type.StringArray); }
+            public override void putBoolArray(string key, bool[] value) { dict.Add(key, value); property_type.Add(key, Type.BoolArray); }
 
-            public override void remove(string key) { dict.Remove(key); }
+            public override void remove(string key) { dict.Remove(key); property_type.Remove(key); }
 
             public override string[] getAllKeys(Type t)
             {
-                ICollection<string> keys = dict.Keys;
+                IList<string> keys = new List<string>();
+                foreach (KeyValuePair<string, Type> key_type in property_type)
+                {
+                    if (key_type.Value == t || t == Type.NoType)
+                    {
+                        keys.Add(key_type.Key);
+                    }
+                }
+
                 string[] keyArray = new string[keys.Count];
                 keys.CopyTo(keyArray, 0);
                 return keyArray;
@@ -184,36 +235,42 @@ namespace gov
 
             public override Type typeOf(string key)
             {
-                object v;
+                return property_type[key];
+
+/*                object v;
                 dict.TryGetValue(key, out v);
                 gov.cca.Type type;
                 typeMapTypes.TryGetValue(v.GetType(), out type);
-                return type;
+                return type;*/
             }
 
-            private static IDictionary<System.Type, gov.cca.Type> typeMapTypes = new Dictionary<System.Type, gov.cca.Type>()
-							{
-							    { null, Type.NoType},
-							    { typeof(int) , Type.Int},
-							    { typeof(long), Type.Long},
-							    { typeof(float), Type.Float},
-							    { typeof(double), Type.Double},
-							    { typeof(string), Type.String},
-							    { typeof(bool), Type.Bool},
-							    { typeof(int[]), Type.IntArray},
-							    { typeof(long[]), Type.LongArray},
-							    { typeof(float[]), Type.FloatArray},
-							    { typeof(double[]), Type.DoubleArray},
-							    { typeof(string[]), Type.StringArray}
-							//    { 112, Fcomplex},
-							//    { 112, Dcomplex},
-							//    { 112, FcomplexArray},
-							//    { 112, DcomplexArray}
-							};
+            public new void Add(string key, object value)
+            {
+                base.Add(key, value);
+                property_type.Add(key, typeMapTypes[value.GetType()]);
+            }
 
-        }
+            private static IDictionary<System.Type, gov.cca.Type> typeMapTypes = new Dictionary<System.Type, gov.cca.Type>();
+			
+			private void fill_typeMapTypes()
+			{
+				typeMapTypes[typeof(int)] = Type.Int;
+				typeMapTypes[typeof(long)] = Type.Long;
+				typeMapTypes[typeof(float)] = Type.Float;
+				typeMapTypes[typeof(double)] = Type.Double;
+				typeMapTypes[typeof(string)] = Type.String;
+				typeMapTypes[typeof(bool)] = Type.Bool;
+				typeMapTypes[typeof(int[])] = Type.IntArray;
+				typeMapTypes[typeof(long[])] = Type.LongArray;
+				typeMapTypes[typeof(float[])] = Type.FloatArray;
+				typeMapTypes[typeof(double[])] = Type.DoubleArray;
+				typeMapTypes[typeof(string[])] = Type.StringArray;
+
+			}
+
+
     }
 
 
-
+	}
 }

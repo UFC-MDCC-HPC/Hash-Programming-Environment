@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using br.ufc.lia.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.backend.DGAC.database;
 
 namespace HPE_DGAC_LoadDB
 {
@@ -128,7 +128,7 @@ namespace HPE_DGAC_LoadDB
                 aAppNew.Id_abstract = a.Id_abstract;
 
             //    AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();
-                br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
+                br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
 
                 // REGISTER parameters (follow supply-of, configure formal-parameter)
                 loadAbstractComponentFunctorApplicationParameters(c, aAppNew);
@@ -197,7 +197,7 @@ namespace HPE_DGAC_LoadDB
                     p_.Id_parameter = formFieldId;
 
                  //   SupplyParameterDAO p_DAO = new SupplyParameterDAO();
-                    br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.insert(p_);
+                    br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.insert(p_);
 
                     pars.Add(p_);
                 }

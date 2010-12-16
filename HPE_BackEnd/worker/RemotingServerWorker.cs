@@ -4,12 +4,12 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using br.ufc.lia.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Collections;
 using MPI;
 using System.Threading;
 
-namespace br.ufc.lia.hpe.backend.DGAC
+namespace br.ufc.pargo.hpe.backend.DGAC
 {
     public class WorkerService : System.ServiceProcess.ServiceBase
     {
@@ -45,7 +45,15 @@ namespace br.ufc.lia.hpe.backend.DGAC
           {
             Console.WriteLine("Starting Worker ");
 
-            ch = new TcpChannel(Constants.WORKER_PORT);
+            System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
+            //System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
+            server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+            IDictionary prop = new Hashtable();
+            prop["port"] = Constants.WORKER_PORT;
+            ch = new TcpChannel(prop, /*client_provider*/ null, server_provider);
+
+            //ch = new TcpChannel(Constants.WORKER_PORT);
+                
             ChannelServices.RegisterChannel(ch, false);
 
             Type commonInterfaceType = typeof(WorkerObject);

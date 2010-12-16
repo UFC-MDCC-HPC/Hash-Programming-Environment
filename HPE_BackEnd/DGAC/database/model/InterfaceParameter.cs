@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
-using br.ufc.lia.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace br.ufc.lia.hpe.backend.DGAC.database{
+namespace br.ufc.pargo.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class InterfaceParameter {

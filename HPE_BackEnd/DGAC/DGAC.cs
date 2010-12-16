@@ -6,9 +6,9 @@ using System.Runtime.Remoting.Channels.Ipc;
 using System.Collections.Generic;
 using System.Reflection;
 using HPE_DGAC_LoadDB;
-using br.ufc.lia.hpe.basic;
-using br.ufc.lia.hpe.backend.DGAC.utils;
-using br.ufc.lia.hpe.backend.DGAC.database;
+using br.ufc.pargo.hpe.basic;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Data;
 using System.Collections;
 using System.Reflection.Emit;
@@ -17,7 +17,7 @@ using MPI;
 using gov.cca;
 //using br.ufc.lia.hpe.backend.ports;
 
-namespace br.ufc.lia.hpe.backend
+namespace br.ufc.pargo.hpe.backend
 {
 
     namespace DGAC
@@ -29,6 +29,8 @@ namespace br.ufc.lia.hpe.backend
 
         public class BackEnd 
         {
+
+            public static WorkerObject framework = null;
 
             private IpcClientChannel ch = null;
 
@@ -591,19 +593,671 @@ namespace br.ufc.lia.hpe.backend
             public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
             public static IUnit createSlice(IUnit ownerUnit,
-                                                          string hash_component_uid,
-                                                          string id_inner,
-                                                          string id_interface,
-                                                          System.Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
-                                                         )
+                                            string hash_component_uid,
+                                            string id_inner,
+                                            string id_interface,
+                                            System.Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
+                                            )
             {
-                IUnit slice = ((WorkerServicesImpl)ownerUnit.Services).autoConnect(ownerUnit, id_inner, id_interface, hash_component_uid, id_inner, id_interface);
-                slice.createSlices();
-                return slice;
+
+                ComponentID user_cid = ownerUnit.CID;
+                Services services = ownerUnit.Services;
+                string instanceName = user_cid.getInstanceName(); 
+                string portName = id_inner + "." + id_interface;
+                string type = id_interface;
+
+                // REGISTER THE USES PORT OF THE ENCLOSING COMPONENT
+                TypeMapImpl properties1 = new TypeMapImpl();
+                properties1[Constants.AUTOMATIC_KEY] = true;
+                services.registerUsesPort(portName, type, properties1);
+
+                // LOOKING FOR INFORMATION ABOUT THE SLICE TO BE INSTANTIATED
+                int id_abstract = ownerUnit.Id_abstract; 
+                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
+                IDictionary<string, int> actualParameters_new = null;
+                hpe.basic.Unit.determineActualParameters2(ownerUnit, ic, out actualParameters_new);
+                br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve(ownerUnit.Id_concrete);                
+                  
+                // INSTANTIATE THE PROVIDER COMPONENT
+                HPETypeMap properties2 = new TypeMapImpl();
+                properties2[Constants.IS_COMPONENT_INSTANCE_KEY] = true;
+                ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, id_interface, properties2);
+
+                //Services frkSrv = framework.getServices("DGAC", "DGAC.Backend", new TypeMapImpl());
+                //frkSrv.registerUsesPort("DGAC.BuilderServices", ???,new TypeMapImpl());
+                //frkSrv.
+
+                // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component)
+                framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS);
+
+                // GET THE PROVIDED PORT
+                IUnit unit_slice = (IUnit) services.getPort(portName);
+
+                // SETUP SOME INFORMATION OF THE UNIT_SLICE
+                unit_slice.setActualParameters(actualParameters_new);
+                unit_slice.ActualParametersTop = ownerUnit.ActualParametersTop;
+                calculateSliceKnowledge(ownerUnit, unit_slice, id_abstract, id_inner, id_interface);
+
+                // RECURSIVELY, INITIALIZE THE SLICES OF THE INNER COMPONENT                
+                unit_slice.createSlices();
+                return unit_slice;
 
             }
 
+            private static void calculateSliceKnowledge(IUnit unit, IUnit unit_slice, int id_abstract, string id_inner, string id_interface)
+            {
+                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
 
+                // Configure the knowledge of the slices about the topology.
+
+                IDictionary<string, int> eix_inner = new Dictionary<string, int>();
+
+                // Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
+
+                IDictionary<string, IList<KeyValuePair<string, int>>> enumsByVars = new Dictionary<string, IList<KeyValuePair<string, int>>>();
+
+                // Console.WriteLine("unit.EnumRank.Count = " + unit.EnumRank.Count);
+
+                foreach (KeyValuePair<string, int> index in unit.EnumRank)
+                {
+                    Enumerator e = BackEnd.edao.retrieve(id_abstract, index.Key);
+                    if (enumsByVars.ContainsKey(e.Variable))
+                    {
+                        IList<KeyValuePair<string, int>> l;
+                        enumsByVars.TryGetValue(e.Variable, out l);
+                        l.Add(index);
+                    }
+                    else
+                    {
+                        IList<KeyValuePair<string, int>> l = new List<KeyValuePair<string, int>>();
+                        l.Add(index);
+                        enumsByVars.Add(e.Variable, l);
+                    }
+                }
+
+                //  Console.WriteLine(" ------ enumByVars has " + enumsByVars.Count + " elements");
+
+                foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
+                {
+                    int found = 0;
+                    foreach (KeyValuePair<string, int> index in k.Value)
+                    {
+                        string eix = index.Key;
+                        int val = index.Value;
+
+                        // Check if the slice is enumerated by eix.
+                        EnumerationSlice es = BackEnd.exsdao.retrieve(id_abstract, id_inner, id_interface, eix);
+                        if (es == null)      // If not, the inner component must be. Otherwise, this is stuck configuration.
+                        // REMARK: With enumerators, this is possible now.
+                        {
+                            EnumerationInner ei = BackEnd.exindao.retrieve(id_abstract, id_inner, eix);
+                            if (ei != null)
+                            {
+                                //                            Console.WriteLine("REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface + "," + eix);
+                                eix_inner.Add(eix, val);
+                                found++;
+                            }
+                            else
+                            {
+                                //                            Console.WriteLine("NON REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface +  ", "+ eix);
+                            }
+                        }
+                        else
+                        {
+                            //                        Console.WriteLine(" ES NON REPLICATE INNER : " + id_abstract + "," + id_inner + "," + eix);
+                            found++;
+                        }
+                    }
+                    if (found == 0)
+                    {
+                        Console.WriteLine("k.Key = " + k.Key);
+
+                        foreach (KeyValuePair<string, int> xxx in k.Value)
+                        {
+                            Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
+                        }
+                        Console.WriteLine("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
+                        throw new Exception("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
+                    }
+
+
+                }
+
+                // Now, list all units of the inner component.
+
+                int id_functor_app_inner_actual = ic.Id_functor_app;
+                int id_abstract_inner_original = ic.Id_abstract_inner;
+                int id_abstract_inner_actual = ic.Id_abstract_inner;
+                if (!ic.Parameter_top.Equals("") && !(ic.Parameter_top == null))
+                {
+                    bool achei = unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
+                    if (!achei)
+                    {
+                        achei = unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + unit.Id_functor_app, out id_functor_app_inner_actual);
+                    }
+
+                    int id_functor_app_old = ic.Id_functor_app;
+                    ic.Id_functor_app = id_functor_app_inner_actual;
+                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
+                    id_abstract_inner_actual = acfa.Id_abstract;
+                    ic.Id_abstract_inner = id_abstract_inner_actual;
+                }
+
+                unit_slice.Id_functor_app = ic.Id_functor_app;
+                unit_slice.Id_abstract = ic.Id_abstract_inner;
+
+                IList<Slice> ss = BackEnd.sdao.listByInner(id_abstract, id_inner);
+                IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
+                Dictionary<string, int> countUnits = new Dictionary<string, int>();
+                IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
+
+                IDictionary<string, string> unitsMapping = new Dictionary<string, string>();
+
+                IList<string> id_units_ordered = BackEnd.acfdao.getIdUnitsOrdered(id_abstract_inner_original);
+                IList<string> id_units_ordered_actual = BackEnd.acfdao.getIdUnitsOrdered(id_abstract_inner_actual);
+                for (int k = 0; k < id_units_ordered.Count; k++)
+                {
+                    unitsMapping.Add(id_units_ordered_actual[k], id_units_ordered[k]);
+                }
+
+                foreach (Slice s in ss)  // for different split_replica's. 
+                {
+                    string id_interface_slice = s.Id_interface_slice;
+
+                    String id_interface_of_slice = s.Id_interface;
+
+                    // Ache todas as unidades que são id_interface.
+                    int[] ranks;
+                    unit.Units.TryGetValue(id_interface_of_slice, out ranks);
+
+                    // Percorra todas estas unidades e adicione somente aquelas cujos índice para algum enumerador em
+                    // eix_inner seja o mesmo.
+                    foreach (int r_ in ranks)
+                    {
+                        int r = unit.RanksInv[r_]; // r is the local rank... r_ is the global rank.
+                        IDictionary<string, int> rE = new Dictionary<string, int>();
+                        foreach (KeyValuePair<string, int> re in unit.EnumRanks[r])
+                            rE.Add(re);
+
+                        bool flag = true;
+                        foreach (KeyValuePair<string, int> e in eix_inner)
+                        {
+                            int index = e.Value;
+                            int index_;
+                            rE.TryGetValue(e.Key, out index_);
+                            flag = flag && index == index_;
+                        }
+
+                        if (flag)
+                        {
+                            int count = 0;
+                            if (countUnits.ContainsKey(id_interface_slice))
+                            {
+                                countUnits.TryGetValue(id_interface_slice, out count);
+                                countUnits.Remove(id_interface_slice);
+                                countUnits.Add(id_interface_slice, ++count);
+                            }
+                            else
+                                countUnits.Add(id_interface_slice, ++count);
+
+                            IList<int> _ranks;
+                            if (ranksAll.ContainsKey(id_interface_slice))
+                            {
+                                ranksAll.TryGetValue(id_interface_slice, out _ranks);
+                            }
+                            else
+                            {
+                                _ranks = new List<int>();
+                                ranksAll.Add(id_interface_slice, _ranks);
+                            }
+                            _ranks.Add(unit.Ranks[r]);
+
+                            enumsByVars.Clear();
+                            // Group by variable
+                            foreach (KeyValuePair<string, int> index in rE)
+                            {
+                                Enumerator e = BackEnd.edao.retrieve(id_abstract, index.Key);
+                                if (enumsByVars.ContainsKey(e.Variable))
+                                {
+                                    IList<KeyValuePair<string, int>> list;
+                                    enumsByVars.TryGetValue(e.Variable, out list);
+                                    list.Add(index);
+                                }
+                                else
+                                {
+                                    IList<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>();
+                                    list.Add(index);
+                                    enumsByVars.Add(e.Variable, list);
+                                }
+                            }
+
+                            foreach (KeyValuePair<string, int> e in eix_inner)
+                            {
+                                Enumerator enumerator = BackEnd.edao.retrieve(id_abstract, e.Key);
+                                enumsByVars.Remove(enumerator.Variable);
+                            }
+
+
+                            // point to the replicator identifiers of the inner component ....
+                            IDictionary<string, int> rE_ = new Dictionary<string, int>();
+
+                            foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
+                            {
+                                // Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + "##################################### " + s.Id_inner);
+                                IList<KeyValuePair<string, int>> rElist = k.Value;
+
+                                int occurrences = 0;
+                                foreach (KeyValuePair<string, int> re in rElist)
+                                {
+                                    IDictionary<string, int> enumeratorCardinalityNew;
+                                    KeyValuePair<string, int> replicator;
+                                    bool found = findReplicator(unit, re, s, ic, unit.EnumeratorCardinality, out enumeratorCardinalityNew, out replicator);
+                                    if (found)
+                                    {
+                                        if (!rE_.Contains(replicator))
+                                        {
+                                            rE_.Add(replicator);
+                                            unit_slice.EnumeratorCardinality = enumeratorCardinalityNew;
+                                            occurrences++;
+
+                                        }
+                                    }
+                                }
+                                if (occurrences != 1)
+                                {
+                                    Console.WriteLine("k.Key = " + k.Key);
+
+                                    foreach (KeyValuePair<string, int> xxx in k.Value)
+                                    {
+                                        Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
+                                    }
+                                    Console.WriteLine("ERROR find replicator : " + occurrences + " - " + rElist.Count + " --- " + id_abstract);
+                                    throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count + " --- " + id_abstract);
+                                }
+                                //   Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + ": END LOOP !!!!!!!!");
+                            }
+
+
+                            IList<IDictionary<string, int>> l;
+                            if (enumRanksL.ContainsKey(id_interface_slice))
+                            {
+                                enumRanksL.TryGetValue(id_interface_slice, out l);
+                            }
+                            else
+                            {
+                                l = new List<IDictionary<string, int>>();
+                                enumRanksL.Add(id_interface_slice, l);
+                            }
+                            l.Add(rE_);
+                        }
+                    }
+                }
+
+                // The slice units of id_inner are contained in the processes of ranks in ranksAll.
+                IList<int> ranksAllList = new List<int>();
+                IList<IDictionary<string, int>> enumRanksList = new List<IDictionary<string, int>>();
+
+                IDictionary<string, int[]> unitsRanks = new Dictionary<string, int[]>();
+
+                //ranksAll.CopyTo(ranksAllArr, 0);
+
+                int pos1 = 0;
+                int pos2 = 0;
+                foreach (string id_unit_slice_ in id_units_ordered_actual)
+                {
+                    IList<int> ranks;
+
+                    string id_unit_slice;
+                    bool achei = unitsMapping.TryGetValue(id_unit_slice_, out id_unit_slice);
+
+                    achei = ranksAll.TryGetValue(id_unit_slice, out ranks);
+
+
+                    if (ranks == null)
+                    {
+                        ranks = new List<int>();
+                    }
+
+
+                    foreach (int r in ranks)
+                        ranksAllList.Insert(pos2++, r);
+
+                    IList<IDictionary<string, int>> enumRanks;
+                    enumRanksL.TryGetValue(id_unit_slice, out enumRanks);
+
+
+                    if (enumRanks == null)
+                    {
+                        enumRanks = new List<IDictionary<string, int>>();
+                    }
+                    else
+                    {
+                        insertEnumeratorFusions(unit_slice, id_unit_slice, enumRanks);
+                    }
+
+                    foreach (IDictionary<string, int> d in enumRanks)
+                        enumRanksList.Insert(pos1++, /* removePrefixes( id_inner ,*/ d /* ) */);
+
+                    // Calculate o.Units ...
+                    int count;
+                    countUnits.TryGetValue(id_unit_slice, out count);
+
+                    int[] _ranks = new int[count];
+                    for (int k = 0; k < count; k++)
+                        //_ranks[k] = ranksAllList[i++];
+                        _ranks[k] = ranks[k];
+
+                    unitsRanks.Add(id_unit_slice_, _ranks);
+                }
+
+                int[] ranksAllArr = new int[ranksAllList.Count];
+                IDictionary<string, int>[] enumRanksArr = new IDictionary<string, int>[enumRanksList.Count];
+
+
+                ranksAllList.CopyTo(ranksAllArr, 0);
+                enumRanksList.CopyTo(enumRanksArr, 0);
+
+                unit_slice.Ranks = ranksAllArr;
+                unit_slice.EnumRanks = enumRanksArr;
+                unit_slice.Units = unitsRanks;
+            }
+
+            private static bool findReplicator(IUnit unit, KeyValuePair<string, int> re,
+                                               Slice s,
+                                               InnerComponent ic,
+                                               IDictionary<string, int> enumeratorCardinality,
+                                               out IDictionary<string, int> enumeratorCardinality_return,
+                                               out KeyValuePair<string, int> replicator)
+            {
+                int id_abstract = ic.Id_abstract_owner;
+                string id_inner = ic.Id_inner;
+                string id_unit = s.Id_interface_slice;
+                IDictionary<string, int> enumeratorCardinality_prime = new Dictionary<string, int>();
+
+                // LOOK FOR THE ORIGINAL REPLICATOR FROM THE INNER COMPONENT THAT HAS BEEN SPLITTED...
+                string re_Key;
+                int re_Value;
+
+                //   Console.WriteLine("findReplicator:" + id_abstract + "," + id_inner + "," + id_unit + ", " + re.Key);
+
+                EnumeratorSplitDAO esplitdao = new EnumeratorSplitDAO();
+                EnumeratorSplit es = esplitdao.retrieve1(id_abstract, re.Key);
+                if (es != null && s.Id_split_replica > 0)
+                {
+                    re_Key = es.Id_enumerator;
+                    re_Value = es.mapSplitEnumerationValue(unit, re_Key, re, s, enumeratorCardinality, enumeratorCardinality_prime);
+                }
+                else
+                {
+                    re_Key = re.Key;
+                    re_Value = re.Value;
+                }
+
+
+                foreach (KeyValuePair<string, int> ke in enumeratorCardinality)
+                    dictReplaceKey(enumeratorCardinality_prime, ke.Key, ke.Value);
+
+                // if (!enumeratorCardinality_prime.ContainsKey(ke.Key))
+                //    {
+                //        enumeratorCardinality_prime.Add(ke);
+                //    }
+
+                string id_inner_container = id_inner;
+                IList<string> id_inner_container_list = new List<string>();
+                IList<SliceExposed> seMap = new List<SliceExposed>();
+
+                // FIND THE ORIGINAL REPLICATOR OF THE INNER COMPONENT THAT HAS BEEN FUSED.
+                //    EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
+                //            EnumeratorMapping em = null;
+
+                IList<SliceExposed> lse = null;
+                if (ic.Transitive)
+                {
+                    //  SliceExposedDAO sedao = new SliceExposedDAO();
+                    lse = BackEnd.sedao.listContainers(s.Id_inner, s.Id_interface_slice, s.Id_abstract, s.Id_split_replica);
+
+                    foreach (SliceExposed se_ in lse)
+                    {
+                        id_inner_container = se_.Id_inner_owner;
+                        id_inner_container_list.Add(id_inner_container);
+                        //             Console.WriteLine("SLICE EXPOSED: " + id_inner_container);
+                        seMap.Add(se_);
+                    }
+                }
+
+                if (id_inner_container_list.Count == 0)
+                {
+                    id_inner_container_list.Add(id_inner_container);
+                }
+
+
+                string re_Key_before = re_Key;
+
+                int cc = -1;
+                foreach (string id_inner_container_ in id_inner_container_list)
+                {
+                    cc = re_Key.IndexOf(id_inner_container_ + ".");
+                    //      Console.WriteLine(" >>>> " + re_Key + " , " +  id_inner_container_);
+                    if (cc >= 0)
+                    {
+                        id_inner_container = id_inner_container_;
+                        re_Key = re_Key.Substring(cc + (id_inner_container + ".").Length);
+                        //         Console.WriteLine(" *>>>> " + re_Key + " , " + id_inner_container_);
+                        break;
+                    }
+                }
+                if (cc < 0)
+                {
+                    replicator = new KeyValuePair<string, int>();
+                    enumeratorCardinality_return = enumeratorCardinality;
+                    return false;
+                }
+
+                IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
+
+                // UPDATE CARDINALITY
+                foreach (KeyValuePair<string, int> ke in enumeratorCardinality_prime)
+                {
+                    if (ke.Key.Equals(re_Key_before))
+                    {
+                        dictReplaceKey(enumeratorCardinalityTemp, re_Key, ke.Value);
+
+                        //                    if (!enumeratorCardinalityTemp.ContainsKey(re_Key))
+                        //                    {
+                        //                        enumeratorCardinalityTemp.Add(re_Key, ke.Value);                        
+                        //                    }
+                    }
+                    else
+                    {
+                        string re_Key_ = ke.Key;
+                        int re_Value_ = ke.Value;
+
+                        int cc_ = re_Key_.IndexOf(id_inner_container + ".");
+                        if (cc_ >= 0)
+                        {
+                            re_Key_ = re_Key_.Substring(cc_ + (id_inner_container + ".").Length);
+                            re_Value_ = ke.Value;
+                            dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
+                            // if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
+                            // {
+                            //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                            // }
+                        }
+                        else
+                        {
+                            dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
+                            //if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
+                            //{
+                            //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
+                            // }
+                        }
+                    }
+                }
+
+                enumeratorCardinality_prime = enumeratorCardinalityTemp;
+
+                KeyValuePair<string, int> ke_prime = new KeyValuePair<string, int>(re_Key, re_Value);
+
+                if (ic.Transitive && seMap.Count > 0)     // in fact, ic.Transitive <=> se != null
+                {
+                    //   InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
+                    InnerComponentExposed ice = BackEnd.icedao.retrieve(id_abstract, id_inner_container, id_inner);
+
+                    //  InnerComponentDAO icdao = new InnerComponentDAO();
+                    InnerComponent ic_owner = BackEnd.icdao.retrieve(ic.Id_abstract_owner, ice.Id_inner_owner);
+                    InnerComponent ic_prime = BackEnd.icdao.retrieve(ic_owner.Id_abstract_inner, ice.Id_inner);
+
+                    //  SliceDAO sdao = new SliceDAO();
+                    Slice s_prime = null;
+
+                    foreach (SliceExposed se in seMap)
+                    {
+                        s_prime = BackEnd.sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice, se.Id_interface_slice_owner);
+                        if (s_prime != null)
+                            break;
+                        // else
+                        //     Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
+                    }
+
+                    IList<EnumeratorMapping> emList = BackEnd.exmdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
+
+                    int kkk;
+                    enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
+
+
+                    foreach (EnumeratorMapping em in emList)
+                    {
+                        dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
+                        //                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
+                        //                    {
+                        //                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
+                        //                    }
+                    }
+
+                    //     Console.WriteLine("emList.Count = " + emList.Count + " => " + ic_prime.Id_abstract_owner + " - " + ke_prime.Key + "," + ic_owner.Id_abstract_inner + "," + ice.Id_inner);
+                    if (emList.Count > 0)
+                    {
+                        foreach (EnumeratorMapping em in emList)
+                        {
+                            KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string, int>(em.Id_enumerator_inner, ke_prime.Value);
+                            if (findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (findReplicator(unit, ke_prime, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
+                        {
+                            return true;
+                        }
+                    }
+
+
+                    replicator = new KeyValuePair<string, int>(); ;
+
+                    enumeratorCardinality_return = new Dictionary<string, int>();
+
+                    return false;
+                }
+                else
+                {
+                    replicator = ke_prime;
+
+                    IList<EnumeratorMapping> emList = BackEnd.exmdao.list(ic.Id_abstract_inner, ke_prime.Key);
+
+                    int kkk;
+                    enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
+
+                    foreach (EnumeratorMapping em in emList)
+                    {
+                        dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
+
+                        //                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
+                        //                    {
+                        //                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
+                        //                    }
+                    }
+
+                    enumeratorCardinality_return = enumeratorCardinality_prime;
+
+                    return true;
+                }
+
+            }
+
+            private static void dictReplaceKey(IDictionary<string, int> dict, string key, int value)
+            {
+                if (dict.ContainsKey(key))
+                {
+                    dict.Remove(key);
+                }
+                dict.Add(key, value);
+            }
+
+
+            private static void insertEnumeratorFusions(IUnit o, string id_unit_slice, IList<IDictionary<string, int>> enumRanks)
+            {
+                int id_abstract = o.Id_abstract;
+                IDictionary<string, IList<string>> mapping = new Dictionary<string, IList<string>>();
+
+                IDictionary<string, int> d0 = enumRanks[0];
+                foreach (KeyValuePair<string, int> k in d0)
+                {
+                    IList<EnumeratorMapping> emList = BackEnd.exmdao.list(id_abstract, k.Key);
+                    if (emList.Count > 0)
+                    {
+                        IList<string> l = new List<string>();
+                        foreach (EnumeratorMapping em in emList)
+                        {
+                            if (!k.Key.Equals(em.Id_enumerator_inner))
+                            {
+                                l.Add(em.Id_enumerator_inner);
+
+                                hpe.kinds.IEnumeratorKind ec;
+                                if (o.getPermutation(k.Key, out ec))
+                                {
+                                    o.addPermutation(em.Id_enumerator_inner, ec);
+                                }
+                            }
+                        }
+                        mapping.Add(k.Key, l);
+                    }
+                }
+
+                IDictionary<IDictionary<string, int>,
+                            IDictionary<string, int>> ttt = new Dictionary<IDictionary<string, int>,
+                                                                           IDictionary<string, int>>();
+
+                foreach (IDictionary<string, int> d in enumRanks)
+                {
+                    IDictionary<string, int> aux = new Dictionary<string, int>();
+                    foreach (KeyValuePair<string, int> k in d)
+                    {
+                        IList<string> l;
+                        if (mapping.TryGetValue(k.Key, out l))
+                        {
+                            foreach (string ee in l)
+                            {
+                                aux.Add(ee, k.Value);
+                            }
+                        }
+                    }
+                    ttt.Add(d, aux);
+                }
+
+                foreach (KeyValuePair<IDictionary<string, int>, IDictionary<string, int>> aux in ttt)
+                {
+                    IDictionary<string, int> d = aux.Key;
+                    foreach (KeyValuePair<string, int> a in aux.Value)
+                    {
+                        d.Add(a);
+
+                    }
+                }
+
+            }
 
             /* RUN TIME ROUTINES */
 

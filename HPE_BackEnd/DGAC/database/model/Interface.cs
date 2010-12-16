@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
-using br.ufc.lia.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace br.ufc.lia.hpe.backend.DGAC.database{
+namespace br.ufc.pargo.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class Interface {
@@ -35,11 +35,11 @@ public class Interface {
                     id_interface_super_top = id_interface;
                 } else {
                     string id_interface_super_ = Id_interface_super;
-                    AbstractComponentFunctor acf = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+                    AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                     if (acf.Id_functor_app_supertype != 0)
                     {
-                        AbstractComponentFunctorApplication acfaSuper = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
-                        Interface iSuper = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_);
+                        AbstractComponentFunctorApplication acfaSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+                        Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_);
                         id_interface_super_top = iSuper.Id_interface_super_top;
                     }
                     else
@@ -47,7 +47,7 @@ public class Interface {
                         id_interface_super_top = id_interface;
                     }
                 }
-                br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, id_interface_super_top);
+                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, id_interface_super_top);
                 return id_interface_super_top;
             } else {
                 return id_interface_super_top;
@@ -131,14 +131,14 @@ public class Interface {
 
         // Look at super type.
 
-        AbstractComponentFunctor cThis = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(this.Id_abstract);
-        AbstractComponentFunctorApplication cSuperApp = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app_supertype);
+        AbstractComponentFunctor cThis = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(this.Id_abstract);
+        AbstractComponentFunctorApplication cSuperApp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app_supertype);
         if (cSuperApp != null)
         {
-            AbstractComponentFunctor acfsuper = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
+            AbstractComponentFunctor acfsuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
             IDictionary<string, AbstractComponentFunctorApplication> parsSuper = null;
             collectParameters(pars, cSuperApp, out parsSuper);
-            Interface iSuper = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super);
+            Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super);
             refs = iSuper.fetchReferences(parsSuper);
             string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
             if (!refs.Contains(refname))
@@ -149,11 +149,11 @@ public class Interface {
         }
 
         // Traverse slices.
-        IList<Slice> slices = br.ufc.lia.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface);
+        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface);
 
         foreach (Slice s in slices)
         {
-            InnerComponent ic = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); // findInnerComponentOwnerOfSlice(Id_abstract, s.Id_inner); 
+            InnerComponent ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); // findInnerComponentOwnerOfSlice(Id_abstract, s.Id_inner); 
             if (ic != null)
             {
                 AbstractComponentFunctorApplication acfa = null;
@@ -163,17 +163,17 @@ public class Interface {
                 if (!ic.Parameter_top.Equals(""))
                 {
                     pars.TryGetValue(ic.Parameter_top, out acfa);
-                    acfa = acfa == null ? br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app) : acfa;                    
+                    acfa = acfa == null ? br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app) : acfa;                    
                 }
                 else
                 {
-                    acfa = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);
+                    acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);
                 }
 
                 collectParameters(pars, acfa, out parsSlice);
 
-                Interface i = br.ufc.lia.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
-                AbstractComponentFunctor acfSlice = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
+                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
+                AbstractComponentFunctor acfSlice = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
 
                 // ---------------------------------------------------------------------------------------
 
@@ -186,6 +186,9 @@ public class Interface {
                 string refname = LoaderApp.buildDllName(acfSlice.Library_path, i.Assembly_string);
                 if (!refs.Contains(refname))
                     refs.Add(refname);
+                string refnamebase = LoaderApp.buildDllNameBase(acfSlice.Library_path, i.Assembly_string);
+                if (!refs.Contains(refnamebase))
+                    refs.Add(refnamebase);
             }
         }
 
@@ -201,11 +204,11 @@ public class Interface {
         InnerComponent ic = null;
         while (ic == null && Id_abstract_traverse != 0)
         {
-            ic = br.ufc.lia.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract_traverse, id_inner);
+            ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract_traverse, id_inner);
             if (ic == null)
             {
-                AbstractComponentFunctor cTraverse = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfdao.retrieve(Id_abstract_traverse);
-                AbstractComponentFunctorApplication cSuperApp = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cTraverse.Id_functor_app_supertype);
+                AbstractComponentFunctor cTraverse = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(Id_abstract_traverse);
+                AbstractComponentFunctorApplication cSuperApp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cTraverse.Id_functor_app_supertype);
                 Id_abstract_traverse = cSuperApp.Id_abstract;
             }
         }
@@ -218,7 +221,7 @@ public class Interface {
     {
    //     SupplyParameterDAO spdao = new SupplyParameterDAO();
      //   AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-        IList<SupplyParameter> spList = br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
+        IList<SupplyParameter> spList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
 
         parsSlice = new Dictionary<string, AbstractComponentFunctorApplication>();
 
@@ -228,7 +231,7 @@ public class Interface {
             if (sp is SupplyParameterComponent)
             {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;
-                acfaPar = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
+                acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 parsSlice.Add(sp_.Id_parameter, acfaPar);
             }
             else if (sp is SupplyParameterParameter)
@@ -247,8 +250,8 @@ public class Interface {
                     {
                         // find bound ...
                      //   AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-                        AbstractComponentFunctorParameter acfp = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract, sp_.Id_parameter);
-                        acfaPar = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
+                        AbstractComponentFunctorParameter acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract, sp_.Id_parameter);
+                        acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
                     }
                 }
@@ -277,14 +280,14 @@ public class Interface {
     {
         
         //SupplyParameterDAO spdao = new SupplyParameterDAO();
-        IList<SupplyParameter> sps = br.ufc.lia.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
+        IList<SupplyParameter> sps = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
         foreach (SupplyParameter sp in sps)
         {
             if (sp is SupplyParameterComponent)
             {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent)sp;
                // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-                AbstractComponentFunctorApplication acfaPar = br.ufc.lia.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
+                AbstractComponentFunctorApplication acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 collectFV(acfaPar, pars, apars);
             }
             else if (sp is SupplyParameterParameter)

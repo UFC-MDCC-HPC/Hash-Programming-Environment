@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace br.ufc.lia.hpe.backend.DGAC.database
+namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
 
     [Serializable()]
@@ -20,6 +20,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.database
                 " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + ")";
 
             Connector.performSQLUpdate(sql);
+
         }
 
 

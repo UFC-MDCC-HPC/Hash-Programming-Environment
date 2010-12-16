@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace br.ufc.lia.hpe.backend.DGAC.utils
+namespace br.ufc.pargo.hpe.backend.DGAC.utils
 {
     public class MPIWorkerMessagingConstants
     {
@@ -36,6 +36,7 @@ namespace br.ufc.lia.hpe.backend.DGAC.utils
         }
         public static int WORKER_PORT = 4865;
         public static string WORKER_SERVICE_NAME = "WorkerService";
+        public static string MANAGER_PORT_NAME = "ManagerHost";
         public const int DLL_OUT = 0;
         public const int EXE_OUT = 1;
         public static string PATH_TEMP_WORKER = FileUtil.readConstant("path_temp_worker");
@@ -56,13 +57,13 @@ namespace br.ufc.lia.hpe.backend.DGAC.utils
         public static string connectionString = FileUtil.readConstant("connection_string");
         public static string externalRefsFile = FileUtil.readConstant("external_references_file");
 
-        public static string ENUMS_KEY = "e";
-        public static string NODES_KEY = "n";
-        public static string KEY_KEY = "k";      
-        public static string UID_KEY = "u";
-        public static string SESSION_KEY = "s";
-        public static string AUTOMATIC_KEY = "auto";
-        public static string IS_COMPONENT_INSTANCE_KEY = "i";
+        public static string ENUMS_KEY = "enumerator";
+        public static string NODES_KEY = "nodes";
+        public static string KEY_KEY = "key";      
+        public static string UID_KEY = "uid";
+        public static string SESSION_KEY = "session";
+        public static string AUTOMATIC_KEY = "automatic";
+        public static string IS_COMPONENT_INSTANCE_KEY = "is_instance";
 
         public static string DEFAULT_PROVIDE_PORT_IMPLEMENTS = "implements";
 

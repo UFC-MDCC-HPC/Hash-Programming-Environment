@@ -3,10 +3,10 @@ using System.Net;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
-using br.ufc.lia.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Collections;
 
-namespace br.ufc.lia.hpe.backend.DGAC
+namespace br.ufc.pargo.hpe.backend.DGAC
 {
     public partial class ManagerService : System.ServiceProcess.ServiceBase
     {
@@ -29,7 +29,14 @@ namespace br.ufc.lia.hpe.backend.DGAC
         private ManagerObject startManagerServer()
         {
             Console.WriteLine("Starting Manager ");
-            channelManagerServer = new IpcChannel("ManagerHost");
+
+            System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
+            System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
+            server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+            IDictionary prop = new Hashtable();
+            prop["portName"] = Constants.MANAGER_PORT_NAME;
+//                 channelManagerServer = new IpcChannel(Constants.MANAGER_PORT_NAME);
+            channelManagerServer = new IpcChannel(prop, client_provider, server_provider);
 
             ChannelServices.RegisterChannel(channelManagerServer, false);
 

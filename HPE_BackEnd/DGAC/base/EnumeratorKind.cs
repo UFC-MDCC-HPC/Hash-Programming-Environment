@@ -2,9 +2,9 @@
 (c) all rights reserved
 ================================================================*/
 using System;
-using br.ufc.lia.hpe.basic;
+using br.ufc.pargo.hpe.basic;
 
-namespace br.ufc.lia.hpe.kinds{
+namespace br.ufc.pargo.hpe.kinds{
   
    public interface IEnumeratorKind : IUnit {
        int getValueAtIndex(int ix);
