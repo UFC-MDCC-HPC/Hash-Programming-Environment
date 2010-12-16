@@ -743,8 +743,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             string id_inner;
             readPortName(portName, out instanceName, out id_inner);
 
-            string id_interface = type;
-
             ComponentID cid;
             if (componentIDs.ContainsKey(instanceName))
             {
@@ -811,8 +809,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             string portName_;
 
             readPortName(portName, out instanceName, out portName_);
-
-            string id_interface = type;
 
             ComponentID cid;
             if (componentIDs.ContainsKey(instanceName))

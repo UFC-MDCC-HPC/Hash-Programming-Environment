@@ -592,6 +592,13 @@ namespace br.ufc.pargo.hpe.backend
             public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
             public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
+
+            /* TODO !!!!
+             * It is still necessary to defined the meaning of the type parameter of registerUsesPort and addProvidesPort.
+             *  The type will be the component type (instantiation). When connecting two ports, the compatibility of the 
+             *  types will be checked !
+             * 
+             */
             public static IUnit createSlice(IUnit ownerUnit,
                                             string hash_component_uid,
                                             string id_inner,
@@ -604,28 +611,21 @@ namespace br.ufc.pargo.hpe.backend
                 Services services = ownerUnit.Services;
                 string instanceName = user_cid.getInstanceName(); 
                 string portName = id_inner + "." + id_interface;
-                string type = id_interface;
+                string portType = "TO DEFINE YET !!! (see comment above the signature)";
 
                 // REGISTER THE USES PORT OF THE ENCLOSING COMPONENT
-                TypeMapImpl properties1 = new TypeMapImpl();
-                properties1[Constants.AUTOMATIC_KEY] = true;
-                services.registerUsesPort(portName, type, properties1);
+                services.registerUsesPort(portName, portType, new TypeMapImpl());
 
-                // LOOKING FOR INFORMATION ABOUT THE SLICE TO BE INSTANTIATED
-                int id_abstract = ownerUnit.Id_abstract; 
-                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
-                IDictionary<string, int> actualParameters_new = null;
-                hpe.basic.Unit.determineActualParameters2(ownerUnit, ic, out actualParameters_new);
-                br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve(ownerUnit.Id_concrete);                
-                  
-                // INSTANTIATE THE PROVIDER COMPONENT
+                // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
                 HPETypeMap properties2 = new TypeMapImpl();
                 properties2[Constants.IS_COMPONENT_INSTANCE_KEY] = true;
                 ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, id_interface, properties2);
 
+                #region Trying to use AbstractFramework (???)
                 //Services frkSrv = framework.getServices("DGAC", "DGAC.Backend", new TypeMapImpl());
                 //frkSrv.registerUsesPort("DGAC.BuilderServices", ???,new TypeMapImpl());
                 //frkSrv.
+                #endregion
 
                 // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component)
                 framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS);
@@ -633,7 +633,11 @@ namespace br.ufc.pargo.hpe.backend
                 // GET THE PROVIDED PORT
                 IUnit unit_slice = (IUnit) services.getPort(portName);
 
-                // SETUP SOME INFORMATION OF THE UNIT_SLICE
+                // LOOKING FOR INFORMATION ABOUT THE SLICE TO BE INSTANTIATED
+                int id_abstract = ownerUnit.Id_abstract;
+                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
+                IDictionary<string, int> actualParameters_new = null;
+                hpe.basic.Unit.determineActualParameters2(ownerUnit, ic, out actualParameters_new);
                 unit_slice.setActualParameters(actualParameters_new);
                 unit_slice.ActualParametersTop = ownerUnit.ActualParametersTop;
                 calculateSliceKnowledge(ownerUnit, unit_slice, id_abstract, id_inner, id_interface);

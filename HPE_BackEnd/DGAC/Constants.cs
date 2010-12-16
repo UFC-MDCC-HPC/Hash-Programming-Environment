@@ -62,7 +62,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public static string KEY_KEY = "key";      
         public static string UID_KEY = "uid";
         public static string SESSION_KEY = "session";
-        public static string AUTOMATIC_KEY = "automatic";
+//        public static string AUTOMATIC_KEY = "automatic";
         public static string IS_COMPONENT_INSTANCE_KEY = "is_instance";
 
         public static string DEFAULT_PROVIDE_PORT_IMPLEMENTS = "implements";
