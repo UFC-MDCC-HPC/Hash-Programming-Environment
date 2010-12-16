@@ -2,11 +2,11 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
-//using System.Linq;
+using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
-using System.Xml.Linq;
+//using System.Xml.Linq;
 using System.Runtime.Remoting.Channels.Ipc;
 using br.ufc.pargo.hpe.backend.DGAC;
 
