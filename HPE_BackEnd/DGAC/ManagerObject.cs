@@ -705,7 +705,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                  public void Run() 
                  {
-                     Console.WriteLine("Calling worker. Instanting " + instanceName + " " + className);
+                     Console.WriteLine("Calling worker. Instanting " + instanceName + " " + className + " null ? " + (worker == null));
                      ComponentID worker_cid = worker.createInstance(instanceName, className, properties);
                  }
 			
