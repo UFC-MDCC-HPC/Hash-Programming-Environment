@@ -12,7 +12,9 @@ DGAC/Constants.cs
 DGAC/FileUtil.cs
 DGAC/DGAC.cs
 DGAC/CCA.cs
-DGAC/ComponentIDImpl.cs
+DGAC/WorkerComponentIDImpl.cs
+DGAC/ManagerComponentIDImpl.cs
+DGAC/WorkerServicesImpl.cs
 DGAC/TypeMapImpl.cs
 DGAC/ManagerObject.cs
 DGAC/WorkerObject.cs
