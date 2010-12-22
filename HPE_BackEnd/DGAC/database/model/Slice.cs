@@ -34,7 +34,7 @@ public class Slice {
         set {id_interface = value;}
     }
 
-    public string PropertyName
+    public string PortName
     {
         get { return property_name; }
         set { property_name = value; }
@@ -52,8 +52,19 @@ public class Slice {
         get { return id_interface_slice; }
         set { id_interface_slice = value; }
     }
-    	
-	public string Id_inner{
+
+    public string Id_interface_slice_top
+    {
+        get
+        {
+            InnerComponent ic = BackEnd.icdao.retrieve(this.id_abstract, this.id_inner);
+            Interface i = BackEnd.idao.retrieve(ic.Id_abstract_inner, this.id_interface_slice);
+            return i.Id_interface_super_top;
+        }
+    }
+    
+    public string Id_inner    
+    {
         get {return id_inner;}
         set {id_inner = value;}
     }
@@ -63,6 +74,12 @@ public class Slice {
     {
         get { return id_split_replica; }
         set { id_split_replica = value; }
+    }
+
+    public bool isPublic()
+    {
+        InnerComponent ic = BackEnd.icdao.retrieve(this.Id_abstract, this.Id_inner);
+        return ic.IsPublic;
     }
 
 

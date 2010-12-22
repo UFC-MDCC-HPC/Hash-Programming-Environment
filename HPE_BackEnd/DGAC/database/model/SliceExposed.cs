@@ -11,10 +11,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
     {
 
         private int id_abstract;
+        private string id_inner;
         private string id_interface_slice;
+        private string id_inner_original;
+        private string id_interface_slice_original;
         private string id_interface_slice_owner;
         private int id_split_replica;
-        private string id_inner;
         private string id_inner_owner;
         private int id_split_replica_owner;
 
@@ -42,16 +44,28 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             set { id_abstract = value; }
         }
 
+        public string Id_inner
+        {
+            get { return id_inner; }
+            set { id_inner = value; }
+        }
+
         public string Id_interface_slice
         {
             get { return id_interface_slice; }
             set { id_interface_slice = value; }
         }
 
-        public string Id_inner
+        public string Id_inner_original
         {
-            get { return id_inner; }
-            set { id_inner = value; }
+            get { return id_inner_original; }
+            set { id_inner_original = value; }
+        }
+
+        public string Id_interface_slice_original
+        {
+            get { return id_interface_slice_original; }
+            set { id_interface_slice_original = value; }
         }
 
         public int Id_split_replica

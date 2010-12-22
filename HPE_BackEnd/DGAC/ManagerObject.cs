@@ -110,12 +110,22 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ComponentID createInstance(string instanceName, string className, TypeMap properties)
             {
-                string[] unit_ids;
-                int[] indexes;
-                int[] cid_nodes;
-                this.createInstanceImpl(instanceName, className, (TypeMapImpl) properties, out cid_nodes, out unit_ids, out indexes);
-                ComponentID cid = new ManagerComponentIDImpl(instanceName, cid_nodes, unit_ids, indexes);
-                this.registerComponentID(cid, properties);
+                ComponentID cid = null;
+                try
+                {
+                    string[] unit_ids;
+                    int[] indexes;
+                    int[] cid_nodes;
+                    this.createInstanceImpl(instanceName, className, (TypeMapImpl)properties, out cid_nodes, out unit_ids, out indexes);
+                    cid = new ManagerComponentIDImpl(instanceName, cid_nodes, unit_ids, indexes);
+                    this.registerComponentID(cid, properties);
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine(e.Message);
+                    Console.Error.WriteLine(e.StackTrace);
+                }
+
                 return cid;
             }
 
@@ -705,8 +715,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                  public void Run() 
                  {
-                     Console.WriteLine("Calling worker. Instanting " + instanceName + " " + className + " null ? " + (worker == null));
-                     ComponentID worker_cid = worker.createInstance(instanceName, className, properties);
+                     try
+                     {
+                         Console.WriteLine("Calling worker. Instanting " + instanceName + " " + className + " null ? " + (worker == null));
+                         ComponentID worker_cid = worker.createInstance(instanceName, className, properties);
+                     }
+                     catch (Exception e)
+                     {
+                         Console.Error.WriteLine(e.Message);
+                         Console.Error.WriteLine(e.StackTrace);
+                     }
                  }
 			
 			     public WorkerComponentID WorkerCID {

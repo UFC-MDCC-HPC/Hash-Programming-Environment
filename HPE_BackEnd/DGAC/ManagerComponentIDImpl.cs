@@ -6,7 +6,7 @@ namespace gov
 {
     namespace cca
     {
-
+        [Serializable]
         public abstract class ManagerComponentID : ComponentID
         {
             public abstract string InstanceName { get; set; }
@@ -19,6 +19,7 @@ namespace gov
             // public abstract WorkerComponentID getWorkerComponentID();
         }
 
+        [Serializable]
         public class ManagerComponentIDImpl : ManagerComponentID
         {
             #region attributes

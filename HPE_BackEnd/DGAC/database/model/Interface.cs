@@ -27,9 +27,6 @@ public class Interface {
     {
         get {
             if (id_interface_super_top == null) {
-              //  InterfaceDAO idao = new InterfaceDAO();
-              //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-              //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
 
                 if (id_interface_super.Equals("")) {
                     id_interface_super_top = id_interface;

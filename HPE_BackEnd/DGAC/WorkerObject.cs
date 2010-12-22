@@ -221,6 +221,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         #endregion
 
 
+        public void redirectSlice(ComponentID user_id,
+                                  string user_portName,
+                                  ComponentID container_id,
+                                  string container_portName)
+        {
+            ConnectionID conn_id;
+            this.connByUserPort.TryGetValue(container_id.getInstanceName() + ":" + container_portName, out conn_id);
+            ComponentID provider_id = conn_id.getProvider();
+            string provider_portName = conn_id.getProviderPortName();
+            this.connect(user_id, user_portName, provider_id, provider_portName);
+        }
 
 
         #region BuilderService Members
@@ -250,12 +261,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 int id_abstract = unit.Id_abstract;
 
                 Slice slice = BackEnd.sdao.retrieve2(id_abstract, id_inner, id_interface, unit.Id_interface);
-                string propertyName = slice.PropertyName;
+                string propertyName = slice.PortName;
 
                 IUnit unit_slice = this.createUnitInstanceComponent(unit, propertyName, id_inner, id_interface);
                 unit_slice.setServices(new WorkerServicesImpl(this,cid,unit_slice));
 
-                this.addProvidesPort(unit_slice, instanceName + ":implements", id_interface, new TypeMapImpl());
+                // this.addProvidesPort(unit_slice, instanceName + ":implements", id_interface, new TypeMapImpl());
 
             }
             else
@@ -308,16 +319,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 br.ufc.pargo.hpe.kinds.IApplicationKind pmain = createUnitInstanceApplication(hash_component_uid, className, (TypeMapImpl)properties);
                 pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
                 Services services = new WorkerServicesImpl(this, cid, hash_component_uid, className, pmain, args);
-                pmain.setServices(services);
 
                 this.registerComponentID(cid, services, pmain);
-
+                
+                pmain.setServices(services);
                 pmain.createSlices();
 
 
-                Go go = new Go(my_rank, pmain);
-                Thread thread_go = new Thread(go.go);
-                thread_go.Start();
+                //Go go = new Go(my_rank, pmain);
+                //Thread thread_go = new Thread(go.go);
+                //thread_go.Start();
             }
 
             return cid;
@@ -646,11 +657,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             connByUserPort.TryGetValue(portName, out conn);
             WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
 
+            // NOTE: The following lines ensures that calls to getPort and releasePort are in pairs.... but we only restrict that two calls 
+            // to releasePort for the same port, or a call to releasePort for a not fetched port, will generate exceptions.
             // Check whether the port was fetched before.
-            if (hpeconn.Fetched)
-            {
-                throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
-            }
+            //if (hpeconn.Fetched)
+            //{
+            //    throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
+            //}
 
             hpeconn.setFetched();
 
@@ -755,8 +768,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             this.registerUsesPortInfo(cid, portName, properties);
             
-            Connector.closeConnection();
-            
+            Connector.closeConnection();            
         }
 
         private void readPortName(string portName, out string instanceName, out string innerName)
@@ -958,7 +970,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
              catch (Exception e) 
              {
                 Console.WriteLine(my_rank + ": ABORTED THREAD");
-                throw e;
+               // throw e;
              }
            }
 
@@ -1234,7 +1246,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         }
 
-        public IUnit createUnitInstanceComponent(
+        public IUnit  createUnitInstanceComponent(
             IUnit unit, 
             string propertyName, // DGAC.database.Component c,                              
             string id_inner, 
@@ -1270,6 +1282,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             o.Id_concrete = u.Id_concrete;
             o.Id_abstract = u.Id_interface_abstract;
             o.Id_interface = u.Id_interface_interface;
+            o.Id_inner = id_inner;
             o.ContainerSlice = unit;
             o.GlobalRank = unit.GlobalRank;
 

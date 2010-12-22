@@ -332,7 +332,7 @@ namespace HPE_DGAC_LoadDB
                         InnerComponent iNewPort = new InnerComponent();
                         iNewPort.Id_abstract_owner = c_.Id_abstract;
                         string old_port_localRef = port.localRef;
-                        port.localRef = lookForRenaming(baseC.localRef, port.localRef);
+                        port.localRef = lookForRenamingNew(baseC.localRef, port.localRef);
                         iNewPort.Id_inner = port.localRef;
                         iNewPort.Parameter_top = port.parameter_id;
                         iNewPort.Transitive = true;
@@ -407,6 +407,7 @@ namespace HPE_DGAC_LoadDB
                         iNew.Parameter_top = p != null ? p.formFieldId : null;
 
                         iNew.Transitive = false;
+                        iNew.IsPublic = c.exposed;
 
                         // LOAD EXPOSED INNER COMPONENTS
                         if (c.port != null)
@@ -418,10 +419,11 @@ namespace HPE_DGAC_LoadDB
                                 InnerComponent iNewPort = new InnerComponent();
                                 iNewPort.Id_abstract_owner = absC.Id_abstract;
                                 string old_port_localRef = port.localRef;
-                                port.localRef = lookForRenaming(c.localRef, port.localRef);
+                                port.localRef = lookForRenamingNew(c.localRef, port.localRef);
                                 iNewPort.Id_inner = port.localRef;                               
                                 iNewPort.Parameter_top = port.parameter_id;
                                 iNewPort.Transitive = true;
+                                iNewPort.IsPublic = port.exposed;
 
                                 AbstractComponentFunctorApplication appPort = newAbstractComponentFunctorApplication(port);
                                 if (appPort == null)
@@ -643,7 +645,7 @@ namespace HPE_DGAC_LoadDB
 
          
 
-        private string lookForRenaming(string cRef, string pRef)
+        private string lookForRenamingNew(string cRef, string pRef)
         {
             if (innerRenaming != null)
             {
@@ -652,6 +654,21 @@ namespace HPE_DGAC_LoadDB
                     if (ir.cRef.Equals(cRef) && ir.cOldName.Equals(pRef))
                     {
                         return ir.cNewName;
+                    }
+                }
+            }
+            return pRef;
+        }
+
+        private string lookForRenamingOld(string cRef, string pRef)
+        {
+            if (innerRenaming != null)
+            {
+                foreach (InnerRenamingType ir in innerRenaming)
+                {
+                    if (ir.cRef.Equals(cRef) && ir.cNewName.Equals(pRef))
+                    {
+                        return ir.cOldName;
                     }
                 }
             }
@@ -823,7 +840,7 @@ namespace HPE_DGAC_LoadDB
                             string fstletter = property_name.Substring(0, 1);
                             property_name = fstletter.ToUpper() + property_name.Substring(1, property_name.Length - 1);
 
-                            s.PropertyName = property_name;
+                            s.PortName = property_name;
 
                             if (!s.Transitive && uS.port != null)
                             {
@@ -841,6 +858,11 @@ namespace HPE_DGAC_LoadDB
                                     se.Id_split_replica_owner = s.Id_split_replica;
                                     se.Id_split_replica = usPort.replica; // s.Id_split_replica;
                                     se.Id_interface_slice = usPort.uRef;
+                                    
+                                    // achar innerRenaming para cNewName = usPort.cRef e cRef = cRefS (uS.cRef) -- Id_inner_original = cOldName
+                                    string id_inner_original = lookForRenamingNew(cRefS, usPort.cRef);
+                                    se.Id_inner_original = id_inner_original != null ? id_inner_original : usPort.cRef;
+                                    se.Id_interface_slice_original = usPort.uRef; // DEVE SER O TOP !!!
 
                                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.sedao.insert(se);
                                 }

@@ -354,6 +354,8 @@ namespace gov
          /**
          * An opaque reference to a Component.
          */
+
+        [Serializable]
         public abstract class ComponentID
         {
             /** 
@@ -632,6 +634,8 @@ namespace gov
          *  opaque ComponentID references and the Ports are referred to
          *  by their string instance names.
          */
+
+        [Serializable]
         public abstract class ConnectionID
         {
             /** 

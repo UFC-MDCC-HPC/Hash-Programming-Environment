@@ -17,7 +17,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             String sql =
                 "INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name)" +
-                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Id_split_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PropertyName + "')";
+                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Id_split_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
 
             Connector.performSQLUpdate(sql);
 
@@ -48,6 +48,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_split_replica = (int)reader["id_split_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
+                s.PortName = (string)reader["property_name"];
             }
             else
             {
@@ -89,7 +90,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_split_replica = (int)reader["id_split_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PropertyName = (string)reader["property_name"];
+                s.PortName = (string)reader["property_name"];
             }
             else
             {
@@ -132,7 +133,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_split_replica = (int)reader["id_split_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PropertyName = (string)reader["property_name"];
+                s.PortName = (string)reader["property_name"];
                 list.Add(s);
             }//while
             // clean up
@@ -167,7 +168,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_split_replica = (int)reader["id_split_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PropertyName = (string)reader["property_name"];
+                s.PortName = (string)reader["property_name"];
                 list.Add(s);
             }//while
             // clean up
@@ -203,7 +204,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_split_replica = (int)reader["id_split_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PropertyName = (string)reader["property_name"];
+                s.PortName = (string)reader["property_name"];
                 list.Add(s);
             }//while
             // clean up
@@ -238,7 +239,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_split_replica = (int)reader["id_split_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PropertyName = (string)reader["property_name"];
+                s.PortName = (string)reader["property_name"];
                 list.Add(s);
             }//while
             // clean up

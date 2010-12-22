@@ -9,7 +9,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database{
 public class InnerComponent{
  
 	
-	 
+	private bool is_public; 
 	private int id_functor_app;
 	private int id_abstract_inner;
 	private string id_inner;
@@ -21,6 +21,12 @@ public class InnerComponent{
     {
         get { return transitive; }
         set { transitive = value; }
+    }
+
+    public bool IsPublic
+    {
+        get { return is_public; }
+        set { is_public = value; }
     }
 
     public string Parameter_top

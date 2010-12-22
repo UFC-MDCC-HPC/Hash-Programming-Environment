@@ -593,28 +593,22 @@ namespace br.ufc.pargo.hpe.backend
             public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
 
+
             /* TODO !!!!
              * It is still necessary to defined the meaning of the type parameter of registerUsesPort and addProvidesPort.
              *  The type will be the component type (instantiation). When connecting two ports, the compatibility of the 
              *  types will be checked !
              * 
              */
-            public static IUnit createSlice(IUnit ownerUnit,
-                                            string hash_component_uid,
-                                            string id_inner,
-                                            string id_interface,
-                                            System.Type[] typeParams /* obsolete - calculated at run-time by buildParamsTable */
-                                            )
+            public static IUnit createSlice(IUnit ownerUnit, Slice slice)                                            
             {
+                string id_inner = slice.Id_inner;
+                string id_interface = slice.Id_interface_slice;
+                string portName = slice.PortName;
 
                 ComponentID user_cid = ownerUnit.CID;
                 Services services = ownerUnit.Services;
                 string instanceName = user_cid.getInstanceName(); 
-                string portName = id_inner + "." + id_interface;
-                string portType = "TO DEFINE YET !!! (see comment above the signature)";
-
-                // REGISTER THE USES PORT OF THE ENCLOSING COMPONENT
-                services.registerUsesPort(portName, portType, new TypeMapImpl());
 
                 // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
                 HPETypeMap properties2 = new TypeMapImpl();
@@ -643,7 +637,6 @@ namespace br.ufc.pargo.hpe.backend
                 calculateSliceKnowledge(ownerUnit, unit_slice, id_abstract, id_inner, id_interface);
 
                 // RECURSIVELY, INITIALIZE THE SLICES OF THE INNER COMPONENT                
-                unit_slice.createSlices();
                 return unit_slice;
 
             }
@@ -1018,7 +1011,7 @@ namespace br.ufc.pargo.hpe.backend
                 if (ic.Transitive)
                 {
                     //  SliceExposedDAO sedao = new SliceExposedDAO();
-                    lse = BackEnd.sedao.listContainers(s.Id_inner, s.Id_interface_slice, s.Id_abstract, s.Id_split_replica);
+                    lse = BackEnd.sedao.listContainers(s.Id_abstract, s.Id_inner, s.Id_interface_slice, s.Id_split_replica);
 
                     foreach (SliceExposed se_ in lse)
                     {
@@ -1263,9 +1256,11 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
-            /* RUN TIME ROUTINES */
-
-
+            internal static void redirectSlice(ComponentID user_id, string portName, ComponentID container_id, string container_portName)
+            {
+                framework.redirectSlice(user_id, portName, container_id, container_portName);
+                
+            }
         }//DGAC
 
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -29,6 +30,70 @@ namespace br.ufc.pargo.hpe.basic
         public void setServices(gov.cca.Services services)
         {
             this.services = services;
+
+            // REGISTER USES PORTS !
+            int id_abstract = this.Id_abstract;
+            string id_interface = this.Id_interface;
+
+            IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
+            foreach (Slice slice in sList)
+            {
+                // The uses port name will be the name of the property
+               services.registerUsesPort(slice.PortName, "", new TypeMapImpl());
+            }
+
+            services.addProvidesPort(this, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS, "", new TypeMapImpl());
+        }
+
+        public void createSlices()
+        {
+            // CREATE SLICES !!!
+            IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
+            foreach (Slice slice in sList)
+            {
+                if (!slice.isPublic())
+                {
+                    /* This method will:
+                     *   1. instantiate the inner component (local slice)
+                     *   2. connect the uses port to the implements (provides) port of the inner component                     * 
+                     */
+                    BackEnd.createSlice(this, slice);
+                }
+                else
+                {
+                    // Look for the port in the enclosing unit.
+                    ComponentID user_id = this.CID;
+                    string portName = slice.PortName;
+                    ComponentID container_id = this.containerSlice.CID;
+
+                    SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
+                                                              slice.Id_inner,
+                                                              slice.Id_interface_slice_top,
+                                                              this.containerSlice.Id_abstract,
+                                                              slice.Id_split_replica,
+                                                              this.Id_inner
+                                                              );
+
+                    Slice slice_container = BackEnd.sdao.retrieve(
+                                                              this.containerSlice.Id_abstract, 
+                                                              se.Id_inner, 
+                                                              se.Id_interface_slice, 
+                                                              se.Id_split_replica
+                                                              );
+
+                    string container_portName = slice_container.PortName;
+
+                    BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
+                }
+
+            }
+
+            
+            foreach (IUnit unit_slice in this.Slices)
+            {
+                unit_slice.createSlices();
+            }
+
         }
 
         private int id_concrete;
@@ -37,6 +102,14 @@ namespace br.ufc.pargo.hpe.basic
         {
             get { return id_concrete; }
             set { id_concrete = value; }
+        }
+
+        private string id_inner = null;
+
+        public string Id_inner
+        {
+            get { return id_inner; }
+            set { id_inner = value; }
         }
 
         private string id_interface;
@@ -74,7 +147,7 @@ namespace br.ufc.pargo.hpe.basic
 
         public IList<IUnit> Slices
         {
-            get { return slices; }
+            get { return slices == null ? new List<IUnit>() : slices; }
         }
 
         public void addSlice(IUnit slice)
@@ -105,9 +178,6 @@ namespace br.ufc.pargo.hpe.basic
         private IDictionary<string, int>[] myEnumRanks = null;
         public IDictionary<string, int>[] EnumRanks { set { this.myEnumRanks = value; } get { return myEnumRanks; } }
 
-        virtual public void createSlices()
-        {
-        }
 
         virtual public void destroySlice()
         {

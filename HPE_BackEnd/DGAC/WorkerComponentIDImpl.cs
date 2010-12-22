@@ -5,10 +5,12 @@ using System.Collections.Generic;
 namespace gov {	
 	namespace cca {
 
+        [Serializable]
         public abstract class WorkerComponentID : ComponentID
         {
         }
 
+        [Serializable]
 		public class WorkerComponentIDImpl : WorkerComponentID
         {
             #region attributes
