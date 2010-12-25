@@ -108,13 +108,6 @@ namespace HPE_DGAC_LoadDB
 
         protected AbstractComponentFunctorApplication newAbstractComponentFunctorApplication(ComponentInUseType c)
         {
-   //         AbstractComponentFunctorApplication aExisting = lookForAbstractComponentFunctorApplication(c);
-     //       if (aExisting != null)
-     //       {
-     //           return aExisting;
-     //       }
-     //       else
-     //       {   // FIND functor-app-of image 
                 AbstractComponentFunctor a = lookForAbstractComponentFunctor(c.hash_component_UID);
                 if (a == null)
                 {
@@ -127,7 +120,7 @@ namespace HPE_DGAC_LoadDB
                 aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
                 aAppNew.Id_abstract = a.Id_abstract;
 
-            //    AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();
+                // AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
 
                 // REGISTER parameters (follow supply-of, configure formal-parameter)
@@ -151,44 +144,37 @@ namespace HPE_DGAC_LoadDB
 
                     SupplyParameter p_ = null;
 
+
+                    ParameterType topParameter = lookForParameterByVarName(varName);
                     ParameterSupplyType s = lookForSupplyForVarName(varName);
-                    if (s != null)
+                    
+                    if (topParameter != null)
+                    {
+                        p_ = new SupplyParameterParameter();
+                        ((SupplyParameterParameter)p_).Id_parameter_actual = topParameter.formFieldId;
+                        ((SupplyParameterParameter)p_).FreeVariable = false;
+
+                    }
+                    else if (s != null)
                     {
                         String cRef = s.cRef;
 
-                        // check whether "inner" is a parameter of the enclosing component ...
-                        ParameterType parEnc = lookForParameterByCRef(cRef);
-                        
-                        if (parEnc == null)
+                        p_ = new SupplyParameterComponent();
+                        // Look for the inner component that supplies that parameter.
+                        InnerComponentType inner = lookForInnerComponent(cRef);
+                        AbstractComponentFunctorApplication cPar = newAbstractComponentFunctorApplication(inner);
+                        if (cPar == null)
                         {
-                            p_ = new SupplyParameterComponent();
-                            // Look for the inner component that supplies that parameter.
-                            InnerComponentType inner = lookForInnerComponent(cRef);
-                            AbstractComponentFunctorApplication cPar = newAbstractComponentFunctorApplication(inner);
-                            if (cPar == null)
-                            {
-                                throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (context actual parameter) : " + inner.name);
-                            }
-                            ((SupplyParameterComponent)p_).Id_functor_app_actual = cPar.Id_functor_app;
+                            throw new Exception("DEPLOY ERROR: Unresolved Dependency for base component (context actual parameter) : " + inner.name);
                         }
-                        else
-                        {
-                            p_ = new SupplyParameterParameter();
-                            ((SupplyParameterParameter)p_).Id_parameter_actual = parEnc.formFieldId;
-                            ((SupplyParameterParameter)p_).FreeVariable = false;
-                        }
+                        ((SupplyParameterComponent)p_).Id_functor_app_actual = cPar.Id_functor_app;
 
                     }
                     else
                     {
-                        
-                       p_ = new SupplyParameterParameter();
-                       ((SupplyParameterParameter)p_).Id_parameter_actual = null;
-                       ((SupplyParameterParameter)p_).FreeVariable = true;
-
-                        // Não há free variable ...
-
-
+                        p_ = new SupplyParameterParameter();
+                        ((SupplyParameterParameter)p_).Id_parameter_actual = null;
+                        ((SupplyParameterParameter)p_).FreeVariable = true;
                     }
 
 
@@ -221,6 +207,22 @@ namespace HPE_DGAC_LoadDB
             }
             return null;
         }
+
+        public ParameterType lookForParameterByVarName(string varName)
+        {
+            if (parameter != null)
+            {
+                foreach (ParameterType p in parameter)
+                {
+                    if (p.varName.Equals(varName))
+                    {
+                        return p;
+                    }
+                }
+            }
+            return null;
+        }
+
 
         protected AbstractComponentFunctor lookForAbstractComponentFunctor(string component_UID)
         {

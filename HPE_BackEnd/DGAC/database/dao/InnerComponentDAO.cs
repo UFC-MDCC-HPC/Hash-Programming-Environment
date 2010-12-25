@@ -146,6 +146,14 @@ public class InnerComponentDAO{
         dbcmd = null;
         return ic;
     }
+
+    internal void remove(int id_abstract_owner, string id_inner)
+    {
+        String sql =
+            "DELETE FROM innercomponent WHERE id_abstract_owner = " + id_abstract_owner + " AND id_inner like '" + id_inner + "'";
+
+        Connector.performSQLUpdate(sql);
+    }
 }//class
 
 }//namespace

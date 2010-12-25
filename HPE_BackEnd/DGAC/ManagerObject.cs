@@ -826,7 +826,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     {
                         /* Read nodes file, and fill the node array */
 
-                        System.Threading.Thread.Sleep(10000);
+                        //System.Threading.Thread.Sleep(10000);
 
                         IList<string> nodeList = new List<string>();
                         using (TextReader tr = new StreamReader(Constants.hosts_file))

@@ -214,6 +214,20 @@ public class InterfaceDAO{
         dbcmd = null;
         return i;
     }
+
+    internal Interface retrieveTop(int id_abstract, string id_interface)
+    {
+        IList<Interface> iList = BackEnd.idao.list(id_abstract);
+        foreach (Interface i in iList)
+        {
+            if (i.Id_interface_super_top.Equals(id_interface))
+            {
+                return i;
+            }
+        }
+
+        return null;
+    }
 }//class
 
 }//namespace
