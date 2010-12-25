@@ -12,7 +12,6 @@ import hPE.frontend.base.commands.SupersedeCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IInterfaceSlice;
-import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
@@ -45,20 +44,9 @@ import hPE.frontend.kinds.activate.model.protocol.HSeqAction;
 import hPE.frontend.kinds.activate.model.protocol.HSignalAction;
 import hPE.frontend.kinds.activate.model.protocol.HSkipAction;
 import hPE.frontend.kinds.activate.model.protocol.HWaitAction;
-import hPE.frontend.kinds.application.model.HApplicationComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
-import hPE.frontend.kinds.base.model.HBaseKindComponent;
-import hPE.frontend.kinds.computation.model.HComputationComponent;
-import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
-import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
-import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
-import hPE.frontend.kinds.service.model.HServiceComponent;
-import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.util.CommandLine;
 import hPE.util.Pair;
 import hPE.util.Triple;
@@ -107,7 +95,6 @@ import hPE.xml.component.SourceFileType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.SplitLinkType;
 import hPE.xml.component.SplitType;
-import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
@@ -124,7 +111,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -958,7 +944,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			ComponentBodyType xCinfo = xC.getComponentInfo();
 
 			String name = xCheader.getName();
-			SupportedKinds kind = xCheader.getKind();
+			String kind = xCheader.getKind();
 			String packagePath = xCheader.getPackagePath();
 			String hash_component_UID = xCheader.getHashComponentUID();			
 			String locationURI = xCheader.getLocationURI(); 
@@ -1279,7 +1265,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// save name
 		xH.setName(c.getComponentName());
 		// save kind
-		xH.setKind(SupportedKinds.get(c.kindString()));
+		xH.setKind(c.kindString());
 		// save base type
 		HComponent sC = c.isAbstractConfiguration() ? c.getSuperType() : c
 				.getWhoItImplements();
@@ -2920,42 +2906,42 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return a;
 	}
 
-	private HComponent createComponent(SupportedKinds kind, String name, URI uri)
+	private HComponent createComponent(String kind, String name, URI uri)
 			throws HPEUnknownKindException {
 
 		HComponent c = null;
 
 		HPackageLocation location = null;
-
-		if (kind.getName().equals(HComputationComponent.KIND)) {
-			c = new HComputationComponent(name, location, uri);
-		} else if (kind.getName().equals(HApplicationComponent.KIND)) {
-			c = new HApplicationComponent(name, location, uri);
-		} else if (kind.getName().equals(HSynchronizationComponent.KIND)) {
-			c = new HSynchronizationComponent(name, location, uri);
-		} else if (kind.getName().equals(HArchitectureComponent.KIND)) {
-			c = new HArchitectureComponent(name, location, uri);
-		} else if (kind.getName().equals(HDataComponent.KIND)) {
-			c = new HDataComponent(name, location, uri);
-		} else if (kind.getName().equals(HEnvironmentComponent.KIND)) {
-			c = new HEnvironmentComponent(name, location, uri);
-		} else if (kind.getName().equals(HQualifierComponent.KIND)) {
-			c = new HQualifierComponent(name, location, uri);
-		} else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
-			c = new HEnumeratorComponent(name, location, uri);
-		} else if (kind.getName().equals(HFacetComponent.KIND)) {
-			c = new HFacetComponent(name, location, uri);
-		} else if (kind.getName().equals(HDomainComponent.KIND)) {
-			c = new HDomainComponent(name, location, uri);
-		} else if (kind.getName().equals(HServiceComponent.KIND)) {
-			c = new HServiceComponent(name, location, uri);
-		} else {
-			KindConfiguration kindConfiguration = KindManager.findByName(kind.getName());
+//TODO RAFAEL: REMOVER SE ESTIVER OK:
+//		if (kind.getName().equals(HComputationComponent.KIND)) {
+//			c = new HComputationComponent(name, location, uri);
+//		} else if (kind.getName().equals(HApplicationComponent.KIND)) {
+//			c = new HApplicationComponent(name, location, uri);
+//		} else if (kind.getName().equals(HSynchronizationComponent.KIND)) {
+//			c = new HSynchronizationComponent(name, location, uri);
+//		} else if (kind.getName().equals(HArchitectureComponent.KIND)) {
+//			c = new HArchitectureComponent(name, location, uri);
+//		} else if (kind.getName().equals(HDataComponent.KIND)) {
+//			c = new HDataComponent(name, location, uri);
+//		} else if (kind.getName().equals(HEnvironmentComponent.KIND)) {
+//			c = new HEnvironmentComponent(name, location, uri);
+//		} else if (kind.getName().equals(HQualifierComponent.KIND)) {
+//			c = new HQualifierComponent(name, location, uri);
+//		} else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
+//			c = new HEnumeratorComponent(name, location, uri);
+//		} else if (kind.getName().equals(HFacetComponent.KIND)) {
+//			c = new HFacetComponent(name, location, uri);
+//		} else if (kind.getName().equals(HDomainComponent.KIND)) {
+//			c = new HDomainComponent(name, location, uri);
+//		} else if (kind.getName().equals(HServiceComponent.KIND)) {
+//			c = new HServiceComponent(name, location, uri);
+//		} else {
+			KindConfiguration kindConfiguration = KindManager.findByName(kind);
 			if (kindConfiguration != null) {
 				c = kindConfiguration.newHBaseKindComponent(name, location, uri);
 			}
-			throw new HPEUnknownKindException("Component Kind Not Supported !");
-		}
+//			throw new HPEUnknownKindException("Component Kind Not Supported !");
+//		}
 
 		return c;
 
