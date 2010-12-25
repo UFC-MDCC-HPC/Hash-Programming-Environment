@@ -2,47 +2,37 @@ package hPE.frontend.base.dialogs;
 
 import hPE.frontend.base.model.HComponent;
 import hPE.util.Pair;
+import java.util.List;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JDialog;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class DialogChangeVarName extends JDialog {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5247580388611042742L;
-	/**
-	 * 
-	 */
 	private JPanel jContentPane = null;
 	private JComboBox jComboBoxVarName = null;
 	private JTextField jTextFieldNewVarName = null;
-	private JButton jButtonSet = null;
-	private JButton jButtonClose = null;
+	private JButton jButtonOK = null;
+	private JButton jButtonCancel = null;
 	private JLabel jLabel1 = null;
 	private JLabel jLabel2 = null;
 	/**
 	 * This is the default constructor
-	 * @param c 
 	 */
-	
-	private HComponent c = null;
-
-	public DialogChangeVarName(HComponent c) {
+	public DialogChangeVarName() {
 		super();
-		this.c = c;
 		initialize();
 	}
 	
@@ -106,7 +96,7 @@ public class DialogChangeVarName extends JDialog {
 					
 					Pair<String, List<HComponent>> item = (Pair<String,List<HComponent>>) getJComboBoxVarName().getSelectedItem();					
 					HComponent cVar = item.snd().get(0); 
-					String varId = cVar.getVariableName((HComponent) cVar.getConfiguration());
+					String varId = cVar.getVariableName((HComponent) cVar.getTopConfiguration());
 					
 					jTextFieldNewVarName.setText(varId);
 					
@@ -148,21 +138,16 @@ public class DialogChangeVarName extends JDialog {
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButtonOK() {
-		if (jButtonSet == null) {
-			jButtonSet = new JButton();
-			jButtonSet.setText("Set");
-			jButtonSet.setSize(new java.awt.Dimension(80,25));
-			jButtonSet.setLocation(new java.awt.Point(359,15));
-			jButtonSet.addActionListener(new ActionListener() {
+		if (jButtonOK == null) {
+			jButtonOK = new JButton();
+			jButtonOK.setText("Ok");
+			jButtonOK.setSize(new java.awt.Dimension(80,25));
+			jButtonOK.setLocation(new java.awt.Point(359,15));
+			jButtonOK.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (!jTextFieldNewVarName.getText().equals("") && jTextFieldNewVarName.getText() != null) {	            	
-	            	   buttonPressed = BUTTON_SET;
-	            	   
-	       	        Pair<String, List<HComponent>> varToBeChanged = (Pair<String, List<HComponent>>) getOldVarName();
-	    	        String newVarName = getNewVarName();
-	            	   
-                    changeVarName(varToBeChanged, newVarName);
-	    	        
+	            	   buttonPressed = BUTTON_OK;
+	            	   setVisible(false);
 	                } else {
 	                	JOptionPane.showMessageDialog(null,
 	                		    "A Parameter ID must be given.",
@@ -172,15 +157,15 @@ public class DialogChangeVarName extends JDialog {
 	            }
 			});
 		}
-		return jButtonSet;
+		return jButtonOK;
 	}
 
 	private int buttonPressed = -1;
 	
 	public int getButtonPressed() { return buttonPressed; }
 
-	public static int BUTTON_SET = 0;
-	public static int BUTTON_CLOSE = 1;
+	public static int BUTTON_OK = 0;
+	public static int BUTTON_CANCEL = 1;
 
 	/**
 	 * This method initializes jButtonCancel	
@@ -188,52 +173,20 @@ public class DialogChangeVarName extends JDialog {
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButtonCancel() {
-		if (jButtonClose == null) {
-			jButtonClose = new JButton();
-			jButtonClose.setText("Close");
-			jButtonClose.setSize(new java.awt.Dimension(80,25));
-			jButtonClose.setLocation(new java.awt.Point(359,45));
-			jButtonClose.addActionListener(new ActionListener() {
+		if (jButtonCancel == null) {
+			jButtonCancel = new JButton();
+			jButtonCancel.setText("Cancel");
+			jButtonCancel.setSize(new java.awt.Dimension(80,25));
+			jButtonCancel.setLocation(new java.awt.Point(359,45));
+			jButtonCancel.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	   buttonPressed = BUTTON_CLOSE;
+	            	   buttonPressed = BUTTON_CANCEL;
 	            	   setVisible(false);
 	            }
 			});
 		}
-		return jButtonClose;
+		return jButtonCancel;
 	}
 	
-    private void changeVarName(Pair<String, List<HComponent>> varToBeChanged, String newVarName) {
-        HComponent topC = (HComponent) c.getTopConfiguration();
-        
-        if (newVarName != null && !newVarName.equals("")) 
-        {
-            boolean allowed = true;
-	        // TODO: TOP LEVEL PARAMETERS ...
-	        //	for (HComponent c : varToBeChanged.snd()) {
-	        //		allowed &= c.isDirectSonOfTheTopConfiguration();
-	        //	}
-        		        	
-	        if (c.isTopConfiguration() && !allowed) {
-	        	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a non top-level variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-	        } else {		        
-	        	for (HComponent innerC : varToBeChanged.snd()) {
-	        		//if (!c.isTopConfiguration() && topC.getVars().contains(innerC.getVariableName(c))) {
-			        //	JOptionPane.showMessageDialog(null, "Don't make the things more difficult to programmers ! \n It is not allowed to change the name of a bound variable !", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
-			        //	break;
-			        //} 
-	        		
-	        		// innerC.setVariableName(newVarName);
-	        		String oldVarName = innerC.getVariableName((HComponent) innerC.getTopConfiguration());
-	        		HComponent ownerOfinnerC = (HComponent) innerC.getConfiguration();
-	        		ownerOfinnerC.changeVariableName(oldVarName, newVarName);
-	        		
-		        }
-	        }
-        } else {
-        	System.err.println("Invalid Variable Name !! (ChangeVariableNameCommand.execute())");
-        	
-        }
-    }
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

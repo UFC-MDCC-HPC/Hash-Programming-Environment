@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Unit Bounds Type</b></em>'.
@@ -248,7 +249,7 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION:
 				return getVisualDescription();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
-				return new Long(getReplica());
+				return getReplica();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
 				return getURef();
 		}
@@ -267,7 +268,7 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 				setVisualDescription((VisualElementAttributes)newValue);
 				return;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
-				setReplica(((Long)newValue).longValue());
+				setReplica((Long)newValue);
 				return;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
 				setURef((String)newValue);

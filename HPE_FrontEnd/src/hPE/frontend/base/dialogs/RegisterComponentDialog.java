@@ -2,11 +2,7 @@ package hPE.frontend.base.dialogs;
 
 import hPE.HPEPlugin;
 import hPE.core.library.HPEComponentLibraryView;
-import hPE.core.library.HPELocationEntry;
 import hPE.core.library.HPELocationFileTraversor;
-import hPE.core.library.InexistentSourcesException;
-import hPE.core.library.UncompiledSourcesException;
-import hPE.frontend.CoreLocationList;
 import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
@@ -89,20 +85,11 @@ public class RegisterComponentDialog extends JDialog {
 		this.setSize(421, 168);
 		this.setTitle("Register " + c.getComponentName() + " in a Location");
 		this.setContentPane(getJContentPane());
-		//HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
+		HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
 		
-		List<URI> l = CoreLocationList.fetchLocations();
+		List<URI> l = locationFileTraversor.fetchLocations();
 		for (URI uri : l) {
-			String locationName = null;
-			try {
-				locationName = HPELocationEntry.fetchLocationName(uri);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			} catch (ServiceException e) {
-				e.printStackTrace();
-			}
+			String locationName = fetchLocationName(uri);
 			if (locationName != null) {
 			   this.locations.put(locationName, uri);
 		       this.getJComboBoxLocations().addItem(locationName);
@@ -118,6 +105,37 @@ public class RegisterComponentDialog extends JDialog {
 		this.getJComboBoxVersions().setSelectedIndex(vs.size()-1);
 	}
 
+	private String fetchLocationName(URI uri)  {
+		String name = null;
+		
+		try {
+
+			List<String> packagesList = new ArrayList<String>();
+		
+			String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+
+			URL url;
+			url = new URL(urlWS);
+		
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+			
+		    HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+				
+			name = server.getName();
+		
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return name;
+	}
 
 	/**
 	 * This method initializes jContentPane
@@ -211,17 +229,51 @@ public class RegisterComponentDialog extends JDialog {
 		
 		String errorMessage = null;
 		
+		if (c.versionSupplied(version == null ? "1.0.0.0" : version)) {
+			if (c.versionCompiled(version == null ? "1.0.0.0" : version)){
 				try {
 		
-                    String message = HPELocationEntry.registerComponent(c, uri, version, freeSource);					
+					String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+		
+					URL url;
+					url = new URL(urlWS);
+				
+					HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
 					
-					JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+				    HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+						
+					String pkName = c.getPackagePath().toString();
+					String ctName = c.getComponentName();	
+					String savedUri = c.getRemoteLocation();
+					c.setRemoteURI(uri);
+					
+					HComponentFactory factory = HComponentFactoryImpl.eInstance; 
+					ComponentType cX = factory.marshallComponent(c);
+					prepareForRegistering(cX, freeSource);
+					IPath filePath = (new Path(c.getLocalLocation())).removeLastSegments(1).append("temp").append("temp.xml");
+					IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(filePath); /*TODO: Which file ?*/
+					factory.saveComponent(cX, file, null);
+					String contents = readTextFile(file);
+					file.delete(true, null);
+					
+					HashMap<String,byte[]> resources = new HashMap<String,byte[]>();
+					fillWithBinaries(version == null ? "1.0.0.0" : version, resources);					
+					
+					String message = server.registerComponent(pkName, ctName, version, contents, resources);
 
-					HPEPlugin plugin = HPEPlugin.getDefault();
+					JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+					if (savedUri!=null) {
+					   c.setRemoteURI(URI.createURI(savedUri));
+					} else {
+					   c.setRemoteURI(null);
+					}
+					
+ 			        HPEPlugin plugin = HPEPlugin.getDefault();
  			        plugin.notifyListeners(HPEComponentLibraryView.PROPERTY_LOCATION_CHANGED);
 
 					
 				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 					errorMessage = e.getMessage();
 				} catch (ServiceException e) {
@@ -248,25 +300,72 @@ public class RegisterComponentDialog extends JDialog {
 				} catch (DuplicatedSliceNamesException e) {
 					e.printStackTrace();
 					errorMessage = e.getMessage();
-				} catch (UncompiledSourcesException e) {
-					e.printStackTrace();
-					if (!c.isAbstract()) {
-					   JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(null, c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (InexistentSourcesException e) {
-					e.printStackTrace();
-					 if (!c.isAbstract()) {
-	   			        JOptionPane.showMessageDialog(null, " The sources for version " + version + " of " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);
-				     } else {
-    					 JOptionPane.showMessageDialog(null, " The sources for " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);	
-				     } 
 				} finally {
 					if (errorMessage != null)
 					    JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
 				}
+			} else {
+				if (!c.isAbstract()) {
+				   JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		else {
+			if (!c.isAbstract()) {
+   			     JOptionPane.showMessageDialog(null, " The sources for version " + version + " of " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);
+			} else {
+				 JOptionPane.showMessageDialog(null, " The sources for " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);	
+			}
+		} 
 		
+		
+	}
+
+	private void fillWithBinaries(String version, HashMap<String, byte[]> resources) throws CoreException, IOException {
+		
+			for (HInterface i : c.getInterfaces()) {
+				if (i.getConfiguration() == c) {
+                    HBESourceVersion srcVersion = i.getSourceVersion(version);
+                    for (Object objFile : srcVersion.getFiles()) {
+                    	HBEAbstractFile file = (HBEAbstractFile) objFile;
+                    	IPath binPath = file.getBinaryPath();
+                    	IFile binFile = ResourcesPlugin.getWorkspace().getRoot().getFile(binPath);
+                    	InputStream is = binFile.getContents();                    	
+            			byte[] contents = new byte[is.available()];            			
+            			is.read(contents);            			
+            			String fileID = makeFileID(i, file);
+            			resources.put(fileID, contents);            			
+            			is.close();
+                    }
+				}
+			
+		}
+		
+	}
+
+	private String makeFileID(HHasExternalReferences i, HBEAbstractFile file) {
+		IPath filePath = new Path(file.getFileName());
+		String fileName = filePath.removeFileExtension().addFileExtension(file.getBinaryExtension()).toString();
+		
+		return fileName;
+	}
+
+	private String readTextFile(IFile file) throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader(file.getLocation().toOSString()));
+		String texto ="";
+        String str = in.readLine();  
+        while (str!=null){
+        	texto += str+"\n";
+        	str = in.readLine();	        	
+        }
+        in.close();
+        return texto;
+	}
+
+	private void prepareForRegistering(ComponentType cx, boolean freeSource) {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -284,16 +383,7 @@ public class RegisterComponentDialog extends JDialog {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					String locationName = (String) getJComboBoxLocations().getSelectedItem();
 					URI uri = locations.get(locationName);
-					String message = "Error connecting to location to fetch information.";
-					try {
-						message = HPELocationEntry.getLocationPresentationMessage(uri);
-					} catch (RemoteException e1) {
-						e1.printStackTrace();
-					} catch (MalformedURLException e1) {
-						e1.printStackTrace();
-					} catch (ServiceException e1) {
-						e1.printStackTrace();
-					}					
+					String message = getLocationPresentationMessage(uri);					
 					
 					JOptionPane.showMessageDialog(null,message, "About " + locationName,JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -303,6 +393,38 @@ public class RegisterComponentDialog extends JDialog {
 		return jButtonInfo;
 	}
 
+	private String getLocationPresentationMessage(URI uri) {
+
+		String message = "fail";
+		
+		try {
+
+			List<String> packagesList = new ArrayList<String>();
+		
+			String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+
+			URL url;
+			url = new URL(urlWS);
+		
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+			
+			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+				
+			message = server.getPresentationMessage();
+		
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return message;
+	}
 
 	/**
 	 * This method initializes jComboBoxVersions	
@@ -334,20 +456,7 @@ public class RegisterComponentDialog extends JDialog {
 							String locationName = (String) getJComboBoxLocations().getSelectedItem();
 							URI uri = locations.get(locationName);
 							String version = c.isAbstract() ? null : (String) getJComboBoxVersions().getSelectedItem(); 
-							String message = "";
-							try {
-								message = HPELocationEntry.markAsObsolete(c, uri, version);
-							} catch (RemoteException e1) {
-								message = e1.getMessage();
-								e1.printStackTrace();
-							} catch (MalformedURLException e1) {
-								message = e1.getMessage();
-								e1.printStackTrace();
-							} catch (ServiceException e1) {
-								message = e1.getMessage();
-								e1.printStackTrace();
-							}
-							JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+							markAsObsolete(uri, version);
 						}
 
 					});
@@ -355,6 +464,34 @@ public class RegisterComponentDialog extends JDialog {
 		return jButtonRegisterMarkObsolete;
 	}
 
+	protected void markAsObsolete(URI uri, String version) {
+		try {
+			String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+			
+			URL url = new URL(urlWS);
+		
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+			
+		    HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+				
+			String pkName = c.getPackagePath().toString();
+			String ctName = c.getComponentName();					
+					
+			String message = server.markAsObsolete(pkName, ctName, version);
+	
+			JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * This method initializes jButtonUnregisterComponent	
@@ -380,21 +517,32 @@ public class RegisterComponentDialog extends JDialog {
 	}
 
 	protected void unregisterComponent(URI uri, String version) {
-		String message = null;
 		try {
-			message = HPELocationEntry.unregisterComponent(c, uri, version);
+			String urlWS = uri.toString(); //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+			
+			URL url = new URL(urlWS);
+		
+			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
+			
+		    HPE_Location_Server server = locationServerService.getHPE_Location_Server(url); 
+				
+			String pkName = c.getPackagePath().toString();
+			String ctName = c.getComponentName();					
+					
+			String message = server.unregisterComponent(pkName, ctName, version);
+	
+			JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+			
 		} catch (MalformedURLException e) {
-			message = e.getMessage();
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ServiceException e) {
-			message = e.getMessage();
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
-			message = e.getMessage();
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"

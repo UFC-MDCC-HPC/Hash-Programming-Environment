@@ -3,7 +3,6 @@ package hPE.frontend;
 import hPE.HPEProperties;
 import hPE.backend.BackEnd_WSLocator;
 import hPE.backend.BackEnd_WSSoap;
-import hPE.frontend.CoreLocationList.CoreLocationInfo;
 import hPE.frontend.backend.environment.DeployedComponentInfoType;
 import hPE.frontend.backend.environment.DeployedParameterType;
 import hPE.frontend.backend.environment.EnvironmentPackage;
@@ -19,6 +18,7 @@ import hPE.frontend.backend.locations.impl.DocumentRootImpl;
 import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
 import hPE.frontend.backend.locations.util.LocationsResourceImpl;
 
+import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -56,7 +56,6 @@ public class BackEndLocationList {
 	private static LocationsFactory factory = LocationsFactory.eINSTANCE;
 
 	private static String fileSites = null;
-	
 	
 	private static String getFileSites() {
 		if (fileSites == null) {
@@ -200,50 +199,88 @@ public class BackEndLocationList {
 		public DeployedComponentInfoParameter[] parameter = null;
 	}
 	
-	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(
-			String urlWS,
-			Map<Integer, DeployedComponentInfo> dcListAbstract, 
-			Map<Integer, DeployedComponentInfo> dcListConcrete) throws IOException, ServiceException {
+	public static List<DeployedComponentInfo> loadDeployedComponentsInfo(BackEndLocationInfo b, String rootPath, Map<Integer, DeployedComponentInfo> dcListAbstract, Map<Integer, DeployedComponentInfo> dcListConcrete, Component rootPane) throws IOException, ServiceException {
 	
 		List<DeployedComponentInfo> l = new ArrayList<DeployedComponentInfo>();
+		
+		// System.out.println("loadDeployedComponentsInfo for " + b.name);
+		
+/*		l.add(new DeployedComponentInfo(new String[] {b.name,"b","c"}, "uuu", 0,"uri1", 0, new String[] {"M","N"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","b"}, "vvv", 1,"uri2", 1, new String[] {"I"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","c"}, "xxx", 2,"uri3", 2, new String[] {"K","M","N"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"b","c"}, "yyy", 3,"uri4", 0, new String[] {"M","N"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","b"}, "rrr", 4,"uri5", 1, new String[] {"I"}, new DeployedComponentInfoParameter[] {}));
+		l.add(new DeployedComponentInfo(new String[] {b.name,"a","c"}, "sss", 5,"uri6", 2, new String[] {"K","M","N"}, new DeployedComponentInfoParameter[] {}));
+	*/
+		
+		try {
+
+			String urlWS = b.locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+		
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
 			
-		BackEnd_WSLocator server = new BackEnd_WSLocator();
-		server.setBackEnd_WSSoapEndpointAddress(urlWS);
-		
-		BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
-		
-		byte[] data = backend.readEnvironment();
-		
-	    EnvironmentType env = loadEnvironment(data);	
-					
-	    List<DeployedComponentInfoType> dcList = env.getDeployed();
-	    if (dcList.size() > 0) {
-	    
-		    dcListAbstract.clear();
-		    dcListConcrete.clear();
+			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+			
+			byte[] data = backend.readEnvironment();
+			
+		    EnvironmentType env = loadEnvironment(data, rootPath);	
+						
+		    List<DeployedComponentInfoType> dcList = env.getDeployed();
+		    if (dcList.size() > 0) {
 		    
-		    for (DeployedComponentInfoType dc : dcList) {
-		    	boolean isAbstract = dc.isAbstract();
-		    	String[] package_ = (String[]) dc.getPackage().toArray();
-		    	String name_ = dc.getName();
-		    	int id_ = dc.getCid();;
-		    	int idBase_ = dc.isSetCidBase() ? dc.getCidBase() : -1;
-		    	String uri_ = dc.getLocationURI();
-		    	int kind_ = HPEKinds.kind(dc.getKind());
-		    	String[] enumerators_ = (String[]) dc.getEnumerator().toArray();
-		    	DeployedComponentInfoParameter[] parameters_ = loadParameters(dc.getParameter());
-		    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,idBase_,uri_,kind_,enumerators_,parameters_); 
-		        l.add(dci);		    	
-		    	if (isAbstract) 
-		    		dcListAbstract.put(new Integer(id_), dci);
-		    	else
-		    		dcListConcrete.put(new Integer(id_), dci);
+			    dcListAbstract.clear();
+			    dcListConcrete.clear();
+			    
+			    for (DeployedComponentInfoType dc : dcList) {
+			    	boolean isAbstract = dc.isAbstract();
+			    	String[] package_ = (String[]) dc.getPackage().toArray();
+			    	String name_ = dc.getName();
+			    	int id_ = dc.getCid();;
+			    	int idBase_ = dc.isSetCidBase() ? dc.getCidBase() : -1;
+			    	String uri_ = dc.getLocationURI();
+			    	int kind_ = loadKind(dc.getKind());
+			    	String[] enumerators_ = (String[]) dc.getEnumerator().toArray();
+			    	DeployedComponentInfoParameter[] parameters_ = loadParameters(dc.getParameter());
+			    	DeployedComponentInfo dci = new DeployedComponentInfo(isAbstract,package_,name_,id_,idBase_,uri_,kind_,enumerators_,parameters_); 
+			        l.add(dci);		    	
+			    	if (isAbstract) 
+			    		dcListAbstract.put(new Integer(id_), dci);
+			    	else
+			    		dcListConcrete.put(new Integer(id_), dci);
+			    }
+		    } else {
+		    	JOptionPane.showMessageDialog(rootPane, "No component is deployed at " + b.name, "Deployment", JOptionPane.INFORMATION_MESSAGE);	
 		    }
-	    } 
-				
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			throw e;
+        }
+		
 		return l;
 	}
 		
+	private static Map<String, Integer> k = null;
+	
+	private static int loadKind(String kind) {
+		if (k == null) {
+		    k = new HashMap<String, Integer>();
+		    k.put("Application",0);
+		    k.put("Computation",1);
+		    k.put("Synchronizer",2);
+		    k.put("Data",3);
+		    k.put("Environment",4);
+		    k.put("Architecture",5);
+		    k.put("Qualifier",6);
+		    k.put("Enumerator",7);
+		} 
+				
+		return k.get(kind);
+	}
 
 	private static DeployedComponentInfoParameter[] loadParameters(
 			EList<DeployedParameterType> parameters) {
@@ -262,7 +299,7 @@ public class BackEndLocationList {
 		return result;
 	}
 
-	private static EnvironmentType loadEnvironment(byte[] data) {
+	private static EnvironmentType loadEnvironment(byte[] data, String rootPath) {
 		// TODO Auto-generated method stub
 		try {				
 			
@@ -366,39 +403,5 @@ public class BackEndLocationList {
 		}
 		
 	}
-	
-	public static List<URI> fetchLocations() {
-
-		List<URI> locations = new ArrayList<URI>();
-		Map<String, BackEndLocationInfo> coreLocations = new HashMap<String,BackEndLocationInfo>();
-		loadBackEndsInfo(coreLocations);
-		
-		for (BackEndLocationInfo c : coreLocations.values()) {
-			locations.add(URI.createURI(c.locURI));
-		}
-		
-		return locations;
-	}
-	
-	public static URI fetchURI(String loc_name) {
-
-		Map<String, BackEndLocationInfo> coreLocations = new HashMap<String,BackEndLocationInfo>();
-		loadBackEndsInfo(coreLocations);
-
-		if (coreLocations.containsKey(loc_name)) {
-		    return URI.createURI(coreLocations.get(loc_name).locURI);
-		} else {
-			return null;
-		}
-	}
-
-	public static String fetchLocationName(URI createURI) {
-		return "localhost";
-	}
-
-	public static String getLocationPresentationMessage(URI createURI) {
-		return "presentation message";
-	}
-	
 	
 }

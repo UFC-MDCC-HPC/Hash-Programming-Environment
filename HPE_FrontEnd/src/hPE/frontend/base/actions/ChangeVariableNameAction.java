@@ -59,7 +59,7 @@ public class ChangeVariableNameAction extends SelectionAction {
 			boolean allSupplied = true;
 			for (Entry<String,List<HComponent>> es : c.getParameters().entrySet()) {
 				for (HComponent cc : es.getValue()) {
-					if (cc.getSupplier() == null) {
+					if (cc.getSupplied() == null) {
 						allSupplied = false;
 					    break;
 					}

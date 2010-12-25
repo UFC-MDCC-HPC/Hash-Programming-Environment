@@ -159,7 +159,7 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 	 * Getter of the property <tt>configuration</tt>
 	 * @return  Returns the configuration.
 	 * @uml.property  name="configuration"
-	 */ 
+	 */
 	public HComponent getConfiguration() {
 		return configuration.get(0);
 	}
@@ -856,17 +856,6 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		}
 		
 		return this.getSplits().size() > 0;
-	}
-
-	public HComponent getConfigurationTop() {
-		if (configuration.size() > 1) {
-		   // It is an enumerator from an inner component. 
-		   return this.configuration.get(1);
-		} 
-		else {
-			// It is an enumerator from the top configuration
-			return this.configuration.get(0);
-		}
 	}
 	
 }

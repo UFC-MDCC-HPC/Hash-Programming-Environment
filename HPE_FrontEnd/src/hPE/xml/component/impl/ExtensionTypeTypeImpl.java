@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Extension Type Type</b></em>'.
@@ -209,9 +210,9 @@ public class ExtensionTypeTypeImpl extends EObjectImpl implements ExtensionTypeT
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ComponentPackage.EXTENSION_TYPE_TYPE__IMPLEMENTS:
-				return isImplements() ? Boolean.TRUE : Boolean.FALSE;
+				return isImplements();
 			case ComponentPackage.EXTENSION_TYPE_TYPE__EXTENDS:
-				return isExtends() ? Boolean.TRUE : Boolean.FALSE;
+				return isExtends();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -225,10 +226,10 @@ public class ExtensionTypeTypeImpl extends EObjectImpl implements ExtensionTypeT
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.EXTENSION_TYPE_TYPE__IMPLEMENTS:
-				setImplements(((Boolean)newValue).booleanValue());
+				setImplements((Boolean)newValue);
 				return;
 			case ComponentPackage.EXTENSION_TYPE_TYPE__EXTENDS:
-				setExtends(((Boolean)newValue).booleanValue());
+				setExtends((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

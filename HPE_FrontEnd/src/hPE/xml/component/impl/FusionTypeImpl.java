@@ -12,11 +12,16 @@ import hPE.xml.component.FusionType;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -42,6 +47,7 @@ public class FusionTypeImpl extends EObjectImpl implements FusionType {
 	 * @ordered
 	 */
 	protected EList<String> cRefs;
+
 	/**
 	 * The default value of the '{@link #getPRef() <em>PRef</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -51,6 +57,7 @@ public class FusionTypeImpl extends EObjectImpl implements FusionType {
 	 * @ordered
 	 */
 	protected static final String PREF_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getPRef() <em>PRef</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -60,6 +67,7 @@ public class FusionTypeImpl extends EObjectImpl implements FusionType {
 	 * @ordered
 	 */
 	protected String pRef = PREF_EDEFAULT;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -1,5 +1,7 @@
 package hPE;
 
+import hPE.frontend.kinds.KindConfiguration;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
@@ -12,13 +14,15 @@ import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 
+import java.util.Set;
+
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -93,75 +97,77 @@ public class SetVersionDialog extends Composite {
 		groupKinds.setText("Component Kinds");
 		groupKinds.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		groupKinds.setLayout(null);
-		groupKinds.setBounds(new Rectangle(5, 30, /*361*/ 420, 81));
+		createComboKinds();
+		groupKinds.setBounds(new Rectangle(5, 30, 390, 81));
 		
-		radioApplication = new Button(groupKinds, SWT.RADIO);
-		radioApplication.setText(HApplicationComponent.KIND);
-		radioApplication.setBounds(new Rectangle(13, 18, 111, 16));
-		radioApplication.addSelectionListener(sl);
-		radioApplication.setSelection(true);
-
-		radioEnvironment = new Button(groupKinds, SWT.RADIO);
-		radioEnvironment.setText(HEnvironmentComponent.KIND);
-		radioEnvironment.setBounds(new Rectangle(13, 38, 111, 16));
-		radioEnvironment.addSelectionListener(sl);
-		radioEnvironment.setSelection(false);
-		
-		radioDataStructure = new Button(groupKinds, SWT.RADIO);
-		radioDataStructure.setText(HDataComponent.KIND);
-		radioDataStructure.setBounds(new Rectangle(13, 58, 111, 16));
-		radioDataStructure.addSelectionListener(sl);
-		radioDataStructure.setSelection(false);
-
-		radioComputation = new Button(groupKinds, SWT.RADIO);
-		radioComputation.setText(HComputationComponent.KIND);
-		radioComputation.setBounds(new Rectangle(128, 18, 106, 16));
-		radioComputation.addSelectionListener(sl);
-		radioComputation.setSelection(false);
-		
-		radioArchitecture = new Button(groupKinds, SWT.RADIO);
-		radioArchitecture.setText(HArchitectureComponent.KIND);
-		radioArchitecture.setBounds(new Rectangle(128, 38, 106, 16));
-		radioArchitecture.addSelectionListener(sl);
-		radioArchitecture.setSelection(false);
-
-		radioEnumerator = new Button(groupKinds, SWT.RADIO);
-		radioEnumerator.setBounds(new Rectangle(128, 58, 106, 16));
-		radioEnumerator.setText(HEnumeratorComponent.KIND);
-		radioEnumerator.addSelectionListener(sl);
-		radioEnumerator.setSelection(false);
-
-		radioSynchronizer = new Button(groupKinds, SWT.RADIO);
-		radioSynchronizer.setText(HSynchronizationComponent.KIND);
-		radioSynchronizer.setBounds(new Rectangle(238, 18, 100, 16));
-		radioSynchronizer.addSelectionListener(sl);
-		radioSynchronizer.setSelection(false);
-
-		radioQualifier = new Button(groupKinds, SWT.RADIO);
-		radioQualifier.setText(HQualifierComponent.KIND);
-		radioQualifier.setBounds(new Rectangle(238, 38, 100, 16));
-		radioQualifier.addSelectionListener(sl);
-		radioQualifier.setSelection(false);
-
-		radioService = new Button(groupKinds, SWT.RADIO);
-		radioService.addSelectionListener(sl);
-		radioService.setSelection(false);
-		radioService.setBounds(new Rectangle(238, 58, 100, 16));
-		radioService.setText(HServiceComponent.KIND);
-		
-		radioFacet = new Button(groupKinds, SWT.RADIO);
-		radioFacet.addSelectionListener(sl);
-		radioFacet.setEnabled(true);
-		radioFacet.setSelection(false);
-		radioFacet.setBounds(new Rectangle(343, 18, 70, 16));
-		radioFacet.setText(HFacetComponent.KIND);
-		
-		radioDomain = new Button(groupKinds, SWT.RADIO);
-		radioDomain.addSelectionListener(sl);
-		radioDomain.setEnabled(true);
-		radioDomain.setSelection(false);
-		radioDomain.setBounds(new Rectangle(343, 38, 70, 16));
-		radioDomain.setText(HDomainComponent.KIND);
+		//TODO RAFAEL: REMOVER SE ESTIVER OK:
+//		radioApplication = new Button(groupKinds, SWT.RADIO);
+//		radioApplication.setText(HApplicationComponent.KIND);
+//		radioApplication.setBounds(new Rectangle(13, 18, 111, 16));
+//		radioApplication.addSelectionListener(sl);
+//		radioApplication.setSelection(true);
+//
+//		radioEnvironment = new Button(groupKinds, SWT.RADIO);
+//		radioEnvironment.setText(HEnvironmentComponent.KIND);
+//		radioEnvironment.setBounds(new Rectangle(13, 38, 111, 16));
+//		radioEnvironment.addSelectionListener(sl);
+//		radioEnvironment.setSelection(false);
+//		
+//		radioDataStructure = new Button(groupKinds, SWT.RADIO);
+//		radioDataStructure.setText(HDataComponent.KIND);
+//		radioDataStructure.setBounds(new Rectangle(13, 58, 111, 16));
+//		radioDataStructure.addSelectionListener(sl);
+//		radioDataStructure.setSelection(false);
+//
+//		radioComputation = new Button(groupKinds, SWT.RADIO);
+//		radioComputation.setText(HComputationComponent.KIND);
+//		radioComputation.setBounds(new Rectangle(128, 18, 106, 16));
+//		radioComputation.addSelectionListener(sl);
+//		radioComputation.setSelection(false);
+//		
+//		radioArchitecture = new Button(groupKinds, SWT.RADIO);
+//		radioArchitecture.setText(HArchitectureComponent.KIND);
+//		radioArchitecture.setBounds(new Rectangle(128, 38, 106, 16));
+//		radioArchitecture.addSelectionListener(sl);
+//		radioArchitecture.setSelection(false);
+//
+//		radioEnumerator = new Button(groupKinds, SWT.RADIO);
+//		radioEnumerator.setBounds(new Rectangle(128, 58, 106, 16));
+//		radioEnumerator.setText(HEnumeratorComponent.KIND);
+//		radioEnumerator.addSelectionListener(sl);
+//		radioEnumerator.setSelection(false);
+//
+//		radioSynchronizer = new Button(groupKinds, SWT.RADIO);
+//		radioSynchronizer.setText(HSynchronizationComponent.KIND);
+//		radioSynchronizer.setBounds(new Rectangle(238, 18, 100, 16));
+//		radioSynchronizer.addSelectionListener(sl);
+//		radioSynchronizer.setSelection(false);
+//
+//		radioQualifier = new Button(groupKinds, SWT.RADIO);
+//		radioQualifier.setText(HQualifierComponent.KIND);
+//		radioQualifier.setBounds(new Rectangle(238, 38, 100, 16));
+//		radioQualifier.addSelectionListener(sl);
+//		radioQualifier.setSelection(false);
+//
+//		radioService = new Button(groupKinds, SWT.RADIO);
+//		radioService.addSelectionListener(sl);
+//		radioService.setSelection(false);
+//		radioService.setBounds(new Rectangle(238, 58, 100, 16));
+//		radioService.setText(HServiceComponent.KIND);
+//		
+//		radioFacet = new Button(groupKinds, SWT.RADIO);
+//		radioFacet.addSelectionListener(sl);
+//		radioFacet.setEnabled(true);
+//		radioFacet.setSelection(false);
+//		radioFacet.setBounds(new Rectangle(343, 18, 70, 16));
+//		radioFacet.setText(HFacetComponent.KIND);
+//		
+//		radioDomain = new Button(groupKinds, SWT.RADIO);
+//		radioDomain.addSelectionListener(sl);
+//		radioDomain.setEnabled(true);
+//		radioDomain.setSelection(false);
+//		radioDomain.setBounds(new Rectangle(343, 38, 70, 16));
+//		radioDomain.setText(HDomainComponent.KIND);
 
 	}
 
@@ -216,6 +222,10 @@ public class SetVersionDialog extends Composite {
 	public Button getRadioButtonConcrete() {
 		return this.radioButtonConcrete;
 	}
+	
+	public Combo getComboKinds() {
+		return comboKinds;
+	}
 
 	public int getVersionField(int k) {
 		switch (k) {
@@ -229,6 +239,8 @@ public class SetVersionDialog extends Composite {
 	
 	private Integer[] safeVersion = new Integer[] {1,0,0,0};
 	private Button radioEnumerator = null;
+	private Combo comboKinds = null;
+	
 	public void SetEnabledVersionSetting(boolean enable) {
 		if (!enable) {
 			if (!(spinnerV1.getSelection() == 1 && 
@@ -264,8 +276,8 @@ public class SetVersionDialog extends Composite {
 	private void createGroup() {
 		group = new Group(this, SWT.NONE);
 		group.setLayout(null);
-		group.setText("");
-		group.setBounds(new Rectangle(/* 375 */ 430, 30, 85, 81));
+		group.setText("Type");
+		group.setBounds(new Rectangle(405, 30, 110, 81));
 		org.eclipse.swt.events.SelectionListener sl = new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Object src = e.getSource();
@@ -277,17 +289,44 @@ public class SetVersionDialog extends Composite {
 		};
 		radioButtonAbstract = new Button(group, SWT.RADIO);
 		radioButtonAbstract.setText("Abstract");
-		radioButtonAbstract.setBounds(new Rectangle(8, 23, 62, 16));
+		radioButtonAbstract.setBounds(new Rectangle(8, 23, 90, 16));
 		radioButtonAbstract.setSelection(true);
 		radioButtonAbstract.addSelectionListener(sl);
 		radioButtonConcrete = new Button(group, SWT.RADIO);
 		radioButtonConcrete.setText("Concrete");
-		radioButtonConcrete.setBounds(new Rectangle(8, 53, 65, 16));
+		radioButtonConcrete.setBounds(new Rectangle(8, 53, 89, 16));
 		radioButtonConcrete.addSelectionListener(sl);
 	}
 	
 	public boolean isAbstract() {
 	  return radioButtonAbstract.getSelection();	
+	}
+
+	/**
+	 * This method initializes comboKinds	
+	 *
+	 */
+	private void createComboKinds() {
+		comboKinds = new Combo(groupKinds, SWT.NONE);
+		comboKinds.setBounds(new Rectangle(13, 24, 360, 26));
+		comboKinds.addSelectionListener(sl);
+		
+		comboKinds.add(HApplicationComponent.KIND);
+		comboKinds.add(HEnvironmentComponent.KIND);
+		comboKinds.add(HDataComponent.KIND);
+		comboKinds.add(HComputationComponent.KIND);
+		comboKinds.add(HArchitectureComponent.KIND);
+		comboKinds.add(HEnumeratorComponent.KIND);
+		comboKinds.add(HSynchronizationComponent.KIND);
+		comboKinds.add(HQualifierComponent.KIND);
+		comboKinds.add(HServiceComponent.KIND);
+		comboKinds.add(HFacetComponent.KIND);
+		comboKinds.add(HDomainComponent.KIND);
+		
+		Set<KindConfiguration> kinds = KindManager.getKinds();
+		for (KindConfiguration kindConfiguration : kinds) {
+			comboKinds.add(kindConfiguration.getName());
+		}
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="18,27"

@@ -8,7 +8,7 @@ public interface IHPEComponentLibraryItem {
 	
 	public IHPEComponentLibraryItem getParent();
 	
-	public List<IHPEComponentLibraryItem> getChildren();
+	public List getChildren();
 	
 	public void addChild(IHPEComponentLibraryItem child);
 	public void removeChild(IHPEComponentLibraryItem child);

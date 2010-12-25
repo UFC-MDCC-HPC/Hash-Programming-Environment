@@ -1,9 +1,0 @@
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\bin\Debug\NumericalIntegration.MPI.NET.exe
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\bin\Debug\NumericalIntegration.MPI.NET.pdb
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\bin\Debug\IntegratingFunctions.dll
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\bin\Debug\NINTLIB.dll
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\bin\Debug\IntegratingFunctions.pdb
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\bin\Debug\NINTLIB.pdb
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\obj\Debug\NumericalIntegration.MPI.NET.exe
-C:\Users\Heron\Documents\My Dropbox\Alunos\Esqueletos FELIPE e RAFAEL\Numerical Integration\NINTLIB\NumericalIntegration.MPI.NET\obj\Debug\NumericalIntegration.MPI.NET.pdb

@@ -11,6 +11,7 @@ import hPE.xml.component.EnumerableComponentType;
 
 import org.eclipse.emf.ecore.EClass;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Enumerable Component Type</b></em>'.

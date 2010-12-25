@@ -36,7 +36,6 @@ import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExposePortType;
 import hPE.xml.component.ExtendsType;
 import hPE.xml.component.ExtensionTypeType;
-import hPE.xml.component.FielType;
 import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
@@ -44,7 +43,6 @@ import hPE.xml.component.ImplementsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
 import hPE.xml.component.InterfaceParameterType;
-import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceRefType;
 import hPE.xml.component.InterfaceSliceRefType;
@@ -63,7 +61,6 @@ import hPE.xml.component.SourceType;
 import hPE.xml.component.SplitEnumeratorType;
 import hPE.xml.component.SplitLinkType;
 import hPE.xml.component.SplitType;
-import hPE.xml.component.SplitType2;
 import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
@@ -78,8 +75,11 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -549,20 +549,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link ComponentPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -574,7 +564,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		if (isInited) return (ComponentPackage)EPackage.Registry.INSTANCE.getEPackage(ComponentPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ComponentPackageImpl theComponentPackage = (ComponentPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof ComponentPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new ComponentPackageImpl());
+		ComponentPackageImpl theComponentPackage = (ComponentPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ComponentPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ComponentPackageImpl());
 
 		isInited = true;
 
@@ -590,6 +580,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		// Mark meta-data to indicate it can't be changed
 		theComponentPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(ComponentPackage.eNS_URI, theComponentPackage);
 		return theComponentPackage;
 	}
 
@@ -841,6 +834,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getComponentBodyType_Parameter() {
+		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getComponentBodyType_SupplyParameter() {
 		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(3);
 	}
@@ -868,8 +870,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getComponentBodyType_RecursiveEntry() {
-		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(7);
+	public EReference getComponentBodyType_Split() {
+		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -877,8 +879,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getComponentBodyType_Parameter() {
-		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(2);
+	public EReference getComponentBodyType_RecursiveEntry() {
+		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -915,15 +917,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EReference getComponentBodyType_FusionsOfReplicators() {
 		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(11);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getComponentBodyType_Split() {
-		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1660,6 +1653,24 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getInnerRenamingType_CNewName() {
+		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInnerRenamingType_COldName() {
+		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getInnerRenamingType_CRef() {
 		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(2);
 	}
@@ -1752,24 +1763,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EAttribute getInterfacePortType_Name() {
 		return (EAttribute)interfacePortTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getInnerRenamingType_COldName() {
-		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getInnerRenamingType_CNewName() {
-		return (EAttribute)innerRenamingTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3136,7 +3129,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentHeaderType_VisualAttributes(), this.getVisualElementAttributes(), null, "visualAttributes", null, 1, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentHeaderType_Kind(), theXMLTypePackage.getString(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_LocationURI(), theXMLTypePackage.getAnyURI(), "locationURI", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_PackagePath(), theXMLTypePackage.getAnyURI(), "packagePath", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3384,6 +3377,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUALIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.FACET);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.DOMAIN);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SERVICE);
 
 		// Initialize data types
 		initEDataType(quantificationTypeObjectEDataType, QuantificationType.class, "QuantificationTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);

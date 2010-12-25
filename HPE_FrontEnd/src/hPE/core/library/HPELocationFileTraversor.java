@@ -43,9 +43,11 @@ public class HPELocationFileTraversor {
     	
         try {
             DOMParser parser = new DOMParser();
+         //   locationPath = "f:\\runtime-workspace";
             String path = (new Path(locationPath)).toOSString(); 
             parser.parse(path);
             DocumentImpl document = (DocumentImpl) parser.getDocument();
+//            traverse(document.getLastChild());
             
             //get the root of the XML document
             Node root = document.getLastChild();
@@ -106,7 +108,12 @@ public class HPELocationFileTraversor {
 			  URI project = URI.createURI(attrs.getNamedItem("project").getNodeValue());
 			  locations.add(project);
 		  }
-	  }	  
+	  }
+	  
+	 
+	  
+	   
+		  
 
       tw.setCurrentNode(n);
     }

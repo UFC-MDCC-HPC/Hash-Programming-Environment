@@ -1,12 +1,13 @@
 package hPE.frontend.base.dialogs;
 
 import hPE.hPEEditor;
+import hPE.backend.BackEnd_WSLocator;
+import hPE.backend.BackEnd_WSSoap;
+import hPE.backend.SecureString;
 import hPE.frontend.BackEndLocationList;
-import hPE.frontend.HPEKinds;
 import hPE.frontend.BackEndLocationList.BackEndLocationInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
 import hPE.frontend.BackEndLocationList.DeployedComponentInfoParameter;
-import hPE.frontend.backend.HPEPlatform;
 import hPE.frontend.base.model.HComponent;
 
 import java.awt.Frame;
@@ -15,7 +16,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +54,26 @@ import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.xml.rpc.ServiceException;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.draw2d.Label;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.editors.text.NonExistingFileEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
+import java.awt.Dimension;
 
 public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener {
 
@@ -154,10 +183,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 
 	private void loadComponents(BackEndLocationInfo b) {
 		try {
-			dcList = BackEndLocationList.loadDeployedComponentsInfo(b.locURI,dcListAbstract,dcListConcrete);
-			if (dcList.size() == 0) {
-		    	JOptionPane.showMessageDialog(rootPane, "No component is deployed at " + b.name, "Deployment", JOptionPane.INFORMATION_MESSAGE);	
-			}
+			dcList = BackEndLocationList.loadDeployedComponentsInfo(b,getCurrentComponent().getLocalLocation(),dcListAbstract,dcListConcrete,rootPane);
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(rootPane, e1.getMessage());
 		} catch (ServiceException e1) {
@@ -236,6 +262,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	static private int QUALIFIER = 6;
 	static private int ENUMERATOR = 7;
 
+	boolean[] kinds = {true, false, false, false, false, false, false, false};
+	
+	String[] kindsStr = {"application", "computation", "synchronizer", "data structure", "environment", "architecture", "qualifier", "enumerator"};
 	
 	private JButton jButtonClose = null;
 	// private JScrollPane jScrollPane = null;
@@ -607,16 +636,30 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	private void deploy() {
 
 		try {
+			String fileName = getCurrentComponent().getLocalLocation();
+		
+			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+			
+			InputStream is;
+			is = file.getContents();
+		
+			byte[] t = new byte[is.available()];
+			
+			is.read(t);
 			
 			BackEndLocationInfo backEndInfo = (BackEndLocationInfo)jComboBoxBackEnd.getSelectedItem();
 			
-			String urlWS = backEndInfo.locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";						
+			String urlWS = backEndInfo.locURI;      //EX: "http://localhost:8080/WSLocationServer/services/LocationService";
+		
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+			
+			BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
+			
 			String userName = backEndInfo.login;
 			String password = backEndInfo.password;
 			String curDir = backEndInfo.curdir != null ? backEndInfo.curdir.toString() : null;
-			
-			String result = HPEPlatform.deploy(urlWS, this.getCurrentComponent(), userName, password, curDir);
-			
+			String result = backend.deployHashComponent(t,userName, password, curDir);
 			if (result != null)
 			    JOptionPane.showMessageDialog(rootPane, result);
 			else
@@ -624,6 +667,9 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 			
 			this.browseUpdate();
 			
+		} catch (CoreException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(rootPane, e.getMessage());
@@ -736,24 +782,31 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		
 		public void run() {			
 			try {
-				String password = loc.password;			
-				String userName = loc.login;
-				String curdir = loc.curdir != null ? loc.curdir.toString() : null;
+			BackEnd_WSLocator server = new BackEnd_WSLocator();
+			server.setBackEnd_WSSoapEndpointAddress(urlWS);
+	
+			BackEnd_WSSoap backend;
+				backend = server.getBackEnd_WSSoap();				
 				
-				String[] result = HPEPlatform.run(urlWS, deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password, curdir);
-					
-				if (result.length >= 1) {
-					d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );
-					Integer i = 0;
-					for (String s : result) {
-						String processId = "Process " + i.toString(); i++;
-					    d.newTab(processId, s);
-					}
-				} else {
-					d.setTitle("Running of " + deployed.name + "has FAILED on " + loc.name + "!");
-				    if (result.length==1) 
-				    	d.newTab("Error Message", result[0]);
-				}	
+			String password = loc.password;			
+			String userName = loc.login;
+			String curdir = loc.curdir != null ? loc.curdir.toString() : null;
+			String[] result = backend.runApplication(deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password, curdir); 
+
+			if (result.length >= 1) {
+				d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );
+				Integer i = 0;
+				for (String s : result) {
+					String processId = "Process " + i.toString(); i++;
+				    d.newTab(processId, s);
+				}
+			} else {
+				d.setTitle("Running of " + deployed.name + "has FAILED on " + loc.name + "!");
+			    if (result.length==1) 
+			    	d.newTab("Error Message", result[0]);
+			}	
+			
+			
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -800,7 +853,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	    	if (kinds[dci.kind] && dci.isAbstract){
 		    	data[j][invgrouping[0]] = buildName(dci.thePackage,".");
 		    	data[j][invgrouping[1]] = dci;
-		    	data[j][invgrouping[2]] = HPEKinds.kindsStr[dci.kind];
+		    	data[j][invgrouping[2]] = kindsStr[dci.kind];
 		    	data[j][3] = buildName(dci.enumerators,", ");	    	
 		    	j++;
 	    	} 	  
@@ -840,7 +893,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	    	if (kinds[dci.kind] && !dci.isAbstract){	
 		    	data[j][invgrouping[0]] = buildName(dci.thePackage,".");
 		    	data[j][invgrouping[1]] = dci;
-		    	data[j][invgrouping[2]] = HPEKinds.kindsStr[dci.kind];
+		    	data[j][invgrouping[2]] = kindsStr[dci.kind];
 		    	data[j][3] = buildName(dci.enumerators,", ");	    	
 		    	j++;
 	    	} 	  
@@ -907,8 +960,6 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 		}
 	}
 		
-	public boolean[] kinds = {true, false, false, false, false, false, false, false};
-
 
 	private String buildName(String[] strs, String sep) {
         String s = strs.length > 0 ? strs[0] : "";

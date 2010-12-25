@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Unit Type</b></em>'.
@@ -462,11 +463,11 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 			case ComponentPackage.UNIT_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
-				return isPrivate() ? Boolean.TRUE : Boolean.FALSE;
+				return isPrivate();
 			case ComponentPackage.UNIT_TYPE__UREF:
 				return getURef();
 			case ComponentPackage.UNIT_TYPE__VISIBLE_INTERFACE:
-				return isVisibleInterface() ? Boolean.TRUE : Boolean.FALSE;
+				return isVisibleInterface();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -494,13 +495,13 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				setIRef((String)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
-				setPrivate(((Boolean)newValue).booleanValue());
+				setPrivate((Boolean)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__UREF:
 				setURef((String)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__VISIBLE_INTERFACE:
-				setVisibleInterface(((Boolean)newValue).booleanValue());
+				setVisibleInterface((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

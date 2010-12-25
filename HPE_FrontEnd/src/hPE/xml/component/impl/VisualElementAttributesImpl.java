@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Visual Element Attributes</b></em>'.
@@ -434,13 +435,13 @@ public class VisualElementAttributesImpl extends EObjectImpl implements VisualEl
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__COLOR:
 				return getColor();
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__H:
-				return new Long(getH());
+				return getH();
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__W:
-				return new Long(getW());
+				return getW();
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__X:
-				return new Long(getX());
+				return getX();
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__Y:
-				return new Long(getY());
+				return getY();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -457,16 +458,16 @@ public class VisualElementAttributesImpl extends EObjectImpl implements VisualEl
 				setColor((ColorComplexType)newValue);
 				return;
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__H:
-				setH(((Long)newValue).longValue());
+				setH((Long)newValue);
 				return;
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__W:
-				setW(((Long)newValue).longValue());
+				setW((Long)newValue);
 				return;
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__X:
-				setX(((Long)newValue).longValue());
+				setX((Long)newValue);
 				return;
 			case ComponentPackage.VISUAL_ELEMENT_ATTRIBUTES__Y:
-				setY(((Long)newValue).longValue());
+				setY((Long)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

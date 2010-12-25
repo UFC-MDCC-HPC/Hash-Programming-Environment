@@ -9,7 +9,6 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentBodyType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.EnumeratorType;
-import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
@@ -19,7 +18,6 @@ import hPE.xml.component.ParameterSupplyType;
 import hPE.xml.component.ParameterType;
 import hPE.xml.component.RecursiveEntryType;
 import hPE.xml.component.SplitType;
-import hPE.xml.component.SplitType2;
 import hPE.xml.component.UnitType;
 
 import java.util.Collection;
@@ -36,6 +34,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -117,6 +116,15 @@ public class ComponentBodyTypeImpl extends EObjectImpl implements ComponentBodyT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<ParameterType> getParameter() {
+		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__PARAMETER);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<ParameterSupplyType> getSupplyParameter() {
 		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__SUPPLY_PARAMETER);
 	}
@@ -144,8 +152,8 @@ public class ComponentBodyTypeImpl extends EObjectImpl implements ComponentBodyT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<RecursiveEntryType> getRecursiveEntry() {
-		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__RECURSIVE_ENTRY);
+	public EList<SplitType> getSplit() {
+		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__SPLIT);
 	}
 
 	/**
@@ -153,8 +161,8 @@ public class ComponentBodyTypeImpl extends EObjectImpl implements ComponentBodyT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ParameterType> getParameter() {
-		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__PARAMETER);
+	public EList<RecursiveEntryType> getRecursiveEntry() {
+		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__RECURSIVE_ENTRY);
 	}
 
 	/**
@@ -191,15 +199,6 @@ public class ComponentBodyTypeImpl extends EObjectImpl implements ComponentBodyT
 	 */
 	public EList<FusionsOfReplicatorsType> getFusionsOfReplicators() {
 		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<SplitType> getSplit() {
-		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__SPLIT);
 	}
 
 	/**

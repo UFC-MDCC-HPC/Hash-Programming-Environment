@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Inner Renaming Type</b></em>'.
@@ -116,8 +117,8 @@ public class InnerRenamingTypeImpl extends EObjectImpl implements InnerRenamingT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getCRef() {
-		return cRef;
+	public String getCNewName() {
+		return cNewName;
 	}
 
 	/**
@@ -125,11 +126,11 @@ public class InnerRenamingTypeImpl extends EObjectImpl implements InnerRenamingT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCRef(String newCRef) {
-		String oldCRef = cRef;
-		cRef = newCRef;
+	public void setCNewName(String newCNewName) {
+		String oldCNewName = cNewName;
+		cNewName = newCNewName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.INNER_RENAMING_TYPE__CREF, oldCRef, cRef));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.INNER_RENAMING_TYPE__CNEW_NAME, oldCNewName, cNewName));
 	}
 
 	/**
@@ -158,8 +159,8 @@ public class InnerRenamingTypeImpl extends EObjectImpl implements InnerRenamingT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getCNewName() {
-		return cNewName;
+	public String getCRef() {
+		return cRef;
 	}
 
 	/**
@@ -167,11 +168,11 @@ public class InnerRenamingTypeImpl extends EObjectImpl implements InnerRenamingT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCNewName(String newCNewName) {
-		String oldCNewName = cNewName;
-		cNewName = newCNewName;
+	public void setCRef(String newCRef) {
+		String oldCRef = cRef;
+		cRef = newCRef;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.INNER_RENAMING_TYPE__CNEW_NAME, oldCNewName, cNewName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.INNER_RENAMING_TYPE__CREF, oldCRef, cRef));
 	}
 
 	/**

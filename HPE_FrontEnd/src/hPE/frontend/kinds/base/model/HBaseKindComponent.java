@@ -1,12 +1,12 @@
 package hPE.frontend.kinds.base.model;
 
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.emf.common.util.URI;
-
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
+
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.util.URI;
 
 public abstract class HBaseKindComponent extends HComponent {
 
@@ -25,5 +25,4 @@ public abstract class HBaseKindComponent extends HComponent {
 		if (c instanceof HFacetComponent) return true;
 		return super.accepts(c);
 	}
-	
 }

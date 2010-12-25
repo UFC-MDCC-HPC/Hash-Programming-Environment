@@ -8,22 +8,13 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.InnerComponentType;
-import hPE.xml.component.UnitBoundsType;
-
-import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -142,7 +133,7 @@ public class InnerComponentTypeImpl extends ComponentInUseTypeImpl implements In
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ComponentPackage.INNER_COMPONENT_TYPE__EXPOSED:
-				return isExposed() ? Boolean.TRUE : Boolean.FALSE;
+				return isExposed();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -152,12 +143,11 @@ public class InnerComponentTypeImpl extends ComponentInUseTypeImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.INNER_COMPONENT_TYPE__EXPOSED:
-				setExposed(((Boolean)newValue).booleanValue());
+				setExposed((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -9,9 +9,7 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.EnumerableType;
 import hPE.xml.component.EnumeratorFromRecursionType;
-import hPE.xml.component.EnumeratorRefType;
 import hPE.xml.component.EnumeratorType;
-import hPE.xml.component.SplitType;
 import hPE.xml.component.VisualElementAttributes;
 
 import java.util.Collection;
@@ -30,6 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -522,9 +521,9 @@ public class EnumeratorTypeImpl extends EObjectImpl implements EnumeratorType {
 			case ComponentPackage.ENUMERATOR_TYPE__FROM_RECURSION:
 				return getFromRecursion();
 			case ComponentPackage.ENUMERATOR_TYPE__CARDINALITY:
-				return new Integer(getCardinality());
+				return getCardinality();
 			case ComponentPackage.ENUMERATOR_TYPE__FROM_SPLIT:
-				return isFromSplit() ? Boolean.TRUE : Boolean.FALSE;
+				return isFromSplit();
 			case ComponentPackage.ENUMERATOR_TYPE__REF:
 				return getRef();
 			case ComponentPackage.ENUMERATOR_TYPE__VAR_ID:
@@ -557,10 +556,10 @@ public class EnumeratorTypeImpl extends EObjectImpl implements EnumeratorType {
 				setFromRecursion((EnumeratorFromRecursionType)newValue);
 				return;
 			case ComponentPackage.ENUMERATOR_TYPE__CARDINALITY:
-				setCardinality(((Integer)newValue).intValue());
+				setCardinality((Integer)newValue);
 				return;
 			case ComponentPackage.ENUMERATOR_TYPE__FROM_SPLIT:
-				setFromSplit(((Boolean)newValue).booleanValue());
+				setFromSplit((Boolean)newValue);
 				return;
 			case ComponentPackage.ENUMERATOR_TYPE__REF:
 				setRef((String)newValue);

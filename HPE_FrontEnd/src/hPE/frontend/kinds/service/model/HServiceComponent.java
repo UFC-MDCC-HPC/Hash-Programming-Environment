@@ -1,15 +1,12 @@
 package hPE.frontend.kinds.service.model;
 
-import org.eclipse.emf.common.util.URI;
-
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
-import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
-import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
+
+import org.eclipse.emf.common.util.URI;
 
 public class HServiceComponent extends HBaseKindComponent {
 

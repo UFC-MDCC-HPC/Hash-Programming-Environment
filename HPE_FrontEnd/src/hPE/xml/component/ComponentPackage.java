@@ -3479,6 +3479,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getComponentBodyType_InnerComponent();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getParameter <em>Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Parameter</em>'.
+	 * @see hPE.xml.component.ComponentBodyType#getParameter()
+	 * @see #getComponentBodyType()
+	 * @generated
+	 */
+	EReference getComponentBodyType_Parameter();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getSupplyParameter <em>Supply Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3512,6 +3523,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getComponentBodyType_Fusion();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getSplit <em>Split</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Split</em>'.
+	 * @see hPE.xml.component.ComponentBodyType#getSplit()
+	 * @see #getComponentBodyType()
+	 * @generated
+	 */
+	EReference getComponentBodyType_Split();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getRecursiveEntry <em>Recursive Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3521,17 +3543,6 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getComponentBodyType_RecursiveEntry();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getParameter <em>Parameter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Parameter</em>'.
-	 * @see hPE.xml.component.ComponentBodyType#getParameter()
-	 * @see #getComponentBodyType()
-	 * @generated
-	 */
-	EReference getComponentBodyType_Parameter();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getInterface <em>Interface</em>}'.
@@ -3576,17 +3587,6 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getComponentBodyType_FusionsOfReplicators();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getSplit <em>Split</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Split</em>'.
-	 * @see hPE.xml.component.ComponentBodyType#getSplit()
-	 * @see #getComponentBodyType()
-	 * @generated
-	 */
-	EReference getComponentBodyType_Split();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.ComponentHeaderType <em>Header Type</em>}'.
@@ -4458,6 +4458,28 @@ public interface ComponentPackage extends EPackage {
 	EClass getInnerRenamingType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InnerRenamingType#getCNewName <em>CNew Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>CNew Name</em>'.
+	 * @see hPE.xml.component.InnerRenamingType#getCNewName()
+	 * @see #getInnerRenamingType()
+	 * @generated
+	 */
+	EAttribute getInnerRenamingType_CNewName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.InnerRenamingType#getCOldName <em>COld Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>COld Name</em>'.
+	 * @see hPE.xml.component.InnerRenamingType#getCOldName()
+	 * @see #getInnerRenamingType()
+	 * @generated
+	 */
+	EAttribute getInnerRenamingType_COldName();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.InnerRenamingType#getCRef <em>CRef</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4575,28 +4597,6 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInterfacePortType_Name();
-
-	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.InnerRenamingType#getCOldName <em>COld Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>COld Name</em>'.
-	 * @see hPE.xml.component.InnerRenamingType#getCOldName()
-	 * @see #getInnerRenamingType()
-	 * @generated
-	 */
-	EAttribute getInnerRenamingType_COldName();
-
-	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.InnerRenamingType#getCNewName <em>CNew Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>CNew Name</em>'.
-	 * @see hPE.xml.component.InnerRenamingType#getCNewName()
-	 * @see #getInnerRenamingType()
-	 * @generated
-	 */
-	EAttribute getInnerRenamingType_CNewName();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.InterfaceRefType <em>Interface Ref Type</em>}'.
@@ -5702,7 +5702,7 @@ public interface ComponentPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Quantification Type Object</em>'.
 	 * @see hPE.xml.component.QuantificationType
-	 * @model instanceClass="hPE.xml.component.QuantificationType"
+	 * @model instanceClass="org.example.hash.component.QuantificationType"
 	 *        extendedMetaData="name='QuantificationType:Object' baseType='QuantificationType'"
 	 * @generated
 	 */
@@ -5714,7 +5714,7 @@ public interface ComponentPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Supported Kinds Object</em>'.
 	 * @see hPE.xml.component.SupportedKinds
-	 * @model instanceClass="hPE.xml.component.SupportedKinds"
+	 * @model instanceClass="org.example.hash.component.SupportedKinds"
 	 *        extendedMetaData="name='SupportedKinds:Object' baseType='SupportedKinds'"
 	 * @generated
 	 */
@@ -5983,6 +5983,14 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_BODY_TYPE__INNER_COMPONENT = eINSTANCE.getComponentBodyType_InnerComponent();
 
 		/**
+		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_BODY_TYPE__PARAMETER = eINSTANCE.getComponentBodyType_Parameter();
+
+		/**
 		 * The meta object literal for the '<em><b>Supply Parameter</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6007,20 +6015,20 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_BODY_TYPE__FUSION = eINSTANCE.getComponentBodyType_Fusion();
 
 		/**
+		 * The meta object literal for the '<em><b>Split</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_BODY_TYPE__SPLIT = eINSTANCE.getComponentBodyType_Split();
+
+		/**
 		 * The meta object literal for the '<em><b>Recursive Entry</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference COMPONENT_BODY_TYPE__RECURSIVE_ENTRY = eINSTANCE.getComponentBodyType_RecursiveEntry();
-
-		/**
-		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPONENT_BODY_TYPE__PARAMETER = eINSTANCE.getComponentBodyType_Parameter();
 
 		/**
 		 * The meta object literal for the '<em><b>Interface</b></em>' containment reference list feature.
@@ -6053,14 +6061,6 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS = eINSTANCE.getComponentBodyType_FusionsOfReplicators();
-
-		/**
-		 * The meta object literal for the '<em><b>Split</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPONENT_BODY_TYPE__SPLIT = eINSTANCE.getComponentBodyType_Split();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.ComponentHeaderTypeImpl <em>Header Type</em>}' class.
@@ -6755,6 +6755,22 @@ public interface ComponentPackage extends EPackage {
 		EClass INNER_RENAMING_TYPE = eINSTANCE.getInnerRenamingType();
 
 		/**
+		 * The meta object literal for the '<em><b>CNew Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INNER_RENAMING_TYPE__CNEW_NAME = eINSTANCE.getInnerRenamingType_CNewName();
+
+		/**
+		 * The meta object literal for the '<em><b>COld Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INNER_RENAMING_TYPE__COLD_NAME = eINSTANCE.getInnerRenamingType_COldName();
+
+		/**
 		 * The meta object literal for the '<em><b>CRef</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6845,22 +6861,6 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INTERFACE_PORT_TYPE__NAME = eINSTANCE.getInterfacePortType_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>COld Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute INNER_RENAMING_TYPE__COLD_NAME = eINSTANCE.getInnerRenamingType_COldName();
-
-		/**
-		 * The meta object literal for the '<em><b>CNew Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute INNER_RENAMING_TYPE__CNEW_NAME = eINSTANCE.getInnerRenamingType_CNewName();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.InterfaceRefTypeImpl <em>Interface Ref Type</em>}' class.

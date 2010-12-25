@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Color Complex Type</b></em>'.
@@ -285,11 +286,11 @@ public class ColorComplexTypeImpl extends EObjectImpl implements ColorComplexTyp
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ComponentPackage.COLOR_COMPLEX_TYPE__B:
-				return new Short(getB());
+				return getB();
 			case ComponentPackage.COLOR_COMPLEX_TYPE__G:
-				return new Short(getG());
+				return getG();
 			case ComponentPackage.COLOR_COMPLEX_TYPE__R:
-				return new Short(getR());
+				return getR();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -303,13 +304,13 @@ public class ColorComplexTypeImpl extends EObjectImpl implements ColorComplexTyp
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.COLOR_COMPLEX_TYPE__B:
-				setB(((Short)newValue).shortValue());
+				setB((Short)newValue);
 				return;
 			case ComponentPackage.COLOR_COMPLEX_TYPE__G:
-				setG(((Short)newValue).shortValue());
+				setG((Short)newValue);
 				return;
 			case ComponentPackage.COLOR_COMPLEX_TYPE__R:
-				setR(((Short)newValue).shortValue());
+				setR((Short)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

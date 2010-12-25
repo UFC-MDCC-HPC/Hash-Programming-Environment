@@ -10,8 +10,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.eclipse.emf.ecore.util.FeatureMap;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Fusion Type</b></em>'.
@@ -51,7 +49,7 @@ public interface FusionType extends EObject {
 	 * Returns the value of the '<em><b>PRef</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>PRef</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>PRef</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

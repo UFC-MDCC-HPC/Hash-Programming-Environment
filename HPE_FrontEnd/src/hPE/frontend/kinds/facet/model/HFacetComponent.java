@@ -27,7 +27,6 @@ public class HFacetComponent extends HBaseKindComponent {
 	
     public boolean accepts(IComponent c) {
     	if (c instanceof HQualifierComponent) return super.accepts(c);
-    	if (c instanceof HFacetComponent) return super.accepts(c);
     	return false;
     }
 

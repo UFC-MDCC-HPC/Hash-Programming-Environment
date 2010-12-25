@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Fusions Of Replicators Type</b></em>'.

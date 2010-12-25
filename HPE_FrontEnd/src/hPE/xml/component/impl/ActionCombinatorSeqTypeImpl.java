@@ -11,6 +11,7 @@ import hPE.xml.component.ComponentPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Action Combinator Seq Type</b></em>'.

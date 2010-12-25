@@ -16,18 +16,22 @@ public class HPEPerspective implements IPerspectiveDescriptor,
 	}
 
 	public String getDescription() {
+		// TODO Auto-generated method stub
 		return "Hash Programming Enviroment - A High Performance Platform of Components";
 	}
 
 	public String getId() {
+		// TODO Auto-generated method stub
 		return "HPE";
 	}
 
 	public ImageDescriptor getImageDescriptor() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getLabel() {
+		// TODO Auto-generated method stub
 		return "Hash Programming Environment";
 	}
 

@@ -239,7 +239,8 @@
 			</element>
 			<element name="visualAttributes" type="tns:VisualElementAttributes"></element>
 		</sequence>
-		<attribute name="kind" type="tns:SupportedKinds"></attribute>
+		<!-- <attribute name="kind" type="tns:SupportedKinds"></attribute> -->
+		<attribute name="kind" type="string"></attribute>
 		<attribute name="name" type="string"></attribute>
 
 		<attribute name="packagePath" type="anyURI"></attribute>

@@ -68,7 +68,7 @@ public class FuseComponentsAction extends SelectionAction {
 		for (int i=1;i<cs.size();i++) {
 			HComponent c_ = (HComponent) cs.get(i);
 			if (!c_.isEquivalentTo(c)) return false;
-			if (c.isPublic() != c_.isPublic()) return false;
+			if (c.getExposed() != c_.getExposed()) return false;
 			// if (!c.getName2().equals(c_.getName2())) return false;
 	        
 	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c_, c)) return false;

@@ -9,22 +9,25 @@ package hPE.xml.component.impl;
 import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.SupportedKinds;
-
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -135,7 +138,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * @generated
 	 * @ordered
 	 */
-	protected static final SupportedKinds KIND_EDEFAULT = SupportedKinds.DATA;
+	protected static final String KIND_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
@@ -145,16 +148,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * @generated
 	 * @ordered
 	 */
-	protected SupportedKinds kind = KIND_EDEFAULT;
-
-	/**
-	 * This is true if the Kind attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean kindESet;
+	protected String kind = KIND_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLocationURI() <em>Location URI</em>}' attribute.
@@ -405,7 +399,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SupportedKinds getKind() {
+	public String getKind() {
 		return kind;
 	}
 
@@ -414,36 +408,11 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setKind(SupportedKinds newKind) {
-		SupportedKinds oldKind = kind;
-		kind = newKind == null ? KIND_EDEFAULT : newKind;
-		boolean oldKindESet = kindESet;
-		kindESet = true;
+	public void setKind(String newKind) {
+		String oldKind = kind;
+		kind = newKind;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_HEADER_TYPE__KIND, oldKind, kind, !oldKindESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetKind() {
-		SupportedKinds oldKind = kind;
-		boolean oldKindESet = kindESet;
-		kind = KIND_EDEFAULT;
-		kindESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.COMPONENT_HEADER_TYPE__KIND, oldKind, KIND_EDEFAULT, oldKindESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetKind() {
-		return kindESet;
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_HEADER_TYPE__KIND, oldKind, kind));
 	}
 
 	/**
@@ -544,7 +513,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return getHashComponentUID();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
-				return isIsAbstract() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsAbstract();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				return getKind();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
@@ -580,10 +549,10 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 				setHashComponentUID((String)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
-				setIsAbstract(((Boolean)newValue).booleanValue());
+				setIsAbstract((Boolean)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
-				setKind((SupportedKinds)newValue);
+				setKind((String)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
 				setLocationURI((String)newValue);
@@ -622,7 +591,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 				unsetIsAbstract();
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
-				unsetKind();
+				setKind(KIND_EDEFAULT);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
 				setLocationURI(LOCATION_URI_EDEFAULT);
@@ -656,7 +625,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
 				return isSetIsAbstract();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
-				return isSetKind();
+				return KIND_EDEFAULT == null ? kind != null : !KIND_EDEFAULT.equals(kind);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
 				return LOCATION_URI_EDEFAULT == null ? locationURI != null : !LOCATION_URI_EDEFAULT.equals(locationURI);
 			case ComponentPackage.COMPONENT_HEADER_TYPE__NAME:
@@ -682,7 +651,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 		result.append(", isAbstract: ");
 		if (isAbstractESet) result.append(isAbstract); else result.append("<unset>");
 		result.append(", kind: ");
-		if (kindESet) result.append(kind); else result.append("<unset>");
+		result.append(kind);
 		result.append(", locationURI: ");
 		result.append(locationURI);
 		result.append(", name: ");

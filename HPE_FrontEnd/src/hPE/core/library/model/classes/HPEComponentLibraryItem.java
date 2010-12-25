@@ -1,11 +1,12 @@
 package hPE.core.library.model.classes;
 
-import hPE.core.library.model.classes.NullDeltaListener;
 import hPE.core.library.model.interfaces.IDeltaListener;
 import hPE.core.library.model.interfaces.IHPEComponentLibraryItem;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 
@@ -33,7 +34,13 @@ public abstract class HPEComponentLibraryItem implements IHPEComponentLibraryIte
 	private List<IHPEComponentLibraryItem> children = new ArrayList<IHPEComponentLibraryItem>();
 	
 	public List<IHPEComponentLibraryItem> getChildren() {
-		return ((List<IHPEComponentLibraryItem>) ((ArrayList<IHPEComponentLibraryItem>) children).clone());
+		Collections.sort(children, new Comparator<IHPEComponentLibraryItem>() {
+			@Override
+			public int compare(IHPEComponentLibraryItem o1, IHPEComponentLibraryItem o2) {
+				return o1.getTitle().compareTo(o2.getTitle());
+			}
+		});
+		return children;
 	}
 	
 	public void addChild(IHPEComponentLibraryItem child) {

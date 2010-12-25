@@ -53,7 +53,7 @@ public class OpenSourceAction extends SelectionAction {
 				return false;
 			}
             HInterface x = (HInterface) part.getModel();
-            if (x.isParameter() || !x.getIsEditableSource()) return false;
+            if (x.isAbstract() || !x.getIsEditableSource()) return false;
             
             HComponent c = (HComponent) x.getConfiguration();
             HComponent topC = (HComponent) c.getTopConfiguration();

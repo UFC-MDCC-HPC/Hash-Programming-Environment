@@ -7,6 +7,7 @@
 package hPE.xml.component;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -188,7 +189,6 @@ public interface ComponentHeaderType extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
-	 * The literals are from the enumeration {@link hPE.xml.component.SupportedKinds}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Kind</em>' attribute isn't clear,
@@ -196,52 +196,23 @@ public interface ComponentHeaderType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Kind</em>' attribute.
-	 * @see hPE.xml.component.SupportedKinds
-	 * @see #isSetKind()
-	 * @see #unsetKind()
-	 * @see #setKind(SupportedKinds)
+	 * @see #setKind(String)
 	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_Kind()
-	 * @model unsettable="true"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='kind'"
 	 * @generated
 	 */
-	SupportedKinds getKind();
+	String getKind();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Kind</em>' attribute.
-	 * @see hPE.xml.component.SupportedKinds
-	 * @see #isSetKind()
-	 * @see #unsetKind()
 	 * @see #getKind()
 	 * @generated
 	 */
-	void setKind(SupportedKinds value);
-
-	/**
-	 * Unsets the value of the '{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetKind()
-	 * @see #getKind()
-	 * @see #setKind(SupportedKinds)
-	 * @generated
-	 */
-	void unsetKind();
-
-	/**
-	 * Returns whether the value of the '{@link hPE.xml.component.ComponentHeaderType#getKind <em>Kind</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Kind</em>' attribute is set.
-	 * @see #unsetKind()
-	 * @see #getKind()
-	 * @see #setKind(SupportedKinds)
-	 * @generated
-	 */
-	boolean isSetKind();
+	void setKind(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Location URI</b></em>' attribute.

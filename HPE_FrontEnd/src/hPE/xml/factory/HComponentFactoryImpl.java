@@ -24,12 +24,13 @@ import hPE.frontend.base.model.HReplicatorSplit;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.HUnitStub;
-import hPE.frontend.base.model.HVisualElement;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
 import hPE.frontend.base.model.IPointsToReplicator;
 import hPE.frontend.base.model.HReplicator.ReplicatorOrigin;
+import hPE.frontend.kinds.KindConfiguration;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HAltAction;
@@ -43,19 +44,9 @@ import hPE.frontend.kinds.activate.model.protocol.HSeqAction;
 import hPE.frontend.kinds.activate.model.protocol.HSignalAction;
 import hPE.frontend.kinds.activate.model.protocol.HSkipAction;
 import hPE.frontend.kinds.activate.model.protocol.HWaitAction;
-import hPE.frontend.kinds.application.model.HApplicationComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
-import hPE.frontend.kinds.computation.model.HComputationComponent;
-import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
-import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
-import hPE.frontend.kinds.facet.model.HFacetComponent;
-import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
-import hPE.frontend.kinds.service.model.HServiceComponent;
-import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.util.CommandLine;
 import hPE.util.Pair;
 import hPE.util.Triple;
@@ -90,7 +81,6 @@ import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
-import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfaceParameterType;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceRefType;
@@ -105,7 +95,6 @@ import hPE.xml.component.SourceFileType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.SplitLinkType;
 import hPE.xml.component.SplitType;
-import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
@@ -119,7 +108,6 @@ import hPE.xml.component.util.ComponentResourceImpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -134,9 +122,7 @@ import java.util.Map.Entry;
 import javax.swing.JOptionPane;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -201,7 +187,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	public static HComponentFactory eInstance = new HComponentFactoryImpl();
 
-	public void saveComponent(ComponentType cX, java.io.File file,
+	public void saveComponent(ComponentType cX, IFile file,
 			IProgressMonitor monitor) {
 		try {
 			// Create a resource set to hold the resources.
@@ -222,7 +208,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			// If there are no arguments, emit an appropriate usage message.
 			//
-			URI uri = URI.createFileURI(file.getPath());
+			URI uri = URI.createURI(file.getFullPath().toPortableString());
 			Resource resource = resourceSet.createResource(uri);
 
 			DocumentRoot dX = factory.createDocumentRoot();
@@ -240,7 +226,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	public void saveComponent(HComponent c, java.io.File file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
+	public void saveComponent(HComponent c, IFile file, IProgressMonitor monitor) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
 
 		this.component = c;
 		ComponentType cX = marshallComponent(c);
@@ -249,132 +235,37 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
-	public HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing, boolean cached, boolean relativePath)
+	public HComponent loadComponent(URI uri, boolean isTop, boolean isExtending, boolean isImplementing)
 			throws HPEInvalidComponentResourceException {
-			ComponentType component = loadComponentX(uri, cached, relativePath);
+			ComponentType component = loadComponentX(uri);
 			return buildComponent(component, uri, isTop, isExtending, isImplementing);
 	}
 
-	private static String workspace_path = null;
-	public static IWorkspace workspace = checkWorkspace();
-	
-	public static void setWorkspacePath(String workspace_path) {
-		HComponentFactoryImpl.workspace_path = workspace_path;
-	}
-
-	public static String getWorkspacePath() {
-		return workspace_path;
-	}
-
 	// Loads a ComponentType object from XML in a HComponent object
-	public ComponentType loadComponentX(URI uri, boolean cache, boolean relativePath)
+	public ComponentType loadComponentX(URI uri)
 			throws HPEInvalidComponentResourceException {
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new ComponentResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI, ComponentPackage.eINSTANCE);
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+					.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+							new ComponentResourceFactoryImpl());
+			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI,
+					ComponentPackage.eINSTANCE);
 
-			Resource resource = null;
-			/*if (this.workspace != null || cache) { 
-				resource = resourceSet.getResource(uri, true);
-			}
-			else*/ if (relativePath){
-				URI uriFull = URI.createFileURI(this.getWorkspacePath() + Path.SEPARATOR + uri.toString());
-				resource = resourceSet.getResource(uriFull, true);
-			} else {
-				URI uriFull = uri; // URI.createFileURI(uri.toString());
-				resource = resourceSet.getResource(uriFull, true);
-			}
+			Resource resource = resourceSet.getResource(uri, true);
 
 			ComponentResourceImpl cResource = (ComponentResourceImpl) resource;
 			EList rs = cResource.getContents();
-			
 			if (rs.size() != 1)
 				throw new HPEInvalidComponentResourceException();
-			
-			ComponentType component = ((DocumentRootImpl) rs.get(0)).getComponent();
+			ComponentType component = ((DocumentRootImpl) rs.get(0))
+					.getComponent();
 
 			return component;
 
 		} catch (Exception e) {
 			throw new HPEInvalidComponentResourceException(e);
 		}
-	}
-
-    public static IPath buildWPath(IPath path_) {
-    	IPath path = path_.setDevice(null);
-    	File file = path.toFile();    	
-    	boolean isRoot = file.exists() && path.toFile().isAbsolute();
-    	if (!isRoot) {
-			IPath wpath = new Path(getWorkspacePath());			
-			IPath rrr = wpath.append(path_);
-			File fileW = rrr.toFile();
-			System.out.print(fileW.exists());
-			return rrr;
-    	} else
-    		return path_;   
-    }
-    
-    public static java.io.File getFileInWorkspace(IPath path) {
-    	
-    	if (path.segment(0).equals("file:")) {
-    		String pathString = path.toString();
-    		path = path.removeFirstSegments(1);
-    		if (pathString.startsWith("file:" + Path.SEPARATOR)) {
-    		   path = path.makeAbsolute();
-    		}
-    	}
-    	
-    	if (path.toFile().isAbsolute()) {
-	        File file = null;
-			IPath fullpath = path;
-			file = fullpath.toFile();        
-	        return file;
-    	} else {
-	        File file = null;
-	    	IPath wpath = new Path(getWorkspacePath());			
-			IPath fullpath = wpath.append(path);
-			file = fullpath.toFile();        
-	        return file;
-    	}
-    	
-    	//IPath wpath = new Path(getWorkspacePath());			
-		//IPath rrr = wpath.append(path);
-	    //return rrr;   
-    }
-
-    public static boolean existsInWorkspace(IPath path) {
-    	IPath wpath = null;
-    	if (path.segment(0).equals("file:")) {
-    		String pathString = path.toString();
-    		path = path.removeFirstSegments(1);
-    		if (pathString.startsWith("file:" + Path.SEPARATOR)) {
-    		   path = path.makeAbsolute();
-    		}
-    	}
-    	File file = path.toFile();
-    	if (file.isAbsolute()) {
-    		wpath = path;
-    	} else {
-    		wpath = buildWPath(path);	
-    	}
-    	
-    	IPath wpath_ = new Path(wpath.toString().replaceAll("%20", " "));
-    	
-    	java.io.File path_bin = wpath_.toFile();		
-		return path_bin.exists();
-    }
-	
-	
-	private static IWorkspace checkWorkspace() {
-		IWorkspace w = null;
-		try {
-		    w = ResourcesPlugin.getWorkspace();
-		    workspace_path = w.getRoot().getLocation().toString();
-		} catch (IllegalStateException e) {
-			System.out.print(e.getMessage());
-		}
-		return w;
 	}
 
 	private Map<String, ComponentInUseType> mC1 = null;
@@ -411,11 +302,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (!fileCache.exists()) {
 				if (locationUri.scheme() == null
 						|| !locationUri.scheme().equals("http")) {
-					// innerUri = locationUri;
-					IPath pathC = new Path(locationUri.toString());	
-					IPath path = HComponentFactoryImpl.buildWPath(pathC);
-					innerUri = URI.createFileURI(path.toString().replaceAll("%20", " "));
-
+					innerUri = locationUri;
 					copyToCache = true;
 				} else {
 					java.io.File file = HPELocationEntry.getComponent(package_.replace(".", ":").split(":"), name, null,locationUri);
@@ -427,27 +314,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						|| !locationUri.scheme().equals("http")) {
 					// COMPARE DATES OF THE PROJECT FILE AND CACHED FILE.
 					IPath pathC = new Path(locationUri.toString());	
-					// IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
-					IPath path = HComponentFactoryImpl.buildWPath(pathC);
+					IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
 					long lastDataCache = fileCache.lastModified();
 				    java.io.File fileProject = new File(path.toString());	
-				    long lastDateProject = fileProject.lastModified();	
-				    // CHECK COMPILED SOURCES STATUS
-				    java.io.File parentFileCache = new File(fileCache.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");
-				    java.io.File parentFileProject = new File(fileProject.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");						    
-				    FilenameFilter filter = new FilenameFilter () {
-						@Override
-						public boolean accept(File dir, String name) {									
-							return name.endsWith(".dll");
-						}};
-				    java.io.File[] fsCache = parentFileCache.listFiles(filter);
-					java.io.File[] fsProject = parentFileProject.listFiles(filter);
-				    
-	                if ((fsCache != null && fsProject != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) 
-	                {
-						IPath pathC1 = new Path(locationUri.toString());	
-						IPath path1 = HComponentFactoryImpl.buildWPath(pathC1);
-						innerUri = URI.createFileURI(path1.toString().replaceAll("%20", " "));
+				    long lastDateProject = fileProject.lastModified();			 
+	                if (lastDateProject > lastDataCache) {
+						innerUri = locationUri;
 						copyToCache = true;
 	                } else 
 					    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
@@ -459,10 +331,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			this.isSubType = extType.isSetExtends() && extType.isExtends();
 			this.isConcrete = extType.isSetImplements()	&& extType.isImplements();
 			
-			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false, this.isSubType, this.isConcrete, !copyToCache, false);
+			HComponent superType = (new HComponentFactoryImpl()).loadComponent(innerUri, false, this.isSubType, this.isConcrete);
 			
 			if (copyToCache)
-				copyProjectToCache(superType, version, locationUri);
+				copyProjectToCache(superType, version);
 			
 			if (retrieveLibraries)
 				retrieveLibraries(superType, locationUri);
@@ -511,9 +383,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					if (!fileCache.exists()) {
 						if (locationUri.scheme() == null
 								|| !locationUri.scheme().equals("http")) {
-							IPath pathC = new Path(locationUri.toString());	
-							IPath path = HComponentFactoryImpl.buildWPath(pathC);
-							innerUri = URI.createFileURI(path.toString().replaceAll("%20", " "));
+							innerUri = locationUri;
 							copyToCache = true;
 						} else {
 							java.io.File file = HPELocationEntry.getComponent(package_
@@ -527,42 +397,32 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 								|| !locationUri.scheme().equals("http")) {
 							// COMPARE DATES OF THE PROJECT FILE AND CACHED FILE.
 							IPath pathC = new Path(locationUri.toString());	
-							//IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
-							IPath path = HComponentFactoryImpl.buildWPath(pathC);
+							IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation();
 							long lastDataCache = fileCache.lastModified();
 						    java.io.File fileProject = new File(path.toString());	
-						    long lastDateProject = fileProject.lastModified();
-						    // COMPARE BINARY FOLDERS
-						    java.io.File parentFileCache = new File(fileCache.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");
-						    java.io.File parentFileProject = new File(fileProject.getParentFile().getAbsolutePath() + Path.SEPARATOR + "bin" + Path.SEPARATOR + "1.0.0.0");						    
-						    FilenameFilter filter = new FilenameFilter () {
-								@Override
-								public boolean accept(File dir, String name) {									
-									return name.endsWith(".dll");
-								}};
-						    java.io.File[] fsCache = parentFileCache.listFiles(filter);
-							java.io.File[] fsProject = parentFileProject.listFiles(filter);
-						    
-			                if ((fsCache != null && fsProject != null) && (lastDateProject > lastDataCache || fsProject.length > fsCache.length || (fsProject != null && fsCache == null))) {
-								IPath pathC1 = new Path(locationUri.toString());	
-								IPath path1 = HComponentFactoryImpl.buildWPath(pathC1);
-								innerUri = URI.createFileURI(path1.toString().replaceAll("%20", " "));
+						    long lastDateProject = fileProject.lastModified();			 
+			                if (lastDateProject > lastDataCache) {
+								innerUri = locationUri;
 								copyToCache = true;
 			                } else 
 							    innerUri = URI.createFileURI(fileCache.getAbsolutePath());
 						} else {
 							innerUri = URI.createFileURI(fileCache.getAbsolutePath());
-						}						
-					}		
+						}
+						
+					}
 		
-					HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false, !copyToCache, false);		
+		
+					 HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri,false, false, false);
+		
 		
 				    if (locationUri.scheme() != null && locationUri.scheme().equals("http")) {
-						innerC.setRemoteURI(locationUri);						
+						innerC.setRemoteURI(locationUri);
+						
 					}
 					
 					if (copyToCache)
-						copyProjectToCache(innerC, version, locationUri);
+						copyProjectToCache(innerC, version);
 					
 					if (retrieveLibraries)
 						retrieveLibraries(innerC, locationUri);
@@ -639,24 +499,20 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		
 	}
 
-	public static void copyProjectToCache(HComponent innerC, String version, URI locationURI) {
+	public static void copyProjectToCache(HComponent innerC, String version) {
 
         IPath pathC = new Path(innerC.getLocalLocation());		
-    	if (pathC.segment(0).equals("file:")) {
-    	    pathC = pathC.removeFirstSegments(1).makeAbsolute();
-    	}
 				
-		//IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation().removeLastSegments(1);
-		IPath path = HComponentFactoryImpl.buildWPath(pathC.setDevice(null)).removeLastSegments(1);
+		IPath path = ResourcesPlugin.getWorkspace().getRoot().getFile(pathC).getLocation().removeLastSegments(1);
 		
-		String cachePath = addSegment(HPEProperties.getInstance().getValue("cache_root"), (new Path(locationURI.toString())).removeLastSegments(1).toString());
+		String cachePath = addSegment(HPEProperties.getInstance().getValue("cache_root"), pathC.removeLastSegments(1).toString());
 				
 		try {
 			copyDirectory(new File(path.toString()), new File(cachePath));
   		    String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
   		    List<String> l = innerC.getModuleNames(version);
   		    for (String fileName : l) {
-	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, path.toFile());
+	            CommandLine.runCommand(new String[] {gacutil_path, "-i", ".." + fileName}, null, path.toFile());
   		    }
 
 		} catch (IOException e) {
@@ -685,7 +541,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if(!srcPath.exists()){
 				System.out.println("File or directory does not exist.");
 				
-				// System.exit(0);
+				System.exit(0);
 			}		
 			else
 			{
@@ -764,8 +620,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (ParameterRenaming p : xInnerC.getParameter()) {
 			String formFieldId = p.getFormFieldId();
 			String varName = p.getVarName();
-			if (!formFieldId.equals("type ?"))
-			   innerC.updateVariableName(formFieldId, varName);
+			innerC.updateVariableName(formFieldId, varName);
 		}
 	}
 
@@ -1089,7 +944,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			ComponentBodyType xCinfo = xC.getComponentInfo();
 
 			String name = xCheader.getName();
-			SupportedKinds kind = xCheader.getKind();
+			String kind = xCheader.getKind();
 			String packagePath = xCheader.getPackagePath();
 			String hash_component_UID = xCheader.getHashComponentUID();			
 			String locationURI = xCheader.getLocationURI(); 
@@ -1136,36 +991,36 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			loadVersions(xCheader.getVersions());
 
 			if (xCinfo != null) {
-
 				loadInnerComponents(xCinfo);
 
 				applyRenaming(xCinfo);
 				loadEnumerators(xCinfo);
 				loadSplits(xCinfo); 
+				setupParameters(xCinfo);
+//				fuseReplicators(xCinfo);
+				supplyParameters(xCinfo);
 				setupVariableNamesOfTopLevelInners(xCinfo);
 				laterFetchPorts();
 
 				if (this.isConcrete)
 					component.setImplements(this.basetype);
+
 				if (this.isSubType)
 					component.setExtends(this.basetype);
 
 				readInterfaces(xCinfo); //
 				loadUnits(xCinfo);//
-				setupParameters(xCinfo);
-				supplyParameters(xCinfo);
 				setRecursive(xCinfo);
 				loadInterfaces(xCinfo, isTop, isImplementing);
 				linksToReplicators(); //
 				fuseReplicators(xCinfo);
 				loadUnitBounds();
 
-				
 				applyFusions(xCinfo);
 
 				loadInterfacePorts();
 				
-				//component.performAdjustSupply();
+				component.performAdjustSupply();
 			}
 
 			return component;
@@ -1410,7 +1265,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// save name
 		xH.setName(c.getComponentName());
 		// save kind
-		xH.setKind(SupportedKinds.get(c.kindString()));
+		xH.setKind(c.kindString());
 		// save base type
 		HComponent sC = c.isAbstractConfiguration() ? c.getSuperType() : c
 				.getWhoItImplements();
@@ -1479,7 +1334,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		xH.setBaseType(baseTypeX);
 
-		EList<ParameterRenaming> parameterRenaming = superTypeX.getParameter();
+		EList parameterRenaming = superTypeX.getParameter();
 		saveVisualDescription(baseType, v);
 
 		EList<UnitBoundsType> unitBounds = superTypeX.getUnitBounds();
@@ -1492,9 +1347,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveInfo(HComponent c, ComponentBodyType xI) throws UndefinedRefInnerException, DuplicatedRefInnerException, DuplicatedSliceNamesException {
 
 		saveInnerComponents(c, xI.getInnerComponent()); // OK !
-	    saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
+		saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
 		saveParameters(c, xI.getParameter()); // OK !
-		saveInnerRenamings(c, xI.getInnerRenaming()); 
+		saveInnerRenamings(c, xI.getInnerRenaming());
 		saveFusions(c, xI.getFusion());
 		saveSplits(c, xI.getSplit());
 		saveInterfaces(c, xI.getInterface());
@@ -1665,7 +1520,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (HComponent ic : cs) {
 
-			if (ic.isParameter() && ic.getSupplier() == null) {
+			if (ic.isParameter() && ic.getSupplied() == null) {
 				String formFieldId = null;
 				String cRef = null;
 				String varName = null;
@@ -1689,13 +1544,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveInnerComponents(HComponent c, EList<InnerComponentType> xI) throws UndefinedRefInnerException, DuplicatedRefInnerException {
+	private void saveInnerComponents(HComponent c, EList xI) throws UndefinedRefInnerException, DuplicatedRefInnerException {
 
 		List<HComponent> cs = new ArrayList<HComponent>();
         int i = 0;
         
         List<String> cRefs = new ArrayList<String>();
-        List<String> cRefsSupply = new ArrayList<String>();
 		
         for (HComponent cInner : c.getComponents()) {
 		    cs.add(cInner);
@@ -1708,15 +1562,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
         }
         
 		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet()) {
+			cs.add(i++, p.getValue());
 			String cRef = p.getValue().getRef();
-			if (cRefsSupply.contains(cRef)) {
-				   throw new DuplicatedRefInnerException(cRef);  
+			if (cRefs.contains(cRef)) {
+				   throw new DuplicatedRefInnerException(cRef); 
 			} else {
-				if (!cRefs.contains(cRef)) {
- 				   cs.add(i++, p.getValue());
-				   cRefs.add(cRef);
-				   cRefsSupply.add(cRef);
-				}
+			   cRefs.add(cRef);
 			}
 		}
 		
@@ -1772,7 +1623,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		String location = ic.getRemoteLocation() == null ? ic.getRelativeLocation() : ic.getRemoteLocation();
 		String package_ = ic.getPackagePath().toString();
-		boolean exposed = ic.isPublic();
+		boolean exposed = ic.getExposed();
 		String hash_component_UID = ic.getHashComponentUID();
 
 		String parameterId = ic.getParameterIdentifier(this.component);
@@ -1820,7 +1671,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveUnitBounds(List<IHUnit> units, EList<UnitBoundsType> unitBounds) {
+	private void saveUnitBounds(List<IHUnit> units, EList unitBounds) {
 
 		Integer replica = null;
 
@@ -1847,7 +1698,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveRecursiveEntries(HComponent component, EList<RecursiveEntryType> xI) {
+	private void saveRecursiveEntries(HComponent component, EList xI) {
 
 		for (HComponent c : component.getComponents()) {
 			if (c.isRecursive()) {
@@ -1903,7 +1754,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void saveSplitLinks(List<HLinkToReplicator> links, EList<SplitLinkType> splitsX) {
+	private void saveSplitLinks(List<HLinkToReplicator> links, EList splitsX) {
 
 		for (HLinkToReplicator l : links) {
 
@@ -1926,13 +1777,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveSplitEnumerators(Collection<HReplicator> rs, EList<String> enumsX) {
+	private void saveSplitEnumerators(Collection<HReplicator> rs, EList enumsX) {
 		for (HReplicator r : rs) {
 			enumsX.add(r.getRef());
 		}
 	}
 
-	private void saveParameterRenamings(HComponent c, EList<ParameterRenaming> parameterRenamings) {
+	private void saveParameterRenamings(HComponent c, EList parameterRenamings) {
 
 		for (Entry<String, List<HComponent>> param : c.getParameters().entrySet()) {
 
@@ -2094,7 +1945,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				actionX = factory.createActionCombinatorAltType();
 			}
 
-			EList<ActionType> innerActionsX = ((ActionCombinatorType) actionX).getAction();
+			EList innerActionsX = ((ActionCombinatorType) actionX).getAction();
 
 			HCombinatorAction combinatorAction = (HCombinatorAction) action;
 
@@ -2250,7 +2101,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void saveUnits(HComponent c, EList<UnitType> xI) throws DuplicatedSliceNamesException {
+	private void saveUnits(HComponent c, EList xI) throws DuplicatedSliceNamesException {
 
 		for (IHUnit u_ : c.getUnits()) {
 
@@ -2305,7 +2156,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 			saveVisualDescription(u, v);
 
-			EList<UnitSliceType> slicesX = uX.getSlices();
+			EList slicesX = uX.getSlices();
 			List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
 			List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
 			List<HUnitSlice> ports = u.getPorts();
@@ -2325,7 +2176,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveUnitSlices(List<HUnitSlice> directSlices,
-			List<HUnitSlice> transitiveSlices, EList<UnitSliceType> slicesX) throws DuplicatedSliceNamesException {
+			List<HUnitSlice> transitiveSlices, EList slicesX) throws DuplicatedSliceNamesException {
 
 		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
 		
@@ -2394,7 +2245,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	
 
-	private void saveSupplyParameters(HComponent c, EList<ParameterSupplyType> xI) {
+	private void saveSupplyParameters(HComponent c, EList xI) {
 
 		for (Entry<String, HComponent> pair : c.getSupplierComponents().entrySet()) {
 
@@ -2419,7 +2270,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveEnumerator(Collection<HReplicator> replicators, EList<EnumeratorType> xI) {
+	private void saveEnumerator(Collection<HReplicator> replicators, EList xI) {
 
 		HComponent topC = null;
 
@@ -2473,7 +2324,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 
 			// EList splitsX = eX.getSplits();
-			EList<EnumerableType> linksX = eX.getLinks();
+			EList linksX = eX.getLinks();
 
 			// saveEnumeratorSplits(e.getSplits(),splitsX); //
 			saveEnumeratorLinks(e.getDirectLinksToMe(), linksX);
@@ -2486,9 +2337,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveEnumeratorLinks(Collection<HLinkToReplicator> linksToMe,
-			EList<EnumerableType> linksX) {
+			EList linksX) {
 
-		List<HVisualElement> replicatedOne = new ArrayList<HVisualElement>();
+		List replicatedOne = new ArrayList();
 
 		List<String> componentsReplicated = new ArrayList<String>();
 		
@@ -2927,16 +2778,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String versionId = s.getVersionId();
 			versionId = checkVersion(versionId) ? versionId : "1.0.0.0";
 			String sourceType = s.getSourceType();
-			HBESourceVersion<HBEAbstractFile> source = i.createSourceVersion(sourceType);
+			HBESourceVersion source = i.createSourceVersion(sourceType);
 			source.setVersionID(versionId);
 
 			for (SourceFileType f : s.getFile()) {
 				String fileType = f.getFileType().equals("dll") ? "library" : f
 						.getFileType();
-				String locallocation = this.component.getRelativeLocation();
-				URI uriRootPath = URI.createURI(locallocation);
-				String rootPath = uriRootPath.toString();
-				rootPath = rootPath.replaceAll("%20", " ");
+				String rootPath = URI.createURI(this.component.getLocalLocation()).devicePath().replaceAll("%20", " ");
 				
 				String versionIdF = f.getVersionId();
 				versionIdF = checkVersion(versionIdF) ? versionIdF : "1.0.0.0";
@@ -3058,38 +2906,42 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return a;
 	}
 
-	private HComponent createComponent(SupportedKinds kind, String name, URI uri)
+	private HComponent createComponent(String kind, String name, URI uri)
 			throws HPEUnknownKindException {
 
 		HComponent c = null;
 
 		HPackageLocation location = null;
-
-		if (kind.getName().equals(HComputationComponent.KIND)) {
-			c = new HComputationComponent(name, location, uri);
-		} else if (kind.getName().equals(HApplicationComponent.KIND)) {
-			c = new HApplicationComponent(name, location, uri);
-		} else if (kind.getName().equals(HSynchronizationComponent.KIND)) {
-			c = new HSynchronizationComponent(name, location, uri);
-		} else if (kind.getName().equals(HArchitectureComponent.KIND)) {
-			c = new HArchitectureComponent(name, location, uri);
-		} else if (kind.getName().equals(HDataComponent.KIND)) {
-			c = new HDataComponent(name, location, uri);
-		} else if (kind.getName().equals(HEnvironmentComponent.KIND)) {
-			c = new HEnvironmentComponent(name, location, uri);
-		} else if (kind.getName().equals(HQualifierComponent.KIND)) {
-			c = new HQualifierComponent(name, location, uri);
-		} else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
-			c = new HEnumeratorComponent(name, location, uri);
-		} else if (kind.getName().equals(HFacetComponent.KIND)) {
-			c = new HFacetComponent(name, location, uri);
-		} else if (kind.getName().equals(HDomainComponent.KIND)) {
-			c = new HDomainComponent(name, location, uri);
-		} else if (kind.getName().equals(HServiceComponent.KIND)) {
-			c = new HServiceComponent(name, location, uri);
-		} else {
-			throw new HPEUnknownKindException("Component Kind Not Supported !");
-		}
+//TODO RAFAEL: REMOVER SE ESTIVER OK:
+//		if (kind.getName().equals(HComputationComponent.KIND)) {
+//			c = new HComputationComponent(name, location, uri);
+//		} else if (kind.getName().equals(HApplicationComponent.KIND)) {
+//			c = new HApplicationComponent(name, location, uri);
+//		} else if (kind.getName().equals(HSynchronizationComponent.KIND)) {
+//			c = new HSynchronizationComponent(name, location, uri);
+//		} else if (kind.getName().equals(HArchitectureComponent.KIND)) {
+//			c = new HArchitectureComponent(name, location, uri);
+//		} else if (kind.getName().equals(HDataComponent.KIND)) {
+//			c = new HDataComponent(name, location, uri);
+//		} else if (kind.getName().equals(HEnvironmentComponent.KIND)) {
+//			c = new HEnvironmentComponent(name, location, uri);
+//		} else if (kind.getName().equals(HQualifierComponent.KIND)) {
+//			c = new HQualifierComponent(name, location, uri);
+//		} else if (kind.getName().equals(HEnumeratorComponent.KIND)) {
+//			c = new HEnumeratorComponent(name, location, uri);
+//		} else if (kind.getName().equals(HFacetComponent.KIND)) {
+//			c = new HFacetComponent(name, location, uri);
+//		} else if (kind.getName().equals(HDomainComponent.KIND)) {
+//			c = new HDomainComponent(name, location, uri);
+//		} else if (kind.getName().equals(HServiceComponent.KIND)) {
+//			c = new HServiceComponent(name, location, uri);
+//		} else {
+			KindConfiguration kindConfiguration = KindManager.findByName(kind);
+			if (kindConfiguration != null) {
+				c = kindConfiguration.newHBaseKindComponent(name, location, uri);
+			}
+//			throw new HPEUnknownKindException("Component Kind Not Supported !");
+//		}
 
 		return c;
 

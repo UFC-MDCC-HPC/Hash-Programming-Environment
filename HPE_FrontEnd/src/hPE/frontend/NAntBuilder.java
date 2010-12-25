@@ -7,10 +7,7 @@ import hPE.frontend.base.dialogs.AddReferencesDialog;
 import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
-import hPE.xml.factory.HComponentFactoryImpl;
-import hPE.xml.factory.HPEInvalidComponentResourceException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +28,6 @@ import net.sf.nant.release._0._86.beta1.nant.ProjectType;
 import net.sf.nant.release._0._86.beta1.nant.Target;
 import net.sf.nant.release._0._86.beta1.nant.util.NantResourceFactoryImpl;
 
-import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -56,22 +52,6 @@ public class NAntBuilder implements Runnable {
 	private HComponent component;
 	private IProgressMonitor monitor;
 	
-	public static void createBuildFile(String path, boolean relativePath) throws HPEInvalidComponentResourceException {
-		   
-		   URI uri = URI.createURI(path); 		   
-		   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, relativePath);
-		   createBuildFile(c);	   
-			
-		}
-	
-	public static void createBuildFile(HComponent c) throws HPEInvalidComponentResourceException {
-		   
-		   NAntBuilder builder = NAntBuilder.instance;
-	   	   builder.setComponent(c);								   
-		   builder.run();	   
-			
-		}
-	
 	public Resource save(HComponent c, IProgressMonitor monitor) {
 		try {
 			// Create a resource set to hold the resources.
@@ -90,18 +70,13 @@ public class NAntBuilder implements Runnable {
 				(NantPackage.eNS_URI, 
 				 NantPackage.eINSTANCE);
 	        
-			// IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocalLocation()));		
+			IFolder file = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(c.getLocalLocation()));		
 			
-			// IPath systemPath = file.getLocation().removeLastSegments(1).append("build.xml");
-			
-			IPath systemPath = new Path(c.getLocalLocation());
-			systemPath = systemPath.removeLastSegments(1).append("build.xml");
-			
-			java.io.File file = HComponentFactoryImpl.getFileInWorkspace(systemPath);
+			IPath systemPath = file.getLocation().removeLastSegments(1).append("build.xml");
 			
 	        // If there are no arguments, emit an appropriate usage message.
 			//
-			URI uri = URI.createFileURI(file.toString());
+			URI uri = URI.createFileURI(systemPath.toOSString());
 			Resource resource = resourceSet.createResource(uri);
 			
 			DocumentRoot dX = factory.createDocumentRoot();
@@ -114,9 +89,8 @@ public class NAntBuilder implements Runnable {
 
 			try {
 				ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-			} catch (IllegalStateException e) {
-
 			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -188,25 +162,17 @@ public class NAntBuilder implements Runnable {
 							compile.setDebug(HPEProperties.getInstance().getValue("compiler_flag_debug").equals("true"));
 							compile.setOptimize(HPEProperties.getInstance().getValue("compiler_flag_optimize").equals("true"));
 							compile.setUnsafe(HPEProperties.getInstance().getValue("compiler_flag_unsafe").equals("true"));
-							java.io.File binPath = HComponentFactoryImpl.getFileInWorkspace(src.getBinaryPath());
-							IPath path_output = Path.fromPortableString(binPath.toString()); // ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
+							IPath path_output = ResourcesPlugin.getWorkspace().getRoot().getFile(src.getBinaryPath()).getLocation(); 
 
-							//IPath path_output_folder = src.getBinaryPath().removeLastSegments(1);
+							IPath path_output_folder = src.getBinaryPath().removeLastSegments(1);
+							IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output_folder);
+							String path_output_folder_string = folderOutput.getLocation().toString();
 							
-							java.io.File folderOutput = binPath.getParentFile();
-							//IFolder folderOutput = ResourcesPlugin.getWorkspace().getRoot().getFolder(path_output_folder);
-							
-							String path_output_folder_string = folderOutput.toString(); //folderOutput.getLocation().toString();
-							
-							// boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
-							// boolean folderOutputExists = HComponentFactoryImpl.existsInWorkspace(path_output_folder);
-							if (!folderOutput.exists()) {
+							boolean folderOutputExists = ResourcesPlugin.getWorkspace().getRoot().exists(path_output_folder);
+							if (!folderOutputExists) {
 								try {
 									NAntBuilder.prepareFolder(folderOutput);
 								} catch (CoreException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
@@ -226,9 +192,8 @@ public class NAntBuilder implements Runnable {
 							
 							compile.setOutput(path_output);
 							compile.setTarget(src.getFileType());
-						    IPath path_snk = new Path(HComponentFactoryImpl.getFileInWorkspace(new Path(c.getLocalLocation())).toString());
-						    
-							// IPath path_snk = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(c.getRelativeLocation())).getLocation();
+						    String u = c.getRelativeLocation();
+							IPath path_snk = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(c.getRelativeLocation())).getLocation();
 							compile.setKeyfile(path_snk.removeFileExtension().addFileExtension("snk"));
 							
 							// Sources
@@ -239,7 +204,7 @@ public class NAntBuilder implements Runnable {
 							// Sources / Includes
 							List<NAntCoreTypesFileSetInclude> includesSrcs = source.getInclude();
 							NAntCoreTypesFileSetInclude includeSrc = factory.createNAntCoreTypesFileSetInclude();
-							includeSrc.setName(HComponentFactoryImpl.getFileInWorkspace(src.getSourcePath())/*ResourcesPlugin.getWorkspace().getRoot().getFile(src.getSourcePath()).getLocation()*/);
+							includeSrc.setName(ResourcesPlugin.getWorkspace().getRoot().getFile(src.getSourcePath()).getLocation());
 							includesSrcs.add(includeSrc);					
 							
 							// References
@@ -250,15 +215,12 @@ public class NAntBuilder implements Runnable {
 							// References / Includes
 							List<NAntCoreTypesFileSetInclude> includeRefs = ref.getInclude();
 							if (src.getDependencies() != null) {
-								for (String dep_ : src.getDependencies())
+								for (String dep : src.getDependencies())
 								{
-									char path_separator = IPath.SEPARATOR;
-									String dep = dep_.replace('/', path_separator);
 									NAntCoreTypesFileSetInclude includeRef = factory.createNAntCoreTypesFileSetInclude();
 								    if (dep.startsWith("%WORKSPACE")) {
-								    	// IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(dep.substring("%WORKSPACE".length())));
-								    	File fpathD = HComponentFactoryImpl.getFileInWorkspace(new Path(dep.substring("%WORKSPACE".length())));
-								    	dep = fpathD.toString();
+								    	IFile fPathD = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(dep.substring("%WORKSPACE".length())));
+								    	dep = fPathD.getLocation().toOSString();
 								    } 
 								    includeRef.setName(dep);
 									includeRefs.add(includeRef);
@@ -305,29 +267,18 @@ public class NAntBuilder implements Runnable {
 		return project;
 	}
 
-	public static void prepareFolder(File folderOutput) throws CoreException, IOException
+	public static void prepareFolder(IFolder folder) throws CoreException
 	{
-		File parent = folderOutput.getParentFile();
-		if (parent.isDirectory())
-		{
-			if (!parent.exists())
-		        prepareFolder(parent);
-		}
-		if (!folderOutput.exists()) {
-			folderOutput.createNewFile();
-		}
-		/*
-		IContainer parent = folderOutput.getParent();
+		IContainer parent = folder.getParent();
 		if (parent instanceof IFolder)
 		{
 			IFolder parentFolder = (IFolder) parent;
 			if (!parentFolder.exists())
 		        prepareFolder(parentFolder);
 		}
-		if (!folderOutput.exists()) {
-			folderOutput.create(true,true,null);
+		if (!folder.exists()) {
+			folder.create(true,true,null);
 		}
-		*/
 
 	} 	
 	

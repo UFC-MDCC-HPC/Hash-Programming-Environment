@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Enumerable Entry Type</b></em>'.
@@ -218,7 +219,7 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__CREF:
 				return getCRef();
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX:
-				return new Integer(getIndex());
+				return getIndex();
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__UREF:
 				return getURef();
 		}
@@ -237,7 +238,7 @@ public class EnumerableEntryTypeImpl extends EnumerableTypeImpl implements Enume
 				setCRef((String)newValue);
 				return;
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__INDEX:
-				setIndex(((Integer)newValue).intValue());
+				setIndex((Integer)newValue);
 				return;
 			case ComponentPackage.ENUMERABLE_ENTRY_TYPE__UREF:
 				setURef((String)newValue);

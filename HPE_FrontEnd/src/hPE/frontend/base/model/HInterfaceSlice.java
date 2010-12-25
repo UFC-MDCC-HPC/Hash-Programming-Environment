@@ -325,7 +325,7 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		if (binding != null) {
 			IHUnit unit = binding.getEntry();
 			HComponent cunit = (HComponent) unit.getConfiguration();
-			return cunit.isPublic();
+			return cunit.getExposed();
 		}
 		
 		return false;

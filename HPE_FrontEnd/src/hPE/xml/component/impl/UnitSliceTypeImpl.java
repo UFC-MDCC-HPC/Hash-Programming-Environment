@@ -11,15 +11,19 @@ import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.VisualElementAttributes;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -67,6 +71,7 @@ public class UnitSliceTypeImpl extends UnitRefTypeImpl implements UnitSliceType 
 	 * @ordered
 	 */
 	protected static final String SLICE_NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getSliceName() <em>Slice Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -276,7 +281,7 @@ public class UnitSliceTypeImpl extends UnitRefTypeImpl implements UnitSliceType 
 			case ComponentPackage.UNIT_SLICE_TYPE__SLICE_NAME:
 				return getSliceName();
 			case ComponentPackage.UNIT_SLICE_TYPE__TRANSITIVE:
-				return isTransitive() ? Boolean.TRUE : Boolean.FALSE;
+				return isTransitive();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -301,7 +306,7 @@ public class UnitSliceTypeImpl extends UnitRefTypeImpl implements UnitSliceType 
 				setSliceName((String)newValue);
 				return;
 			case ComponentPackage.UNIT_SLICE_TYPE__TRANSITIVE:
-				setTransitive(((Boolean)newValue).booleanValue());
+				setTransitive((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -55,7 +55,7 @@ public abstract class HUnit extends HPrimUnit
   	    	 
   	    	 HComponent c = (HComponent) u.getConfiguration();
   	    	 
-  	    	 if (c.isPublic() || c.IsExposedFalsifiedContextTop()) {
+  	    	 if (c.getExposed() || c.IsExposedFalsifiedContextTop()) {
   	    		 ports.add(us);
   	    		 units.add(u);
   	    	 }
@@ -190,10 +190,8 @@ public abstract class HUnit extends HPrimUnit
     public void updatePorts() throws HPEAbortException {
     	Map<HUnitSlice,List<HPort>> newPorts = this.calculatePorts();
     	HInterface i =(HInterface) this.getInterface();
-//    	if (i!=null) {
-	    	HInterfaceSig is = i.getSignature();
-	    	is.updatePorts(newPorts);
-//   	}
+    	HInterfaceSig is = i.getSignature();
+    	is.updatePorts(newPorts);
     }
     
 
@@ -587,7 +585,7 @@ public abstract class HUnit extends HPrimUnit
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-   	       adjustTheNewInterface(new_i, i);
+    	  adjustTheNewInterface(new_i, i);
     	}
     	    	
     	IHUnit u = (IHUnit) u_.getActualUnit();
@@ -878,7 +876,7 @@ public abstract class HUnit extends HPrimUnit
 			    HComponent ccc = !c.getTopParentConfigurations().isEmpty() ? c.getTopParentConfigurations().get(0) : null;
 			//else 
 			//	c = (HComponent)this.getStubs().get(0).getConfiguration();
-			return ccc != null && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop()) || (!c.isPublic() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc));
+			return ccc != null && (c.getExposed() || (!c.getExposed() && c.IsExposedFalsifiedContextTop()) || (!c.getExposed() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc));
 		}
 		
 /*		public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {

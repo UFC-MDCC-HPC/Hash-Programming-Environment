@@ -10,14 +10,18 @@ import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.FusionOfReplicatorsType;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeEList;
+
 
 /**
  * <!-- begin-user-doc -->

@@ -9,11 +9,8 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentInUseType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.InnerComponentType;
-import hPE.xml.component.EntryType;
 import hPE.xml.component.ParameterRenaming;
-import hPE.xml.component.PortType;
 import hPE.xml.component.UnitBoundsType;
-import hPE.xml.component.SplitType;
 import hPE.xml.component.VisualElementAttributes;
 
 import java.util.Collection;
@@ -31,6 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->

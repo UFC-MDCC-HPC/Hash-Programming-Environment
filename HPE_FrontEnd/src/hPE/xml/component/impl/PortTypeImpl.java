@@ -7,22 +7,18 @@
 package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.PortSliceType;
 import hPE.xml.component.PortType;
-
 import hPE.xml.component.VisualElementAttributes;
-import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -253,7 +249,7 @@ public class PortTypeImpl extends EObjectImpl implements PortType {
 			case ComponentPackage.PORT_TYPE__VISUAL_DESCRIPTION:
 				return getVisualDescription();
 			case ComponentPackage.PORT_TYPE__EXPOSED:
-				return isExposed() ? Boolean.TRUE : Boolean.FALSE;
+				return isExposed();
 			case ComponentPackage.PORT_TYPE__PREF:
 				return getPRef();
 		}
@@ -265,7 +261,6 @@ public class PortTypeImpl extends EObjectImpl implements PortType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -273,7 +268,7 @@ public class PortTypeImpl extends EObjectImpl implements PortType {
 				setVisualDescription((VisualElementAttributes)newValue);
 				return;
 			case ComponentPackage.PORT_TYPE__EXPOSED:
-				setExposed(((Boolean)newValue).booleanValue());
+				setExposed((Boolean)newValue);
 				return;
 			case ComponentPackage.PORT_TYPE__PREF:
 				setPRef((String)newValue);

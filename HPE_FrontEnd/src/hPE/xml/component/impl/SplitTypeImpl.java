@@ -13,19 +13,20 @@ import hPE.xml.component.SplitType;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -321,7 +322,7 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 			case ComponentPackage.SPLIT_TYPE__EREF:
 				return getERef();
 			case ComponentPackage.SPLIT_TYPE__N:
-				return new Integer(getN());
+				return getN();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -354,7 +355,7 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 				setERef((String)newValue);
 				return;
 			case ComponentPackage.SPLIT_TYPE__N:
-				setN(((Integer)newValue).intValue());
+				setN((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

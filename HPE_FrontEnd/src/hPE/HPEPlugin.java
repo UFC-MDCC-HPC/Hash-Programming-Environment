@@ -81,7 +81,6 @@ public class HPEPlugin extends AbstractUIPlugin {
 	
 	}
 	
-	
 	public class MyResourceChangeReporter implements IResourceChangeListener {
 		      public void resourceChanged(IResourceChangeEvent event) {
 	               try {
@@ -97,15 +96,17 @@ public class HPEPlugin extends AbstractUIPlugin {
 					           source = event.getSource();
 					           if (source instanceof IProject) {
 					        	   IProject project = (IProject) source;
-					        	   IPath path = project.getFullPath().makeRelative();
+					        	   IPath path = project.getFullPath();
 					        	   String pathStr = path.toString();
 					        	   String[] pathStrArr = pathStr.replace(".", "#").split("#");
 					        	   String cName = pathStrArr[pathStrArr.length - 1];
 					        	   IPath path2 = path.append(cName + ".hpe");
-					        	   
-					        	   NAntBuilder.createBuildFile(path2.toString(), true);
-					        	   
-								   project.refreshLocal(IResource.DEPTH_INFINITE, null);								   
+					        	   URI uri = URI.createURI(path2.toString()); 
+					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false);
+								   NAntBuilder builder = NAntBuilder.instance;
+							   	   builder.setComponent(c);								   
+								   builder.run();
+								   project.refreshLocal(IResource.DEPTH_INFINITE, null);
 								   System.out.println("generated build.xml for " + path2);
 					           }
 
@@ -133,17 +134,16 @@ public class HPEPlugin extends AbstractUIPlugin {
 		         switch (delta.getKind()) {
 		            case IResourceDelta.ADDED:
 		               if (ext != null && fileName.getFileExtension().equals("dll"))
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()},null);		               
+		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()}, null, null);		               
 		               break;
 		            case IResourceDelta.REMOVED:
-		               if (ext != null && fileName.getFileExtension().equals("dll")) {
-						CommandLine.runCommand(new String[] {gacutil_path, "-u", fileName.removeFileExtension().lastSegment()},null);
-					}
+		               if (ext != null && fileName.getFileExtension().equals("dll"))
+		                  CommandLine.runCommand(new String[] {gacutil_path, "-u", fileName.removeFileExtension().lastSegment()}, null, null);
 		               
 		               break;
 		            case IResourceDelta.CHANGED:
 		               if (ext != null && ext.equals("dll")) {
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()},null);
+		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()}, null,  null);
 		               }
 		               break;
 		         }

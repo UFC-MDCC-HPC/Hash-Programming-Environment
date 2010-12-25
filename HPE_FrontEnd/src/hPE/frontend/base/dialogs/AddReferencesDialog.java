@@ -11,7 +11,6 @@ import hPE.frontend.base.externalreferences.impl.DocumentRootImpl;
 import hPE.frontend.base.externalreferences.util.ExternalreferencesResourceFactoryImpl;
 import hPE.frontend.base.externalreferences.util.ExternalreferencesResourceImpl;
 import hPE.frontend.base.model.HHasExternalReferences;
-import hPE.frontend.base.model.HInterface;
 
 import java.awt.Frame;
 import java.awt.Rectangle;
@@ -27,10 +26,12 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -44,9 +45,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import java.awt.Dimension;
-import javax.swing.JTextArea;
-import javax.swing.JList;
 
 public class AddReferencesDialog extends JDialog  implements ActionListener  {
 
@@ -122,6 +120,10 @@ public class AddReferencesDialog extends JDialog  implements ActionListener  {
 			mono_path = mono_path.append(new Path("lib" + IPath.SEPARATOR + "mono" + IPath.SEPARATOR + lib_mono_version));
 			File mono_path_file = new File(mono_path.toString());
 			
+			if (!mono_path_file.isDirectory()) {
+				DialogUtil.openError("Variable MONO_PATH not set in hpe.frontend.properties.");
+			}
+			
 			File[] files = mono_path_file.listFiles();
 			for (File f : files) {
 				if (f.isFile()) {				
@@ -136,7 +138,7 @@ public class AddReferencesDialog extends JDialog  implements ActionListener  {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Variable MONO_PATH not set in hpe.frontend.properties.", "Error", JOptionPane.ERROR_MESSAGE);
+			DialogUtil.openError("Variable MONO_PATH not set in hpe.frontend.properties.");
 		}
 	}
 

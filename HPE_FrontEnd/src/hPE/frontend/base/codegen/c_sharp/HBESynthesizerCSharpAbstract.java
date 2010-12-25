@@ -21,7 +21,6 @@ import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 
@@ -54,7 +53,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
         for (HPort port : ports) {
         	if (!port.isInherited()) {
                 HComponent pc = (HComponent)port.getConfiguration();
-        		String sliceTypeName = ((HInterface)port.getInterface()).isParameter() ? pc.getVariableName((HComponent) i.getConfiguration()):  ((HInterface)port.getInterface()).getName2(false,varContext, null);
+        		String sliceTypeName = ((HInterface)port.getInterface()).isAbstract() ? pc.getVariableName((HComponent) i.getConfiguration()):  ((HInterface)port.getInterface()).getName2(false,varContext);
 				if (theSlices.containsKey(sliceTypeName)) {
 					slices = theSlices.get(sliceTypeName);
 				} else {
@@ -103,15 +102,12 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
         List<HInterface> paramBounds = new ArrayList<HInterface>();
         List<String> paramBoundsName = new ArrayList<String>();
                 
-		List<Pair<String, HInterface>> interface_bounds = new ArrayList<Pair<String, HInterface>>();
-		HComponent topC = (HComponent) i.getConfiguration().getTopConfiguration();
-		
-		for (Triple<String,HInterface,String> p : i.getParameters(topC)) {
+ 		for (Triple<String,HInterface,String> p : i.getParameters()) {
  			String varName = p.fst();
  			if (!varContext.contains(varName)) {
 	 			HInterface i1 = p.snd();
 	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
-	 			//if (c.isParameter() && c.getSupplier() == null) {
+	 			if (c.isParameter() && c.getSupplied() == null) {
 	 			   List<HInterface> bounds = new ArrayList<HInterface>();
 	 			   HInterface bound = p.snd();
 	 			   bounds.add(bound);
@@ -122,18 +118,12 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 	 					  paramBounds.add(oneBound);
 	 				  }
 	 			   }
-		 		   interface_bounds.add(new Pair<String, HInterface>(varName, bound));
-	 			//}
+	 				
+	               programTextVarBounds += "where " + varName + ":" + bound.getName2(false,varContext) + "\n";
+	 			}
 	 			varContext.add(varName);
  			}
  		} 
-		
- 		for (Pair<String, HInterface> pair : interface_bounds) {
-   		   String varName = pair.fst().split("@")[0];
-   		   HInterface bound = pair.snd();
-   		   programTextVarBounds += "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
-   		}
-		
         
         fillPortSlices(i,varContext);
         
@@ -143,7 +133,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		String componentName = i.getConfiguration().getComponentName();
 		
 
-		programText += "using br.ufc.pargo.hpe.kinds;\n";
+		programText += "using hpe.kinds;\n";
 
 		// GET REFERENCES - Begin ...
 		
@@ -208,11 +198,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
 		
 		
-//		String l = i.getConfiguration().getLocalLocation();
-		HComponent c = (HComponent) i.getConfiguration();
-		String l = c.getRelativeLocation();
-		
-		
+		String l = i.getConfiguration().getLocalLocation();	   
 	    String procFileName = i.getPrimName();		
 		
 		HBESourceCSharpClassDefinition userInterfaceDef = new HBESourceCSharpClassDefinition (procFileName + ".cs", programText, l,versionID, i, "user");
@@ -232,14 +218,12 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
         List<HInterface> paramBounds = new ArrayList<HInterface>();
         List<String> paramBoundsName = new ArrayList<String>();
                 
-		List<Pair<String, HInterface>> interface_bounds = new ArrayList<Pair<String, HInterface>>();
-		HComponent topC = (HComponent) i.getConfiguration().getTopConfiguration();
-		for (Triple<String,HInterface,String> p : i.getParameters(topC)) {
+ 		for (Triple<String,HInterface,String> p : i.getParameters()) {
  			String varName = p.fst();
  			if (!varContext.contains(varName)) {
 	 			HInterface i1 = p.snd();
 	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
-	 			//if (c.isParameter() && c.getSupplier() == null) {
+	 			if (c.isParameter() && c.getSupplied() == null) {
 	 			   List<HInterface> bounds = new ArrayList<HInterface>();
 	 			   HInterface bound = p.snd();
 	 			   bounds.add(bound);
@@ -249,21 +233,18 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 	 					  paramBoundsName.add(oneBound.getPrimName());
 	 					  paramBounds.add(oneBound);
 	 				  }
-	 			  // }
+	 			   }
 	 				
-	 			  interface_bounds.add(new Pair<String, HInterface>(varName, bound));   
-	               // programTextVarBounds += "where " + varName + ":" + bound.getName2(false,varContext, null) + "\n";
+	 			/*   HInterface bound = p.snd();
+	 			   if (!paramBoundsName.contains(bound.getPrimName())) { 
+	 	//			   paramBoundsName.add(bound.getPrimName());
+	 				   paramBounds.add(bound);
+	 			   } */
+	               programTextVarBounds += "where " + varName + ":" + bound.getName2(false,varContext) + "\n";
 	 			}
 	 			varContext.add(varName);
  			}
  		} 
- 		
- 		for (Pair<String, HInterface> pair : interface_bounds) {
-   		   String varName = pair.fst().split("@")[0];
-   		   HInterface bound = pair.snd();
-   		   programTextVarBounds += "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
-   		}
-
         
         fillPortSlices(i,varContext);
         
@@ -273,7 +254,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		String componentName = i.getConfiguration().getComponentName();
 		
 
-		programText += "using br.ufc.pargo.hpe.kinds;\n";
+		programText += "using hpe.kinds;\n";
 
 		// GET REFERENCES - Begin ...
 		
@@ -284,7 +265,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 			
 			HInterfaceSlice s = ss.getValue().get(0);
 
-			for (Pair<String,HInterface> dep : ((HInterface)s.getInterface()).getCompilationDependencies()) {
+			for (Pair<String,HInterface> dep : ((HInterface)s.getInterface()).getCompilationDependencies3()) {
 				String depStr = dep.fst();
  				String useStr = depStr.substring(0, depStr.lastIndexOf("."));
 				HInterface ii = dep.snd();
@@ -410,8 +391,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 
 		programText += "\n} // end namespace \n"; // end namespace
 		
-		HComponent c = (HComponent) i.getConfiguration();
-		String l = c.getRelativeLocation();
+	    String l = i.getConfiguration().getLocalLocation();
 	    
 	    String procFileName = i.getPrimName();
 	    

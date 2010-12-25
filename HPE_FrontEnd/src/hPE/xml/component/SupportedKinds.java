@@ -22,8 +22,6 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum SupportedKinds implements Enumerator {
-
-
 	/**
 	 * The '<em><b>Data</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -33,7 +31,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	DATA(0, "Data", "Data"),
-	
+
 	/**
 	 * The '<em><b>Computation</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -52,7 +50,9 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	SYNCHRONIZER(2, "Synchronizer", "Synchronizer"), /**
+	SYNCHRONIZER(2, "Synchronizer", "Synchronizer"),
+
+	/**
 	 * The '<em><b>Architecture</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +90,9 @@ public enum SupportedKinds implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	APPLICATION(6, "Application", "Application"), /**
+	APPLICATION(6, "Application", "Application"),
+
+	/**
 	 * The '<em><b>Enumerator</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -121,14 +123,14 @@ public enum SupportedKinds implements Enumerator {
 	DOMAIN(9, "Domain", "Domain"),
 
 	/**
-	 * The '<em><b>Domain</b></em>' literal object.
+	 * The '<em><b>Service</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #DOMAIN_VALUE
+	 * @see #SERVICE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SERVICE(9, "Service", "Service");
+	SERVICE(10, "Service", "Service");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -250,7 +252,6 @@ public enum SupportedKinds implements Enumerator {
 	 */
 	public static final int ENUMERATOR_VALUE = 7;
 
-
 	/**
 	 * The '<em><b>Facet</b></em>' literal value.
 	 * <!-- begin-user-doc -->
@@ -263,7 +264,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @model name="Facet"
 	 * @generated
 	 * @ordered
-	 */	
+	 */
 	public static final int FACET_VALUE = 8;
 
 	/**
@@ -280,8 +281,7 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	public static final int DOMAIN_VALUE = 9;
-	
-	
+
 	/**
 	 * The '<em><b>Service</b></em>' literal value.
 	 * <!-- begin-user-doc -->
@@ -374,8 +374,9 @@ public enum SupportedKinds implements Enumerator {
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
 			case ENUMERATOR_VALUE: return ENUMERATOR;
-			case DOMAIN_VALUE: return DOMAIN;
 			case FACET_VALUE: return FACET;
+			case DOMAIN_VALUE: return DOMAIN;
+			case SERVICE_VALUE: return SERVICE;
 		}
 		return null;
 	}

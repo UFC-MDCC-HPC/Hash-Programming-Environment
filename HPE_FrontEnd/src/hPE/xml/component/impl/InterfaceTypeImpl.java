@@ -9,7 +9,6 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ActionType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.InterfaceParameterType;
-import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.InterfaceType;
@@ -32,6 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -455,7 +455,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
-				return new Integer(getNArgs());
+				return getNArgs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -499,7 +499,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				setIRef((String)newValue);
 				return;
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
-				setNArgs(((Integer)newValue).intValue());
+				setNArgs((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

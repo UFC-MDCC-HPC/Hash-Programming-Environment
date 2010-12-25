@@ -25,7 +25,7 @@ public class HPEResourceNavigator extends ResourceNavigator {
 
 	private void initialize() {
 	
-	   
+	    this.getActionGroup();
 		
 	}
 	

@@ -81,6 +81,23 @@ public interface ComponentBodyType extends EObject {
 	EList<InnerComponentType> getInnerComponent();
 
 	/**
+	 * Returns the value of the '<em><b>Parameter</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.ParameterType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parameter</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parameter</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getComponentBodyType_Parameter()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='parameter' group='#group:0'"
+	 * @generated
+	 */
+	EList<ParameterType> getParameter();
+
+	/**
 	 * Returns the value of the '<em><b>Supply Parameter</b></em>' containment reference list.
 	 * The list contents are of type {@link hPE.xml.component.ParameterSupplyType}.
 	 * <!-- begin-user-doc -->
@@ -132,6 +149,23 @@ public interface ComponentBodyType extends EObject {
 	EList<FusionType> getFusion();
 
 	/**
+	 * Returns the value of the '<em><b>Split</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.SplitType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Split</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Split</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getComponentBodyType_Split()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='split' group='#group:0'"
+	 * @generated
+	 */
+	EList<SplitType> getSplit();
+
+	/**
 	 * Returns the value of the '<em><b>Recursive Entry</b></em>' containment reference list.
 	 * The list contents are of type {@link hPE.xml.component.RecursiveEntryType}.
 	 * <!-- begin-user-doc -->
@@ -147,23 +181,6 @@ public interface ComponentBodyType extends EObject {
 	 * @generated
 	 */
 	EList<RecursiveEntryType> getRecursiveEntry();
-
-	/**
-	 * Returns the value of the '<em><b>Parameter</b></em>' containment reference list.
-	 * The list contents are of type {@link hPE.xml.component.ParameterType}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Parameter</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameter</em>' containment reference list.
-	 * @see hPE.xml.component.ComponentPackage#getComponentBodyType_Parameter()
-	 * @model containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='parameter' group='#group:0'"
-	 * @generated
-	 */
-	EList<ParameterType> getParameter();
 
 	/**
 	 * Returns the value of the '<em><b>Interface</b></em>' containment reference list.
@@ -232,22 +249,5 @@ public interface ComponentBodyType extends EObject {
 	 * @generated
 	 */
 	EList<FusionsOfReplicatorsType> getFusionsOfReplicators();
-
-	/**
-	 * Returns the value of the '<em><b>Split</b></em>' containment reference list.
-	 * The list contents are of type {@link hPE.xml.component.SplitType}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Split</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Split</em>' containment reference list.
-	 * @see hPE.xml.component.ComponentPackage#getComponentBodyType_Split()
-	 * @model containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='split' group='#group:0'"
-	 * @generated
-	 */
-	EList<SplitType> getSplit();
 
 } // ComponentBodyType

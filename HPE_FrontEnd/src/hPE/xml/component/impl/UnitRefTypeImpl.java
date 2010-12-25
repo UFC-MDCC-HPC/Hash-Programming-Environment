@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Unit Ref Type</b></em>'.
@@ -253,7 +254,7 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return getCRef();
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				return new Integer(getReplica());
+				return getReplica();
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				return getURef();
 		}
@@ -272,7 +273,7 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 				setCRef((String)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				setReplica(((Integer)newValue).intValue());
+				setReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				setURef((String)newValue);
