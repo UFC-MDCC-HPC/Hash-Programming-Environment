@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.utils
 {
@@ -62,10 +63,37 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public static string KEY_KEY = "key";      
         public static string UID_KEY = "uid";
         public static string SESSION_KEY = "session";
-//        public static string AUTOMATIC_KEY = "automatic";
-        public static string IS_COMPONENT_INSTANCE_KEY = "is_instance";
+        public static string ASSEMBLY_STRING_KEY = "assembly_string";
+        public static string ID_CONCRETE_KEY = "id_concrete";
+        public static string ID_ABSTRACT_KEY = "id_abstract";
+        public static string ID_INNER_KEY = "id_inner";
+        public static string ID_INTERFACE_KEY = "id_interface";
+        public static string KIND_KEY = "kind";
 
         public static string DEFAULT_PROVIDE_PORT_IMPLEMENTS = "implements";
+
+        public const int KIND_UNRECOGNIZED = -1;
+        public const int KIND_APPLICATION   = 0;
+        public const int KIND_COMPUTATION = 1;
+        public const int KIND_SYNCHRONIZER = 2;
+        public const int KIND_ENVIRONMENT = 3;
+        public const int KIND_PLATFORM      = 4;
+        public const int KIND_ENUMERATOR    = 5;
+        public const int KIND_QUALIFIER = 6;
+        public const int KIND_SERVICE = 7;
+        public const int KIND_DATASTRUCTURE = 8;
+
+        public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()
+        {
+            {"Application", Constants.KIND_APPLICATION},
+            {"Architecture", Constants.KIND_PLATFORM},
+            {"Computation", Constants.KIND_COMPUTATION},
+            {"Data",Constants.KIND_DATASTRUCTURE},
+            {"Enumerator",Constants.KIND_ENUMERATOR},
+            {"Environment",Constants.KIND_ENVIRONMENT},
+            {"Qualifier",Constants.KIND_QUALIFIER},
+            {"Synchronizer", Constants.KIND_SYNCHRONIZER}
+        };
 
         public static string getArgVal(string argId)
         {

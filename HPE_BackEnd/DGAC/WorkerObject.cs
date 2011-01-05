@@ -159,7 +159,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.setServices(new WorkerServicesImpl(this, new WorkerComponentIDImpl("framework")));
             DGAC.BackEnd.framework = this;
 
-          //  this.registerComponentID(this.services.getComponentID(), services);
+            this.global_communicator = MPI.Communicator.world;
+            my_rank = this.global_communicator.Rank;
+
         }
 
 
@@ -236,100 +238,77 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         #region BuilderService Members
 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public ComponentID createInstance(string instanceName,
                                           string className,    // unit name (data)
                                           TypeMap properties)
         {
-            HPETypeMap hpe_properties = (HPETypeMap)properties;
+            ComponentID cid = null;
+
+            int kind = properties.getInt(Constants.KIND_KEY, Constants.KIND_UNRECOGNIZED);
+
+            switch (kind)
+            {
+                case Constants.KIND_APPLICATION: cid = createInstanceApplication(instanceName, className, properties); break;
+                case Constants.KIND_COMPUTATION:
+                case Constants.KIND_DATASTRUCTURE:
+                case Constants.KIND_ENUMERATOR:
+                case Constants.KIND_ENVIRONMENT:
+                case Constants.KIND_PLATFORM:
+                case Constants.KIND_QUALIFIER:
+                case Constants.KIND_SERVICE:
+                case Constants.KIND_SYNCHRONIZER: cid = createInstanceX(instanceName, className, properties); break;
+                case Constants.KIND_UNRECOGNIZED: throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
+            }
+
+            return cid;
+        }
+
+
+        public ComponentID createInstanceApplication(string instanceName,
+                                          string className,    // unit name (data)
+                                          TypeMap properties)
+        {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
             unitProperties.Add(cid, properties);
-            if (hpe_properties.ContainsKey(Constants.IS_COMPONENT_INSTANCE_KEY))
-            {
-                // CREATE AN INNER COMPONENT INSTANCE. 
 
-                // <instanceName> = <instance of the enclosing component>.<id_inner>
+            string hash_component_uid = properties.getString(Constants.UID_KEY, "not found");
+            int key = properties.getInt(Constants.KEY_KEY, my_rank);
 
-                int last_dot = instanceName.LastIndexOf("-");
-                string enclosingInstanceName = instanceName.Substring(0, last_dot);
-                string id_inner = instanceName.Substring(last_dot + 1);
-                ComponentID enclosing_cid;
-                componentIDs.TryGetValue(enclosingInstanceName, out enclosing_cid);
-                IUnit unit = null;
-                unitInstances.TryGetValue(enclosing_cid, out unit);
-                string id_interface = className;
-                int id_abstract = unit.Id_abstract;
+            br.ufc.pargo.hpe.kinds.IApplicationKind pmain = createUnitInstanceApplication(hash_component_uid, className, (TypeMapImpl)properties);
+            pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
 
-                Slice slice = BackEnd.sdao.retrieve2(id_abstract, id_inner, id_interface, unit.Id_interface);
-                string propertyName = slice.PortName;
+            Services services = new WorkerServicesImpl(this, cid, hash_component_uid, className, pmain);
+            pmain.setServices(services);
 
-                IUnit unit_slice = this.createUnitInstanceComponent(unit, propertyName, id_inner, id_interface);
-                unit_slice.setServices(new WorkerServicesImpl(this,cid,unit_slice));
+            pmain.createSlices();
 
-                // this.addProvidesPort(unit_slice, instanceName + ":implements", id_interface, new TypeMapImpl());
+            return cid;
+        }
 
-            }
-            else
-            {
-                // CREATE AN APPLICATION INSTANCE (TOP LEVEL COMPONENT) 
-                this.global_communicator = MPI.Communicator.world;
-                my_rank = this.global_communicator.Rank;
+        public ComponentID createInstanceX(string instanceName,
+                                           string className,
+                                           TypeMap properties)
+        {
+            ComponentID cid = new WorkerComponentIDImpl(instanceName);
+            unitProperties.Add(cid, properties);
 
-                string hash_component_uid = null;
-                object hash_component_uid_obj = null;
-                if (hpe_properties.TryGetValue(Constants.UID_KEY, out hash_component_uid_obj))
-                {
-                    hash_component_uid = (string)hash_component_uid_obj;
-                }
+            string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
+            int id_abstract = properties.getInt(Constants.ID_ABSTRACT_KEY, 0);
+            string id_interface = properties.getString(Constants.ID_INTERFACE_KEY, "");
+            int id_concrete = properties.getInt(Constants.ID_CONCRETE_KEY, 0);
+            string id_inner = properties.getString(Constants.ID_INNER_KEY, "");
+            
+            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)Activator.CreateInstance(assembly_string, className).Unwrap();
 
-                int key = my_rank;
-                object keyObj = null;
-                if (hpe_properties.TryGetValue(Constants.KEY_KEY, out keyObj))
-                {
-                    key = (int)keyObj;
-                }
+            unit_slice.Id_abstract = id_abstract;
+            unit_slice.Id_interface = id_interface;
+            unit_slice.Id_inner = id_inner;
+            unit_slice.Id_concrete = id_concrete;
 
-                IList<string> eStrL = new List<string>();
-
-                // READING SESSION ID
-                object sessionObj = null;
-                int session_id = -1;
-                if (hpe_properties.TryGetValue(Constants.SESSION_KEY, out sessionObj))
-                {
-                    session_id = (int)sessionObj;
-                    eStrL.Add("--session");
-                    eStrL.Add(session_id.ToString());
-                }
-
-                // --- READING ENUMERATORS AND COPYING TO args OBJECT PASSED TO DGACInit
-
-                IDictionary<string, int> enums = readEnumerators(hpe_properties);
-
-                foreach (KeyValuePair<string, int> k in enums)
-                {
-                    eStrL.Add("--enumerator");
-                    eStrL.Add(k.Key);
-                    eStrL.Add(k.Value.ToString());
-                }
-                // ---------------------------------------------------------------------
-
-                string[] args = new string[eStrL.Count];
-                eStrL.CopyTo(args, 0);
-
-                br.ufc.pargo.hpe.kinds.IApplicationKind pmain = createUnitInstanceApplication(hash_component_uid, className, (TypeMapImpl)properties);
-                pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-                Services services = new WorkerServicesImpl(this, cid, hash_component_uid, className, pmain, args);
-
-                this.registerComponentID(cid, services, pmain);
-                
-                pmain.setServices(services);
-                pmain.createSlices();
-
-
-                //Go go = new Go(my_rank, pmain);
-                //Thread thread_go = new Thread(go.go);
-                //thread_go.Start();
-            }
+            Services services = new WorkerServicesImpl(this, cid, unit_slice);
+            unit_slice.setServices(services);
 
             return cid;
         }
@@ -473,23 +452,36 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
             connectionList.Add(connection);
-            addConnByProviderPort(provider.getInstanceName() + ":" + providingPortName, connection);
+            bool first_connection = addConnByProviderPort(provider.getInstanceName() + ":" + providingPortName, connection);
             connByUserPort.Add(user.getInstanceName() + ":" + usingPortName, connection);
             this.tryAwakeConnectingUserPort(usingPortName);
+
+            IUnit user_unit, provider_unit;
+            this.unitInstances.TryGetValue(user, out user_unit);
+            this.unitInstances.TryGetValue(provider, out provider_unit);
+
+            if (first_connection)
+                DGAC.BackEnd.setupSlice(user_unit, provider_unit);
 
             return connection;
         }
 
-        private void addConnByProviderPort(string portName, ConnectionID connection)
+        private bool addConnByProviderPort(string portName, ConnectionID connection)
         {
             IList<ConnectionID> listConn;
+            bool first_connection = true;
             if (!connByProviderPort.TryGetValue(portName, out listConn))
             {
                 listConn = new List<ConnectionID>();
                 connByProviderPort.Add(portName, listConn);
             }
+            else
+            {
+                first_connection = false;
+            }
             listConn.Add(connection);
-            
+
+            return first_connection;
         }
 
         private void tryAwakeConnectingUserPort(string usingPortName)
@@ -987,24 +979,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 	
 	
-        public void Init(string hash_component_uid, string my_id_unit, IUnit pmain, string[] args)
+        public void Init(ComponentID cid, string hash_component_uid, string my_id_unit, IUnit pmain)
         {
-            // slices = new List<hpe.basic.IUnit>();
-
-            session_id = getSessionID(args);
-
-            //                if (session_id >= 0)
-            //                    RedirectOutput(session_id);
-            //                else
-            //                    open_log_out = false;
-
             Connector.openConnection();
+
+            TypeMap properties = this.getComponentProperties(cid);
 
             DGAC.database.Component c = BackEnd.cdao.retrieve_uid(hash_component_uid);
 
             int id_abstract = c.Id_abstract;
             int id_concrete = c.Id_concrete;
 
+            pmain.Id_functor_app = c.Id_functor_app;
             pmain.Id_concrete = id_concrete;
             pmain.Id_abstract = id_abstract;
             pmain.Id_interface = my_id_unit;
@@ -1018,7 +1004,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             foreach (Enumerator e in eList)
             {
                 int rangeInf_ = 0;
-                int rangeSup_ = enumeratorCardinality(args, e.Variable);
+                int rangeSup_ = enumeratorCardinality(properties.getStringArray(Constants.ENUMS_KEY,new string[0]), e.Variable);
 
                 eInf.Add(e.Id_enumerator, rangeInf_);
                 eSup.Add(e.Id_enumerator, rangeSup_);
@@ -1132,10 +1118,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         }
 
 
-        private StreamWriter log_out = null;
-        private string output_log_filename = "output";
-        private bool open_log_out = true;
-
         private static readonly DateTime Jan1st1970 = new DateTime
             (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -1143,31 +1125,23 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
-
-        private int globalRank(string[] args)
-        {
-            int step = 0;
-            foreach (string a in args)
-            {
-                if (step == 0 && a.Equals("--myrank"))
-                    step++;
-                else if (step == 1)
-                    return Int32.Parse(a);
-            }
-            return -1;
-        }
         
-        private int enumeratorCardinality(string[] args, string var)
+        private int enumeratorCardinality(string[] enums, string var)
         {
             int step = 0;
-            foreach (string a in args)
+            foreach (string a in enums)
             {
-                if (step == 0 && a.Equals("--enumerator")) step++;
-                else if (step == 1 && (var.Equals(a))) step++;
-                else if (step == 2) return Int32.Parse(a);
-                else step = 0;
+                if (step == 0 && a.Equals(var))
+                {
+                    step = 1;
+                }
+                else if (step == 1)
+                {
+                    return int.Parse(a);
+                }
             }
-            return 1;
+
+            return 0;
         }
 
         public void openConnection()
@@ -1189,113 +1163,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         }
 
 
-
-        private IDictionary<string, System.Type> instanceCache;
-
-        // CREATE AN INSTANCE OF A SEQUENCIAL #-COMPONENT (Only one unit is assumed)
-        public Object createInstance(System.Type T)
-        {
-            string library_path = T.FullName;
-
-            return createInstance(library_path);
-        }
-
-
-        public Object createInstance(string library_path)
-        {
-            return createInstance(library_path, new System.Type[] { });
-        }
-
-        public Object createInstance(string library_path, System.Type[] typeParams)
-        {
-            System.Type closedT = null;
-
-            if (instanceCache == null || !instanceCache.ContainsKey(library_path))
-            {
-                Interface i = BackEnd.idao.retrieve_libraryPath(library_path);
-
-                int id_abstract = i.Id_abstract;
-
-                DGAC.database.Component c = BackEnd.cdao.retrieveThatImplements(id_abstract)[0];
-
-                database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, 1);
-
-                string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
-                string class_name = u.Class_name;  // the name of the class inside the DLL.
-                int class_nargs = u.Class_nargs;
-
-                //IPImpl, Version=1.0.0.0, Culture=neutral, PublicKey=0024000004800000940000000602000000240000525341310004000001000100CD27D3A31B4F32440C52F63365D89A2D9527864AAEDC551F83D6345719CCD2937126770A203F67551BD45EA1D835E71AE79AEB8E46AC23829AF52F70D364268574D94DC912CB9A1458B90AABE649B0A6966BA5ECFE1599FEA3969F2B49A5E630821CE6BC8A65B9FB65FFDEF61AB4D07C32B242CEEEFCBDC5151D2B7ABB6D87B0, processorArchitecture=MSIL
-
-                Assembly a = Assembly.Load(assembly_string);
-
-                string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-                System.Type t = a.GetType(strType);
-                closedT = typeParams.Length > 0 ? t.MakeGenericType(typeParams) : t;
-
-                if (instanceCache == null) instanceCache = new Dictionary<string, System.Type>();
-                instanceCache.Add(library_path, closedT);
-            }
-            else
-            {
-                instanceCache.TryGetValue(library_path, out closedT);
-            }
-
-            hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
-
-            return o;
-
-        }
-
-        public IUnit  createUnitInstanceComponent(
-            IUnit unit, 
-            string propertyName, // DGAC.database.Component c,                              
-            string id_inner, 
-            string id_interface /*, IDictionary<string, int> actualParameters_new*/
-        )
-        {
-            DGAC.database.Component c = BackEnd.cdao.retrieve(unit.Id_concrete);
-            int id_abstract = c.Id_abstract;
-            database.Unit u = LoaderApp.resolveImpl(unit, c.Id_concrete, id_inner, id_interface);
-
-            DGAC.database.Component cu = BackEnd.cdao.retrieve(u.Id_concrete);
-
-            if (u == null)
-                throw new ConcreteComponentNotFoundException(id_abstract, id_inner, c.Id_functor_app);
-
-            string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
-            string class_name = u.Class_name;  // the name of the class inside the DLL.
-            int class_nargs = u.Class_nargs;
-
-            System.Type[] actualParams;
-
-            Assembly a = Assembly.Load(assembly_string);
-
-            string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-            System.Type t = a.GetType(strType);
-
-            this.buildParamTable(propertyName, unit.GetType(), out actualParams);
-
-            System.Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
-
-            hpe.basic.IUnit o = (hpe.basic.IUnit)Activator.CreateInstance(closedT);
-
-            o.Id_concrete = u.Id_concrete;
-            o.Id_abstract = u.Id_interface_abstract;
-            o.Id_interface = u.Id_interface_interface;
-            o.Id_inner = id_inner;
-            o.ContainerSlice = unit;
-            o.GlobalRank = unit.GlobalRank;
-
-            return o;
-        }
-
         private IDictionary<int, System.Type> paramTable = new Dictionary<int, System.Type>();
 
-        private void buildParamTable(String propertyName, System.Type myType, out System.Type[] actualParams)
-        {
-            System.Type o = myType.BaseType.GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance).PropertyType;
-            actualParams = o.GetGenericArguments();
-        }
 
 
         private IDictionary<string, System.Type> checked_types = new Dictionary<string, System.Type>();
@@ -1346,7 +1215,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 IDictionary<string, Interface> sliceParameters = null;
                 IDictionary<string, int> actualParameters_new = null;
-                hpe.basic.Unit.determineActualParameters(actualParameters, ic.Id_functor_app, out actualParameters_new);
+                DGAC.BackEnd.determineActualParameters(actualParameters, ic.Id_functor_app, out actualParameters_new);
                 fetchParameters(actualParameters_new, id_functor_app_inner, id_abstract_inner, iSlice, out sliceParameters);
 
                 foreach (KeyValuePair<string, Interface> kvp in sliceParameters)

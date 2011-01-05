@@ -68,15 +68,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	//returns a impl of the inner
 	//return -1 if the impl doesnt exist    
 
-	public static Unit resolveImpl(IUnit unit, int id_concrete, string id_inner, string id_interface){
+        public static Unit resolveImpl(IUnit unit, string id_inner, string id_interface)
+        {
 
 
        // Console.WriteLine("ENTER RESOLVEIMPL");
 
-	    Component component = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
+	    // Component component = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
 	
 		//get abstract component from received component for walking through its inner components
-        AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);
+        AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(unit.Id_functor_app);
 
 		//INIT 
 		if(acfa!=null){

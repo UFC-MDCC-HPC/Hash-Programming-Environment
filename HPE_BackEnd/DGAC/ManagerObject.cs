@@ -611,6 +611,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             TypeMapImpl worker_properties = new TypeMapImpl(properties);
                             worker_properties[Constants.KEY_KEY] = k;
                             worker_properties[Constants.UID_KEY] = hash_component_uid;
+                            worker_properties[Constants.KIND_KEY] = Constants.kindMapping[c.Kind];
                             GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, unit.Key, worker_properties);
                             Thread t = new Thread(gw.Run);
                             t.Start();

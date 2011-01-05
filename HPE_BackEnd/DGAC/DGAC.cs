@@ -592,7 +592,73 @@ namespace br.ufc.pargo.hpe.backend
             public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
             public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
+            public static void resolveUnit(
+                            IUnit enclosing_unit,
+                            string id_inner,
+                            string id_interface, /*, IDictionary<string, int> actualParameters_new*/
+                            out string cname,
+                            out string iname,
+                            out System.Type[] actualParams
+                        )
+            {
+                database.Unit u = LoaderApp.resolveImpl(enclosing_unit, id_inner, id_interface);
 
+                if (u == null)
+                    throw new ConcreteComponentNotFoundException(enclosing_unit.Id_abstract, id_inner, enclosing_unit.Id_functor_app);
+
+                DGAC.database.Component cu = BackEnd.cdao.retrieve(u.Id_concrete);
+
+                cname = cu.Library_path;
+                iname = u.Id_unit;
+
+                Slice slice = BackEnd.sdao.retrieve2(enclosing_unit.Id_abstract, id_inner, id_interface, enclosing_unit.Id_interface);
+                
+                string propertyName = slice.PortName;
+                buildParamTable(propertyName, enclosing_unit.GetType(), out actualParams);
+            }
+
+            private static void buildParamTable(String propertyName, System.Type myType, out System.Type[] actualParams)
+            {
+                System.Type o = myType.BaseType.GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance).PropertyType;
+                actualParams = o.GetGenericArguments();
+            }
+
+            
+
+            public static IUnit calculateClassName(
+                IUnit enclosing_unit, 
+                string id_inner, 
+                string id_interface, 
+                out br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
+                out br.ufc.pargo.hpe.backend.DGAC.database.Component c,
+                out string assembly_string, 
+                out string type)
+            {
+                string package_path;
+                string id_unit;
+                System.Type[] actualParams;
+                resolveUnit(enclosing_unit, id_inner, id_interface, out package_path, out id_unit, out actualParams);
+
+                c = DGAC.BackEnd.cdao.retrieve_libraryPath(package_path);
+                u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, id_unit, 0);
+
+                assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
+                string class_name = u.Class_name;  // the name of the class inside the DLL.
+                int class_nargs = u.Class_nargs;
+                string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
+
+                Assembly a = Assembly.Load(assembly_string);
+                System.Type t = a.GetType(strType);
+
+                System.Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
+                type = closedT.FullName;
+
+                object oh = Activator.CreateInstance(assembly_string, closedT.FullName).Unwrap();
+
+                hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)oh;
+
+                return unit_slice;
+            }
 
             /* TODO !!!!
              * It is still necessary to defined the meaning of the type parameter of registerUsesPort and addProvidesPort.
@@ -608,73 +674,96 @@ namespace br.ufc.pargo.hpe.backend
 
                 ComponentID user_cid = ownerUnit.CID;
                 Services services = ownerUnit.Services;
-                string instanceName = user_cid.getInstanceName(); 
+                string instanceName = user_cid.getInstanceName();
+
+                // APPLY THE RESOLUTION ALGORITHM
+                string assembly_string;
+                string className;
+                br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
+                br.ufc.pargo.hpe.backend.DGAC.database.Component c;
+                calculateClassName(ownerUnit, id_inner, id_interface, out u, out c, out assembly_string, out className);
 
                 // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
                 HPETypeMap properties2 = new TypeMapImpl();
-                properties2[Constants.IS_COMPONENT_INSTANCE_KEY] = true;
-                ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, id_interface, properties2);
+                properties2[Constants.ASSEMBLY_STRING_KEY] = assembly_string;
+                properties2[Constants.ID_CONCRETE_KEY] = u.Id_concrete;
+                properties2[Constants.ID_ABSTRACT_KEY] = u.Id_interface_abstract;
+                properties2[Constants.ID_INTERFACE_KEY] = u.Id_interface_interface;
+                properties2[Constants.ID_INNER_KEY] = id_inner;
+                properties2[Constants.KIND_KEY] = Constants.kindMapping[c.Kind];
+                ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
 
-                #region Trying to use AbstractFramework (???)
-                //Services frkSrv = framework.getServices("DGAC", "DGAC.Backend", new TypeMapImpl());
-                //frkSrv.registerUsesPort("DGAC.BuilderServices", ???,new TypeMapImpl());
-                //frkSrv.
-                #endregion
-
-                // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component)
+                // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
                 framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS);
+                
+                // GET THE UNIT SLICE AND RETURNS IT
+                return (IUnit) services.getPort(portName);
+            }
 
-                // GET THE PROVIDED PORT
-                IUnit unit_slice = (IUnit) services.getPort(portName);
-
-                // LOOKING FOR INFORMATION ABOUT THE SLICE TO BE INSTANTIATED
-                int id_abstract = ownerUnit.Id_abstract;
+            public static void setupSlice(br.ufc.pargo.hpe.basic.IUnit unit, br.ufc.pargo.hpe.basic.IUnit unit_slice)
+            {
+                int id_abstract = unit.Id_abstract;
+                string id_inner = unit_slice.Id_inner;
+                string id_interface = unit_slice.Id_interface;
                 InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
-                IDictionary<string, int> actualParameters_new = null;
-                hpe.basic.Unit.determineActualParameters2(ownerUnit, ic, out actualParameters_new);
-                unit_slice.setActualParameters(actualParameters_new);
-                unit_slice.ActualParametersTop = ownerUnit.ActualParametersTop;
-                calculateSliceKnowledge(ownerUnit, unit_slice, id_abstract, id_inner, id_interface);
 
-                // RECURSIVELY, INITIALIZE THE SLICES OF THE INNER COMPONENT                
-                return unit_slice;
+                int id_functor_app_inner_actual = ic.Id_functor_app;
+                if (ic.Parameter_top.Length > 0)
+                {
+                    bool achei = unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
+                    if (!achei)
+                    {
+                        achei = unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + unit.Id_functor_app, out id_functor_app_inner_actual);
+                    }
+                    ic.Id_functor_app = id_functor_app_inner_actual;
+                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
+                    ic.Id_abstract_inner = acfa.Id_abstract;
+                }
+
+                IDictionary<string, int> actualParameters_new;
+                determineActualParameters(unit.ActualParameters, id_functor_app_inner_actual, out actualParameters_new);
+
+                unit_slice.Id_functor_app = ic.Id_functor_app;
+                unit_slice.Id_abstract = ic.Id_abstract_inner;
+                unit_slice.setActualParameters(actualParameters_new);
+                unit_slice.ActualParametersTop = unit.ActualParametersTop;
+                unit_slice.ContainerSlice = unit;
+                unit_slice.GlobalRank = unit.GlobalRank;
+
+                calculateTopology(unit, unit_slice);
 
             }
 
-            private static void calculateSliceKnowledge(IUnit unit, IUnit unit_slice, int id_abstract, string id_inner, string id_interface)
+
+            private static void calculateTopology(IUnit unit, IUnit unit_slice)
             {
-                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
+                int id_abstract = unit.Id_abstract;
+                string id_inner = unit_slice.Id_inner;
+                string id_interface = unit_slice.Id_interface;
 
                 // Configure the knowledge of the slices about the topology.
-
                 IDictionary<string, int> eix_inner = new Dictionary<string, int>();
-
-                // Console.WriteLine(" ------ unit.EnumRank has " + unit.EnumRank.Count + " elements");
-
-                IDictionary<string, IList<KeyValuePair<string, int>>> enumsByVars = new Dictionary<string, IList<KeyValuePair<string, int>>>();
-
-                // Console.WriteLine("unit.EnumRank.Count = " + unit.EnumRank.Count);
+                IDictionary<string, IDictionary<string, int>> enumsByVars = new Dictionary<string, IDictionary<string, int>>();
 
                 foreach (KeyValuePair<string, int> index in unit.EnumRank)
                 {
                     Enumerator e = BackEnd.edao.retrieve(id_abstract, index.Key);
                     if (enumsByVars.ContainsKey(e.Variable))
                     {
-                        IList<KeyValuePair<string, int>> l;
+                        IDictionary<string, int> l;
                         enumsByVars.TryGetValue(e.Variable, out l);
                         l.Add(index);
                     }
                     else
                     {
-                        IList<KeyValuePair<string, int>> l = new List<KeyValuePair<string, int>>();
+                        IDictionary<string, int> l = new Dictionary<string, int>();
                         l.Add(index);
                         enumsByVars.Add(e.Variable, l);
                     }
                 }
 
-                //  Console.WriteLine(" ------ enumByVars has " + enumsByVars.Count + " elements");
-
-                foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
+                // THIS LOOP CALCULATES WHICH ENUMERATORS OF THE Unit ENUMERATES THE INNER COMPONENT OF THE SLICE (eix_inner), and not the slice itself  -------------------------------
+                foreach (KeyValuePair<string, IDictionary<string, int>> k in enumsByVars)
                 {
                     int found = 0;
                     foreach (KeyValuePair<string, int> index in k.Value)
@@ -690,66 +779,26 @@ namespace br.ufc.pargo.hpe.backend
                             EnumerationInner ei = BackEnd.exindao.retrieve(id_abstract, id_inner, eix);
                             if (ei != null)
                             {
-                                //                            Console.WriteLine("REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface + "," + eix);
                                 eix_inner.Add(eix, val);
                                 found++;
-                            }
-                            else
-                            {
-                                //                            Console.WriteLine("NON REPLICATE INNER : " + id_abstract + "," + id_inner + "," + id_interface +  ", "+ eix);
                             }
                         }
                         else
                         {
-                            //                        Console.WriteLine(" ES NON REPLICATE INNER : " + id_abstract + "," + id_inner + "," + eix);
                             found++;
                         }
                     }
-                    if (found == 0)
-                    {
-                        Console.WriteLine("k.Key = " + k.Key);
-
-                        foreach (KeyValuePair<string, int> xxx in k.Value)
-                        {
-                            Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
-                        }
-                        Console.WriteLine("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
-                        throw new Exception("UNEXPECTED CONDITION: Stuck Configuration (" + found + ") ...(id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface=" + id_interface + ")");
-                    }
-
-
                 }
 
-                // Now, list all units of the inner component.
+                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
 
-                int id_functor_app_inner_actual = ic.Id_functor_app;
-                int id_abstract_inner_original = ic.Id_abstract_inner;
-                int id_abstract_inner_actual = ic.Id_abstract_inner;
-                if (!ic.Parameter_top.Equals("") && !(ic.Parameter_top == null))
-                {
-                    bool achei = unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
-                    if (!achei)
-                    {
-                        achei = unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + unit.Id_functor_app, out id_functor_app_inner_actual);
-                    }
+                int id_abstract_inner_original = ic.Id_abstract_inner; 
+                int id_functor_app_inner_actual = unit_slice.Id_functor_app;
+                int id_abstract_inner_actual = unit_slice.Id_abstract;
 
-                    int id_functor_app_old = ic.Id_functor_app;
-                    ic.Id_functor_app = id_functor_app_inner_actual;
-                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
-                    id_abstract_inner_actual = acfa.Id_abstract;
-                    ic.Id_abstract_inner = id_abstract_inner_actual;
-                }
-
-                unit_slice.Id_functor_app = ic.Id_functor_app;
-                unit_slice.Id_abstract = ic.Id_abstract_inner;
-
-                IList<Slice> ss = BackEnd.sdao.listByInner(id_abstract, id_inner);
-                IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
-                Dictionary<string, int> countUnits = new Dictionary<string, int>();
-                IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
+                // Map id_unit's of the original inner component type to the id_unit's of the actual inner component type 
 
                 IDictionary<string, string> unitsMapping = new Dictionary<string, string>();
-
                 IList<string> id_units_ordered = BackEnd.acfdao.getIdUnitsOrdered(id_abstract_inner_original);
                 IList<string> id_units_ordered_actual = BackEnd.acfdao.getIdUnitsOrdered(id_abstract_inner_actual);
                 for (int k = 0; k < id_units_ordered.Count; k++)
@@ -757,11 +806,18 @@ namespace br.ufc.pargo.hpe.backend
                     unitsMapping.Add(id_units_ordered_actual[k], id_units_ordered[k]);
                 }
 
-                foreach (Slice s in ss)  // for different split_replica's. 
+                // ?????  -------------------------------
+
+                IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
+                Dictionary<string, int> countUnits = new Dictionary<string, int>();
+                IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
+
+                IList<Slice> slices_of_the_inner = BackEnd.sdao.listByInner(id_abstract, id_inner);
+
+                foreach (Slice s in slices_of_the_inner)  // for different split_replica's. 
                 {
                     string id_interface_slice = s.Id_interface_slice;
-
-                    String id_interface_of_slice = s.Id_interface;
+                    string id_interface_of_slice = s.Id_interface;
 
                     // Ache todas as unidades que são id_interface.
                     int[] ranks;
@@ -816,13 +872,13 @@ namespace br.ufc.pargo.hpe.backend
                                 Enumerator e = BackEnd.edao.retrieve(id_abstract, index.Key);
                                 if (enumsByVars.ContainsKey(e.Variable))
                                 {
-                                    IList<KeyValuePair<string, int>> list;
+                                    IDictionary<string, int> list;
                                     enumsByVars.TryGetValue(e.Variable, out list);
                                     list.Add(index);
                                 }
                                 else
                                 {
-                                    IList<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>();
+                                    IDictionary<string, int> list = new Dictionary<string, int>();
                                     list.Add(index);
                                     enumsByVars.Add(e.Variable, list);
                                 }
@@ -834,14 +890,13 @@ namespace br.ufc.pargo.hpe.backend
                                 enumsByVars.Remove(enumerator.Variable);
                             }
 
-
                             // point to the replicator identifiers of the inner component ....
                             IDictionary<string, int> rE_ = new Dictionary<string, int>();
 
-                            foreach (KeyValuePair<string, IList<KeyValuePair<string, int>>> k in enumsByVars)
+                            foreach (KeyValuePair<string, IDictionary<string, int>> k in enumsByVars)
                             {
                                 // Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + "##################################### " + s.Id_inner);
-                                IList<KeyValuePair<string, int>> rElist = k.Value;
+                                IDictionary<string, int> rElist = k.Value;
 
                                 int occurrences = 0;
                                 foreach (KeyValuePair<string, int> re in rElist)
@@ -851,36 +906,19 @@ namespace br.ufc.pargo.hpe.backend
                                     bool found = findReplicator(unit, re, s, ic, unit.EnumeratorCardinality, out enumeratorCardinalityNew, out replicator);
                                     if (found)
                                     {
-                                        if (!rE_.Contains(replicator))
+                                        if (!rE_.ContainsKey(replicator.Key))
                                         {
                                             rE_.Add(replicator);
                                             unit_slice.EnumeratorCardinality = enumeratorCardinalityNew;
                                             occurrences++;
-
                                         }
                                     }
                                 }
-                                if (occurrences != 1)
-                                {
-                                    Console.WriteLine("k.Key = " + k.Key);
-
-                                    foreach (KeyValuePair<string, int> xxx in k.Value)
-                                    {
-                                        Console.WriteLine("k.Value = (" + xxx.Key + "," + xxx.Value + ")");
-                                    }
-                                    Console.WriteLine("ERROR find replicator : " + occurrences + " - " + rElist.Count + " --- " + id_abstract);
-                                    throw new Exception("ERROR find replicator : " + occurrences + " - " + rElist.Count + " --- " + id_abstract);
-                                }
-                                //   Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + ": END LOOP !!!!!!!!");
                             }
 
 
                             IList<IDictionary<string, int>> l;
-                            if (enumRanksL.ContainsKey(id_interface_slice))
-                            {
-                                enumRanksL.TryGetValue(id_interface_slice, out l);
-                            }
-                            else
+                            if (!enumRanksL.TryGetValue(id_interface_slice, out l))
                             {
                                 l = new List<IDictionary<string, int>>();
                                 enumRanksL.Add(id_interface_slice, l);
@@ -902,35 +940,21 @@ namespace br.ufc.pargo.hpe.backend
                 int pos2 = 0;
                 foreach (string id_unit_slice_ in id_units_ordered_actual)
                 {
-                    IList<int> ranks;
-
                     string id_unit_slice;
-                    bool achei = unitsMapping.TryGetValue(id_unit_slice_, out id_unit_slice);
+                    unitsMapping.TryGetValue(id_unit_slice_, out id_unit_slice);
 
-                    achei = ranksAll.TryGetValue(id_unit_slice, out ranks);
-
-
-                    if (ranks == null)
-                    {
+                    IList<int> ranks;
+                    if (!ranksAll.TryGetValue(id_unit_slice, out ranks))
                         ranks = new List<int>();
-                    }
-
 
                     foreach (int r in ranks)
                         ranksAllList.Insert(pos2++, r);
 
                     IList<IDictionary<string, int>> enumRanks;
-                    enumRanksL.TryGetValue(id_unit_slice, out enumRanks);
-
-
-                    if (enumRanks == null)
-                    {
+                    if (!enumRanksL.TryGetValue(id_unit_slice, out enumRanks))
                         enumRanks = new List<IDictionary<string, int>>();
-                    }
                     else
-                    {
                         insertEnumeratorFusions(unit_slice, id_unit_slice, enumRanks);
-                    }
 
                     foreach (IDictionary<string, int> d in enumRanks)
                         enumRanksList.Insert(pos1++, /* removePrefixes( id_inner ,*/ d /* ) */);
@@ -939,17 +963,13 @@ namespace br.ufc.pargo.hpe.backend
                     int count;
                     countUnits.TryGetValue(id_unit_slice, out count);
 
-                    int[] _ranks = new int[count];
-                    for (int k = 0; k < count; k++)
-                        //_ranks[k] = ranksAllList[i++];
-                        _ranks[k] = ranks[k];
-
+                    int[] _ranks = new int[count]; 
+                    ranks.CopyTo(_ranks, 0);
                     unitsRanks.Add(id_unit_slice_, _ranks);
                 }
 
                 int[] ranksAllArr = new int[ranksAllList.Count];
                 IDictionary<string, int>[] enumRanksArr = new IDictionary<string, int>[enumRanksList.Count];
-
 
                 ranksAllList.CopyTo(ranksAllArr, 0);
                 enumRanksList.CopyTo(enumRanksArr, 0);
@@ -1170,11 +1190,6 @@ namespace br.ufc.pargo.hpe.backend
                     foreach (EnumeratorMapping em in emList)
                     {
                         dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
-
-                        //                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
-                        //                    {
-                        //                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
-                        //                    }
                     }
 
                     enumeratorCardinality_return = enumeratorCardinality_prime;
@@ -1183,6 +1198,80 @@ namespace br.ufc.pargo.hpe.backend
                 }
 
             }
+
+            public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
+            {
+                actualParameters_new = new Dictionary<string, int>(); ;
+
+                foreach (KeyValuePair<string, int> parameter in actualParameters)
+                {
+                    if (parameter.Key.Contains("#"))
+                    {
+                        actualParameters_new.Add(parameter);
+                    }
+                }
+
+                SupplyParameterDAO spdao = new SupplyParameterDAO();
+                IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+
+                foreach (SupplyParameter sp in spcList)
+                {
+                    if (sp is SupplyParameterParameter)
+                    {
+                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                        int id_functor_app_actual;
+                        bool achou = actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+                        if (achou)
+                        {
+                            actualParameters_new.Add(spp.Id_parameter, id_functor_app_actual);
+                        }
+                        else
+                        {
+                            /*                        Console.WriteLine("UNEXPECTED ERROR: " + spp.Id_parameter_actual + " NOT FOUND ! (In: setActualParameters - UnitImpl.cs)");
+                                                    foreach (KeyValuePair<string, int> yyy in actualParameters)
+                                                    {
+                                                        Console.Write("("+ yyy.Key + "," + yyy.Value + ");");
+                                                    } */
+                        }
+                    }
+                    else if (sp is SupplyParameterComponent)
+                    {
+                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                        actualParameters_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+                        traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
+                    }
+                }
+            }
+
+            private static void traverseParameters(int id_functor_app_top,
+                                            int id_functor_app,
+                                            IDictionary<string, int> actualParametersTop,
+                                            IDictionary<string, int> actualParameters)
+            {
+
+                SupplyParameterDAO spdao = new SupplyParameterDAO();
+                IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+                foreach (SupplyParameter sp in spcList)
+                {
+                    if (sp is SupplyParameterParameter)
+                    {
+                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                        int id_functor_app_actual;
+                        bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+                        string key = spp.Id_parameter + "#" + id_functor_app_top;
+                        if (!actualParameters.ContainsKey(key))
+                            actualParameters.Add(key, id_functor_app_actual);
+                    }
+                    else if (sp is SupplyParameterComponent)
+                    {
+                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                        traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParametersTop, actualParameters);
+                    }
+                }
+
+
+            }
+
 
             private static void dictReplaceKey(IDictionary<string, int> dict, string key, int value)
             {
@@ -1250,16 +1339,13 @@ namespace br.ufc.pargo.hpe.backend
                     foreach (KeyValuePair<string, int> a in aux.Value)
                     {
                         d.Add(a);
-
                     }
                 }
-
             }
 
             internal static void redirectSlice(ComponentID user_id, string portName, ComponentID container_id, string container_portName)
             {
-                framework.redirectSlice(user_id, portName, container_id, container_portName);
-                
+                framework.redirectSlice(user_id, portName, container_id, container_portName);                
             }
         }//DGAC
 

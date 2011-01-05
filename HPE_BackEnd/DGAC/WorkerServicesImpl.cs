@@ -38,12 +38,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             framework.registerComponentID(this.getComponentID(), this);
         }
 
-        public WorkerServicesImpl(WorkerObject framework, ComponentID cid, string hash_component_uid, string my_id_unit, IUnit pmain, string[] args)
+        public WorkerServicesImpl(WorkerObject framework, ComponentID cid, string hash_component_uid, string my_id_unit, IUnit pmain)
         {
             this.cid = cid;
             this.instanceName = cid.getInstanceName();
             this.framework = framework;
-            framework.Init(hash_component_uid, my_id_unit, pmain, args);
+            framework.Init(cid, hash_component_uid, my_id_unit, pmain);
+            framework.registerComponentID(this.getComponentID(), this, pmain);
         }
 
 
