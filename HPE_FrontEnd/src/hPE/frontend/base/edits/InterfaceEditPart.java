@@ -2,6 +2,7 @@ package hPE.frontend.base.edits;
 
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.figures.InterfaceFigure;
+import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HLinkToInterface;
@@ -75,49 +76,20 @@ public class InterfaceEditPart<ModelType extends HInterface, FigureType extends 
 		catch (Exception e) {
 		   name = "ERROR Refreshing Visuals (InterfaceEditPart)"; 
 		}
-        String name_ = breakLines(" " + name + " ");
+        String name_ = HComponent.breakLines(" " + name + " ");
 
-        Label ff = new Label(" interface " + name_);
-		Font font = new Font(null, "Arial", 10, SWT.BOLD);
+        Label ff = new Label(name_);
+		Font font = new Font(null, "Courier New", 8, SWT.BOLD);
 		ff.setFont(font); 
 
 		interface_figure.setBounds(the_interface.getBounds());
         interface_figure.setName(the_interface.getPrimName());
         interface_figure.setBackgroundColor(the_interface.getColor());
         interface_figure.setEditable(the_interface.isEditable());
-        interface_figure.setToolTip(ff);
+        interface_figure.setToolTip(ff); interface_figure.getToolTip(); 
 				
 	}
 	
-	private String breakLines(String name) {
-
-		String name_="";
-		
-		int level = 0;
-		int lastindex=0;		
-        for (int i=0; i<name.length();i++)  {
-        	if (name.charAt(i) == '<') { 
-        		if (level == 0) {
-            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
-            		lastindex = i+1;        		
-        		}
-        		level ++;
-        	}
-        	else if (name.charAt(i) == '>')  {
-        		if (level==1) {
-        		}
-        		level --;
-        	}
-        	else if (name.charAt(i) == ',' && level == 1) { 
-        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
-        		lastindex = i+1;        		
-        	}
-        }
-        		
-		name_ += name.substring(lastindex, name.length());
-
-		return name_;
-	}
 
 	public void activate() {
         if (!isActive()) 

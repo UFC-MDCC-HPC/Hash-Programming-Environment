@@ -81,75 +81,74 @@ public class HPEPlugin extends AbstractUIPlugin {
 	
 	}
 	
+	
 	public class MyResourceChangeReporter implements IResourceChangeListener {
-		      public void resourceChanged(IResourceChangeEvent event) {
-	               try {
-	            	    Object source = null;
-				         IResource res = event.getResource();
-				         switch (event.getType()) {
-				            case IResourceChangeEvent.POST_BUILD:
-					           source = event.getSource();
-				               event.getDelta().accept(new DeltaPrinter());
-				               break;
-				            case IResourceChangeEvent.PRE_BUILD:
-					           System.out.println("Starting build.");
-					           source = event.getSource();
-					           if (source instanceof IProject) {
-					        	   IProject project = (IProject) source;
-					        	   IPath path = project.getFullPath();
-					        	   String pathStr = path.toString();
-					        	   String[] pathStrArr = pathStr.replace(".", "#").split("#");
-					        	   String cName = pathStrArr[pathStrArr.length - 1];
-					        	   IPath path2 = path.append(cName + ".hpe");
-					        	   URI uri = URI.createURI(path2.toString()); 
-					        	   HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false);
-								   NAntBuilder builder = NAntBuilder.instance;
-							   	   builder.setComponent(c);								   
-								   builder.run();
-								   project.refreshLocal(IResource.DEPTH_INFINITE, null);
-								   System.out.println("generated build.xml for " + path2);
-					           }
+		public void resourceChanged(IResourceChangeEvent event) {
+			try {
+				Object source = null;
+				IResource res = event.getResource();
+				switch (event.getType()) {
+				case IResourceChangeEvent.POST_BUILD:
+					source = event.getSource();
+					event.getDelta().accept(new DeltaPrinter());
+					break;
+				case IResourceChangeEvent.PRE_BUILD:
+					System.out.println("Starting build.");
+					source = event.getSource();
+					if (source instanceof IProject) {
+						IProject project = (IProject) source;
+						IPath path = project.getFullPath().makeRelative();
+						String pathStr = path.toString();
+						String[] pathStrArr = pathStr.replace(".", "#").split("#");
+						String cName = pathStrArr[pathStrArr.length - 1];
+						IPath path2 = path.append(cName + ".hpe");
 
-					           
-					           event.getDelta().accept(new DeltaPrinter());
-					           break; 
-				         }
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (HPEInvalidComponentResourceException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						NAntBuilder.createBuildFile(path2.toString(), true);
+
+						project.refreshLocal(IResource.DEPTH_INFINITE, null);
+						System.out.println("generated build.xml for " + path2);
 					}
-		      }
-	   }
 
-	   class DeltaPrinter implements IResourceDeltaVisitor {
-		      public boolean visit(IResourceDelta delta) {
-		         IResource res = delta.getResource();
-		         
-                 IPath fileName = res.getLocation();
-                 String ext = fileName.getFileExtension(); 
-                 String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
-		         switch (delta.getKind()) {
-		            case IResourceDelta.ADDED:
-		               if (ext != null && fileName.getFileExtension().equals("dll"))
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()}, null, null);		               
-		               break;
-		            case IResourceDelta.REMOVED:
-		               if (ext != null && fileName.getFileExtension().equals("dll"))
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-u", fileName.removeFileExtension().lastSegment()}, null, null);
-		               
-		               break;
-		            case IResourceDelta.CHANGED:
-		               if (ext != null && ext.equals("dll")) {
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()}, null,  null);
-		               }
-		               break;
-		         }
-		         return true; // visit the children
-		      }
-		   }
+					event.getDelta().accept(new DeltaPrinter());
+					break;
+				}
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (HPEInvalidComponentResourceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	class DeltaPrinter implements IResourceDeltaVisitor {
+		public boolean visit(IResourceDelta delta) {
+			IResource res = delta.getResource();
+
+			IPath fileName = res.getLocation();
+			String ext = fileName.getFileExtension();
+			String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
+			switch (delta.getKind()) {
+			case IResourceDelta.ADDED:
+				if (ext != null && fileName.getFileExtension().equals("dll")) {
+					CommandLine.runCommand(new String[] { gacutil_path, "-i", fileName.toString() }, null);
+				}
+				break;
+			case IResourceDelta.REMOVED:
+				if (ext != null && fileName.getFileExtension().equals("dll")) {
+					CommandLine.runCommand(new String[] { gacutil_path, "-u", fileName.removeFileExtension().lastSegment() }, null);
+				}
+				break;
+			case IResourceDelta.CHANGED:
+				if (ext != null && ext.equals("dll")) {
+					CommandLine.runCommand(new String[] { gacutil_path, "-i", fileName.toString() }, null);
+				}
+				break;
+			}
+			return true; // visit the children
+		}
+	}
 	   /**
 	 * This method is called upon plug-in activation
 	 */

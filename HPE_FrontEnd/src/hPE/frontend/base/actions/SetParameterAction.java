@@ -76,7 +76,7 @@ public class SetParameterAction extends SelectionAction {
 			HComponent topConfig = (HComponent) x.getTopConfiguration();
 			//if (topConfig instanceof HApplicationComponent) return false;
             if (set && x.isParameter() /*&& x.getSupplied()==null*/) return false;            
-            else if (!set && !(x.isParameter() && x.getSupplied()==null)) return false;
+            else if (!set && !(x.isParameter() && x.getSupplier()==null)) return false;
             
             if (!x.isDirectSonOfTheTopConfiguration()) return false;
             

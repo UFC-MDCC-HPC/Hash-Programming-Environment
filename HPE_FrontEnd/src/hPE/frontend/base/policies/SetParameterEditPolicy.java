@@ -84,9 +84,7 @@ public void execute(){
     if (dialog.getButtonPressed() == SetParameterDialog.BUTTON_OK) {
         varName = parId;        
         model.setParameter(varName);
-		// TODO: EXISTENTIAL TYPE
-        // model.setExistentialType(isExistential);
-       ((HComponent)model.getTopConfiguration()).invalidateInterfaceNames();       
+        ((HComponent)model.getTopConfiguration()).invalidateInterfaceNames();       
    } else {
 	   cancel = true;
    }

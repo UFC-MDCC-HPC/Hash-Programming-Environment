@@ -36,7 +36,7 @@ public class HBESynthesizerCSharpMain extends hPE.frontend.kinds.activate.codege
         dependencies.add(pathD);
  		 		
         List<String> paramActualsName = new ArrayList<String>();
- 		for (Triple<String,HInterface,String> p : i.getParameters3()) {
+ 		for (Triple<String,HInterface,String> p : i.getParameters()) {
  			HInterface i1_ = p.snd();
  			List<HInterface> l = new ArrayList<HInterface>();
  			l.add(i1_);

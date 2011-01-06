@@ -1,5 +1,28 @@
-#Tue Jul 07 22:59:33 BRT 2009
+#Fri Nov 12 23:21:26 GFT 2010
 eclipse.preferences.version=1
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/BuilderService.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/BuilderServiceLocator.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/BuilderServiceSoap.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/BuilderServiceSoap12Stub.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/BuilderServiceSoapStub.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/ComponentID.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/ConnectionID.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/ManagerComponentID.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/ManagerComponentIDImpl.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/ManagerConnectionID.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/ManagerConnectionIDImpl.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/Property.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/Type.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/TypeMap.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/BuilderService/TypeMapImplWS.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ComponentClassDescription.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ComponentRepository.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ComponentRepositoryLocator.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ComponentRepositorySoap.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ComponentRepositorySoap12Stub.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ComponentRepositorySoapStub.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ManagerComponentClassDescription.java=UTF-8
+encoding//src/br/ufc/pargo/hpe/cca/ports/ComponentRepository/ManagerComponentClassDescriptionImpl.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WS.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSLocator.java=UTF-8
 encoding//src/hPE/backend/BackEnd_WSSoap.java=UTF-8

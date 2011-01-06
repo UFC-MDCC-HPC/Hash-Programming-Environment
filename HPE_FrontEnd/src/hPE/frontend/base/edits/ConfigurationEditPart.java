@@ -104,9 +104,10 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 				children.add(c);
 		
-		for (HComponent c : ((ModelType) getModel()).getExposedComponents()) 
+		for (HComponent c : ((ModelType) getModel()).getExposedComponents()) {
 			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 				children.add(c);
+		}
 
 		for (HInterface an_interface : ((ModelType) getModel()).getInterfaces()) {
 			if (!(an_interface.getHidden())) { 
@@ -115,7 +116,10 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		}
 		
 		for (HReplicator a_replicator : ((ModelType) getModel()).gettReplicators()) {
-			if (!(a_replicator.getHidden()) && !(a_replicator.isJoined()) &&  !a_replicator.isUnitaryAndNotShow()) { 
+			if (!(a_replicator.getHidden()) && 
+				!(a_replicator.isJoined()) &&  
+				!a_replicator.isUnitaryAndNotShow() && 
+				!a_replicator.getConfigurationTop().isHiddenInnerComponent()) { 
 				children.add(a_replicator);
 			} 
 		}
@@ -219,57 +223,30 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		//config.cleanReplicators();
 		
 		FigureType config_figure = (FigureType) getFigure();
-		String name = config.isAbstractConfiguration() ? "Abstract ": "" ; 
+		String name = config.isAbstractConfiguration() ? "Abstract ": "" ;
+		String nameBase = "";
         name = name + config.kindString() + " " + config.getNameWithParameters(true, true, true);
         if (!config.isAbstractConfiguration()) {
-            name = name + " implements " + (config.getWhoItImplements() != null ? config.getWhoItImplements().getNameWithParameters(false, true, true) : "?");
+        	nameBase = " implements " + (config.getWhoItImplements() != null ? config.getWhoItImplements().getNameWithParameters(false, true, true) : "?"); 
         }
         else if (config.getSuperType() != null) {        
-            name = name + " extends " + config.getSuperType().getNameWithParameters(false, true, true);
-        }
+            nameBase = " extends " + config.getSuperType().getNameWithParameters(false, true, true);
+        } 
 		
-        String name_ = breakLines(" " + name + " ");
+        String name_ = HComponent.breakLines(name);
+        String nameBase_ = HComponent.breakLines(nameBase);
         
-		Label ff = new Label(" " + name_ + " ");
-		Font font = new Font(null, "Arial", 10, SWT.BOLD);
+		Label ff = new Label(" " + name_ + "\n " + nameBase_ + " ");
+		Font font = new Font(null, "Courier New", 8, SWT.BOLD);
 		ff.setFont(font); 
 
-		config_figure.setName(name);
+		config_figure.setName(name + nameBase);
         config_figure.setColor(config.getColor());
 		config_figure.setToolTip(ff);
 		
 		super.refreshVisuals();
 	}
 	
-	private String breakLines(String name) {
-
-		String name_="";
-		
-		int level = 0;
-		int lastindex=0;		
-        for (int i=0; i<name.length();i++)  {
-        	if (name.charAt(i) == '<') { 
-        		if (level == 0) {
-            		name_ += name.substring(lastindex, i+1) + "\n\t";        		
-            		lastindex = i+1;        		
-        		}
-        		level ++;
-        	}
-        	else if (name.charAt(i) == '>')  {
-        		if (level==1) {
-        		}
-        		level --;
-        	}
-        	else if (name.charAt(i) == ',' && level == 1) { 
-        		name_ += name.substring(lastindex, i+1) + " \n\t";        		
-        		lastindex = i+1;        		
-        	}
-        }
-        		
-		name_ += name.substring(lastindex, name.length());
-
-		return name_;
-	}
 
 	public void propertyChange(PropertyChangeEvent ev) {
 		if (ev.getPropertyName().equals(ModelType.UPDATE_NAME)) this.refresh();
@@ -282,7 +259,12 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		if (ev.getPropertyName().equals(ModelType.NEW_COMPONENT)) this.refreshChildren();
 		if (ev.getPropertyName().equals(ModelType.UPDATE_CONNECTIONS)) this.refresh();
 		if (ev.getPropertyName().equals(ModelType.SUPPLY_PARAMETER)) this.refresh();
+		if (ev.getPropertyName().equals(ModelType.PROPERTY_IS_PARAMETER)) this.refresh();
 		if (ev.getPropertyName().equalsIgnoreCase("labelContents")) this.refreshVisuals();//$NON-NLS-1$
+		if (ev.getPropertyName().equalsIgnoreCase(ModelType.UPDATE_CONFIGURATION)) {
+			this.refresh();
+		}
+		
 	}
 	
 	private DirectEditManager manager;

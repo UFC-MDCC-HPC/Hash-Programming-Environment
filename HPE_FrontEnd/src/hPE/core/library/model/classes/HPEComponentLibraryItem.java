@@ -33,7 +33,9 @@ public abstract class HPEComponentLibraryItem implements IHPEComponentLibraryIte
 	
 	private List<IHPEComponentLibraryItem> children = new ArrayList<IHPEComponentLibraryItem>();
 	
+	@SuppressWarnings("unchecked")
 	public List<IHPEComponentLibraryItem> getChildren() {
+		children = (List<IHPEComponentLibraryItem>) ((ArrayList<IHPEComponentLibraryItem>) children).clone();
 		Collections.sort(children, new Comparator<IHPEComponentLibraryItem>() {
 			@Override
 			public int compare(IHPEComponentLibraryItem o1, IHPEComponentLibraryItem o2) {

@@ -18,17 +18,17 @@ public class ExposedCommand extends Command {
 	
 	public void execute() {
 
-		component.setExposed(!component.getExposed());
+		component.setExposed(!component.isPublic());
 		
 		return;
 	}
 	
 	public void undo () {
-		component.setExposed(!component.getExposed());
+		component.setExposed(!component.isPublic());
 	}
 	
 	public void redo () {
-		component.setExposed(!component.getExposed());
+		component.setExposed(!component.isPublic());
 	}
 	
 	public boolean canExecute() {

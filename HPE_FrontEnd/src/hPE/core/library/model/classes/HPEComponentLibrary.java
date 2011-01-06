@@ -6,6 +6,7 @@ import hPE.core.library.model.interfaces.IHPEComponentLibraryItem;
 import hPE.core.library.model.interfaces.ILPackage;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,12 @@ public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPE
 	    readLibrary((List<URI>) model);
 	}
 	
+	private List<String> packageNames = new ArrayList<String>();
+	
+	public List<String> getPackageNames() {
+		return packageNames;
+	}
+
 	public void readLibrary(List<URI> locationNameList) {
 		// Takes a set of location names and builds location objects.
 				
@@ -53,6 +60,7 @@ public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPE
 				    if (allPks.containsKey(pkName)) {
 				       allPks.get(pkName).addLocation(locationSite);			       
 			        } else {
+			        	packageNames.add(pkName);
 			        	ILPackage pk = new LPackage(this,pkName.split(":"));
 			        	pk.addLocation(locationSite);
 			        	addChild(pk);
@@ -96,5 +104,6 @@ public class HPEComponentLibrary extends HPEComponentLibraryItem implements IHPE
 	public String getSystemLocation() {
 		return "";
 	}
+
 	
 }

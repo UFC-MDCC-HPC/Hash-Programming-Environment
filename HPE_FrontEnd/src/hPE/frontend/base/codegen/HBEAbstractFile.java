@@ -2,6 +2,7 @@ package hPE.frontend.base.codegen;
 
 import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.model.HHasExternalReferences;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -48,12 +49,28 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 		this.setSrcType(srcType);
 		this.versionID = versionID;
 		this.contents = contents;
-    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf("/")).concat("/src/")/*.concat(this.getFileType()).concat("/")*/.concat(this.getVersionID()).concat("/").concat(this.getFileName());
+		
+		IPath path = new Path(rootPath);
+		this.sPath = path.removeLastSegments(1).append("src").append(this.getVersionID()).append(this.getFileName()).toString();
+		
+		checkFile();
+		
+		
+//    	this.sPath = rootPath.substring(0,rootPath.lastIndexOf(Path.SEPARATOR)).concat(Path.SEPARATOR + "src" + Path.SEPARATOR)
+//    	                     .concat(this.getVersionID()).concat("" + Path.SEPARATOR).concat(this.getFileName());
 			
 	//	this.persistSourceFile(contents,rootPath);
 		
 	}
 	
+	private void checkFile() {
+		
+    	IPath path = new Path(sPath);	
+    	// IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+    	java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+		
+	}
+
 	private String fileName;
 	private String srcType;
 	private String sPath;
@@ -68,12 +85,13 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 	public String getCurrentContents() {
 				
     	IPath path = new Path(sPath);	
-    	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+    	// IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+    	java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
     	
     	StringBuffer s = new StringBuffer();
 
 		try {				
-			FileInputStream contents = (FileInputStream) file.getContents();
+			FileInputStream contents = new FileInputStream(file);
 			if (contents != null) {
 				Reader reader = new InputStreamReader(contents);
 				char[] readBuffer = new char[2048];
@@ -90,14 +108,15 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 			
 		    return this.contents;
 			
-		} catch (CoreException e) {
+		} /* catch (CoreException e) {
 			if (this.contents != null)
 				persistSourceFile();
         	// JOptionPane.showMessageDialog(null,
         	//	    "Error Fetching File Contents - ".concat(e.getMessage()),
         	//	    "Error",
         	//	    JOptionPane.ERROR_MESSAGE);
-	    } catch (IOException e) {
+	    } */ 
+		catch (IOException e) {
         	JOptionPane.showMessageDialog(null,
         		    "Error Reading File Contents - ".concat(e.getMessage()),
         		    "Error",
@@ -232,11 +251,6 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
             contents = new ByteArrayInputStream(new byte[0]);
 
         try {
-            // Create a new file resource in the workspace
-//            if (linkTargetPath != null)
- //               fileHandle.createLink(linkTargetPath,
-   //                     IResource.ALLOW_MISSING_LOCAL, monitor);
-     //       else {
                 IPath path = fileHandle.getFullPath();
                 IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
                 int numSegments= path.segmentCount();

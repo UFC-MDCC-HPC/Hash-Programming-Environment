@@ -5,6 +5,7 @@ import hPE.HPEPlugin;
 import hPE.core.library.model.classes.HPEComponentLibrary;
 import hPE.core.library.model.classes.HPEComponentLibraryItem;
 import hPE.core.library.model.classes.LComponentView;
+import hPE.frontend.CoreLocationList;
 
 import java.util.Iterator;
 import java.util.List;
@@ -128,8 +129,8 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 		this.addPropertyListener(propertyListener);
         
         getSite().getWorkbenchWindow().getPartService().addPartListener(partListener); */
-		
-		treeViewer.setInput(getInitalInput());
+		root = getInitialInput(this.getShowObsolete()); 
+		treeViewer.setInput(root);
 		// treeViewer.expandAll();
 	}
 	
@@ -223,7 +224,7 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 			public void run() {
 		  		setShowObsolete(!getShowObsolete());
 		  		viewObsoleteAction.setChecked(getShowObsolete());
-				treeViewer.setInput(getInitalInput());
+				treeViewer.setInput(getInitialInput(getShowObsolete()));
 				treeViewer.refresh();
 				treeViewer.expandToLevel(2);
 			}
@@ -359,19 +360,19 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 	}
 	
 	
-	public HPEComponentLibrary getInitalInput() {
+	public static HPEComponentLibrary getInitialInput(boolean showObsolete) {
 		
 		List<URI> locations;
 		
-		HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
+		//HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
 		
-		locations = locationFileTraversor.fetchLocations();
+		locations = CoreLocationList.fetchLocations();
 		
 		// TODO: library (getInitialInput)
 		// Read machine locations, stored in a XML file whose 
 		// path is pointed by a system variable HASH_LOCATIONS_FILE
 		
-		root = new HPEComponentLibrary(locations,getShowObsolete());
+		HPEComponentLibrary	root = new HPEComponentLibrary(locations,showObsolete);
 		
 		return root;
 	}
@@ -429,7 +430,8 @@ public class HPEComponentLibraryView extends ViewPart implements IPropertyChange
 	private void refreshLocation() 
 	{
 		try {
-     		treeViewer.setInput(getInitalInput());
+			root = getInitialInput(this.getShowObsolete());
+     		treeViewer.setInput(root);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

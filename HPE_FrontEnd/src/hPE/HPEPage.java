@@ -16,6 +16,7 @@ import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 import hPE.xml.factory.HComponentFactory;
+import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
@@ -118,12 +119,18 @@ public class HPEPage extends WizardNewFileCreationPage implements
 
 			String ss = this.getContainerFullPath().toString();
 		
+			
+			IPath containerRelativePath = this.getContainerFullPath();
+			IPath containerAbsolutePath = HComponentFactoryImpl.buildWPath(containerRelativePath);
+			
+			//URI uri = URI.createFileURI(path.makeAbsolute().toOSString());
+			
 			if (!ss.contains(".")) {
 				JOptionPane.showMessageDialog(null, "Unrecognized component package. Use <package>.<name>", "Creation Error", JOptionPane.ERROR_MESSAGE);
 					throw new Exception("Unrecognized component name.");
 			}
 			if (selectedKindName == null) {
-				DialogUtil.openError("Select a Component Kind.");
+				DialogUtil.openError("You must select the Component Kind.");
 				return false;
 			}
 			String packageName = ss.substring(1,ss.lastIndexOf('.'));
@@ -131,72 +138,79 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 			this.setFileName(s + ".hpe");
 						
-			String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
+			// String absolutePath = this.getContainerFullPath().append(s + ".hpe").toPortableString();
+			String absolutePathString = containerAbsolutePath.append(s + ".hpe").toString();
+			String relativePathString = containerRelativePath.append(s + ".hpe").toString();
 					
-			URI uri = URI.createFileURI(absolutePath);
+			URI uriAbsolutePath = URI.createFileURI(absolutePathString);
 			
 			HComponent c = null;
 			//TODO RAFAEL: REMOVER SE ESTIVER OK:
 //			switch (modelSelected1) {
-//			case 1: c = new HDataComponent(s,null,uri); break;
-//			case 2: c = new HComputationComponent(s,null,uri); break;
-//			case 3: c = new HSynchronizationComponent(s,null,uri); break;
-//			case 4: c = new HArchitectureComponent(s,null,uri); break;
-//			case 5: c = new HEnvironmentComponent(s,null,uri); break;
-//			case 6: c = new HQualifierComponent(s,null,uri); break;
-//			case 7: c = new HApplicationComponent(s,null,uri); break;
-//		    case 8: c = new HServiceComponent(s,null,uri); break;
-//			case 9: c = new HEnumeratorComponent(s,null,uri); break;
-//			case 10: c = new HFacetComponent(s,null,uri); break;
-//			case 11: c = new HDomainComponent(s,null,uri); break;
+//			case 1: c = new HDataComponent(s,null,uriAbsolutePath); break;
+//			case 2: c = new HComputationComponent(s,null,uriAbsolutePath); break;
+//			case 3: c = new HSynchronizationComponent(s,null,uriAbsolutePath); break;
+//			case 4: c = new HArchitectureComponent(s,null,uriAbsolutePath); break;
+//			case 5: c = new HEnvironmentComponent(s,null,uriAbsolutePath); break;
+//			case 6: c = new HQualifierComponent(s,null,uriAbsolutePath); break;
+//			case 7: c = new HApplicationComponent(s,null,uriAbsolutePath); break;
+//		    case 8: c = new HServiceComponent(s,null,uriAbsolutePath); break;
+//			case 9: c = new HEnumeratorComponent(s,null,uriAbsolutePath); break;
+//			case 10: c = new HFacetComponent(s,null,uriAbsolutePath); break;
+//			case 11: c = new HDomainComponent(s,null,uriAbsolutePath); break;
 //			}
 
 			if (HDataComponent.KIND.equals(selectedKindName)) {
-				c = new HDataComponent(s, null, uri);
+				c = new HDataComponent(s, null, uriAbsolutePath);
 			} else if (HComputationComponent.KIND.equals(selectedKindName)) {
-				c = new HComputationComponent(s, null, uri);
+				c = new HComputationComponent(s, null, uriAbsolutePath);
 			} else if (HSynchronizationComponent.KIND.equals(selectedKindName)) {
-				c = new HSynchronizationComponent(s, null, uri);
+				c = new HSynchronizationComponent(s, null, uriAbsolutePath);
 			} else if (HArchitectureComponent.KIND.equals(selectedKindName)) {
-				c = new HArchitectureComponent(s, null, uri);
+				c = new HArchitectureComponent(s, null, uriAbsolutePath);
 			} else if (HEnvironmentComponent.KIND.equals(selectedKindName)) {
-				c = new HEnvironmentComponent(s, null, uri);
+				c = new HEnvironmentComponent(s, null, uriAbsolutePath);
 			} else if (HQualifierComponent.KIND.equals(selectedKindName)) {
-				c = new HQualifierComponent(s, null, uri);
+				c = new HQualifierComponent(s, null, uriAbsolutePath);
 			} else if (HApplicationComponent.KIND.equals(selectedKindName)) {
-				c = new HApplicationComponent(s, null, uri);
+				c = new HApplicationComponent(s, null, uriAbsolutePath);
 			} else if (HServiceComponent.KIND.equals(selectedKindName)) {
-				c = new HServiceComponent(s, null, uri);
+				c = new HServiceComponent(s, null, uriAbsolutePath);
 			} else if (HEnumeratorComponent.KIND.equals(selectedKindName)) {
-				c = new HEnumeratorComponent(s, null, uri);
+				c = new HEnumeratorComponent(s, null, uriAbsolutePath);
 			} else if (HFacetComponent.KIND.equals(selectedKindName)) {
-				c = new HFacetComponent(s, null, uri);
+				c = new HFacetComponent(s, null, uriAbsolutePath);
 			} else if (HDomainComponent.KIND.equals(selectedKindName)) {
-				c = new HDomainComponent(s, null, uri);
+				c = new HDomainComponent(s, null, uriAbsolutePath);
 			} else {
 				KindConfiguration kindConfiguration = KindManager.findByName(selectedKindName);
 				if (kindConfiguration != null) {
-					c = kindConfiguration.newHBaseKindComponent(s, null, uri);
+					c = kindConfiguration.newHBaseKindComponent(s, null, uriAbsolutePath);
 				}
 			}
 			
 			setComponentVersion(c);
+			c.setAbstract(composite2.isAbstract());
+			
+			IPath absolutePath = new Path(absolutePathString); 
+			IPath relativePath = new Path(relativePathString); 
+			c.setPackagePath(new Path(packageName));
+			
 			try {
 				c.createComponentKey();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			c.setAbstract(composite2.isAbstract());
 			
-			IPath path = new Path(absolutePath);
-			// c.setPackagePath(path.removeFirstSegments(1).uptoSegment(1).makeRelative());
-			c.setPackagePath(new Path(packageName));
 			
-			IFile file = persistSourceFile("", path);
+			
+			IFile file = persistSourceFile("", relativePath);
+			
+			java.io.File file2 = HComponentFactoryImpl.getFileInWorkspace(absolutePath);
 			
 			try {
-				factory.saveComponent(c,file,null);
+				factory.saveComponent(c,file2,null);
 			} catch (UndefinedRefInnerException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -318,7 +332,9 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	
 	public IFile persistSourceFile(String programText, IPath path) {
 		
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		// java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+		
 			    							
 		try {				
 			createFile(file,null,null);				
@@ -348,11 +364,6 @@ public class HPEPage extends WizardNewFileCreationPage implements
 	    contents = new ByteArrayInputStream(new byte[0]);
 	
 	try {
-	    // Create a new file resource in the workspace
-	//    if (linkTargetPath != null)
-	//               fileHandle.createLink(linkTargetPath,
-	//                     IResource.ALLOW_MISSING_LOCAL, monitor);
-	//       else {
 	        IPath path = fileHandle.getFullPath();
 	        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 	        int numSegments= path.segmentCount();
