@@ -216,8 +216,6 @@ public class Interface {
                                    AbstractComponentFunctorApplication acfa, 
                                    out IDictionary<string, AbstractComponentFunctorApplication> parsSlice)
     {
-   //     SupplyParameterDAO spdao = new SupplyParameterDAO();
-     //   AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
         IList<SupplyParameter> spList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
 
         parsSlice = new Dictionary<string, AbstractComponentFunctorApplication>();

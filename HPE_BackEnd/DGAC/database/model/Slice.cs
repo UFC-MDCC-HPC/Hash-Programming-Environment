@@ -40,13 +40,6 @@ public class Slice {
         set { property_name = value; }
     }
     
-    /*  public int Id_abstract_slice
-      {
-          get { return id_abstract_slice; }
-          set { id_abstract_slice = value; }
-      }
-      */
-
     public string Id_interface_slice
     {
         get { return id_interface_slice; }

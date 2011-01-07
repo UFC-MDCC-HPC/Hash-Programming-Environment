@@ -33,13 +33,13 @@ namespace br.ufc.pargo.hpe.basic
 
             // REGISTER USES PORTS !
             int id_abstract = this.Id_abstract;
-            string id_interface = this.Id_interface;
+            string id_interface = this.Id_unit;
 
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
             foreach (Slice slice in sList)
             {
                 // The uses port name will be the name of the property
-               services.registerUsesPort(slice.PortName, "", new TypeMapImpl());
+               services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
             }
 
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS, "", new TypeMapImpl());
@@ -63,25 +63,19 @@ namespace br.ufc.pargo.hpe.basic
                 {
                     // Look for the port in the enclosing unit.
                     ComponentID user_id = this.CID;
-                    string portName = slice.PortName;
+                    string portName = slice.Id_inner; /*slice.PortName;*/
                     ComponentID container_id = this.containerSlice.CID;
+
+                    Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
 
                     SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
                                                               slice.Id_inner,
                                                               slice.Id_interface_slice_top,
                                                               this.containerSlice.Id_abstract,
-                                                              slice.Id_split_replica,
-                                                              this.Id_inner
+                                                              i.Id_interface_super_top
                                                               );
 
-                    Slice slice_container = BackEnd.sdao.retrieve(
-                                                              this.containerSlice.Id_abstract, 
-                                                              se.Id_inner, 
-                                                              se.Id_interface_slice, 
-                                                              se.Id_split_replica
-                                                              );
-
-                    string container_portName = slice_container.PortName;
+                    string container_portName = se.Id_inner;
 
                     BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
                 }
@@ -104,28 +98,36 @@ namespace br.ufc.pargo.hpe.basic
             set { id_concrete = value; }
         }
 
-        private string id_inner = null;
+/*        private string id_inner = null;
 
         public string Id_inner
         {
             get { return id_inner; }
             set { id_inner = value; }
-        }
+        } */
 
         private string id_interface;
 
-        public string Id_interface
+        public string Id_unit
         {
             get { return id_interface; }
             set { id_interface = value; }
         }
 
-        private int id_abstract;
+        private int id_abstract = 0;
 
         public int Id_abstract
         {
-            get { return id_abstract; }
-            set { id_abstract = value; }
+            get
+            {
+                if (id_abstract == 0 && this.Id_concrete > 0)
+                {
+                    br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve(this.Id_concrete);
+                    id_abstract = c.Id_abstract;
+                }
+                return id_abstract;
+            }
+            //set { id_abstract = value; }
         }
 
         private IDictionary<string, int> actual_parameters = new Dictionary<string, int>();

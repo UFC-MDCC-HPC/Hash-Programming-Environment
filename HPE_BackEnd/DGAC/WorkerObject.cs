@@ -294,17 +294,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
             unitProperties.Add(cid, properties);
 
-            string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
-            int id_abstract = properties.getInt(Constants.ID_ABSTRACT_KEY, 0);
-            string id_interface = properties.getString(Constants.ID_INTERFACE_KEY, "");
+            string id_unit = properties.getString(Constants.ID_UNIT_KEY, "");
             int id_concrete = properties.getInt(Constants.ID_CONCRETE_KEY, 0);
-            string id_inner = properties.getString(Constants.ID_INNER_KEY, "");
+            br.ufc.pargo.hpe.backend.DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(id_concrete, id_unit, -1);
             
-            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)Activator.CreateInstance(assembly_string, className).Unwrap();
+            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)Activator.CreateInstance(u.Assembly_string, className).Unwrap();
 
-            unit_slice.Id_abstract = id_abstract;
-            unit_slice.Id_interface = id_interface;
-            unit_slice.Id_inner = id_inner;
+            unit_slice.Id_unit = id_unit;
             unit_slice.Id_concrete = id_concrete;
 
             Services services = new WorkerServicesImpl(this, cid, unit_slice);
@@ -461,7 +457,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.unitInstances.TryGetValue(provider, out provider_unit);
 
             if (first_connection)
-                DGAC.BackEnd.setupSlice(user_unit, provider_unit);
+                DGAC.BackEnd.setupSlice(user_unit, provider_unit, usingPortName);
 
             return connection;
         }
@@ -992,8 +988,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             pmain.Id_functor_app = c.Id_functor_app;
             pmain.Id_concrete = id_concrete;
-            pmain.Id_abstract = id_abstract;
-            pmain.Id_interface = my_id_unit;
+            //pmain.Id_abstract = id_abstract;
+            pmain.Id_unit = my_id_unit;
 
             IDictionary<string, int> eInf = new Dictionary<string, int>();
             IDictionary<string, int> eSup = new Dictionary<string, int>();

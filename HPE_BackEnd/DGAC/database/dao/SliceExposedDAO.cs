@@ -166,7 +166,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return se;
         }
 
-        internal SliceExposed retrieveContainerByOriginal(string id_inner_original, string id_interface_slice_original, int id_abstract, int id_split_replica, string id_inner_owner)
+        internal SliceExposed retrieveContainerByOriginal(
+            string id_inner_original, 
+            string id_interface_slice_original, 
+            int id_abstract, 
+            string id_interface)
         {
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
@@ -177,10 +181,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "WHERE id_inner_original like '" + id_inner_original + "' and " +
                       "id_interface_slice_original like '" + id_interface_slice_original + "' and " +
                       "id_abstract = " + id_abstract + " and " +
-                      "id_split_replica = " + id_split_replica + " and " +
-                      "id_inner_owner = '" + id_inner_owner + "'";
+                      "id_interface_slice_owner = '" + id_interface + "'";
             dbcmd.CommandText = sql;
-            IDataReader reader = dbcmd.ExecuteReader();
+                IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
             {
                 se = new SliceExposed();

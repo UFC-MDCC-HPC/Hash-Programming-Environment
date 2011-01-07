@@ -228,6 +228,35 @@ public class InterfaceDAO{
 
         return null;
     }
+
+    internal Interface retrieveSuper(int id_abstract, string id_interface)
+    {
+        bool loop;
+        AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract);
+
+        IList<Interface> iList = BackEnd.idao.list(id_abstract);
+        foreach (Interface i in iList)
+        {
+            Interface iCurr = i;
+            AbstractComponentFunctor acfCurr = acf;
+            do
+            {
+                if (iCurr.Id_interface.Equals(id_interface))
+                {
+                    return i;
+                }
+                else if (loop = acfCurr.Id_functor_app_supertype > 0)
+                {
+                    AbstractComponentFunctorApplication acfaSuper = DGAC.BackEnd.acfadao.retrieve(acfCurr.Id_functor_app_supertype);
+                    acfCurr = DGAC.BackEnd.acfdao.retrieve(acfaSuper.Id_abstract);
+                    iCurr = DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, iCurr.Id_interface_super);
+                }
+            }
+            while (loop);
+        }
+
+        return null;
+    }
 }//class
 
 }//namespace
