@@ -38,14 +38,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             framework.registerComponentID(this.getComponentID(), this);
         }
 
-        public WorkerServicesImpl(WorkerObject framework, ComponentID cid, string hash_component_uid, string my_id_unit, IUnit pmain)
+     /*   public WorkerServicesImpl(WorkerObject framework, ComponentID cid, IUnit pmain, string library_path, string my_id_unit)
         {
             this.cid = cid;
             this.instanceName = cid.getInstanceName();
             this.framework = framework;
-            framework.Init(cid, hash_component_uid, my_id_unit, pmain);
             framework.registerComponentID(this.getComponentID(), this, pmain);
-        }
+        } */
 
 
         private string mkPortName(string portName)

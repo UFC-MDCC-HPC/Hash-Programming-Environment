@@ -27,6 +27,19 @@ namespace br.ufc.pargo.hpe.backend
         * já devem ter sido inicializados manualmente e identificados dentro do arquivo properties.xml, na pasta config
         */
 
+        namespace ports
+        {
+            public interface CreateSlicePort : Port
+            {
+                void createSlices();
+                IList<IUnit> Slices { get; }
+                IUnit ContainerSlice { get; set; }
+                void addSlice(IUnit slice);
+                void destroySlice();
+
+            }
+        }
+
         public class BackEnd 
         {
 
@@ -594,43 +607,44 @@ namespace br.ufc.pargo.hpe.backend
 
             public static void resolveUnit(
                             IUnit enclosing_unit,
-                            string id_inner,
+                            InnerComponent ic,
                             string id_interface, /*, IDictionary<string, int> actualParameters_new*/
                             out DGAC.database.Component cu,
-                            out DGAC.database.Unit u,
-                            out System.Type[] actualParams
+                            out DGAC.database.Unit u /*,
+                            out System.Type[] actualParams */
                         )
             {
-                u = LoaderApp.resolveImpl(enclosing_unit, id_inner, id_interface);
+                //u = LoaderApp.resolveImpl(enclosing_unit, ic.Id_abstract_inner, id_interface);
+                u = LoaderApp.resolveImpl(ic.Id_functor_app, id_interface, enclosing_unit.ActualParameters, enclosing_unit.ActualParametersTop);
 
-                if (u == null)
-                    throw new ConcreteComponentNotFoundException(enclosing_unit.Id_abstract, id_inner, enclosing_unit.Id_functor_app);
+                //if (u == null)
+                //    throw new ConcreteComponentNotFoundException(enclosing_unit.Id_abstract, ic.Id_abstract_inner, enclosing_unit.Id_functor_app);
 
                 cu = BackEnd.cdao.retrieve(u.Id_concrete);
 
-                Slice slice = BackEnd.sdao.retrieve2(enclosing_unit.Id_abstract, id_inner, id_interface, enclosing_unit.Id_unit);
-                
-                /* testing : check parameters */
-                int id_abstract = enclosing_unit.Id_abstract;
-                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
-
-                int id_functor_app_inner_actual = ic.Id_functor_app;
-                if (ic.Parameter_top.Length > 0 
-                     && (enclosing_unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual) 
-                          || enclosing_unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + enclosing_unit.Id_functor_app, out id_functor_app_inner_actual))) {
-                    ic.Id_functor_app = id_functor_app_inner_actual;
-                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
-                    ic.Id_abstract_inner = acfa.Id_abstract;
-                }
-
-                IDictionary<string, int> actualParameters_new;
-                determineActualParameters(enclosing_unit.ActualParameters, id_functor_app_inner_actual, out actualParameters_new);
-                /* ---------------- */
-
-                Interface i = BackEnd.idao.retrieveSuper(ic.Id_abstract_inner, id_interface);
-                actualParams = calculateActualClassParameteres(i,id_functor_app_inner_actual, actualParameters_new);
             }
 
+
+            public static void resolveUnit(
+                            int id_functor_app,
+                            string id_interface, 
+                            IDictionary<string, int> actualParameters,
+                            IDictionary<string, int> actualParametersTop,
+                            out DGAC.database.Component cu,
+                            out DGAC.database.Unit u /*,
+                            out System.Type[] actualParams */
+                        )
+            {
+                u = LoaderApp.resolveImpl(id_functor_app, id_interface, actualParameters, actualParametersTop);
+
+                //if (u == null)
+                //    throw new ConcreteComponentNotFoundException(id, id_inner, enclosing_unit.Id_functor_app);
+
+                cu = BackEnd.cdao.retrieve(u.Id_concrete);
+
+            }
+
+            
             private static System.Type[] calculateActualClassParameteres(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
             {
                 IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
@@ -715,19 +729,57 @@ namespace br.ufc.pargo.hpe.backend
                 actualParams = o.GetGenericArguments();
             }
 
+            public static void calculateActualParams(
+                string library_path,
+                br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
+                br.ufc.pargo.hpe.backend.DGAC.database.Component c,
+                out System.Type[] actualParams)
+            {
+                IDictionary<string, int> actualParameters_new;
+                determineActualParameters(new Dictionary<string, int>(), c.Id_functor_app, out actualParameters_new);
+
+                Interface i = BackEnd.idao.retrieveSuper(c.Id_abstract, u.Id_unit);
+                actualParams = calculateActualClassParameteres(i, c.Id_functor_app, actualParameters_new);
+                /* ---------------- */
+            }
             
+            public static void calculateActualParams(
+                IUnit enclosing_unit, 
+                InnerComponent ic,
+                //string id_inner, 
+                string id_interface, 
+                out System.Type[] actualParams)
+            {                
+                /* calculate class name */
+                //int id_abstract = enclosing_unit.Id_abstract;
+                //InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
+                //updateInnerComponentType(enclosing_unit, ic);
+
+                IDictionary<string, int> actualParameters_new;
+                determineActualParameters(enclosing_unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
+
+                Interface i = BackEnd.idao.retrieveSuper(ic.Id_abstract_inner, id_interface);
+                actualParams = calculateActualClassParameteres(i, ic.Id_functor_app, actualParameters_new);
+            }
+
+            private static void updateInnerComponentType(IUnit enclosing_unit, InnerComponent ic)
+            {
+                int id_functor_app_inner_actual;
+                if (ic.Parameter_top.Length > 0
+                     && (enclosing_unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual)
+                          || enclosing_unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + enclosing_unit.Id_functor_app, out id_functor_app_inner_actual)))
+                {
+                    ic.Id_functor_app = id_functor_app_inner_actual;
+                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
+                    ic.Id_abstract_inner = acfa.Id_abstract;
+                }
+            }
 
             public static void calculateGenericClassName(
-                IUnit enclosing_unit, 
-                string id_inner, 
-                string id_interface, 
-                out br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
-                out br.ufc.pargo.hpe.backend.DGAC.database.Component c,
+                br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
+                System.Type[] actualParams,
                 out string type)
             {
-                System.Type[] actualParams;
-                resolveUnit(enclosing_unit, id_inner, id_interface, out c, out u, out actualParams);
-
                 string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
                 string class_name = u.Class_name;  // the name of the class inside the DLL.
                 int class_nargs = u.Class_nargs;
@@ -736,9 +788,10 @@ namespace br.ufc.pargo.hpe.backend
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
 
-                System.Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t; 
+                System.Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
                 type = closedT.FullName;
             }
+
 
             /* TODO !!!!
              * It is still necessary to defined the meaning of the type parameter of registerUsesPort and addProvidesPort.
@@ -757,17 +810,21 @@ namespace br.ufc.pargo.hpe.backend
                 string instanceName = user_cid.getInstanceName();
 
                 // APPLY THE RESOLUTION ALGORITHM
-                string assembly_string;
                 string className;
                 br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
                 br.ufc.pargo.hpe.backend.DGAC.database.Component c;
-                calculateGenericClassName(ownerUnit, id_inner, id_interface, out u, out c, out className);
+                InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
+                updateInnerComponentType(ownerUnit, ic);
+                //resolveUnit(ownerUnit, ic, id_interface, out c, out u);
+                resolveUnit(ic.Id_functor_app, id_interface, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop, out c, out u);
+                System.Type[] actualParams;
+                calculateActualParams(ownerUnit, ic, id_interface, out actualParams);
+                calculateGenericClassName(u, actualParams, out className);
 
                 // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
                 HPETypeMap properties2 = new TypeMapImpl();
-                properties2[Constants.KIND_KEY] = Constants.kindMapping[c.Kind];
-                properties2[Constants.ID_CONCRETE_KEY] = u.Id_concrete;
-                properties2[Constants.ID_UNIT_KEY] = u.Id_unit;
+                properties2[Constants.COMPONENT_KEY] = c.Library_path; // u.Id_concrete;
+                properties2[Constants.UNIT_KEY] = u.Id_unit;
                 ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
 
                 // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
@@ -811,6 +868,129 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
+            public static void calculateInitialTopology(ComponentID cid, string library_path, string my_id_unit, IUnit pmain)
+            {
+                Connector.openConnection();
+
+                TypeMap properties = framework.getComponentProperties(cid);
+
+                DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(library_path);
+
+                int id_abstract = c.Id_abstract;
+                int id_concrete = c.Id_concrete;
+
+                pmain.Id_functor_app = c.Id_functor_app;
+                pmain.Id_concrete = id_concrete;
+                pmain.Id_unit = my_id_unit;
+
+                IDictionary<string, int> eInf = new Dictionary<string, int>();
+                IDictionary<string, int> eSup = new Dictionary<string, int>();
+
+                pmain.EnumeratorCardinality = new Dictionary<string, int>();
+
+                IList<Enumerator> eList = BackEnd.edao.list(id_abstract);
+                foreach (Enumerator e in eList)
+                {
+                    int rangeInf_ = 0;
+                    int rangeSup_ = enumeratorCardinality(properties.getStringArray(Constants.ENUMS_KEY, new string[0]), e.Variable);
+
+                    eInf.Add(e.Id_enumerator, rangeInf_);
+                    eSup.Add(e.Id_enumerator, rangeSup_);
+                    if (rangeSup_ > 0)
+                        pmain.EnumeratorCardinality.Add(e.Id_enumerator, rangeSup_);
+                }
+
+                int rangeInf, rangeSup;
+
+                int num_procs = 0;
+                int rank = 0;
+
+                pmain.Units = new Dictionary<string, int[]>();
+                IList<IDictionary<string, int>> pmain_EnumRanks = new List<IDictionary<string, int>>();
+                IList<int> pmain_Ranks = new List<int>();
+
+                IList<string> id_units_ordered = BackEnd.acfdao.getIdUnitsOrdered(id_abstract);
+
+                foreach (string id_unit in id_units_ordered)
+                {
+                    if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)
+                        pmain.GlobalRank = rank;
+
+                    IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(id_abstract, id_unit);
+
+                    if (eiList.Count > 0)
+                    {
+                        IList<IList<int>> x = new List<IList<int>>();
+                        x.Add(new List<int>());
+                        int j = 0;
+                        string[] enumerator = new string[eiList.Count];
+                        foreach (EnumerationInterface ei in eiList)
+                        {
+                            enumerator[j++] = ei.Id_enumerator;
+                            eInf.TryGetValue(ei.Id_enumerator, out rangeInf);
+                            eSup.TryGetValue(ei.Id_enumerator, out rangeSup);
+                            IList<IList<int>> y = new List<IList<int>>();
+                            foreach (IList<int> xx in x)
+                            {
+                                for (int yyy = rangeInf; yyy < rangeSup; yyy++)
+                                {
+                                    IList<int> yy = new List<int>();
+                                    foreach (int xxx in xx)
+                                    {
+                                        yy.Add(xxx);
+                                    }
+                                    yy.Add(yyy);
+                                    y.Add(yy);
+                                }
+                            }
+                            x = y;
+                        }
+
+                        num_procs += x.Count;
+
+                        IList<int> ranks = new List<int>();
+
+                        foreach (IList<int> eIXs in x)
+                        {
+                            j = 0;
+                            pmain_EnumRanks.Add(new Dictionary<string, int>());
+                            foreach (int eVal in eIXs)
+                            {
+                                pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
+                            }
+                            pmain_Ranks.Add(rank);
+                            ranks.Add(rank);
+                            rank++;
+                        }
+                        int[] ranksArr = new int[ranks.Count];
+                        ranks.CopyTo(ranksArr, 0);
+                        pmain.Units.Add(id_unit, ranksArr);
+                    }
+                    else // Unitary unit ...
+                    {
+                        num_procs++;
+                        pmain_Ranks.Add(rank);
+                        pmain_EnumRanks.Add(new Dictionary<string, int>());
+                        int[] ranksArr = new int[1];
+                        ranksArr[0] = rank++;
+                        pmain.Units.Add(id_unit, ranksArr);
+                    }
+                }
+
+                pmain.EnumRanks = new IDictionary<string, int>[num_procs];
+                pmain.Ranks = new int[num_procs];
+
+                for (int i = 0; i < num_procs; i++)
+                {
+                    pmain.EnumRanks[i] = pmain_EnumRanks[i];
+                    pmain.Ranks[i] = pmain_Ranks[i];
+                }
+
+                pmain.setUpParameters(c);
+                pmain.ActualParametersTop = pmain.ActualParameters;
+
+                Connector.closeConnection();
+            }
 
             private static void calculateTopology(IUnit unit, IUnit unit_slice, string id_inner)
             {
@@ -1054,6 +1234,24 @@ namespace br.ufc.pargo.hpe.backend
                 unit_slice.Ranks = ranksAllArr;
                 unit_slice.EnumRanks = enumRanksArr;
                 unit_slice.Units = unitsRanks;
+            }
+
+            private static int enumeratorCardinality(string[] enums, string var)
+            {
+                int step = 0;
+                foreach (string a in enums)
+                {
+                    if (step == 0 && a.Equals(var))
+                    {
+                        step = 1;
+                    }
+                    else if (step == 1)
+                    {
+                        return int.Parse(a);
+                    }
+                }
+
+                return 0;
             }
 
             private static bool findReplicator(IUnit unit, KeyValuePair<string, int> re,
@@ -1497,6 +1695,13 @@ namespace br.ufc.pargo.hpe.backend
                 cname += "]";
 
                 return cname;
+            }
+
+            private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            public static long currentTimeMillis()
+            {
+                return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
             }
 
 

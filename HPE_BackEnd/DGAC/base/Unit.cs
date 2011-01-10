@@ -33,11 +33,13 @@ namespace br.ufc.pargo.hpe.basic
         int[] EnumPeers { get; }
         IDictionary<string, int> EnumeratorCardinality { get; set; }
 
+        
         void createSlices();
         IList<IUnit> Slices { get; }
         IUnit ContainerSlice { get; set; }
         void addSlice(IUnit slice);
         void destroySlice();
+        
 
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }

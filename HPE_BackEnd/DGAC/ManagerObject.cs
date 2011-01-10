@@ -521,7 +521,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public int[] createInstanceImpl(
                 string instanceName,
-                string className,
+                string library_path,
                 TypeMapImpl properties,
                 out int[] cid_nodes,
                 out string[] unit_ids,
@@ -534,7 +534,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 try
                 {
-
                     Connector.openConnection();
 
                     /* BEGIN FOM RunApplication */
@@ -542,13 +541,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     Console.WriteLine("ENTROU createInstance manager");
 
                     IDictionary<string, int> files = new Dictionary<string, int>();
-
                     IDictionary<string, int>  enums = readEnumerators(properties);
-
 
                     int[] nodes = this.fetchNodes(properties);
 
-                    br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(className);
+                    br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(library_path);
                     string hash_component_uid = c.Hash_component_UID;
 
                     IList<br.ufc.pargo.hpe.backend.DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
@@ -610,9 +607,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         {
                             TypeMapImpl worker_properties = new TypeMapImpl(properties);
                             worker_properties[Constants.KEY_KEY] = k;
-                            worker_properties[Constants.UID_KEY] = hash_component_uid;
-                            worker_properties[Constants.KIND_KEY] = Constants.kindMapping[c.Kind];
-                            GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, unit.Key, worker_properties);
+                            worker_properties[Constants.COMPONENT_KEY] = library_path;
+                            worker_properties[Constants.UNIT_KEY] = unit.Key ;
+
+                            br.ufc.pargo.hpe.backend.DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, unit.Key, -1);
+                            string class_name_worker;
+                            System.Type[] actualParams;
+                            DGAC.BackEnd.calculateActualParams(library_path, u, c, out actualParams);
+                            DGAC.BackEnd.calculateGenericClassName(u, actualParams, out class_name_worker);
+                            
+                            GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, class_name_worker, worker_properties);
                             Thread t = new Thread(gw.Run);
                             t.Start();
                             wthreads.Add(t);

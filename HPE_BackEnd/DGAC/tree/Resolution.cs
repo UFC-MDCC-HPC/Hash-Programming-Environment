@@ -194,5 +194,34 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 						
 			return c; // if c is null, there is not an implementation ....			
 		}
-	}
+
+
+        public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
+        {
+
+            Component c;
+
+            if (acfaRef.ParametersList.Count == 0)
+            {
+                if (cache.TryGetValue(acfaRef.Id_abstract, out c))
+                {
+                    return c;
+                }
+            }
+
+            TreeNode root = GenerateTree.generate(actualParametersTop, acfaRef);
+
+            Resolution.sort(root);
+
+            c = Resolution.tryGeneralize(root, root);
+
+            if (acfaRef.ParametersList.Count == 0)
+            {
+                cache.Add(acfaRef.Id_abstract, c);
+            }
+
+            return c; // if c is null, there is not an implementation ....			
+        }
+
+    }
 }

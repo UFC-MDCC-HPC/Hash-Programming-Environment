@@ -126,10 +126,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		
 		public void registerComponentID(ComponentID cid, Services services, br.ufc.pargo.hpe.basic.IUnit unit) 
 		{
-			unitInstances.Add(cid,unit);
-			componentIDs.Add(cid.getInstanceName(),cid);
-            componentServices.Add(cid,services);
-            unit.CID = cid;
+            if (!componentIDs.ContainsKey(cid.getInstanceName()))
+            {
+                unitInstances.Add(cid, unit);
+                componentIDs.Add(cid.getInstanceName(), cid);
+                componentServices.Add(cid, services);
+                unit.CID = cid;
+            }
 		}
 
         public void registerComponentID(ComponentID cid, Services services)
@@ -246,11 +249,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ComponentID cid = null;
 
-            int kind = properties.getInt(Constants.KIND_KEY, Constants.KIND_UNRECOGNIZED);
+            Connector.openConnection();
 
+            string library_path = properties.getString(Constants.COMPONENT_KEY, "not found");
+            br.ufc.pargo.hpe.backend.DGAC.database.Component c = DGAC.BackEnd.cdao.retrieve_libraryPath(library_path);
+            
+            int kind = Constants.kindMapping[c.Kind];
+            
             switch (kind)
             {
-                case Constants.KIND_APPLICATION: cid = createInstanceApplication(instanceName, className, properties); break;
+                case Constants.KIND_APPLICATION: cid = createInstanceForApplications(instanceName, className, properties); break;
                 case Constants.KIND_COMPUTATION:
                 case Constants.KIND_DATASTRUCTURE:
                 case Constants.KIND_ENUMERATOR:
@@ -258,56 +266,59 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 case Constants.KIND_PLATFORM:
                 case Constants.KIND_QUALIFIER:
                 case Constants.KIND_SERVICE:
-                case Constants.KIND_SYNCHRONIZER: cid = createInstanceX(instanceName, className, properties); break;
+                case Constants.KIND_SYNCHRONIZER: cid = createInstanceBaseForAllKinds(instanceName, className, properties); break;
                 case Constants.KIND_UNRECOGNIZED: throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
             }
 
+            Connector.closeConnection();
+
             return cid;
         }
 
 
-        public ComponentID createInstanceApplication(string instanceName,
-                                          string className,    // unit name (data)
-                                          TypeMap properties)
+        private ComponentID createInstanceForApplications(string instanceName, string class_name, TypeMap properties)
         {
-            ComponentID cid = new WorkerComponentIDImpl(instanceName);
-            unitProperties.Add(cid, properties);
-
-            string hash_component_uid = properties.getString(Constants.UID_KEY, "not found");
             int key = properties.getInt(Constants.KEY_KEY, my_rank);
+            string id_unit = properties.getString(Constants.UNIT_KEY, "");
+            string library_path = properties.getString(Constants.COMPONENT_KEY, "");
 
-            br.ufc.pargo.hpe.kinds.IApplicationKind pmain = createUnitInstanceApplication(hash_component_uid, className, (TypeMapImpl)properties);
+            ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
+
+            IUnit unit_slice;
+            unitInstances.TryGetValue(cid_app, out unit_slice);
+            br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind) unit_slice;
+            
+            // This part is only performed by applications.
+            DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, pmain);
             pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-
-            Services services = new WorkerServicesImpl(this, cid, hash_component_uid, className, pmain);
-            pmain.setServices(services);
-
             pmain.createSlices();
+            // --------------------------------------------
 
-            return cid;
+            return cid_app;
         }
 
-        public ComponentID createInstanceX(string instanceName,
-                                           string className,
-                                           TypeMap properties)
+        private ComponentID createInstanceBaseForAllKinds(string instanceName, string class_name, TypeMap properties)
         {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
             unitProperties.Add(cid, properties);
 
-            string id_unit = properties.getString(Constants.ID_UNIT_KEY, "");
-            int id_concrete = properties.getInt(Constants.ID_CONCRETE_KEY, 0);
-            br.ufc.pargo.hpe.backend.DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(id_concrete, id_unit, -1);
-            
-            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)Activator.CreateInstance(u.Assembly_string, className).Unwrap();
+            string id_unit = properties.getString(Constants.UNIT_KEY, "");
+            string library_path = properties.getString(Constants.COMPONENT_KEY, "");
+            br.ufc.pargo.hpe.backend.DGAC.database.Component c = DGAC.BackEnd.cdao.retrieve_libraryPath(library_path);
+            br.ufc.pargo.hpe.backend.DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, id_unit, -1);
 
+            string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
+
+            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)Activator.CreateInstance(assembly_string, class_name).Unwrap();
             unit_slice.Id_unit = id_unit;
-            unit_slice.Id_concrete = id_concrete;
+            unit_slice.Id_concrete = c.Id_concrete;
 
             Services services = new WorkerServicesImpl(this, cid, unit_slice);
             unit_slice.setServices(services);
 
             return cid;
         }
+
 
         private IDictionary<string, int> readEnumerators(HPETypeMap properties)
         {
@@ -900,7 +911,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.global_communicator.Split(0, my_rank);
         }
 
-        private hpe.kinds.IApplicationKind createUnitInstanceApplication(string hash_component_uid, string id_unit, TypeMapImpl properties)
+        private hpe.kinds.IApplicationKind createUnitInstanceApplication(string library_path, string id_unit, TypeMapImpl properties)
         {
             hpe.kinds.IApplicationKind pmain = null;
 
@@ -908,7 +919,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
                 Connector.openConnection();
 
-                br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_uid(hash_component_uid);
+                br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(library_path);
                 int id_concrete = c.Id_concrete;
 
                 br.ufc.pargo.hpe.backend.DGAC.database.Unit unit = BackEnd.udao.retrieve(id_concrete, id_unit, -1);
@@ -970,201 +981,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			Console.WriteLine("Hi!");
 		}
 	
-	
-	    private int session_id;
-
-	
-	
-        public void Init(ComponentID cid, string hash_component_uid, string my_id_unit, IUnit pmain)
-        {
-            Connector.openConnection();
-
-            TypeMap properties = this.getComponentProperties(cid);
-
-            DGAC.database.Component c = BackEnd.cdao.retrieve_uid(hash_component_uid);
-
-            int id_abstract = c.Id_abstract;
-            int id_concrete = c.Id_concrete;
-
-            pmain.Id_functor_app = c.Id_functor_app;
-            pmain.Id_concrete = id_concrete;
-            //pmain.Id_abstract = id_abstract;
-            pmain.Id_unit = my_id_unit;
-
-            IDictionary<string, int> eInf = new Dictionary<string, int>();
-            IDictionary<string, int> eSup = new Dictionary<string, int>();
-
-            pmain.EnumeratorCardinality = new Dictionary<string, int>();
-
-            IList<Enumerator> eList = BackEnd.edao.list(id_abstract);
-            foreach (Enumerator e in eList)
-            {
-                int rangeInf_ = 0;
-                int rangeSup_ = enumeratorCardinality(properties.getStringArray(Constants.ENUMS_KEY,new string[0]), e.Variable);
-
-                eInf.Add(e.Id_enumerator, rangeInf_);
-                eSup.Add(e.Id_enumerator, rangeSup_);
-                if (rangeSup_ > 0)
-                    pmain.EnumeratorCardinality.Add(e.Id_enumerator, rangeSup_);
-            }
-
-            int rangeInf, rangeSup;
-
-            int num_procs = 0;
-            int rank = 0;
-
-            pmain.Units = new Dictionary<string, int[]>();
-            IList<IDictionary<string, int>> pmain_EnumRanks = new List<IDictionary<string, int>>();
-            IList<int> pmain_Ranks = new List<int>();
-
-            IList<string> id_units_ordered = BackEnd.acfdao.getIdUnitsOrdered(id_abstract);
-
-            foreach (string id_unit in id_units_ordered)
-            {
-                if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)
-                    pmain.GlobalRank = rank;
-
-                IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(id_abstract, id_unit);
-
-                if (eiList.Count > 0)
-                {
-                    IList<IList<int>> x = new List<IList<int>>();
-                    x.Add(new List<int>());
-                    int j = 0;
-                    string[] enumerator = new string[eiList.Count];
-                    foreach (EnumerationInterface ei in eiList)
-                    {
-                        enumerator[j++] = ei.Id_enumerator;
-                        eInf.TryGetValue(ei.Id_enumerator, out rangeInf);
-                        eSup.TryGetValue(ei.Id_enumerator, out rangeSup);
-                        IList<IList<int>> y = new List<IList<int>>();
-                        foreach (IList<int> xx in x)
-                        {
-                            for (int yyy = rangeInf; yyy < rangeSup; yyy++)
-                            {
-                                IList<int> yy = new List<int>();
-                                foreach (int xxx in xx)
-                                {
-                                    yy.Add(xxx);
-                                }
-                                yy.Add(yyy);
-                                y.Add(yy);
-                            }
-                        }
-                        x = y;
-                    }
-
-                    num_procs += x.Count;
-
-                    IList<int> ranks = new List<int>();
-
-                    foreach (IList<int> eIXs in x)
-                    {
-                        j = 0;
-                        pmain_EnumRanks.Add(new Dictionary<string, int>());
-                        foreach (int eVal in eIXs)
-                        {
-                            pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
-                        }
-                        pmain_Ranks.Add(rank);
-                        ranks.Add(rank);
-                        rank++;
-                    }
-                    int[] ranksArr = new int[ranks.Count];
-                    ranks.CopyTo(ranksArr, 0);
-                    pmain.Units.Add(id_unit, ranksArr);
-                }
-                else // Unitary unit ...
-                {
-                    num_procs++;
-                    pmain_Ranks.Add(rank);
-                    pmain_EnumRanks.Add(new Dictionary<string, int>());
-                    int[] ranksArr = new int[1];
-                    ranksArr[0] = rank++;
-                    pmain.Units.Add(id_unit, ranksArr);
-                }
-            }
-
-            pmain.EnumRanks = new IDictionary<string, int>[num_procs];
-            pmain.Ranks = new int[num_procs];
-
-            for (int i = 0; i < num_procs; i++)
-            {
-                pmain.EnumRanks[i] = pmain_EnumRanks[i];
-                pmain.Ranks[i] = pmain_Ranks[i];
-            }
-
-            pmain.setUpParameters(c);
-            pmain.ActualParametersTop = pmain.ActualParameters;
-
-            // closeConnection(true);
-        }
-
-        private int getSessionID(string[] args)
-        {
-            int step = 0;
-            foreach (string a in args)
-            {
-                if (step == 0 && a.Equals("--session"))
-                    step++;
-                else if (step == 1)
-                    return Int32.Parse(a);
-            }
-            return -1;
-        }
-
-
-        private static readonly DateTime Jan1st1970 = new DateTime
-            (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public long currentTimeMillis()
-        {
-            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
-        }
-        
-        private int enumeratorCardinality(string[] enums, string var)
-        {
-            int step = 0;
-            foreach (string a in enums)
-            {
-                if (step == 0 && a.Equals(var))
-                {
-                    step = 1;
-                }
-                else if (step == 1)
-                {
-                    return int.Parse(a);
-                }
-            }
-
-            return 0;
-        }
-
-        public void openConnection()
-        {
-            Connector.openConnection();
-            Connector.beginTransaction();
-        }
-
-        public void closeConnection(bool commit)
-        {
-            if (commit)
-            {
-                Connector.commitTransaction(); // if it is ok, commit ...
-            }
-            else
-            {
-                Connector.rollBackTransaction(); // if it is ok, commit ...
-            }
-        }
-
-
-        private IDictionary<int, System.Type> paramTable = new Dictionary<int, System.Type>();
-
-
-
-        private IDictionary<string, System.Type> checked_types = new Dictionary<string, System.Type>();
-
         private void fetchParameters(IDictionary<string, int> actualParameters,
                                             int id_functor_app_owner,
                                             int id_abstract,
