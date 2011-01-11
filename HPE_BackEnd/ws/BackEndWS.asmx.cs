@@ -68,7 +68,7 @@ namespace Back_End_WS
 
             EnvironmentType env = dgac.readEnvironment();
 
-            byte[] xmlEnv = LoaderApp.SerializeObject(Constants.PATH_TEMP_WORKER + "environment.xml", env);
+            byte[] xmlEnv = LoaderApp.SerializeEnvironment(Constants.PATH_TEMP_WORKER + "environment.xml", env);
 
             return xmlEnv;
         }

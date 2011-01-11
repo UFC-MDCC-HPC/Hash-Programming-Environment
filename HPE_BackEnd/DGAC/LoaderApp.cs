@@ -14,34 +14,77 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
     public class LoaderApp
     {
 
-
-
         public static ComponentType DeserializeObject(string filename)
         {
-            Console.WriteLine("Reading with XmlReader");
-
-            // Create an instance of the XmlSerializer specifying type and namespace.
-            XmlSerializer serializer = new XmlSerializer(typeof(ComponentType));
-
-            // A FileStream is needed to read the XML document.
-            FileStream fs = new FileStream(filename, FileMode.Open);
-
-            XmlReader reader = new XmlTextReader(fs);
-
-
             // Declare an object variable of the type to be deserialized.
-            ComponentType i;
+            ComponentType i = null;
+            FileStream fs = null;
+            try
+            {
+                Console.WriteLine("Reading with XmlReader");
 
-            // Use the Deserialize method to restore the object's state.
-            i = (ComponentType)serializer.Deserialize(reader);
+                // Create an instance of the XmlSerializer specifying type and namespace.
+                XmlSerializer serializer = new XmlSerializer(typeof(ComponentType));
 
-            fs.Close();
+                // A FileStream is needed to read the XML document.
+                fs = new FileStream(filename, FileMode.Open);
+
+                XmlReader reader = new XmlTextReader(fs);
+
+
+                // Use the Deserialize method to restore the object's state.
+                i = (ComponentType)serializer.Deserialize(reader);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (fs != null)
+                    fs.Close();
+            }
 
             return i;
 
         }
 
-        public static byte[] SerializeObject(string filename, EnvironmentType env)
+        public static ComponentFunctorApplicationType DeserializeInstantiator(string filename)
+        {
+            // Declare an object variable of the type to be deserialized.
+            ComponentFunctorApplicationType i = null;
+            FileStream fs = null;
+            try
+            {
+                Console.WriteLine("Reading with XmlReader");
+
+                // Create an instance of the XmlSerializer specifying type and namespace.
+                XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));
+
+                // A FileStream is needed to read the XML document.
+                fs = new FileStream(filename, FileMode.Open);
+
+                XmlReader reader = new XmlTextReader(fs);
+
+                // Use the Deserialize method to restore the object's state.
+                i = (ComponentFunctorApplicationType)serializer.Deserialize(reader);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                if (fs != null)
+                    fs.Close();
+            }
+
+            return i;
+
+        }
+
+        public static byte[] SerializeEnvironment(string filename, EnvironmentType env)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(EnvironmentType));
 
@@ -50,7 +93,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             XmlWriter writer = new XmlTextWriter(fs, null);
 
             serializer.Serialize(writer, env);
-
 
             BinaryReader br = new BinaryReader(fs);
             int count = (int)fs.Length;
@@ -63,146 +105,34 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return data;
         }
 
+        public static byte[] serializeInstantiator(string filename, ComponentFunctorApplicationType inst)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));
+
+            FileStream fs = new FileStream(filename, FileMode.Create);
+
+            XmlWriter writer = new XmlTextWriter(fs, null);
+
+            serializer.Serialize(writer, inst);
+
+            BinaryReader br = new BinaryReader(fs);
+            int count = (int)fs.Length;
+            fs.Position = 0;
+
+            byte[] data = br.ReadBytes(count);
+            br.Close();
+            fs.Close();
+
+            return data;
+        }
 
         //receives id_concrete and id inner wich belongs for that inner
         //returns a impl of the inner
         //return -1 if the impl doesnt exist    
 
-        public static Unit resolveImpl(IUnit unit, string id_inner, string id_interface)
+
+        public static Component resolveImpl(AbstractComponentFunctorApplication acfaRef, IDictionary<string, int> actualParameters, IDictionary<string, int> actualParametersTop)
         {
-
-            //get abstract component from received component for walking through its inner components
-            AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(unit.Id_functor_app);
-
-            //INIT 
-            if (acfa != null)
-            {
-
-                //get functor
-                AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
-
-                if (acf != null)
-                {
-
-                    // analysing the inner component
-                    InnerComponent innerComponent = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(acf.Id_abstract, id_inner);
-
-                    //    Console.WriteLine("innerComponents is Null ? " + (innerComponent == null));
-
-                    int Id_functor_app_inner = -1;
-                    if (innerComponent.Parameter_top.Length == 0)
-                    {
-                        Id_functor_app_inner = innerComponent.Id_functor_app;
-                    }
-                    else
-                    {
-                        bool achei = unit.ActualParameters.TryGetValue(innerComponent.Parameter_top, out Id_functor_app_inner);
-                        if (!achei)
-                        {
-                            achei = unit.ActualParameters.TryGetValue(innerComponent.Parameter_top + "#" + unit.Id_functor_app, out Id_functor_app_inner);
-                        }
-
-                        if (!achei)
-                        {
-                            Console.WriteLine("UNEXPECTED ERROR: " + innerComponent.Parameter_top + "#" + unit.Id_functor_app + " NOT FOUND !!! (In: resolveImpl - LoaderApp.cs)");
-                        }
-                    }
-
-
-                    AbstractComponentFunctorApplication acfaRef = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_inner);
-
-
-                    // get inner component application
-                    if (acfaRef != null)
-                    {
-                        IList<SupplyParameter> supplyParameters = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfaRef.Id_functor_app);
-
-                        foreach (SupplyParameter supplyParameter in supplyParameters)
-                        {
-
-                            //if exist a supplied parameter, then check if it is suppllie for a component
-                            SupplyParameterComponent spc = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spcdao.retrieve(supplyParameter.Id_parameter,
-                                                                                                supplyParameter.Id_functor_app);
-
-                            if (spc != null)
-                            {
-                                acfaRef.addParameter(spc.Id_parameter, spc.Id_functor_app_actual);
-                            }
-                            else
-                            {
-                                SupplyParameterParameter spp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sppdao.retrieve(supplyParameter.Id_parameter,
-                                                                                                    supplyParameter.Id_functor_app);
-                                if (spp != null)
-                                {
-                                    int id_functor_app_actual_top;
-                                    unit.ActualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
-                                    if (id_functor_app_actual_top == 0)
-                                    {
-                                        unit.ActualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
-                                    }
-                                    acfaRef.addParameter(spp.Id_parameter, id_functor_app_actual_top);
-
-                                } // else NOT EXPECTED !!! A parameter is either a supplied component or an enclosing parameter.
-
-                            }//else
-
-                        }//for each SupplyParameter
-
-                    }
-                    else //acfaRef!=null  // ELSE UNEXPECTED: An inner component withour a functor application.
-                    {
-                        Console.Out.WriteLine("UNEXPECTED ERROR: Inner component without functor application (id_functor_app_inner = " + Id_functor_app_inner + ")");
-                    }
-
-                    // AT THIS POINT, the FUNCTOR OF THE INNER COMPONENT, WITH PARAMETERS SUPPLIED, 
-                    //    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure findHashComponent
-                    //    descrito no artigo.				
-
-                    Component componentRef = Resolution.findHashComponent(unit, acfaRef);
-
-                    if (componentRef == null)
-                    {
-                        Console.WriteLine("componentRef NULL ! acfaRef = " + Id_functor_app_inner);
-                        return null;
-                    }
-
-                    string id_unit = null;
-
-                    Interface i2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(innerComponent.Id_abstract_inner, id_interface);
-
-                    foreach (Interface i in br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(componentRef.Id_abstract))
-                    {
-                        if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
-                        {
-                            id_unit = i.Id_interface;
-                        }
-                    }
-
-
-                    Unit u = br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(componentRef.Id_concrete, id_unit, 1);
-                    if (u == null)
-                    {
-                        Console.WriteLine("u is NULL ! acfaRef = " + Id_functor_app_inner + " - (" + componentRef.Id_concrete + "," + id_unit + "," + id_interface + ")");
-                    }
-
-                    // IList innerParameters = acfaRef.getParametersList();
-                    // //find a record in AbstractComponentFunctorApplication which matches with my object parameters
-                    // Component componentRef = matchParameters(innerParameters,acfaDAO,spDAO,componentDAO);
-                    return u;
-
-                }//acf!=null
-
-            }//acfa!=null  // UNEXPECTED !!!! A concrete component that does not implement and abstract one
-
-            return null;
-        }//resolution
-
-
-
-
-        public static Unit resolveImpl(int id_functor_app, string id_interface, IDictionary<string, int> actualParameters, IDictionary<string, int> actualParametersTop)
-        {
-            AbstractComponentFunctorApplication acfaRef = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app);
 
 
             // get inner component application
@@ -242,10 +172,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 }//for each SupplyParameter
 
             }
-            else //acfaRef!=null  // ELSE UNEXPECTED: An inner component withour a functor application.
-            {
-                Console.Out.WriteLine("UNEXPECTED ERROR: Inner component without functor application (id_functor_app_inner = " + id_functor_app + ")");
-            }
 
             // AT THIS POINT, the FUNCTOR OF THE INNER COMPONENT, WITH PARAMETERS SUPPLIED, 
             //    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure findHashComponent
@@ -255,35 +181,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             if (componentRef == null)
             {
-                Console.WriteLine("componentRef NULL ! acfaRef = " + id_functor_app);
+                Console.WriteLine("componentRef NULL ! acfaRef = " + acfaRef.Id_functor_app);
                 return null;
             }
-
-            string id_unit = null;
-
-            Interface i2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveSuper(acfaRef.Id_abstract, id_interface);
-
-            foreach (Interface i in br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(componentRef.Id_abstract))
+            else
             {
-                if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
-                {
-                    id_unit = i.Id_interface;
-                }
+                return componentRef;
             }
 
-
-            Unit u = br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(componentRef.Id_concrete, id_unit, 1);
-            if (u == null)
-            {
-                Console.WriteLine("u is NULL ! acfaRef = " + id_functor_app + " - (" + componentRef.Id_concrete + "," + id_unit + "," + id_interface + ")");
-            }
-
-            // IList innerParameters = acfaRef.getParametersList();
-            // //find a record in AbstractComponentFunctorApplication which matches with my object parameters
-            // Component componentRef = matchParameters(innerParameters,acfaDAO,spDAO,componentDAO);
-            return u;
-
-            return null;
         }//resolution
 
 

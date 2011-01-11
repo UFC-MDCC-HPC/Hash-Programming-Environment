@@ -605,45 +605,38 @@ namespace br.ufc.pargo.hpe.backend
             public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
             public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
-            public static void resolveUnit(
-                            IUnit enclosing_unit,
-                            InnerComponent ic,
-                            string id_interface, /*, IDictionary<string, int> actualParameters_new*/
-                            out DGAC.database.Component cu,
-                            out DGAC.database.Unit u /*,
-                            out System.Type[] actualParams */
-                        )
-            {
-                //u = LoaderApp.resolveImpl(enclosing_unit, ic.Id_abstract_inner, id_interface);
-                u = LoaderApp.resolveImpl(ic.Id_functor_app, id_interface, enclosing_unit.ActualParameters, enclosing_unit.ActualParametersTop);
-
-                //if (u == null)
-                //    throw new ConcreteComponentNotFoundException(enclosing_unit.Id_abstract, ic.Id_abstract_inner, enclosing_unit.Id_functor_app);
-
-                cu = BackEnd.cdao.retrieve(u.Id_concrete);
-
-            }
-
-
-            public static void resolveUnit(
-                            int id_functor_app,
-                            string id_interface, 
+            public static DGAC.database.Component resolveUnit(
+                            AbstractComponentFunctorApplication acfaRef,
                             IDictionary<string, int> actualParameters,
-                            IDictionary<string, int> actualParametersTop,
-                            out DGAC.database.Component cu,
-                            out DGAC.database.Unit u /*,
-                            out System.Type[] actualParams */
+                            IDictionary<string, int> actualParametersTop
                         )
-            {
-                u = LoaderApp.resolveImpl(id_functor_app, id_interface, actualParameters, actualParametersTop);
-
-                //if (u == null)
-                //    throw new ConcreteComponentNotFoundException(id, id_inner, enclosing_unit.Id_functor_app);
-
-                cu = BackEnd.cdao.retrieve(u.Id_concrete);
-
+            {                
+                return LoaderApp.resolveImpl(acfaRef, actualParameters, actualParametersTop);
             }
 
+            public static DGAC.database.Component resolveUnit(
+                            AbstractComponentFunctorApplication acfaRef
+                        )
+            {
+                return resolveUnit(acfaRef, new Dictionary<string, int>(), new Dictionary<string, int>());
+            }
+
+            public static br.ufc.pargo.hpe.backend.DGAC.database.Unit takeUnit(
+                DGAC.database.Component c,
+                string id_interface)
+            {
+                string id_unit = null;
+                Interface i2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveSuper(c.Id_abstract, id_interface);
+                foreach (Interface i in br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(c.Id_abstract))
+                {
+                    if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
+                    {
+                        id_unit = i.Id_interface;
+                    }
+                }
+
+                return br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(c.Id_concrete, id_unit, 1);
+            }
             
             private static System.Type[] calculateActualClassParameteres(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
             {
@@ -729,37 +722,36 @@ namespace br.ufc.pargo.hpe.backend
                 actualParams = o.GetGenericArguments();
             }
 
-            public static void calculateActualParams(
-                string library_path,
-                br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
-                br.ufc.pargo.hpe.backend.DGAC.database.Component c,
+
+           
+            private static void calculateActualParams_(
+                IDictionary<string,int> actualParameters,
+                AbstractComponentFunctorApplication acfaRef,
+                string id_interface,
                 out System.Type[] actualParams)
             {
                 IDictionary<string, int> actualParameters_new;
-                determineActualParameters(new Dictionary<string, int>(), c.Id_functor_app, out actualParameters_new);
+                determineActualParameters(actualParameters, acfaRef.Id_functor_app, out actualParameters_new);
 
-                Interface i = BackEnd.idao.retrieveSuper(c.Id_abstract, u.Id_unit);
-                actualParams = calculateActualClassParameteres(i, c.Id_functor_app, actualParameters_new);
-                /* ---------------- */
+                Interface i = BackEnd.idao.retrieveSuper(acfaRef.Id_abstract, id_interface);
+                actualParams = calculateActualClassParameteres(i, acfaRef.Id_functor_app, actualParameters_new);
+            }
+
+            public static void calculateActualParams(
+                AbstractComponentFunctorApplication acfaRef,
+                string id_interface,
+                out System.Type[] actualParams)
+            {
+                calculateActualParams_(new Dictionary<string, int>(), acfaRef, id_interface, out actualParams);
             }
             
             public static void calculateActualParams(
                 IUnit enclosing_unit, 
-                InnerComponent ic,
-                //string id_inner, 
+                AbstractComponentFunctorApplication acfaRef,
                 string id_interface, 
                 out System.Type[] actualParams)
-            {                
-                /* calculate class name */
-                //int id_abstract = enclosing_unit.Id_abstract;
-                //InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
-                //updateInnerComponentType(enclosing_unit, ic);
-
-                IDictionary<string, int> actualParameters_new;
-                determineActualParameters(enclosing_unit.ActualParameters, ic.Id_functor_app, out actualParameters_new);
-
-                Interface i = BackEnd.idao.retrieveSuper(ic.Id_abstract_inner, id_interface);
-                actualParams = calculateActualClassParameteres(i, ic.Id_functor_app, actualParameters_new);
+            {
+                calculateActualParams_(enclosing_unit.ActualParameters, acfaRef, id_interface, out actualParams);
             }
 
             private static void updateInnerComponentType(IUnit enclosing_unit, InnerComponent ic)
@@ -792,6 +784,37 @@ namespace br.ufc.pargo.hpe.backend
                 type = closedT.FullName;
             }
 
+            public static AbstractComponentFunctorApplication loadACFAFromInstantiator(ComponentFunctorApplicationType instantiator)
+            {
+                Connector.openConnection();
+
+                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath(instantiator.library_path);
+
+                AbstractComponentFunctorApplication aAppNew = new AbstractComponentFunctorApplication();
+                aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+                aAppNew.Id_abstract = acf.Id_abstract;
+                DGAC.BackEnd.acfadao.insert(aAppNew);
+
+                if (instantiator.context_parameter != null)
+                    foreach (ContextParameterType ctx in instantiator.context_parameter)
+                    {
+                        AbstractComponentFunctorApplication acfa_par = loadACFAFromInstantiator(ctx.actual_parameter);
+
+                        SupplyParameterComponent par = new SupplyParameterComponent();
+                        par.Id_abstract = acfa_par.Id_abstract;
+                        par.Id_functor_app = aAppNew.Id_functor_app;
+                        par.Id_parameter = ctx.formal_parameter_id;
+                        par.Id_functor_app_actual = acfa_par.Id_functor_app;
+
+                        DGAC.BackEnd.spdao.insert(par);
+                    }
+
+                Connector.closeConnection();
+
+                return aAppNew;
+            }
+
+
 
             /* TODO !!!!
              * It is still necessary to defined the meaning of the type parameter of registerUsesPort and addProvidesPort.
@@ -815,10 +838,13 @@ namespace br.ufc.pargo.hpe.backend
                 br.ufc.pargo.hpe.backend.DGAC.database.Component c;
                 InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
                 updateInnerComponentType(ownerUnit, ic);
-                //resolveUnit(ownerUnit, ic, id_interface, out c, out u);
-                resolveUnit(ic.Id_functor_app, id_interface, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop, out c, out u);
+                AbstractComponentFunctorApplication acfaRef = BackEnd.acfadao.retrieve(ic.Id_functor_app);
+                c = resolveUnit(acfaRef, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop);
+                u = takeUnit(c, id_interface);
+                if (u == null)
+                    throw new ConcreteComponentNotFoundException(acfaRef.Id_functor_app);
                 System.Type[] actualParams;
-                calculateActualParams(ownerUnit, ic, id_interface, out actualParams);
+                calculateActualParams(ownerUnit, acfaRef, id_interface, out actualParams);
                 calculateGenericClassName(u, actualParams, out className);
 
                 // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
@@ -1626,11 +1652,9 @@ namespace br.ufc.pargo.hpe.backend
 
             IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
 
-            public ConcreteComponentNotFoundException(int id_abstract, string id_inner, int id_functor_app_implements)
+            public ConcreteComponentNotFoundException(int id_functor_app_implements)
                 : base()
             {
-                this.id_abstract = id_abstract;
-                this.id_inner = id_inner;
                 this.id_functor_app_implements = id_functor_app_implements;
 
                 AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app_implements);

@@ -36,11 +36,12 @@ public class FileUtil{
   /// <param name="fileFullPath">String that defines name of the file</param>
   /// <param name="content">String that defines the content wich will be written in the file</param>
   /// <returns>void</returns>
-  public static void writingToFile(string fileName, string content){
+  public static FileInfo writingToFile(string fileName, string content){
   	 FileInfo f = new FileInfo(Constants.PATH_TEMP_WORKER + fileName);
 	 StreamWriter w = f.CreateText();
 	 w.WriteLine(content);
 	 w.Close();
+     return f;
   }
   
   /// <summary>

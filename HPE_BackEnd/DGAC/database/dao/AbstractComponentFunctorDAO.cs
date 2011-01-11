@@ -153,7 +153,7 @@ public class AbstractComponentFunctorDAO{
              "WHERE library_path like '" + library_path + "'";
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
-        if (reader.Read())
+        while (reader.Read())
         {
             acf = new AbstractComponentFunctor();
             acf.Hash_component_UID = (string)reader["hash_component_UID"];
@@ -162,14 +162,6 @@ public class AbstractComponentFunctorDAO{
             acf.Library_path = (string)reader["library_path"];
             acf.Kind = (string)reader["kind"];
             if (!cache_acf.ContainsKey(acf.Id_abstract)) cache_acf.Add(acf.Id_abstract, acf);
-        }
-        else
-        {
-            // NOT FOUND !
-        }
-        if (reader.Read())
-        {
-            throw new Exception("More than one line FOUND for field hash_component_UID (AbastractComponentFunctorDAO)");
         }
 
 

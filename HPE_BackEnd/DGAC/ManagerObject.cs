@@ -521,7 +521,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public int[] createInstanceImpl(
                 string instanceName,
-                string library_path,
+                string instantiator_string,
                 TypeMapImpl properties,
                 out int[] cid_nodes,
                 out string[] unit_ids,
@@ -535,6 +535,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 try
                 {
                     Connector.openConnection();
+                    Connector.beginTransaction();
 
                     /* BEGIN FOM RunApplication */
 
@@ -545,7 +546,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     int[] nodes = this.fetchNodes(properties);
 
-                    br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(library_path);
+                    FileInfo file = FileUtil.writingToFile(instanceName + ".xml", instantiator_string);
+                    ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
+
+                    DGAC.database.Component c;
+                    DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
+                    
+                    c = DGAC.BackEnd.resolveUnit(acfaRef);
+
                     string hash_component_uid = c.Hash_component_UID;
 
                     IList<br.ufc.pargo.hpe.backend.DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
@@ -555,7 +563,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     foreach (br.ufc.pargo.hpe.backend.DGAC.database.Interface i in iList)
                     {
-                        //br.ufc.lia.hpe.backend.DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
                         IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(c.Id_abstract, i.Id_interface);
                         int count = 1;
                         IDictionary<string, int> m = new Dictionary<string, int>();
@@ -607,13 +614,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         {
                             TypeMapImpl worker_properties = new TypeMapImpl(properties);
                             worker_properties[Constants.KEY_KEY] = k;
-                            worker_properties[Constants.COMPONENT_KEY] = library_path;
+                            worker_properties[Constants.COMPONENT_KEY] = c.Library_path;
                             worker_properties[Constants.UNIT_KEY] = unit.Key ;
 
-                            br.ufc.pargo.hpe.backend.DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, unit.Key, -1);
+                            // DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, unit.Key, -1);
+                            DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, unit.Key);
+
                             string class_name_worker;
+                            
                             System.Type[] actualParams;
-                            DGAC.BackEnd.calculateActualParams(library_path, u, c, out actualParams);
+                            DGAC.BackEnd.calculateActualParams(acfaRef, unit.Key, out actualParams);
                             DGAC.BackEnd.calculateGenericClassName(u, actualParams, out class_name_worker);
                             
                             GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, class_name_worker, worker_properties);
@@ -660,9 +670,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         }
                     }
 
+                    Connector.commitTransaction();
+
                 }
                 catch (Exception e)
                 {
+                    Connector.endTransaction();
                     Console.WriteLine(e.Message);
                     throw e;
                 }

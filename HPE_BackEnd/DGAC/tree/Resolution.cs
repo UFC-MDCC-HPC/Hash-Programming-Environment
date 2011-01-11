@@ -161,39 +161,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         private static IDictionary<int, Component> cache = new Dictionary<int, Component>();
 
-		public static Component findHashComponent(IUnit unit, AbstractComponentFunctorApplication acfaRef) {
-
-            Component c;
-
-            if (acfaRef.ParametersList.Count == 0)
-            {
-                if (cache.TryGetValue(acfaRef.Id_abstract, out c)) {
-                    return c; 
-                }
-            }
-
-			TreeNode root = GenerateTree.generate(unit, acfaRef);
-			
-			Resolution.sort(root);
-
-//            TreeNode heron = root;
-//            while (heron != null)
- //           {
-//                Console.Write(heron.Functor_app.Id_abstract + " -> ");
-//                heron = heron.Next;
-//            }
-
-			c = Resolution.tryGeneralize(root,root);
-
-            if (acfaRef.ParametersList.Count == 0)
-            {
-                cache.Add(acfaRef.Id_abstract, c);
-            }
-
-       //    writeTreeNode(root); Console.WriteLine(" FOUND !!!!!!");
-						
-			return c; // if c is null, there is not an implementation ....			
-		}
 
 
         public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)

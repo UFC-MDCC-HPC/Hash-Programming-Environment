@@ -93,7 +93,7 @@ namespace HPE_DGAC_LoadDB
                 {
                     if (enumerator == null) enumerator = new List<EnumeratorType>();
                     enumerator.Add((EnumeratorType)o);
-                }
+                }   
                 else if (o is FusionsOfReplicatorsType)
                 {
                     if (fusionOfReplicators == null) fusionOfReplicators = new List<FusionsOfReplicatorsType>();
@@ -120,7 +120,6 @@ namespace HPE_DGAC_LoadDB
                 aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
                 aAppNew.Id_abstract = a.Id_abstract;
 
-                // AbstractComponentFunctorApplicationDAO aAppNewDAO = new AbstractComponentFunctorApplicationDAO();
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
 
                 // REGISTER parameters (follow supply-of, configure formal-parameter)
@@ -143,7 +142,6 @@ namespace HPE_DGAC_LoadDB
                     String varName = p.varName;
 
                     SupplyParameter p_ = null;
-
 
                     ParameterType topParameter = lookForParameterByVarName(varName);
                     ParameterSupplyType s = lookForSupplyForVarName(varName);
