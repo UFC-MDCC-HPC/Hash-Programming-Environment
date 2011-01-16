@@ -231,7 +231,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			// if (c.isParameter()) {
 			String varName = c.getVariableName(cThis);
 			String parId = c.getParameterIdentifier(cThis);
-			parameters.add(new Triple<String, HInterface, String>(varName,
+			if (!parId.equals("type ?"))
+				parameters.add(new Triple<String, HInterface, String>(varName,
 					is_supplier, parId));
 			// }
 
@@ -243,10 +244,10 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 				String sParId = spar.trd();
 				List<IHPrimUnit> suList = sis.getCompliantUnits();
 				HComponent sc = (HComponent) suList.get(0).getConfiguration();
-				// if (sc.isParameter()) {
-				parameters.add(new Triple<String, HInterface, String>(sVarName,
-						sis, sParId));
-				// }
+				//if (sc.isParameter()) {
+				if (!sParId.equals("type ?"))
+				   parameters.add(new Triple<String, HInterface, String>(sVarName, sis, sParId));
+				//}
 			}
 
 		}
@@ -383,7 +384,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			List<String> varContext) {
 		return this.getPrimName()
 				+ this.getParameterModifierName2(showSuperType, varContext)
-				+ (showSuperType && this.getInheritedName() != null ? ": "
+				+ (showSuperType && this.hasSuperType() ? ": "
 						+ this.getInheritedName() : "");
 	}
 
@@ -395,11 +396,11 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			return name
 					+ this.getParameterModifierName(showSuperType, showBounds,
 							depth)
-					+ (showSuperType && this.getInheritedName() != null ? ": "
+					+ (showSuperType && this.hasSuperType() ? ": "
 							+ this.getInheritedName() : "");
 		} else {
 			return name
-					+ (showSuperType && this.getInheritedName() != null ? ": "
+					+ (showSuperType && this.hasSuperType() ? ": "
 							+ this.getInheritedName() : "");
 		}
 
@@ -852,9 +853,11 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	}
 
+
 	public void setInherited(HComponent topConfiguration) {
 		this.setSuperTypeID(this.toString());
 		// this.saveInheritedName();
+		
 		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
 		this.setEditable(true);
 		this.setInheritedSlices();

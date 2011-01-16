@@ -481,7 +481,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	String typeParams = "new Type[] {" + paramsStr + "}";
 		    	
 		    	String cast = "(" + typeName + ")";
-		    	sourceCode += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, UID,\"" + unit_id + "\",\"" + unit_slice_id + "\"," + typeParams + ");\n";
+		    	sourceCode += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, UID,\"" + unit_id + "\",\"" + unit_slice_id + ");\n";
 	    	} 
 	    }			
         

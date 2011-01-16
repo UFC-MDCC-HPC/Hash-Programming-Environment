@@ -8,6 +8,9 @@ import hPE.frontend.commandline.exception.ArgException;
 import hPE.frontend.commandline.exception.CmdException;
 import hPE.frontend.commandline.util.HpePrinter;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -249,7 +252,15 @@ public class HpeBuilderServiceCmd implements HpeGenericCmd{
 		Map<String, List<String>> options_register = traverseOptions(args, allowedArgs, 2);
     	
 		String instanceName = options_register.get("instancename").get(0);
-		String cName = options_register.get("componentname").get(0);
+		String fileName = options_register.get("componentname").get(0);
+		
+		String contents = null;
+		try {
+			contents = readTextFile(fileName);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}		
+		
 		TypeMap properties_map = null;
 		if (options_register.containsKey("property")) {
 		    List<String> properties_list = options_register.get("property"); 
@@ -274,13 +285,30 @@ public class HpeBuilderServiceCmd implements HpeGenericCmd{
 		
 		try {			
 			
-			ComponentID cid = backend.createInstance(instanceName, cName, properties_map);
+			ComponentID cid = backend.createInstance(instanceName, contents, properties_map);
 						
 		} catch (IOException e) {
 			CmdException ee = new CmdException("Error creating instance (CCA BuilderService)");
 			ee.initCause(e);
 			throw ee;
 		} 
+	}
+
+	public static String readTextFile(String fullPathFilename) throws IOException {
+		StringBuffer sb = new StringBuffer(1024);
+		BufferedReader reader = new BufferedReader(new FileReader(fullPathFilename));
+				
+		char[] chars = new char[1024];
+		int numRead = 0;
+		while( (numRead = reader.read(chars)) > -1){
+			for (int i=0; i<numRead;i++)
+			    sb.append(chars[i]);			
+			//sb.append(String.valueOf(chars));	
+		}
+
+		reader.close();
+
+		return sb.toString();
 	}
 
 	// builderservice component destroy -instancename <cname> -timeout <milliseconds> -location <location_name>

@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClassDefinition> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1915974147641117394L;
 	private HBESourceCSharpClassDefinition src_base = null; 
 	private HBESourceCSharpClassDefinition src_user = null; 
 	
