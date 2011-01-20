@@ -814,6 +814,30 @@ namespace br.ufc.pargo.hpe.backend
                 return aAppNew;
             }
 
+            public static ComponentFunctorApplicationType buildInstantiator(int id_functor_app_service)
+            {
+                Connector.openConnection();
+                AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_service);
+                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
+                IList<SupplyParameter> spList = BackEnd.spdao.list(id_functor_app_service);
+
+                ComponentFunctorApplicationType c = new ComponentFunctorApplicationType();
+                c.library_path = acf.Library_path;
+                c.context_parameter = new ContextParameterType[spList.Count];
+                int i = 0;
+                foreach (SupplyParameter sp in spList)
+                {
+                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                    c.context_parameter[i] = new ContextParameterType();
+                    c.context_parameter[i].formal_parameter_id = sp.Id_parameter;
+                    c.context_parameter[i].actual_parameter = buildInstantiator(spc.Id_functor_app_actual);
+                    i++;
+                }
+                Connector.closeConnection();
+
+                return c;
+            }
+
 
 
             /* TODO !!!!
@@ -854,7 +878,7 @@ namespace br.ufc.pargo.hpe.backend
                 ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
 
                 // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
-                framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS);
+                framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
                 
                 // GET THE UNIT SLICE AND RETURNS IT
                 return (IUnit) services.getPort(portName);

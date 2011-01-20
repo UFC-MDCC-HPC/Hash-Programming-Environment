@@ -1,45 +1,39 @@
 
 using System;
 using System.Collections.Generic;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 
 namespace gov
 {
     namespace cca
     {
-
         public abstract class ManagerConnectionID : ConnectionID
         {
-            public abstract bool Fetched { get; }
-            public abstract void setFetched();
-            public abstract void unsetFetched();
-            public abstract void blockFetched();
-            public abstract void unblockFetched();
-
-            public abstract int[] Nodes { get; set; }
-
-            public abstract ComponentID Provider { get; set; }
-            public abstract string ProvidesPortName { get; set; }
-            public abstract ComponentID User { get; set; }
-            public abstract string UsesPortName { get; set; }
-
-            public abstract WorkerConnectionID WorkerConnectionID { get; }
-        }
-
-        public class ManagerConnectionIDImpl : ManagerConnectionID
-        {
-
             #region attributes
 
-            private ComponentID provider;
-            private string providesPortName;
-            private ComponentID user;
-            private string usesPortName;
+            protected ComponentID provider;
+            protected string providesPortName;
+            protected ComponentID user;
+            protected string usesPortName;
 
-            private int[] nodes;
-
-            private string connectionString = null;
+            protected string connectionString = null;
 
             #endregion
+
+            public ManagerConnectionID()
+            {
+                connectionString = User + "." + UsesPortName + "->" + Provider + "." + ProvidesPortName;
+            }
+
+            public ManagerConnectionID(ComponentID provider, string providesPortName, ComponentID user, string usesPortName)
+            {
+                this.provider = provider;
+                this.providesPortName = providesPortName;
+                this.user = user;
+                this.usesPortName = usesPortName;
+
+                connectionString = User + "." + UsesPortName + "->" + Provider + "." + ProvidesPortName;
+            }
 
             #region ConnectionID Members
 
@@ -52,50 +46,65 @@ namespace gov
 
             #region properties (for serialization purposes)
 
-            public override ComponentID Provider
+            public ComponentID Provider
             {
                 get { return this.provider; }
                 set { this.provider = value; }
             }
 
-            public override string ProvidesPortName
+            public string ProvidesPortName
             {
                 get { return this.providesPortName; }
                 set { this.providesPortName = value; }
             }
 
-            public override ComponentID User
+            public ComponentID User
             {
                 get { return this.user; }
                 set { this.user = value; }
             }
 
-            public override string UsesPortName
+            public string UsesPortName
             {
                 get { return usesPortName; }
                 set { this.usesPortName = value; }
             }
+            #endregion
 
-            public override int[] Nodes { get { return nodes; } set { this.nodes = value; } }
+            public override string ToString()
+            {
+                return connectionString;
+            }
+
+            public override int GetHashCode()
+            {
+                return connectionString.GetHashCode();
+            }
+
+        }
+
+        public class ManagerDirectConnectionID : ManagerConnectionID
+        {
+
+            #region attributes
+
+            private int[] nodes;
+
+            #endregion
+
+            #region properties (for serialization purposes)
+
+            public int[] Nodes { get { return nodes; } set { this.nodes = value; } }
 
             #endregion
             
             #region constructors
 
-            public ManagerConnectionIDImpl()
-            {
-                connectionString = User + "." + UsesPortName + "->" + Provider + "." + ProvidesPortName;
-            }
 
-            public ManagerConnectionIDImpl(ComponentID provider, string providesPortName, ComponentID user, string usesPortName, int[] nodes)
+            public ManagerDirectConnectionID(ComponentID provider, string providesPortName, ComponentID user, string usesPortName, int[] nodes) 
+                :  base(provider, providesPortName,user,usesPortName)
             {
-                this.provider = provider;
-                this.providesPortName = providesPortName;
-                this.user = user;
-                this.usesPortName = usesPortName;
                 this.nodes = nodes;
-
-                connectionString = User + "." + UsesPortName + "->" + Provider + "." + ProvidesPortName;
             }
 
             #endregion            
@@ -106,9 +115,9 @@ namespace gov
             private bool block_fetch = false;
 
 
-            public override bool Fetched { get { return fetched; } }
+            public bool Fetched { get { return fetched; } }
 
-            public override void setFetched()
+            public void setFetched()
             {
                 if (!this.canSetFetched())
                 {
@@ -118,17 +127,17 @@ namespace gov
                 fetched = true;
             }
 
-            public override void unsetFetched()
+            public void unsetFetched()
             {
                 fetched = false;
             }
 
-            public override void blockFetched()
+            public void blockFetched()
             {
                 block_fetch = true;
             }
 
-            public override void unblockFetched()
+            public void unblockFetched()
             {
                 block_fetch = false;
             }
@@ -140,7 +149,7 @@ namespace gov
 
             #endregion
 
-            public override WorkerConnectionID WorkerConnectionID
+            public WorkerConnectionID WorkerConnectionID
             {
                 get
                 {
@@ -150,14 +159,72 @@ namespace gov
                 }
             }
 
-            public override string ToString()
+        }
+
+
+        public class ManagerIndirectConnectionID : ManagerConnectionID
+        {
+
+            #region attributes
+
+            private ComponentID binding;
+
+            private int[] nodes_user;
+            private int[] nodes_provider;
+
+            #endregion
+
+            #region ConnectionID Members
+
+            public ComponentID getBinding() { return user; }
+
+            #endregion
+
+            public ComponentID Binding
             {
-                return connectionString;
+                get { return binding; }
+                set { this.binding = value; }
             }
 
-            public override int GetHashCode()
+            public int[] NodesUser { get { return nodes_user; } set { this.nodes_user = value; } }
+            public int[] NodesProvider { get { return nodes_provider; } set { this.nodes_provider = value; } }
+
+            public ManagerConnectionID conn_user;
+            public ManagerConnectionID conn_prov;
+            
+            #region constructors
+
+
+            public ManagerIndirectConnectionID(ComponentID provider, string providesPortName, ComponentID user, string usesPortName, ComponentID binding, ManagerConnectionID conn_user, ManagerConnectionID conn_prov, int[] nodes_user, int[] nodes_provider)
+                : base(provider, providesPortName, user, usesPortName)
             {
-                return connectionString.GetHashCode();
+                this.nodes_user = nodes_user;
+                this.nodes_provider = nodes_provider;
+                this.binding = binding;
+                this.conn_user = conn_user;
+                this.conn_prov = conn_prov;
+            }
+
+            #endregion            
+
+            public WorkerConnectionID WorkerConnectionID_user
+            {
+                get
+                {
+                    WorkerComponentID wUser = ((ManagerComponentID)User).WorkerComponentID;
+                    WorkerComponentID wBinding = ((ManagerComponentID)Binding).WorkerComponentID;
+                    return new WorkerConnectionIDImpl(wBinding, Constants.DEFAULT_PROVIDES_PORT_SERVICE, wUser, usesPortName);
+                }
+            }
+
+            public WorkerConnectionID WorkerConnectionID_provider
+            {
+                get
+                {
+                    WorkerComponentID wBinding = ((ManagerComponentID)Binding).WorkerComponentID;
+                    WorkerComponentID wProvider = ((ManagerComponentID)Provider).WorkerComponentID;
+                    return new WorkerConnectionIDImpl(wProvider, providesPortName, wBinding, Constants.DEFAULT_USES_PORT_SERVICE);
+                }
             }
 
         }

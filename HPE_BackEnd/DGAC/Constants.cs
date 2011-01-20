@@ -70,7 +70,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public static string UNIT_KEY = "id_interface";
        // public static string KIND_KEY = "kind";
 
-        public static string DEFAULT_PROVIDE_PORT_IMPLEMENTS = "implements";
+        public static string DEFAULT_PROVIDES_PORT_IMPLEMENTS = "implements";
+        public static string DEFAULT_PROVIDES_PORT_SERVICE = "service_client";
+        public static string DEFAULT_USES_PORT_SERVICE = "service_server";
 
         public const int KIND_UNRECOGNIZED = -1;
         public const int KIND_APPLICATION   = 0;

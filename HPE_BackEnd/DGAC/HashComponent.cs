@@ -2534,7 +2534,10 @@ public partial class InnerComponentType : ComponentInUseType {
 [System.SerializableAttribute()]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
 public enum SupportedKinds {
-    
+
+    /// <remarks/>
+    Service,
+
     /// <remarks/>
     Data,
     

@@ -42,7 +42,7 @@ namespace br.ufc.pargo.hpe.basic
                services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
             }
 
-            services.addProvidesPort(this, Constants.DEFAULT_PROVIDE_PORT_IMPLEMENTS, "", new TypeMapImpl());
+            services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, "", new TypeMapImpl());
         }
 
         public void createSlices()

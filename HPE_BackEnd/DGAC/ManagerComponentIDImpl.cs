@@ -15,8 +15,8 @@ namespace gov
             public abstract int[] WorkerUnitIndexes { get; set; }
 
             public abstract WorkerComponentID WorkerComponentID { get; }
-
-            // public abstract WorkerComponentID getWorkerComponentID();
+            public abstract int Id_functor_app { get; }
+            public abstract int Kind { get; }
         }
 
         [Serializable]
@@ -42,12 +42,14 @@ namespace gov
                 this.instanceNamePrim = instanceName;
             }
 
-            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes)
+            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, int id_functor_app, int kind)
             {
                 this.instanceNamePrim = instanceName;
                 this.nodes = nodes;
                 this.unit_ids = unit_ids;
                 this.indexes = indexes;
+                this.id_functor_app = id_functor_app;
+                this.kind = kind;
             }
 
             #endregion
@@ -110,6 +112,19 @@ namespace gov
                 return instanceNamePrim.GetHashCode();
             }
 
+            private int id_functor_app;
+
+            public override int Id_functor_app
+            {
+                get { return id_functor_app; }
+            }
+
+            private int kind;
+
+            public override int Kind
+            {
+                get { return kind; }
+            }
         }
 
     }

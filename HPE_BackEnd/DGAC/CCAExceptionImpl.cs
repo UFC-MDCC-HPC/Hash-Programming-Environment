@@ -28,6 +28,11 @@ namespace gov
             {
             }
 
+            public CCAExceptionImpl(string message, Exception inner_exception)
+                : base(message, inner_exception)
+            {
+            }
+
             public CCAExceptionType getCCAExceptionType()
             {
                 return etype;

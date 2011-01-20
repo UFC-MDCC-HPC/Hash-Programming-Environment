@@ -126,6 +126,27 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return data;
         }
 
+        public static string serializeInstantiatorToString(ComponentFunctorApplicationType inst)
+        {
+            string filename = Constants.PATH_TEMP_WORKER + "service.xml";
+
+            XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));
+
+            FileStream fs = new FileStream(filename, FileMode.Create);
+
+            XmlWriter writer = new XmlTextWriter(fs, null);
+
+            serializer.Serialize(writer, inst);
+
+            TextReader br = File.OpenText(filename);
+            string result = br.ReadToEnd();
+
+            br.Close();
+            fs.Close();            
+
+            return result;
+        }
+
         //receives id_concrete and id inner wich belongs for that inner
         //returns a impl of the inner
         //return -1 if the impl doesnt exist    

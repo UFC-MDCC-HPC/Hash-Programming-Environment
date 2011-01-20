@@ -116,8 +116,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     string[] unit_ids;
                     int[] indexes;
                     int[] cid_nodes;
-                    this.createInstanceImpl(instanceName, className, (TypeMapImpl)properties, out cid_nodes, out unit_ids, out indexes);
-                    cid = new ManagerComponentIDImpl(instanceName, cid_nodes, unit_ids, indexes);
+                    int id_functor_app;
+                    int kind;
+                    this.createInstanceImpl(instanceName, className, (TypeMapImpl)properties, out cid_nodes, out unit_ids, out indexes, out id_functor_app, out kind);
+                    cid = new ManagerComponentIDImpl(instanceName, cid_nodes, unit_ids, indexes, id_functor_app, kind);
                     this.registerComponentID(cid, properties);
                 }
                 catch (Exception e)
@@ -188,14 +190,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public string[] getProvidedPortNames(ComponentID cid)
             {
-			    IDictionary<string, IList<int>> ports = this.getUsedPorts(cid);
+			    IDictionary<string, int[]> ports = this.getUsedPorts(cid);
 			
 			    string[] return_ports = new string[ports.Count];
 			    ports.Keys.CopyTo(return_ports, 0);
                 return return_ports;
 		    }
 
-            public IDictionary<string, IList<int>> getProvidedPorts(ComponentID cid)
+            public IDictionary<string, int[]> getProvidedPorts(ComponentID cid)
             {
 			    IDictionary<string, IList<int>> ports = new Dictionary<string,IList<int>>();
 			    ManagerComponentID cid_ = (ManagerComponentID)cid;
@@ -221,21 +223,29 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         node_indexes.Add(node);
                     }
                 }
-			
-			    return ports;
-		    }
+
+                IDictionary<string, int[]> ports_ = new Dictionary<string, int[]>();
+                foreach (KeyValuePair<string, IList<int>> p in ports)
+                {
+                    int[] nodes = new int[p.Value.Count];
+                    p.Value.CopyTo(nodes, 0);
+                    ports_.Add(p.Key, nodes);
+                }
+
+                return ports_;
+            }
 
 		    [MethodImpl(MethodImplOptions.Synchronized)]
             public string[] getUsedPortNames(ComponentID cid)
             {
-			    IDictionary<string, IList<int>> ports = this.getUsedPorts(cid);
+			    IDictionary<string, int[]> ports = this.getUsedPorts(cid);
 			
 			    string[] return_ports = new string[ports.Count];
 			    ports.Keys.CopyTo(return_ports, 0);
                 return return_ports;
             }
 
-            public IDictionary<string, IList<int>> getUsedPorts(ComponentID cid)
+            public IDictionary<string, int[]> getUsedPorts(ComponentID cid)
             {
                 IDictionary<string, IList<int>> ports = new Dictionary<string, IList<int>>();
                 ManagerComponentID cid_ = (ManagerComponentID)cid;
@@ -261,7 +271,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     }
                 }
 
-                return ports;
+                IDictionary<string, int[]> ports_ = new Dictionary<string, int[]>();
+                foreach (KeyValuePair<string, IList<int>> p in ports)
+                {
+                    int[] nodes = new int[p.Value.Count];
+                    p.Value.CopyTo(nodes, 0);
+                    ports_.Add(p.Key, nodes);
+                }
+
+                return ports_;
             }
 
 		    [MethodImpl(MethodImplOptions.Synchronized)]
@@ -323,41 +341,218 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 WorkerComponentID cid_user = new WorkerComponentIDImpl(user_.getInstanceName());
                 WorkerComponentID cid_prov = new WorkerComponentIDImpl(provider_.getInstanceName());
-                IDictionary<string, IList<int>> used_ports = this.getUsedPorts(cid_user);
-                IDictionary<string, IList<int>> prov_ports = this.getProvidedPorts(cid_prov);
 
-                IList<int> nodes_user, nodes_prov;
+                int kind_user = user_.Kind;
+                int kind_prov = provider_.Kind;
+
+                int kind_user_port;
+                int id_functor_app_user_port;
+                findPortKindAndType(user_.Id_functor_app, usingPortName, out kind_user_port, out id_functor_app_user_port);
+                int kind_prov_port;
+                int id_functor_app_prov_port;
+                findPortKindAndType(provider_.Id_functor_app, providingPortName, out kind_prov_port, out id_functor_app_prov_port);
+
+                IDictionary<string, int[]> used_ports = this.getUsedPorts(cid_user);
+                IDictionary<string, int[]> prov_ports = this.getProvidedPorts(cid_prov);
+
+                int[] nodes_user, nodes_prov;
                 used_ports.TryGetValue(usingPortName, out nodes_user);
                 prov_ports.TryGetValue(providingPortName, out nodes_prov);
+                 
+                int[] nodes;
+                int result = compare_nodes_sets(nodes_user, nodes_prov, out nodes);
 
-                if (nodes_prov.Count != nodes_user.Count)
+                ConnectionID connection = null;
+
+                switch (result)
                 {
-                    throw new CCAExceptionImpl("The ports are not placed in the same set of locations. it is impossible to align them.");
+                    case EQUAL:
+                        direct_connect(nodes, cid_user, usingPortName, cid_prov, providingPortName);
+                        connection = new ManagerDirectConnectionID(user, usingPortName, provider, providingPortName, nodes);
+                        break;
+                    case DISJOINT:
+                        if (kind_user == Constants.KIND_APPLICATION && kind_prov == Constants.KIND_APPLICATION &&
+                            kind_user_port == Constants.KIND_SERVICE && kind_prov_port == Constants.KIND_SERVICE)
+                        {
+                            ManagerComponentID cid_binding;
+                            ManagerConnectionID conn_user, conn_prov;
+                            indirect_connect(nodes_user, nodes_prov, cid_user, usingPortName, cid_prov, providingPortName, id_functor_app_user_port, out cid_binding, out conn_user, out conn_prov);
+                            connection = new ManagerIndirectConnectionID(user, usingPortName, provider, providingPortName, cid_binding, conn_user, conn_prov, nodes_user, nodes_prov);                            
+                        }
+                        else
+                        {
+                            throw new CCAExceptionImpl("The nodes sets are disjoint and the ports are not of service kind.");
+                        }
+                        break;
+                    case SIMILAR:
+                    case OVERLAPPING:
+                        throw new CCAExceptionImpl("The nodes sets must be EQUAL or DISJOINT to perform a indirect connection.");
                 }
 
-                IList<int> nodes_list = new List<int>();
-
-                // The node sets must be equivalent.
-                foreach (int node in nodes_prov)
-                {
-                    if (!nodes_user.Contains(node))
-                    {
-                        throw new CCAExceptionImpl("The ports are not placed in the same set of locations. it is impossible to align them.");
-                    }
-
-                    ConnectionID conn = worker[node].connect(cid_user, usingPortName, cid_prov, providingPortName);
-                    nodes_list.Add(node);
-                }
-
-                int[] nodes = new int[nodes_list.Count];
-                nodes_list.CopyTo(nodes, 0);
-
-                ConnectionID connection = new ManagerConnectionIDImpl(user, usingPortName, provider, providingPortName, nodes);
+                
                 connectionList.Add(connection);
                 connByProviderPort.Add(providingPortName, connection);
                 connByUserPort.Add(usingPortName, connection);
 
                 return connection;
+            }
+
+            /* */
+            private int findPortKindAndType(int id_functor_app, string id_inner, out int kind, out int id_functor_app_service)
+            {
+                Connector.openConnection();
+
+                AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app);
+                InnerComponent ic = BackEnd.icdao.retrieve(acfa.Id_abstract, id_inner);
+                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
+
+                id_functor_app_service = ic.Id_functor_app;
+
+                Connector.closeConnection();
+
+                kind = Constants.kindMapping[acf.Kind];
+                return kind;                
+            }
+
+            private void indirect_connect(
+                int[] nodes_user, 
+                int[] nodes_prov, 
+                WorkerComponentID cid_user, string usingPortName, 
+                WorkerComponentID cid_prov, string providingPortName, 
+                int id_functor_app_service, 
+                out ManagerComponentID cid_binding,
+                out ManagerConnectionID conn_user,
+                out ManagerConnectionID conn_prov)
+            {
+                // RESOLVES AND CREATE INSTANCE OF A SERVICE COMPONENT 
+                //    with server units residing in nodes_user and client units residing nodes_prov
+                string instantiator_string = null;
+                try
+                {
+                    Connector.openConnection();
+                    Connector.beginTransaction();
+                    ComponentFunctorApplicationType instantiator = DGAC.BackEnd.buildInstantiator(id_functor_app_service);
+                    instantiator_string = LoaderApp.serializeInstantiatorToString(instantiator);
+                    Connector.commitTransaction();
+                }
+                catch (Exception e)
+                {
+                    Connector.rollBackTransaction();
+                    CCAExceptionImpl cca_e = new CCAExceptionImpl("Error creating the service binding.", e);
+                    throw cca_e;
+                }
+                finally
+                {
+                    Connector.closeConnection();
+                }
+
+                string instanceName = "service_" + id_functor_app_service;
+
+                TypeMapImpl properties = new TypeMapImpl();
+                properties[Constants.NODES_KEY] = null; //TODO
+                cid_binding = (ManagerComponentID) this.createInstance(instanceName, instantiator_string, properties);
+                
+                // CONNECT THE USER PORT THE SERVICE PROVIDES PORT
+                conn_user = (ManagerConnectionID) this.connect(cid_user, usingPortName, cid_binding, Constants.DEFAULT_PROVIDES_PORT_SERVICE);                
+
+                // CONNECT THE SERVICE USES PORT TO THE PROVIDER PORT
+                conn_prov = (ManagerConnectionID) this.connect(cid_binding, Constants.DEFAULT_USES_PORT_SERVICE, cid_prov, providingPortName);
+            }
+
+
+            private void direct_connect(int[] nodes, WorkerComponentID cid_user, string usingPortName, WorkerComponentID cid_prov, string providingPortName)
+            {
+                foreach (int node in nodes)
+                {
+                    ConnectionID conn = worker[node].connect(cid_user, usingPortName, cid_prov, providingPortName);
+                }
+            }
+
+            private const int EQUAL = 0;
+            private const int SIMILAR = 1;
+            private const int OVERLAPPING = 2;
+            private const int DISJOINT = 3;
+
+            // POG 
+            private int compare_nodes_sets(int[] nodes_user, int[] nodes_prov, out int[] nodes)
+            {
+                int[] nodes_user_sorted = (int[])nodes_user.Clone();
+                int[] nodes_prov_sorted = (int[])nodes_prov.Clone();
+                int size = nodes_user_sorted.Length > nodes_prov_sorted.Length ? nodes_user_sorted.Length - 1 : nodes_prov_sorted.Length - 1;
+                int[] nodes_user_sorted_inv = new int[nodes_user_sorted[size]];
+                int[] nodes_prov_sorted_inv = new int[nodes_prov_sorted[size]];
+
+                Array.Sort<int>(nodes_user_sorted);
+                Array.Sort<int>(nodes_prov_sorted);
+
+                for (int i = 0; i < nodes_user_sorted_inv.Length; i++)
+                    nodes_user_sorted_inv[i] = -1;
+                for (int i = 0; i < nodes_prov_sorted_inv.Length; i++)
+                    nodes_prov_sorted_inv[i] = -1;
+
+                for (int i = 0; i < nodes_user_sorted.Length; i++)
+                    nodes_user_sorted_inv[nodes_user_sorted[i]] = i;
+                for (int i = 0; i < nodes_prov_sorted.Length; i++)
+                    nodes_prov_sorted_inv[nodes_prov_sorted[i]] = i;
+
+                nodes = null;
+
+                bool isEqual = true;
+                bool isSimilar = true;
+                bool isOverlapping = true;
+                bool isDisjoint = true;
+                if (nodes_user_sorted.Length != nodes_prov_sorted.Length)
+                {
+                    isEqual = false;
+                    isSimilar = false;
+                    for (int i = 0; i < nodes_user_sorted.Length; i++)
+                    {
+                        if (nodes_prov_sorted_inv[nodes_user_sorted[i]] > 0)
+                        {
+                            isDisjoint = false;
+                            return OVERLAPPING;
+                        }
+                    }
+                    for (int i = 0; i < nodes_prov_sorted.Length; i++)
+                    {
+                        if (nodes_user_sorted_inv[nodes_prov_sorted[i]] > 0)
+                        {
+                            isDisjoint = false;
+                            return OVERLAPPING;
+                        }
+                    }
+                    return DISJOINT;
+                }
+                else
+                {
+                    int count = 4;
+
+                    for (int i = 0; i < nodes_user_sorted.Length; i++)
+                    {
+                        if (nodes_user_sorted[i] == nodes_prov_sorted[i])
+                        {
+                            isDisjoint = false; count--;
+                        }
+                        else if (nodes_user_sorted[i] != nodes_prov_sorted[i])
+                        {
+                            isEqual = false; count--;
+                        }
+                        else if (nodes_prov_sorted_inv[nodes_user_sorted[i]] > 0 && nodes_user_sorted_inv[nodes_prov_sorted[i]] > 0)
+                        {
+                            isSimilar = false; count--;
+                        }
+                        if (count == 1)
+                        {
+                            return OVERLAPPING;
+                        }
+                    }
+                }
+
+                if (isEqual) { nodes = nodes_user; return EQUAL; }
+                else if (isSimilar) return SIMILAR;
+                else if (isDisjoint) return DISJOINT;
+                else if (isOverlapping) return OVERLAPPING;
+                else return -1;
             }
 
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -525,7 +720,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 TypeMapImpl properties,
                 out int[] cid_nodes,
                 out string[] unit_ids,
-                out int[] indexes
+                out int[] indexes,
+                out int id_functor_app,
+                out int kind
                 )
             {
                 IList<int> cid_nodes_list = new List<int>();
@@ -542,17 +739,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     Console.WriteLine("ENTROU createInstance manager");
 
                     IDictionary<string, int> files = new Dictionary<string, int>();
-                    IDictionary<string, int>  enums = readEnumerators(properties);
+                    IDictionary<string, int> enums = readEnumerators(properties);
 
                     int[] nodes = this.fetchNodes(properties);
 
                     FileInfo file = FileUtil.writingToFile(instanceName + ".xml", instantiator_string);
                     ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
 
-                    DGAC.database.Component c;
                     DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
-                    
-                    c = DGAC.BackEnd.resolveUnit(acfaRef);
+                    id_functor_app = acfaRef.Id_functor_app;
+
+                    DGAC.database.Component c = DGAC.BackEnd.resolveUnit(acfaRef);
+                    kind = Constants.kindMapping[c.Kind];
 
                     string hash_component_uid = c.Hash_component_UID;
 
