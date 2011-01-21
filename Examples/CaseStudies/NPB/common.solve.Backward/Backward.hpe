@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000011ed359b2ec8ca11d0432a3162103ff9b3672ed7ace141eee027e0e8e75db4e3bfe728d83cc3d2106c9fe2d484210de19e84cfa503d608f8c7dd024115667a94eeddf635376e4d69e0ed3b0c4153b75afe1e6be3204d7250a4d9ee595cac356f8f069b3d6204382cdfdbbc95708b14e9f4327caf4779b7488e6e8a0d0d7e3aac" isAbstract="true" kind="Computation" name="Backward" packagePath="common.solve">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="direction" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" parameter_id="direction" exposed="false">
+      <visualDescription h="30" w="50" x="184" y="388">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="direction">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000065a583953c3587c1209979536e5ff1a80890361170dab29c31967996924e908f4dfcd7fd7c85921b08aa2193be1674aa220dbaafda9c081270f8248e0ef486f725d00c99c141ffefbc663fb868426326f477127eca49696e967b6c8203ada10b80b06758073be286f99f981981d314cf3ba20addb76983db1e155576d5e86c83" localRef="method" location="common.solve.Method/Method.hpe" name="Method" package="common.solve" parameter_id="method" exposed="false">
+      <visualDescription h="30" w="50" x="208" y="451">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="method">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+      <visualDescription h="44" w="103" x="204" y="400">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="blocks">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+      <visualDescription h="62" w="157" x="181" y="454">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="problem">
+        <visualDescription h="10" w="10" x="13" y="27"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="direction" formFieldId="direction" varName="DIR"/>
+    <parameter componentRef="method" formFieldId="method" varName="MTH"/>
+    <interface iRef="IBackward" nArgs="0">
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="41" y="26"/>
+      </slice>
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="9" y="27"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;&#xA;namespace common.solve.Backward { &#xA;&#xA;public interface BaseIBackward : IComputationKind &#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {set;}&#xA;&#x9;IProblemDefinition Problem {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBackward.cs" srcType="base" uri="common.solve.Backward/bin/1.0.0.0/BaseIBackward.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.solve.Backward { &#xA;&#xA;public interface IBackward : BaseIBackward&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBackward.cs" srcType="user" uri="common.solve.Backward/bin/1.0.0.0/IBackward.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.solve.Backward/bin/1.0.0.0/BaseIBackward.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="205" y="94">
+        <color b="207" g="207" r="207"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+    </interface>
+    <unit iRef="IBackward" private="false" uRef="backward" visibleInterface="true">
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="41" y="26"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="9" y="27"/>
+      </slices>
+      <visualDescription h="40" w="80" x="205" y="174"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>direction</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="direction" uRef="direction"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+      <originRef>method</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
+      <visualDescription h="20" w="20" x="260" y="427"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
+      <links xsi:type="component:EnumerableUnitType" ref="backward"/>
+      <visualDescription h="60" w="61" x="31" y="251"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

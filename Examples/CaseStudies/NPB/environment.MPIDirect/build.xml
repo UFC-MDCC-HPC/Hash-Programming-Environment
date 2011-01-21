@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe_cache" default="all" name="MPIDirect">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="MPIDirect-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/MPIDirect.snk" optimize="true" output="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/bin/1.0.0.0/BaseIMPIDirect.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/src/1.0.0.0/BaseIMPIDirect.cs"/>
+      </sources>
+      <references>
+        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/MPIDirect.snk" optimize="true" output="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/src/1.0.0.0/IMPIDirect.cs"/>
+      </sources>
+      <references>
+        <include name="/home/heron/Dropbox/Examples/MultiDimensionalNumericalIntegration/HPE (workspace)/environment.MPIDirect/bin/1.0.0.0/BaseIMPIDirect.dll"/>
+        <include name="/usr/local/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="MPIDirect-1.0.0.0" name="all"/>
+</project>
