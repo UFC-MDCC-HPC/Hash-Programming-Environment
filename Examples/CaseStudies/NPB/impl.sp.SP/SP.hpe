@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ddeedcaba108d1ed5e25cabaf2bd29f9ccced4266b31e92a275abc158dba1dbdf7da446e2ab536fc6614be14bff8fb9183a4189b985fe4d27b5827017638da1116ce4f24f8a5746b4db9cfb95905093897bf3fdcf3414b497fd7a29025c44f2fc979f9c837232c7f1cb152b236d0f97ff543046b43f4bf10d66edbf4e6d2ffb2" isAbstract="false" kind="Application" name="SP" packagePath="impl.sp">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bb7f791047740de8171f6403f4e39e3ab9163d08d99cce3b0b309c76150a2e3b362a1875207169ceaaab1959500d083c25e8c91af512fac7ff94c095694daaf6a479e6b33cf26403f1e507ad01d6e0a44c8e4ef8e3ba907967fead9e80269e6878dcdce4e786e96c18c251c6ef2bb1836e5f2c940ec88c4151d9a2fcebd60c89" localRef="base" location="sp.SP/SP.hpe" name="SP" package="sp" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="188" y="162">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="sp">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ISPImpl" nArgs="0">
+      <slice isRef="adi">
+        <originRef cRef="adi" iRef="IADI"/>
+        <visualDescription h="10" w="10" x="31" y="31"/>
+      </slice>
+      <slice isRef="verify">
+        <originRef cRef="verify" iRef="IVerify"/>
+        <visualDescription h="10" w="10" x="8" y="25"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@5f8b9" repeat="0">
+        <visualDescription h="150" w="130" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c514a" repeat="0" sliceRef="adi">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@acd66d" repeat="0" sliceRef="verify">
+          <visualDescription h="50" w="50" x="70" y="50"/>
+        </action>
+      </protocol>
+      <visualDescription h="40" w="80" x="477" y="156">
+        <color b="255" g="255" r="128"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="adi"/>
+        <slice pRef="problem" sRef="verify"/>
+      </port>
+      <port name="process">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="data_partition" sRef="adi"/>
+        <slice pRef="process" sRef="verify"/>
+      </port>
+    </interface>
+    <unit iRef="ISPImpl" private="false" uRef="sp" visibleInterface="true">
+      <super cRef="base" uRef="sp"/>
+      <slices cRef="adi" replica="0" uRef="adi" sliceName="adi" transitive="false">
+        <visualDescription h="10" w="10" x="31" y="31"/>
+      </slices>
+      <slices cRef="verify" replica="0" uRef="verify" sliceName="verify" transitive="false">
+        <visualDescription h="10" w="10" x="8" y="25"/>
+      </slices>
+      <visualDescription h="40" w="80" x="477" y="236"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+      <originRef>base</originRef>
+      <originRef>adi</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>y</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="20" w="20" x="295" y="298"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+      <originRef>base</originRef>
+      <originRef>adi</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>z</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="20" w="20" x="357" y="354"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>adi</originRef>
+      <originRef>add</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="60" w="61" x="103" y="490"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>base</originRef>
+      <originRef>verify</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>x</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="20" w="20" x="185" y="326"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+      <originRef>base</originRef>
+      <originRef>verify</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>z</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="20" w="20" x="366" y="324"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

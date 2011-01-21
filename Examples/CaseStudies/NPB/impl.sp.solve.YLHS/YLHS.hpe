@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000015c46542f2907f5e45ff5d82fb3d2a01ab3eaa1d0e2b6d1740b0b5ac79689e804193f9d5e1bc3a022214c0849e3968e4a917b0c7491b008111cd43fd027b6220299dbcb8354dddc6e8d13f50746e59716364d2ded799ed0e142a486526e91d7ab6e58fc0127dadf1544eeec8dc52acf5a9772a551cf573b07141914712f2eada" isAbstract="false" kind="Computation" name="YLHS" packagePath="impl.sp.solve">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006d52bca419b0f708a96178d08394b1198257360fdafaef92f994479c37ffd6db903ea30f36c33673c858e471757f53b8d9273b94bbeeeaebb8b47fdae6718cbe861cfca8ebb7f5d76ed621d72981ba47aaf2b10da11f0551c55eb918b6a07e240c40550623b6724b8bbbdfadc6c2cd3ba0a5869c726bef16856946c8837f63b6" localRef="base" location="common.solve.LHS/LHS.hpe" name="LHS" package="common.solve" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="288" y="118">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="direction" varName="DIR"/>
+        <parameter formFieldId="method" varName="MTH"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+          <visualDescription h="42" w="125" x="262" y="443">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="44" w="113" x="281" y="270">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="7" y="17"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="lhs">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000159d9ccb4ff0bb35a4fe190495e9c0d9a8406fa4adae5405850aed7cf83bbe6096bcb7deb5b07550a718fabec888b38f45c00ad4323db7b35e01dd236f9d1af6d8d0e529844de79031b63f05f2e810d0218c315e2c720d374b2bc2c0b15ec45863f2832e19f30c9bf6ee1519c76cd5e6f0ed485d2027397f93caec006396c587" localRef="method" location="common.solve.BeamWarmingMethod/BeamWarmingMethod.hpe" name="BeamWarmingMethod" package="common.solve" exposed="false">
+      <visualDescription h="30" w="50" x="172" y="280">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="method">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ffcae3e9a0ecbf9c4629fdb52bc2acc0e2cc392d40ed0441b527e752c9079cf609fb0785045e3d2c5ace2f492d755021fd6cf82d853e202471136832c6cf8fdffec701b57bfde7017dd2ef51f1a4c4adca40833d6c6165b9123411a3dc7be80a59839ab3316debcc5e4d0d6e17dcb8400cf7e4bc1eca328e130aa9f8182bfccb" localRef="ydir" location="common.direction.Y/Y.hpe" name="Y" package="common.direction" exposed="false">
+      <visualDescription h="30" w="50" x="157" y="145">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="y">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="ydir" varName="DIR"/>
+    <supplyParameter cRef="method" varName="MTH"/>
+    <interface iRef="IYLHSImpl" nArgs="0">
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="63" y="22"/>
+      </slice>
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="7" y="21"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@2bd8bb" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.solve.LHS;&#xA;&#xA;namespace impl.sp.solve.YLHS { &#xA;&#xA;public abstract class BaseIYLHSImpl: Computation, BaseILHS&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIYLHSImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000015c46542f2907f5e45ff5d82fb3d2a01ab3eaa1d0e2b6d1740b0b5ac79689e804193f9d5e1bc3a022214c0849e3968e4a917b0c7491b008111cd43fd027b6220299dbcb8354dddc6e8d13f50746e59716364d2ded799ed0e142a486526e91d7ab6e58fc0127dadf1544eeec8dc52acf5a9772a551cf573b07141914712f2eada&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIYLHSImpl.cs" srcType="base" uri="impl.sp.solve.YLHS/bin/1.0.0.0/BaseIYLHSImpl.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.solve.LHS/bin/1.0.0.0/BaseILHS.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.LHS;&#xA;&#xA;namespace impl.sp.solve.YLHS { &#xA;&#xA;public class IYLHSImpl : BaseIYLHSImpl, ILHS&#xA;{&#xA;&#xA;public IYLHSImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IYLHSImpl.cs" srcType="user" uri="impl.sp.solve.YLHS/bin/1.0.0.0/IYLHSImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.sp.solve.YLHS/bin/1.0.0.0/BaseIYLHSImpl.dll</dependency>
+          <dependency>common.solve.LHS/bin/1.0.0.0/ILHS.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="94" y="112">
+        <color b="0" g="255" r="255"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+    </interface>
+    <unit iRef="IYLHSImpl" private="false" uRef="lhs" visibleInterface="true">
+      <super cRef="base" uRef="lhs"/>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="63" y="22"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="7" y="21"/>
+      </slices>
+      <visualDescription h="40" w="80" x="174" y="207"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
+      <visualDescription h="31" w="34" x="31" y="251"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+      <originRef>method</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
+      <visualDescription h="20" w="20" x="260" y="427"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>ydir</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="ydir" uRef="y"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
