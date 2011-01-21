@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000099ec807d7886f0c2735f4a4c2dc60d8feb0a435847e291a0f9dd7aed2539883c551cf8dd8fe530fe7d695458a20d532e4a58b5cf62af87f410238ec43d1e140b210efe08dea6fc4983660e10cc3431cd1102137a5df63ef9bef47a99b409c0b1c86bd4aa322397fd56e1ed3be2e81f8d1a9765c5dc9134ec1eb1b5d4567311ae" isAbstract="true" kind="Qualifier" name="X" packagePath="common.direction">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="base" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" version="1.0.0.0">
+        <visualDescription h="56" w="95" x="215" y="289">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="x">
+          <visualDescription h="10" w="10" x="42" y="8"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IX" nArgs="0">
+      <visualDescription h="40" w="80" x="111" y="89">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IX" private="false" uRef="x" visibleInterface="true">
+      <super cRef="base" uRef="direction"/>
+      <visualDescription h="40" w="80" x="69" y="196"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="x"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
