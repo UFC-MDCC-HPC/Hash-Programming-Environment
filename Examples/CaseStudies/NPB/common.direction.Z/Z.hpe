@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000003bb781674ea675f3e73d687d81c2a1fc30c172ba4dc5abb7591c0493b3e0f7a440be50941862ce7b3d1d6a7d57a55f20f8929f9f272be575cb8c2735e6faaeb2aa7c8b4cdc19e0c763e7a660a9c4cce5993fd57a435000e7717204249b8b85fac784054d914d6776215ae09ebe843efcc400849f526412b1a2b2209ff2903ce" isAbstract="true" kind="Qualifier" name="Z" packagePath="common.direction">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="base" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" version="1.0.0.0">
+        <visualDescription h="59" w="88" x="222" y="274">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="z">
+          <visualDescription h="10" w="10" x="39" y="8"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IZ" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.Z { &#xA;&#xA;public interface BaseIZ : BaseIDirection, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIZ.cs" srcType="base" uri="common.direction.Z/bin/1.0.0.0/BaseIZ.dll" versionId="1.0.0.0">
+          <dependency>common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.Z { &#xA;&#xA;public interface IZ : BaseIZ, IDirection&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IZ.cs" srcType="user" uri="common.direction.Z/bin/1.0.0.0/IZ.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.direction.Z/bin/1.0.0.0/BaseIZ.dll</dependency>
+          <dependency>common.direction.Direction/bin/1.0.0.0/IDirection.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="177" y="83">
+        <color b="180" g="254" r="131"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IZ" private="false" uRef="z" visibleInterface="true">
+      <super cRef="base" uRef="direction"/>
+      <visualDescription h="40" w="80" x="49" y="159"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="z"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
