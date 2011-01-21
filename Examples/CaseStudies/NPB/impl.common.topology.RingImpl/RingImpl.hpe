@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009940f48b12f3ff2b97f38a8f2781a7548c48fc5c3ca13d232230cb69b85b4f68f65b3be7fef5b671419fbe6f34053a6f78456411cb614f4008d02d8a3182f0fe034e49fe16c72427e346d8fa00de2c134f95d953b5285d09b1403eb7e7ee4035c4e894b858d3682c7c1013f54333859cebcc9a619551bebd1e61518d2ec020ad" isAbstract="false" kind="Environment" name="RingImpl" packagePath="impl.common.topology">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="base" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="358" y="209">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ICellImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;&#xA;namespace impl.common.topology.RingImpl { &#xA;&#xA;public abstract class BaseICellImpl: Environment, BaseICell&#xA;{&#xA;&#xA;&#xA;public BaseICellImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000009940f48b12f3ff2b97f38a8f2781a7548c48fc5c3ca13d232230cb69b85b4f68f65b3be7fef5b671419fbe6f34053a6f78456411cb614f4008d02d8a3182f0fe034e49fe16c72427e346d8fa00de2c134f95d953b5285d09b1403eb7e7ee4035c4e894b858d3682c7c1013f54333859cebcc9a619551bebd1e61518d2ec020ad&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICellImpl.cs" srcType="base" uri="impl.common.topology.RingImpl/bin/1.0.0.0/BaseICellImpl.dll" versionId="1.0.0.0">
+          <dependency>common.topology.Ring/bin/1.0.0.0/BaseICell.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;&#xA;namespace impl.common.topology.RingImpl { &#xA;&#xA;public class ICellImpl : BaseICellImpl, ICell&#xA;{&#xA;&#xA;public ICellImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICellImpl.cs" srcType="user" uri="impl.common.topology.RingImpl/bin/1.0.0.0/ICellImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.topology.RingImpl/bin/1.0.0.0/BaseICellImpl.dll</dependency>
+          <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="160" y="129">
+        <color b="0" g="255" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ICellImpl" private="false" uRef="cell" visibleInterface="true">
+      <super cRef="base" uRef="cell"/>
+      <visualDescription h="40" w="80" x="160" y="209"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="cell"/>
+      <visualDescription h="20" w="20" x="282" y="414"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007f652b3348e9a3cc8b60e7e9726330109c2d940104df2f6cc82666380f133c90c46df49d5754eb118268b902c4f3f86db579d7ce0981721b82cd8d35d67796df80eee43ea8765beac082fd81d44b3854233bed818e4565e01dd72ffe4117481c1edcdd21b08d3ba53214a588ad1e3a889e1fb4b348af9d359aa6daa7e37e9cb4" isAbstract="false" kind="Data" name="RHSImpl" packagePath="impl.common.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007f5e06a0ef988b60a7a59a81bca9655de7d3fe0eaeb346e28865824e61551aad50d4c240c1ab80e37a47ca8929a61fd70b8d7a7510508af3f26e491b548cca2abdecf584740e427efd63e7596e3d64f5a60d722d25232018e4d8ddabd3c148cda7e43af1b37554ec42f77f4fbbe35914f81097d00dedd811b023437502234d95" localRef="base" location="common.data.RHS/RHS.hpe" name="RHS" package="common.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="234" y="226">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="rhs">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IRHSImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.RHS;&#xA;&#xA;namespace impl.common.data.RHSImpl { &#xA;&#xA;public abstract class BaseIRHSImpl: DataStructure, BaseIRHS&#xA;{&#xA;&#xA;&#xA;public BaseIRHSImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000007f652b3348e9a3cc8b60e7e9726330109c2d940104df2f6cc82666380f133c90c46df49d5754eb118268b902c4f3f86db579d7ce0981721b82cd8d35d67796df80eee43ea8765beac082fd81d44b3854233bed818e4565e01dd72ffe4117481c1edcdd21b08d3ba53214a588ad1e3a889e1fb4b348af9d359aa6daa7e37e9cb4&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIRHSImpl.cs" srcType="base" uri="impl.common.data.RHSImpl/bin/1.0.0.0/BaseIRHSImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.RHS/bin/1.0.0.0/BaseIRHS.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.RHS;&#xA;&#xA;namespace impl.common.data.RHSImpl { &#xA;&#xA;public class IRHSImpl : BaseIRHSImpl, IRHS&#xA;{&#xA;&#xA;public IRHSImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IRHSImpl.cs" srcType="user" uri="impl.common.data.RHSImpl/bin/1.0.0.0/IRHSImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.data.RHSImpl/bin/1.0.0.0/BaseIRHSImpl.dll</dependency>
+          <dependency>common.data.RHS/bin/1.0.0.0/IRHS.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="123" y="110">
+        <color b="255" g="0" r="0"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IRHSImpl" private="false" uRef="rhs" visibleInterface="true">
+      <super cRef="base" uRef="rhs"/>
+      <visualDescription h="40" w="80" x="123" y="190"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@6b06a91295098438541" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="rhs"/>
+      <visualDescription h="20" w="20" x="155" y="330"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

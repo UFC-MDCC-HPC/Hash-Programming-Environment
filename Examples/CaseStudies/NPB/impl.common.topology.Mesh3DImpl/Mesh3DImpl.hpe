@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008584adccb1e9b176bb3b5aa3e4f4989c9923b70cfce0855c68c7c1025e59d0c41ae3bd30bfc1104ce88f0da674e6143aae8615dfa9b53efe7507b443a247e2ea5ec3f5cf6f19710d921f8caa6e2dea8399c6fe28ca772bc853f9d610c25832e86ab6a0595788e78dafe9cc0635dd853f788ece170ff8e5176943c30bc42730b3" isAbstract="false" kind="Environment" name="Mesh3DImpl" packagePath="impl.common.topology">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d296e875ef6985ba75dbc75d6a6b23eded2c0f55a7df69acd8302a0196311f3a290d4165fbf7be07c388350990c20dd8ccc184b0e6cdf1aacf8780d9e3fb4f834c33b0e689f4dc06b3fac16d68b424709f2528d7850d4b5a1513b3961196213504b746ec23d908d0e93ec988dbadaa0376cb3a7ad87ee628a3410988211eca0" localRef="base" location="common.topology.Mesh3D/Mesh3D.hpe" name="Mesh3D" package="common.topology" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="372" y="283">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="30" w="50" x="97" y="426">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="30" w="50" x="240" y="498">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="z" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="30" w="50" x="377" y="484">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ICellImpl" nArgs="0">
+      <slice isRef="x">
+        <originRef cRef="x" iRef="ICell"/>
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slice>
+      <slice isRef="y">
+        <originRef cRef="y" iRef="ICell"/>
+        <visualDescription h="10" w="10" x="31" y="26"/>
+      </slice>
+      <slice isRef="z">
+        <originRef cRef="z" iRef="ICell"/>
+        <visualDescription h="10" w="10" x="60" y="13"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.topology.Mesh3D;&#xA;&#xA;namespace impl.common.topology.Mesh3DImpl { &#xA;&#xA;public abstract class BaseICellImpl: Environment, BaseICell&#xA;{&#xA;&#xA;protected ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.x = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.y = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.z = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseICellImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000008584adccb1e9b176bb3b5aa3e4f4989c9923b70cfce0855c68c7c1025e59d0c41ae3bd30bfc1104ce88f0da674e6143aae8615dfa9b53efe7507b443a247e2ea5ec3f5cf6f19710d921f8caa6e2dea8399c6fe28ca772bc853f9d610c25832e86ab6a0595788e78dafe9cc0635dd853f788ece170ff8e5176943c30bc42730b3&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICellImpl.cs" srcType="base" uri="impl.common.topology.Mesh3DImpl/bin/1.0.0.0/BaseICellImpl.dll" versionId="1.0.0.0">
+          <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
+          <dependency>common.topology.Mesh3D/bin/1.0.0.0/BaseICell.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Mesh3D;&#xA;&#xA;namespace impl.common.topology.Mesh3DImpl { &#xA;&#xA;public class ICellImpl : BaseICellImpl, ICell&#xA;{&#xA;&#xA;public ICellImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICellImpl.cs" srcType="user" uri="impl.common.topology.Mesh3DImpl/bin/1.0.0.0/ICellImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.topology.Mesh3DImpl/bin/1.0.0.0/BaseICellImpl.dll</dependency>
+          <dependency>common.topology.Mesh3D/bin/1.0.0.0/ICell.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="142" y="107">
+        <color b="255" g="0" r="128"/>
+      </visualDescription>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="x"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="y"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="z"/>
+      </port>
+    </interface>
+    <unit iRef="ICellImpl" private="false" uRef="cell" visibleInterface="true">
+      <super cRef="base" uRef="cell"/>
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="false">
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slices>
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="false">
+        <visualDescription h="10" w="10" x="31" y="26"/>
+      </slices>
+      <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="13"/>
+      </slices>
+      <visualDescription h="40" w="80" x="144" y="206"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>base</originRef>
+      <originRef>x</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="cell"/>
+      <visualDescription h="20" w="20" x="184" y="359"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+      <originRef>base</originRef>
+      <originRef>y</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="cell"/>
+      <visualDescription h="20" w="20" x="281" y="362"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+      <originRef>base</originRef>
+      <originRef>z</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="cell"/>
+      <visualDescription h="20" w="20" x="341" y="361"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

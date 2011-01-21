@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ef2dc11caaf7756599da349def63e789b4efc5d27e55db10ce3d03680a05e63341f2a35deff1443e296ec5852a422b410eee70bfce46a9661fe345109fe84cce41d6f59b0a399953f507a51c12e2588b6eab7d1fc35b8d43b9145fec0d2630e30784432e46ce068347aa4026c2b87145b0a448f11559ba741cf4a336035bbad4" isAbstract="false" kind="Data" name="LHSImpl" packagePath="impl.common.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009bd9692378cd22edf582097e28e207dff39ca1db571eddab0abf7bd500c6509800d4dc812456656c43a7379c229de7298049a508f2ab9d40e917781bb84d494fa7462a3ba12693cade3b6b1b8208323484e76f7f7ed046d9348a52e90fc8d3c877dcbc54c3489968e0a1d8c4f283b07dddf92287edf3984531fb6a271860aa6" localRef="base" location="common.data.LHS/LHS.hpe" name="LHS" package="common.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="314" y="217">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="lhs">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ILHSImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.LHS;&#xA;&#xA;namespace impl.common.data.LHSImpl { &#xA;&#xA;public abstract class BaseILHSImpl: DataStructure, BaseILHS&#xA;{&#xA;&#xA;&#xA;public BaseILHSImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000ef2dc11caaf7756599da349def63e789b4efc5d27e55db10ce3d03680a05e63341f2a35deff1443e296ec5852a422b410eee70bfce46a9661fe345109fe84cce41d6f59b0a399953f507a51c12e2588b6eab7d1fc35b8d43b9145fec0d2630e30784432e46ce068347aa4026c2b87145b0a448f11559ba741cf4a336035bbad4&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseILHSImpl.cs" srcType="base" uri="impl.common.data.LHSImpl/bin/1.0.0.0/BaseILHSImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.LHS/bin/1.0.0.0/BaseILHS.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.LHS;&#xA;&#xA;namespace impl.common.data.LHSImpl { &#xA;&#xA;public class ILHSImpl : BaseILHSImpl, ILHS&#xA;{&#xA;&#xA;public ILHSImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ILHSImpl.cs" srcType="user" uri="impl.common.data.LHSImpl/bin/1.0.0.0/ILHSImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.data.LHSImpl/bin/1.0.0.0/BaseILHSImpl.dll</dependency>
+          <dependency>common.data.LHS/bin/1.0.0.0/ILHS.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="98" y="75">
+        <color b="235" g="235" r="235"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ILHSImpl" private="false" uRef="lhs" visibleInterface="true">
+      <super cRef="base" uRef="lhs"/>
+      <visualDescription h="40" w="80" x="101" y="277"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@cf28a71295098436821" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
+      <visualDescription h="20" w="20" x="233" y="192"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

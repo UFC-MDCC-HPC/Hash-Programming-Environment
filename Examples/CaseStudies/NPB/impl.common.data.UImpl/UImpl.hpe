@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005931e5cc4540d93145c21e946bd26c900e014408d4febcdbc388b61897eace5704c4d8c6e374c2d6da0e7e3c8bfcab9ff22075b6c6ad3118a2ab0c1d8f2fab00d45eab30102b19cd9182f5cae07ad63a7699ad323c3890a5edc710e5083ad4a42b011227f8949c902cf5ee7edde45b24b73907618d74ba3fc456d2ade28b189c" isAbstract="false" kind="Data" name="UImpl" packagePath="impl.common.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005b16baae2c1fbcdb7a0ac48b2bfd0dd24fe70adf8aca82f5c5492a93da820d04550acd8dac1caa12b30c007dc3186b2680aebb2b93c43a25fa2a01e5099594ecfa6a9c2ccf99613936db64b77005f2355b090defd222ddc065a2453b9a884102f121da2043c066dc88683dd67cf4e65d50d9bc9a064edb8fef31b17888a53cae" localRef="base" location="common.data.U/U.hpe" name="U" package="common.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="338" y="245">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="u">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IUImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.U;&#xA;&#xA;namespace impl.common.data.UImpl { &#xA;&#xA;public abstract class BaseIUImpl: DataStructure, BaseIU&#xA;{&#xA;&#xA;&#xA;public BaseIUImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000005931e5cc4540d93145c21e946bd26c900e014408d4febcdbc388b61897eace5704c4d8c6e374c2d6da0e7e3c8bfcab9ff22075b6c6ad3118a2ab0c1d8f2fab00d45eab30102b19cd9182f5cae07ad63a7699ad323c3890a5edc710e5083ad4a42b011227f8949c902cf5ee7edde45b24b73907618d74ba3fc456d2ade28b189c&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIUImpl.cs" srcType="base" uri="impl.common.data.UImpl/bin/1.0.0.0/BaseIUImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.U/bin/1.0.0.0/BaseIU.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.U;&#xA;&#xA;namespace impl.common.data.UImpl { &#xA;&#xA;public class IUImpl : BaseIUImpl, IU&#xA;{&#xA;&#xA;public IUImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IUImpl.cs" srcType="user" uri="impl.common.data.UImpl/bin/1.0.0.0/IUImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.data.UImpl/bin/1.0.0.0/BaseIUImpl.dll</dependency>
+          <dependency>common.data.U/bin/1.0.0.0/IU.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="156" y="186">
+        <color b="0" g="0" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IUImpl" private="false" uRef="u" visibleInterface="true">
+      <super cRef="base" uRef="u"/>
+      <visualDescription h="40" w="80" x="156" y="266"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@e0d8c31295098440541" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="u"/>
+      <visualDescription h="20" w="20" x="117" y="401"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

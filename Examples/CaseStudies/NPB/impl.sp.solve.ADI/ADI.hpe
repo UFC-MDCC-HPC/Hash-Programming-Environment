@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000fb316b55696c9138e64dd37ecb271f82554b922bf3eb1af387e06526ae8e242fd8ca9570f417c3da43dc6bfbc7104507350a04f6f7781922091bc8471ffa11d08e952b1d00abe0ed557dab1f4c6be65a94027395505d0b601293e412aa77b0fe740d903658a74de8c6c011ae30948689a4abef436a12daf2ecbf8dfe616fb9c4" isAbstract="false" kind="Computation" name="ADI" packagePath="impl.sp.solve">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000fdf5c175f57642a3294f6fd4f550a60eb1403f120b974e0fb8a2e79a950d1619b0bb28c25bcc4ab590c859f74b73754e39ff2055e9555f5a939e3476e6e03a3b5cdf86224c17bf9cf3c98b907f61396cddaeb0b98823bc52c420dc97fcc4c7cbc6e97aebf835f043a36021b9152b560265a800ccf1bb13965e9d6a4a63b2b3fd" localRef="base" location="sp.ADI/ADI.hpe" name="ADI" package="sp" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="286" y="262">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="30" w="139" x="367" y="394">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="47" y="9"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000001d1817dae53c0527ea6a5fcdb5f56ac2670f8c5f9877066e0e1ee3daa6fe0444129762c763b0ad6771a2b8de6b03402b7f593fe3bdd0340806db57ce27c9f276a56d6f1ba8a2821d0ba72028442622a79fff65f9f60d5e27f6ac2f583b3cd57885fcc259d2743c155947ebbff71ec4e7a7011b23b714bb3166efb35d70f231b1" localRef="data_partition" location="common.datapartition.Blocks3D/Blocks3D.hpe" name="Blocks3D" package="common.datapartition" exposed="true">
+          <visualDescription h="44" w="108" x="13" y="110">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="process">
+            <visualDescription h="10" w="10" x="49" y="6"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="adi">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IADIImpl" nArgs="0">
+      <slice isRef="data_partition">
+        <originRef cRef="data_partition" iRef="IBlocks3D"/>
+        <visualDescription h="10" w="10" x="5" y="23"/>
+      </slice>
+      <slice isRef="z_solve">
+        <originRef cRef="z_solve" iRef="ISolve"/>
+        <visualDescription h="10" w="10" x="145" y="49"/>
+      </slice>
+      <slice isRef="y_solve">
+        <originRef cRef="y_solve" iRef="ISolve"/>
+        <visualDescription h="10" w="10" x="130" y="27"/>
+      </slice>
+      <slice isRef="x_solve">
+        <originRef cRef="x_solve" iRef="ISolve"/>
+        <visualDescription h="10" w="10" x="129" y="7"/>
+      </slice>
+      <slice isRef="copy_faces">
+        <originRef cRef="copy_faces" iRef="ICopyFaces"/>
+        <visualDescription h="10" w="10" x="19" y="26"/>
+      </slice>
+      <slice isRef="compute_rhs">
+        <originRef cRef="compute_rhs" iRef="IComputeRHS"/>
+        <visualDescription h="10" w="10" x="36" y="28"/>
+      </slice>
+      <slice isRef="add">
+        <originRef cRef="add" iRef="IAdd"/>
+        <visualDescription h="10" w="10" x="1" y="8"/>
+      </slice>
+      <slice isRef="txinvr">
+        <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
+        <visualDescription h="10" w="10" x="18" y="2"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d04053" repeat="0">
+        <visualDescription h="550" w="510" x="145" y="125"/>
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2f3bd3" repeat="0">
+          <visualDescription h="450" w="430" x="70" y="50"/>
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@100c5d9" repeat="0">
+            <visualDescription h="350" w="350" x="70" y="50"/>
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1bd45c5" repeat="0">
+              <visualDescription h="250" w="270" x="70" y="50"/>
+              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@12f92a2" repeat="0">
+                <visualDescription h="150" w="190" x="70" y="50"/>
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4402b5" repeat="0" sliceRef="z_solve">
+                  <visualDescription h="50" w="50" x="10" y="50"/>
+                </action>
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@10dc792" repeat="0" sliceRef="z_solve">
+                  <visualDescription h="50" w="50" x="70" y="50"/>
+                </action>
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a95d74" repeat="0" sliceRef="z_solve">
+                  <visualDescription h="50" w="50" x="130" y="50"/>
+                </action>
+              </action>
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3678dc" repeat="0" sliceRef="copy_faces">
+                <visualDescription h="50" w="50" x="10" y="50"/>
+              </action>
+            </action>
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@38b9c7" repeat="0" sliceRef="compute_rhs">
+              <visualDescription h="50" w="50" x="10" y="50"/>
+            </action>
+          </action>
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2cdee9" repeat="0" sliceRef="add">
+            <visualDescription h="50" w="50" x="10" y="50"/>
+          </action>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1dea37f" repeat="0" sliceRef="txinvr">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.CopyFaces;&#xA;using common.solve.Solve;&#xA;using common.Add;&#xA;using common.ComputeRHS;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;using common.datapartition.Blocks3D;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public abstract class BaseIADIImpl: Computation, BaseIADI&#xA;{&#xA;&#xA;protected ICell x = null;&#xA;&#xA;protected ICell X {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.x = value;&#xA;&#x9;&#x9;x_solve.Cell = value;&#xA;&#x9;&#x9;copy_faces.X = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell z = null;&#xA;&#xA;protected ICell Z {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.z = value;&#xA;&#x9;&#x9;z_solve.Cell = value;&#xA;&#x9;&#x9;copy_faces.Z = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell y = null;&#xA;&#xA;protected ICell Y {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.y = value;&#xA;&#x9;&#x9;y_solve.Cell = value;&#xA;&#x9;&#x9;copy_faces.Y = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;protected IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;&#x9;txinvr.Blocks = value;&#xA;&#x9;&#x9;compute_rhs.Blocks = value;&#xA;&#x9;&#x9;x_solve.Blocks = value;&#xA;&#x9;&#x9;y_solve.Blocks = value;&#xA;&#x9;&#x9;z_solve.Blocks = value;&#xA;&#x9;&#x9;copy_faces.Blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;&#x9;txinvr.Problem = value;&#xA;&#x9;&#x9;compute_rhs.Problem = value;&#xA;&#x9;&#x9;add.Problem = value;&#xA;&#x9;&#x9;x_solve.Problem = value;&#xA;&#x9;&#x9;y_solve.Problem = value;&#xA;&#x9;&#x9;z_solve.Problem = value;&#xA;&#x9;&#x9;copy_faces.Problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICopyFaces copy_faces = null;&#xA;&#xA;protected ICopyFaces Copy_faces {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.copy_faces = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ISolve z_solve = null;&#xA;&#xA;protected ISolve Z_solve {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.z_solve = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ISolve y_solve = null;&#xA;&#xA;protected ISolve Y_solve {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.y_solve = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ISolve x_solve = null;&#xA;&#xA;protected ISolve X_solve {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.x_solve = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IAdd add = null;&#xA;&#xA;protected IAdd Add {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.add = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IComputeRHS compute_rhs = null;&#xA;&#xA;protected IComputeRHS Compute_rhs {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.compute_rhs = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBlockDiagonalMatVecProduct txinvr = null;&#xA;&#xA;protected IBlockDiagonalMatVecProduct Txinvr {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.txinvr = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBlocks3D data_partition = null;&#xA;&#xA;public IBlocks3D Data_partition {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.data_partition = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIADIImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000fb316b55696c9138e64dd37ecb271f82554b922bf3eb1af387e06526ae8e242fd8ca9570f417c3da43dc6bfbc7104507350a04f6f7781922091bc8471ffa11d08e952b1d00abe0ed557dab1f4c6be65a94027395505d0b601293e412aa77b0fe740d903658a74de8c6c011ae30948689a4abef436a12daf2ecbf8dfe616fb9c4&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Txinvr = (IBlockDiagonalMatVecProduct) BackEnd.createSlice(this, UID,&quot;txinvr&quot;,&quot;matvecproduct);&#xA;&#x9;this.Compute_rhs = (IComputeRHS) BackEnd.createSlice(this, UID,&quot;compute_rhs&quot;,&quot;compute_rhs);&#xA;&#x9;this.Add = (IAdd) BackEnd.createSlice(this, UID,&quot;add&quot;,&quot;add);&#xA;&#x9;this.X_solve = (ISolve) BackEnd.createSlice(this, UID,&quot;x_solve&quot;,&quot;solve);&#xA;&#x9;this.Y_solve = (ISolve) BackEnd.createSlice(this, UID,&quot;y_solve&quot;,&quot;solve);&#xA;&#x9;this.Z_solve = (ISolve) BackEnd.createSlice(this, UID,&quot;z_solve&quot;,&quot;solve);&#xA;&#x9;this.Copy_faces = (ICopyFaces) BackEnd.createSlice(this, UID,&quot;copy_faces&quot;,&quot;copy_faces);&#xA;&#x9;this.Blocks = (IBlocks) BackEnd.createSlice(this, UID,&quot;blocks_info&quot;,&quot;blocks);&#xA;&#x9;this.Y = (ICell) BackEnd.createSlice(this, UID,&quot;y&quot;,&quot;cell);&#xA;&#x9;this.Z = (ICell) BackEnd.createSlice(this, UID,&quot;z&quot;,&quot;cell);&#xA;&#x9;this.X = (ICell) BackEnd.createSlice(this, UID,&quot;x&quot;,&quot;cell);&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIADIImpl.cs" srcType="base" uri="impl.sp.solve.ADI/bin/1.0.0.0/BaseIADIImpl.dll" versionId="1.0.0.0">
+          <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll</dependency>
+          <dependency>common.solve.Solve/bin/1.0.0.0/ISolve.dll</dependency>
+          <dependency>common.Add/bin/1.0.0.0/IAdd.dll</dependency>
+          <dependency>common.ComputeRHS/bin/1.0.0.0/IComputeRHS.dll</dependency>
+          <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/IBlockDiagonalMatVecProduct.dll</dependency>
+          <dependency>common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll</dependency>
+          <dependency>sp.ADI/bin/1.0.0.0/BaseIADI.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public class IADIImpl : BaseIADIImpl, IADI&#xA;{&#xA;&#xA;public IADIImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;#pragma omp parallel sections&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;#pragma omp parallel sections&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;#pragma omp parallel sections&#xA;&#x9;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;#pragma omp parallel sections&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;z_solve.compute();&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;null.compute();&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;null.compute();&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;copy_faces.synchronize();&#xA;&#x9;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;compute_rhs.compute();&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;add.compute();&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;txinvr.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IADIImpl.cs" srcType="user" uri="impl.sp.solve.ADI/bin/1.0.0.0/IADIImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.sp.solve.ADI/bin/1.0.0.0/BaseIADIImpl.dll</dependency>
+          <dependency>sp.ADI/bin/1.0.0.0/IADI.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="65" w="217" x="271" y="22">
+        <color b="0" g="128" r="128"/>
+      </visualDescription>
+      <port name="data_partition">
+        <visualDescription h="10" w="10" x="79" y="44"/>
+        <slice pRef="process" sRef="data_partition"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="19" y="47"/>
+        <slice pRef="blocks" sRef="data_partition"/>
+        <slice pRef="blocks" sRef="z_solve"/>
+        <slice pRef="blocks" sRef="y_solve"/>
+        <slice pRef="blocks" sRef="x_solve"/>
+        <slice pRef="blocks" sRef="copy_faces"/>
+        <slice pRef="blocks" sRef="compute_rhs"/>
+        <slice pRef="blocks" sRef="txinvr"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="196" y="14"/>
+        <slice pRef="x" sRef="data_partition"/>
+        <slice pRef="cell" sRef="x_solve"/>
+        <slice pRef="x" sRef="copy_faces"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="165" y="33"/>
+        <slice pRef="z" sRef="data_partition"/>
+        <slice pRef="cell" sRef="z_solve"/>
+        <slice pRef="z" sRef="copy_faces"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="192" y="40"/>
+        <slice pRef="y" sRef="data_partition"/>
+        <slice pRef="cell" sRef="y_solve"/>
+        <slice pRef="y" sRef="copy_faces"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="162" y="9"/>
+        <slice pRef="problem" sRef="z_solve"/>
+        <slice pRef="problem" sRef="y_solve"/>
+        <slice pRef="problem" sRef="x_solve"/>
+        <slice pRef="problem" sRef="copy_faces"/>
+        <slice pRef="problem" sRef="compute_rhs"/>
+        <slice pRef="problem" sRef="add"/>
+        <slice pRef="problem" sRef="txinvr"/>
+      </port>
+    </interface>
+    <unit iRef="IADIImpl" private="false" uRef="adi" visibleInterface="true">
+      <super cRef="base" uRef="adi"/>
+      <slices cRef="data_partition" replica="0" uRef="process" sliceName="data_partition" transitive="false">
+        <visualDescription h="10" w="10" x="5" y="23"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
+        <visualDescription h="10" w="10" x="11" y="23"/>
+      </slices>
+      <slices cRef="z_solve" replica="0" uRef="solve" sliceName="z_solve" transitive="false">
+        <visualDescription h="10" w="10" x="64" y="28"/>
+        <port>problem</port>
+      </slices>
+      <slices cRef="y_solve" replica="0" uRef="solve" sliceName="y_solve" transitive="false">
+        <visualDescription h="10" w="10" x="64" y="15"/>
+        <port>problem</port>
+      </slices>
+      <slices cRef="x_solve" replica="0" uRef="solve" sliceName="x_solve" transitive="false">
+        <visualDescription h="10" w="10" x="63" y="3"/>
+        <port>problem</port>
+      </slices>
+      <slices cRef="copy_faces" replica="0" uRef="copy_faces" sliceName="copy_faces" transitive="false">
+        <visualDescription h="10" w="10" x="19" y="26"/>
+        <port>problem</port>
+      </slices>
+      <slices cRef="compute_rhs" replica="0" uRef="compute_rhs" sliceName="compute_rhs" transitive="false">
+        <visualDescription h="10" w="10" x="36" y="28"/>
+        <port>problem</port>
+      </slices>
+      <slices cRef="add" replica="0" uRef="add" sliceName="add" transitive="false">
+        <visualDescription h="10" w="10" x="1" y="8"/>
+        <port>problem</port>
+      </slices>
+      <slices cRef="txinvr" replica="0" uRef="matvecproduct" sliceName="txinvr" transitive="false">
+        <visualDescription h="10" w="10" x="18" y="2"/>
+        <port>problem</port>
+      </slices>
+      <visualDescription h="40" w="80" x="152" y="252"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>base</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>x</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="adi"/>
+      <visualDescription h="20" w="20" x="142" y="378"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+      <originRef>base</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>y</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="adi"/>
+      <visualDescription h="20" w="20" x="295" y="298"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+      <originRef>base</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>z</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="adi"/>
+      <visualDescription h="20" w="20" x="357" y="354"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>add</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="adi"/>
+      <visualDescription h="60" w="61" x="126" y="492"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

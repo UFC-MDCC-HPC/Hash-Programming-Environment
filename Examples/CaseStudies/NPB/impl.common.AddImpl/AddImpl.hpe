@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000b451a2bcd50ab8fc6269d3b37d6080ea9857b499ff3e1fcff4e4e7cef260032f4dfe8fec4a8bc513bbf481c13bc8e1ecb32c06d6e6ada7fc216f54cbcaee3f6ab216b657367eefef844062653c70cf4e723d7fad24be7944255e0c2ad290c92a9d7ab7fe3c9bf2ba3038f405a86e6a90cb9b8e969943153f0d632549a07d983" isAbstract="false" kind="Computation" name="AddImpl" packagePath="impl.common">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000038134709aa421ea995d8c4a06a219b3c06e217b264862c7f985c8566efe540bc4d6d47c8cdff0300442f8be4b2a2d1360ef08637533e161a00d58be08f0c83a55c2af56706533bda5937b5163d7d88f8da074142b1a0afc1c2ec44787db7edb612c3f9c6338adf5584902584de806577ad60f158be5d1611fd668e4d27ce69c" localRef="base" location="common.Add/Add.hpe" name="Add" package="common" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="365" y="169">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="30" w="139" x="178" y="315">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+          <visualDescription h="51" w="106" x="299" y="417">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="add">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IAddImpl" nArgs="0">
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="65" y="25"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="16" y="29"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@45f2bf" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.Add;&#xA;&#xA;namespace impl.common.AddImpl { &#xA;&#xA;public abstract class BaseIAddImpl: Computation, BaseIAdd&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;   this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;   this.problem = (IProblemDefinition) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIAddImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000000b451a2bcd50ab8fc6269d3b37d6080ea9857b499ff3e1fcff4e4e7cef260032f4dfe8fec4a8bc513bbf481c13bc8e1ecb32c06d6e6ada7fc216f54cbcaee3f6ab216b657367eefef844062653c70cf4e723d7fad24be7944255e0c2ad290c92a9d7ab7fe3c9bf2ba3038f405a86e6a90cb9b8e969943153f0d632549a07d983&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIAddImpl.cs" srcType="base" uri="impl.common.AddImpl/bin/1.0.0.0/BaseIAddImpl.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.Add/bin/1.0.0.0/BaseIAdd.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Add;&#xA;&#xA;namespace impl.common.AddImpl { &#xA;&#xA;public class IAddImpl : BaseIAddImpl, IAdd&#xA;{&#xA;&#xA;public IAddImpl() { &#xA;&#xA;} &#xA;&#xA;private int ncells;&#xA;private double[,,,,] u;&#xA;private double[,,,,] rhs;&#xA;private int[,] start;&#xA;private int[,] end;&#xA;private int[,] cell_size;&#xA;&#xA;public inititialize() &#xA;{  &#x9;&#xA;    ncells = Problem.NCells;&#x9;&#x9;&#x9;&#xA;&#x9;u = Problem.Field_u;&#xA;&#x9;rhs = Problem.Field_rhs;&#xA;&#x9;start = Blocks.cell_start;&#xA;&#x9;end = Blocks.cell_end;&#xA;&#x9;cell_size = Blocks.cell_size;   &#xD;&#xA;}&#xA;&#xA;public override void compute() &#xA;{ &#x9;&#x9;&#x9;&#xA;    int c, i, j, k, m;&#xA;&#xA;    for (c = 0; c &lt; ncells; c++)&#xA;    {&#xA;        for (k = start[c, 2]; k &lt; 2 + cell_size[c, 2] - end[c, 2]; k++)&#xA;        {&#xA;            for (j = start[c, 1]; j &lt; 2 + cell_size[c, 1] - end[c, 1]; j++)&#xA;            {&#xA;                for (i = start[c, 0]; i &lt; 2 + cell_size[c, 0] - end[c, 0]; i++)&#xA;                {&#xA;                    for (m = 0; m &lt; 5; m++)&#xA;                    {&#xA;                        u[c, k, j, i, m] += rhs[c, k, j, i, m];&#xA;                    }&#xA;                }&#xA;            }&#xA;        }&#xA;    }&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IAddImpl.cs" srcType="user" uri="impl.common.AddImpl/bin/1.0.0.0/IAddImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.AddImpl/bin/1.0.0.0/BaseIAddImpl.dll</dependency>
+          <dependency>common.Add/bin/1.0.0.0/IAdd.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="115" y="149">
+        <color b="0" g="255" r="0"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+    </interface>
+    <unit iRef="IAddImpl" private="false" uRef="add" visibleInterface="true">
+      <super cRef="base" uRef="add"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="65" y="25"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="16" y="29"/>
+      </slices>
+      <visualDescription h="40" w="80" x="115" y="229"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="add"/>
+      <visualDescription h="60" w="61" x="31" y="251"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

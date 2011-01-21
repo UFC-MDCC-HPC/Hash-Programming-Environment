@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000176a8289150e11128b302981ed5749025f17245b7b8fe4720244ba0aa74a2a2190ecf7371d21cc42bdc131fb70c85587d8336479804f1318144f9799e5a45d7627b273528381f40a83b2d94f7404cc92c72733febcfd118e879216ccad84721711c916dc9de90b0736ce37f524d3139946bd1164a2f5246d9fb5a2c43676faa2" isAbstract="false" kind="Data" name="ProblemDefinitionImpl" packagePath="impl.common.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="base" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="299" y="232">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IProblemDefinitionImpl" nArgs="0">
+      <slice isRef="us">
+        <originRef cRef="us" iRef="IField"/>
+        <visualDescription h="10" w="10" x="1" y="26"/>
+      </slice>
+      <slice isRef="vs">
+        <originRef cRef="vs" iRef="IField"/>
+        <visualDescription h="10" w="10" x="14" y="22"/>
+      </slice>
+      <slice isRef="ws">
+        <originRef cRef="ws" iRef="IField"/>
+        <visualDescription h="10" w="10" x="25" y="26"/>
+      </slice>
+      <slice isRef="qs">
+        <originRef cRef="qs" iRef="IField"/>
+        <visualDescription h="10" w="10" x="37" y="26"/>
+      </slice>
+      <slice isRef="rho">
+        <originRef cRef="rho" iRef="IField"/>
+        <visualDescription h="10" w="10" x="49" y="27"/>
+      </slice>
+      <slice isRef="ainv">
+        <originRef cRef="ainv" iRef="IField"/>
+        <visualDescription h="10" w="10" x="27" y="3"/>
+      </slice>
+      <slice isRef="speed">
+        <originRef cRef="speed" iRef="IField"/>
+        <visualDescription h="10" w="10" x="48" y="2"/>
+      </slice>
+      <slice isRef="u">
+        <originRef cRef="u" iRef="IField"/>
+        <visualDescription h="10" w="10" x="67" y="2"/>
+      </slice>
+      <slice isRef="forcing">
+        <originRef cRef="forcing" iRef="IField"/>
+        <visualDescription h="10" w="10" x="69" y="15"/>
+      </slice>
+      <slice isRef="rhs">
+        <originRef cRef="rhs" iRef="IField"/>
+        <visualDescription h="10" w="10" x="65" y="26"/>
+      </slice>
+      <slice isRef="lhs">
+        <originRef cRef="lhs" iRef="IField"/>
+        <visualDescription h="10" w="10" x="57" y="13"/>
+      </slice>
+      <slice isRef="square">
+        <originRef cRef="square" iRef="IField"/>
+        <visualDescription h="10" w="10" x="9" y="2"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.Field;&#xA;using common.data.ProblemDefinition;&#xA;&#xA;namespace impl.common.data.ProblemDefinition { &#xA;&#xA;public abstract class BaseIProblemDefinitionImpl: DataStructure, BaseIProblemDefinition&#xA;{&#xA;&#xA;private IField lhs = null;&#xA;&#xA;protected IField Lhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (lhs==null) &#xA;&#x9;&#x9;&#x9;lhs = (IField) Services.getPort(&quot;lhs&quot;);&#xA;&#x9;&#x9;return lhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField u = null;&#xA;&#xA;protected IField U {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (u == null) &#xA;&#x9;&#x9;&#x9;u = (IField) Services.getPort(&quot;u&quot;);&#xA;&#x9;&#x9;return u;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField us = null;&#xA;&#xA;protected IField Us {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (us == null) &#xA;&#x9;&#x9;&#x9;us = (IField) Services.getPort(&quot;us&quot;);&#xA;&#x9;&#x9;return us;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField vs = null;&#xA;&#xA;protected IField Vs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (vs==null) &#xA;&#x9;&#x9;&#x9;vs = (IField) Services.getPort(&quot;vs&quot;);&#xA;&#x9;&#x9;return vs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField ws = null;&#xA;&#xA;protected IField Ws {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (ws==null) &#xA;&#x9;&#x9;&#x9;ws = (IField) Services.getPort(&quot;ws&quot;);&#xA;&#x9;&#x9;return ws;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField qs = null;&#xA;&#xA;protected IField Qs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (qs==null) &#xA;&#x9;&#x9;&#x9;qs = (IField) Services.getPort(&quot;qs&quot;);&#xA;&#x9;&#x9;return qs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField rho = null;&#xA;&#xA;protected IField Rho {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (rho==null) &#xA;&#x9;&#x9;&#x9;rho = (IField) Services.getPort(&quot;rho&quot;);&#xA;&#x9;&#x9;return rho;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField ainv = null;&#xA;&#xA;protected IField Ainv {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (ainv==null) &#xA;&#x9;&#x9;&#x9;ainv = (IField) Services.getPort(&quot;ainv&quot;);&#xA;&#x9;&#x9;return ainv;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField speed = null;&#xA;&#xA;protected IField Speed {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (speed==null) &#xA;&#x9;&#x9;&#x9;speed = (IField) Services.getPort(&quot;speed&quot;);&#xA;&#x9;&#x9;return speed;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField square = null;&#xA;&#xA;protected IField Square {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (square==null) &#xA;&#x9;&#x9;&#x9;square = (IField) Services.getPort(&quot;square&quot;);&#xA;&#x9;&#x9;return square;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField rhs = null;&#xA;&#xA;protected IField Rhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (rhs==null) &#xA;&#x9;&#x9;&#x9;rhs = (IField) Services.getPort(&quot;rhs&quot;);&#xA;&#x9;&#x9;return rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField forcing = null;&#xA;&#xA;protected IField Forcing {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (forcing==null) &#xA;&#x9;&#x9;&#x9;forcing = (IField) Services.getPort(&quot;forcing&quot;);&#xA;&#x9;&#x9;return rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIProblemDefinitionImpl.cs" srcType="base" uri="impl.common.data.ProblemDefinitionImpl/bin/1.0.0.0/BaseIProblemDefinitionImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.Field/bin/1.0.0.0/IField.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/BaseIProblemDefinition.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.ProblemDefinition;&#xA;&#xA;namespace impl.common.data.ProblemDefinition { &#xA;&#xA;public class IProblemDefinitionImpl : BaseIProblemDefinitionImpl, IProblemDefinition&#xA;{&#xA;&#x9;&#x9;&#xA;&#x9;public char CLASS = 'S';&#xA;&#xA;&#x9;protected int IMAX = 0, JMAX = 0, KMAX = 0, MAX_CELL_DIM = 0, BUF_SIZE = 0, IMAXP, JMAXP,&#xA;&#x9;&#x9;&#x9;&#x9;  problem_size = 0, maxcells = 0, ncells = 0;&#xA;&#x9;protected int[] grid_points = { 0, 0, 0 };&#xA;&#x9;protected int niter_default = 0;&#xA;&#x9;protected double dt_default = 0.0d;&#x9;&#x9;&#xA;&#xA;&#x9;public void initialize_problem_data(char clss) &#xA;&#x9;{&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;setProblemClass(clss);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;int total_nodes = this.Ranks.Length;&#xA;&#x9;&#x9;maxcells =  Convert.ToInt32(Math.Sqrt(total_nodes));&#xA;&#x9;&#x9;&#x9;&#xA;        MAX_CELL_DIM = (problem_size/maxcells)+1;                &#xA;&#x9;&#x9;IMAX = JMAX = KMAX = grid_points[0] = grid_points[1] = grid_points[2] = MAX_CELL_DIM;&#xA;        IMAXP = IMAX/2 * 2 + 1;&#xA;        JMAXP = JMAX/2 * 2 + 1;&#xA;        BUF_SIZE = MAX_CELL_DIM*MAX_CELL_DIM*(maxcells-1)*60*2+1;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;U.initialize_field(&quot;u&quot;,maxcells, KMAX+4,JMAXP+4,IMAXP+4, 5);&#xA;&#x9;&#x9;Rhs.initialize_field(&quot;rhs&quot;, maxcells, KMAX+2,JMAXP+2,IMAXP+2, 5);&#xA;&#x9;&#x9;Lhs.initialize_field(&quot;lhs&quot;, maxcells, KMAX+2,JMAXP+2,IMAXP+2, 15);&#xA;&#x9;&#x9;Forcing.initialize_field(&quot;forcing&quot;, maxcells, KMAX+2, JMAXP+2, IMAXP+2, 5);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;Us.initialize_field(&quot;us&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Vs.initialize_field(&quot;vs&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Ws.initialize_field(&quot;ws&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Qs.initialize_field(&quot;qs&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Ainv.initialize_field(&quot;ainv&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Rho.initialize_field(&quot;rho&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Speed.initialize_field(&quot;speed&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#xA;&#x9;&#x9;Square.initialize_field(&quot;square&quot;, maxcells, KMAX+3, JMAX+3, IMAX+3);&#x9;&#x9;&#x9;&#xA;    }&#xA;&#x9;&#x9;&#xA;&#x9;private void setProblemClass(char clss) &#xA;&#x9;{&#xA;&#x9;&#x9;CLASS = clss;&#xA;        &#xA;&#x9;&#x9;switch (clss)&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;case 'S':&#xA;                problem_size = 12;&#xA;&#x9;&#x9;&#x9;&#x9;dt_default = .015d;&#xA;&#x9;&#x9;&#x9;&#x9;niter_default = 100;&#xA;&#x9;&#x9;&#x9;&#x9;break;&#xA;&#x9;&#x9;&#x9;case 'W':&#xA;&#x9;&#x9;&#x9;&#x9;problem_size = 36;&#xA;&#x9;&#x9;&#x9;&#x9;dt_default = .0015d;&#xA;&#x9;&#x9;&#x9;&#x9;niter_default = 400;&#xA;&#x9;&#x9;&#x9;&#x9;break;&#xA;&#x9;&#x9;&#x9;case 'A':&#xA;&#x9;&#x9;&#x9;&#x9;problem_size = 64;&#xA;&#x9;&#x9;&#x9;&#x9;dt_default = .0015d;&#xA;&#x9;&#x9;&#x9;&#x9;niter_default = 400;&#xA;&#x9;&#x9;&#x9;&#x9;break;&#xA;&#x9;&#x9;&#x9;case 'B':&#xA;&#x9;&#x9;&#x9;&#x9;problem_size = 102;&#xA;&#x9;&#x9;&#x9;&#x9;dt_default = .001d;&#xA;&#x9;&#x9;&#x9;&#x9;niter_default = 400;&#xA;&#x9;&#x9;&#x9;&#x9;break;&#xA;&#x9;&#x9;&#x9;case 'C':&#xA;&#x9;&#x9;&#x9;&#x9;problem_size = 162;&#xA;&#x9;&#x9;&#x9;&#x9;dt_default = .00067d;&#xA;&#x9;&#x9;&#x9;&#x9;niter_default = 400;&#xA;&#x9;&#x9;&#x9;&#x9;break;&#xA;            default :&#xA;                Console.WriteLine(&quot;: NO PROBLEM INSTANCE !!!&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;throw new Exception(&quot;NO PROBLEM INSTANCE&quot;);&#x9;&#x9;                    &#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;&#x9;&#xA;  public int NCells { get { return ncells; } }&#xA;&#x9;&#x9;&#xA;  public double [,,,,] Field_u       { get { return U.Field; } }&#x9;&#xA;  public double [,,,,] Field_rhs     { get { return Rhs.Field; } }&#x9;&#xA;  public double [,,,,] Field_lhs     { get { return Lhs.Field; } }&#x9;&#xA;  public double [,,,,] Field_forcing { get { return Forcing.Field; } }&#x9;&#xA;&#x9;&#x9;&#xA;  public double [,,,,] Field_us       { get { return Us.Field; } }&#x9;&#xA;  public double [,,,,] Field_vs       { get { return Vs.Field; } }&#x9;&#xA;  public double [,,,,] Field_ws       { get { return Ws.Field; } }&#x9;&#xA;  public double [,,,,] Field_qs       { get { return Qs.Field; } }&#x9;&#xA;  public double [,,,,] Field_ainv     { get { return Ainv.Field; } }&#x9;&#xA;  public double [,,,,] Field_rho      { get { return Rho.Field; } }&#x9;&#xA;  public double [,,,,] Field_speed    { get { return Speed.Field; } }&#x9;&#xA;  public double [,,,,] Field_square   { get { return Square.Field; } }&#x9;&#xA;&#xA;&#x9;&#x9;&#xA;  public void initialize() &#xA;  {&#xA;  }&#xA;&#x9;&#x9;&#xA;  public void lhsinit() &#xA;  {&#xA;  }&#xA;&#x9;&#x9;&#xA;  public void exact_rhs()&#xA;  {&#xA;&#x9;&#x9;&#x9;&#xA;  }&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IProblemDefinitionImpl.cs" srcType="user" uri="impl.common.data.ProblemDefinitionImpl/bin/1.0.0.0/IProblemDefinitionImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.data.ProblemDefinitionImpl/bin/1.0.0.0/BaseIProblemDefinitionImpl.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="88" w="132" x="130" y="58">
+        <color b="0" g="255" r="0"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IProblemDefinitionImpl" private="false" uRef="problem" visibleInterface="true">
+      <super cRef="base" uRef="problem"/>
+      <slices cRef="us" replica="0" uRef="field" sliceName="us" transitive="false">
+        <visualDescription h="10" w="10" x="1" y="26"/>
+      </slices>
+      <slices cRef="vs" replica="0" uRef="field" sliceName="vs" transitive="false">
+        <visualDescription h="10" w="10" x="14" y="22"/>
+      </slices>
+      <slices cRef="ws" replica="0" uRef="field" sliceName="ws" transitive="false">
+        <visualDescription h="10" w="10" x="25" y="26"/>
+      </slices>
+      <slices cRef="qs" replica="0" uRef="field" sliceName="qs" transitive="false">
+        <visualDescription h="10" w="10" x="37" y="26"/>
+      </slices>
+      <slices cRef="rho" replica="0" uRef="field" sliceName="rho" transitive="false">
+        <visualDescription h="10" w="10" x="49" y="27"/>
+      </slices>
+      <slices cRef="ainv" replica="0" uRef="field" sliceName="ainv" transitive="false">
+        <visualDescription h="10" w="10" x="27" y="3"/>
+      </slices>
+      <slices cRef="speed" replica="0" uRef="field" sliceName="speed" transitive="false">
+        <visualDescription h="10" w="10" x="48" y="2"/>
+      </slices>
+      <slices cRef="u" replica="0" uRef="field" sliceName="u" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="2"/>
+      </slices>
+      <slices cRef="forcing" replica="0" uRef="field" sliceName="forcing" transitive="false">
+        <visualDescription h="10" w="10" x="69" y="15"/>
+      </slices>
+      <slices cRef="rhs" replica="0" uRef="field" sliceName="rhs" transitive="false">
+        <visualDescription h="10" w="10" x="65" y="26"/>
+      </slices>
+      <slices cRef="lhs" replica="0" uRef="field" sliceName="lhs" transitive="false">
+        <visualDescription h="10" w="10" x="57" y="13"/>
+      </slices>
+      <slices cRef="square" replica="0" uRef="field" sliceName="square" transitive="false">
+        <visualDescription h="10" w="10" x="9" y="2"/>
+      </slices>
+      <visualDescription h="40" w="80" x="170" y="183"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
+      <visualDescription h="60" w="61" x="31" y="251"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

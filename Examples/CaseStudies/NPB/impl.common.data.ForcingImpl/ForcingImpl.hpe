@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000018ef7e65466657d72bdd28e323ec1482195373ace0c28071bdd9aa96c0b39b3af6af497242f302cf18a17f3d147e8bc061719b1980ba8fb106639dd913cc29d53d4448515cd8bcd9ba92c1149ac047e869a9da5babc68d65fc9c7eb2613bcd3d197ab68f889658ac5541f32712217bfb0484ad11bdb497e7a830bc487207485" isAbstract="false" kind="Data" name="ForcingImpl" packagePath="impl.common.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e70fa7e373a1ef3fb5fcac9f7ed5f07c0eb60d8687d5f02e8cd025313f4c2d4a70d991d462db900806684a2dd14430f65e24a6a0f8a39485e3ac5bed19a768b7b6dc3f5e1192cb8c6005d41f7d1b07a45da42f28c31e77a083a053a74ceafd17496e110737b1b53facb8b88cc560de0ba048f5754682327984b0f2e1b93b129d" localRef="base" location="common.data.Forcing/Forcing.hpe" name="Forcing" package="common.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="212" y="207">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="forcing">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IForcingImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.Forcing;&#xA;&#xA;namespace impl.common.data.ForcingImpl { &#xA;&#xA;public abstract class BaseIForcingImpl: DataStructure, BaseIForcing&#xA;{&#xA;&#xA;&#xA;public BaseIForcingImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000018ef7e65466657d72bdd28e323ec1482195373ace0c28071bdd9aa96c0b39b3af6af497242f302cf18a17f3d147e8bc061719b1980ba8fb106639dd913cc29d53d4448515cd8bcd9ba92c1149ac047e869a9da5babc68d65fc9c7eb2613bcd3d197ab68f889658ac5541f32712217bfb0484ad11bdb497e7a830bc487207485&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIForcingImpl.cs" srcType="base" uri="impl.common.data.ForcingImpl/bin/1.0.0.0/BaseIForcingImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.Forcing/bin/1.0.0.0/BaseIForcing.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.Forcing;&#xA;&#xA;namespace impl.common.data.ForcingImpl { &#xA;&#xA;public class IForcingImpl : BaseIForcingImpl, IForcing&#xA;{&#xA;&#xA;public IForcingImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IForcingImpl.cs" srcType="user" uri="impl.common.data.ForcingImpl/bin/1.0.0.0/IForcingImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.data.ForcingImpl/bin/1.0.0.0/BaseIForcingImpl.dll</dependency>
+          <dependency>common.data.Forcing/bin/1.0.0.0/IForcing.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="123" y="110">
+        <color b="64" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IForcingImpl" private="false" uRef="forcing" visibleInterface="true">
+      <super cRef="base" uRef="forcing"/>
+      <visualDescription h="40" w="80" x="123" y="190"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@6b06a91295098438541" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="forcing"/>
+      <visualDescription h="20" w="20" x="155" y="330"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

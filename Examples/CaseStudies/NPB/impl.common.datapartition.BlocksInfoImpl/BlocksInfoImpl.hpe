@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a9582b55f976cdaada5cfeec8bd575fe3f16ee61c43ff1196f041d19f6eb09f7e597bd58987dc766e39d558b21d6272b332338f9b4a6bb2a4fc8bec7d34b77c10242106fc9b3223043dbf78a4a32542ede7dcc4021ee58f6d4a6cf54cc5eb31c757e8ad32510bd162b9f272fccefca41afb8965759c3320e99f49c00073c068b" isAbstract="false" kind="Environment" name="BlocksInfoImpl" packagePath="impl.common.datapartition">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="base" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" version="1.0.0.0">
+        <visualDescription h="50" w="91" x="395" y="299">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IBlocksInfoImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;&#xA;namespace impl.common.datapartition.BlocksInfoImpl { &#xA;&#xA;public abstract class BaseIBlocksInfoImpl: Environment, BaseIBlocks&#xA;{&#xA;&#xA;&#xA;public BaseIBlocksInfoImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000a9582b55f976cdaada5cfeec8bd575fe3f16ee61c43ff1196f041d19f6eb09f7e597bd58987dc766e39d558b21d6272b332338f9b4a6bb2a4fc8bec7d34b77c10242106fc9b3223043dbf78a4a32542ede7dcc4021ee58f6d4a6cf54cc5eb31c757e8ad32510bd162b9f272fccefca41afb8965759c3320e99f49c00073c068b&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBlocksInfoImpl.cs" srcType="base" uri="impl.common.datapartition.BlocksInfoImpl/bin/1.0.0.0/BaseIBlocksInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocks.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;&#xA;namespace impl.common.datapartition.BlocksInfoImpl { &#xA;&#xA;public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks&#xA;{&#xA;&#xA;public IBlocksInfoImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IBlocksInfoImpl.cs" srcType="user" uri="impl.common.datapartition.BlocksInfoImpl/bin/1.0.0.0/IBlocksInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.datapartition.BlocksInfoImpl/bin/1.0.0.0/BaseIBlocksInfoImpl.dll</dependency>
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="152" x="274" y="109">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBlocksInfoImpl" private="false" uRef="blocks" visibleInterface="true">
+      <super cRef="base" uRef="blocks"/>
+      <visualDescription h="47" w="94" x="135" y="183"/>
+    </unit>
+  </componentInfo>
+</component:component>

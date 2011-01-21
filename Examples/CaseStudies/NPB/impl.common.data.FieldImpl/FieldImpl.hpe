@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b30dd5cc01accddcb636d055e9040bc95e22ac71d84c3104202d95e0c57a4b59f929a6bb285a65009986661c21e7ed949ff4200e95962ec334e82fe5b3573537a381056290d9f9f9062d1bf1ef3f8604918cc6bc75242ba380417d2831c80755284bd6c9a2c74076886e9caa96bf775e0ec9647956472ac3049059e036515785" isAbstract="false" kind="Data" name="FieldImpl" packagePath="impl.common.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="base" location="common.data.Field/Field.hpe" name="Field" package="common.data" version="1.0.0.0">
+        <visualDescription h="33" w="89" x="215" y="195">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="field">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IFieldImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.Field;&#xA;&#xA;namespace impl.common.data.FieldImpl { &#xA;&#xA;public abstract class BaseIFieldImpl: DataStructure, BaseIField&#xA;{&#xA;&#xA;&#xA;public BaseIFieldImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000b30dd5cc01accddcb636d055e9040bc95e22ac71d84c3104202d95e0c57a4b59f929a6bb285a65009986661c21e7ed949ff4200e95962ec334e82fe5b3573537a381056290d9f9f9062d1bf1ef3f8604918cc6bc75242ba380417d2831c80755284bd6c9a2c74076886e9caa96bf775e0ec9647956472ac3049059e036515785&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIFieldImpl.cs" srcType="base" uri="impl.common.data.FieldImpl/bin/1.0.0.0/BaseIFieldImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.Field/bin/1.0.0.0/BaseIField.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.Field;&#xA;&#xA;namespace impl.common.data.FieldImpl { &#xA;&#xA;public class IFieldImpl : BaseIFieldImpl, IField&#xA;{&#xA;&#xA;public IFieldImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IFieldImpl.cs" srcType="user" uri="impl.common.data.FieldImpl/bin/1.0.0.0/IFieldImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.data.FieldImpl/bin/1.0.0.0/BaseIFieldImpl.dll</dependency>
+          <dependency>common.data.Field/bin/1.0.0.0/IField.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="74" y="107">
+        <color b="255" g="128" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IFieldImpl" private="false" uRef="field" visibleInterface="true">
+      <super cRef="base" uRef="field"/>
+      <visualDescription h="40" w="80" x="70" y="203"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="field"/>
+      <visualDescription h="20" w="20" x="224" y="264"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

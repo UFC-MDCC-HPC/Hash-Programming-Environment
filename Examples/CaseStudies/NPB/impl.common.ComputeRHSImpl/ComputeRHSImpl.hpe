@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c529e36a6fc6d06d4b6def2307c75249ae24c826ccc5e2c99668fa2d837b0f76b7e937ecfd3fb0aa678f1f4646c82e39d8e40a99fd0f014259fb265eb9bdaaf6bc8d9fe1c1d9d123a8b205be929329d947f8e3673d527df1d72736c5d275e47a19795a4a8d92aa785cb860f43c0e0106a33ef6e10f5240219b9b934a48bd7086" isAbstract="false" kind="Computation" name="ComputeRHSImpl" packagePath="impl.common">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ebcd15c87001f794ff5f45146cc1149ff6b1cc732402e8fea7669e809f5f7ca7d0f449f36406e3c799d858b0df7c7ea46ed476b25ab2dd86f2147c5bd5aaa2723be2e0773163d3ebf363f88058c611ae190b35a5e11b2895c6b6ac55d7bcf8fcc96fb463cbf025e6a692e7bed5c86f5b14574041cbb0c132eba6f2deec770097" localRef="base" location="common.ComputeRHS/ComputeRHS.hpe" name="ComputeRHS" package="common" version="1.0.0.0">
+        <visualDescription h="49" w="95" x="332" y="161">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+          <visualDescription h="43" w="110" x="448" y="71">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="47" w="102" x="462" y="287">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="9" y="10"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="compute_rhs">
+          <visualDescription h="10" w="10" x="13" y="20"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IComputeRHSImpl" nArgs="0">
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="44" y="25"/>
+      </slice>
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="65" y="20"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1eec98a" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.ComputeRHS;&#xA;&#xA;namespace impl.common.ComputeRHSImpl { &#xA;&#xA;public abstract class BaseIComputeRHSImpl: Computation, BaseIComputeRHS&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIComputeRHSImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000c529e36a6fc6d06d4b6def2307c75249ae24c826ccc5e2c99668fa2d837b0f76b7e937ecfd3fb0aa678f1f4646c82e39d8e40a99fd0f014259fb265eb9bdaaf6bc8d9fe1c1d9d123a8b205be929329d947f8e3673d527df1d72736c5d275e47a19795a4a8d92aa785cb860f43c0e0106a33ef6e10f5240219b9b934a48bd7086&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIComputeRHSImpl.cs" srcType="base" uri="impl.common.ComputeRHSImpl/bin/1.0.0.0/BaseIComputeRHSImpl.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.ComputeRHS/bin/1.0.0.0/BaseIComputeRHS.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.ComputeRHS;&#xA;&#xA;namespace impl.common.ComputeRHSImpl { &#xA;&#xA;public class IComputeRHSImpl : BaseIComputeRHSImpl, IComputeRHS&#xA;{&#xA;&#xA;public IComputeRHSImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IComputeRHSImpl.cs" srcType="user" uri="impl.common.ComputeRHSImpl/bin/1.0.0.0/IComputeRHSImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.ComputeRHSImpl/bin/1.0.0.0/BaseIComputeRHSImpl.dll</dependency>
+          <dependency>common.ComputeRHS/bin/1.0.0.0/IComputeRHS.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="137" x="49" y="71">
+        <color b="128" g="128" r="64"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+    </interface>
+    <unit iRef="IComputeRHSImpl" private="false" uRef="compute_rhs" visibleInterface="true">
+      <super cRef="base" uRef="compute_rhs"/>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="44" y="25"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="65" y="20"/>
+      </slices>
+      <visualDescription h="40" w="80" x="63" y="213"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="compute_rhs"/>
+      <visualDescription h="32" w="36" x="63" y="349"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

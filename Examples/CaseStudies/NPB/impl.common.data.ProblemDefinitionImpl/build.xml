@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<project basedir='.' default='all' name='br.ufc.lia.pargo.hpe.casestudies.npb.common.impl.ProblemDefinition'>
+  <property name='src' value='src'/>
+  <property name='build' value='bin'/>
+  <property name='nant.settings.currentframework' value='mono-3.5'/>
+  <target depends='' name='all'/>
+</project>
