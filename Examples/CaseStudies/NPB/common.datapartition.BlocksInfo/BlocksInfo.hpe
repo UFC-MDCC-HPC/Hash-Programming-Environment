@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" isAbstract="true" kind="Environment" name="BlocksInfo" packagePath="common.datapartition">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IBlocks" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.datapartition.BlocksInfo { &#xA;&#xA;public interface BaseIBlocks : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks.cs" srcType="base" uri="common.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocks.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.datapartition.BlocksInfo { &#xA;&#xA;public interface IBlocks : BaseIBlocks&#xA;{&#xA;  int[,] cell_coord {get;}&#xA;  int[,] cell_size {get;}&#xA;  int[,] cell_low {get;}&#xA;  int[,] cell_high {get;}&#xA;  int[,] cell_slice {get;}&#xA;  &#xA;  int[,] cell_start {get;}&#xA;  int[,] cell_end {get;}&#xA;&#xA;  int[] predecessor {get;}&#xA;  int[] sucessor {get;} &#xA;&#xA;  int ncells {get;} // sqrt(nodes)&#xA;  int ndirs {get;}  // Assumed to be 3 ?&#xA;  &#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlocks.cs" srcType="user" uri="common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocks.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="274" y="109">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBlocks" private="false" uRef="blocks" visibleInterface="true">
+      <visualDescription h="47" w="94" x="135" y="183"/>
+    </unit>
+  </componentInfo>
+</component:component>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000fd31f80305b7a9e8cf27d52c0952a3bdb5c8275ac7667862bb0459204b2bedc56f17c8cb54bd5d3ff5e83075eebd9ef535206985b54c28fcf162cc65adbc967ae8eeef54ca19cdfcf3141da61c1d05c7fdd1ccc85aa8ff38a54f3f6576154ad5b157e718a7372b41ccd2d5b16c98b7a17d8bc678f017d7089836cb4846108a8a" isAbstract="true" kind="Environment" name="Blocks3D" packagePath="br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000517534b91e0af2ad7f64f69654c86ba564be9e5cc393120da0a3b9d02975dc43cfc56717e3fb511b86eec0db332475d7b6b99133b1560f58f150da8ac05727780169c2b74143dcca48ef31e69067d992bd003dd3f8b5df6c7e597bf5ff8ccd27f906caf3e88e5bf71cec779395b67eab01df0f03528ca5c5e7e01b250343aeaf" localRef="topology" location="br.ufc.lia.pargo.hpe.casestudies.npb.common.topology.Mesh3D/Mesh3D.hpe" name="Mesh3D" package="br.ufc.lia.pargo.hpe.casestudies.npb.common.topology" exposed="false">
+      <visualDescription h="47" w="97" x="228" y="388">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="cell">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <interface iRef="IProcess" nArgs="0">
+      <slice isRef="cell">
+        <originRef cRef="topology" iRef="ICell"/>
+        <visualDescription h="10" w="10" x="39" y="32"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D { &#xA;&#xA;public interface BaseIProcess : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIProcess.cs" srcType="base" uri="br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D/bin/1.0.0.0/BaseIProcess.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D { &#xA;&#xA;public interface IProcess : BaseIProcess&#xA;{&#xA;  int[,] cell_coord {get;}&#xA;  int[,] cell_size {get;}&#xA;  int[,] cell_low {get;}&#xA;  int[,] cell_high {get;}&#xA;  int[,] cell_slice {get;}&#xA;  &#xA;  int[,] cell_start {get;}&#xA;  int[,] cell_end {get;}&#xA;&#xA;  int[] predecessor {get;}&#xA;  int[] sucessor {get;} &#xA;&#xA;  int ncells {get;} // sqrt(nodes)&#xA;  int ndirs {get;}  // Assumed to be 3 ?&#xA;  &#xA;  void make_set(int[] grid_points); // the size of grid_points determines ndirs.&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IProcess.cs" srcType="user" uri="br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D/bin/1.0.0.0/IProcess.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D/bin/1.0.0.0/BaseIProcess.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="274" y="109">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IProcess" private="false" uRef="process" visibleInterface="true">
+      <slices cRef="topology" replica="0" uRef="cell" sliceName="cell" transitive="false">
+        <visualDescription h="10" w="10" x="39" y="32"/>
+      </slices>
+      <visualDescription h="47" w="94" x="135" y="183"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>topology</originRef>
+      <originRef>x_dir</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <visualDescription h="24" w="25" x="144" y="307"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+      <originRef>topology</originRef>
+      <originRef>y_dir</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <visualDescription h="20" w="20" x="183" y="307"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+      <originRef>topology</originRef>
+      <originRef>z_dir</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <visualDescription h="20" w="20" x="222" y="293"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

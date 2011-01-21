@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" isAbstract="true" kind="Qualifier" name="Direction" packagePath="common.direction">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IDirection" nArgs="0">
+      <visualDescription h="40" w="80" x="121" y="203">
+        <color b="192" g="192" r="192"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IDirection" private="false" uRef="direction" visibleInterface="true">
+      <visualDescription h="40" w="80" x="121" y="283"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="direction"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

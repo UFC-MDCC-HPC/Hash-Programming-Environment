@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000001d1817dae53c0527ea6a5fcdb5f56ac2670f8c5f9877066e0e1ee3daa6fe0444129762c763b0ad6771a2b8de6b03402b7f593fe3bdd0340806db57ce27c9f276a56d6f1ba8a2821d0ba72028442622a79fff65f9f60d5e27f6ac2f583b3cd57885fcc259d2743c155947ebbff71ec4e7a7011b23b714bb3166efb35d70f231b1" isAbstract="true" kind="Environment" name="Blocks3D" packagePath="common.datapartition">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d296e875ef6985ba75dbc75d6a6b23eded2c0f55a7df69acd8302a0196311f3a290d4165fbf7be07c388350990c20dd8ccc184b0e6cdf1aacf8780d9e3fb4f834c33b0e689f4dc06b3fac16d68b424709f2528d7850d4b5a1513b3961196213504b746ec23d908d0e93ec988dbadaa0376cb3a7ad87ee628a3410988211eca0" localRef="topology" location="common.topology.Mesh3D/Mesh3D.hpe" name="Mesh3D" package="common.topology" exposed="false">
+      <visualDescription h="47" w="97" x="228" y="388">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+        <visualDescription h="30" w="50" x="97" y="426">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+        <visualDescription h="30" w="50" x="240" y="498">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="z" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+        <visualDescription h="30" w="50" x="377" y="484">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="cell">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+      <visualDescription h="53" w="81" x="71" y="331">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="blocks">
+        <visualDescription h="10" w="10" x="32" y="5"/>
+      </unitBounds>
+    </innerComponent>
+    <interface iRef="IBlocks3D" nArgs="0">
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="9" y="30"/>
+      </slice>
+      <slice isRef="cell">
+        <originRef cRef="topology" iRef="ICell"/>
+        <visualDescription h="10" w="10" x="39" y="32"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using br.ufc.lia.pargo.hpe.casestudies.npb.common.topology.Ring;&#xA;using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.BlocksInfo;&#xA;&#xA;namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D { &#xA;&#xA;public interface BaseIBlocks3D : IEnvironmentKind &#xA;{&#xA;&#xA;&#x9;ICell Cell {set;}&#xA;&#x9;ICell Cell {set;}&#xA;&#x9;ICell Cell {set;}&#xA;&#x9;IBlocks Blocks {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks3D.cs" srcType="base" uri="common.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll" versionId="1.0.0.0">
+          <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D { &#xA;&#xA;public interface IBlocks3D : BaseIBlocks3D&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlocks3D.cs" srcType="user" uri="common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="63" w="115" x="274" y="109">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="79" y="2"/>
+        <slice pRef="x" sRef="cell"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="88" y="37"/>
+        <slice pRef="z" sRef="cell"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="cell"/>
+      </port>
+    </interface>
+    <unit iRef="IBlocks3D" private="false" uRef="process" visibleInterface="true">
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="9" y="30"/>
+      </slices>
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
+        <visualDescription h="10" w="10" x="6" y="25"/>
+      </slices>
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
+        <visualDescription h="10" w="10" x="31" y="26"/>
+      </slices>
+      <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="true">
+        <visualDescription h="10" w="10" x="60" y="13"/>
+      </slices>
+      <slices cRef="topology" replica="0" uRef="cell" sliceName="cell" transitive="false">
+        <visualDescription h="10" w="10" x="39" y="32"/>
+        <port>x</port>
+        <port>y</port>
+        <port>z</port>
+      </slices>
+      <visualDescription h="47" w="94" x="135" y="183"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>topology</originRef>
+      <originRef>x</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <visualDescription h="20" w="20" x="184" y="359"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+      <originRef>topology</originRef>
+      <originRef>y</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <visualDescription h="20" w="20" x="281" y="362"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+      <originRef>topology</originRef>
+      <originRef>z</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <visualDescription h="20" w="20" x="341" y="361"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
