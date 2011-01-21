@@ -377,7 +377,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	memSlices.put(sliceName, slice);
 		    	String defaultSliceName = slice.getOriginalName2();
 		    
-			    sourceCode += "protected " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
+			    sourceCode += "private " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
 
 			    HPort portOfTheSlice = portMapping.get(slice); /*slice.getMyPort()*/;
 			    boolean isPublic = ((portOfTheSlice != null && !portOfTheSlice.isPrivate()) /*|| (portOfTheSlice == null && slice.isPublic())*/) /*|| !(slice instanceof HActivateInterfaceSlice)*/;
@@ -385,10 +385,12 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
                 //if (isPublic) {
 				    sourceCode += (isPublic ? "public " : "protected ") + typeName + " " + firstUpper(sliceName) + " {\n";
-				    sourceCode += tabs(1) + "set {\n";
+				    sourceCode += tabs(1) + "get {\n";
 				    				    
-				    sourceCode += tabs(2) + "this." + sliceName + " = value;\n";				    
-				    if (tt.containsKey(sliceName)) {
+				    sourceCode += tabs(2) + "if (this." + sliceName + " == null)\n";
+				    sourceCode += tabs(3) + "this." + sliceName + " = (" + typeName + ") Services.getPort(" + /*TODO: id_inner*/  ");\n";  ; // value;\n";
+				    sourceCode += tabs(2) + "return this." + sliceName + ";\n";
+				    /*if (tt.containsKey(sliceName)) {
 					    for (HInterfaceSlice ss : i.getSortedSlices(tt.get(sliceName))) {
 					    	String ss_name = portOfTheSlice.getDefaultNameOf(ss);
 					    	if (ss_name == null) {
@@ -396,7 +398,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 					    	}
 					    	sourceCode += tabs(2) + ss.getName() + "." + firstUpper(ss_name) + " = value;\n";
 					    }				    
-				    }
+				    }*/
 				    if (slice instanceof HEnumeratorInterfaceSlice) {
 				    	HEnumeratorInterfaceSlice permutationSlice = (HEnumeratorInterfaceSlice) slice;
 				    	String key = permutationSlice.getReplicatorID();
@@ -442,6 +444,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 			ss0.addAll(ss_);
 		}
         
+		/*
     	List<HInterfaceSlice> ss = i.getSortedSlices(ss0);	
     	
 	    for (HInterfaceSlice slice: ss) {
@@ -483,7 +486,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	String cast = "(" + typeName + ")";
 		    	sourceCode += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, UID,\"" + unit_id + "\",\"" + unit_slice_id + ");\n";
 	    	} 
-	    }			
+	    }
+	    */			
         
                 
         sourceCode += "} \n\n"; // end createSlices body;

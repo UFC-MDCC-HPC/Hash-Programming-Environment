@@ -394,7 +394,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
                 
 			    if (isPublic) 
-			    	programText += tabs(1) + typeName + " " + firstUpper(sliceName) + " {set;}\n";
+			    	programText += tabs(1) + typeName + " " + firstUpper(sliceName) + " {get;}\n";
 			    			    
 		    }			
 		}
