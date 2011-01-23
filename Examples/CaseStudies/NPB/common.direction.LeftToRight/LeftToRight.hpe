@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000972bd39f4db8435798f7ef9f006357475ffe04a1c955423969f250ab7cd65e4265735073dc93944d171fed52cfd4c235c7ad1911d629e5959adccc692549cb6bcbf6d736f766efbce2bf548c691721a10965f2bacf10fec2b23a952ce62edba5aad7beacf644389cb1fe19a7326bd72c8c775b8ed7b204be3e560b71693c0281" isAbstract="true" kind="Qualifier" name="LeftToRight" packagePath="common.direction">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="base" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" version="1.0.0.0">
+        <visualDescription h="56" w="95" x="215" y="289">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="left_to_right">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ILeftToRight" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.LeftToRight { &#xA;&#xA;public interface BaseILeftToRight : BaseIDirection, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILeftToRight.cs" srcType="base" uri="common.direction.LeftToRight/bin/1.0.0.0/BaseILeftToRight.dll" versionId="1.0.0.0">
+          <dependency>common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.LeftToRight { &#xA;&#xA;public interface ILeftToRight : BaseILeftToRight, IDirection&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILeftToRight.cs" srcType="user" uri="common.direction.LeftToRight/bin/1.0.0.0/ILeftToRight.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.direction.LeftToRight/bin/1.0.0.0/BaseILeftToRight.dll</dependency>
+          <dependency>common.direction.Direction/bin/1.0.0.0/IDirection.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="121" y="203">
+        <color b="192" g="192" r="192"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ILeftToRight" private="false" uRef="left_to_right" visibleInterface="true">
+      <super cRef="base" uRef="direction"/>
+      <visualDescription h="48" w="96" x="51" y="139"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="left_to_right"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
