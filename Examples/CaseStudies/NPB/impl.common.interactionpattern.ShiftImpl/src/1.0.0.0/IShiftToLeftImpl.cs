@@ -4,12 +4,12 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.interactionpattern.Shift;
 
-namespace impl.common.interactionpattern.ShiftImpl { 
+namespace impl.common.interactionpattern.ShiftToLeftImpl { 
 
-public class IShiftImpl : BaseIShiftImpl, IShift
+public class IShiftToLeftImpl : BaseIShiftToLeftImpl, IShift
 {
 
-public IShiftImpl() { 
+public IShiftToLeftImpl() { 
 
 } 
 

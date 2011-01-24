@@ -9,9 +9,9 @@ using common.Buffer;
 using environment.MPIDirect;
 using common.interactionpattern.Shift;
 
-namespace impl.common.interactionpattern.ShiftImpl { 
+namespace impl.common.interactionpattern.ShiftToLeftImpl { 
 
-public abstract class BaseIShiftImpl: Synchronizer, BaseIShift
+public abstract class BaseIShiftToLeftImpl: Synchronizer, BaseIShift
 {
 
 protected ICell cell = null;
@@ -47,7 +47,7 @@ protected IMPIDirect Mpi {
 }
 
 
-public BaseIShiftImpl() { 
+public BaseIShiftToLeftImpl() { 
 
 } 
 
