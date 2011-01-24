@@ -69,7 +69,7 @@
         <originRef cRef="direction" iRef="IDirection"/>
         <visualDescription h="10" w="10" x="9" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4fc4f5" repeat="0">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2b4526" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -121,7 +121,7 @@
       <originRef>topology</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="shift"/>
-      <visualDescription h="20" w="20" x="283" y="319"/>
+      <visualDescription h="20" w="20" x="282" y="414"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>mpi</originRef>
@@ -137,12 +137,16 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
-        <originRef>mpi</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
         <originRef>topology</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>direction</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>mpi</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
