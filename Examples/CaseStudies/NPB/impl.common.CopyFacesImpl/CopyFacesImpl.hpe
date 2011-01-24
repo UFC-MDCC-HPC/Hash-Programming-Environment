@@ -9,6 +9,22 @@
         <visualDescription h="39" w="77" x="432" y="213">
           <color b="255" g="255" r="255"/>
         </visualDescription>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="48" w="139" x="421" y="56">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="13" y="21"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+          <visualDescription h="47" w="113" x="160" y="145">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
         <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
           <visualDescription h="30" w="88" x="339" y="382">
             <color b="255" g="255" r="255"/>
@@ -41,22 +57,6 @@
             <visualDescription h="10" w="10" x="63" y="6"/>
           </unitBounds>
         </port>
-        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
-          <visualDescription h="48" w="139" x="421" y="56">
-            <color b="255" g="255" r="255"/>
-          </visualDescription>
-          <unitBounds uRef="problem">
-            <visualDescription h="10" w="10" x="13" y="21"/>
-          </unitBounds>
-        </port>
-        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-          <visualDescription h="47" w="113" x="160" y="145">
-            <color b="255" g="255" r="255"/>
-          </visualDescription>
-          <unitBounds uRef="blocks">
-            <visualDescription h="10" w="10" x="5" y="2"/>
-          </unitBounds>
-        </port>
         <unitBounds uRef="copy_faces">
           <visualDescription h="10" w="10" x="8" y="16"/>
         </unitBounds>
@@ -77,41 +77,33 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="24" y="26"/>
       </slice>
-      <slice isRef="shift_y">
-        <originRef cRef="shift_y" iRef="IShift"/>
-        <visualDescription h="10" w="10" x="93" y="43"/>
+      <slice isRef="interact">
+        <originRef cRef="interact" iRef="IInteract"/>
+        <visualDescription h="10" w="10" x="62" y="35"/>
       </slice>
-      <slice isRef="shift_x">
-        <originRef cRef="shift_x" iRef="IShift"/>
-        <visualDescription h="10" w="10" x="14" y="1"/>
-      </slice>
-      <slice isRef="shift_z">
-        <originRef cRef="shift_z" iRef="IShift"/>
-        <visualDescription h="10" w="10" x="62" y="3"/>
-      </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d77781" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8f6793" repeat="0">
         <visualDescription h="350" w="290" x="75" y="75"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1e6beca" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d91fad" repeat="0">
           <visualDescription h="250" w="210" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1f7d95e" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@aed1c3" repeat="0">
             <visualDescription h="150" w="130" x="70" y="50"/>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@dfbcc4" repeat="0">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14d5fb6" repeat="0">
               <visualDescription h="50" w="50" x="70" y="50"/>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e21b99" repeat="0" sliceRef="shift_y">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c6bae9" repeat="0">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@81e89f" repeat="0" sliceRef="shift_y">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@11922ad" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@cf3fcf" repeat="0" sliceRef="shift_y">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@133b573" repeat="0">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.Buffer;&#xA;using common.data.ProblemDefinition;&#xA;using environment.MPIDirect;&#xA;using common.interactionpattern.Shift;&#xA;using common.CopyFaces;&#xA;&#xA;namespace impl.common.CopyFacesImpl { &#xA;&#xA;public abstract class BaseICopyFacesImpl: Synchronizer, BaseICopyFaces&#xA;{&#xA;&#xA;protected ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBuffer output_buffer_x = null;&#xA;&#xA;protected IBuffer Output_buffer_x {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer_x == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer_x = (IBuffer) Services.getPort(&quot;output_buffer_x&quot;);&#xA;&#x9;&#x9;return this.output_buffer_x;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBuffer input_buffer_x = null;&#xA;&#xA;protected IBuffer Input_buffer_x {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer_x == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer_x = (IBuffer) Services.getPort(&quot;input_buffer_x&quot;);&#xA;&#x9;&#x9;return this.input_buffer_x;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBuffer output_buffer = null;&#xA;&#xA;protected IBuffer Output_buffer_y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer_y == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer_y = (IBuffer) Services.getPort(&quot;output_buffer_y&quot;);&#xA;&#x9;&#x9;return this.output_buffer_y;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBuffer input_buffer_y = null;&#xA;&#xA;protected IBuffer Input_buffer_y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer_y == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer_y = (IBuffer) Services.getPort(&quot;input_buffer_y&quot;);&#xA;&#x9;&#x9;return this.input_buffer_y;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBuffer output_buffer_z = null;&#xA;&#xA;protected IBuffer Output_buffer_z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer_z == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer_z = (IBuffer) Services.getPort(&quot;output_buffer_z&quot;);&#xA;&#x9;&#x9;return this.output_buffer_z;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBuffer input_buffer_z = null;&#xA;&#xA;protected IBuffer Input_buffer_z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer_z == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer_z = (IBuffer) Services.getPort(&quot;input_buffer_z&quot;);&#xA;&#x9;&#x9;return this.input_buffer_z;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IShift shift_y = null;&#xA;&#xA;protected IShift Shift_y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift_y == null)&#xA;&#x9;&#x9;&#x9;this.shift_y = (IShift) Services.getPort(&quot;shift_y&quot;);&#xA;&#x9;&#x9;return this.shift_y;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IShift shift_x = null;&#xA;&#xA;protected IShift Shift_x {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift_x == null)&#xA;&#x9;&#x9;&#x9;this.shift_x = (IShift) Services.getPort(&quot;shift_x&quot;);&#xA;&#x9;&#x9;return this.shift_x;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IShift shift_z = null;&#xA;&#xA;protected IShift Shift_z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift_z == null)&#xA;&#x9;&#x9;&#x9;this.shift_z = (IShift) Services.getPort(&quot;shift_z&quot;);&#xA;&#x9;&#x9;return this.shift_z;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseICopyFacesImpl() { &#xA;&#xA;} &#xA;&#xA;abstract public void synchronize(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICopyFacesImpl.cs" srcType="base" uri="impl.common.CopyFacesImpl/bin/1.0.0.0/BaseICopyFacesImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.Buffer;&#xA;using common.data.ProblemDefinition;&#xA;using environment.MPIDirect;&#xA;using common.interactionpattern.Shift;&#xA;using common.CopyFaces;&#xA;&#xA;namespace impl.common.CopyFacesImpl { &#xA;&#xA;public abstract class BaseICopyFacesImpl: Synchronizer, BaseICopyFaces&#xA;{&#xA;&#xA;private ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer output_buffer_x = null;&#xA;&#xA;protected IBuffer Output_buffer_x {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer_x == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer_x = (IBuffer) Services.getPort(&quot;output_buffer_x&quot;);&#xA;&#x9;&#x9;return this.output_buffer_x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer input_buffer_x = null;&#xA;&#xA;protected IBuffer Input_buffer_x {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer_x == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer_x = (IBuffer) Services.getPort(&quot;input_buffer_x&quot;);&#xA;&#x9;&#x9;return this.input_buffer_x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer output_buffer_y = null;&#xA;&#xA;protected IBuffer Output_buffer_y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer_y == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer_y = (IBuffer) Services.getPort(&quot;output_buffer_y&quot;);&#xA;&#x9;&#x9;return this.output_buffer_y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer input_buffer_y = null;&#xA;&#xA;protected IBuffer Input_buffer_y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer_y == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer_y = (IBuffer) Services.getPort(&quot;input_buffer_y&quot;);&#xA;&#x9;&#x9;return this.input_buffer_y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer output_buffer_z = null;&#xA;&#xA;protected IBuffer Output_buffer_z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer_z == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer_z = (IBuffer) Services.getPort(&quot;output_buffer_z&quot;);&#xA;&#x9;&#x9;return this.output_buffer_z;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer input_buffer_z = null;&#xA;&#xA;protected IBuffer Input_buffer_z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer_z == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer_z = (IBuffer) Services.getPort(&quot;input_buffer_z&quot;);&#xA;&#x9;&#x9;return this.input_buffer_z;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IShift shift_y = null;&#xA;&#xA;protected IShift Shift_y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift_y == null)&#xA;&#x9;&#x9;&#x9;this.shift_y = (IShift) Services.getPort(&quot;shift_y&quot;);&#xA;&#x9;&#x9;return this.shift_y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IShift shift_x = null;&#xA;&#xA;protected IShift Shift_x {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift_x == null)&#xA;&#x9;&#x9;&#x9;this.shift_x = (IShift) Services.getPort(&quot;shift_x&quot;);&#xA;&#x9;&#x9;return this.shift_x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IShift shift_z = null;&#xA;&#xA;protected IShift Shift_z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift_z == null)&#xA;&#x9;&#x9;&#x9;this.shift_z = (IShift) Services.getPort(&quot;shift_z&quot;);&#xA;&#x9;&#x9;return this.shift_z;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseICopyFacesImpl() { &#xA;&#xA;} &#xA;&#xA;abstract public void synchronize(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICopyFacesImpl.cs" srcType="base" uri="impl.common.CopyFacesImpl/bin/1.0.0.0/BaseICopyFacesImpl.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
@@ -120,7 +112,7 @@
           <dependency>common.interactionpattern.Shift/bin/1.0.0.0/IShift.dll</dependency>
           <dependency>common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.CopyFaces;&#xA;&#xA;namespace impl.common.CopyFacesImpl { &#xA;&#xA;public class ICopyFacesImpl : BaseICopyFacesImpl, ICopyFaces&#xA;{&#xA;&#xA;public ICopyFacesImpl() { &#xA;&#xA;} &#xA;&#xA;public override void synchronize() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;#pragma omp parallel sections&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;#pragma omp parallel sections&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;&#x9;shift_y.synchronize();&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;&#x9;null.synchronize();&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;null.synchronize();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICopyFacesImpl.cs" srcType="user" uri="impl.common.CopyFacesImpl/bin/1.0.0.0/ICopyFacesImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.CopyFaces;&#xA;&#xA;namespace impl.common.CopyFacesImpl { &#xA;&#xA;public class ICopyFacesImpl : BaseICopyFacesImpl, ICopyFaces&#xA;{&#xA;&#x9;&#x9;&#xA;&#x9;private int ncells;&#xA;&#xA;&#x9;private int[,] cell_size;&#xA;&#x9;private int[,] cell_coord;&#xA;&#xA;&#x9;private double[,,,,] u;&#xA;&#xA;&#x9;public void initialize() &#xA;&#x9;{&#xA;&#x9;&#x9;ncells = Problem.NCells;&#xA;&#x9;&#x9;cell_size = Blocks.cell_size;&#xA;&#x9;&#x9;cell_coord = Blocks.cell_coord;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;u = Problem.Field_u;&#xA;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;public override void synchronize() {&#xA;&#x9;  &#xD;&#xA;&#x9;&#xA;&#x9;&#x9;    Shift_y.synchronize();&#xA;&#x9;&#x9;&#x9;Shift_z.synchronize();&#xA;&#x9;&#x9;&#x9;Shift_x.synchronize();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;//-------&#xA;&#x9;&#x9;&#x9;&#xA;            int i, j, k, c, m, p0, p1, p2, p3, p4, p5, ksize, jsize, isize;&#xA;            Request[] requests;&#xA;            int[] b_size;&#xA;&#xA;            double[][] out_buffer = new double[6][];&#xA;            double[][] in_buffer = new double[6][];&#xA;&#xA;//            requests = new Request[12];&#xA;            b_size = new int[6];&#xA;&#xA;            b_size[0] = east_size;&#xA;            b_size[1] = west_size;&#xA;            b_size[2] = north_size;&#xA;            b_size[3] = south_size;&#xA;            b_size[4] = top_size;&#xA;            b_size[5] = bottom_size;&#xA;&#xA;            for (i = 0; i &lt; 6; i++)&#xA;            {&#xA;                out_buffer[i] = new double[b_size[i]];&#xA;                in_buffer[i] = new double[b_size[i]];&#xA;            }&#xA;&#xA;&#xA;            //---------------------------------------------------------------------&#xA;            // because the difference stencil for the diagonalized scheme is &#xA;            // orthogonal, we do not have to perform the staged copying of faces, &#xA;            // but can send all face information simultaneously to the neighboring &#xA;            // cells in all directions          &#xA;            //---------------------------------------------------------------------&#xA;            p0 = 0;&#xA;            p1 = 0;&#xA;            p2 = 0;&#xA;            p3 = 0;&#xA;            p4 = 0;&#xA;            p5 = 0;&#xA;&#xA;            for (c = 0; c &lt; ncells; c++)&#xA;            {&#xA;                ksize = cell_size[c, 2] + 2;&#xA;                jsize = cell_size[c, 1] + 2;&#xA;                isize = cell_size[c, 0] + 2;&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //            fill the buffer to be sent to eastern neighbors (i-dir)&#xA;                //---------------------------------------------------------------------&#xA;                if (cell_coord[c, 0] != ncells - 1)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = isize - 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    out_buffer[0][p0++] = u[c, k, j, i, m];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //            fill the buffer to be sent to western neighbors &#xA;                //---------------------------------------------------------------------&#xA;                if (cell_coord[c, 0] != 0)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt;= 3; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    out_buffer[1][p1++] = u[c, k, j, i, m];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //            fill the buffer to be sent to northern neighbors (j_dir)&#xA;                //---------------------------------------------------------------------&#xA;                if (cell_coord[c, 1] != ncells - 1)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = jsize - 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    out_buffer[2][p2++] = u[c, k, j, i, m];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //            fill the buffer to be sent to southern neighbors &#xA;                //---------------------------------------------------------------------&#xA;                if (cell_coord[c, 1] != 0)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt;= 3; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    out_buffer[3][p3++] = u[c, k, j, i, m];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //            fill the buffer to be sent to top neighbors (k-dir)&#xA;                //---------------------------------------------------------------------&#xA;                if (cell_coord[c, 2] != ncells - 1)&#xA;                {&#xA;                    for (k = ksize - 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    out_buffer[4][p4++] = u[c, k, j, i, m];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //            fill the buffer to be sent to bottom neighbors&#xA;                //---------------------------------------------------------------------&#xA;                if (cell_coord[c, 2] != 0)&#xA;                {&#xA;                    for (k = 2; k &lt;= 3; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    out_buffer[5][p5++] = u[c, k, j, i, m];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;&#xA;&#xA;            RequestList requestList = new RequestList();&#xA;&#xA;            requests[0] = comm_rhs.ImmediateReceive&lt;double>(successor[0], WEST, in_buffer[0]);&#xA;            requests[1] = comm_rhs.ImmediateReceive&lt;double>(predecessor[0], EAST, in_buffer[1]);&#xA;            requests[2] = comm_rhs.ImmediateReceive&lt;double>(successor[1], SOUTH, in_buffer[2]);&#xA;            requests[3] = comm_rhs.ImmediateReceive&lt;double>(predecessor[1], NORTH, in_buffer[3]);&#xA;            requests[4] = comm_rhs.ImmediateReceive&lt;double>(successor[2], BOTTOM, in_buffer[4]);&#xA;            requests[5] = comm_rhs.ImmediateReceive&lt;double>(predecessor[2], TOP, in_buffer[5]);&#xA;            requests[6] = comm_rhs.ImmediateSend&lt;double>(out_buffer[0], successor[0], EAST);&#xA;            requests[7] = comm_rhs.ImmediateSend&lt;double>(out_buffer[1], predecessor[0], WEST);&#xA;            requests[8] = comm_rhs.ImmediateSend&lt;double>(out_buffer[2], successor[1], NORTH);&#xA;            requests[9] = comm_rhs.ImmediateSend&lt;double>(out_buffer[3], predecessor[1], SOUTH);&#xA;            requests[10] = comm_rhs.ImmediateSend&lt;double>(out_buffer[4], successor[2], TOP);&#xA;            requests[11] = comm_rhs.ImmediateSend&lt;double>(out_buffer[5], predecessor[2], BOTTOM);&#xA;&#xA;            foreach (Request request in requests)&#xA;            {&#xA;                requestList.Add(request);&#xA;            }&#xA;&#xA;            requestList.WaitAll();&#xA;&#xA;            //---------------------------------------------------------------------&#xA;            // unpack the data that has just been received;             &#xA;            //---------------------------------------------------------------------&#xA;            p0 = 0;&#xA;            p1 = 0;&#xA;            p2 = 0;&#xA;            p3 = 0;&#xA;            p4 = 0;&#xA;            p5 = 0;&#xA;&#xA;            for (c = 0; c &lt; ncells; c++)&#xA;            {&#xA;                isize = cell_size[c, 0] + 2;&#xA;                jsize = cell_size[c, 1] + 2;&#xA;                ksize = cell_size[c, 2] + 2;&#xA;&#xA;                if (cell_coord[c, 0] != 0)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 0; i &lt;= 1; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    u[c, k, j, i, m] = in_buffer[1][p0++];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                if (cell_coord[c, 0] != ncells - 1)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = isize; i &lt;= isize + 1; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    u[c, k, j, i, m] = in_buffer[0][p1++];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                if (cell_coord[c, 1] != 0)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = 0; j &lt;= 1; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    u[c, k, j, i, m] = in_buffer[3][p2++];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                if (cell_coord[c, 1] != ncells - 1)&#xA;                {&#xA;                    for (k = 2; k &lt; ksize; k++)&#xA;                    {&#xA;                        for (j = jsize; j &lt;= jsize + 1; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    u[c, k, j, i, m] = in_buffer[2][p3++];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                if (cell_coord[c, 2] != 0)&#xA;                {&#xA;                    for (k = 0; k &lt;= 1; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    u[c, k, j, i, m] = in_buffer[5][p4++];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                if (cell_coord[c, 2] != ncells - 1)&#xA;                {&#xA;                    for (k = ksize; k &lt;= ksize + 1; k++)&#xA;                    {&#xA;                        for (j = 2; j &lt; jsize; j++)&#xA;                        {&#xA;                            for (i = 2; i &lt; isize; i++)&#xA;                            {&#xA;                                for (m = 0; m &lt; 5; m++)&#xA;                                {&#xA;                                    u[c, k, j, i, m] = in_buffer[4][p5++];&#xA;                                }&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;&#xA;                //---------------------------------------------------------------------&#xA;                //      cells loop&#xA;                //---------------------------------------------------------------------&#xA;            }&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;}&#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;" fileType="library" name="ICopyFacesImpl.cs" srcType="user" uri="impl.common.CopyFacesImpl/bin/1.0.0.0/ICopyFacesImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.common.CopyFacesImpl/bin/1.0.0.0/BaseICopyFacesImpl.dll</dependency>
           <dependency>common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll</dependency>
         </file>
@@ -136,47 +128,69 @@
         <visualDescription h="10" w="10" x="0" y="43"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <port name="output_buffer_y_north">
+        <visualDescription h="10" w="10" x="99" y="19"/>
+        <slice pRef="output_buffer" sRef="interact"/>
+      </port>
+      <port name="cell_z">
+        <visualDescription h="10" w="10" x="46" y="93"/>
+        <slice pRef="cell_z" sRef="interact"/>
+      </port>
+      <port name="input_buffer_y_north">
+        <visualDescription h="10" w="10" x="143" y="34"/>
+        <slice pRef="input_buffer" sRef="interact"/>
+      </port>
       <port name="mpi">
+        <visualDescription h="10" w="10" x="21" y="77"/>
+        <slice pRef="mpi" sRef="interact"/>
+      </port>
+      <port name="output_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="mpi" sRef="shift_y"/>
-        <slice pRef="mpi" sRef="shift_x"/>
-        <slice pRef="mpi" sRef="shift_z"/>
-      </port>
-      <port name="output_buffer">
-        <visualDescription h="10" w="10" x="100" y="7"/>
-        <slice pRef="output_buffer" sRef="shift_y"/>
+        <slice pRef="output_buffer" sRef="interact"/>
       </port>
       <port name="input_buffer">
-        <visualDescription h="10" w="10" x="88" y="61"/>
-        <slice pRef="input_buffer" sRef="shift_y"/>
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer" sRef="interact"/>
       </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="77" y="74"/>
-        <slice pRef="cell" sRef="shift_y"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="31" y="70"/>
-        <slice pRef="cell" sRef="shift_x"/>
+      <port name="cell_x">
+        <visualDescription h="10" w="10" x="66" y="102"/>
+        <slice pRef="cell_x" sRef="interact"/>
       </port>
       <port name="output_buffer">
-        <visualDescription h="10" w="10" x="100" y="7"/>
-        <slice pRef="output_buffer" sRef="shift_x"/>
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer" sRef="interact"/>
       </port>
       <port name="input_buffer">
-        <visualDescription h="10" w="10" x="88" y="61"/>
-        <slice pRef="input_buffer" sRef="shift_x"/>
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer" sRef="interact"/>
+      </port>
+      <port name="input_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer" sRef="interact"/>
       </port>
       <port name="output_buffer">
-        <visualDescription h="10" w="10" x="100" y="7"/>
-        <slice pRef="output_buffer" sRef="shift_z"/>
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer" sRef="interact"/>
+      </port>
+      <port name="cell_y">
+        <visualDescription h="10" w="10" x="65" y="80"/>
+        <slice pRef="cell_y" sRef="interact"/>
       </port>
       <port name="input_buffer">
-        <visualDescription h="10" w="10" x="88" y="61"/>
-        <slice pRef="input_buffer" sRef="shift_z"/>
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer" sRef="interact"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="9" y="62"/>
-        <slice pRef="cell" sRef="shift_z"/>
+      <port name="output_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer" sRef="interact"/>
+      </port>
+      <port name="input_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer" sRef="interact"/>
+      </port>
+      <port name="output_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer" sRef="interact"/>
       </port>
     </interface>
     <unit iRef="ICopyFacesImpl" private="false" uRef="copy_faces" visibleInterface="true">
@@ -187,62 +201,34 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="24" y="26"/>
       </slices>
-      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
+      <slices cRef="y" replica="0" uRef="cell" sliceName="cell_y" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
         <visualDescription h="10" w="10" x="11" y="22"/>
       </slices>
-      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
+      <slices cRef="x" replica="0" uRef="cell" sliceName="cell_x" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="true">
+      <slices cRef="z" replica="0" uRef="cell" sliceName="cell_z" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="shift_y" replica="0" uRef="shift" sliceName="shift_y" transitive="false">
-        <visualDescription h="10" w="10" x="1" y="7"/>
-        <port>y</port>
+      <slices cRef="interact" replica="0" uRef="interact" sliceName="interact" transitive="false">
+        <visualDescription h="10" w="10" x="50" y="27"/>
+        <port>cell_y</port>
         <port>mpi</port>
-      </slices>
-      <slices cRef="shift_x" replica="0" uRef="shift" sliceName="shift_x" transitive="false">
-        <visualDescription h="10" w="10" x="14" y="1"/>
-        <port>x</port>
-        <port>mpi</port>
-      </slices>
-      <slices cRef="shift_z" replica="0" uRef="shift" sliceName="shift_z" transitive="false">
-        <visualDescription h="10" w="10" x="48" y="17"/>
-        <port>z</port>
-        <port>mpi</port>
+        <port>cell_x</port>
+        <port>cell_z</port>
       </slices>
       <visualDescription h="40" w="80" x="53" y="235"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="i">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>base</originRef>
-      <originRef>shift_x</originRef>
+      <originRef>interact</originRef>
+      <originRef>shift_z_bottom</originRef>
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="copy_faces"/>
-      <visualDescription h="20" w="20" x="413" y="262"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="j">
-      <originRef>base</originRef>
-      <originRef>shift_y</originRef>
-      <originRef>mpi</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="copy_faces"/>
-      <visualDescription h="20" w="20" x="265" y="237"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="k">
-      <originRef>base</originRef>
-      <originRef>shift_z</originRef>
-      <originRef>mpi</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="copy_faces"/>
-      <visualDescription h="20" w="20" x="76" y="397"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
-      <originRef>base</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="copy_faces"/>
-      <visualDescription h="35" w="37" x="184" y="43"/>
+      <visualDescription h="35" w="37" x="213" y="51"/>
     </enumerator>
   </componentInfo>
 </component:component>
