@@ -7,11 +7,11 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="direction" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" parameter_id="direction" exposed="false">
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="orientation" location="common.orientation.Axis/Axis.hpe" name="Axis" package="common.orientation" parameter_id="orientation" exposed="false">
       <visualDescription h="30" w="50" x="118" y="456">
         <color b="255" g="255" r="255"/>
       </visualDescription>
-      <unitBounds uRef="direction">
+      <unitBounds uRef="orientation">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
@@ -39,7 +39,7 @@
         <visualDescription h="10" w="10" x="47" y="9"/>
       </unitBounds>
     </innerComponent>
-    <parameter componentRef="direction" formFieldId="direction" varName="DIR"/>
+    <parameter componentRef="orientation" formFieldId="orientation" varName="DIR"/>
     <parameter componentRef="method" formFieldId="method" varName="MTH"/>
     <interface iRef="IBlockDiagonalMatVecProduct" nArgs="0">
       <slice isRef="blocks">
@@ -81,8 +81,8 @@
       <visualDescription h="40" w="114" x="124" y="265"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
-      <originRef>direction</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="direction" uRef="direction"/>
+      <originRef>orientation</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="orientation"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
