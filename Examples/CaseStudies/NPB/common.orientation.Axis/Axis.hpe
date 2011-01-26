@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000454b3cd77d4e1bd37b45801a6d225edceaa85080940d8ff93d8308c4a585601d0e0b00c70d55eb34cfa4de904d0234a5454ee4f10a3d46be2ec77520da0d55fa8d959e0f2ecbf8fd25f8d4e676e2b92a40e6ce7e492f5feb6c31345f8c7c887f7e2ecb139b95c71dcf3ca9aa44f0bdd07cf60319eb2676344bda9667fca51abe" isAbstract="true" kind="Qualifier" name="Axis" packagePath="common.orientation">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IAxis" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.orientation.Axis { &#xA;&#xA;public interface BaseIAxis : IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIAxis.cs" srcType="base" uri="common.orientation.Axis/bin/1.0.0.0/BaseIAxis.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.orientation.Axis { &#xA;&#xA;public interface IAxis : BaseIAxis&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IAxis.cs" srcType="user" uri="common.orientation.Axis/bin/1.0.0.0/IAxis.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.orientation.Axis/bin/1.0.0.0/BaseIAxis.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="121" y="203">
+        <color b="128" g="128" r="64"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IAxis" private="false" uRef="axis" visibleInterface="true">
+      <visualDescription h="40" w="80" x="121" y="283"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="axis"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
