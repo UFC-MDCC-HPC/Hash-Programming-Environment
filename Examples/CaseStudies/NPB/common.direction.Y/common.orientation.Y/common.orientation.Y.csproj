@@ -5,19 +5,19 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CF9639F9-33DA-4DCF-B74C-8BA53BE77368}</ProjectGuid>
+    <ProjectGuid>{9836FF76-DF70-442C-8158-252FF11E6AB3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>common.direction.XYZ</RootNamespace>
-    <AssemblyName>IXYZ</AssemblyName>
+    <RootNamespace>common.orientation.Y</RootNamespace>
+    <AssemblyName>IY</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\XYZ.hpe</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Y.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin</OutputPath>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin</OutputPath>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -40,12 +40,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="..\src\1.0.0.0\BaseIXYZ.cs">
-      <Link>BaseIXYZ.cs</Link>
+    <Compile Include="..\src\1.0.0.0\BaseIY.cs">
+      <Link>BaseIY.cs</Link>
     </Compile>
-    <Compile Include="..\src\1.0.0.0\IXYZ.cs">
-      <Link>IXYZ.cs</Link>
+    <Compile Include="..\src\1.0.0.0\IY.cs">
+      <Link>IY.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
+      <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
+      <Name>common.orientation.Axis</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
