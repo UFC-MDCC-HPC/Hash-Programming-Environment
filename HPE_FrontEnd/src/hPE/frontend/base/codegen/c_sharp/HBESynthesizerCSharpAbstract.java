@@ -173,7 +173,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		}
 		
 		String inheritedName2 = null;
-		String primInheritedName2 = i.getInheritedName() != null ? i.getInheritedName().split("<")[0] : null;
+		String primInheritedName2 = i.hasSuperType() ? i.getInheritedName().split("<")[0] : null;
 		
 		if (primInheritedName2 != null) {
 			inheritedName2 = procName.replaceFirst(i.getPrimName(), primInheritedName2); 
@@ -330,7 +330,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		}
 		
 		String inheritedName = null;
-		String primInheritedName = i.getInheritedName() != null ? i.getInheritedName().split("<")[0] : null;
+		String primInheritedName = i.hasSuperType() ? i.getInheritedName().split("<")[0] : null;
 		
 		if (primInheritedName != null) {
 			inheritedName = procName.replaceFirst(i.getPrimName(), primInheritedName); 
@@ -394,7 +394,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
                 
 			    if (isPublic) 
-			    	programText += tabs(1) + typeName + " " + firstUpper(sliceName) + " {set;}\n";
+			    	programText += tabs(1) + typeName + " " + firstUpper(sliceName) + " {get;}\n";
 			    			    
 		    }			
 		}

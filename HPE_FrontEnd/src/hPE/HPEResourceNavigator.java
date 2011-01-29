@@ -61,14 +61,6 @@ public class HPEResourceNavigator extends ResourceNavigator {
 		   }
 	   }
 
-//		   MenuManager menu1 = new MenuManager("Compile HCL", "1");
-//		   menu1.add(new Action("Action 1") {});
-//		   mainMenu.add(menu1);
-//		   MenuManager menu2 = new MenuManager("Menu &2", "2");
-//		   menu2.add(new Action("Action 2") {});
-//		   menu1.add(menu2);
-
-		
 	}
 	
 	

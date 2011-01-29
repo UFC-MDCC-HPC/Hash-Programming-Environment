@@ -1266,9 +1266,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			for (FusionOfReplicatorsType ff : f.getFusionOfReplicators()) {
 				String eRef = ff.getERef();
 				List<String> cRef = ff.getOriginRef();
-				HComponent c = !cRef.isEmpty() ? this.mC2.get(mC1.get(cRef.get(0))) : this.component;
-				HReplicator r = c.lookForReplicator(eRef, cRef);
-				rs.add(r);
+				ComponentInUseType tt = mC1.get(cRef.get(0));
+				if (tt != null) {
+					HComponent c = !cRef.isEmpty() ? this.mC2.get(tt) : this.component;
+					HReplicator r = c.lookForReplicator(eRef, cRef);
+					if (r != null) rs.add(r);
+				} else {
+					System.out.println(cRef + " not found (fuseReplicators)");
+				}
 			}
 
 			CompoundCommand cc = new CompoundCommand();
@@ -1336,9 +1341,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			EList<String> cs = f.getCRefs();
 			String pRef = f.getPRef();
 			for (String cRef : cs) {
-				HComponent c = mC2.get(mC1.get(cRef)).getExposedComponentByName(pRef);
-				if (!toFuse.contains(c))
-					toFuse.add(c);
+				ComponentInUseType y = mC1.get(cRef);
+				if (y != null)  { 
+					HComponent c = mC2.get(y).getExposedComponentByName(pRef);
+					if (c != null && !toFuse.contains(c))
+						toFuse.add(c);
+				}
 			}
 
 			HComponent aux = null;
@@ -1957,8 +1965,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveInterfaces(HComponent c, EList<InterfaceType> xI) {
 
 		for (HInterface i : c.getInterfaces())
-			if (i.getConfiguration() == c) { // Only interfaces of the top
-												// configuration
+			if (i.getConfiguration() == c) { // Only interfaces of the top configuration
 
 				ActionType a = null;
 				String iRef = null;
@@ -2016,9 +2023,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		int order = 0;
 		for (Triple<String,HInterface,String> parameter : parameters) {
 		    InterfaceParameterType parX = factory.createInterfaceParameterType();
-		    parX.setParid(parameter.fst());		   
+		    parX.setParid(parameter.trd());		   
 		    if (!m.containsKey(parX.getParid())) {
-			   parX.setVarid(parameter.trd());
+			   parX.setVarid(parameter.fst());
 			   parX.setIname(parameter.snd().getPrimName());
 			   parX.setUname(parameter.snd().getCompliantUnits().get(0).getName2());
 	    	   parX.setOrder(order++);

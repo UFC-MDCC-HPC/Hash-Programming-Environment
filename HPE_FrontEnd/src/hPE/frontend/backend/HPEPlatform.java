@@ -26,7 +26,7 @@ public class HPEPlatform {
 
 		String fileName = c.getLocalLocation();
 	
-		java.io.File file = HComponentFactoryImpl.getFileInWorkspace(new Path(fileName));
+		java.io.File file = HComponentFactoryImpl.getFileInWorkspace((new Path(fileName)).setDevice(null));
 		
 		InputStream is = new FileInputStream(file);
 	

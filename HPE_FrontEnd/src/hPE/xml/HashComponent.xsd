@@ -142,6 +142,7 @@
 			<enumeration value="Facet"></enumeration>
 			<enumeration value="Domain"></enumeration>
 			<enumeration value="Service"></enumeration>
+			<enumeration value="value"></enumeration>
 		</restriction>
 	</simpleType>
 
