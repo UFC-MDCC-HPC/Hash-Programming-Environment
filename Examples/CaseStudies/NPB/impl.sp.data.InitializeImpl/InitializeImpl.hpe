@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005fd89fc075c2eb638c269bfcafb00ac52a697b9b24e331c2df2376e4231c33dd7aebeb8a8db1b8ecb4af28bc98f4fa5eeb4bd9c84ab878436493b277583ba179eb37018715b21bceaa2031453acc49aebfea721d3d2d6e397aa54de10b5d0f7abb52196371c92cc7e575092a2e04b6957079cef9511b4f9b710c843b14828a85" isAbstract="false" kind="Computation" name="InitializeImpl" packagePath="impl.sp.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ef308746e6a157dc97c1362d57e15ae0f2fb7b9a3b253513f7fcfd7cb58098fd7cc8e34261a98ab255b45a60347a2cb48dc5cb2e008c87f2be55abe0c6694ef0cba1f3b66d2b65cf2b4f9cffa0e3809b557b90f07f92770ab6123e88dfadcd3e491c7c0af329d380607350238aed820dd27518439c1d62216847915fb341f093" localRef="base" location="common.data.Initialize/Initialize.hpe" name="Initialize" package="common.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="253" y="155">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="30" w="140" x="383" y="354">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+          <visualDescription h="30" w="130" x="376" y="460">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="initialize">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="182" y="315">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="instance" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" exposed="false">
+      <visualDescription h="30" w="146" x="127" y="448">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="IInitializeImpl" nArgs="2">
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="66" y="6"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="29" y="23"/>
+      </slice>
+      <slice isRef="exact_solution">
+        <originRef cRef="exact_solution" iRef="IExactSolution"/>
+        <visualDescription h="10" w="10" x="59" y="26"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@156e642" repeat="0">
+        <visualDescription h="150" w="70" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@273443" repeat="0" sliceRef="exact_solution">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.data.ExactSolution;&#xA;using common.data.Initialize;&#xA;&#xA;namespace impl.sp.data.InitializeImpl { &#xA;&#xA;public abstract class BaseIInitializeImpl&lt;I, C>: Computation, BaseIInitialize&lt;I, C>&#xA;where I:IInstance_SP&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExactSolution exact_solution = null;&#xA;&#xA;protected IExactSolution Exact_solution {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exact_solution == null)&#xA;&#x9;&#x9;&#x9;this.exact_solution = (IExactSolution) Services.getPort(&quot;exact_solution&quot;);&#xA;&#x9;&#x9;return this.exact_solution;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInitializeImpl.cs" srcType="base" uri="impl.sp.data.InitializeImpl/bin/1.0.0.0/BaseIInitializeImpl.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.data.ExactSolution/bin/1.0.0.0/IExactSolution.dll</dependency>
+          <dependency>common.data.Initialize/bin/1.0.0.0/BaseIInitialize.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.data.Initialize;&#xA;&#xA;namespace impl.sp.data.InitializeImpl { &#xA;&#xA;public class IInitializeImpl&lt;I, C> : BaseIInitializeImpl&lt;I, C>, IInitialize&lt;I, C>&#xA;where I:IInstance_SP&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IInitializeImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;exact_solution.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInitializeImpl.cs" srcType="user" uri="impl.sp.data.InitializeImpl/bin/1.0.0.0/IInitializeImpl.dll" versionId="1.0.0.0">
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.sp.data.InitializeImpl/bin/1.0.0.0/BaseIInitializeImpl.dll</dependency>
+          <dependency>common.data.Initialize/bin/1.0.0.0/IInitialize.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="136" y="158">
+        <color b="0" g="255" r="0"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <parameter iname="IInstance_SP" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IInitializeImpl" private="false" uRef="initialize" visibleInterface="true">
+      <super cRef="base" uRef="initialize"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="6"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="29" y="23"/>
+      </slices>
+      <slices cRef="exact_solution" replica="0" uRef="exact_solution" sliceName="exact_solution" transitive="false">
+        <visualDescription h="10" w="10" x="59" y="26"/>
+      </slices>
+      <visualDescription h="40" w="80" x="136" y="238"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="initialize"/>
+      <visualDescription h="60" w="61" x="31" y="251"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

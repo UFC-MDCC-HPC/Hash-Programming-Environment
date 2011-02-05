@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002d9ff344dc0474130d701766c942fa43e57a69f557844ccc71634139773814d8d4f402f557f333778c7096aa464fb5a0f98d0b75d68a199f8f50eb6974766af065cfbd4dc45bdce0c5545e8449e4858b0eef24eb660244a3f94f61338bc6bc7bc7be6141aee426b710afa3a88f9b34d040d6d0839272033ebcbd050b570bb587" isAbstract="false" kind="Environment" name="Instance_SP_S" packagePath="impl.sp.problem_size">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="base" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" version="1.0.0.0">
+        <visualDescription h="31" w="100" x="241" y="185">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="instance">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000069f308cef3ee67fe4a9428f103ea9d47782608466294ceb577ea2487f0dfef904d4cac3d977b78429febc91f5d34d2beaf698ccfa8fe594275093f92aaf7f6d66cac2c1e56f5655cc1894e5b5d589f3017a8ed2ad73e2e2c4f24b9f00c305660cd8fce15a9700519131c700d4b65317e03415aa31473afcff256691f7336b48e" localRef="class" location="common.problem_size.Class_S/Class_S.hpe" name="Class_S" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="234" y="252">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <interface iRef="IInstance_SP_S_Impl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_S { &#xA;&#xA;public abstract class BaseIInstance_SP_S_Impl: Environment, BaseIInstance_SP&#xA;{&#xA;&#xA;&#xA;public BaseIInstance_SP_S_Impl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000002d9ff344dc0474130d701766c942fa43e57a69f557844ccc71634139773814d8d4f402f557f333778c7096aa464fb5a0f98d0b75d68a199f8f50eb6974766af065cfbd4dc45bdce0c5545e8449e4858b0eef24eb660244a3f94f61338bc6bc7bc7be6141aee426b710afa3a88f9b34d040d6d0839272033ebcbd050b570bb587&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_SP_S_Impl.cs" srcType="base" uri="impl.sp.problem_size.Instance_SP_S/bin/1.0.0.0/BaseIInstance_SP_S_Impl.dll" versionId="1.0.0.0">
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/BaseIInstance_SP.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_S { &#xA;&#xA;public class IInstance_SP_S_Impl : BaseIInstance_SP_S_Impl, IInstance_SP&#xA;{&#xA;&#xA;public IInstance_SP_S_Impl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_SP_S_Impl.cs" srcType="user" uri="impl.sp.problem_size.Instance_SP_S/bin/1.0.0.0/IInstance_SP_S_Impl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.sp.problem_size.Instance_SP_S/bin/1.0.0.0/BaseIInstance_SP_S_Impl.dll</dependency>
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="132" y="130">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IInstance_SP_S_Impl" private="false" uRef="instance" visibleInterface="true">
+      <super cRef="base" uRef="instance"/>
+      <visualDescription h="40" w="80" x="186" y="287"/>
+    </unit>
+  </componentInfo>
+</component:component>

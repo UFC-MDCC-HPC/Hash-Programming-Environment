@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{276FEAF9-116F-49E6-9EB3-BAD9227F0767}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.sp.data.InitializeImpl</RootNamespace>
+    <AssemblyName>IInitializeImpl</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\InitializeImpl.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIInitializeImpl.cs">
+      <Link>BaseIInitializeImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IInitializeImpl.cs">
+      <Link>IInitializeImpl.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\sp.problem_size.Instance_SP\sp.problem_size.Instance_SP\sp.problem_size.Instance_SP.csproj">
+      <Project>{0BC65DA6-CE75-464F-B807-BD41C4773F55}</Project>
+      <Name>sp.problem_size.Instance_SP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.Initialize\common.data.Initialize\common.data.Initialize.csproj">
+      <Project>{C55C420B-633E-4AFC-BC3D-470BFB3E17C1}</Project>
+      <Name>common.data.Initialize</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
+      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
+      <Name>common.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
+      <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
+      <Name>common.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.ExactSolution\common.data.ExactSolution\common.data.ExactSolution.csproj">
+      <Project>{A0FA07F3-66F2-4749-8745-C90E5A611FF8}</Project>
+      <Name>common.data.ExactSolution</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

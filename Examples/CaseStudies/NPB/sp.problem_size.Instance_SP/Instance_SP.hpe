@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" isAbstract="true" kind="Environment" name="Instance_SP" packagePath="sp.problem_size">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="base" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="257" y="176">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="instance">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000055a71b2117f2c6f4934d8e3487ee297c1b4ace50a877c67f5ce70004bd91aa80017bc282e087924d9ed54242ab9f6a9ac7e6b56617c2c70de75f860a27344846987653cdc0df5921bf5cf2798377370875884abb2e72d8d5736137facb16f0894343b6fbfeea4f7dd326db99bc886f1cff9ce05dbf2dc28be062e0efac0cf485" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="305" y="284">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <interface iRef="IInstance_SP" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace sp.problem_size.Instance_SP { &#xA;&#xA;public interface BaseIInstance_SP : BaseIInstance, IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInstance_SP.cs" srcType="base" uri="sp.problem_size.Instance_SP/bin/1.0.0.0/BaseIInstance_SP.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/BaseIInstance.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace sp.problem_size.Instance_SP { &#xA;&#xA;public interface IInstance_SP : BaseIInstance_SP, IInstance&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInstance_SP.cs" srcType="user" uri="sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/sp.problem_size.Instance_SP/bin/1.0.0.0/BaseIInstance_SP.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="132" y="130">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IInstance_SP" private="false" uRef="instance" visibleInterface="true">
+      <super cRef="base" uRef="instance"/>
+      <visualDescription h="40" w="80" x="186" y="287"/>
+    </unit>
+  </componentInfo>
+</component:component>
