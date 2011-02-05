@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000037a9a5a5d556806427fed17e9d9da01cba09c367a7217e9bf0cecb835990985d50990b655933932ff0048b8076e5bf155199f826b77770081eeddb208f1e1189d375d2a21c32678113b87936a8ae52dfc34f72df909869b53b0d601f143f03655edfcd2d755ed0c61b681b9cd312a2b254cfcaff4cdc28b51aeb88bc7bbdf791" isAbstract="true" kind="Computation" name="ExactSolution" packagePath="common.data">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IExactSolution" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.data.ExactSolution { &#xA;&#xA;public interface BaseIExactSolution : IComputationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIExactSolution.cs" srcType="base" uri="common.data.ExactSolution/bin/1.0.0.0/BaseIExactSolution.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.data.ExactSolution { &#xA;&#xA;public interface IExactSolution : BaseIExactSolution&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IExactSolution.cs" srcType="user" uri="common.data.ExactSolution/bin/1.0.0.0/IExactSolution.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.data.ExactSolution/bin/1.0.0.0/BaseIExactSolution.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="114" x="158" y="282">
+        <color b="255" g="0" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IExactSolution" private="false" uRef="exact_solution" visibleInterface="true">
+      <visualDescription h="40" w="115" x="158" y="362"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1a4eaac1296932932353" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="exact_solution"/>
+      <visualDescription h="20" w="20" x="95" y="194"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

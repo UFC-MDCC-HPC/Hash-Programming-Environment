@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" isAbstract="true" kind="Qualifier" name="Class" packagePath="common.problem_size">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IClass" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.problem_size.Class { &#xA;&#xA;public interface BaseIClass : IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIClass.cs" srcType="base" uri="common.problem_size.Class/bin/1.0.0.0/BaseIClass.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.problem_size.Class { &#xA;&#xA;public interface IClass : BaseIClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IClass.cs" srcType="user" uri="common.problem_size.Class/bin/1.0.0.0/IClass.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.problem_size.Class/bin/1.0.0.0/BaseIClass.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="209" y="139">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IClass" private="false" uRef="class" visibleInterface="true">
+      <visualDescription h="40" w="80" x="209" y="219"/>
+    </unit>
+  </componentInfo>
+</component:component>
