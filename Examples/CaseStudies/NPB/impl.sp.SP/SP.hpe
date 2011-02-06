@@ -9,6 +9,7 @@
         <visualDescription h="30" w="50" x="188" y="162">
           <color b="255" g="255" r="255"/>
         </visualDescription>
+        <parameter formFieldId="class" varName="CLASS"/>
         <unitBounds uRef="sp">
           <visualDescription h="10" w="10" x="5" y="2"/>
         </unitBounds>
@@ -20,7 +21,16 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <interface iRef="ISPImpl" nArgs="0">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="88" y="245">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="CLASS"/>
+    <interface iRef="ISPImpl" nArgs="1">
       <slice isRef="adi">
         <originRef cRef="adi" iRef="IADI"/>
         <visualDescription h="10" w="10" x="31" y="31"/>
@@ -29,15 +39,36 @@
         <originRef cRef="verify" iRef="IVerify"/>
         <visualDescription h="10" w="10" x="8" y="25"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@5f8b9" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@86789b" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c514a" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@580a6f" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@acd66d" repeat="0" sliceRef="verify">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1509e5" repeat="0" sliceRef="verify">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
+      <sources sourceType="C# Executable" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.datapartition.Blocks3D;&#xA;using environment.MPIDirect;&#xA;using common.Verify;&#xA;using sp.ADI;&#xA;using sp.SP;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;public abstract class BaseISPImpl&lt;IClass>: Application, BaseISP&lt;IClass>&#xA;where CLASS:IClass&#xA;{&#xA;&#xA;private IProblemDefinition&lt;IInstance_SP&lt;IClass>, IClass> problem = null;&#xA;&#xA;protected IProblemDefinition&lt;IInstance_SP&lt;IClass>, IClass> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_SP&lt;IClass>, IClass>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks3D&lt;IInstance_SP&lt;IClass>, IClass> process = null;&#xA;&#xA;protected IBlocks3D&lt;IInstance_SP&lt;IClass>, IClass> Process {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.process == null)&#xA;&#x9;&#x9;&#x9;this.process = (IBlocks3D&lt;IInstance_SP&lt;IClass>, IClass>) Services.getPort(&quot;data_partition&quot;);&#xA;&#x9;&#x9;return this.process;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IVerify&lt;IInstance_SP&lt;IClass>, IClass> verify = null;&#xA;&#xA;protected IVerify&lt;IInstance_SP&lt;IClass>, IClass> Verify {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.verify == null)&#xA;&#x9;&#x9;&#x9;this.verify = (IVerify&lt;IInstance_SP&lt;IClass>, IClass>) Services.getPort(&quot;verify&quot;);&#xA;&#x9;&#x9;return this.verify;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IADI&lt;IClass> adi = null;&#xA;&#xA;protected IADI&lt;IClass> Adi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.adi == null)&#xA;&#x9;&#x9;&#x9;this.adi = (IADI&lt;IClass>) Services.getPort(&quot;adi&quot;);&#xA;&#x9;&#x9;return this.adi;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseISPImpl.cs" srcType="base" uri="impl.sp.SP/bin/1.0.0.0/BaseISPImpl.dll" versionId="1.0.0.0">
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll</dependency>
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>common.Verify/bin/1.0.0.0/IVerify.dll</dependency>
+          <dependency>sp.ADI/bin/1.0.0.0/IADI.dll</dependency>
+          <dependency>sp.SP/bin/1.0.0.0/BaseISP.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.SP;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;public class ISPImpl&lt;IClass> : BaseISPImpl&lt;IClass>, ISP&lt;IClass>&#xA;where CLASS:IClass&#xA;{&#xA;&#xA;public ISPImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;adi.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;verify.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ISPImpl.cs" srcType="user" uri="impl.sp.SP/bin/1.0.0.0/ISPImpl.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.sp.SP/bin/1.0.0.0/BaseISPImpl.dll</dependency>
+          <dependency>sp.SP/bin/1.0.0.0/ISP.dll</dependency>
+        </file>
+        <file contents="using DGAC;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;&#x9;public class ISPImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;ISPImpl sp = new ISPImpl();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;0024000004800000940000000602000000240000525341310004000011000000ddeedcaba108d1ed5e25cabaf2bd29f9ccced4266b31e92a275abc158dba1dbdf7da446e2ab536fc6614be14bff8fb9183a4189b985fe4d27b5827017638da1116ce4f24f8a5746b4db9cfb95905093897bf3fdcf3414b497fd7a29025c44f2fc979f9c837232c7f1cb152b236d0f97ff543046b43f4bf10d66edbf4e6d2ffb2&quot;,&quot;sp&quot;,sp,args);&#xA;&#x9;&#x9;&#x9;sp.createSlices();&#xA;&#x9;&#x9;&#x9;sp.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="ISPImplMain.cs" srcType="main" uri="file:/C:/Users/Heron/Documents/My Dropbox/Alunos/Cenez/hpe/impl.sp.SP/bin/1.0.0.0/ISPImplMain.exe" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.sp.SP/bin/1.0.0.0/ISPImpl.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="477" y="156">
         <color b="255" g="255" r="128"/>
       </visualDescription>
@@ -46,11 +77,17 @@
         <slice pRef="problem" sRef="adi"/>
         <slice pRef="problem" sRef="verify"/>
       </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="adi"/>
+        <slice pRef="mpi" sRef="verify"/>
+      </port>
       <port name="process">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="data_partition" sRef="adi"/>
-        <slice pRef="process" sRef="verify"/>
+        <slice pRef="data_partition" sRef="verify"/>
       </port>
+      <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
     </interface>
     <unit iRef="ISPImpl" private="false" uRef="sp" visibleInterface="true">
       <super cRef="base" uRef="sp"/>
@@ -69,7 +106,7 @@
       <originRef>topology</originRef>
       <originRef>y</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="295" y="298"/>
+      <visualDescription h="20" w="20" x="264" y="386"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
       <originRef>base</originRef>
@@ -78,25 +115,16 @@
       <originRef>topology</originRef>
       <originRef>z</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="357" y="354"/>
+      <visualDescription h="20" w="20" x="352" y="356"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>base</originRef>
       <originRef>adi</originRef>
-      <originRef>add</originRef>
+      <originRef>compute_rhs</originRef>
       <originRef>problem_data</originRef>
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="60" w="61" x="103" y="490"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
-      <originRef>base</originRef>
-      <originRef>verify</originRef>
-      <originRef>data_partition</originRef>
-      <originRef>topology</originRef>
-      <originRef>x</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="185" y="326"/>
+      <visualDescription h="60" w="61" x="264" y="479"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
       <originRef>base</originRef>
@@ -105,7 +133,7 @@
       <originRef>topology</originRef>
       <originRef>z</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="366" y="324"/>
+      <visualDescription h="20" w="20" x="185" y="326"/>
     </enumerator>
   </componentInfo>
 </component:component>

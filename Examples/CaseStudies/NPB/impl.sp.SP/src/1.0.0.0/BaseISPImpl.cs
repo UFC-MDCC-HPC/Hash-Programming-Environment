@@ -4,67 +4,159 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using common.Verify;
 using common.data.ProblemDefinition;
-using sp.ADI;
+using sp.problem_size.Instance_SP;
+using common.problem_size.Class;
 using common.datapartition.Blocks3D;
-using br.ufc.lia.pargo.hpe.casestudies.npb.SP;
+using environment.MPIDirect;
+using common.Verify;
+using common.datapartition.BlocksInfo;
+using common.topology.Ring;
+using common.data.Initialize;
+using common.data.ExactRHS;
+using common.data.LHSInit;
+using sp.ADI;
+using sp.SP;
 
 namespace impl.sp.SP { 
 
-public abstract class BaseISPImpl: Application, BaseISP
+public abstract class BaseISPImpl<CLASS>: Application, BaseISP<CLASS>
+where CLASS:IClass
 {
+		
+private IInitialize<IInstance_SP<CLASS>, CLASS> initialize = null;
 
-protected IVerify verify = null;
-
-protected IVerify Verify {
-	set {
-		this.verify = value;
+protected IInitialize<IInstance_SP<CLASS>, CLASS> Initialize {
+	get {
+		if (this.initialize == null)
+			this.initialize = (IInitialize<IInstance_SP<CLASS>, CLASS>) Services.getPort("initialize");
+		return this.initialize;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private IExactRHS<IInstance_SP<CLASS>, CLASS> exact_rhs = null;
 
-protected IProblemDefinition Problem {
-	set {
-		this.problem = value;
-		adi.Problem = value;
-		verify.Problem = value;
+protected IExactRHS<IInstance_SP<CLASS>, CLASS> Exact_rhs {
+	get {
+		if (this.exact_rhs == null)
+			this.exact_rhs = (IExactRHS<IInstance_SP<CLASS>, CLASS>) Services.getPort("exact_rhs");
+		return this.exact_rhs;
 	}
 }
 
-protected IADI adi = null;
+private ILHSInit<IInstance_SP<CLASS>, CLASS> lhsinit = null;
 
-protected IADI Adi {
-	set {
-		this.adi = value;
+protected ILHSInit<IInstance_SP<CLASS>, CLASS> Lhsinit {
+	get {
+		if (this.lhsinit == null)
+			this.lhsinit = (ILHSInit<IInstance_SP<CLASS>, CLASS>) Services.getPort("lhsinit");
+		return this.lhsinit;
+	}
+}
+		
+		
+private IBlocks blocks = null;
+
+protected IBlocks Blocks {
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks;
 	}
 }
 
-protected IBlocks3D process = null;
+private ICell x = null;
 
-protected IBlocks3D Process {
-	set {
-		this.process = value;
-		adi.Data_partition = value;
-		verify.Process = value;
+protected ICell X {
+	get {
+		if (this.x == null)
+			this.x = (ICell) Services.getPort("x");
+		return this.x;
 	}
 }
 
+private ICell y = null;
 
-public BaseISPImpl() { 
+protected ICell Y {
+	get {
+		if (this.y == null)
+			this.y = (ICell) Services.getPort("y");
+		return this.y;
+	}
+}
 
-} 
+private ICell z = null;
 
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000ddeedcaba108d1ed5e25cabaf2bd29f9ccced4266b31e92a275abc158dba1dbdf7da446e2ab536fc6614be14bff8fb9183a4189b985fe4d27b5827017638da1116ce4f24f8a5746b4db9cfb95905093897bf3fdcf3414b497fd7a29025c44f2fc979f9c837232c7f1cb152b236d0f97ff543046b43f4bf10d66edbf4e6d2ffb2";
+protected ICell Z {
+	get {
+		if (this.z == null)
+			this.z = (ICell) Services.getPort("z");
+		return this.z;
+	}
+}
+		
+		
+private IInstance_SP<CLASS> instance = default(IInstance_SP<CLASS>);
 
-override public void createSlices() {
-	base.createSlices();
-	this.Adi = (IADI) BackEnd.createSlice(this, UID,"adi","adi);
-	this.Verify = (IVerify) BackEnd.createSlice(this, UID,"verify","verify);
-	this.Process = (IBlocks3D) BackEnd.createSlice(this, UID,"data_partition","process);
-	this.Problem = (IProblemDefinition) BackEnd.createSlice(this, UID,"problem_data","problem);
-} 
+protected IInstance_SP<CLASS> Instance {
+	get {
+		if (instance==null) 
+			instance = (IInstance_SP<CLASS>) Services.getPort("instance");
+		return instance;
+	}
+}		
+		
+
+private IProblemDefinition<IInstance_SP<CLASS>, CLASS> problem = null;
+
+protected IProblemDefinition<IInstance_SP<CLASS>, CLASS> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<IInstance_SP<CLASS>, CLASS>) Services.getPort("problem_data");
+		return this.problem;
+	}
+}
+
+private IBlocks3D<IInstance_SP<CLASS>, CLASS> process = null;
+
+protected IBlocks3D<IInstance_SP<CLASS>, CLASS> Process {
+	get {
+		if (this.process == null)
+			this.process = (IBlocks3D<IInstance_SP<CLASS>, CLASS>) Services.getPort("data_partition");
+		return this.process;
+	}
+}
+
+private IMPIDirect mpi = null;
+
+protected IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
+	}
+}
+
+private IVerify<IInstance_SP<CLASS>, CLASS> verify = null;
+
+protected IVerify<IInstance_SP<CLASS>, CLASS> Verify {
+	get {
+		if (this.verify == null)
+			this.verify = (IVerify<IInstance_SP<CLASS>, CLASS>) Services.getPort("verify");
+		return this.verify;
+	}
+}
+
+private IADI<CLASS> adi = null;
+
+protected IADI<CLASS> Adi {
+	get {
+		if (this.adi == null)
+			this.adi = (IADI<CLASS>) Services.getPort("adi");
+		return this.adi;
+	}
+}
+
 
 abstract public void compute(); 
 
