@@ -1,1 +1,17 @@
-Unexpected error.  File contents could not be restored from local history during undo/redo.
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>common.Add</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.emonic.base.EMonic_Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.emonic.base.EMonic_Nature</nature>
+	</natures>
+</projectDescription>
