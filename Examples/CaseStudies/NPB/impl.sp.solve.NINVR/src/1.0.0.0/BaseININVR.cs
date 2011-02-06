@@ -6,39 +6,42 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
+using common.problem_size.Instance;
 using common.solve.BlockDiagonalMatVecProduct;
+using common.problem_size.Class;
+using sp.problem_size.Instance_SP;
+using common.orientation.Axis;
+using common.solve.Method;
 
 namespace impl.sp.solve.NINVR { 
 
-public abstract class BaseININVR: Computation, BaseIBlockDiagonalMatVecProduct
+public abstract class BaseININVR<I,C,DIR,MTH>: Computation, BaseIBlockDiagonalMatVecProduct<I,C, DIR,MTH>
+where I:IInstance_SP<C>
+where C:IClass
+where DIR:IAxis
+where MTH:IMethod
 {
 
-protected IBlocks blocks = null;
+private IBlocks blocks = null;
 
 public IBlocks Blocks {
-	set {
-		this.blocks = value;
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private IProblemDefinition<I,C> problem = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
+public IProblemDefinition<I,C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
+		return this.problem;
 	}
 }
 
-
-public BaseININVR() { 
-
-} 
-
-public static string UID = "00240000048000009400000006020000002400005253413100040000110000007d90a5160982ec6fe1e136fdc541867a8e8a5b3f68311bba5265af3f61bdf79d01bd8b757a17afcd5360050a7a15856ddaf49d4af66fb1388554402c951c264ef6fae3d033a929ece38aeeceb104d1e1546068fd18b59d712d6d1c1de1ab9695cef49197d705a6888cf5347a56e3106311d5a51b64797b2377d714f387f1ea87";
-
-override public void createSlices() {
-	base.createSlices();
-} 
 
 abstract public void compute(); 
 

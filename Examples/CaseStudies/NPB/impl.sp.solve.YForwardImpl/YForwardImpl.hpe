@@ -9,7 +9,9 @@
         <visualDescription h="30" w="50" x="218" y="184">
           <color b="255" g="255" r="255"/>
         </visualDescription>
-        <parameter formFieldId="direction" varName="DIR"/>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
         <parameter formFieldId="method" varName="MTH"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
           <visualDescription h="56" w="114" x="264" y="422">
@@ -23,6 +25,8 @@
           <visualDescription h="45" w="106" x="57" y="434">
             <color b="255" g="255" r="255"/>
           </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
             <visualDescription h="10" w="10" x="5" y="2"/>
           </unitBounds>
@@ -38,7 +42,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ffcae3e9a0ecbf9c4629fdb52bc2acc0e2cc392d40ed0441b527e752c9079cf609fb0785045e3d2c5ace2f492d755021fd6cf82d853e202471136832c6cf8fdffec701b57bfde7017dd2ef51f1a4c4adca40833d6c6165b9123411a3dc7be80a59839ab3316debcc5e4d0d6e17dcb8400cf7e4bc1eca328e130aa9f8182bfccb" localRef="ydir" location="common.direction.Y/Y.hpe" name="Y" package="common.direction" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ffcae3e9a0ecbf9c4629fdb52bc2acc0e2cc392d40ed0441b527e752c9079cf609fb0785045e3d2c5ace2f492d755021fd6cf82d853e202471136832c6cf8fdffec701b57bfde7017dd2ef51f1a4c4adca40833d6c6165b9123411a3dc7be80a59839ab3316debcc5e4d0d6e17dcb8400cf7e4bc1eca328e130aa9f8182bfccb" localRef="ydir" location="common.orientation.Y/Y.hpe" name="Y" package="common.orientation" exposed="false">
       <visualDescription h="30" w="50" x="106" y="177">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -54,9 +58,28 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="102" y="170">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="instance" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="111" y="389">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="ydir" varName="DIR"/>
     <supplyParameter cRef="method" varName="MTH"/>
-    <interface iRef="IYForwardImpl" nArgs="0">
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="IYForwardImpl" nArgs="4">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="59" y="26"/>
@@ -65,16 +88,34 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="11" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@10a954f" repeat="0">
+      <slice isRef="method">
+        <originRef cRef="method" iRef="IMethod"/>
+        <visualDescription h="10" w="10" x="30" y="27"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="47" y="28"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@18f6947" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.solve.Forward;&#xA;&#xA;namespace impl.sp.solve.YForwardImpl { &#xA;&#xA;public abstract class BaseIYForwardImpl: Computation, BaseIForward&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIYForwardImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000027df87e922bbe114bd0efcec142ac6ad0ba821b1cb64bf38f07510180c1b91e0970fc5fb49071bab5debeb8b8f0fb7fe002c7f1a3c4092bbb00e61f62ff73f1ee847081658fe197db7dd28def134b33a801bc8a6c013d3e16c026d0fbfa36346db5446be855b623d2f931874997f83df1766e897d5fc5978b1a8143f120ac3b3&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIYForwardImpl.cs" srcType="base" uri="impl.sp.solve.YForwardImpl/bin/1.0.0.0/BaseIYForwardImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;using common.solve.BeamWarmingMethod;&#xA;using common.orientation.Y;&#xA;using common.solve.Forward;&#xA;&#xA;namespace impl.sp.solve.YForwardImpl { &#xA;&#xA;public abstract class BaseIYForwardImpl&lt;I, C, MTH, DIR>: Computation, BaseIForward&lt;I, C, MTH, DIR>&#xA;where I:IInstance_SP&lt;C>&#xA;where C:IClass&#xA;where MTH:IBeamWarmingMethod&#xA;where DIR:IY&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(blocks_info);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(problem_data);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(orientation);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;private MTH method = default(MTH);&#xA;&#xA;protected MTH Method {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.method == null)&#xA;&#x9;&#x9;&#x9;this.method = (MTH) Services.getPort(method);&#xA;&#x9;&#x9;return this.method;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIYForwardImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000027df87e922bbe114bd0efcec142ac6ad0ba821b1cb64bf38f07510180c1b91e0970fc5fb49071bab5debeb8b8f0fb7fe002c7f1a3c4092bbb00e61f62ff73f1ee847081658fe197db7dd28def134b33a801bc8a6c013d3e16c026d0fbfa36346db5446be855b623d2f931874997f83df1766e897d5fc5978b1a8143f120ac3b3&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIYForwardImpl.cs" srcType="base" uri="impl.sp.solve.YForwardImpl/bin/1.0.0.0/BaseIYForwardImpl.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
+          <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
           <dependency>common.solve.Forward/bin/1.0.0.0/BaseIForward.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.Forward;&#xA;&#xA;namespace impl.sp.solve.YForwardImpl { &#xA;&#xA;public class IYForwardImpl : BaseIYForwardImpl, IForward&#xA;{&#xA;&#xA;public IYForwardImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IYForwardImpl.cs" srcType="user" uri="impl.sp.solve.YForwardImpl/bin/1.0.0.0/IYForwardImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.solve.BeamWarmingMethod;&#xA;using common.orientation.Y;&#xA;using common.solve.Forward;&#xA;&#xA;namespace impl.sp.solve.YForwardImpl { &#xA;&#xA;public class IYForwardImpl&lt;I, C, MTH, DIR> : BaseIYForwardImpl&lt;I, C, MTH, DIR>, IForward&lt;I, C, MTH, DIR>&#xA;where I:IInstance_SP&lt;C>&#xA;where C:IClass&#xA;where MTH:IBeamWarmingMethod&#xA;where DIR:IY&#xA;{&#xA;&#xA;public IYForwardImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IYForwardImpl.cs" srcType="user" uri="impl.sp.solve.YForwardImpl/bin/1.0.0.0/IYForwardImpl.dll" versionId="1.0.0.0">
+          <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
+          <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
           <dependency>%WORKSPACE/impl.sp.solve.YForwardImpl/bin/1.0.0.0/BaseIYForwardImpl.dll</dependency>
           <dependency>common.solve.Forward/bin/1.0.0.0/IForward.dll</dependency>
         </file>
@@ -90,6 +131,10 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <parameter iname="IInstance_SP" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IBeamWarmingMethod" order="2" parid="method" uname="method" varid="MTH"/>
+      <parameter iname="IY" order="3" parid="orientation" uname="y" varid="DIR"/>
     </interface>
     <unit iRef="IYForwardImpl" private="false" uRef="forward" visibleInterface="true">
       <super cRef="base" uRef="forward"/>
@@ -98,6 +143,12 @@
       </slices>
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="11" y="23"/>
+      </slices>
+      <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
+        <visualDescription h="10" w="10" x="30" y="27"/>
+      </slices>
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+        <visualDescription h="10" w="10" x="47" y="28"/>
       </slices>
       <visualDescription h="40" w="80" x="155" y="246"/>
     </unit>

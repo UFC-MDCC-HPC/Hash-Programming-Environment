@@ -6,128 +6,142 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.topology.Ring;
-using common.Buffer;
 using common.solve.LHS;
+using sp.problem_size.Instance_SP;
+using common.problem_size.Class;
 using common.data.ProblemDefinition;
-using common.solve.Backward;
 using common.solve.BlockDiagonalMatVecProduct;
+using common.Buffer;
 using common.solve.Forward;
+using common.solve.BeamWarmingMethod;
+using common.orientation.Y;
 using common.interactionpattern.Shift;
+using common.direction.LeftToRight;
+using environment.MPIDirect;
+using common.problem_size.Instance;
+using common.solve.Backward;
 using common.solve.Solve;
 
 namespace impl.sp.solve.YSolve { 
 
-public abstract class BaseIYSolveImpl: Computation, BaseISolve
+public abstract class BaseIYSolveImpl<I, C, MTH, DIR>: Computation, BaseISolve<I, C, MTH, DIR>
+where I:IInstance_SP<C>
+where C:IClass
+where MTH:IBeamWarmingMethod
+where DIR:IY
 {
 
-protected IBlocks blocks = null;
+private IBlocks blocks = null;
 
 public IBlocks Blocks {
-	set {
-		this.blocks = value;
-		forward.Blocks = value;
-		matvecproduct.Blocks = value;
-		backward.Blocks = value;
-		lhs.Blocks = value;
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks;
 	}
 }
 
-protected ICell cell = null;
+private ICell cell = null;
 
 public ICell Cell {
-	set {
-		this.cell = value;
-		shift.Cell = value;
+	get {
+		if (this.cell == null)
+			this.cell = (ICell) Services.getPort("topology");
+		return this.cell;
 	}
 }
 
-protected IBuffer output_buffer = null;
+private ILHS<I, C, DIR, MTH> lhs = null;
 
-protected IBuffer Output_buffer {
-	set {
-		this.output_buffer = value;
-		shift.Output_buffer = value;
+protected ILHS<I, C, DIR, MTH> Lhs {
+	get {
+		if (this.lhs == null)
+			this.lhs = (ILHS<I, C, DIR, MTH>) Services.getPort("lhs");
+		return this.lhs;
 	}
 }
 
-protected IBuffer input_buffer = null;
+private IProblemDefinition<I, C> problem = null;
+
+public IProblemDefinition<I, C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
+		return this.problem;
+	}
+}
+
+private IBlockDiagonalMatVecProduct<I, C, DIR, MTH> matvecproduct = null;
+
+protected IBlockDiagonalMatVecProduct<I, C, DIR, MTH> Matvecproduct {
+	get {
+		if (this.matvecproduct == null)
+			this.matvecproduct = (IBlockDiagonalMatVecProduct<I, C, DIR, MTH>) Services.getPort("matvecproduct");
+		return this.matvecproduct;
+	}
+}
+
+private IBuffer input_buffer = null;
 
 protected IBuffer Input_buffer {
-	set {
-		this.input_buffer = value;
-		shift.Input_buffer = value;
+	get {
+		if (this.input_buffer == null)
+			this.input_buffer = (IBuffer) Services.getPort("input_buffer");
+		return this.input_buffer;
 	}
 }
 
-protected ILHS lhs = null;
+private IBuffer output_buffer = null;
 
-protected ILHS Lhs {
-	set {
-		this.lhs = value;
+protected IBuffer Output_buffer {
+	get {
+		if (this.output_buffer == null)
+			this.output_buffer = (IBuffer) Services.getPort("output_buffer");
+		return this.output_buffer;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private IForward<I, C, MTH, DIR> forward = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
-		forward.Problem = value;
-		matvecproduct.Problem = value;
-		backward.Problem = value;
-		lhs.Problem = value;
+protected IForward<I, C, MTH, DIR> Forward {
+	get {
+		if (this.forward == null)
+			this.forward = (IForward<I, C, MTH, DIR>) Services.getPort("forward");
+		return this.forward;
 	}
 }
 
-protected IBackward backward = null;
+private IShift<ILeftToRight> shift = null;
 
-protected IBackward Backward {
-	set {
-		this.backward = value;
+protected IShift<ILeftToRight> Shift {
+	get {
+		if (this.shift == null)
+			this.shift = (IShift<ILeftToRight>) Services.getPort("shift");
+		return this.shift;
 	}
 }
 
-protected IBlockDiagonalMatVecProduct matvecproduct = null;
+private IMPIDirect mpi = null;
 
-protected IBlockDiagonalMatVecProduct Matvecproduct {
-	set {
-		this.matvecproduct = value;
-	}
-}
-
-protected IForward forward = null;
-
-protected IForward Forward {
-	set {
-		this.forward = value;
-	}
-}
-
-protected IShift shift = null;
-
-protected IShift Shift {
-	set {
-		this.shift = value;
+public IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
 	}
 }
 
 
-public BaseIYSolveImpl() { 
+private IBackward<I, C, DIR, MTH> backward = null;
 
-} 
+protected IBackward<I, C, DIR, MTH> Backward {
+	get {
+		if (this.backward == null)
+			this.backward = (IBackward<I, C, DIR, MTH>) Services.getPort("backward");
+		return this.backward;
+	}
+}
 
-public static string UID = "002400000480000094000000060200000024000052534131000400001100000095c94f1865342526b29221555f336d3917001c5f09b4efb35f0d84c9e35d0ebedbcd05c840960ed4e301684b0e8a7a79a4e6588945354d65c6e1d75466da11575829a108949ab951de0e1bb648362bac431ed80d28d65b621e0ea911dd0fbf92a96931d066256bf8e198328a70bb1e797d6407edadd4a6c296eeb6d8428cfd8d";
-
-override public void createSlices() {
-	base.createSlices();
-	this.Shift = (IShift) BackEnd.createSlice(this, UID,"shift","shift);
-	this.Forward = (IForward) BackEnd.createSlice(this, UID,"forward","forward);
-	this.Matvecproduct = (IBlockDiagonalMatVecProduct) BackEnd.createSlice(this, UID,"matvecproduct","matvecproduct);
-	this.Backward = (IBackward) BackEnd.createSlice(this, UID,"backward","backward);
-	this.Lhs = (ILHS) BackEnd.createSlice(this, UID,"lhs","lhs);
-	this.Input_buffer = (IBuffer) BackEnd.createSlice(this, UID,"input_buffer","buffer);
-	this.Output_buffer = (IBuffer) BackEnd.createSlice(this, UID,"output_buffer","buffer);
-} 
 
 abstract public void compute(); 
 

@@ -1,18 +1,25 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.topology.Ring;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.BlocksInfo;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.data.ProblemDefinition;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D;
+using common.topology.Ring;
+using common.datapartition.BlocksInfo;
+using common.data.ProblemDefinition;
+using sp.problem_size.Instance_SP;
+using common.problem_size.Class;
+using environment.MPIDirect;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.sp.ADI { 
+namespace sp.ADI { 
 
-public interface BaseIADI : IComputationKind 
+public interface BaseIADI<C> : IComputationKind 
+where C:IClass
 {
 
-	IProblemDefinition Problem {set;}
-	IBlocks3D Data_partition {set;}
+	IProblemDefinition<IInstance_SP<C>, C> Problem {get;}
+	IMPIDirect Mpi {get;}
+	ICell X {get;}
+	ICell Y {get;}
+	ICell Z {get;}
+	IBlocks Blocks {get;}
 
 
 } // end main interface 

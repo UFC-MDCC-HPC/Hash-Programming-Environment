@@ -1,8 +1,10 @@
 using br.ufc.pargo.hpe.kinds;
+using common.problem_size.Class;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.sp.ADI { 
+namespace sp.ADI { 
 
-public interface IADI : BaseIADI
+public interface IADI<C> : BaseIADI<C>
+where C:IClass
 {
 
 

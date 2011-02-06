@@ -6,39 +6,63 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
+using sp.problem_size.Instance_SP;
+using common.problem_size.Class;
+using common.orientation.Axis;
+using common.solve.Method;
+using common.orientation.Z;
+using common.solve.BeamWarmingMethod;
 using common.solve.Backward;
 
 namespace impl.sp.solve.ZBackwardImpl { 
 
-public abstract class BaseIZBackwardImpl: Computation, BaseIBackward
+public abstract class BaseIZBackwardImpl<I, C, DIR, MTH>: Computation, BaseIBackward<I, C, DIR, MTH>
+where I:IInstance_SP<C>
+where C:IClass
+where DIR:IZ
+where MTH:IBeamWarmingMethod
 {
 
-protected IBlocks blocks = null;
+private IBlocks blocks = null;
 
 public IBlocks Blocks {
-	set {
-		this.blocks = value;
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private IProblemDefinition<I, C> problem = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
+public IProblemDefinition<I, C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
+		return this.problem;
 	}
 }
 
+private DIR axis = default(DIR);
 
-public BaseIZBackwardImpl() { 
+protected DIR Axis {
+	get {
+		if (this.axis == null)
+			this.axis = (DIR) Services.getPort("orientation");
+		return this.axis;
+	}
+}
 
-} 
+private MTH method = default(MTH);
 
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000ab961be9107b7c2cea9946daf77c0bf540e7c5c148728ba23eb44be488a1f2658179127950333eac79062c3555de721150b1b189f5b60b330b5b6058da0e7ccec50d8030ff6ced4d62986412cc4ff463570511ffd6b30fda992da7a0e2a9970e39e70030da15114e0ce5b02b0a80b0d7bc6f27d0de0880dc476e78457e1a3597";
+protected MTH Method {
+	get {
+		if (this.method == null)
+			this.method = (MTH) Services.getPort("method");
+		return this.method;
+	}
+}
 
-override public void createSlices() {
-	base.createSlices();
-} 
 
 abstract public void compute(); 
 

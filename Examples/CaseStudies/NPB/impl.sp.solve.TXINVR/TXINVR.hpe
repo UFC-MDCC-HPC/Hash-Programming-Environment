@@ -9,7 +9,9 @@
         <visualDescription h="30" w="50" x="270" y="156">
           <color b="255" g="255" r="255"/>
         </visualDescription>
-        <parameter formFieldId="direction" varName="DIR"/>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
         <parameter formFieldId="method" varName="MTH"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
           <visualDescription h="53" w="112" x="302" y="427">
@@ -23,6 +25,8 @@
           <visualDescription h="55" w="102" x="284" y="279">
             <color b="255" g="255" r="255"/>
           </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
             <visualDescription h="10" w="10" x="47" y="9"/>
           </unitBounds>
@@ -38,7 +42,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a9352e76d4c88239645b90e854bbd3f1a8abb667bc5a8c67a80728df749f5188b349a7ab44c5749bd29292ca8c80c30912b2f5d141abf97f42b621fe05bfdd2b78dcedfdd23f675606bd142775aabd270bc260921eb4b42b2711d8ecbff1221d1adff4da3d86e032b31620081d2b817b169fc98ed18834a240b8ea60a6e20ad2" localRef="xyzdir" location="common.direction.XYZ/XYZ.hpe" name="XYZ" package="common.direction" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a9352e76d4c88239645b90e854bbd3f1a8abb667bc5a8c67a80728df749f5188b349a7ab44c5749bd29292ca8c80c30912b2f5d141abf97f42b621fe05bfdd2b78dcedfdd23f675606bd142775aabd270bc260921eb4b42b2711d8ecbff1221d1adff4da3d86e032b31620081d2b817b169fc98ed18834a240b8ea60a6e20ad2" localRef="xyzdir" location="common.orientation.XYZ/XYZ.hpe" name="XYZ" package="common.orientation" exposed="false">
       <visualDescription h="30" w="50" x="261" y="120">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -54,9 +58,28 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="instance" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="97" y="454">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="224" y="441">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="xyzdir" varName="DIR"/>
     <supplyParameter cRef="method" varName="MTH"/>
-    <interface iRef="ITXINVR" nArgs="0">
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="ITXINVR" nArgs="1">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="78" y="26"/>
@@ -65,21 +88,22 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="92" y="3"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@3cad45" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@13cea" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TXINVR { &#xA;&#xA;public abstract class BaseITXINVR: Computation, BaseIBlockDiagonalMatVecProduct&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseITXINVR() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000ddc6a8247211751d7820c59f40f60abfe1f88087018c274a2b2cbd294086e87e93a5db2c7ee68d047aa7e454cf4f04991a77fe331d9525ba05b6f1f6df82498bde125fece3b95a4a96b2d25550af5674fca413becf2d121be69ee2bb77a87a8f1fa04b8665694e0292507d5c9f3dc8f43c434e087e0651482064ae3d4576768e&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITXINVR.cs" srcType="base" uri="impl.sp.solve.TXINVR/bin/1.0.0.0/BaseITXINVR.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TXINVR { &#xA;&#xA;public abstract class BaseITXINVR&lt;IInstance>: Computation, BaseIBlockDiagonalMatVecProduct&lt;IInstance>&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort();&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance> problem = null;&#xA;&#xA;public IProblemDefinition&lt;IInstance> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance>) Services.getPort();&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseITXINVR() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000ddc6a8247211751d7820c59f40f60abfe1f88087018c274a2b2cbd294086e87e93a5db2c7ee68d047aa7e454cf4f04991a77fe331d9525ba05b6f1f6df82498bde125fece3b95a4a96b2d25550af5674fca413becf2d121be69ee2bb77a87a8f1fa04b8665694e0292507d5c9f3dc8f43c434e087e0651482064ae3d4576768e&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITXINVR.cs" srcType="base" uri="impl.sp.solve.TXINVR/bin/1.0.0.0/BaseITXINVR.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/BaseIBlockDiagonalMatVecProduct.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TXINVR { &#xA;&#xA;public class ITXINVR : BaseITXINVR, IBlockDiagonalMatVecProduct&#xA;{&#xA;&#xA;public ITXINVR() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITXINVR.cs" srcType="user" uri="impl.sp.solve.TXINVR/bin/1.0.0.0/ITXINVR.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TXINVR { &#xA;&#xA;public class ITXINVR&lt;IInstance> : BaseITXINVR&lt;IInstance>, IBlockDiagonalMatVecProduct&lt;IInstance>&#xA;{&#xA;&#xA;public ITXINVR() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITXINVR.cs" srcType="user" uri="impl.sp.solve.TXINVR/bin/1.0.0.0/ITXINVR.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.sp.solve.TXINVR/bin/1.0.0.0/BaseITXINVR.dll</dependency>
           <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/IBlockDiagonalMatVecProduct.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="55" w="228" x="100" y="146">
+      <visualDescription h="55" w="228" x="124" y="104">
         <color b="64" g="255" r="0"/>
       </visualDescription>
       <port name="blocks">
@@ -90,6 +114,7 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
     <unit iRef="ITXINVR" private="false" uRef="matvecproduct" visibleInterface="true">
       <super cRef="base" uRef="matvecproduct"/>
@@ -101,6 +126,13 @@
       </slices>
       <visualDescription h="40" w="114" x="124" y="265"/>
     </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
+      <visualDescription h="60" w="61" x="76" y="339"/>
+    </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>xyzdir</originRef>
       <originRef>base</originRef>
@@ -112,13 +144,6 @@
       <originRef>base</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <visualDescription h="20" w="20" x="260" y="427"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
-      <originRef>base</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
-      <visualDescription h="60" w="61" x="76" y="339"/>
     </enumerator>
   </componentInfo>
 </component:component>

@@ -9,7 +9,9 @@
         <visualDescription h="30" w="50" x="247" y="80">
           <color b="255" g="255" r="255"/>
         </visualDescription>
-        <parameter formFieldId="direction" varName="DIR"/>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
         <parameter formFieldId="method" varName="MTH"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
           <visualDescription h="53" w="112" x="302" y="427">
@@ -23,6 +25,8 @@
           <visualDescription h="55" w="102" x="315" y="279">
             <color b="255" g="255" r="255"/>
           </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
             <visualDescription h="10" w="10" x="47" y="9"/>
           </unitBounds>
@@ -46,7 +50,7 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000003bb781674ea675f3e73d687d81c2a1fc30c172ba4dc5abb7591c0493b3e0f7a440be50941862ce7b3d1d6a7d57a55f20f8929f9f272be575cb8c2735e6faaeb2aa7c8b4cdc19e0c763e7a660a9c4cce5993fd57a435000e7717204249b8b85fac784054d914d6776215ae09ebe843efcc400849f526412b1a2b2209ff2903ce" localRef="zdir" location="common.direction.Z/Z.hpe" name="Z" package="common.direction" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000003bb781674ea675f3e73d687d81c2a1fc30c172ba4dc5abb7591c0493b3e0f7a440be50941862ce7b3d1d6a7d57a55f20f8929f9f272be575cb8c2735e6faaeb2aa7c8b4cdc19e0c763e7a660a9c4cce5993fd57a435000e7717204249b8b85fac784054d914d6776215ae09ebe843efcc400849f526412b1a2b2209ff2903ce" localRef="zdir" location="common.orientation.Z/Z.hpe" name="Z" package="common.orientation" exposed="false">
       <visualDescription h="30" w="50" x="285" y="307">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -54,9 +58,28 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="instance" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="124" y="460">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="202" y="495">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="zdir" varName="DIR"/>
+    <supplyParameter cRef="instance" varName="I"/>
     <supplyParameter cRef="method" varName="MTH"/>
-    <interface iRef="ITZETAR" nArgs="0">
+    <interface iRef="ITZETAR" nArgs="1">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="78" y="26"/>
@@ -65,16 +88,17 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="92" y="3"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@157a654" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@a7350a" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TZETAR { &#xA;&#xA;public abstract class BaseITZETAR: Computation, BaseIBlockDiagonalMatVecProduct&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseITZETAR() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000051df9e33dd05d03a61afe4e3765837fc1f33a4e7d7b3a9b6bb2e42801b6acf57f45195f9b165cbaacd3735b7a66f419fbf65169088edf170760b42755c222bf9152126cb0c417119f71c7e93dd4e3078140c24088d8a0dcc7110fb5f183cc07e278c019cb43bc44eff3c47bcccd2409343328cf59a1e27e52b8991a0de81fc8d&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITZETAR.cs" srcType="base" uri="impl.sp.solve.TZETAR/bin/1.0.0.0/BaseITZETAR.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TZETAR { &#xA;&#xA;public abstract class BaseITZETAR&lt;IInstance>: Computation, BaseIBlockDiagonalMatVecProduct&lt;IInstance>&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort();&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance> problem = null;&#xA;&#xA;public IProblemDefinition&lt;IInstance> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance>) Services.getPort();&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseITZETAR() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;002400000480000094000000060200000024000052534131000400001100000051df9e33dd05d03a61afe4e3765837fc1f33a4e7d7b3a9b6bb2e42801b6acf57f45195f9b165cbaacd3735b7a66f419fbf65169088edf170760b42755c222bf9152126cb0c417119f71c7e93dd4e3078140c24088d8a0dcc7110fb5f183cc07e278c019cb43bc44eff3c47bcccd2409343328cf59a1e27e52b8991a0de81fc8d&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITZETAR.cs" srcType="base" uri="impl.sp.solve.TZETAR/bin/1.0.0.0/BaseITZETAR.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/BaseIBlockDiagonalMatVecProduct.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TZETAR { &#xA;&#xA;public class ITZETAR : BaseITZETAR, IBlockDiagonalMatVecProduct&#xA;{&#xA;&#xA;public ITZETAR() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITZETAR.cs" srcType="user" uri="impl.sp.solve.TZETAR/bin/1.0.0.0/ITZETAR.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.TZETAR { &#xA;&#xA;public class ITZETAR&lt;IInstance> : BaseITZETAR&lt;IInstance>, IBlockDiagonalMatVecProduct&lt;IInstance>&#xA;{&#xA;&#xA;public ITZETAR() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITZETAR.cs" srcType="user" uri="impl.sp.solve.TZETAR/bin/1.0.0.0/ITZETAR.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.sp.solve.TZETAR/bin/1.0.0.0/BaseITZETAR.dll</dependency>
           <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/IBlockDiagonalMatVecProduct.dll</dependency>
         </file>
@@ -90,6 +114,7 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
     <unit iRef="ITZETAR" private="false" uRef="matvecproduct" visibleInterface="true">
       <super cRef="base" uRef="matvecproduct"/>
@@ -101,6 +126,13 @@
       </slices>
       <visualDescription h="40" w="114" x="124" y="265"/>
     </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
+      <visualDescription h="60" w="61" x="76" y="339"/>
+    </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <originRef>base</originRef>
@@ -112,13 +144,6 @@
       <originRef>base</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="zdir" uRef="z"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
-      <originRef>base</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
-      <visualDescription h="60" w="61" x="76" y="339"/>
     </enumerator>
   </componentInfo>
 </component:component>
