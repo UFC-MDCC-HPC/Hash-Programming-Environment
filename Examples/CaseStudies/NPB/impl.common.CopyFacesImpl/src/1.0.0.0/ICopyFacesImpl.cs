@@ -3,10 +3,15 @@ using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.CopyFaces;
+using common.data.ProblemDefinition;
+using common.problem_size.Instance;
+using common.problem_size.Class;
 
 namespace impl.common.CopyFacesImpl { 
 
-public class ICopyFacesImpl : BaseICopyFacesImpl, ICopyFaces
+public class ICopyFacesImpl<I,C> : BaseICopyFacesImpl<I,C>, ICopyFaces<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 		
 	private int ncells;
@@ -16,50 +21,91 @@ public class ICopyFacesImpl : BaseICopyFacesImpl, ICopyFaces
 
 	private double[,,,,] u;
 
+    private double[][] out_buffer = new double[6][];
+    private double[][] in_buffer = new double[6][];
+		
+    private int east_size;
+    private int west_size;
+    private int north_size;
+    private int south_size;
+    private int top_size;
+    private int bottom_size;		
+		
 	public void initialize() 
 	{
 		ncells = Problem.NCells;
 		cell_size = Blocks.cell_size;
-		cell_coord = Blocks.cell_coord;
+		cell_coord = Blocks.cell_coord;		
 			
 		u = Problem.Field_u;
+			
+		compute_buffer_size(5);
+			
+		create_buffers();			
+	}
+		
+	private void compute_buffer_size(int dim) 
+	{
+        int c, face_size;
 
+        if (ncells == 1) return;
+
+        //---------------------------------------------------------------------
+        //      compute the actual sizes of the buffers; note that there is 
+        //      always one cell face that doesn't need buffer space, because it 
+        //      is at the boundary of the grid
+        //---------------------------------------------------------------------
+
+        west_size = 0;
+        east_size = 0;
+
+        for (c = 0; c < ncells; c++)
+        {
+            face_size = cell_size[c, 1] * cell_size[c, 2] * dim * 2;
+            if (cell_coord[c, 0] != 0) west_size = west_size + face_size;
+            if (cell_coord[c, 0] != ncells - 1) east_size = east_size + face_size;
+        }
+
+        north_size = 0;
+        south_size = 0;
+        for (c = 0; c < ncells; c++)
+        {
+            face_size = cell_size[c, 0] * cell_size[c, 2] * dim * 2;
+            if (cell_coord[c, 1] != 0) south_size = south_size + face_size;
+            if (cell_coord[c, 1] != ncells - 1) north_size = north_size + face_size;
+        }
+
+        top_size = 0;
+        bottom_size = 0;
+        for (c = 0; c < ncells; c++)
+        {
+            face_size = cell_size[c, 0] * cell_size[c, 1] * dim * 2;
+            if (cell_coord[c, 2] != 0) bottom_size = bottom_size + face_size;
+            if (cell_coord[c, 2] != ncells - 1) top_size = top_size + face_size;
+        }		
+	}
+		
+	private void create_buffers() 
+	{
+		out_buffer[0] = Output_buffer_x_east.Array = new double[east_size];	
+		out_buffer[1] = Output_buffer_x_west.Array = new double[west_size];	
+		out_buffer[2] = Output_buffer_y_north.Array = new double[north_size];	
+		out_buffer[3] = Output_buffer_y_south.Array = new double[south_size];	
+		out_buffer[4] = Output_buffer_z_top.Array = new double[top_size];	
+		out_buffer[5] = Output_buffer_z_bottom.Array = new double[bottom_size];	
 			
-			
+		in_buffer[0] = Input_buffer_x_east.Array = new double[east_size];	
+		in_buffer[1] = Input_buffer_x_west.Array = new double[west_size];	
+		in_buffer[2] = Input_buffer_y_north.Array = new double[north_size];	
+		in_buffer[3] = Input_buffer_y_south.Array = new double[south_size];	
+		in_buffer[4] = Input_buffer_z_top.Array = new double[top_size];	
+		in_buffer[5] = Input_buffer_z_bottom.Array = new double[bottom_size];				
 	}
 		
 	public override void synchronize() {
 	  
-	
-		    Shift_y.synchronize();
-			Shift_z.synchronize();
-			Shift_x.synchronize();
-			
-			//-------
 			
             int i, j, k, c, m, p0, p1, p2, p3, p4, p5, ksize, jsize, isize;
-            Request[] requests;
-            int[] b_size;
-
-            double[][] out_buffer = new double[6][];
-            double[][] in_buffer = new double[6][];
-
-//            requests = new Request[12];
-            b_size = new int[6];
-
-            b_size[0] = east_size;
-            b_size[1] = west_size;
-            b_size[2] = north_size;
-            b_size[3] = south_size;
-            b_size[4] = top_size;
-            b_size[5] = bottom_size;
-
-            for (i = 0; i < 6; i++)
-            {
-                out_buffer[i] = new double[b_size[i]];
-                in_buffer[i] = new double[b_size[i]];
-            }
-
 
             //---------------------------------------------------------------------
             // because the difference stencil for the diagonalized scheme is 
@@ -202,7 +248,7 @@ public class ICopyFacesImpl : BaseICopyFacesImpl, ICopyFaces
             }
 
 
-            RequestList requestList = new RequestList();
+    /*        RequestList requestList = new RequestList(); 
 
             requests[0] = comm_rhs.ImmediateReceive<double>(successor[0], WEST, in_buffer[0]);
             requests[1] = comm_rhs.ImmediateReceive<double>(predecessor[0], EAST, in_buffer[1]);
@@ -223,6 +269,23 @@ public class ICopyFacesImpl : BaseICopyFacesImpl, ICopyFaces
             }
 
             requestList.WaitAll();
+    */
+			Interact.initiate_recv_west();
+			Interact.initiate_recv_east();
+			Interact.initiate_recv_south();
+			Interact.initiate_recv_north();
+			Interact.initiate_recv_bottom();
+			Interact.initiate_recv_top();
+			
+			Interact.initiate_send_east();
+			Interact.initiate_send_west();
+			Interact.initiate_send_north();
+			Interact.initiate_send_south();
+			Interact.initiate_send_top();
+			Interact.initiate_send_bottom();
+			
+			Interact.synchronize();
+			
 
             //---------------------------------------------------------------------
             // unpack the data that has just been received;             

@@ -61,14 +61,6 @@ public BaseIProcessImpl() {
 
 } 
 
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000b72fd3158502ef4632454597f3da92b46982f3f00cf0765582e5c7d83235572c4824dd838676063b7d3a0e5b096709c3835211bad9eed0378e6f4b3ee031be0d61dd2717055006a5908f79a2e121eb382f099d01028c3b0e84d987279fc52c76843bc451c9a6d32f31179fb884fee0b317de1267e5eb07f7952455a9a2e0988e";
-
-override public void createSlices() {
-	base.createSlices();
-	this.Cell = (ICell) BackEnd.createSlice(this, UID,"topology","cell);
-} 
-
-
 }
 
 }

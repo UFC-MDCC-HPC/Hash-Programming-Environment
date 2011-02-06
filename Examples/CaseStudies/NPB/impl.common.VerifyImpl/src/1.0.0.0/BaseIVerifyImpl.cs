@@ -4,102 +4,125 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using common.datapartition.BlocksInfo;
 using common.topology.Ring;
-using common.error.RHSNorm;
-using common.error.ErrorNorm;
+using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
+using common.problem_size.Instance;
+using common.error.RHSNorm;
+using environment.MPIDirect;
+using common.error.ErrorNorm;
 using common.datapartition.Blocks3D;
 using common.Verify;
+using common.problem_size.Class;
+using common.CopyFaces;
 
 namespace impl.common.VerifyImpl { 
 
-public abstract class BaseIVerifyImpl: Computation, BaseIVerify
+public abstract class BaseIVerifyImpl<I,C>: Computation, BaseIVerify<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
-protected IBlocks blocks = null;
+private I instance = default(I);
 
-protected IBlocks Blocks {
-	set {
-		this.blocks = value;
-		error_norm.Blocks = value;
+protected I Instance {
+	get {
+		if (this.instance == null)
+			this.instance = (I) Services.getPort("instance");
+		return this.instance;
 	}
 }
 
-protected ICell x = null;
+private ICell z = null;
 
-protected ICell X {
-	set {
-		this.x = value;
+public ICell Z {
+	get {
+		if (this.z == null)
+			this.z = (ICell) Services.getPort("z");
+		return this.z;
 	}
 }
 
-protected ICell y = null;
+private ICell x = null;
 
-protected ICell Y {
-	set {
-		this.y = value;
+public ICell X {
+	get {
+		if (this.x == null)
+			this.x = (ICell) Services.getPort("x");
+		return this.x;
 	}
 }
 
-protected ICell z = null;
+private ICell y = null;
 
-protected ICell Z {
-	set {
-		this.z = value;
+public ICell Y {
+	get {
+		if (this.y == null)
+			this.y = (ICell) Services.getPort("y");
+		return this.y;
 	}
 }
 
-protected IRHSNorm rhs_norm = null;
+private IBlocks blocks_info = null;
 
-protected IRHSNorm Rhs_norm {
-	set {
-		this.rhs_norm = value;
+public IBlocks Blocks_info {
+	get {
+		if (this.blocks_info == null)
+			this.blocks_info = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks_info;
 	}
 }
 
-protected IErrorNorm error_norm = null;
+private IProblemDefinition<I,C> problem = null;
 
-protected IErrorNorm Error_norm {
-	set {
-		this.error_norm = value;
+public IProblemDefinition<I,C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
+		return this.problem;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private ICopyFaces<I,C> copy_faces = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
-		error_norm.Problem = value;
-		rhs_norm.Problem = value;
+protected ICopyFaces<I,C> Copy_faces {
+	get {
+		if (this.copy_faces == null)
+			this.copy_faces = (ICopyFaces<I,C>) Services.getPort("copy_faces");
+		return this.copy_faces;
 	}
 }
 
-protected IBlocks3D process = null;
+private IRHSNorm<I,C> rhs_norm = null;
 
-public IBlocks3D Process {
-	set {
-		this.process = value;
+protected IRHSNorm<I,C> Rhs_norm {
+	get {
+		if (this.rhs_norm == null)
+			this.rhs_norm = (IRHSNorm<I,C>) Services.getPort("rhs_norm");
+		return this.rhs_norm;
 	}
 }
 
+private IMPIDirect mpi = null;
 
-public BaseIVerifyImpl() { 
+public IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
+	}
+}
 
-} 
+private IErrorNorm<I,C> error_norm = null;
 
-public static string UID = "00240000048000009400000006020000002400005253413100040000110000001fdf1c333e7a360a79b933f434b7bff10ff34eb5f3c0dc8388fb27d56022f3cd84044a75f3c2423262d0b2021ea32d52fecb4950e16a1c6a8ab596d49cc2fac421dcfe345e2caffdc928cbad900d555ddf330cb0dba2fac75e9c7acf38e8cc3a3ca9c3d3435f29f212b8fc9f5bc50991184e61608f578dd8ddf1e75094b0c19a";
+protected IErrorNorm<I,C> Error_norm {
+	get {
+		if (this.error_norm == null)
+			this.error_norm = (IErrorNorm<I,C>) Services.getPort("error_norm");
+		return this.error_norm;
+	}
+}
 
-override public void createSlices() {
-	base.createSlices();
-	this.Error_norm = (IErrorNorm) BackEnd.createSlice(this, UID,"error_norm","error_norm);
-	this.Rhs_norm = (IRHSNorm) BackEnd.createSlice(this, UID,"rhs_norm","rhs_norm);
-	this.Z = (ICell) BackEnd.createSlice(this, UID,"z","cell);
-	this.Y = (ICell) BackEnd.createSlice(this, UID,"y","cell);
-	this.X = (ICell) BackEnd.createSlice(this, UID,"x","cell);
-	this.Blocks = (IBlocks) BackEnd.createSlice(this, UID,"blocks_info","blocks);
-} 
 
 abstract public void compute(); 
 

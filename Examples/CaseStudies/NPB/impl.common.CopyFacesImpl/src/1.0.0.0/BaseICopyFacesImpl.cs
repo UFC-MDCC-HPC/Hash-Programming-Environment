@@ -9,12 +9,16 @@ using common.datapartition.BlocksInfo;
 using common.Buffer;
 using common.data.ProblemDefinition;
 using environment.MPIDirect;
-using common.interactionpattern.Shift;
+using common.interactionpattern.Interact;
 using common.CopyFaces;
+using common.problem_size.Class;
+using common.problem_size.Instance;
 
 namespace impl.common.CopyFacesImpl { 
 
-public abstract class BaseICopyFacesImpl: Synchronizer, BaseICopyFaces
+public abstract class BaseICopyFacesImpl<I,C>: Synchronizer, BaseICopyFaces<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
 private ICell y = null;
@@ -57,72 +61,136 @@ public IBlocks Blocks {
 	}
 }
 
-private IBuffer output_buffer_x = null;
+private IBuffer output_buffer_x_east = null;
 
-protected IBuffer Output_buffer_x {
+protected IBuffer Output_buffer_x_east  {
 	get {
-		if (this.output_buffer_x == null)
-			this.output_buffer_x = (IBuffer) Services.getPort("output_buffer_x");
-		return this.output_buffer_x;
+		if (this.output_buffer_x_east  == null)
+			this.output_buffer_x_east  = (IBuffer) Services.getPort("output_buffer_x_east ");
+		return this.output_buffer_x_east ;
+	}
+}
+		
+private IBuffer output_buffer_x_west = null;
+
+protected IBuffer Output_buffer_x_west {
+	get {
+		if (this.output_buffer_x_west == null)
+			this.output_buffer_x_west = (IBuffer) Services.getPort("output_buffer_x_west");
+		return this.output_buffer_x_west;
+	}
+}
+		
+		
+private IBuffer input_buffer_x_east = null;
+
+protected IBuffer Input_buffer_x_east  {
+	get {
+		if (this.input_buffer_x_east  == null)
+			this.input_buffer_x_east  = (IBuffer) Services.getPort("input_buffer_x_east ");
+		return this.input_buffer_x_east ;
 	}
 }
 
-private IBuffer input_buffer_x = null;
+private IBuffer input_buffer_x_west = null;
 
-protected IBuffer Input_buffer_x {
+protected IBuffer Input_buffer_x_west {
 	get {
-		if (this.input_buffer_x == null)
-			this.input_buffer_x = (IBuffer) Services.getPort("input_buffer_x");
-		return this.input_buffer_x;
+		if (this.input_buffer_x_west == null)
+			this.input_buffer_x_west = (IBuffer) Services.getPort("input_buffer_x_west");
+		return this.input_buffer_x_west;
+	}
+}
+		
+		
+private IBuffer output_buffer_y_south = null;
+
+protected IBuffer Output_buffer_y_south {
+	get {
+		if (this.output_buffer_y_south == null)
+			this.output_buffer_y_south = (IBuffer) Services.getPort("output_buffer_y_south");
+		return this.output_buffer_y_south;
 	}
 }
 
-private IBuffer output_buffer_y = null;
+private IBuffer output_buffer_y_north = null;
 
-protected IBuffer Output_buffer_y {
+protected IBuffer Output_buffer_y_north {
 	get {
-		if (this.output_buffer_y == null)
-			this.output_buffer_y = (IBuffer) Services.getPort("output_buffer_y");
-		return this.output_buffer_y;
+		if (this.output_buffer_y_north == null)
+			this.output_buffer_y_north = (IBuffer) Services.getPort("output_buffer_y_north");
+		return this.output_buffer_y_north;
 	}
 }
 
-private IBuffer input_buffer_y = null;
+private IBuffer input_buffer_y_south = null;
 
-protected IBuffer Input_buffer_y {
+protected IBuffer Input_buffer_y_south {
 	get {
-		if (this.input_buffer_y == null)
-			this.input_buffer_y = (IBuffer) Services.getPort("input_buffer_y");
-		return this.input_buffer_y;
+		if (this.input_buffer_y_south == null)
+			this.input_buffer_y_south = (IBuffer) Services.getPort("input_buffer_y_south");
+		return this.input_buffer_y_south;
 	}
 }
 
-private IBuffer output_buffer_z = null;
+private IBuffer input_buffer_y_north = null;
 
-protected IBuffer Output_buffer_z {
+protected IBuffer Input_buffer_y_north {
 	get {
-		if (this.output_buffer_z == null)
-			this.output_buffer_z = (IBuffer) Services.getPort("output_buffer_z");
-		return this.output_buffer_z;
+		if (this.input_buffer_y_north == null)
+			this.input_buffer_y_north = (IBuffer) Services.getPort("input_buffer_y_north");
+		return this.input_buffer_y_north;
 	}
 }
 
-private IBuffer input_buffer_z = null;
+private IBuffer output_buffer_z_top = null;
 
-protected IBuffer Input_buffer_z {
+protected IBuffer Output_buffer_z_top {
 	get {
-		if (this.input_buffer_z == null)
-			this.input_buffer_z = (IBuffer) Services.getPort("input_buffer_z");
-		return this.input_buffer_z;
+		if (this.output_buffer_z_top == null)
+			this.output_buffer_z_top = (IBuffer) Services.getPort("output_buffer_z_top");
+		return this.output_buffer_z_top;
+	}
+}
+		
+private IBuffer output_buffer_z_bottom = null;
+
+protected IBuffer Output_buffer_z_bottom {
+	get {
+		if (this.output_buffer_z_bottom == null)
+			this.output_buffer_z_bottom = (IBuffer) Services.getPort("output_buffer_z_bottom");
+		return this.output_buffer_z_bottom;
+	}
+}
+		
+		
+private IBuffer input_buffer_z_top = null;
+
+protected IBuffer Input_buffer_z_top {
+	get {
+		if (this.input_buffer_z_top == null)
+			this.input_buffer_z_top = (IBuffer) Services.getPort("input_buffer_z_top");
+		return this.input_buffer_z_top;
+	}
+}
+		
+private IBuffer input_buffer_z_bottom = null;
+
+protected IBuffer Input_buffer_z_bottom {
+	get {
+		if (this.input_buffer_z_bottom == null)
+			this.input_buffer_z_bottom = (IBuffer) Services.getPort("input_buffer_z_bottom");
+		return this.input_buffer_z_bottom;
 	}
 }
 
-private IProblemDefinition problem = null;
 
-public IProblemDefinition Problem {
+private IProblemDefinition<I,C> problem = null;
+
+public IProblemDefinition<I,C> Problem {
 	get {
 		if (this.problem == null)
-			this.problem = (IProblemDefinition) Services.getPort("problem_data");
+			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
 		return this.problem;
 	}
 }
@@ -137,37 +205,17 @@ public IMPIDirect Mpi {
 	}
 }
 
-private IShift shift_y = null;
+private IInteract interact = null;
 
-protected IShift Shift_y {
+protected IInteract Interact {
 	get {
-		if (this.shift_y == null)
-			this.shift_y = (IShift) Services.getPort("shift_y");
-		return this.shift_y;
+		if (this.interact == null)
+			this.interact = (IInteract) Services.getPort("interact");
+		return this.interact;
 	}
 }
 
-private IShift shift_x = null;
-
-protected IShift Shift_x {
-	get {
-		if (this.shift_x == null)
-			this.shift_x = (IShift) Services.getPort("shift_x");
-		return this.shift_x;
-	}
-}
-
-private IShift shift_z = null;
-
-protected IShift Shift_z {
-	get {
-		if (this.shift_z == null)
-			this.shift_z = (IShift) Services.getPort("shift_z");
-		return this.shift_z;
-	}
-}
-
-
+		
 public BaseICopyFacesImpl() { 
 
 } 

@@ -9,10 +9,14 @@
         <visualDescription h="30" w="50" x="365" y="169">
           <color b="255" g="255" r="255"/>
         </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
         <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
           <visualDescription h="30" w="139" x="178" y="315">
             <color b="255" g="255" r="255"/>
           </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
             <visualDescription h="10" w="10" x="5" y="2"/>
           </unitBounds>
@@ -36,7 +40,26 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <interface iRef="IAddImpl" nArgs="0">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="731" y="470">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="760" y="538">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="IAddImpl" nArgs="1">
       <slice isRef="problem">
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="65" y="25"/>
@@ -45,7 +68,7 @@
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="16" y="29"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@45f2bf" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@163f932" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -54,7 +77,7 @@
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>common.Add/bin/1.0.0.0/BaseIAdd.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Add;&#xA;&#xA;namespace impl.common.AddImpl { &#xA;&#xA;public class IAddImpl : BaseIAddImpl, IAdd&#xA;{&#xA;&#xA;public IAddImpl() { &#xA;&#xA;} &#xA;&#xA;private int ncells;&#xA;private double[,,,,] u;&#xA;private double[,,,,] rhs;&#xA;private int[,] start;&#xA;private int[,] end;&#xA;private int[,] cell_size;&#xA;&#xA;public inititialize() &#xA;{  &#x9;&#xA;    ncells = Problem.NCells;&#x9;&#x9;&#x9;&#xA;&#x9;u = Problem.Field_u;&#xA;&#x9;rhs = Problem.Field_rhs;&#xA;&#x9;start = Blocks.cell_start;&#xA;&#x9;end = Blocks.cell_end;&#xA;&#x9;cell_size = Blocks.cell_size;   &#xD;&#xA;}&#xA;&#xA;public override void compute() &#xA;{ &#x9;&#x9;&#x9;&#xA;    int c, i, j, k, m;&#xA;&#xA;    for (c = 0; c &lt; ncells; c++)&#xA;    {&#xA;        for (k = start[c, 2]; k &lt; 2 + cell_size[c, 2] - end[c, 2]; k++)&#xA;        {&#xA;            for (j = start[c, 1]; j &lt; 2 + cell_size[c, 1] - end[c, 1]; j++)&#xA;            {&#xA;                for (i = start[c, 0]; i &lt; 2 + cell_size[c, 0] - end[c, 0]; i++)&#xA;                {&#xA;                    for (m = 0; m &lt; 5; m++)&#xA;                    {&#xA;                        u[c, k, j, i, m] += rhs[c, k, j, i, m];&#xA;                    }&#xA;                }&#xA;            }&#xA;        }&#xA;    }&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IAddImpl.cs" srcType="user" uri="impl.common.AddImpl/bin/1.0.0.0/IAddImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Add;&#xA;&#xA;namespace impl.common.AddImpl { &#xA;&#xA;public class IAddImpl : BaseIAddImpl, IAdd&#xA;{&#xA;&#xA;public IAddImpl() { &#xA;&#xA;} &#xA;&#xA;private int ncells;&#xA;private double[,,,,] u;&#xA;private double[,,,,] rhs;&#xA;private int[,] start;&#xA;private int[,] end;&#xA;private int[,] cell_size;&#xA;&#xA;public void initialize() &#xA;{  &#x9;&#xA;    ncells = Problem.NCells;&#x9;&#x9;&#x9;&#xA;&#x9;u = Problem.Field_u;&#xA;&#x9;rhs = Problem.Field_rhs;&#xA;&#x9;start = Blocks.cell_start;&#xA;&#x9;end = Blocks.cell_end;&#xA;&#x9;cell_size = Blocks.cell_size;   &#xD;&#xA;}&#xA;&#xA;public override void compute() &#xA;{ &#x9;&#x9;&#x9;&#xA;    int c, i, j, k, m;&#xA;&#xA;    for (c = 0; c &lt; ncells; c++)&#xA;    {&#xA;        for (k = start[c, 2]; k &lt; 2 + cell_size[c, 2] - end[c, 2]; k++)&#xA;        {&#xA;            for (j = start[c, 1]; j &lt; 2 + cell_size[c, 1] - end[c, 1]; j++)&#xA;            {&#xA;                for (i = start[c, 0]; i &lt; 2 + cell_size[c, 0] - end[c, 0]; i++)&#xA;                {&#xA;                    for (m = 0; m &lt; 5; m++)&#xA;                    {&#xA;                        u[c, k, j, i, m] += rhs[c, k, j, i, m];&#xA;                    }&#xA;                }&#xA;            }&#xA;        }&#xA;    }&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IAddImpl.cs" srcType="user" uri="impl.common.AddImpl/bin/1.0.0.0/IAddImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.common.AddImpl/bin/1.0.0.0/BaseIAddImpl.dll</dependency>
           <dependency>common.Add/bin/1.0.0.0/IAdd.dll</dependency>
         </file>
@@ -70,6 +93,7 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
     <unit iRef="IAddImpl" private="false" uRef="add" visibleInterface="true">
       <super cRef="base" uRef="add"/>

@@ -33,15 +33,29 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="..\src\1.0.0.0\BaseICellImpl.cs">
-      <Link>BaseICellImpl.cs</Link>
+    <Compile Include="..\src\1.0.0.0\BaseICell3DImpl.cs">
+      <Link>BaseICell3DImpl.cs</Link>
     </Compile>
-    <Compile Include="..\src\1.0.0.0\ICellImpl.cs">
-      <Link>ICellImpl.cs</Link>
+    <Compile Include="..\src\1.0.0.0\ICell3DImpl.cs">
+      <Link>ICell3DImpl.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Mesh3D\common.topology.Mesh3D\common.topology.Mesh3D.csproj">
+      <Project>{0BF7E793-1FDA-4FA1-9C2F-963178598EDB}</Project>
+      <Name>common.topology.Mesh3D</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

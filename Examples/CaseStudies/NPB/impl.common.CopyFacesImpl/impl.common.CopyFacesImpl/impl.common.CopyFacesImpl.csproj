@@ -73,9 +73,17 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.interactionpattern.Shift\common.interactionpattern.shift\common.interactionpattern.Shift.csproj">
-      <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
-      <Name>common.interactionpattern.Shift</Name>
+    <ProjectReference Include="..\..\common.interactionpattern.Interact\common.interactionpattern.Interact\common.interactionpattern.Interact.csproj">
+      <Project>{0DB177CF-2105-45E3-AAF5-7BAB51E56A71}</Project>
+      <Name>common.interactionpattern.Interact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -6,40 +6,60 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
+using common.problem_size.Instance;
+using common.problem_size.Class;
 using common.error.ErrorNorm;
+using environment.MPIDirect;
+using common.data.ExactSolution;
 
 namespace impl.common.error.ErrorNormImpl { 
 
-public abstract class BaseIErrorNormImpl: Computation, BaseIErrorNorm
+public abstract class BaseIErrorNormImpl<I,C>: Computation, BaseIErrorNorm<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
-protected IBlocks blocks = null;
+private IExactSolution exact_solution = null;
+
+protected IExactSolution Exact_solution {
+	get {
+		if (this.exact_solution == null)
+			this.exact_solution = (IExactSolution) Services.getPort("exact_solution");
+		return this.exact_solution;
+	}
+}
+
+private IBlocks blocks = null;
 
 public IBlocks Blocks {
-	set {
-		this.blocks = value;
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks");
+		return this.blocks;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private IProblemDefinition<I,C> problem = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
+public IProblemDefinition<I,C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem");
+		return this.problem;
 	}
 }
 
+private IMPIDirect mpi = null;
 
-public BaseIErrorNormImpl() { 
+public IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
+	}
+}
 
-} 
-
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000d11962cf5f605b848b55c0d3ebc6ac85b89abc3158adad4386af3ddbcb087b1013eb204851615da609f77d303e8ed106e5e22357a19cdfb7d99f6b01aef0d8393019c81a2feb62a25dffe0502953fe0ba9478b0da420f624c15d0fcc710468e8aa43d9f6f9fa058666d14a53fb8cfa2d8958ecec5acc72e7a2425b9e34482f99";
-
-override public void createSlices() {
-	base.createSlices();
-} 
-
+		
 abstract public void compute(); 
 
 

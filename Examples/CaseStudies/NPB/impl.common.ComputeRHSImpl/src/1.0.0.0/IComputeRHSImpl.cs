@@ -4,10 +4,14 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.ComputeRHS;
 using common.data.ProblemDefinition;
+using common.problem_size.Class;
+using common.problem_size.Instance;
 
 namespace impl.common.ComputeRHSImpl { 
 
-public class IComputeRHSImpl : BaseIComputeRHSImpl, IComputeRHS
+public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
 	private int ncells;

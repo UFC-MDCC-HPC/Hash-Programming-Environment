@@ -9,10 +9,15 @@ namespace impl.common.topology.RingImpl {
 public class ICellImpl : BaseICellImpl, ICell
 {
 
-public ICellImpl() { 
-
-} 
-
+	public ICellImpl() { 
+	
+	} 
+		
+	private int _successor_;	
+	private int _predecessor_;	
+		
+    public int successor { get { return _successor_; } set { _successor_ = value; } }
+    public int predecessor { get { return _predecessor_; } set { _predecessor_ = value; } }		
 
 }
 

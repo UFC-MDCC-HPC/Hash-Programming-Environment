@@ -37,6 +37,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
+    <Reference Include="BMInOut, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f7ab42cfcd849336">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>H:\HPE\NPB\NPB-CSharp\bin\BMInOut.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -48,4 +52,50 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
+      <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
+      <Name>common.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.error.ErrorNorm\common.error.ErrorNorm\common.error.ErrorNorm.csproj">
+      <Project>{F8C34778-EFA9-41AE-AEE9-0AA780413EC9}</Project>
+      <Name>common.error.ErrorNorm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.error.RHSNorm\common.error.RHSNorm\common.error.RHSNorm.csproj">
+      <Project>{3EABA808-0D6A-4230-A4A9-0B39839FE2DB}</Project>
+      <Name>common.error.RHSNorm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Verify\common.Verify\common.Verify.csproj">
+      <Project>{53EDB048-723C-44FA-8B9B-64A2BBD808C1}</Project>
+      <Name>common.Verify</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.Blocks3D\common.datapartition.Blocks3D\common.datapartition.Blocks3D.csproj">
+      <Project>{E308F8A8-C2CE-4159-8073-B8A31100D7D9}</Project>
+      <Name>common.datapartition.Blocks3D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
+      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
+      <Name>common.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.CopyFaces\common.CopyFaces\common.CopyFaces.csproj">
+      <Project>{EFF27C29-8291-4717-919D-70319E68D1E2}</Project>
+      <Name>common.CopyFaces</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

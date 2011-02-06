@@ -6,11 +6,25 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.data.Field;
 using common.data.ProblemDefinition;
+using common.problem_size.Class;
+using sp.problem_size.Instance_SP;
 
 namespace impl.common.data.ProblemDefinition { 
 
-public abstract class BaseIProblemDefinitionImpl: DataStructure, BaseIProblemDefinition
+public abstract class BaseIProblemDefinitionImpl<I, C>: DataStructure, BaseIProblemDefinition<I,C>
+where I:IInstance_SP<C>
+where C:IClass
 {
+		
+private I instance = default(I);
+
+protected I Instance {
+	get {
+		if (instance==null) 
+			instance = (I) Services.getPort("instance");
+		return instance;
+	}
+}		
 
 private IField lhs = null;
 

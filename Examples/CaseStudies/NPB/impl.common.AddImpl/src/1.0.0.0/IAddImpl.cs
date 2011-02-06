@@ -3,10 +3,14 @@ using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.Add;
+using common.problem_size.Class;
+using common.problem_size.Instance;
 
 namespace impl.common.AddImpl { 
 
-public class IAddImpl : BaseIAddImpl, IAdd
+public class IAddImpl<I,C> : BaseIAddImpl<I,C>, IAdd<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
 public IAddImpl() { 
@@ -20,7 +24,7 @@ private int[,] start;
 private int[,] end;
 private int[,] cell_size;
 
-public void inititialize() 
+public void initialize() 
 {  	
     ncells = Problem.NCells;			
 	u = Problem.Field_u;

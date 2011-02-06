@@ -7,10 +7,15 @@ using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
 using common.Add;
+using common.problem_size.Class;
+using common.problem_size.Instance;
+
 
 namespace impl.common.AddImpl { 
 
-public abstract class BaseIAddImpl: Computation, BaseIAdd
+public abstract class BaseIAddImpl<I,C>: Computation, BaseIAdd<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
 private IBlocks blocks = null;
@@ -23,12 +28,12 @@ public IBlocks Blocks {
 	}
 }
 
-private IProblemDefinition problem = null;
+private IProblemDefinition<I,C> problem = null;
 
-public IProblemDefinition Problem {
+public IProblemDefinition<I,C> Problem {
 	get {
 		if (this.problem == null)
-		   this.problem = (IProblemDefinition) Services.getPort("problem_data");
+		   this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
 		return this.problem;
 	}
 }

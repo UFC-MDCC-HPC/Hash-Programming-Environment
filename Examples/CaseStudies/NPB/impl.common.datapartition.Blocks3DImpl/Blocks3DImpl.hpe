@@ -9,6 +9,8 @@
         <visualDescription h="30" w="50" x="298" y="189">
           <color b="255" g="255" r="255"/>
         </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
         <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
           <visualDescription h="30" w="50" x="97" y="426">
             <color b="255" g="255" r="255"/>
@@ -52,7 +54,26 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <interface iRef="IProcessImpl" nArgs="0">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="instance" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" exposed="false">
+      <visualDescription h="30" w="147" x="542" y="640">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="41" w="175" x="674" y="354">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="IBlocks3DImpl" nArgs="1">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="9" y="30"/>
@@ -61,14 +82,18 @@
         <originRef cRef="topology" iRef="ICell"/>
         <visualDescription h="10" w="10" x="39" y="32"/>
       </slice>
+      <slice isRef="instance">
+        <originRef cRef="instance" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="65" y="29"/>
+      </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Mesh3D;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.datapartition.Blocks3D;&#xA;&#xA;namespace impl.common.datapartition.Blocks3DImpl { &#xA;&#xA;public abstract class BaseIProcessImpl: Environment, BaseIBlocks3D&#xA;{&#xA;&#xA;protected ICell cell = null;&#xA;&#xA;protected ICell Cell {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.cell = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.x = value;&#xA;&#x9;&#x9;cell.X = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.z = value;&#xA;&#x9;&#x9;cell.Z = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.y = value;&#xA;&#x9;&#x9;cell.Y = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIProcessImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000b72fd3158502ef4632454597f3da92b46982f3f00cf0765582e5c7d83235572c4824dd838676063b7d3a0e5b096709c3835211bad9eed0378e6f4b3ee031be0d61dd2717055006a5908f79a2e121eb382f099d01028c3b0e84d987279fc52c76843bc451c9a6d32f31179fb884fee0b317de1267e5eb07f7952455a9a2e0988e&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;&#x9;this.Cell = (ICell) BackEnd.createSlice(this, UID,&quot;topology&quot;,&quot;cell);&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIProcessImpl.cs" srcType="base" uri="impl.common.datapartition.Blocks3DImpl/bin/1.0.0.0/BaseIProcessImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Mesh3D;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.datapartition.Blocks3D;&#xA;&#xA;namespace impl.common.datapartition.Blocks3DImpl { &#xA;&#xA;public abstract class BaseIBlocks3DImpl: br.ufc.pargo.hpe.kinds.Environment, BaseIBlocks3D&#xA;{&#xA;&#xA;private ICell3D cell = null;&#xA;&#xA;protected ICell3D Cell {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.cell == null)&#xA;&#x9;&#x9;&#x9;this.cell = (ICell3D) Services.getPort(&quot;cell&quot;);&#xA;&#x9;&#x9;return this.cell;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBlocks3DImpl.cs" srcType="base" uri="impl.common.datapartition.Blocks3DImpl/bin/1.0.0.0/BaseIBlocks3DImpl.dll" versionId="1.0.0.0">
           <dependency>common.topology.Mesh3D/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.Blocks3D;&#xA;&#xA;namespace impl.common.datapartition.Blocks3DImpl { &#xA;&#xA;public class IProcessImpl : BaseIProcessImpl, IBlocks3D&#xA;{&#xA;&#xA;public IProcessImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IProcessImpl.cs" srcType="user" uri="impl.common.datapartition.Blocks3DImpl/bin/1.0.0.0/IProcessImpl.dll" versionId="1.0.0.0">
-          <dependency>%WORKSPACE/impl.common.datapartition.Blocks3DImpl/bin/1.0.0.0/BaseIProcessImpl.dll</dependency>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.Blocks3D;&#xA;&#xA;namespace impl.common.datapartition.Blocks3DImpl { &#xA;&#xA;public class IBlocks3DImpl : BaseIBlocks3DImpl, IBlocks3D&#xA;{&#xA;&#xA;public IBlocks3DImpl() { &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;make_set();&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;} &#xA;&#x9;&#x9;&#xA;//---------------------------------------------------------------------&#xA;// This function allocates space for a set of cells and fills the set     &#xA;// such that communication between cells on different nodes is only&#xA;// nearest neighbor                                                   &#xA;//---------------------------------------------------------------------&#xA;private void make_set()&#xA;{&#xA;&#x9;int[,] cell_coord, cell_low, cell_high, cell_size, slice, start, end;&#xA;&#xA;    cell_coord = Blocks.cell_coord;&#xA;&#x9;cell_low = Blocks.cell_low;&#xA;&#x9;cell_high = Blocks.cell_high;&#xA;&#x9;cell_size = Blocks.cell_size;&#xA;&#x9;slice = Blocks.cell_slice;&#xA;&#x9;start = Blocks.cell_start;&#xA;&#x9;end = Blocks.cell_end;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;int ncells;&#xA;&#x9;int no_nodes = this.Ranks.Length;&#x9;&#xA;&#x9;int node = this.GlobalRank;&#xA;&#x9;&#x9;&#x9;&#xA;    int p, i, j, c, dir, size, excess, ierrcode = 0;&#xA;&#xA;    //---------------------------------------------------------------------&#xA;    //     compute square root; add small number to allow for roundoff&#xA;    //     (note: this is computed in setup_mpi.f also, but prefer to do&#xA;    //     it twice because of some include file problems).&#xA;    //---------------------------------------------------------------------&#xA;    ncells = Convert.ToInt32(Math.Sqrt(no_nodes));&#xA;&#xA;    //---------------------------------------------------------------------&#xA;    //      this makes coding easier&#xA;    //---------------------------------------------------------------------&#xA;    p = ncells;&#xA;&#xA;    //---------------------------------------------------------------------&#xA;    //      determine the location of the cell at the bottom of the 3D &#xA;    //      array of cells&#xA;    //---------------------------------------------------------------------&#xA;    cell_coord[0, 0] = mod(node, p);   //mod(node,p);&#xA;    cell_coord[0, 1] = node / p;&#xA;    cell_coord[0, 2] = 0;&#xA;&#xA;    //---------------------------------------------------------------------&#xA;    //      set the cell_coords for cells in the rest of the z-layers; &#xA;    //      this comes down to a simple linear numbering in the z-direct-&#xA;    //      ion, and to the doubly-cyclic numbering in the other dirs     &#xA;    //---------------------------------------------------------------------&#xA;    for (c = 1; c &lt; p; c++)&#xA;    {&#xA;        cell_coord[c, 0] = mod(cell_coord[c - 1, 0] + 1, p) ;                           // mod(cell_coord(1,c-1)+1,p);&#xA;        cell_coord[c, 1] = mod(cell_coord[c - 1, 1] - 1 + p, p) ;                           // mod(cell_coord(2,c-1)-1+p,p); &#xA;        cell_coord[c, 2] = c ;&#xA;    }&#xA;&#xA;    //---------------------------------------------------------------------&#xA;    //      slice(n,dir) contains the sequence number of the cell that is in&#xA;    //      coordinate plane n in the dir direction&#xA;    //---------------------------------------------------------------------&#xA;    for (dir = 0; dir &lt; 3; dir++)&#xA;    {&#xA;        for (c = 0; c &lt; p; c++)&#xA;        {&#xA;            slice[cell_coord[c, dir], dir] = c;&#xA;        }&#xA;    }&#xA;    &#xA;    //---------------------------------------------------------------------&#xA;    //      fill the predecessor and successor entries, using the indices &#xA;    //      of the bottom cells (they are the same at each level of k &#xA;    //      anyway) acting as if full periodicity pertains; note that p is&#xA;    //      added to those arguments to the mod functions that might&#xA;    //      otherwise return wrong values when using the modulo function&#xA;    //---------------------------------------------------------------------&#xA;    i = cell_coord[0, 0];&#xA;    j = cell_coord[0, 1];&#xA;&#xA;    Cell.X.predecessor = /* predecessor[0] = */ mod(i - 1 + p, p) + p * j;&#xA;    Cell.Y.predecessor = /* predecessor[1] = */ i + p * mod(j - 1 + p, p);&#xA;    Cell.Z.predecessor = /* predecessor[2] = */ mod(i + 1, p) + p * mod(j - 1 + p, p);&#xA;&#xA;    Cell.X.sucessor = /* successor[0] = */ mod(i + 1, p) + p * j;&#xA;    Cell.Y.sucessor = /* successor[1] = */ i + p * mod(j + 1, p);&#xA;    Cell.Z.sucessor = /* successor[2] = */ mod(i - 1 + p, p) + p * mod(j + 1, p);&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;    //---------------------------------------------------------------------&#xA;    // now compute the sizes of the cells                                    &#xA;    //---------------------------------------------------------------------&#xA;    for (dir = 0; dir &lt; 3; dir++)&#xA;    {&#xA;        //---------------------------------------------------------------------&#xA;        //         set cell_coord range for each direction                            &#xA;        //---------------------------------------------------------------------&#xA;        size = grid_points[dir] / p;&#xA;        excess = mod(grid_points[dir], p);&#xA;&#xA;        for (c = 0; c &lt; ncells; c++)&#xA;        {&#xA;            if (cell_coord[c, dir] &lt; excess)&#xA;            {&#xA;                cell_size[c, dir] = size + 1;&#xA;                cell_low[c, dir] = (cell_coord[c, dir]) * (size + 1);&#xA;                cell_high[c, dir] = cell_low[c, dir] + size;&#xA;            }&#xA;            else&#xA;            {&#xA;                cell_size[c, dir] = size;&#xA;                cell_low[c, dir] = excess * (size + 1) + (cell_coord[c, dir] - excess) * size;&#xA;                cell_high[c, dir] = cell_low[c, dir] + size - 1;&#xA;            }&#xA;            if (cell_size[c, dir] &lt;= 2)&#xA;            {&#xA;                Console.WriteLine(&quot;Error: Cell size too small. Min size is 3&quot;);&#xA;              //  worldcomm.Abort(ierrcode); &#xA;                System.Environment.Exit(0);&#xA;            }&#xA;        }&#xA;    }&#xA;}&#xA;&#x9;&#x9;&#xA;private int mod(int a, int b)&#xA;{&#xA;    int r;&#xA;    Math.DivRem(a, b, out r);&#xA;    return r;&#xA;}&#xA;&#xA;&#xA;}&#xA;}&#xA;" fileType="library" name="IBlocks3DImpl.cs" srcType="user" uri="impl.common.datapartition.Blocks3DImpl/bin/1.0.0.0/IBlocks3DImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.datapartition.Blocks3DImpl/bin/1.0.0.0/BaseIBlocks3DImpl.dll</dependency>
           <dependency>common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll</dependency>
         </file>
       </sources>
@@ -83,16 +108,17 @@
         <visualDescription h="10" w="10" x="79" y="2"/>
         <slice pRef="x" sRef="cell"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="88" y="37"/>
-        <slice pRef="z" sRef="cell"/>
-      </port>
       <port name="y">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="y" sRef="cell"/>
       </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="88" y="37"/>
+        <slice pRef="z" sRef="cell"/>
+      </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
-    <unit iRef="IProcessImpl" private="false" uRef="process" visibleInterface="true">
+    <unit iRef="IBlocks3DImpl" private="false" uRef="process" visibleInterface="true">
       <super cRef="base" uRef="process"/>
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
         <visualDescription h="10" w="10" x="9" y="30"/>
@@ -111,6 +137,9 @@
         <port>x</port>
         <port>y</port>
         <port>z</port>
+      </slices>
+      <slices cRef="instance" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="65" y="29"/>
       </slices>
       <visualDescription h="47" w="94" x="135" y="183"/>
     </unit>

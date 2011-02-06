@@ -6,9 +6,11 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000099021d2f712406ffa021ea9f4f0d75d2cba517e7bac440d02dd6b2c9b906ebc109050dd574b7b79f9082fa2116739a6ffd8da821372ccf28ec2d551ba8814610c2825b807dadf65db043a10660caae3b15ea88fb7620461bd2896e0b49b91c840d56d56077174337c5161328ec742f8333e04d49d4a0b3ee2e533f9f3549c78c" localRef="base" location="common.error.ErrorNorm/ErrorNorm.hpe" name="ErrorNorm" package="common.error" version="1.0.0.0">
-        <visualDescription h="30" w="50" x="194" y="160">
+        <visualDescription h="30" w="50" x="174" y="160">
           <color b="255" g="255" r="255"/>
         </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
           <visualDescription h="54" w="93" x="238" y="333">
             <color b="255" g="255" r="255"/>
@@ -18,9 +20,11 @@
           </unitBounds>
         </port>
         <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
-          <visualDescription h="30" w="117" x="173" y="487">
+          <visualDescription h="30" w="117" x="135" y="506">
             <color b="255" g="255" r="255"/>
           </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
             <visualDescription h="10" w="10" x="5" y="2"/>
           </unitBounds>
@@ -36,7 +40,26 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <interface iRef="IErrorNormImpl" nArgs="0">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="253" y="238">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="115" y="338">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="IErrorNormImpl" nArgs="1">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="62" y="28"/>
@@ -45,19 +68,20 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="28" y="25"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@124a904" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1cd0295" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d45ab6" repeat="0">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@64bd8a" repeat="0">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.error.ErrorNorm;&#xA;&#xA;namespace impl.common.error.ErrorNormImpl { &#xA;&#xA;public abstract class BaseIErrorNormImpl: Computation, BaseIErrorNorm&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIErrorNormImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000d11962cf5f605b848b55c0d3ebc6ac85b89abc3158adad4386af3ddbcb087b1013eb204851615da609f77d303e8ed106e5e22357a19cdfb7d99f6b01aef0d8393019c81a2feb62a25dffe0502953fe0ba9478b0da420f624c15d0fcc710468e8aa43d9f6f9fa058666d14a53fb8cfa2d8958ecec5acc72e7a2425b9e34482f99&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIErrorNormImpl.cs" srcType="base" uri="impl.common.error.ErrorNormImpl/bin/1.0.0.0/BaseIErrorNormImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.error.ErrorNorm;&#xA;&#xA;namespace impl.common.error.ErrorNormImpl { &#xA;&#xA;public abstract class BaseIErrorNormImpl&lt;IInstance>: Computation, BaseIErrorNorm&lt;IInstance>&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort();&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance> problem = null;&#xA;&#xA;public IProblemDefinition&lt;IInstance> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance>) Services.getPort();&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIErrorNormImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000d11962cf5f605b848b55c0d3ebc6ac85b89abc3158adad4386af3ddbcb087b1013eb204851615da609f77d303e8ed106e5e22357a19cdfb7d99f6b01aef0d8393019c81a2feb62a25dffe0502953fe0ba9478b0da420f624c15d0fcc710468e8aa43d9f6f9fa058666d14a53fb8cfa2d8958ecec5acc72e7a2425b9e34482f99&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIErrorNormImpl.cs" srcType="base" uri="impl.common.error.ErrorNormImpl/bin/1.0.0.0/BaseIErrorNormImpl.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.error.ErrorNorm/bin/1.0.0.0/BaseIErrorNorm.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.error.ErrorNorm;&#xA;&#xA;namespace impl.common.error.ErrorNormImpl { &#xA;&#xA;public class IErrorNormImpl : BaseIErrorNormImpl, IErrorNorm&#xA;{&#xA;&#xA;public IErrorNormImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IErrorNormImpl.cs" srcType="user" uri="impl.common.error.ErrorNormImpl/bin/1.0.0.0/IErrorNormImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.error.ErrorNorm;&#xA;&#xA;namespace impl.common.error.ErrorNormImpl { &#xA;&#xA;public class IErrorNormImpl&lt;IInstance> : BaseIErrorNormImpl&lt;IInstance>, IErrorNorm&lt;IInstance>&#xA;{&#xA;&#xA;public IErrorNormImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IErrorNormImpl.cs" srcType="user" uri="impl.common.error.ErrorNormImpl/bin/1.0.0.0/IErrorNormImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.common.error.ErrorNormImpl/bin/1.0.0.0/BaseIErrorNormImpl.dll</dependency>
           <dependency>common.error.ErrorNorm/bin/1.0.0.0/IErrorNorm.dll</dependency>
         </file>
@@ -73,6 +97,7 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
     <unit iRef="IErrorNormImpl" private="false" uRef="error_norm" visibleInterface="true">
       <super cRef="base" uRef="error_norm"/>
@@ -89,7 +114,7 @@
       <originRef>problem_data</originRef>
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="error_norm"/>
-      <visualDescription h="60" w="61" x="34" y="226"/>
+      <visualDescription h="60" w="61" x="34" y="203"/>
     </enumerator>
   </componentInfo>
 </component:component>

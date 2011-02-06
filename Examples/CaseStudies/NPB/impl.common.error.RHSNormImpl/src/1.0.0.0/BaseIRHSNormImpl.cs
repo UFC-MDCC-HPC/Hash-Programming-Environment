@@ -6,30 +6,49 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.data.ProblemDefinition;
 using common.error.RHSNorm;
+using common.problem_size.Class;
+using common.problem_size.Instance;
+using common.datapartition.BlocksInfo;
+using environment.MPIDirect;
+
 
 namespace impl.common.error.RHSNormImpl { 
 
-public abstract class BaseIRHSNormImpl: Computation, BaseIRHSNorm
+public abstract class BaseIRHSNormImpl<I,C>: Computation, BaseIRHSNorm<I,C>
+		where I:IInstance<C>
+		where C:IClass
 {
 
-protected IProblemDefinition problem = null;
+private IBlocks blocks = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
+public IBlocks Blocks {
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks");
+		return this.blocks;
 	}
 }
 
+private IProblemDefinition<I,C> problem = null;
 
-public BaseIRHSNormImpl() { 
+public IProblemDefinition<I,C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem");
+		return this.problem;
+	}
+}
 
-} 
+private IMPIDirect mpi = null;
 
-public static string UID = "002400000480000094000000060200000024000052534131000400001100000021a4a229c0f4621d60b0bb4a23e3997818281a24c8d40dcb9799917951d415da250af7c05771d71f31c46b2cc0542d764a4945f23b04b116647201ba56cbe1da5148e2f8c1dca475c71a12da487f1f74aab0ea067d0b0989414da7f000b96452de6229363f826685005bb371768d237527972692cf56f3a6d961bbb10e6bc0a6";
-
-override public void createSlices() {
-	base.createSlices();
-} 
+public IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
+	}
+}
+		
 
 abstract public void compute(); 
 

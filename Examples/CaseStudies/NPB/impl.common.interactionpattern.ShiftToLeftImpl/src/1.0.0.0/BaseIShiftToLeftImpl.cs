@@ -7,42 +7,62 @@ using br.ufc.pargo.hpe.kinds;
 using common.topology.Ring;
 using common.Buffer;
 using environment.MPIDirect;
+using common.direction.RightToLeft;
 using common.interactionpattern.Shift;
 
 namespace impl.common.interactionpattern.ShiftToLeftImpl { 
 
-public abstract class BaseIShiftToLeftImpl: Synchronizer, BaseIShift
+public abstract class BaseIShiftToLeftImpl<DIR>: Synchronizer, BaseIShift<DIR>
+		where DIR:IRightToLeft
 {
 
-protected ICell cell = null;
+private ICell cell = null;
 
 public ICell Cell {
-	set {
-		this.cell = value;
+	get {
+		if (this.cell == null)
+			this.cell = (ICell) Services.getPort("cell");
+		return this.cell;
 	}
 }
 
-protected IBuffer input_buffer = null;
+private IBuffer input_buffer = null;
 
 public IBuffer Input_buffer {
-	set {
-		this.input_buffer = value;
+	get {
+		if (this.input_buffer == null)
+			this.input_buffer = (IBuffer) Services.getPort("input_buffer");
+		return this.input_buffer;
 	}
 }
 
-protected IBuffer output_buffer = null;
+private IBuffer output_buffer = null;
 
 public IBuffer Output_buffer {
-	set {
-		this.output_buffer = value;
+	get {
+		if (this.output_buffer == null)
+			this.output_buffer = (IBuffer) Services.getPort("output_buffer");
+		return this.output_buffer;
 	}
 }
 
-protected IMPIDirect mpi = null;
+private IMPIDirect mpi = null;
 
-protected IMPIDirect Mpi {
-	set {
-		this.mpi = value;
+public IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
+	}
+}
+
+private DIR direction = default(DIR);
+
+protected DIR Direction {
+	get {
+		if (this.direction == null)
+			this.direction = (DIR) Services.getPort("direction");
+		return this.direction;
 	}
 }
 
@@ -51,11 +71,10 @@ public BaseIShiftToLeftImpl() {
 
 } 
 
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000d7f5ba42a4d2210fe521140fcdebcf86ada2b7d45f2aa9e4054f8a582d91a0d8ad7b9076fe096a7afe942f90822f2cd34d5133f076994d9affe78a3f64a41de336eb1525766d06118ae8ffefe7a3fa5f1d87a80c95d76ad7093cf6aded17fda8c39ab83254fd1f155d3c425f28edd875d2b24b597d9d9a2ba66fd9cba64f23b0";
+public static string UID = "0024000004800000940000000602000000240000525341310004000011000000edc7b05e0bb9da2bd993cc6deb534c575306f8c96142656271c343e24a1b55eb2a358eff5568646dff1cc33e86eb80ca0ce0402626f531a8f785bb04b5afcee7a8b5314bd04b5112f04d915c2b6947e66abf5e2640ae34d736ce0cd7c46fc9839e66eda8baaee1d3e95beadebfe6831864d972a66c59bc776b3ac44aefda0885";
 
 override public void createSlices() {
 	base.createSlices();
-	this.Mpi = (IMPIDirect) BackEnd.createSlice(this, UID,"mpi","mpi);
 } 
 
 abstract public void synchronize(); 

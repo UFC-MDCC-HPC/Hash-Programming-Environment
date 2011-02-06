@@ -44,7 +44,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <interface iRef="ICellImpl" nArgs="0">
+    <interface iRef="ICell3DImpl" nArgs="0">
       <slice isRef="x">
         <originRef cRef="x" iRef="ICell"/>
         <visualDescription h="10" w="10" x="6" y="25"/>
@@ -58,13 +58,13 @@
         <visualDescription h="10" w="10" x="60" y="13"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.topology.Mesh3D;&#xA;&#xA;namespace impl.common.topology.Mesh3DImpl { &#xA;&#xA;public abstract class BaseICellImpl: Environment, BaseICell&#xA;{&#xA;&#xA;protected ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.x = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.y = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.z = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseICellImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000008584adccb1e9b176bb3b5aa3e4f4989c9923b70cfce0855c68c7c1025e59d0c41ae3bd30bfc1104ce88f0da674e6143aae8615dfa9b53efe7507b443a247e2ea5ec3f5cf6f19710d921f8caa6e2dea8399c6fe28ca772bc853f9d610c25832e86ab6a0595788e78dafe9cc0635dd853f788ece170ff8e5176943c30bc42730b3&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICellImpl.cs" srcType="base" uri="impl.common.topology.Mesh3DImpl/bin/1.0.0.0/BaseICellImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.topology.Mesh3D;&#xA;&#xA;namespace impl.common.topology.Mesh3DImpl { &#xA;&#xA;public abstract class BaseICell3DImpl: Environment, BaseICell3D&#xA;{&#xA;&#xA;private ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort();&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort();&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort();&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseICell3DImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000008584adccb1e9b176bb3b5aa3e4f4989c9923b70cfce0855c68c7c1025e59d0c41ae3bd30bfc1104ce88f0da674e6143aae8615dfa9b53efe7507b443a247e2ea5ec3f5cf6f19710d921f8caa6e2dea8399c6fe28ca772bc853f9d610c25832e86ab6a0595788e78dafe9cc0635dd853f788ece170ff8e5176943c30bc42730b3&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICell3DImpl.cs" srcType="base" uri="impl.common.topology.Mesh3DImpl/bin/1.0.0.0/BaseICell3DImpl.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
-          <dependency>common.topology.Mesh3D/bin/1.0.0.0/BaseICell.dll</dependency>
+          <dependency>common.topology.Mesh3D/bin/1.0.0.0/BaseICell3D.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Mesh3D;&#xA;&#xA;namespace impl.common.topology.Mesh3DImpl { &#xA;&#xA;public class ICellImpl : BaseICellImpl, ICell&#xA;{&#xA;&#xA;public ICellImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICellImpl.cs" srcType="user" uri="impl.common.topology.Mesh3DImpl/bin/1.0.0.0/ICellImpl.dll" versionId="1.0.0.0">
-          <dependency>%WORKSPACE/impl.common.topology.Mesh3DImpl/bin/1.0.0.0/BaseICellImpl.dll</dependency>
-          <dependency>common.topology.Mesh3D/bin/1.0.0.0/ICell.dll</dependency>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Mesh3D;&#xA;&#xA;namespace impl.common.topology.Mesh3DImpl { &#xA;&#xA;public class ICell3DImpl : BaseICell3DImpl, ICell3D&#xA;{&#xA;&#xA;public ICell3DImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICell3DImpl.cs" srcType="user" uri="impl.common.topology.Mesh3DImpl/bin/1.0.0.0/ICell3DImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.topology.Mesh3DImpl/bin/1.0.0.0/BaseICell3DImpl.dll</dependency>
+          <dependency>common.topology.Mesh3D/bin/1.0.0.0/ICell3D.dll</dependency>
         </file>
       </sources>
       <visualDescription h="40" w="80" x="142" y="107">
@@ -83,7 +83,7 @@
         <slice pRef="cell" sRef="z"/>
       </port>
     </interface>
-    <unit iRef="ICellImpl" private="false" uRef="cell" visibleInterface="true">
+    <unit iRef="ICell3DImpl" private="false" uRef="cell" visibleInterface="true">
       <super cRef="base" uRef="cell"/>
       <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="false">
         <visualDescription h="10" w="10" x="6" y="25"/>
