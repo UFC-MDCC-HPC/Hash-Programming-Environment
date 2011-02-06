@@ -4,166 +4,161 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using common.topology.Ring;
 using common.datapartition.BlocksInfo;
-using common.data.ProblemDefinition;
+using common.topology.Ring;
 using common.CopyFaces;
+using sp.problem_size.Instance_SP;
+using common.problem_size.Class;
 using common.solve.Solve;
-using common.Add;
-using common.ComputeRHS;
+using common.solve.BeamWarmingMethod;
+using common.orientation.Y;
+using common.orientation.Z;
 using common.solve.BlockDiagonalMatVecProduct;
+using common.orientation.XYZ;
+using environment.MPIDirect;
+using common.Add;
 using common.datapartition.Blocks3D;
+using common.data.ProblemDefinition;
+using common.ComputeRHS;
+using common.orientation.X;
 using sp.ADI;
 
 namespace impl.sp.solve.ADI { 
 
-public abstract class BaseIADIImpl: Computation, BaseIADI
+public abstract class BaseIADIImpl<C>: Computation, BaseIADI<C>
+where C:IClass
 {
 
-protected ICell x = null;
+private IBlocks blocks = null;
 
-protected ICell X {
-	set {
-		this.x = value;
-		x_solve.Cell = value;
-		copy_faces.X = value;
+public IBlocks Blocks {
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks;
 	}
 }
 
-protected ICell z = null;
+private ICell x = null;
 
-protected ICell Z {
-	set {
-		this.z = value;
-		z_solve.Cell = value;
-		copy_faces.Z = value;
+public ICell X {
+	get {
+		if (this.x == null)
+			this.x = (ICell) Services.getPort("x");
+		return this.x;
 	}
 }
 
-protected ICell y = null;
+private ICell y = null;
 
-protected ICell Y {
-	set {
-		this.y = value;
-		y_solve.Cell = value;
-		copy_faces.Y = value;
+public ICell Y {
+	get {
+		if (this.y == null)
+			this.y = (ICell) Services.getPort("y");
+		return this.y;
 	}
 }
 
-protected IBlocks blocks = null;
+private ICell z = null;
 
-protected IBlocks Blocks {
-	set {
-		this.blocks = value;
-		txinvr.Blocks = value;
-		compute_rhs.Blocks = value;
-		x_solve.Blocks = value;
-		y_solve.Blocks = value;
-		z_solve.Blocks = value;
-		copy_faces.Blocks = value;
+public ICell Z {
+	get {
+		if (this.z == null)
+			this.z = (ICell) Services.getPort("z");
+		return this.z;
 	}
 }
 
-protected IProblemDefinition problem = null;
+private ICopyFaces<IInstance_SP<C>, C> copy_faces = null;
 
-public IProblemDefinition Problem {
-	set {
-		this.problem = value;
-		txinvr.Problem = value;
-		compute_rhs.Problem = value;
-		add.Problem = value;
-		x_solve.Problem = value;
-		y_solve.Problem = value;
-		z_solve.Problem = value;
-		copy_faces.Problem = value;
+protected ICopyFaces<IInstance_SP<C>, C> Copy_faces {
+	get {
+		if (this.copy_faces == null)
+			this.copy_faces = (ICopyFaces<IInstance_SP<C>, C>) Services.getPort("copy_faces");
+		return this.copy_faces;
 	}
 }
 
-protected ICopyFaces copy_faces = null;
+private ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IY> y_solve = null;
 
-protected ICopyFaces Copy_faces {
-	set {
-		this.copy_faces = value;
+protected ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IY> Y_solve {
+	get {
+		if (this.y_solve == null)
+			this.y_solve = (ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IY>) Services.getPort("y_solve");
+		return this.y_solve;
 	}
 }
 
-protected ISolve z_solve = null;
+private ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IZ> z_solve = null;
 
-protected ISolve Z_solve {
-	set {
-		this.z_solve = value;
+protected ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IZ> Z_solve {
+	get {
+		if (this.z_solve == null)
+			this.z_solve = (ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IZ>) Services.getPort("z_solve");
+		return this.z_solve;
 	}
 }
 
-protected ISolve y_solve = null;
+private IBlockDiagonalMatVecProduct<IInstance_SP<C>, C, IXYZ, IBeamWarmingMethod> txinvr = null;
 
-protected ISolve Y_solve {
-	set {
-		this.y_solve = value;
+protected IBlockDiagonalMatVecProduct<IInstance_SP<C>, C, IXYZ, IBeamWarmingMethod> Txinvr {
+	get {
+		if (this.txinvr == null)
+			this.txinvr = (IBlockDiagonalMatVecProduct<IInstance_SP<C>, C, IXYZ, IBeamWarmingMethod>) Services.getPort("txinvr");
+		return this.txinvr;
 	}
 }
 
-protected ISolve x_solve = null;
+private IMPIDirect mpi = null;
 
-protected ISolve X_solve {
-	set {
-		this.x_solve = value;
+public IMPIDirect Mpi {
+	get {
+		if (this.mpi == null)
+			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		return this.mpi;
 	}
 }
 
-protected IAdd add = null;
+private IAdd<IInstance_SP<C>, C> add = null;
 
-protected IAdd Add {
-	set {
-		this.add = value;
+protected IAdd<IInstance_SP<C>, C> Add {
+	get {
+		if (this.add == null)
+			this.add = (IAdd<IInstance_SP<C>, C>) Services.getPort("add");
+		return this.add;
 	}
 }
 
-protected IComputeRHS compute_rhs = null;
+private IProblemDefinition<IInstance_SP<C>, C> problem = null;
 
-protected IComputeRHS Compute_rhs {
-	set {
-		this.compute_rhs = value;
+public IProblemDefinition<IInstance_SP<C>, C> Problem {
+	get {
+		if (this.problem == null)
+			this.problem = (IProblemDefinition<IInstance_SP<C>, C>) Services.getPort("problem_data");
+		return this.problem;
 	}
 }
 
-protected IBlockDiagonalMatVecProduct txinvr = null;
+private IComputeRHS<IInstance_SP<C>, C> compute_rhs = null;
 
-protected IBlockDiagonalMatVecProduct Txinvr {
-	set {
-		this.txinvr = value;
+protected IComputeRHS<IInstance_SP<C>, C> Compute_rhs {
+	get {
+		if (this.compute_rhs == null)
+			this.compute_rhs = (IComputeRHS<IInstance_SP<C>, C>) Services.getPort("compute_rhs");
+		return this.compute_rhs;
 	}
 }
 
-protected IBlocks3D data_partition = null;
+private ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX> x_solve = null;
 
-public IBlocks3D Data_partition {
-	set {
-		this.data_partition = value;
+protected ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX> X_solve {
+	get {
+		if (this.x_solve == null)
+			this.x_solve = (ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX>) Services.getPort("x_solve");
+		return this.x_solve;
 	}
 }
 
-
-public BaseIADIImpl() { 
-
-} 
-
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000fb316b55696c9138e64dd37ecb271f82554b922bf3eb1af387e06526ae8e242fd8ca9570f417c3da43dc6bfbc7104507350a04f6f7781922091bc8471ffa11d08e952b1d00abe0ed557dab1f4c6be65a94027395505d0b601293e412aa77b0fe740d903658a74de8c6c011ae30948689a4abef436a12daf2ecbf8dfe616fb9c4";
-
-override public void createSlices() {
-	base.createSlices();
-	this.Txinvr = (IBlockDiagonalMatVecProduct) BackEnd.createSlice(this, UID,"txinvr","matvecproduct);
-	this.Compute_rhs = (IComputeRHS) BackEnd.createSlice(this, UID,"compute_rhs","compute_rhs);
-	this.Add = (IAdd) BackEnd.createSlice(this, UID,"add","add);
-	this.X_solve = (ISolve) BackEnd.createSlice(this, UID,"x_solve","solve);
-	this.Y_solve = (ISolve) BackEnd.createSlice(this, UID,"y_solve","solve);
-	this.Z_solve = (ISolve) BackEnd.createSlice(this, UID,"z_solve","solve);
-	this.Copy_faces = (ICopyFaces) BackEnd.createSlice(this, UID,"copy_faces","copy_faces);
-	this.Blocks = (IBlocks) BackEnd.createSlice(this, UID,"blocks_info","blocks);
-	this.Y = (ICell) BackEnd.createSlice(this, UID,"y","cell);
-	this.Z = (ICell) BackEnd.createSlice(this, UID,"z","cell);
-	this.X = (ICell) BackEnd.createSlice(this, UID,"x","cell);
-} 
 
 abstract public void compute(); 
 
