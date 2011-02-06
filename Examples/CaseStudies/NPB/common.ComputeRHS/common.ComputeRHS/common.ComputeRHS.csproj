@@ -57,5 +57,13 @@
       <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
       <Name>common.datapartition.BlocksInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

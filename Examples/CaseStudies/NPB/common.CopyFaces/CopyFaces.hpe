@@ -8,9 +8,11 @@
   </header>
   <componentInfo>
     <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
-      <visualDescription h="48" w="139" x="418" y="26">
+      <visualDescription h="48" w="139" x="431" y="42">
         <color b="255" g="255" r="255"/>
       </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="class" varName="C"/>
       <unitBounds uRef="problem">
         <visualDescription h="10" w="10" x="13" y="21"/>
       </unitBounds>
@@ -159,10 +161,29 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <interface iRef="ICopyFaces" nArgs="0">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="606" y="692">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" parameter_id="instance_type" exposed="false">
+      <visualDescription h="30" w="50" x="473" y="775">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
+    <interface iRef="ICopyFaces" nArgs="1">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
-        <visualDescription h="10" w="10" x="22" y="37"/>
+        <visualDescription h="10" w="10" x="104" y="16"/>
       </slice>
       <slice isRef="problem">
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
@@ -172,30 +193,30 @@
         <originRef cRef="interact" iRef="IInteract"/>
         <visualDescription h="10" w="10" x="62" y="35"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@134b643" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@db08f1" repeat="0">
         <visualDescription h="450" w="370" x="195" y="225"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1aa1eab" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2831bc" repeat="0">
           <visualDescription h="350" w="290" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1c36e6e" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d96b45" repeat="0">
             <visualDescription h="250" w="210" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@18702eb" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@118abb" repeat="0">
               <visualDescription h="150" w="130" x="70" y="50"/>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d0bc1d" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ab0962" repeat="0">
                 <visualDescription h="50" w="50" x="70" y="50"/>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ee50dc" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f523a3" repeat="0">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@fe9c81" repeat="0">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f6ab8a" repeat="0">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d4fc8a" repeat="0">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@782d03" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@fdc74" repeat="0" sliceRef="interact">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d3589e" repeat="0" sliceRef="interact">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -211,7 +232,7 @@
           <dependency>%WORKSPACE/common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="122" w="198" x="57" y="63">
+      <visualDescription h="122" w="198" x="67" y="61">
         <color b="128" g="0" r="128"/>
       </visualDescription>
       <port name="blocks">
@@ -226,15 +247,31 @@
         <visualDescription h="10" w="10" x="21" y="77"/>
         <slice pRef="mpi" sRef="interact"/>
       </port>
-      <port name="input_buffer_y_north">
-        <visualDescription h="10" w="10" x="143" y="34"/>
+      <port name="y">
+        <visualDescription h="10" w="10" x="65" y="80"/>
+        <slice pRef="cell_y" sRef="interact"/>
+      </port>
+      <port name="input_buffer_z_top">
+        <visualDescription h="10" w="10" x="163" y="22"/>
         <slice pRef="input_buffer" sRef="interact"/>
       </port>
-      <port name="output_buffer_y_north">
-        <visualDescription h="10" w="10" x="99" y="19"/>
+      <port name="output_buffer_z_top">
+        <visualDescription h="10" w="10" x="169" y="49"/>
         <slice pRef="output_buffer" sRef="interact"/>
       </port>
-      <port name="cell_x">
+      <port name="output_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer" sRef="interact"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="46" y="93"/>
+        <slice pRef="cell_z" sRef="interact"/>
+      </port>
+      <port name="input_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer" sRef="interact"/>
+      </port>
+      <port name="x">
         <visualDescription h="10" w="10" x="66" y="102"/>
         <slice pRef="cell_x" sRef="interact"/>
       </port>
@@ -254,14 +291,6 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="input_buffer" sRef="interact"/>
       </port>
-      <port name="cell_y">
-        <visualDescription h="10" w="10" x="65" y="80"/>
-        <slice pRef="cell_y" sRef="interact"/>
-      </port>
-      <port name="cell_z">
-        <visualDescription h="10" w="10" x="46" y="93"/>
-        <slice pRef="cell_z" sRef="interact"/>
-      </port>
       <port name="output_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer" sRef="interact"/>
@@ -278,14 +307,7 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer" sRef="interact"/>
       </port>
-      <port name="output_buffer">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="interact"/>
-      </port>
-      <port name="input_buffer">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="interact"/>
-      </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
     <unit iRef="ICopyFaces" private="false" uRef="copy_faces" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
@@ -294,13 +316,13 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="24" y="26"/>
       </slices>
-      <slices cRef="input_buffer_y_south" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
+      <slices cRef="input_buffer_y_south" replica="0" uRef="buffer" sliceName="input_buffer_z_top" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_y_south" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
+      <slices cRef="output_buffer_y_south" replica="0" uRef="buffer" sliceName="output_buffer_z_top" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
-      <slices cRef="y" replica="0" uRef="cell" sliceName="cell_y" transitive="true">
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
@@ -318,13 +340,13 @@
       <slices cRef="output_buffer_x_left" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
-      <slices cRef="x" replica="0" uRef="cell" sliceName="cell_x" transitive="true">
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="input_buffer_x_right" replica="0" uRef="buffer" sliceName="input_buffer_y_north" transitive="true">
+      <slices cRef="input_buffer_x_right" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_x_right" replica="0" uRef="buffer" sliceName="output_buffer_y_north" transitive="true">
+      <slices cRef="output_buffer_x_right" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="input_buffer_z_top" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
@@ -333,7 +355,7 @@
       <slices cRef="output_buffer_z_top" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
-      <slices cRef="z" replica="0" uRef="cell" sliceName="cell_z" transitive="true">
+      <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="input_buffer_z_bottom" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
@@ -344,20 +366,20 @@
       </slices>
       <slices cRef="interact" replica="0" uRef="interact" sliceName="interact" transitive="false">
         <visualDescription h="10" w="10" x="50" y="27"/>
-        <port>input_buffer</port>
-        <port>output_buffer</port>
-        <port>cell_y</port>
+        <port>input_buffer_z_top</port>
+        <port>output_buffer_z_top</port>
+        <port>y</port>
         <port>mpi</port>
         <port>input_buffer</port>
         <port>output_buffer</port>
         <port>input_buffer</port>
         <port>output_buffer</port>
-        <port>cell_x</port>
-        <port>input_buffer_y_north</port>
-        <port>output_buffer_y_north</port>
+        <port>x</port>
         <port>input_buffer</port>
         <port>output_buffer</port>
-        <port>cell_z</port>
+        <port>input_buffer</port>
+        <port>output_buffer</port>
+        <port>z</port>
         <port>input_buffer</port>
         <port>output_buffer</port>
       </slices>

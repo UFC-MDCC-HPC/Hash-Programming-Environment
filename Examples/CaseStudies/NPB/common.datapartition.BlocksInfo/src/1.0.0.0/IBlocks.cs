@@ -16,9 +16,9 @@ public interface IBlocks : BaseIBlocks
   int[] predecessor {get;}
   int[] sucessor {get;} 
 
-  int ncells {get;} // sqrt(nodes)
-  int ndirs {get;}  // Assumed to be 3 ?
-  
+  int ncells {get;set;} // sqrt(nodes)
+  int ndirs {get;set;}  // Assumed to be 3 ?
+		
 } // end main interface 
 
 } // end namespace 

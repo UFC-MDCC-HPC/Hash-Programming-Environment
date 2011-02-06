@@ -7,11 +7,11 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="orientation" location="common.orientation.Axis/Axis.hpe" name="Axis" package="common.orientation" parameter_id="orientation" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000454b3cd77d4e1bd37b45801a6d225edceaa85080940d8ff93d8308c4a585601d0e0b00c70d55eb34cfa4de904d0234a5454ee4f10a3d46be2ec77520da0d55fa8d959e0f2ecbf8fd25f8d4e676e2b92a40e6ce7e492f5feb6c31345f8c7c887f7e2ecb139b95c71dcf3ca9aa44f0bdd07cf60319eb2676344bda9667fca51abe" localRef="orientation" location="common.orientation.Axis/Axis.hpe" name="Axis" package="common.orientation" parameter_id="orientation" exposed="false">
       <visualDescription h="30" w="50" x="213" y="439">
         <color b="255" g="255" r="255"/>
       </visualDescription>
-      <unitBounds uRef="orientation">
+      <unitBounds uRef="axis">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
@@ -35,101 +35,34 @@
       <visualDescription h="45" w="106" x="57" y="434">
         <color b="255" g="255" r="255"/>
       </visualDescription>
-      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009bd9692378cd22edf582097e28e207dff39ca1db571eddab0abf7bd500c6509800d4dc812456656c43a7379c229de7298049a508f2ab9d40e917781bb84d494fa7462a3ba12693cade3b6b1b8208323484e76f7f7ed046d9348a52e90fc8d3c877dcbc54c3489968e0a1d8c4f283b07dddf92287edf3984531fb6a271860aa6" localRef="lhs" location="common.data.LHS/LHS.hpe" name="LHS" package="common.data" exposed="false">
-        <visualDescription h="30" w="79" x="435" y="152">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="lhs">
-          <visualDescription h="10" w="10" x="12" y="11"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000007f5e06a0ef988b60a7a59a81bca9655de7d3fe0eaeb346e28865824e61551aad50d4c240c1ab80e37a47ca8929a61fd70b8d7a7510508af3f26e491b548cca2abdecf584740e427efd63e7596e3d64f5a60d722d25232018e4d8ddabd3c148cda7e43af1b37554ec42f77f4fbbe35914f81097d00dedd811b023437502234d95" localRef="rhs" location="common.data.RHS/RHS.hpe" name="RHS" package="common.data" exposed="false">
-        <visualDescription h="30" w="79" x="437" y="185">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="rhs">
-          <visualDescription h="10" w="10" x="14" y="12"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000005b16baae2c1fbcdb7a0ac48b2bfd0dd24fe70adf8aca82f5c5492a93da820d04550acd8dac1caa12b30c007dc3186b2680aebb2b93c43a25fa2a01e5099594ecfa6a9c2ccf99613936db64b77005f2355b090defd222ddc065a2453b9a884102f121da2043c066dc88683dd67cf4e65d50d9bc9a064edb8fef31b17888a53cae" localRef="u" location="common.data.U/U.hpe" name="U" package="common.data" exposed="false">
-        <visualDescription h="30" w="78" x="438" y="223">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="u">
-          <visualDescription h="10" w="10" x="15" y="9"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="us" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="81" x="437" y="261">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="11" y="11"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="vs" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="77" x="440" y="298">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="11" y="10"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="ws" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="77" x="442" y="333">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="11" y="11"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="qs" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="77" x="443" y="368">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="11" y="11"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="ainv" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="77" x="443" y="430">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="10" y="10"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="rho" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="77" x="448" y="399">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="11" y="10"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c90ba34c6d313b818aac11c636e470def5f587fff1cf51da772f229fa1a9a60a2d5a56c7f27473991211353d5bc4c0cdec5acc9a2cb24392dc07e20dad02de68c4525f09d59756dcec506d34934b5a1206f3e86894dd3215f99456e36e93f8eee349bf44a29a3e56f37f4c5ffaeee5b79060a8c9e6d31144c2739d08fb07b8b8" localRef="speed" location="common.data.Field/Field.hpe" name="Field" package="common.data" exposed="false">
-        <visualDescription h="29" w="73" x="445" y="466">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="field">
-          <visualDescription h="10" w="10" x="9" y="10"/>
-        </unitBounds>
-      </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e70fa7e373a1ef3fb5fcac9f7ed5f07c0eb60d8687d5f02e8cd025313f4c2d4a70d991d462db900806684a2dd14430f65e24a6a0f8a39485e3ac5bed19a768b7b6dc3f5e1192cb8c6005d41f7d1b07a45da42f28c31e77a083a053a74ceafd17496e110737b1b53facb8b88cc560de0ba048f5754682327984b0f2e1b93b129d" localRef="forcing" location="common.data.Forcing/Forcing.hpe" name="Forcing" package="common.data" exposed="false">
-        <visualDescription h="30" w="88" x="433" y="111">
-          <color b="255" g="255" r="255"/>
-        </visualDescription>
-        <unitBounds uRef="forcing">
-          <visualDescription h="10" w="10" x="8" y="10"/>
-        </unitBounds>
-      </port>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="class" varName="C"/>
       <unitBounds uRef="problem">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" parameter_id="instance_type" exposed="false">
+      <visualDescription h="30" w="50" x="464" y="487">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="735" y="565">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
     <parameter componentRef="orientation" formFieldId="orientation" varName="DIR"/>
     <parameter componentRef="method" formFieldId="method" varName="MTH"/>
-    <interface iRef="IForward" nArgs="0">
+    <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <interface iRef="IForward" nArgs="4">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="59" y="26"/>
@@ -138,13 +71,16 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="11" y="23"/>
       </slice>
-      <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.solve.x.Forward { &#xA;&#xA;public interface BaseIForward : IComputationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIForward.cs" srcType="base" uri="common.solve.Forward/bin/1.0.0.0/BaseIForward.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.solve.x.Forward { &#xA;&#xA;public interface IForward : BaseIForward&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IForward.cs" srcType="user" uri="common.solve.Forward/bin/1.0.0.0/IForward.dll" versionId="1.0.0.0">
-          <dependency>%WORKSPACE/common.solve.x.Forward/bin/1.0.0.0/BaseIForward.dll</dependency>
-        </file>
-      </sources>
-      <visualDescription h="40" w="80" x="155" y="166">
+      <slice isRef="method">
+        <originRef cRef="method" iRef="IMethod"/>
+        <visualDescription h="10" w="10" x="30" y="27"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="47" y="28"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="40" w="80" x="199" y="140">
         <color b="255" g="0" r="0"/>
       </visualDescription>
       <port name="blocks">
@@ -155,46 +91,10 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
-      <port name="ainv">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="speed">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="ws">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="rhs">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="rhs" sRef="problem"/>
-      </port>
-      <port name="lhs">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="lhs" sRef="problem"/>
-      </port>
-      <port name="us">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="qs">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="vs">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="rho">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="field" sRef="problem"/>
-      </port>
-      <port name="u">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="u" sRef="problem"/>
-      </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IMethod" order="2" parid="method" uname="method" varid="MTH"/>
+      <parameter iname="IAxis" order="3" parid="orientation" uname="axis" varid="DIR"/>
     </interface>
     <unit iRef="IForward" private="false" uRef="forward" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
@@ -202,57 +102,25 @@
       </slices>
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="11" y="23"/>
-        <port>lhs</port>
-        <port>rhs</port>
-        <port>u</port>
-        <port>us</port>
-        <port>vs</port>
-        <port>ws</port>
-        <port>qs</port>
-        <port>rho</port>
-        <port>ainv</port>
-        <port>speed</port>
       </slices>
-      <slices cRef="lhs" replica="0" uRef="lhs" sliceName="lhs" transitive="true">
-        <visualDescription h="10" w="10" x="65" y="7"/>
+      <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
+        <visualDescription h="10" w="10" x="30" y="27"/>
       </slices>
-      <slices cRef="rhs" replica="0" uRef="rhs" sliceName="rhs" transitive="true">
-        <visualDescription h="10" w="10" x="66" y="17"/>
-      </slices>
-      <slices cRef="u" replica="0" uRef="u" sliceName="u" transitive="true">
-        <visualDescription h="10" w="10" x="67" y="28"/>
-      </slices>
-      <slices cRef="us" replica="0" uRef="field" sliceName="us" transitive="true">
-        <visualDescription h="10" w="10" x="1" y="26"/>
-      </slices>
-      <slices cRef="vs" replica="0" uRef="field" sliceName="vs" transitive="true">
-        <visualDescription h="10" w="10" x="14" y="22"/>
-      </slices>
-      <slices cRef="ws" replica="0" uRef="field" sliceName="ws" transitive="true">
-        <visualDescription h="10" w="10" x="25" y="26"/>
-      </slices>
-      <slices cRef="qs" replica="0" uRef="field" sliceName="qs" transitive="true">
-        <visualDescription h="10" w="10" x="37" y="26"/>
-      </slices>
-      <slices cRef="rho" replica="0" uRef="field" sliceName="rho" transitive="true">
-        <visualDescription h="10" w="10" x="49" y="27"/>
-      </slices>
-      <slices cRef="ainv" replica="0" uRef="field" sliceName="ainv" transitive="true">
-        <visualDescription h="10" w="10" x="27" y="3"/>
-      </slices>
-      <slices cRef="speed" replica="0" uRef="field" sliceName="speed" transitive="true">
-        <visualDescription h="10" w="10" x="48" y="2"/>
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+        <visualDescription h="10" w="10" x="47" y="28"/>
       </slices>
       <visualDescription h="40" w="80" x="155" y="246"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="orientation"/>
+      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
+      <links xsi:type="component:EnumerableUnitType" ref="forward"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
+      <links xsi:type="component:EnumerableUnitType" ref="forward"/>
       <visualDescription h="20" w="20" x="260" y="427"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -262,5 +130,20 @@
       <links xsi:type="component:EnumerableUnitType" ref="forward"/>
       <visualDescription h="33" w="37" x="55" y="278"/>
     </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>orientation</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <originRef>method</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
   </componentInfo>
 </component:component>

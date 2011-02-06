@@ -10,7 +10,7 @@
     <RootNamespace>common.orientation.XYZ</RootNamespace>
     <AssemblyName>IXYZ</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\XYZ.hpe</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\common.solve.LHS\LHS.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -52,6 +52,10 @@
     <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
       <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
       <Name>common.orientation.Axis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
+      <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
+      <Name>common.direction.Direction</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

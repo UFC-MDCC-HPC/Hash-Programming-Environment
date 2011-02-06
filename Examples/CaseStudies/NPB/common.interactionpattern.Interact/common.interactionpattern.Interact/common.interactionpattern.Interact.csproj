@@ -48,4 +48,18 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Buffer\common.Buffer\common.Buffer.csproj">
+      <Project>{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}</Project>
+      <Name>common.Buffer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

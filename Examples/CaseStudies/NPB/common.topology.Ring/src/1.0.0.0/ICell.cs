@@ -4,8 +4,8 @@ namespace common.topology.Ring {
 
 public interface ICell : BaseICell
 {
-   int sucessor { get; }
-   int predecessor { get; }
+   int successor { get; set; }
+   int predecessor { get; set; }
    
 } // end main interface 
 

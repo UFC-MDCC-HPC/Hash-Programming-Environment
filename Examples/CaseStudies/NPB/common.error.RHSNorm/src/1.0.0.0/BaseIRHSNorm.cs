@@ -1,14 +1,23 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.data.ProblemDefinition;
+using common.data.ProblemDefinition;
+using common.problem_size.Instance;
+using common.problem_size.Class;
+using common.datapartition.BlocksInfo;
+using environment.MPIDirect;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.error.RHSNorm { 
+namespace common.error.RHSNorm { 
 
-public interface BaseIRHSNorm : IComputationKind 
+public interface BaseIRHSNorm<I,C> : IComputationKind 
+where I:IInstance<C>
+where C:IClass
 {
+		
+	IBlocks Blocks {get;}
+	IProblemDefinition<I,C> Problem {get;}
+	IMPIDirect Mpi {get;}
 
-	IProblemDefinition Problem {set;}
 
 
 } // end main interface 

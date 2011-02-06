@@ -1,11 +1,20 @@
 using br.ufc.pargo.hpe.kinds;
+using common.problem_size.Instance;
+using common.problem_size.Class;
+using common.orientation.Axis;
+using common.solve.Method;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.solve.Backward { 
+namespace common.solve.Backward { 
 
-public interface IBackWard : BaseIBackWard
+public interface IBackward<I, C, DIR, MTH> : BaseIBackward<I, C, DIR, MTH>
+where I:IInstance<C>
+where C:IClass
+where DIR:IAxis
+where MTH:IMethod
 {
-
-
+	void init();
+	void initialize();
+	void enterStage(int stage);
 } // end main interface 
 
 } // end namespace 

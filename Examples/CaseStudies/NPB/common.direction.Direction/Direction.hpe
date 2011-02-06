@@ -8,6 +8,12 @@
   </header>
   <componentInfo>
     <interface iRef="IDirection" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.direction.Direction { &#xA;&#xA;public interface BaseIDirection : IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDirection.cs" srcType="base" uri="common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.direction.Direction { &#xA;&#xA;public interface IDirection : BaseIDirection&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDirection.cs" srcType="user" uri="common.direction.Direction/bin/1.0.0.0/IDirection.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="121" y="203">
         <color b="192" g="192" r="192"/>
       </visualDescription>

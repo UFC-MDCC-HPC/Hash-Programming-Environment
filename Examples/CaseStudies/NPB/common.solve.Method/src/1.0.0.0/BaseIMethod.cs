@@ -2,7 +2,7 @@
 
 using br.ufc.pargo.hpe.kinds;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.solve.Method { 
+namespace common.solve.Method { 
 
 public interface BaseIMethod : IQualifierKind 
 {

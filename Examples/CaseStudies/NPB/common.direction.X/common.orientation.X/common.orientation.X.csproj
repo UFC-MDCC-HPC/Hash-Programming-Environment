@@ -40,11 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="..\src\1.0.0.0\BaseICell.cs">
-      <Link>BaseICell.cs</Link>
+    <Compile Include="..\src\1.0.0.0\BaseIX.cs">
+      <Link>BaseIX.cs</Link>
     </Compile>
-    <Compile Include="..\src\1.0.0.0\ICell.cs">
-      <Link>ICell.cs</Link>
+    <Compile Include="..\src\1.0.0.0\IX.cs">
+      <Link>IX.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

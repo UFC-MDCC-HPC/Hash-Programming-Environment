@@ -1,9 +1,9 @@
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.direction.Direction;
+using common.orientation.Axis;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.direction.Z { 
+namespace common.orientation.Z { 
 
-public interface IZ : BaseIZ, IDirection
+public interface IZ : BaseIZ, IAxis
 {
 
 

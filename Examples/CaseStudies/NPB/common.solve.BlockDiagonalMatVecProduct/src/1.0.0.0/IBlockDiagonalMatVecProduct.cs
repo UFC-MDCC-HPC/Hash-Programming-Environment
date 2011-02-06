@@ -1,9 +1,20 @@
 using br.ufc.pargo.hpe.kinds;
+using common.problem_size.Instance;
+using common.problem_size.Class;
+using common.orientation.Axis;
+using common.solve.Method;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.solve.BlockDiagonalMatVecProduct { 
+namespace common.solve.BlockDiagonalMatVecProduct { 
 
-public interface IBlockDiagonalMatVecProduct : BaseIBlockDiagonalMatVecProduct
+public interface IBlockDiagonalMatVecProduct<I,C, DIR, MTH> : BaseIBlockDiagonalMatVecProduct<I,C,DIR,MTH>
+where I:IInstance<C>
+where C:IClass
+where DIR:IAxis
+where MTH:IMethod
 {
+		
+	void initialize();
+	void enterStage(int stage);
 
 
 } // end main interface 

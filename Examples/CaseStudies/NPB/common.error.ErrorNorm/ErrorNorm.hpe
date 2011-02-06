@@ -19,11 +19,48 @@
       <visualDescription h="30" w="117" x="173" y="487">
         <color b="255" g="255" r="255"/>
       </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="class" varName="C"/>
       <unitBounds uRef="problem">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <interface iRef="IErrorNorm" nArgs="0">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" parameter_id="instance_type" exposed="false">
+      <visualDescription h="30" w="50" x="511" y="627">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="682" y="546">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
+      <visualDescription h="30" w="50" x="422" y="290">
+        <color b="240" g="32" r="160"/>
+      </visualDescription>
+      <unitBounds uRef="mpi">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000037a9a5a5d556806427fed17e9d9da01cba09c367a7217e9bf0cecb835990985d50990b655933932ff0048b8076e5bf155199f826b77770081eeddb208f1e1189d375d2a21c32678113b87936a8ae52dfc34f72df909869b53b0d601f143f03655edfcd2d755ed0c61b681b9cd312a2b254cfcaff4cdc28b51aeb88bc7bbdf791" localRef="exact_solution" location="common.data.ExactSolution/ExactSolution.hpe" name="ExactSolution" package="common.data" exposed="false">
+      <visualDescription h="30" w="169" x="328" y="447">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="exact_solution">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <interface iRef="IErrorNorm" nArgs="2">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="62" y="28"/>
@@ -32,18 +69,35 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="28" y="25"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1122a37" repeat="0">
-        <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1918588" repeat="0">
+      <slice isRef="mpi">
+        <originRef cRef="mpi" iRef="IMPIDirect"/>
+        <visualDescription h="10" w="10" x="47" y="27"/>
+      </slice>
+      <slice isRef="exact_solution">
+        <originRef cRef="exact_solution" iRef="IExactSolution"/>
+        <visualDescription h="10" w="10" x="13" y="27"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@cf577f" repeat="0">
+        <visualDescription h="250" w="150" x="85" y="125"/>
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@164213c" repeat="0">
+          <visualDescription h="150" w="70" x="70" y="50"/>
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c20272" repeat="0">
+            <visualDescription h="50" w="50" x="10" y="50"/>
+          </action>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@795e8c" repeat="0" sliceRef="exact_solution">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;&#xA;namespace common.error.ErrorNorm { &#xA;&#xA;public interface BaseIErrorNorm : IComputationKind &#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {set;}&#xA;&#x9;IProblemDefinition Problem {set;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIErrorNorm.cs" srcType="base" uri="common.error.ErrorNorm/bin/1.0.0.0/BaseIErrorNorm.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace common.error.ErrorNorm { &#xA;&#xA;public interface BaseIErrorNorm&lt;I, C> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#x9;&#x9;&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIErrorNorm.cs" srcType="base" uri="common.error.ErrorNorm/bin/1.0.0.0/BaseIErrorNorm.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.error.ErrorNorm { &#xA;&#xA;public interface IErrorNorm : BaseIErrorNorm&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IErrorNorm.cs" srcType="user" uri="common.error.ErrorNorm/bin/1.0.0.0/IErrorNorm.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.error.ErrorNorm { &#xA;&#xA;public interface IErrorNorm&lt;I, C> : BaseIErrorNorm&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#x9;&#x9;&#xA;&#x9;void initialize();&#xA;&#x9;double[] xce { get; }&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IErrorNorm.cs" srcType="user" uri="common.error.ErrorNorm/bin/1.0.0.0/IErrorNorm.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>%WORKSPACE/common.error.ErrorNorm/bin/1.0.0.0/BaseIErrorNorm.dll</dependency>
         </file>
       </sources>
@@ -58,6 +112,12 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="mpi"/>
+      </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IErrorNorm" private="false" uRef="error_norm" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
@@ -66,6 +126,12 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="28" y="25"/>
       </slices>
+      <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="false">
+        <visualDescription h="10" w="10" x="47" y="27"/>
+      </slices>
+      <slices cRef="exact_solution" replica="0" uRef="exact_solution" sliceName="exact_solution" transitive="false">
+        <visualDescription h="10" w="10" x="13" y="27"/>
+      </slices>
       <visualDescription h="40" w="80" x="231" y="151"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -73,7 +139,40 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="error_norm"/>
-      <visualDescription h="60" w="61" x="34" y="226"/>
+      <visualDescription h="60" w="61" x="50" y="235"/>
     </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
+      <originRef>mpi</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="mpi" uRef="mpi"/>
+      <links xsi:type="component:EnumerableUnitType" ref="error_norm"/>
+      <visualDescription h="20" w="20" x="186" y="263"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1a4eaac1296932932353" varId="n">
+      <originRef>exact_solution</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exact_solution" uRef="exact_solution"/>
+      <visualDescription h="20" w="20" x="95" y="194"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1a4eaac1296932932353</eRef>
+        <originRef>exact_solution</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
   </componentInfo>
 </component:component>

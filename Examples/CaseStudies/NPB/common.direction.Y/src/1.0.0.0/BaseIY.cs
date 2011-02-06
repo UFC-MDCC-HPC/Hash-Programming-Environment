@@ -1,11 +1,11 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.direction.Direction;
+using common.orientation.Axis;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.direction.Y { 
+namespace common.orientation.Y { 
 
-public interface BaseIY : BaseIDirection, IQualifierKind 
+public interface BaseIY : BaseIAxis, IQualifierKind 
 {
 
 

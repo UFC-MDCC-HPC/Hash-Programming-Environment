@@ -1,18 +1,22 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.topology.Ring;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.BlocksInfo;
+using common.topology.Ring;
+using common.datapartition.BlocksInfo;
+using common.problem_size.Instance;
+using common.problem_size.Class;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D { 
+namespace common.datapartition.Blocks3D { 
 
-public interface BaseIBlocks3D : IEnvironmentKind 
+public interface BaseIBlocks3D<I,C> : IEnvironmentKind 
+where I:IInstance<C>
+where C:IClass
 {
 
-	ICell Cell {set;}
-	ICell Cell {set;}
-	ICell Cell {set;}
-	IBlocks Blocks {set;}
+	ICell Z {get;}
+	ICell Y {get;}
+	ICell X {get;}
+	IBlocks Blocks {get;}
 
 
 } // end main interface 

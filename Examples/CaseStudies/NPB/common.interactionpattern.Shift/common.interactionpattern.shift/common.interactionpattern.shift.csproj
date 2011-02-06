@@ -37,6 +37,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
+    <Reference Include="MPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=29b4a045737654fe">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Mono-2.6.1\lib\mono\MPI\MPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -48,4 +52,10 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
+      <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
+      <Name>common.direction.Direction</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

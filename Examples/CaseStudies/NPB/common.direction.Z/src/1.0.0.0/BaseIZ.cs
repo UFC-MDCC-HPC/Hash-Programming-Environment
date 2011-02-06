@@ -1,11 +1,11 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.direction.Direction;
+using common.orientation.Axis;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.direction.Z { 
+namespace common.orientation.Z { 
 
-public interface BaseIZ : BaseIDirection, IQualifierKind 
+public interface BaseIZ : BaseIAxis, IQualifierKind 
 {
 
 

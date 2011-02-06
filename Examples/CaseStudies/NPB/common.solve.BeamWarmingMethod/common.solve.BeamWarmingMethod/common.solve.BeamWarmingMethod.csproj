@@ -10,7 +10,7 @@
     <RootNamespace>common.solve.BeamWarmingMethod</RootNamespace>
     <AssemblyName>IBeamWarmingMethod</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\BeamWarmingMethod.hpe</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\BeamWarmingMethod.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -48,4 +48,10 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
+      <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
+      <Name>common.solve.Method</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

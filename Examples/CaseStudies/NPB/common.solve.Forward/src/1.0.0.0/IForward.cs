@@ -1,10 +1,19 @@
 using br.ufc.pargo.hpe.kinds;
+using common.problem_size.Instance;
+using common.problem_size.Class;
+using common.solve.Method;
+using common.orientation.Axis;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.solve.x.Forward { 
+namespace common.solve.Forward { 
 
-public interface IForward : BaseIForward
+public interface IForward<I, C, MTH, DIR> : BaseIForward<I, C, MTH, DIR>
+where I:IInstance<C>
+where C:IClass
+where MTH:IMethod
+where DIR:IAxis
 {
-
+	void initialize();
+	void enterStage(int stage);
 
 } // end main interface 
 

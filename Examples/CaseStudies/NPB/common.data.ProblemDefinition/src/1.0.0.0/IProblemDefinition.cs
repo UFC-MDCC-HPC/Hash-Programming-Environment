@@ -1,5 +1,7 @@
 using br.ufc.pargo.hpe.kinds;
 using System;
+using common.problem_size.Instance;
+using common.problem_size.Class;
 
 namespace common.data.ProblemDefinition { 
 
@@ -37,7 +39,7 @@ public class Constants
 		                     {0.3d,0.5d,0.4,0.3d,0.2d}};
 
 		
-  public void set_constants(int ndid, int[] grid_points)
+  public static void set_constants(int ndid, int[] grid_points)
   {			
 			
 	ce[0,0] = 2.0d * (1.0d + ((double)ndid) * 0.01d);
@@ -164,20 +166,23 @@ public class Constants
 	zzcon5 = c3c4tz3 * c1c5 * tz3;
   }
 		
-  public double dmax1(double a, double b)
+  public static double dmax1(double a, double b)
   {
 		if (a < b) return b; else return a;
   }
 
-  public double dmax1(double a, double b, double c, double d)
+  public static double dmax1(double a, double b, double c, double d)
   {
 		return dmax1(dmax1(a, b), dmax1(c, d));
   }		
 	
+		
 }
 	
 	
-public interface IProblemDefinition : BaseIProblemDefinition
+public interface IProblemDefinition<I, C> : BaseIProblemDefinition<I, C>
+where I:IInstance<C>
+where C:IClass
 {
 		
   int NCells { get; }
@@ -195,12 +200,18 @@ public interface IProblemDefinition : BaseIProblemDefinition
   double [,,,,] Field_rho     { get; }	
   double [,,,,] Field_speed   { get; }	
   double [,,,,] Field_square  { get; }	
-
-  void initialize_problem_data(char clss);
 		
-  void initialize(); // computes initial u
-  void lhsinit();    // computes initial lhs
-  void exact_rhs();  // computes forcing
+  int MAX_CELL_DIM { get; set; }	
+  int maxcells { get; set;}	
+  int IMAX { get; set; }	
+  int JMAX { get; set; }	
+  int KMAX { get; set; }	
+  int[] grid_points { get; }
+		
+  void initialize_problem_data();
+		
+		
+		
   // void exact_solution(double xi, double eta, double zeta, double[] dtemp, int offset); // auxiliar ...
 
 } // end main interface 

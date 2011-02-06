@@ -1,18 +1,27 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.BlocksInfo;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.topology.Ring;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.data.ProblemDefinition;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D;
+using common.topology.Ring;
+using common.datapartition.BlocksInfo;
+using common.datapartition.Blocks3D;
+using common.problem_size.Instance;
+using common.problem_size.Class;
+using environment.MPIDirect;
+using common.data.ProblemDefinition;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.Verify { 
+namespace common.Verify { 
 
-public interface BaseIVerify : IComputationKind 
+public interface BaseIVerify<I, C> : IComputationKind
+where C:IClass 
+where I:IInstance<C>
 {
 
-	IProblemDefinition Problem {set;}
-	IBlocks3D Process {set;}
+	IMPIDirect Mpi {get;}
+	IProblemDefinition<I,C> Problem {get;}
+	ICell X {get;}
+	ICell Y {get;}
+	ICell Z {get;}
+	IBlocks Blocks_info {get;}
 
 
 } // end main interface 

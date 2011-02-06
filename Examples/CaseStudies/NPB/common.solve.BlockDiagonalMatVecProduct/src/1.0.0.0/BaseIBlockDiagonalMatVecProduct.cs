@@ -1,16 +1,24 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.BlocksInfo;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.data.ProblemDefinition;
+using common.datapartition.BlocksInfo;
+using common.data.ProblemDefinition;
+using common.problem_size.Instance;
+using common.problem_size.Class;
+using common.orientation.Axis;
+using common.solve.Method;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.common.solve.BlockDiagonalMatVecProduct { 
+namespace common.solve.BlockDiagonalMatVecProduct { 
 
-public interface BaseIBlockDiagonalMatVecProduct : IComputationKind 
+public interface BaseIBlockDiagonalMatVecProduct<I,C,DIR,MTH> : IComputationKind 
+where I:IInstance<C>
+where C:IClass
+where DIR:IAxis
+where MTH:IMethod
 {
 
-	IBlocks Blocks {set;}
-	IProblemDefinition Problem {set;}
+	IBlocks Blocks {get;}
+	IProblemDefinition<I,C> Problem {get;}
 
 
 } // end main interface 
