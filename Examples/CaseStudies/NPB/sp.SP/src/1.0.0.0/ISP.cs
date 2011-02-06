@@ -1,8 +1,10 @@
 using br.ufc.pargo.hpe.kinds;
+using common.problem_size.Class;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.SP { 
+namespace sp.SP { 
 
-public interface ISP : BaseISP
+public interface ISP<CLASS> : BaseISP<CLASS>
+where CLASS:IClass
 {
 
 

@@ -1,12 +1,16 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.data.ProblemDefinition;
-using br.ufc.lia.pargo.hpe.casestudies.npb.common.datapartition.Blocks3D;
+using common.datapartition.Blocks3D;
+using sp.problem_size.Instance_SP;
+using common.data.ProblemDefinition;
+using environment.MPIDirect;
+using common.problem_size.Class;
 
-namespace br.ufc.lia.pargo.hpe.casestudies.npb.SP { 
+namespace sp.SP { 
 
-public interface BaseISP : IApplicationKind 
+public interface BaseISP<CLASS> : IApplicationKind 
+where CLASS:IClass
 {
 
 
