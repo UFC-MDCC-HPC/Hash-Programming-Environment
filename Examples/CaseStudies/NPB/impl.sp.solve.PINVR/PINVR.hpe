@@ -6,10 +6,12 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000037015743105037553fe19f62ab320b38e3b722a956c70b75cd57e60341064965fa8162108964af95b8f63fc3c7e4022c472da55c3d293d9c9a82f8cb33164bf04f7edf932fb278345dbce599dd25ec347a022be6a8069297d14a60bd577312bd630a6a934c475595270c9f5f461b402f0fa361508905e2192a48726c15b98989" localRef="base" location="common.solve.BlockDiagonalMatVecProduct/BlockDiagonalMatVecProduct.hpe" name="BlockDiagonalMatVecProduct" package="common.solve" version="1.0.0.0">
-        <visualDescription h="38" w="94" x="227" y="139">
+        <visualDescription h="38" w="94" x="321" y="179">
           <color b="255" g="255" r="255"/>
         </visualDescription>
-        <parameter formFieldId="direction" varName="DIR"/>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
         <parameter formFieldId="method" varName="MTH"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
           <visualDescription h="53" w="112" x="302" y="427">
@@ -23,6 +25,8 @@
           <visualDescription h="55" w="102" x="284" y="279">
             <color b="255" g="255" r="255"/>
           </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
             <visualDescription h="10" w="10" x="47" y="9"/>
           </unitBounds>
@@ -38,14 +42,6 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000099ec807d7886f0c2735f4a4c2dc60d8feb0a435847e291a0f9dd7aed2539883c551cf8dd8fe530fe7d695458a20d532e4a58b5cf62af87f410238ec43d1e140b210efe08dea6fc4983660e10cc3431cd1102137a5df63ef9bef47a99b409c0b1c86bd4aa322397fd56e1ed3be2e81f8d1a9765c5dc9134ec1eb1b5d4567311ae" localRef="xdir" location="common.direction.X/X.hpe" name="X" package="common.direction" exposed="false">
-      <visualDescription h="30" w="50" x="88" y="158">
-        <color b="255" g="255" r="255"/>
-      </visualDescription>
-      <unitBounds uRef="x">
-        <visualDescription h="10" w="10" x="5" y="2"/>
-      </unitBounds>
-    </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000159d9ccb4ff0bb35a4fe190495e9c0d9a8406fa4adae5405850aed7cf83bbe6096bcb7deb5b07550a718fabec888b38f45c00ad4323db7b35e01dd236f9d1af6d8d0e529844de79031b63f05f2e810d0218c315e2c720d374b2bc2c0b15ec45863f2832e19f30c9bf6ee1519c76cd5e6f0ed485d2027397f93caec006396c587" localRef="method" location="common.solve.BeamWarmingMethod/BeamWarmingMethod.hpe" name="BeamWarmingMethod" package="common.solve" exposed="false">
       <visualDescription h="30" w="50" x="134" y="129">
         <color b="255" g="255" r="255"/>
@@ -54,9 +50,36 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
-    <supplyParameter cRef="xdir" varName="DIR"/>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="167" y="420">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000796ff7bbb33560060ee9951c4f8242d987089c0c50af1d3a6ab2f92466788c33bfa42e66a347c4206d81a948be78598f82f386b898f40714662cb0134d02313a7e06d04944957cb9149a5069ebfcc65b58711afd15bfbe6f3144cf719a1d8c90833890d5ed1eac7e3b8a657a774a065ca04588c7743c47a41fe59e21cd7767a4" localRef="instance" location="sp.problem_size.Instance_SP/Instance_SP.hpe" name="Instance_SP" package="sp.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="188" y="472">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ffcae3e9a0ecbf9c4629fdb52bc2acc0e2cc392d40ed0441b527e752c9079cf609fb0785045e3d2c5ace2f492d755021fd6cf82d853e202471136832c6cf8fdffec701b57bfde7017dd2ef51f1a4c4adca40833d6c6165b9123411a3dc7be80a59839ab3316debcc5e4d0d6e17dcb8400cf7e4bc1eca328e130aa9f8182bfccb" localRef="or" location="common.orientation.Y/Y.hpe" name="Y" package="common.orientation" exposed="false">
+      <visualDescription h="30" w="50" x="109" y="454">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="y">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="or" varName="DIR"/>
     <supplyParameter cRef="method" varName="MTH"/>
-    <interface iRef="IPNVR" nArgs="0">
+    <supplyParameter cRef="instance" varName="I"/>
+    <interface iRef="IPNVR" nArgs="1">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="78" y="26"/>
@@ -65,16 +88,17 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="92" y="3"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@d9b40f" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@be561c" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.PINVR { &#xA;&#xA;public abstract class BaseIPNVR: Computation, BaseIBlockDiagonalMatVecProduct&#xA;{&#xA;&#xA;protected IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.blocks = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;protected IProblemDefinition problem = null;&#xA;&#xA;public IProblemDefinition Problem {&#xA;&#x9;set {&#xA;&#x9;&#x9;this.problem = value;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIPNVR() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000ef688b527ba4d99375693e95a828b595702bf5e8b74c6c5e7aa459be39541d1a698f17806588efa1f118609d96aaf700056f025410648901b954868bda037ee5ddee13ed90b474913c5364c5173ad95709017e7a6d72adb6e4e4024c9407f4c8bb79d2687f40fab7c3db22d1ee9cd21f41170ce5a673c12c283e23d85856b192&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIPNVR.cs" srcType="base" uri="impl.sp.solve.PINVR/bin/1.0.0.0/BaseIPNVR.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.PINVR { &#xA;&#xA;public abstract class BaseIPNVR&lt;IInstance>: Computation, BaseIBlockDiagonalMatVecProduct&lt;IInstance>&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort();&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance> problem = null;&#xA;&#xA;public IProblemDefinition&lt;IInstance> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance>) Services.getPort();&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;public BaseIPNVR() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000ef688b527ba4d99375693e95a828b595702bf5e8b74c6c5e7aa459be39541d1a698f17806588efa1f118609d96aaf700056f025410648901b954868bda037ee5ddee13ed90b474913c5364c5173ad95709017e7a6d72adb6e4e4024c9407f4c8bb79d2687f40fab7c3db22d1ee9cd21f41170ce5a673c12c283e23d85856b192&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIPNVR.cs" srcType="base" uri="impl.sp.solve.PINVR/bin/1.0.0.0/BaseIPNVR.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/BaseIBlockDiagonalMatVecProduct.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.PINVR { &#xA;&#xA;public class IPNVR : BaseIPNVR, IBlockDiagonalMatVecProduct&#xA;{&#xA;&#xA;public IPNVR() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IPNVR.cs" srcType="user" uri="impl.sp.solve.PINVR/bin/1.0.0.0/IPNVR.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;&#xA;namespace impl.sp.solve.PINVR { &#xA;&#xA;public class IPNVR&lt;IInstance> : BaseIPNVR&lt;IInstance>, IBlockDiagonalMatVecProduct&lt;IInstance>&#xA;{&#xA;&#xA;public IPNVR() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IPNVR.cs" srcType="user" uri="impl.sp.solve.PINVR/bin/1.0.0.0/IPNVR.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.sp.solve.PINVR/bin/1.0.0.0/BaseIPNVR.dll</dependency>
           <dependency>common.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/IBlockDiagonalMatVecProduct.dll</dependency>
         </file>
@@ -90,6 +114,7 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
     </interface>
     <unit iRef="IPNVR" private="false" uRef="matvecproduct" visibleInterface="true">
       <super cRef="base" uRef="matvecproduct"/>
@@ -108,17 +133,17 @@
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
       <visualDescription h="60" w="61" x="76" y="339"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
-      <originRef>xdir</originRef>
-      <originRef>base</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="xdir" uRef="x"/>
-      <visualDescription h="20" w="20" x="354" y="190"/>
-    </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <originRef>base</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <visualDescription h="20" w="20" x="260" y="427"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>or</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="or" uRef="y"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
   </componentInfo>
 </component:component>
