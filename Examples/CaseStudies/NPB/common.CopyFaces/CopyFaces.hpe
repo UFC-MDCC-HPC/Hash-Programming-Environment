@@ -29,7 +29,7 @@
       <visualDescription h="34" w="119" x="216" y="441">
         <color b="255" g="255" r="255"/>
       </visualDescription>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="input_buffer_x_right" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="input_buffer_x_east" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
         <visualDescription h="43" w="134" x="661" y="314">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -37,7 +37,7 @@
           <visualDescription h="10" w="10" x="10" y="17"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="output_buffer_x_right" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="output_buffer_x_east" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
         <visualDescription h="44" w="129" x="666" y="364">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -46,7 +46,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
-        <visualDescription h="35" w="48" x="192" y="271">
+        <visualDescription h="35" w="48" x="192" y="265">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="cell">
@@ -61,7 +61,7 @@
           <visualDescription h="10" w="10" x="5" y="2"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="input_buffer_x_left" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="input_buffer_x_west" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
         <visualDescription h="43" w="134" x="510" y="314">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -69,7 +69,7 @@
           <visualDescription h="10" w="10" x="10" y="17"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="output_buffer_x_left" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="output_buffer_x_west" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
         <visualDescription h="44" w="129" x="518" y="367">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -180,7 +180,7 @@
     </innerComponent>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
-    <interface iRef="ICopyFaces" nArgs="1">
+    <interface iRef="ICopyFaces" nArgs="2">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="104" y="16"/>
@@ -193,42 +193,42 @@
         <originRef cRef="interact" iRef="IInteract"/>
         <visualDescription h="10" w="10" x="62" y="35"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@db08f1" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8d9b3c" repeat="0">
         <visualDescription h="450" w="370" x="195" y="225"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2831bc" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@caae96" repeat="0">
           <visualDescription h="350" w="290" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d96b45" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8bfd55" repeat="0">
             <visualDescription h="250" w="210" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@118abb" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a50b05" repeat="0">
               <visualDescription h="150" w="130" x="70" y="50"/>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ab0962" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1768708" repeat="0">
                 <visualDescription h="50" w="50" x="70" y="50"/>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f523a3" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9b1ef8" repeat="0">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f6ab8a" repeat="0">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e323f" repeat="0">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@782d03" repeat="0">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4d47c" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d3589e" repeat="0" sliceRef="interact">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@11a4e3e" repeat="0" sliceRef="interact">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.Buffer;&#xA;using common.data.ProblemDefinition;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace common.CopyFaces { &#xA;&#xA;public interface BaseICopyFaces : ISynchronizerKind &#xA;{&#xA;&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition Problem {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseICopyFaces.cs" srcType="base" uri="common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.Buffer;&#xA;using common.data.ProblemDefinition;&#xA;using environment.MPIDirect;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace common.CopyFaces { &#xA;&#xA;public interface BaseICopyFaces&lt;I,C> : ISynchronizerKind &#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I,C> Problem {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseICopyFaces.cs" srcType="base" uri="common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.CopyFaces { &#xA;&#xA;public interface ICopyFaces : BaseICopyFaces&#xA;{&#xA;   void initialize();&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICopyFaces.cs" srcType="user" uri="common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.CopyFaces { &#xA;&#xA;public interface ICopyFaces&lt;I,C> : BaseICopyFaces&lt;I,C>&#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICopyFaces.cs" srcType="user" uri="common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll</dependency>
         </file>
       </sources>
@@ -243,71 +243,72 @@
         <visualDescription h="10" w="10" x="12" y="51"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
+      <port name="input_buffer_y_south">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_y_south" sRef="interact"/>
+      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="21" y="77"/>
         <slice pRef="mpi" sRef="interact"/>
       </port>
+      <port name="output_buffer_y_south">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer_y_south" sRef="interact"/>
+      </port>
       <port name="y">
-        <visualDescription h="10" w="10" x="65" y="80"/>
-        <slice pRef="cell_y" sRef="interact"/>
-      </port>
-      <port name="input_buffer_z_top">
-        <visualDescription h="10" w="10" x="163" y="22"/>
-        <slice pRef="input_buffer" sRef="interact"/>
-      </port>
-      <port name="output_buffer_z_top">
-        <visualDescription h="10" w="10" x="169" y="49"/>
-        <slice pRef="output_buffer" sRef="interact"/>
-      </port>
-      <port name="output_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="interact"/>
+        <slice pRef="y" sRef="interact"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="46" y="93"/>
-        <slice pRef="cell_z" sRef="interact"/>
-      </port>
-      <port name="input_buffer">
+      <port name="output_buffer_y_north">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="interact"/>
+        <slice pRef="output_buffer_y_north" sRef="interact"/>
+      </port>
+      <port name="input_buffer_y_north">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_y_north" sRef="interact"/>
+      </port>
+      <port name="input_buffer_x_east">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_x_east" sRef="interact"/>
       </port>
       <port name="x">
-        <visualDescription h="10" w="10" x="66" y="102"/>
-        <slice pRef="cell_x" sRef="interact"/>
-      </port>
-      <port name="input_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="interact"/>
+        <slice pRef="x" sRef="interact"/>
       </port>
-      <port name="output_buffer">
+      <port name="output_buffer_x_east">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="interact"/>
+        <slice pRef="output_buffer_x_east" sRef="interact"/>
       </port>
-      <port name="output_buffer">
+      <port name="input_buffer_z_bottom">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="interact"/>
+        <slice pRef="input_buffer_z_bottom" sRef="interact"/>
       </port>
-      <port name="input_buffer">
+      <port name="output_buffer_z_bottom">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="interact"/>
+        <slice pRef="output_buffer_z_bottom" sRef="interact"/>
       </port>
-      <port name="output_buffer">
+      <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="interact"/>
+        <slice pRef="z" sRef="interact"/>
       </port>
-      <port name="input_buffer">
+      <port name="input_buffer_z_top">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="interact"/>
+        <slice pRef="input_buffer_z_top" sRef="interact"/>
       </port>
-      <port name="input_buffer">
+      <port name="output_buffer_z_top">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="interact"/>
+        <slice pRef="output_buffer_z_top" sRef="interact"/>
       </port>
-      <port name="output_buffer">
+      <port name="output_buffer_x_west">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="interact"/>
+        <slice pRef="output_buffer_x_west" sRef="interact"/>
+      </port>
+      <port name="input_buffer_x_west">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_x_west" sRef="interact"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="ICopyFaces" private="false" uRef="copy_faces" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
@@ -316,10 +317,10 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="24" y="26"/>
       </slices>
-      <slices cRef="input_buffer_y_south" replica="0" uRef="buffer" sliceName="input_buffer_z_top" transitive="true">
+      <slices cRef="input_buffer_y_south" replica="0" uRef="buffer" sliceName="input_buffer_y_south" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_y_south" replica="0" uRef="buffer" sliceName="output_buffer_z_top" transitive="true">
+      <slices cRef="output_buffer_y_south" replica="0" uRef="buffer" sliceName="output_buffer_y_south" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
@@ -328,60 +329,60 @@
       <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
         <visualDescription h="10" w="10" x="11" y="22"/>
       </slices>
-      <slices cRef="input_buffer_y_north" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
+      <slices cRef="input_buffer_y_north" replica="0" uRef="buffer" sliceName="input_buffer_y_north" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_y_north" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
+      <slices cRef="output_buffer_y_north" replica="0" uRef="buffer" sliceName="output_buffer_y_north" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
-      <slices cRef="input_buffer_x_left" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
+      <slices cRef="input_buffer_x_west" replica="0" uRef="buffer" sliceName="input_buffer_x_west" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_x_left" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
+      <slices cRef="output_buffer_x_west" replica="0" uRef="buffer" sliceName="output_buffer_x_west" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="input_buffer_x_right" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
+      <slices cRef="input_buffer_x_east" replica="0" uRef="buffer" sliceName="input_buffer_x_east" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_x_right" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
+      <slices cRef="output_buffer_x_east" replica="0" uRef="buffer" sliceName="output_buffer_x_east" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
-      <slices cRef="input_buffer_z_top" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
+      <slices cRef="input_buffer_z_top" replica="0" uRef="buffer" sliceName="input_buffer_z_top" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_z_top" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
+      <slices cRef="output_buffer_z_top" replica="0" uRef="buffer" sliceName="output_buffer_z_top" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="input_buffer_z_bottom" replica="0" uRef="buffer" sliceName="input_buffer" transitive="true">
+      <slices cRef="input_buffer_z_bottom" replica="0" uRef="buffer" sliceName="input_buffer_z_bottom" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_z_bottom" replica="0" uRef="buffer" sliceName="output_buffer" transitive="true">
+      <slices cRef="output_buffer_z_bottom" replica="0" uRef="buffer" sliceName="output_buffer_z_bottom" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="interact" replica="0" uRef="interact" sliceName="interact" transitive="false">
         <visualDescription h="10" w="10" x="50" y="27"/>
-        <port>input_buffer_z_top</port>
-        <port>output_buffer_z_top</port>
+        <port>input_buffer_y_south</port>
+        <port>output_buffer_y_south</port>
         <port>y</port>
         <port>mpi</port>
-        <port>input_buffer</port>
-        <port>output_buffer</port>
-        <port>input_buffer</port>
-        <port>output_buffer</port>
+        <port>input_buffer_y_north</port>
+        <port>output_buffer_y_north</port>
+        <port>input_buffer_x_west</port>
+        <port>output_buffer_x_west</port>
         <port>x</port>
-        <port>input_buffer</port>
-        <port>output_buffer</port>
-        <port>input_buffer</port>
-        <port>output_buffer</port>
+        <port>input_buffer_x_east</port>
+        <port>output_buffer_x_east</port>
+        <port>input_buffer_z_top</port>
+        <port>output_buffer_z_top</port>
         <port>z</port>
-        <port>input_buffer</port>
-        <port>output_buffer</port>
+        <port>input_buffer_z_bottom</port>
+        <port>output_buffer_z_bottom</port>
       </slices>
       <visualDescription h="40" w="80" x="53" y="235"/>
     </unit>
