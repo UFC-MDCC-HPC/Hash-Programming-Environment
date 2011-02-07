@@ -66,17 +66,6 @@ protected DIR Direction {
 	}
 }
 
-
-public BaseIShiftToLeftImpl() { 
-
-} 
-
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000edc7b05e0bb9da2bd993cc6deb534c575306f8c96142656271c343e24a1b55eb2a358eff5568646dff1cc33e86eb80ca0ce0402626f531a8f785bb04b5afcee7a8b5314bd04b5112f04d915c2b6947e66abf5e2640ae34d736ce0cd7c46fc9839e66eda8baaee1d3e95beadebfe6831864d972a66c59bc776b3ac44aefda0885";
-
-override public void createSlices() {
-	base.createSlices();
-} 
-
 abstract public void synchronize(); 
 
 
