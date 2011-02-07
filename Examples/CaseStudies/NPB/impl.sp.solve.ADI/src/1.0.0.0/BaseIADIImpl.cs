@@ -79,6 +79,16 @@ protected ICopyFaces<IInstance_SP<C>, C> Copy_faces {
 	}
 }
 
+private ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX> x_solve = null;
+
+protected ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX> X_solve {
+	get {
+		if (this.x_solve == null)
+			this.x_solve = (ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX>) Services.getPort("x_solve");
+		return this.x_solve;
+	}
+}
+
 private ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IY> y_solve = null;
 
 protected ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IY> Y_solve {
@@ -146,16 +156,6 @@ protected IComputeRHS<IInstance_SP<C>, C> Compute_rhs {
 		if (this.compute_rhs == null)
 			this.compute_rhs = (IComputeRHS<IInstance_SP<C>, C>) Services.getPort("compute_rhs");
 		return this.compute_rhs;
-	}
-}
-
-private ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX> x_solve = null;
-
-protected ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX> X_solve {
-	get {
-		if (this.x_solve == null)
-			this.x_solve = (ISolve<IInstance_SP<C>, C, IBeamWarmingMethod, IX>) Services.getPort("x_solve");
-		return this.x_solve;
 	}
 }
 

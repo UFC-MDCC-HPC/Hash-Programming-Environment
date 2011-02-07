@@ -6,7 +6,7 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bb7f791047740de8171f6403f4e39e3ab9163d08d99cce3b0b309c76150a2e3b362a1875207169ceaaab1959500d083c25e8c91af512fac7ff94c095694daaf6a479e6b33cf26403f1e507ad01d6e0a44c8e4ef8e3ba907967fead9e80269e6878dcdce4e786e96c18c251c6ef2bb1836e5f2c940ec88c4151d9a2fcebd60c89" localRef="base" location="sp.SP/SP.hpe" name="SP" package="sp" version="1.0.0.0">
-        <visualDescription h="30" w="50" x="188" y="162">
+        <visualDescription h="30" w="50" x="177" y="173">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="class" varName="CLASS"/>
@@ -39,17 +39,41 @@
         <originRef cRef="verify" iRef="IVerify"/>
         <visualDescription h="10" w="10" x="8" y="25"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@86789b" repeat="0">
+      <slice isRef="instance">
+        <originRef cRef="instance" iRef="IInstance_SP"/>
+        <visualDescription h="10" w="10" x="0" y="9"/>
+      </slice>
+      <slice isRef="initialize">
+        <originRef cRef="initialize" iRef="IInitialize"/>
+        <visualDescription h="10" w="10" x="23" y="3"/>
+      </slice>
+      <slice isRef="lhsinit">
+        <originRef cRef="lhsinit" iRef="ILHSInit"/>
+        <visualDescription h="10" w="10" x="38" y="5"/>
+      </slice>
+      <slice isRef="exact_rhs">
+        <originRef cRef="exact_rhs" iRef="IExactRHS"/>
+        <visualDescription h="10" w="10" x="62" y="1"/>
+      </slice>
+      <slice isRef="process">
+        <originRef cRef="data_partition" iRef="IBlocks3D"/>
+        <visualDescription h="10" w="10" x="59" y="23"/>
+      </slice>
+      <slice isRef="timer">
+        <originRef cRef="timer" iRef="ITimer"/>
+        <visualDescription h="10" w="10" x="45" y="29"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1b2def1" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@580a6f" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4ae1b6" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1509e5" repeat="0" sliceRef="verify">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@289099" repeat="0" sliceRef="verify">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Executable" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.datapartition.Blocks3D;&#xA;using environment.MPIDirect;&#xA;using common.Verify;&#xA;using sp.ADI;&#xA;using sp.SP;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;public abstract class BaseISPImpl&lt;IClass>: Application, BaseISP&lt;IClass>&#xA;where CLASS:IClass&#xA;{&#xA;&#xA;private IProblemDefinition&lt;IInstance_SP&lt;IClass>, IClass> problem = null;&#xA;&#xA;protected IProblemDefinition&lt;IInstance_SP&lt;IClass>, IClass> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_SP&lt;IClass>, IClass>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks3D&lt;IInstance_SP&lt;IClass>, IClass> process = null;&#xA;&#xA;protected IBlocks3D&lt;IInstance_SP&lt;IClass>, IClass> Process {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.process == null)&#xA;&#x9;&#x9;&#x9;this.process = (IBlocks3D&lt;IInstance_SP&lt;IClass>, IClass>) Services.getPort(&quot;data_partition&quot;);&#xA;&#x9;&#x9;return this.process;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IVerify&lt;IInstance_SP&lt;IClass>, IClass> verify = null;&#xA;&#xA;protected IVerify&lt;IInstance_SP&lt;IClass>, IClass> Verify {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.verify == null)&#xA;&#x9;&#x9;&#x9;this.verify = (IVerify&lt;IInstance_SP&lt;IClass>, IClass>) Services.getPort(&quot;verify&quot;);&#xA;&#x9;&#x9;return this.verify;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IADI&lt;IClass> adi = null;&#xA;&#xA;protected IADI&lt;IClass> Adi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.adi == null)&#xA;&#x9;&#x9;&#x9;this.adi = (IADI&lt;IClass>) Services.getPort(&quot;adi&quot;);&#xA;&#x9;&#x9;return this.adi;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseISPImpl.cs" srcType="base" uri="impl.sp.SP/bin/1.0.0.0/BaseISPImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.datapartition.Blocks3D;&#xA;using environment.MPIDirect;&#xA;using common.Verify;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.topology.Ring;&#xA;using common.data.Initialize;&#xA;using common.data.ExactRHS;&#xA;using common.data.LHSInit;&#xA;using common.benchmarking.Timer;&#xA;using sp.ADI;&#xA;using sp.SP;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;public abstract class BaseISPImpl&lt;CLASS>: Application, BaseISP&lt;CLASS>&#xA;where CLASS:IClass&#xA;{&#xA;&#x9;&#x9;&#xA;private ITimer timer = null;&#xA;&#xA;protected ITimer Timer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.timer == null)&#xA;&#x9;&#x9;&#x9;this.timer = (ITimer) Services.getPort(&quot;timer&quot;);&#xA;&#x9;&#x9;return this.timer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IInitialize&lt;IInstance_SP&lt;CLASS>, CLASS> initialize = null;&#xA;&#xA;protected IInitialize&lt;IInstance_SP&lt;CLASS>, CLASS> Initialize {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.initialize == null)&#xA;&#x9;&#x9;&#x9;this.initialize = (IInitialize&lt;IInstance_SP&lt;CLASS>, CLASS>) Services.getPort(&quot;initialize&quot;);&#xA;&#x9;&#x9;return this.initialize;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExactRHS&lt;IInstance_SP&lt;CLASS>, CLASS> exact_rhs = null;&#xA;&#xA;protected IExactRHS&lt;IInstance_SP&lt;CLASS>, CLASS> Exact_rhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exact_rhs == null)&#xA;&#x9;&#x9;&#x9;this.exact_rhs = (IExactRHS&lt;IInstance_SP&lt;CLASS>, CLASS>) Services.getPort(&quot;exact_rhs&quot;);&#xA;&#x9;&#x9;return this.exact_rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ILHSInit&lt;IInstance_SP&lt;CLASS>, CLASS> lhsinit = null;&#xA;&#xA;protected ILHSInit&lt;IInstance_SP&lt;CLASS>, CLASS> Lhsinit {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.lhsinit == null)&#xA;&#x9;&#x9;&#x9;this.lhsinit = (ILHSInit&lt;IInstance_SP&lt;CLASS>, CLASS>) Services.getPort(&quot;lhsinit&quot;);&#xA;&#x9;&#x9;return this.lhsinit;&#xA;&#x9;}&#xA;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private IBlocks blocks = null;&#xA;&#xA;protected IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell x = null;&#xA;&#xA;protected ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell y = null;&#xA;&#xA;protected ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;protected ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private IInstance_SP&lt;CLASS> instance = default(IInstance_SP&lt;CLASS>);&#xA;&#xA;protected IInstance_SP&lt;CLASS> Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (instance==null) &#xA;&#x9;&#x9;&#x9;instance = (IInstance_SP&lt;CLASS>) Services.getPort(&quot;instance&quot;);&#xA;&#x9;&#x9;return instance;&#xA;&#x9;}&#xA;}&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#xA;private IProblemDefinition&lt;IInstance_SP&lt;CLASS>, CLASS> problem = null;&#xA;&#xA;protected IProblemDefinition&lt;IInstance_SP&lt;CLASS>, CLASS> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_SP&lt;CLASS>, CLASS>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks3D&lt;IInstance_SP&lt;CLASS>, CLASS> process = null;&#xA;&#xA;protected IBlocks3D&lt;IInstance_SP&lt;CLASS>, CLASS> Process {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.process == null)&#xA;&#x9;&#x9;&#x9;this.process = (IBlocks3D&lt;IInstance_SP&lt;CLASS>, CLASS>) Services.getPort(&quot;data_partition&quot;);&#xA;&#x9;&#x9;return this.process;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IVerify&lt;IInstance_SP&lt;CLASS>, CLASS> verify = null;&#xA;&#xA;protected IVerify&lt;IInstance_SP&lt;CLASS>, CLASS> Verify {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.verify == null)&#xA;&#x9;&#x9;&#x9;this.verify = (IVerify&lt;IInstance_SP&lt;CLASS>, CLASS>) Services.getPort(&quot;verify&quot;);&#xA;&#x9;&#x9;return this.verify;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IADI&lt;CLASS> adi = null;&#xA;&#xA;protected IADI&lt;CLASS> Adi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.adi == null)&#xA;&#x9;&#x9;&#x9;this.adi = (IADI&lt;CLASS>) Services.getPort(&quot;adi&quot;);&#xA;&#x9;&#x9;return this.adi;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseISPImpl.cs" srcType="base" uri="impl.sp.SP/bin/1.0.0.0/BaseISPImpl.dll" versionId="1.0.0.0">
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -59,33 +83,55 @@
           <dependency>sp.ADI/bin/1.0.0.0/IADI.dll</dependency>
           <dependency>sp.SP/bin/1.0.0.0/BaseISP.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.SP;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;public class ISPImpl&lt;IClass> : BaseISPImpl&lt;IClass>, ISP&lt;IClass>&#xA;where CLASS:IClass&#xA;{&#xA;&#xA;public ISPImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;adi.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;verify.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ISPImpl.cs" srcType="user" uri="impl.sp.SP/bin/1.0.0.0/ISPImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.SP;&#xA;using common.data.ProblemDefinition;&#xA;using MPI;&#xA;using NPB3_0_JAV.BMInOut;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;&#x9;public class ISPImpl&lt;CLASS> : BaseISPImpl&lt;CLASS>, ISP&lt;CLASS>&#xA;&#x9;&#x9;where CLASS:IClass&#xA;&#x9;{&#xA;        public int bid = -1;&#xA;&#x9;&#x9;public static int t_total = 1;&#xA;    &#x9;public static String BMName = &quot;SP&quot;;&#xA;&#x9;&#x9;public char PROBLEM_CLASS = 'S';&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected bool active;&#xA;&#x9;&#x9;protected int node, no_nodes, total_nodes, root ,maxcells;&#xA;&#x9;    protected Intracommunicator worldcomm, comm_setup, comm_solve, comm_rhs = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private int ncells;&#xA;&#x9;&#x9;private int[,] cell_size;&#xA;&#x9;&#x9;private int[] grid_points;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private int problem_size;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public BMResults results;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public ISPImpl() &#xA;&#x9;    { &#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;setup_mpi();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;ncells = Problem.NCells;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;cell_size = Blocks.cell_size;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;grid_points = Problem.grid_points;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;problem_size = Instance.problem_size;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;PROBLEM_CLASS = Instance.CLASS;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private void runBenchmark()&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;    if (!active)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        Console.WriteLine(&quot;not active !&quot;);&#xA;&#x9;&#x9;        System.Environment.Exit(0);&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    int niter = -1;&#xA;&#x9;&#x9;    if (node == root)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        BMArgs.Banner(BMName, PROBLEM_CLASS, false, total_nodes);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;    &#x9;&#x9;&#xA;&#x9;&#x9;    for (int c = 0; c &lt; ncells; c++)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        if ((cell_size[c, 0] > Problem.IMAX) ||&#xA;&#x9;&#x9;            (cell_size[c, 1] > Problem.JMAX) ||&#xA;&#x9;&#x9;            (cell_size[c, 2] > Problem.KMAX))&#xA;&#x9;&#x9;        {&#xA;&#x9;&#x9;            Console.WriteLine(&quot;Problem size too big for compiled array sizes&quot;);&#xA;&#x9;&#x9;            System.Environment.Exit(0);&#xA;&#x9;&#x9;        }&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;    Constants.set_constants(0, grid_points);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Initialize.compute();&#xA;&#x9;&#x9;&#x9;Lhsinit.compute();&#xA;&#x9;&#x9;&#x9;Exact_rhs.compute();&#xA;&#x9;&#x9;    //compute_buffer_size(5);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    //      do one time step to touch all code, and reinitialize&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    Adi.compute();&#xA;&#x9;&#x9;    Initialize.compute();&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    //      Synchronize before placing time stamp&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    &#xA;&#x9;&#x9;    comm_setup.Barrier();&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Timer.resetAllTimers();&#xA;&#x9;&#x9;&#x9;Timer.start(t_total);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    Console.WriteLine(&quot;STARTING&quot;); Console.Out.Flush();&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    for (int step = 1; step &lt;= niter; step++)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        if (node == 0 &amp;&amp; (step % 20 == 0 || step == 1 || step == niter))&#xA;&#x9;&#x9;        {&#xA;&#x9;&#x9;            Console.WriteLine(&quot;Time step &quot; + step);&#xA;&#x9;&#x9;        }&#xA;&#x9;&#x9;&#x9;&#x9;Adi.compute();&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Timer.stop(1);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Verify.compute(); &#xA;&#x9;&#x9;    int verified = Verify.Verified;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    double tmax = Timer.readTimerGlobal(t_total); &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    if (node == root)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        double time = Timer.readTimer(t_total);&#xA;&#x9;&#x9;        results = new BMResults(BMName,&#xA;&#x9;&#x9;                      PROBLEM_CLASS,&#xA;&#x9;&#x9;                      grid_points[0],&#xA;&#x9;&#x9;                      grid_points[1],&#xA;&#x9;&#x9;                      grid_points[2],&#xA;&#x9;&#x9;                      niter,&#xA;&#x9;&#x9;                      time,&#xA;&#x9;&#x9;                      getMFLOPS(time, niter),&#xA;&#x9;&#x9;                      &quot;floating point&quot;,&#xA;&#x9;&#x9;                      verified,&#xA;&#x9;&#x9;                      true,&#xA;&#x9;&#x9;                      total_nodes,&#xA;&#x9;&#x9;                      bid);&#xA;&#x9;&#x9;        results.print();&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    worldcomm.Barrier();&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override void compute() &#xA;&#x9;&#x9;{           &#xA;&#x9;&#x9;&#x9;runBenchmark();&#x9;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} // end activate method &#xA;&#x9;&#x9;&#xA;&#x9;    private void setup_mpi()&#xA;&#x9;    {&#xA;&#x9;        int nc, color;&#xA;&#x9;&#xA;&#x9;        worldcomm = this.LocalCommunicator;&#xA;&#x9;&#xA;&#x9;        total_nodes = worldcomm.Size;&#xA;&#x9;        node = worldcomm.Rank;&#xA;&#x9;&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        //     compute square root; add small number to allow for roundoff&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        nc = Convert.ToInt32(Math.Sqrt(total_nodes) + 0.00001d);&#xA;&#x9;        maxcells = Convert.ToInt32(Math.Sqrt(total_nodes));&#xA;&#x9;&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        // We handle a non-square number of nodes by making the excess nodes&#xA;&#x9;        // inactive. However, we can never handle more cells than were compiled&#xA;&#x9;        // in. &#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;&#xA;&#x9;        if (nc > maxcells) nc = maxcells;&#xA;&#x9;&#xA;&#x9;        if (node >= nc * nc)&#xA;&#x9;        {&#xA;&#x9;            active = false;&#xA;&#x9;            color = 1;&#xA;&#x9;        }&#xA;&#x9;        else&#xA;&#x9;        {&#xA;&#x9;            active = true;&#xA;&#x9;            color = 0;&#xA;&#x9;        }&#xA;&#x9;&#xA;&#x9;        comm_setup = (Intracommunicator)worldcomm.Split(color, node);&#xA;&#x9;&#xA;&#x9;        if (!active) return;&#xA;&#x9;&#xA;&#x9;        no_nodes = comm_setup.Size;&#xA;&#x9;        comm_solve = (Intracommunicator)comm_setup.Clone();&#xA;&#x9;        comm_rhs = (Intracommunicator)comm_setup.Clone();&#xA;&#x9;&#xA;&#x9;&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        //     let node 0 be the root for the group (there is only one)&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        root = 0;&#xA;&#x9;    }&#xA;&#x9;&#xA;&#x9;    public double getMFLOPS(double total_time, int niter)&#xA;&#x9;    {&#xA;&#x9;        double mflops = 0.0d;&#xA;&#x9;        if (total_time > 0)&#xA;&#x9;        {&#xA;&#x9;            mflops = (881.174d * Math.Pow(problem_size, 3)&#xA;&#x9;                    - 4683.91d * Math.Pow(problem_size, 2)&#xA;&#x9;                    + 11484.5d * problem_size&#xA;&#x9;                    - 19272.4d) * niter / (1.0d * 1000000.0d);&#xA;&#x9;        }&#xA;&#x9;        return mflops;&#xA;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="library" name="ISPImpl.cs" srcType="user" uri="impl.sp.SP/bin/1.0.0.0/ISPImpl.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.sp.SP/bin/1.0.0.0/BaseISPImpl.dll</dependency>
           <dependency>sp.SP/bin/1.0.0.0/ISP.dll</dependency>
-        </file>
-        <file contents="using DGAC;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace impl.sp.SP { &#xA;&#xA;&#x9;public class ISPImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;ISPImpl sp = new ISPImpl();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;0024000004800000940000000602000000240000525341310004000011000000ddeedcaba108d1ed5e25cabaf2bd29f9ccced4266b31e92a275abc158dba1dbdf7da446e2ab536fc6614be14bff8fb9183a4189b985fe4d27b5827017638da1116ce4f24f8a5746b4db9cfb95905093897bf3fdcf3414b497fd7a29025c44f2fc979f9c837232c7f1cb152b236d0f97ff543046b43f4bf10d66edbf4e6d2ffb2&quot;,&quot;sp&quot;,sp,args);&#xA;&#x9;&#x9;&#x9;sp.createSlices();&#xA;&#x9;&#x9;&#x9;sp.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="ISPImplMain.cs" srcType="main" uri="file:/C:/Users/Heron/Documents/My Dropbox/Alunos/Cenez/hpe/impl.sp.SP/bin/1.0.0.0/ISPImplMain.exe" versionId="1.0.0.0">
-          <dependency>%WORKSPACE/impl.sp.SP/bin/1.0.0.0/ISPImpl.dll</dependency>
-          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
       </sources>
       <visualDescription h="40" w="80" x="477" y="156">
         <color b="255" g="255" r="128"/>
       </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="adi"/>
+        <slice pRef="blocks" sRef="verify"/>
+        <slice pRef="blocks" sRef="initialize"/>
+        <slice pRef="blocks" sRef="lhsinit"/>
+        <slice pRef="blocks" sRef="exact_rhs"/>
+        <slice pRef="blocks" sRef="process"/>
+      </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="adi"/>
         <slice pRef="problem" sRef="verify"/>
+        <slice pRef="problem" sRef="initialize"/>
+        <slice pRef="problem" sRef="lhsinit"/>
+        <slice pRef="problem" sRef="exact_rhs"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="adi"/>
         <slice pRef="mpi" sRef="verify"/>
+        <slice pRef="mpi" sRef="timer"/>
       </port>
-      <port name="process">
+      <port name="y">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="data_partition" sRef="adi"/>
-        <slice pRef="data_partition" sRef="verify"/>
+        <slice pRef="cell" sRef="adi"/>
+        <slice pRef="y" sRef="verify"/>
+        <slice pRef="y" sRef="process"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="z" sRef="adi"/>
+        <slice pRef="z" sRef="verify"/>
+        <slice pRef="z" sRef="process"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="adi"/>
+        <slice pRef="x" sRef="verify"/>
+        <slice pRef="x" sRef="process"/>
       </port>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
     </interface>
@@ -97,43 +143,59 @@
       <slices cRef="verify" replica="0" uRef="verify" sliceName="verify" transitive="false">
         <visualDescription h="10" w="10" x="8" y="25"/>
       </slices>
+      <slices cRef="instance" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="0" y="9"/>
+      </slices>
+      <slices cRef="initialize" replica="0" uRef="initialize" sliceName="initialize" transitive="false">
+        <visualDescription h="10" w="10" x="23" y="3"/>
+      </slices>
+      <slices cRef="lhsinit" replica="0" uRef="lhsinit" sliceName="lhsinit" transitive="false">
+        <visualDescription h="10" w="10" x="38" y="5"/>
+      </slices>
+      <slices cRef="exact_rhs" replica="0" uRef="exact_rhs" sliceName="exact_rhs" transitive="false">
+        <visualDescription h="10" w="10" x="62" y="1"/>
+      </slices>
+      <slices cRef="data_partition" replica="0" uRef="process" sliceName="process" transitive="false">
+        <visualDescription h="10" w="10" x="59" y="23"/>
+      </slices>
+      <slices cRef="timer" replica="0" uRef="timer" sliceName="timer" transitive="false">
+        <visualDescription h="10" w="10" x="45" y="29"/>
+      </slices>
       <visualDescription h="40" w="80" x="477" y="236"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>base</originRef>
       <originRef>adi</originRef>
+      <originRef>copy_faces</originRef>
+      <originRef>interact</originRef>
+      <originRef>shift_y_north</originRef>
+      <originRef>topology</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="53" w="63" x="37" y="301"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+      <originRef>base</originRef>
+      <originRef>data_partition</originRef>
+      <originRef>topology</originRef>
+      <originRef>x</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
+      <visualDescription h="20" w="20" x="184" y="359"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+      <originRef>base</originRef>
       <originRef>data_partition</originRef>
       <originRef>topology</originRef>
       <originRef>y</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="264" y="386"/>
+      <visualDescription h="20" w="20" x="288" y="386"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
       <originRef>base</originRef>
-      <originRef>adi</originRef>
       <originRef>data_partition</originRef>
       <originRef>topology</originRef>
       <originRef>z</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="352" y="356"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
-      <originRef>base</originRef>
-      <originRef>adi</originRef>
-      <originRef>compute_rhs</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="60" w="61" x="264" y="479"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
-      <originRef>base</originRef>
-      <originRef>verify</originRef>
-      <originRef>data_partition</originRef>
-      <originRef>topology</originRef>
-      <originRef>z</originRef>
-      <links xsi:type="component:EnumerableUnitType" ref="sp"/>
-      <visualDescription h="20" w="20" x="185" y="326"/>
+      <visualDescription h="20" w="20" x="341" y="361"/>
     </enumerator>
   </componentInfo>
 </component:component>

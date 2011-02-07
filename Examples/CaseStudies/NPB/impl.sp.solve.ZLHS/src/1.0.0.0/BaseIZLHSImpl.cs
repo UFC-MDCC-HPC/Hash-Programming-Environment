@@ -40,17 +40,27 @@ public IProblemDefinition<I,C> Problem {
 		return this.problem;
 	}
 }
+		
+private DIR axis = default(DIR);
 
+protected DIR Axis {
+	get {
+		if (this.axis == null)
+			this.axis = (DIR) Services.getPort("orientation");
+		return this.axis;
+	}
+}
 
-public BaseIZLHSImpl() { 
+private MTH method = default(MTH);
 
-} 
-
-public static string UID = "0024000004800000940000000602000000240000525341310004000011000000f5078e675ebd08eb0d810a4170906ed61a848050952f3f7db632edc557cd8930802661ed234878e776e1fea77cb6c1fd2f9d7722a98a46f3c8e014b20f63929597c81a2ea5299b147fa2936a40fe78c47b5a9b96560ee469d5776aaa95ed22f8ff419c7a66802f4a5355b44b318ed325262abd9df26640faac078d945fb02292";
-
-override public void createSlices() {
-	base.createSlices();
-} 
+protected MTH Method {
+	get {
+		if (this.method == null)
+			this.method = (MTH) Services.getPort("method");
+		return this.method;
+	}
+}
+		
 
 abstract public void compute(); 
 

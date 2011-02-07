@@ -15,10 +15,10 @@ using common.solve.Method;
 namespace impl.sp.solve.TXINVR { 
 
 public abstract class BaseITXINVR<I,C,DIR,MTH>: Computation, BaseIBlockDiagonalMatVecProduct<I,C,DIR,MTH>
-		where I:IInstance<C>
-		where C:IClass
-		where DIR:IAxis
-		where MTH:IMethod
+	where I:IInstance<C>
+	where C:IClass
+	where DIR:IAxis
+	where MTH:IMethod
 {
 
 private IBlocks blocks = null;
@@ -40,7 +40,28 @@ public IProblemDefinition<I,C> Problem {
 		return this.problem;
 	}
 }
+		
+private DIR axis = default(DIR);
 
+protected DIR Axis {
+	get {
+		if (this.axis == null)
+			this.axis = (DIR) Services.getPort("orientation");
+		return this.axis;
+	}
+}
+
+private MTH method = default(MTH);
+
+protected MTH Method {
+	get {
+		if (this.method == null)
+			this.method = (MTH) Services.getPort("method");
+		return this.method;
+	}
+}
+		
+		
 abstract public void compute(); 
 
 
