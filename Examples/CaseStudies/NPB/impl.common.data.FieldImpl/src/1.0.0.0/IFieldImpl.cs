@@ -8,7 +8,6 @@ namespace impl.common.data.FieldImpl {
 
 public class IFieldImpl : BaseIFieldImpl, IField
 {
-
     private double[,,,,] field = null;
 		
     public double[,,,,] Field { 

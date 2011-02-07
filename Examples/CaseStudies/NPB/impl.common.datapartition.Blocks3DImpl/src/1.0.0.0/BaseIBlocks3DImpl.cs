@@ -35,7 +35,7 @@ private ICell3D cell = null;
 protected ICell3D Cell {
 	get {
 		if (this.cell == null)
-			this.cell = (ICell3D) Services.getPort("cell");
+			this.cell = (ICell3D) Services.getPort("topology");
 		return this.cell;
 	}
 }
@@ -75,7 +75,7 @@ private IBlocks blocks = null;
 public IBlocks Blocks {
 	get {
 		if (this.blocks == null)
-			this.blocks = (IBlocks) Services.getPort("blocks");
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
 		return this.blocks;
 	}
 }
