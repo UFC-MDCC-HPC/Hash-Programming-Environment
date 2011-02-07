@@ -16,6 +16,11 @@ namespace impl.sp.solve.YBackwardImpl {
 		where DIR:IY
 		where MTH:IBeamWarmingMethod
 	{
+		public IYBackwardImpl() 
+		{
+			initialize();
+		}
+		
         private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;
 		

@@ -18,8 +18,9 @@ namespace impl.sp.solve.YLHS {
 	where MTH:IBeamWarmingMethod
 	{
 
-		public IYLHSImpl() { 
-	
+		public IYLHSImpl() 
+		{ 
+			initialize();
 		} 
 
 		private int c;

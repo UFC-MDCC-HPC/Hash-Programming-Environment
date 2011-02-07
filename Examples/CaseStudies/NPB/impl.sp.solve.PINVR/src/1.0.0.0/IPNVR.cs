@@ -18,8 +18,9 @@ public class IPNVR<I,C,DIR,MTH> : BaseIPNVR<I,C,DIR,MTH>, IBlockDiagonalMatVecPr
 		where MTH:IMethod
 {
 
-public IPNVR() { 
-
+public IPNVR() 
+{ 
+    initialize();
 } 
 
 private int[,] start, end, cell_size, slice;

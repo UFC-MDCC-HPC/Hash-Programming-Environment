@@ -16,6 +16,10 @@ namespace impl.sp.solve.YSolve {
 		where MTH:IBeamWarmingMethod
 		where DIR:IY
 	{
+		public IYSolveImpl()
+		{
+			initialize();
+		}
 	
 		private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;

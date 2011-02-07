@@ -16,6 +16,10 @@ namespace impl.sp.solve.XSolve {
 		where MTH:IBeamWarmingMethod
 		where DIR:IX
 	{
+		public IXSolveImpl()
+		{
+			initialize();
+		}
 	
 		private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;

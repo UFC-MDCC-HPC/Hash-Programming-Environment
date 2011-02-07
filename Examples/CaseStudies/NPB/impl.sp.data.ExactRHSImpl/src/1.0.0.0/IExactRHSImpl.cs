@@ -16,7 +16,7 @@ namespace impl.sp.data.ExactRHSImpl {
 	
 		public IExactRHSImpl() 
 		{ 
-		
+			initialize();		
 		} 
 		
 		private int[,] cell_size, cell_low, start, end;

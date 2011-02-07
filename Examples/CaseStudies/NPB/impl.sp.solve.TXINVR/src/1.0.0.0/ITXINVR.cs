@@ -19,8 +19,9 @@ public class ITXINVR<I,C,DIR,MTH> : BaseITXINVR<I,C,DIR,MTH>, IBlockDiagonalMatV
 		where MTH:IMethod
 {
 
-public ITXINVR() { 
-
+public ITXINVR() 
+{ 
+    initialize();
 } 
 
 private int[,] start, end, cell_size;

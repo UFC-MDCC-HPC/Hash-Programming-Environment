@@ -18,8 +18,9 @@ public class ITZETAR<I,C,DIR,MTH> : BaseITZETAR<I,C,DIR,MTH>, IBlockDiagonalMatV
 		where MTH:IMethod
 {
 
-public ITZETAR() { 
-
+public ITZETAR() 
+{ 
+    initialize();
 } 
 
 private int[,] start, end, cell_size, slice;

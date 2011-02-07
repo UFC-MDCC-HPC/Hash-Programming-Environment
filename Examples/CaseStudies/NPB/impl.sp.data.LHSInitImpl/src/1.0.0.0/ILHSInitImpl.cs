@@ -14,8 +14,9 @@ namespace impl.sp.data.LHSInitImpl {
 		where C:IClass
 	{
 		
-		public ILHSInitImpl() { 
-		
+		public ILHSInitImpl() 
+		{ 
+			initialize();
 		} 
 		
 		private int[,] cell_size, cell_low, cell_high, start, end, slice, cell_coord;

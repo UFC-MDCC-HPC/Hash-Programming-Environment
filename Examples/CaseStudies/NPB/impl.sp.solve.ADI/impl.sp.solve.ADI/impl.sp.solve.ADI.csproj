@@ -121,10 +121,6 @@
       <Project>{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}</Project>
       <Name>common.solve.Solve</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.Add\common.Add\common.Add.csproj">
-      <Project>{35BD4987-A347-49DC-B3AF-AF77049A0485}</Project>
-      <Name>common.Add</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
       <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
       <Name>common.problem_size.Instance</Name>
@@ -132,6 +128,10 @@
     <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
       <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
       <Name>common.solve.Method</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Add\common.Add\common.Add.csproj">
+      <Project>{768C7250-12F1-4923-A6B5-416A53215BB1}</Project>
+      <Name>common.Add</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

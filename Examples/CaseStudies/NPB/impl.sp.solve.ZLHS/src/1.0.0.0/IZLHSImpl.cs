@@ -18,8 +18,9 @@ namespace impl.sp.solve.ZLHS {
 	where MTH:IBeamWarmingMethod
 	{
 
-		public IZLHSImpl() { 
-		
+		public IZLHSImpl() 
+		{ 
+			initialize();
 		} 
 		
 		private int c;

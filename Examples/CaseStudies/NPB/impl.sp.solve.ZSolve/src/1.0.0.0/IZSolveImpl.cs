@@ -16,6 +16,10 @@ namespace impl.sp.solve.ZSolve {
 		where MTH:IBeamWarmingMethod
 		where DIR:IZ
 	{
+		public IZSolveImpl()
+		{
+			initialize();
+		}
 	
 		private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;

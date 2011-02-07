@@ -18,8 +18,9 @@ public class ININVR<I,C,DIR,MTH> : BaseININVR<I,C,DIR,MTH>, IBlockDiagonalMatVec
 		where MTH:IMethod
 {
 
-public ININVR() { 
-
+public ININVR() 
+{
+    initialize();
 } 
 		
 private int[,] start, end, cell_size, slice;

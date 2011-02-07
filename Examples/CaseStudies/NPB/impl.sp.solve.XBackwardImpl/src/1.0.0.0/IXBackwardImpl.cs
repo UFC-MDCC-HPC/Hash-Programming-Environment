@@ -16,6 +16,11 @@ namespace impl.sp.solve.XBackwardImpl {
 		where DIR:IX
 		where MTH:IBeamWarmingMethod
 	{	
+		public IXBackwardImpl()
+		{
+    		initialize();
+		}
+		
         private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;
 		

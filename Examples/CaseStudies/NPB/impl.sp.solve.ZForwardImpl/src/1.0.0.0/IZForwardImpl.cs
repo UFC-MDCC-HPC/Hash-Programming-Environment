@@ -16,6 +16,11 @@ namespace impl.sp.solve.ZForwardImpl {
 		where MTH:IBeamWarmingMethod
 		where DIR:IZ
 	{
+		public IZForwardImpl() 
+		{
+			initialize();
+		}
+		
         private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;
 		

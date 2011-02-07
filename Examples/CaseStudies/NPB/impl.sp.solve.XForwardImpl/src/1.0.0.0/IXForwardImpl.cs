@@ -19,6 +19,11 @@ namespace impl.sp.solve.XForwardImpl {
         private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;
 		
+		public IXForwardImpl()
+		{
+    		initialize();			
+		}		
+		
 		public void initialize()
 		{
 			start = Blocks.cell_start;

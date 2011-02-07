@@ -9,7 +9,8 @@ namespace impl.sp.data.ExactSolutionImpl {
 	public class IExactSolutionImpl : BaseIExactSolutionImpl, IExactSolution
 	{
 	
-		public IExactSolutionImpl() { 
+		public IExactSolutionImpl() 
+		{ 
 		
 		} 
 				

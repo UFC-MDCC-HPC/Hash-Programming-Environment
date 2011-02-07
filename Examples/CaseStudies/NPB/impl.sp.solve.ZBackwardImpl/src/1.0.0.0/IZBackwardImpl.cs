@@ -16,6 +16,11 @@ namespace impl.sp.solve.ZBackwardImpl {
 		where DIR:IZ
 		where MTH:IBeamWarmingMethod
 	{	
+		public IZBackwardImpl()
+		{
+			initialize();
+		}
+		
         private int[,] start, end, slice, cell_size;
 		private double[,,,,] lhs, rhs;
 		

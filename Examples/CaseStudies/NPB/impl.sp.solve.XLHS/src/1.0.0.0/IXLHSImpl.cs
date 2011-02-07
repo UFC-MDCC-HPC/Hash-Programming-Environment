@@ -18,8 +18,9 @@ namespace impl.sp.solve.XLHS {
 	where MTH:IBeamWarmingMethod
 	{
 	
-		public IXLHSImpl() { 
-					
+		public IXLHSImpl() 
+		{ 
+			initialize();
 		} 
 			
 		private int c;

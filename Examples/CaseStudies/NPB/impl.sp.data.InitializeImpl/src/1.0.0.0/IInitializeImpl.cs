@@ -14,8 +14,9 @@ namespace impl.sp.data.InitializeImpl {
 		where C:IClass
 	{
 	
-		public IInitializeImpl() { 
-		
+		public IInitializeImpl() 
+		{ 
+		    initialize();
 		} 
 		
 		private int[,] cell_size, cell_low, cell_high, start, end, slice;
