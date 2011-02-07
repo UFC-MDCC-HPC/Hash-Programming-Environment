@@ -14,6 +14,7 @@ namespace impl.sp.SP {
 		where CLASS:IClass
 	{
         public int bid = -1;
+		public static int t_total = 1;
     	public static String BMName = "SP";
 		public char PROBLEM_CLASS = 'S';
 		
@@ -21,6 +22,7 @@ namespace impl.sp.SP {
 		protected int node, no_nodes, total_nodes, root ,maxcells;
 	    protected Intracommunicator worldcomm, comm_setup, comm_solve, comm_rhs = null;
 		
+		private int ncells;
 		private int[,] cell_size;
 		private int[] grid_points;
 		
@@ -29,20 +31,13 @@ namespace impl.sp.SP {
 		public BMResults results;
 		
 		public ISPImpl() 
-	    { 
-		
+	    { 				
 			setup_mpi();
 			
-			Problem.initialize_problem_data();
+			ncells = Problem.NCells;
 			
-			Initialize.initialize();
-			Lhsinit.initialize();
-			Exact_rhs.initialize();
-						
-			cell_size = Blocks.cell_size;
-			
-			grid_points = Problem.grid_points;
-			
+			cell_size = Blocks.cell_size;			
+			grid_points = Problem.grid_points;			
 			problem_size = Instance.problem_size;
 			
 			PROBLEM_CLASS = Instance.CLASS;			
@@ -63,31 +58,21 @@ namespace impl.sp.SP {
 		
 		    }
 		
-		    //---------------------------------------------------------------------
-		    //      Read input file (if it exists), else take
-		    //      defaults from parameters
-		    //---------------------------------------------------------------------
-		    //niter = getInputPars();
-		
-		    //comm_setup.Broadcast<int>(ref niter, root);
-		    //comm_setup.Broadcast<int>(ref dp_type, root);
-		    //comm_setup.Broadcast<int>(ref grid_points, root);
-		    
-		    Process.make_set();
-		
-//		    for (int c = 0; c < ncells; c++)
-//		    {
-//		        if ((cell_size[c, 0] > IMAX) ||
-//		            (cell_size[c, 1] > JMAX) ||
-//		            (cell_size[c, 2] > KMAX))
-//		        {
-//		            Console.WriteLine("Problem size too big for compiled array sizes");
-//		            System.Environment.Exit(0);
-//		        }
-//		    }
+				    		
+		    for (int c = 0; c < ncells; c++)
+		    {
+		        if ((cell_size[c, 0] > Problem.IMAX) ||
+		            (cell_size[c, 1] > Problem.JMAX) ||
+		            (cell_size[c, 2] > Problem.KMAX))
+		        {
+		            Console.WriteLine("Problem size too big for compiled array sizes");
+		            System.Environment.Exit(0);
+		        }
+		    }
 		
 			
 		    Constants.set_constants(0, grid_points);
+			
 			Initialize.compute();
 			Lhsinit.compute();
 			Exact_rhs.compute();
@@ -102,11 +87,11 @@ namespace impl.sp.SP {
 		    //---------------------------------------------------------------------
 		    //      Synchronize before placing time stamp
 		    //---------------------------------------------------------------------
-		    // mpi_barrier(comm_setup, error);
+		    
 		    comm_setup.Barrier();
 		
-//		    timer.resetAllTimers();
-//		    timer.start(t_total);
+			Timer.resetAllTimers();
+			Timer.start(t_total);
 		
 		    Console.WriteLine("STARTING"); Console.Out.Flush();
 		
@@ -118,15 +103,17 @@ namespace impl.sp.SP {
 		        }
 				Adi.compute();
 		    }
-//		    timer.stop(1);
-			Verify.compute(); // verify(niter);
+			
+			Timer.stop(1);
+			
+			Verify.compute(); 
 		    int verified = Verify.Verified;
 		
-		    double tmax = 0; //comm_setup.Reduce<double>(timer.readTimer(t_total), Operation<double>.Max, root);
+		    double tmax = Timer.readTimerGlobal(t_total); 
 		
 		    if (node == root)
 		    {
-		        double time = 0; // timer.readTimer(t_total);
+		        double time = Timer.readTimer(t_total);
 		        results = new BMResults(BMName,
 		                      PROBLEM_CLASS,
 		                      grid_points[0],
@@ -144,7 +131,6 @@ namespace impl.sp.SP {
 		    }
 		
 		    worldcomm.Barrier();
-//		    mpi.Dispose();
 		}
 		
 		public override void compute() 
@@ -157,9 +143,6 @@ namespace impl.sp.SP {
 	    {
 	        int nc, color;
 	
-	//        string[] args = System.Environment.GetCommandLineArgs();
-	//        mpi = new MPI.Environment(ref args);
-	        
 	        worldcomm = this.LocalCommunicator;
 	
 	        total_nodes = worldcomm.Size;

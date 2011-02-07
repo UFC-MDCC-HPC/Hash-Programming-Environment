@@ -113,5 +113,9 @@
       <Project>{D22B9238-922C-43B5-B176-7D68B4AC4276}</Project>
       <Name>common.data.LHSInit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\common.benchmarking.Timer\common.benchmarking.Timer\common.benchmarking.Timer.csproj">
+      <Project>{D477316A-7431-4538-BC0B-8D386F0FF20C}</Project>
+      <Name>common.benchmarking.Timer</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

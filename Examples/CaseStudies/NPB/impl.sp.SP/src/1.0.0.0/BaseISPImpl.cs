@@ -15,6 +15,7 @@ using common.topology.Ring;
 using common.data.Initialize;
 using common.data.ExactRHS;
 using common.data.LHSInit;
+using common.benchmarking.Timer;
 using sp.ADI;
 using sp.SP;
 
@@ -24,6 +25,16 @@ public abstract class BaseISPImpl<CLASS>: Application, BaseISP<CLASS>
 where CLASS:IClass
 {
 		
+private ITimer timer = null;
+
+protected ITimer Timer {
+	get {
+		if (this.timer == null)
+			this.timer = (ITimer) Services.getPort("timer");
+		return this.timer;
+	}
+}
+
 private IInitialize<IInstance_SP<CLASS>, CLASS> initialize = null;
 
 protected IInitialize<IInstance_SP<CLASS>, CLASS> Initialize {
