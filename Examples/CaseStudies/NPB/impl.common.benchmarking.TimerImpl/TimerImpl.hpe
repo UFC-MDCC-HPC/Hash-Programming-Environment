@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000059b4ce3dbbdf760174f86283585d3435ba88a369b19cf7b99738eb3337e976d2731f8cec2e02f890164397ac8f7d022c714dcc702eaaa97e587927da59bf6f6bf64e050538b9e609c4e503c956fb34d605f6f37ff17c41e00f1b3dc879002362cb7a0f05fca62cf64e4d72e13b6d7b16cd896f76580a5368e476badb01d9eb9f" isAbstract="false" kind="Environment" name="TimerImpl" packagePath="impl.common.benchmarking">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000150b32b0aa711ac27ed82788965632927016c1994a5ddb2eaa7583965976b4c34c1dad7f4a5b601273aed6e4f6d28509bd4c2afa3faa09ebc7809ae7ad13764a79bfda622a052166b8c756d8163fdfd3d134b1a09c1dc7506f646fb93a8c8439c7ddfdc895a6c2ba60920857e1a5e9eec2b3c9b6b84659cc4ba4a64f9e2f98a2" localRef="base" location="common.benchmarking.Timer/Timer.hpe" name="Timer" package="common.benchmarking" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="284" y="211">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
+          <visualDescription h="47" w="74" x="153" y="318">
+            <color b="240" g="32" r="160"/>
+          </visualDescription>
+          <unitBounds uRef="mpi">
+            <visualDescription h="10" w="10" x="62" y="12"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="timer">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ITimerImpl" nArgs="0">
+      <slice isRef="mpi">
+        <originRef cRef="mpi" iRef="IMPIDirect"/>
+        <visualDescription h="10" w="10" x="8" y="21"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using environment.MPIDirect;&#xA;using common.benchmarking.Timer;&#xA;&#xA;namespace impl.common.benchmarking.TimerImpl { &#xA;&#xA;public abstract class BaseITimerImpl: Environment, BaseITimer&#xA;{&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITimerImpl.cs" srcType="base" uri="impl.common.benchmarking.TimerImpl/bin/1.0.0.0/BaseITimerImpl.dll" versionId="1.0.0.0">
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>common.benchmarking.Timer/bin/1.0.0.0/BaseITimer.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.benchmarking.Timer;&#xA;&#xA;namespace impl.common.benchmarking.TimerImpl { &#xA;&#xA;public class ITimerImpl : BaseITimerImpl, ITimer&#xA;{&#xA;&#xA;public ITimerImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITimerImpl.cs" srcType="user" uri="impl.common.benchmarking.TimerImpl/bin/1.0.0.0/ITimerImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.benchmarking.TimerImpl/bin/1.0.0.0/BaseITimerImpl.dll</dependency>
+          <dependency>common.benchmarking.Timer/bin/1.0.0.0/ITimer.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="138" y="55">
+        <color b="98" g="174" r="126"/>
+      </visualDescription>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="mpi"/>
+      </port>
+    </interface>
+    <unit iRef="ITimerImpl" private="false" uRef="timer" visibleInterface="true">
+      <super cRef="base" uRef="timer"/>
+      <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="false">
+        <visualDescription h="10" w="10" x="62" y="23"/>
+      </slices>
+      <visualDescription h="40" w="80" x="138" y="135"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
+      <originRef>base</originRef>
+      <originRef>mpi</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="timer"/>
+      <visualDescription h="20" w="20" x="373" y="107"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
