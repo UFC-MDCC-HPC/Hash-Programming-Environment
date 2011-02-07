@@ -355,16 +355,9 @@
     <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <innerRenaming cNewName="x" cOldName="topology" cRef="x_solve"/>
     <innerRenaming cNewName="y" cOldName="topology" cRef="y_solve"/>
     <innerRenaming cNewName="z" cOldName="topology" cRef="z_solve"/>
-    <innerRenaming cNewName="x" cOldName="topology" cRef="x_solve"/>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>x_solve</cRefs>
-      <cRefs>y_solve</cRefs>
-      <cRefs>z_solve</cRefs>
-      <pRef>mpi</pRef>
-    </fusion>
     <fusion>
       <cRefs>txinvr</cRefs>
       <cRefs>add</cRefs>
@@ -373,7 +366,19 @@
       <cRefs>x_solve</cRefs>
       <cRefs>y_solve</cRefs>
       <cRefs>z_solve</cRefs>
-      <pRef>blocks_info</pRef>
+      <pRef>problem_data</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>x_solve</cRefs>
+      <pRef>x</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>x_solve</cRefs>
+      <cRefs>y_solve</cRefs>
+      <cRefs>z_solve</cRefs>
+      <pRef>mpi</pRef>
     </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
@@ -393,12 +398,7 @@
       <cRefs>x_solve</cRefs>
       <cRefs>y_solve</cRefs>
       <cRefs>z_solve</cRefs>
-      <pRef>problem_data</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>x_solve</cRefs>
-      <pRef>x</pRef>
+      <pRef>blocks_info</pRef>
     </fusion>
     <interface iRef="IADI" nArgs="1">
       <slice isRef="z_solve">
@@ -429,32 +429,32 @@
         <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
         <visualDescription h="10" w="10" x="194" y="90"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@78c18a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@15ad51a" repeat="0">
         <visualDescription h="493" w="490" x="145" y="125"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ea67fc" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5cd81a" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="225" y="38"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5112ff" repeat="0" sliceRef="compute_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16f942c" repeat="0" sliceRef="compute_rhs">
           <visualDescription h="50" w="50" x="222" y="103"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@b66008" repeat="0" sliceRef="txinvr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@68e3cd" repeat="0" sliceRef="txinvr">
           <visualDescription h="50" w="50" x="224" y="167"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@15ad076" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@43ac0b" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="231" y="231"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12c0415" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d415b2" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="230" y="298"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c02855" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1dc90ef" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="230" y="366"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@197f53f" repeat="0" sliceRef="add">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1af67f9" repeat="0" sliceRef="add">
           <visualDescription h="50" w="50" x="224" y="420"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using environment.MPIDirect;&#xA;using common.datapartition.Blocks3D;&#xA;&#xA;namespace sp.ADI { &#xA;&#xA;public interface BaseIADI&lt;C> : IComputationKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IProblemDefinition&lt;IInstance_SP&lt;C>, C> Problem {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#x9;IBlocks3D&lt;IInstance_SP&lt;C>,C> Data_partition {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIADI.cs" srcType="base" uri="sp.ADI/bin/1.0.0.0/BaseIADI.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace sp.ADI { &#xA;&#xA;public interface BaseIADI&lt;C> : IComputationKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IProblemDefinition&lt;IInstance_SP&lt;C>, C> Problem {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIADI.cs" srcType="base" uri="sp.ADI/bin/1.0.0.0/BaseIADI.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
@@ -474,6 +474,16 @@
       <visualDescription h="140" w="313" x="431" y="89">
         <color b="0" g="128" r="128"/>
       </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="43" y="4"/>
+        <slice pRef="blocks" sRef="z_solve"/>
+        <slice pRef="blocks" sRef="y_solve"/>
+        <slice pRef="blocks" sRef="x_solve"/>
+        <slice pRef="blocks" sRef="copy_faces"/>
+        <slice pRef="blocks" sRef="compute_rhs"/>
+        <slice pRef="blocks" sRef="add"/>
+        <slice pRef="blocks" sRef="txinvr"/>
+      </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="162" y="9"/>
         <slice pRef="problem" sRef="z_solve"/>
@@ -484,21 +494,6 @@
         <slice pRef="problem" sRef="add"/>
         <slice pRef="problem" sRef="txinvr"/>
       </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="z_solve"/>
-        <slice pRef="blocks" sRef="y_solve"/>
-        <slice pRef="blocks" sRef="x_solve"/>
-        <slice pRef="blocks" sRef="copy_faces"/>
-        <slice pRef="blocks" sRef="compute_rhs"/>
-        <slice pRef="blocks" sRef="add"/>
-        <slice pRef="blocks" sRef="txinvr"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="z_solve"/>
-        <slice pRef="z" sRef="copy_faces"/>
-      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="11" y="97"/>
         <slice pRef="mpi" sRef="z_solve"/>
@@ -506,20 +501,25 @@
         <slice pRef="mpi" sRef="x_solve"/>
         <slice pRef="mpi" sRef="copy_faces"/>
       </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="77" y="104"/>
+        <slice pRef="cell" sRef="z_solve"/>
+        <slice pRef="z" sRef="copy_faces"/>
+      </port>
       <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="224" y="24"/>
         <slice pRef="cell" sRef="y_solve"/>
         <slice pRef="y" sRef="copy_faces"/>
       </port>
       <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="126" y="110"/>
         <slice pRef="cell" sRef="x_solve"/>
         <slice pRef="x" sRef="copy_faces"/>
       </port>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IADI" private="false" uRef="adi" visibleInterface="true">
-      <slices cRef="z" replica="0" uRef="cell" sliceName="cell" transitive="true">
+      <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
@@ -534,12 +534,12 @@
       <slices cRef="y" replica="0" uRef="cell" sliceName="cell" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="x" replica="0" uRef="cell" sliceName="cell" transitive="true">
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="z_solve" replica="0" uRef="solve" sliceName="z_solve" transitive="false">
         <visualDescription h="10" w="10" x="64" y="28"/>
-        <port>cell</port>
+        <port>z</port>
         <port>mpi</port>
         <port>blocks</port>
         <port>problem</port>
@@ -553,7 +553,7 @@
       </slices>
       <slices cRef="x_solve" replica="0" uRef="solve" sliceName="x_solve" transitive="false">
         <visualDescription h="10" w="10" x="63" y="3"/>
-        <port>cell</port>
+        <port>x</port>
         <port>mpi</port>
         <port>blocks</port>
         <port>problem</port>
@@ -562,7 +562,7 @@
         <visualDescription h="10" w="10" x="19" y="26"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>y</port>
+        <port>cell</port>
         <port>mpi</port>
         <port>x</port>
         <port>z</port>
@@ -584,29 +584,32 @@
       </slices>
       <visualDescription h="40" w="80" x="152" y="252"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>z_solve</originRef>
-      <originRef>matvecproduct</originRef>
-      <originRef>method</originRef>
+      <originRef>backward</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="z_solve" uRef="solve"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="33" w="41" x="613" y="398"/>
+      <visualDescription h="60" w="61" x="50" y="77"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>y_solve</originRef>
-      <originRef>matvecproduct</originRef>
-      <originRef>method</originRef>
+      <originRef>backward</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="y_solve" uRef="solve"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="33" w="41" x="717" y="279"/>
+      <visualDescription h="60" w="61" x="90" y="124"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>x_solve</originRef>
-      <originRef>matvecproduct</originRef>
-      <originRef>method</originRef>
+      <originRef>backward</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="x_solve" uRef="solve"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="33" w="41" x="706" y="519"/>
+      <visualDescription h="60" w="61" x="36" y="174"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>x_dir</originRef>
@@ -639,7 +642,7 @@
       <originRef>topology</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="copy_faces" uRef="copy_faces"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="29" w="42" x="653" y="369"/>
+      <visualDescription h="29" w="42" x="86" y="143"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>compute_rhs</originRef>
@@ -647,7 +650,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="compute_rhs" uRef="compute_rhs"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="32" w="36" x="662" y="321"/>
+      <visualDescription h="32" w="36" x="72" y="169"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>add</originRef>
@@ -655,21 +658,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="add" uRef="add"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="60" w="61" x="659" y="432"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
-      <originRef>txinvr</originRef>
-      <originRef>orientation</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="txinvr" uRef="matvecproduct"/>
-      <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="20" w="20" x="736" y="362"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
-      <originRef>txinvr</originRef>
-      <originRef>method</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="txinvr" uRef="matvecproduct"/>
-      <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="20" w="20" x="696" y="398"/>
+      <visualDescription h="60" w="61" x="0" y="115"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>txinvr</originRef>
@@ -677,7 +666,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="txinvr" uRef="matvecproduct"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="60" w="61" x="690" y="383"/>
+      <visualDescription h="60" w="61" x="31" y="121"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>xyz</originRef>
@@ -686,12 +675,6 @@
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>compute_rhs</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
         <originRef>copy_faces</originRef>
@@ -707,37 +690,36 @@
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>compute_rhs</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>add</originRef>
         <originRef>problem_data</originRef>
         <originRef>speed</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
-        <originRef>y_solve</originRef>
-        <originRef>matvecproduct</originRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>txinvr</originRef>
-        <originRef>orientation</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
-        <originRef>txinvr</originRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>z_solve</originRef>
-        <originRef>matvecproduct</originRef>
-        <originRef>method</originRef>
+        <originRef>backward</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>x_solve</originRef>
-        <originRef>matvecproduct</originRef>
-        <originRef>method</originRef>
+        <originRef>backward</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>y_solve</originRef>
+        <originRef>backward</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
