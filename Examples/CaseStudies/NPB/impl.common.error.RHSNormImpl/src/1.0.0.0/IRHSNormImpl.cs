@@ -14,8 +14,9 @@ public class IRHSNormImpl<I,C> : BaseIRHSNormImpl<I,C>, IRHSNorm<I,C>
 		where C:IClass
 {
 
-	public IRHSNormImpl() { 
-	
+	public IRHSNormImpl() 
+	{ 
+			initialize();
 	} 
 		
     private int[,] cell_size, start, end;		

@@ -17,8 +17,9 @@ public class IErrorNormImpl<I,C> : BaseIErrorNormImpl<I,C>, IErrorNorm<I,C>
 		where C:IClass
 {
 
-	public IErrorNormImpl() { 
-	
+	public IErrorNormImpl() 
+	{ 
+			initialize();
 	} 
 
 	private int[,] cell_low, cell_high;

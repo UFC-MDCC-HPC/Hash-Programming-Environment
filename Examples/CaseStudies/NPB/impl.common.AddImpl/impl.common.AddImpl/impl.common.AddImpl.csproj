@@ -48,10 +48,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\common.Add\common.Add\common.Add.csproj">
-      <Project>{35BD4987-A347-49DC-B3AF-AF77049A0485}</Project>
-      <Name>common.Add</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
       <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
       <Name>common.data.ProblemDefinition</Name>
@@ -67,6 +63,10 @@
     <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
       <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
       <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Add\common.Add\common.Add.csproj">
+      <Project>{768C7250-12F1-4923-A6B5-416A53215BB1}</Project>
+      <Name>common.Add</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

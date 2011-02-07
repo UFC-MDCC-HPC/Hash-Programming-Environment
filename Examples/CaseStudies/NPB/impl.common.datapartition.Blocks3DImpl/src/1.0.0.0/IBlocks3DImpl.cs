@@ -14,8 +14,7 @@ where C:IClass
 {
 
 public IBlocks3DImpl() { 
-			
-	
+	make_set();	
 } 
 		
 protected int[] grid_points ;

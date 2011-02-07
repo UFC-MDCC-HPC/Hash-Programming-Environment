@@ -9,8 +9,6 @@ where I:IInstance<C>
 where C:IClass
 {
 
-   void initialize();
-
 } // end main interface 
 
 } // end namespace 

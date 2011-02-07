@@ -9,7 +9,6 @@ where I:IInstance<C>
 where C:IClass
 {
 		
-	void initialize();
 	double[] xce { get; }
 
 } // end main interface 

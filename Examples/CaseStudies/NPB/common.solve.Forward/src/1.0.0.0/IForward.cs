@@ -12,7 +12,6 @@ where C:IClass
 where MTH:IMethod
 where DIR:IAxis
 {
-	void initialize();
 	void enterStage(int stage);
 
 } // end main interface 

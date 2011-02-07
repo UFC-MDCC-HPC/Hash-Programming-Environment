@@ -38,10 +38,8 @@ public class Constants
 		                     {0.4d,0.3d,0.5,0.1d,0.3d},
 		                     {0.3d,0.5d,0.4,0.3d,0.2d}};
 
-		
-  public static void set_constants(int ndid, int[] grid_points)
-  {			
-			
+ public static void set_constants(int ndid, int[] grid_points)
+  {					
 	ce[0,0] = 2.0d * (1.0d + ((double)ndid) * 0.01d);
 	//    ce[0]=2.0;
 
@@ -164,8 +162,9 @@ public class Constants
 	zzcon3 = c3c4tz3 * conz1 * tz3;
 	zzcon4 = c3c4tz3 * con16 * tz3;
 	zzcon5 = c3c4tz3 * c1c5 * tz3;
+			
   }
-		
+	
   public static double dmax1(double a, double b)
   {
 		if (a < b) return b; else return a;
@@ -175,7 +174,6 @@ public class Constants
   {
 		return dmax1(dmax1(a, b), dmax1(c, d));
   }		
-	
 		
 }
 	
@@ -207,9 +205,7 @@ where C:IClass
   int JMAX { get; set; }	
   int KMAX { get; set; }	
   int[] grid_points { get; }
-		
-  void initialize_problem_data();
-		
+				
 		
 		
   // void exact_solution(double xi, double eta, double zeta, double[] dtemp, int offset); // auxiliar ...

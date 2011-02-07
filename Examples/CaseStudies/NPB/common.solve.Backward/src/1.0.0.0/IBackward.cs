@@ -13,7 +13,6 @@ where DIR:IAxis
 where MTH:IMethod
 {
 	void init();
-	void initialize();
 	void enterStage(int stage);
 } // end main interface 
 

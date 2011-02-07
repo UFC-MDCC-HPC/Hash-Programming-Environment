@@ -12,7 +12,6 @@ public interface ILHS<I,C,DIR,MTH> : BaseILHS<I,C,DIR,MTH>
 	where DIR:IAxis
 	where MTH:IMethod
 {
-	void initialize();
 	void enterStage(int stage);
 
 } // end main interface 

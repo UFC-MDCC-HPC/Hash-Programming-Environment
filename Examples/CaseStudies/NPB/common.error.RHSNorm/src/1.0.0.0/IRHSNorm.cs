@@ -8,7 +8,6 @@ public interface IRHSNorm<I,C> : BaseIRHSNorm<I,C>
 where I:IInstance<C>
 where C:IClass
 {
-    void initialize();
 	double[] xcr { get; }
 
 } // end main interface 

@@ -14,6 +14,11 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 		where C:IClass
 {
 
+	public IComputeRHSImpl() 
+	{
+		initialize();
+	}
+		
 	private int ncells;
 
 	private int[,] start;

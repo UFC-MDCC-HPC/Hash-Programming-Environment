@@ -10,8 +10,6 @@ public interface IComputeRHS<I,C> : BaseIComputeRHS<I,C>
 		where C:IClass
 {
 
-	void initialize();
-
 } // end main interface 
 
 } // end namespace 

@@ -13,6 +13,12 @@ where I:IInstance_SP<C>
 where C:IClass
 {
 		
+	public IProblemDefinitionImpl()
+	{
+		initialize_problem_data();
+		set_constants(0);
+	}
+		
 	public char CLASS = 'S';
 	
 	protected int _IMAX_ = 0, _JMAX_ = 0, _KMAX_ = 0, _MAX_CELL_DIM_ = 0, BUF_SIZE = 0, IMAXP, JMAXP,
@@ -79,6 +85,11 @@ where C:IClass
 		niter_default = Instance.niter_default;
 	}	
 	
+  public void set_constants(int ndid)
+  {			
+	Constants.set_constants(ndid,grid_points);
+  }
+		
 						
 }
 

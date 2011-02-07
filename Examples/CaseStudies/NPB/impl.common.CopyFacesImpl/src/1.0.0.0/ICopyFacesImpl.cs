@@ -14,6 +14,11 @@ public class ICopyFacesImpl<I,C> : BaseICopyFacesImpl<I,C>, ICopyFaces<I,C>
 		where C:IClass
 {
 		
+	public ICopyFacesImpl() 
+	{
+		initialize();
+    }
+		
 	private int ncells;
 
 	private int[,] cell_size;
