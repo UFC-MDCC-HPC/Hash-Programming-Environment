@@ -9,8 +9,6 @@ public interface IAdd<I,C> : BaseIAdd<I,C>
 		where C:IClass
 {
 
-    void initialize(); 
-
 } // end main interface 
 
 } // end namespace 
