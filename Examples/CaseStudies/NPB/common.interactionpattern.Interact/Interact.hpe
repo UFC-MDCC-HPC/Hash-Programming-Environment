@@ -7,7 +7,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019f24cc9345f4cb04f0a3610c62148f4681f29583195cee45a2799bcc91bc6713b89112dd790ad1ffc5cfa79e0f2cfa522e0ac0b930a681735b82b3e5451e1ecc0e1c2e2975e4cbc5c71b7e56bbfd40e1588670437fe06b6144159e97894ab81796d45e17546e6a8e52183f43cdac5947cf29691f9a99886aba076aa6960538c" localRef="shift_x_right" location="common.interactionpattern.Shift/Shift.hpe" name="Shift" package="common.interactionpattern" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019f24cc9345f4cb04f0a3610c62148f4681f29583195cee45a2799bcc91bc6713b89112dd790ad1ffc5cfa79e0f2cfa522e0ac0b930a681735b82b3e5451e1ecc0e1c2e2975e4cbc5c71b7e56bbfd40e1588670437fe06b6144159e97894ab81796d45e17546e6a8e52183f43cdac5947cf29691f9a99886aba076aa6960538c" localRef="shift_x_east" location="common.interactionpattern.Shift/Shift.hpe" name="Shift" package="common.interactionpattern" exposed="false">
       <visualDescription h="47" w="112" x="394" y="220">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -48,7 +48,7 @@
         <visualDescription h="10" w="10" x="10" y="19"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019f24cc9345f4cb04f0a3610c62148f4681f29583195cee45a2799bcc91bc6713b89112dd790ad1ffc5cfa79e0f2cfa522e0ac0b930a681735b82b3e5451e1ecc0e1c2e2975e4cbc5c71b7e56bbfd40e1588670437fe06b6144159e97894ab81796d45e17546e6a8e52183f43cdac5947cf29691f9a99886aba076aa6960538c" localRef="shift_x_left" location="common.interactionpattern.Shift/Shift.hpe" name="Shift" package="common.interactionpattern" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019f24cc9345f4cb04f0a3610c62148f4681f29583195cee45a2799bcc91bc6713b89112dd790ad1ffc5cfa79e0f2cfa522e0ac0b930a681735b82b3e5451e1ecc0e1c2e2975e4cbc5c71b7e56bbfd40e1588670437fe06b6144159e97894ab81796d45e17546e6a8e52183f43cdac5947cf29691f9a99886aba076aa6960538c" localRef="shift_x_west" location="common.interactionpattern.Shift/Shift.hpe" name="Shift" package="common.interactionpattern" exposed="false">
       <visualDescription h="40" w="112" x="53" y="221">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -307,47 +307,47 @@
     <supplyParameter cRef="top" varName="DIR_Z_TOP"/>
     <supplyParameter cRef="north" varName="DIR_Y_NORTH"/>
     <supplyParameter cRef="left" varName="DIR_X_LEFT"/>
-    <innerRenaming cNewName="output_buffer_y_south" cOldName="output_buffer" cRef="shift_y_south"/>
-    <innerRenaming cNewName="input_buffer_y_south" cOldName="input_buffer" cRef="shift_y_south"/>
-    <innerRenaming cNewName="input_buffer_y_north" cOldName="input_buffer" cRef="shift_y_north"/>
-    <innerRenaming cNewName="output_buffer_x_right" cOldName="output_buffer" cRef="shift_x_right"/>
-    <innerRenaming cNewName="input_buffer_z_bottom" cOldName="input_buffer" cRef="shift_z_bottom"/>
+    <innerRenaming cNewName="x" cOldName="topology" cRef="shift_x_east"/>
+    <innerRenaming cNewName="x" cOldName="topology" cRef="shift_x_west"/>
+    <innerRenaming cNewName="input_buffer_x_west" cOldName="input_buffer" cRef="shift_x_west"/>
     <innerRenaming cNewName="z" cOldName="topology" cRef="shift_z_top"/>
     <innerRenaming cNewName="z" cOldName="topology" cRef="shift_z_bottom"/>
-    <innerRenaming cNewName="x" cOldName="topology" cRef="shift_x_right"/>
-    <innerRenaming cNewName="x" cOldName="topology" cRef="shift_x_left"/>
-    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_north"/>
-    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_south"/>
-    <innerRenaming cNewName="output_buffer_z_bottom" cOldName="output_buffer" cRef="shift_z_bottom"/>
-    <innerRenaming cNewName="output_buffer_x_left" cOldName="output_buffer" cRef="shift_x_left"/>
-    <innerRenaming cNewName="input_buffer_x_right" cOldName="input_buffer" cRef="shift_x_right"/>
-    <innerRenaming cNewName="input_buffer_x_left" cOldName="input_buffer" cRef="shift_x_left"/>
-    <innerRenaming cNewName="output_buffer_y_north" cOldName="output_buffer" cRef="shift_y_north"/>
+    <innerRenaming cNewName="output_buffer_y_south" cOldName="output_buffer" cRef="shift_y_south"/>
     <innerRenaming cNewName="input_buffer_z_top" cOldName="input_buffer" cRef="shift_z_top"/>
     <innerRenaming cNewName="output_buffer_z_top" cOldName="output_buffer" cRef="shift_z_top"/>
+    <innerRenaming cNewName="input_buffer_z_bottom" cOldName="input_buffer" cRef="shift_z_bottom"/>
+    <innerRenaming cNewName="input_buffer_x_east" cOldName="input_buffer" cRef="shift_x_east"/>
+    <innerRenaming cNewName="output_buffer_x_west" cOldName="output_buffer" cRef="shift_x_west"/>
+    <innerRenaming cNewName="output_buffer_y_north" cOldName="output_buffer" cRef="shift_y_north"/>
+    <innerRenaming cNewName="output_buffer_z_bottom" cOldName="output_buffer" cRef="shift_z_bottom"/>
+    <innerRenaming cNewName="input_buffer_y_north" cOldName="input_buffer" cRef="shift_y_north"/>
+    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_north"/>
+    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_south"/>
+    <innerRenaming cNewName="output_buffer_x_east" cOldName="output_buffer" cRef="shift_x_east"/>
+    <innerRenaming cNewName="input_buffer_y_south" cOldName="input_buffer" cRef="shift_y_south"/>
+    <fusion>
+      <cRefs>shift_x_west</cRefs>
+      <cRefs>shift_x_east</cRefs>
+      <pRef>x</pRef>
+    </fusion>
     <fusion>
       <cRefs>shift_z_bottom</cRefs>
       <cRefs>shift_z_top</cRefs>
       <pRef>z</pRef>
     </fusion>
     <fusion>
-      <cRefs>shift_x_left</cRefs>
-      <cRefs>shift_x_right</cRefs>
-      <pRef>x</pRef>
+      <cRefs>shift_z_bottom</cRefs>
+      <cRefs>shift_z_top</cRefs>
+      <cRefs>shift_y_south</cRefs>
+      <cRefs>shift_y_north</cRefs>
+      <cRefs>shift_x_west</cRefs>
+      <cRefs>shift_x_east</cRefs>
+      <pRef>mpi</pRef>
     </fusion>
     <fusion>
       <cRefs>shift_y_south</cRefs>
       <cRefs>shift_y_north</cRefs>
       <pRef>y</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>shift_z_bottom</cRefs>
-      <cRefs>shift_z_top</cRefs>
-      <cRefs>shift_y_south</cRefs>
-      <cRefs>shift_y_north</cRefs>
-      <cRefs>shift_x_left</cRefs>
-      <cRefs>shift_x_right</cRefs>
-      <pRef>mpi</pRef>
     </fusion>
     <interface iRef="IInteract" nArgs="0">
       <slice isRef="shift_y_south">
@@ -359,11 +359,11 @@
         <visualDescription h="10" w="10" x="53" y="109"/>
       </slice>
       <slice isRef="shift_x_left">
-        <originRef cRef="shift_x_left" iRef="IShift"/>
+        <originRef cRef="shift_x_west" iRef="IShift"/>
         <visualDescription h="10" w="10" x="41" y="188"/>
       </slice>
       <slice isRef="shift_x_right">
-        <originRef cRef="shift_x_right" iRef="IShift"/>
+        <originRef cRef="shift_x_east" iRef="IShift"/>
         <visualDescription h="10" w="10" x="186" y="195"/>
       </slice>
       <slice isRef="shift_z_top">
@@ -374,24 +374,24 @@
         <originRef cRef="shift_z_bottom" iRef="IShift"/>
         <visualDescription h="10" w="10" x="263" y="123"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@aff79a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@39139b" repeat="0">
         <visualDescription h="150" w="370" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@a8cbec" repeat="0" sliceRef="shift_y_south">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13636aa" repeat="0" sliceRef="shift_y_south">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e4110a" repeat="0" sliceRef="shift_y_north">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3efc8d" repeat="0" sliceRef="shift_y_north">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ab7e1" repeat="0" sliceRef="shift_x_left">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@136ace8" repeat="0" sliceRef="shift_x_left">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e3087" repeat="0" sliceRef="shift_x_right">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@91c046" repeat="0" sliceRef="shift_x_right">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3f962" repeat="0" sliceRef="shift_z_top">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e65f0a" repeat="0" sliceRef="shift_z_top">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e9b6e4" repeat="0" sliceRef="shift_z_bottom">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@69a08d" repeat="0" sliceRef="shift_z_bottom">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
       </protocol>
@@ -401,16 +401,25 @@
           <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.interactionpattern.Interact { &#xA;&#xA;public interface IInteract : BaseIInteract&#xA;{&#xA;&#x9;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInteract.cs" srcType="user" uri="common.interactionpattern.Interact/bin/1.0.0.0/IInteract.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.interactionpattern.Interact { &#xA;&#xA;public interface IInteract : BaseIInteract&#xA;{&#xA;&#x9;void initiate_send_west();&#xA;    void initiate_recv_west();&#x9;&#x9;&#xA;&#x9;void initiate_send_east();&#xA;    void initiate_recv_east();&#x9;&#x9;&#xA;&#x9;void initiate_send_north();&#xA;    void initiate_recv_north();&#xA;&#x9;void initiate_send_south();&#xA;    void initiate_recv_south();&#xA;&#x9;void initiate_send_top();&#xA;    void initiate_recv_top();&#x9;&#x9;&#xA;&#x9;void initiate_send_bottom();&#xA;    void initiate_recv_bottom();&#xA;&#x9;&#x9;&#xA;&#x9;void shift_x_right();&#xA;&#x9;void shift_x_left();&#xA;&#x9;void shift_y_right();&#xA;&#x9;void shift_y_left();&#xA;&#x9;void shift_z_right();&#xA;&#x9;void shift_z_left();&#xA;&#x9;&#x9;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInteract.cs" srcType="user" uri="common.interactionpattern.Interact/bin/1.0.0.0/IInteract.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.interactionpattern.Interact/bin/1.0.0.0/BaseIInteract.dll</dependency>
         </file>
       </sources>
       <visualDescription h="259" w="359" x="483" y="296">
         <color b="128" g="0" r="128"/>
       </visualDescription>
+      <port name="output_buffer_y_south">
+        <visualDescription h="10" w="10" x="55" y="25"/>
+        <slice pRef="output_buffer" sRef="shift_y_south"/>
+      </port>
       <port name="input_buffer_y_south">
         <visualDescription h="10" w="10" x="84" y="7"/>
         <slice pRef="input_buffer" sRef="shift_y_south"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="70" y="64"/>
+        <slice pRef="cell" sRef="shift_y_south"/>
+        <slice pRef="cell" sRef="shift_y_north"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="110" y="122"/>
@@ -420,15 +429,6 @@
         <slice pRef="mpi" sRef="shift_x_right"/>
         <slice pRef="mpi" sRef="shift_z_top"/>
         <slice pRef="mpi" sRef="shift_z_bottom"/>
-      </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="70" y="64"/>
-        <slice pRef="cell" sRef="shift_y_south"/>
-        <slice pRef="cell" sRef="shift_y_north"/>
-      </port>
-      <port name="output_buffer_y_south">
-        <visualDescription h="10" w="10" x="55" y="25"/>
-        <slice pRef="output_buffer" sRef="shift_y_south"/>
       </port>
       <port name="output_buffer_y_north">
         <visualDescription h="10" w="10" x="18" y="96"/>
@@ -442,14 +442,14 @@
         <visualDescription h="10" w="10" x="6" y="228"/>
         <slice pRef="input_buffer" sRef="shift_x_left"/>
       </port>
-      <port name="output_buffer_x_west">
-        <visualDescription h="10" w="10" x="21" y="131"/>
-        <slice pRef="output_buffer" sRef="shift_x_left"/>
-      </port>
       <port name="x">
         <visualDescription h="10" w="10" x="95" y="199"/>
         <slice pRef="cell" sRef="shift_x_left"/>
         <slice pRef="cell" sRef="shift_x_right"/>
+      </port>
+      <port name="output_buffer_x_west">
+        <visualDescription h="10" w="10" x="21" y="131"/>
+        <slice pRef="output_buffer" sRef="shift_x_left"/>
       </port>
       <port name="output_buffer_x_east">
         <visualDescription h="10" w="10" x="174" y="230"/>
@@ -458,10 +458,6 @@
       <port name="input_buffer_x_east">
         <visualDescription h="10" w="10" x="254" y="225"/>
         <slice pRef="input_buffer" sRef="shift_x_right"/>
-      </port>
-      <port name="input_buffer_z_top">
-        <visualDescription h="10" w="10" x="194" y="3"/>
-        <slice pRef="input_buffer" sRef="shift_z_top"/>
       </port>
       <port name="z">
         <visualDescription h="10" w="10" x="225" y="61"/>
@@ -472,13 +468,17 @@
         <visualDescription h="10" w="10" x="116" y="10"/>
         <slice pRef="output_buffer" sRef="shift_z_top"/>
       </port>
-      <port name="output_buffer_z_bottom">
-        <visualDescription h="10" w="10" x="312" y="212"/>
-        <slice pRef="output_buffer" sRef="shift_z_bottom"/>
+      <port name="input_buffer_z_top">
+        <visualDescription h="10" w="10" x="194" y="3"/>
+        <slice pRef="input_buffer" sRef="shift_z_top"/>
       </port>
       <port name="input_buffer_z_bottom">
         <visualDescription h="10" w="10" x="273" y="15"/>
         <slice pRef="input_buffer" sRef="shift_z_bottom"/>
+      </port>
+      <port name="output_buffer_z_bottom">
+        <visualDescription h="10" w="10" x="312" y="212"/>
+        <slice pRef="output_buffer" sRef="shift_z_bottom"/>
       </port>
     </interface>
     <unit iRef="IInteract" private="false" uRef="interact" visibleInterface="true">
@@ -500,19 +500,19 @@
       <slices cRef="output_buffer_y_north" replica="0" uRef="buffer" sliceName="output_buffer_y_north" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
-      <slices cRef="input_buffer_x_left" replica="0" uRef="buffer" sliceName="input_buffer_x_west" transitive="true">
+      <slices cRef="input_buffer_x_west" replica="0" uRef="buffer" sliceName="input_buffer_x_west" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_x_left" replica="0" uRef="buffer" sliceName="output_buffer_x_west" transitive="true">
+      <slices cRef="output_buffer_x_west" replica="0" uRef="buffer" sliceName="output_buffer_x_west" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
         <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
-      <slices cRef="input_buffer_x_right" replica="0" uRef="buffer" sliceName="input_buffer_x_east" transitive="true">
+      <slices cRef="input_buffer_x_east" replica="0" uRef="buffer" sliceName="input_buffer_x_east" transitive="true">
         <visualDescription h="10" w="10" x="64" y="10"/>
       </slices>
-      <slices cRef="output_buffer_x_right" replica="0" uRef="buffer" sliceName="output_buffer_x_east" transitive="true">
+      <slices cRef="output_buffer_x_east" replica="0" uRef="buffer" sliceName="output_buffer_x_east" transitive="true">
         <visualDescription h="10" w="10" x="63" y="24"/>
       </slices>
       <slices cRef="input_buffer_z_top" replica="0" uRef="buffer" sliceName="input_buffer_z_top" transitive="true">
@@ -544,14 +544,14 @@
         <port>y</port>
         <port>mpi</port>
       </slices>
-      <slices cRef="shift_x_left" replica="0" uRef="shift" sliceName="shift_x_left" transitive="false">
+      <slices cRef="shift_x_west" replica="0" uRef="shift" sliceName="shift_x_left" transitive="false">
         <visualDescription h="10" w="10" x="4" y="14"/>
         <port>input_buffer_x_west</port>
         <port>output_buffer_x_west</port>
         <port>x</port>
         <port>mpi</port>
       </slices>
-      <slices cRef="shift_x_right" replica="0" uRef="shift" sliceName="shift_x_right" transitive="false">
+      <slices cRef="shift_x_east" replica="0" uRef="shift" sliceName="shift_x_right" transitive="false">
         <visualDescription h="10" w="10" x="67" y="15"/>
         <port>input_buffer_x_east</port>
         <port>output_buffer_x_east</port>
@@ -575,16 +575,16 @@
       <visualDescription h="40" w="80" x="293" y="346"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
-      <originRef>shift_x_right</originRef>
+      <originRef>shift_x_east</originRef>
       <originRef>topology</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="shift_x_right" uRef="shift"/>
+      <links xsi:type="component:EnumerableEntryType" cRef="shift_x_east" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="interact"/>
       <visualDescription h="20" w="20" x="282" y="414"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
-      <originRef>shift_x_left</originRef>
+      <originRef>shift_x_west</originRef>
       <originRef>topology</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="shift_x_left" uRef="shift"/>
+      <links xsi:type="component:EnumerableEntryType" cRef="shift_x_west" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="interact"/>
       <visualDescription h="20" w="20" x="282" y="414"/>
     </enumerator>
@@ -660,7 +660,7 @@
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
-        <originRef>shift_x_left</originRef>
+        <originRef>shift_x_west</originRef>
         <originRef>topology</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
@@ -675,7 +675,7 @@
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
-        <originRef>shift_x_right</originRef>
+        <originRef>shift_x_east</originRef>
         <originRef>topology</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>

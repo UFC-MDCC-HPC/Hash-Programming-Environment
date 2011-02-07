@@ -231,39 +231,39 @@
     <interface iRef="ISolve" nArgs="4">
       <slice isRef="shift">
         <originRef cRef="shift" iRef="IShift"/>
-        <visualDescription h="10" w="10" x="17" y="5"/>
+        <visualDescription h="10" w="10" x="67" y="65"/>
       </slice>
       <slice isRef="forward">
         <originRef cRef="forward" iRef="IForward"/>
-        <visualDescription h="10" w="10" x="8" y="28"/>
+        <visualDescription h="10" w="10" x="29" y="41"/>
       </slice>
       <slice isRef="lhs">
         <originRef cRef="lhs" iRef="ILHS"/>
-        <visualDescription h="10" w="10" x="32" y="26"/>
+        <visualDescription h="10" w="10" x="38" y="27"/>
       </slice>
       <slice isRef="matvecproduct">
         <originRef cRef="matvecproduct" iRef="IBlockDiagonalMatVecProduct"/>
-        <visualDescription h="10" w="10" x="66" y="18"/>
+        <visualDescription h="10" w="10" x="65" y="16"/>
       </slice>
       <slice isRef="backward">
         <originRef cRef="backward" iRef="IBackward"/>
-        <visualDescription h="10" w="10" x="57" y="5"/>
+        <visualDescription h="10" w="10" x="66" y="1"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1737268" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d14172" repeat="0">
         <visualDescription h="150" w="310" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5c0daa" repeat="0" sliceRef="forward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1fcbcb" repeat="0" sliceRef="forward">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1852aa6" repeat="0" sliceRef="lhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17c82a4" repeat="0" sliceRef="lhs">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b32113" repeat="0" sliceRef="matvecproduct">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1651c52" repeat="0" sliceRef="matvecproduct">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1407edc" repeat="0" sliceRef="backward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12661bf" repeat="0" sliceRef="backward">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@148aa77" repeat="0" sliceRef="shift">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@db81c3" repeat="0" sliceRef="shift">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
       </protocol>
@@ -289,34 +289,34 @@
           <dependency>%WORKSPACE/common.solve.Solve/bin/1.0.0.0/BaseISolve.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="19" y="94">
+      <visualDescription h="90" w="147" x="19" y="44">
         <color b="0" g="0" r="255"/>
       </visualDescription>
       <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="32" y="67"/>
         <slice pRef="cell" sRef="shift"/>
       </port>
-      <port name="input_buffer">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer" sRef="shift"/>
-      </port>
       <port name="mpi">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="112" y="62"/>
         <slice pRef="mpi" sRef="shift"/>
       </port>
       <port name="output_buffer">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="82" y="52"/>
         <slice pRef="output_buffer" sRef="shift"/>
       </port>
+      <port name="input_buffer">
+        <visualDescription h="10" w="10" x="10" y="57"/>
+        <slice pRef="input_buffer" sRef="shift"/>
+      </port>
       <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="107" y="28"/>
         <slice pRef="blocks" sRef="forward"/>
         <slice pRef="blocks" sRef="lhs"/>
         <slice pRef="blocks" sRef="matvecproduct"/>
         <slice pRef="blocks" sRef="backward"/>
       </port>
       <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="6" y="1"/>
         <slice pRef="problem" sRef="forward"/>
         <slice pRef="problem" sRef="lhs"/>
         <slice pRef="problem" sRef="matvecproduct"/>
@@ -375,49 +375,20 @@
       </slices>
       <visualDescription h="40" w="80" x="19" y="200"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
-      <originRef>matvecproduct</originRef>
-      <originRef>orientation</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="matvecproduct" uRef="matvecproduct"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="20" w="20" x="252" y="561"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
-      <originRef>matvecproduct</originRef>
-      <originRef>method</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="matvecproduct" uRef="matvecproduct"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="33" w="41" x="276" y="537"/>
-    </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>matvecproduct</originRef>
       <originRef>problem_data</originRef>
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="matvecproduct" uRef="matvecproduct"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="60" w="61" x="162" y="515"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
-      <originRef>lhs</originRef>
-      <originRef>orientation</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="lhs" uRef="lhs"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="20" w="20" x="217" y="507"/>
+      <visualDescription h="60" w="61" x="151" y="519"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>lhs</originRef>
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="lhs" uRef="lhs"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="20" w="20" x="241" y="527"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
-      <originRef>lhs</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="lhs" uRef="lhs"/>
-      <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="31" w="34" x="134" y="503"/>
+      <visualDescription h="20" w="20" x="247" y="511"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>forward</originRef>
@@ -425,7 +396,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="forward" uRef="forward"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="33" w="37" x="149" y="479"/>
+      <visualDescription h="33" w="37" x="84" y="484"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>backward</originRef>
@@ -433,14 +404,14 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="backward" uRef="backward"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="60" w="61" x="61" y="489"/>
+      <visualDescription h="60" w="61" x="35" y="447"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>shift</originRef>
       <originRef>topology</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve"/>
-      <visualDescription h="20" w="20" x="278" y="506"/>
+      <visualDescription h="20" w="20" x="195" y="478"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
@@ -460,23 +431,8 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
-        <originRef>matvecproduct</originRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
-        <originRef>lhs</originRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
-        <originRef>shift</originRef>
-        <originRef>topology</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>matvecproduct</originRef>
+        <originRef>backward</originRef>
         <originRef>problem_data</originRef>
         <originRef>speed</originRef>
       </fusionOfReplicators>
@@ -487,26 +443,20 @@
         <originRef>speed</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>matvecproduct</originRef>
-        <originRef>orientation</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>lhs</originRef>
-        <originRef>orientation</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>lhs</originRef>
         <originRef>problem_data</originRef>
         <originRef>speed</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>backward</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>shift</originRef>
+        <originRef>topology</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <originRef>lhs</originRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

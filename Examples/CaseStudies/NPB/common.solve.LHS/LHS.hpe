@@ -62,22 +62,22 @@
     <parameter componentRef="method" formFieldId="method" varName="MTH"/>
     <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
-    <interface iRef="ILHS" nArgs="2">
+    <interface iRef="ILHS" nArgs="4">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="63" y="22"/>
       </slice>
-      <slice isRef="class">
-        <originRef cRef="class" iRef="IClass"/>
-        <visualDescription h="10" w="10" x="51" y="27"/>
-      </slice>
-      <slice isRef="instance">
-        <originRef cRef="instance" iRef="IInstance"/>
-        <visualDescription h="10" w="10" x="44" y="8"/>
-      </slice>
       <slice isRef="problem">
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="7" y="21"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="22" y="27"/>
+      </slice>
+      <slice isRef="method">
+        <originRef cRef="method" iRef="IMethod"/>
+        <visualDescription h="10" w="10" x="30" y="5"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0"/>
       <visualDescription h="40" w="80" x="140" y="110">
@@ -91,8 +91,10 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
-      <parameter iname="IClass" order="0" parid="class" uname="class" varid="C"/>
-      <parameter iname="IInstance" order="1" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IAxis" order="2" parid="orientation" uname="axis" varid="DIR"/>
+      <parameter iname="IMethod" order="3" parid="method" uname="method" varid="MTH"/>
     </interface>
     <unit iRef="ILHS" private="false" uRef="lhs" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
@@ -101,23 +103,25 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="7" y="21"/>
       </slices>
-	<slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
         <visualDescription h="10" w="10" x="22" y="27"/>
       </slices>
       <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
         <visualDescription h="10" w="10" x="30" y="5"/>
-      </slices>      
+      </slices>
       <visualDescription h="40" w="80" x="174" y="207"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
+      <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
-      <visualDescription h="20" w="20" x="260" y="427"/>
+      <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
+      <visualDescription h="20" w="20" x="313" y="364"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>problem_data</originRef>
@@ -126,5 +130,20 @@
       <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
       <visualDescription h="31" w="34" x="31" y="251"/>
     </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <originRef>method</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>orientation</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
   </componentInfo>
 </component:component>
