@@ -24,7 +24,7 @@ public final class DialogUtil {
 		MessageDialog.openError(getShell(), title, message);
 	}
 
-	public static void openErrorDialog(String message, Throwable exception) {
+	public static void openError(String message, Throwable exception) {
 		openError("HPE - Error", message, exception);
 	}
 

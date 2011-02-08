@@ -1,31 +1,27 @@
 package hPE.frontend.base.commands;
 
-import javax.swing.JOptionPane;
-
-import org.eclipse.gef.commands.Command;
-
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HPrimUnit;
-import hPE.frontend.kinds.activate.model.HActivateConfiguration;
-import hPE.frontend.kinds.computation.model.HComputationUnit;
-import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.frontend.kinds.data.model.HDataUnit;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gef.commands.Command;
 
 public class NewUnitCommand extends Command {
 
-    HPrimUnit new_unit;	
-    HComponent the_configuration;
-    Point the_location;
-	
+	HPrimUnit new_unit;
+	HComponent the_configuration;
+	Point the_location;
+
 	public NewUnitCommand(String label, HComponent configuration, Point location) {
 		super(label);
 		this.the_configuration = configuration;
 		this.the_location = location;
 	}
-	
+
+	@Override
 	public void execute() {
 
 		if (the_configuration instanceof HEnumeratorComponent) {
@@ -34,14 +30,16 @@ public class NewUnitCommand extends Command {
 			HPrimUnit new_unit = the_configuration.createUnit();
 			new_unit.setLocation(the_location);
 		}
-		
+
 	}
-	
+
+	@Override
 	public boolean canUndo() {
 		return false;
-		
+
 	}
-	
+
+	@Override
 	public boolean canExecute() {
 
 		return true;

@@ -28,8 +28,12 @@ import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.base.model.HBaseKindInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.gef.ui.actions.SelectionAction;
 
 /**
  * Base class of a kind configuration.
@@ -37,10 +41,17 @@ import org.eclipse.emf.common.util.URI;
  * 
  * @author Rafael Sales - rafaelcds@gmail.com
  */
-public abstract class KindConfiguration {
+public abstract class KindConfiguration implements Comparable<KindConfiguration> {
 
 	public abstract String getName();
-	
+
+	public abstract boolean isConcretizable();
+
+	@Override
+	public int compareTo(KindConfiguration kind) {
+		return this.getName().compareTo(kind.getName());
+	}
+
 	/**
 	 * Gets the list of implementing HComponent classes of the kinds that should
 	 * accept this kind's components as inner components.
@@ -50,7 +61,7 @@ public abstract class KindConfiguration {
 	public Class<? extends HComponent>[] getSupportedSuperComponents() {
 		return new Class[0];
 	}
-	
+
 	public abstract ComponentEditPart<?, ?> newComponentEditPart();
 
 	public abstract ConfigurationEditPart<?, ?> newConfigurationEditPart();
@@ -86,12 +97,16 @@ public abstract class KindConfiguration {
 	public abstract HInterfaceSlice newHInterfaceSlice(String name, HInterface whichInterface, HInterfaceSig interfaceSig, int nestingFactor);
 
 	public abstract HUnit newHUnit(String name, HComponent configuration, HInterface which_interface);
-	
+
 	public abstract HUnit newHUnit(String name, HComponent configuration);
 
 	public abstract HUnitSlice newHUnitSlice(IHUnit unit, IHUnit unitEntry, Point where) throws HPEAbortException;
 
 	public abstract HUnitStub newHUnitStub(IHUnit unit);
-	
+
 	public abstract HUnitStub newHUnitStub(IHUnit unit, HComponent enc);
+
+	public List<SelectionAction> createActionsForConfiguration(HComponent configuration) {
+		return new ArrayList<SelectionAction>();
+	}
 }

@@ -9,6 +9,7 @@ import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;
@@ -43,7 +44,7 @@ import javax.swing.table.TableModel;
 import org.eclipse.draw2d.geometry.Point;
 
 public abstract class HInterface extends HPrimInterface implements IInterface,
-		HHasExternalReferences {
+HHasExternalReferences {
 
 	static final long serialVersionUID = 1;
 
@@ -54,6 +55,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	}
 
+	@Override
 	public void hide() {
 
 		super.hide();
@@ -133,12 +135,12 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		HComponent c = (HComponent) this.getConfiguration();
 		String typeString = c.getPackagePath() + "." + c.getComponentName()
-				+ "." + this.getPrimName();
+		+ "." + this.getPrimName();
 		lsStr.add(typeString);
 		ls.add(new Pair<String, HInterface>(typeString, this));
 
 		List<Triple<String, HInterface, String>> pars = this
-				.getParameters((HComponent) this.getConfiguration());
+		.getParameters((HComponent) this.getConfiguration());
 
 		for (Triple<String, HInterface, String> p : pars) {
 			HInterface i = p.snd();
@@ -174,7 +176,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			HComponent cc = (HComponent) uList.get(0).getConfiguration();
 
 			List<Triple<String, HInterface, String>> ic_parameters = ic
-					.getParameters(cThis);
+			.getParameters(cThis);
 
 			for (Triple<String, HInterface, String> innerParameter : ic_parameters) {
 				parameters.add(innerParameter);
@@ -214,41 +216,41 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			 * c_supplier.getInterfaceByName(is.getPrimName()); c = c_supplier;
 			 * } else
 			 */if (c.isParameter()) {
-				HComponent cTop = (HComponent) cThis.getTopConfiguration();
-				Map<String, HComponent> pars = cThis
-						.getParametersByDefinedVarNames();
-				String varName = c.getVariableName(cThis);
-				if (pars.containsKey(varName)) {
-					HComponent c_parameter = pars.get(varName);
-					is_supplier = c_parameter.getInterfaceByName(is
-							.getPrimName());
-					c = c_parameter;
-				}
-			}
+				 HComponent cTop = (HComponent) cThis.getTopConfiguration();
+				 Map<String, HComponent> pars = cThis
+				 .getParametersByDefinedVarNames();
+				 String varName = c.getVariableName(cThis);
+				 if (pars.containsKey(varName)) {
+					 HComponent c_parameter = pars.get(varName);
+					 is_supplier = c_parameter.getInterfaceByName(is
+							 .getPrimName());
+					 c = c_parameter;
+				 }
+			 }
 
-			is_supplier = is_supplier == null ? is : is_supplier;
+			 is_supplier = is_supplier == null ? is : is_supplier;
 
-			// if (c.isParameter()) {
-			String varName = c.getVariableName(cThis);
-			String parId = c.getParameterIdentifier(cThis);
-			if (!parId.equals("type ?"))
-				parameters.add(new Triple<String, HInterface, String>(varName,
-					is_supplier, parId));
-			// }
+			 // if (c.isParameter()) {
+			 String varName = c.getVariableName(cThis);
+			 String parId = c.getParameterIdentifier(cThis);
+			 if (!parId.equals("type ?"))
+				 parameters.add(new Triple<String, HInterface, String>(varName,
+						 is_supplier, parId));
+			 // }
 
-			List<Triple<String, HInterface, String>> slice_parameters = is_supplier
-					.getParameters(cThis);
-			for (Triple<String, HInterface, String> spar : slice_parameters) {
-				String sVarName = spar.fst();
-				HInterface sis = spar.snd();
-				String sParId = spar.trd();
-				List<IHPrimUnit> suList = sis.getCompliantUnits();
-				HComponent sc = (HComponent) suList.get(0).getConfiguration();
-				//if (sc.isParameter()) {
-				if (!sParId.equals("type ?"))
-				   parameters.add(new Triple<String, HInterface, String>(sVarName, sis, sParId));
-				//}
-			}
+			 List<Triple<String, HInterface, String>> slice_parameters = is_supplier
+			 .getParameters(cThis);
+			 for (Triple<String, HInterface, String> spar : slice_parameters) {
+				 String sVarName = spar.fst();
+				 HInterface sis = spar.snd();
+				 String sParId = spar.trd();
+				 List<IHPrimUnit> suList = sis.getCompliantUnits();
+				 HComponent sc = (HComponent) suList.get(0).getConfiguration();
+				 //if (sc.isParameter()) {
+				 if (!sParId.equals("type ?"))
+					 parameters.add(new Triple<String, HInterface, String>(sVarName, sis, sParId));
+				 //}
+			 }
 
 		}
 
@@ -275,7 +277,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 				if (parameterized > 1)
 					nameWithParameters += ", ";
 				nameWithParameters = nameWithParameters
-						+ i.getName2(false, varContext, null);
+				+ i.getName2(false, varContext, null);
 			}
 			vs.add(parId /* varName */);
 		}
@@ -296,9 +298,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		List<String> vs = new ArrayList<String>();
 
 		HComponent topC = (HComponent) ((HComponent) this.getConfiguration())
-				.getTopConfiguration();
+		.getTopConfiguration();
 		List<Triple<String, HInterface, String>> parameters = this
-				.getParameters(topC);
+		.getParameters(topC);
 
 		for (Triple<String, HInterface, String> triple : parameters) {
 			String varName = triple.fst();
@@ -312,8 +314,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 				if (parameterized > 1)
 					nameWithParameters += ", ";
 				nameWithParameters = nameWithParameters
-						+ i.getName(false, depth > 0 ? false : showBounds,
-								depth + 1);
+				+ i.getName(false, depth > 0 ? false : showBounds,
+						depth + 1);
 			}
 			vs.add(varName);
 		}
@@ -325,6 +327,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return nameWithParameters;
 	}
 
+	@Override
 	public String getName2() {
 		return this.getPrimName();
 	}
@@ -337,13 +340,13 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		if (this.isParameter()) {
 			HComponent c = (HComponent) this.getCompliantUnits().get(0)
-					.getConfiguration();
+			.getConfiguration();
 			String varName = c.getVariableName();
 			String parId = c.getParameterIdentifier();
 			return varName
-					+ (showBounds ? ": "
-							+ this.getNonAbstractName(false, showBounds, depth,
-									false) : "");
+			+ (showBounds ? ": "
+					+ this.getNonAbstractName(false, showBounds, depth,
+							false) : "");
 		} else {
 			return this.getNonAbstractName(showSuperType, showBounds, depth,
 					false);
@@ -354,7 +357,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			String varNameCtx) {
 
 		HComponent c = (HComponent) this.getCompliantUnits().get(0)
-				.getConfiguration();
+		.getConfiguration();
 		String varName = c.getVariableName((HComponent) this.getConfiguration()
 				.getTopConfiguration());
 		boolean showVariable = (varNameCtx == null || !varName
@@ -364,14 +367,14 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		boolean showBounds = !showVariable;
 
 		return (showVariable ? varName.split("@")[0] : "")
-				+ (showVariable && showBounds ? ":" : "")
-				+ (showBounds ? this.getNonAbstractName2(false, varContext)
-						: "");
+		+ (showVariable && showBounds ? ":" : "")
+		+ (showBounds ? this.getNonAbstractName2(false, varContext)
+				: "");
 	}
 
 	public boolean isParameter() {
 		HComponent c = (HComponent) this.getCompliantUnits().get(0)
-				.getConfiguration();
+		.getConfiguration();
 		return c.isParameter() && (c.getSupplier() == null);
 	}
 
@@ -383,9 +386,9 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	private String getNonAbstractName2(boolean showSuperType,
 			List<String> varContext) {
 		return this.getPrimName()
-				+ this.getParameterModifierName2(showSuperType, varContext)
-				+ (showSuperType && this.hasSuperType() ? ": "
-						+ this.getInheritedName() : "");
+		+ this.getParameterModifierName2(showSuperType, varContext)
+		+ (showSuperType && this.hasSuperType() ? ": "
+				+ this.getInheritedName() : "");
 	}
 
 	private String getNonAbstractName(boolean showSuperType,
@@ -394,14 +397,14 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 				: this.getPrimName();
 		if (this.isAbstract() || base) {
 			return name
-					+ this.getParameterModifierName(showSuperType, showBounds,
-							depth)
+			+ this.getParameterModifierName(showSuperType, showBounds,
+					depth)
 					+ (showSuperType && this.hasSuperType() ? ": "
 							+ this.getInheritedName() : "");
 		} else {
 			return name
-					+ (showSuperType && this.hasSuperType() ? ": "
-							+ this.getInheritedName() : "");
+			+ (showSuperType && this.hasSuperType() ? ": "
+					+ this.getInheritedName() : "");
 		}
 
 		// String name = base ? this.baseName : this.getPrimName();
@@ -409,7 +412,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	public HInterfaceSlice addInterfaceSlice(HUnitSlice uSlice, String name)
-			throws HPENotFusableSlicesException {
+	throws HPENotFusableSlicesException {
 
 		HInterfaceSig isig = this.getSignature();
 
@@ -479,7 +482,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		public boolean noSources() {
 			return getSourceVersionList() == null
-					|| getSourceVersionList().isEmpty();
+			|| getSourceVersionList().isEmpty();
 		}
 
 		public void cleanSources() {
@@ -521,7 +524,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
 			HBESourceVersion<HBEAbstractFile> srcVersion = this
-					.getSourceVersionList().get(rowIndex);
+			.getSourceVersionList().get(rowIndex);
 
 			switch (columnIndex) {
 			case 0:
@@ -541,7 +544,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		public Object getValueAt(int rowIndex, int columnIndex) {
 
 			HBESourceVersion<HBEAbstractFile> srcVersion = this
-					.getSourceVersionList().get(rowIndex);
+			.getSourceVersionList().get(rowIndex);
 
 			HComponent c = (HComponent) i.getConfiguration();
 
@@ -549,48 +552,48 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 			String type = srcVersion.getFiles().size() == 0 ? (srcsUndef
 					.containsKey(srcVersion) ? srcsUndef.get(srcVersion)
-					: "Undefined") : srcVersion.getSynthesizerType(abs);
+							: "Undefined") : srcVersion.getSynthesizerType(abs);
 
-			switch (columnIndex) {
-			case 0:
-				return srcVersion;
-			case 1:
-				return type;
-				// case 2: return srcVersion.getFiles().size() > 0 ?
-				// srcVersion.getFiles().get(0).getFileName() : "";
-			case 2: {
-				// if (!cbs.containsKey(new Integer(rowIndex))) {
-				// cbs.put(new Integer(rowIndex), newComboBox(rowIndex,
-				// srcVersion.getFiles()));
-				// }
-				// JComboBox comboBox2 = cbs.get(new Integer(rowIndex));
-				if (!getSelectedFileNames().containsKey(new Integer(rowIndex))) {
-					Object o = this.getComboBox().getSelectedItem();
-					if (o != null && rowIndex == jTable.getSelectedRow())
-						getSelectedFileNames()
+					switch (columnIndex) {
+					case 0:
+						return srcVersion;
+					case 1:
+						return type;
+						// case 2: return srcVersion.getFiles().size() > 0 ?
+						// srcVersion.getFiles().get(0).getFileName() : "";
+					case 2: {
+						// if (!cbs.containsKey(new Integer(rowIndex))) {
+						// cbs.put(new Integer(rowIndex), newComboBox(rowIndex,
+						// srcVersion.getFiles()));
+						// }
+						// JComboBox comboBox2 = cbs.get(new Integer(rowIndex));
+						if (!getSelectedFileNames().containsKey(new Integer(rowIndex))) {
+							Object o = this.getComboBox().getSelectedItem();
+							if (o != null && rowIndex == jTable.getSelectedRow())
+								getSelectedFileNames()
 								.put(
 										new Integer(rowIndex),
 										this.getComboBox().getSelectedItem()
-												.toString());
-					else if (o == null && this.getComboBox().getItemCount() > 0) {
-						this.getComboBox().setSelectedIndex(0);
-						getSelectedFileNames()
+										.toString());
+							else if (o == null && this.getComboBox().getItemCount() > 0) {
+								this.getComboBox().setSelectedIndex(0);
+								getSelectedFileNames()
 								.put(
 										new Integer(rowIndex),
 										this.getComboBox().getSelectedItem()
-												.toString());
-					} else {
-						getSelectedFileNames().put(new Integer(rowIndex), "");
+										.toString());
+							} else {
+								getSelectedFileNames().put(new Integer(rowIndex), "");
+							}
+						}
+
+						return srcVersion.getFiles().size() > 0 ? getSelectedFileNames()
+								.get(new Integer(rowIndex))
+								: "";
 					}
-				}
+					}
 
-				return srcVersion.getFiles().size() > 0 ? getSelectedFileNames()
-						.get(new Integer(rowIndex))
-						: "";
-			}
-			}
-
-			return null;
+					return null;
 		}
 
 		public JComboBox newComboBox() {
@@ -622,13 +625,13 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			this.setSelectedFileNames(null);
 		}
 
-		private Map<HBESourceVersion<HBEAbstractFile>, String> srcsUndef = new HashMap<HBESourceVersion<HBEAbstractFile>, String>();
+		private final Map<HBESourceVersion<HBEAbstractFile>, String> srcsUndef = new HashMap<HBESourceVersion<HBEAbstractFile>, String>();
 
 		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 			HBESourceVersion<HBEAbstractFile> srcVersion = this
-					.getSourceVersionList().get(rowIndex);
+			.getSourceVersionList().get(rowIndex);
 			if (columnIndex == 1 && srcVersion.getFiles().size() == 0)
-				srcsUndef.put(srcVersion, (String) aValue.toString());
+				srcsUndef.put(srcVersion, aValue.toString());
 		}
 
 		public void addTableModelListener(TableModelListener l) {
@@ -773,7 +776,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	// Name of the base interface in case of implements or extends;
-	private List<String> baseName = new ArrayList<String>();
+	private final List<String> baseName = new ArrayList<String>();
 
 	public void setImplements() {
 		this.baseName.add(0, this.getName2());
@@ -857,7 +860,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	public void setInherited(HComponent topConfiguration) {
 		this.setSuperTypeID(this.toString());
 		// this.saveInheritedName();
-		
+
 		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
 		this.setEditable(true);
 		this.setInheritedSlices();
@@ -865,7 +868,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	public void setImplemented(HComponent topConfiguration) {
 		superTypeID = null; // REASON: This is the supertype of the abstract
-							// component and not of the concrete component.
+		// component and not of the concrete component.
 		// this.saveInheritedName();
 		this.setConfiguration(topConfiguration); // ?????????????????????????????????????????
 		this.setEditable(true);
@@ -924,11 +927,12 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	public HBESourceVersion createSourceVersion(String sourceType) {
-		if (sourceType
-				.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp
-						.getType())) {
-			return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
-		} else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
+		//TODO RAFAEL remover
+		//		if (sourceType
+		//				.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp
+		//						.getType())) {
+		//			return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
+		/*} else*/ if (sourceType.equals(HBESourceVersionCSharp.getType())) {
 			return new HBESourceVersionCSharp();
 		} else {
 			return null;
@@ -964,7 +968,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	private class CompareSliceByDependence implements
-			Comparator<HInterfaceSlice> {
+	Comparator<HInterfaceSlice> {
 
 		private List<HComponent> cs = null;
 

@@ -3,13 +3,11 @@ package hPE;
 
 
 import hPE.frontend.ConfigurationEditPartFactory;
-import hPE.frontend.NAntBuilder;
 import hPE.frontend.base.actions.AddReferencesAction;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
-import hPE.frontend.base.actions.DeployAction;
 import hPE.frontend.base.actions.DetachInterfaceAction;
 import hPE.frontend.base.actions.ExposedAction;
 import hPE.frontend.base.actions.FuseComponentsAction;
@@ -38,6 +36,7 @@ import hPE.frontend.base.dnd.FileTransferDropTargetListener;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HUnit;
+import hPE.frontend.kinds.KindManager;
 import hPE.frontend.kinds.activate.actions.AltAbsorbtionAction;
 import hPE.frontend.kinds.activate.actions.CombineActionsAction;
 import hPE.frontend.kinds.activate.actions.CutBranchAction;
@@ -50,9 +49,6 @@ import hPE.frontend.kinds.activate.actions.SetPrivateUnitAction;
 import hPE.frontend.kinds.activate.actions.UnfoldActionAction;
 import hPE.frontend.kinds.activate.actions.UnnestActionAction;
 import hPE.frontend.kinds.activate.model.HActivateConfiguration;
-import hPE.frontend.kinds.application.actions.DeployApplicationAction;
-import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
@@ -78,7 +74,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gef.ContextMenuProvider;
@@ -150,20 +145,21 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 
 	private DefaultEditDomain editDomain;
 	private boolean isDirty;
-	
+
 	public hPEEditor() {
-		super();		
+		super();
 	}
-		
-	private HComponent configuration = null; 
-	
+
+	private HComponent configuration = null;
+
 	public static HPEVersionEditor currentEditor = null;
-	
+
+	@Override
 	protected void initializeGraphicalViewer() {
-		
+
 		getGraphicalViewer().setEditPartFactory(getEditPartFactory());
 		getGraphicalViewer().setContents(configuration);
-		
+
 		getGraphicalViewer().addDropTargetListener(new FileTransferDropTargetListener(getGraphicalViewer()));
 		getSite().getPage().addPartListener(new IPartListener() {
 
@@ -171,132 +167,137 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 			public void partActivated(IWorkbenchPart part) {
 				// TODO Auto-generated method stub
 				if (part instanceof HPEVersionEditor) {
-				   currentEditor = (HPEVersionEditor) part;
+					currentEditor = (HPEVersionEditor) part;
 				} else {
 					currentEditor = null;
 				}
-				
+
 				BrowseAndRunBackEndDialog.changeWindowName();
 			}
 
 			@Override
 			public void partBroughtToTop(IWorkbenchPart part) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void partClosed(IWorkbenchPart part) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void partDeactivated(IWorkbenchPart part) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void partOpened(IWorkbenchPart part) {
 				// TODO Auto-generated method stub
-				
+
 			}});
-		
+
 	}
-	
+
 	protected PaletteViewerProvider createPaletteViewerProvider() {
 		return new PaletteViewerProvider(getEditDomain()) {
 			private IMenuListener menuListener;
+			@Override
 			protected void configurePaletteViewer(PaletteViewer viewer) {
 				super.configurePaletteViewer(viewer);
 				viewer.addDragSourceListener(new TemplateTransferDragSourceListener(viewer));
 			}
+			@Override
 			protected void hookPaletteViewer(PaletteViewer viewer) {
 				super.hookPaletteViewer(viewer);
 				final CopyTemplateAction copy = (CopyTemplateAction)getActionRegistry()
-						.getAction(ActionFactory.COPY.getId());
+				.getAction(ActionFactory.COPY.getId());
 				viewer.addSelectionChangedListener(copy);
 				if (menuListener == null)
 					menuListener = new IMenuListener() {
-						public void menuAboutToShow(IMenuManager manager) {
-							manager.appendToGroup(GEFActionConstants.GROUP_COPY, copy);
-						}
-					};
+					public void menuAboutToShow(IMenuManager manager) {
+						manager.appendToGroup(GEFActionConstants.GROUP_COPY, copy);
+					}
+				};
 				viewer.getContextMenu().addMenuListener(menuListener);
 			}
 		};
 	}
-	
-	protected void configureGraphicalViewer() 
+
+	@Override
+	protected void configureGraphicalViewer()
 	{
 		super.configureGraphicalViewer();
-		
-		GraphicalViewer viewer = getGraphicalViewer(); 
-		
+
+		GraphicalViewer viewer = getGraphicalViewer();
+
 		viewer.getControl().setBackground(ColorConstants.listBackground);
 		viewer.setRootEditPart(new ScalableFreeformRootEditPart());
 		viewer.setKeyHandler(new GraphicalViewerKeyHandler(viewer));
-		
+
 		// configure the context menu provider
 		ContextMenuProvider cmProvider = new hPEEditorContextMenuProvider(viewer, getActionRegistry(),configuration);
 		viewer.setContextMenu(cmProvider);
 		getSite().registerContextMenu(cmProvider, viewer);
-		
-	//	ActionBarContributor abContributor = new HPEEditorActionBarContributor();
-		
-		
-		
+
+		//	ActionBarContributor abContributor = new HPEEditorActionBarContributor();
+
+
+
 	}
-	
+
 	protected Object getContent()
 	{
 		// todo return your model here
 		return configuration;
 	}
-	
+
 	protected EditPartFactory getEditPartFactory()
 	{
 		// todo return your EditPartFactory
 		return new ConfigurationEditPartFactory();
 	}
-	
-	
+
+
+	@Override
 	public DefaultEditDomain getEditDomain()
 	{
 		if (editDomain == null)	editDomain = new DefaultEditDomain(this);
-		return editDomain;		
-		
+		return editDomain;
+
 	}
-	
-	
+
+
 	private void createOutputStream(OutputStream os) throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(os);
 		oos.writeObject(getModel());
 		oos.close();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	
-	private HComponentFactory factory = HComponentFactory.eInstance;
-	
+
+	private final HComponentFactory factory = HComponentFactory.eInstance;
+
+	@Override
 	public void doSave(IProgressMonitor monitor) {
-	    try {
-		HComponent c = getModel();
-		IFile file = ((IFileEditorInput) getEditorInput()).getFile();
-		
-		java.io.File file2 = new File(file.getLocation().toString());
-		    
-		factory.saveComponent(c,file2,monitor);
-	    
-// comment: build.xml is always built before "build project".			
-		// NAntBuilder builder = NAntBuilder.instance;
-   	    // builder.setComponent(c);
-		// builder.setMonitor(monitor);
-		// (new Thread(builder)).start();
-	      getCommandStack().markSaveLocation();			
+		try {
+			HComponent c = getModel();
+			IFile file = ((IFileEditorInput) getEditorInput()).getFile();
+
+			java.io.File file2 = new File(file.getLocation().toString());
+
+			factory.saveComponent(c,file2,monitor);
+
+			// comment: build.xml is always built before "build project".
+			// NAntBuilder builder = NAntBuilder.instance;
+			// builder.setComponent(c);
+			// builder.setMonitor(monitor);
+			// (new Thread(builder)).start();
+			getCommandStack().markSaveLocation();
 		} catch (UndefinedRefInnerException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
@@ -306,27 +307,28 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 		} catch (DuplicatedSliceNamesException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Saving Error",JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-		}	
+		}
 	}
-	
-	
+
+
 
 	public HComponent getModel() {
-		
+
 		return configuration;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.ISaveablePart#doSaveAs()
 	 */
+	@Override
 	public void doSaveAs() {
 		// Show a SaveAs dialog
 		Shell shell = getSite().getWorkbenchWindow().getShell();
 		SaveAsDialog dialog = new SaveAsDialog(shell);
 		dialog.setOriginalFile(((IFileEditorInput) getEditorInput()).getFile());
 		dialog.open();
-		
-		IPath path = dialog.getResult();	
+
+		IPath path = dialog.getResult();
 		if (path != null) {
 			// try to save the editor's contents under a different file name
 			final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
@@ -336,77 +338,88 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 						false, // don't fork
 						false, // not cancelable
 						new WorkspaceModifyOperation() { // run this operation
+							@Override
 							public void execute(final IProgressMonitor monitor) {
 								try {
 									ByteArrayOutputStream out = new ByteArrayOutputStream();
 									createOutputStream(out);
 									file.create(
-										new ByteArrayInputStream(out.toByteArray()), // contents
-										true, // keep saving, even if IFile is out of sync with the Workspace
-										monitor); // progress monitor
+											new ByteArrayInputStream(out.toByteArray()), // contents
+											true, // keep saving, even if IFile is out of sync with the Workspace
+											monitor); // progress monitor
 								} catch (CoreException ce) {
 									ce.printStackTrace();
 								} catch (IOException ioe) {
 									ioe.printStackTrace();
-								} 
+								}
 							}
 						});
 				// set input to the new file
 				setInput(new FileEditorInput(file));
 				getCommandStack().markSaveLocation();
 			} catch (InterruptedException ie) {
-	  			// should not happen, since the monitor dialog is not cancelable
-				ie.printStackTrace(); 
-			} catch (InvocationTargetException ite) { 
-				ite.printStackTrace(); 
+				// should not happen, since the monitor dialog is not cancelable
+				ie.printStackTrace();
+			} catch (InvocationTargetException ite) {
+				ite.printStackTrace();
 			}
 		}
 	}
 
+	@Override
 	public boolean isSaveAsAllowed() {
-		return false;		
+		return false;
 	}
-	
-	
-	
+
+
+
+	@Override
 	public boolean isDirty ()
 	{
 		return isDirty;
 	}
-	
+
 	protected void setDirty (boolean dirty)
 	{
-	  if (isDirty != dirty)
-	  {
-		  isDirty = dirty;
-		  firePropertyChange(IEditorPart.PROP_DIRTY);
-	  }
+		if (isDirty != dirty)
+		{
+			isDirty = dirty;
+			firePropertyChange(IEditorPart.PROP_DIRTY);
+		}
 	}
-	
+
+	@Override
 	public CommandStack getCommandStack()
 	{
 		return getEditDomain().getCommandStack();
 	}
-	
-	
-	
-	
-	
-public void init(IEditorSite site, IEditorInput input) throws PartInitException
+
+
+
+
+
+	@Override
+	public void init(IEditorSite site, IEditorInput input) throws PartInitException
 	{
-	    //store site and input
-		setSite(site);	
+		//store site and input
+		setSite(site);
 		setInput(input);
-		
+
 		// add CommandStackListener
 		getCommandStack().addCommandStackListener(getCommandStackListener());
-		
-	    // add selection change listener
-		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(this); 
-		
+
+		// add selection change listener
+		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(this);
+
 		ActionRegistry registry = getActionRegistry();
 		IActionBars bars = site.getActionBars();
-		
+
+
+		List<SelectionAction> kindsActions = KindManager.createActionsForConfiguration(configuration);
+		for (SelectionAction action : kindsActions) {
+			bars.setGlobalActionHandler(action.getId(), registry.getAction(action.getId()));
+		}
+
 		String id = ActionFactory.UNDO.getId();
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ActionFactory.REDO.getId();
@@ -414,10 +427,9 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		id = ActionFactory.DELETE.getId();
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 
-		
 		if (configuration instanceof HActivateConfiguration) {
-			
-//			bars.setGlobalActionHandler(id, registry.getAction(id));		
+
+			//			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = EditProtocolAction.SHOW_PROTOCOL;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = EditProtocolAction.HIDE_PROTOCOL;
@@ -439,22 +451,16 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 			id = UnnestActionAction.UNNEST_ACTION;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = InterleaveActionsAction.INTERLEAVE_ACTIONS;
-			bars.setGlobalActionHandler(id, registry.getAction(id));		
+			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = CutBranchAction.CUT_BRANCH;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = AltAbsorbtionAction.ALT_ABSORPTION;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = RepeatFusionAction.REPEAT_FUSION;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = DeployApplicationAction.DEPLOY_APPLICATION;
-			bars.setGlobalActionHandler(id, registry.getAction(id));
 
 		}
-		else if (configuration instanceof HDataComponent) {
-			
 
-		}
-		
 		//id = DeployAction.DEPLOY;
 		//bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = BrowseAction.BROWSE;
@@ -509,10 +515,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = LiftUnitAction.LIFT_UNIT;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
-//		id = OpenSliceAction.OPEN_SLICE;
-//		bars.setGlobalActionHandler(id, registry.getAction(id));
-//		id = OpenSliceAction.CLOSE_SLICE;
-//		bars.setGlobalActionHandler(id, registry.getAction(id));		
+		//		id = OpenSliceAction.OPEN_SLICE;
+		//		bars.setGlobalActionHandler(id, registry.getAction(id));
+		//		id = OpenSliceAction.CLOSE_SLICE;
+		//		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = OpenSourceAction.EDIT_SOURCE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = AddReferencesAction.ADD_REFERENCES;
@@ -525,106 +531,111 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = RegisterComponentAction.REGISTER_COMPONENT;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
-		
+
 		bars.updateActionBars();
-		
+
 		// initializes actions
 		createActions();
-		
 
-		
+
+
 	}
-	
+
+	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		// If not the active editor, ignore selection changed.
-		
+
 		HPEVersionEditor e = (HPEVersionEditor) ((MultiPageEditorSite) this.getSite()).getMultiPageEditor();
 		if (e.equals(getSite().getPage().getActiveEditor()))
 			updateActions(this.getSelectionActions());
 	}
 
 
+	@Override
 	protected void createActions()
 	{
 		super.createActions();
-		
+
 		addStackAction(new UndoAction(this));
 		addStackAction(new RedoAction(this));
-		
+
 		addEditPartAction(new DeleteAction((IWorkbenchPart) this));
-		
+
 		addEditorAction(new SaveAction(this));
-		
-		SelectionAction action;
+
 		ActionRegistry registry = getActionRegistry();
 
+		List<SelectionAction> kindsActions = KindManager.createActionsForConfiguration(configuration);
+		for (SelectionAction action : kindsActions) {
+			registry.registerAction(action);
+			getSelectionActions().add(action.getId());
+		}
+
+		SelectionAction action;
 		if (configuration instanceof HActivateConfiguration) {
-						
+
 			action = new EditProtocolAction(this,true);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new EditProtocolAction(this,false);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new SetNestingFactorAction(this,true);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new SetNestingFactorAction(this,false);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new UnfoldActionAction(this,false);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new UnfoldActionAction(this,true);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new LiftActionAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new CombineActionsAction(this,CombineActionsAction.PAR_ACTIONS_REQUEST);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new CombineActionsAction(this,CombineActionsAction.SEQ_ACTIONS_REQUEST);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new UnnestActionAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new InterleaveActionsAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new CutBranchAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new AltAbsorbtionAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
+
 			action = new RepeatFusionAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
-			action = new DeployApplicationAction(this);
-			registry.registerAction(action);
-			getSelectionActions().add(action.getId());
+
+			//TODO RAFAEL Remover
+			//			action = new DeployApplicationAction(this);
+			//			registry.registerAction(action);
+			//			getSelectionActions().add(action.getId());
 		}
-		else if (configuration instanceof HDataComponent) {
-			
-			
-		}
-		
+
 		//action = new DeployAction(this);
 		//registry.registerAction(action);
 		//getSelectionActions().add(action.getId());
@@ -645,7 +656,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		action = new FuseReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetPermutationAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
@@ -653,43 +664,43 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		action = new LiftReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetReplicatorFactorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new UnfuseReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetPrivateUnitAction(this,true);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetPrivateUnitAction(this,false);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SupplyParameterAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetSliceNameAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetParameterAction(this,true);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SetParameterAction(this,false);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new UnbindAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new BuildInterfaceFromSlicesAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
@@ -701,51 +712,51 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		action = new ShowInterfaceAction(this,true);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new ShowInterfaceAction(this,false);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new UnsetReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new SplitReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new JoinReplicatorAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new ChangeColorAction(this,new ColorDialog(getSite().getWorkbenchWindow().getShell()));
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new ChangeVariableNameAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new InheritFromAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new LiftUnitAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
-//		action = new OpenSliceAction(this,true);
-//		registry.registerAction(action);
-//		getSelectionActions().add(action.getId());
-		
-//		action = new OpenSliceAction(this,false);
-//		registry.registerAction(action);
-//		getSelectionActions().add(action.getId());
-		
+
+		//		action = new OpenSliceAction(this,true);
+		//		registry.registerAction(action);
+		//		getSelectionActions().add(action.getId());
+
+		//		action = new OpenSliceAction(this,false);
+		//		registry.registerAction(action);
+		//		getSelectionActions().add(action.getId());
+
 		action = new OpenSourceAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-				
+
 		action = new AddReferencesAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
@@ -757,184 +768,189 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		action = new ImplementsAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new NewVersionAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
-		
+
 		action = new RegisterComponentAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 	}
-	
+
+	@Override
 	public void dispose()
 	{
 		// remove CommandStackListener
 		getCommandStack().removeCommandStackListener(getCommandStackListener());
-		
-	    // remove selection listener
-		getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(this); 
-		
+
+		// remove selection listener
+		getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(this);
+
 		// disposy the Action Registry (will dispose all actions)
 		getActionRegistry().dispose();
-		
+
 		// important: always call super implementation of dispose
-		super.dispose();	
+		super.dispose();
 	}
-	
+
+	@Override
 	public Object getAdapter(Class adapter)
 	{
-	    // we need to handle common GEF elements we created
+		// we need to handle common GEF elements we created
 		if (adapter == GraphicalViewer.class || adapter == EditPartViewer.class)
-		    return getGraphicalViewer();
+			return getGraphicalViewer();
 		else if (adapter == CommandStack.class)
-		     return getCommandStack();
+			return getCommandStack();
 		else if (adapter == EditDomain.class)
-		     return getEditDomain();
+			return getEditDomain();
 		else if (adapter == ActionRegistry.class)
-			 return getActionRegistry();
+			return getActionRegistry();
 		else if (adapter == IPropertySheetPage.class)
 			return getPropertySheetPage();
-		
-	    // the super implementation handles the rest
-		return super.getAdapter(adapter);	
+
+		// the super implementation handles the rest
+		return super.getAdapter(adapter);
 	}
-	
+
 	private PropertySheetPage undoablePropertySheetPage;
-	
+
 	protected PropertySheetPage getPropertySheetPage()
 	{
 		if (null == undoablePropertySheetPage)
 		{
 			undoablePropertySheetPage = new PropertySheetPage();
 			undoablePropertySheetPage.setRootEntry(
-			new UndoablePropertySheetEntry(getCommandStack()));	
-						
+					new UndoablePropertySheetEntry(getCommandStack()));
+
 		}
 		return undoablePropertySheetPage;
 	}
-	
-	
+
+
+	@Override
 	protected void initializePaletteViewer() {
-		 setEditDomain(getEditDomain());
+		setEditDomain(getEditDomain());
 	}
-	
+
+	@Override
 	public void createPartControl(Composite parent)
 	{
-	    SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
-	    createPaletteViewer(sashForm);
-	    createGraphicalViewer(sashForm);
-	    sashForm.setWeights(new int[] {30,70});
+		SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
+		createPaletteViewer(sashForm);
+		createGraphicalViewer(sashForm);
+		sashForm.setWeights(new int[] {30,70});
 	}
-	
+
 	private PaletteRoot paletteRoot;
-	
+
+	@Override
 	protected PaletteRoot getPaletteRoot()
 	{
-	if (null == paletteRoot)
-	{
-		// create root
-		paletteRoot = new PaletteRoot();
-		List categories = new ArrayList();
-		
-		// a group of default control tools
-		PaletteGroup controls = new PaletteGroup("Controls");
-		
-		// the selection tool
-		ToolEntry tool = new SelectionToolEntry();		
-		controls.add(tool);
-		
-		
-		// use selection tool as default entry
-		paletteRoot.setDefaultEntry(tool);
-		
-		// the marquee selection tool
-		MarqueeToolEntry m = new MarqueeToolEntry(); 
-		controls.add(m);
-		
-		// a separator
-		PaletteSeparator separator = new PaletteSeparator("palette.separator");
-		separator.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
-		controls.add(separator);
-		
-		// a tool for creating connection
-		controls.add(
-			new ConnectionCreationToolEntry(
-			"Connections",
-			"Create Connections",
-			new CreationFactory() {
-				public Object getNewObject() { return null; }
-				// see ShapeEditPart#createEditPolicies() 
-				// this is abused to transmit the desired line style 
-				public Object getObjectType() { return null; }
-			},
-			ImageDescriptor.createFromFile(getClass(), "util/icons/connection16.gif"),
-			ImageDescriptor.createFromFile(getClass(), "util/icons/connection24.gif")
-			)
-		);
-		
-		// todo add your palette drawers and entries here
+		if (null == paletteRoot)
+		{
+			// create root
+			paletteRoot = new PaletteRoot();
+			List categories = new ArrayList();
 
-		PaletteDrawer componentsDrawer = new PaletteDrawer("Configuration Elements");
+			// a group of default control tools
+			PaletteGroup controls = new PaletteGroup("Controls");
 
-		CombinedTemplateCreationEntry component = new CombinedTemplateCreationEntry(
-				"Unit",
-				"Create a unit", 
-				HUnit.class,
-				new SimpleFactory(HUnit.class), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif"), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle24.gif"));
-		componentsDrawer.add(component);		
+			// the selection tool
+			ToolEntry tool = new SelectionToolEntry();
+			controls.add(tool);
 
-		component = new CombinedTemplateCreationEntry(
-				"Enumerator",
-				"Create an enumerator", 
-				HReplicator.class,
-				new SimpleFactory(HReplicator.class), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"));
-		componentsDrawer.add(component);		
-		
-		
-		categories.add(controls);
-		categories.add(componentsDrawer);
-		
-		// add all categroies to root
-		paletteRoot.addAll(categories);
+
+			// use selection tool as default entry
+			paletteRoot.setDefaultEntry(tool);
+
+			// the marquee selection tool
+			MarqueeToolEntry m = new MarqueeToolEntry();
+			controls.add(m);
+
+			// a separator
+			PaletteSeparator separator = new PaletteSeparator("palette.separator");
+			separator.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
+			controls.add(separator);
+
+			// a tool for creating connection
+			controls.add(
+					new ConnectionCreationToolEntry(
+							"Connections",
+							"Create Connections",
+							new CreationFactory() {
+								public Object getNewObject() { return null; }
+								// see ShapeEditPart#createEditPolicies()
+								// this is abused to transmit the desired line style
+								public Object getObjectType() { return null; }
+							},
+							ImageDescriptor.createFromFile(getClass(), "util/icons/connection16.gif"),
+							ImageDescriptor.createFromFile(getClass(), "util/icons/connection24.gif")
+					)
+			);
+
+			// todo add your palette drawers and entries here
+
+			PaletteDrawer componentsDrawer = new PaletteDrawer("Configuration Elements");
+
+			CombinedTemplateCreationEntry component = new CombinedTemplateCreationEntry(
+					"Unit",
+					"Create a unit",
+					HUnit.class,
+					new SimpleFactory(HUnit.class),
+					ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle16.gif"),
+					ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle24.gif"));
+			componentsDrawer.add(component);
+
+			component = new CombinedTemplateCreationEntry(
+					"Enumerator",
+					"Create an enumerator",
+					HReplicator.class,
+					new SimpleFactory(HReplicator.class),
+					ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"),
+					ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"));
+			componentsDrawer.add(component);
+
+
+			categories.add(controls);
+			categories.add(componentsDrawer);
+
+			// add all categroies to root
+			paletteRoot.addAll(categories);
+		}
+		return paletteRoot;
 	}
-	return paletteRoot;
-	}
-	
-	private List editPartActionIDs = new ArrayList();
-	private List stackActionIDs    = new ArrayList();
-	private List editorActionIDs   = new ArrayList();
-	
+
+	private final List editPartActionIDs = new ArrayList();
+	private final List stackActionIDs    = new ArrayList();
+	private final List editorActionIDs   = new ArrayList();
+
 	protected void addEditPartAction(SelectionAction action)
 	{
 		getActionRegistry().registerAction(action);
 		editPartActionIDs.add(action.getId());
 	}
-	
+
 	protected void addStackAction(StackAction action)
 	{
 		getActionRegistry().registerAction(action);
 		stackActionIDs.add(action.getId());
 	}
-	
-	
+
+
 	protected void addEditorAction(EditorPartAction action)
 	{
 		getActionRegistry().registerAction(action);
 		editorActionIDs.add(action.getId());
 	}
-	
+
 	protected void addAction(IAction action)
 	{
 		getActionRegistry().registerAction(action);
 	}
-		
-	
-	private CommandStackListener commandStackListener = new CommandStackListener()
+
+
+	private final CommandStackListener commandStackListener = new CommandStackListener()
 	{
 		public void commandStackChanged(EventObject event)
 		{
@@ -942,66 +958,69 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 			setDirty(getCommandStack().isDirty());
 		}
 	};
-	
+
 	protected CommandStackListener getCommandStackListener()
 	{
 		return commandStackListener;
 	}
-	
+
+	@Override
 	protected void createPaletteViewer(Composite parent)
 	{
-		
-		//	 create graphical viewer		
+
+		//	 create graphical viewer
 		PaletteViewer viewer = new PaletteViewer();
 		viewer.createControl(parent);
-		
+
 		//	 hook the viewer into the EditDomain (only one palette per EditDomain)
 		getEditDomain().setPaletteViewer(viewer);
-		
+
 		//	 important: the palette is initialized via EditDomain
 		getEditDomain().setPaletteRoot(getPaletteRoot());
-		
-	}	
+
+	}
 
 
 	public static HComponent getConfiguration(URI uri) {
-		
+
 		HComponent c = null;
-				
+
 		try {
 			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
 		} catch (HPEInvalidComponentResourceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 
 		return c;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.part.EditorPart#setInput(org.eclipse.ui.IEditorInput)
 	 */
+	@Override
 	protected void setInput(IEditorInput input) {
 		super.setInput(input);
 		IFile file = ((IFileEditorInput) input).getFile();
 		IPath path = HComponentFactoryImpl.buildWPath(file.getFullPath());
-		
+
 		URI uri = URI.createFileURI(path.makeAbsolute().toOSString());
 		configuration = getConfiguration(uri);
 		setPartName(file.getName());
 	}
-	
+
 	private void handleLoadException(Exception e) {
-		
+
 		System.err.println("** Load failed. Using default configuration. **");
 		e.printStackTrace();
-		
-	    configuration = new HDataComponent("New Configuration", null,null);
+
+		//TODO Rafael
+		//configuration = new HDataComponent("New Configuration", null,null);
 	}
 
 
-	
-	
+
+
 }
 
 
