@@ -5,6 +5,7 @@ import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -20,17 +21,20 @@ public class HServiceComponent extends HBaseKindComponent {
 
 	@Override
 	public HUnit createUnit() {
-	     HUnit new_unit = new HServiceUnit(null, this);
-	     return new_unit;
+		HUnit new_unit = new HServiceUnit(null, this);
+		return new_unit;
 	}
-	
-    public boolean accepts(IComponent c) {
-    	if (c instanceof HApplicationComponent) return true;
-    	return super.accepts(c);
-    }
 
-    public String kindString() {
-    	return KIND;
-    }    
-    
+	@Override
+	public boolean accepts(IComponent c) {
+		if (c instanceof HFacetComponent) return true;
+		if (c instanceof HApplicationComponent) return true;
+		return super.accepts(c);
+	}
+
+	@Override
+	public String kindString() {
+		return KIND;
+	}
+
 }

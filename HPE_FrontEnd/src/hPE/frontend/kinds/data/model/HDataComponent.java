@@ -1,18 +1,16 @@
 package hPE.frontend.kinds.data.model;
 
-import org.eclipse.emf.common.util.URI;
-
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
-import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
-import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.base.model.HHasPortsConfiguration;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
+import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
-import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+
+import org.eclipse.emf.common.util.URI;
 
 public class HDataComponent extends HHasPortsConfiguration {
 
@@ -24,21 +22,25 @@ public class HDataComponent extends HHasPortsConfiguration {
 		super(name, location, uri);
 	}
 
+	@Override
 	public HUnit createUnit() {
-	     HUnit new_unit = new HDataUnit(null, this);
-	     return new_unit;
+		HUnit new_unit = new HDataUnit(null, this);
+		return new_unit;
 	}
-	
-    public boolean accepts(IComponent c) {
-    	if (c instanceof HQualifierComponent) return true;
-    	if (c instanceof HDataComponent) return true;
-    	if (c instanceof HEnvironmentComponent) return true;
-    	if (c instanceof HArchitectureComponent) return true;
-    	if (c instanceof HEnumeratorComponent) return true;
-    	return super.accepts(c);
-    }	
-	
-    public String kindString() {
-    	return "Data Structure";
-    }
+
+	@Override
+	public boolean accepts(IComponent c) {
+		if (c instanceof HFacetComponent) return true;
+		if (c instanceof HQualifierComponent) return true;
+		if (c instanceof HDataComponent) return true;
+		if (c instanceof HEnvironmentComponent) return true;
+		if (c instanceof HArchitectureComponent) return true;
+		if (c instanceof HEnumeratorComponent) return true;
+		return super.accepts(c);
+	}
+
+	@Override
+	public String kindString() {
+		return "Data Structure";
+	}
 }

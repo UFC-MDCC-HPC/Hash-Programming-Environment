@@ -22,18 +22,20 @@ public class HDomainComponent extends HBaseKindComponent {
 
 	@Override
 	public HUnit createUnit() {
-	     HUnit new_unit = new HDomainUnit(null, this);
-	     return new_unit;
+		HUnit new_unit = new HDomainUnit(null, this);
+		return new_unit;
 	}
-	
-    public boolean accepts(IComponent c) {
-    	if (c instanceof HFacetComponent) return true;
-    	if (c instanceof HQualifierComponent) return true;
-    	return super.accepts(c);
-    }
 
-    public String kindString() {
-    	return "Domain";
-    }    
-    
+	@Override
+	public boolean accepts(IComponent c) {
+		if (c instanceof HFacetComponent) return true;
+		if (c instanceof HQualifierComponent) return true;
+		return super.accepts(c);
+	}
+
+	@Override
+	public String kindString() {
+		return "Domain";
+	}
+
 }
