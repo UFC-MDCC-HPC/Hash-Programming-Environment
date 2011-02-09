@@ -5,7 +5,7 @@
       <extensionType>
         <extends>true</extends>
       </extensionType>
-      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000055a71b2117f2c6f4934d8e3487ee297c1b4ace50a877c67f5ce70004bd91aa80017bc282e087924d9ed54242ab9f6a9ac7e6b56617c2c70de75f860a27344846987653cdc0df5921bf5cf2798377370875884abb2e72d8d5736137facb16f0894343b6fbfeea4f7dd326db99bc886f1cff9ce05dbf2dc28be062e0efac0cf485" localRef="base" location="commom.problem_size.Class/Class.hpe" name="Class" package="commom.problem_size" version="1.0.0.0">
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000055a71b2117f2c6f4934d8e3487ee297c1b4ace50a877c67f5ce70004bd91aa80017bc282e087924d9ed54242ab9f6a9ac7e6b56617c2c70de75f860a27344846987653cdc0df5921bf5cf2798377370875884abb2e72d8d5736137facb16f0894343b6fbfeea4f7dd326db99bc886f1cff9ce05dbf2dc28be062e0efac0cf485" localRef="base" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" version="1.0.0.0">
         <visualDescription h="30" w="50" x="430" y="264">
           <color b="255" g="255" r="255"/>
         </visualDescription>
