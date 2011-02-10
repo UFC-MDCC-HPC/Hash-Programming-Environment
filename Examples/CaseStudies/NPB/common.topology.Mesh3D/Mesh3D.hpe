@@ -80,23 +80,37 @@
       </slices>
       <visualDescription h="40" w="80" x="144" y="206"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>x</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="x" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="cell"/>
-      <visualDescription h="20" w="20" x="184" y="359"/>
+      <visualDescription h="32" w="33" x="166" y="333"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>y</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="y" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="cell"/>
       <visualDescription h="20" w="20" x="281" y="362"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>z</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="z" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="cell"/>
       <visualDescription h="20" w="20" x="341" y="361"/>
     </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>x</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>y</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>z</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
   </componentInfo>
 </component:component>
