@@ -24,11 +24,11 @@
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace common.benchmarking.Timer { &#xA;&#xA;public interface BaseITimer : IEnvironmentKind &#xA;{&#xA;&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseITimer.cs" srcType="base" uri="common.benchmarking.Timer/bin/1.0.0.0/BaseITimer.dll" versionId="1.0.0.0">
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.benchmarking.Timer { &#xA;&#xA;public interface ITimer : BaseITimer&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ITimer.cs" srcType="user" uri="common.benchmarking.Timer/bin/1.0.0.0/ITimer.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.benchmarking.Timer { &#xA;&#xA;public interface ITimer : BaseITimer&#xA;{&#xA;    void start(int n);&#xA;    void stop(int n);&#xA;    double readTimer(int n);&#xA;    void resetTimer(int n);&#xA;    void resetAllTimers();&#xA;&#x9;double readTimerGlobal(int n);&#xA;    &#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ITimer.cs" srcType="user" uri="common.benchmarking.Timer/bin/1.0.0.0/ITimer.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.benchmarking.Timer/bin/1.0.0.0/BaseITimer.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="138" y="55">
+      <visualDescription h="40" w="80" x="205" y="58">
         <color b="98" g="174" r="126"/>
       </visualDescription>
       <port name="mpi">
