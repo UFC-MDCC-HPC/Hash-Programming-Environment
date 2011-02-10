@@ -77,15 +77,15 @@
         <originRef cRef="exact_solution" iRef="IExactSolution"/>
         <visualDescription h="10" w="10" x="13" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@cf577f" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1c420e1" repeat="0">
         <visualDescription h="250" w="150" x="85" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@164213c" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@14ac0cb" repeat="0">
           <visualDescription h="150" w="70" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c20272" repeat="0">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@b7563e" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@795e8c" repeat="0" sliceRef="exact_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7f144d" repeat="0" sliceRef="exact_solution">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -96,12 +96,12 @@
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.error.ErrorNorm { &#xA;&#xA;public interface IErrorNorm&lt;I, C> : BaseIErrorNorm&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#x9;&#x9;&#xA;&#x9;void initialize();&#xA;&#x9;double[] xce { get; }&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IErrorNorm.cs" srcType="user" uri="common.error.ErrorNorm/bin/1.0.0.0/IErrorNorm.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.error.ErrorNorm { &#xA;&#xA;public interface IErrorNorm&lt;I, C> : BaseIErrorNorm&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#x9;&#x9;&#xA;&#x9;double[] xce { get; }&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IErrorNorm.cs" srcType="user" uri="common.error.ErrorNorm/bin/1.0.0.0/IErrorNorm.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>%WORKSPACE/common.error.ErrorNorm/bin/1.0.0.0/BaseIErrorNorm.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="231" y="71">
+      <visualDescription h="40" w="80" x="245" y="70">
         <color b="0" g="128" r="255"/>
       </visualDescription>
       <port name="blocks">
@@ -139,17 +139,21 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="error_norm"/>
-      <visualDescription h="60" w="61" x="50" y="235"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
+      <visualDescription h="60" w="61" x="50" y="219"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="mpi" uRef="mpi"/>
       <links xsi:type="component:EnumerableUnitType" ref="error_norm"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="186" y="263"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1a4eaac1296932932353" varId="n">
       <originRef>exact_solution</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="exact_solution" uRef="exact_solution"/>
+      <links xsi:type="component:EnumerableUnitType" ref="error_norm"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="95" y="194"/>
     </enumerator>
     <fusionsOfReplicators>
@@ -161,13 +165,6 @@
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
         <originRef>mpi</originRef>
-      </fusionOfReplicators>
-    </fusionsOfReplicators>
-    <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1a4eaac1296932932353</eRef>

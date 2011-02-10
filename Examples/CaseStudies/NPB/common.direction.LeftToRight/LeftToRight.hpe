@@ -36,7 +36,7 @@
     </interface>
     <unit iRef="ILeftToRight" private="false" uRef="left_to_right" visibleInterface="true">
       <super cRef="base" uRef="direction"/>
-      <visualDescription h="48" w="96" x="51" y="139"/>
+      <visualDescription h="48" w="96" x="83" y="95"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>base</originRef>

@@ -62,13 +62,13 @@
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.data.LHSInit { &#xA;&#xA;public interface ILHSInit&lt;I, C> : BaseILHSInit&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILHSInit.cs" srcType="user" uri="common.data.LHSInit/bin/1.0.0.0/ILHSInit.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.data.LHSInit { &#xA;&#xA;public interface ILHSInit&lt;I, C> : BaseILHSInit&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILHSInit.cs" srcType="user" uri="common.data.LHSInit/bin/1.0.0.0/ILHSInit.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/common.data.LHSInit/bin/1.0.0.0/BaseILHSInit.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="248" y="204">
+      <visualDescription h="40" w="80" x="250" y="184">
         <color b="0" g="255" r="128"/>
       </visualDescription>
       <port name="problem">
@@ -96,7 +96,8 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="lhsinit"/>
-      <visualDescription h="60" w="61" x="26" y="209"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
+      <visualDescription h="60" w="61" x="29" y="238"/>
     </enumerator>
   </componentInfo>
 </component:component>

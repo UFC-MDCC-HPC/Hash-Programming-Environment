@@ -14,7 +14,7 @@
           <dependency>%WORKSPACE/common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="121" y="203">
+      <visualDescription h="40" w="80" x="114" y="185">
         <color b="192" g="192" r="192"/>
       </visualDescription>
     </interface>

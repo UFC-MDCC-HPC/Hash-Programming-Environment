@@ -40,7 +40,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-      <visualDescription h="53" w="81" x="71" y="331">
+      <visualDescription h="53" w="81" x="52" y="331">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="blocks">
@@ -66,20 +66,32 @@
     </innerComponent>
     <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
-    <interface iRef="IBlocks3D" nArgs="1">
+    <interface iRef="IBlocks3D" nArgs="2">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="9" y="30"/>
       </slice>
       <slice isRef="cell">
-        <originRef cRef="topology" iRef="ICell"/>
+        <originRef cRef="topology" iRef="ICell3D"/>
         <visualDescription h="10" w="10" x="48" y="47"/>
       </slice>
       <slice isRef="instance">
         <originRef cRef="instance" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="65" y="29"/>
       </slice>
-      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.datapartition.Blocks3D { &#xA;&#xA;public interface BaseIBlocks3D&lt;I,C> : IEnvironmentKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;ICell Z {get;}&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks3D.cs" srcType="base" uri="common.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll" versionId="1.0.0.0">
+          <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace common.datapartition.Blocks3D { &#xA;&#xA;public interface IBlocks3D&lt;I,C> : BaseIBlocks3D&lt;I,C>&#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;&#x9;&#x9;void make_set();&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlocks3D.cs" srcType="user" uri="common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/common.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="63" w="115" x="274" y="109">
         <color b="0" g="128" r="255"/>
       </visualDescription>
@@ -87,19 +99,20 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="88" y="37"/>
-        <slice pRef="z" sRef="cell"/>
+      <port name="x">
+        <visualDescription h="10" w="10" x="79" y="2"/>
+        <slice pRef="x" sRef="cell"/>
       </port>
       <port name="y">
         <visualDescription h="10" w="10" x="32" y="0"/>
         <slice pRef="y" sRef="cell"/>
       </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="79" y="2"/>
-        <slice pRef="x" sRef="cell"/>
+      <port name="z">
+        <visualDescription h="10" w="10" x="88" y="37"/>
+        <slice pRef="z" sRef="cell"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IBlocks3D" private="false" uRef="process" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
@@ -123,7 +136,7 @@
       <slices cRef="instance" replica="0" uRef="instance" sliceName="instance" transitive="false">
         <visualDescription h="10" w="10" x="65" y="29"/>
       </slices>
-      <visualDescription h="47" w="94" x="135" y="183"/>
+      <visualDescription h="47" w="94" x="126" y="174"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
       <originRef>topology</originRef>
@@ -145,6 +158,11 @@
       <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="process"/>
       <visualDescription h="20" w="20" x="341" y="361"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@41e5481297302422773" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="process"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
+      <visualDescription h="20" w="20" x="124" y="86"/>
     </enumerator>
   </componentInfo>
 </component:component>
