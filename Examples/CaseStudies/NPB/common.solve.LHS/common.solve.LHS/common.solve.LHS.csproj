@@ -43,7 +43,7 @@
     <Compile Include="..\src\1.0.0.0\BaseILHS.cs">
       <Link>BaseILHS.cs</Link>
     </Compile>
-    <Compile Include="..\src\1.0.0.0\ ILHS.cs">
+    <Compile Include="..\src\1.0.0.0\ILHS.cs">
       <Link>ILHS.cs</Link>
     </Compile>
   </ItemGroup>

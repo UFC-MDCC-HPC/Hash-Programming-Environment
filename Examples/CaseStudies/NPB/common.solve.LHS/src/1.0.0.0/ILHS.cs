@@ -6,11 +6,11 @@ using common.solve.Method;
 
 namespace common.solve.LHS { 
 
-public interface ILHS<I,C,DIR,MTH> : BaseILHS<I,C,DIR,MTH>
-	where I:IInstance<C>
-	where C:IClass
-	where DIR:IAxis
-	where MTH:IMethod
+public interface ILHS<I, C, DIR, MTH> : BaseILHS<I, C, DIR, MTH>
+where I:IInstance<C>
+where C:IClass
+where DIR:IAxis
+where MTH:IMethod
 {
 	void enterStage(int stage);
 

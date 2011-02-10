@@ -90,7 +90,7 @@
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
           <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;&#xA;namespace common.solve.Backward { &#xA;&#xA;public interface IBackward&lt;I, C, DIR, MTH> : BaseIBackward&lt;I, C, DIR, MTH>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBackward.cs" srcType="user" uri="common.solve.Backward/bin/1.0.0.0/IBackward.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;&#xA;namespace common.solve.Backward { &#xA;&#xA;public interface IBackward&lt;I, C, DIR, MTH> : BaseIBackward&lt;I, C, DIR, MTH>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#x9;void init();&#xA;&#x9;void enterStage(int stage);&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBackward.cs" srcType="user" uri="common.solve.Backward/bin/1.0.0.0/IBackward.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
@@ -98,7 +98,7 @@
           <dependency>%WORKSPACE/common.solve.Backward/bin/1.0.0.0/BaseIBackward.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="271" y="91">
+      <visualDescription h="40" w="80" x="228" y="65">
         <color b="207" g="207" r="207"/>
       </visualDescription>
       <port name="blocks">
@@ -133,12 +133,14 @@
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="backward"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="backward"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="260" y="427"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -146,7 +148,8 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="backward"/>
-      <visualDescription h="60" w="61" x="31" y="251"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
+      <visualDescription h="60" w="61" x="21" y="211"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>

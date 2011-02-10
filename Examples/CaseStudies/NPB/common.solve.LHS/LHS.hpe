@@ -8,7 +8,7 @@
   </header>
   <componentInfo>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000454b3cd77d4e1bd37b45801a6d225edceaa85080940d8ff93d8308c4a585601d0e0b00c70d55eb34cfa4de904d0234a5454ee4f10a3d46be2ec77520da0d55fa8d959e0f2ecbf8fd25f8d4e676e2b92a40e6ce7e492f5feb6c31345f8c7c887f7e2ecb139b95c71dcf3ca9aa44f0bdd07cf60319eb2676344bda9667fca51abe" localRef="orientation" location="common.orientation.Axis/Axis.hpe" name="Axis" package="common.orientation" parameter_id="orientation" exposed="false">
-      <visualDescription h="30" w="50" x="143" y="473">
+      <visualDescription h="30" w="50" x="103" y="474">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="axis">
@@ -79,8 +79,26 @@
         <originRef cRef="method" iRef="IMethod"/>
         <visualDescription h="10" w="10" x="30" y="5"/>
       </slice>
-      <sources sourceType="C# Language" versionId="1.0.0.0"/>
-      <visualDescription h="40" w="80" x="140" y="110">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;&#xA;namespace common.solve.LHS { &#xA;&#xA;public interface BaseILHS&lt;I,C,DIR,MTH> : IComputationKind &#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IAxis&#xA;&#x9;where MTH:IMethod&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I,C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILHS.cs" srcType="base" uri="common.solve.LHS/bin/1.0.0.0/BaseILHS.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;&#xA;namespace common.solve.LHS { &#xA;&#xA;public interface ILHS&lt;I, C, DIR, MTH> : BaseILHS&lt;I, C, DIR, MTH>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#x9;void enterStage(int stage);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILHS.cs" srcType="user" uri="common.solve.LHS/bin/1.0.0.0/ILHS.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>%WORKSPACE/common.solve.LHS/bin/1.0.0.0/BaseILHS.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="115" y="108">
         <color b="0" g="255" r="255"/>
       </visualDescription>
       <port name="blocks">
@@ -115,12 +133,14 @@
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="313" y="364"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -128,6 +148,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="lhs"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="31" w="34" x="31" y="251"/>
     </enumerator>
     <fusionsOfReplicators>

@@ -23,11 +23,11 @@
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Instance { &#xA;&#xA;public interface BaseIInstance&lt;C> : IEnvironmentKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInstance.cs" srcType="base" uri="common.problem_size.Instance/bin/1.0.0.0/BaseIInstance.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Instance { &#xA;&#xA;public interface IInstance&lt;C> : BaseIInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;{&#xA;&#x9;int problem_size { get; }&#xA;&#x9;int niter_default { get; }&#xA;&#x9;double dt_default { get; }&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInstance.cs" srcType="user" uri="common.problem_size.Instance/bin/1.0.0.0/IInstance.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Instance { &#xA;&#xA;public enum PROBLEM_CLASS {U, S, W, A, B, C};&#xA;&#xA;public interface IInstance&lt;C> : BaseIInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;{&#xA;&#x9;int problem_size { get; }&#xA;&#x9;int niter_default { get; }&#xA;&#x9;double dt_default { get; }&#xA;&#x9;PROBLEM_CLASS CLASS { get; }&#xA;&#xA;    &#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInstance.cs" srcType="user" uri="common.problem_size.Instance/bin/1.0.0.0/IInstance.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.problem_size.Instance/bin/1.0.0.0/BaseIInstance.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="209" y="139">
+      <visualDescription h="40" w="80" x="131" y="136">
         <color b="0" g="128" r="255"/>
       </visualDescription>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="C"/>

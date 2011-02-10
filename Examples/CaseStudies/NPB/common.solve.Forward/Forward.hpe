@@ -79,7 +79,25 @@
         <originRef cRef="orientation" iRef="IAxis"/>
         <visualDescription h="10" w="10" x="47" y="28"/>
       </slice>
-      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.solve.Method;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace common.solve.Forward { &#xA;&#xA;public interface BaseIForward&lt;I, C, MTH, DIR> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where MTH:IMethod&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIForward.cs" srcType="base" uri="common.solve.Forward/bin/1.0.0.0/BaseIForward.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.solve.Method;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace common.solve.Forward { &#xA;&#xA;public interface IForward&lt;I, C, MTH, DIR> : BaseIForward&lt;I, C, MTH, DIR>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where MTH:IMethod&#xA;where DIR:IAxis&#xA;{&#xA;&#x9;void enterStage(int stage);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IForward.cs" srcType="user" uri="common.solve.Forward/bin/1.0.0.0/IForward.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>%WORKSPACE/common.solve.Forward/bin/1.0.0.0/BaseIForward.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="199" y="140">
         <color b="255" g="0" r="0"/>
       </visualDescription>
@@ -109,18 +127,20 @@
       <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
         <visualDescription h="10" w="10" x="47" y="28"/>
       </slices>
-      <visualDescription h="40" w="80" x="155" y="246"/>
+      <visualDescription h="40" w="80" x="170" y="237"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="forward"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="forward"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="260" y="427"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -128,6 +148,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="forward"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="33" w="37" x="55" y="278"/>
     </enumerator>
     <fusionsOfReplicators>
