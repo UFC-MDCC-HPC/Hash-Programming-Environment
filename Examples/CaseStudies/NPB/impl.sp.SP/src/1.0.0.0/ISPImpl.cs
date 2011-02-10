@@ -7,6 +7,7 @@ using sp.SP;
 using common.data.ProblemDefinition;
 using MPI;
 using NPB3_0_JAV.BMInOut;
+using common.problem_size.Instance;
 
 namespace impl.sp.SP { 
 
@@ -16,7 +17,7 @@ namespace impl.sp.SP {
         public int bid = -1;
 		public static int t_total = 1;
     	public static String BMName = "SP";
-		public char PROBLEM_CLASS = 'S';
+		public PROBLEM_CLASS problem_class;
 		
 		protected bool active;
 		protected int node, no_nodes, total_nodes, root ,maxcells;
@@ -40,7 +41,7 @@ namespace impl.sp.SP {
 			grid_points = Problem.grid_points;			
 			problem_size = Instance.problem_size;
 			
-			PROBLEM_CLASS = Instance.CLASS;			
+			problem_class = Instance.CLASS;			
 		} 
 		
 		private void runBenchmark()
@@ -54,7 +55,7 @@ namespace impl.sp.SP {
 		    int niter = -1;
 		    if (node == root)
 		    {
-		        BMArgs.Banner(BMName, PROBLEM_CLASS, false, total_nodes);
+		        BMArgs.Banner(BMName, problem_class.ToString()[0], false, total_nodes);
 		
 		    }
 		
@@ -115,7 +116,7 @@ namespace impl.sp.SP {
 		    {
 		        double time = Timer.readTimer(t_total);
 		        results = new BMResults(BMName,
-		                      PROBLEM_CLASS,
+		                      problem_class.ToString()[0],
 		                      grid_points[0],
 		                      grid_points[1],
 		                      grid_points[2],

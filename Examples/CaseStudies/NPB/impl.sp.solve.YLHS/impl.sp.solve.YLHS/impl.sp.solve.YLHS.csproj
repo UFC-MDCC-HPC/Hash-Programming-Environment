@@ -81,13 +81,13 @@
       <Project>{0BC65DA6-CE75-464F-B807-BD41C4773F55}</Project>
       <Name>sp.problem_size.Instance_SP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.orientation.X\common.orientation.X\common.orientation.X.csproj">
-      <Project>{944FBD84-2F3B-432F-BB71-9597D2D25457}</Project>
-      <Name>common.orientation.X</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.solve.BeamWarmingMethod\common.solve.BeamWarmingMethod\common.solve.BeamWarmingMethod.csproj">
       <Project>{93476BE3-1749-4A69-90C8-160ED9FA7E50}</Project>
       <Name>common.solve.BeamWarmingMethod</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Y\common.orientation.Y\common.orientation.Y.csproj">
+      <Project>{9836FF76-DF70-442C-8158-252FF11E6AB3}</Project>
+      <Name>common.orientation.Y</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

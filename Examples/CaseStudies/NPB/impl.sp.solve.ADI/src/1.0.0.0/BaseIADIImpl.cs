@@ -17,7 +17,6 @@ using common.solve.BlockDiagonalMatVecProduct;
 using common.orientation.XYZ;
 using environment.MPIDirect;
 using common.Add;
-using common.datapartition.Blocks3D;
 using common.data.ProblemDefinition;
 using common.ComputeRHS;
 using common.orientation.X;

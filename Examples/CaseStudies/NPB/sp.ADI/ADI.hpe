@@ -238,7 +238,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ebcd15c87001f794ff5f45146cc1149ff6b1cc732402e8fea7669e809f5f7ca7d0f449f36406e3c799d858b0df7c7ea46ed476b25ab2dd86f2147c5bd5aaa2723be2e0773163d3ebf363f88058c611ae190b35a5e11b2895c6b6ac55d7bcf8fcc96fb463cbf025e6a692e7bed5c86f5b14574041cbb0c132eba6f2deec770097" localRef="compute_rhs" location="common.ComputeRHS/ComputeRHS.hpe" name="ComputeRHS" package="common" exposed="false">
-      <visualDescription h="45" w="108" x="0" y="239">
+      <visualDescription h="45" w="108" x="0" y="256">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="instance_type" varName="I"/>
@@ -352,12 +352,12 @@
     <supplyParameter cRef="x_dir" varName="DIR_X"/>
     <supplyParameter cRef="dir_z" varName="DIR_Z"/>
     <supplyParameter cRef="xyz" varName="DIR"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
-    <innerRenaming cNewName="x" cOldName="topology" cRef="x_solve"/>
-    <innerRenaming cNewName="y" cOldName="topology" cRef="y_solve"/>
     <innerRenaming cNewName="z" cOldName="topology" cRef="z_solve"/>
+    <innerRenaming cNewName="y" cOldName="topology" cRef="y_solve"/>
+    <innerRenaming cNewName="x" cOldName="topology" cRef="x_solve"/>
     <fusion>
       <cRefs>txinvr</cRefs>
       <cRefs>add</cRefs>
@@ -366,12 +366,7 @@
       <cRefs>x_solve</cRefs>
       <cRefs>y_solve</cRefs>
       <cRefs>z_solve</cRefs>
-      <pRef>problem_data</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>x_solve</cRefs>
-      <pRef>x</pRef>
+      <pRef>blocks_info</pRef>
     </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
@@ -379,11 +374,6 @@
       <cRefs>y_solve</cRefs>
       <cRefs>z_solve</cRefs>
       <pRef>mpi</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>y_solve</cRefs>
-      <pRef>y</pRef>
     </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
@@ -398,7 +388,17 @@
       <cRefs>x_solve</cRefs>
       <cRefs>y_solve</cRefs>
       <cRefs>z_solve</cRefs>
-      <pRef>blocks_info</pRef>
+      <pRef>problem_data</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>y_solve</cRefs>
+      <pRef>y</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>x_solve</cRefs>
+      <pRef>x</pRef>
     </fusion>
     <interface iRef="IADI" nArgs="1">
       <slice isRef="z_solve">
@@ -429,27 +429,27 @@
         <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
         <visualDescription h="10" w="10" x="194" y="90"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@15ad51a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@93a9b2" repeat="0">
         <visualDescription h="493" w="490" x="145" y="125"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5cd81a" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@69ff0e" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="225" y="38"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16f942c" repeat="0" sliceRef="compute_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e82ff2" repeat="0" sliceRef="compute_rhs">
           <visualDescription h="50" w="50" x="222" y="103"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@68e3cd" repeat="0" sliceRef="txinvr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a3c290" repeat="0" sliceRef="txinvr">
           <visualDescription h="50" w="50" x="224" y="167"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@43ac0b" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3aa1b5" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="231" y="231"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d415b2" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14e8194" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="230" y="298"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1dc90ef" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@11d298d" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="230" y="366"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1af67f9" repeat="0" sliceRef="add">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@193085a" repeat="0" sliceRef="add">
           <visualDescription h="50" w="50" x="224" y="420"/>
         </action>
       </protocol>

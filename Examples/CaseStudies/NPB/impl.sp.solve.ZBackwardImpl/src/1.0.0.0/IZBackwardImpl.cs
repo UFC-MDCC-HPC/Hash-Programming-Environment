@@ -42,7 +42,7 @@ namespace impl.sp.solve.ZBackwardImpl {
             #region backward init
             //---------------------------------------------------------------------
             //            now we know this is the first grid block on the back sweep,
-            //            so we don't need a message to start the substitution. 
+            //            so we do not need a message to start the substitution. 
             //---------------------------------------------------------------------
 
             k = kend - 1;

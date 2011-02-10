@@ -9,7 +9,7 @@ using common.data.ProblemDefinition;
 using common.problem_size.Class;
 using common.solve.LHS;
 using sp.problem_size.Instance_SP;
-using common.orientation.X;
+using common.orientation.Y;
 using common.solve.BeamWarmingMethod;
 
 namespace impl.sp.solve.YLHS { 
@@ -17,7 +17,7 @@ namespace impl.sp.solve.YLHS {
 public abstract class BaseIYLHSImpl<I,C,DIR,MTH>: Computation, BaseILHS<I,C,DIR,MTH>
 	where I:IInstance_SP<C>
 	where C:IClass
-	where DIR:IX
+	where DIR:IY
 	where MTH:IBeamWarmingMethod
 {
 

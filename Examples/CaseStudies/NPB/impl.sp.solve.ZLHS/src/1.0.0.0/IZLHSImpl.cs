@@ -6,7 +6,7 @@ using common.solve.LHS;
 using common.problem_size.Class;
 using common.data.ProblemDefinition;
 using sp.problem_size.Instance_SP;
-using common.orientation.X;
+using common.orientation.Z;
 using common.solve.BeamWarmingMethod;
 
 namespace impl.sp.solve.ZLHS { 
@@ -14,7 +14,7 @@ namespace impl.sp.solve.ZLHS {
 	public class IZLHSImpl<I,C,DIR,MTH> : BaseIZLHSImpl<I,C,DIR,MTH>, ILHS<I,C,DIR,MTH>
 	where I:IInstance_SP<C>
 	where C:IClass
-	where DIR:IX
+	where DIR:IZ
 	where MTH:IBeamWarmingMethod
 	{
 
