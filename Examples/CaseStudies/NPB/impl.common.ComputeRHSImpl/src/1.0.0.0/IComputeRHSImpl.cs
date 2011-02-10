@@ -148,7 +148,7 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	                                  u[c, k, j, i, 3] * u[c, k, j, i, 3]) * rho_inv;
 	                    qs[c, k, j, i, 0] = square[c, k, j, i, 0] * rho_inv;
 	                    //---------------------------------------------------------------------
-	                    //               (don't need speed and ainx until the lhs computation)
+	                    //               (do not need speed and ainx until the lhs computation)
 	                    //---------------------------------------------------------------------
 	                    aux = c1c2 * rho_inv * (u[c, k, j, i, 4] - square[c, k, j, i, 0]);
 	                    aux = Math.Sqrt(aux);

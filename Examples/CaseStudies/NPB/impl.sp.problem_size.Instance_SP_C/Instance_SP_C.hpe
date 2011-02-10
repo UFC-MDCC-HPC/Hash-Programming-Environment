@@ -21,7 +21,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000069f308cef3ee67fe4a9428f103ea9d47782608466294ceb577ea2487f0dfef904d4cac3d977b78429febc91f5d34d2beaf698ccfa8fe594275093f92aaf7f6d66cac2c1e56f5655cc1894e5b5d589f3017a8ed2ad73e2e2c4f24b9f00c305660cd8fce15a9700519131c700d4b65317e03415aa31473afcff256691f7336b48e" localRef="class" location="common.problem_size.Class_C/Class_C.hpe" name="Class_C" package="common.problem_size" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000938be8330369935f1db34ccbf394ff219dbf72e9969cd608e73059b6aee60d240808d210eebabf873ddaf88b8f727810579b26678c7a85f833a090f51a3d51197dec1c0d3f288db510ed7ee6b5a359e49dd55ef4223bf7433e94451e7fa945b1205d6a3fe9a44b14493a66e6aa5f132298ce1e81c2b6957600555117261cc08d" localRef="class" location="common.problem_size.Class_C/Class_C.hpe" name="Class_C" package="common.problem_size" exposed="false">
       <visualDescription h="30" w="50" x="234" y="252">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -30,22 +30,30 @@
       </unitBounds>
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
-    <interface iRef="IInstance_SP_C_Impl" nArgs="0">
+    <interface iRef="IInstance_SP_C_Impl" nArgs="1">
+      <slice isRef="class">
+        <originRef cRef="class" iRef="IClass"/>
+        <visualDescription h="10" w="10" x="27" y="21"/>
+      </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_C { &#xA;&#xA;public abstract class BaseIInstance_SP_C_Impl: Environment, BaseIInstance_SP&#xA;{&#xA;&#xA;&#xA;public BaseIInstance_SP_C_Impl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;0024000004800000940000000602000000240000525341310004000011000000c580d7d9baace0bc15060800efa78cf6910867495951f69e58dc38525fbdf74860b9c1efec91d741f402e2717861ae0ee7d238891160075a1da35f963c039852e9886b3233d4d6cc1e2a519511e65d4f94142fb12ec2a7f80ab7099ba63c72ee179915bb4839be6aee164277370045036d6766e2d8548fb51b93cd81bd768b8e&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_SP_C_Impl.cs" srcType="base" uri="impl.sp.problem_size.Instance_SP_C/bin/1.0.0.0/BaseIInstance_SP_C_Impl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class_C;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_C { &#xA;&#xA;public abstract class BaseIInstance_SP_C_Impl&lt;C>: br.ufc.pargo.hpe.kinds.Environment, BaseIInstance_SP&lt;C>&#xA;&#x9;&#x9;where C:IClass_C&#xA;{&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_SP_C_Impl.cs" srcType="base" uri="impl.sp.problem_size.Instance_SP_C/bin/1.0.0.0/BaseIInstance_SP_C_Impl.dll" versionId="1.0.0.0">
           <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/BaseIInstance_SP.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_C { &#xA;&#xA;public class IInstance_SP_C_Impl : BaseIInstance_SP_C_Impl, IInstance_SP&#xA;{&#xA;&#xA;public IInstance_SP_C_Impl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_SP_C_Impl.cs" srcType="user" uri="impl.sp.problem_size.Instance_SP_C/bin/1.0.0.0/IInstance_SP_C_Impl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class_C;&#xA;using common.problem_size.Instance;&#xA;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_C { &#xA;&#xA;public class IInstance_SP_C_Impl&lt;C> : BaseIInstance_SP_C_Impl&lt;C>, IInstance_SP&lt;C>&#xA;&#x9;&#x9;where C:IClass_C&#xA;{&#xA;public IInstance_SP_C_Impl() { &#xA;&#xA;} &#xA;&#x9;&#x9;&#xA;private int _problem_size = 162;&#xA;private int _niter_default = 400;&#xA;private&#x9;double _dt_default = .00067d;&#x9;&#x9;&#xA;private PROBLEM_CLASS _CLASS_ = PROBLEM_CLASS.C;&#xA;&#x9;&#x9;&#xA;public int problem_size { get { return _problem_size; } }&#xA;public int niter_default { get { return _niter_default; } }&#xA;public double dt_default { get { return _dt_default; } }&#x9;&#x9;&#xA;public PROBLEM_CLASS CLASS { get { return _CLASS_; } }&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private&#x9;double[] _xcrref_ = {0.5881691581829E+03d, 0.2454417603569E+03d, 0.3293829191851E+03d, 0.3081924971891E+03d, 0.4597223799176E+03d}; //    Reference values of RMS-norms of residual.&#xA;private double[] _xceref_ = {0.2598120500183d, 0.2590888922315E-01d, 0.5132886416320E-01d, 0.4806073419454E-01d, 0.5483377491301d}; //    Reference values of RMS-norms of solution error.&#xA;private&#x9;double _dtref_ = .00067d;&#xA;&#xA;public double[] xcrref { get { return _xcrref_; } } &#xA;public double[] xceref { get { return _xceref_; } }&#xA;public double dtref { get { return _dtref_; } }&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_SP_C_Impl.cs" srcType="user" uri="impl.sp.problem_size.Instance_SP_C/bin/1.0.0.0/IInstance_SP_C_Impl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.sp.problem_size.Instance_SP_C/bin/1.0.0.0/BaseIInstance_SP_C_Impl.dll</dependency>
           <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="132" y="130">
+      <visualDescription h="40" w="80" x="109" y="134">
         <color b="0" g="128" r="255"/>
       </visualDescription>
+      <parameter iname="IClass_C" order="0" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IInstance_SP_C_Impl" private="false" uRef="instance" visibleInterface="true">
       <super cRef="base" uRef="instance"/>
+      <slices cRef="class" replica="0" uRef="class" sliceName="class" transitive="false">
+        <visualDescription h="10" w="10" x="27" y="21"/>
+      </slices>
       <visualDescription h="40" w="80" x="186" y="287"/>
     </unit>
   </componentInfo>

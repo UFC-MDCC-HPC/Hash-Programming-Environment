@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b92f1f1edd2b18313261e5d77bdaccdc5b688fadde35565cf2857b2594af04fc125d3657d787dd24872a343afc511e568c1968c18bc5cbf39475d16471fa3176ce6dd05961b9a72468501e198e1582ce56db005c3fe032fd03dcefbc0a4d8a2b3565947f2255a66d9c08f0ad932a7af084385741cf4dc1deb304b1bba03c0080" isAbstract="false" kind="Data" name="BufferImpl" packagePath="impl.common">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="base" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" version="1.0.0.0">
+        <visualDescription h="82" w="139" x="251" y="305">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="buffer">
+          <visualDescription h="10" w="10" x="28" y="38"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IBufferImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Buffer;&#xA;&#xA;namespace impl.common.BufferImpl { &#xA;&#xA;public abstract class BaseIBufferImpl: DataStructure, BaseIBuffer&#xA;{&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBufferImpl.cs" srcType="base" uri="impl.common.BufferImpl/bin/1.0.0.0/BaseIBufferImpl.dll" versionId="1.0.0.0">
+          <dependency>common.Buffer/bin/1.0.0.0/BaseIBuffer.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Buffer;&#xA;&#xA;namespace impl.common.BufferImpl { &#xA;&#x9;&#xA;&#x9;&#xA;&#x9;&#xA;public class IBufferImpl : BaseIBufferImpl, IBuffer&#xA;{&#xA;&#xA;public IBufferImpl() { &#xA;&#xA;} &#xA;&#xA;private double[] array;&#x9;&#xA;&#xA;&#x9;&#x9;&#xA;public double[] Array { get { return array; } set { array = value; } }&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IBufferImpl.cs" srcType="user" uri="impl.common.BufferImpl/bin/1.0.0.0/IBufferImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.common.BufferImpl/bin/1.0.0.0/BaseIBufferImpl.dll</dependency>
+          <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="113" y="74">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBufferImpl" private="false" uRef="buffer" visibleInterface="true">
+      <super cRef="base" uRef="buffer"/>
+      <visualDescription h="40" w="80" x="111" y="206"/>
+    </unit>
+  </componentInfo>
+</component:component>

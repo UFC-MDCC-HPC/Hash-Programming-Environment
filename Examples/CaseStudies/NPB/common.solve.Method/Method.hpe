@@ -14,7 +14,7 @@
           <dependency>%WORKSPACE/common.solve.Method/bin/1.0.0.0/BaseIMethod.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="179" y="157">
+      <visualDescription h="40" w="80" x="169" y="157">
         <color b="128" g="0" r="255"/>
       </visualDescription>
     </interface>

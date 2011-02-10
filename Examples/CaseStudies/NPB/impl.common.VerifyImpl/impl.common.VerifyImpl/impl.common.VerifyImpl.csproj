@@ -97,5 +97,9 @@
       <Project>{EFF27C29-8291-4717-919D-70319E68D1E2}</Project>
       <Name>common.CopyFaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\sp.problem_size.Instance_SP\sp.problem_size.Instance_SP\sp.problem_size.Instance_SP.csproj">
+      <Project>{0BC65DA6-CE75-464F-B807-BD41C4773F55}</Project>
+      <Name>sp.problem_size.Instance_SP</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

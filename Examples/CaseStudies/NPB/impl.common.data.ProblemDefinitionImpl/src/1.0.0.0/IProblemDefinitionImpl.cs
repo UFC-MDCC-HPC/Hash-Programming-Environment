@@ -19,8 +19,6 @@ where C:IClass
 		set_constants(0);
 	}
 		
-	public char CLASS = 'S';
-	
 	protected int _IMAX_ = 0, _JMAX_ = 0, _KMAX_ = 0, _MAX_CELL_DIM_ = 0, BUF_SIZE = 0, IMAXP, JMAXP,
 				  problem_size = 0, _maxcells_ = 0, ncells = 0;
 	protected int[] _grid_points_ = { 0, 0, 0 };

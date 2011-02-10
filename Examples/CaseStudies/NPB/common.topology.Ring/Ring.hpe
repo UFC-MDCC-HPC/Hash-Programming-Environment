@@ -10,11 +10,11 @@
     <interface iRef="ICell" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.topology.Ring { &#xA;&#xA;public interface BaseICell : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseICell.cs" srcType="base" uri="common.topology.Ring/bin/1.0.0.0/BaseICell.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.topology.Ring { &#xA;&#xA;public interface ICell : BaseICell&#xA;{&#xA;   int sucessor { get; }&#xA;   int predecessor { get; }&#xA;   &#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICell.cs" srcType="user" uri="common.topology.Ring/bin/1.0.0.0/ICell.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.topology.Ring { &#xA;&#xA;public interface ICell : BaseICell&#xA;{&#xA;   int successor { get; set; }&#xA;   int predecessor { get; set; }&#xA;   &#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICell.cs" srcType="user" uri="common.topology.Ring/bin/1.0.0.0/ICell.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.topology.Ring/bin/1.0.0.0/BaseICell.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="160" y="129">
+      <visualDescription h="40" w="80" x="123" y="124">
         <color b="0" g="255" r="128"/>
       </visualDescription>
     </interface>

@@ -30,22 +30,30 @@
       </unitBounds>
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
-    <interface iRef="IInstance_SP_A_Impl" nArgs="0">
+    <interface iRef="IInstance_SP_A_Impl" nArgs="1">
+      <slice isRef="class">
+        <originRef cRef="class" iRef="IClass"/>
+        <visualDescription h="10" w="10" x="27" y="21"/>
+      </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_A { &#xA;&#xA;public abstract class BaseIInstance_SP_A_Impl: Environment, BaseIInstance_SP&#xA;{&#xA;&#xA;&#xA;public BaseIInstance_SP_A_Impl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000009f3e515ece7cefca80ecec7754858155072772909849340cbe58bbf7265b0871cfa66d936a414bda7a2ced44e290891149869d12ff4bd43d113b6ab71aa92f9be9a2fe300e8ff441e7368d9b9215504c52b28eb24b97061adce672e79d407b7bac56e650477b109d8a471c9545db6f6f4f9bea4af0a1f4538d059971ab92d7bb&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_SP_A_Impl.cs" srcType="base" uri="impl.sp.problem_size.Instance_SP_A/bin/1.0.0.0/BaseIInstance_SP_A_Impl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class_A;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_A { &#xA;&#xA;public abstract class BaseIInstance_SP_A_Impl&lt;C>: br.ufc.pargo.hpe.kinds.Environment, BaseIInstance_SP&lt;C>&#xA;&#x9;&#x9;where C:IClass_A&#xA;{&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_SP_A_Impl.cs" srcType="base" uri="impl.sp.problem_size.Instance_SP_A/bin/1.0.0.0/BaseIInstance_SP_A_Impl.dll" versionId="1.0.0.0">
           <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/BaseIInstance_SP.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_A { &#xA;&#xA;public class IInstance_SP_A_Impl : BaseIInstance_SP_A_Impl, IInstance_SP&#xA;{&#xA;&#xA;public IInstance_SP_A_Impl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_SP_A_Impl.cs" srcType="user" uri="impl.sp.problem_size.Instance_SP_A/bin/1.0.0.0/IInstance_SP_A_Impl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class_A;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace impl.sp.problem_size.Instance_SP_A { &#xA;&#xA;public class IInstance_SP_A_Impl&lt;C> : BaseIInstance_SP_A_Impl&lt;C>, IInstance_SP&lt;C>&#xA;&#x9;&#x9;where C:IClass_A&#xA;{&#xA;&#xA;public IInstance_SP_A_Impl() { &#xA;&#xA;} &#xA;&#x9;&#x9;&#xA;private int _problem_size = 64;&#xA;private int _niter_default = 400;&#xA;private&#x9;double _dt_default = .0015d;&#x9;&#xA;private PROBLEM_CLASS _CLASS_ = PROBLEM_CLASS.A;&#xA;&#x9;&#x9;&#xA;public int problem_size { get { return _problem_size; } }&#xA;public int niter_default { get { return _niter_default; } }&#xA;public double dt_default { get { return _dt_default; } }&#x9;&#x9;&#xA;public PROBLEM_CLASS CLASS { get { return _CLASS_; } }&#x9;&#x9;&#xA;&#xA;private&#x9;double[] _xcrref_ = {2.4799822399300195d, 1.1276337964368832d, 1.5028977888770491d, 1.4217816211695179d, 2.1292113035138280d}; //    Reference values of RMS-norms of residual.&#xA;private double[] _xceref_ = {1.0900140297820550E-4d, 3.7343951769282091E-5d, 5.0092785406541633E-5d, 4.7671093939528255E-5d, 1.3621613399213001E-4d}; //    Reference values of RMS-norms of solution error.&#xA;private&#x9;double _dtref_ = .0015d;&#xA;&#xA;public double[] xcrref { get { return _xcrref_; } } &#xA;public double[] xceref { get { return _xceref_; } }&#xA;public double dtref { get { return _dtref_; } }&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_SP_A_Impl.cs" srcType="user" uri="impl.sp.problem_size.Instance_SP_A/bin/1.0.0.0/IInstance_SP_A_Impl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.sp.problem_size.Instance_SP_A/bin/1.0.0.0/BaseIInstance_SP_A_Impl.dll</dependency>
           <dependency>sp.problem_size.Instance_SP/bin/1.0.0.0/IInstance_SP.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="132" y="130">
+      <visualDescription h="40" w="80" x="96" y="141">
         <color b="0" g="128" r="255"/>
       </visualDescription>
+      <parameter iname="IClass_A" order="0" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IInstance_SP_A_Impl" private="false" uRef="instance" visibleInterface="true">
       <super cRef="base" uRef="instance"/>
+      <slices cRef="class" replica="0" uRef="class" sliceName="class" transitive="false">
+        <visualDescription h="10" w="10" x="27" y="21"/>
+      </slices>
       <visualDescription h="40" w="80" x="186" y="287"/>
     </unit>
   </componentInfo>

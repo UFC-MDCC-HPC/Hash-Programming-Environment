@@ -57,7 +57,7 @@ public class ICopyFacesImpl<I,C> : BaseICopyFacesImpl<I,C>, ICopyFaces<I,C>
 
         //---------------------------------------------------------------------
         //      compute the actual sizes of the buffers; note that there is 
-        //      always one cell face that doesn't need buffer space, because it 
+        //      always one cell face that does not need buffer space, because it 
         //      is at the boundary of the grid
         //---------------------------------------------------------------------
 

@@ -22,15 +22,15 @@
   <componentInfo>
     <interface iRef="ICellImpl" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;&#xA;namespace impl.common.topology.RingImpl { &#xA;&#xA;public abstract class BaseICellImpl: Environment, BaseICell&#xA;{&#xA;&#xA;&#xA;public BaseICellImpl() { &#xA;&#xA;} &#xA;&#xA;public static string UID = &quot;00240000048000009400000006020000002400005253413100040000110000009940f48b12f3ff2b97f38a8f2781a7548c48fc5c3ca13d232230cb69b85b4f68f65b3be7fef5b671419fbe6f34053a6f78456411cb614f4008d02d8a3182f0fe034e49fe16c72427e346d8fa00de2c134f95d953b5285d09b1403eb7e7ee4035c4e894b858d3682c7c1013f54333859cebcc9a619551bebd1e61518d2ec020ad&quot;;&#xA;&#xA;override public void createSlices() {&#xA;&#x9;base.createSlices();&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICellImpl.cs" srcType="base" uri="impl.common.topology.RingImpl/bin/1.0.0.0/BaseICellImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;&#xA;namespace impl.common.topology.RingImpl { &#xA;&#xA;public abstract class BaseICellImpl: br.ufc.pargo.hpe.kinds.Environment, BaseICell&#xA;{&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICellImpl.cs" srcType="base" uri="impl.common.topology.RingImpl/bin/1.0.0.0/BaseICellImpl.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/BaseICell.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;&#xA;namespace impl.common.topology.RingImpl { &#xA;&#xA;public class ICellImpl : BaseICellImpl, ICell&#xA;{&#xA;&#xA;public ICellImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICellImpl.cs" srcType="user" uri="impl.common.topology.RingImpl/bin/1.0.0.0/ICellImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;&#xA;namespace impl.common.topology.RingImpl { &#xA;&#xA;public class ICellImpl : BaseICellImpl, ICell&#xA;{&#xA;&#xA;&#x9;public ICellImpl() { &#xA;&#x9;&#xA;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;private int _successor_;&#x9;&#xA;&#x9;private int _predecessor_;&#x9;&#xA;&#x9;&#x9;&#xA;    public int successor { get { return _successor_; } set { _successor_ = value; } }&#xA;    public int predecessor { get { return _predecessor_; } set { _predecessor_ = value; } }&#x9;&#x9;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICellImpl.cs" srcType="user" uri="impl.common.topology.RingImpl/bin/1.0.0.0/ICellImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.common.topology.RingImpl/bin/1.0.0.0/BaseICellImpl.dll</dependency>
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="160" y="129">
+      <visualDescription h="40" w="80" x="159" y="113">
         <color b="0" g="255" r="128"/>
       </visualDescription>
     </interface>

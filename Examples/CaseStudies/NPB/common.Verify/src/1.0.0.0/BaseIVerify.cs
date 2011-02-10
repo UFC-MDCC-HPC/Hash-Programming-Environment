@@ -3,7 +3,6 @@
 using br.ufc.pargo.hpe.kinds;
 using common.topology.Ring;
 using common.datapartition.BlocksInfo;
-using common.datapartition.Blocks3D;
 using common.problem_size.Instance;
 using common.problem_size.Class;
 using environment.MPIDirect;

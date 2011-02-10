@@ -249,21 +249,21 @@
         <originRef cRef="backward" iRef="IBackward"/>
         <visualDescription h="10" w="10" x="66" y="1"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d14172" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@82becd" repeat="0">
         <visualDescription h="150" w="310" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1fcbcb" repeat="0" sliceRef="forward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1bcba55" repeat="0" sliceRef="forward">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17c82a4" repeat="0" sliceRef="lhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16d538d" repeat="0" sliceRef="lhs">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1651c52" repeat="0" sliceRef="matvecproduct">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@887eed" repeat="0" sliceRef="matvecproduct">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12661bf" repeat="0" sliceRef="backward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@144fae7" repeat="0" sliceRef="backward">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@db81c3" repeat="0" sliceRef="shift">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b47c59" repeat="0" sliceRef="shift">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
       </protocol>
@@ -292,28 +292,21 @@
       <visualDescription h="90" w="147" x="19" y="44">
         <color b="0" g="0" r="255"/>
       </visualDescription>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="32" y="67"/>
-        <slice pRef="cell" sRef="shift"/>
-      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="112" y="62"/>
         <slice pRef="mpi" sRef="shift"/>
       </port>
-      <port name="output_buffer">
-        <visualDescription h="10" w="10" x="82" y="52"/>
-        <slice pRef="output_buffer" sRef="shift"/>
+      <port name="cell">
+        <visualDescription h="10" w="10" x="32" y="67"/>
+        <slice pRef="cell" sRef="shift"/>
       </port>
       <port name="input_buffer">
         <visualDescription h="10" w="10" x="10" y="57"/>
         <slice pRef="input_buffer" sRef="shift"/>
       </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="107" y="28"/>
-        <slice pRef="blocks" sRef="forward"/>
-        <slice pRef="blocks" sRef="lhs"/>
-        <slice pRef="blocks" sRef="matvecproduct"/>
-        <slice pRef="blocks" sRef="backward"/>
+      <port name="output_buffer">
+        <visualDescription h="10" w="10" x="82" y="52"/>
+        <slice pRef="output_buffer" sRef="shift"/>
       </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="6" y="1"/>
@@ -321,6 +314,13 @@
         <slice pRef="problem" sRef="lhs"/>
         <slice pRef="problem" sRef="matvecproduct"/>
         <slice pRef="problem" sRef="backward"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="107" y="28"/>
+        <slice pRef="blocks" sRef="forward"/>
+        <slice pRef="blocks" sRef="lhs"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="backward"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
