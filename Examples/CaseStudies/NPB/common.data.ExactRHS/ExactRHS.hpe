@@ -65,9 +65,9 @@
         <originRef cRef="exact_solution" iRef="IExactSolution"/>
         <visualDescription h="10" w="10" x="31" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@151c368" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d8c9de" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f3eac0" repeat="0" sliceRef="exact_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ad2d07" repeat="0" sliceRef="exact_solution">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -86,7 +86,7 @@
           <dependency>%WORKSPACE/common.data.ExactRHS/bin/1.0.0.0/BaseIExactRHS.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="180" y="156">
+      <visualDescription h="40" w="80" x="130" y="141">
         <color b="255" g="255" r="0"/>
       </visualDescription>
       <port name="problem">
@@ -116,6 +116,7 @@
       <originRef>exact_solution</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="exact_solution" uRef="exact_solution"/>
       <links xsi:type="component:EnumerableUnitType" ref="exact_rhs"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="95" y="194"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -123,6 +124,7 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="exact_rhs"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="60" w="61" x="27" y="289"/>
     </enumerator>
     <fusionsOfReplicators>
