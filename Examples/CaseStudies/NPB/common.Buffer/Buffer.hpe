@@ -10,11 +10,11 @@
     <interface iRef="IBuffer" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.Buffer { &#xA;&#xA;public interface BaseIBuffer : IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBuffer.cs" srcType="base" uri="common.Buffer/bin/1.0.0.0/BaseIBuffer.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.Buffer { &#xA;&#xA;public interface IBuffer : BaseIBuffer&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBuffer.cs" srcType="user" uri="common.Buffer/bin/1.0.0.0/IBuffer.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.Buffer { &#xA;&#xA;public interface IBuffer : BaseIBuffer&#xA;{&#xA;    double[] Array { get; set;}&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBuffer.cs" srcType="user" uri="common.Buffer/bin/1.0.0.0/IBuffer.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.Buffer/bin/1.0.0.0/BaseIBuffer.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="115" y="94">
+      <visualDescription h="40" w="80" x="113" y="74">
         <color b="128" g="255" r="255"/>
       </visualDescription>
     </interface>
