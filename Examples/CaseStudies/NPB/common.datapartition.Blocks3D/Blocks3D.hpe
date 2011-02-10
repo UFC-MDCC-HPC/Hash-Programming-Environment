@@ -99,6 +99,10 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="88" y="37"/>
+        <slice pRef="z" sRef="cell"/>
+      </port>
       <port name="x">
         <visualDescription h="10" w="10" x="79" y="2"/>
         <slice pRef="x" sRef="cell"/>
@@ -106,10 +110,6 @@
       <port name="y">
         <visualDescription h="10" w="10" x="32" y="0"/>
         <slice pRef="y" sRef="cell"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="88" y="37"/>
-        <slice pRef="z" sRef="cell"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -138,31 +138,13 @@
       </slices>
       <visualDescription h="47" w="94" x="126" y="174"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="i">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>topology</originRef>
       <originRef>x</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="process"/>
-      <visualDescription h="20" w="20" x="184" y="359"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="j">
-      <originRef>topology</originRef>
-      <originRef>y</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
-      <links xsi:type="component:EnumerableUnitType" ref="process"/>
-      <visualDescription h="20" w="20" x="281" y="362"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="k">
-      <originRef>topology</originRef>
-      <originRef>z</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
-      <links xsi:type="component:EnumerableUnitType" ref="process"/>
-      <visualDescription h="20" w="20" x="341" y="361"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@41e5481297302422773" varId="n">
-      <links xsi:type="component:EnumerableUnitType" ref="process"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="20" w="20" x="124" y="86"/>
+      <visualDescription h="20" w="20" x="274" y="338"/>
     </enumerator>
   </componentInfo>
 </component:component>
