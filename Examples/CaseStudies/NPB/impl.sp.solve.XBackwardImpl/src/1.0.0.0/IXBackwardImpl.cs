@@ -18,23 +18,8 @@ namespace impl.sp.solve.XBackwardImpl {
 	{	
 		public IXBackwardImpl()
 		{
-    		initialize();
-		}
-		
-        private int[,] start, end, slice, cell_size;
-		private double[,,,,] lhs, rhs;
-		
-		public void initialize()
-		{
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
-			cell_size = Blocks.cell_size;
-			
-			lhs = Problem.Field_lhs;
-			rhs = Problem.Field_rhs;
-		}
-		
+ 		}
+				
 		public void init()
 		{
 			int i, j, k, n, i1, m;

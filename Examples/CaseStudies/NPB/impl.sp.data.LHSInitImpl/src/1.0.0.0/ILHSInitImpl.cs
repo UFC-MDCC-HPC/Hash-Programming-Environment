@@ -16,35 +16,8 @@ namespace impl.sp.data.LHSInitImpl {
 		
 		public ILHSInitImpl() 
 		{ 
-			initialize();
-		} 
-		
-		private int[,] cell_size, cell_low, cell_high, start, end, slice, cell_coord;
-		
-		private int ncells, IMAX, JMAX, KMAX, maxcells;
-		
-		private double[,,,,] lhs;
-		
-		public void initialize()
-		{
-			ncells = Problem.NCells;
-			lhs = Problem.Field_u;
-			
-			cell_size = Blocks.cell_size;
-			cell_low = Blocks.cell_low;
-			cell_high = Blocks.cell_high;
-			cell_coord = Blocks.cell_coord;
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
-						
-			IMAX = Problem.IMAX;
-			JMAX = Problem.JMAX;
-			KMAX = Problem.KMAX;
-			maxcells = Problem.maxcells;
-			
-		}
-		
+		}		
+				
 		public override void compute() 
 		{ 
 

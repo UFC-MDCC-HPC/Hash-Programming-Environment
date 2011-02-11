@@ -18,25 +18,8 @@ namespace impl.sp.solve.YSolve {
 	{
 		public IYSolveImpl()
 		{
-			initialize();
 		}
-	
-		private int[,] start, end, slice, cell_size;
-		private double[,,,,] lhs, rhs;
-		private int ncells;
-		
-		public void initialize()
-		{
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
-			cell_size = Blocks.cell_size;
 			
-			ncells = Problem.NCells;
-			lhs = Problem.Field_lhs;
-			rhs = Problem.Field_rhs;
-		}
-		
 		public override void compute() { 
             int i, j, k, stage, n, isize, jend, ksize, j1, buffer_size, c, m, p, jstart; /* requests(2), statuses(MPI_STATUS_SIZE, 2);*/
             double r1, r2, d, e, sm1, sm2;

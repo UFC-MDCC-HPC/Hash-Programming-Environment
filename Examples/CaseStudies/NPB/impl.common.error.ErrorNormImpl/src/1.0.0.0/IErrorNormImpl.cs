@@ -19,35 +19,9 @@ public class IErrorNormImpl<I,C> : BaseIErrorNormImpl<I,C>, IErrorNorm<I,C>
 
 	public IErrorNormImpl() 
 	{ 
-			initialize();
-	} 
-
-	private int[,] cell_low, cell_high;
-	private int ncells;
-	private double dnzm1, dnym1, dnxm1;
-	private double[,,,,] u;
-	private int[] grid_points;
-	private Intracommunicator comm_setup;
-
-		
-	public void initialize() 
-	{
-		cell_low = Blocks.cell_low;
-		cell_high = Blocks.cell_high;
-		ncells = Problem.NCells;
-		dnzm1 = Constants.dnxm1;
-		dnym1 = Constants.dnym1;
-		dnxm1 = Constants.dnzm1;	
-			
-		u = Problem.Field_u;
-		
 		rms = new double[5];
-			
-		grid_points = Problem.grid_points;
-			
-		comm_setup = Mpi.localComm(this);
-	}
-		
+	} 
+				
 	private double[] rms; 
 		
 	public double[] xce { get { return rms; } }

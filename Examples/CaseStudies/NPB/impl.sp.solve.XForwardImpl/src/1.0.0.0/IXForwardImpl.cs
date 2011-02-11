@@ -16,25 +16,11 @@ namespace impl.sp.solve.XForwardImpl {
 		where MTH:IBeamWarmingMethod
 		where DIR:IX
 	{
-        private int[,] start, end, slice, cell_size;
-		private double[,,,,] lhs, rhs;
 		
 		public IXForwardImpl()
 		{
-    		initialize();			
 		}		
-		
-		public void initialize()
-		{
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
-			cell_size = Blocks.cell_size;
-			
-			lhs = Problem.Field_lhs;
-			rhs = Problem.Field_rhs;
-		}
-		
+				
 		private int c, istart, iend, jsize, ksize;
 		
 		public void enterStage(int stage)			

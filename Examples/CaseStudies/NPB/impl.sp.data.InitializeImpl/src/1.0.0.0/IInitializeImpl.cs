@@ -16,40 +16,8 @@ namespace impl.sp.data.InitializeImpl {
 	
 		public IInitializeImpl() 
 		{ 
-		    initialize();
 		} 
-		
-		private int[,] cell_size, cell_low, cell_high, start, end, slice;
-		
-		private int ncells, IMAX, JMAX, KMAX, maxcells;
-		
-		private double[,,,,] u;
-		
-		private double dnzm1, dnym1, dnxm1; 
-		
-		public void initialize()
-		{
-			ncells = Problem.NCells;
-			u = Problem.Field_u;
-			
-			cell_size = Blocks.cell_size;
-			cell_low = Blocks.cell_low;
-			cell_high = Blocks.cell_high;
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
-			
-			dnzm1 = Constants.dnzm1;
-			dnym1 = Constants.dnym1;
-			dnxm1 = Constants.dnxm1;
-			
-			IMAX = Problem.IMAX;
-			JMAX = Problem.JMAX;
-			KMAX = Problem.KMAX;
-			maxcells = Problem.maxcells;
-			
-		}
-				
+								
 		public override void compute() { 
 				int c, i, j, k, m, ii, jj, kk, ix, iy, iz;
 				double xi, eta, zeta, Pxi, Peta, Pzeta; 

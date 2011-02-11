@@ -21,36 +21,7 @@ public class ITXINVR<I,C,DIR,MTH> : BaseITXINVR<I,C,DIR,MTH>, IBlockDiagonalMatV
 
 public ITXINVR() 
 { 
-    initialize();
 } 
-
-private int[,] start, end, cell_size;
-private double[,,,,] rhs, rho_i, us, vs, ws, qs, speed, ainv;
-private double bt, c2;
-private int ncells;
-		
-public void initialize() 
-{
-	start = Blocks.cell_start;
-	end = Blocks.cell_end;
-	cell_size = Blocks.cell_size;
-			
-	rhs = Problem.Field_rhs;
-	rho_i = Problem.Field_rho;
-	us = Problem.Field_us;
-	vs = Problem.Field_vs;
-	ws = Problem.Field_ws;
-	qs = Problem.Field_qs;
-	speed = Problem.Field_speed;
-	ainv = Problem.Field_ainv;
-			
-			
-	bt = Constants.bt;
-	c2 = Constants.c2;
-			
-	ncells = Problem.NCells;
-			
-}
 		
 					
 public void enterStage(int stage)			

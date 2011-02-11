@@ -17,13 +17,28 @@ public abstract class BaseIInitializeImpl<I, C>: Computation, BaseIInitialize<I,
 where I:IInstance_SP<C>
 where C:IClass
 {
+		
+protected int[,] cell_size, cell_low, cell_high, start, end, slice;		
+protected int ncells, IMAX, JMAX, KMAX, maxcells;		
+protected double[,,,,] u;		
+protected double dnzm1, dnym1, dnxm1; 
+		
 
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
 	get {
 		if (this.blocks == null)
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			cell_size = Blocks.cell_size;
+			cell_low = Blocks.cell_low;
+			cell_high = Blocks.cell_high;
+			start = Blocks.cell_start;
+			end = Blocks.cell_end;
+			slice = Blocks.cell_slice;
+		}
 		return this.blocks;
 	}
 }
@@ -33,7 +48,21 @@ private IProblemDefinition<I, C> problem = null;
 public IProblemDefinition<I, C> Problem {
 	get {
 		if (this.problem == null)
+		{
 			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
+					
+			ncells = Problem.NCells;
+			u = Problem.Field_u;
+						
+			dnzm1 = Constants.dnzm1;
+			dnym1 = Constants.dnym1;
+			dnxm1 = Constants.dnxm1;
+			
+			IMAX = Problem.IMAX;
+			JMAX = Problem.JMAX;
+			KMAX = Problem.KMAX;
+			maxcells = Problem.maxcells;
+		}	
 		return this.problem;
 	}
 }

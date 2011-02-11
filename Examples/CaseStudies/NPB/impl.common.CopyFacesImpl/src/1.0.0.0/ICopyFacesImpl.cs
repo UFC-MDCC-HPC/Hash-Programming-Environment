@@ -13,41 +13,20 @@ public class ICopyFacesImpl<I,C> : BaseICopyFacesImpl<I,C>, ICopyFaces<I,C>
 		where I:IInstance<C>
 		where C:IClass
 {
+	protected double[][] out_buffer = new double[6][];
+	protected double[][] in_buffer = new double[6][];
+		
+	protected int east_size;
+	protected int west_size;
+	protected int north_size;
+	protected int south_size;
+	protected int top_size;
+	protected int bottom_size;		
+	
 		
 	public ICopyFacesImpl() 
 	{
-		initialize();
     }
-		
-	private int ncells;
-
-	private int[,] cell_size;
-	private int[,] cell_coord;
-
-	private double[,,,,] u;
-
-    private double[][] out_buffer = new double[6][];
-    private double[][] in_buffer = new double[6][];
-		
-    private int east_size;
-    private int west_size;
-    private int north_size;
-    private int south_size;
-    private int top_size;
-    private int bottom_size;		
-		
-	public void initialize() 
-	{
-		ncells = Problem.NCells;
-		cell_size = Blocks.cell_size;
-		cell_coord = Blocks.cell_coord;		
-			
-		u = Problem.Field_u;
-			
-		compute_buffer_size(5);
-			
-		create_buffers();			
-	}
 		
 	private void compute_buffer_size(int dim) 
 	{
@@ -90,25 +69,37 @@ public class ICopyFacesImpl<I,C> : BaseICopyFacesImpl<I,C>, ICopyFaces<I,C>
         }		
 	}
 		
+ 	private bool buffers_ok = false;	
+		
 	private void create_buffers() 
 	{
-		out_buffer[0] = Output_buffer_x_east.Array = new double[east_size];	
-		out_buffer[1] = Output_buffer_x_west.Array = new double[west_size];	
-		out_buffer[2] = Output_buffer_y_north.Array = new double[north_size];	
-		out_buffer[3] = Output_buffer_y_south.Array = new double[south_size];	
-		out_buffer[4] = Output_buffer_z_top.Array = new double[top_size];	
-		out_buffer[5] = Output_buffer_z_bottom.Array = new double[bottom_size];	
-			
-		in_buffer[0] = Input_buffer_x_east.Array = new double[east_size];	
-		in_buffer[1] = Input_buffer_x_west.Array = new double[west_size];	
-		in_buffer[2] = Input_buffer_y_north.Array = new double[north_size];	
-		in_buffer[3] = Input_buffer_y_south.Array = new double[south_size];	
-		in_buffer[4] = Input_buffer_z_top.Array = new double[top_size];	
-		in_buffer[5] = Input_buffer_z_bottom.Array = new double[bottom_size];				
+		if (!buffers_ok) 
+		{
+			compute_buffer_size(5);
+				
+			out_buffer[0] = Output_buffer_x_east.Array = new double[east_size];	
+			out_buffer[1] = Output_buffer_x_west.Array = new double[west_size];	
+			out_buffer[2] = Output_buffer_y_north.Array = new double[north_size];	
+			out_buffer[3] = Output_buffer_y_south.Array = new double[south_size];	
+			out_buffer[4] = Output_buffer_z_top.Array = new double[top_size];	
+			out_buffer[5] = Output_buffer_z_bottom.Array = new double[bottom_size];	
+				
+			in_buffer[0] = Input_buffer_x_east.Array = new double[east_size];	
+			in_buffer[1] = Input_buffer_x_west.Array = new double[west_size];	
+			in_buffer[2] = Input_buffer_y_north.Array = new double[north_size];	
+			in_buffer[3] = Input_buffer_y_south.Array = new double[south_size];	
+			in_buffer[4] = Input_buffer_z_top.Array = new double[top_size];	
+			in_buffer[5] = Input_buffer_z_bottom.Array = new double[bottom_size];				
+				
+			buffers_ok = true;
+		} 
 	}
+
 		
 	public override void synchronize() {
 	  
+			
+			this.create_buffers();
 			
             int i, j, k, c, m, p0, p1, p2, p3, p4, p5, ksize, jsize, isize;
 

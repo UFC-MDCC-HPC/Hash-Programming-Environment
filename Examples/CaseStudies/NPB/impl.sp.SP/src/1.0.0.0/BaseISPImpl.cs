@@ -18,12 +18,21 @@ using common.data.LHSInit;
 using common.benchmarking.Timer;
 using sp.ADI;
 using sp.SP;
+using common.problem_size.Instance;
 
 namespace impl.sp.SP { 
 
 public abstract class BaseISPImpl<CLASS>: Application, BaseISP<CLASS>
 where CLASS:IClass
 {
+		
+public PROBLEM_CLASS problem_class;
+
+protected int ncells;
+protected int[,] cell_size;
+protected int[] grid_points;		
+protected int problem_size;
+		
 		
 private ITimer timer = null;
 
@@ -70,8 +79,12 @@ private IBlocks blocks = null;
 
 protected IBlocks Blocks {
 	get {
-		if (this.blocks == null)
+		if (this.blocks == null) 
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			cell_size = Blocks.cell_size;			
+		}
 		return this.blocks;
 	}
 }
@@ -112,7 +125,12 @@ private IInstance_SP<CLASS> instance = default(IInstance_SP<CLASS>);
 protected IInstance_SP<CLASS> Instance {
 	get {
 		if (instance==null) 
-			instance = (IInstance_SP<CLASS>) Services.getPort("instance");
+		{
+			this.instance = (IInstance_SP<CLASS>) Services.getPort("instance");
+					
+			problem_size = Instance.problem_size;			
+			problem_class = Instance.CLASS;								
+		}
 		return instance;
 	}
 }		
@@ -122,8 +140,13 @@ private IProblemDefinition<IInstance_SP<CLASS>, CLASS> problem = null;
 
 protected IProblemDefinition<IInstance_SP<CLASS>, CLASS> Problem {
 	get {
-		if (this.problem == null)
+		if (this.problem == null) 
+		{
 			this.problem = (IProblemDefinition<IInstance_SP<CLASS>, CLASS>) Services.getPort("problem_data");
+					
+			ncells = problem.NCells;			
+			grid_points = Problem.grid_points;			
+		}
 		return this.problem;
 	}
 }

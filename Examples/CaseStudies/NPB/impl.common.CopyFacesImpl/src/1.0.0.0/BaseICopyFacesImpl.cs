@@ -20,7 +20,15 @@ public abstract class BaseICopyFacesImpl<I,C>: Synchronizer, BaseICopyFaces<I,C>
 		where I:IInstance<C>
 		where C:IClass
 {
+		
+protected int ncells;
 
+protected int[,] cell_size;
+protected int[,] cell_coord;
+
+protected double[,,,,] u;
+			
+		
 private ICell y = null;
 
 public ICell Y {
@@ -56,7 +64,13 @@ private IBlocks blocks = null;
 public IBlocks Blocks {
 	get {
 		if (this.blocks == null)
+		{					
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			cell_size = Blocks.cell_size;
+			cell_coord = Blocks.cell_coord;		
+					
+		}
 		return this.blocks;
 	}
 }
@@ -190,7 +204,12 @@ private IProblemDefinition<I,C> problem = null;
 public IProblemDefinition<I,C> Problem {
 	get {
 		if (this.problem == null)
+		{
 			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
+					
+			ncells = Problem.NCells;
+			u = Problem.Field_u;
+		}
 		return this.problem;
 	}
 }
@@ -222,7 +241,9 @@ public BaseICopyFacesImpl() {
 
 abstract public void synchronize(); 
 
+	
 
 }
 
+	
 }

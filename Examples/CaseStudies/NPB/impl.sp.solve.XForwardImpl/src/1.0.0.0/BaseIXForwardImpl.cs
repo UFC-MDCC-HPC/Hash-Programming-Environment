@@ -22,13 +22,23 @@ where C:IClass
 where MTH:IBeamWarmingMethod
 where DIR:IX
 {
-
+		
+protected int[,] start, end, slice, cell_size;
+protected double[,,,,] lhs, rhs;
+		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
 	get {
 		if (this.blocks == null)
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			start = Blocks.cell_start;
+			end = Blocks.cell_end;
+			slice = Blocks.cell_slice;
+			cell_size = Blocks.cell_size;					
+	    }
 		return this.blocks;
 	}
 }
@@ -38,7 +48,12 @@ private IProblemDefinition<I, C> problem = null;
 public IProblemDefinition<I, C> Problem {
 	get {
 		if (this.problem == null)
+		{
 			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
+					
+			lhs = Problem.Field_lhs;
+			rhs = Problem.Field_rhs;					
+		}
 		return this.problem;
 	}
 }

@@ -30,13 +30,24 @@ where C:IClass
 where MTH:IBeamWarmingMethod
 where DIR:IX
 {
-
+		
+protected int[,] start, end, slice, cell_size;
+protected double[,,,,] lhs, rhs;
+protected int ncells;
+		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
 	get {
 		if (this.blocks == null)
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			start = Blocks.cell_start;
+			end = Blocks.cell_end;
+			slice = Blocks.cell_slice;
+			cell_size = Blocks.cell_size;
+		}
 		return this.blocks;
 	}
 }
@@ -56,7 +67,13 @@ private IProblemDefinition<I, C> problem = null;
 public IProblemDefinition<I, C> Problem {
 	get {
 		if (this.problem == null)
+		{
 			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
+					
+			ncells = Problem.NCells;
+			lhs = Problem.Field_lhs;
+			rhs = Problem.Field_rhs;
+		}
 		return this.problem;
 	}
 }
@@ -111,13 +128,13 @@ protected IShift<ILeftToRight> Shift {
 	}
 }
 
-private ILHS<I, C, DIR, MTH> lhs = null;
+private ILHS<I, C, DIR, MTH> lhs_ = null;
 
 protected ILHS<I, C, DIR, MTH> Lhs {
 	get {
-		if (this.lhs == null)
-			this.lhs = (ILHS<I, C, DIR, MTH>) Services.getPort("lhs");
-		return this.lhs;
+		if (this.lhs_ == null)
+			this.lhs_ = (ILHS<I, C, DIR, MTH>) Services.getPort("lhs");
+		return this.lhs_;
 	}
 }
 

@@ -16,31 +16,9 @@ public class IRHSNormImpl<I,C> : BaseIRHSNormImpl<I,C>, IRHSNorm<I,C>
 
 	public IRHSNormImpl() 
 	{ 
-			initialize();
-	} 
-		
-    private int[,] cell_size, start, end;		
-	private int ncells;
-	private double[,,,,] rhs;
-	private int[] grid_points;
-	private Intracommunicator comm_setup;
-		
-	public void initialize() 
-	{
-		cell_size = Blocks.cell_size;
-        start = Blocks.cell_start;
-		end = Blocks.cell_end;
-			
-		ncells = Problem.NCells;
-		rhs = Problem.Field_rhs;
-			
 		rms = new double[5];
+	} 
 			
-		grid_points = Problem.grid_points;
-			
-		comm_setup = Mpi.localComm(this);
-	}
-	
 	private double[] rms; 
 		
 	public double[] xcr { get { return rms; } }

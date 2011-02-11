@@ -16,12 +16,15 @@ where I:IInstance_SP<C>
 where C:IClass
 {
 		
+		
 private I instance = default(I);
 
 protected I Instance {
 	get {
 		if (instance==null) 
+		{
 			instance = (I) Services.getPort("instance");
+        }
 		return instance;
 	}
 }		

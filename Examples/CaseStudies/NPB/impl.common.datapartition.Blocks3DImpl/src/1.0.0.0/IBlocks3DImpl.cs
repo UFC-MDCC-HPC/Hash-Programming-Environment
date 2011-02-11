@@ -13,8 +13,8 @@ where I:IInstance_SP<C>
 where C:IClass
 {
 
-public IBlocks3DImpl() { 
-	make_set();	
+public IBlocks3DImpl() 
+{ 
 } 
 		
 protected int[] grid_points ;

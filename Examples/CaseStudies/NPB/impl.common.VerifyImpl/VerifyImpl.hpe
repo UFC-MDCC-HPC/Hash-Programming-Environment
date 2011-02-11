@@ -108,12 +108,12 @@
         <originRef cRef="instance" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="236" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@196b5f9" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@9498a3" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@184f774" repeat="0" sliceRef="rhs_norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b0fedc" repeat="0" sliceRef="rhs_norm">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@920039" repeat="0" sliceRef="error_norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12c4b84" repeat="0" sliceRef="error_norm">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
@@ -139,11 +139,11 @@
       <visualDescription h="40" w="80" x="140" y="95">
         <color b="255" g="0" r="128"/>
       </visualDescription>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="92" y="5"/>
-        <slice pRef="mpi" sRef="rhs_norm"/>
-        <slice pRef="mpi" sRef="error_norm"/>
-        <slice pRef="mpi" sRef="copy_faces"/>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="rhs_norm"/>
+        <slice pRef="blocks" sRef="error_norm"/>
+        <slice pRef="blocks" sRef="copy_faces"/>
       </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="107" y="40"/>
@@ -151,11 +151,11 @@
         <slice pRef="problem" sRef="error_norm"/>
         <slice pRef="problem" sRef="copy_faces"/>
       </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="rhs_norm"/>
-        <slice pRef="blocks" sRef="error_norm"/>
-        <slice pRef="blocks" sRef="copy_faces"/>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="92" y="5"/>
+        <slice pRef="mpi" sRef="rhs_norm"/>
+        <slice pRef="mpi" sRef="error_norm"/>
+        <slice pRef="mpi" sRef="copy_faces"/>
       </port>
       <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>

@@ -15,8 +15,8 @@ where C:IClass
 		
 	public IProblemDefinitionImpl()
 	{
-		initialize_problem_data();
-		set_constants(0);
+		
+		
 	}
 		
 	protected int _IMAX_ = 0, _JMAX_ = 0, _KMAX_ = 0, _MAX_CELL_DIM_ = 0, BUF_SIZE = 0, IMAXP, JMAXP,
@@ -73,7 +73,8 @@ where C:IClass
 		Ainv.initialize_field("ainv", maxcells, KMAX+3, JMAX+3, IMAX+3);
 		Rho.initialize_field("rho", maxcells, KMAX+3, JMAX+3, IMAX+3);
 		Speed.initialize_field("speed", maxcells, KMAX+3, JMAX+3, IMAX+3);
-		Square.initialize_field("square", maxcells, KMAX+3, JMAX+3, IMAX+3);			
+		Square.initialize_field("square", maxcells, KMAX+3, JMAX+3, IMAX+3);	
+			
 	}
 		
 	private void setProblemClass() 

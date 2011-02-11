@@ -294,12 +294,6 @@
       <pRef>y</pRef>
     </fusion>
     <fusion>
-      <cRefs>timer</cRefs>
-      <cRefs>verify</cRefs>
-      <cRefs>adi</cRefs>
-      <pRef>mpi</pRef>
-    </fusion>
-    <fusion>
       <cRefs>data_partition</cRefs>
       <cRefs>exact_rhs</cRefs>
       <cRefs>lhsinit</cRefs>
@@ -313,6 +307,12 @@
       <cRefs>verify</cRefs>
       <cRefs>adi</cRefs>
       <pRef>z</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>timer</cRefs>
+      <cRefs>verify</cRefs>
+      <cRefs>adi</cRefs>
+      <pRef>mpi</pRef>
     </fusion>
     <fusion>
       <cRefs>data_partition</cRefs>
@@ -361,30 +361,30 @@
         <originRef cRef="timer" iRef="ITimer"/>
         <visualDescription h="10" w="10" x="45" y="29"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@6e128a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@16ea70b" repeat="0">
         <visualDescription h="450" w="370" x="115" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@834833" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@198c3e9" repeat="0">
           <visualDescription h="350" w="290" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@f90c88" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@65f9e4" repeat="0">
             <visualDescription h="250" w="210" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a5cac2" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@f907bd" repeat="0">
               <visualDescription h="150" w="130" x="70" y="50"/>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@a2a9c3" repeat="0" sliceRef="adi">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16b161a" repeat="0" sliceRef="adi">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13772c5" repeat="0" sliceRef="verify">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17807bd" repeat="0" sliceRef="verify">
                 <visualDescription h="50" w="50" x="70" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@150103e" repeat="0" sliceRef="initialize">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14426c4" repeat="0" sliceRef="initialize">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@15a94aa" repeat="0" sliceRef="lhsinit">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14d4b08" repeat="0" sliceRef="lhsinit">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d6621d" repeat="0" sliceRef="exact_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1790838" repeat="0" sliceRef="exact_rhs">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -405,6 +405,14 @@
       <visualDescription h="138" w="139" x="477" y="58">
         <color b="255" g="255" r="128"/>
       </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="2" y="66"/>
+        <slice pRef="problem" sRef="adi"/>
+        <slice pRef="problem" sRef="verify"/>
+        <slice pRef="problem" sRef="initialize"/>
+        <slice pRef="problem" sRef="lhsinit"/>
+        <slice pRef="problem" sRef="exact_rhs"/>
+      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="110" y="37"/>
         <slice pRef="blocks" sRef="adi"/>
@@ -414,13 +422,11 @@
         <slice pRef="blocks" sRef="exact_rhs"/>
         <slice pRef="blocks" sRef="process"/>
       </port>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="2" y="66"/>
-        <slice pRef="problem" sRef="adi"/>
-        <slice pRef="problem" sRef="verify"/>
-        <slice pRef="problem" sRef="initialize"/>
-        <slice pRef="problem" sRef="lhsinit"/>
-        <slice pRef="problem" sRef="exact_rhs"/>
+      <port name="y">
+        <visualDescription h="10" w="10" x="102" y="77"/>
+        <slice pRef="cell" sRef="adi"/>
+        <slice pRef="y" sRef="verify"/>
+        <slice pRef="y" sRef="process"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="62" y="122"/>
@@ -433,12 +439,6 @@
         <slice pRef="x" sRef="adi"/>
         <slice pRef="x" sRef="verify"/>
         <slice pRef="x" sRef="process"/>
-      </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="102" y="77"/>
-        <slice pRef="cell" sRef="adi"/>
-        <slice pRef="y" sRef="verify"/>
-        <slice pRef="y" sRef="process"/>
       </port>
       <port name="z">
         <visualDescription h="10" w="10" x="83" y="105"/>

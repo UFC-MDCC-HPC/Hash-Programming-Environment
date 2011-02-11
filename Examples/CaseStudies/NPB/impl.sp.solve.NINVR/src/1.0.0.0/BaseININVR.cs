@@ -21,13 +21,26 @@ public abstract class BaseININVR<I,C,DIR,MTH>: Computation, BaseIBlockDiagonalMa
 	where DIR:IAxis
 	where MTH:IMethod
 {
-
+		
+protected int[,] start, end, cell_size, slice;
+protected double[,,,,] rhs;
+protected double bt;
+		
+		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
 	get {
-		if (this.blocks == null)
+		if (this.blocks == null) 
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			start = blocks.cell_start;
+			end = blocks.cell_end;
+			cell_size = blocks.cell_size;
+			slice = blocks.cell_slice;
+			
+		}
 		return this.blocks;
 	}
 }
@@ -37,7 +50,12 @@ private IProblemDefinition<I,C> problem = null;
 public IProblemDefinition<I,C> Problem {
 	get {
 		if (this.problem == null)
+		{
 			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
+					
+			bt = Constants.bt;					
+			rhs = problem.Field_rhs;
+		}
 		return this.problem;
 	}
 }

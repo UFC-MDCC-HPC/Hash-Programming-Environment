@@ -17,36 +17,24 @@ namespace impl.sp.SP {
         public int bid = -1;
 		public static int t_total = 1;
     	public static String BMName = "SP";
-		public PROBLEM_CLASS problem_class;
 		
 		protected bool active;
 		protected int node, no_nodes, total_nodes, root ,maxcells;
 	    protected Intracommunicator worldcomm, comm_setup, comm_solve, comm_rhs = null;
 		
-		private int ncells;
-		private int[,] cell_size;
-		private int[] grid_points;
-		
-		private int problem_size;
 		
 		public BMResults results;
 		
 		public ISPImpl() 
-	    { 				
-			setup_mpi();
+	    { 			
 			
-			ncells = Problem.NCells;
-			
-			cell_size = Blocks.cell_size;			
-			grid_points = Problem.grid_points;			
-			problem_size = Instance.problem_size;
-			
-			problem_class = Instance.CLASS;			
 		} 
 		
 		private void runBenchmark()
 		{
-		    if (!active)
+			setup_mpi();
+
+			if (!active)
 		    {
 		        Console.WriteLine("not active !");
 		        System.Environment.Exit(0);
@@ -59,6 +47,7 @@ namespace impl.sp.SP {
 		
 		    }
 		
+			Process.make_set();
 				    		
 		    for (int c = 0; c < ncells; c++)
 		    {
@@ -71,8 +60,8 @@ namespace impl.sp.SP {
 		        }
 		    }
 		
-			
-		    Constants.set_constants(0, grid_points);
+			Problem.initialize_problem_data();
+			Problem.set_constants(0);
 			
 			Initialize.compute();
 			Lhsinit.compute();

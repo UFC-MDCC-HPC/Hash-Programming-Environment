@@ -20,13 +20,53 @@ public abstract class BaseIXLHSImpl<I,C,DIR,MTH>: Computation, BaseILHS<I,C,DIR,
 	where DIR:IX
 	where MTH:IBeamWarmingMethod
 {
-
+		
+protected int[,] start, end, cell_size, slice;
+protected double[,,,,] lhs, rho_i, speed, us;
+protected double c3c4, dttx2, c2dttx1, dttx1, con43, dx5, dx1,
+               comz5, comz4, comz1, comz6, dx2, c1c5, dxmax;
+protected int MAX_CELL_DIM;
+protected double[] cv, rhon;
+		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
 	get {
 		if (this.blocks == null)
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+					
+			start = Blocks.cell_start;
+			end = Blocks.cell_end;
+			cell_size = Blocks.cell_size;
+			slice = Blocks.cell_slice;
+					
+			MAX_CELL_DIM = Problem.MAX_CELL_DIM;
+			
+			lhs = Problem.Field_lhs;
+			rho_i = Problem.Field_rho;
+			speed = Problem.Field_speed;
+			us = Problem.Field_us;
+					
+			c3c4 = Constants.c3c4;
+			dttx2 = Constants.dttx2;
+			c2dttx1 = Constants.c2dttx1;
+			dttx1 = Constants.dttx1;
+			con43 = Constants.con43;
+			dx5 = Constants.dx5;
+			dx1 = Constants.dx1;
+			comz4 = Constants.comz4;
+			comz1 = Constants.comz1;
+			comz6 = Constants.comz6;
+			comz5 = Constants.comz5;
+			dx2 = Constants.dx2;
+			c1c5 = Constants.c1c5;
+			dxmax = Constants.dxmax;
+					
+		    cv = new double[MAX_CELL_DIM + 4];     /* -2 */   // lhsx, lhsy, lhsz (def/use)
+		    rhon = new double[MAX_CELL_DIM + 4];   /* -2 */   // lhsx (local)
+					
+		}
 		return this.blocks;
 	}
 }
