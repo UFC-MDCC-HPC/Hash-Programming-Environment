@@ -5,7 +5,7 @@
       <extensionType>
         <extends>true</extends>
       </extensionType>
-      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000055a71b2117f2c6f4934d8e3487ee297c1b4ace50a877c67f5ce70004bd91aa80017bc282e087924d9ed54242ab9f6a9ac7e6b56617c2c70de75f860a27344846987653cdc0df5921bf5cf2798377370875884abb2e72d8d5736137facb16f0894343b6fbfeea4f7dd326db99bc886f1cff9ce05dbf2dc28be062e0efac0cf485" localRef="base" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" version="1.0.0.0">
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="base" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" version="1.0.0.0">
         <visualDescription h="30" w="50" x="430" y="264">
           <color b="255" g="255" r="255"/>
         </visualDescription>
@@ -22,10 +22,10 @@
   <componentInfo>
     <interface iRef="IClass_C" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using commom.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Class_C { &#xA;&#xA;public interface BaseIClass_C : BaseIClass, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIClass_C.cs" srcType="base" uri="common.problem_size.Class_C/bin/1.0.0.0/BaseIClass_C.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Class_C { &#xA;&#xA;public interface BaseIClass_C : BaseIClass, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIClass_C.cs" srcType="base" uri="common.problem_size.Class_C/bin/1.0.0.0/BaseIClass_C.dll" versionId="1.0.0.0">
           <dependency>commom.problem_size.Class/bin/1.0.0.0/BaseIClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using commom.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Class_C { &#xA;&#xA;public interface IClass_C : BaseIClass_C, IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IClass_C.cs" srcType="user" uri="common.problem_size.Class_C/bin/1.0.0.0/IClass_C.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.problem_size.Class_C { &#xA;&#xA;public interface IClass_C : BaseIClass_C, IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IClass_C.cs" srcType="user" uri="common.problem_size.Class_C/bin/1.0.0.0/IClass_C.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.problem_size.Class_C/bin/1.0.0.0/BaseIClass_C.dll</dependency>
           <dependency>commom.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>

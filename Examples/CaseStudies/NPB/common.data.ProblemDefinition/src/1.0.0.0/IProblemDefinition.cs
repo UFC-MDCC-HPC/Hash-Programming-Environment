@@ -206,7 +206,8 @@ where C:IClass
   int KMAX { get; set; }	
   int[] grid_points { get; }
 				
-		
+  void initialize_problem_data();
+  void set_constants(int ndid);
 		
   // void exact_solution(double xi, double eta, double zeta, double[] dtemp, int offset); // auxiliar ...
 
