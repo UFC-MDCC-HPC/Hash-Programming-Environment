@@ -125,7 +125,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 
 	   class DeltaPrinter implements IResourceDeltaVisitor {
 		      public boolean visit(IResourceDelta delta) {
-		         IResource res = delta.getResource();
+		       /*  IResource res = delta.getResource();
 		         
                  IPath fileName = res.getLocation();
                  String ext = fileName.getFileExtension(); 
@@ -146,7 +146,7 @@ public class HPEPlugin extends AbstractUIPlugin {
 		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()},null);
 		               }
 		               break;
-		         }
+		         } */
 		         return true; // visit the children
 		      }
 		   }

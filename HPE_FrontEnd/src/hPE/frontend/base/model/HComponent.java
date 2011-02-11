@@ -2504,7 +2504,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public void supplyParameter(String varName, HComponent model) {
 		
 		if (!model.isParameter()) {
-			model.setVariableName(varName);		
+			
+			model.setVariableName(varName);
+						
 			if (!model.isConnected()) {
 			   model.setHiddenInnerComponent(true);
 			}
@@ -2535,7 +2537,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				    	String varName_ = c_.getVariableName();
 				    	if (varName_.equals(varName)) {
 				    		c_.setSupplier(model);
-				    		c.setSupplied(model, varName_);
+				    		c.setSupplied(model, varName_);				    		
+				    		String parId = c_.getParameterIdentifier();
+				    		String s = c.getLocalLocation();
+							if (!model.parameterIdentifier.containsKey(s))
+								model.parameterIdentifier.put(s, parId);
 				    	}
 			    	}
 		    	}

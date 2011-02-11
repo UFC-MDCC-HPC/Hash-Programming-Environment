@@ -177,6 +177,7 @@ public class hPEEditor extends GraphicalEditorWithPalette {
 				}
 				
 				BrowseAndRunBackEndDialog.changeWindowName();
+				BrowseAndRunBackEndDialog.setCurrentEditor(currentEditor);
 			}
 
 			@Override

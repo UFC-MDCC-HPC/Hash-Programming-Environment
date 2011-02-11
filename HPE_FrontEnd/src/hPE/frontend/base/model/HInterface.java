@@ -205,39 +205,45 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 			HInterface is_supplier = null;
 			List<IHPrimUnit> uList = is.getCompliantUnits();
 			HComponent c = (HComponent) uList.get(0).getConfiguration();
+			HComponent old_c = c;
+			
+			  if (c.isParameter() && c.getSupplier() != null) { 
+					Map<String, HComponent> pars = cThis.getParametersByDefinedVarNames(); 
+					String varName = c.getVariableName(); 
+					HComponent c_supplier = (HComponent) c.getSupplier(); 
+					is_supplier = c_supplier.getInterfaceByName(is.getPrimName()); 
+					c = c_supplier;
+					is_supplier = is_supplier == null ? is : is_supplier;
 
-			/*
-			 * if (c.isParameter() && c.getSupplier() != null) { Map<String,
-			 * HComponent> pars = cThis.getParametersByDefinedVarNames(); String
-			 * varName = c.getVariableName(); HComponent c_supplier =
-			 * (HComponent) c.getSupplier(); is_supplier =
-			 * c_supplier.getInterfaceByName(is.getPrimName()); c = c_supplier;
-			 * } else
-			 */if (c.isParameter()) {
-				HComponent cTop = (HComponent) cThis.getTopConfiguration();
-				Map<String, HComponent> pars = cThis
-						.getParametersByDefinedVarNames();
-				String varName = c.getVariableName(cThis);
-				if (pars.containsKey(varName)) {
-					HComponent c_parameter = pars.get(varName);
-					is_supplier = c_parameter.getInterfaceByName(is
-							.getPrimName());
-					c = c_parameter;
-				}
+					// if (c.isParameter()) {
+					//String varName = old_c.getVariableName(cThis);
+					String parId = c.getParameterIdentifier(cThis.isAbstract() ? cThis : cThis.getWhoItImplements());
+					if (!parId.equals("type ?"))
+						parameters.add(new Triple<String, HInterface, String>(varName,is_supplier, parId));
+					// }
+			  } else if (c.isParameter()) {
+					HComponent cTop = (HComponent) cThis.getTopConfiguration();
+					Map<String, HComponent> pars = cThis.getParametersByDefinedVarNames();
+					String varName = c.getVariableName(cThis);
+					if (pars.containsKey(varName)) {
+						HComponent c_parameter = pars.get(varName);
+						is_supplier = c_parameter.getInterfaceByName(is.getPrimName());
+						c = c_parameter;
+					}
+					is_supplier = is_supplier == null ? is : is_supplier;
+	
+					// if (c.isParameter()) {
+					//String varName = old_c.getVariableName(cThis);
+					String parId = c.getParameterIdentifier(cThis.isAbstract() ? cThis : cThis.getWhoItImplements());
+					if (!parId.equals("type ?"))
+						parameters.add(new Triple<String, HInterface, String>(varName,is_supplier, parId));
+					// }
+			} else {
+				is_supplier = is_supplier == null ? is : is_supplier;
 			}
 
-			is_supplier = is_supplier == null ? is : is_supplier;
 
-			// if (c.isParameter()) {
-			String varName = c.getVariableName(cThis);
-			String parId = c.getParameterIdentifier(cThis);
-			if (!parId.equals("type ?"))
-				parameters.add(new Triple<String, HInterface, String>(varName,
-					is_supplier, parId));
-			// }
-
-			List<Triple<String, HInterface, String>> slice_parameters = is_supplier
-					.getParameters(cThis);
+			List<Triple<String, HInterface, String>> slice_parameters = is_supplier.getParameters(cThis);
 			for (Triple<String, HInterface, String> spar : slice_parameters) {
 				String sVarName = spar.fst();
 				HInterface sis = spar.snd();
@@ -295,10 +301,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 		List<String> vs = new ArrayList<String>();
 
-		HComponent topC = (HComponent) ((HComponent) this.getConfiguration())
-				.getTopConfiguration();
-		List<Triple<String, HInterface, String>> parameters = this
-				.getParameters(topC);
+		HComponent topC = (HComponent) ((HComponent) this.getConfiguration()).getTopConfiguration();
+		List<Triple<String, HInterface, String>> parameters = this.getParameters(topC);
 
 		for (Triple<String, HInterface, String> triple : parameters) {
 			String varName = triple.fst();
@@ -390,18 +394,13 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	private String getNonAbstractName(boolean showSuperType,
 			boolean showBounds, int depth, boolean base) {
-		String name = base && !this.baseName.isEmpty() ? this.baseName.get(0)
-				: this.getPrimName();
+		String name = base && !this.baseName.isEmpty() ? this.baseName.get(0): this.getPrimName();
 		if (this.isAbstract() || base) {
 			return name
-					+ this.getParameterModifierName(showSuperType, showBounds,
-							depth)
-					+ (showSuperType && this.hasSuperType() ? ": "
-							+ this.getInheritedName() : "");
+					+ this.getParameterModifierName(showSuperType, showBounds, depth)
+					+ (showSuperType && this.hasSuperType() ? ": " + this.getInheritedName() : "");
 		} else {
-			return name
-					+ (showSuperType && this.hasSuperType() ? ": "
-							+ this.getInheritedName() : "");
+			return name	+ (showSuperType && this.hasSuperType() ? ": " + this.getInheritedName() : "");
 		}
 
 		// String name = base ? this.baseName : this.getPrimName();

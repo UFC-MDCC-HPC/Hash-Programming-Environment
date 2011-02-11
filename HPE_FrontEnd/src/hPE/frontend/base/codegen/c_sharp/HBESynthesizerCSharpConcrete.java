@@ -126,7 +126,9 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         
         HComponent topC = (HComponent) i.getConfiguration().getTopConfiguration();
         
-        for (Triple<String,HInterface,String> p : i.getParameters(topC)) {
+        List<Triple<String,HInterface,String>> pars = i.getParameters(topC);
+        
+        for (Triple<String,HInterface,String> p : pars) {
 			String varName = p.fst(); 
  			if (!varContext.contains(varName)) {
 	 			HInterface i1 = p.snd();
@@ -383,12 +385,14 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 			    boolean isPublic = ((portOfTheSlice != null && !portOfTheSlice.isPrivate()) /*|| (portOfTheSlice == null && slice.isPublic())*/) /*|| !(slice instanceof HActivateInterfaceSlice)*/;
 		        
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
+			    String id_inner = slice.getPortName();
+			    
                 //if (isPublic) {
 				    sourceCode += (isPublic ? "public " : "protected ") + typeName + " " + firstUpper(sliceName) + " {\n";
 				    sourceCode += tabs(1) + "get {\n";
 				    				    
 				    sourceCode += tabs(2) + "if (this." + sliceName + " == null)\n";
-				    sourceCode += tabs(3) + "this." + sliceName + " = (" + typeName + ") Services.getPort(" + /*TODO: id_inner*/  ");\n";  ; // value;\n";
+					sourceCode += tabs(3) + "this." + sliceName + " = (" + typeName + ") Services.getPort(\"" + id_inner +  "\");\n";  ; // value;\n";
 				    sourceCode += tabs(2) + "return this." + sliceName + ";\n";
 				    /*if (tt.containsKey(sliceName)) {
 					    for (HInterfaceSlice ss : i.getSortedSlices(tt.get(sliceName))) {
@@ -424,16 +428,18 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		sourceCode += "\n"; // end declaration of inner slices
 		
 		
-        sourceCode += "public Base" + procName.split("<")[0] + "() { \n"; // begin constructor signature
+        /* sourceCode += "public Base" + procName.split("<")[0] + "() { \n"; // begin constructor signature
 			
         if (this.getIsSubclass()) {
         	sourceCode += tabs(1) + "super();\n";
-        }
+        }        
         
         sourceCode += "\n} \n\n"; // end constructor body;
+        */
         
-        HComponent c = (HComponent)i.getConfiguration();
+        /* HComponent c = (HComponent)i.getConfiguration();
 
+        
         sourceCode += "public static string UID = \"" + c.getHashComponentUID() + "\";\n\n";
         sourceCode += "override public void createSlices() {\n"; // begin constructor signature
         sourceCode += tabs(1) + "base.createSlices();\n";        
@@ -442,55 +448,11 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         
 		for (List<HInterfaceSlice> ss_: theSlices.values()) {
 			ss0.addAll(ss_);
-		}
-        
-		/*
-    	List<HInterfaceSlice> ss = i.getSortedSlices(ss0);	
-    	
-	    for (HInterfaceSlice slice: ss) {
-	    	HPort portOfTheSlice = slice.getMyPort();
-	    	if (portOfTheSlice == null || (portOfTheSlice != null && portOfTheSlice.isPrivate()) || slice instanceof HActivateInterfaceSlice) {
-		    	HInterface iSlice = (HInterface)slice.getInterface();
-		    	
-		    	String sliceName = slice.getName();			    
-		    	String unit_id = iSlice.getCompliantUnits().get(0).getConfiguration().getRef();
-
-		    	// TODO: ESTÁ ERRADO !! VERIFICAR PARA IRootImpl 
-		    	//String unit_slice_id = iSlice.getCompliantUnits().get(0).getSupersededName();// slice.getName();		
-		    	String unit_slice_id = iSlice.getCompliantUnits().get(0).getName2();// slice.getName();		
-		    	
-		    	HComponent sc =((HComponent)slice.getConfiguration()); 
-		    	String typeName = iSlice.isParameter() ? sc.getVariableName(c).split("@")[0] :  ((HInterface)slice.getInterface()).getName2(false, varContext, null);
-	    		
-		    	List<String> varContext_ = new ArrayList<String>();
-	    		varContext_.addAll(varContext);
-	    		String typeName2 = ((HInterface)slice.getInterface()).getName2(false, varContext_, null);		    		
-	    		String typeName2_ = isParameter(typeName2,varContext_);
-	    		while (typeName2_ != null) {
-		    		varContext_.remove(typeName2_);
-		    		typeName2 = ((HInterface)slice.getInterface()).getName2(false, varContext_, null);		    		
-		    		typeName2_ = isParameter(typeName2,varContext_);
-		    	} 
-		    	
-		    	String[] params = extractParameters(typeName2);
-		    	
-		    	String paramsStr = "";
-		    	for (int counter = 0; counter < params.length - 1; counter++) {
-		    		paramsStr += "typeof(" + params[counter] + "),";
-		    	}
-		    	if (params.length > 0)
-		    		paramsStr += "typeof(" + params[params.length - 1].trim() + ")";
-		    	
-		    	String typeParams = "new Type[] {" + paramsStr + "}";
-		    	
-		    	String cast = "(" + typeName + ")";
-		    	sourceCode += tabs(1) + "this." + firstUpper(sliceName) + " = " + cast + " BackEnd.createSlice(this, UID,\"" + unit_id + "\",\"" + unit_slice_id + ");\n";
-	    	} 
-	    }
-	    */			
+		}        
         
                 
         sourceCode += "} \n\n"; // end createSlices body;
+        */
 
         for (String methodCode : this.getBaseDeclarations()) {
         	sourceCode += methodCode;

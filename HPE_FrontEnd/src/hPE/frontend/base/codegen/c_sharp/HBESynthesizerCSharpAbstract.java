@@ -249,11 +249,11 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 	 					  paramBoundsName.add(oneBound.getPrimName());
 	 					  paramBounds.add(oneBound);
 	 				  }
-	 			  // }
+	 			  }
 	 				
 	 			  interface_bounds.add(new Pair<String, HInterface>(varName, bound));   
 	               // programTextVarBounds += "where " + varName + ":" + bound.getName2(false,varContext, null) + "\n";
-	 			}
+	 			
 	 			varContext.add(varName);
  			}
  		} 

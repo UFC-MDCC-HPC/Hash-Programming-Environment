@@ -16,10 +16,10 @@ import hPE.HPEPlugin;
 public class ExposedAction extends SelectionAction {
 
 	private static final String
-		EXPOSED_REQUEST = "Exposed Yes/No";  //$NON-NLS-1$
+		EXPOSED_REQUEST = "Public/Private";  //$NON-NLS-1$
 	
 	public static final String
-	    EXPOSED = "Exposed Yes/No";   //$NON-NLS-1$
+	    EXPOSED = "Public/Private";   //$NON-NLS-1$
 	
 	Request request;
 	

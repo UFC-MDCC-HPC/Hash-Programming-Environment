@@ -1,5 +1,6 @@
 package hPE.frontend.base.dialogs;
 
+import hPE.HPEVersionEditor;
 import hPE.hPEEditor;
 import hPE.frontend.BackEndLocationList;
 import hPE.frontend.HPEKinds;
@@ -45,6 +46,8 @@ import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.xml.rpc.ServiceException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener {
 
@@ -1202,6 +1205,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 
 	private static BrowseAndRunBackEndDialog instance = null; 
 	
+	private static HPEVersionEditor currentEditor = null;
 	
     public static void changeWindowName() {
     	BrowseAndRunBackEndDialog instance = getInstance();
@@ -1214,6 +1218,14 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
     		}
     	} 
     }
+
+	public static void setCurrentEditor(HPEVersionEditor _currentEditor) {
+		currentEditor = _currentEditor;
+	}
+
+	public static HPEVersionEditor getCurrentEditor() {
+		return currentEditor;
+	}
 
 	
 }  //  @jve:decl-index=0:visual-constraint="149,-11"

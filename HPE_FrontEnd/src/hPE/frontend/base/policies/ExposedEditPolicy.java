@@ -1,5 +1,6 @@
 package hPE.frontend.base.policies;
 
+import hPE.frontend.base.actions.ExposedAction;
 import hPE.frontend.base.commands.ExposedCommand;
 import hPE.frontend.base.model.HComponent;
 
@@ -15,7 +16,7 @@ public class ExposedEditPolicy extends ComponentEditPolicy {
 	}
 	
 private static final String
-      EXPOSED_REQUEST = "Exposed Yes/No";  //$NON-NLS-1$
+      EXPOSED_REQUEST = ExposedAction.EXPOSED;  //$NON-NLS-1$
 
 public Command getCommand(Request request) {
 	

@@ -4,6 +4,7 @@ import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.edits.ConfigurationEditPart;
 import hPE.frontend.base.model.HComponent;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
@@ -43,6 +44,9 @@ public DeployCommand(ConfigurationEditPart part){
 public void execute(){
 	
 	BrowseAndRunBackEndDialog dialog = BrowseAndRunBackEndDialog.getInstance();
+	
+	IProgressMonitor monitor = null;
+	BrowseAndRunBackEndDialog.getCurrentEditor().doSave(monitor);
 	
 	dialog.setAlwaysOnTop(true);
 	dialog.setVisible(true);

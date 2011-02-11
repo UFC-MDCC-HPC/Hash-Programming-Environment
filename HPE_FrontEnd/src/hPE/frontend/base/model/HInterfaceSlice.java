@@ -103,7 +103,7 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		this.setBounds(r);
 	}
 
-	private List compliantUnitSlices = new ArrayList();
+	private List<HUnitSlice> compliantUnitSlices = new ArrayList<HUnitSlice>();
 	
     public void addCompliantUnitSlice(HUnitSlice unit) {
 	   	if (!compliantUnitSlices.contains(unit)) compliantUnitSlices.add(unit);
@@ -113,7 +113,7 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 	  	compliantUnitSlices.remove(unit);
 	}
 	    
-	public List getCompliantUnitSlices () {
+	public List<HUnitSlice> getCompliantUnitSlices () {
 	   	return this.compliantUnitSlices;
 	}	
 	
@@ -329,6 +329,14 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		}
 		
 		return false;
+	}
+
+	public String getPortName() {
+		
+		HUnitSlice unit_slice = this.getCompliantUnitSlices().get(0);
+		IHUnit unit = (IHUnit) unit_slice.getComponentEntry();
+		HComponent c = (HComponent) unit.getConfiguration();
+		return c.getRef();
 	}
 
 		
