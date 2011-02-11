@@ -15,25 +15,8 @@ namespace impl.common.AddImpl {
 	
 		public IAddImpl() 
 		{ 
-			initialize();
 		} 
 		
-		private int ncells;
-		private double[,,,,] u;
-		private double[,,,,] rhs;
-		private int[,] start;
-		private int[,] end;
-		private int[,] cell_size;
-		
-		public void initialize() 
-		{  	
-		    ncells = Problem.NCells;			
-			u = Problem.Field_u;
-			rhs = Problem.Field_rhs;
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			cell_size = Blocks.cell_size;   
-		}
 		
 		public override void compute() 
 		{ 			

@@ -162,12 +162,6 @@
       <cRefs>copy_faces</cRefs>
       <cRefs>error_norm</cRefs>
       <cRefs>rhs_norm</cRefs>
-      <pRef>problem_data</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>error_norm</cRefs>
-      <cRefs>rhs_norm</cRefs>
       <pRef>blocks_info</pRef>
     </fusion>
     <fusion>
@@ -175,6 +169,12 @@
       <cRefs>error_norm</cRefs>
       <cRefs>rhs_norm</cRefs>
       <pRef>mpi</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>error_norm</cRefs>
+      <cRefs>rhs_norm</cRefs>
+      <pRef>problem_data</pRef>
     </fusion>
     <interface iRef="IVerify" nArgs="2">
       <slice isRef="rhs_norm">
@@ -193,18 +193,18 @@
         <originRef cRef="instance" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="236" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@176a220" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@13af7a5" repeat="0">
         <visualDescription h="250" w="210" x="115" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@18e088e" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@58adc3" repeat="0">
           <visualDescription h="150" w="130" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d3a88f" repeat="0" sliceRef="rhs_norm">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f817db" repeat="0" sliceRef="rhs_norm">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@df5188" repeat="0" sliceRef="error_norm">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e63935" repeat="0" sliceRef="error_norm">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@161c373" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@b5e5cf" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -249,13 +249,13 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="y" sRef="copy_faces"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="copy_faces"/>
-      </port>
       <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="x" sRef="copy_faces"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="z" sRef="copy_faces"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
