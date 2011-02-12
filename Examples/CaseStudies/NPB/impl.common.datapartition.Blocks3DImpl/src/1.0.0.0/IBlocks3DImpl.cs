@@ -25,8 +25,8 @@ protected int[] grid_points ;
 // such that communication between cells on different nodes is only
 // nearest neighbor                                                   
 //---------------------------------------------------------------------
-public void make_set()
-{
+override public void initialize() // make_set()
+{			
 	int[,] cell_coord, cell_low, cell_high, cell_size, slice, start, end;
 
     cell_coord = Blocks.cell_coord;

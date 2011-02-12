@@ -18,15 +18,9 @@ public class IErrorNormImpl<I,C> : BaseIErrorNormImpl<I,C>, IErrorNorm<I,C>
 {
 
 	public IErrorNormImpl() 
-	{ 
-		rms = new double[5];
+	{ 		
 	} 
 				
-	private double[] rms; 
-		
-	public double[] xce { get { return rms; } }
-		
-
 	public override void compute() { 
 
             int c, i, j, k, ii, jj, kk, m, d;

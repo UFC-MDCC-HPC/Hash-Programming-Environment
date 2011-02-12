@@ -6,8 +6,8 @@ using common.data.ProblemDefinition;
 using common.problem_size.Class;
 using sp.problem_size.Instance_SP;
 
-namespace impl.common.data.ProblemDefinition { 
-
+namespace impl.common.data.ProblemDefinitionImpl { 
+	     
 public class IProblemDefinitionImpl<I, C> : BaseIProblemDefinitionImpl<I, C>, IProblemDefinition<I, C>
 where I:IInstance_SP<C>
 where C:IClass
@@ -49,8 +49,10 @@ where C:IClass
 	public int KMAX { get { return _KMAX_; } set { _KMAX_ = value; } }	
 	public int[] grid_points { get { return _grid_points_; } }
 		
-	public void initialize_problem_data() 
+	override public void initialize() 
 	{			
+		set_constants(0);
+			
 		setProblemClass();
 		
 		int total_nodes = this.Ranks.Length;
@@ -84,7 +86,7 @@ where C:IClass
 		niter_default = Instance.niter_default;
 	}	
 	
-  public void set_constants(int ndid)
+  private void set_constants(int ndid)
   {			
 	Constants.set_constants(ndid,grid_points);
   }

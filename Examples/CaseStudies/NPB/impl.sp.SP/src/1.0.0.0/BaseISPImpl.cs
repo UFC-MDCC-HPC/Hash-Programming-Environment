@@ -25,13 +25,28 @@ namespace impl.sp.SP {
 public abstract class BaseISPImpl<CLASS>: Application, BaseISP<CLASS>
 where CLASS:IClass
 {
+					
+#region MyRegion
 		
 public PROBLEM_CLASS problem_class;
-
+		
 protected int ncells;
 protected int[,] cell_size;
 protected int[] grid_points;		
 protected int problem_size;
+		
+override public void initialize()
+{	
+	cell_size = Blocks.cell_size;	
+	
+	problem_size = Instance.problem_size;			
+	problem_class = Instance.CLASS;								
+	
+	ncells = Problem.NCells;			
+	grid_points = Problem.grid_points;			
+}
+		
+#endregion
 		
 		
 private ITimer timer = null;
@@ -44,13 +59,13 @@ protected ITimer Timer {
 	}
 }
 
-private IInitialize<IInstance_SP<CLASS>, CLASS> initialize = null;
+private IInitialize<IInstance_SP<CLASS>, CLASS> initialize_ = null;
 
 protected IInitialize<IInstance_SP<CLASS>, CLASS> Initialize {
 	get {
-		if (this.initialize == null)
-			this.initialize = (IInitialize<IInstance_SP<CLASS>, CLASS>) Services.getPort("initialize");
-		return this.initialize;
+		if (this.initialize_ == null)
+			this.initialize_ = (IInitialize<IInstance_SP<CLASS>, CLASS>) Services.getPort("initialize");
+		return this.initialize_;
 	}
 }
 
@@ -82,8 +97,6 @@ protected IBlocks Blocks {
 		if (this.blocks == null) 
 		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
-					
-			cell_size = Blocks.cell_size;			
 		}
 		return this.blocks;
 	}
@@ -127,9 +140,6 @@ protected IInstance_SP<CLASS> Instance {
 		if (instance==null) 
 		{
 			this.instance = (IInstance_SP<CLASS>) Services.getPort("instance");
-					
-			problem_size = Instance.problem_size;			
-			problem_class = Instance.CLASS;								
 		}
 		return instance;
 	}
@@ -143,9 +153,6 @@ protected IProblemDefinition<IInstance_SP<CLASS>, CLASS> Problem {
 		if (this.problem == null) 
 		{
 			this.problem = (IProblemDefinition<IInstance_SP<CLASS>, CLASS>) Services.getPort("problem_data");
-					
-			ncells = problem.NCells;			
-			grid_points = Problem.grid_points;			
 		}
 		return this.problem;
 	}

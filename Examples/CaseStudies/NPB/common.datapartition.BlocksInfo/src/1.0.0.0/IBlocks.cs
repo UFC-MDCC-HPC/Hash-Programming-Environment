@@ -19,6 +19,8 @@ public interface IBlocks : BaseIBlocks
   int ncells {get;set;} // sqrt(nodes)
   int ndirs {get;set;}  // Assumed to be 3 ?
 		
+  void initialize();
+		
 } // end main interface 
 
 } // end namespace 

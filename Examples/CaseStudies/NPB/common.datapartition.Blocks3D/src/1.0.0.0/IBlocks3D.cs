@@ -8,7 +8,7 @@ public interface IBlocks3D<I,C> : BaseIBlocks3D<I,C>
 		where I:IInstance<C>
 		where C:IClass
 {
-		void make_set();
+
 } // end main interface 
 
 } // end namespace 

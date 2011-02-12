@@ -47,7 +47,7 @@ namespace impl.sp.SP {
 		
 		    }
 		
-			Process.make_set();
+			// Process.make_set();
 				    		
 		    for (int c = 0; c < ncells; c++)
 		    {
@@ -60,8 +60,8 @@ namespace impl.sp.SP {
 		        }
 		    }
 		
-			Problem.initialize_problem_data();
-			Problem.set_constants(0);
+//			Problem.initialize_problem_data();
+//			Problem.set_constants(0);
 			
 			Initialize.compute();
 			Lhsinit.compute();

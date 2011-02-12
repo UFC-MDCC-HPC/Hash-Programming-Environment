@@ -5,7 +5,7 @@ using br.ufc.pargo.hpe.kinds;
 using environment.MPIDirect;
 using MPI;
 
-namespace environment.impl.MPIDirectImpl { 
+namespace impl.environment.MPIDirectImpl { 
 
 public class IMPIDirectImpl : BaseIMPIDirectImpl, IMPIDirect
 {
@@ -14,12 +14,16 @@ public class IMPIDirectImpl : BaseIMPIDirectImpl, IMPIDirect
    
    public IMPIDirectImpl() { 
 
+   } 
+   
+   new public void initialize()
+   {
+   
       // string[] args = System.Environment.GetCommandLineArgs();
    	  // mpi = new MPI.Environment(ref args);
    	
    	   Console.WriteLine("MPI.NET Init for process #" + Communicator.world.Rank);
-
-   } 
+   }
 
    public MPI.Environment MPI {
       get { return mpi; }

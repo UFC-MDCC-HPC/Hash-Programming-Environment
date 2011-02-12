@@ -11,14 +11,12 @@ namespace impl.common.interactionpattern.ShiftToRightImpl {
 public class IShiftToRightImpl<DIR> : BaseIShiftToRightImpl<DIR>, IShift<DIR>
 		where DIR:ILeftToRight
 {
-		
-	private Intracommunicator comm;	
-	private RequestList requestList;
+	
+	private RequestList requestList = new RequestList();
 			
 	public IShiftToRightImpl() 
 	{ 			
-	   comm = Mpi.localComm(this);			
-	   requestList = new RequestList();
+	   
 	} 
 			
 	private static int DEFAULT_TAG = 0;		

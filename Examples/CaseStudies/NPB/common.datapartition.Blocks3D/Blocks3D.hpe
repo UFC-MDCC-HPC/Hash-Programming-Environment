@@ -86,7 +86,7 @@
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace common.datapartition.Blocks3D { &#xA;&#xA;public interface IBlocks3D&lt;I,C> : BaseIBlocks3D&lt;I,C>&#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;&#x9;&#x9;void make_set();&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlocks3D.cs" srcType="user" uri="common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace common.datapartition.Blocks3D { &#xA;&#xA;public interface IBlocks3D&lt;I,C> : BaseIBlocks3D&lt;I,C>&#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlocks3D.cs" srcType="user" uri="common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/common.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll</dependency>
@@ -99,10 +99,6 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="88" y="37"/>
-        <slice pRef="z" sRef="cell"/>
-      </port>
       <port name="y">
         <visualDescription h="10" w="10" x="32" y="0"/>
         <slice pRef="y" sRef="cell"/>
@@ -110,6 +106,10 @@
       <port name="x">
         <visualDescription h="10" w="10" x="79" y="2"/>
         <slice pRef="x" sRef="cell"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="88" y="37"/>
+        <slice pRef="z" sRef="cell"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>

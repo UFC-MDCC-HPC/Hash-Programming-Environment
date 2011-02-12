@@ -23,10 +23,24 @@ where DIR:IX
 where MTH:IBeamWarmingMethod
 {
 		
+#region data		
+		
 protected int[,] start, end, slice, cell_size;
 protected double[,,,,] lhs, rhs;
-		
 
+override public void initialize()
+{
+	start = Blocks.cell_start;
+	end = Blocks.cell_end;
+	slice = Blocks.cell_slice;
+	cell_size = Blocks.cell_size;
+	
+	lhs = Problem.Field_lhs;
+	rhs = Problem.Field_rhs;
+}
+		
+#endregion
+		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
@@ -34,11 +48,6 @@ public IBlocks Blocks {
 		if (this.blocks == null)
 		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
-				
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
-			cell_size = Blocks.cell_size;
 		}
 		return this.blocks;
 	}
@@ -51,9 +60,6 @@ public IProblemDefinition<I, C> Problem {
 		if (this.problem == null) 
 		{
 			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
-					
-			lhs = Problem.Field_lhs;
-			rhs = Problem.Field_rhs;
 		}
 		return this.problem;
 	}

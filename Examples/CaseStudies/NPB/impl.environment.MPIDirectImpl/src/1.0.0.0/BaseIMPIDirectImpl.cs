@@ -7,7 +7,7 @@ using br.ufc.pargo.hpe.kinds;
 using environment.MPIDirect;
 using gov.cca;
 
-namespace environment.impl.MPIDirectImpl { 
+namespace impl.environment.MPIDirectImpl { 
 
 public abstract class BaseIMPIDirectImpl: Environment, BaseIMPIDirect
 {

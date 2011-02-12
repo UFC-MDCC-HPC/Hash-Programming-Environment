@@ -305,36 +305,26 @@
     <supplyParameter cRef="south" varName="DIR_Y_SOUTH"/>
     <supplyParameter cRef="bottom" varName="DIR_Z_BOTTOM"/>
     <supplyParameter cRef="top" varName="DIR_Z_TOP"/>
-    <supplyParameter cRef="north" varName="DIR_Y_NORTH"/>
     <supplyParameter cRef="left" varName="DIR_X_LEFT"/>
-    <innerRenaming cNewName="z" cOldName="topology" cRef="shift_z_top"/>
-    <innerRenaming cNewName="z" cOldName="topology" cRef="shift_z_bottom"/>
-    <innerRenaming cNewName="input_buffer_z_bottom" cOldName="input_buffer" cRef="shift_z_bottom"/>
-    <innerRenaming cNewName="output_buffer_z_bottom" cOldName="output_buffer" cRef="shift_z_bottom"/>
-    <innerRenaming cNewName="input_buffer_z_top" cOldName="input_buffer" cRef="shift_z_top"/>
-    <innerRenaming cNewName="input_buffer_y_north" cOldName="input_buffer" cRef="shift_y_north"/>
-    <innerRenaming cNewName="output_buffer_z_top" cOldName="output_buffer" cRef="shift_z_top"/>
-    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_north"/>
-    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_south"/>
-    <innerRenaming cNewName="input_buffer_y_south" cOldName="input_buffer" cRef="shift_y_south"/>
-    <innerRenaming cNewName="input_buffer_x_west" cOldName="input_buffer" cRef="shift_x_west"/>
+    <supplyParameter cRef="north" varName="DIR_Y_NORTH"/>
+    <innerRenaming cNewName="output_buffer_x_east" cOldName="output_buffer" cRef="shift_x_east"/>
+    <innerRenaming cNewName="output_buffer_y_north" cOldName="output_buffer" cRef="shift_y_north"/>
     <innerRenaming cNewName="output_buffer_x_west" cOldName="output_buffer" cRef="shift_x_west"/>
-    <innerRenaming cNewName="input_buffer_x_east" cOldName="input_buffer" cRef="shift_x_east"/>
+    <innerRenaming cNewName="input_buffer_y_south" cOldName="input_buffer" cRef="shift_y_south"/>
+    <innerRenaming cNewName="output_buffer_z_top" cOldName="output_buffer" cRef="shift_z_top"/>
     <innerRenaming cNewName="x" cOldName="topology" cRef="shift_x_east"/>
     <innerRenaming cNewName="x" cOldName="topology" cRef="shift_x_west"/>
-    <innerRenaming cNewName="output_buffer_y_north" cOldName="output_buffer" cRef="shift_y_north"/>
-    <innerRenaming cNewName="output_buffer_x_east" cOldName="output_buffer" cRef="shift_x_east"/>
+    <innerRenaming cNewName="input_buffer_x_east" cOldName="input_buffer" cRef="shift_x_east"/>
+    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_north"/>
+    <innerRenaming cNewName="y" cOldName="topology" cRef="shift_y_south"/>
+    <innerRenaming cNewName="input_buffer_z_top" cOldName="input_buffer" cRef="shift_z_top"/>
+    <innerRenaming cNewName="z" cOldName="topology" cRef="shift_z_top"/>
+    <innerRenaming cNewName="z" cOldName="topology" cRef="shift_z_bottom"/>
+    <innerRenaming cNewName="input_buffer_x_west" cOldName="input_buffer" cRef="shift_x_west"/>
+    <innerRenaming cNewName="output_buffer_z_bottom" cOldName="output_buffer" cRef="shift_z_bottom"/>
+    <innerRenaming cNewName="input_buffer_z_bottom" cOldName="input_buffer" cRef="shift_z_bottom"/>
+    <innerRenaming cNewName="input_buffer_y_north" cOldName="input_buffer" cRef="shift_y_north"/>
     <innerRenaming cNewName="output_buffer_y_south" cOldName="output_buffer" cRef="shift_y_south"/>
-    <fusion>
-      <cRefs>shift_z_bottom</cRefs>
-      <cRefs>shift_z_top</cRefs>
-      <pRef>z</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>shift_y_south</cRefs>
-      <cRefs>shift_y_north</cRefs>
-      <pRef>y</pRef>
-    </fusion>
     <fusion>
       <cRefs>shift_z_bottom</cRefs>
       <cRefs>shift_z_top</cRefs>
@@ -348,6 +338,16 @@
       <cRefs>shift_x_west</cRefs>
       <cRefs>shift_x_east</cRefs>
       <pRef>x</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>shift_y_south</cRefs>
+      <cRefs>shift_y_north</cRefs>
+      <pRef>y</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>shift_z_bottom</cRefs>
+      <cRefs>shift_z_top</cRefs>
+      <pRef>z</pRef>
     </fusion>
     <interface iRef="IInteract" nArgs="0">
       <slice isRef="shift_y_south">
@@ -374,29 +374,29 @@
         <originRef cRef="shift_z_bottom" iRef="IShift"/>
         <visualDescription h="10" w="10" x="263" y="123"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1a6d98b" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19e4df7" repeat="0">
         <visualDescription h="150" w="370" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@11441d5" repeat="0" sliceRef="shift_y_south">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@10c325" repeat="0" sliceRef="shift_y_south">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ee13d0" repeat="0" sliceRef="shift_y_north">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7bd50c" repeat="0" sliceRef="shift_y_north">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@56bd2a" repeat="0" sliceRef="shift_x_left">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e01b97" repeat="0" sliceRef="shift_x_left">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9d17c0" repeat="0" sliceRef="shift_x_right">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@33849a" repeat="0" sliceRef="shift_x_right">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1826fcd" repeat="0" sliceRef="shift_z_top">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@469eaa" repeat="0" sliceRef="shift_z_top">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7a31d8" repeat="0" sliceRef="shift_z_bottom">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5ae375" repeat="0" sliceRef="shift_z_bottom">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.Buffer;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace common.interactionpattern.Interact { &#xA;&#xA;public interface BaseIInteract : ISynchronizerKind &#xA;{&#xA;&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;IBuffer Output_buffer_y_south {get;}&#xA;&#x9;IBuffer Input_buffer_y_south {get;}&#xA;&#x9;IBuffer Output_buffer_y_north {get;}&#xA;&#x9;IBuffer Input_buffer_y_north {get;}&#xA;&#x9;IBuffer Input_buffer_x_west {get;}&#xA;&#x9;IBuffer Output_buffer_x_west {get;}&#xA;&#x9;IBuffer Input_buffer_x_east {get;}&#xA;&#x9;IBuffer Output_buffer_x_east {get;}&#xA;&#x9;IBuffer Input_buffer_z_top {get;}&#xA;&#x9;IBuffer Output_buffer_z_top {get;}&#xA;&#x9;IBuffer Input_buffer_z_bottom {get;}&#xA;&#x9;IBuffer Output_buffer_z_bottom {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInteract.cs" srcType="base" uri="common.interactionpattern.Interact/bin/1.0.0.0/BaseIInteract.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.Buffer;&#xA;using environment.MPIDirect;&#xA;&#xA;namespace common.interactionpattern.Interact { &#xA;&#xA;public interface BaseIInteract : ISynchronizerKind &#xA;{&#xA;&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;IBuffer Output_buffer_y_south {get;}&#xA;&#x9;IBuffer Input_buffer_y_south {get;}&#xA;&#x9;IBuffer Output_buffer_y_north {get;}&#xA;&#x9;IBuffer Input_buffer_y_north {get;}&#xA;&#x9;IBuffer Input_buffer_x_west {get;}&#xA;&#x9;IBuffer Output_buffer_x_west {get;}&#xA;&#x9;IBuffer Input_buffer_x_east {get;}&#xA;&#x9;IBuffer Output_buffer_x_east {get;}&#xA;&#x9;IBuffer Input_buffer_z_top {get;}&#xA;&#x9;IBuffer Output_buffer_z_top {get;}&#xA;&#x9;IBuffer Input_buffer_z_bottom {get;}&#xA;&#x9;IBuffer Output_buffer_z_bottom {get;}&#xA;&#x9;//IMPIDirect Mpi {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInteract.cs" srcType="base" uri="common.interactionpattern.Interact/bin/1.0.0.0/BaseIInteract.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
@@ -410,10 +410,9 @@
       <visualDescription h="259" w="359" x="483" y="296">
         <color b="128" g="0" r="128"/>
       </visualDescription>
-      <port name="y">
-        <visualDescription h="10" w="10" x="70" y="64"/>
-        <slice pRef="cell" sRef="shift_y_south"/>
-        <slice pRef="cell" sRef="shift_y_north"/>
+      <port name="output_buffer_y_south">
+        <visualDescription h="10" w="10" x="55" y="25"/>
+        <slice pRef="output_buffer" sRef="shift_y_south"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="110" y="122"/>
@@ -424,21 +423,26 @@
         <slice pRef="mpi" sRef="shift_z_top"/>
         <slice pRef="mpi" sRef="shift_z_bottom"/>
       </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="70" y="64"/>
+        <slice pRef="cell" sRef="shift_y_south"/>
+        <slice pRef="cell" sRef="shift_y_north"/>
+      </port>
       <port name="input_buffer_y_south">
         <visualDescription h="10" w="10" x="84" y="7"/>
         <slice pRef="input_buffer" sRef="shift_y_south"/>
       </port>
-      <port name="output_buffer_y_south">
-        <visualDescription h="10" w="10" x="55" y="25"/>
-        <slice pRef="output_buffer" sRef="shift_y_south"/>
+      <port name="output_buffer_y_north">
+        <visualDescription h="10" w="10" x="18" y="96"/>
+        <slice pRef="output_buffer" sRef="shift_y_north"/>
       </port>
       <port name="input_buffer_y_north">
         <visualDescription h="10" w="10" x="38" y="40"/>
         <slice pRef="input_buffer" sRef="shift_y_north"/>
       </port>
-      <port name="output_buffer_y_north">
-        <visualDescription h="10" w="10" x="18" y="96"/>
-        <slice pRef="output_buffer" sRef="shift_y_north"/>
+      <port name="output_buffer_x_west">
+        <visualDescription h="10" w="10" x="21" y="131"/>
+        <slice pRef="output_buffer" sRef="shift_x_left"/>
       </port>
       <port name="input_buffer_x_west">
         <visualDescription h="10" w="10" x="6" y="228"/>
@@ -449,38 +453,34 @@
         <slice pRef="cell" sRef="shift_x_left"/>
         <slice pRef="cell" sRef="shift_x_right"/>
       </port>
-      <port name="output_buffer_x_west">
-        <visualDescription h="10" w="10" x="21" y="131"/>
-        <slice pRef="output_buffer" sRef="shift_x_left"/>
+      <port name="input_buffer_x_east">
+        <visualDescription h="10" w="10" x="254" y="225"/>
+        <slice pRef="input_buffer" sRef="shift_x_right"/>
       </port>
       <port name="output_buffer_x_east">
         <visualDescription h="10" w="10" x="174" y="230"/>
         <slice pRef="output_buffer" sRef="shift_x_right"/>
       </port>
-      <port name="input_buffer_x_east">
-        <visualDescription h="10" w="10" x="254" y="225"/>
-        <slice pRef="input_buffer" sRef="shift_x_right"/>
-      </port>
       <port name="output_buffer_z_top">
         <visualDescription h="10" w="10" x="116" y="10"/>
         <slice pRef="output_buffer" sRef="shift_z_top"/>
+      </port>
+      <port name="input_buffer_z_top">
+        <visualDescription h="10" w="10" x="194" y="3"/>
+        <slice pRef="input_buffer" sRef="shift_z_top"/>
       </port>
       <port name="z">
         <visualDescription h="10" w="10" x="225" y="61"/>
         <slice pRef="cell" sRef="shift_z_top"/>
         <slice pRef="cell" sRef="shift_z_bottom"/>
       </port>
-      <port name="input_buffer_z_top">
-        <visualDescription h="10" w="10" x="194" y="3"/>
-        <slice pRef="input_buffer" sRef="shift_z_top"/>
+      <port name="output_buffer_z_bottom">
+        <visualDescription h="10" w="10" x="312" y="212"/>
+        <slice pRef="output_buffer" sRef="shift_z_bottom"/>
       </port>
       <port name="input_buffer_z_bottom">
         <visualDescription h="10" w="10" x="273" y="15"/>
         <slice pRef="input_buffer" sRef="shift_z_bottom"/>
-      </port>
-      <port name="output_buffer_z_bottom">
-        <visualDescription h="10" w="10" x="312" y="212"/>
-        <slice pRef="output_buffer" sRef="shift_z_bottom"/>
       </port>
       <externalReferences>MPI</externalReferences>
     </interface>

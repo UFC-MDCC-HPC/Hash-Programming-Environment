@@ -10,7 +10,7 @@
     <interface iRef="IExactSolution" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.data.ExactSolution { &#xA;&#xA;public interface BaseIExactSolution : IComputationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIExactSolution.cs" srcType="base" uri="common.data.ExactSolution/bin/1.0.0.0/BaseIExactSolution.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.data.ExactSolution { &#xA;&#xA;public interface IExactSolution : BaseIExactSolution&#xA;{&#xA;&#xA;   void initialize();&#xA;   void setParameters(double xi, double eta, double zeta, double[] dtemp, int offset);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IExactSolution.cs" srcType="user" uri="common.data.ExactSolution/bin/1.0.0.0/IExactSolution.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.data.ExactSolution { &#xA;&#xA;public interface IExactSolution : BaseIExactSolution&#xA;{&#xA;   void setParameters(double xi, double eta, double zeta, double[] dtemp, int offset);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IExactSolution.cs" srcType="user" uri="common.data.ExactSolution/bin/1.0.0.0/IExactSolution.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.data.ExactSolution/bin/1.0.0.0/BaseIExactSolution.dll</dependency>
         </file>
       </sources>

@@ -10,12 +10,24 @@ using environment.MPIDirect;
 using common.interactionpattern.Shift;
 using common.direction.Direction;
 using common.interactionpattern.Interact;
+using MPI;
 
 namespace impl.common.interactionpattern.InteractImpl { 
 
 public abstract class BaseIInteractImpl: Synchronizer, BaseIInteract
 {
 
+#region data		
+		
+protected Intracommunicator comm;			
+		
+override public void initialize()
+{
+	comm = Mpi.localComm(this);
+}
+		
+#endregion
+		
 private ICell y = null;
 
 public ICell Y {
@@ -170,8 +182,10 @@ private IMPIDirect mpi = null;
 
 public IMPIDirect Mpi {
 	get {
-		if (this.mpi == null)
+		if (this.mpi == null) 
+		{
 			this.mpi = (IMPIDirect) Services.getPort("mpi");
+		}
 		return this.mpi;
 	}
 }

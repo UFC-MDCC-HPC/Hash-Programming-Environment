@@ -12,14 +12,10 @@ public class IShiftToLeftImpl<DIR> : BaseIShiftToLeftImpl<DIR>, IShift<DIR>
 		where DIR:IRightToLeft
 {
 
-	private Intracommunicator comm;		
-			
-	private RequestList requestList;
+	private RequestList requestList = new RequestList();
 			
 	public IShiftToLeftImpl() 
-	{ 
-	   comm = Mpi.localComm(this);
-	   requestList = new RequestList();
+	{  
 	} 
 			
 	private static int DEFAULT_TAG = 0;		

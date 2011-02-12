@@ -25,7 +25,7 @@ public interface BaseIInteract : ISynchronizerKind
 	IBuffer Output_buffer_z_top {get;}
 	IBuffer Input_buffer_z_bottom {get;}
 	IBuffer Output_buffer_z_bottom {get;}
-	IMPIDirect Mpi {get;}
+	//IMPIDirect Mpi {get;}
 
 
 } // end main interface 

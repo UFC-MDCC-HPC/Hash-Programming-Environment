@@ -11,6 +11,10 @@ public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks
 
 	public IBlocksInfoImpl() 
 	{ 
+	} 
+		
+	override public void initialize()
+	{
 		int total_nodes = this.Ranks.Length;
 		int no_nodes = total_nodes;
 			
@@ -32,7 +36,8 @@ public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks
 		_sucessor_ = new int[3]; 
 		
 		_grid_points_ = new int[3] {0, 0, 0};
-	} 
+	}
+		
 				
 	private int[,] _cell_coord_;
 	private int[,] _cell_size_;

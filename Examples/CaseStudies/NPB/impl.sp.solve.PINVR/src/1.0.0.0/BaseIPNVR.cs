@@ -21,10 +21,24 @@ public abstract class BaseIPNVR<I,C,DIR,MTH>: Computation, BaseIBlockDiagonalMat
 	where MTH:IMethod
 {
 		
+#region data		
+		
 protected int[,] start, end, cell_size, slice;
 protected double[,,,,] rhs;
 protected double bt;
 		
+override public void initialize()
+{
+	start = Blocks.cell_start;
+	end = Blocks.cell_end;
+	cell_size = Blocks.cell_size;
+	slice = Blocks.cell_slice;					
+	
+	bt = Constants.bt;					
+	rhs = Problem.Field_rhs;					
+}
+		
+#endregion
 
 private IBlocks blocks = null;
 
@@ -33,11 +47,6 @@ public IBlocks Blocks {
 		if (this.blocks == null)
 		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
-					
-			start = blocks.cell_start;
-			end = blocks.cell_end;
-			cell_size = blocks.cell_size;
-			slice = blocks.cell_slice;					
 	    }
 		return this.blocks;
 	}
@@ -50,9 +59,6 @@ public IProblemDefinition<I,C> Problem {
 		if (this.problem == null)
 		{
 			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
-					
-			bt = Constants.bt;					
-			rhs = problem.Field_rhs;					
 		}
 		return this.problem;
 	}

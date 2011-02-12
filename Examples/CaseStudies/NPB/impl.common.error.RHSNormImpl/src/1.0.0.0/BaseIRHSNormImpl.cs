@@ -18,12 +18,29 @@ public abstract class BaseIRHSNormImpl<I,C>: Computation, BaseIRHSNorm<I,C>
 		where I:IInstance<C>
 		where C:IClass
 {
+
+#region data		
 				
 protected int[,] cell_size, start, end;		
 protected int ncells;
 protected double[,,,,] rhs;
 protected int[] grid_points;
 protected Intracommunicator comm_setup;
+		
+override public void initialize()
+{
+	cell_size = Blocks.cell_size;
+    start = Blocks.cell_start;
+	end = Blocks.cell_end;
+	
+	ncells = Problem.NCells;
+	rhs = Problem.Field_rhs;
+	grid_points = Problem.grid_points;
+	
+	comm_setup = Mpi.localComm(this);			
+}
+		
+#endregion
 		
 private IBlocks blocks = null;
 
@@ -32,10 +49,6 @@ public IBlocks Blocks {
 		if (this.blocks == null)
 		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
-					
-			cell_size = Blocks.cell_size;
-	        start = Blocks.cell_start;
-			end = Blocks.cell_end;
 		}
 		return this.blocks;
 	}
@@ -48,10 +61,6 @@ public IProblemDefinition<I,C> Problem {
 		if (this.problem == null)
 		{
 			this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
-					
-			ncells = Problem.NCells;
-			rhs = Problem.Field_rhs;
-			grid_points = Problem.grid_points;
 		}
 		return this.problem;
 	}
@@ -64,8 +73,6 @@ public IMPIDirect Mpi {
 		if (this.mpi == null)
 		{
 			this.mpi = (IMPIDirect) Services.getPort("mpi");
-					
-			comm_setup = Mpi.localComm(this);
 		}
 		return this.mpi;
 	}

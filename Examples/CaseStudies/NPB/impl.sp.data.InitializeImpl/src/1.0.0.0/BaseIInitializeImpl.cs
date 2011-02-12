@@ -18,12 +18,38 @@ where I:IInstance_SP<C>
 where C:IClass
 {
 		
+#region data		
+		
 protected int[,] cell_size, cell_low, cell_high, start, end, slice;		
 protected int ncells, IMAX, JMAX, KMAX, maxcells;		
 protected double[,,,,] u;		
 protected double dnzm1, dnym1, dnxm1; 
-		
 
+		
+override public void initialize()
+{
+	cell_size = Blocks.cell_size;
+	cell_low = Blocks.cell_low;
+	cell_high = Blocks.cell_high;
+	start = Blocks.cell_start;
+	end = Blocks.cell_end;
+	slice = Blocks.cell_slice;
+	ncells = Problem.NCells;
+	
+	u = Problem.Field_u;
+				
+	dnzm1 = Constants.dnzm1;
+	dnym1 = Constants.dnym1;
+	dnxm1 = Constants.dnxm1;
+	
+	IMAX = Problem.IMAX;
+	JMAX = Problem.JMAX;
+	KMAX = Problem.KMAX;
+	maxcells = Problem.maxcells;
+}
+		
+#endregion
+		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
@@ -31,13 +57,6 @@ public IBlocks Blocks {
 		if (this.blocks == null)
 		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
-					
-			cell_size = Blocks.cell_size;
-			cell_low = Blocks.cell_low;
-			cell_high = Blocks.cell_high;
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			slice = Blocks.cell_slice;
 		}
 		return this.blocks;
 	}
@@ -50,18 +69,6 @@ public IProblemDefinition<I, C> Problem {
 		if (this.problem == null)
 		{
 			this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
-					
-			ncells = Problem.NCells;
-			u = Problem.Field_u;
-						
-			dnzm1 = Constants.dnzm1;
-			dnym1 = Constants.dnym1;
-			dnxm1 = Constants.dnxm1;
-			
-			IMAX = Problem.IMAX;
-			JMAX = Problem.JMAX;
-			KMAX = Problem.KMAX;
-			maxcells = Problem.maxcells;
 		}	
 		return this.problem;
 	}

@@ -6,17 +6,15 @@ using common.interactionpattern.Interact;
 using MPI;
 
 namespace impl.common.interactionpattern.InteractImpl { 
-
+	      
 public class IInteractImpl : BaseIInteractImpl, IInteract
 {
 
-	private Intracommunicator comm;		
-    private RequestList requestList;		
+		
+    private RequestList requestList = new RequestList();		
 		
 	public IInteractImpl() 
 	{ 	
-	   comm = Mpi.localComm(this);
-	   requestList = new RequestList();
 	} 
 		
 	public void initiate_send_west()

@@ -9,7 +9,7 @@ using common.data.ProblemDefinition;
 using common.problem_size.Class;
 using sp.problem_size.Instance_SP;
 
-namespace impl.common.data.ProblemDefinition { 
+namespace impl.common.data.ProblemDefinitionImpl { 
 
 public abstract class BaseIProblemDefinitionImpl<I, C>: DataStructure, BaseIProblemDefinition<I,C>
 where I:IInstance_SP<C>

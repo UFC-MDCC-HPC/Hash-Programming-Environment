@@ -9,6 +9,7 @@ using common.Buffer;
 using environment.MPIDirect;
 using common.direction.RightToLeft;
 using common.interactionpattern.Shift;
+using MPI;
 
 namespace impl.common.interactionpattern.ShiftToLeftImpl { 
 
@@ -16,6 +17,8 @@ public abstract class BaseIShiftToLeftImpl<DIR>: Synchronizer, BaseIShift<DIR>
 		where DIR:IRightToLeft
 {
 
+protected Intracommunicator comm;		
+		
 private ICell cell = null;
 
 public ICell Cell {
@@ -51,7 +54,11 @@ private IMPIDirect mpi = null;
 public IMPIDirect Mpi {
 	get {
 		if (this.mpi == null)
+		{
 			this.mpi = (IMPIDirect) Services.getPort("mpi");
+					
+			comm = Mpi.localComm(this);		
+		}
 		return this.mpi;
 	}
 }

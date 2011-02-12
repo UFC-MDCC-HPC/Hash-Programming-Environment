@@ -41,7 +41,7 @@ namespace impl.sp.data.ExactSolutionImpl {
 			this.offset = offset;
 		}
 		
-		public void initialize()
+		override public void initialize()
 		{
 			int ndid = 0;
 			ce[0,0] = 2.0d * (1.0d + ((double)ndid) * 0.01d);

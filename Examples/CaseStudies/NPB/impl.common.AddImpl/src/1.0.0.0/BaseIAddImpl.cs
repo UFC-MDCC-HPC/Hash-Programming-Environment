@@ -13,55 +13,61 @@ using common.problem_size.Instance;
 
 namespace impl.common.AddImpl { 
 
-public abstract class BaseIAddImpl<I,C>: Computation, BaseIAdd<I,C>
-		where I:IInstance<C>
-		where C:IClass
-{
-		
-protected int ncells;
-protected double[,,,,] u;
-protected double[,,,,] rhs;
-protected int[,] start;
-protected int[,] end;
-protected int[,] cell_size;
-		
-
-private IBlocks blocks = null;
-
-public IBlocks Blocks {
-	get {
-		if (this.blocks == null) 
-		{
-		    this.blocks = (IBlocks) Services.getPort("blocks_info");
-					
-			start = Blocks.cell_start;
-			end = Blocks.cell_end;
-			cell_size = Blocks.cell_size;   
-		}
-		return this.blocks;
+	public abstract class BaseIAddImpl<I,C>: Computation, BaseIAdd<I,C>
+			where I:IInstance<C>
+			where C:IClass
+	{
+			
+	#region data
+			
+	protected int ncells;
+	protected double[,,,,] u;
+	protected double[,,,,] rhs;
+	protected int[,] start;
+	protected int[,] end;
+	protected int[,] cell_size;
+			
+	override public void initialize() 
+	{
+		start = Blocks.cell_start;
+		end = Blocks.cell_end;
+		cell_size = Blocks.cell_size;   
+				
+	    ncells = Problem.NCells;			
+		u = Problem.Field_u;
+		rhs = Problem.Field_rhs;
 	}
-}
-
-private IProblemDefinition<I,C> problem = null;
-
-public IProblemDefinition<I,C> Problem {
-	get {
-		if (this.problem == null)
-		{
-		   this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");
-					
-		    ncells = Problem.NCells;			
-			u = Problem.Field_u;
-			rhs = Problem.Field_rhs;
+			
+	#endregion		
+			
+	private IBlocks blocks = null;
+	
+	public IBlocks Blocks {
+		get {
+			if (this.blocks == null) 
+			{
+			    this.blocks = (IBlocks) Services.getPort("blocks_info");
+			}
+			return this.blocks;
 		}
-		return this.problem;
 	}
-}
-
-
-abstract public void compute(); 
-
-
-}
+	
+	private IProblemDefinition<I,C> problem = null;
+	
+	public IProblemDefinition<I,C> Problem {
+		get {
+			if (this.problem == null)
+			{
+			   this.problem = (IProblemDefinition<I,C>) Services.getPort("problem_data");					
+			}
+			return this.problem;
+		}
+	}
+	
+	
+	abstract public void compute(); 
+	
+	
+	}
 
 }
