@@ -16,6 +16,10 @@ public class ITimerImpl : BaseITimerImpl, ITimer
   double[] total_time=new double[max_counters];
 
   public ITimerImpl(){
+  }
+  
+  override public void initialize()
+  {
     for(int i=0;i<max_counters;i++){
       start_time[i]=0;
       elapsed_time[i]=0;
