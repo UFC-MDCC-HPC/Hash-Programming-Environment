@@ -1,0 +1,10 @@
+./ws_repository/ComponentRepository.asmx.cs
+-lib:"bin/"
+-r:System.Web.Services.dll 
+-r:System.Runtime.Remoting.dll
+-r:System.Data.dll 
+-r:DGAC
+
+-target:library
+
+-out:./ws_repository/bin/ComponentRepository.asmx.dll

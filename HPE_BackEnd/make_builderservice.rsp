@@ -1,0 +1,11 @@
+./ws_builderservice/BuilderService.asmx.cs
+-lib:"bin/"
+-lib:"/usr/lib/mono/DGAC"
+-r:System.Web.Services.dll 
+-r:System.Runtime.Remoting.dll
+-r:System.Data.dll 
+-r:DGAC
+
+-target:library
+
+-out:./ws_builderservice/bin/BuilderService.asmx.dll
