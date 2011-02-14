@@ -17,7 +17,7 @@ public class InterfaceParameterDAO{
     {
         String sql =
             "INSERT INTO interfaceparameters (id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order)" +
-            " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.ParId + "','" + ac.VarId + "','" + ac.Id_interface_parameter + "','" + ac.Id_unit_parameter + "'," + ac.ParOrder + ")";
+            " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.VarId + "','" + ac.ParId + "','" + ac.Id_interface_parameter + "','" + ac.Id_unit_parameter + "'," + ac.ParOrder + ")";
 
         Connector.performSQLUpdate(sql);
     }

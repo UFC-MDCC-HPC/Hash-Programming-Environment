@@ -17,7 +17,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             Connector.performSQLUpdate(sql);
         }
 
-        public EnumeratorMapping retrieve(int id_abstract, string id_inner, string id_enumerator_inner) 
+        public EnumeratorMapping retrieve(int id_abstract, /*string id_inner,*/ string id_enumerator_inner) 
         {
             EnumeratorMapping u = null;
             IDbConnection dbcon = Connector.DBcon;
@@ -26,7 +26,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "SELECT id_abstract, id_inner, id_enumerator_inner, id_enumerator_container " +
                 "FROM enumerator_mapping " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
-                "id_inner like '" + id_inner + "' AND " +
+                //"id_inner like '" + id_inner + "' AND " +
                 "id_enumerator_inner like '" + id_enumerator_inner + "'";
 
             dbcmd.CommandText = sql;

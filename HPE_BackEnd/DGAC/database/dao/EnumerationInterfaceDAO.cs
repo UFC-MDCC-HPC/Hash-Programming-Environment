@@ -108,6 +108,50 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcmd = null;
             return list;
         }
-        
+
+        public IList<EnumerationInterface> listByInterfaceWithFusions(int id_abstract, string id_interface)
+        {
+            List<EnumerationInterface> list = new List<EnumerationInterface>();
+            IDbConnection dbcon = Connector.DBcon;
+            IDbCommand dbcmd = dbcon.CreateCommand();
+            string sql =
+                "SELECT id_abstract, id_enumerator, id_interface " +
+                "FROM enumeration_interface " +
+                "WHERE id_abstract=" + id_abstract + " AND " +
+                "id_interface like '" + id_interface + "'";
+            dbcmd.CommandText = sql;
+            IDataReader reader = dbcmd.ExecuteReader();
+            while (reader.Read())
+            {
+                EnumerationInterface u = new EnumerationInterface();
+                u.Id_abstract = (int)reader["id_abstract"];
+                u.Id_enumerator = (string)reader["id_enumerator"];
+                u.Id_interface = (string)reader["id_interface"];
+
+                list.Add(u);
+
+
+            }//while
+            // clean up
+            reader.Close();
+            reader = null;
+            dbcmd.Dispose();
+            dbcmd = null;
+
+            List<EnumerationInterface> list2 = new List<EnumerationInterface>();
+            foreach (EnumerationInterface u in list)
+            {
+                EnumeratorMapping em = BackEnd.exmdao.retrieve(u.Id_abstract, u.Id_enumerator);
+                if (em != null && em.Id_enumerator_inner.Equals(em.Id_enumerator_container))
+                {
+                    list2.Add(u);
+                }
+
+            }
+
+
+            return list2;
+        }
+
     }
 }

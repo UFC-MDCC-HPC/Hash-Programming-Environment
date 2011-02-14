@@ -51,24 +51,24 @@ public class Connector {
 
     public static void openConnection()
     {      
-        lock (slock) {
+        //lock (slock) {
 	        if (r==0) {
 	           dbcon = Connector.getConnection();
 	           dbcon.Open();
 	        }
 	        r++;
-        }
+        //}
     }
 
     public static void closeConnection()
     {       
-        lock(slock) {  
+        //lock(slock) {  
 	        r--;
 	        if (r == 0) {
 	           dbcon.Close();
 	           dbcon = null;
 	        }
-        }
+        //}
     }
     
 

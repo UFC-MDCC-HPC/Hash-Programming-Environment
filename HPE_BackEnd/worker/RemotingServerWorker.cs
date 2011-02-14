@@ -78,17 +78,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             this.startWorkerServer();
 
-            mpi_listener = new Thread(mpi_listening);
-            mpi_listener.Start();
+           // mpi_listener = new Thread(mpi_listening);
+           // mpi_listener.Start();
         }
 
-        protected Thread mpi_listener = null;
+        // protected Thread mpi_listener = null;
 
-        protected ReceiveRequest request = null;
+        // protected ReceiveRequest request = null;
 
-        protected bool cancel = false;
+        // protected bool cancel = false;
 
-        protected void mpi_listening()
+       /* protected void mpi_listening()
         {
             do
             {
@@ -112,12 +112,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             Console.WriteLine("Worker is no more listening !");
         }
-
+        */
         protected override void OnStop()
         {
-            cancel = true;
-            request.Cancel();
-            mpi_listener.Join();
+            //cancel = true;
+            //request.Cancel();
+            //mpi_listener.Join();
             mpi.Dispose();
             this.stopWorkerServer();
         }

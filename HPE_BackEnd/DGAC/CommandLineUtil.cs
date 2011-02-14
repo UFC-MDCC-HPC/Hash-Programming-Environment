@@ -159,7 +159,12 @@ public class CommandLineUtil {
 
       string package_path = Constants.UNIT_PACKAGE_PATH.Replace("\"", "");
       string fileSource = Constants.PATH_TEMP_WORKER + assembly + ".dll";
-      string fileTarget = package_path + Path.DirectorySeparatorChar + cuid + Path.DirectorySeparatorChar + assembly + ".dll";
+      string pathTarget = package_path + Path.DirectorySeparatorChar + cuid;
+      string fileTarget = pathTarget + Path.DirectorySeparatorChar + assembly + ".dll";
+      if (!Directory.Exists(pathTarget))
+      {
+          Directory.CreateDirectory(pathTarget);
+      }
       File.Copy(fileSource, fileTarget, true);
 
       return true;

@@ -386,7 +386,7 @@ namespace HPE_DGAC_LoadDB
                 foreach (InnerComponentType c in inner)
                 {
                     // innerAll.Add(c);
-                    if ((isNotInSupply(c) && (isNotParameter(c) || this.findInSlices(c.localRef) )) || includeAsInner.Contains(c))
+                    if (((isNotInSupply(c) || this.findInSlices(c.localRef)) && (isNotParameter(c) || this.findInSlices(c.localRef) )) || includeAsInner.Contains(c))
                     {
                         // CREATE INNER COMPONENT
                         InnerComponent iNew = new InnerComponent();
@@ -420,11 +420,14 @@ namespace HPE_DGAC_LoadDB
                                 int id_abstract_port = app.Id_abstract;
                                 string id_inner_port = port.localRef;
                                 InnerComponent ic_port = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(id_abstract_port,id_inner_port);
-                                foreach (ParameterRenaming par in c.parameter)
+                                if (c.parameter != null)
                                 {
-                                    if (par.formFieldId.Equals(ic_port.Parameter_top))
+                                    foreach (ParameterRenaming par in c.parameter)
                                     {
-                                        varName = par.varName;
+                                        if (par.formFieldId.Equals(ic_port.Parameter_top))
+                                        {
+                                            varName = par.varName;
+                                        }
                                     }
                                 }
 

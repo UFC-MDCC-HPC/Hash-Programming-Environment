@@ -36,15 +36,19 @@ namespace br.ufc.pargo.hpe.basic
         
         void createSlices();
         IList<IUnit> Slices { get; }
+        IList<IUnit> AllSlices { get; }
         IUnit ContainerSlice { get; set; }
         void addSlice(IUnit slice);
+        void addSliceAll(IUnit slice);
         void destroySlice();
+        void initialize();
+        void perform_initialize();
         
 
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }
         void setActualParameters(IDictionary<string, int> actualParameters_new);
-        void setUpParameters(br.ufc.pargo.hpe.backend.DGAC.database.Component c);
+        void setUpParameters(int id_functor_app);
 
         bool getPermutation(string varid, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation);
         void addPermutation(string varid, br.ufc.pargo.hpe.kinds.IEnumeratorKind u);

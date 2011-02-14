@@ -51,33 +51,39 @@ namespace br.ufc.pargo.hpe.basic
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
             foreach (Slice slice in sList)
             {
-                if (!slice.isPublic())
+                InnerComponent ic = BackEnd.icdao.retrieve(slice.Id_abstract, slice.Id_inner);
+                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
+                int slice_kind = Constants.kindMapping[acf.Kind];
+                if (slice_kind != Constants.KIND_QUALIFIER)
                 {
-                    /* This method will:
-                     *   1. instantiate the inner component (local slice)
-                     *   2. connect the uses port to the implements (provides) port of the inner component                     * 
-                     */
-                    BackEnd.createSlice(this, slice);
-                }
-                else
-                {
-                    // Look for the port in the enclosing unit.
-                    ComponentID user_id = this.CID;
-                    string portName = slice.Id_inner; /*slice.PortName;*/
-                    ComponentID container_id = this.containerSlice.CID;
+                    if (!slice.isPublic())
+                    {
+                        /* This method will:
+                         *   1. instantiate the inner component (local slice)
+                         *   2. connect the uses port to the implements (provides) port of the inner component                     * 
+                         */
+                        BackEnd.createSlice(this, slice);
+                    }
+                    else
+                    {
+                        // Look for the port in the enclosing unit.
+                        ComponentID user_id = this.CID;
+                        string portName = slice.Id_inner; /*slice.PortName;*/
+                        ComponentID container_id = this.containerSlice.CID;
 
-                    Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
+                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
 
-                    SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
-                                                              slice.Id_inner,
-                                                              slice.Id_interface_slice_top,
-                                                              this.containerSlice.Id_abstract,
-                                                              i.Id_interface_super_top
-                                                              );
+                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
+                                                                  slice.Id_inner,
+                                                                  slice.Id_interface_slice_top,
+                                                                  this.containerSlice.Id_abstract,
+                                                                  i.Id_interface_super_top
+                                                                  );
 
-                    string container_portName = se.Id_inner;
+                        string container_portName = se.Id_inner;
 
-                    BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
+                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
+                    }
                 }
 
             }
@@ -89,6 +95,24 @@ namespace br.ufc.pargo.hpe.basic
             }
 
         }
+
+        private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
+
+        public void perform_initialize()
+        {
+
+            foreach (IUnit unit_slice in this.AllSlices)
+            {
+                if (!initialized.ContainsKey(unit_slice))
+                {
+                    unit_slice.perform_initialize();
+                    initialized.Add(unit_slice, true);
+                }
+            }
+            
+            initialize();
+        }
+
 
         private int id_concrete;
 
@@ -152,10 +176,23 @@ namespace br.ufc.pargo.hpe.basic
             get { return slices == null ? new List<IUnit>() : slices; }
         }
 
+        IList<IUnit> all_slices;
+
+        public IList<IUnit> AllSlices
+        {
+            get { return all_slices == null ? new List<IUnit>() : all_slices; }
+        }
+
         public void addSlice(IUnit slice)
         {
             if (slices == null) slices = new List<IUnit>();
             slices.Add(slice);
+        }
+
+        public void addSliceAll(IUnit slice)
+        {
+            if (all_slices == null) all_slices = new List<IUnit>();
+            all_slices.Add(slice);
         }
 
         private int myGlobalRank = -1;
@@ -253,10 +290,10 @@ namespace br.ufc.pargo.hpe.basic
             ActualParameters = actualParameters_new;
         }
 
-        public void setUpParameters(br.ufc.pargo.hpe.backend.DGAC.database.Component c)
+        public void setUpParameters(int id_functor_app)
         {
             SupplyParameterDAO spdao = new SupplyParameterDAO();
-            IList<SupplyParameter> spcList = spdao.list(c.Id_functor_app);
+            IList<SupplyParameter> spcList = spdao.list(id_functor_app);
             foreach (SupplyParameterComponent spc in spcList)
             {
                 ActualParameters.Add(spc.Id_parameter, spc.Id_functor_app_actual);
@@ -310,6 +347,10 @@ namespace br.ufc.pargo.hpe.basic
             {
                 return cid;
             }
+        }
+
+        virtual public void initialize()
+        {
         }
 
         #endregion

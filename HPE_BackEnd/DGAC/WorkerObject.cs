@@ -278,23 +278,37 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private ComponentID createInstanceForApplications(string instanceName, string class_name, TypeMap properties)
         {
-            int key = properties.getInt(Constants.KEY_KEY, my_rank);
-            string id_unit = properties.getString(Constants.UNIT_KEY, "");
-            string library_path = properties.getString(Constants.COMPONENT_KEY, "");
+            try
+            {
+                int key = properties.getInt(Constants.KEY_KEY, my_rank);
+                string id_unit = properties.getString(Constants.UNIT_KEY, "");
+                string library_path = properties.getString(Constants.COMPONENT_KEY, "");
+                int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
 
-            ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
+                ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
-            IUnit unit_slice;
-            unitInstances.TryGetValue(cid_app, out unit_slice);
-            br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind) unit_slice;
-            
-            // This part is only performed by applications.
-            DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, pmain);
-            pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-            pmain.createSlices();
-            // --------------------------------------------
+                IUnit unit_slice;
+                unitInstances.TryGetValue(cid_app, out unit_slice);
+                br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind)unit_slice;
 
-            return cid_app;
+                // This part is only performed by applications.
+                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
+                pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
+                pmain.createSlices();
+                // --------------------------------------------
+
+                pmain.perform_initialize();
+
+                return cid_app;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                throw e;
+            }
+
         }
 
         private ComponentID createInstanceBaseForAllKinds(string instanceName, string class_name, TypeMap properties)
@@ -309,7 +323,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
 
-            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit)Activator.CreateInstance(assembly_string, class_name).Unwrap();
+            ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
+            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit) obj.Unwrap();
             unit_slice.Id_unit = id_unit;
             unit_slice.Id_concrete = c.Id_concrete;
 
@@ -469,6 +484,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             if (first_connection)
                 DGAC.BackEnd.setupSlice(user_unit, provider_unit, usingPortName);
+
+            user_unit.addSliceAll(provider_unit);
 
             return connection;
         }

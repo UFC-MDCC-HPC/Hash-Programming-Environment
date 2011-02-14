@@ -65,6 +65,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public static string SESSION_KEY = "session";
         //public static string ASSEMBLY_STRING_KEY = "assembly_string";
         public static string COMPONENT_KEY = "id_concrete";
+        public static string ID_FUNCTOR_APP = "id_functor_app";
         //public static string ID_ABSTRACT_KEY = "id_abstract";
         //public static string ID_INNER_KEY = "id_inner";
         public static string UNIT_KEY = "id_interface";

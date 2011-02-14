@@ -787,6 +787,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         nprocs += count;
                     }
 
+                    Connector.commitTransaction();
 
                     if (nprocs != aprocs)
                     {
@@ -814,6 +815,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             worker_properties[Constants.KEY_KEY] = k;
                             worker_properties[Constants.COMPONENT_KEY] = c.Library_path;
                             worker_properties[Constants.UNIT_KEY] = unit.Key ;
+                            worker_properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
 
                             // DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, unit.Key, -1);
                             DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, unit.Key);
@@ -868,7 +870,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         }
                     }
 
-                    Connector.commitTransaction();
 
                 }
                 catch (Exception e)

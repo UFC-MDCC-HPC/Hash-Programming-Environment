@@ -786,30 +786,41 @@ namespace br.ufc.pargo.hpe.backend
 
             public static AbstractComponentFunctorApplication loadACFAFromInstantiator(ComponentFunctorApplicationType instantiator)
             {
-                Connector.openConnection();
+                AbstractComponentFunctorApplication aAppNew = null;
 
-                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath(instantiator.library_path);
+                try
+                {
+                    Connector.openConnection();
 
-                AbstractComponentFunctorApplication aAppNew = new AbstractComponentFunctorApplication();
-                aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
-                aAppNew.Id_abstract = acf.Id_abstract;
-                DGAC.BackEnd.acfadao.insert(aAppNew);
+                    AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath(instantiator.library_path);
 
-                if (instantiator.context_parameter != null)
-                    foreach (ContextParameterType ctx in instantiator.context_parameter)
-                    {
-                        AbstractComponentFunctorApplication acfa_par = loadACFAFromInstantiator(ctx.actual_parameter);
+                    aAppNew = new AbstractComponentFunctorApplication();
+                    aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+                    aAppNew.Id_abstract = acf.Id_abstract;
+                    DGAC.BackEnd.acfadao.insert(aAppNew);
 
-                        SupplyParameterComponent par = new SupplyParameterComponent();
-                        par.Id_abstract = acfa_par.Id_abstract;
-                        par.Id_functor_app = aAppNew.Id_functor_app;
-                        par.Id_parameter = ctx.formal_parameter_id;
-                        par.Id_functor_app_actual = acfa_par.Id_functor_app;
+                    if (instantiator.context_parameter != null)
+                        foreach (ContextParameterType ctx in instantiator.context_parameter)
+                        {
+                            AbstractComponentFunctorApplication acfa_par = loadACFAFromInstantiator(ctx.actual_parameter);
 
-                        DGAC.BackEnd.spdao.insert(par);
-                    }
+                            SupplyParameterComponent par = new SupplyParameterComponent();
+                            par.Id_abstract = acfa_par.Id_abstract;
+                            par.Id_functor_app = aAppNew.Id_functor_app;
+                            par.Id_parameter = ctx.formal_parameter_id;
+                            par.Id_functor_app_actual = acfa_par.Id_functor_app;
 
-                Connector.closeConnection();
+                            DGAC.BackEnd.spdao.insert(par);
+                        }
+
+                 }
+                catch (Exception e)
+                {
+                }
+                finally
+                {
+                    Connector.closeConnection();
+                }
 
                 return aAppNew;
             }
@@ -918,7 +929,7 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
-            public static void calculateInitialTopology(ComponentID cid, string library_path, string my_id_unit, IUnit pmain)
+            public static void calculateInitialTopology(ComponentID cid, string library_path, string my_id_unit, int id_functor_app_startup, IUnit pmain)
             {
                 Connector.openConnection();
 
@@ -966,7 +977,7 @@ namespace br.ufc.pargo.hpe.backend
                     if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)
                         pmain.GlobalRank = rank;
 
-                    IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterface(id_abstract, id_unit);
+                    IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterfaceWithFusions(id_abstract, id_unit);
 
                     if (eiList.Count > 0)
                     {
@@ -1036,7 +1047,7 @@ namespace br.ufc.pargo.hpe.backend
                     pmain.Ranks[i] = pmain_Ranks[i];
                 }
 
-                pmain.setUpParameters(c);
+                pmain.setUpParameters(id_functor_app_startup);
                 pmain.ActualParametersTop = pmain.ActualParameters;
 
                 Connector.closeConnection();
