@@ -15,11 +15,17 @@ DGAC/CCA.cs
 DGAC/WorkerComponentIDImpl.cs
 DGAC/ManagerComponentIDImpl.cs
 DGAC/WorkerServicesImpl.cs
+DGAC/ManagerConnectionIDImpl.cs
+DGAC/WorkerConnectionIDImpl.cs
+DGAC/ManagerComponentClassDescriptionImpl.cs
+DGAC/WorkerComponentClassDescriptionImpl.cs
 DGAC/TypeMapImpl.cs
+DGAC/TypeMapImplWS.cs
 DGAC/ManagerObject.cs
 DGAC/WorkerObject.cs
 DGAC/BackEndEnvironment.cs
 DGAC/externalreferences.cs
+DGAC/CCAExceptionImpl.cs
 
 -target:library
 
