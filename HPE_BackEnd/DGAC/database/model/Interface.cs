@@ -120,14 +120,6 @@ public class Interface {
 
         IList<string> refs = new List<string>();
 
-      //  InterfaceDAO idao = new InterfaceDAO();
-      //  InnerComponentDAO icdao = new InnerComponentDAO();
-      //  SliceDAO sdao = new SliceDAO();
-       // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-      //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-
-        // Look at super type.
-
         AbstractComponentFunctor cThis = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(this.Id_abstract);
         AbstractComponentFunctorApplication cSuperApp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app_supertype);
         if (cSuperApp != null)
@@ -194,9 +186,6 @@ public class Interface {
 
     private InnerComponent findInnerComponentOwnerOfSlice(int Id_abstract, string id_inner)
     {
-     //   InnerComponentDAO icdao = new InnerComponentDAO();
-      //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-      //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
         int Id_abstract_traverse = Id_abstract;
         InnerComponent ic = null;
         while (ic == null && Id_abstract_traverse != 0)
