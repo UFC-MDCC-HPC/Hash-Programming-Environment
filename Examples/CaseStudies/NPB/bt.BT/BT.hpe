@@ -223,7 +223,7 @@
         </unitBounds>
       </port>
       <unitBounds uRef="process">
-        <visualDescription h="10" w="10" x="2" y="2"/>
+        <visualDescription h="10" w="10" x="4" y="14"/>
       </unitBounds>
     </innerComponent>
     <supplyParameter cRef="instance" varName="I"/>
@@ -231,12 +231,12 @@
     <fusion>
       <cRefs>data_partition</cRefs>
       <cRefs>verify</cRefs>
-      <pRef>z</pRef>
+      <pRef>x</pRef>
     </fusion>
     <fusion>
+      <cRefs>data_partition</cRefs>
       <cRefs>verify</cRefs>
-      <cRefs>timer</cRefs>
-      <pRef>mpi</pRef>
+      <pRef>z</pRef>
     </fusion>
     <fusion>
       <cRefs>data_partition</cRefs>
@@ -245,15 +245,15 @@
     </fusion>
     <fusion>
       <cRefs>verify</cRefs>
+      <cRefs>timer</cRefs>
+      <pRef>mpi</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>verify</cRefs>
       <cRefs>exact_rhs</cRefs>
       <cRefs>initialize</cRefs>
       <cRefs>lhsinit</cRefs>
       <pRef>problem_data</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>data_partition</cRefs>
-      <cRefs>verify</cRefs>
-      <pRef>x</pRef>
     </fusion>
     <fusion>
       <cRefs>initialize</cRefs>
@@ -289,18 +289,18 @@
         <originRef cRef="verify" iRef="IVerify"/>
         <visualDescription h="10" w="10" x="67" y="12"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@79ed68" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a48071" repeat="0">
         <visualDescription h="150" w="250" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d163cf" repeat="0" sliceRef="lhsinit">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ec8a6e" repeat="0" sliceRef="lhsinit">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@efd26f" repeat="0" sliceRef="initialize">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@745d92" repeat="0" sliceRef="initialize">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e099cb" repeat="0" sliceRef="exact_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ab24ae" repeat="0" sliceRef="exact_rhs">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@190f46a" repeat="0" sliceRef="verify">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f54044" repeat="0" sliceRef="verify">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
       </protocol>
@@ -342,15 +342,15 @@
         <slice pRef="z" sRef="process"/>
         <slice pRef="z" sRef="verify"/>
       </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="process"/>
-        <slice pRef="y" sRef="verify"/>
-      </port>
       <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="x" sRef="process"/>
         <slice pRef="x" sRef="verify"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="process"/>
+        <slice pRef="y" sRef="verify"/>
       </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
