@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e7ee0dd4691d86154bc4aef6dddd6fc66dc12b451adfb3972cfae0156d711003d5f2513aed8abacc600e6b2541b2524b1e3ce24e15c855bfcfca43ed094671715c97cb446397a550ad4d6f676ee79f12b40c54af2000aa0c238af28c1ecfe390535e20b7c9bb6118ac90f8f729caa0a9de75455169286334fbdd268d562a0498" isAbstract="true" kind="Application" name="BT" packagePath="bt">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="200" y="349">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="class" formFieldId="class" varName="CLASS"/>
+    <interface iRef="IBT" nArgs="0">
+      <visualDescription h="40" w="80" x="240" y="135">
+        <color b="255" g="255" r="0"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBT" private="false" uRef="bt" visibleInterface="true">
+      <visualDescription h="40" w="80" x="240" y="215"/>
+    </unit>
+  </componentInfo>
+</component:component>
