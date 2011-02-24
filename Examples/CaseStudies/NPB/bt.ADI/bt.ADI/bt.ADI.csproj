@@ -66,5 +66,9 @@
       <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
       <Name>bt.problem_size.Instance_BT</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.Solve\bt.solve.Solve\bt.solve.Solve.csproj">
+      <Project>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</Project>
+      <Name>bt.solve.Solve</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
