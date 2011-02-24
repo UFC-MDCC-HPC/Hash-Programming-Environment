@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008182bdd73f0a92bd01babb318eb96bde0a0942b909fa5a968cb3940a88384a9a8f9f16bfc013ec1549ebd7c12261130ba6797731851e25bb4e55f3c8ded80fd3a95be8be597d6e7b244ebad3186c52a9c5236f8bd72d34f8c8931bf6f2777fb24f5bff65b5737b2364313529c6a342a5095a0d352737f9a26fe21af349fa5398" isAbstract="true" kind="Computation" name="ADI" packagePath="bt">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>
