@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="ASCII"?>
-<component:component xmlns:component="http://www.example.org/HashComponent">
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
   <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b6fcf8bff07d9f7e4987f37367427764b048d4f94a1139041b6a04b0b2bb2fb3f6ce1adb5daa6e286e9f81f0d5d05fd960a39c23ef5310ff0c9fd22ce9a54312ca51e32d34f5be744ed64bb0be4bf6fc420eff75fdafa7b935460695e5d4e31088b42e26a793aa00f86ecf2e296a6cd418acef4f37aa91c12ec6a76182251a1" isAbstract="true" kind="Qualifier" name="Method" packagePath="bt.solve">
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>
     </visualAttributes>
   </header>
-  <componentInfo/>
+  <componentInfo>
+    <interface iRef="IMethod" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace bt.solve.Method { &#xA;&#xA;public interface BaseIMethod : IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIMethod.cs" srcType="base" uri="bt.solve.Method/bin/1.0.0.0/BaseIMethod.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace bt.solve.Method { &#xA;&#xA;public interface IMethod : BaseIMethod&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IMethod.cs" srcType="user" uri="bt.solve.Method/bin/1.0.0.0/IMethod.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/bt.solve.Method/bin/1.0.0.0/BaseIMethod.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="64" y="52">
+        <color b="128" g="0" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IMethod" private="false" uRef="method" visibleInterface="true">
+      <visualDescription h="40" w="80" x="68" y="153"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="method"/>
+      <visualDescription h="20" w="20" x="203" y="166"/>
+    </enumerator>
+  </componentInfo>
 </component:component>
