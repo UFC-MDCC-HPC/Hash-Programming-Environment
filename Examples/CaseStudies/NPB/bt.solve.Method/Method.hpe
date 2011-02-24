@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b6fcf8bff07d9f7e4987f37367427764b048d4f94a1139041b6a04b0b2bb2fb3f6ce1adb5daa6e286e9f81f0d5d05fd960a39c23ef5310ff0c9fd22ce9a54312ca51e32d34f5be744ed64bb0be4bf6fc420eff75fdafa7b935460695e5d4e31088b42e26a793aa00f86ecf2e296a6cd418acef4f37aa91c12ec6a76182251a1" isAbstract="true" kind="Qualifier" name="Method" packagePath="bt.solve">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>
