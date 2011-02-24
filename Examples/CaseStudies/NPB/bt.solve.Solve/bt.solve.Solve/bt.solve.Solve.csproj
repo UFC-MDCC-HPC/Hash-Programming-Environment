@@ -74,5 +74,9 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.Method\bt.solve.Method\bt.solve.Method.csproj">
+      <Project>{971B7B2F-278F-48A5-B839-1A0DEC43F72B}</Project>
+      <Name>bt.solve.Method</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
