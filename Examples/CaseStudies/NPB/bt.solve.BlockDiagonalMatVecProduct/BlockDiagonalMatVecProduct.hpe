@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000252d775379cebf63a7f8e34e988e9c9db5bf5116e9ac273e68386684f568e50fa4cdd08a69d4f36a4dd1de6585e158b0930750711bf3839751e20c11a6511f528b5a8e8f24febeb3df617041970ba4a3ac921131ded6267186a2dffe7facffe8cb7b1786b8d25789affde94348e909966d6297315c5cc67a50b455db740115b8" isAbstract="true" kind="Computation" name="BlockDiagonalMatVecProduct" packagePath="bt.solve">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>
