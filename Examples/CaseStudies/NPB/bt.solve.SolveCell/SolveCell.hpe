@@ -33,10 +33,130 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b6fcf8bff07d9f7e4987f37367427764b048d4f94a1139041b6a04b0b2bb2fb3f6ce1adb5daa6e286e9f81f0d5d05fd960a39c23ef5310ff0c9fd22ce9a54312ca51e32d34f5be744ed64bb0be4bf6fc420eff75fdafa7b935460695e5d4e31088b42e26a793aa00f86ecf2e296a6cd418acef4f37aa91c12ec6a76182251a1" localRef="method" location="bt.solve.Method/Method.hpe" name="Method" package="bt.solve" parameter_id="method" exposed="false">
-      <visualDescription h="48" w="71" x="139" y="323">
+      <visualDescription h="48" w="71" x="137" y="339">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="method">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000252d775379cebf63a7f8e34e988e9c9db5bf5116e9ac273e68386684f568e50fa4cdd08a69d4f36a4dd1de6585e158b0930750711bf3839751e20c11a6511f528b5a8e8f24febeb3df617041970ba4a3ac921131ded6267186a2dffe7facffe8cb7b1786b8d25789affde94348e909966d6297315c5cc67a50b455db740115b8" localRef="binvcrhs" location="bt.solve.BlockDiagonalMatVecProduct/BlockDiagonalMatVecProduct.hpe" name="BlockDiagonalMatVecProduct" package="bt.solve" exposed="false">
+      <visualDescription h="33" w="77" x="248" y="235">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="orientation" varName="DIR"/>
+      <parameter formFieldId="class" varName="C"/>
+      <parameter formFieldId="method" varName="MTH"/>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+        <visualDescription h="37" w="106" x="422" y="103">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+        <visualDescription h="44" w="77" x="444" y="220">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="matvecproduct">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000252d775379cebf63a7f8e34e988e9c9db5bf5116e9ac273e68386684f568e50fa4cdd08a69d4f36a4dd1de6585e158b0930750711bf3839751e20c11a6511f528b5a8e8f24febeb3df617041970ba4a3ac921131ded6267186a2dffe7facffe8cb7b1786b8d25789affde94348e909966d6297315c5cc67a50b455db740115b8" localRef="matmulsub" location="bt.solve.BlockDiagonalMatVecProduct/BlockDiagonalMatVecProduct.hpe" name="BlockDiagonalMatVecProduct" package="bt.solve" exposed="false">
+      <visualDescription h="45" w="79" x="250" y="175">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="orientation" varName="DIR"/>
+      <parameter formFieldId="class" varName="C"/>
+      <parameter formFieldId="method" varName="MTH"/>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+        <visualDescription h="37" w="106" x="422" y="103">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+        <visualDescription h="44" w="77" x="444" y="220">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="matvecproduct">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000252d775379cebf63a7f8e34e988e9c9db5bf5116e9ac273e68386684f568e50fa4cdd08a69d4f36a4dd1de6585e158b0930750711bf3839751e20c11a6511f528b5a8e8f24febeb3df617041970ba4a3ac921131ded6267186a2dffe7facffe8cb7b1786b8d25789affde94348e909966d6297315c5cc67a50b455db740115b8" localRef="binvrhs" location="bt.solve.BlockDiagonalMatVecProduct/BlockDiagonalMatVecProduct.hpe" name="BlockDiagonalMatVecProduct" package="bt.solve" exposed="false">
+      <visualDescription h="42" w="75" x="249" y="72">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="orientation" varName="DIR"/>
+      <parameter formFieldId="class" varName="C"/>
+      <parameter formFieldId="method" varName="MTH"/>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+        <visualDescription h="37" w="106" x="422" y="103">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+        <visualDescription h="44" w="77" x="444" y="220">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="matvecproduct">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000252d775379cebf63a7f8e34e988e9c9db5bf5116e9ac273e68386684f568e50fa4cdd08a69d4f36a4dd1de6585e158b0930750711bf3839751e20c11a6511f528b5a8e8f24febeb3df617041970ba4a3ac921131ded6267186a2dffe7facffe8cb7b1786b8d25789affde94348e909966d6297315c5cc67a50b455db740115b8" localRef="matvecsub" location="bt.solve.BlockDiagonalMatVecProduct/BlockDiagonalMatVecProduct.hpe" name="BlockDiagonalMatVecProduct" package="bt.solve" exposed="false">
+      <visualDescription h="40" w="83" x="251" y="125">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="orientation" varName="DIR"/>
+      <parameter formFieldId="class" varName="C"/>
+      <parameter formFieldId="method" varName="MTH"/>
+      <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+        <visualDescription h="37" w="106" x="422" y="103">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+        <visualDescription h="44" w="77" x="444" y="220">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <unitBounds uRef="matvecproduct">
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
@@ -44,14 +164,32 @@
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <parameter componentRef="orientation" formFieldId="orientation" varName="DIR"/>
     <parameter componentRef="method" formFieldId="method" varName="MTH"/>
-    <interface iRef="ISolveCell" nArgs="2">
+    <fusion>
+      <cRefs>matvecsub</cRefs>
+      <cRefs>binvrhs</cRefs>
+      <cRefs>matmulsub</cRefs>
+      <cRefs>binvcrhs</cRefs>
+      <pRef>problem_data</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>matvecsub</cRefs>
+      <cRefs>binvrhs</cRefs>
+      <cRefs>matmulsub</cRefs>
+      <cRefs>binvcrhs</cRefs>
+      <pRef>blocks_info</pRef>
+    </fusion>
+    <interface iRef="ISolveCell" nArgs="4">
       <slice isRef="axis">
         <originRef cRef="orientation" iRef="IAxis"/>
-        <visualDescription h="10" w="10" x="39" y="26"/>
+        <visualDescription h="10" w="10" x="105" y="61"/>
       </slice>
       <slice isRef="method">
         <originRef cRef="method" iRef="IMethod"/>
-        <visualDescription h="10" w="10" x="54" y="27"/>
+        <visualDescription h="10" w="10" x="84" y="62"/>
+      </slice>
+      <slice isRef="matvecproduct">
+        <originRef cRef="binvcrhs" iRef="IBlockDiagonalMatVecProduct"/>
+        <visualDescription h="10" w="10" x="55" y="5"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace bt.solve.SolveCell { &#xA;&#xA;public interface BaseISolveCell : IComputationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseISolveCell.cs" srcType="base" uri="bt.solve.SolveCell/bin/1.0.0.0/BaseISolveCell.dll" versionId="1.0.0.0"/>
@@ -59,20 +197,62 @@
           <dependency>%WORKSPACE/bt.solve.SolveCell/bin/1.0.0.0/BaseISolveCell.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="46" y="102">
+      <visualDescription h="82" w="147" x="17" y="57">
         <color b="255" g="128" r="255"/>
       </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="matvecproduct"/>
+        <slice pRef="problem" sRef="matvecproduct"/>
+        <slice pRef="problem" sRef="matvecproduct"/>
+        <slice pRef="problem" sRef="matvecproduct"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+      </port>
       <parameter iname="IAxis" order="0" parid="orientation" uname="axis" varid="DIR"/>
       <parameter iname="IMethod" order="1" parid="method" uname="method" varid="MTH"/>
+      <parameter iname="IInstance" order="2" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="3" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="ISolveCell" private="false" uRef="solve_cell" visibleInterface="true">
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="true">
+        <visualDescription h="10" w="10" x="61" y="44"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
+        <visualDescription h="10" w="10" x="79" y="42"/>
+      </slices>
       <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
-        <visualDescription h="10" w="10" x="39" y="26"/>
+        <visualDescription h="10" w="10" x="6" y="36"/>
       </slices>
       <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
-        <visualDescription h="10" w="10" x="54" y="27"/>
+        <visualDescription h="10" w="10" x="26" y="37"/>
       </slices>
-      <visualDescription h="40" w="80" x="77" y="191"/>
+      <slices cRef="binvcrhs" replica="0" uRef="matvecproduct" sliceName="matvecproduct" transitive="false">
+        <visualDescription h="10" w="10" x="68" y="39"/>
+        <port>blocks</port>
+        <port>problem</port>
+      </slices>
+      <slices cRef="matmulsub" replica="0" uRef="matvecproduct" sliceName="matvecproduct" transitive="false">
+        <visualDescription h="10" w="10" x="78" y="24"/>
+        <port>blocks</port>
+        <port>problem</port>
+      </slices>
+      <slices cRef="matvecsub" replica="0" uRef="matvecproduct" sliceName="matvecproduct" transitive="false">
+        <visualDescription h="10" w="10" x="74" y="11"/>
+        <port>blocks</port>
+        <port>problem</port>
+      </slices>
+      <slices cRef="binvrhs" replica="0" uRef="matvecproduct" sliceName="matvecproduct" transitive="false">
+        <visualDescription h="10" w="10" x="51" y="5"/>
+        <port>blocks</port>
+        <port>problem</port>
+      </slices>
+      <visualDescription h="55" w="90" x="47" y="193"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
@@ -86,13 +266,39 @@
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
       <visualDescription h="20" w="20" x="203" y="166"/>
     </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+      <originRef>binvcrhs</originRef>
+      <originRef>method</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="binvcrhs" uRef="matvecproduct"/>
+      <visualDescription h="35" w="35" x="181" y="263"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+      <originRef>matmulsub</originRef>
+      <originRef>method</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matmulsub" uRef="matvecproduct"/>
+      <visualDescription h="44" w="47" x="158" y="260"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+      <originRef>binvrhs</originRef>
+      <originRef>method</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="binvrhs" uRef="matvecproduct"/>
+      <visualDescription h="35" w="35" x="173" y="250"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+      <originRef>matvecsub</originRef>
+      <originRef>method</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="matvecsub" uRef="matvecproduct"/>
+      <visualDescription h="35" w="35" x="169" y="258"/>
+    </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>orientation</originRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <originRef>matmulsub</originRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <originRef>binvrhs</originRef>
         <originRef>method</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
