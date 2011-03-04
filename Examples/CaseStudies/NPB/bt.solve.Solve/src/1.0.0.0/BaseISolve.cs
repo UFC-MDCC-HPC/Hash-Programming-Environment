@@ -17,7 +17,6 @@ public interface BaseISolve<DIR, MTH, I, C> : IComputationKind
 where DIR:IAxis
 where MTH:IMethod
 where I:IInstance<C>
-where I:IInstance<C>
 where C:IClass
 {
 
