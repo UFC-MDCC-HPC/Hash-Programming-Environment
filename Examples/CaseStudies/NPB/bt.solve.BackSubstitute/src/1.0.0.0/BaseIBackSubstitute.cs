@@ -13,7 +13,6 @@ namespace bt.solve.BackSubstitute {
 public interface BaseIBackSubstitute<MTH, I, C, DIR> : IComputationKind 
 where MTH:IMethod
 where I:IInstance<C>
-where I:IInstance<C>
 where C:IClass
 where DIR:IAxis
 {
