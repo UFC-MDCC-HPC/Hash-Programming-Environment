@@ -70,5 +70,9 @@
       <Project>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</Project>
       <Name>bt.solve.Solve</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.Method\bt.solve.Method\bt.solve.Method.csproj">
+      <Project>{971B7B2F-278F-48A5-B839-1A0DEC43F72B}</Project>
+      <Name>bt.solve.Method</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

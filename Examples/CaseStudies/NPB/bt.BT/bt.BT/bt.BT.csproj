@@ -10,6 +10,8 @@
     <RootNamespace>bt.BT</RootNamespace>
     <AssemblyName>bt.BT</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\BT.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,9 +60,9 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\sp.problem_size.Instance_SP\sp.problem_size.Instance_SP\sp.problem_size.Instance_SP.csproj">
-      <Project>{0BC65DA6-CE75-464F-B807-BD41C4773F55}</Project>
-      <Name>sp.problem_size.Instance_SP</Name>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
