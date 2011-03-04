@@ -12,7 +12,6 @@ namespace bt.solve.PackUnpack {
 
 public interface BaseIPackUnpack<I, C, MTH, DIR> : IComputationKind 
 where I:IInstance<C>
-where I:IInstance<C>
 where C:IClass
 where MTH:IMethod
 where DIR:IAxis
