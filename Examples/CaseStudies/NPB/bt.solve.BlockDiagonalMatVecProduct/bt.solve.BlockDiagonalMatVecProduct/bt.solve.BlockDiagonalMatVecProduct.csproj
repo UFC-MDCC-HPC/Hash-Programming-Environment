@@ -10,6 +10,8 @@
     <RootNamespace>bt.solve.BlockDiagonalMatVecProduct</RootNamespace>
     <AssemblyName>bt.solve.BlockDiagonalMatVecProduct</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\BlockDiagonalMatVecProduct.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
