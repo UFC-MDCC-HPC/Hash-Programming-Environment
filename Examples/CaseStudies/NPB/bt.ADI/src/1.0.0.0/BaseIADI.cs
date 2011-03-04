@@ -18,11 +18,7 @@ where C:IClass
 	ICell Z {get;}
 	ICell X {get;}
 	IBlocks Blocks {get;}
-	IBlocks Blocks {get;}
-	IBlocks Blocks {get;}
 	IMPIDirect Mpi {get;}
-	IProblemDefinition<IInstance<C>, C> Problem {get;}
-	IProblemDefinition<IInstance<C>, C> Problem {get;}
 	IProblemDefinition<IInstance<C>, C> Problem {get;}
 
 
