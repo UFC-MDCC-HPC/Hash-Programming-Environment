@@ -32,4 +32,13 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseISolveCell.cs">
+      <Link>BaseISolveCell.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\ISolveCell.cs">
+      <Link>ISolveCell.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

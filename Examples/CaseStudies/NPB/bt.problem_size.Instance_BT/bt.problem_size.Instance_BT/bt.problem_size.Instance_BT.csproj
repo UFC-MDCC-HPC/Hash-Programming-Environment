@@ -49,4 +49,13 @@
       <Name>common.problem_size.Instance</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIInstance_BT.cs">
+      <Link>BaseIInstance_BT.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IInstance_BT.cs">
+      <Link>IInstance_BT.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

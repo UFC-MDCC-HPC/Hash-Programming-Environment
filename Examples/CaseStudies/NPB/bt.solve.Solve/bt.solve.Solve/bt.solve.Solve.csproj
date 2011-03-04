@@ -81,4 +81,13 @@
       <Name>bt.solve.Method</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseISolve.cs">
+      <Link>BaseISolve.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\ISolve.cs">
+      <Link>ISolve.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

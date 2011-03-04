@@ -79,5 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIADI.cs">
+      <Link>BaseIADI.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IADI.cs">
+      <Link>IADI.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

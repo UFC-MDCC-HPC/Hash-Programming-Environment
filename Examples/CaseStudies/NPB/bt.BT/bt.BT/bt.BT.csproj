@@ -65,4 +65,13 @@
       <Name>bt.problem_size.Instance_BT</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIBT.cs">
+      <Link>BaseIBT.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IBT.cs">
+      <Link>IBT.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

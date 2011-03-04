@@ -39,4 +39,13 @@
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIMethod.cs">
+      <Link>BaseIMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IMethod.cs">
+      <Link>IMethod.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>
