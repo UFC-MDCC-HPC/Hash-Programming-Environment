@@ -77,4 +77,7 @@
       <Name>bt.solve.Method</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
 </Project>
