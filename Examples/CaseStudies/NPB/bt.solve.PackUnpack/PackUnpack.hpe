@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000eb723329ee00227e802ee5b5d2a1720376b76809a59062faaf7f2468d4443235b8fbd3d43ccc7dcbf1fbe17d42b8c85df9d2f1bf740a279277b0110b96f52e4d71514f5faebd9911defffd31277c154e6a80dff53744525357439865aa06acf9a24ac5ee483240340f550093aa9bdb39098cab8b282fff64241ec9d36dfbc987" isAbstract="true" kind="Computation" name="PackUnpack" packagePath="bt.solve">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>
