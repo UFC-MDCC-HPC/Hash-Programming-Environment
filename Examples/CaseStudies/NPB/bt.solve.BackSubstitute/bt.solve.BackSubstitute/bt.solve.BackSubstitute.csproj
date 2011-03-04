@@ -6,7 +6,7 @@
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D8977F13-73E3-492A-A482-8D54A63BB8A1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.BackSubstitute</RootNamespace>
     <AssemblyName>bt.solve.BackSubstitute</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>

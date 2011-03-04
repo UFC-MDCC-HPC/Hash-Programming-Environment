@@ -6,7 +6,7 @@
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7B6DC294-680C-4FD8-9407-BBBFD92C2752}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.SolveCell</RootNamespace>
     <AssemblyName>bt.solve.SolveCell</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
