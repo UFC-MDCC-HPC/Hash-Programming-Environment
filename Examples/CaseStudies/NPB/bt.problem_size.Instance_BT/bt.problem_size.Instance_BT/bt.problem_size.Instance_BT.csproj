@@ -8,7 +8,7 @@
     <ProjectGuid>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.problem_size.Instance_BT</RootNamespace>
-    <AssemblyName>bt.problem_size.Instance_BT</AssemblyName>
+    <AssemblyName>Instance_BT</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Instance_BT.snk</AssemblyOriginatorKeyFile>

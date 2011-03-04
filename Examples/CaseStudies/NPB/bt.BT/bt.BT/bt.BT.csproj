@@ -8,7 +8,7 @@
     <ProjectGuid>{5207C0E1-FEA2-4093-A6B4-EB7BBEDC11EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.BT</RootNamespace>
-    <AssemblyName>bt.BT</AssemblyName>
+    <AssemblyName>BT</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\BT.snk</AssemblyOriginatorKeyFile>
