@@ -1,10 +1,167 @@
 <?xml version="1.0" encoding="ASCII"?>
-<component:component xmlns:component="http://www.example.org/HashComponent">
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
   <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000abb430b49cbc36678e34814f9fbb657761df8c33e609c13bb873618b7d5aacfda08ae2a4173c6f0df3afc8f1206ace78548e7af4792d8c4e2f43f12e8fb0774c634bf856618d786fab21f55bfa4d35c71c47297def96a92ca400d2ceaebcb9a4d0f32994e7d24afd5fc1296f2e8befd31890355bbfce7c78b27b341fa6a5779a" isAbstract="true" kind="Computation" name="BackSubstitute" packagePath="bt.solve">
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>
     </visualAttributes>
   </header>
-  <componentInfo/>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b6fcf8bff07d9f7e4987f37367427764b048d4f94a1139041b6a04b0b2bb2fb3f6ce1adb5daa6e286e9f81f0d5d05fd960a39c23ef5310ff0c9fd22ce9a54312ca51e32d34f5be744ed64bb0be4bf6fc420eff75fdafa7b935460695e5d4e31088b42e26a793aa00f86ecf2e296a6cd418acef4f37aa91c12ec6a76182251a1" localRef="method" location="bt.solve.Method/Method.hpe" name="Method" package="bt.solve" parameter_id="method" exposed="false">
+      <visualDescription h="60" w="99" x="260" y="469">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="method">
+        <visualDescription h="10" w="10" x="45" y="4"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+      <visualDescription h="63" w="112" x="404" y="288">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="problem">
+        <visualDescription h="10" w="10" x="5" y="26"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+      <visualDescription h="63" w="108" x="369" y="183">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="blocks">
+        <visualDescription h="10" w="10" x="6" y="26"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="170" y="412">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance_type" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" parameter_id="instance_type" exposed="false">
+      <visualDescription h="74" w="123" x="335" y="455">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000454b3cd77d4e1bd37b45801a6d225edceaa85080940d8ff93d8308c4a585601d0e0b00c70d55eb34cfa4de904d0234a5454ee4f10a3d46be2ec77520da0d55fa8d959e0f2ecbf8fd25f8d4e676e2b92a40e6ce7e492f5feb6c31345f8c7c887f7e2ecb139b95c71dcf3ca9aa44f0bdd07cf60319eb2676344bda9667fca51abe" localRef="orientation" location="common.orientation.Axis/Axis.hpe" name="Axis" package="common.orientation" parameter_id="orientation" exposed="false">
+      <visualDescription h="74" w="85" x="135" y="455">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="axis">
+        <visualDescription h="10" w="10" x="40" y="6"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="method" formFieldId="method" varName="MTH"/>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
+    <parameter componentRef="orientation" formFieldId="orientation" varName="DIR"/>
+    <interface iRef="IBackSubstitute" nArgs="4">
+      <slice isRef="method">
+        <originRef cRef="method" iRef="IMethod"/>
+        <visualDescription h="10" w="10" x="77" y="13"/>
+      </slice>
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="57" y="37"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="20" y="9"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="17" y="37"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using bt.solve.Method;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace bt.solve.BackSubstitute { &#xA;&#xA;public interface BaseIBackSubstitute&lt;MTH, I, C, DIR> : IComputationKind &#xA;where MTH:IMethod&#xA;where I:IInstance&lt;C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBackSubstitute.cs" srcType="base" uri="bt.solve.BackSubstitute/bin/1.0.0.0/BaseIBackSubstitute.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>bt.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using bt.solve.Method;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace bt.solve.BackSubstitute { &#xA;&#xA;public interface IBackSubstitute&lt;MTH, I, C, DIR> : BaseIBackSubstitute&lt;MTH, I, C, DIR>&#xA;where MTH:IMethod&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBackSubstitute.cs" srcType="user" uri="bt.solve.BackSubstitute/bin/1.0.0.0/IBackSubstitute.dll" versionId="1.0.0.0">
+          <dependency>bt.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>%WORKSPACE/bt.solve.BackSubstitute/bin/1.0.0.0/BaseIBackSubstitute.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="56" w="101" x="118" y="165">
+        <color b="128" g="128" r="0"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <parameter iname="IMethod" order="0" parid="method" uname="method" varid="MTH"/>
+      <parameter iname="IInstance" order="1" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="2" parid="class" uname="class" varid="C"/>
+      <parameter iname="IAxis" order="3" parid="orientation" uname="axis" varid="DIR"/>
+    </interface>
+    <unit iRef="IBackSubstitute" private="false" uRef="back_substitute" visibleInterface="true">
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="87" y="7"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="7"/>
+      </slices>
+      <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
+        <visualDescription h="10" w="10" x="28" y="45"/>
+      </slices>
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+        <visualDescription h="10" w="10" x="4" y="43"/>
+      </slices>
+      <visualDescription h="56" w="101" x="178" y="306"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+      <originRef>method</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
+      <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
+      <visualDescription h="20" w="20" x="203" y="166"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
+      <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
+      <visualDescription h="30" w="32" x="309" y="368"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>orientation</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
+      <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>orientation</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <originRef>method</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+  </componentInfo>
 </component:component>
