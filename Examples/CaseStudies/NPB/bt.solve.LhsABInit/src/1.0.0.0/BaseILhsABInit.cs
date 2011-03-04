@@ -8,7 +8,6 @@ namespace bt.solve.LhsABInit {
 
 public interface BaseILhsABInit<I, C> : IComputationKind 
 where I:IInstance_BT<C>
-where I:IInstance_BT<C>
 where C:IClass
 {
 
