@@ -54,8 +54,13 @@
         <visualDescription h="10" w="10" x="65" y="24"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace bt.solve.LhsABInit { &#xA;&#xA;public interface BaseILhsABInit : IComputationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILhsABInit.cs" srcType="base" uri="bt.solve.LhsABInit/bin/1.0.0.0/BaseILhsABInit.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace bt.solve.LhsABInit { &#xA;&#xA;public interface ILhsABInit : BaseILhsABInit{&#xA;   int size {get;set;}&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILhsABInit.cs" srcType="user" uri="bt.solve.LhsABInit/bin/1.0.0.0/ILhsABInit.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace bt.solve.LhsABInit { &#xA;&#xA;public interface BaseILhsABInit&lt;I, C> : IComputationKind &#xA;where I:IInstance_BT&lt;C>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILhsABInit.cs" srcType="base" uri="bt.solve.LhsABInit/bin/1.0.0.0/BaseILhsABInit.dll" versionId="1.0.0.0">
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace bt.solve.LhsABInit { &#xA;&#xA;public interface ILhsABInit&lt;I, C> : BaseILhsABInit&lt;I, C>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILhsABInit.cs" srcType="user" uri="bt.solve.LhsABInit/bin/1.0.0.0/ILhsABInit.dll" versionId="1.0.0.0">
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/bt.solve.LhsABInit/bin/1.0.0.0/BaseILhsABInit.dll</dependency>
         </file>
       </sources>
