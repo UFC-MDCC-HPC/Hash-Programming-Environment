@@ -12,7 +12,6 @@ namespace bt.solve.BlockDiagonalMatVecProduct {
 
 public interface BaseIBlockDiagonalMatVecProduct<I, C, DIR, MTH> : IComputationKind 
 where I:IInstance<C>
-where I:IInstance<C>
 where C:IClass
 where DIR:IAxis
 where MTH:IMethod
