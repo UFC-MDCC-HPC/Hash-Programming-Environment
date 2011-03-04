@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000abb430b49cbc36678e34814f9fbb657761df8c33e609c13bb873618b7d5aacfda08ae2a4173c6f0df3afc8f1206ace78548e7af4792d8c4e2f43f12e8fb0774c634bf856618d786fab21f55bfa4d35c71c47297def96a92ca400d2ceaebcb9a4d0f32994e7d24afd5fc1296f2e8befd31890355bbfce7c78b27b341fa6a5779a" isAbstract="true" kind="Computation" name="BackSubstitute" packagePath="bt.solve">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>
