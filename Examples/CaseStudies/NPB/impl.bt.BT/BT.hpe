@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000039b582fe463a1ff49c270b45eadadbac5a59b0dac54fe433fc17aea566349527ef4ea467332d7f2165fa5ca2d000127117ee4354ccc448d9a68a2581f26f97f6a0f438110f0858e8e72165783986dc4c6ea118840b0b1b20ec4bdbd98ba6d22cf214dac3ae467cd900f96187ea0d5b153e7291d8a5850ae2270eb951122a5f96" isAbstract="false" kind="Application" name="BT" packagePath="impl.bt">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e7ee0dd4691d86154bc4aef6dddd6fc66dc12b451adfb3972cfae0156d711003d5f2513aed8abacc600e6b2541b2524b1e3ce24e15c855bfcfca43ed094671715c97cb446397a550ad4d6f676ee79f12b40c54af2000aa0c238af28c1ecfe390535e20b7c9bb6118ac90f8f729caa0a9de75455169286334fbdd268d562a0498" localRef="base" location="bt.BT/BT.hpe" name="BT" package="bt" version="1.0.0.0">
+        <visualDescription h="41" w="83" x="159" y="347">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="CLASS"/>
+        <unitBounds uRef="bt">
+          <visualDescription h="10" w="10" x="35" y="5"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="68" y="375">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="CLASS"/>
+    <interface iRef="IBTImpl" nArgs="1">
+      <slice isRef="instance">
+        <originRef cRef="instance" iRef="IInstance_BT"/>
+        <visualDescription h="10" w="10" x="57" y="65"/>
+      </slice>
+      <slice isRef="lhsinit">
+        <originRef cRef="lhsinit" iRef="ILHSInit"/>
+        <visualDescription h="10" w="10" x="105" y="3"/>
+      </slice>
+      <slice isRef="initialize">
+        <originRef cRef="initialize" iRef="IInitialize"/>
+        <visualDescription h="10" w="10" x="6" y="67"/>
+      </slice>
+      <slice isRef="timer">
+        <originRef cRef="timer" iRef="ITimer"/>
+        <visualDescription h="10" w="10" x="18" y="36"/>
+      </slice>
+      <slice isRef="exact_rhs">
+        <originRef cRef="exact_rhs" iRef="IExactRHS"/>
+        <visualDescription h="10" w="10" x="36" y="35"/>
+      </slice>
+      <slice isRef="process">
+        <originRef cRef="data_partition" iRef="IBlocks3D"/>
+        <visualDescription h="10" w="10" x="44" y="20"/>
+      </slice>
+      <slice isRef="verify">
+        <originRef cRef="verify" iRef="IVerify"/>
+        <visualDescription h="10" w="10" x="67" y="12"/>
+      </slice>
+      <slice isRef="adi">
+        <originRef cRef="adi" iRef="IADI"/>
+        <visualDescription h="10" w="10" x="5" y="28"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@27c604" repeat="0">
+        <visualDescription h="250" w="330" x="175" y="125"/>
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@13961ed" repeat="0">
+          <visualDescription h="150" w="250" x="70" y="50"/>
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4c394a" repeat="0" sliceRef="lhsinit">
+            <visualDescription h="50" w="50" x="10" y="50"/>
+          </action>
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@45589d" repeat="0" sliceRef="initialize">
+            <visualDescription h="50" w="50" x="70" y="50"/>
+          </action>
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@bcb3c3" repeat="0" sliceRef="exact_rhs">
+            <visualDescription h="50" w="50" x="130" y="50"/>
+          </action>
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@bde44e" repeat="0" sliceRef="verify">
+            <visualDescription h="50" w="50" x="190" y="50"/>
+          </action>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d7f4a8" repeat="0" sliceRef="adi">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
+      <visualDescription h="53" w="122" x="133" y="158">
+        <color b="255" g="255" r="0"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="lhsinit"/>
+        <slice pRef="problem" sRef="initialize"/>
+        <slice pRef="problem" sRef="exact_rhs"/>
+        <slice pRef="problem" sRef="verify"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="lhsinit"/>
+        <slice pRef="blocks" sRef="initialize"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="timer"/>
+        <slice pRef="mpi" sRef="verify"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="exact_rhs"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="process"/>
+        <slice pRef="y" sRef="verify"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="z" sRef="process"/>
+        <slice pRef="z" sRef="verify"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="process"/>
+        <slice pRef="x" sRef="verify"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="process"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="verify"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="z" sRef="adi"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="adi"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="adi"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="adi"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="adi"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="adi"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="adi"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="adi"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="adi"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="adi"/>
+      </port>
+      <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
+    </interface>
+    <unit iRef="IBTImpl" private="false" uRef="bt" visibleInterface="true">
+      <super cRef="base" uRef="bt"/>
+      <slices cRef="instance" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="21" y="28"/>
+      </slices>
+      <slices cRef="lhsinit" replica="0" uRef="lhsinit" sliceName="lhsinit" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="29"/>
+      </slices>
+      <slices cRef="initialize" replica="0" uRef="initialize" sliceName="initialize" transitive="false">
+        <visualDescription h="10" w="10" x="36" y="28"/>
+      </slices>
+      <slices cRef="timer" replica="0" uRef="timer" sliceName="timer" transitive="false">
+        <visualDescription h="10" w="10" x="52" y="3"/>
+      </slices>
+      <slices cRef="exact_rhs" replica="0" uRef="exact_rhs" sliceName="exact_rhs" transitive="false">
+        <visualDescription h="10" w="10" x="48" y="29"/>
+      </slices>
+      <slices cRef="data_partition" replica="0" uRef="process" sliceName="process" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="17"/>
+      </slices>
+      <slices cRef="verify" replica="0" uRef="verify" sliceName="verify" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="3"/>
+      </slices>
+      <slices cRef="adi" replica="0" uRef="adi" sliceName="adi" transitive="false">
+        <visualDescription h="10" w="10" x="5" y="28"/>
+      </slices>
+      <visualDescription h="40" w="80" x="205" y="249"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>exact_rhs</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="bt"/>
+      <visualDescription h="29" w="28" x="433" y="125"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>verify</originRef>
+      <originRef>error_norm</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="bt"/>
+      <visualDescription h="48" w="44" x="364" y="245"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>adi</originRef>
+      <originRef>compute_rhs</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>speed</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="bt"/>
+      <visualDescription h="24" w="26" x="459" y="401"/>
+    </enumerator>
+    <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>base</originRef>
+        <originRef>verify</originRef>
+        <originRef>error_norm</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>base</originRef>
+        <originRef>adi</originRef>
+        <originRef>compute_rhs</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>base</originRef>
+        <originRef>exact_rhs</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>speed</originRef>
+      </fusionOfReplicators>
+    </fusionsOfReplicators>
+  </componentInfo>
+</component:component>
