@@ -2,11 +2,13 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
+using common.problem_size.Class;
 using bt.BT;
 
 namespace impl.bt.BT { 
 
 public class IBTImpl<IClass> : BaseIBTImpl<IClass>, IBT<IClass>
+where CLASS:IClass
 {
 
 public IBTImpl() { 
