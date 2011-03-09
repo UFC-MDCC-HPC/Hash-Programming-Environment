@@ -25,6 +25,28 @@ public abstract class BaseIBTImpl<IClass>: Application, BaseIBT<IClass>
 where CLASS:IClass
 {
 
+#region MyRegion
+		
+public PROBLEM_CLASS problem_class;
+		
+protected int ncells;
+protected int[,] cell_size;
+protected int[] grid_points;		
+protected int problem_size;
+		
+override public void initialize()
+{	
+	cell_size = Blocks.cell_size;	
+	
+	problem_size = Instance.problem_size;			
+	problem_class = Instance.CLASS;								
+	
+	ncells = Problem.NCells;			
+	grid_points = Problem.grid_points;			
+}
+		
+#endregion
+
 private ICell z = null;
 
 protected ICell Z {
