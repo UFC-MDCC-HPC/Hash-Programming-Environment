@@ -80,7 +80,7 @@
         <visualDescription h="10" w="10" x="48" y="51"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using bt.solve.Method;&#xA;&#xA;namespace bt.solve.BlockDiagonalMatVecProduct { &#xA;&#xA;public interface BaseIBlockDiagonalMatVecProduct&lt;I, C, DIR, MTH> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlockDiagonalMatVecProduct.cs" srcType="base" uri="bt.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/BaseIBlockDiagonalMatVecProduct.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using bt.solve.Method;&#xA;&#xA;namespace bt.solve.BlockDiagonalMatVecProduct { &#xA;&#xA;public interface BaseIBlockDiagonalMatVecProduct&lt;I, C, DIR, MTH> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlockDiagonalMatVecProduct.cs" srcType="base" uri="bt.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/BaseIBlockDiagonalMatVecProduct.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
@@ -134,18 +134,21 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="34" w="34" x="576" y="249"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="497" y="226"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="35" w="35" x="231" y="387"/>
     </enumerator>
     <fusionsOfReplicators>

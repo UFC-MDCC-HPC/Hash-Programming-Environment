@@ -63,24 +63,24 @@
     <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="orientation" formFieldId="orientation" varName="DIR"/>
     <interface iRef="IBackSubstitute" nArgs="4">
-      <slice isRef="method">
-        <originRef cRef="method" iRef="IMethod"/>
-        <visualDescription h="10" w="10" x="77" y="13"/>
-      </slice>
       <slice isRef="problem">
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="57" y="37"/>
-      </slice>
-      <slice isRef="axis">
-        <originRef cRef="orientation" iRef="IAxis"/>
-        <visualDescription h="10" w="10" x="20" y="9"/>
       </slice>
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="17" y="37"/>
       </slice>
+      <slice isRef="method">
+        <originRef cRef="method" iRef="IMethod"/>
+        <visualDescription h="10" w="10" x="77" y="13"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="20" y="9"/>
+      </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using bt.solve.Method;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace bt.solve.BackSubstitute { &#xA;&#xA;public interface BaseIBackSubstitute&lt;MTH, I, C, DIR> : IComputationKind &#xA;where MTH:IMethod&#xA;where I:IInstance&lt;C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBackSubstitute.cs" srcType="base" uri="bt.solve.BackSubstitute/bin/1.0.0.0/BaseIBackSubstitute.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using bt.solve.Method;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace bt.solve.BackSubstitute { &#xA;&#xA;public interface BaseIBackSubstitute&lt;MTH, I, C, DIR> : IComputationKind &#xA;where MTH:IMethod&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBackSubstitute.cs" srcType="base" uri="bt.solve.BackSubstitute/bin/1.0.0.0/BaseIBackSubstitute.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
@@ -109,9 +109,9 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
-      <parameter iname="IMethod" order="0" parid="method" uname="method" varid="MTH"/>
-      <parameter iname="IInstance" order="1" parid="instance_type" uname="instance" varid="I"/>
-      <parameter iname="IClass" order="2" parid="class" uname="class" varid="C"/>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IMethod" order="2" parid="method" uname="method" varid="MTH"/>
       <parameter iname="IAxis" order="3" parid="orientation" uname="axis" varid="DIR"/>
     </interface>
     <unit iRef="IBackSubstitute" private="false" uRef="back_substitute" visibleInterface="true">
@@ -133,6 +133,7 @@
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="203" y="166"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -140,12 +141,14 @@
       <originRef>speed</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="30" w="32" x="309" y="368"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <fusionsOfReplicators>
