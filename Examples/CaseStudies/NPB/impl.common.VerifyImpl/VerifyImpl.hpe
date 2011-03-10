@@ -108,12 +108,12 @@
         <originRef cRef="instance" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="236" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@9498a3" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1a4307d" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b0fedc" repeat="0" sliceRef="rhs_norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6b7b14" repeat="0" sliceRef="rhs_norm">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12c4b84" repeat="0" sliceRef="error_norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5d9ddc" repeat="0" sliceRef="error_norm">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
@@ -157,17 +157,17 @@
         <slice pRef="mpi" sRef="error_norm"/>
         <slice pRef="mpi" sRef="copy_faces"/>
       </port>
-      <port name="z">
+      <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="copy_faces"/>
+        <slice pRef="x" sRef="copy_faces"/>
       </port>
       <port name="y">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="y" sRef="copy_faces"/>
       </port>
-      <port name="x">
+      <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="x" sRef="copy_faces"/>
+        <slice pRef="z" sRef="copy_faces"/>
       </port>
       <externalReferences>BMInOut</externalReferences>
       <parameter iname="IInstance_SP" order="0" parid="instance_type" uname="instance" varid="I"/>
