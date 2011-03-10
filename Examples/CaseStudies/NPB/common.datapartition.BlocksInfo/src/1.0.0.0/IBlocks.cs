@@ -13,8 +13,8 @@ public interface IBlocks : BaseIBlocks
   int[,] cell_start {get;}
   int[,] cell_end {get;}
 
-  int[] predecessor {get;}
-  int[] sucessor {get;} 
+//  int[] predecessor {get;}
+//  int[] sucessor {get;} 
 
   int ncells {get;set;} // sqrt(nodes)
   int ndirs {get;set;}  // Assumed to be 3 ?
