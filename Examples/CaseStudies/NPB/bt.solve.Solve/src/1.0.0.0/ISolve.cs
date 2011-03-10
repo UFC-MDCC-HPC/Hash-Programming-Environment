@@ -1,6 +1,6 @@
 using br.ufc.pargo.hpe.kinds;
 using common.orientation.Axis;
-using bt.solve.Method;
+using common.solve.Method;
 using common.problem_size.Instance;
 using common.problem_size.Class;
 

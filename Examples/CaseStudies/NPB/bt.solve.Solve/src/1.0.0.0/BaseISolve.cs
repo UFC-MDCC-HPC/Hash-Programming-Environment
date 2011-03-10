@@ -9,7 +9,7 @@ using common.problem_size.Class;
 using common.Buffer;
 using environment.MPIDirect;
 using common.orientation.Axis;
-using bt.solve.Method;
+using common.solve.Method;
 
 namespace bt.solve.Solve { 
 
