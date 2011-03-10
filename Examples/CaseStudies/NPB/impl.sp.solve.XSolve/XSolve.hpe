@@ -93,8 +93,8 @@
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="xdir" varName="DIR"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <interface iRef="IXSolveImpl" nArgs="4">
       <slice isRef="shift">
         <originRef cRef="shift" iRef="IShift"/>
@@ -116,21 +116,21 @@
         <originRef cRef="backward" iRef="IBackward"/>
         <visualDescription h="10" w="10" x="57" y="5"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@16727ba" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@10e8c63" repeat="0">
         <visualDescription h="150" w="310" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16149fc" repeat="0" sliceRef="forward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@22dc07" repeat="0" sliceRef="forward">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@404954" repeat="0" sliceRef="lhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9b55ca" repeat="0" sliceRef="lhs">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@8e570f" repeat="0" sliceRef="matvecproduct">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d63f6" repeat="0" sliceRef="matvecproduct">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f5cd5c" repeat="0" sliceRef="backward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@18dc52e" repeat="0" sliceRef="backward">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17d7248" repeat="0" sliceRef="shift">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@8c634b" repeat="0" sliceRef="shift">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
       </protocol>
@@ -182,19 +182,19 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="input_buffer" sRef="shift"/>
       </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="forward"/>
-        <slice pRef="blocks" sRef="lhs"/>
-        <slice pRef="blocks" sRef="matvecproduct"/>
-        <slice pRef="blocks" sRef="backward"/>
-      </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="forward"/>
         <slice pRef="problem" sRef="lhs"/>
         <slice pRef="problem" sRef="matvecproduct"/>
         <slice pRef="problem" sRef="backward"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="forward"/>
+        <slice pRef="blocks" sRef="lhs"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="backward"/>
       </port>
       <parameter iname="IInstance_SP" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
