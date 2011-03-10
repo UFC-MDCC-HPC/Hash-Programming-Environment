@@ -18,6 +18,7 @@ using common.data.LHSInit;
 using bt.ADI;
 using common.data.ProblemDefinition;
 using bt.BT;
+using common.problem_size.Instance;
 
 namespace impl.bt.BT { 
 
@@ -46,104 +47,124 @@ override public void initialize()
 }
 		
 #endregion
+		
+		
+private ITimer timer = null;
 
-private ICell z = null;
-
-protected ICell Z {
+protected ITimer Timer {
 	get {
-		if (this.z == null)
-			this.z = (ICell) Services.getPort("z");
-		return this.z;
+		if (this.timer == null)
+			this.timer = (ITimer) Services.getPort("timer");
+		return this.timer;
 	}
 }
 
-private ICell x = null;
+private IInitialize<IInstance_BT<CLASS>, CLASS> initialize_ = null;
 
-protected ICell X {
+protected IInitialize<IInstance_BT<CLASS>, CLASS> Initialize {
 	get {
-		if (this.x == null)
-			this.x = (ICell) Services.getPort("x");
-		return this.x;
+		if (this.initialize_ == null)
+			this.initialize_ = (IInitialize<IInstance_BT<CLASS>, CLASS>) Services.getPort("initialize");
+		return this.initialize_;
 	}
 }
 
-private ICell y = null;
+private IExactRHS<IInstance_BT<CLASS>, CLASS> exact_rhs = null;
 
-protected ICell Y {
+protected IExactRHS<IInstance_BT<CLASS>, CLASS> Exact_rhs {
 	get {
-		if (this.y == null)
-			this.y = (ICell) Services.getPort("y");
-		return this.y;
+		if (this.exact_rhs == null)
+			this.exact_rhs = (IExactRHS<IInstance_BT<CLASS>, CLASS>) Services.getPort("exact_rhs");
+		return this.exact_rhs;
 	}
 }
 
-private ICell cell = null;
+private ILHSInit<IInstance_BT<CLASS>, CLASS> lhsinit = null;
 
-protected ICell Cell {
+protected ILHSInit<IInstance_BT<CLASS>, CLASS> Lhsinit {
 	get {
-		if (this.cell == null)
-			this.cell = (ICell) Services.getPort("topology");
-		return this.cell;
+		if (this.lhsinit == null)
+			this.lhsinit = (ILHSInit<IInstance_BT<CLASS>, CLASS>) Services.getPort("lhsinit");
+		return this.lhsinit;
 	}
 }
-
-private ICell x = null;
-
-protected ICell X {
-	get {
-		if (this.x == null)
-			this.x = (ICell) Services.getPort("x");
-		return this.x;
-	}
-}
-
-private ICell y = null;
-
-protected ICell Y {
-	get {
-		if (this.y == null)
-			this.y = (ICell) Services.getPort("y");
-		return this.y;
-	}
-}
-
-private ICell z = null;
-
-protected ICell Z {
-	get {
-		if (this.z == null)
-			this.z = (ICell) Services.getPort("z");
-		return this.z;
-	}
-}
-
+		
+		
 private IBlocks blocks = null;
 
 protected IBlocks Blocks {
 	get {
-		if (this.blocks == null)
+		if (this.blocks == null) 
+		{
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		}
 		return this.blocks;
 	}
 }
 
-private IInstance_BT<IClass> instance = null;
+private ICell x = null;
 
-protected IInstance_BT<IClass> Instance {
+protected ICell X {
 	get {
-		if (this.instance == null)
-			this.instance = (IInstance_BT<IClass>) Services.getPort("instance");
-		return this.instance;
+		if (this.x == null)
+			this.x = (ICell) Services.getPort("x");
+		return this.x;
 	}
 }
 
-private IExactRHS<IClass> exact_rhs = null;
+private ICell y = null;
 
-protected IExactRHS<IClass> Exact_rhs {
+protected ICell Y {
 	get {
-		if (this.exact_rhs == null)
-			this.exact_rhs = (IExactRHS<IClass>) Services.getPort("exact_rhs");
-		return this.exact_rhs;
+		if (this.y == null)
+			this.y = (ICell) Services.getPort("y");
+		return this.y;
+	}
+}
+
+private ICell z = null;
+
+protected ICell Z {
+	get {
+		if (this.z == null)
+			this.z = (ICell) Services.getPort("z");
+		return this.z;
+	}
+}
+		
+		
+private IInstance_BT<CLASS> instance = default(IInstance_BT<CLASS>);
+
+protected IInstance_BT<CLASS> Instance {
+	get {
+		if (instance==null) 
+		{
+			this.instance = (IInstance_BT<CLASS>) Services.getPort("instance");
+		}
+		return instance;
+	}
+}		
+		
+
+private IProblemDefinition<IInstance_BT<CLASS>, CLASS> problem = null;
+
+protected IProblemDefinition<IInstance_BT<CLASS>, CLASS> Problem {
+	get {
+		if (this.problem == null) 
+		{
+			this.problem = (IProblemDefinition<IInstance_BT<CLASS>, CLASS>) Services.getPort("problem_data");
+		}
+		return this.problem;
+	}
+}
+
+private IBlocks3D<IInstance_BT<CLASS>, CLASS> process = null;
+
+protected IBlocks3D<IInstance_BT<CLASS>, CLASS> Process {
+	get {
+		if (this.process == null)
+			this.process = (IBlocks3D<IInstance_BT<CLASS>, CLASS>) Services.getPort("data_partition");
+		return this.process;
 	}
 }
 
@@ -157,73 +178,23 @@ protected IMPIDirect Mpi {
 	}
 }
 
-private IVerify<IClass, IInstance_BT<IClass>> verify = null;
+private IVerify<IInstance_BT<CLASS>, CLASS> verify = null;
 
-protected IVerify<IClass, IInstance_BT<IClass>> Verify {
+protected IVerify<IInstance_BT<CLASS>, CLASS> Verify {
 	get {
 		if (this.verify == null)
-			this.verify = (IVerify<IClass, IInstance_BT<IClass>>) Services.getPort("verify");
+			this.verify = (IVerify<IInstance_BT<CLASS>, CLASS>) Services.getPort("verify");
 		return this.verify;
 	}
 }
 
-private ITimer timer = null;
+private IADI<CLASS> adi = null;
 
-protected ITimer Timer {
-	get {
-		if (this.timer == null)
-			this.timer = (ITimer) Services.getPort("timer");
-		return this.timer;
-	}
-}
-
-private IInitialize<IClass> initialize = null;
-
-protected IInitialize<IClass> Initialize {
-	get {
-		if (this.initialize == null)
-			this.initialize = (IInitialize<IClass>) Services.getPort("initialize");
-		return this.initialize;
-	}
-}
-
-private IBlocks3D<IInstance_BT<IClass>, IClass> process = null;
-
-protected IBlocks3D<IInstance_BT<IClass>, IClass> Process {
-	get {
-		if (this.process == null)
-			this.process = (IBlocks3D<IInstance_BT<IClass>, IClass>) Services.getPort("data_partition");
-		return this.process;
-	}
-}
-
-private ILHSInit<IClass> lhsinit = null;
-
-protected ILHSInit<IClass> Lhsinit {
-	get {
-		if (this.lhsinit == null)
-			this.lhsinit = (ILHSInit<IClass>) Services.getPort("lhsinit");
-		return this.lhsinit;
-	}
-}
-
-private IADI<IClass> adi = null;
-
-protected IADI<IClass> Adi {
+protected IADI<CLASS> Adi {
 	get {
 		if (this.adi == null)
-			this.adi = (IADI<IClass>) Services.getPort("adi");
+			this.adi = (IADI<CLASS>) Services.getPort("adi");
 		return this.adi;
-	}
-}
-
-private IProblemDefinition<IInstance_BT<IClass>, IClass> problem = null;
-
-protected IProblemDefinition<IInstance_BT<IClass>, IClass> Problem {
-	get {
-		if (this.problem == null)
-			this.problem = (IProblemDefinition<IInstance_BT<IClass>, IClass>) Services.getPort("problem_data");
-		return this.problem;
 	}
 }
 
