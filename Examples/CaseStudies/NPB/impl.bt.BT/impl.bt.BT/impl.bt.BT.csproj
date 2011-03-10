@@ -34,5 +34,88 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIBTImpl.cs">
+      <Link>BaseIBTImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IBTImpl.cs">
+      <Link>IBTImpl.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="MPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=29b4a045737654fe">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\MPI.NET\lib\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="BMInOut, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e3d31ba250e8460c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\BMInOut\BMInOut.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.benchmarking.Timer\common.benchmarking.Timer\common.benchmarking.Timer.csproj">
+      <Project>{D477316A-7431-4538-BC0B-8D386F0FF20C}</Project>
+      <Name>common.benchmarking.Timer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.ExactRHS\common.data.ExactRHS\common.data.ExactRHS.csproj">
+      <Project>{0F96A16B-A814-4932-8F30-316C551AC64F}</Project>
+      <Name>common.data.ExactRHS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.Initialize\common.data.Initialize\common.data.Initialize.csproj">
+      <Project>{C55C420B-633E-4AFC-BC3D-470BFB3E17C1}</Project>
+      <Name>common.data.Initialize</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.LHSInit\common.data.LHSInit\common.data.LHSInit.csproj">
+      <Project>{D22B9238-922C-43B5-B176-7D68B4AC4276}</Project>
+      <Name>common.data.LHSInit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
+      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
+      <Name>common.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.Blocks3D\common.datapartition.Blocks3D\common.datapartition.Blocks3D.csproj">
+      <Project>{E308F8A8-C2CE-4159-8073-B8A31100D7D9}</Project>
+      <Name>common.datapartition.Blocks3D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
+      <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
+      <Name>common.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Verify\common.Verify\common.Verify.csproj">
+      <Project>{53EDB048-723C-44FA-8B9B-64A2BBD808C1}</Project>
+      <Name>common.Verify</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.ADI\bt.ADI\bt.ADI.csproj">
+      <Project>{44D71AA0-3B13-4388-A6B8-7FD28D316B48}</Project>
+      <Name>bt.ADI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.BT\bt.BT\bt.BT.csproj">
+      <Project>{5207C0E1-FEA2-4093-A6B4-EB7BBEDC11EB}</Project>
+      <Name>bt.BT</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
