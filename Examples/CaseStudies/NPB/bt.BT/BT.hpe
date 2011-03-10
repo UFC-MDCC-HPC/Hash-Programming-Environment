@@ -298,7 +298,7 @@
     <fusion>
       <cRefs>data_partition</cRefs>
       <cRefs>verify</cRefs>
-      <pRef>x</pRef>
+      <pRef>y</pRef>
     </fusion>
     <fusion>
       <cRefs>data_partition</cRefs>
@@ -310,11 +310,6 @@
       <cRefs>verify</cRefs>
       <cRefs>timer</cRefs>
       <pRef>mpi</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>data_partition</cRefs>
-      <cRefs>verify</cRefs>
-      <pRef>y</pRef>
     </fusion>
     <fusion>
       <cRefs>adi</cRefs>
@@ -332,6 +327,11 @@
       <cRefs>initialize</cRefs>
       <cRefs>lhsinit</cRefs>
       <pRef>blocks_info</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>data_partition</cRefs>
+      <cRefs>verify</cRefs>
+      <pRef>x</pRef>
     </fusion>
     <interface iRef="IBT" nArgs="1">
       <slice isRef="instance">
@@ -366,24 +366,24 @@
         <originRef cRef="adi" iRef="IADI"/>
         <visualDescription h="10" w="10" x="5" y="28"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8e02ce" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@865213" repeat="0">
         <visualDescription h="250" w="330" x="175" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@15a5d23" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@767855" repeat="0">
           <visualDescription h="150" w="250" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@198ca74" repeat="0" sliceRef="lhsinit">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d644e6" repeat="0" sliceRef="lhsinit">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13ac72" repeat="0" sliceRef="initialize">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4572a0" repeat="0" sliceRef="initialize">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@19e7ec4" repeat="0" sliceRef="exact_rhs">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@168833c" repeat="0" sliceRef="exact_rhs">
             <visualDescription h="50" w="50" x="130" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@949eb2" repeat="0" sliceRef="verify">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@8004f9" repeat="0" sliceRef="verify">
             <visualDescription h="50" w="50" x="190" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13ed002" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c67ede" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -428,6 +428,11 @@
         <slice pRef="mpi" sRef="verify"/>
         <slice pRef="mpi" sRef="adi"/>
       </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="process"/>
+        <slice pRef="y" sRef="verify"/>
+      </port>
       <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="process"/>
@@ -438,11 +443,6 @@
         <slice pRef="x" sRef="process"/>
         <slice pRef="x" sRef="verify"/>
       </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="process"/>
-        <slice pRef="y" sRef="verify"/>
-      </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="cell" sRef="adi"/>
@@ -451,13 +451,13 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="adi"/>
       </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="adi"/>
-      </port>
       <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="x" sRef="adi"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="adi"/>
       </port>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
     </interface>
@@ -545,105 +545,97 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>lhsinit</originRef>
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="lhsinit" uRef="lhsinit"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="60" w="61" x="41" y="214"/>
+      <visualDescription h="60" w="61" x="31" y="184"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1a4eaac1296932932353" varId="n">
       <originRef>initialize</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>exact_solution</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="initialize" uRef="initialize"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="60" w="61" x="24" y="227"/>
+      <visualDescription h="20" w="20" x="95" y="194"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>timer</originRef>
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="timer" uRef="timer"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="20" w="20" x="130" y="182"/>
+      <visualDescription h="20" w="20" x="120" y="117"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1a4eaac1296932932353" varId="n">
       <originRef>exact_rhs</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>exact_solution</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="exact_rhs" uRef="exact_rhs"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="60" w="61" x="27" y="289"/>
+      <visualDescription h="20" w="20" x="66" y="179"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>verify</originRef>
-      <originRef>error_norm</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>rhs_norm</originRef>
+      <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="verify" uRef="verify"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="60" w="61" x="23" y="142"/>
+      <visualDescription h="20" w="20" x="107" y="234"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>data_partition</originRef>
       <originRef>topology</originRef>
-      <originRef>x</originRef>
+      <originRef>z</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="data_partition" uRef="process"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="20" w="20" x="50" y="106"/>
+      <visualDescription h="20" w="20" x="89" y="138"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>adi</originRef>
-      <originRef>copy_faces</originRef>
-      <originRef>interact</originRef>
-      <originRef>shift_y_north</originRef>
-      <originRef>topology</originRef>
+      <originRef>x_solve</originRef>
+      <originRef>unpack_back_sub_info</originRef>
+      <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="adi" uRef="adi"/>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="29" w="42" x="92" y="163"/>
+      <visualDescription h="36" w="59" x="14" y="143"/>
     </enumerator>
     <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1a4eaac1296932932353</eRef>
+        <originRef>exact_rhs</originRef>
+        <originRef>exact_solution</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>data_partition</originRef>
+        <originRef>topology</originRef>
+        <originRef>z</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>verify</originRef>
+        <originRef>rhs_norm</originRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>lhsinit</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>qs</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1a4eaac1296932932353</eRef>
+        <originRef>initialize</originRef>
+        <originRef>exact_solution</originRef>
+      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
         <originRef>timer</originRef>
         <originRef>mpi</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>exact_rhs</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>initialize</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
-        <originRef>data_partition</originRef>
-        <originRef>topology</originRef>
-        <originRef>x</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>lhsinit</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>verify</originRef>
-        <originRef>error_norm</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
         <originRef>adi</originRef>
-        <originRef>copy_faces</originRef>
-        <originRef>interact</originRef>
-        <originRef>shift_y_north</originRef>
-        <originRef>topology</originRef>
+        <originRef>x_solve</originRef>
+        <originRef>unpack_back_sub_info</originRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

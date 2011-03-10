@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
-  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000eb723329ee00227e802ee5b5d2a1720376b76809a59062faaf7f2468d4443235b8fbd3d43ccc7dcbf1fbe17d42b8c85df9d2f1bf740a279277b0110b96f52e4d71514f5faebd9911defffd31277c154e6a80dff53744525357439865aa06acf9a24ac5ee483240340f550093aa9bdb39098cab8b282fff64241ec9d36dfbc987" isAbstract="true" kind="Computation" name="PackUnpack" packagePath="bt.solve">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004955bfd98f6bcd03d29a10f181d714cedc8d2e15f2a2fe6f2b18bdbe16be9c1fb196f03e77f23fbff2ec17980090b4c5973ffa30c83bde9410cfc24a54e831685d946aaf5662af0f7149ca07d285bddd31a6b1a93f6dbc785f770424b0ab6bf4ab84d640fbe84f8634b6ea10be9ba0274065efb3d80715e3312b0be9419522df" isAbstract="true" kind="Computation" name="PackUnpack" packagePath="bt.solve">
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>
@@ -98,7 +98,7 @@
           <dependency>%WORKSPACE/bt.solve.PackUnpack/bin/1.0.0.0/BaseIPackUnpack.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="46" w="83" x="302" y="131">
+      <visualDescription h="46" w="83" x="270" y="135">
         <color b="255" g="128" r="128"/>
       </visualDescription>
       <port name="problem">
@@ -127,43 +127,43 @@
       <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
         <visualDescription h="10" w="10" x="4" y="26"/>
       </slices>
-      <visualDescription h="40" w="80" x="346" y="243"/>
+      <visualDescription h="40" w="80" x="322" y="231"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="packunpack"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="20" w="20" x="469" y="345"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="packunpack"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="20" w="20" x="539" y="152"/>
+      <visualDescription h="36" w="59" x="164" y="166"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="packunpack"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="24" w="32" x="294" y="308"/>
+      <visualDescription h="48" w="47" x="125" y="327"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>orientation</originRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
-        <originRef>method</originRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>orientation</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

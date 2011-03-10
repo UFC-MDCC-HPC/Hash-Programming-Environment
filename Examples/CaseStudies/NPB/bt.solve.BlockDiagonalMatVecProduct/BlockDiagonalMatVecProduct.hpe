@@ -98,7 +98,7 @@
           <dependency>%WORKSPACE/bt.solve.BlockDiagonalMatVecProduct/bin/1.0.0.0/BaseIBlockDiagonalMatVecProduct.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="70" w="198" x="147" y="136">
+      <visualDescription h="70" w="198" x="122" y="98">
         <color b="255" g="128" r="255"/>
       </visualDescription>
       <port name="blocks">
@@ -131,25 +131,25 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="34" w="34" x="576" y="249"/>
+      <visualDescription h="48" w="47" x="125" y="327"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="20" w="20" x="497" y="226"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="matvecproduct"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="35" w="35" x="231" y="387"/>
+      <visualDescription h="40" w="43" x="122" y="204"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
@@ -159,7 +159,7 @@
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>

@@ -85,7 +85,7 @@
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="lhsabinit"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="60" w="61" x="338" y="290"/>
+      <visualDescription h="60" w="61" x="375" y="276"/>
     </enumerator>
   </componentInfo>
 </component:component>

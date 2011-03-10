@@ -43,7 +43,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-        <visualDescription h="30" w="84" x="415" y="529">
+        <visualDescription h="30" w="84" x="381" y="531">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -105,7 +105,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-        <visualDescription h="30" w="84" x="415" y="529">
+        <visualDescription h="30" w="84" x="381" y="531">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -167,7 +167,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-        <visualDescription h="30" w="84" x="415" y="529">
+        <visualDescription h="30" w="84" x="381" y="531">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -201,7 +201,7 @@
       <parameter formFieldId="instance_type" varName="I"/>
       <parameter formFieldId="class" varName="C"/>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-        <visualDescription h="30" w="84" x="415" y="529">
+        <visualDescription h="30" w="84" x="381" y="531">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -239,7 +239,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-        <visualDescription h="30" w="84" x="415" y="529">
+        <visualDescription h="30" w="84" x="381" y="531">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -251,7 +251,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000eb82239aba6d1602bb56d9bd0b5cc8e84fe2b1cd35dd7cf777bd79a1fae0f3342d9fc94775c9aec281bf4751866abb89e43d51fe491f700fc81a715726ce05a34aeaf3c25ef0283941f2ce3fbefdd4f4fd58e49bdf60950bc27f484076cb7925afc984f4ee26d4937b4337b01d4ea35538bb45d0cc34beafc57c3c4c0b5f8f9a" localRef="copy_faces" location="common.CopyFaces/CopyFaces.hpe" name="CopyFaces" package="common" exposed="false">
-      <visualDescription h="33" w="65" x="163" y="366">
+      <visualDescription h="33" w="65" x="356" y="384">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="instance_type" varName="I"/>
@@ -267,7 +267,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-        <visualDescription h="30" w="84" x="415" y="529">
+        <visualDescription h="30" w="84" x="381" y="531">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -313,14 +313,23 @@
     <supplyParameter cRef="dir_y" varName="DIR_Y"/>
     <supplyParameter cRef="dir_x" varName="DIR_X"/>
     <supplyParameter cRef="dir_z" varName="DIR_Z"/>
-    <supplyParameter cRef="instance" varName="I"/>
     <supplyParameter cRef="method" varName="MTH"/>
+    <supplyParameter cRef="instance" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <fusion>
       <cRefs>z_solve</cRefs>
       <cRefs>y_solve</cRefs>
       <cRefs>x_solve</cRefs>
       <pRef>topology</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>add</cRefs>
+      <cRefs>compute_rhs</cRefs>
+      <cRefs>z_solve</cRefs>
+      <cRefs>y_solve</cRefs>
+      <cRefs>x_solve</cRefs>
+      <pRef>problem_data</pRef>
     </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
@@ -337,15 +346,6 @@
       <cRefs>y_solve</cRefs>
       <cRefs>x_solve</cRefs>
       <pRef>mpi</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>add</cRefs>
-      <cRefs>compute_rhs</cRefs>
-      <cRefs>z_solve</cRefs>
-      <cRefs>y_solve</cRefs>
-      <cRefs>x_solve</cRefs>
-      <pRef>problem_data</pRef>
     </fusion>
     <interface iRef="IADI" nArgs="1">
       <slice isRef="solve">
@@ -364,24 +364,24 @@
         <originRef cRef="copy_faces" iRef="ICopyFaces"/>
         <visualDescription h="10" w="10" x="5" y="76"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@acf051" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@c51111" repeat="0">
         <visualDescription h="150" w="370" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d568a6" repeat="0" sliceRef="solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e37dbe" repeat="0" sliceRef="solve">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1c99650" repeat="0" sliceRef="solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@54502c" repeat="0" sliceRef="solve">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ab75ac" repeat="0" sliceRef="solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@15b7e00" repeat="0" sliceRef="solve">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ba7636" repeat="0" sliceRef="compute_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ad4529" repeat="0" sliceRef="compute_rhs">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@a70e95" repeat="0" sliceRef="add">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9793ea" repeat="0" sliceRef="add">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ae84a4" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17007c0" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
       </protocol>
@@ -403,15 +403,6 @@
       <visualDescription h="98" w="174" x="55" y="43">
         <color b="0" g="128" r="128"/>
       </visualDescription>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="solve"/>
-        <slice pRef="blocks" sRef="solve"/>
-        <slice pRef="blocks" sRef="solve"/>
-        <slice pRef="blocks" sRef="compute_rhs"/>
-        <slice pRef="blocks" sRef="add"/>
-        <slice pRef="blocks" sRef="copy_faces"/>
-      </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="solve"/>
@@ -421,11 +412,14 @@
         <slice pRef="problem" sRef="add"/>
         <slice pRef="problem" sRef="copy_faces"/>
       </port>
-      <port name="cell">
+      <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="solve"/>
-        <slice pRef="cell" sRef="solve"/>
-        <slice pRef="cell" sRef="solve"/>
+        <slice pRef="blocks" sRef="solve"/>
+        <slice pRef="blocks" sRef="solve"/>
+        <slice pRef="blocks" sRef="solve"/>
+        <slice pRef="blocks" sRef="compute_rhs"/>
+        <slice pRef="blocks" sRef="add"/>
+        <slice pRef="blocks" sRef="copy_faces"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -434,12 +428,18 @@
         <slice pRef="mpi" sRef="solve"/>
         <slice pRef="mpi" sRef="copy_faces"/>
       </port>
+      <port name="cell">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="solve"/>
+        <slice pRef="cell" sRef="solve"/>
+        <slice pRef="cell" sRef="solve"/>
+      </port>
       <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="copy_faces"/>
       </port>
       <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="33" y="77"/>
         <slice pRef="x" sRef="copy_faces"/>
       </port>
       <port name="y">
@@ -512,13 +512,13 @@
       </slices>
       <visualDescription h="40" w="80" x="139" y="179"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>x_solve</originRef>
-      <originRef>pack_solve_info</originRef>
-      <originRef>orientation</originRef>
+      <originRef>unpack_back_sub_info</originRef>
+      <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="x_solve" uRef="solve"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="20" w="20" x="16" y="439"/>
+      <visualDescription h="36" w="59" x="30" y="207"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>dir_x</originRef>
@@ -532,13 +532,13 @@
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <visualDescription h="20" w="20" x="260" y="427"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>y_solve</originRef>
-      <originRef>pack_solve_info</originRef>
-      <originRef>orientation</originRef>
+      <originRef>unpack_back_sub_info</originRef>
+      <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="y_solve" uRef="solve"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="20" w="20" x="42" y="409"/>
+      <visualDescription h="36" w="59" x="23" y="225"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>dir_y</originRef>
@@ -552,18 +552,18 @@
       <links xsi:type="component:EnumerableEntryType" cRef="dir_z" uRef="z"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
       <originRef>z_solve</originRef>
-      <originRef>pack_solve_info</originRef>
-      <originRef>orientation</originRef>
+      <originRef>unpack_back_sub_info</originRef>
+      <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="z_solve" uRef="solve"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="20" w="20" x="31" y="500"/>
+      <visualDescription h="36" w="59" x="0" y="262"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>compute_rhs</originRef>
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="compute_rhs" uRef="compute_rhs"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
       <visualDescription h="32" w="36" x="63" y="349"/>
@@ -571,57 +571,57 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>add</originRef>
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="add" uRef="add"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
       <visualDescription h="60" w="61" x="31" y="274"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>copy_faces</originRef>
       <originRef>interact</originRef>
-      <originRef>shift_y_north</originRef>
-      <originRef>topology</originRef>
+      <originRef>shift_x_east</originRef>
+      <originRef>direction</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="copy_faces" uRef="copy_faces"/>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="29" w="42" x="69" y="438"/>
+      <visualDescription h="36" w="35" x="40" y="425"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>copy_faces</originRef>
         <originRef>interact</originRef>
-        <originRef>shift_y_north</originRef>
-        <originRef>topology</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>z_solve</originRef>
-        <originRef>pack_solve_info</originRef>
-        <originRef>orientation</originRef>
+        <originRef>shift_x_east</originRef>
+        <originRef>direction</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>add</originRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>x_solve</originRef>
-        <originRef>pack_solve_info</originRef>
-        <originRef>orientation</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
         <originRef>y_solve</originRef>
-        <originRef>pack_solve_info</originRef>
-        <originRef>orientation</originRef>
+        <originRef>unpack_back_sub_info</originRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>compute_rhs</originRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <originRef>z_solve</originRef>
+        <originRef>unpack_back_sub_info</originRef>
+        <originRef>method</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <originRef>x_solve</originRef>
+        <originRef>unpack_back_sub_info</originRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
