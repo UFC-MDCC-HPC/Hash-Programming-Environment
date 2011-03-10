@@ -62,9 +62,9 @@
       <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
       <Name>common.problem_size.Instance</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\bt.solve.Method\bt.solve.Method\bt.solve.Method.csproj">
-      <Project>{971B7B2F-278F-48A5-B839-1A0DEC43F72B}</Project>
-      <Name>bt.solve.Method</Name>
+    <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
+      <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
+      <Name>common.solve.Method</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
