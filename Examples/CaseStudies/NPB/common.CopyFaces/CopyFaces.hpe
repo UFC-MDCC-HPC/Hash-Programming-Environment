@@ -193,30 +193,30 @@
         <originRef cRef="interact" iRef="IInteract"/>
         <visualDescription h="10" w="10" x="62" y="35"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@75c792" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@147bc1b" repeat="0">
         <visualDescription h="450" w="370" x="195" y="225"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@815d26" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8ecbbd" repeat="0">
           <visualDescription h="350" w="290" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@10a7a76" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@e21bf2" repeat="0">
             <visualDescription h="250" w="210" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@eddfaa" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@98d032" repeat="0">
               <visualDescription h="150" w="130" x="70" y="50"/>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f727ea" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@8cb00f" repeat="0">
                 <visualDescription h="50" w="50" x="70" y="50"/>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5da875" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7ab560" repeat="0">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ded0e7" repeat="0">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@19d0a5" repeat="0">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@652baf" repeat="0">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d10f0c" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1725c1" repeat="0" sliceRef="interact">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1330f83" repeat="0" sliceRef="interact">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -228,7 +228,7 @@
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.CopyFaces { &#xA;&#xA;public interface ICopyFaces&lt;I,C> : BaseICopyFaces&lt;I,C>&#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICopyFaces.cs" srcType="user" uri="common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace common.CopyFaces { &#xA;&#xA;public interface ICopyFaces&lt;I,C> : BaseICopyFaces&lt;I,C>&#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;{&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICopyFaces.cs" srcType="user" uri="common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll</dependency>
         </file>
       </sources>
@@ -243,21 +243,13 @@
         <visualDescription h="10" w="10" x="12" y="51"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
-      <port name="input_buffer_x_west">
+      <port name="y">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_x_west" sRef="interact"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="x" sRef="interact"/>
+        <slice pRef="y" sRef="interact"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="21" y="77"/>
         <slice pRef="mpi" sRef="interact"/>
-      </port>
-      <port name="output_buffer_x_west">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer_x_west" sRef="interact"/>
       </port>
       <port name="input_buffer_y_north">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -267,13 +259,17 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer_y_north" sRef="interact"/>
       </port>
-      <port name="y">
+      <port name="input_buffer_x_west">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="interact"/>
+        <slice pRef="input_buffer_x_west" sRef="interact"/>
       </port>
-      <port name="input_buffer_z_top">
+      <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_z_top" sRef="interact"/>
+        <slice pRef="x" sRef="interact"/>
+      </port>
+      <port name="output_buffer_x_west">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer_x_west" sRef="interact"/>
       </port>
       <port name="output_buffer_z_top">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -283,13 +279,17 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="interact"/>
       </port>
-      <port name="input_buffer_z_bottom">
+      <port name="input_buffer_z_top">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_z_bottom" sRef="interact"/>
+        <slice pRef="input_buffer_z_top" sRef="interact"/>
       </port>
       <port name="output_buffer_z_bottom">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer_z_bottom" sRef="interact"/>
+      </port>
+      <port name="input_buffer_z_bottom">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_z_bottom" sRef="interact"/>
       </port>
       <port name="input_buffer_x_east">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -299,13 +299,13 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer_x_east" sRef="interact"/>
       </port>
-      <port name="input_buffer_y_south">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_y_south" sRef="interact"/>
-      </port>
       <port name="output_buffer_y_south">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer_y_south" sRef="interact"/>
+      </port>
+      <port name="input_buffer_y_south">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_y_south" sRef="interact"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -388,32 +388,32 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="copy_faces"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="60" w="61" x="31" y="251"/>
+      <visualDescription h="48" w="47" x="140" y="379"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>interact</originRef>
-      <originRef>shift_y_north</originRef>
-      <originRef>topology</originRef>
+      <originRef>shift_x_east</originRef>
+      <originRef>direction</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="interact" uRef="interact"/>
       <links xsi:type="component:EnumerableUnitType" ref="copy_faces"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="29" w="42" x="359" y="410"/>
+      <visualDescription h="36" w="35" x="396" y="279"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>interact</originRef>
-        <originRef>shift_y_north</originRef>
-        <originRef>topology</originRef>
+        <originRef>shift_x_east</originRef>
+        <originRef>direction</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
