@@ -6,16 +6,18 @@
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A02235BC-CA4A-4F3C-84B4-78305D2DED49}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.BeamWarmingMethod</RootNamespace>
-    <AssemblyName>bt.solve.BeamWarmingMethod</AssemblyName>
+    <AssemblyName>IBeamWarmingMethod</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\BeamWarmingMethod.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,10 +26,32 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIBeamWarmingMethod.cs">
+      <Link>BaseIBeamWarmingMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IBeamWarmingMethod.cs">
+      <Link>IBeamWarmingMethod.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
+      <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
+      <Name>common.solve.Method</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
 </Project>
