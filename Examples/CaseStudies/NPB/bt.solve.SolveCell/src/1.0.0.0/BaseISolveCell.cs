@@ -6,7 +6,7 @@ using common.data.ProblemDefinition;
 using common.problem_size.Instance;
 using common.problem_size.Class;
 using common.orientation.Axis;
-using bt.solve.Method;
+using common.solve.Method;
 
 namespace bt.solve.SolveCell { 
 
