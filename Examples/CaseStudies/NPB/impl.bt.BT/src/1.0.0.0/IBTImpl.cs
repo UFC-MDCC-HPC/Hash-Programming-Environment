@@ -10,7 +10,7 @@ using NPB3_0_JAV.BMInOut;
 using common.problem_size.Instance;
 
 namespace impl.bt.BT { 
-	public class IBTImpl<IClass> : BaseIBTImpl<IClass>, IBT<IClass> where CLASS:IClass {
+	public class IBTImpl<CLASS> : BaseIBTImpl<CLASS>, IBT<CLASS> where CLASS:IClass {
         public int bid = -1;
 		public static int t_total = 1;
     	public static String BMName = "BT";

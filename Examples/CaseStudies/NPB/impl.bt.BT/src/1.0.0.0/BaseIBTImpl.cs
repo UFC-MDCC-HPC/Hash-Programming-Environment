@@ -21,7 +21,7 @@ using bt.BT;
 
 namespace impl.bt.BT { 
 
-public abstract class BaseIBTImpl<IClass>: Application, BaseIBT<IClass>
+public abstract class BaseIBTImpl<CLASS>: Application, BaseIBT<CLASS>
 where CLASS:IClass
 {
 
