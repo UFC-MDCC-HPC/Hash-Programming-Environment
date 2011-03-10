@@ -78,7 +78,7 @@
       <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="false">
         <visualDescription h="10" w="10" x="60" y="13"/>
       </slices>
-      <visualDescription h="40" w="80" x="144" y="206"/>
+      <visualDescription h="40" w="80" x="60" y="130"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>x</originRef>
@@ -101,15 +101,15 @@
     <fusionsOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>z</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
         <originRef>x</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
         <originRef>y</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
-        <originRef>z</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
