@@ -63,12 +63,12 @@
         <originRef cRef="timer" iRef="ITimer"/>
         <visualDescription h="10" w="10" x="45" y="29"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@34e4d1" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@18dc8ea" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9a8087" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@181aba8" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16c4e90" repeat="0" sliceRef="verify">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2cce73" repeat="0" sliceRef="verify">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
@@ -104,6 +104,30 @@
         <slice pRef="problem" sRef="lhsinit"/>
         <slice pRef="problem" sRef="exact_rhs"/>
       </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="adi"/>
+        <slice pRef="y" sRef="verify"/>
+        <slice pRef="y" sRef="process"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="adi"/>
+        <slice pRef="mpi" sRef="verify"/>
+        <slice pRef="mpi" sRef="timer"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="z" sRef="adi"/>
+        <slice pRef="z" sRef="verify"/>
+        <slice pRef="z" sRef="process"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="adi"/>
+        <slice pRef="x" sRef="verify"/>
+        <slice pRef="x" sRef="process"/>
+      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="adi"/>
@@ -112,30 +136,6 @@
         <slice pRef="blocks" sRef="lhsinit"/>
         <slice pRef="blocks" sRef="exact_rhs"/>
         <slice pRef="blocks" sRef="process"/>
-      </port>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="mpi" sRef="adi"/>
-        <slice pRef="mpi" sRef="verify"/>
-        <slice pRef="mpi" sRef="timer"/>
-      </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="adi"/>
-        <slice pRef="y" sRef="verify"/>
-        <slice pRef="y" sRef="process"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="x" sRef="adi"/>
-        <slice pRef="x" sRef="verify"/>
-        <slice pRef="x" sRef="process"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="adi"/>
-        <slice pRef="z" sRef="verify"/>
-        <slice pRef="z" sRef="process"/>
       </port>
       <externalReferences>MPI</externalReferences>
       <externalReferences>BMInOut</externalReferences>
