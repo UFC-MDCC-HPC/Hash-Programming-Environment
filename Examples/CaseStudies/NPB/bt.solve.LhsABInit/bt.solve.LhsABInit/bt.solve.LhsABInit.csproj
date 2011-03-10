@@ -8,7 +8,7 @@
     <ProjectGuid>{AFE3078B-834E-4584-BFFF-1B894D228AD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.LhsABInit</RootNamespace>
-    <AssemblyName>bt.solve.LhsABInit</AssemblyName>
+    <AssemblyName>ILhsABInit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\LhsABInit.snk</AssemblyOriginatorKeyFile>
@@ -42,12 +42,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
       <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
       <Name>common.problem_size.Class</Name>
@@ -56,5 +50,15 @@
       <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
       <Name>common.problem_size.Instance</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
