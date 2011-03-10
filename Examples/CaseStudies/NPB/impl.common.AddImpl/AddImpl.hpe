@@ -68,7 +68,7 @@
         <originRef cRef="blocks_info" iRef="IBlocks"/>
         <visualDescription h="10" w="10" x="16" y="29"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1734381" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1efe1a1" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -82,7 +82,7 @@
           <dependency>common.Add/bin/1.0.0.0/IAdd.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="115" y="149">
+      <visualDescription h="40" w="80" x="102" y="125">
         <color b="0" g="255" r="0"/>
       </visualDescription>
       <port name="problem">
