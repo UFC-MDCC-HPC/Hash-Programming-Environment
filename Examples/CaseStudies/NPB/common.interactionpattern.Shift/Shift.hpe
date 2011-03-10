@@ -40,7 +40,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="direction" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" parameter_id="direction" exposed="false">
-      <visualDescription h="56" w="149" x="342" y="346">
+      <visualDescription h="56" w="149" x="365" y="367">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="direction">
@@ -69,7 +69,7 @@
         <originRef cRef="direction" iRef="IDirection"/>
         <visualDescription h="10" w="10" x="9" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@fc14d6" repeat="0">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1592933" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -131,19 +131,15 @@
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="mpi" uRef="mpi"/>
       <links xsi:type="component:EnumerableUnitType" ref="shift"/>
-      <visualDescription h="20" w="20" x="225" y="137"/>
+      <visualDescription h="29" w="37" x="225" y="128"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>direction</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="direction" uRef="direction"/>
       <links xsi:type="component:EnumerableUnitType" ref="shift"/>
-      <visualDescription h="20" w="20" x="354" y="190"/>
+      <visualDescription h="20" w="20" x="341" y="276"/>
     </enumerator>
     <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
-        <originRef>topology</originRef>
-      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>direction</originRef>
@@ -151,6 +147,10 @@
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
         <originRef>mpi</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <originRef>topology</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

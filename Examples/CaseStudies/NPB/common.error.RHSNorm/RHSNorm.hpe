@@ -108,24 +108,23 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="rhs_norm"/>
-      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="60" w="61" x="34" y="274"/>
+      <visualDescription h="20" w="20" x="73" y="418"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="mpi" uRef="mpi"/>
       <links xsi:type="component:EnumerableUnitType" ref="rhs_norm"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="20" w="20" x="307" y="136"/>
+      <visualDescription h="20" w="20" x="175" y="310"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
