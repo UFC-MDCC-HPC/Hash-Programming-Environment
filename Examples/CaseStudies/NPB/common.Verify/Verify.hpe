@@ -193,18 +193,18 @@
         <originRef cRef="instance" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="236" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@13af7a5" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@936f00" repeat="0">
         <visualDescription h="250" w="210" x="115" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@58adc3" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@15c7abb" repeat="0">
           <visualDescription h="150" w="130" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f817db" repeat="0" sliceRef="rhs_norm">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7dcb49" repeat="0" sliceRef="rhs_norm">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e63935" repeat="0" sliceRef="error_norm">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ad47b9" repeat="0" sliceRef="error_norm">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@b5e5cf" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3fec10" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -249,13 +249,13 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="y" sRef="copy_faces"/>
       </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="x" sRef="copy_faces"/>
-      </port>
       <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="copy_faces"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="copy_faces"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -305,53 +305,46 @@
       </slices>
       <visualDescription h="40" w="80" x="174" y="205"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>rhs_norm</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="rhs_norm" uRef="rhs_norm"/>
       <links xsi:type="component:EnumerableUnitType" ref="verify"/>
-      <links xsi:type="component:EnumerableComponentType" ref="instance"/>
-      <visualDescription h="60" w="61" x="27" y="296"/>
+      <visualDescription h="20" w="20" x="175" y="310"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>error_norm</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="error_norm" uRef="error_norm"/>
       <links xsi:type="component:EnumerableUnitType" ref="verify"/>
-      <links xsi:type="component:EnumerableComponentType" ref="instance"/>
-      <visualDescription h="60" w="61" x="23" y="142"/>
+      <visualDescription h="20" w="20" x="251" y="316"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>copy_faces</originRef>
       <originRef>interact</originRef>
-      <originRef>shift_y_north</originRef>
-      <originRef>topology</originRef>
+      <originRef>shift_x_east</originRef>
+      <originRef>direction</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="copy_faces" uRef="copy_faces"/>
       <links xsi:type="component:EnumerableUnitType" ref="verify"/>
-      <links xsi:type="component:EnumerableComponentType" ref="instance"/>
-      <visualDescription h="29" w="42" x="120" y="453"/>
+      <visualDescription h="36" w="35" x="259" y="303"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>error_norm</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>rhs_norm</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@b9c6cb1294972272571</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>copy_faces</originRef>
         <originRef>interact</originRef>
-        <originRef>shift_y_north</originRef>
-        <originRef>topology</originRef>
+        <originRef>shift_x_east</originRef>
+        <originRef>direction</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>error_norm</originRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>rhs_norm</originRef>
+        <originRef>mpi</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
