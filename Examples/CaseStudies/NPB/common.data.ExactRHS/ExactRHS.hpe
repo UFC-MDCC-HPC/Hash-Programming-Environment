@@ -65,9 +65,9 @@
         <originRef cRef="exact_solution" iRef="IExactSolution"/>
         <visualDescription h="10" w="10" x="31" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1430c4f" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2c02b0" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@dd1d56" repeat="0" sliceRef="exact_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16472f3" repeat="0" sliceRef="exact_solution">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -121,17 +121,17 @@
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>speed</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="exact_rhs"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="60" w="61" x="27" y="289"/>
+      <visualDescription h="48" w="47" x="21" y="345"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
-        <originRef>speed</originRef>
+        <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1a4eaac1296932932353</eRef>
