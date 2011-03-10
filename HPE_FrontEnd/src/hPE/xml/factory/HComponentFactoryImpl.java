@@ -1159,7 +1159,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				linksToReplicators(); //
 				fuseReplicators(xCinfo);
 				loadUnitBounds();
-
 				
 				applyFusions(xCinfo);
 
@@ -1290,10 +1289,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			CompoundCommand cc = new CompoundCommand();
 
 			HReplicator rTop = null;
+			long hashCode = 0;
 			for (HReplicator r : rs) {
-				FuseReplicatorCommand c = (FuseReplicatorCommand) new FuseReplicatorCommand(r);
-				if (rTop == null)
-					rTop = r;
+				 String eRef = "";
+				 for (String cRef : r.getOrigin()) {
+					 eRef += cRef;
+				 }				 
+				 
+				 String rRef = r.getRef();
+				 eRef += r.getRef().substring(rRef.indexOf("@"));
+				
+				 long hashCode_ = Math.abs(eRef.hashCode());
+				 if (hashCode_ > hashCode) {
+				    hashCode = hashCode_;
+				    rTop = r;
+				 }
+			}	
+			
+			FuseReplicatorCommand c = (FuseReplicatorCommand) new FuseReplicatorCommand(rTop);
+			c.setTop(rTop);
+			cc.add(c);
+			
+			for (HReplicator r : rs) if (r != rTop){
+				c = (FuseReplicatorCommand) new FuseReplicatorCommand(r);
+//				if (rTop == null) 
+//					rTop = r;
 				c.setTop(rTop);
 				cc.add(c);
 			}
@@ -1524,46 +1544,41 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				List<List<HReplicator>> ss = topR.getFusionsInContext(this.component);
 
 				for (List<HReplicator> rrs : ss) {
-					FusionsOfReplicatorsType fOfr = factory
-							.createFusionsOfReplicatorsType();
-					EList<FusionOfReplicatorsType> ffs = fOfr
-							.getFusionOfReplicators();
-					FusionOfReplicatorsType ff = factory
-							.createFusionOfReplicatorsType();
+					FusionsOfReplicatorsType fOfr = factory.createFusionsOfReplicatorsType();
+					EList<FusionOfReplicatorsType> ffs = fOfr.getFusionOfReplicators();
+					FusionOfReplicatorsType ff = factory.createFusionOfReplicatorsType();
 					ff.setERef(topR.getRef());
-					List<HComponent> cOfrs = new ArrayList<HComponent>(topR
-							.getConfigurations()); // ;
-													// (HComponent)topR.getConfiguration();
-					cOfrs.remove(0);
+					
 					List<String> cRefs = ff.getOriginRef();
+					cRefs.addAll(topR.getOrigin());
+					
+					/*List<HComponent> cOfrs = new ArrayList<HComponent>(topR.getConfigurations()); // ;
+					cOfrs.remove(0);
 					HComponent cOfr_ = null;
 					for (HComponent cOfr : cOfrs) {
-						String ref = cOfr_ != null
-								&& cOfr.getSavedName().containsKey(cOfr_) ? cOfr
-								.getSavedName().get(cOfr_)
-								: cOfr.getRef();
+						String ref = cOfr_ != null && cOfr.getSavedName().containsKey(cOfr_) ? cOfr.getSavedName().get(cOfr_) : cOfr.getRef();
 						cRefs.add(ref);
 						cOfr_ = cOfr;
-					}
+					}*/					
+					
 
 					ffs.add(ff);
 					for (HReplicator r_ : rrs) {
 						ff = factory.createFusionOfReplicatorsType();
-						ff.setERef(r_.getRef());
-						cOfrs = new ArrayList<HComponent>(r_
-								.getConfigurations()); // ;
-														// (HComponent)topR.getConfiguration();
-						cOfrs.remove(0);
+						
 						cRefs = ff.getOriginRef();
+						ff.setERef(r_.getRef());
+						
+						cRefs.addAll(r_.getOrigin());
+						
+						/* cOfrs = new ArrayList<HComponent>(r_.getConfigurations()); // ;
+						cOfrs.remove(0);
 						cOfr_ = null;
 						for (HComponent cOfr : cOfrs) {
-							String ref = cOfr_ != null
-									&& cOfr.getSavedName().containsKey(cOfr_) ? cOfr
-									.getSavedName().get(cOfr_)
-									: cOfr.getRef();
+							String ref = cOfr_ != null && cOfr.getSavedName().containsKey(cOfr_) ? cOfr.getSavedName().get(cOfr_) : cOfr.getRef();
 							cRefs.add(ref);
 							cOfr_ = cOfr;
-						}
+						}*/
 
 						ffs.add(ff);
 					}

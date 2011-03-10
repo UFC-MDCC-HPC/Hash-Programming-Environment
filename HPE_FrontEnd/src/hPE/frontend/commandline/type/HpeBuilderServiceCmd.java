@@ -88,7 +88,8 @@ public class HpeBuilderServiceCmd implements HpeGenericCmd{
 	
 	
 	private BuilderServiceSoap backend = null;	
-	private String locationURI = "http://localhost:62822/BuilderService.asmx";
+	// private String locationURI = "http://localhost:62822/BuilderService.asmx";
+	private String locationURI = "http://castanhao.lia.ufc.br/hpe_backend/BuilderService.asmx";
 	private HashMap<String, ComponentID> instances = null;
 	private HashMap<String, ConnectionID> connections = null;
 	

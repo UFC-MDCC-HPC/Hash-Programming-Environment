@@ -334,7 +334,19 @@ public class HReplicator  extends HVisualElement implements Serializable, HNamed
 		fireEventUpdateConnections();
 	}
 	
-	
+	public List<String> getOrigin() 
+	{
+		List<HComponent> cOfrs = new ArrayList<HComponent>(this.getConfigurations()); // ;
+		cOfrs.remove(0);
+		List<String> cRefs = new ArrayList<String>();
+		HComponent cOfr_ = null;
+		for (HComponent cOfr : cOfrs) {
+			String ref = cOfr_ != null && cOfr.getSavedName().containsKey(cOfr_) ? cOfr.getSavedName().get(cOfr_) : cOfr.getRef();
+			cRefs.add(ref);
+			cOfr_ = cOfr;
+		}
+		return cRefs;
+	}
 	
 	
 	

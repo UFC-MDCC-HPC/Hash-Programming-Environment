@@ -1,6 +1,5 @@
 package hPE.frontend.base.commands;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.eclipse.gef.commands.Command;
