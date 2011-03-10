@@ -251,7 +251,7 @@
       <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="qs" uRef="field"/>
       <links xsi:type="component:EnumerableUnitType" ref="problem"/>
-      <visualDescription h="20" w="20" x="329" y="304"/>
+      <visualDescription h="48" w="47" x="125" y="327"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>ainv</originRef>
@@ -293,7 +293,7 @@
       <originRef>lhs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="lhs" uRef="field"/>
       <links xsi:type="component:EnumerableUnitType" ref="problem"/>
-      <visualDescription h="20" w="20" x="80" y="453"/>
+      <visualDescription h="20" w="20" x="67" y="437"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>square</originRef>
@@ -302,6 +302,14 @@
       <visualDescription h="20" w="20" x="60" y="330"/>
     </enumerator>
     <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>qs</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
+        <originRef>lhs</originRef>
+      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>speed</originRef>
@@ -328,10 +336,6 @@
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>qs</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>u</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
@@ -345,10 +349,6 @@
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>square</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>lhs</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
