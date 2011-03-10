@@ -8,7 +8,7 @@
     <ProjectGuid>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.Solve</RootNamespace>
-    <AssemblyName>bt.solve.Solve</AssemblyName>
+    <AssemblyName>ISolve</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Solve.snk</AssemblyOriginatorKeyFile>
@@ -33,11 +33,11 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="System" />
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common.Buffer\common.Buffer\common.Buffer.csproj">

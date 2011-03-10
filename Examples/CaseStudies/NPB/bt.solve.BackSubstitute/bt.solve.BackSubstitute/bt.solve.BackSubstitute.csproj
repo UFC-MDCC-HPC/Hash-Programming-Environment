@@ -8,7 +8,7 @@
     <ProjectGuid>{D8977F13-73E3-492A-A482-8D54A63BB8A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.BackSubstitute</RootNamespace>
-    <AssemblyName>bt.solve.BackSubstitute</AssemblyName>
+    <AssemblyName>IBackSubstitute</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\BackSubstitute.snk</AssemblyOriginatorKeyFile>
@@ -42,7 +42,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>

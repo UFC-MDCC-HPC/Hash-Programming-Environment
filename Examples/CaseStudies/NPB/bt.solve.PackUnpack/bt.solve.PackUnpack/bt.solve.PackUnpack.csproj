@@ -8,7 +8,7 @@
     <ProjectGuid>{D5AE286E-6D1C-4873-99CD-F9EDDF344731}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.PackUnpack</RootNamespace>
-    <AssemblyName>bt.solve.PackUnpack</AssemblyName>
+    <AssemblyName>IPackUnpack</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PackUnpack.snk</AssemblyOriginatorKeyFile>
@@ -42,7 +42,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
@@ -55,10 +55,6 @@
     <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
       <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
       <Name>common.problem_size.Class</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\bt.solve.Method\bt.solve.Method\bt.solve.Method.csproj">
-      <Project>{971B7B2F-278F-48A5-B839-1A0DEC43F72B}</Project>
-      <Name>bt.solve.Method</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
       <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>

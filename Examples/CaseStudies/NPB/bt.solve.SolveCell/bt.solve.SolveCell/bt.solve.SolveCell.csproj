@@ -8,7 +8,7 @@
     <ProjectGuid>{7B6DC294-680C-4FD8-9407-BBBFD92C2752}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.solve.SolveCell</RootNamespace>
-    <AssemblyName>bt.solve.SolveCell</AssemblyName>
+    <AssemblyName>ISolveCell</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\SolveCell.snk</AssemblyOriginatorKeyFile>
@@ -42,16 +42,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\bt.solve.Method\bt.solve.Method\bt.solve.Method.csproj">
-      <Project>{971B7B2F-278F-48A5-B839-1A0DEC43F72B}</Project>
-      <Name>bt.solve.Method</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
       <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
       <Name>common.data.ProblemDefinition</Name>
