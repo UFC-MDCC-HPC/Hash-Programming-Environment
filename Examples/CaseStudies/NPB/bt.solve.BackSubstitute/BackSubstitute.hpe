@@ -7,7 +7,7 @@
     </visualAttributes>
   </header>
   <componentInfo>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b6fcf8bff07d9f7e4987f37367427764b048d4f94a1139041b6a04b0b2bb2fb3f6ce1adb5daa6e286e9f81f0d5d05fd960a39c23ef5310ff0c9fd22ce9a54312ca51e32d34f5be744ed64bb0be4bf6fc420eff75fdafa7b935460695e5d4e31088b42e26a793aa00f86ecf2e296a6cd418acef4f37aa91c12ec6a76182251a1" localRef="method" location="bt.solve.Method/Method.hpe" name="Method" package="bt.solve" parameter_id="method" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000065a583953c3587c1209979536e5ff1a80890361170dab29c31967996924e908f4dfcd7fd7c85921b08aa2193be1674aa220dbaafda9c081270f8248e0ef486f725d00c99c141ffefbc663fb868426326f477127eca49696e967b6c8203ada10b80b06758073be286f99f981981d314cf3ba20addb76983db1e155576d5e86c83" localRef="method" location="common.solve.Method/Method.hpe" name="Method" package="common.solve" parameter_id="method" exposed="false">
       <visualDescription h="60" w="99" x="260" y="469">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -85,13 +85,13 @@
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
-          <dependency>bt.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
         </file>
         <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using bt.solve.Method;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace bt.solve.BackSubstitute { &#xA;&#xA;public interface IBackSubstitute&lt;MTH, I, C, DIR> : BaseIBackSubstitute&lt;MTH, I, C, DIR>&#xA;where MTH:IMethod&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBackSubstitute.cs" srcType="user" uri="bt.solve.BackSubstitute/bin/1.0.0.0/IBackSubstitute.dll" versionId="1.0.0.0">
-          <dependency>bt.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
@@ -129,7 +129,7 @@
       </slices>
       <visualDescription h="56" w="101" x="178" y="306"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
@@ -142,7 +142,7 @@
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="48" w="47" x="71" y="288"/>
+      <visualDescription h="48" w="47" x="61" y="268"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
@@ -153,13 +153,13 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
         <originRef>qs</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>

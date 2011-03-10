@@ -32,7 +32,7 @@
         <visualDescription h="10" w="10" x="24" y="7"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b6fcf8bff07d9f7e4987f37367427764b048d4f94a1139041b6a04b0b2bb2fb3f6ce1adb5daa6e286e9f81f0d5d05fd960a39c23ef5310ff0c9fd22ce9a54312ca51e32d34f5be744ed64bb0be4bf6fc420eff75fdafa7b935460695e5d4e31088b42e26a793aa00f86ecf2e296a6cd418acef4f37aa91c12ec6a76182251a1" localRef="method" location="bt.solve.Method/Method.hpe" name="Method" package="bt.solve" parameter_id="method" exposed="false">
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000065a583953c3587c1209979536e5ff1a80890361170dab29c31967996924e908f4dfcd7fd7c85921b08aa2193be1674aa220dbaafda9c081270f8248e0ef486f725d00c99c141ffefbc663fb868426326f477127eca49696e967b6c8203ada10b80b06758073be286f99f981981d314cf3ba20addb76983db1e155576d5e86c83" localRef="method" location="common.solve.Method/Method.hpe" name="Method" package="common.solve" parameter_id="method" exposed="false">
       <visualDescription h="48" w="71" x="272" y="430">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -179,14 +179,14 @@
       <cRefs>binvrhs</cRefs>
       <cRefs>matmulsub</cRefs>
       <cRefs>binvcrhs</cRefs>
-      <pRef>blocks_info</pRef>
+      <pRef>problem_data</pRef>
     </fusion>
     <fusion>
       <cRefs>matvecsub</cRefs>
       <cRefs>binvrhs</cRefs>
       <cRefs>matmulsub</cRefs>
       <cRefs>binvcrhs</cRefs>
-      <pRef>problem_data</pRef>
+      <pRef>blocks_info</pRef>
     </fusion>
     <interface iRef="ISolveCell" nArgs="4">
       <slice isRef="axis">
@@ -205,24 +205,24 @@
         <originRef cRef="lhsabinit" iRef="ILhsABInit"/>
         <visualDescription h="10" w="10" x="0" y="12"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@165b242" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@60f009" repeat="0">
         <visualDescription h="250" w="330" x="175" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19a4016" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2efcd0" repeat="0">
           <visualDescription h="150" w="250" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e5880d" repeat="0" sliceRef="matvecproduct">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d7d56d" repeat="0" sliceRef="matvecproduct">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4716a8" repeat="0" sliceRef="matvecproduct">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1fcfd14" repeat="0" sliceRef="matvecproduct">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@120ab3b" repeat="0" sliceRef="matvecproduct">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4b4cdd" repeat="0" sliceRef="matvecproduct">
             <visualDescription h="50" w="50" x="130" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1c9e362" repeat="0" sliceRef="matvecproduct">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a37fe4" repeat="0" sliceRef="matvecproduct">
             <visualDescription h="50" w="50" x="190" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16f400d" repeat="0" sliceRef="lhsabinit">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12185dd" repeat="0" sliceRef="lhsabinit">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -233,13 +233,13 @@
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
-          <dependency>bt.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
         <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.orientation.Axis;&#xA;using bt.solve.Method;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace bt.solve.SolveCell { &#xA;&#xA;public interface ISolveCell&lt;DIR, MTH, I, C> : BaseISolveCell&lt;DIR, MTH, I, C>&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISolveCell.cs" srcType="user" uri="bt.solve.SolveCell/bin/1.0.0.0/ISolveCell.dll" versionId="1.0.0.0">
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
-          <dependency>bt.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/bt.solve.SolveCell/bin/1.0.0.0/BaseISolveCell.dll</dependency>
@@ -248,19 +248,19 @@
       <visualDescription h="111" w="185" x="147" y="118">
         <color b="255" g="128" r="255"/>
       </visualDescription>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="matvecproduct"/>
-        <slice pRef="blocks" sRef="matvecproduct"/>
-        <slice pRef="blocks" sRef="matvecproduct"/>
-        <slice pRef="blocks" sRef="matvecproduct"/>
-      </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="problem" sRef="matvecproduct"/>
         <slice pRef="problem" sRef="matvecproduct"/>
         <slice pRef="problem" sRef="matvecproduct"/>
         <slice pRef="problem" sRef="matvecproduct"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
+        <slice pRef="blocks" sRef="matvecproduct"/>
       </port>
       <parameter iname="IAxis" order="0" parid="orientation" uname="axis" varid="DIR"/>
       <parameter iname="IMethod" order="1" parid="method" uname="method" varid="MTH"/>
@@ -311,7 +311,7 @@
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
       <visualDescription h="20" w="20" x="46" y="475"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
@@ -323,13 +323,7 @@
       <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="binvcrhs" uRef="matvecproduct"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
-      <visualDescription h="20" w="20" x="67" y="437"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
-      <originRef>binvcrhs</originRef>
-      <originRef>method</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="binvcrhs" uRef="matvecproduct"/>
-      <visualDescription h="20" w="20" x="32" y="419"/>
+      <visualDescription h="20" w="20" x="60" y="444"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>matmulsub</originRef>
@@ -339,24 +333,12 @@
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
       <visualDescription h="20" w="20" x="67" y="437"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
-      <originRef>matmulsub</originRef>
-      <originRef>method</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="matmulsub" uRef="matvecproduct"/>
-      <visualDescription h="20" w="20" x="21" y="447"/>
-    </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>binvrhs</originRef>
       <originRef>problem_data</originRef>
       <originRef>qs</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="binvrhs" uRef="matvecproduct"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
-      <visualDescription h="20" w="20" x="67" y="437"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
-      <originRef>binvrhs</originRef>
-      <originRef>method</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="binvrhs" uRef="matvecproduct"/>
       <visualDescription h="20" w="20" x="43" y="506"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
@@ -366,12 +348,6 @@
       <links xsi:type="component:EnumerableEntryType" cRef="matvecsub" uRef="matvecproduct"/>
       <links xsi:type="component:EnumerableUnitType" ref="solve_cell"/>
       <visualDescription h="20" w="20" x="67" y="437"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1529fb71298521096484" varId="n">
-      <originRef>matvecsub</originRef>
-      <originRef>method</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="matvecsub" uRef="matvecproduct"/>
-      <visualDescription h="46" w="54" x="72" y="494"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>lhsabinit</originRef>
@@ -383,22 +359,25 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
-        <originRef>matvecsub</originRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>binvcrhs</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>qs</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
         <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
-        <originRef>binvrhs</originRef>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <originRef>method</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
+        <originRef>method</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
         <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
@@ -412,8 +391,7 @@
         <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1529fb71298521096484</eRef>
-        <originRef>matmulsub</originRef>
+        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
         <originRef>method</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
@@ -425,12 +403,6 @@
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>matvecsub</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>qs</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>binvcrhs</originRef>
         <originRef>problem_data</originRef>
         <originRef>qs</originRef>
       </fusionOfReplicators>
