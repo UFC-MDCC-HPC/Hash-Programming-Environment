@@ -14,7 +14,7 @@
           <dependency>%WORKSPACE/common.problem_size.Class/bin/1.0.0.0/BaseIClass.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="209" y="139">
+      <visualDescription h="40" w="80" x="169" y="107">
         <color b="0" g="128" r="255"/>
       </visualDescription>
     </interface>
