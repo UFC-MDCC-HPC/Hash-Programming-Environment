@@ -109,39 +109,39 @@
         <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
         <visualDescription h="10" w="10" x="18" y="2"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@140561a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@10a0655" repeat="0">
         <visualDescription h="550" w="510" x="145" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@d4df3f" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@125eb4c" repeat="0">
           <visualDescription h="450" w="430" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@18cc466" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7aed04" repeat="0">
             <visualDescription h="350" w="350" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@b23fce" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@5eda46" repeat="0">
               <visualDescription h="250" w="270" x="70" y="50"/>
-              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7afd20" repeat="0">
+              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@14c4ec8" repeat="0">
                 <visualDescription h="150" w="190" x="70" y="50"/>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@80650d" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c85316" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="10" y="50"/>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@16a39c3" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1c70a61" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="70" y="50"/>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f64fae" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7a6f65" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="130" y="50"/>
                 </action>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e946c0" repeat="0" sliceRef="copy_faces">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@276192" repeat="0" sliceRef="copy_faces">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@123e7b7" repeat="0" sliceRef="compute_rhs">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@176c294" repeat="0" sliceRef="compute_rhs">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@41ca05" repeat="0" sliceRef="add">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e095c3" repeat="0" sliceRef="add">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1363c8e" repeat="0" sliceRef="txinvr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1884174" repeat="0" sliceRef="txinvr">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -175,16 +175,6 @@
       <visualDescription h="65" w="217" x="271" y="22">
         <color b="0" g="128" r="128"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="162" y="9"/>
-        <slice pRef="problem" sRef="z_solve"/>
-        <slice pRef="problem" sRef="y_solve"/>
-        <slice pRef="problem" sRef="x_solve"/>
-        <slice pRef="problem" sRef="copy_faces"/>
-        <slice pRef="problem" sRef="compute_rhs"/>
-        <slice pRef="problem" sRef="add"/>
-        <slice pRef="problem" sRef="txinvr"/>
-      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="43" y="4"/>
         <slice pRef="blocks" sRef="z_solve"/>
@@ -195,17 +185,27 @@
         <slice pRef="blocks" sRef="add"/>
         <slice pRef="blocks" sRef="txinvr"/>
       </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="162" y="9"/>
+        <slice pRef="problem" sRef="z_solve"/>
+        <slice pRef="problem" sRef="y_solve"/>
+        <slice pRef="problem" sRef="x_solve"/>
+        <slice pRef="problem" sRef="copy_faces"/>
+        <slice pRef="problem" sRef="compute_rhs"/>
+        <slice pRef="problem" sRef="add"/>
+        <slice pRef="problem" sRef="txinvr"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="77" y="104"/>
+        <slice pRef="cell" sRef="z_solve"/>
+        <slice pRef="z" sRef="copy_faces"/>
+      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="z_solve"/>
         <slice pRef="mpi" sRef="y_solve"/>
         <slice pRef="mpi" sRef="x_solve"/>
         <slice pRef="mpi" sRef="copy_faces"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="77" y="104"/>
-        <slice pRef="cell" sRef="z_solve"/>
-        <slice pRef="z" sRef="copy_faces"/>
       </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="224" y="24"/>

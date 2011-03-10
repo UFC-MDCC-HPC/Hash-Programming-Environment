@@ -77,8 +77,8 @@
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="orientation" varName="DIR"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <interface iRef="ININVR" nArgs="4">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocks"/>
@@ -96,7 +96,7 @@
         <originRef cRef="method" iRef="IMethod"/>
         <visualDescription h="10" w="10" x="30" y="5"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@147171b" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@464cfa" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
