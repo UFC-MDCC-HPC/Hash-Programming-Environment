@@ -6,7 +6,7 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e7ee0dd4691d86154bc4aef6dddd6fc66dc12b451adfb3972cfae0156d711003d5f2513aed8abacc600e6b2541b2524b1e3ce24e15c855bfcfca43ed094671715c97cb446397a550ad4d6f676ee79f12b40c54af2000aa0c238af28c1ecfe390535e20b7c9bb6118ac90f8f729caa0a9de75455169286334fbdd268d562a0498" localRef="base" location="bt.BT/BT.hpe" name="BT" package="bt" version="1.0.0.0">
-        <visualDescription h="41" w="83" x="159" y="347">
+        <visualDescription h="41" w="83" x="173" y="360">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="class" varName="CLASS"/>
@@ -63,28 +63,29 @@
         <originRef cRef="adi" iRef="IADI"/>
         <visualDescription h="10" w="10" x="5" y="28"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@10db8ad" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1aac3df" repeat="0">
         <visualDescription h="250" w="330" x="175" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1d7800a" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@218f5c" repeat="0">
           <visualDescription h="150" w="250" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1173665" repeat="0" sliceRef="lhsinit">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14af285" repeat="0" sliceRef="lhsinit">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f453b6" repeat="0" sliceRef="initialize">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1781f5a" repeat="0" sliceRef="initialize">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@a3d651" repeat="0" sliceRef="exact_rhs">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1527a93" repeat="0" sliceRef="exact_rhs">
             <visualDescription h="50" w="50" x="130" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4b9168" repeat="0" sliceRef="verify">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ed50c0" repeat="0" sliceRef="verify">
             <visualDescription h="50" w="50" x="190" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1375575" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@150a6a8" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
-      <visualDescription h="53" w="122" x="105" y="143">
+      <sources sourceType="C# Language" versionId="1.0.0.0"/>
+      <visualDescription h="53" w="122" x="132" y="126">
         <color b="255" g="255" r="0"/>
       </visualDescription>
       <port name="blocks">
@@ -110,28 +111,24 @@
         <slice pRef="mpi" sRef="verify"/>
         <slice pRef="mpi" sRef="adi"/>
       </port>
-      <port name="z">
+      <port name="y">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="process"/>
-        <slice pRef="z" sRef="verify"/>
+        <slice pRef="y" sRef="process"/>
+        <slice pRef="y" sRef="verify"/>
       </port>
       <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="x" sRef="process"/>
         <slice pRef="x" sRef="verify"/>
       </port>
-      <port name="y">
+      <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="process"/>
-        <slice pRef="y" sRef="verify"/>
+        <slice pRef="z" sRef="process"/>
+        <slice pRef="z" sRef="verify"/>
       </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="cell" sRef="adi"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="x" sRef="adi"/>
       </port>
       <port name="y">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -140,6 +137,10 @@
       <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="adi"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="adi"/>
       </port>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
     </interface>
@@ -171,12 +172,13 @@
       </slices>
       <visualDescription h="40" w="80" x="205" y="249"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>base</originRef>
-      <originRef>timer</originRef>
-      <originRef>mpi</originRef>
+      <originRef>exact_rhs</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="bt"/>
-      <visualDescription h="29" w="28" x="433" y="125"/>
+      <visualDescription h="29" w="28" x="403" y="189"/>
     </enumerator>
   </componentInfo>
 </component:component>
