@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8FCBE39B-FDF9-4420-9291-248113C70E51}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.bt.ADI</RootNamespace>
+    <AssemblyName>IADIImpl</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ADI.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIADIImpl.cs">
+      <Link>BaseIADIImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IADIImpl.cs">
+      <Link>IADIImpl.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
+      <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
+      <Name>common.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.CopyFaces\common.CopyFaces\common.CopyFaces.csproj">
+      <Project>{EFF27C29-8291-4717-919D-70319E68D1E2}</Project>
+      <Name>common.CopyFaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.Solve\bt.solve.Solve\bt.solve.Solve.csproj">
+      <Project>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</Project>
+      <Name>bt.solve.Solve</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.X\common.orientation.X\common.orientation.X.csproj">
+      <Project>{944FBD84-2F3B-432F-BB71-9597D2D25457}</Project>
+      <Name>common.orientation.X</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Y\common.orientation.Y\common.orientation.Y.csproj">
+      <Project>{9836FF76-DF70-442C-8158-252FF11E6AB3}</Project>
+      <Name>common.orientation.Y</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Z\common.orientation.Z\common.orientation.Z.csproj">
+      <Project>{06541603-756E-46E4-9836-4FE91E436A59}</Project>
+      <Name>common.orientation.Z</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
