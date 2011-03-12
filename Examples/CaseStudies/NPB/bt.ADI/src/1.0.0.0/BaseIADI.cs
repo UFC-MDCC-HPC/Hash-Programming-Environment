@@ -5,7 +5,7 @@ using common.topology.Ring;
 using common.datapartition.BlocksInfo;
 using environment.MPIDirect;
 using common.data.ProblemDefinition;
-using common.problem_size.Instance;
+using bt.problem_size.Instance_BT;
 using common.problem_size.Class;
 
 namespace bt.ADI { 
@@ -14,12 +14,13 @@ public interface BaseIADI<C> : IComputationKind
 where C:IClass
 {
 
-	ICell Y {get;}
-	ICell Z {get;}
+	ICell Cell {get;}
 	ICell X {get;}
+	ICell Z {get;}
+	ICell Y {get;}
 	IBlocks Blocks {get;}
 	IMPIDirect Mpi {get;}
-	IProblemDefinition<IInstance_BT<C>, C> Problem {get;}
+	IProblemDefinition<IInstance_BT<C>> Problem {get;}
 
 
 } // end main interface 

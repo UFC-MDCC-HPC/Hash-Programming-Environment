@@ -313,9 +313,15 @@
     <supplyParameter cRef="dir_y" varName="DIR_Y"/>
     <supplyParameter cRef="dir_x" varName="DIR_X"/>
     <supplyParameter cRef="dir_z" varName="DIR_Z"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <fusion>
+      <cRefs>z_solve</cRefs>
+      <cRefs>y_solve</cRefs>
+      <cRefs>x_solve</cRefs>
+      <pRef>topology</pRef>
+    </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
       <cRefs>add</cRefs>
@@ -324,12 +330,6 @@
       <cRefs>y_solve</cRefs>
       <cRefs>x_solve</cRefs>
       <pRef>blocks_info</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>z_solve</cRefs>
-      <cRefs>y_solve</cRefs>
-      <cRefs>x_solve</cRefs>
-      <pRef>topology</pRef>
     </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
@@ -364,34 +364,34 @@
         <originRef cRef="copy_faces" iRef="ICopyFaces"/>
         <visualDescription h="10" w="10" x="5" y="76"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1917ef8" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@81134f" repeat="0">
         <visualDescription h="150" w="370" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@126d5d1" repeat="0" sliceRef="solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1adb15" repeat="0" sliceRef="solve">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9fa79a" repeat="0" sliceRef="solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1256bdc" repeat="0" sliceRef="solve">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b473e2" repeat="0" sliceRef="solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1cc78b4" repeat="0" sliceRef="solve">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@240fd2" repeat="0" sliceRef="compute_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@10883c8" repeat="0" sliceRef="compute_rhs">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@18aa724" repeat="0" sliceRef="add">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3e2e0" repeat="0" sliceRef="add">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e341ca" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@123f9c7" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace bt.ADI { &#xA;&#xA;public interface BaseIADI&lt;C> : IComputationKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;ICell Y {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#x9;IProblemDefinition&lt;IInstance&lt;C>, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIADI.cs" srcType="base" uri="bt.ADI/bin/1.0.0.0/BaseIADI.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace bt.ADI { &#xA;&#xA;public interface BaseIADI&lt;C> : IComputationKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;ICell Cell {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Z {get;}&#xA;&#x9;ICell Y {get;}&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IMPIDirect Mpi {get;}&#xA;&#x9;IProblemDefinition&lt;IInstance_BT&lt;C>> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIADI.cs" srcType="base" uri="bt.ADI/bin/1.0.0.0/BaseIADI.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
-          <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
@@ -421,18 +421,18 @@
         <slice pRef="blocks" sRef="add"/>
         <slice pRef="blocks" sRef="copy_faces"/>
       </port>
+      <port name="cell">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="solve"/>
+        <slice pRef="cell" sRef="solve"/>
+        <slice pRef="cell" sRef="solve"/>
+      </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="solve"/>
         <slice pRef="mpi" sRef="solve"/>
         <slice pRef="mpi" sRef="solve"/>
         <slice pRef="mpi" sRef="copy_faces"/>
-      </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="solve"/>
-        <slice pRef="cell" sRef="solve"/>
-        <slice pRef="cell" sRef="solve"/>
       </port>
       <port name="x">
         <visualDescription h="10" w="10" x="33" y="77"/>
