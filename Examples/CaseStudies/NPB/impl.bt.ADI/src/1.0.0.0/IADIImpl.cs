@@ -11,29 +11,14 @@ public class IADIImpl<C> : BaseIADIImpl<C>, IADI<C>
 where C:IClass
 {
 
-public IADIImpl() { 
-
+public override void compute(){ 
+	Copy_faces.synchronize();
+	X_solve.compute();
+	Y_solve.compute();
+	Z_solve.compute();
+	Add.compute();
 } 
 
-public override void compute() { 
-	#pragma omp parallel sections
-	{
-		#pragma omp section
-		solve.compute();
-		#pragma omp section
-		null.compute();
-		#pragma omp section
-		null.compute();
-		#pragma omp section
-		compute_rhs.compute();
-		#pragma omp section
-		add.compute();
-		#pragma omp section
-		copy_faces.synchronize();
-	}
-
 } // end activate method 
-
-}
 
 }
