@@ -20,7 +20,7 @@ where C:IClass
 	ICell Y {get;}
 	IBlocks Blocks {get;}
 	IMPIDirect Mpi {get;}
-	IProblemDefinition<IInstance_BT<C>> Problem {get;}
+	IProblemDefinition<IInstance_BT<C>, C> Problem {get;}
 
 
 } // end main interface 
