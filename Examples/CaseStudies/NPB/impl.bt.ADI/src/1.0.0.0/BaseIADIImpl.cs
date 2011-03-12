@@ -11,7 +11,7 @@ using bt.problem_size.Instance_BT;
 using common.problem_size.Class;
 using bt.solve.Solve;
 using common.orientation.Y;
-using common.solve.BeamWarmingMethod;
+using bt.solve.BeamWarmingMethod;
 using common.direction.Direction;
 using common.ComputeRHS;
 using common.orientation.X;
