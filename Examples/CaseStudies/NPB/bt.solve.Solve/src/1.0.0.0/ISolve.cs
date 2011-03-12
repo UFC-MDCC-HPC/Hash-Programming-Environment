@@ -6,11 +6,11 @@ using common.problem_size.Class;
 
 namespace bt.solve.Solve { 
 
-public interface ISolve<DIR, MTH, I, C> : BaseISolve<DIR, MTH, I, C>
+public interface ISolve<DIR, I, C, MTH> : BaseISolve<DIR, I, C, MTH>
 where DIR:IAxis
-where MTH:IMethod
 where I:IInstance<C>
 where C:IClass
+where MTH:IMethod
 {
 
 
