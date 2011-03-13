@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000053990261624a712c9103065c5248073a3b06a1caa4b86db57edb8b75dab18ac58dc71ee58dbd54763ee20c943123b98a30d20036f583abdff7bee30ee3fe5545e7b46c1f782e1bf5df5a1bf115fa077fb34aebde738b596b3eb537db26da493eb3f6d2fc25ddd6f7f642044cdc633b21d4fb453ffc706f19e5be1da920507289" isAbstract="false" kind="Environment" name="Instance_BT_C" packagePath="impl.bt.problem_size">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bf53b0511383425a287205701028bd02468fc3d7e016187e316b324317e52a13e4ef0306034cc0f1612eac77c8c89171d233ab624d7f88cf7617781ea97fa7fcba7539b5065ba46eeb6fa2c58d5cc8c4bac53ea60ddac7bab5ad64d967540e78947590eeb466137ff49b1db9e8e77e8207f5e253a70d62b1914edf8cbfcfc0a4" localRef="base" location="bt.problem_size.Instance_BT/Instance_BT.hpe" name="Instance_BT" package="bt.problem_size" version="1.0.0.0">
+        <visualDescription h="46" w="75" x="220" y="360">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="instance">
+          <visualDescription h="10" w="10" x="30" y="6"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000938be8330369935f1db34ccbf394ff219dbf72e9969cd608e73059b6aee60d240808d210eebabf873ddaf88b8f727810579b26678c7a85f833a090f51a3d51197dec1c0d3f288db510ed7ee6b5a359e49dd55ef4223bf7433e94451e7fa945b1205d6a3fe9a44b14493a66e6aa5f132298ce1e81c2b6957600555117261cc08d" localRef="class" location="common.problem_size.Class_C/Class_C.hpe" name="Class_C" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="220" y="239">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <interface iRef="IInstance_BT_C_Impl" nArgs="1">
+      <slice isRef="class">
+        <originRef cRef="class" iRef="IClass"/>
+        <visualDescription h="10" w="10" x="27" y="21"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Class_C;&#xA;using bt.problem_size.Instance_BT;&#xA;&#xA;namespace impl.bt.problem_size.Instance_BT_C { &#xA;&#xA;public abstract class BaseIInstance_BT_C_Impl&lt;C>: Environment, BaseIInstance&lt;C>&#xA;where C:IClass_C&#xA;{&#xA;&#xA;private C class = default(C);&#xA;&#xA;protected C Class {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.class == null)&#xA;&#x9;&#x9;&#x9;this.class = (C) Services.getPort(&quot;class&quot;);&#xA;&#x9;&#x9;return this.class;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_BT_C_Impl.cs" srcType="base" uri="impl.bt.problem_size.Instance_BT_C/bin/1.0.0.0/BaseIInstance_BT_C_Impl.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.problem_size.Class_C/bin/1.0.0.0/IClass_C.dll</dependency>
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/BaseIInstance.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class_C;&#xA;using bt.problem_size.Instance_BT;&#xA;&#xA;namespace impl.bt.problem_size.Instance_BT_C { &#xA;&#xA;public class IInstance_BT_C_Impl&lt;C> : BaseIInstance_BT_C_Impl&lt;C>, IInstance&lt;C>&#xA;where C:IClass_C&#xA;{&#xA;&#xA;public IInstance_BT_C_Impl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_BT_C_Impl.cs" srcType="user" uri="impl.bt.problem_size.Instance_BT_C/bin/1.0.0.0/IInstance_BT_C_Impl.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class_C/bin/1.0.0.0/IClass_C.dll</dependency>
+          <dependency>%WORKSPACE/impl.bt.problem_size.Instance_BT_C/bin/1.0.0.0/BaseIInstance_BT_C_Impl.dll</dependency>
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="151" x="179" y="134">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+      <parameter iname="IClass_C" order="0" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IInstance_BT_C_Impl" private="false" uRef="instance" visibleInterface="true">
+      <super cRef="base" uRef="instance"/>
+      <slices cRef="class" replica="0" uRef="class" sliceName="class" transitive="false">
+        <visualDescription h="10" w="10" x="27" y="21"/>
+      </slices>
+      <visualDescription h="40" w="80" x="215" y="247"/>
+    </unit>
+  </componentInfo>
+</component:component>
