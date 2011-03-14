@@ -173,10 +173,9 @@ public class Constants
   public static double dmax1(double a, double b, double c, double d)
   {
 		return dmax1(dmax1(a, b), dmax1(c, d));
-  }	
-  
-  public static double pow2(double p) { return p * p; }
-		
+  }		
+
+  public static double pow2(double p) { return p * p; }		
 }
 	
 	
@@ -199,14 +198,7 @@ where C:IClass
   double [,,,,] Field_ainv    { get; }	
   double [,,,,] Field_rho     { get; }	
   double [,,,,] Field_speed   { get; }	
-  double [,,,,] Field_square  { get; }
-
-  double[,,,,,] Field_lhsc { get; }
-  double[,,,] Field_backsub_info { get; }
-  double[,,] Field_fjac { get; }
-  double[,,] Field_njac { get; }
-  double[,,] Field_lhsa { get; }
-  double[,,] Field_lhsb { get; }
+  double [,,,,] Field_square  { get; }	
 		
   int MAX_CELL_DIM { get; set; }	
   int maxcells { get; set;}	
