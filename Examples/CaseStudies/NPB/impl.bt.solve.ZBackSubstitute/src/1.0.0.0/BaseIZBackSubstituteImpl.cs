@@ -22,6 +22,20 @@ where C:IClass
 where DIR:IZ
 where MTH:IBeamWarmingMethod
 {
+#region data
+		
+protected int[,] start, end, cell_size;
+protected double[,,,,] rhs;
+
+override public void initialize()		
+{
+	start = Blocks.cell_start;
+	end = Blocks.cell_end;
+	cell_size = Blocks.cell_size;
+	rhs = Problem.Field_rhs;
+}
+		
+#endregion 
 
 private IBlocks blocks = null;
 
