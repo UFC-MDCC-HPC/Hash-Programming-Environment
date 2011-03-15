@@ -10,11 +10,11 @@ using common.orientation.Axis;
 
 namespace bt.solve.BackSubstitute { 
 
-public interface BaseIBackSubstitute<MTH, I, C, DIR> : IComputationKind 
-where MTH:IMethod
+public interface BaseIBackSubstitute<I, C, DIR, MTH> : IComputationKind 
 where I:IInstance<C>
 where C:IClass
 where DIR:IAxis
+where MTH:IMethod
 {
 
 	IBlocks Blocks {get;}

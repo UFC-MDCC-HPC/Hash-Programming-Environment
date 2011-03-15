@@ -6,11 +6,11 @@ using common.orientation.Axis;
 
 namespace bt.solve.BackSubstitute { 
 
-public interface IBackSubstitute<MTH, I, C, DIR> : BaseIBackSubstitute<MTH, I, C, DIR>
-where MTH:IMethod
+public interface IBackSubstitute<I, C, DIR, MTH> : BaseIBackSubstitute<I, C, DIR, MTH>
 where I:IInstance<C>
 where C:IClass
 where DIR:IAxis
+where MTH:IMethod
 {
 
 
