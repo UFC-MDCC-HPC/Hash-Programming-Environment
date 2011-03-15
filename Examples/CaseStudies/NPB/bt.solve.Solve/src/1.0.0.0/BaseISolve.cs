@@ -1,8 +1,8 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using common.datapartition.BlocksInfo;
 using common.topology.Ring;
+using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
 using common.problem_size.Instance;
 using common.problem_size.Class;
@@ -20,13 +20,12 @@ where C:IClass
 where MTH:IMethod
 {
 
-	IBlocks Blocks {get;}
 	ICell Cell {get;}
+	IBlocks Blocks {get;}
 	IProblemDefinition<I, C> Problem {get;}
-	IBuffer Input_buffer {get;}
-	IBuffer Output_buffer {get;}
 	IMPIDirect Mpi {get;}
-
+	//IBuffer Input_buffer {get;}
+	//IBuffer Output_buffer {get;}
 
 } // end main interface 
 
