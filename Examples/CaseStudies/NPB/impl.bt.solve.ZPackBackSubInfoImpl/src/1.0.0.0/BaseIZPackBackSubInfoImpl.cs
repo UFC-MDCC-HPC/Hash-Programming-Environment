@@ -22,6 +22,17 @@ where C:IClass
 where DIR:IZ
 where MTH:IBeamWarmingMethod
 {
+#region data
+	protected double[,,,,] rhs;
+	protected int JMAX;
+	protected int IMAX;
+	
+	override public void initialize(){
+		rhs = Problem.Field_rhs;
+		JMAX = Problem.JMAX;
+		IMAX = Problem.IMAX;
+	}
+#endregion
 
 private IBlocks blocks = null;
 
