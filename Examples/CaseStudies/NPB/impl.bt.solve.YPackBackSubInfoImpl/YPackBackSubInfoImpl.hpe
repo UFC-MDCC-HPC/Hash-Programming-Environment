@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cd40ea11355f1ae64480b0b8d12c3bc134d7ecd25950cf992f1cef375504de662371d02e407362676780934b0c4ef1a80ee5d85a7114373df96e08c183e91e4770c549b1c8f240608ecc17701e5f9d603437067530844a48b5a0f5e94c4f88234a83fa76fb55aa472d650c3dc40acc84965e2e61fdfb317fbac4d4e023ce6ed2" isAbstract="false" kind="Computation" name="YPackBackSubInfoImpl" packagePath="impl.bt.solve">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004955bfd98f6bcd03d29a10f181d714cedc8d2e15f2a2fe6f2b18bdbe16be9c1fb196f03e77f23fbff2ec17980090b4c5973ffa30c83bde9410cfc24a54e831685d946aaf5662af0f7149ca07d285bddd31a6b1a93f6dbc785f770424b0ab6bf4ab84d640fbe84f8634b6ea10be9ba0274065efb3d80715e3312b0be9419522df" localRef="base" location="bt.solve.PackUnpack/PackUnpack.hpe" name="PackUnpack" package="bt.solve" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="261" y="366">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
+        <parameter formFieldId="method" varName="MTH"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
+          <visualDescription h="49" w="84" x="66" y="386">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="32" y="7"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
+          <visualDescription h="56" w="96" x="391" y="328">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="52" y="10"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="packunpack">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bf53b0511383425a287205701028bd02468fc3d7e016187e316b324317e52a13e4ef0306034cc0f1612eac77c8c89171d233ab624d7f88cf7617781ea97fa7fcba7539b5065ba46eeb6fa2c58d5cc8c4bac53ea60ddac7bab5ad64d967540e78947590eeb466137ff49b1db9e8e77e8207f5e253a70d62b1914edf8cbfcfc0a4" localRef="instance_type" location="bt.problem_size.Instance_BT/Instance_BT.hpe" name="Instance_BT" package="bt.problem_size" exposed="false">
+      <visualDescription h="82" w="129" x="47" y="46">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000025529ab026e77dd546c5f94e76127e76d2c281e7bdedc252d61f6953b04f54d154593621b2aef59dcd634eb5fd324c6e2ad6536ac74f2cdeb85f88c97805cf25c77d65ca931e199c09fa9424a481585529fd2e43b58709ac4c948c2b5b81be648a3f130bd9795324dc2c04a3d5143030b3afa496239772cd9f2e7d3d9a599082" localRef="method" location="bt.solve.BeamWarmingMethod/BeamWarmingMethod.hpe" name="BeamWarmingMethod" package="bt.solve" exposed="false">
+      <visualDescription h="30" w="50" x="270" y="214">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="method">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="267" y="418">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ffcae3e9a0ecbf9c4629fdb52bc2acc0e2cc392d40ed0441b527e752c9079cf609fb0785045e3d2c5ace2f492d755021fd6cf82d853e202471136832c6cf8fdffec701b57bfde7017dd2ef51f1a4c4adca40833d6c6165b9123411a3dc7be80a59839ab3316debcc5e4d0d6e17dcb8400cf7e4bc1eca328e130aa9f8182bfccb" localRef="orientation" location="common.orientation.Y/Y.hpe" name="Y" package="common.orientation" exposed="false">
+      <visualDescription h="55" w="87" x="440" y="445">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="y">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="orientation" varName="DIR"/>
+    <supplyParameter cRef="method" varName="MTH"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IYPackBackSubInfoImpl" nArgs="4">
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="6" y="32"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="67" y="4"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="5" y="7"/>
+      </slice>
+      <slice isRef="method">
+        <originRef cRef="method" iRef="IMethod"/>
+        <visualDescription h="10" w="10" x="33" y="25"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@6a9c84" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;using common.orientation.Y;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.PackUnpack;&#xA;&#xA;namespace impl.bt.solve.YPackBackSubInfoImpl { &#xA;&#xA;public abstract class BaseIYPackBackSubInfoImpl&lt;I, C, DIR, MTH>: Computation, BaseIPackUnpack&lt;I, C, DIR, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where DIR:IY&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;private MTH method = default(MTH);&#xA;&#xA;protected MTH Method {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.method == null)&#xA;&#x9;&#x9;&#x9;this.method = (MTH) Services.getPort(&quot;method&quot;);&#xA;&#x9;&#x9;return this.method;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIYPackBackSubInfoImpl.cs" srcType="base" uri="impl.bt.solve.YPackBackSubInfoImpl/bin/1.0.0.0/BaseIYPackBackSubInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
+          <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
+          <dependency>bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
+          <dependency>bt.solve.PackUnpack/bin/1.0.0.0/BaseIPackUnpack.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Y;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.PackUnpack;&#xA;&#xA;namespace impl.bt.solve.YPackBackSubInfoImpl { &#xA;&#xA;public class IYPackBackSubInfoImpl&lt;I, C, DIR, MTH> : BaseIYPackBackSubInfoImpl&lt;I, C, DIR, MTH>, IPackUnpack&lt;I, C, DIR, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where DIR:IY&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;public IYPackBackSubInfoImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IYPackBackSubInfoImpl.cs" srcType="user" uri="impl.bt.solve.YPackBackSubInfoImpl/bin/1.0.0.0/IYPackBackSubInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
+          <dependency>bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
+          <dependency>%WORKSPACE/impl.bt.solve.YPackBackSubInfoImpl/bin/1.0.0.0/BaseIYPackBackSubInfoImpl.dll</dependency>
+          <dependency>bt.solve.PackUnpack/bin/1.0.0.0/IPackUnpack.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="46" w="307" x="130" y="114">
+        <color b="255" g="128" r="128"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <parameter iname="IInstance_BT" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IY" order="2" parid="orientation" uname="y" varid="DIR"/>
+      <parameter iname="IBeamWarmingMethod" order="3" parid="method" uname="method" varid="MTH"/>
+    </interface>
+    <unit iRef="IYPackBackSubInfoImpl" private="false" uRef="packunpack" visibleInterface="true">
+      <super cRef="base" uRef="packunpack"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="65" y="29"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="2"/>
+      </slices>
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+        <visualDescription h="10" w="10" x="4" y="26"/>
+      </slices>
+      <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
+        <visualDescription h="10" w="10" x="33" y="25"/>
+      </slices>
+      <visualDescription h="40" w="80" x="246" y="232"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+      <originRef>method</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
+      <visualDescription h="20" w="20" x="174" y="147"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>qs</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="packunpack"/>
+      <visualDescription h="48" w="47" x="78" y="239"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>orientation</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="y"/>
+      <visualDescription h="20" w="20" x="374" y="431"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
