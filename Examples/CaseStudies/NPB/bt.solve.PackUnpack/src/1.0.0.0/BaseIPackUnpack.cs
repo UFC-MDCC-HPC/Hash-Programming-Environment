@@ -10,11 +10,11 @@ using common.orientation.Axis;
 
 namespace bt.solve.PackUnpack { 
 
-public interface BaseIPackUnpack<I, C, MTH, DIR> : IComputationKind 
+public interface BaseIPackUnpack<I, C, DIR, MTH> : IComputationKind 
 where I:IInstance<C>
 where C:IClass
-where MTH:IMethod
 where DIR:IAxis
+where MTH:IMethod
 {
 
 	IBlocks Blocks {get;}

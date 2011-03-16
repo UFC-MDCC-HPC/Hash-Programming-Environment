@@ -6,11 +6,11 @@ using common.orientation.Axis;
 
 namespace bt.solve.PackUnpack { 
 
-public interface IPackUnpack<I, C, MTH, DIR> : BaseIPackUnpack<I, C, MTH, DIR>
+public interface IPackUnpack<I, C, DIR, MTH> : BaseIPackUnpack<I, C, DIR, MTH>
 where I:IInstance<C>
 where C:IClass
-where MTH:IMethod
 where DIR:IAxis
+where MTH:IMethod
 {
 
 
