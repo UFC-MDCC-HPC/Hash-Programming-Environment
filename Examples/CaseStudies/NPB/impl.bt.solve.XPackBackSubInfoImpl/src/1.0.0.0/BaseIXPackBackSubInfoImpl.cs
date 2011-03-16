@@ -23,9 +23,9 @@ where DIR:IX
 where MTH:IBeamWarmingMethod
 {
 #region data
-	protected double[,,,,] rhs;
-	protected int KMAX;
-	protected int JMAX;
+	private double[,,,,] rhs;
+	private int KMAX;
+	private int JMAX;
 	
 	override public void initialize(){
 		rhs = Problem.Field_rhs;
