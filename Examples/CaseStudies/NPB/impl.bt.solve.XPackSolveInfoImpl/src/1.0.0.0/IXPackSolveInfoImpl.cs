@@ -14,9 +14,9 @@ namespace impl.bt.solve.XPackSolveInfoImpl {
 	where C:IClass
 	where DIR:IX
 	where MTH:IBeamWarmingMethod {
-		protected double[,,,,,] lhsc;
-		protected double[] in_buffer_x; 
-		protected int c;
+		private double[,,,,,] lhsc;
+		private double[] in_buffer_x; 
+		private int c;
 		public void setParameters(double[,,,,,] lhsc, double[] in_buffer_x, int c) {
 			this.lhsc = lhsc;
 			this.in_buffer_x = in_buffer_x; 
