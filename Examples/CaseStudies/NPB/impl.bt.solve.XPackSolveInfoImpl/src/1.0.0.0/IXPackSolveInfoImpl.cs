@@ -36,7 +36,7 @@ namespace impl.bt.solve.XPackSolveInfoImpl {
 			            }
 			            ptr = ptr + 5;
 			        }
-			        for(n = 0; n < 5; n++) {
+			        for(int n = 0; n < 5; n++) {
 			            in_buffer_x[ptr + n] = rhs[c, k+2, j+2, isize, n];
 			        }
 			        ptr = ptr + 5;
