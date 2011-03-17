@@ -63,10 +63,10 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000019f24cc9345f4cb04f0a3610c62148f4681f29583195cee45a2799bcc91bc6713b89112dd790ad1ffc5cfa79e0f2cfa522e0ac0b930a681735b82b3e5451e1ecc0e1c2e2975e4cbc5c71b7e56bbfd40e1588670437fe06b6144159e97894ab81796d45e17546e6a8e52183f43cdac5947cf29691f9a99886aba076aa6960538c" localRef="shift" location="common.interactionpattern.Shift/Shift.hpe" name="Shift" package="common.interactionpattern" exposed="false">
-      <visualDescription h="57" w="80" x="558" y="193">
+      <visualDescription h="57" w="80" x="566" y="192">
         <color b="255" g="255" r="255"/>
       </visualDescription>
-      <parameter formFieldId="direction" varName="DIR"/>
+      <parameter formFieldId="direction" varName="DIR2"/>
       <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003d814b4345cf5faa20de75a01f91d78801c9aa8825d72a72adf61dc3f77f69a0d55eaceeec93bd9f288f7929dcceaf5a0bf739dbda828f06cacf8cc8d7396a243bfad7d225e794677392c2f895cd42470e6dbf22f2bf1ce97b9dae1ce70dc67096f97eec9cf234ee0a67fe88da930be655bc5fc0b8df79434c5cca0f2ba23c94" localRef="input_buffer" location="common.Buffer/Buffer.hpe" name="Buffer" package="common" exposed="false">
         <visualDescription h="30" w="91" x="582" y="277">
           <color b="255" g="255" r="255"/>
@@ -261,6 +261,15 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000972bd39f4db8435798f7ef9f006357475ffe04a1c955423969f250ab7cd65e4265735073dc93944d171fed52cfd4c235c7ad1911d629e5959adccc692549cb6bcbf6d736f766efbce2bf548c691721a10965f2bacf10fec2b23a952ce62edba5aad7beacf644389cb1fe19a7326bd72c8c775b8ed7b204be3e560b71693c0281" localRef="left_to_right" location="common.direction.LeftToRight/LeftToRight.hpe" name="LeftToRight" package="common.direction" exposed="false">
+      <visualDescription h="64" w="102" x="65" y="168">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="left_to_right">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="left_to_right" varName="DIR2"/>
     <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <parameter componentRef="orientation" formFieldId="orientation" varName="DIR"/>
@@ -300,45 +309,45 @@
         <originRef cRef="pack_back_sub_info" iRef="IPackUnpack"/>
         <visualDescription h="10" w="10" x="4" y="71"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19c68aa" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1535b2d" repeat="0">
         <visualDescription h="750" w="550" x="135" y="225"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19ba1f0" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1871111" repeat="0">
           <visualDescription h="650" w="470" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a49ea5" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@718f92" repeat="0">
             <visualDescription h="550" w="390" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1ab7153" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@188bc85" repeat="0">
               <visualDescription h="450" w="310" x="70" y="50"/>
-              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@9d3f93" repeat="0">
+              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@10de4c" repeat="0">
                 <visualDescription h="350" w="230" x="70" y="50"/>
-                <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1b8e6e1" repeat="0">
+                <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@17256ca" repeat="0">
                   <visualDescription h="250" w="150" x="70" y="50"/>
-                  <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@3dde76" repeat="0">
+                  <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1a02403" repeat="0">
                     <visualDescription h="150" w="70" x="70" y="50"/>
-                    <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d81726" repeat="0" sliceRef="solve_cell">
+                    <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9c5441" repeat="0" sliceRef="solve_cell">
                       <visualDescription h="50" w="50" x="10" y="50"/>
                     </action>
                   </action>
-                  <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d7fe48" repeat="0" sliceRef="shift">
+                  <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@15f9263" repeat="0" sliceRef="shift">
                     <visualDescription h="50" w="50" x="10" y="50"/>
                   </action>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@177570c" repeat="0" sliceRef="back_substitute">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@183a34f" repeat="0" sliceRef="back_substitute">
                   <visualDescription h="50" w="50" x="10" y="50"/>
                 </action>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f4100d" repeat="0" sliceRef="packunpack">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@156d4d5" repeat="0" sliceRef="packunpack">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@49d5de" repeat="0" sliceRef="packunpack">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1af1ee6" repeat="0" sliceRef="packunpack">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1780b00" repeat="0" sliceRef="packunpack">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@15bc09" repeat="0" sliceRef="packunpack">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a3d24" repeat="0" sliceRef="packunpack">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ec3076" repeat="0" sliceRef="packunpack">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -367,15 +376,6 @@
       <visualDescription h="85" w="129" x="278" y="67">
         <color b="0" g="0" r="255"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="problem" sRef="solve_cell"/>
-        <slice pRef="problem" sRef="back_substitute"/>
-        <slice pRef="problem" sRef="packunpack"/>
-        <slice pRef="problem" sRef="packunpack"/>
-        <slice pRef="problem" sRef="packunpack"/>
-        <slice pRef="problem" sRef="packunpack"/>
-      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="solve_cell"/>
@@ -385,6 +385,19 @@
         <slice pRef="blocks" sRef="packunpack"/>
         <slice pRef="blocks" sRef="packunpack"/>
       </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="solve_cell"/>
+        <slice pRef="problem" sRef="back_substitute"/>
+        <slice pRef="problem" sRef="packunpack"/>
+        <slice pRef="problem" sRef="packunpack"/>
+        <slice pRef="problem" sRef="packunpack"/>
+        <slice pRef="problem" sRef="packunpack"/>
+      </port>
+      <port name="cell">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="shift"/>
+      </port>
       <port name="output_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer" sRef="shift"/>
@@ -392,10 +405,6 @@
       <port name="mpi">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="shift"/>
-      </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="shift"/>
       </port>
       <port name="input_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -529,6 +538,12 @@
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <visualDescription h="20" w="20" x="26" y="411"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>left_to_right</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="left_to_right" uRef="left_to_right"/>
+      <visualDescription h="20" w="20" x="51" y="131"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
