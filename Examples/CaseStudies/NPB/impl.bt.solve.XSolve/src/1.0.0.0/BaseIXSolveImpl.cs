@@ -14,9 +14,9 @@ using bt.solve.PackUnpack;
 using common.orientation.X;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.BackSubstitute;
-using environment.MPIDirect;
 using common.interactionpattern.Shift;
-using common.direction.Direction;
+using common.direction.LeftToRight;
+using environment.MPIDirect;
 using bt.solve.SolveCell;
 using bt.solve.Solve;
 
@@ -79,43 +79,43 @@ protected IBuffer Output_buffer {
 	}
 }
 
-private IPackUnpack<I, C, DIR, MTH> packunpack = null;
+private IPackUnpack<I, C, DIR, MTH> pack_back_sub_info = null;
 
-protected IPackUnpack<I, C, DIR, MTH> Packunpack {
+protected IPackUnpack<I, C, DIR, MTH> PackBackSubInfo {
 	get {
-		if (this.packunpack == null)
-			this.packunpack = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("pack_back_sub_info");
-		return this.packunpack;
+		if (this.pack_back_sub_info == null)
+			this.pack_back_sub_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("pack_back_sub_info");
+		return this.pack_back_sub_info;
 	}
 }
 
-private IPackUnpack<I, C, DIR, MTH> packunpack = null;
+private IPackUnpack<I, C, DIR, MTH> unpack_back_sub_info = null;
 
-protected IPackUnpack<I, C, DIR, MTH> Packunpack {
+protected IPackUnpack<I, C, DIR, MTH> UnpackBackSubInfo {
 	get {
-		if (this.packunpack == null)
-			this.packunpack = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("unpack_back_sub_info");
-		return this.packunpack;
+		if (this.unpack_back_sub_info == null)
+			this.unpack_back_sub_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("unpack_back_sub_info");
+		return this.unpack_back_sub_info;
 	}
 }
 
-private IPackUnpack<I, C, DIR, MTH> packunpack = null;
+private IPackUnpack<I, C, DIR, MTH> unpack_solve_info = null;
 
-protected IPackUnpack<I, C, DIR, MTH> Packunpack {
+protected IPackUnpack<I, C, DIR, MTH> UnpackSolveInfo {
 	get {
-		if (this.packunpack == null)
-			this.packunpack = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("unpack_solve_info");
-		return this.packunpack;
+		if (this.unpack_solve_info == null)
+			this.unpack_solve_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("unpack_solve_info");
+		return this.unpack_solve_info;
 	}
 }
 
-private IPackUnpack<I, C, DIR, MTH> packunpack = null;
+private IPackUnpack<I, C, DIR, MTH> pack_solve_info = null;
 
-protected IPackUnpack<I, C, DIR, MTH> Packunpack {
+protected IPackUnpack<I, C, DIR, MTH> PackSolveInfo {
 	get {
-		if (this.packunpack == null)
-			this.packunpack = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("pack_solve_info");
-		return this.packunpack;
+		if (this.pack_solve_info == null)
+			this.pack_solve_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("pack_solve_info");
+		return this.pack_solve_info;
 	}
 }
 
@@ -129,6 +129,16 @@ protected IBackSubstitute<I, C, DIR, MTH> Back_substitute {
 	}
 }
 
+private IShift<ILeftToRight> shift = null;
+
+protected IShift<ILeftToRight> Shift {
+	get {
+		if (this.shift == null)
+			this.shift = (IShift<ILeftToRight>) Services.getPort("shift");
+		return this.shift;
+	}
+}
+
 private IMPIDirect mpi = null;
 
 public IMPIDirect Mpi {
@@ -136,16 +146,6 @@ public IMPIDirect Mpi {
 		if (this.mpi == null)
 			this.mpi = (IMPIDirect) Services.getPort("mpi");
 		return this.mpi;
-	}
-}
-
-private IShift<DIR> shift = null;
-
-protected IShift<DIR> Shift {
-	get {
-		if (this.shift == null)
-			this.shift = (IShift<DIR>) Services.getPort("shift");
-		return this.shift;
 	}
 }
 
