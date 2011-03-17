@@ -6,13 +6,13 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bf1139a13175ef499c27ab647062439437f1bab31b1c1ed2cbec7c8422715b8857af2107ab44922115ce542862210efbe980e383ff4ecee056db2139aec59f12bfeb64c8e2217cf225eb8997fc6e2c31f433d1590246b2b1a3fa7fb000dd5c6fe63dcadfc8aedb93374c7b96a55d99d0ec2db589e911811b590f4a5581b110d4" localRef="base" location="bt.solve.LhsABInit/LhsABInit.hpe" name="LhsABInit" package="bt.solve" version="1.0.0.0">
-        <visualDescription h="71" w="86" x="203" y="364">
+        <visualDescription h="59" w="70" x="307" y="389">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="instance_type" varName="I"/>
         <parameter formFieldId="class" varName="C"/>
         <unitBounds uRef="lhsabinit">
-          <visualDescription h="10" w="10" x="38" y="4"/>
+          <visualDescription h="10" w="10" x="31" y="6"/>
         </unitBounds>
       </component>
     </baseType>
@@ -23,7 +23,7 @@
   </header>
   <componentInfo>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000bf53b0511383425a287205701028bd02468fc3d7e016187e316b324317e52a13e4ef0306034cc0f1612eac77c8c89171d233ab624d7f88cf7617781ea97fa7fcba7539b5065ba46eeb6fa2c58d5cc8c4bac53ea60ddac7bab5ad64d967540e78947590eeb466137ff49b1db9e8e77e8207f5e253a70d62b1914edf8cbfcfc0a4" localRef="instance_type" location="bt.problem_size.Instance_BT/Instance_BT.hpe" name="Instance_BT" package="bt.problem_size" exposed="false">
-      <visualDescription h="58" w="133" x="75" y="148">
+      <visualDescription h="66" w="111" x="399" y="403">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="class" varName="C"/>
@@ -32,7 +32,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
-      <visualDescription h="30" w="50" x="206" y="390">
+      <visualDescription h="30" w="50" x="260" y="456">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="class">
@@ -50,7 +50,7 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="65" y="24"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1971507" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@fc3d6" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -68,7 +68,7 @@
           <dependency>bt.solve.LhsABInit/bin/1.0.0.0/ILhsABInit.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="96" x="198" y="144">
+      <visualDescription h="40" w="133" x="276" y="170">
         <color b="0" g="255" r="128"/>
       </visualDescription>
       <parameter iname="IInstance_BT" order="0" parid="instance_type" uname="instance" varid="I"/>
@@ -82,14 +82,14 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
         <visualDescription h="10" w="10" x="65" y="24"/>
       </slices>
-      <visualDescription h="40" w="80" x="206" y="241"/>
+      <visualDescription h="40" w="80" x="303" y="298"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>base</originRef>
       <originRef>problem_data</originRef>
       <originRef>qs</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="lhsabinit"/>
-      <visualDescription h="60" w="61" x="42" y="231"/>
+      <visualDescription h="60" w="61" x="156" y="288"/>
     </enumerator>
   </componentInfo>
 </component:component>
