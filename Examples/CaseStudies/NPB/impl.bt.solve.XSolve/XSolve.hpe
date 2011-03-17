@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000edb768a48618c514672149b2ecf4888cf7e67a469e31700234e929dfb313308d0deedbb03f7549719ae6ba7319f7600a08f3ac2693e4fb6b6beaa8953379e6a9c2c3fa0ddb8c47dddcaa55fcf3213cdc17542a93f6f21a3f8ea80cf7f8169cbb552faf1dc83e544f5b1b34a93642361cd113ebd6f109c30de936569c5fb82b8f" isAbstract="false" kind="Computation" name="XSolve" packagePath="impl.bt.solve">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo/>
+</component:component>
