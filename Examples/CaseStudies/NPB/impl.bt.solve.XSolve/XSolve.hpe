@@ -6,7 +6,7 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000bae3da14fb48c0e99af6ebcd66876aed5437168f2dc689b6e0d613d75a6a6f0689686cee970b3836f4c73410ae0c283d47e11abd20757a350a39a15862c4330b86ee723dcf60e7920e684de4e739bc479de4b0199e152120feb41edff40762c4b236ca7306f2350bf1e2ec699bfdfff762d12aec77250844cb6bc822f0f0486" localRef="base" location="bt.solve.Solve/Solve.hpe" name="Solve" package="bt.solve" version="1.0.0.0">
-        <visualDescription h="41" w="66" x="235" y="366">
+        <visualDescription h="41" w="66" x="246" y="361">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="instance_type" varName="I"/>
@@ -93,8 +93,8 @@
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="orientation" varName="DIR"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance_type" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <interface iRef="IXSolveImpl" nArgs="4">
       <slice isRef="solve_cell">
         <originRef cRef="solve_cell" iRef="ISolveCell"/>
@@ -112,50 +112,50 @@
         <originRef cRef="pack_back_sub_info" iRef="IPackUnpack"/>
         <visualDescription h="10" w="10" x="4" y="71"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1e6c0ea" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1389ea8" repeat="0">
         <visualDescription h="750" w="550" x="135" y="225"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@837c0b" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@383173" repeat="0">
           <visualDescription h="650" w="470" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@44c1b9" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@136ab80" repeat="0">
             <visualDescription h="550" w="390" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a620d" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@35684d" repeat="0">
               <visualDescription h="450" w="310" x="70" y="50"/>
-              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1ab74bd" repeat="0">
+              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@52bf58" repeat="0">
                 <visualDescription h="350" w="230" x="70" y="50"/>
-                <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@17d4a14" repeat="0">
+                <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@9034d4" repeat="0">
                   <visualDescription h="250" w="150" x="70" y="50"/>
-                  <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8a7318" repeat="0">
+                  <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@17c6d76" repeat="0">
                     <visualDescription h="150" w="70" x="70" y="50"/>
-                    <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@18a3e5f" repeat="0" sliceRef="solve_cell">
+                    <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f68ad9" repeat="0" sliceRef="solve_cell">
                       <visualDescription h="50" w="50" x="10" y="50"/>
                     </action>
                   </action>
-                  <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@104e75b" repeat="0" sliceRef="shift">
+                  <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@115c214" repeat="0" sliceRef="shift">
                     <visualDescription h="50" w="50" x="10" y="50"/>
                   </action>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@f1163f" repeat="0" sliceRef="back_substitute">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@178ed27" repeat="0" sliceRef="back_substitute">
                   <visualDescription h="50" w="50" x="10" y="50"/>
                 </action>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1eb9926" repeat="0" sliceRef="packunpack">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@199d38" repeat="0" sliceRef="packunpack">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9391d9" repeat="0" sliceRef="packunpack">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a10521" repeat="0" sliceRef="packunpack">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4c7d74" repeat="0" sliceRef="packunpack">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@57e77f" repeat="0" sliceRef="packunpack">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1c06999" repeat="0" sliceRef="packunpack">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@11f712f" repeat="0" sliceRef="packunpack">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.Buffer;&#xA;using bt.solve.PackUnpack;&#xA;using common.orientation.X;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.BackSubstitute;&#xA;using common.interactionpattern.Shift;&#xA;using common.direction.LeftToRight;&#xA;using environment.MPIDirect;&#xA;using bt.solve.SolveCell;&#xA;using bt.solve.Solve;&#xA;&#xA;namespace impl.bt.solve.XSolve { &#xA;&#xA;public abstract class BaseIXSolveImpl&lt;DIR, I, C, MTH>: Computation, BaseISolve&lt;DIR, I, C, MTH>&#xA;where DIR:IX&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;private ICell cell = null;&#xA;&#xA;public ICell Cell {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.cell == null)&#xA;&#x9;&#x9;&#x9;this.cell = (ICell) Services.getPort(&quot;topology&quot;);&#xA;&#x9;&#x9;return this.cell;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer input_buffer = null;&#xA;&#xA;protected IBuffer Input_buffer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer = (IBuffer) Services.getPort(&quot;input_buffer&quot;);&#xA;&#x9;&#x9;return this.input_buffer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer output_buffer = null;&#xA;&#xA;protected IBuffer Output_buffer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer = (IBuffer) Services.getPort(&quot;output_buffer&quot;);&#xA;&#x9;&#x9;return this.output_buffer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> packunpack = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> Packunpack {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.packunpack == null)&#xA;&#x9;&#x9;&#x9;this.packunpack = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;pack_back_sub_info&quot;);&#xA;&#x9;&#x9;return this.packunpack;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> packunpack = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> Packunpack {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.packunpack == null)&#xA;&#x9;&#x9;&#x9;this.packunpack = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;unpack_back_sub_info&quot;);&#xA;&#x9;&#x9;return this.packunpack;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> packunpack = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> Packunpack {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.packunpack == null)&#xA;&#x9;&#x9;&#x9;this.packunpack = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;unpack_solve_info&quot;);&#xA;&#x9;&#x9;return this.packunpack;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> packunpack = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> Packunpack {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.packunpack == null)&#xA;&#x9;&#x9;&#x9;this.packunpack = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;pack_solve_info&quot;);&#xA;&#x9;&#x9;return this.packunpack;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBackSubstitute&lt;I, C, DIR, MTH> back_substitute = null;&#xA;&#xA;protected IBackSubstitute&lt;I, C, DIR, MTH> Back_substitute {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.back_substitute == null)&#xA;&#x9;&#x9;&#x9;this.back_substitute = (IBackSubstitute&lt;I, C, DIR, MTH>) Services.getPort(&quot;back_substitute&quot;);&#xA;&#x9;&#x9;return this.back_substitute;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IShift&lt;ILeftToRight> shift = null;&#xA;&#xA;protected IShift&lt;ILeftToRight> Shift {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift == null)&#xA;&#x9;&#x9;&#x9;this.shift = (IShift&lt;ILeftToRight>) Services.getPort(&quot;shift&quot;);&#xA;&#x9;&#x9;return this.shift;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolveCell&lt;DIR, I, C, MTH> solve_cell = null;&#xA;&#xA;protected ISolveCell&lt;DIR, I, C, MTH> Solve_cell {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.solve_cell == null)&#xA;&#x9;&#x9;&#x9;this.solve_cell = (ISolveCell&lt;DIR, I, C, MTH>) Services.getPort(&quot;solve_cell&quot;);&#xA;&#x9;&#x9;return this.solve_cell;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIXSolveImpl.cs" srcType="base" uri="impl.bt.solve.XSolve/bin/1.0.0.0/BaseIXSolveImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.Buffer;&#xA;using bt.solve.PackUnpack;&#xA;using common.orientation.X;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.BackSubstitute;&#xA;using common.interactionpattern.Shift;&#xA;using common.direction.LeftToRight;&#xA;using environment.MPIDirect;&#xA;using bt.solve.SolveCell;&#xA;using bt.solve.Solve;&#xA;&#xA;namespace impl.bt.solve.XSolve { &#xA;&#xA;public abstract class BaseIXSolveImpl&lt;DIR, I, C, MTH>: Computation, BaseISolve&lt;DIR, I, C, MTH>&#xA;where DIR:IX&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;private ICell cell = null;&#xA;&#xA;public ICell Cell {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.cell == null)&#xA;&#x9;&#x9;&#x9;this.cell = (ICell) Services.getPort(&quot;topology&quot;);&#xA;&#x9;&#x9;return this.cell;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer input_buffer = null;&#xA;&#xA;protected IBuffer Input_buffer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.input_buffer == null)&#xA;&#x9;&#x9;&#x9;this.input_buffer = (IBuffer) Services.getPort(&quot;input_buffer&quot;);&#xA;&#x9;&#x9;return this.input_buffer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBuffer output_buffer = null;&#xA;&#xA;protected IBuffer Output_buffer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.output_buffer == null)&#xA;&#x9;&#x9;&#x9;this.output_buffer = (IBuffer) Services.getPort(&quot;output_buffer&quot;);&#xA;&#x9;&#x9;return this.output_buffer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> pack_back_sub_info = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> PackBackSubInfo {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.pack_back_sub_info == null)&#xA;&#x9;&#x9;&#x9;this.pack_back_sub_info = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;pack_back_sub_info&quot;);&#xA;&#x9;&#x9;return this.pack_back_sub_info;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> unpack_back_sub_info = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> UnpackBackSubInfo {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.unpack_back_sub_info == null)&#xA;&#x9;&#x9;&#x9;this.unpack_back_sub_info = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;unpack_back_sub_info&quot;);&#xA;&#x9;&#x9;return this.unpack_back_sub_info;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> unpack_solve_info = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> UnpackSolveInfo {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.unpack_solve_info == null)&#xA;&#x9;&#x9;&#x9;this.unpack_solve_info = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;unpack_solve_info&quot;);&#xA;&#x9;&#x9;return this.unpack_solve_info;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IPackUnpack&lt;I, C, DIR, MTH> pack_solve_info = null;&#xA;&#xA;protected IPackUnpack&lt;I, C, DIR, MTH> PackSolveInfo {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.pack_solve_info == null)&#xA;&#x9;&#x9;&#x9;this.pack_solve_info = (IPackUnpack&lt;I, C, DIR, MTH>) Services.getPort(&quot;pack_solve_info&quot;);&#xA;&#x9;&#x9;return this.pack_solve_info;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBackSubstitute&lt;I, C, DIR, MTH> back_substitute = null;&#xA;&#xA;protected IBackSubstitute&lt;I, C, DIR, MTH> Back_substitute {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.back_substitute == null)&#xA;&#x9;&#x9;&#x9;this.back_substitute = (IBackSubstitute&lt;I, C, DIR, MTH>) Services.getPort(&quot;back_substitute&quot;);&#xA;&#x9;&#x9;return this.back_substitute;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IShift&lt;ILeftToRight> shift = null;&#xA;&#xA;protected IShift&lt;ILeftToRight> Shift {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.shift == null)&#xA;&#x9;&#x9;&#x9;this.shift = (IShift&lt;ILeftToRight>) Services.getPort(&quot;shift&quot;);&#xA;&#x9;&#x9;return this.shift;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolveCell&lt;DIR, I, C, MTH> solve_cell = null;&#xA;&#xA;protected ISolveCell&lt;DIR, I, C, MTH> Solve_cell {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.solve_cell == null)&#xA;&#x9;&#x9;&#x9;this.solve_cell = (ISolveCell&lt;DIR, I, C, MTH>) Services.getPort(&quot;solve_cell&quot;);&#xA;&#x9;&#x9;return this.solve_cell;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIXSolveImpl.cs" srcType="base" uri="impl.bt.solve.XSolve/bin/1.0.0.0/BaseIXSolveImpl.dll" versionId="1.0.0.0">
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
@@ -206,13 +206,13 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="mpi" sRef="shift"/>
       </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="shift"/>
-      </port>
       <port name="input_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="input_buffer" sRef="shift"/>
+      </port>
+      <port name="cell">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="cell" sRef="shift"/>
       </port>
       <port name="output_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>

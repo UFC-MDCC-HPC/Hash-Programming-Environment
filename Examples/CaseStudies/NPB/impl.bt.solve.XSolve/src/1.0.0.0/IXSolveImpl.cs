@@ -22,6 +22,7 @@ public IXSolveImpl() {
 } 
 
 public override void compute() { 
+	/*
 	#pragma omp parallel sections
 	{
 		#pragma omp section
@@ -63,7 +64,7 @@ public override void compute() {
 		#pragma omp section
 		null.compute();
 	}
-
+   */
 } // end activate method 
 
 }

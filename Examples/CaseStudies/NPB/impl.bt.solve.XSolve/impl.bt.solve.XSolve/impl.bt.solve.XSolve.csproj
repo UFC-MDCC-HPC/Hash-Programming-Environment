@@ -121,5 +121,9 @@
       <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
       <Name>common.orientation.Axis</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.LeftToRight\common.direction.LeftToRight\common.direction.LeftToRight.csproj">
+      <Project>{835C07D3-3F76-482D-8127-C02CA1D79CE9}</Project>
+      <Name>common.direction.LeftToRight</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
