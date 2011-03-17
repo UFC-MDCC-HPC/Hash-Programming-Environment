@@ -32,4 +32,89 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.BackSubstitute\bt.solve.BackSubstitute\bt.solve.BackSubstitute.csproj">
+      <Project>{D8977F13-73E3-492A-A482-8D54A63BB8A1}</Project>
+      <Name>bt.solve.BackSubstitute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod.csproj">
+      <Project>{A02235BC-CA4A-4F3C-84B4-78305D2DED49}</Project>
+      <Name>bt.solve.BeamWarmingMethod</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.PackUnpack\bt.solve.PackUnpack\bt.solve.PackUnpack.csproj">
+      <Project>{D5AE286E-6D1C-4873-99CD-F9EDDF344731}</Project>
+      <Name>bt.solve.PackUnpack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.Solve\bt.solve.Solve\bt.solve.Solve.csproj">
+      <Project>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</Project>
+      <Name>bt.solve.Solve</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.SolveCell\bt.solve.SolveCell\bt.solve.SolveCell.csproj">
+      <Project>{7B6DC294-680C-4FD8-9407-BBBFD92C2752}</Project>
+      <Name>bt.solve.SolveCell</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Buffer\common.Buffer\common.Buffer.csproj">
+      <Project>{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}</Project>
+      <Name>common.Buffer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
+      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
+      <Name>common.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
+      <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
+      <Name>common.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
+      <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
+      <Name>common.direction.Direction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.LeftToRight\common.direction.LeftToRight\common.direction.LeftToRight.csproj">
+      <Project>{835C07D3-3F76-482D-8127-C02CA1D79CE9}</Project>
+      <Name>common.direction.LeftToRight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.interactionpattern.Shift\common.interactionpattern.shift\common.interactionpattern.Shift.csproj">
+      <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
+      <Name>common.interactionpattern.Shift</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
+      <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
+      <Name>common.orientation.Axis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Y\common.orientation.Y\common.orientation.Y.csproj">
+      <Project>{9836FF76-DF70-442C-8158-252FF11E6AB3}</Project>
+      <Name>common.orientation.Y</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
+      <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
+      <Name>common.solve.Method</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
