@@ -50,10 +50,6 @@
       <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
       <Name>common.problem_size.Instance</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
-      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
-      <Name>bt.problem_size.Instance_BT</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
