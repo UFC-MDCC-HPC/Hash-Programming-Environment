@@ -24,8 +24,7 @@ where MTH:IMethod
 	IBlocks Blocks {get;}
 	IProblemDefinition<I, C> Problem {get;}
 	IMPIDirect Mpi {get;}
-	//IBuffer Input_buffer {get;}
-	//IBuffer Output_buffer {get;}
+
 
 } // end main interface 
 
