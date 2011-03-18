@@ -5,15 +5,11 @@ using common.problem_size.Class;
 using common.solve.Method;
 
 namespace bt.solve.SolveCell { 
-
-public interface ISolveCell<DIR, I, C, MTH> : BaseISolveCell<DIR, I, C, MTH>
-where DIR:IAxis
-where I:IInstance<C>
-where C:IClass
-where MTH:IMethod
-{
-
-
-} // end main interface 
-
-} // end namespace 
+	public interface ISolveCell<DIR, I, C, MTH> : BaseISolveCell<DIR, I, C, MTH>
+	where DIR:IAxis
+	where I:IInstance<C>
+	where C:IClass
+	where MTH:IMethod {
+	   void setParameters(double[,,,,,] lhsc, int first, int last, int c);
+	}
+}
