@@ -16,8 +16,8 @@ namespace impl.bt.solve.XPackBackSubInfoImpl {
 	where MTH:IBeamWarmingMethod {
 		private double[] in_buffer_x;
 		private int c;
-		public void setParameters(double[] in_buffer_x, int c) {
-		   this.in_buffer_x = in_buffer_x;
+		public void setParameters(double[] buffer, int c) {
+		   this.in_buffer_x = buffer;
 		   this.c = c;
 		}
 		
