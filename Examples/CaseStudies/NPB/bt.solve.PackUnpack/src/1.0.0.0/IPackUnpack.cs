@@ -10,7 +10,7 @@ namespace bt.solve.PackUnpack {
 	where C:IClass
 	where DIR:IAxis
 	where MTH:IMethod {
-	   void setParameters(double[] out_buffer, int c);
+	   void setParameters(double[] buffer, int c);
 	   void infoLhsc(double[,,,,,] lhsc);
 	   void infoBackSub(double[,,,] backsub_info);
 	} // end main interface 
