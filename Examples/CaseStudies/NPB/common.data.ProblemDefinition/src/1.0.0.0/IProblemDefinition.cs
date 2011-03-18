@@ -198,8 +198,11 @@ where C:IClass
   double [,,,,] Field_ainv    { get; }	
   double [,,,,] Field_rho     { get; }	
   double [,,,,] Field_speed   { get; }	
-  double [,,,,] Field_square  { get; }	
-		
+  double [,,,,] Field_square  { get; }
+
+  double[,,,,,] Field_lhsc;       { get; }
+  double[,,,] Field_backsub_info; { get; }
+
   int MAX_CELL_DIM { get; set; }	
   int maxcells { get; set;}	
   int IMAX { get; set; }	
