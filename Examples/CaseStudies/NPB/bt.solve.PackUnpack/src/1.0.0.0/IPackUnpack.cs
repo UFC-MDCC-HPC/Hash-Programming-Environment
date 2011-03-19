@@ -11,7 +11,5 @@ namespace bt.solve.PackUnpack {
 	where DIR:IAxis
 	where MTH:IMethod {
 	   //void setParameters(double[] buffer, int c);
-	   //void infoLhsc(double[,,,,,] lhsc);
-	   //void infoBackSub(double[,,,] backsub_info);
 	} // end main interface 
 } // end namespace 
