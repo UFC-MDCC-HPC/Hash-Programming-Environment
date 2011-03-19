@@ -49,29 +49,45 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
-      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
-      <Name>bt.problem_size.Instance_BT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
-      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
-      <Name>common.topology.Ring</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
-      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
-      <Name>common.problem_size.Class</Name>
+    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
+      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
+      <Name>common.data.ProblemDefinition</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
       <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
       <Name>common.datapartition.BlocksInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\common.CopyFaces\common.CopyFaces\common.CopyFaces.csproj">
       <Project>{EFF27C29-8291-4717-919D-70319E68D1E2}</Project>
       <Name>common.CopyFaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.ComputeRHS\common.ComputeRHS\common.ComputeRHS.csproj">
+      <Project>{1BF8D641-91A5-44EE-B0D2-4F254D96A91B}</Project>
+      <Name>common.ComputeRHS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\bt.solve.Solve\bt.solve.Solve\bt.solve.Solve.csproj">
       <Project>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</Project>
       <Name>bt.solve.Solve</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Z\common.orientation.Z\common.orientation.Z.csproj">
+      <Project>{06541603-756E-46E4-9836-4FE91E436A59}</Project>
+      <Name>common.orientation.Z</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\common.orientation.X\common.orientation.X\common.orientation.X.csproj">
       <Project>{944FBD84-2F3B-432F-BB71-9597D2D25457}</Project>
@@ -81,21 +97,9 @@
       <Project>{9836FF76-DF70-442C-8158-252FF11E6AB3}</Project>
       <Name>common.orientation.Y</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.orientation.Z\common.orientation.Z\common.orientation.Z.csproj">
-      <Project>{06541603-756E-46E4-9836-4FE91E436A59}</Project>
-      <Name>common.orientation.Z</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod.csproj">
-      <Project>{A02235BC-CA4A-4F3C-84B4-78305D2DED49}</Project>
-      <Name>bt.solve.BeamWarmingMethod</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
       <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
       <Name>common.direction.Direction</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.ComputeRHS\common.ComputeRHS\common.ComputeRHS.csproj">
-      <Project>{1BF8D641-91A5-44EE-B0D2-4F254D96A91B}</Project>
-      <Name>common.ComputeRHS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
@@ -105,33 +109,21 @@
       <Project>{768C7250-12F1-4923-A6B5-416A53215BB1}</Project>
       <Name>common.Add</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
-      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
-      <Name>common.data.ProblemDefinition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\bt.ADI\bt.ADI\bt.ADI.csproj">
-      <Project>{44D71AA0-3B13-4388-A6B8-7FD28D316B48}</Project>
-      <Name>bt.ADI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\bt.solve.BlockDiagonalMatVecProduct\bt.solve.BlockDiagonalMatVecProduct\bt.solve.BlockDiagonalMatVecProduct.csproj">
-      <Project>{185D42BE-70B2-42F6-B10E-8C77C333B22E}</Project>
-      <Name>bt.solve.BlockDiagonalMatVecProduct</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.orientation.XYZ\common.orientation.XYZ\common.orientation.XYZ.csproj">
-      <Project>{CF9639F9-33DA-4DCF-B74C-8BA53BE77368}</Project>
-      <Name>common.orientation.XYZ</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
-      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
-      <Name>common.problem_size.Instance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
-      <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
-      <Name>common.orientation.Axis</Name>
+    <ProjectReference Include="..\..\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod.csproj">
+      <Project>{A02235BC-CA4A-4F3C-84B4-78305D2DED49}</Project>
+      <Name>bt.solve.BeamWarmingMethod</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
       <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
       <Name>common.solve.Method</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.ADI\bt.ADI\bt.ADI.csproj">
+      <Project>{7F995546-BBE1-4632-9576-1025B8C9D882}</Project>
+      <Name>bt.ADI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
+      <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
+      <Name>common.orientation.Axis</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
