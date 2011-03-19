@@ -6,26 +6,29 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.topology.Ring;
 using common.datapartition.BlocksInfo;
-using common.data.ProblemDefinition;
+using bt.solve.PackBackSubInfo;
 using bt.problem_size.Instance_BT;
 using common.problem_size.Class;
-using common.Buffer;
-using bt.solve.PackUnpack;
 using common.orientation.Y;
 using bt.solve.BeamWarmingMethod;
+using common.data.ProblemDefinition;
+using common.Buffer;
 using bt.solve.BackSubstitute;
+using bt.solve.UnpackSolveInfo;
+using bt.solve.PackSolveInfo;
 using common.interactionpattern.Shift;
 using common.direction.LeftToRight;
-using environment.MPIDirect;
 using bt.solve.SolveCell;
+using environment.MPIDirect;
+using bt.solve.UnpackBackSubInfo;
 using bt.solve.Solve;
 
 namespace impl.bt.solve.YSolve { 
 
-public abstract class BaseIYSolveImpl<DIR, I, C, MTH>: Computation, BaseISolve<DIR, I, C, MTH>
-where DIR:IY
+public abstract class BaseIYSolveImpl<I, C, DIR, MTH>: Computation, BaseISolve<I, C, DIR, MTH>
 where I:IInstance_BT<C>
 where C:IClass
+where DIR:IY
 where MTH:IBeamWarmingMethod
 {
 
@@ -46,6 +49,16 @@ public IBlocks Blocks {
 		if (this.blocks == null)
 			this.blocks = (IBlocks) Services.getPort("blocks_info");
 		return this.blocks;
+	}
+}
+
+private IPackBackSubInfo<I, C, DIR, MTH> pack_back_sub_info = null;
+
+protected IPackBackSubInfo<I, C, DIR, MTH> Pack_back_sub_info {
+	get {
+		if (this.pack_back_sub_info == null)
+			this.pack_back_sub_info = (IPackBackSubInfo<I, C, DIR, MTH>) Services.getPort("pack_back_sub_info");
+		return this.pack_back_sub_info;
 	}
 }
 
@@ -79,46 +92,6 @@ protected IBuffer Input_buffer {
 	}
 }
 
-private IPackUnpack<I, C, DIR, MTH> pack_back_sub_info = null;
-
-protected IPackUnpack<I, C, DIR, MTH> PackBackSubInfo {
-	get {
-		if (this.pack_back_sub_info == null)
-			this.pack_back_sub_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("pack_back_sub_info");
-		return this.pack_back_sub_info;
-	}
-}
-
-private IPackUnpack<I, C, DIR, MTH> unpack_back_sub_info = null;
-
-protected IPackUnpack<I, C, DIR, MTH> UnpackBackSubInfo {
-	get {
-		if (this.unpack_back_sub_info == null)
-			this.unpack_back_sub_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("unpack_back_sub_info");
-		return this.unpack_back_sub_info;
-	}
-}
-
-private IPackUnpack<I, C, DIR, MTH> unpack_solve_info = null;
-
-protected IPackUnpack<I, C, DIR, MTH> UnpackSolveInfo {
-	get {
-		if (this.unpack_solve_info == null)
-			this.unpack_solve_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("unpack_solve_info");
-		return this.unpack_solve_info;
-	}
-}
-
-private IPackUnpack<I, C, DIR, MTH> pack_solve_info = null;
-
-protected IPackUnpack<I, C, DIR, MTH> PackSolveInfo {
-	get {
-		if (this.pack_solve_info == null)
-			this.pack_solve_info = (IPackUnpack<I, C, DIR, MTH>) Services.getPort("pack_solve_info");
-		return this.pack_solve_info;
-	}
-}
-
 private IBackSubstitute<I, C, DIR, MTH> back_substitute = null;
 
 protected IBackSubstitute<I, C, DIR, MTH> Back_substitute {
@@ -126,6 +99,26 @@ protected IBackSubstitute<I, C, DIR, MTH> Back_substitute {
 		if (this.back_substitute == null)
 			this.back_substitute = (IBackSubstitute<I, C, DIR, MTH>) Services.getPort("back_substitute");
 		return this.back_substitute;
+	}
+}
+
+private IUnpackSolveInfo<I, C, DIR, MTH> unpack_solve_info = null;
+
+protected IUnpackSolveInfo<I, C, DIR, MTH> Unpack_solve_info {
+	get {
+		if (this.unpack_solve_info == null)
+			this.unpack_solve_info = (IUnpackSolveInfo<I, C, DIR, MTH>) Services.getPort("unpack_solve_info");
+		return this.unpack_solve_info;
+	}
+}
+
+private IPackSolveInfo<I, C, DIR, MTH> pack_solve_info = null;
+
+protected IPackSolveInfo<I, C, DIR, MTH> Pack_solve_info {
+	get {
+		if (this.pack_solve_info == null)
+			this.pack_solve_info = (IPackSolveInfo<I, C, DIR, MTH>) Services.getPort("pack_solve_info");
+		return this.pack_solve_info;
 	}
 }
 
@@ -139,6 +132,16 @@ protected IShift<ILeftToRight> Shift {
 	}
 }
 
+private ISolveCell<I, C, DIR, MTH> solve_cell = null;
+
+protected ISolveCell<I, C, DIR, MTH> Solve_cell {
+	get {
+		if (this.solve_cell == null)
+			this.solve_cell = (ISolveCell<I, C, DIR, MTH>) Services.getPort("solve_cell");
+		return this.solve_cell;
+	}
+}
+
 private IMPIDirect mpi = null;
 
 public IMPIDirect Mpi {
@@ -149,13 +152,13 @@ public IMPIDirect Mpi {
 	}
 }
 
-private ISolveCell<DIR, I, C, MTH> solve_cell = null;
+private IUnpackBackSubInfo<I, C, DIR, MTH> unpack_back_sub_info = null;
 
-protected ISolveCell<DIR, I, C, MTH> Solve_cell {
+protected IUnpackBackSubInfo<I, C, DIR, MTH> Unpack_back_sub_info {
 	get {
-		if (this.solve_cell == null)
-			this.solve_cell = (ISolveCell<DIR, I, C, MTH>) Services.getPort("solve_cell");
-		return this.solve_cell;
+		if (this.unpack_back_sub_info == null)
+			this.unpack_back_sub_info = (IUnpackBackSubInfo<I, C, DIR, MTH>) Services.getPort("unpack_back_sub_info");
+		return this.unpack_back_sub_info;
 	}
 }
 
