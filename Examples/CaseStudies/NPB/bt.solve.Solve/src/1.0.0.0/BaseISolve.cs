@@ -13,10 +13,10 @@ using common.solve.Method;
 
 namespace bt.solve.Solve { 
 
-public interface BaseISolve<DIR, I, C, MTH> : IComputationKind 
-where DIR:IAxis
+public interface BaseISolve<I, C, DIR, MTH> : IComputationKind 
 where I:IInstance<C>
 where C:IClass
+where DIR:IAxis
 where MTH:IMethod
 {
 
