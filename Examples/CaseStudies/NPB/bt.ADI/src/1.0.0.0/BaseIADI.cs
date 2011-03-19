@@ -15,9 +15,9 @@ where C:IClass
 {
 
 	ICell Cell {get;}
-	ICell X {get;}
 	ICell Z {get;}
 	ICell Y {get;}
+	ICell X {get;}
 	IBlocks Blocks {get;}
 	IMPIDirect Mpi {get;}
 	IProblemDefinition<IInstance_BT<C>, C> Problem {get;}
