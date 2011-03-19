@@ -61,10 +61,6 @@
       <Project>{A02235BC-CA4A-4F3C-84B4-78305D2DED49}</Project>
       <Name>bt.solve.BeamWarmingMethod</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\bt.solve.PackUnpack\bt.solve.PackUnpack\bt.solve.PackUnpack.csproj">
-      <Project>{D5AE286E-6D1C-4873-99CD-F9EDDF344731}</Project>
-      <Name>bt.solve.PackUnpack</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\bt.solve.Solve\bt.solve.Solve\bt.solve.Solve.csproj">
       <Project>{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}</Project>
       <Name>bt.solve.Solve</Name>
@@ -124,6 +120,22 @@
     <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.UnpackBackSubInfo\bt.solve.UnpackBackSubInfo\bt.solve.UnpackBackSubInfo.csproj">
+      <Project>{26DD6AB2-4D34-4B7D-A58B-0001C6CC7680}</Project>
+      <Name>bt.solve.UnpackBackSubInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.UnpackSolveInfo\bt.solve.UnpackSolveInfo\bt.solve.UnpackSolveInfo.csproj">
+      <Project>{916DD860-39DC-4A0D-A5BC-BFEF47EBD173}</Project>
+      <Name>bt.solve.UnpackSolveInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.PackBackSubInfo\bt.solve.PackBackSubInfo\bt.solve.PackBackSubInfo.csproj">
+      <Project>{45700E0B-F219-4247-B5A5-7AFDE5767F6D}</Project>
+      <Name>bt.solve.PackBackSubInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.PackSolveInfo\bt.solve.PackSolveInfo\bt.solve.PackSolveInfo.csproj">
+      <Project>{B8DDD9B3-1FB2-4B20-A444-B97FC33B5928}</Project>
+      <Name>bt.solve.PackSolveInfo</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
