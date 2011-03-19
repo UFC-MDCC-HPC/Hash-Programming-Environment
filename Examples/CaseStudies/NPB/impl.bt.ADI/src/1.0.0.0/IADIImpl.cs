@@ -11,14 +11,18 @@ public class IADIImpl<C> : BaseIADIImpl<C>, IADI<C>
 where C:IClass
 {
 
-public override void compute(){ 
+public IADIImpl() { 
+
+} 
+
+public override void compute() { 
 	Copy_faces.synchronize();
 	X_solve.compute();
 	Y_solve.compute();
 	Z_solve.compute();
 	Add.compute();
-} 
-
 } // end activate method 
+
+}
 
 }

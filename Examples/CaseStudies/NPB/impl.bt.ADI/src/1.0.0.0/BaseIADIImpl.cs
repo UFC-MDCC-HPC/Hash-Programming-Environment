@@ -4,31 +4,38 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using common.topology.Ring;
 using common.datapartition.BlocksInfo;
+using common.topology.Ring;
 using common.CopyFaces;
 using bt.problem_size.Instance_BT;
 using common.problem_size.Class;
+using common.ComputeRHS;
 using bt.solve.Solve;
-using common.orientation.Y;
+using common.orientation.Z;
 using bt.solve.BeamWarmingMethod;
 using common.direction.Direction;
-using common.ComputeRHS;
-using common.orientation.X;
 using environment.MPIDirect;
+using common.orientation.X;
+using common.orientation.Y;
 using common.Add;
 using common.data.ProblemDefinition;
-using common.orientation.Z;
 using bt.ADI;
-
-using bt.solve.BlockDiagonalMatVecProduct;
-using common.orientation.XYZ;
 
 namespace impl.bt.ADI { 
 
 public abstract class BaseIADIImpl<C>: Computation, BaseIADI<C>
 where C:IClass
 {
+
+private IBlocks blocks = null;
+
+public IBlocks Blocks {
+	get {
+		if (this.blocks == null)
+			this.blocks = (IBlocks) Services.getPort("blocks_info");
+		return this.blocks;
+	}
+}
 
 private ICell cell = null;
 
@@ -50,16 +57,6 @@ public ICell X {
 	}
 }
 
-private ICell y = null;
-
-public ICell Y {
-	get {
-		if (this.y == null)
-			this.y = (ICell) Services.getPort("y");
-		return this.y;
-	}
-}
-
 private ICell z = null;
 
 public ICell Z {
@@ -70,13 +67,13 @@ public ICell Z {
 	}
 }
 
-private IBlocks blocks = null;
+private ICell y = null;
 
-public IBlocks Blocks {
+public ICell Y {
 	get {
-		if (this.blocks == null)
-			this.blocks = (IBlocks) Services.getPort("blocks_info");
-		return this.blocks;
+		if (this.y == null)
+			this.y = (ICell) Services.getPort("y");
+		return this.y;
 	}
 }
 
@@ -90,16 +87,6 @@ protected ICopyFaces<IInstance_BT<C>, C> Copy_faces {
 	}
 }
 
-private ISolve<IY, IInstance_BT<C>, C, IBeamWarmingMethod> y_solve = null;
-
-protected ISolve<IY, IInstance_BT<C>, C, IBeamWarmingMethod> Y_solve {
-	get {
-		if (this.y_solve == null)
-			this.y_solve = (ISolve<IY, IInstance_BT<C>, C, IBeamWarmingMethod>) Services.getPort("y_solve");
-		return this.y_solve;
-	}
-}
-
 private IComputeRHS<IInstance_BT<C>, C> compute_rhs = null;
 
 protected IComputeRHS<IInstance_BT<C>, C> Compute_rhs {
@@ -110,13 +97,13 @@ protected IComputeRHS<IInstance_BT<C>, C> Compute_rhs {
 	}
 }
 
-private ISolve<IX, IInstance_BT<C>, C, IBeamWarmingMethod> x_solve = null;
+private ISolve<IInstance_BT<C>, C, IZ, IBeamWarmingMethod> z_solve = null;
 
-protected ISolve<IX, IInstance_BT<C>, C, IBeamWarmingMethod> X_solve {
+protected ISolve<IInstance_BT<C>, C, IZ, IBeamWarmingMethod> Z_solve {
 	get {
-		if (this.x_solve == null)
-			this.x_solve = (ISolve<IX, IInstance_BT<C>, C, IBeamWarmingMethod>) Services.getPort("x_solve");
-		return this.x_solve;
+		if (this.z_solve == null)
+			this.z_solve = (ISolve<IInstance_BT<C>, C, IZ, IBeamWarmingMethod>) Services.getPort("z_solve");
+		return this.z_solve;
 	}
 }
 
@@ -127,6 +114,26 @@ public IMPIDirect Mpi {
 		if (this.mpi == null)
 			this.mpi = (IMPIDirect) Services.getPort("mpi");
 		return this.mpi;
+	}
+}
+
+private ISolve<IInstance_BT<C>, C, IX, IBeamWarmingMethod> x_solve = null;
+
+protected ISolve<IInstance_BT<C>, C, IX, IBeamWarmingMethod> X_solve {
+	get {
+		if (this.x_solve == null)
+			this.x_solve = (ISolve<IInstance_BT<C>, C, IX, IBeamWarmingMethod>) Services.getPort("x_solve");
+		return this.x_solve;
+	}
+}
+
+private ISolve<IInstance_BT<C>, C, IY, IBeamWarmingMethod> y_solve = null;
+
+protected ISolve<IInstance_BT<C>, C, IY, IBeamWarmingMethod> Y_solve {
+	get {
+		if (this.y_solve == null)
+			this.y_solve = (ISolve<IInstance_BT<C>, C, IY, IBeamWarmingMethod>) Services.getPort("y_solve");
+		return this.y_solve;
 	}
 }
 
@@ -147,16 +154,6 @@ public IProblemDefinition<IInstance_BT<C>, C> Problem {
 		if (this.problem == null)
 			this.problem = (IProblemDefinition<IInstance_BT<C>, C>) Services.getPort("problem_data");
 		return this.problem;
-	}
-}
-
-private ISolve<IZ, IInstance_BT<C>, C, IBeamWarmingMethod> z_solve = null;
-
-protected ISolve<IZ, IInstance_BT<C>, C, IBeamWarmingMethod> Z_solve {
-	get {
-		if (this.z_solve == null)
-			this.z_solve = (ISolve<IZ, IInstance_BT<C>, C, IBeamWarmingMethod>) Services.getPort("z_solve");
-		return this.z_solve;
 	}
 }
 
