@@ -105,10 +105,6 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\bt.ADI\bt.ADI\bt.ADI.csproj">
-      <Project>{44D71AA0-3B13-4388-A6B8-7FD28D316B48}</Project>
-      <Name>bt.ADI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
       <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
       <Name>bt.problem_size.Instance_BT</Name>
@@ -116,6 +112,10 @@
     <ProjectReference Include="..\..\bt.BT\bt.BT\bt.BT.csproj">
       <Project>{5207C0E1-FEA2-4093-A6B4-EB7BBEDC11EB}</Project>
       <Name>bt.BT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.ADI\bt.ADI\bt.ADI.csproj">
+      <Project>{7F995546-BBE1-4632-9576-1025B8C9D882}</Project>
+      <Name>bt.ADI</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
