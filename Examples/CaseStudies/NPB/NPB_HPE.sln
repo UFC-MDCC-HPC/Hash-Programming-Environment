@@ -187,8 +187,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt.BT", "bt.BT\bt.BT\bt.BT.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt.problem_size.Instance_BT", "bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj", "{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt.ADI", "bt.ADI\bt.ADI\bt.ADI.csproj", "{44D71AA0-3B13-4388-A6B8-7FD28D316B48}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt.solve.Solve", "bt.solve.Solve\bt.solve.Solve\bt.solve.Solve.csproj", "{F3FC3BC0-FCDC-4781-A9A5-5A610F7DE817}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt.solve.SolveCell", "bt.solve.SolveCell\bt.solve.SolveCell\bt.solve.SolveCell.csproj", "{7B6DC294-680C-4FD8-9407-BBBFD92C2752}"
@@ -310,6 +308,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.bt.solve.MatMulSubImpl", "impl.bt.solve.MatMulSubImpl\impl.bt.solve.MatMulSubImpl\impl.bt.solve.MatMulSubImpl.csproj", "{DE8D7EBA-1214-41DC-BD3D-B4CB36E8F4AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.bt.solve.MatVecSubImpl", "impl.bt.solve.MatVecSubImpl\impl.bt.solve.MatVecSubImpl\impl.bt.solve.MatVecSubImpl.csproj", "{05FF3F29-D656-4C25-AE1F-9DAC82DB7F71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt.ADI", "bt.ADI\bt.ADI\bt.ADI.csproj", "{7F995546-BBE1-4632-9576-1025B8C9D882}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -465,10 +465,6 @@ Global
 		{43CA9FCE-6E90-4B34-B154-4375FEB10055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43CA9FCE-6E90-4B34-B154-4375FEB10055}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43CA9FCE-6E90-4B34-B154-4375FEB10055}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44D71AA0-3B13-4388-A6B8-7FD28D316B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44D71AA0-3B13-4388-A6B8-7FD28D316B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44D71AA0-3B13-4388-A6B8-7FD28D316B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44D71AA0-3B13-4388-A6B8-7FD28D316B48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45700E0B-F219-4247-B5A5-7AFDE5767F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45700E0B-F219-4247-B5A5-7AFDE5767F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45700E0B-F219-4247-B5A5-7AFDE5767F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -589,6 +585,10 @@ Global
 		{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F995546-BBE1-4632-9576-1025B8C9D882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F995546-BBE1-4632-9576-1025B8C9D882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F995546-BBE1-4632-9576-1025B8C9D882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F995546-BBE1-4632-9576-1025B8C9D882}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81F70FE3-62B2-43CB-92E8-52A8837A3D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81F70FE3-62B2-43CB-92E8-52A8837A3D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81F70FE3-62B2-43CB-92E8-52A8837A3D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
