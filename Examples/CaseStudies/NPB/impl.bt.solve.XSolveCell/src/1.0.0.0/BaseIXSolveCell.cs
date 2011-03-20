@@ -31,10 +31,12 @@ namespace impl.bt.solve.XSolveCell {
 			protected int[,] start, end, cell_size;
 			protected double[,,,,] rho_i, u, qs, rhs; //u, rhs, forcing, us, vs, ws, , square, qs, speed, ainv;	
 			
-			protected double tx2, ty2, tz2, dssp, dt, xxcon2, xxcon3, xxcon4, xxcon5, dx1tx1, dx2tx1, dx3tx1,
+			protected double tx2, ty2, tz2, dssp, dt, c1, c2, c1c2,
+			      c3c4, c1345, tx1, dx1, dx2, dx3, dx4, dx5, con43;
+			      /*xxcon2, xxcon3, xxcon4, xxcon5, dx1tx1, dx2tx1, dx3tx1,
 				  dx4tx1, dx5tx1, yycon2, yycon3, yycon4, yycon5, dy1ty1, dy2ty1, dy3ty1, dy4ty1, dy5ty1,
-				  zzcon2, zzcon3, zzcon4, zzcon5, dz1tz1, dz2tz1, dz3tz1, dz4tz1, dz5tz1, c1, c2, c1c2, con43,
-				  c3c4, c1345, tx1, dx1, dx2, dx3, dx4, dx5;
+				  zzcon2, zzcon3, zzcon4, zzcon5, dz1tz1, dz2tz1, dz3tz1, dz4tz1, dz5tz1, 
+				  */
 
 			override public void initialize(){
 	            start = Blocks.cell_start;
@@ -46,20 +48,25 @@ namespace impl.bt.solve.XSolveCell {
 				u = Problem.Field_u;
 				rhs = Problem.Field_rhs;
 				
-				dx1 = Constants.dx1;
-				dx2 = Constants.dx2;
-				dx3 = Constants.dx3;
-				dx4 = Constants.dx4;
-				dx5 = Constants.dx5;
-				
-				tx1 = Constants.tx1; 
-				c1345 = Constants.c1345;
-				c3c4 = Constants.c3c4;
 				tx2 = Constants.tx2; 
 				ty2 = Constants.ty2;
 				tz2 = Constants.tz2;
 				dssp = Constants.dssp;
 				dt = Constants.dt;
+				c1 = Constants.c1;
+				c2 = Constants.c2;
+				c1c2 = Constants.c1c2;
+				con43 = Constants.con43;
+				c3c4 = Constants.c3c4;	
+				c1345 = Constants.c1345;
+				tx1 = Constants.tx1; 
+				
+				dx1 = Constants.dx1;
+				dx2 = Constants.dx2;
+				dx3 = Constants.dx3;
+				dx4 = Constants.dx4;
+				dx5 = Constants.dx5;
+				/*
 				xxcon2 = Constants.xxcon2;
 				xxcon3 = Constants.xxcon3;
 				xxcon4 = Constants.xxcon4;
@@ -87,10 +94,8 @@ namespace impl.bt.solve.XSolveCell {
 				dz3tz1 = Constants.dz3tz1;
 				dz4tz1 = Constants.dz4tz1;
 				dz5tz1 = Constants.dz5tz1;
-				c1 = Constants.c1;
-				c2 = Constants.c2;
-				c1c2 = Constants.c1c2;
-				con43 = Constants.con43;
+				*/
+
 									
 				//forcing = Problem.Field_forcing;
 				//us = Problem.Field_us;
