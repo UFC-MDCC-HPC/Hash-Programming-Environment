@@ -29,7 +29,24 @@ namespace impl.bt.solve.XSolve {
 	where C:IClass
 	where DIR:IX
 	where MTH:IBeamWarmingMethod {
-	
+		#region data
+			protected double[,,,,] rhs;
+			protected int KMAX, JMAX, IMAX, ncells, MAX_CELL_DIM, maxcells;
+			protected int[,] slice, cell_coord;
+			
+			override public void initialize(){
+				rhs = Problem.Field_rhs;
+				KMAX = Problem.KMAX;
+				JMAX = Problem.JMAX;
+				IMAX = Problem.IMAX;
+				ncells = Problem.NCells;
+				maxcells = Problem.maxcells;
+				MAX_CELL_DIM = Problem.MAX_CELL_DIM;				
+	            slice = Blocks.cell_slice;
+	            cell_coord = Blocks.cell_coord;
+			}
+		#endregion
+		
 		private ICell cell = null;
 		
 		public ICell Cell {

@@ -19,7 +19,6 @@ namespace impl.bt.solve.XSolve {
 		public override void compute() { 
 			int c, stage, first, last, buffer_size;
 			buffer_size = MAX_CELL_DIM * MAX_CELL_DIM * (5 * 5 + 5);
-			MPI.Request[] requests = new MPI.Request[2] { null, null };
 			double[] out_buffer_x = new double[buffer_size];
 			double[,,,,,] lhsc = new double[maxcells, KMAX+2, JMAX+2, IMAX+2, 5, 5];
 			double[,,,] backsub_info = new double[maxcells, MAX_CELL_DIM+3, MAX_CELL_DIM+3, 5];
@@ -33,23 +32,30 @@ namespace impl.bt.solve.XSolve {
 			    }
 			    if(stage == 0) {
 			        first = 1;
-			        x_solve_cell(lhsc, first, last, c);
+			        Solve_cell.setParameters(lhsc, first, last, c);
+			        Solve_cell.compute();
 			    }
 			    else {
 			        first = 0;
 			        int jp = cell_coord[c,1];
 			        int kp = cell_coord[c,2];
+			        Shift.initiate_recv();
+			        Shift.synchronize();
 			        //requests[0] = comm_solve.ImmediateReceive<double>(predecessor[0], WEST + jp + kp * ncells, out_buffer_x); 
 			        //requests[1].Wait(); 
 			        //requests[0].Wait(); 
-			        Unpack_solve_info(lhsc, out_buffer_x, c);
-			        Solve_cell(lhsc, first, last, c);
+			        Unpack_solve_info.setParameters(lhsc, out_buffer_x, c);
+			        Unpack_solve_info.compute();
+			        Solve_cell.setParameters(lhsc, first, last, c);
+			        Solve_cell.compute();
 			    }
 			    if(last == 0) {
 			        double[] in_buffer_x = new double[buffer_size];
-			        x_pack_solve_info(lhsc, in_buffer_x, c); 
+			        Pack_solve_info.setParameters(lhsc, in_buffer_x, c);
+			        Pack_solve_info.compute();
 			        int jp = cell_coord[c,1];
 			        int kp = cell_coord[c,2];
+			        Shift.initiate_send();
 			        //requests[1] = comm_solve.ImmediateSend<double>(in_buffer_x, successor[0], WEST+jp+kp*ncells);
 			    }
 			}
@@ -64,22 +70,29 @@ namespace impl.bt.solve.XSolve {
 			        first = 1;
 			    if(stage == (ncells-1)) {
 			        last = 1;
-			        Back_substitute(lhsc, backsub_info, first, last, c);
+			        Back_substitute.setParameters(lhsc, backsub_info, first, last, c);
+			        Back_substitute.compute();
 			    }
 			    else {
 			        int jp = cell_coord[c,1];
 			        int kp = cell_coord[c,2];
+				    Shift.initiate_recv();
+			        Shift.synchronize();		        
 			        //requests[0] = comm_solve.ImmediateReceive<double>(successor[0], EAST+jp+kp*ncells, out_buffer_x); 
 			        //requests[1].Wait(); 
 			        //requests[0].Wait(); 
-			        Unpack_back_sub_info(backsub_info, out_buffer_x, c);
-			        Back_substitute(lhsc, backsub_info, first, last, c);
+			        Unpack_back_sub_info.setParameters(backsub_info, out_buffer_x, c);
+			        Unpack_back_sub_info.compute();
+			        Back_substitute.setParameters(lhsc, backsub_info, first, last, c);
+			        Back_substitute.compute();
 			    }
 			    if(first == 0) {
 			        int jp = cell_coord[c,1];
 			        int kp = cell_coord[c,2];
 			        double[] in_buffer_x = new double[buffer_size];
-			        Pack_back_sub_info(in_buffer_x, c); 
+			        Pack_back_sub_info.setParameters(in_buffer_x, c);
+			        Pack_back_sub_info.compute();
+			        Shift.initiate_send();
 			        //requests[1] = comm_solve.ImmediateSend<double>(in_buffer_x, predecessor[0], EAST+jp+kp*ncells);                    
 			    }
 			}
