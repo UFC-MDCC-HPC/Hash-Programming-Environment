@@ -197,6 +197,8 @@ namespace impl.bt.solve.YSolveCell {
 			}
 		}
 		
+		public static double pow2(double p) { return p * p; }
+		
 		abstract public void compute(); 
 	}
 }
