@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3CCB8AE2-6737-4EE1-BA51-7314A29811AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.bt.solve.XSolveCell</RootNamespace>
+    <AssemblyName>IXSolveCell</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\XSolveCell.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIXSolveCell.cs">
+      <Link>BaseIXSolveCell.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IXSolveCell.cs">
+      <Link>IXSolveCell.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.data.ProblemDefinition\common.data.ProblemDefinition\common.data.ProblemDefinition.csproj">
+      <Project>{CAEB389F-AE7E-4052-9FB7-8E29F4928E82}</Project>
+      <Name>common.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo\common.datapartition.BlocksInfo.csproj">
+      <Project>{AD922723-458D-488B-B525-0A16FAF9774C}</Project>
+      <Name>common.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT\bt.problem_size.Instance_BT.csproj">
+      <Project>{B6D543EF-3CB3-4A8C-988A-602EE0F65DF9}</Project>
+      <Name>bt.problem_size.Instance_BT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Instance\common.problem_size.Instance\common.problem_size.Instance.csproj">
+      <Project>{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}</Project>
+      <Name>common.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.X\common.orientation.X\common.orientation.X.csproj">
+      <Project>{944FBD84-2F3B-432F-BB71-9597D2D25457}</Project>
+      <Name>common.orientation.X</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
+      <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
+      <Name>common.orientation.Axis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.solve.Method\common.solve.Method\common.solve.Method.csproj">
+      <Project>{63E68F25-2D70-4A6A-BB2E-922472355F8F}</Project>
+      <Name>common.solve.Method</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod\bt.solve.BeamWarmingMethod.csproj">
+      <Project>{A02235BC-CA4A-4F3C-84B4-78305D2DED49}</Project>
+      <Name>bt.solve.BeamWarmingMethod</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.BinvcRhs\bt.solve.BinvcRhs\bt.solve.BinvcRhs.csproj">
+      <Project>{02BFE96A-7EDB-45CC-AEF6-E9880FC645F8}</Project>
+      <Name>bt.solve.BinvcRhs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.BinvRhs\bt.solve.BinvRhs\bt.solve.BinvRhs.csproj">
+      <Project>{D9CA3854-383D-40A9-BAAE-3C79E2ECB3FD}</Project>
+      <Name>bt.solve.BinvRhs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.MatMulSub\bt.solve.MatMulSub\bt.solve.MatMulSub.csproj">
+      <Project>{B4AF9098-4B7F-483E-846F-0E81032855AE}</Project>
+      <Name>bt.solve.MatMulSub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.MatVecSub\bt.solve.MatVecSub\bt.solve.MatVecSub.csproj">
+      <Project>{C642A732-E57F-4E8E-9115-E6C68CE3F6C8}</Project>
+      <Name>bt.solve.MatVecSub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.SolveCell\bt.solve.SolveCell\bt.solve.SolveCell.csproj">
+      <Project>{7B6DC294-680C-4FD8-9407-BBBFD92C2752}</Project>
+      <Name>bt.solve.SolveCell</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bt.solve.LhsABInit\bt.solve.LhsABInit\bt.solve.LhsABInit.csproj">
+      <Project>{AFE3078B-834E-4584-BFFF-1B894D228AD2}</Project>
+      <Name>bt.solve.LhsABInit</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
