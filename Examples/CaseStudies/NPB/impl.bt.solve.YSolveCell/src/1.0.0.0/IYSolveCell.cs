@@ -14,7 +14,16 @@ namespace impl.bt.solve.YSolveCell {
 	where C:IClass
 	where DIR:IY
 	where MTH:IBeamWarmingMethod {
-	
+		private double[,,,,,] lhsc;
+		private int first;
+		private int last;
+		private int c;
+		public void setParameters(double[,,,,,] lhsc, int first, int last, int c){
+			this.lhsc = lhsc;
+			this.first = first;
+			this.last = last;
+			this.c = c;
+		}
 		public IYSolveCell() { 
 		
 		} 
