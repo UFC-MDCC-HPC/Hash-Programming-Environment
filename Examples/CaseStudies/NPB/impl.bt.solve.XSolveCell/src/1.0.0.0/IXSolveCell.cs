@@ -41,11 +41,12 @@ namespace impl.bt.solve.XSolveCell {
             jsize = cell_size[c, 1] - end[c, 1] + 1;
             ksize = cell_size[c, 2] - end[c, 2] + 1;
 
-            lhsabinit(lhsa, lhsb, isize);
+            Lhsabinit.setParameters(lhsa, lhsb, isize);
+            Lhsabinit.compute();
             for(k = start[c, 2]; k <= ksize; k++) {
                 for(j = start[c, 1]; j <= jsize; j++) {
                     for(i = start[c, 0]-1; i <= cell_size[c, 0] - end[c, 0]+2; i++) {
-                        tmp1 = rho_i[c, k, j, i];  
+                        tmp1 = rho_i[c, k, j, i, 0];  
                         tmp2 = tmp1 * tmp1;
                         tmp3 = tmp1 * tmp2;
 
@@ -55,7 +56,7 @@ namespace impl.bt.solve.XSolveCell {
                         fjac[i+1, 3, 0] = 0.0d; 
                         fjac[i+1, 4, 0] = 0.0d; 
 
-                        fjac[i+1, 0, 1] = -(u[c, k, j, i, 1] * tmp2 * u[c, k, j, i, 1]) + c2 * qs[c, k, j, i];
+                        fjac[i+1, 0, 1] = -(u[c, k, j, i, 1] * tmp2 * u[c, k, j, i, 1]) + c2 * qs[c, k, j, i, 0];
                         fjac[i+1, 1, 1] = (2.0d - c2) * (u[c, k, j, i, 1] * tmp1);
                         fjac[i+1, 2, 1] = -c2 * (u[c, k, j, i, 2] * tmp1);
                         fjac[i+1, 3, 1] = -c2 * (u[c, k, j, i, 3] * tmp1);
@@ -73,8 +74,8 @@ namespace impl.bt.solve.XSolveCell {
                         fjac[i+1, 3, 3] = u[c, k, j, i, 1] * tmp1;
                         fjac[i+1, 4, 3] = 0.0d;
 
-                        fjac[i+1, 0, 4] = (c2 * 2.0d * qs[c, k, j, i] - c1 * (u[c, k, j, i, 4] * tmp1)) * (u[c, k, j, i, 1] * tmp1);
-                        fjac[i+1, 1, 4] = c1 * u[c, k, j, i, 4] * tmp1 - c2 * (u[c, k, j, i, 1] * u[c, k, j, i, 1] * tmp2 + qs[c, k, j, i]);
+                        fjac[i+1, 0, 4] = (c2 * 2.0d * qs[c, k, j, i, 0] - c1 * (u[c, k, j, i, 4] * tmp1)) * (u[c, k, j, i, 1] * tmp1);
+                        fjac[i+1, 1, 4] = c1 * u[c, k, j, i, 4] * tmp1 - c2 * (u[c, k, j, i, 1] * u[c, k, j, i, 1] * tmp2 + qs[c, k, j, i, 0]);
                         fjac[i+1, 2, 4] = -c2 * (u[c, k, j, i, 2] * u[c, k, j, i, 1]) * tmp2;
                         fjac[i+1, 3, 4] = -c2 * (u[c, k, j, i, 3] * u[c, k, j, i, 1]) * tmp2;
                         fjac[i+1, 4, 4] = c1 * (u[c, k, j, i, 1] * tmp1);
@@ -210,17 +211,24 @@ namespace impl.bt.solve.XSolveCell {
                         lhsc[c, k, j, i, 4, 4] = tmp2 * fjac[i+2, 4, 4] - tmp1 * njac[i+2, 4, 4] - tmp1 * dx5;
                     }
                     if(first == 1) {
-                        binvcrhs(lhsb, lhsc, rhs, istart, c, k, j, istart, c, k, j, istart);
+                        Binvcrhs.setParameters(lhsb, lhsc, rhs, istart, c, k, j, istart, c, k, j, istart);
+                        Binvcrhs.compute();
                     }
                     for(i = istart + first; i <= isize - last; i++) {
-                        matvec_sub(lhsa, rhs, rhs, i, c, k, j, i-1, c, k, j, i);
-                        matmul_sub(lhsa, lhsc, lhsb, i, c, k, j, i-1, i);
-                        binvcrhs(lhsb, lhsc, rhs, i, c, k, j, i, c, k, j, i);
+                        Matvec_sub.setParameters(lhsa, rhs, rhs, i, c, k, j, i-1, c, k, j, i);
+                        Matvec_sub.compute();
+                        Matmul_sub.setParameters(lhsa, lhsc, lhsb, i, c, k, j, i-1, i);
+                        Matmul_sub.compute();
+                        Binvcrhs.setParameters(lhsb, lhsc, rhs, i, c, k, j, i, c, k, j, i);
+                        Binvcrhs.compute();
                     }
                     if(last == 1) {
-                        matvec_sub(lhsa, rhs, rhs, isize, c, k, j, isize-1, c, k, j, isize);
-                        matmul_sub(lhsa, lhsc, lhsb, isize, c, k, j, isize-1, isize);
-                        binvrhs(lhsb, rhs, isize, c, k, j, isize);
+                        Matvec_sub.setParameters(lhsa, rhs, rhs, isize, c, k, j, isize-1, c, k, j, isize);
+                        Matvec_sub.compute();
+                        Matmul_sub.setParameters(lhsa, lhsc, lhsb, isize, c, k, j, isize-1, isize);
+                        Matmul_sub.compute();
+                        Binvrhs.setParameters(lhsb, rhs, isize, c, k, j, isize);
+                        Binvrhs.compute();
                     }
                 }
             }
