@@ -14,7 +14,16 @@ namespace impl.bt.solve.ZSolveCell {
 	where C:IClass
 	where DIR:IZ
 	where MTH:IBeamWarmingMethod {
-	
+		private double[,,,,,] lhsc;
+		private int first;
+		private int last;
+		private int c;
+		public void setParameters(double[,,,,,] lhsc, int first, int last, int c){
+			this.lhsc = lhsc;
+			this.first = first;
+			this.last = last;
+			this.c = c;
+		}
 		public IZSolveCell() { 
 		
 		} 
