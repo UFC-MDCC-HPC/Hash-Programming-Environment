@@ -25,7 +25,19 @@ namespace impl.bt.solve.XSolveCell {
 	where C:IClass
 	where DIR:IX
 	where MTH:IBeamWarmingMethod {
-	
+		#region data
+			protected int MAX_CELL_DIM;
+			protected int[,] start, end, cell_size;
+			
+			override public void initialize(){
+	            start = Blocks.cell_start;
+				end = Blocks.cell_end;
+				//slice = Blocks.cell_slice;
+				cell_size = Blocks.cell_size;
+				MAX_CELL_DIM = Problem.MAX_CELL_DIM;				
+	            //cell_coord = Blocks.cell_coord;
+			}
+		#endregion
 		private IBlocks blocks = null;
 		
 		public IBlocks Blocks {
