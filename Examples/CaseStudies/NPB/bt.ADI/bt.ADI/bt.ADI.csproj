@@ -8,7 +8,7 @@
     <ProjectGuid>{7F995546-BBE1-4632-9576-1025B8C9D882}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>bt.ADI</RootNamespace>
-    <AssemblyName>bt.ADI</AssemblyName>
+    <AssemblyName>IADI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ADI.snk</AssemblyOriginatorKeyFile>
