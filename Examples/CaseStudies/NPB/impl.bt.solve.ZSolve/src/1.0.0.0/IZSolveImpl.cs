@@ -13,17 +13,18 @@ namespace impl.bt.solve.ZSolve {
 	where I:IInstance_BT<C>
 	where C:IClass
 	where DIR:IZ
-	where MTH:IBeamWarmingMethod {	
-		public IZSolveImpl() { 
-		
-		} 		
+	where MTH:IBeamWarmingMethod {
+	   public IZSolveImpl() { 
+		} 
 		public override void compute() { 
             int c, stage, first, last, buffer_size; 
             buffer_size = MAX_CELL_DIM * MAX_CELL_DIM * (5 * 5 + 5);
-            double[] out_buffer_z = new double[buffer_size];
-            double[] out_buffer_x = new double[buffer_size];
+            double[] out_buffer_z;// = new double[buffer_size];
             double[, , , , ,] lhsc = new double[maxcells, KMAX+2, JMAX+2, IMAX+2, 5, 5];
             double[, , ,] backsub_info = new double[maxcells, MAX_CELL_DIM+3, MAX_CELL_DIM+3, 5];
+            
+            Output_buffer.Array = out_buffer_z = new double[buffer_size];
+            
             for(stage = 0; stage < ncells; stage++) {
                 c = slice[stage, 2];
                 if(stage == ncells-1) {
@@ -41,8 +42,8 @@ namespace impl.bt.solve.ZSolve {
                     first = 0;
                     int ip = cell_coord[c, 0];
                     int jp = cell_coord[c, 1];
-			        Shift.initiate_recv();
-			        Shift.synchronize();                    
+			        Shift_lr.initiate_recv();
+			        Shift_lr.synchronize();                    
                     //requests[0] = comm_solve.ImmediateReceive<double>(predecessor[2], BOTTOM+ip+jp*ncells, out_buffer_z);
                     //requests[1].Wait(); 
                     //requests[0].Wait(); 
@@ -54,16 +55,19 @@ namespace impl.bt.solve.ZSolve {
                 if(last == 0) {
                     int ip = cell_coord[c,0];
                     int jp = cell_coord[c,1];                    
-                    double[] in_buffer_z = new double[buffer_size];
+                    double[] in_buffer_z;// = new double[buffer_size];
+                    Input_buffer.Array = in_buffer_z = new double[buffer_size];
                     Pack_solve_info.setParameters(lhsc, in_buffer_z, c);
                     Pack_solve_info.compute(); 
-			        Shift.initiate_send();                    
+			        Shift_lr.initiate_send();                    
                     //requests[1] = comm_solve.ImmediateSend<double>(in_buffer_z, successor[2], BOTTOM+ip+jp*ncells);                    
                 }
             }
-            out_buffer_z = null;
+            //out_buffer_z = null;
+            Output_buffer.Array = out_buffer_z = null;
             buffer_size = MAX_CELL_DIM * MAX_CELL_DIM * 5;
-            out_buffer_z = new double[buffer_size];
+            //out_buffer_z = new double[buffer_size];
+            Output_buffer.Array = out_buffer_z = new double[buffer_size];
             for(stage = ncells-1; stage >= 0; stage--) {
                 c = slice[stage, 2];
                 first = 0;
@@ -78,8 +82,8 @@ namespace impl.bt.solve.ZSolve {
                 else {
                     int ip = cell_coord[c, 0];
                     int jp = cell_coord[c, 1];
-			        Shift.initiate_recv();
-			        Shift.synchronize(); 
+			        Shift_rl.initiate_recv();
+			        Shift_rl.synchronize(); 
                     //requests[0] = comm_solve.ImmediateReceive<double>(successor[2], TOP+ip+jp*ncells, out_buffer_z);
                     //requests[1].Wait();
                     //requests[0].Wait();
@@ -91,10 +95,11 @@ namespace impl.bt.solve.ZSolve {
                 if(first == 0) {
                     int ip = cell_coord[c,0];
                     int jp = cell_coord[c,1];                    
-                    double[] in_buffer_z = new double[buffer_size];
+                    double[] in_buffer_z;// = new double[buffer_size];
+                    Input_buffer.Array = in_buffer_z = new double[buffer_size];
                     Pack_back_sub_info.setParameters(in_buffer_z, c);
                     Pack_back_sub_info.compute(); 
-			        Shift.initiate_send();                    
+			        Shift_rl.initiate_send();                    
                     //requests[1] = comm_solve.ImmediateSend<double>(in_buffer_z, predecessor[2], TOP+ip+jp*ncells);
                 }
             }

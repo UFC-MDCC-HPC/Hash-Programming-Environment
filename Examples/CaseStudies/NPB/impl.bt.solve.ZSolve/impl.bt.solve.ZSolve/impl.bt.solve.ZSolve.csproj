@@ -137,5 +137,9 @@
       <Project>{B8DDD9B3-1FB2-4B20-A444-B97FC33B5928}</Project>
       <Name>bt.solve.PackSolveInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.RightToLeft\common.direction.RightToLeft\common.direction.RightToLeft.csproj">
+      <Project>{99E276F9-4541-4E11-8D64-4BB9C2E93980}</Project>
+      <Name>common.direction.RightToLeft</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
