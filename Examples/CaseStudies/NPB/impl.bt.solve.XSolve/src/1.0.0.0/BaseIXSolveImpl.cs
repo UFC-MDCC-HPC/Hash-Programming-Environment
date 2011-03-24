@@ -4,22 +4,23 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using common.topology.Ring;
-using common.datapartition.BlocksInfo;
-using bt.solve.PackBackSubInfo;
+using common.data.ProblemDefinition;
 using bt.problem_size.Instance_BT;
 using common.problem_size.Class;
-using common.orientation.X;
-using bt.solve.BeamWarmingMethod;
-using common.data.ProblemDefinition;
 using common.Buffer;
 using bt.solve.BackSubstitute;
-using bt.solve.UnpackSolveInfo;
-using bt.solve.PackSolveInfo;
+using common.orientation.X;
+using bt.solve.BeamWarmingMethod;
 using common.interactionpattern.Shift;
 using common.direction.LeftToRight;
+using bt.solve.UnpackSolveInfo;
 using bt.solve.SolveCell;
+using common.direction.RightToLeft;
 using environment.MPIDirect;
+using bt.solve.PackBackSubInfo;
+using common.datapartition.BlocksInfo;
+using common.topology.Ring;
+using bt.solve.PackSolveInfo;
 using bt.solve.UnpackBackSubInfo;
 using bt.solve.Solve;
 
@@ -44,36 +45,6 @@ namespace impl.bt.solve.XSolve {
 	            cell_coord = Blocks.cell_coord;
 			}
 		#endregion
-		
-		private ICell cell = null;
-		
-		public ICell Cell {
-			get {
-				if (this.cell == null)
-					this.cell = (ICell) Services.getPort("topology");
-				return this.cell;
-			}
-		}
-		
-		private IBlocks blocks = null;
-		
-		public IBlocks Blocks {
-			get {
-				if (this.blocks == null)
-					this.blocks = (IBlocks) Services.getPort("blocks_info");
-				return this.blocks;
-			}
-		}
-		
-		private IPackBackSubInfo<I, C, DIR, MTH> pack_back_sub_info = null;
-		
-		protected IPackBackSubInfo<I, C, DIR, MTH> Pack_back_sub_info {
-			get {
-				if (this.pack_back_sub_info == null)
-					this.pack_back_sub_info = (IPackBackSubInfo<I, C, DIR, MTH>) Services.getPort("pack_back_sub_info");
-				return this.pack_back_sub_info;
-			}
-		}
 		
 		private IProblemDefinition<I, C> problem = null;
 		
@@ -115,6 +86,16 @@ namespace impl.bt.solve.XSolve {
 			}
 		}
 		
+		private IShift<ILeftToRight> shift_lr = null;
+		
+		protected IShift<ILeftToRight> Shift_lr {
+			get {
+				if (this.shift_lr == null)
+					this.shift_lr = (IShift<ILeftToRight>) Services.getPort("shift_lr");
+				return this.shift_lr;
+			}
+		}
+		
 		private IUnpackSolveInfo<I, C, DIR, MTH> unpack_solve_info = null;
 		
 		protected IUnpackSolveInfo<I, C, DIR, MTH> Unpack_solve_info {
@@ -122,26 +103,6 @@ namespace impl.bt.solve.XSolve {
 				if (this.unpack_solve_info == null)
 					this.unpack_solve_info = (IUnpackSolveInfo<I, C, DIR, MTH>) Services.getPort("unpack_solve_info");
 				return this.unpack_solve_info;
-			}
-		}
-		
-		private IPackSolveInfo<I, C, DIR, MTH> pack_solve_info = null;
-		
-		protected IPackSolveInfo<I, C, DIR, MTH> Pack_solve_info {
-			get {
-				if (this.pack_solve_info == null)
-					this.pack_solve_info = (IPackSolveInfo<I, C, DIR, MTH>) Services.getPort("pack_solve_info");
-				return this.pack_solve_info;
-			}
-		}
-		
-		private IShift<ILeftToRight> shift = null;
-		
-		protected IShift<ILeftToRight> Shift {
-			get {
-				if (this.shift == null)
-					this.shift = (IShift<ILeftToRight>) Services.getPort("shift");
-				return this.shift;
 			}
 		}
 		
@@ -155,6 +116,16 @@ namespace impl.bt.solve.XSolve {
 			}
 		}
 		
+		private IShift<IRightToLeft> shift_rl = null;
+		
+		protected IShift<IRightToLeft> Shift_rl {
+			get {
+				if (this.shift_rl == null)
+					this.shift_rl = (IShift<IRightToLeft>) Services.getPort("shift_rl");
+				return this.shift_rl;
+			}
+		}
+		
 		private IMPIDirect mpi = null;
 		
 		public IMPIDirect Mpi {
@@ -162,6 +133,46 @@ namespace impl.bt.solve.XSolve {
 				if (this.mpi == null)
 					this.mpi = (IMPIDirect) Services.getPort("mpi");
 				return this.mpi;
+			}
+		}
+		
+		private IPackBackSubInfo<I, C, DIR, MTH> pack_back_sub_info = null;
+		
+		protected IPackBackSubInfo<I, C, DIR, MTH> Pack_back_sub_info {
+			get {
+				if (this.pack_back_sub_info == null)
+					this.pack_back_sub_info = (IPackBackSubInfo<I, C, DIR, MTH>) Services.getPort("pack_back_sub_info");
+				return this.pack_back_sub_info;
+			}
+		}
+		
+		private IBlocks blocks = null;
+		
+		public IBlocks Blocks {
+			get {
+				if (this.blocks == null)
+					this.blocks = (IBlocks) Services.getPort("blocks_info");
+				return this.blocks;
+			}
+		}
+		
+		private ICell cell = null;
+		
+		public ICell Cell {
+			get {
+				if (this.cell == null)
+					this.cell = (ICell) Services.getPort("topology");
+				return this.cell;
+			}
+		}
+		
+		private IPackSolveInfo<I, C, DIR, MTH> pack_solve_info = null;
+		
+		protected IPackSolveInfo<I, C, DIR, MTH> Pack_solve_info {
+			get {
+				if (this.pack_solve_info == null)
+					this.pack_solve_info = (IPackSolveInfo<I, C, DIR, MTH>) Services.getPort("pack_solve_info");
+				return this.pack_solve_info;
 			}
 		}
 		
@@ -174,8 +185,6 @@ namespace impl.bt.solve.XSolve {
 				return this.unpack_back_sub_info;
 			}
 		}
-		
 		abstract public void compute(); 
-	
 	}
 }
