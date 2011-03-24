@@ -128,6 +128,10 @@
       <Project>{916DD860-39DC-4A0D-A5BC-BFEF47EBD173}</Project>
       <Name>bt.solve.UnpackSolveInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.RightToLeft\common.direction.RightToLeft\common.direction.RightToLeft.csproj">
+      <Project>{99E276F9-4541-4E11-8D64-4BB9C2E93980}</Project>
+      <Name>common.direction.RightToLeft</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
