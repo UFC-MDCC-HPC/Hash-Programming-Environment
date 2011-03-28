@@ -6,5 +6,20 @@
       <color b="255" g="255" r="255"/>
     </visualAttributes>
   </header>
-  <componentInfo/>
+  <componentInfo>
+    <interface iRef="ILU" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.LU { &#xA;&#xA;public interface BaseILU : IApplicationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILU.cs" srcType="base" uri="lu.LU/bin/1.0.0.0/BaseILU.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.LU { &#xA;&#xA;public interface ILU : BaseILU&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILU.cs" srcType="user" uri="lu.LU/bin/1.0.0.0/ILU.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/lu.LU/bin/1.0.0.0/BaseILU.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="269" y="176">
+        <color b="255" g="255" r="0"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ILU" private="false" uRef="lu" visibleInterface="true">
+      <visualDescription h="40" w="80" x="269" y="256"/>
+    </unit>
+  </componentInfo>
 </component:component>
