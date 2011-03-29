@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003f7c0cc37ca78e852016e2a915f725898b8d7146ddb3fe6fb28c3b620eb1cac9262e591e3e589501d76901f4a15e763cadaa7f2995a6350580c7b388b6366dd16fd5b897a15f3535a3d9e9c9c6794a195dfedceaca5fffbfc84aae404ca4b346ffc5c9cee60449b55dfa211c3df03bf53ec732d72beb3e0f389544299d2d47d8" isAbstract="true" kind="Qualifier" name="Class_A" packagePath="lu.problem_size">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e015a40d8c8f9086dd934a5b5463189d181a3b90546bbb5a4be77b9e0d5aead84c377ec379e5c986804d08fb90ece0c25f5e06b0684e3f58269c7f3984ef08f213ba50f7b77e2ebf0a0e29cac392816620b472b7b7dfa1b45d02473862a77549975c32c543be9e64a40b436aa889877e9904a314595e1ef489305319dfa39a" localRef="base" location="lu.problem_size.Class/Class.hpe" name="Class" package="lu.problem_size" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="219" y="360">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="class">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IClass_A" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Class;&#xA;&#xA;namespace lu.problem_size.Class_A { &#xA;&#xA;public interface BaseIClass_A : BaseIClass, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIClass_A.cs" srcType="base" uri="lu.problem_size.Class_A/bin/1.0.0.0/BaseIClass_A.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Class/bin/1.0.0.0/BaseIClass.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Class;&#xA;&#xA;namespace lu.problem_size.Class_A { &#xA;&#xA;public interface IClass_A : BaseIClass_A, IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IClass_A.cs" srcType="user" uri="lu.problem_size.Class_A/bin/1.0.0.0/IClass_A.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/lu.problem_size.Class_A/bin/1.0.0.0/BaseIClass_A.dll</dependency>
+          <dependency>lu.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="68" y="206">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IClass_A" private="false" uRef="class" visibleInterface="true">
+      <super cRef="base" uRef="class"/>
+      <visualDescription h="40" w="80" x="142" y="302"/>
+    </unit>
+  </componentInfo>
+</component:component>
