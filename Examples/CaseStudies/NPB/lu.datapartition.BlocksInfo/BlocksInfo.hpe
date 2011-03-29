@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" isAbstract="true" kind="Environment" name="BlocksInfo" packagePath="lu.datapartition">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IBlocksInfo" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.datapartition.BlocksInfo { &#xA;&#xA;public interface BaseIBlocksInfo : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocksInfo.cs" srcType="base" uri="lu.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocksInfo.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.datapartition.BlocksInfo { &#xA;&#xA;public interface IBlocksInfo : BaseIBlocksInfo&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlocksInfo.cs" srcType="user" uri="lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/lu.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocksInfo.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="163" y="226">
+        <color b="64" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBlocksInfo" private="false" uRef="blocks" visibleInterface="true">
+      <visualDescription h="40" w="80" x="163" y="306"/>
+    </unit>
+  </componentInfo>
+</component:component>
