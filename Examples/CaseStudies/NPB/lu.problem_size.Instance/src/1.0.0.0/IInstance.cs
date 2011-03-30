@@ -15,7 +15,7 @@ namespace lu.problem_size.Instance {
 		int isiz02 {get;}
 		int isiz03 {get;}
 		int isiz3 {get;}
-		PROBLEM_CLASS clss { get; }
+		PROBLEM_CLASS CLASS { get; }
 			
 	}
 }
