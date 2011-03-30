@@ -1,6 +1,6 @@
 using br.ufc.pargo.hpe.kinds;
 using lu.problem_size.Instance;
-using lu.problem_size.Class;
+using common.problem_size.Class;
 
 namespace lu.data.ProblemDefinition { 
 	public interface IProblemDefinition<I, C> : BaseIProblemDefinition<I, C>
@@ -30,6 +30,6 @@ namespace lu.data.ProblemDefinition {
 		bool[] icomme {get;set;}
 		bool[] icommw {get;set;}
 		int isiz1 {get;set;}
-		int isiz2 {get;set;} 
+		int isiz2 {get;set;} 	
 	}
 }
