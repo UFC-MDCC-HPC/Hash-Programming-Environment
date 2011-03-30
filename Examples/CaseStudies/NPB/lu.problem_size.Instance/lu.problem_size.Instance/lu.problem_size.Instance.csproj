@@ -49,9 +49,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\lu.problem_size.Class\lu.problem_size.Class\lu.problem_size.Class.csproj">
-      <Project>{D04CCF42-C703-43F7-8E4B-43DAE65D04ED}</Project>
-      <Name>lu.problem_size.Class</Name>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
