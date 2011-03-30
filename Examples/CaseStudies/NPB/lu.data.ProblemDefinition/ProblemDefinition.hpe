@@ -72,12 +72,12 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000077a299c99b97aaa77aa6e94dc72ce7dd6776e75fef652354d4003676b20ec539b228d1d8aea09626b843cc3ab1c0d84ad167051ddc0b314c7649bd14f16c7858a0eb57d78a2e8a79c7f56f9664fadc7648612fdedc8d36bd105d479fd63b19c286b302d6e4c45aed4573ca06780a204a2d59aeff7863e4b8241ce93db192f0ae" localRef="instance_type" location="lu.problem_size.Instance/Instance.hpe" name="Instance" package="lu.problem_size" parameter_id="instance_type" exposed="false">
-      <visualDescription h="56" w="121" x="242" y="437">
+      <visualDescription h="56" w="121" x="54" y="236">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="class" varName="C"/>
       <unitBounds uRef="instance">
-        <visualDescription h="10" w="10" x="5" y="2"/>
+        <visualDescription h="10" w="10" x="103" y="21"/>
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
@@ -104,7 +104,7 @@
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.data.ProblemDefinition { &#xA;&#xA;public interface IProblemDefinition&lt;I, C> : BaseIProblemDefinition&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IProblemDefinition.cs" srcType="user" uri="lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.data.ProblemDefinition { &#xA;&#x9;public interface IProblemDefinition&lt;I, C> : BaseIProblemDefinition&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;&#x9;double [,,,] Field_a { get; }&#xA;&#x9;&#x9;double [,,,] Field_b { get; }&#xA;&#x9;&#x9;double [,,,] Field_c { get; }&#xA;&#x9;&#x9;double [,,,] Field_d { get; }&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;double [,,,] Field_u    { get; }&#xA;&#x9;&#x9;double [,,,] Field_rsd  { get; }&#xA;&#x9;&#x9;double [,,,] Field_frct { get; }&#xA;&#x9;&#x9;double [,,,] Field_flux { get; }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;int node {get;set;}&#xA;&#x9;&#x9;int ndim {get;set;}&#xA;&#x9;&#x9;int num {get;set;}&#xA;&#x9;&#x9;int xdim {get;set;}&#xA;&#x9;&#x9;int ydim {get;set;}&#xA;&#x9;&#x9;int row {get;set;}&#xA;&#x9;&#x9;int col {get;set;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;bool[] icommn {get;set;}&#xA;&#x9;&#x9;bool[] icomms {get;set;}&#xA;&#x9;&#x9;bool[] icomme {get;set;}&#xA;&#x9;&#x9;bool[] icommw {get;set;}&#xA;&#x9;&#x9;int isiz1 {get;set;}&#xA;&#x9;&#x9;int isiz2 {get;set;} &#x9;&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IProblemDefinition.cs" srcType="user" uri="lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.data.ProblemDefinition/bin/1.0.0.0/BaseIProblemDefinition.dll</dependency>
@@ -118,67 +118,74 @@
     </interface>
     <unit iRef="IProblemDefinition" private="false" uRef="problem" visibleInterface="true">
       <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
-        <visualDescription h="10" w="10" x="2" y="27"/>
+        <visualDescription h="10" w="10" x="2" y="26"/>
       </slices>
       <slices cRef="a" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="3" y="2"/>
+        <visualDescription h="10" w="10" x="28" y="2"/>
       </slices>
       <slices cRef="b" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="15" y="1"/>
+        <visualDescription h="10" w="10" x="42" y="0"/>
       </slices>
       <slices cRef="c" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="31" y="2"/>
+        <visualDescription h="10" w="10" x="56" y="2"/>
       </slices>
       <slices cRef="d" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="47" y="2"/>
+        <visualDescription h="10" w="10" x="67" y="6"/>
       </slices>
       <slices cRef="u" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="64" y="4"/>
+        <visualDescription h="10" w="10" x="66" y="17"/>
       </slices>
       <slices cRef="rsd" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="65" y="13"/>
+        <visualDescription h="10" w="10" x="67" y="28"/>
       </slices>
       <slices cRef="frct" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="64" y="22"/>
+        <visualDescription h="10" w="10" x="66" y="40"/>
       </slices>
       <slices cRef="flux" replica="0" uRef="field" sliceName="field" transitive="false">
-        <visualDescription h="10" w="10" x="49" y="29"/>
+        <visualDescription h="10" w="10" x="55" y="46"/>
       </slices>
-      <visualDescription h="40" w="80" x="237" y="237"/>
+      <visualDescription h="59" w="80" x="237" y="231"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>frct</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="frct" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="374" y="470"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>flux</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="flux" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="434" y="351"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>u</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="u" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="216" y="287"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>c</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="c" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="328" y="357"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>b</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="b" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="275" y="351"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>a</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="a" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="217" y="349"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="rsd" uRef="field"/>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
       <visualDescription h="20" w="20" x="285" y="395"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
