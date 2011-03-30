@@ -1,7 +1,7 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using lu.problem_size.Class;
+using common.problem_size.Class;
 
 namespace lu.problem_size.Instance { 
 
