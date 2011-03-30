@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000039018612d378b21cc9b09b73f7fa4f52aaddaa05ee52e7afa0903d261470e2a4ec40152492453fb84e8f0a3bca0d6f52ec7d9d50cfde2490254e429b71ceef876c580d44c0de5ab83dbabb5559a2b4c71222e09e324c4458e57b9762079c72d668069bb7103945f5fb6e26a112814dbb199c2aecee5b1531342eec61dea65fa0" isAbstract="false" kind="Data" name="FieldImpl" packagePath="impl.lu.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000025ab7c5f5a5bc8f25feb7fe82327cfdc3eb69baecb980fd4d6d730bc25dee4ca680ad966ccac234b2235159e13c5cd90a43f1e9be864b4e5f63c5a6b37af0fb56cd05d39e31735401d5224bfde14eee445fd40c416ad2b70bca11094cea27c983203916cc9a1966ac0bd350bc4d9dddbc72d5197e2c74a9d4670db165d2cc692" localRef="base" location="lu.data.Field/Field.hpe" name="Field" package="lu.data" version="1.0.0.0">
+        <visualDescription h="42" w="74" x="240" y="376">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="field">
+          <visualDescription h="10" w="10" x="27" y="4"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IFieldImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.Field;&#xA;&#xA;namespace impl.lu.data.FieldImpl { &#xA;&#xA;public abstract class BaseIFieldImpl: DataStructure, BaseIField&#xA;{&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIFieldImpl.cs" srcType="base" uri="impl.lu.data.FieldImpl/bin/1.0.0.0/BaseIFieldImpl.dll" versionId="1.0.0.0">
+          <dependency>lu.data.Field/bin/1.0.0.0/BaseIField.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.Field;&#xA;&#xA;namespace impl.lu.data.FieldImpl { &#xA;&#xA;public class IFieldImpl : BaseIFieldImpl, IField&#xA;{&#xA;&#xA;public IFieldImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IFieldImpl.cs" srcType="user" uri="impl.lu.data.FieldImpl/bin/1.0.0.0/IFieldImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.lu.data.FieldImpl/bin/1.0.0.0/BaseIFieldImpl.dll</dependency>
+          <dependency>lu.data.Field/bin/1.0.0.0/IField.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="119" x="212" y="172">
+        <color b="192" g="128" r="128"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IFieldImpl" private="false" uRef="field" visibleInterface="true">
+      <super cRef="base" uRef="field"/>
+      <visualDescription h="40" w="80" x="232" y="275"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="field"/>
+      <visualDescription h="20" w="20" x="144" y="285"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
