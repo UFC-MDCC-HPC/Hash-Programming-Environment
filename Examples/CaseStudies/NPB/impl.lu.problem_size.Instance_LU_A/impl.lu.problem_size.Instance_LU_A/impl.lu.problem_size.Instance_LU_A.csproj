@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E33FA558-0BD9-41F3-AD69-248173552A49}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.lu.problem_size.Instance_LU_A</RootNamespace>
+    <AssemblyName>IInstance_LU_A_Impl</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Instance_LU_A.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIInstance_LU_A_Impl.cs">
+      <Link>BaseIInstance_LU_A_Impl.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IInstance_LU_A_Impl.cs">
+      <Link>IInstance_LU_A_Impl.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.problem_size.Class_A\common.problem_size.Class_A\common.problem_size.Class_A.csproj">
+      <Project>{C37AF2A2-25E1-4663-B6AB-9CB4057BC1DA}</Project>
+      <Name>common.problem_size.Class_A</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU.csproj">
+      <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
+      <Name>lu.problem_size.Instance_LU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
+      <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
+      <Name>lu.problem_size.Instance</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
