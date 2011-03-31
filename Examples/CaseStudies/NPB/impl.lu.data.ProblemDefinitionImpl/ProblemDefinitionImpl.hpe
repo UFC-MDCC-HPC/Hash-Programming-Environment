@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000891c444d30aacf22a66992be1a134a5432ef0f139f859f1be046939781fa94c17f2375c2dca314b854d8894f3e9c8d52a123314523ff269c0f244d2c4b9957191b3c0bf40ae124befea4a9e41846101a2e96e137242381fdb99d2402296d4b2117c43a46760fb5f28b00da8f438a61d7b5bbae27a9ac10e15b3eeb4a3761c09a" isAbstract="false" kind="Data" name="ProblemDefinitionImpl" packagePath="impl.lu.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f8aadd94be2122c6dbf97a8db4c368df4aa14e5eef40999c777e681c973106bec55b80c133f1e7301d0ff36e2ee37a1d7d095ffff4581f295b2e8fc055fc07304178d993e14731e9c3d1e72370eee41c30ae18e6d096d5d70ac13a2833e8945cd641f4a3cab17bc2397b395bc234fdfa244afa599eb514a94d884e663b3a3a5" localRef="base" location="lu.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="lu.data" version="1.0.0.0">
+        <visualDescription h="33" w="68" x="279" y="423">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="30" y="4"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d9c75ae5f43eaaeb10762b3e7c65b336ea4790b679668da776b55e1821b1f59388b8ea2e5f25263fc4cebe208bc2cb79d9bcbbc6167a4bd4b552d03cca4ef35f734d0cbac01feb8e9a6d6296807fccc63cd003ba735a6445bb240120f051f046aa5787203f6fd7fd7b0cd0e18a980c63f35f8918343d6ea5563d8c3211f8ab1" localRef="instance_type" location="lu.problem_size.Instance_LU/Instance_LU.hpe" name="Instance_LU" package="lu.problem_size" exposed="false">
+      <visualDescription h="51" w="111" x="205" y="446">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="385" y="454">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IProblemDefinitionImpl" nArgs="2">
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="2" y="27"/>
+      </slice>
+      <slice isRef="field">
+        <originRef cRef="a" iRef="IField"/>
+        <visualDescription h="10" w="10" x="3" y="2"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.data.Field;&#xA;using lu.problem_size.Instance_LU;&#xA;using lu.data.ProblemDefinition;&#xA;&#xA;namespace impl.lu.data.ProblemDefinitionImpl { &#xA;&#xA;public abstract class BaseIProblemDefinitionImpl&lt;I, C>: DataStructure, BaseIProblemDefinition&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private I instance = default(I);&#xA;&#xA;protected I Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;return this.instance;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;a&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;b&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;c&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;d&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;u&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;rsd&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;frct&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;flux&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIProblemDefinitionImpl.cs" srcType="base" uri="impl.lu.data.ProblemDefinitionImpl/bin/1.0.0.0/BaseIProblemDefinitionImpl.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>lu.data.Field/bin/1.0.0.0/IField.dll</dependency>
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/BaseIProblemDefinition.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.data.ProblemDefinition;&#xA;&#xA;namespace impl.lu.data.ProblemDefinitionImpl { &#xA;&#xA;public class IProblemDefinitionImpl&lt;I, C> : BaseIProblemDefinitionImpl&lt;I, C>, IProblemDefinition&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IProblemDefinitionImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IProblemDefinitionImpl.cs" srcType="user" uri="impl.lu.data.ProblemDefinitionImpl/bin/1.0.0.0/IProblemDefinitionImpl.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.lu.data.ProblemDefinitionImpl/bin/1.0.0.0/BaseIProblemDefinitionImpl.dll</dependency>
+          <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="96" w="149" x="239" y="169">
+        <color b="0" g="255" r="0"/>
+      </visualDescription>
+      <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IProblemDefinitionImpl" private="false" uRef="problem" visibleInterface="true">
+      <super cRef="base" uRef="problem"/>
+      <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="2" y="26"/>
+      </slices>
+      <slices cRef="a" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="28" y="2"/>
+      </slices>
+      <slices cRef="b" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="42" y="0"/>
+      </slices>
+      <slices cRef="c" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="56" y="2"/>
+      </slices>
+      <slices cRef="d" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="6"/>
+      </slices>
+      <slices cRef="u" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="17"/>
+      </slices>
+      <slices cRef="rsd" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="28"/>
+      </slices>
+      <slices cRef="frct" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="40"/>
+      </slices>
+      <slices cRef="flux" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="55" y="46"/>
+      </slices>
+      <visualDescription h="59" w="80" x="274" y="306"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+      <originRef>base</originRef>
+      <originRef>d</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
+      <visualDescription h="30" w="30" x="187" y="321"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
