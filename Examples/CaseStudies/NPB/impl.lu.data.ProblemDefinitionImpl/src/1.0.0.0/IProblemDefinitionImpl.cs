@@ -22,10 +22,32 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 		
 		override public void initialize(){
 		    setProblemClass();
-			_icommn = new bool[nx0+ny0+1];
-			_icomms = new bool[nx0+ny0+1];
-			_icomme = new bool[nx0+ny0+1];
-			_icommw = new bool[nx0+ny0+1];
+			_icommn = new bool[_nx0+_ny0+1];
+			_icomms = new bool[_nx0+_ny0+1];
+			_icomme = new bool[_nx0+_ny0+1];
+			_icommw = new bool[_nx0+_ny0+1];
+			
+            _num    = this.Ranks.Length;
+            _node   = this.GlobalRank;         
+            _ndim   = Constants.nodedim(_num);
+            
+            int ydiv = Constants.ilog2(_num)/2;
+            int xdiv = ydiv;
+            if(xdiv + ydiv != Constants.ilog2(_num))
+                xdiv += 1;
+            xdiv = Constants.ipow2(xdiv);
+            ydiv = Constants.ipow2(ydiv);
+            _isiz1 = _isiz01 / xdiv;
+            if(_isiz1 * xdiv < _isiz01)
+                _isiz1++;
+            _isiz2 = _isiz01 / ydiv;
+            if(_isiz2 * ydiv < _isiz01)
+                _isiz2++;
+                
+            
+                
+            
+            setConstants(0);
 		}
 		
 		private void setProblemClass(){
