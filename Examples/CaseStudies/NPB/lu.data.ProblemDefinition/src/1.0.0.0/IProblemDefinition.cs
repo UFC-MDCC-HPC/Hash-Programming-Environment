@@ -17,19 +17,23 @@ namespace lu.data.ProblemDefinition {
 		double [,,,] Field_flux { get; }
 		
 		
-		int node {get;set;}
-		int ndim {get;set;}
-		int num {get;set;}
-		int xdim {get;set;}
-		int ydim {get;set;}
-		int row {get;set;}
-		int col {get;set;}
+		int node {get;}
+		int ndim {get;}
+		int num {get;}
+		int xdim {get;}
+		int ydim {get;}
+		int row {get;}
+		int col {get;}
 		
-		bool[] icommn {get;set;}
-		bool[] icomms {get;set;}
-		bool[] icomme {get;set;}
-		bool[] icommw {get;set;}
-		int isiz1 {get;set;}
-		int isiz2 {get;set;} 	
+		int nx0 {get;}
+		int ny0 {get;}
+		int nz0 {get;}
+				
+		bool[] icommn {get;}
+		bool[] icomms {get;}
+		bool[] icomme {get;}
+		bool[] icommw {get;}
+		int isiz1 {get;}
+		int isiz2 {get;} 	
 	}
 }
