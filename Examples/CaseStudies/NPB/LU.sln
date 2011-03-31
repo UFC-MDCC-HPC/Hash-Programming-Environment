@@ -207,6 +207,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.problem_size.Instan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.problem_size.Instance_LU_W", "impl.lu.problem_size.Instance_LU_W\impl.lu.problem_size.Instance_LU_W\impl.lu.problem_size.Instance_LU_W.csproj", "{B67895E0-CA51-450A-81A5-363F08F720AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.data.ProblemDefinitionImpl", "impl.lu.data.ProblemDefinitionImpl\impl.lu.data.ProblemDefinitionImpl\impl.lu.data.ProblemDefinitionImpl.csproj", "{FF3DA5D3-AF7A-4407-9285-6137C6A1039C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -621,6 +623,10 @@ Global
 		{FCB82F65-01BB-4196-A03B-B058B485E0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCB82F65-01BB-4196-A03B-B058B485E0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCB82F65-01BB-4196-A03B-B058B485E0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF3DA5D3-AF7A-4407-9285-6137C6A1039C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF3DA5D3-AF7A-4407-9285-6137C6A1039C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF3DA5D3-AF7A-4407-9285-6137C6A1039C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF3DA5D3-AF7A-4407-9285-6137C6A1039C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF9AE01F-5921-4D51-BE52-01C828B84666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF9AE01F-5921-4D51-BE52-01C828B84666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF9AE01F-5921-4D51-BE52-01C828B84666}.Release|Any CPU.ActiveCfg = Release|Any CPU
