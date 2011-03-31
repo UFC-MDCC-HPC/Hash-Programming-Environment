@@ -23,6 +23,9 @@ namespace lu.data.ProblemDefinition {
 		public static void setConstants(int ij){
 		   		   
 		}
+		public static double mod(double a, double b) { return (a % b); }
+		public double min(int n1, int n2) { return n1 < n2 ? n1 : n2; }
+		public double max(double n1, double n2) { return n1 > n2 ? n1 : n2; }
 		public static double pow2(double p) { return p * p; }  
 		public static int nodedim(double n) { return (int)(Math.Log(n) / Math.Log(2.0d) + 0.00001); }
         public static int ilog2(int i) {
