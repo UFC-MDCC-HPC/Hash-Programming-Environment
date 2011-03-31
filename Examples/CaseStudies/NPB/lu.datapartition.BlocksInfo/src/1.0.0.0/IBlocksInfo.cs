@@ -37,7 +37,6 @@ namespace lu.datapartition.BlocksInfo {
 //       int isiz1 {get;set;}
 //       int isiz2 {get;set;} 
       
-       double omega {get;set;}
        double frc {get;set;}
        
 //Instance
