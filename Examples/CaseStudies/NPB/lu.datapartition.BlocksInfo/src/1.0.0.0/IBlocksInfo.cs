@@ -5,9 +5,6 @@ namespace lu.datapartition.BlocksInfo {
 	   int nx {get;set;}
 	   int ny {get;set;}
 	   int nz {get;set;}
-	   int nx0 {get;set;}
-	   int ny0 {get;set;}
-	   int nz0 {get;set;}
 	   int ipt {get;set;}
 	   int ist {get;set;}
 	   int iend {get;set;}
