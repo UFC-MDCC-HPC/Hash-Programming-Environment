@@ -70,6 +70,14 @@ namespace lu.data.ProblemDefinition {
 		int nx0 {get;}
 		int ny0 {get;}
 		int nz0 {get;}
+		
+        int itmax  {get;}
+        int inorm  {get;}
+        int isiz01 {get;}
+        int isiz02 {get;}
+        int isiz03 {get;}
+        int isiz3  {get;}
+		double dt  {get;}		
 				
 		bool[] icommn {get;}
 		bool[] icomms {get;}
