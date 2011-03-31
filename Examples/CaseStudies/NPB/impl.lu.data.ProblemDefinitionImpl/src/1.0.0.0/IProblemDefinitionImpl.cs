@@ -22,11 +22,7 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 		
 		override public void initialize(){
 		    setProblemClass();
-			_icommn = new bool[_nx0+_ny0+1];
-			_icomms = new bool[_nx0+_ny0+1];
-			_icomme = new bool[_nx0+_ny0+1];
-			_icommw = new bool[_nx0+_ny0+1];
-			
+
             _num    = this.Ranks.Length;
             _node   = this.GlobalRank;         
             _ndim   = Constants.nodedim(_num);
@@ -43,10 +39,22 @@ namespace impl.lu.data.ProblemDefinitionImpl {
             _isiz2 = _isiz01 / ydiv;
             if(_isiz2 * ydiv < _isiz01)
                 _isiz2++;
+
+			_icommn = new bool[_nx0+_ny0+1];
+			_icomms = new bool[_nx0+_ny0+1];
+			_icomme = new bool[_nx0+_ny0+1];
+			_icommw = new bool[_nx0+_ny0+1];
                 
+            A.initialize_field ("a", _isiz2, _isiz1, 5, 5);
+            B.initialize_field ("b", _isiz2, _isiz1, 5, 5);
+            _C.initialize_field("c", _isiz2, _isiz1, 5, 5);
+            D.initialize_field ("d", _isiz2, _isiz1, 5, 5);
             
-                
-            
+            U.initialize_field   ("u"   , _isiz3, _isiz2+4, _isiz1+4, 5);
+            Rsd.initialize_field ("rsd" , _isiz3, _isiz2+4, _isiz1+4, 5);
+            Frct.initialize_field("frct", _isiz3, _isiz2+4, _isiz1+4, 5);
+            Flux.initialize_field("flux", _isiz3, _isiz2+2, _isiz1+2, 5);
+
             setConstants(0);
 		}
 		
