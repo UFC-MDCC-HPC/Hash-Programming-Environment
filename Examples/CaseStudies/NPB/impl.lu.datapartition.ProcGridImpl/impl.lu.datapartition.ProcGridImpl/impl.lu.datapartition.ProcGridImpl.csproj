@@ -48,10 +48,4 @@
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\lu.datapartition.ProcGrid\lu.datapartition.ProcGrid\lu.datapartition.ProcGrid.csproj">
-      <Project>{3421DE33-5E38-49FE-9971-46F9D1114FEF}</Project>
-      <Name>lu.datapartition.ProcGrid</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
