@@ -13,7 +13,7 @@ namespace impl.lu.data.ProblemDefinitionImpl {
         protected int _nx0 = 0, _ny0 = 0, _nz0 = 0;
 		protected int _itmax = 0, _inorm = 0, _isiz01 = 0, _isiz02 = 0, _isiz03 = 0, _isiz3 = 0;
 		protected double _dt = 0.0;		
-		protected int _node, _ndim, _num, _xdim, _ydim, _row, _col, _isiz1, _isiz2;	
+		protected int _isiz1, _isiz2;	//_xdim, _ydim, _row, _col, _node, _ndim, _num,
 				
 		protected bool[] _icommn, _icomms, _icomme, _icommw;
 
@@ -23,9 +23,9 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 		override public void initialize(){
 		    setProblemClass();
 
-            _num    = this.Ranks.Length;
-            _node   = this.GlobalRank;         
-            _ndim   = Constants.nodedim(_num);
+            int _num    = this.Ranks.Length;
+//            _node   = this.GlobalRank;         
+//            _ndim   = Constants.nodedim(_num);
             
             int ydiv = Constants.ilog2(_num)/2;
             int xdiv = ydiv;
@@ -40,10 +40,10 @@ namespace impl.lu.data.ProblemDefinitionImpl {
             if(_isiz2 * ydiv < _isiz01)
                 _isiz2++;
 
-			_icommn = new bool[_nx0+_ny0+1];
-			_icomms = new bool[_nx0+_ny0+1];
-			_icomme = new bool[_nx0+_ny0+1];
-			_icommw = new bool[_nx0+_ny0+1];
+//			_icommn = new bool[_nx0+_ny0+1];
+//			_icomms = new bool[_nx0+_ny0+1];
+//			_icomme = new bool[_nx0+_ny0+1];
+//			_icommw = new bool[_nx0+_ny0+1];
                 
             A.initialize_field ("a", _isiz2, _isiz1, 5, 5);
             B.initialize_field ("b", _isiz2, _isiz1, 5, 5);
@@ -56,12 +56,12 @@ namespace impl.lu.data.ProblemDefinitionImpl {
             Flux.initialize_field("flux", _isiz3, _isiz2+2, _isiz1+2, 5);
             
             //proc_grid()
-	            _xdim   = (int)Math.Pow(2, (_ndim/2));
-	            if(Constants.mod(_ndim, 2)==1)
-	                _xdim = _xdim + _xdim;
-	            _ydim   = _num/_xdim;
-	            _row    = (int)Constants.mod(_node, _xdim) + 1;
-	            _col    = _node/_xdim + 1; 
+//	            _xdim   = (int)Math.Pow(2, (_ndim/2));
+//	            if(Constants.mod(_ndim, 2)==1)
+//	                _xdim = _xdim + _xdim;
+//	            _ydim   = _num/_xdim;
+//	            _row    = (int)Constants.mod(_node, _xdim) + 1;
+//	            _col    = _node/_xdim + 1; 
             //           
 
             Constants.setConstants(_nx0,_ny0,_nz0);
@@ -91,13 +91,13 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 		public double [,,,] Field_flux { get { return Flux.Field; } }
 		public double [,,,] Field_u    { get { return U.Field;    } }
 		
-		public int node      { get { return _node;   } }
-		public int ndim      { get { return _ndim;   } }
-		public int num       { get { return _num;    } }
-		public int xdim      { get { return _xdim;   } }
-		public int ydim      { get { return _ydim;   } }
-		public int row       { get { return _row;    } }
-		public int col       { get { return _col;    } }
+//		public int node      { get { return _node;   } }
+//		public int ndim      { get { return _ndim;   } }
+//		public int num       { get { return _num;    } }
+//		public int xdim      { get { return _xdim;   } }
+//		public int ydim      { get { return _ydim;   } }
+//		public int row       { get { return _row;    } }
+//		public int col       { get { return _col;    } }
 		
 		public int nx0       { get { return _nx0;    } }
 		public int ny0       { get { return _ny0;    } }
@@ -111,10 +111,10 @@ namespace impl.lu.data.ProblemDefinitionImpl {
         public int isiz3  { get { return _isiz3;    } }
 		public double dt  { get { return _dt;       } }
 				
-		public bool[] icommn { get { return _icommn; } }
-		public bool[] icomms { get { return _icomms; } }
-		public bool[] icomme { get { return _icomme; } }
-		public bool[] icommw { get { return _icommw; } }
+//		public bool[] icommn { get { return _icommn; } }
+//		public bool[] icomms { get { return _icomms; } }
+//		public bool[] icomme { get { return _icomme; } }
+//		public bool[] icommw { get { return _icommw; } }
 		public int isiz1     { get { return _isiz1;  } }
 		public int isiz2     { get { return _isiz2;  } } 		
 	}
