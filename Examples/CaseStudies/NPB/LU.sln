@@ -209,10 +209,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.problem_size.Instan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.data.ProblemDefinitionImpl", "impl.lu.data.ProblemDefinitionImpl\impl.lu.data.ProblemDefinitionImpl\impl.lu.data.ProblemDefinitionImpl.csproj", "{FF3DA5D3-AF7A-4407-9285-6137C6A1039C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.datapartition.ProcGrid", "lu.datapartition.ProcGrid\lu.datapartition.ProcGrid\lu.datapartition.ProcGrid.csproj", "{3421DE33-5E38-49FE-9971-46F9D1114FEF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.ProcGridImpl", "impl.lu.datapartition.ProcGridImpl\impl.lu.datapartition.ProcGridImpl\impl.lu.datapartition.ProcGridImpl.csproj", "{7998CC72-96A5-482E-B690-F5162057B7E0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.topology.Neighbors", "lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj", "{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.topology.NeighborsImpl", "impl.lu.topology.NeighborsImpl\impl.lu.topology.NeighborsImpl\impl.lu.topology.NeighborsImpl.csproj", "{8FE364EE-0455-41FC-8A26-6FE02FB25303}"
@@ -299,10 +295,6 @@ Global
 		{29979F72-692E-4C32-B025-6FFD67EF13E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29979F72-692E-4C32-B025-6FFD67EF13E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29979F72-692E-4C32-B025-6FFD67EF13E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3421DE33-5E38-49FE-9971-46F9D1114FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3421DE33-5E38-49FE-9971-46F9D1114FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3421DE33-5E38-49FE-9971-46F9D1114FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3421DE33-5E38-49FE-9971-46F9D1114FEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34A613EC-2BEE-484B-B871-05A2A0B7BE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34A613EC-2BEE-484B-B871-05A2A0B7BE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34A613EC-2BEE-484B-B871-05A2A0B7BE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -391,10 +383,6 @@ Global
 		{7917C388-0EFB-4A0C-991F-B0EBD32962AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7917C388-0EFB-4A0C-991F-B0EBD32962AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7917C388-0EFB-4A0C-991F-B0EBD32962AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7998CC72-96A5-482E-B690-F5162057B7E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7998CC72-96A5-482E-B690-F5162057B7E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7998CC72-96A5-482E-B690-F5162057B7E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7998CC72-96A5-482E-B690-F5162057B7E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B6844EA-1CBC-4728-8823-59B187A92424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B6844EA-1CBC-4728-8823-59B187A92424}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B6844EA-1CBC-4728-8823-59B187A92424}.Release|Any CPU.ActiveCfg = Release|Any CPU
