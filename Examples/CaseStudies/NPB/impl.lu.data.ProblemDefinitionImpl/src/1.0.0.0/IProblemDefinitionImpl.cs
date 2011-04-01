@@ -54,8 +54,17 @@ namespace impl.lu.data.ProblemDefinitionImpl {
             Rsd.initialize_field ("rsd" , _isiz3, _isiz2+4, _isiz1+4, 5);
             Frct.initialize_field("frct", _isiz3, _isiz2+4, _isiz1+4, 5);
             Flux.initialize_field("flux", _isiz3, _isiz2+2, _isiz1+2, 5);
+            
+            //proc_grid()
+	            _xdim   = (int)Math.Pow(2, (_ndim/2));
+	            if(Constants.mod(_ndim, 2)==1)
+	                _xdim = _xdim + _xdim;
+	            _ydim   = _num/_xdim;
+	            _row    = (int)Constants.mod(_node, _xdim) + 1;
+	            _col    = _node/_xdim + 1; 
+            //           
 
-            setConstants(0);
+            Constants.setConstants(_nx0,_ny0,_nz0);
 		}
 		
 		private void setProblemClass(){
@@ -70,10 +79,6 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 			_isiz03 = Instance.isiz03;
 			_isiz3  = Instance.isiz3;
             _dt     = Instance.dt;
-		}
-		
-		private void setConstants(int ij){
-		   Constants.setConstants(ij);
 		}
 		
 		public double [,,,] Field_a { get { return A.Field; } }
