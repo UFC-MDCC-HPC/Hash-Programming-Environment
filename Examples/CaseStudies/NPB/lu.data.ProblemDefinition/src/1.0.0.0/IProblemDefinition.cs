@@ -106,13 +106,13 @@ namespace lu.data.ProblemDefinition {
 		double [,,,] Field_flux { get; }
 		
 		
-		int node {get;}
-		int ndim {get;}
-		int num {get;}
-		int xdim {get;}
-		int ydim {get;}
-		int row {get;}
-		int col {get;}
+//		int node {get;}
+//		int ndim {get;}
+//		int num {get;}
+//		int xdim {get;}
+//		int ydim {get;}
+//		int row {get;}
+//		int col {get;}
 		
 		int nx0 {get;}
 		int ny0 {get;}
@@ -126,10 +126,10 @@ namespace lu.data.ProblemDefinition {
         int isiz3  {get;}
 		double dt  {get;}		
 				
-		bool[] icommn {get;}
-		bool[] icomms {get;}
-		bool[] icomme {get;}
-		bool[] icommw {get;}
+//		bool[] icommn {get;}
+//		bool[] icomms {get;}
+//		bool[] icomme {get;}
+//		bool[] icommw {get;}
 		int isiz1 {get;}
 		int isiz2 {get;} 	
 	}
