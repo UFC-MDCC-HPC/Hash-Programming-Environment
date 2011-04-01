@@ -213,6 +213,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.datapartition.ProcGrid",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.ProcGridImpl", "impl.lu.datapartition.ProcGridImpl\impl.lu.datapartition.ProcGridImpl\impl.lu.datapartition.ProcGridImpl.csproj", "{7998CC72-96A5-482E-B690-F5162057B7E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.topology.Neighbors", "lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj", "{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.topology.NeighborsImpl", "impl.lu.topology.NeighborsImpl\impl.lu.topology.NeighborsImpl\impl.lu.topology.NeighborsImpl.csproj", "{8FE364EE-0455-41FC-8A26-6FE02FB25303}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -399,6 +403,10 @@ Global
 		{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C9C16FD-309D-4A72-8B55-E97FDC4AA371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{835C07D3-3F76-482D-8127-C02CA1D79CE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{835C07D3-3F76-482D-8127-C02CA1D79CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{835C07D3-3F76-482D-8127-C02CA1D79CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -423,6 +431,10 @@ Global
 		{8D1B8783-8363-48E3-B9E9-85EA4A760439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D1B8783-8363-48E3-B9E9-85EA4A760439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D1B8783-8363-48E3-B9E9-85EA4A760439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9144969E-1620-4BB1-8827-C003583FDF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9144969E-1620-4BB1-8827-C003583FDF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9144969E-1620-4BB1-8827-C003583FDF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
