@@ -9,9 +9,9 @@ public interface INeighbors : BaseINeighbors
 		int east {get;}
 		int west {get;}	
 		
-        int num {get;}
+        int ydim {get;}
         int node {get;}
-        int ndim {get;}
+        int xdim {get;}
         int row {get;}
         int col {get;}
 
