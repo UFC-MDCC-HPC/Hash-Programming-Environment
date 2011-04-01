@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002d616a25e42af9f361e71f1e323f299291ababf6fcbbd117d63f256538242682961a466f510b141f9af72905f74e0c06678bd49ed062e2e619097efea743e649cf8f94502584dc2ac856b5129d898ae5a6b238065c4592c43943145bff0f32aeed9d651fdcf1bbc3119f4a2398cca318fc29b0112cd7dd06bec31c3f1d6af4c9" isAbstract="true" kind="Environment" name="ProcGrid" packagePath="lu.datapartition">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IProcGrid" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.datapartition.ProcGrid { &#xA;&#xA;public interface BaseIProcGrid : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIProcGrid.cs" srcType="base" uri="lu.datapartition.ProcGrid/bin/1.0.0.0/BaseIProcGrid.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.datapartition.ProcGrid { &#xA;&#xA;public interface IProcGrid : BaseIProcGrid&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IProcGrid.cs" srcType="user" uri="lu.datapartition.ProcGrid/bin/1.0.0.0/IProcGrid.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/lu.datapartition.ProcGrid/bin/1.0.0.0/BaseIProcGrid.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="213" y="175">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IProcGrid" private="false" uRef="proc_grid" visibleInterface="true">
+      <visualDescription h="40" w="80" x="213" y="255"/>
+    </unit>
+  </componentInfo>
+</component:component>
