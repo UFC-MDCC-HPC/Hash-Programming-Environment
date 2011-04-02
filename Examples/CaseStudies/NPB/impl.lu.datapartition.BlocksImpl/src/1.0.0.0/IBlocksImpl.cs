@@ -11,7 +11,7 @@ namespace impl.lu.datapartition.BlocksImpl {
 	where I:IInstance_LU<C>
 	where C:IClass {
 		public IBlocksImpl() { 
-		
+		   
 		} 
 		override public void initialize(){
 		   Blocks.north = Cell.north;

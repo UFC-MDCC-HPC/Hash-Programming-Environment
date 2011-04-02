@@ -21,7 +21,7 @@ where C:IClass
 
 private ICell cell = null;
 
-public ICell Cell {
+protected ICell Cell {
 	get {
 		if (this.cell == null)
 			this.cell = (ICell) Services.getPort("topology");
@@ -41,7 +41,7 @@ public IBlocksInfo Blocks {
 
 private INeighbors neighbors = null;
 
-protected INeighbors Neighbors {
+public INeighbors Neighbors {
 	get {
 		if (this.neighbors == null)
 			this.neighbors = (INeighbors) Services.getPort("neighbors");
