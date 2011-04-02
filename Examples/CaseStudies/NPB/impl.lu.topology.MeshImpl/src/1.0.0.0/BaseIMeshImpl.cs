@@ -9,7 +9,7 @@ using lu.topology.Mesh;
 
 namespace impl.lu.topology.MeshImpl { 
 
-public abstract class BaseIMeshImpl: br.ufc.pargo.hpe.kinds.Environment, BaseICell
+public abstract class BaseIMeshImpl: br.ufc.pargo.hpe.kinds.Environment, BaseIMesh
 {
 
 private INeighbors neighbors = null;

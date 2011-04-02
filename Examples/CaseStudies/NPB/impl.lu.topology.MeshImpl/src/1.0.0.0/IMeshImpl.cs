@@ -5,8 +5,9 @@ using br.ufc.pargo.hpe.kinds;
 using lu.topology.Mesh;
 
 namespace impl.lu.topology.MeshImpl { 
-	public class IMeshImpl : BaseIMeshImpl, ICell {
+	public class IMeshImpl : BaseIMeshImpl, IMesh {
 		public IMeshImpl() { 
+		
 		} 
 		override public void initialize(){
             int _num    = this.Ranks.Length;
@@ -69,6 +70,6 @@ namespace impl.lu.topology.MeshImpl {
         public int xdim { get { return _xdim;   } }        
         public int ydim { get { return _ydim;   } }
         public int row { get { return _row;   } }
-        public int col { get { return _col;   } }		
+        public int col { get { return _col;   } }	
 	}
 }
