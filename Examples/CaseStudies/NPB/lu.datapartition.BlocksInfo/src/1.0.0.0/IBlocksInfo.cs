@@ -20,7 +20,17 @@ namespace lu.datapartition.BlocksInfo {
 	   
 		int nx0 {get; set;}
 		int ny0 {get; set;}
-		int nz0 {get; set;}	   
+		int nz0 {get; set;}
+		
+		int north {get; set;}
+		int south {get; set;}
+		int east {get; set;}
+		int west {get; set;}		
+		
+        int row {get; set;}
+        int col {get; set;}	
+        int xdim {get; set;}
+        int ydim {get; set;}	        	
 	   
 //ProblemDefination	   
 //	   int node {get;set;}
@@ -48,5 +58,6 @@ namespace lu.datapartition.BlocksInfo {
 //       int isiz3 {get;set;}
        
        void initialize();
+       void setBlock();
 	}
 }
