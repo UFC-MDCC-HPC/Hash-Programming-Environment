@@ -18,6 +18,10 @@ namespace lu.datapartition.BlocksInfo {
 	   int ki1 {get;set;}
 	   int ki2 {get;set;}
 	   
+		int nx0 {get; set;}
+		int ny0 {get; set;}
+		int nz0 {get; set;}	   
+	   
 //ProblemDefination	   
 //	   int node {get;set;}
 //	   int ndim {get;set;}
