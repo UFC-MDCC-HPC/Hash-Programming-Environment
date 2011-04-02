@@ -10,7 +10,7 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 	public class IProblemDefinitionImpl<I, C> : BaseIProblemDefinitionImpl<I, C>, IProblemDefinition<I, C>
 	where I:IInstance_LU<C>
 	where C:IClass {
-        protected int _nx0 = 0, _ny0 = 0, _nz0 = 0;
+        //protected int _nx0 = 0, _ny0 = 0, _nz0 = 0;
 		protected int _itmax = 0, _inorm = 0, _isiz01 = 0, _isiz02 = 0, _isiz03 = 0, _isiz3 = 0;
 		protected double _dt = 0.0;		
 		protected int _isiz1, _isiz2;	//_xdim, _ydim, _row, _col, _node, _ndim, _num,
@@ -64,14 +64,10 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 //	            _col    = _node/_xdim + 1; 
             //           
 
-            Constants.setConstants(_nx0,_ny0,_nz0);
+            Constants.setConstants(Instance.isiz01,Instance.isiz02,Instance.isiz03);
 		}
 		
 		private void setProblemClass(){
-	        _nx0 = Instance.isiz01;
-			_ny0 = Instance.isiz02;
-			_nz0 = Instance.isiz03;
-			
 			_itmax  = Instance.itmax;
 			_inorm  = Instance.inorm;
 			_isiz01 = Instance.isiz01;
@@ -99,9 +95,9 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 //		public int row       { get { return _row;    } }
 //		public int col       { get { return _col;    } }
 		
-		public int nx0       { get { return _nx0;    } }
-		public int ny0       { get { return _ny0;    } }
-		public int nz0       { get { return _nz0;    } }
+//		public int nx0       { get { return _nx0;    } }
+//		public int ny0       { get { return _ny0;    } }
+//		public int nz0       { get { return _nz0;    } }
 		
         public int itmax  { get { return _itmax;    } }
         public int inorm  { get { return _inorm;    } }
