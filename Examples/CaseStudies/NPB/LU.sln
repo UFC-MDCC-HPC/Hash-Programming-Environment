@@ -219,6 +219,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.datapartition.Blocks", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.topology.MeshImpl", "impl.lu.topology.MeshImpl\impl.lu.topology.MeshImpl\impl.lu.topology.MeshImpl.csproj", "{2264DF69-9C07-4EAF-B41B-B71DB438F388}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.BlocksImpl", "impl.lu.datapartition.BlocksImpl\impl.lu.datapartition.BlocksImpl\impl.lu.datapartition.BlocksImpl.csproj", "{90734D15-2639-4178-A2A8-01696D8D99B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -437,6 +439,10 @@ Global
 		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FE364EE-0455-41FC-8A26-6FE02FB25303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90734D15-2639-4178-A2A8-01696D8D99B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90734D15-2639-4178-A2A8-01696D8D99B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90734D15-2639-4178-A2A8-01696D8D99B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90734D15-2639-4178-A2A8-01696D8D99B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9144969E-1620-4BB1-8827-C003583FDF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9144969E-1620-4BB1-8827-C003583FDF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9144969E-1620-4BB1-8827-C003583FDF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
