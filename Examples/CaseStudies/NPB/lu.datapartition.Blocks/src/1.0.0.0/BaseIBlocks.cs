@@ -1,7 +1,6 @@
 /* AUTOMATICALLY GENERATE CODE */
 
 using br.ufc.pargo.hpe.kinds;
-using lu.topology.Mesh;
 using lu.datapartition.BlocksInfo;
 using lu.topology.Neighbors;
 using lu.problem_size.Instance;
@@ -14,8 +13,8 @@ where I:IInstance<C>
 where C:IClass
 {
 
-	ICell Cell {get;}
 	IBlocksInfo Blocks {get;}
+	INeighbors Neighbors {get;}
 
 
 } // end main interface 
