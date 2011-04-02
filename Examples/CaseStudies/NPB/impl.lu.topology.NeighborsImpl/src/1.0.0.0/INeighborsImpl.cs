@@ -8,7 +8,7 @@ namespace impl.lu.topology.NeighborsImpl {
 	public class INeighborsImpl : BaseINeighborsImpl, INeighbors {
 		public INeighborsImpl() { 
 		
-		} 
+		} /*
 		override public void initialize(){
             int _num    = this.Ranks.Length;
             _node   = this.GlobalRank;         
@@ -53,19 +53,22 @@ namespace impl.lu.topology.NeighborsImpl {
                 _east = -1;
             }             
 		}
+		
 		public static double mod(double a, double b) { return (a % b); }
 		public static int nodedim(double n) { return (int)(Math.Log(n) / Math.Log(2.0d) + 0.00001); }
+		*///, _node, _xdim, _ydim, _row, _col;
+//		public int node { get { return _node;   } }
+//        public int xdim { get { return _xdim;   } }        
+//        public int ydim { get { return _ydim;   } }
+//        public int row { get { return _row;   } }
+//        public int col { get { return _col;   } }				
 		
-		protected int _north, _south, _east, _west, _node, _xdim, _ydim, _row, _col;
-		public int north      { get { return _north;   } }
-		public int south      { get { return _south;   } }
-		public int east      { get { return _east;   } }
-		public int west      { get { return _west;   } }
+		protected int _north, _south, _east, _west;
+		public int north      {get { return _north; } set { _north = value; } }
+		public int south      {get { return _south; } set { _south = value; } }
+		public int east      {get { return _east; } set { _east = value; } }
+		public int west      {get { return _west; } set { _west = value; } }
 		
-		public int node { get { return _node;   } }
-        public int xdim { get { return _xdim;   } }        
-        public int ydim { get { return _ydim;   } }
-        public int row { get { return _row;   } }
-        public int col { get { return _col;   } }		
+
    }
 }
