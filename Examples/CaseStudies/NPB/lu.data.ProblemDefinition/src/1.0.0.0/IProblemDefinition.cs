@@ -114,10 +114,6 @@ namespace lu.data.ProblemDefinition {
 //		int row {get;}
 //		int col {get;}
 		
-		int nx0 {get;}
-		int ny0 {get;}
-		int nz0 {get;}
-		
         int itmax  {get;}
         int inorm  {get;}
         int isiz01 {get;}
