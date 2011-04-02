@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ef112031ee0ef6742a4b9289ed37c540e8da38d8b0dcf4f53e278d6df373674df583b7375a7dc6726ee69838c663509f9c07662bc7dfd377aba4a751eee64d14a662a0fc25f7e6c5b02e168b003f7f3eb6e8ae72444bcfc187853d0589885d66f768b3b8820a8e80fe8aa2996b293052f5e8c8dd5ccd9a4b13df937930fe5e8a" isAbstract="false" kind="Environment" name="Mesh3DImpl" packagePath="impl.lu.topology">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e5aae33b0b76d19288004d2085d9a30270d43312bfa62efb01f2a232c31c753124ba2c77440da7c133ab5eb43673eb87555a60a92d0d652b73a3a94c1c778f6acdb22ff72d7a8b5ad6b0657e4194df02592790a60f29e077314cfd17356a5322ad394313565aa2b20bed6858c5e5f32a3a73f957b4c30c7b08c9a978a30e8fb4" localRef="base" location="lu.topology.Mesh3D/Mesh3D.hpe" name="Mesh3D" package="lu.topology" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="250" y="314">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a5f16b771d8e6498d2d3de28ff69055bf66aa7e281fc4b0ebd4b16e81176b4e3da49a70c73092d2f9616290fa7acb2e06f92a486f19d7c2b61b569e4e990c21941ac8db14315fcead8106a62cd8e81a7ce87e967196af8b5d8b3647706c0121ae7dd36c0144f157e051a1e08938e4b954a423dff981f6493aa277f9639d533c9" localRef="neighbors" location="lu.topology.Neighbors/Neighbors.hpe" name="Neighbors" package="lu.topology" exposed="true">
+          <visualDescription h="41" w="82" x="39" y="283">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="neighbors">
+            <visualDescription h="10" w="10" x="69" y="16"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="mesh3d">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IMesh3DImpl" nArgs="0">
+      <slice isRef="neighbors">
+        <originRef cRef="neighbors" iRef="INeighbors"/>
+        <visualDescription h="10" w="10" x="19" y="22"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.topology.Neighbors;&#xA;using lu.topology.Mesh3D;&#xA;&#xA;namespace impl.lu.topology.Mesh3DImpl { &#xA;&#xA;public abstract class BaseIMesh3DImpl: Environment, BaseIMesh3D&#xA;{&#xA;&#xA;private INeighbors neighbors = null;&#xA;&#xA;public INeighbors Neighbors {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.neighbors == null)&#xA;&#x9;&#x9;&#x9;this.neighbors = (INeighbors) Services.getPort(&quot;neighbors&quot;);&#xA;&#x9;&#x9;return this.neighbors;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIMesh3DImpl.cs" srcType="base" uri="impl.lu.topology.Mesh3DImpl/bin/1.0.0.0/BaseIMesh3DImpl.dll" versionId="1.0.0.0">
+          <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
+          <dependency>lu.topology.Mesh3D/bin/1.0.0.0/BaseIMesh3D.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.topology.Mesh3D;&#xA;&#xA;namespace impl.lu.topology.Mesh3DImpl { &#xA;&#xA;public class IMesh3DImpl : BaseIMesh3DImpl, IMesh3D&#xA;{&#xA;&#xA;public IMesh3DImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IMesh3DImpl.cs" srcType="user" uri="impl.lu.topology.Mesh3DImpl/bin/1.0.0.0/IMesh3DImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.lu.topology.Mesh3DImpl/bin/1.0.0.0/BaseIMesh3DImpl.dll</dependency>
+          <dependency>lu.topology.Mesh3D/bin/1.0.0.0/IMesh3D.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="194" y="97">
+        <color b="255" g="0" r="0"/>
+      </visualDescription>
+      <port name="neighbors">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="neighbors" sRef="neighbors"/>
+      </port>
+    </interface>
+    <unit iRef="IMesh3DImpl" private="false" uRef="mesh3d" visibleInterface="true">
+      <super cRef="base" uRef="mesh3d"/>
+      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="false">
+        <visualDescription h="10" w="10" x="19" y="22"/>
+      </slices>
+      <visualDescription h="40" w="80" x="209" y="201"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
+      <originRef>base</originRef>
+      <originRef>neighbors</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="mesh3d"/>
+      <visualDescription h="20" w="20" x="77" y="193"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
