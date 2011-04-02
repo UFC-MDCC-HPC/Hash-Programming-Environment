@@ -64,8 +64,7 @@
         <visualDescription h="10" w="10" x="110" y="28"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.topology.Mesh;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.datapartition.Blocks { &#xA;&#xA;public interface BaseIBlocks&lt;I, C> : IEnvironmentKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;ICell Cell {get;}&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks.cs" srcType="base" uri="lu.datapartition.Blocks/bin/1.0.0.0/BaseIBlocks.dll" versionId="1.0.0.0">
-          <dependency>lu.topology.Mesh/bin/1.0.0.0/ICell.dll</dependency>
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.datapartition.Blocks { &#xA;&#xA;public interface BaseIBlocks&lt;I, C> : IEnvironmentKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;INeighbors Neighbors {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks.cs" srcType="base" uri="lu.datapartition.Blocks/bin/1.0.0.0/BaseIBlocks.dll" versionId="1.0.0.0">
           <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
           <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
