@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008b529ac8d8e6d8cee479d1ffffea05ad75c189b73aee1129ba92612f801112d24b9ad23a7be2fa3af4b4d00a415208e74fb567eb48534e138e8f241032fc70f6548c4851326d4f49820433f57d00806b5b1b89cc0459affc62ad2b6355a219357cc15c5669b67aa2cfa42d5b25748c98f025f666299c4a2387ee0247a6796cb1" isAbstract="true" kind="Qualifier" name="NorthToSouth" packagePath="common.direction">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="base" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="257" y="402">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="direction">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="INorthToSouth" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.NorthToSouth { &#xA;&#xA;public interface BaseINorthToSouth : BaseIDirection, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseINorthToSouth.cs" srcType="base" uri="common.direction.NorthToSouth/bin/1.0.0.0/BaseINorthToSouth.dll" versionId="1.0.0.0">
+          <dependency>common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.NorthToSouth { &#xA;&#xA;public interface INorthToSouth : BaseINorthToSouth, IDirection&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="INorthToSouth.cs" srcType="user" uri="common.direction.NorthToSouth/bin/1.0.0.0/INorthToSouth.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.direction.NorthToSouth/bin/1.0.0.0/BaseINorthToSouth.dll</dependency>
+          <dependency>common.direction.Direction/bin/1.0.0.0/IDirection.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="101" x="206" y="185">
+        <color b="192" g="192" r="192"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="INorthToSouth" private="false" uRef="direction" visibleInterface="true">
+      <super cRef="base" uRef="direction"/>
+      <visualDescription h="40" w="80" x="244" y="290"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="direction"/>
+      <visualDescription h="20" w="20" x="112" y="298"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
