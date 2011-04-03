@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002fea9bd59e9315af6e10dc86dce7fc78debf74006d16060fa19e4b9b208632792b74c63051bd71db018df841a140b16ca038250c787cdd5a56583218b6671d7be2468eea4455a2081126168bed230a8689c2a6cc6746b895a98d0101e2290c0d2f7ef02ad06f6e1f1baf26a3493f96e5d647dfd3d6a8c999c8adcfb18f0e699b" isAbstract="true" kind="Qualifier" name="EastToWest" packagePath="common.direction">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000008dadcae582d76f1488d439896d4bfd505106048b3ba8e45b80ce2579980c636d34a0e59c3ad6a98a0c86460ae326b7aef57b0353433314945005b0cbe63b8ed080f8b93d69d6535a97576c6572b69fb588544b58a8afa38f7837418edca1faa8b74fec26b2d1a16f3c8b69bec57847356073169560cd90f4e6d0d47f0903c29c" localRef="base" location="common.direction.Direction/Direction.hpe" name="Direction" package="common.direction" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="201" y="389">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="direction">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IEastToWest" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.EastToWest { &#xA;&#xA;public interface BaseIEastToWest : BaseIDirection, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIEastToWest.cs" srcType="base" uri="common.direction.EastToWest/bin/1.0.0.0/BaseIEastToWest.dll" versionId="1.0.0.0">
+          <dependency>common.direction.Direction/bin/1.0.0.0/BaseIDirection.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.direction.EastToWest { &#xA;&#xA;public interface IEastToWest : BaseIEastToWest, IDirection&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IEastToWest.cs" srcType="user" uri="common.direction.EastToWest/bin/1.0.0.0/IEastToWest.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.direction.EastToWest/bin/1.0.0.0/BaseIEastToWest.dll</dependency>
+          <dependency>common.direction.Direction/bin/1.0.0.0/IDirection.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="114" y="185">
+        <color b="192" g="192" r="192"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IEastToWest" private="false" uRef="direction" visibleInterface="true">
+      <super cRef="base" uRef="direction"/>
+      <visualDescription h="40" w="80" x="166" y="291"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="direction"/>
+      <visualDescription h="20" w="20" x="89" y="386"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
