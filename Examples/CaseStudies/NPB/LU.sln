@@ -221,6 +221,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.topology.Mesh3DImpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.Blocks3DImpl", "impl.lu.datapartition.Blocks3DImpl\impl.lu.datapartition.Blocks3DImpl\impl.lu.datapartition.Blocks3DImpl.csproj", "{2531EBFF-45E4-4C23-B90B-3E2A4439002C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.BlocksInfoImpl", "impl.lu.datapartition.BlocksInfoImpl\impl.lu.datapartition.BlocksInfoImpl\impl.lu.datapartition.BlocksInfoImpl.csproj", "{41F2636E-4719-4057-BD5F-B06E225FD8EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -323,6 +325,10 @@ Global
 		{3EABA808-0D6A-4230-A4A9-0B39839FE2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EABA808-0D6A-4230-A4A9-0B39839FE2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EABA808-0D6A-4230-A4A9-0B39839FE2DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F2636E-4719-4057-BD5F-B06E225FD8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F2636E-4719-4057-BD5F-B06E225FD8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F2636E-4719-4057-BD5F-B06E225FD8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F2636E-4719-4057-BD5F-B06E225FD8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42F2B05E-5C5C-4DAF-A060-55C67011F385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42F2B05E-5C5C-4DAF-A060-55C67011F385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42F2B05E-5C5C-4DAF-A060-55C67011F385}.Release|Any CPU.ActiveCfg = Release|Any CPU
