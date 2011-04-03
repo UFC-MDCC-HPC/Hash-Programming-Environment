@@ -18,14 +18,15 @@ namespace impl.lu.datapartition.Blocks3DImpl {
 		   Blocks.south = Mesh3d.south;
 		   Blocks.east = Mesh3d.east;
 		   Blocks.west = Mesh3d.west;
-		   Blocks.nx0 = Instance.isiz01;
-		   Blocks.ny0 = Instance.isiz02;
-		   Blocks.nz0 = Instance.isiz03;
+		   Blocks.nx0   = Instance.isiz01;
+		   Blocks.ny0   = Instance.isiz02;
+		   Blocks.nz0   = Instance.isiz03;
+		   Blocks.isiz3 = Instance.isiz3;
 		   Blocks.col = Mesh3d.col;
 		   Blocks.row = Mesh3d.row;
 		   Blocks.xdim = Mesh3d.xdim;
 		   Blocks.ydim = Mesh3d.ydim;
-		   Blocks.setBlock();
+		   Blocks.subDomain();
 		}
 	
 	
