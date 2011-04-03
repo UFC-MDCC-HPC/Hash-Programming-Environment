@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006d200b421f8e5aab50824e85ac6a2db921a2fd2c3119935fea0f075e81e9775d3aac7534924d53b5027596ffc8df91a732f2794bc094a821fbe256279a12112a07a105f906cfa2796c8c4c5469ad427a1bdf1acb4203854ddd4aab9f4f1ddabf5a09ec4ae956c356b2ac801db1bedde5efc643350b0c2676d5fe10f2d50d2487" isAbstract="false" kind="Environment" name="BlocksInfoImpl" packagePath="impl.lu.datapartition">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="base" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="214" y="347">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="18" y="4"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IBlocksInfoImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;&#xA;namespace impl.lu.datapartition.BlocksInfoImpl { &#xA;&#xA;public abstract class BaseIBlocksInfoImpl: Environment, BaseIBlocksInfo&#xA;{&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBlocksInfoImpl.cs" srcType="base" uri="impl.lu.datapartition.BlocksInfoImpl/bin/1.0.0.0/BaseIBlocksInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocksInfo.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;&#xA;namespace impl.lu.datapartition.BlocksInfoImpl { &#xA;&#xA;public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocksInfo&#xA;{&#xA;&#xA;public IBlocksInfoImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IBlocksInfoImpl.cs" srcType="user" uri="impl.lu.datapartition.BlocksInfoImpl/bin/1.0.0.0/IBlocksInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.lu.datapartition.BlocksInfoImpl/bin/1.0.0.0/BaseIBlocksInfoImpl.dll</dependency>
+          <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="50" w="113" x="176" y="98">
+        <color b="64" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBlocksInfoImpl" private="false" uRef="blocks" visibleInterface="true">
+      <super cRef="base" uRef="blocks"/>
+      <visualDescription h="40" w="80" x="189" y="240"/>
+    </unit>
+  </componentInfo>
+</component:component>
