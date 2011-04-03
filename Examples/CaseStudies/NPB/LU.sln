@@ -223,6 +223,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.Block
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.datapartition.BlocksInfoImpl", "impl.lu.datapartition.BlocksInfoImpl\impl.lu.datapartition.BlocksInfoImpl\impl.lu.datapartition.BlocksInfoImpl.csproj", "{41F2636E-4719-4057-BD5F-B06E225FD8EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.interactionpattern.Shift", "lu.interactionpattern.Shift\lu.interactionpattern.Shift\lu.interactionpattern.Shift.csproj", "{AB62BCB2-79C6-4193-9E0E-DA19B8BA7F94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -497,6 +499,10 @@ Global
 		{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB62BCB2-79C6-4193-9E0E-DA19B8BA7F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB62BCB2-79C6-4193-9E0E-DA19B8BA7F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB62BCB2-79C6-4193-9E0E-DA19B8BA7F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB62BCB2-79C6-4193-9E0E-DA19B8BA7F94}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB77093A-75AF-43D9-A3C5-A9E6DDA5254B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB77093A-75AF-43D9-A3C5-A9E6DDA5254B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB77093A-75AF-43D9-A3C5-A9E6DDA5254B}.Release|Any CPU.ActiveCfg = Release|Any CPU
