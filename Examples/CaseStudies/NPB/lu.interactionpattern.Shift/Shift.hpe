@@ -65,9 +65,20 @@
         <originRef cRef="direction" iRef="IDirection"/>
         <visualDescription h="10" w="10" x="57" y="21"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d1b687" repeat="0">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@121bcf2" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Buffer;&#xA;using lu.topology.Neighbors;&#xA;using common.direction.Direction;&#xA;&#xA;namespace lu.interactionpattern.Shift { &#xA;&#xA;public interface BaseIShift&lt;DIR> : ISynchronizerKind &#xA;where DIR:IDirection&#xA;{&#xA;&#xA;&#x9;IBuffer Output_buffer {set;}&#xA;&#x9;IBuffer Input_buffer {set;}&#xA;&#x9;INeighbors Neighbors {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIShift.cs" srcType="base" uri="lu.interactionpattern.Shift/bin/1.0.0.0/BaseIShift.dll" versionId="1.0.0.0">
+          <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
+          <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
+          <dependency>common.direction.Direction/bin/1.0.0.0/IDirection.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;using MPI;&#xA;&#xA;namespace lu.interactionpattern.Shift { &#xA;&#x9;public interface IShift&lt;DIR> : BaseIShift&lt;DIR>&#xA;&#x9;where DIR:IDirection {&#xA;&#x9;    void initiate_send();&#xA;&#x9;    void initiate_recv();&#xA;&#x9;&#x9;Request HandleLeft { get; }&#xA;&#x9;&#x9;Request HandleRight { get;}&#xA;&#x9;&#xA;&#x9;}  &#xA;} &#xA;" fileType="library" name="IShift.cs" srcType="user" uri="lu.interactionpattern.Shift/bin/1.0.0.0/IShift.dll" versionId="1.0.0.0">
+          <dependency>common.direction.Direction/bin/1.0.0.0/IDirection.dll</dependency>
+          <dependency>%WORKSPACE/lu.interactionpattern.Shift/bin/1.0.0.0/BaseIShift.dll</dependency>
+        </file>
+      </sources>
       <visualDescription h="40" w="80" x="172" y="189">
         <color b="64" g="64" r="128"/>
       </visualDescription>
