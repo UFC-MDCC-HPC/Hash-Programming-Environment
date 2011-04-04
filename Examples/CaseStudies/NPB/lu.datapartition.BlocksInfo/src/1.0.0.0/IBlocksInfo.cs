@@ -55,7 +55,6 @@ namespace lu.datapartition.BlocksInfo {
 //       int isiz03 {get;set;}
 
        
-       //void initialize();
-
+       //void initialize();       
 	}
 }
