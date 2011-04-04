@@ -54,7 +54,7 @@ private IMesh3D mesh3d = null;
 protected IMesh3D Mesh3d {
 	get {
 		if (this.mesh3d == null)
-			this.mesh3d = (IMesh3D) Services.getPort("topology");
+			this.mesh3d = (IMesh3D) Services.getPort("mesh3D");
 		return this.mesh3d;
 	}
 }
