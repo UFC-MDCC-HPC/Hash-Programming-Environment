@@ -11,8 +11,8 @@ public interface BaseIShift<DIR> : ISynchronizerKind
 where DIR:IDirection
 {
 
-	IBuffer Output_buffer {set;}
-	IBuffer Input_buffer {set;}
+	IBuffer Output_buffer {get;}
+	IBuffer Input_buffer {get;}
 	INeighbors Neighbors {get;}
 
 
