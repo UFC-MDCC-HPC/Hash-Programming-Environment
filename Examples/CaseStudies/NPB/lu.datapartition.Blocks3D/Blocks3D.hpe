@@ -24,7 +24,7 @@
         <visualDescription h="10" w="10" x="37" y="4"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e5aae33b0b76d19288004d2085d9a30270d43312bfa62efb01f2a232c31c753124ba2c77440da7c133ab5eb43673eb87555a60a92d0d652b73a3a94c1c778f6acdb22ff72d7a8b5ad6b0657e4194df02592790a60f29e077314cfd17356a5322ad394313565aa2b20bed6858c5e5f32a3a73f957b4c30c7b08c9a978a30e8fb4" localRef="topology" location="lu.topology.Mesh3D/Mesh3D.hpe" name="Mesh3D" package="lu.topology" exposed="false">
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e5aae33b0b76d19288004d2085d9a30270d43312bfa62efb01f2a232c31c753124ba2c77440da7c133ab5eb43673eb87555a60a92d0d652b73a3a94c1c778f6acdb22ff72d7a8b5ad6b0657e4194df02592790a60f29e077314cfd17356a5322ad394313565aa2b20bed6858c5e5f32a3a73f957b4c30c7b08c9a978a30e8fb4" localRef="mesh3D" location="lu.topology.Mesh3D/Mesh3D.hpe" name="Mesh3D" package="lu.topology" exposed="false">
       <visualDescription h="49" w="97" x="26" y="279">
         <color b="255" g="255" r="255"/>
       </visualDescription>
@@ -51,13 +51,13 @@
     <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <interface iRef="IBlocks3D" nArgs="2">
-      <slice isRef="mesh3d">
-        <originRef cRef="topology" iRef="IMesh3D"/>
-        <visualDescription h="10" w="10" x="6" y="32"/>
-      </slice>
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocksInfo"/>
         <visualDescription h="10" w="10" x="91" y="14"/>
+      </slice>
+      <slice isRef="mesh3d">
+        <originRef cRef="mesh3D" iRef="IMesh3D"/>
+        <visualDescription h="10" w="10" x="6" y="32"/>
       </slice>
       <slice isRef="instance">
         <originRef cRef="instance_type" iRef="IInstance"/>
@@ -79,25 +79,25 @@
       <visualDescription h="51" w="107" x="186" y="152">
         <color b="0" g="128" r="255"/>
       </visualDescription>
-      <port name="neighbors">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="neighbors" sRef="mesh3d"/>
-      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="neighbors">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="neighbors" sRef="mesh3d"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IBlocks3D" private="false" uRef="process" visibleInterface="true">
-      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="true">
-        <visualDescription h="10" w="10" x="19" y="22"/>
-      </slices>
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
         <visualDescription h="10" w="10" x="33" y="24"/>
       </slices>
-      <slices cRef="topology" replica="0" uRef="mesh3d" sliceName="mesh3d" transitive="false">
+      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="true">
+        <visualDescription h="10" w="10" x="19" y="22"/>
+      </slices>
+      <slices cRef="mesh3D" replica="0" uRef="mesh3d" sliceName="mesh3d" transitive="false">
         <visualDescription h="10" w="10" x="10" y="24"/>
         <port>neighbors</port>
       </slices>
@@ -107,9 +107,9 @@
       <visualDescription h="40" w="80" x="192" y="251"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
-      <originRef>topology</originRef>
+      <originRef>mesh3D</originRef>
       <originRef>neighbors</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="mesh3d"/>
+      <links xsi:type="component:EnumerableEntryType" cRef="mesh3D" uRef="mesh3d"/>
       <links xsi:type="component:EnumerableUnitType" ref="process"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="144" y="326"/>
