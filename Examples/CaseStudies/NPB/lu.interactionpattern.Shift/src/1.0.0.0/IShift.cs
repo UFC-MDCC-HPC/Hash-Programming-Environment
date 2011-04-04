@@ -7,8 +7,8 @@ namespace lu.interactionpattern.Shift {
 	where DIR:IDirection {
 	    void initiate_send();
 	    void initiate_recv();
-		Request HandleLeft { get; }
-		Request HandleRight { get;}
+		Request Handle { get; }
+//		Request HandleRight { get;}
 	
 	}  
 } 
