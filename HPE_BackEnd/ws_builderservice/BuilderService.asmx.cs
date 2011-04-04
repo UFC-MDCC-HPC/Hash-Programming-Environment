@@ -26,7 +26,7 @@ namespace br.ufc.pargo.hpe.cca.ports.BuilderService
     //[System.Xml.Serialization.XmlInclude(typeof(System.Collections.Generic.Dictionary<string, object>))]
     [System.Xml.Serialization.XmlInclude(typeof(gov.cca.TypeMapImplWS))]
     [System.Xml.Serialization.XmlInclude(typeof(gov.cca.ManagerComponentIDImpl))]
-    [System.Xml.Serialization.XmlInclude(typeof(gov.cca.ManagerConnectionIDImpl))]
+    [System.Xml.Serialization.XmlInclude(typeof(gov.cca.ManagerConnectionID))]
     public class BuilderService : System.Web.Services.WebService, gov.cca.ports.BuilderService
     {
         private IpcClientChannel ch;

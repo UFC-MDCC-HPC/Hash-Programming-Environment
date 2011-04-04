@@ -14,8 +14,8 @@ DGAC/DGAC.cs
 DGAC/CCA.cs
 DGAC/WorkerComponentIDImpl.cs
 DGAC/ManagerComponentIDImpl.cs
-DGAC/WorkerServicesImpl.cs
 DGAC/ManagerConnectionIDImpl.cs
+DGAC/WorkerServicesImpl.cs
 DGAC/WorkerConnectionIDImpl.cs
 DGAC/ManagerComponentClassDescriptionImpl.cs
 DGAC/WorkerComponentClassDescriptionImpl.cs
@@ -26,6 +26,8 @@ DGAC/WorkerObject.cs
 DGAC/BackEndEnvironment.cs
 DGAC/externalreferences.cs
 DGAC/CCAExceptionImpl.cs
+DGAC/Instantiator.cs
+DGAC/ManagerServices.cs
 
 -target:library
 
