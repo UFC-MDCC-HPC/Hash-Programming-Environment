@@ -13,7 +13,7 @@ namespace impl.lu.interactionpattern.ShiftToNorthImpl {
 		
 		} 
 		
-		private static int from_s = 1, from_n = 2, from_e = 3, from_w = 4;
+		private static int from_s = 1;//, from_n = 2, from_e = 3, from_w = 4;
 				
 		public void initiate_send(){//Blocking Send
 			comm.Send<double>(Output_buffer.Array, Neighbors.north, from_s);      
