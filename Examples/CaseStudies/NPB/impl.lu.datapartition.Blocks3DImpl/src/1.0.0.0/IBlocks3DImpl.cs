@@ -25,10 +25,11 @@ namespace impl.lu.datapartition.Blocks3DImpl {
 		   Blocks.col = Mesh3d.col;
 		   Blocks.row = Mesh3d.row;
 		   Blocks.xdim = Mesh3d.xdim;
-		   Blocks.ydim = Mesh3d.ydim;
-		   Blocks.subDomain();
+		   Blocks.ydim = Mesh3d.ydim;		   
 		}
-	
-	
+		
+		public void configBlock(){
+		   Blocks.subDomain();
+		}	
 	}
 }
