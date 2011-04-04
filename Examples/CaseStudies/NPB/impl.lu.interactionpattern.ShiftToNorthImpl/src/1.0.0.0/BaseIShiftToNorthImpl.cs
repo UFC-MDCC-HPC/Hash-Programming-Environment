@@ -10,6 +10,7 @@ using common.direction.Direction;
 using lu.topology.Neighbors;
 using common.direction.SouthToNorth;
 using lu.interactionpattern.Shift;
+using MPI;
 
 namespace impl.lu.interactionpattern.ShiftToNorthImpl { 
 
