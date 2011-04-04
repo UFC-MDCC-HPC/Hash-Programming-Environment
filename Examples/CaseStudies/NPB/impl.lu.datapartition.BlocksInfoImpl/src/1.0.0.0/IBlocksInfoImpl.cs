@@ -45,14 +45,15 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
                 //mpi.Dispose();
                 throw new System.Exception("Check SUBDOMAIN SIZE");
             }
-//            if((_nx > _isiz1) || (_ny > _isiz2) || (_nz > _isiz3)) {
-//                Console.WriteLine("SUBDOMAIN SIZE IS TOO LARGE - ADJUST PROBLEM SIZE OR NUMBER OF PROCESSORS" +
-//                    "SO THAT NX, NY AND NZ ARE LESS THAN OR EQUAL TO ISIZ1, ISIZ2 AND ISIZ3 RESPECTIVELY. THEY ARE CURRENTLY"+
-//                    " "+_nx+"x"+_ny+"x"+_nz);
-//                //worldcomm.Abort(0);//CALL MPI_ABORT[ MPI_COMM_WORLD,ERRORCODE, IERROR ]
-//                //mpi.Dispose();
-//                throw new System.Exception("Check SUBDOMAIN SIZE");
-//            }
+            setCheck();
+            if((_nx > _isiz1) || (_ny > _isiz2) || (_nz > _isiz3)) {
+                Console.WriteLine("SUBDOMAIN SIZE IS TOO LARGE - ADJUST PROBLEM SIZE OR NUMBER OF PROCESSORS" +
+                    "SO THAT NX, NY AND NZ ARE LESS THAN OR EQUAL TO ISIZ1, ISIZ2 AND ISIZ3 RESPECTIVELY. THEY ARE CURRENTLY"+
+                    " "+_nx+"x"+_ny+"x"+_nz);
+                //worldcomm.Abort(0);//CALL MPI_ABORT[ MPI_COMM_WORLD,ERRORCODE, IERROR ]
+                //mpi.Dispose();
+                throw new System.Exception("Check SUBDOMAIN SIZE");
+            }
             _ist = 1;
             _iend = _nx;
             if(_north==-1)
@@ -67,39 +68,36 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
                 _jend = _ny - 1;
 		}
 		
-//		private void setCheck(){
-//		    int _num    = this.Ranks.Length;
-//            int ydiv = ilog2(_num) / 2;
-//            int xdiv = ydiv;
-//            if(xdiv + ydiv != ilog2(_num))
-//                xdiv += 1;
-//            xdiv = ipow2(xdiv);
-//            ydiv = ipow2(ydiv);
-//            _isiz1 = _nx0 / xdiv;
-//            if(_isiz1 * xdiv < _nx0)
-//                _isiz1++;
-//            _isiz2 = _nx0 / ydiv;
-//            if(_isiz2 * ydiv < _nx0)
-//                _isiz2++;
-//		}
+		private void setCheck(){
+		    int _num    = this.Ranks.Length;
+            int ydiv = ilog2(_num) / 2;
+            int xdiv = ydiv;
+            if(xdiv + ydiv != ilog2(_num)) xdiv += 1;
+            xdiv = ipow2(xdiv);
+            ydiv = ipow2(ydiv);
+            _isiz1 = _nx0 / xdiv;
+            if(_isiz1 * xdiv < _nx0) _isiz1++;
+            _isiz2 = _nx0 / ydiv;
+            if(_isiz2 * ydiv < _nx0) _isiz2++;
+		}
 		
 		public static double mod(double a, double b) { return (a % b); }
-//        public static int ilog2(int i) {
-//            int log2, exp2 = 1;
-//            if(i <= 0) return (-1);
-//            for(log2 = 0; log2 < 20; log2++) {
-//                if(exp2 == i) return (log2);
-//                exp2 *= 2;
-//            }
-//            return (-1);
-//        }        
-//        public static int ipow2(int i) {
-//            int pow2 = 1;
-//            if(i < 0) return (-1);
-//            if(i == 0) return (1);
-//            while(i-->0) pow2 *= 2;
-//            return (pow2);
-//        }	
+        public static int ilog2(int i) {
+            int log2, exp2 = 1;
+            if(i <= 0) return (-1);
+            for(log2 = 0; log2 < 20; log2++) {
+                if(exp2 == i) return (log2);
+                exp2 *= 2;
+            }
+            return (-1);
+        }        
+        public static int ipow2(int i) {
+            int pow2 = 1;
+            if(i < 0) return (-1);
+            if(i == 0) return (1);
+            while(i-->0) pow2 *= 2;
+            return (pow2);
+        }	
 		
 		protected int _north, _south, _east, _west;
 		protected int _xdim, _ydim, _row, _col;
@@ -132,8 +130,6 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
 		public int jst  { get { return _jst;  } }
 		public int jend { get { return _jend; } }
 					
-		//public int isiz1 {get { return _isiz1;  } }
-		//public int isiz2 {get { return _isiz2;  } }
 		public int isiz3 {get { return _isiz3;  } set { _isiz3  = value; } }	
 	}
 }
