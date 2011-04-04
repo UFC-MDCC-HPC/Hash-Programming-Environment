@@ -8,7 +8,11 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
 	public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocksInfo {
 		public IBlocksInfoImpl() { 
 		
-		}		
+		}	
+		
+		override public void initialize(){
+		   
+		}	
 		
 		public void subDomain(){
             int mm;
