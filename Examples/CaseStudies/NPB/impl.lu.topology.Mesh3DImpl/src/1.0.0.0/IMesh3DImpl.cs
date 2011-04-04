@@ -16,42 +16,23 @@ namespace impl.lu.topology.Mesh3DImpl {
             
             //proc_grid
             _xdim   = (int)Math.Pow(2, (_ndim/2));
-            if(mod(_ndim, 2)==1)
-                _xdim = _xdim + _xdim;
+            if(mod(_ndim, 2)==1) _xdim = _xdim + _xdim;
             _ydim   = _num/_xdim;
             _row    = (int)mod(_node, _xdim) + 1;
             _col    = _node/_xdim + 1;
             //
             
-            _south = -1;
-            _east  = -1;
-            _north = -1;
-            _west  = -1;
-            if(_row>1) {
-                _north = _node -1;
-            }
-            else {
-                _north = -1;
-            }
-            if(_row < _xdim) {
-                _south = _node + 1;
-            }
-            else {
-                _south = -1;
-            }
-
-            if(_col > 1) {
-                _west = _node - _xdim;
-            }
-            else {
-                _west = -1;
-            }
-            if(_col < _ydim) {
-                _east = _node + _xdim;
-            }
-            else {
-                _east = -1;
-            }  
+            _south = -1; _east  = -1; _north = -1; _west  = -1;
+            if(_row>1) _north = _node -1;
+            else _north = -1;
+            if(_row < _xdim) _south = _node + 1;
+            else _south = -1;
+            
+            if(_col > 1) _west = _node - _xdim;
+            else _west = -1;
+            if(_col < _ydim) _east = _node + _xdim;
+            else _east = -1;
+              
             Neighbors.north = _north;
             Neighbors.south = _south;
             Neighbors.east = _east;
