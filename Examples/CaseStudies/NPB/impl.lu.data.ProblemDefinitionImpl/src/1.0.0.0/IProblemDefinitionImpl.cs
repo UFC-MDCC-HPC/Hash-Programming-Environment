@@ -11,7 +11,7 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 	where I:IInstance_LU<C>
 	where C:IClass {
         //protected int _nx0 = 0, _ny0 = 0, _nz0 = 0;
-		protected int _itmax = 0, _inorm = 0, _isiz01 = 0, _isiz02 = 0, _isiz03 = 0, _isiz3 = 0;
+		protected int _isiz01 = 0, _isiz3 = 0;//_isiz02 = 0, _isiz03 = 0,_itmax = 0, _inorm = 0, 
 		protected double _dt = 0.0;		
 		protected int _isiz1, _isiz2;	//_xdim, _ydim, _row, _col, _node, _ndim, _num,
 				
@@ -68,13 +68,13 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 		}
 		
 		private void setProblemClass(){
-			_itmax  = Instance.itmax;
-			_inorm  = Instance.inorm;
+//			_itmax  = Instance.itmax;
+//			_inorm  = Instance.inorm;
 			_isiz01 = Instance.isiz01;
-			_isiz02 = Instance.isiz02;
-			_isiz03 = Instance.isiz03;
-			_isiz3  = Instance.isiz3;
-            _dt     = Instance.dt;
+//			_isiz02 = Instance.isiz02;
+//			_isiz03 = Instance.isiz03;
+//			_isiz3  = Instance.isiz3;
+//            _dt     = Instance.dt;
 		}
 		
 		public double [,,,] Field_a { get { return A.Field; } }
@@ -99,13 +99,13 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 //		public int ny0       { get { return _ny0;    } }
 //		public int nz0       { get { return _nz0;    } }
 		
-        public int itmax  { get { return _itmax;    } }
-        public int inorm  { get { return _inorm;    } }
-        public int isiz01 { get { return _isiz01;   } }
-        public int isiz02 { get { return _isiz02;   } }
-        public int isiz03 { get { return _isiz03;   } }
-        public int isiz3  { get { return _isiz3;    } }
-		public double dt  { get { return _dt;       } }
+//        public int itmax  { get { return _itmax;    } }
+//        public int inorm  { get { return _inorm;    } }
+//        public int isiz01 { get { return _isiz01;   } }
+//        public int isiz02 { get { return _isiz02;   } }
+//        public int isiz03 { get { return _isiz03;   } }
+//        public int isiz3  { get { return _isiz3;    } }
+//		public double dt  { get { return _dt;       } }
 				
 //		public bool[] icommn { get { return _icommn; } }
 //		public bool[] icomms { get { return _icomms; } }
