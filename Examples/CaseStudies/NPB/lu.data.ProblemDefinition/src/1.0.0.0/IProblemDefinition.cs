@@ -114,13 +114,13 @@ namespace lu.data.ProblemDefinition {
 //		int row {get;}
 //		int col {get;}
 		
-        int itmax  {get;}
-        int inorm  {get;}
-        int isiz01 {get;}
-        int isiz02 {get;}
-        int isiz03 {get;}
-        int isiz3  {get;}
-		double dt  {get;}		
+//        int itmax  {get;}
+//        int inorm  {get;}
+//        int isiz01 {get;}
+//        int isiz02 {get;}
+//        int isiz03 {get;}
+//        int isiz3  {get;}
+//		double dt  {get;}		
 				
 //		bool[] icommn {get;}
 //		bool[] icomms {get;}
