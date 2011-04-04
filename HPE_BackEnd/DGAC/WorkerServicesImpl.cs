@@ -38,14 +38,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             framework.registerComponentID(this.getComponentID(), this);
         }
 
-     /*   public WorkerServicesImpl(WorkerObject framework, ComponentID cid, IUnit pmain, string library_path, string my_id_unit)
-        {
-            this.cid = cid;
-            this.instanceName = cid.getInstanceName();
-            this.framework = framework;
-            framework.registerComponentID(this.getComponentID(), this, pmain);
-        } */
-
 
         private string mkPortName(string portName)
         {
@@ -57,17 +49,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public Port getPort(string portName)
         {
-            return framework.getPort(mkPortName(portName));
+            return framework.getPort(mkPortName(portName.Trim()));
         }
 
         public Port getPortNonblocking(string portName)
         {
-            return framework.getPortNonblocking(mkPortName(portName));
+            return framework.getPortNonblocking(mkPortName(portName.Trim()));
         }
 
         public void releasePort(string portName)
         {
-            framework.releasePort(mkPortName(portName));
+            framework.releasePort(mkPortName(portName.Trim()));
         }
 
         public TypeMap createTypeMap()

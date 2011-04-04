@@ -6,14 +6,13 @@
 
 using System;
 using br.ufc.pargo.hpe.basic;
+using gov.cca.ports;
 
 namespace br.ufc.pargo.hpe.kinds
 {
 
-
-    public interface ISynchronizerKind : IUnit
+    public interface ISynchronizerKind : IUnit, GoPort
 	{
-		void synchronize();
 	}
 	
 	public abstract class Synchronizer : Unit {

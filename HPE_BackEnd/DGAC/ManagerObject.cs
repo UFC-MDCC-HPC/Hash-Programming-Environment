@@ -52,14 +52,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
 
                 throw new CCAExceptionImpl("This operation is not allowed in the framework manager");
+               
 
-
-/*                int[] nodes = this.fetchNodes((HPETypeMap)selfProperties);
+                int[] nodes = this.fetchNodes((HPETypeMap)selfProperties);
 
                 ManagerComponentID cid = new ManagerComponentIDImpl(selfInstanceName);
                 this.registerComponentID(cid, selfProperties);
 
-                ManagerServices manager_services = new ManagerServicesImpl(this, cid);
+                ManagerServices manager_services = new ManagerServices(cid);
 
                 foreach (int i in nodes)
                 {
@@ -68,7 +68,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     manager_services.addWorkerServicesObject(i, worker_services);
                 }
 
-                return manager_services; */
+                return manager_services; 
             }
 
            // private IDictionary<Services, ComponentRelease> releaseRegister = new Dictionary<Services, ComponentRelease>();
@@ -117,9 +117,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     int[] indexes;
                     int[] cid_nodes;
                     int id_functor_app;
+                    WorkerComponentID[] worker_cids;
                     int kind;
-                    this.createInstanceImpl(instanceName, className, (TypeMapImpl)properties, out cid_nodes, out unit_ids, out indexes, out id_functor_app, out kind);
-                    cid = new ManagerComponentIDImpl(instanceName, cid_nodes, unit_ids, indexes, id_functor_app, kind);
+                    this.createInstanceImpl(instanceName, className, (TypeMapImpl)properties, out cid_nodes, out unit_ids, out indexes, out id_functor_app, out kind, out worker_cids);
+                    cid = new ManagerComponentIDImpl(instanceName, cid_nodes, unit_ids, indexes, worker_cids, id_functor_app, kind);
                     this.registerComponentID(cid, properties);
                 }
                 catch (Exception e)
@@ -182,7 +183,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                      WorkerObject worker = this.worker[node];
-                     WorkerComponentID wcid = toDie_.WorkerComponentID;
+                     WorkerComponentID wcid = toDie_.getWorkerComponentID(node);
                      worker.destroyInstance(wcid, timeout);
                 }
             }
@@ -201,11 +202,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
 			    IDictionary<string, IList<int>> ports = new Dictionary<string,IList<int>>();
 			    ManagerComponentID cid_ = (ManagerComponentID)cid;
-                WorkerComponentID wcid = cid_.WorkerComponentID;
+                
                 int[] list = cid_.WorkerNodes;
                 // foreach (KeyValuePair<WorkerComponentID, int> pair in list)
                 foreach (int node in list)
                 {
+                    WorkerComponentID wcid = cid_.getWorkerComponentID(node);
                     WorkerObject worker = this.worker[node];
                     string[] portNames = worker.getProvidedPortNames(wcid);
                     foreach (string portName in portNames)
@@ -249,10 +251,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
                 IDictionary<string, IList<int>> ports = new Dictionary<string, IList<int>>();
                 ManagerComponentID cid_ = (ManagerComponentID)cid;
-                WorkerComponentID wcid = cid_.WorkerComponentID;
                 int[] list = cid_.WorkerNodes;
                 foreach (int node in list)
                 {
+                    WorkerComponentID wcid = cid_.getWorkerComponentID(node);
                     WorkerObject worker = this.worker[node];
                     string[] portNames = worker.getUsedPortNames(wcid);
                     foreach (string portName in portNames)
@@ -288,10 +290,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 HPETypeMap result = new TypeMapImpl();
 
                 ManagerComponentID cid_ = (ManagerComponentID)cid;
-                WorkerComponentID wcid = cid_.WorkerComponentID;
                 int[] list = cid_.WorkerNodes;
                 foreach (int node in list)
                 {
+                    WorkerComponentID wcid = cid_.getWorkerComponentID(node);
                     WorkerObject worker = this.worker[node];
                     HPETypeMap properties = (HPETypeMap) worker.getPortProperties(wcid, portName);
                     
@@ -324,10 +326,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             public void setPortProperties(ComponentID cid, string portName, TypeMap map)
             {
                 ManagerComponentID cid_ = (ManagerComponentID)cid;
-                WorkerComponentID wcid = cid_.WorkerComponentID;
                 int[] list = cid_.WorkerNodes;
                 foreach (int node in list)
-                {                    
+                {
+                    WorkerComponentID wcid = cid_.getWorkerComponentID(node);
                     WorkerObject worker = this.worker[node];
                     worker.setPortProperties(cid, portName, map);
                 }
@@ -627,8 +629,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 ManagerComponentID id1_m = (ManagerComponentID)id1;
                 ManagerComponentID id2_m = (ManagerComponentID) id2;
 
-                WorkerComponentID id1_w = id1_m.WorkerComponentID;
-                WorkerComponentID id2_w = id2_m.WorkerComponentID;
 
                 int[] id1_ws = id1_m.WorkerNodes;
                 int[] id2_ws = id2_m.WorkerNodes;
@@ -641,11 +641,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 IDictionary<int, ComponentID> id2_ws_inv = new Dictionary<int, ComponentID>();
                 foreach (int node in id2_ws)
                 {
+                    WorkerComponentID id2_w = id2_m.getWorkerComponentID(node);
                     id2_ws_inv.Add(node, id2_w);
                 }
 
                 foreach (int node in id1_ws) 
                 {
+                    WorkerComponentID id1_w = id1_m.getWorkerComponentID(node);
                     ComponentID cid1 = id1_w;
                     ComponentID cid2;
                     if (id2_ws_inv.ContainsKey(node))
@@ -722,12 +724,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 out string[] unit_ids,
                 out int[] indexes,
                 out int id_functor_app,
-                out int kind
+                out int kind,
+                out WorkerComponentID[] worker_cids
                 )
             {
                 IList<int> cid_nodes_list = new List<int>();
                 IList<string> unit_ids_list = new List<string>();
                 IList<int> indexes_list = new List<int>();
+                IList<WorkerComponentID> worker_cids_list = new List<WorkerComponentID>();
 
                 try
                 {
@@ -864,6 +868,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             thread_unit_id.TryGetValue(t, out unit_id);
                             thread_index.TryGetValue(t,out index);
                             WorkerComponentID wcid = go_obj.WorkerCID;
+                            worker_cids_list.Add(wcid);
                             cid_nodes_list.Add(node);
                             unit_ids_list.Add(unit_id);
                             indexes_list.Add(index);
@@ -886,9 +891,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 cid_nodes = new int[cid_nodes_list.Count];
                 indexes = new int[indexes_list.Count];
                 unit_ids = new string[unit_ids_list.Count];
+                worker_cids = new WorkerComponentID[worker_cids_list.Count];
                 cid_nodes_list.CopyTo(cid_nodes, 0);
                 indexes_list.CopyTo(indexes, 0);
                 unit_ids_list.CopyTo(unit_ids, 0);
+                worker_cids_list.CopyTo(worker_cids, 0);
                 return cid_nodes;
 
             }
@@ -935,7 +942,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                      try
                      {
                          Console.WriteLine("Calling worker. Instanting " + instanceName + " " + className + " null ? " + (worker == null));
-                         ComponentID worker_cid = worker.createInstance(instanceName, className, properties);
+                         worker_cid = (WorkerComponentID) worker.createInstance(instanceName, className, properties);
                      }
                      catch (Exception e)
                      {
@@ -1111,7 +1118,48 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     worker[i] = wo;
                 }
 
-        }
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public void runApplication(string session_id_string, ManagerComponentID mcid)
+                {
+                    IList<Thread> thread_list = new List<Thread>();
+                    foreach (int node in mcid.WorkerNodes)
+                    {
+                        RunApplicationThread thread = new RunApplicationThread(node, worker[node], session_id_string, mcid);
+                        Thread t = new Thread(thread.Run);
+                        thread_list.Add(t);
+                        t.Start();
+                    }
+                    foreach (Thread t in thread_list)
+                    {
+                        t.Join();
+                    }
+                }
+
+                internal class RunApplicationThread
+                {
+                    private string session_id_string;
+                    private ManagerComponentID mcid;
+                    private int node;
+                    private WorkerObject worker;
+
+                    public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid)
+                    {
+                        this.session_id_string = session_id_string;
+                        this.mcid = mcid;
+                        this.node = node;
+                        this.worker = worker;
+                    }
+
+                    public void Run()
+                    {
+                        worker.runApplication(session_id_string, mcid.getWorkerComponentID(node));
+                    }
+
+                }
+
+
+     
+    }
 
         
 }

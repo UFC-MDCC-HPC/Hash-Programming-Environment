@@ -10,10 +10,11 @@ using br.ufc.pargo.hpe.kinds;
 using MPI;
 using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
+using br.ufc.pargo.hpe.ports;
 
 namespace br.ufc.pargo.hpe.basic
 {
-    public interface IUnit : Component, Port
+    public interface IUnit : Component, AutomaticSlicesPort
     {
         gov.cca.Services Services { get; }
 
@@ -33,17 +34,23 @@ namespace br.ufc.pargo.hpe.basic
         int[] EnumPeers { get; }
         IDictionary<string, int> EnumeratorCardinality { get; set; }
 
-        
-        void createSlices();
         IList<IUnit> Slices { get; }
         IList<IUnit> AllSlices { get; }
         IUnit ContainerSlice { get; set; }
         void addSlice(IUnit slice);
         void addSliceAll(IUnit slice);
-        void destroySlice();
         void initialize();
-        void perform_initialize();
-        
+        void destroySlice();
+
+        #region CreateSlicesPort
+
+        void create_slices();
+        void initialize_slices();
+        void destroy_slices();
+
+        #endregion CreateSlicesPort
+
+
 
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }

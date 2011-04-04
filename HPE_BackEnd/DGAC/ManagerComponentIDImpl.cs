@@ -14,7 +14,8 @@ namespace gov
             public abstract string[] WorkerUnitNames { get; set; }
             public abstract int[] WorkerUnitIndexes { get; set; }
 
-            public abstract WorkerComponentID WorkerComponentID { get; }
+           // public abstract WorkerComponentID WorkerComponentID { get; }
+            public abstract WorkerComponentID getWorkerComponentID(int node);
             public abstract int Id_functor_app { get; }
             public abstract int Kind { get; }
         }
@@ -42,7 +43,7 @@ namespace gov
                 this.instanceNamePrim = instanceName;
             }
 
-            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, int id_functor_app, int kind)
+            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, WorkerComponentID[] wcids, int id_functor_app, int kind)
             {
                 this.instanceNamePrim = instanceName;
                 this.nodes = nodes;
@@ -50,6 +51,11 @@ namespace gov
                 this.indexes = indexes;
                 this.id_functor_app = id_functor_app;
                 this.kind = kind;
+                this.wcids = new Dictionary<int, WorkerComponentID>();
+                for (int i = 0; i < nodes.Length; i++)
+                {
+                    this.wcids[i] = wcids[i];
+                }
             }
 
             #endregion
@@ -97,19 +103,18 @@ namespace gov
 
             #endregion
 
-            public override WorkerComponentID WorkerComponentID
+            private IDictionary<int,WorkerComponentID> wcids;
+
+            public override WorkerComponentID getWorkerComponentID(int node)
             {
-                get { return new WorkerComponentIDImpl(this.getInstanceName()); }
+                WorkerComponentID wcid;
+                wcids.TryGetValue(node, out wcid);
+                return wcid;
             }
 
             public override string ToString()
             {
                 return instanceNamePrim;
-            }
-
-            public override int GetHashCode()
-            {
-                return instanceNamePrim.GetHashCode();
             }
 
             private int id_functor_app;

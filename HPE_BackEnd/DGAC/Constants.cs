@@ -72,8 +72,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
        // public static string KIND_KEY = "kind";
 
         public static string DEFAULT_PROVIDES_PORT_IMPLEMENTS = "implements";
+        public static string DEFAULT_CREATESLICES_PORT_IMPLEMENTS = "create_slices";
         public static string DEFAULT_PROVIDES_PORT_SERVICE = "service_client";
         public static string DEFAULT_USES_PORT_SERVICE = "service_server";
+
+        public static string CREATE_SLICES_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";
+        public static string GO_PORT_TYPE = "gov.cca.ports.GoPort";
 
         public const int KIND_UNRECOGNIZED = -1;
         public const int KIND_APPLICATION   = 0;

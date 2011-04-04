@@ -12,6 +12,7 @@ using gov.cca;
 using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using gov.cca.ports;
+using br.ufc.pargo.hpe.ports;
 //using br.ufc.lia.hpe.kinds;
 
 
@@ -29,7 +30,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		
 		// Tables
 		
-		private IDictionary<ComponentID, br.ufc.pargo.hpe.basic.IUnit> unitInstances = new Dictionary<ComponentID, br.ufc.pargo.hpe.basic.IUnit>();
+		private IDictionary<string, br.ufc.pargo.hpe.basic.IUnit> unitInstances = new Dictionary<string, br.ufc.pargo.hpe.basic.IUnit>();
 		private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
 		private IDictionary<ComponentID, TypeMap> unitProperties = new Dictionary<ComponentID, TypeMap>();
 
@@ -128,7 +129,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		{
             if (!componentIDs.ContainsKey(cid.getInstanceName()))
             {
-                unitInstances.Add(cid, unit);
+                unitInstances.Add(cid.getInstanceName(), unit);
                 componentIDs.Add(cid.getInstanceName(), cid);
                 componentServices.Add(cid, services);
                 unit.CID = cid;
@@ -147,7 +148,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private void unregisterComponentID(ComponentID cid) 
 		{
 			componentIDs.Remove(cid.getInstanceName());
-			unitInstances.Remove(cid);
+			unitInstances.Remove(cid.getInstanceName());
 		}
 
 		
@@ -213,8 +214,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         #endregion
 
 
-
-
         #region Component Members
 
         public void setServices(Services services)
@@ -270,6 +269,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 case Constants.KIND_UNRECOGNIZED: throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
             }
 
+            // REGISTER CREATESLICES PORT
+            
+
             Connector.closeConnection();
 
             return cid;
@@ -288,16 +290,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
                 IUnit unit_slice;
-                unitInstances.TryGetValue(cid_app, out unit_slice);
+                unitInstances.TryGetValue(cid_app.getInstanceName(), out unit_slice);
                 br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind)unit_slice;
 
                 // This part is only performed by applications.
                 DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
                 pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-                pmain.createSlices();
+                //pmain.createSlices();
+                
                 // --------------------------------------------
 
-                pmain.perform_initialize();
+                //pmain.perform_initialize();
 
                 return cid_app;
 
@@ -359,8 +362,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public ComponentID[] getComponentIDs()
         {
-			ComponentID[] cids = new WorkerComponentIDImpl[unitInstances.Count];			
-            unitInstances.Keys.CopyTo(cids, 0);
+			ComponentID[] cids = new WorkerComponentIDImpl[unitInstances.Count];
+            int i = 0;
+            foreach (KeyValuePair<string, IUnit> pair in unitInstances)
+            {
+                cids[i++] = pair.Value.CID;
+            }
+            //unitInstances.Keys.CopyTo(cids, 0);
 			return cids;
         }
 
@@ -479,13 +487,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.tryAwakeConnectingUserPort(usingPortName);
 
             IUnit user_unit, provider_unit;
-            this.unitInstances.TryGetValue(user, out user_unit);
-            this.unitInstances.TryGetValue(provider, out provider_unit);
+            this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
+            this.unitInstances.TryGetValue(provider.getInstanceName(), out provider_unit);
 
-            if (first_connection)
-                DGAC.BackEnd.setupSlice(user_unit, provider_unit, usingPortName);
-
-            user_unit.addSliceAll(provider_unit);
+            if (user_unit != null)
+            {
+                if (first_connection) /* user is null if it is the driver */
+                    DGAC.BackEnd.setupSlice(user_unit, provider_unit, usingPortName);
+                user_unit.addSliceAll(provider_unit);
+            }
 
             return connection;
         }
@@ -723,7 +733,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             if (!connByUserPort.ContainsKey(portName))
             {
-                throw new CCAExceptionImpl(CCAExceptionType.PortNotConnected);
+                //throw new CCAExceptionImpl(CCAExceptionType.PortNotConnected);
+                return null;
             }
 
             return this.getPortProceed(portName);
@@ -980,7 +991,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
            {
              try 
              {
-               pmain.compute(); 
+               pmain.go(); 
                Console.WriteLine(my_rank + ": FINISH");
              } 
              catch (Exception e) 
@@ -1170,8 +1181,38 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
             return d2;
         }
-	
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void runApplication(string session_id_string, WorkerComponentID wcid)
+        {
+            const string DEFAULT_CREATESLICES_PORT_USES = "create_slices";
+            const string DEFAULT_GO_PORT_USES = "go";
+
+            AbstractFramework frw = (AbstractFramework)this;
+
+            // REGISTER THE DRIVER COMPONENT
+            Services services = frw.getServices(session_id_string, this.GetType().FullName, new TypeMapImpl());
+            ComponentID my_cid = services.getComponentID();
+
+            // REGISTER "BuilderService" USES PORT AND CONNECTS
+            // services.registerUsesPort("builder_service", "gov.cca.BuilderService", new TypeMapImpl());
+            // services.getPort("builder_service");
+            BuilderService builder_service = (BuilderService)this; // services.getPort("builder_service");
+
+            // REGISTER USES PORT "CreateSlices"
+            services.registerUsesPort(DEFAULT_CREATESLICES_PORT_USES, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
+            builder_service.connect(my_cid, DEFAULT_CREATESLICES_PORT_USES, wcid, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS);
+            AutomaticSlicesPort create_slice_port = (AutomaticSlicesPort)services.getPort(DEFAULT_CREATESLICES_PORT_USES);
+            create_slice_port.create_slices();
+            create_slice_port.initialize_slices();
+
+            // REGISTER USES PORT "Go"
+            services.registerUsesPort(DEFAULT_GO_PORT_USES, Constants.GO_PORT_TYPE, new TypeMapImpl());
+            builder_service.connect(my_cid, DEFAULT_GO_PORT_USES, wcid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+            GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
+            go_port.go();
+        }
     }
 
        

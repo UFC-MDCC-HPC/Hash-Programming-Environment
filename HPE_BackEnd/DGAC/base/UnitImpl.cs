@@ -10,6 +10,7 @@ using br.ufc.pargo.hpe.backend.DGAC.database;
 using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
+using br.ufc.pargo.hpe.ports;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -42,11 +43,16 @@ namespace br.ufc.pargo.hpe.basic
                services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
             }
 
-            services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, "", new TypeMapImpl());
+            Interface i = BackEnd.idao.retrieve(id_abstract, id_interface);            
+            services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, i.Class_name, new TypeMapImpl());
+            services.addProvidesPort(this, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
         }
 
-        public void createSlices()
+        #region CreateSlicesPort
+
+        public void create_slices()
         {
+            Connector.openConnection();
             // CREATE SLICES !!!
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
             foreach (Slice slice in sList)
@@ -59,7 +65,7 @@ namespace br.ufc.pargo.hpe.basic
                     if (!slice.isPublic())
                     {
                         /* This method will:
-                         *   1. instantiate the inner component (local slice)
+                         *   1. instantiate the inner component (local slice) if it is not yet be instantiated and connected
                          *   2. connect the uses port to the implements (provides) port of the inner component                     * 
                          */
                         BackEnd.createSlice(this, slice);
@@ -85,33 +91,52 @@ namespace br.ufc.pargo.hpe.basic
                         BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
                     }
                 }
-
-            }
-
+            }            
             
             foreach (IUnit unit_slice in this.Slices)
             {
-                unit_slice.createSlices();
+                unit_slice.create_slices();
             }
 
+            Connector.closeConnection();
         }
 
         private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
 
-        public void perform_initialize()
+        public void initialize_slices()
         {
 
             foreach (IUnit unit_slice in this.AllSlices)
             {
                 if (!initialized.ContainsKey(unit_slice))
                 {
-                    unit_slice.perform_initialize();
+                    unit_slice.initialize_slices();
                     initialized.Add(unit_slice, true);
                 }
             }
-            
+
             initialize();
         }
+
+        private static IDictionary<IUnit, bool> destroyed = new Dictionary<IUnit, bool>();
+
+        public void destroy_slices()
+        {
+
+            foreach (IUnit unit_slice in this.AllSlices)
+            {
+                if (!destroyed.ContainsKey(unit_slice))
+                {
+                    unit_slice.destroy_slices();
+                    destroyed.Add(unit_slice, true);
+                }
+            }
+
+            destroySlice();
+        }
+
+        #endregion CreateSlicesPort
+
 
 
         private int id_concrete;
@@ -121,14 +146,6 @@ namespace br.ufc.pargo.hpe.basic
             get { return id_concrete; }
             set { id_concrete = value; }
         }
-
-/*        private string id_inner = null;
-
-        public string Id_inner
-        {
-            get { return id_inner; }
-            set { id_inner = value; }
-        } */
 
         private string id_interface;
 
@@ -354,5 +371,6 @@ namespace br.ufc.pargo.hpe.basic
         }
 
         #endregion
+
     }
 }

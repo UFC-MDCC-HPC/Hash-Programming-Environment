@@ -121,6 +121,8 @@ public class ComponentDAO{
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
+            if (cache_c_lp.ContainsKey(library_path))
+                cache_c_lp.Remove(library_path);
             cache_c_lp.Add(library_path, c);
         }//while
         // clean up

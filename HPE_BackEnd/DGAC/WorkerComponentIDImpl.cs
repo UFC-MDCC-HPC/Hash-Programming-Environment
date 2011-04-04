@@ -47,11 +47,6 @@ namespace gov {
 				return instanceNamePrim;
 			}
 			
-			public override int GetHashCode ()
-			{
-				return instanceNamePrim.GetHashCode ();
-			}
-
         }
 				
 	}

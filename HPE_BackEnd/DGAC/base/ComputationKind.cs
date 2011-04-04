@@ -6,14 +6,14 @@
 
 using System;
 using br.ufc.pargo.hpe.basic;
+using gov.cca.ports;
 
 namespace br.ufc.pargo.hpe.kinds
 {
 
 
-    public interface IComputationKind : IUnit
+    public interface IComputationKind : IUnit, GoPort
 	{	
-		void compute();		
 	}
 	
 	public abstract class Computation : Unit {

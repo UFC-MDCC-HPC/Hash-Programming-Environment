@@ -15,6 +15,8 @@ using System.Reflection.Emit;
 using MPI;
 
 using gov.cca;
+using br.ufc.pargo.hpe.ports;
+using gov.cca.ports;
 //using br.ufc.lia.hpe.backend.ports;
 
 namespace br.ufc.pargo.hpe.backend
@@ -400,12 +402,20 @@ namespace br.ufc.pargo.hpe.backend
 
                     session_id = getSessionID(id_concrete);
 
-                    IDictionary<string, int> enums = new Dictionary<string, int>();
+                    //IDictionary<string, int> enums = new Dictionary<string, int>();
+                    //for (int i = 0; i < eIds.Length; i++)
+                    //{
+                    //    enums.Add(eIds[i], eVls[i]);
+                    //}
 
+                    IList<string> enumList = new List<string>();
                     for (int i = 0; i < eIds.Length; i++)
                     {
-                        enums.Add(eIds[i], eVls[i]);
+                        enumList.Add(eIds[i]);
+                        enumList.Add(eVls[i].ToString());
                     }
+                    string[] enums = new string[enumList.Count];
+                    enumList.CopyTo(enums, 0);
 
                     DGAC.database.Component c = cdao.retrieve(id_concrete);
 
@@ -413,17 +423,20 @@ namespace br.ufc.pargo.hpe.backend
 
                     /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();
-                    properties[Constants.ENUMS_KEY] = enums;
-                    properties[Constants.NODES_KEY] = nodes;
-                    properties[Constants.SESSION_KEY] = session_id;
+                    properties.putStringArray(Constants.ENUMS_KEY, enums);
+                    properties.putIntArray(Constants.NODES_KEY, nodes);
+                    properties.putInt(Constants.SESSION_KEY, session_id);
 
                     Console.WriteLine("before manager.createInstance");
 
-                    manager.createInstance(session_id.ToString(), c.Library_path, properties);
+                    String session_id_string = "session_" + session_id.ToString();
 
-                    /* END UNDER CONSTRUCTION */
-                    releaseManager(ch);
+                    string instantiatior_string = File.ReadAllText("h:\\temp\\teste.xml");
 
+                    ComponentID cid = manager.createInstance(session_id_string + ".application", /*c.Library_path*/ instantiatior_string, properties);
+
+                    manager.runApplication(session_id_string, (ManagerComponentID)cid);
+                    
                 }
                 catch (Exception e)
                 {
@@ -438,6 +451,7 @@ namespace br.ufc.pargo.hpe.backend
                 return str_output == null ? new String[] { } : str_output;
 
             }
+
 
             public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
             {
@@ -867,32 +881,39 @@ namespace br.ufc.pargo.hpe.backend
                 Services services = ownerUnit.Services;
                 string instanceName = user_cid.getInstanceName();
 
-                // APPLY THE RESOLUTION ALGORITHM
-                string className;
-                br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
-                br.ufc.pargo.hpe.backend.DGAC.database.Component c;
-                InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
-                updateInnerComponentType(ownerUnit, ic);
-                AbstractComponentFunctorApplication acfaRef = BackEnd.acfadao.retrieve(ic.Id_functor_app);
-                c = resolveUnit(acfaRef, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop);
-                u = takeUnit(c, id_interface);
-                if (u == null)
-                    throw new ConcreteComponentNotFoundException(acfaRef.Id_functor_app);
-                System.Type[] actualParams;
-                calculateActualParams(ownerUnit, acfaRef, id_interface, out actualParams);
-                calculateGenericClassName(u, actualParams, out className);
+                IUnit the_unit = (IUnit)services.getPortNonblocking(portName);
 
-                // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
-                HPETypeMap properties2 = new TypeMapImpl();
-                properties2[Constants.COMPONENT_KEY] = c.Library_path; // u.Id_concrete;
-                properties2[Constants.UNIT_KEY] = u.Id_unit;
-                ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
+                if (the_unit == null)
+                {
+                    // APPLY THE RESOLUTION ALGORITHM
+                    string className;
+                    br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
+                    br.ufc.pargo.hpe.backend.DGAC.database.Component c;
+                    InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
+                    updateInnerComponentType(ownerUnit, ic);
+                    AbstractComponentFunctorApplication acfaRef = BackEnd.acfadao.retrieve(ic.Id_functor_app);
+                    c = resolveUnit(acfaRef, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop);
+                    u = takeUnit(c, id_interface);
+                    if (u == null)
+                        throw new ConcreteComponentNotFoundException(acfaRef.Id_functor_app);
+                    System.Type[] actualParams;
+                    calculateActualParams(ownerUnit, acfaRef, id_interface, out actualParams);
+                    calculateGenericClassName(u, actualParams, out className);
 
-                // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
-                framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-                
-                // GET THE UNIT SLICE AND RETURNS IT
-                return (IUnit) services.getPort(portName);
+                    // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
+                    HPETypeMap properties2 = new TypeMapImpl();
+                    properties2[Constants.COMPONENT_KEY] = c.Library_path; // u.Id_concrete;
+                    properties2[Constants.UNIT_KEY] = u.Id_unit;
+                    ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
+
+                    // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
+                    framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+
+                    // GET THE UNIT SLICE AND RETURNS IT
+                    return (IUnit)services.getPort(portName);
+                }
+                else
+                    return the_unit;
             }
 
             public static void setupSlice(br.ufc.pargo.hpe.basic.IUnit unit, br.ufc.pargo.hpe.basic.IUnit unit_slice, string id_inner)

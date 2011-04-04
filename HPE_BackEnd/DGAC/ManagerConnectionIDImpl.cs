@@ -149,14 +149,11 @@ namespace gov
 
             #endregion
 
-            public WorkerConnectionID WorkerConnectionID
+            public WorkerConnectionID getWorkerConnectionID(int node)
             {
-                get
-                {
-                    WorkerComponentID wProvider = ((ManagerComponentID)Provider).WorkerComponentID;
-                    WorkerComponentID wUser = ((ManagerComponentID)User).WorkerComponentID;
+                    WorkerComponentID wProvider = ((ManagerComponentID)Provider).getWorkerComponentID(node);
+                    WorkerComponentID wUser = ((ManagerComponentID)User).getWorkerComponentID(node);
                     return new WorkerConnectionIDImpl(wProvider, providesPortName, wUser, usesPortName);
-                }
             }
 
         }
@@ -207,24 +204,18 @@ namespace gov
 
             #endregion            
 
-            public WorkerConnectionID WorkerConnectionID_user
+            public WorkerConnectionID getWorkerConnectionID_user(int node)
             {
-                get
-                {
-                    WorkerComponentID wUser = ((ManagerComponentID)User).WorkerComponentID;
-                    WorkerComponentID wBinding = ((ManagerComponentID)Binding).WorkerComponentID;
-                    return new WorkerConnectionIDImpl(wBinding, Constants.DEFAULT_PROVIDES_PORT_SERVICE, wUser, usesPortName);
-                }
+                WorkerComponentID wUser = ((ManagerComponentID)User).getWorkerComponentID(node);
+                WorkerComponentID wBinding = ((ManagerComponentID)Binding).getWorkerComponentID(node);
+                return new WorkerConnectionIDImpl(wBinding, Constants.DEFAULT_PROVIDES_PORT_SERVICE, wUser, usesPortName);
             }
 
-            public WorkerConnectionID WorkerConnectionID_provider
+            public WorkerConnectionID getWorkerConnectionID_provider(int node)
             {
-                get
-                {
-                    WorkerComponentID wBinding = ((ManagerComponentID)Binding).WorkerComponentID;
-                    WorkerComponentID wProvider = ((ManagerComponentID)Provider).WorkerComponentID;
-                    return new WorkerConnectionIDImpl(wProvider, providesPortName, wBinding, Constants.DEFAULT_USES_PORT_SERVICE);
-                }
+                WorkerComponentID wBinding = ((ManagerComponentID)Binding).getWorkerComponentID(node);
+                WorkerComponentID wProvider = ((ManagerComponentID)Provider).getWorkerComponentID(node);
+                return new WorkerConnectionIDImpl(wProvider, providesPortName, wBinding, Constants.DEFAULT_USES_PORT_SERVICE);
             }
 
         }
