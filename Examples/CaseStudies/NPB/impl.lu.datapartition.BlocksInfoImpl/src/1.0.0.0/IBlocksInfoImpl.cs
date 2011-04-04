@@ -10,9 +10,9 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
 		
 		}	
 		
-		override public void initialize(){
-		   
-		}	
+//		override public void initialize(){
+//		   
+//		}	
 		
 		public void subDomain(){
             int mm;
