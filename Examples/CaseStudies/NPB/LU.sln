@@ -241,6 +241,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.interactionpattern.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.interactionpattern.ShiftToWestImpl", "impl.lu.interactionpattern.ShiftToWestImpl\impl.lu.interactionpattern.ShiftToWestImpl\impl.lu.interactionpattern.ShiftToWestImpl.csproj", "{FEF4B9CF-791E-4B42-AB54-FD59DB7DE59B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common.orientation.XY", "common.orientation.XY\common.orientation.XY\common.orientation.XY.csproj", "{61D0CD9C-D3C1-4314-8127-6A6DA2F9963D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -391,6 +393,10 @@ Global
 		{61CA4D46-1883-41F6-9974-106BF9EB4C5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61CA4D46-1883-41F6-9974-106BF9EB4C5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61CA4D46-1883-41F6-9974-106BF9EB4C5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D0CD9C-D3C1-4314-8127-6A6DA2F9963D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D0CD9C-D3C1-4314-8127-6A6DA2F9963D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D0CD9C-D3C1-4314-8127-6A6DA2F9963D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D0CD9C-D3C1-4314-8127-6A6DA2F9963D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63D41EC8-1078-442C-BD1A-38869DB006A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63D41EC8-1078-442C-BD1A-38869DB006A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63D41EC8-1078-442C-BD1A-38869DB006A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
