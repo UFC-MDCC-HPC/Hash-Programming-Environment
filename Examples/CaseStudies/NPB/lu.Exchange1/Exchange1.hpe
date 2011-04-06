@@ -246,8 +246,23 @@
         <originRef cRef="shift_to_west" iRef="IShift"/>
         <visualDescription h="10" w="10" x="18" y="21"/>
       </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@16ef749" repeat="0">
+        <visualDescription h="150" w="250" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2ce189" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d07d4" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="70" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@50b40b" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="130" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f202be" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="190" y="50"/>
+        </action>
+      </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.Buffer;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;&#xA;namespace lu.Exchange1 { &#xA;&#xA;public interface BaseIExchange1&lt;I, C> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;INeighbors Neighbors {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIExchange1.cs" srcType="base" uri="lu.Exchange1/bin/1.0.0.0/BaseIExchange1.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.Buffer;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;&#xA;namespace lu.Exchange1 { &#xA;&#x9;public interface BaseIExchange1&lt;I, C> : IComputationKind &#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;&#x9;INeighbors Neighbors {get;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIExchange1.cs" srcType="base" uri="lu.Exchange1/bin/1.0.0.0/BaseIExchange1.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -257,7 +272,7 @@
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Exchange1 { &#xA;&#xA;public interface IExchange1&lt;I, C> : BaseIExchange1&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IExchange1.cs" srcType="user" uri="lu.Exchange1/bin/1.0.0.0/IExchange1.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Exchange1 { &#xA;&#x9;public interface IExchange1&lt;I, C> : BaseIExchange1&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;   void setParameters(double[,,,] g, int iex);&#xA;&#x9;   void setParameters(double[,,,] g, int iex, int k);&#x9;   &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IExchange1.cs" srcType="user" uri="lu.Exchange1/bin/1.0.0.0/IExchange1.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.Exchange1/bin/1.0.0.0/BaseIExchange1.dll</dependency>
@@ -345,6 +360,7 @@
       <originRef>d</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="38" w="41" x="331" y="267"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
@@ -352,6 +368,7 @@
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift_to_west" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="47" w="48" x="173" y="531"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
@@ -359,6 +376,7 @@
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift_to_north" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="47" w="48" x="50" y="330"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
@@ -366,6 +384,7 @@
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift_to_east" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="47" w="48" x="62" y="244"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
@@ -373,6 +392,7 @@
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift_to_south" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="47" w="48" x="119" y="196"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
