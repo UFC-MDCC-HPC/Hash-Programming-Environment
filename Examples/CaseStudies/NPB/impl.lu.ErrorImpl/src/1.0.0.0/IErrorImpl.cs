@@ -19,6 +19,7 @@ namespace impl.lu.ErrorImpl {
             double tmp;
             double[,,,] u000ijk = new double[1, 1, 1, 5];
             double[] dummy = new double[5];
+            errnm = new double[5];
             for(m = 0; m< 5; m++) {
                 errnm[m] = 0.0d;
                 dummy[m] = 0.0d;
@@ -43,7 +44,7 @@ namespace impl.lu.ErrorImpl {
             }
 		}
 		
-		private double[] errnm = new double[5];
+		private double[] errnm;
 		public double[] Errnm { get { return errnm; } }
 		
 		public static double pow2(double p) { return p * p; } 
