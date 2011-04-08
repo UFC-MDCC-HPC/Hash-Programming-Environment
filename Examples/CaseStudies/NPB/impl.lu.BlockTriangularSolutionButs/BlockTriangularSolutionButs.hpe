@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000091e6e42fe9e3c66b5fa78dabb99fd04eeafe346a2ad4604e57c3c8909672d1c327fb64ec42011b04ab32e73c1b0bd7b5b639affeb1658a29988657f35f2026d00391b9995e36c324891a70705d7892ac6cecf80cf431e23afdadeb5bd046b4c25d8821ce0caed019acadfa27ec523142e19b76e31ddf942045017427ee0c48ce" isAbstract="false" kind="Computation" name="BlockTriangularSolutionButs" packagePath="impl.lu">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d592b1f15a841350c99f7515ae9891bcb902c2c7aa24785efa23ded21317c32513ebe119e1385396278ecb5dea5806fd57d8d37abb4048b42e4ba2f84ccfa193a3b96fef4c547ee7d349873b0623ecfe1cb0a9556768178bba4534fa97312350163773f027e3451510c8c8efc47a4a488074ac1f2eadadeeffb8909ce91ba2a8" localRef="base" location="lu.BlockTriangularSolution/BlockTriangularSolution.hpe" name="BlockTriangularSolution" package="lu" version="1.0.0.0">
+        <visualDescription h="56" w="75" x="267" y="363">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <parameter formFieldId="discretization" varName="DIS"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
+          <visualDescription h="41" w="84" x="434" y="366">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="71" y="18"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f8aadd94be2122c6dbf97a8db4c368df4aa14e5eef40999c777e681c973106bec55b80c133f1e7301d0ff36e2ee37a1d7d095ffff4581f295b2e8fc055fc07304178d993e14731e9c3d1e72370eee41c30ae18e6d096d5d70ac13a2833e8945cd641f4a3cab17bc2397b395bc234fdfa244afa599eb514a94d884e663b3a3a5" localRef="problem_data" location="lu.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="lu.data" exposed="true">
+          <visualDescription h="54" w="132" x="72" y="362">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="10" y="24"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a5f16b771d8e6498d2d3de28ff69055bf66aa7e281fc4b0ebd4b16e81176b4e3da49a70c73092d2f9616290fa7acb2e06f92a486f19d7c2b61b569e4e990c21941ac8db14315fcead8106a62cd8e81a7ce87e967196af8b5d8b3647706c0121ae7dd36c0144f157e051a1e08938e4b954a423dff981f6493aa277f9639d533c9" localRef="neighbors" location="lu.topology.Neighbors/Neighbors.hpe" name="Neighbors" package="lu.topology" exposed="true">
+          <visualDescription h="24" w="61" x="279" y="508">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="neighbors">
+            <visualDescription h="10" w="10" x="64" y="15"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="block_triangular_solution">
+          <visualDescription h="10" w="10" x="33" y="4"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d9c75ae5f43eaaeb10762b3e7c65b336ea4790b679668da776b55e1821b1f59388b8ea2e5f25263fc4cebe208bc2cb79d9bcbbc6167a4bd4b552d03cca4ef35f734d0cbac01feb8e9a6d6296807fccc63cd003ba735a6445bb240120f051f046aa5787203f6fd7fd7b0cd0e18a980c63f35f8918343d6ea5563d8c3211f8ab1" localRef="instance_type" location="lu.problem_size.Instance_LU/Instance_LU.hpe" name="Instance_LU" package="lu.problem_size" exposed="false">
+      <visualDescription h="51" w="142" x="89" y="146">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="423" y="81">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003b2bb0cd7e40f6656cf8c45eca92bcacf5eb470105b385de6770e7d19c42c17fa79ea537e141928d7fd175d546de8dfeb6c655f991e9d54e804f1174b4ee905af2d286ed6a0efaae55380466a2745e4212caf2a630b299e3413a22b0ace4f9e91851f6ca4a565a2b2a3f69861c0a01bba642014c7fb9439828ac8152578f32bb" localRef="discretization" location="lu.triangular.Upper/Upper.hpe" name="Upper" package="lu.triangular" exposed="false">
+      <visualDescription h="38" w="102" x="365" y="184">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="discretization">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="discretization" varName="DIS"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IBlockTriangularSolutionButs" nArgs="3">
+      <slice isRef="exchange1">
+        <originRef cRef="exchange1" iRef="IExchange1"/>
+        <visualDescription h="10" w="10" x="27" y="48"/>
+      </slice>
+      <slice isRef="discretization">
+        <originRef cRef="discretization" iRef="IDiscretization"/>
+        <visualDescription h="10" w="10" x="134" y="22"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@164ac55" repeat="0">
+        <visualDescription h="150" w="70" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6e2304" repeat="0" sliceRef="exchange1">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using common.Discretization;&#xA;using lu.topology.Neighbors;&#xA;using lu.Exchange1;&#xA;using lu.triangular.Upper;&#xA;using lu.BlockTriangularSolution;&#xA;&#xA;namespace impl.lu.BlockTriangularSolutionButs { &#xA;&#xA;public abstract class BaseIBlockTriangularSolutionButs&lt;I, C, DIS>: Computation, BaseIBlockTriangularSolution&lt;I, C, DIS>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;where DIS:IUpper&#xA;{&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIS discretization = default(DIS);&#xA;&#xA;protected DIS Discretization {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.discretization == null)&#xA;&#x9;&#x9;&#x9;this.discretization = (DIS) Services.getPort(&quot;discretization&quot;);&#xA;&#x9;&#x9;return this.discretization;&#xA;&#x9;}&#xA;}&#xA;&#xA;private INeighbors neighbors = null;&#xA;&#xA;public INeighbors Neighbors {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.neighbors == null)&#xA;&#x9;&#x9;&#x9;this.neighbors = (INeighbors) Services.getPort(&quot;neighbors&quot;);&#xA;&#x9;&#x9;return this.neighbors;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExchange1&lt;I, C> exchange1 = null;&#xA;&#xA;protected IExchange1&lt;I, C> Exchange1 {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exchange1 == null)&#xA;&#x9;&#x9;&#x9;this.exchange1 = (IExchange1&lt;I, C>) Services.getPort(&quot;exchange1&quot;);&#xA;&#x9;&#x9;return this.exchange1;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBlockTriangularSolutionButs.cs" srcType="base" uri="impl.lu.BlockTriangularSolutionButs/bin/1.0.0.0/BaseIBlockTriangularSolutionButs.dll" versionId="1.0.0.0">
+          <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
+          <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
+          <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
+          <dependency>lu.Exchange1/bin/1.0.0.0/IExchange1.dll</dependency>
+          <dependency>lu.triangular.Upper/bin/1.0.0.0/IUpper.dll</dependency>
+          <dependency>lu.BlockTriangularSolution/bin/1.0.0.0/BaseIBlockTriangularSolution.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.triangular.Upper;&#xA;using lu.BlockTriangularSolution;&#xA;&#xA;namespace impl.lu.BlockTriangularSolutionButs { &#xA;&#xA;public class IBlockTriangularSolutionButs&lt;I, C, DIS> : BaseIBlockTriangularSolutionButs&lt;I, C, DIS>, IBlockTriangularSolution&lt;I, C, DIS>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;where DIS:IUpper&#xA;{&#xA;&#xA;public IBlockTriangularSolutionButs() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;exchange1.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IBlockTriangularSolutionButs.cs" srcType="user" uri="impl.lu.BlockTriangularSolutionButs/bin/1.0.0.0/IBlockTriangularSolutionButs.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>lu.triangular.Upper/bin/1.0.0.0/IUpper.dll</dependency>
+          <dependency>%WORKSPACE/impl.lu.BlockTriangularSolutionButs/bin/1.0.0.0/BaseIBlockTriangularSolutionButs.dll</dependency>
+          <dependency>lu.BlockTriangularSolution/bin/1.0.0.0/IBlockTriangularSolution.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="103" w="194" x="175" y="93">
+        <color b="64" g="64" r="0"/>
+      </visualDescription>
+      <port name="neighbors">
+        <visualDescription h="10" w="10" x="6" y="76"/>
+        <slice pRef="neighbors" sRef="exchange1"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="55" y="79"/>
+        <slice pRef="problem" sRef="exchange1"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="51" y="6"/>
+        <slice pRef="blocks" sRef="exchange1"/>
+      </port>
+      <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IUpper" order="2" parid="discretization" uname="discretization" varid="DIS"/>
+    </interface>
+    <unit iRef="IBlockTriangularSolutionButs" private="false" uRef="block_triangular_solution" visibleInterface="true">
+      <super cRef="base" uRef="block_triangular_solution"/>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="true">
+        <visualDescription h="10" w="10" x="0" y="21"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
+        <visualDescription h="10" w="10" x="113" y="18"/>
+      </slices>
+      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="true">
+        <visualDescription h="10" w="10" x="8" y="25"/>
+      </slices>
+      <slices cRef="exchange1" replica="0" uRef="exchange1" sliceName="exchange1" transitive="false">
+        <visualDescription h="10" w="10" x="68" y="38"/>
+        <port>blocks</port>
+        <port>problem</port>
+        <port>neighbors</port>
+      </slices>
+      <slices cRef="discretization" replica="0" uRef="discretization" sliceName="discretization" transitive="false">
+        <visualDescription h="10" w="10" x="134" y="22"/>
+      </slices>
+      <visualDescription h="51" w="149" x="227" y="234"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+      <originRef>base</originRef>
+      <originRef>exchange1</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>d</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
+      <visualDescription h="38" w="41" x="455" y="251"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
+      <originRef>discretization</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="discretization" uRef="discretization"/>
+      <visualDescription h="20" w="20" x="297" y="157"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
