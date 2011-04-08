@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfffd7d324d17d3a99722babbc2397f07a119214ee4574e1c380ca9014b5f77cc67a74d09c32301cf23e190e524f7a8693618ec78b242b2d2dfc21ae6606f31d5832fe65fe0721fcb355479c77392993afe1191d7fd177114ac6b7ff5864d7b07167c9f63b321d4156c01da8099defbaae07267292b9b03dbbed23bd0c5b5f8e" isAbstract="true" kind="Qualifier" name="Discretization" packagePath="common">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IDiscretization" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.Discretization { &#xA;&#xA;public interface BaseIDiscretization : IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIDiscretization.cs" srcType="base" uri="common.Discretization/bin/1.0.0.0/BaseIDiscretization.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace common.Discretization { &#xA;&#xA;public interface IDiscretization : BaseIDiscretization&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IDiscretization.cs" srcType="user" uri="common.Discretization/bin/1.0.0.0/IDiscretization.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/common.Discretization/bin/1.0.0.0/BaseIDiscretization.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="88" x="219" y="174">
+        <color b="108" g="85" r="170"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IDiscretization" private="false" uRef="discretization" visibleInterface="true">
+      <visualDescription h="40" w="97" x="214" y="258"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="discretization"/>
+      <visualDescription h="20" w="20" x="141" y="268"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
