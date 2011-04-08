@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c7a9e559057cfaba9f6af10e78a28dd44207a4f47320761e707598d1d2abb6f9406ffe9d716dc4999b57320639284d74d87fd848d5c4f4021310f4cd2ec8b550e9165ba70a1b2e8ba515de1b2215e02d431ce8dbfc6b43f5483d31c050da96ad28836bd6ef7d4534fa652870a534829b415c48981b0d13546a2cb2f2564b3a9f" isAbstract="true" kind="Qualifier" name="Lower" packagePath="lu.triangular">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfffd7d324d17d3a99722babbc2397f07a119214ee4574e1c380ca9014b5f77cc67a74d09c32301cf23e190e524f7a8693618ec78b242b2d2dfc21ae6606f31d5832fe65fe0721fcb355479c77392993afe1191d7fd177114ac6b7ff5864d7b07167c9f63b321d4156c01da8099defbaae07267292b9b03dbbed23bd0c5b5f8e" localRef="base" location="common.Discretization/Discretization.hpe" name="Discretization" package="common" version="1.0.0.0">
+        <visualDescription h="32" w="66" x="239" y="363">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="discretization">
+          <visualDescription h="10" w="10" x="26" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="ILower" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.triangular.Lower { &#xA;&#xA;public interface BaseILower : BaseIDiscretization, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILower.cs" srcType="base" uri="lu.triangular.Lower/bin/1.0.0.0/BaseILower.dll" versionId="1.0.0.0">
+          <dependency>common.Discretization/bin/1.0.0.0/BaseIDiscretization.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.triangular.Lower { &#xA;&#xA;public interface ILower : BaseILower, IDiscretization&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILower.cs" srcType="user" uri="lu.triangular.Lower/bin/1.0.0.0/ILower.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/lu.triangular.Lower/bin/1.0.0.0/BaseILower.dll</dependency>
+          <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="111" x="210" y="173">
+        <color b="108" g="85" r="170"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="ILower" private="false" uRef="discretization" visibleInterface="true">
+      <super cRef="base" uRef="discretization"/>
+      <visualDescription h="40" w="97" x="235" y="261"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="discretization"/>
+      <visualDescription h="20" w="20" x="107" y="275"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
