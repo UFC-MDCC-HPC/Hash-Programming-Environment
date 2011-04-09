@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b333df0a3db8b90613e1b1f4b020bb5dbf5c9dc200fb392737e2d25e50034dc6125d18de94ace4339db4f7ada96fc92cb855d28dd3b722def8b6003017ae153b183d0af7f5a1b9d82c2ae6d9510d6cd31b283776d97e351e0f07f6c21f0dca6e735056a33c804cc14e2998eaec2a5c4c6ef71159ee4a04474b56ad913b426598" isAbstract="false" kind="Computation" name="TriangularPartJacobianMatrix_Jacld" packagePath="impl.lu">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000000f710402aac3521c5f5726b4c7213e137686fbbb12fa3a1c7c76407da707964e3ffb6bdef53bd776f9b06f5baeaa6ef5ff5ae2c301c2a7b8800ef81f6280da184656f68269c806398c81469f201c02e9461e5f4c389cb3a26759302bae600182fca6830a29f50376cb17b64f0a01601188190179b1df4f0856ea31f5ab9d54a9" localRef="base" location="lu.TriangularPartJacobianMatrix/TriangularPartJacobianMatrix.hpe" name="TriangularPartJacobianMatrix" package="lu" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="308" y="359">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <parameter formFieldId="discretization" varName="DIS"/>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f8aadd94be2122c6dbf97a8db4c368df4aa14e5eef40999c777e681c973106bec55b80c133f1e7301d0ff36e2ee37a1d7d095ffff4581f295b2e8fc055fc07304178d993e14731e9c3d1e72370eee41c30ae18e6d096d5d70ac13a2833e8945cd641f4a3cab17bc2397b395bc234fdfa244afa599eb514a94d884e663b3a3a5" localRef="problem_data" location="lu.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="lu.data" exposed="true">
+          <visualDescription h="46" w="114" x="442" y="326">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="5" y="19"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
+          <visualDescription h="34" w="95" x="44" y="351">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="41" y="3"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="triangular_part_jacobian_matrix">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d9c75ae5f43eaaeb10762b3e7c65b336ea4790b679668da776b55e1821b1f59388b8ea2e5f25263fc4cebe208bc2cb79d9bcbbc6167a4bd4b552d03cca4ef35f734d0cbac01feb8e9a6d6296807fccc63cd003ba735a6445bb240120f051f046aa5787203f6fd7fd7b0cd0e18a980c63f35f8918343d6ea5563d8c3211f8ab1" localRef="instance_type" location="lu.problem_size.Instance_LU/Instance_LU.hpe" name="Instance_LU" package="lu.problem_size" exposed="false">
+      <visualDescription h="54" w="148" x="217" y="110">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="119" y="137">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c7a9e559057cfaba9f6af10e78a28dd44207a4f47320761e707598d1d2abb6f9406ffe9d716dc4999b57320639284d74d87fd848d5c4f4021310f4cd2ec8b550e9165ba70a1b2e8ba515de1b2215e02d431ce8dbfc6b43f5483d31c050da96ad28836bd6ef7d4534fa652870a534829b415c48981b0d13546a2cb2f2564b3a9f" localRef="discretization" location="lu.triangular.Lower/Lower.hpe" name="Lower" package="lu.triangular" exposed="false">
+      <visualDescription h="60" w="123" x="235" y="144">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="discretization">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="discretization" varName="DIS"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="ITriangularPartJacobianMatrix_Jacld" nArgs="3">
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocksInfo"/>
+        <visualDescription h="10" w="10" x="9" y="38"/>
+      </slice>
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="185" y="40"/>
+      </slice>
+      <slice isRef="discretization">
+        <originRef cRef="discretization" iRef="IDiscretization"/>
+        <visualDescription h="10" w="10" x="44" y="41"/>
+      </slice>
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="176" y="3"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@5ccc3c" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using common.Discretization;&#xA;using lu.problem_size.Instance;&#xA;using lu.triangular.Lower;&#xA;using lu.TriangularPartJacobianMatrix;&#xA;&#xA;namespace impl.lu.TriangularPartJacobianMatrix_Jacld { &#xA;&#xA;public abstract class BaseITriangularPartJacobianMatrix_Jacld&lt;I, C, DIS>: Computation, BaseITriangularPartJacobianMatrix&lt;I, C, DIS>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;where DIS:ILower&#xA;{&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIS discretization = default(DIS);&#xA;&#xA;protected DIS Discretization {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.discretization == null)&#xA;&#x9;&#x9;&#x9;this.discretization = (DIS) Services.getPort(&quot;discretization&quot;);&#xA;&#x9;&#x9;return this.discretization;&#xA;&#x9;}&#xA;}&#xA;&#xA;private I instance = default(I);&#xA;&#xA;protected I Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;return this.instance;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITriangularPartJacobianMatrix_Jacld.cs" srcType="base" uri="impl.lu.TriangularPartJacobianMatrix_Jacld/bin/1.0.0.0/BaseITriangularPartJacobianMatrix_Jacld.dll" versionId="1.0.0.0">
+          <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
+          <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
+          <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>lu.triangular.Lower/bin/1.0.0.0/ILower.dll</dependency>
+          <dependency>lu.TriangularPartJacobianMatrix/bin/1.0.0.0/BaseITriangularPartJacobianMatrix.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.triangular.Lower;&#xA;using lu.TriangularPartJacobianMatrix;&#xA;&#xA;namespace impl.lu.TriangularPartJacobianMatrix_Jacld { &#xA;&#xA;public class ITriangularPartJacobianMatrix_Jacld&lt;I, C, DIS> : BaseITriangularPartJacobianMatrix_Jacld&lt;I, C, DIS>, ITriangularPartJacobianMatrix&lt;I, C, DIS>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;where DIS:ILower&#xA;{&#xA;&#xA;public ITriangularPartJacobianMatrix_Jacld() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITriangularPartJacobianMatrix_Jacld.cs" srcType="user" uri="impl.lu.TriangularPartJacobianMatrix_Jacld/bin/1.0.0.0/ITriangularPartJacobianMatrix_Jacld.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>lu.triangular.Lower/bin/1.0.0.0/ILower.dll</dependency>
+          <dependency>%WORKSPACE/impl.lu.TriangularPartJacobianMatrix_Jacld/bin/1.0.0.0/BaseITriangularPartJacobianMatrix_Jacld.dll</dependency>
+          <dependency>lu.TriangularPartJacobianMatrix/bin/1.0.0.0/ITriangularPartJacobianMatrix.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="57" w="209" x="212" y="126">
+        <color b="255" g="0" r="0"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="8" y="5"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="184" y="6"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="ILower" order="2" parid="discretization" uname="discretization" varid="DIS"/>
+    </interface>
+    <unit iRef="ITriangularPartJacobianMatrix_Jacld" private="false" uRef="triangular_part_jacobian_matrix" visibleInterface="true">
+      <super cRef="base" uRef="triangular_part_jacobian_matrix"/>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="105" y="44"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="192" y="23"/>
+      </slices>
+      <slices cRef="discretization" replica="0" uRef="discretization" sliceName="discretization" transitive="false">
+        <visualDescription h="10" w="10" x="44" y="41"/>
+      </slices>
+      <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="176" y="3"/>
+      </slices>
+      <visualDescription h="57" w="209" x="208" y="234"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>d</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="triangular_part_jacobian_matrix"/>
+      <visualDescription h="26" w="25" x="74" y="234"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
+      <originRef>discretization</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="discretization" uRef="discretization"/>
+      <visualDescription h="20" w="20" x="183" y="108"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
