@@ -271,9 +271,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.Error", "lu.Error\lu.Err
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ErrorImpl", "impl.lu.ErrorImpl\impl.lu.ErrorImpl\impl.lu.ErrorImpl.csproj", "{549A1FFB-652D-4CCF-8CFA-4AB6451139E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.Rhs", "lu.Rhs\lu.Rhs\lu.Rhs.csproj", "{86A66144-06F7-4F89-8E3B-5E49824D20D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.ssor.Rhs", "lu.ssor.Rhs\lu.ssor.Rhs\lu.ssor.Rhs.csproj", "{86A66144-06F7-4F89-8E3B-5E49824D20D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.RhsImpl", "impl.lu.RhsImpl\impl.lu.RhsImpl\impl.lu.RhsImpl.csproj", "{1CCE9032-DE73-4E4D-AD28-8B72759D4556}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ssor.RhsImpl", "impl.lu.ssor.RhsImpl\impl.lu.ssor.RhsImpl\impl.lu.ssor.RhsImpl.csproj", "{1CCE9032-DE73-4E4D-AD28-8B72759D4556}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.ERhs", "lu.ERhs\lu.ERhs\lu.ERhs.csproj", "{C328A2BA-944C-4EC2-A968-3DA127037C48}"
 EndProject
@@ -285,17 +285,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.triangular.Upper", "lu.t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.triangular.Lower", "lu.triangular.Lower\lu.triangular.Lower\lu.triangular.Lower.csproj", "{39F5D9A6-8239-4A74-916A-786069635AC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.BlockTriangularSolution", "lu.BlockTriangularSolution\lu.BlockTriangularSolution\lu.BlockTriangularSolution.csproj", "{47C6FDA6-0EF1-4C75-86E6-C0E9C7CBB5A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.ssor.BlockTriangularSolution", "lu.ssor.BlockTriangularSolution\lu.ssor.BlockTriangularSolution\lu.ssor.BlockTriangularSolution.csproj", "{47C6FDA6-0EF1-4C75-86E6-C0E9C7CBB5A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.BlockTriangularSolutionButs", "impl.lu.BlockTriangularSolutionButs\impl.lu.BlockTriangularSolutionButs\impl.lu.BlockTriangularSolutionButs.csproj", "{8007903C-841B-4E6C-8EA0-434CAE70A9EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ssor.BlockTriangularSolutionButs", "impl.lu.ssor.BlockTriangularSolutionButs\impl.lu.ssor.BlockTriangularSolutionButs\impl.lu.ssor.BlockTriangularSolutionButs.csproj", "{8007903C-841B-4E6C-8EA0-434CAE70A9EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.BlockTriangularSolutionBlts", "impl.lu.BlockTriangularSolutionBlts\impl.lu.BlockTriangularSolutionBlts\impl.lu.BlockTriangularSolutionBlts.csproj", "{593DD912-4E7F-4C62-9001-CA0F47C233E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ssor.BlockTriangularSolutionBlts", "impl.lu.ssor.BlockTriangularSolutionBlts\impl.lu.ssor.BlockTriangularSolutionBlts\impl.lu.ssor.BlockTriangularSolutionBlts.csproj", "{593DD912-4E7F-4C62-9001-CA0F47C233E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.TriangularPartJacobianMatrix", "lu.TriangularPartJacobianMatrix\lu.TriangularPartJacobianMatrix\lu.TriangularPartJacobianMatrix.csproj", "{F0DC38B7-CCEA-4CD0-8171-40901E720C60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.ssor.TriangularPartJacobianMatrix", "lu.ssor.TriangularPartJacobianMatrix\lu.ssor.TriangularPartJacobianMatrix\lu.ssor.TriangularPartJacobianMatrix.csproj", "{F0DC38B7-CCEA-4CD0-8171-40901E720C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.TriangularPartJacobianMatrix_Jacu", "impl.lu.TriangularPartJacobianMatrix_Jacu\impl.lu.TriangularPartJacobianMatrix_Jacu\impl.lu.TriangularPartJacobianMatrix_Jacu.csproj", "{BFC9857A-1B23-421B-8ACF-6D0BA971148A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ssor.TriangularPartJacobianMatrix_Jacu", "impl.lu.ssor.TriangularPartJacobianMatrix_Jacu\impl.lu.ssor.TriangularPartJacobianMatrix_Jacu\impl.lu.ssor.TriangularPartJacobianMatrix_Jacu.csproj", "{BFC9857A-1B23-421B-8ACF-6D0BA971148A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.TriangularPartJacobianMatrix_Jacld", "impl.lu.TriangularPartJacobianMatrix_Jacld\impl.lu.TriangularPartJacobianMatrix_Jacld\impl.lu.TriangularPartJacobianMatrix_Jacld.csproj", "{47BD5171-04D4-4B73-A194-297DD06BB9D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ssor.TriangularPartJacobianMatrix_Jacld", "impl.lu.ssor.TriangularPartJacobianMatrix_Jacld\impl.lu.ssor.TriangularPartJacobianMatrix_Jacld\impl.lu.ssor.TriangularPartJacobianMatrix_Jacld.csproj", "{47BD5171-04D4-4B73-A194-297DD06BB9D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.ssor.L2Norm", "lu.ssor.L2Norm\lu.ssor.L2Norm\lu.ssor.L2Norm.csproj", "{7A5E3F4D-B54B-4043-BB8F-FDE04F9F4A87}"
 EndProject
