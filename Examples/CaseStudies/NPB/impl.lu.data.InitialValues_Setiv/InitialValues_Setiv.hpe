@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000083fe417001bb352d058e52cf7856b75514c5f2eacf10f19a4d8f6f1e10e27ceedb8c79d2ff72fd03322acaa214b11a459edade6949af6925ffe425705efc0f8ba1ab0f45f2a3e6cd585de594d57771b923541721f04d925bf6de25cc86d4ecbc0ba5c48b02be698b6094e32feb2997d2ec4cfc4d9e4a3840d4db36718d4e4a9c" isAbstract="false" kind="Computation" name="InitialValues_Setiv" packagePath="impl.lu.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000089f3412831007f146fee0270d9bb8c6e9b2533016dfa737ff5e681e89e5e9b819430e28fdfc749b428345f95a9083582f05c92a88cf02e4f3f893ce3bbc0d720915d0a1d65eabd3d022eb341da2e34092e81df35b1bc3e934a8348757e2c65b77dcb4c9b15799723a33fe180662b62e744d8e87cbb8b01072b6b8e6c5647cdaf" localRef="base" location="lu.data.InitialValues/InitialValues.hpe" name="InitialValues" package="lu.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="239" y="443">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f8aadd94be2122c6dbf97a8db4c368df4aa14e5eef40999c777e681c973106bec55b80c133f1e7301d0ff36e2ee37a1d7d095ffff4581f295b2e8fc055fc07304178d993e14731e9c3d1e72370eee41c30ae18e6d096d5d70ac13a2833e8945cd641f4a3cab17bc2397b395bc234fdfa244afa599eb514a94d884e663b3a3a5" localRef="problem_data" location="lu.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="lu.data" exposed="true">
+          <visualDescription h="42" w="115" x="338" y="456">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="5" y="17"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
+          <visualDescription h="52" w="102" x="66" y="448">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="84" y="21"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="initial_values">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d9c75ae5f43eaaeb10762b3e7c65b336ea4790b679668da776b55e1821b1f59388b8ea2e5f25263fc4cebe208bc2cb79d9bcbbc6167a4bd4b552d03cca4ef35f734d0cbac01feb8e9a6d6296807fccc63cd003ba735a6445bb240120f051f046aa5787203f6fd7fd7b0cd0e18a980c63f35f8918343d6ea5563d8c3211f8ab1" localRef="instance_type" location="lu.problem_size.Instance_LU/Instance_LU.hpe" name="Instance_LU" package="lu.problem_size" exposed="false">
+      <visualDescription h="34" w="116" x="178" y="180">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="122" y="191">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IInitialValues_Setiv" nArgs="2">
+      <slice isRef="exact">
+        <originRef cRef="exact" iRef="IExact"/>
+        <visualDescription h="10" w="10" x="89" y="39"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1bb5b4a" repeat="0">
+        <visualDescription h="150" w="70" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1666eba" repeat="0" sliceRef="exact">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.Exact;&#xA;using lu.data.InitialValues;&#xA;&#xA;namespace impl.lu.data.InitialValues_Setiv { &#xA;&#xA;public abstract class BaseIInitialValues_Setiv&lt;I, C>: Computation, BaseIInitialValues&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExact&lt;I, C> exact = null;&#xA;&#xA;protected IExact&lt;I, C> Exact {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exact == null)&#xA;&#x9;&#x9;&#x9;this.exact = (IExact&lt;I, C>) Services.getPort(&quot;exact&quot;);&#xA;&#x9;&#x9;return this.exact;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInitialValues_Setiv.cs" srcType="base" uri="impl.lu.data.InitialValues_Setiv/bin/1.0.0.0/BaseIInitialValues_Setiv.dll" versionId="1.0.0.0">
+          <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
+          <dependency>lu.Exact/bin/1.0.0.0/IExact.dll</dependency>
+          <dependency>lu.data.InitialValues/bin/1.0.0.0/BaseIInitialValues.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.data.InitialValues;&#xA;&#xA;namespace impl.lu.data.InitialValues_Setiv { &#xA;&#xA;public class IInitialValues_Setiv&lt;I, C> : BaseIInitialValues_Setiv&lt;I, C>, IInitialValues&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IInitialValues_Setiv() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;exact.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInitialValues_Setiv.cs" srcType="user" uri="impl.lu.data.InitialValues_Setiv/bin/1.0.0.0/IInitialValues_Setiv.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.lu.data.InitialValues_Setiv/bin/1.0.0.0/BaseIInitialValues_Setiv.dll</dependency>
+          <dependency>lu.data.InitialValues/bin/1.0.0.0/IInitialValues.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="53" w="166" x="150" y="163">
+        <color b="128" g="255" r="255"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="exact"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="exact"/>
+      </port>
+      <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IInitialValues_Setiv" private="false" uRef="initial_values" visibleInterface="true">
+      <super cRef="base" uRef="initial_values"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
+        <visualDescription h="10" w="10" x="62" y="12"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="true">
+        <visualDescription h="10" w="10" x="9" y="7"/>
+      </slices>
+      <slices cRef="exact" replica="0" uRef="exact" sliceName="exact" transitive="false">
+        <visualDescription h="10" w="10" x="89" y="39"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <visualDescription h="53" w="166" x="169" y="297"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+      <originRef>base</originRef>
+      <originRef>exact</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>d</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="initial_values"/>
+      <visualDescription h="24" w="27" x="77" y="350"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
