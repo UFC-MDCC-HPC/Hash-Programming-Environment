@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E49C44B9-813D-4BB1-B927-8946D696EF7A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.lu.BoundaryValues_Setbv</RootNamespace>
+    <AssemblyName>IBoundaryValues_Setbv</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\BoundaryValues_Setbv.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIBoundaryValues_Setbv.cs">
+      <Link>BaseIBoundaryValues_Setbv.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IBoundaryValues_Setbv.cs">
+      <Link>IBoundaryValues_Setbv.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU.csproj">
+      <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
+      <Name>lu.problem_size.Instance_LU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
+      <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
+      <Name>lu.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exact\lu.Exact\lu.Exact.csproj">
+      <Project>{5EE2A9B3-6403-4E4A-8AE8-69EF905AE73C}</Project>
+      <Name>lu.Exact</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.data.ProblemDefinition\lu.data.ProblemDefinition\lu.data.ProblemDefinition.csproj">
+      <Project>{E07F89D2-70CB-46FD-BB84-E0DEC7CBDFF0}</Project>
+      <Name>lu.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo.csproj">
+      <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
+      <Name>lu.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.BoundaryValues\lu.BoundaryValues\lu.BoundaryValues.csproj">
+      <Project>{51A48D96-6247-4390-A933-D37B96206142}</Project>
+      <Name>lu.BoundaryValues</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
