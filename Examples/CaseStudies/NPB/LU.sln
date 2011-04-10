@@ -301,6 +301,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.ssor.L2Norm", "lu.ssor.L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.ssor.L2NormImpl", "impl.lu.ssor.L2NormImpl\impl.lu.ssor.L2NormImpl\impl.lu.ssor.L2NormImpl.csproj", "{A5EDC0EF-9984-4AAD-9846-BF143D66DF81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lu.BoundaryValues", "lu.BoundaryValues\lu.BoundaryValues\lu.BoundaryValues.csproj", "{51A48D96-6247-4390-A933-D37B96206142}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.lu.BoundaryValues_Setbv", "impl.lu.BoundaryValues_Setbv\impl.lu.BoundaryValues_Setbv\impl.lu.BoundaryValues_Setbv.csproj", "{E49C44B9-813D-4BB1-B927-8946D696EF7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -467,6 +471,10 @@ Global
 		{50F60379-5921-44B9-AFB0-619C5C8062CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50F60379-5921-44B9-AFB0-619C5C8062CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50F60379-5921-44B9-AFB0-619C5C8062CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51A48D96-6247-4390-A933-D37B96206142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51A48D96-6247-4390-A933-D37B96206142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51A48D96-6247-4390-A933-D37B96206142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51A48D96-6247-4390-A933-D37B96206142}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -835,6 +843,10 @@ Global
 		{E34FEF38-886C-47F9-A17C-EB34ED993EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E34FEF38-886C-47F9-A17C-EB34ED993EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E34FEF38-886C-47F9-A17C-EB34ED993EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49C44B9-813D-4BB1-B927-8946D696EF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49C44B9-813D-4BB1-B927-8946D696EF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49C44B9-813D-4BB1-B927-8946D696EF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49C44B9-813D-4BB1-B927-8946D696EF7A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4AF323F-7FB6-4584-9512-20ADEEC72785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4AF323F-7FB6-4584-9512-20ADEEC72785}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4AF323F-7FB6-4584-9512-20ADEEC72785}.Release|Any CPU.ActiveCfg = Release|Any CPU
