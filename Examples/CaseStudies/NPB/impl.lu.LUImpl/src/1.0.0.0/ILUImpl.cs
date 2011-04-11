@@ -4,64 +4,82 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.problem_size.Class;
 using lu.LU;
+using NPB3_0_JAV.BMInOut;
 
 namespace impl.lu.LUImpl { 
 	public class ILUImpl<C> : BaseILUImpl<C>, ILU<C>
 	where C:IClass{
-	
+	   
+        public int bid = -1;
+		public static int num = 1;
+    	public static String BMName = "LU";
+		
+		public BMResults results;
+
 		public ILUImpl() { 
 		
 		} 
 		
 		private void runBenchmark(){
+		    int node = worldcomm.Rank;
+		    num = worldcomm.Size;
             if(node == 0) Console.WriteLine(" Size: " + isiz01 + " x " + isiz02 + " x " + isiz03);
             if(node == 0) Console.WriteLine(" Iterations: " + itmax);
             if(node == 0) Console.WriteLine(" Number of processes: " + num);
-            proc_grid();
-            neighbors();
-            subdomain();
-            setConstants();
+//            proc_grid();
+//            neighbors();
+//            subdomain();
+//            setConstants();
+            Process.configBlock();
             //---------------------------------------------------------------------
             //   set the boundary values for dependent variables
             //---------------------------------------------------------------------
-            Setbv();
+            Setbv.compute();
             //---------------------------------------------------------------------
             //   set the initial values for dependent variables
             //---------------------------------------------------------------------
-            Setiv();
+            Setiv.compute();
             //---------------------------------------------------------------------
             //   compute the forcing term based on prescribed exact solution
             //---------------------------------------------------------------------
-            Erhs();
+            Erhs.compute();
             //---------------------------------------------------------------------
             //   perform one SSOR iteration to touch all data and program pages 
             //---------------------------------------------------------------------
-            Ssor(1);
+            Ssor.setParameters(1);
+            Ssor.compute();
             //---------------------------------------------------------------------
             //   reset the boundary and initial values
             //---------------------------------------------------------------------
-            Setbv();
-            Setiv();
+            Setbv.compute();
+            Setiv.compute();
             //---------------------------------------------------------------------
             //   perform the SSOR iterations
-            //---------------------------------------------------------------------
-            double[] rsdnm  = Ssor(itmax);
+            //---------------------------------------------------------------------            
+            Ssor.setParameters(itmax);
+            Ssor.compute();
+            double[] rsdnm  = Ssor.Rsdnm;
             //---------------------------------------------------------------------
             //   compute the solution error
-            //---------------------------------------------------------------------
-            double[] errnm = Error();
+            //---------------------------------------------------------------------            
+            Error.compute();
+            double[] errnm = Error.Errnm;
             //---------------------------------------------------------------------
             //   compute the surface integral
             //---------------------------------------------------------------------
-            double frc = Pintgr();
+            Pintgr.compute();
+            double frc = Pintgr.Frc;
             //---------------------------------------------------------------------
             //   verification test
             //---------------------------------------------------------------------
+            double maxtime = Ssor.Maxtime;
             if(node==0) {
                 double mflops = ((double)(itmax))*(1984.77*((double)(nx0))*((double)(ny0))*((double)(nz0))-10923.3*pow2((((double)(nx0+ny0+nz0))/3.0))+27770.9*((double)(nx0+ny0+nz0))/3.0-144010.0) / (maxtime*1000000.0);
-                int verified = Verify(rsdnm, errnm, frc);
+                Verify.setParameters(rsdnm, errnm, frc);
+                Verify.compute();
+                int verified = Verify.Verified;
                 BMResults results = new BMResults(BMName,
-                                        CLASS,
+                                        problem_class.ToString()[0],
                                         nx0,
                                         ny0,
                                         nz0,
@@ -75,11 +93,13 @@ namespace impl.lu.LUImpl {
                                         -1);
                 results.print();            
             }
-            mpi.Dispose();
+            //mpi.Dispose();
 		}
 		
 		public override void compute() { 
 		   runBenchmark();
 		}
+		
+		public static double pow2(double p) { return p * p; } 
 	}
 }

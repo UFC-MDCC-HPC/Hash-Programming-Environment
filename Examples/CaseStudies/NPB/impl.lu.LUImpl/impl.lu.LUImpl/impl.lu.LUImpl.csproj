@@ -47,5 +47,79 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
+    <Reference Include="MPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=29b4a045737654fe">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\MPI.NET\Lib\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="BMInOut, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e3d31ba250e8460c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\BMInOut\BMInOut.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.ssor.SSOR\lu.ssor.SSOR\lu.ssor.SSOR.csproj">
+      <Project>{4311EE15-4421-4AF2-94EE-7E4AE817132F}</Project>
+      <Name>lu.ssor.SSOR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Pintgr\lu.Pintgr\lu.Pintgr.csproj">
+      <Project>{40539179-21BB-439E-8E5A-F35491A1F73E}</Project>
+      <Name>lu.Pintgr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.ERhs\lu.ERhs\lu.ERhs.csproj">
+      <Project>{C328A2BA-944C-4EC2-A968-3DA127037C48}</Project>
+      <Name>lu.ERhs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo.csproj">
+      <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
+      <Name>lu.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.data.ProblemDefinition\lu.data.ProblemDefinition\lu.data.ProblemDefinition.csproj">
+      <Project>{E07F89D2-70CB-46FD-BB84-E0DEC7CBDFF0}</Project>
+      <Name>lu.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.data.InitialValues\lu.data.InitialValues\lu.data.InitialValues.csproj">
+      <Project>{97F8C611-9CAC-47F3-9720-C061B02DDA97}</Project>
+      <Name>lu.data.InitialValues</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.datapartition.Blocks3D\lu.datapartition.Blocks3D\lu.datapartition.Blocks3D.csproj">
+      <Project>{6FA72318-ED59-447C-B9E6-78F2AB5F04C0}</Project>
+      <Name>lu.datapartition.Blocks3D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Error\lu.Error\lu.Error.csproj">
+      <Project>{21174B0A-8C85-4098-A657-5C2A7C29D817}</Project>
+      <Name>lu.Error</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Verify\lu.Verify\lu.Verify.csproj">
+      <Project>{2BF9B9FC-B9BC-4423-9718-1315B775B6E5}</Project>
+      <Name>lu.Verify</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.data.BoundaryValues\lu.data.BoundaryValues\lu.data.BoundaryValues.csproj">
+      <Project>{30A00A68-05CC-4872-821A-F857C3FE159C}</Project>
+      <Name>lu.data.BoundaryValues</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.LU\lu.LU\lu.LU.csproj">
+      <Project>{42F2B05E-5C5C-4DAF-A060-55C67011F385}</Project>
+      <Name>lu.LU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
+      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
+      <Name>lu.topology.Neighbors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU.csproj">
+      <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
+      <Name>lu.problem_size.Instance_LU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
+      <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
+      <Name>lu.problem_size.Instance</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
