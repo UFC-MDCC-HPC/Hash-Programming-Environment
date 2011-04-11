@@ -1,0 +1,6 @@
+#Sat Feb 05 15:45:15 GFT 2011
+eclipse.preferences.version=1
+org.emonic.base.build.file=build.xml
+org.emonic.base.build.mechanism=nant
+org.emonic.base.project.copyright=(c) 2011 by Francisco Heron de Carvalho Junior & Cenez Araujo Resende\r\nAll rights reserved.
+org.emonic.base.project.defaultNamespace=

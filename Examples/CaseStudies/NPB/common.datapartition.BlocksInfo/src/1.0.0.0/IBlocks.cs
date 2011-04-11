@@ -19,7 +19,9 @@ public interface IBlocks : BaseIBlocks
   int ncells {get;set;} // sqrt(nodes)
   int ndirs {get;set;}  // Assumed to be 3 ?
 		
-  void initialize();
+  int[] grid_points { get; }
+		
+ // void initialize();
 		
 } // end main interface 
 

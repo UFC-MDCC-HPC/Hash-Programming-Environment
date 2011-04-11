@@ -99,6 +99,10 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="32" y="0"/>
+        <slice pRef="y" sRef="cell"/>
+      </port>
       <port name="z">
         <visualDescription h="10" w="10" x="88" y="37"/>
         <slice pRef="z" sRef="cell"/>
@@ -106,10 +110,6 @@
       <port name="x">
         <visualDescription h="10" w="10" x="79" y="2"/>
         <slice pRef="x" sRef="cell"/>
-      </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="32" y="0"/>
-        <slice pRef="y" sRef="cell"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -136,11 +136,11 @@
       <slices cRef="instance" replica="0" uRef="instance" sliceName="instance" transitive="false">
         <visualDescription h="10" w="10" x="65" y="29"/>
       </slices>
-      <visualDescription h="47" w="94" x="126" y="174"/>
+      <visualDescription h="47" w="94" x="106" y="137"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>topology</originRef>
-      <originRef>x</originRef>
+      <originRef>z</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="topology" uRef="cell"/>
       <links xsi:type="component:EnumerableUnitType" ref="process"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>

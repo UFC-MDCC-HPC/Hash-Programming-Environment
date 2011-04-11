@@ -69,11 +69,11 @@
         <originRef cRef="direction" iRef="IDirection"/>
         <visualDescription h="10" w="10" x="9" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1592933" repeat="0">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4d6c1ce6" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.interactionpattern.Shift { &#xA;&#xA;public interface BaseIShift&lt;DIR> : ISynchronizerKind &#xA;&#x9;&#x9;where DIR:IDirection&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIShift.cs" srcType="base" uri="common.interactionpattern.Shift/bin/1.0.0.0/BaseIShift.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.direction.Direction;&#xA;using common.topology.Ring;&#xA;&#xA;namespace common.interactionpattern.Shift { &#xA;&#xA;public interface BaseIShift&lt;DIR> : ISynchronizerKind &#xA;&#x9;&#x9;where DIR:IDirection&#xA;{&#xA;&#xA;   ICell Cell {get;}&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIShift.cs" srcType="base" uri="common.interactionpattern.Shift/bin/1.0.0.0/BaseIShift.dll" versionId="1.0.0.0">
           <externalDependency>MPI</externalDependency>
         </file>
         <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using MPI;&#xA;using common.direction.Direction;&#xA;&#xA;namespace common.interactionpattern.Shift { &#xA;&#xA;public interface IShift&lt;DIR> : BaseIShift&lt;DIR>&#xA;&#x9;&#x9;where DIR:IDirection&#xA;{&#xA;&#xA;    void initiate_send();&#xA;    void initiate_recv();&#xA;&#x9;Request HandleLeft { get; }&#xA;&#x9;Request HandleRight { get;}&#xA;&#x9;&#x9;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IShift.cs" srcType="user" uri="common.interactionpattern.Shift/bin/1.0.0.0/IShift.dll" versionId="1.0.0.0">
@@ -117,9 +117,9 @@
         <visualDescription h="10" w="10" x="11" y="22"/>
       </slices>
       <slices cRef="direction" replica="0" uRef="direction" sliceName="direction" transitive="false">
-        <visualDescription h="10" w="10" x="9" y="6"/>
+        <visualDescription h="10" w="10" x="128" y="72"/>
       </slices>
-      <visualDescription h="40" w="80" x="152" y="199"/>
+      <visualDescription h="82" w="169" x="100" y="165"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
       <originRef>topology</originRef>

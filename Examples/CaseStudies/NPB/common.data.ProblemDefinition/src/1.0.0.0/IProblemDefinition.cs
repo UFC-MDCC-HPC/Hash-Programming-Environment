@@ -38,8 +38,11 @@ public class Constants
 		                     {0.4d,0.3d,0.5,0.1d,0.3d},
 		                     {0.3d,0.5d,0.4,0.3d,0.2d}};
 
- public static void set_constants(int ndid, int[] grid_points)
-  {					
+ public static void set_constants(int ndid, int[] grid_points, double dt_default)
+  {				
+			
+	dt = dt_default;
+			
 	ce[0,0] = 2.0d * (1.0d + ((double)ndid) * 0.01d);
 	//    ce[0]=2.0;
 

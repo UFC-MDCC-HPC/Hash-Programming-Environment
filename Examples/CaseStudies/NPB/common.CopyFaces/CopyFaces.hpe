@@ -193,30 +193,30 @@
         <originRef cRef="interact" iRef="IInteract"/>
         <visualDescription h="10" w="10" x="62" y="35"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@147bc1b" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@5196a0c7" repeat="0">
         <visualDescription h="450" w="370" x="195" y="225"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8ecbbd" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@781592a9" repeat="0">
           <visualDescription h="350" w="290" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@e21bf2" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@504fd2d6" repeat="0">
             <visualDescription h="250" w="210" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@98d032" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@289b08cb" repeat="0">
               <visualDescription h="150" w="130" x="70" y="50"/>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@8cb00f" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5a5e5c40" repeat="0">
                 <visualDescription h="50" w="50" x="70" y="50"/>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7ab560" repeat="0">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@68fa9c19" repeat="0">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@19d0a5" repeat="0">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d1e6327" repeat="0">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d10f0c" repeat="0">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@35ffa460" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1330f83" repeat="0" sliceRef="interact">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2280b652" repeat="0" sliceRef="interact">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -232,7 +232,7 @@
           <dependency>%WORKSPACE/common.CopyFaces/bin/1.0.0.0/BaseICopyFaces.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="122" w="198" x="67" y="61">
+      <visualDescription h="122" w="198" x="45" y="70">
         <color b="128" g="0" r="128"/>
       </visualDescription>
       <port name="blocks">
@@ -243,33 +243,13 @@
         <visualDescription h="10" w="10" x="12" y="51"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
-      <port name="y">
+      <port name="input_buffer_z_top">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="interact"/>
+        <slice pRef="input_buffer_z_top" sRef="interact"/>
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="21" y="77"/>
         <slice pRef="mpi" sRef="interact"/>
-      </port>
-      <port name="input_buffer_y_north">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_y_north" sRef="interact"/>
-      </port>
-      <port name="output_buffer_y_north">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer_y_north" sRef="interact"/>
-      </port>
-      <port name="input_buffer_x_west">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_x_west" sRef="interact"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="x" sRef="interact"/>
-      </port>
-      <port name="output_buffer_x_west">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer_x_west" sRef="interact"/>
       </port>
       <port name="output_buffer_z_top">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -279,9 +259,17 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="interact"/>
       </port>
-      <port name="input_buffer_z_top">
+      <port name="input_buffer_y_north">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_z_top" sRef="interact"/>
+        <slice pRef="input_buffer_y_north" sRef="interact"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="interact"/>
+      </port>
+      <port name="output_buffer_y_north">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer_y_north" sRef="interact"/>
       </port>
       <port name="output_buffer_z_bottom">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -291,21 +279,33 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="input_buffer_z_bottom" sRef="interact"/>
       </port>
-      <port name="input_buffer_x_east">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="input_buffer_x_east" sRef="interact"/>
-      </port>
       <port name="output_buffer_x_east">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="output_buffer_x_east" sRef="interact"/>
       </port>
-      <port name="output_buffer_y_south">
+      <port name="input_buffer_x_east">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer_y_south" sRef="interact"/>
+        <slice pRef="input_buffer_x_east" sRef="interact"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="interact"/>
+      </port>
+      <port name="output_buffer_x_west">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer_x_west" sRef="interact"/>
+      </port>
+      <port name="input_buffer_x_west">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="input_buffer_x_west" sRef="interact"/>
       </port>
       <port name="input_buffer_y_south">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="input_buffer_y_south" sRef="interact"/>
+      </port>
+      <port name="output_buffer_y_south">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer_y_south" sRef="interact"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
