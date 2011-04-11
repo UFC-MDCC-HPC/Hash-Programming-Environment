@@ -11,7 +11,7 @@
     <AssemblyName>IClass</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\common.problem_size.Instance\Instance.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Class.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
