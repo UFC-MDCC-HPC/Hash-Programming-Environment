@@ -14,6 +14,7 @@ using common.error.ErrorNorm;
 using common.Verify;
 using common.problem_size.Class;
 using common.CopyFaces;
+using common.ComputeRHS;
 
 namespace impl.common.VerifyImpl { 
 
@@ -92,6 +93,16 @@ protected ICopyFaces<I,C> Copy_faces {
 	}
 }
 
+private IComputeRHS<I,C> compute_rhs = null;
+
+protected IComputeRHS<I,C> Compute_rhs {
+	get {
+		if (this.compute_rhs == null)
+			this.compute_rhs = (IComputeRHS<I,C>) Services.getPort("compute_rhs");
+		return this.compute_rhs;
+	}
+}
+
 private IRHSNorm<I,C> rhs_norm = null;
 
 protected IRHSNorm<I,C> Rhs_norm {
@@ -123,7 +134,7 @@ protected IErrorNorm<I,C> Error_norm {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

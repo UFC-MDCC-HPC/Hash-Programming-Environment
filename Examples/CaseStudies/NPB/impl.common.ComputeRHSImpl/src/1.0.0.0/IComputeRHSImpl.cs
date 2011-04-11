@@ -18,7 +18,7 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	{
 	}
 		
-	public override void compute() 
+	public override int go() 
 	{
 							
 	    int c, i, j, k, m, ksize, jsize, isize;
@@ -62,6 +62,13 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	                    aux = Math.Sqrt(aux);
 	                    speed[c, k, j, i, 0] = aux;
 	                    ainv[c, k, j, i, 0] = 1.0d / aux;
+
+              //              Console.WriteLine("us" + "[" + c + "," + k + "," + j + "," + i + "] = " + us[c, k, j, i,0]);
+              //              Console.WriteLine("vs" + "[" + c + "," + k + "," + j + "," + i + "] = " + vs[c, k, j, i,0]);
+              //              Console.WriteLine("ws" + "[" + c + "," + k + "," + j + "," + i + "] = " + ws[c, k, j, i,0]);
+              //              Console.WriteLine("square" + "[" + c + "," + k + "," + j + "," + i + "] = " + square[c, k, j, i,0]);
+              //              Console.WriteLine("qs" + "[" + c + "," + k + "," + j + "," + i + "] = " + qs[c, k, j, i,0]);
+              //              Console.WriteLine("speed" + "[" + c + "," + k + "," + j + "," + i + "] = " + speed[c, k, j, i,0]);
 	                }
 	            }
 	        }
@@ -81,6 +88,7 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	                    for (m = 0; m < 5; m++)
 	                    {
 	                        rhs[c, k, j, i, m] = forcing[c, k, j, i, m];
+			//				 Console.WriteLine("forcing" + "[" + c + "," + k + "," + j + "," + i + ",m] = " + rhs[c, k, j, i, m]);
 	                    }
 	                }
 	            }
@@ -105,6 +113,15 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	                               u[c, k, j, i - 1, 0]) -
 	                              tx2 * (u[c, k, j, i + 1, 1] - u[c, k, j, i - 1, 1]);
 	
+                  //          Console.WriteLine("rhs" + "[" + c + "," + k + "," + j + "," + i + ",0] = " + rhs[c, k, j, i, 0]);
+                  //          Console.WriteLine("dx1tx1 : " + dx1tx1);
+                  //          Console.WriteLine("tx2 : " + tx2);
+                  //          Console.WriteLine("u[c, k, j, i + 1, 0] : " + u[c, k, j, i + 1, 0]);
+                  //          Console.WriteLine("u[c, k, j, i    , 0] : " + u[c, k, j, i    , 0]);
+                  //          Console.WriteLine("u[c, k, j, i - 1, 0] : " + u[c, k, j, i - 1, 0]);
+                  //          Console.WriteLine("u[c, k, j, i + 1, 1] : " + u[c, k, j, i + 1, 1]);
+                  //          Console.WriteLine("u[c, k, j, i - 1, 1] : " + u[c, k, j, i - 1, 1]);
+														 
 	                    rhs[c, k, j, i, 1] = rhs[c, k, j, i, 1] + dx2tx1 *
 	                              (u[c, k, j, i + 1, 1] - 2.0d * u[c, k, j, i, 1] +
 	                               u[c, k, j, i - 1, 1]) +
@@ -404,6 +421,7 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	                             (u[c, k + 1, j, i, 0] - 2.0d * u[c, k, j, i, 0] +
 	                              u[c, k - 1, j, i, 0]) -
 	                             tz2 * (u[c, k + 1, j, i, 3] - u[c, k - 1, j, i, 3]);
+														
 	                    rhs[c, k, j, i, 1] = rhs[c, k, j, i, 1] + dz2tz1 *
 	                             (u[c, k + 1, j, i, 1] - 2.0d * u[c, k, j, i, 1] +
 	                              u[c, k - 1, j, i, 1]) +
@@ -541,11 +559,14 @@ public class IComputeRHSImpl<I,C> : BaseIComputeRHSImpl<I,C>, IComputeRHS<I,C>
 	                    for (m = 0; m < 5; m++)
 	                    {
 	                        rhs[c, k, j, i, m] = rhs[c, k, j, i, m] * dt;
+            //                Console.WriteLine("rhs" + "[" + c + "," + k + "," + j + "," + i + "] = " + rhs[c, k, j, i, m]);
 	                    }
 	                }
 	            }
 	        }
 	    }
+			
+			return 0;
 	
 	} // end activate method 
 

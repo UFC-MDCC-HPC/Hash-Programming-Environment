@@ -33,7 +33,7 @@ namespace impl.sp.solve.ZForwardImpl {
             jsize = cell_size[c, 1] + 2;
 		}
 
-		public override void compute() 
+		public override int go() 
 		{ 
 			int i, j, k, n, k1, k2, m;
 			double fac1, fac2;
@@ -189,6 +189,8 @@ namespace impl.sp.solve.ZForwardImpl {
             }
 
             #endregion
+			
+			return 0;
 		} // end activate method 
 		
 	}

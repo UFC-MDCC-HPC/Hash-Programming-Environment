@@ -18,7 +18,7 @@ namespace impl.sp.data.ExactRHSImpl {
 		{ 
 		} 
 								
-		public override void compute() { 
+		public override int go() { 
 		
 		    double[] dtemp = new double[5];
 		    double xi, eta, zeta, dtpp;
@@ -64,7 +64,7 @@ namespace impl.sp.data.ExactRHSImpl {
 		                    xi = (i - 2 + cell_low[c, 0]) * dnxm1;
 		
 		                    Exact_solution.setParameters(xi, eta, zeta, dtemp, 0);
-							Exact_solution.compute();
+							Exact_solution.go();
 		                    for (m = 0; m < 5; m++)
 		                    {
 		                        ue[i, m] = dtemp[m]; // OK ue[i,m]
@@ -182,7 +182,7 @@ namespace impl.sp.data.ExactRHSImpl {
 		                    eta = (j - 2 + cell_low[c, 1]) * dnym1;
 		
 		                    Exact_solution.setParameters(xi, eta, zeta, dtemp, 0);
-							Exact_solution.compute();
+							Exact_solution.go();
 		                    for (m = 0; m < 5; m++)
 		                    {
 		                        ue[j, m] = dtemp[m];
@@ -297,7 +297,7 @@ namespace impl.sp.data.ExactRHSImpl {
 		                    zeta = (k - 2 + cell_low[c, 2]) * dnzm1;
 		
 							Exact_solution.setParameters(xi, eta, zeta, dtemp, 0);
-							Exact_solution.compute();
+							Exact_solution.go();
 							
 		                    for (m = 0; m <= 4; m++)
 		                    {
@@ -413,6 +413,8 @@ namespace impl.sp.data.ExactRHSImpl {
 		            }
 		        }
 		    } // cell loop
+			
+			return 0;
 		} // end activate method 
 		
 	}

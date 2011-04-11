@@ -33,7 +33,7 @@ namespace impl.sp.solve.YForwardImpl {
             ksize = cell_size[c, 2] + 2;
 		}
 
-		public override void compute() 
+		public override int go() 
 		{
             int i, j, k, n, j1, j2, m; /* requests(2), statuses(MPI_STATUS_SIZE, 2);*/              
 			double fac1, fac2;
@@ -192,6 +192,7 @@ namespace impl.sp.solve.YForwardImpl {
 			
             #endregion
 			
+			return 0;
 		} // end activate method 
 		
 	}

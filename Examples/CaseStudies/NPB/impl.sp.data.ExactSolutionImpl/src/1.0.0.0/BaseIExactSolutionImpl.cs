@@ -12,7 +12,7 @@ public abstract class BaseIExactSolutionImpl: Computation, BaseIExactSolution
 {
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

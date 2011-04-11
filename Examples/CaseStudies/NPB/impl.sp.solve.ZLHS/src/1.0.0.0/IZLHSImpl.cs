@@ -26,10 +26,10 @@ namespace impl.sp.solve.ZLHS {
 
 		public void enterStage(int stage)			
 		{
-            c = slice[stage, 0];
+            c = slice[stage, 2];
 		}
 							
-		public override void compute() { 
+		public override int go() { 
 			
             double ru1;
             int i, j, k;
@@ -154,6 +154,8 @@ namespace impl.sp.solve.ZLHS {
                     }
                 }
             }
+			
+			return 0;
 		} // end activate method 
 
 		public double dmax1(double a, double b)

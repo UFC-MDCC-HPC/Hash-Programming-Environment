@@ -26,12 +26,12 @@ namespace impl.sp.solve.TZETAR {
 		
 		public void enterStage(int stage)			
 		{
-		    c = slice[stage, 0];
+		    c = slice[stage, 2];
 		
 		}
 				
 		
-		public override void compute() { 
+		public override int go() { 
 		    int i, j, k;
 		    int ksize, jsize, isize;
 		    double t1, t2, t3, ac, xvel, yvel, zvel,
@@ -74,11 +74,15 @@ namespace impl.sp.solve.TZETAR {
 		                rhs[c, k, j, i, 3] = zvel * t2 + t3;
 		                rhs[c, k, j, i, 4] = uzik1 * (-xvel * r2 + yvel * r1) +
 		                      qs[c, k, j, i, 0] * t2 + c2iv * ac2u * t1 + zvel * t3;
+		                      
+                 //      for (int m=0;m<5;m++)		                
+		         //           Console.WriteLine("tzetar - rhs" + "[" + c + "," + k + "," + j + "," + i + "," + m + "] = " + rhs[c, k, j, i, m]);
 		
 		            }
 		        }
 		    }
 		
+			return 0;
 		} // end activate method 
 	
 	}

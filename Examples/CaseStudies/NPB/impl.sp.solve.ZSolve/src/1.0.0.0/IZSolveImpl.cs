@@ -20,13 +20,47 @@ namespace impl.sp.solve.ZSolve {
 		{
 		}
 		
-		public override void compute() 
+        private double[][] in_buffer_z_f;
+        private double[][] out_buffer_z_f;
+        private double[][] in_buffer_z_b;
+        private double[][] out_buffer_z_b;
+        private int[] buffer_size_a;            
+
+		/* override public void initialize()
+		{
+		    base.initialize();
+		    
+		    in_buffer_z_f = new double[ncells][];
+		    out_buffer_z_f = new double[ncells][];
+		    in_buffer_z_b = new double[ncells][];
+		    out_buffer_z_b = new double[ncells][];
+		    int buffer_size;
+		    
+		    for (int stage = 0; stage < ncells; stage++)
+            {
+                int c = slice[stage, 2];
+
+                int isize = cell_size[c, 0] + 2;
+                int jsize = cell_size[c, 1] + 2;
+
+                buffer_size = (isize - start[c, 0] - end[c, 0]) * (jsize - start[c, 1] - end[c, 1]);
+
+                in_buffer_z_f[c] = new double[22 * buffer_size];
+                out_buffer_z_f[c] = new double[22 * buffer_size];
+                
+                in_buffer_z_b[c] = new double[10 * buffer_size];
+                out_buffer_z_b[c] = new double[10 * buffer_size];
+            }
+		}
+		*/
+		
+		public override int go() 
 		{ 
-            int i, j, k, stage, n, isize, jsize, kend, k1, buffer_size, c, m, p, kstart;
+            int i, j, k, stage, n, isize, jsize, kend, k1, c, m, p, kstart;
             double r1, r2, d, e, sm1, sm2;
             double[] s = new double[5];
             double[] in_buffer_z;
-            double[] out_buffer_z;            
+            double[] out_buffer_z;
 
             //---------------------------------------------------------------------
             // now do a sweep on a layer-by-layer basis, i.e. sweeping through cells
@@ -50,19 +84,30 @@ namespace impl.sp.solve.ZSolve {
                 isize = cell_size[c, 0] + 2;
                 jsize = cell_size[c, 1] + 2;
 
-                buffer_size = (isize - start[c, 0] - end[c, 0]) *
-                             (jsize - start[c, 1] - end[c, 1]);
+         /*       Console.WriteLine("c = " + c + ", length = in_buffer_z_f = " + in_buffer_z_f[c].Length);
+                Console.WriteLine("c = " + c + ", length = out_buffer_z_f = " + out_buffer_z_f[c].Length);
+                Input_buffer_forward.Array = in_buffer_z = in_buffer_z_f[c]; //= new double[22 * buffer_size];
+                Output_buffer_forward.Array = out_buffer_z = out_buffer_z_f[c]; // = new double[22 * buffer_size];
+*/
+                isize = cell_size[c, 0] + 2;
+                jsize = cell_size[c, 1] + 2;
 
-                Input_buffer.Array = in_buffer_z = new double[22 * buffer_size];
-                Output_buffer.Array = out_buffer_z = new double[22 * buffer_size];
+                int buffer_size = (isize - start[c, 0] - end[c, 0]) * (jsize - start[c, 1] - end[c, 1]);
+                
+                                
+                Input_buffer_forward.Array = in_buffer_z = new double[22 * buffer_size];
+                Output_buffer_forward.Array = out_buffer_z = new double[22 * buffer_size];
 
+                //Console.WriteLine("c = " + c + ", length = in_buffer_z_f = " + in_buffer_z.Length);
+                //Console.WriteLine("c = " + c + ", length = out_buffer_z_f = " + out_buffer_z.Length);
+                
                 if (stage != 0)
                 {
-					Shift.initiate_recv();
+					Shift_forward.initiate_recv();
 
-					Lhs.compute();
+					Lhs.go();
 					
-					Shift.synchronize();
+					Shift_forward.go();
 
                     #region read buffer
                     //---------------------------------------------------------------------
@@ -145,10 +190,10 @@ namespace impl.sp.solve.ZSolve {
                 }
                 else
                 {
-					Lhs.compute();
+					Lhs.go();
                 }
 
-				Forward.compute();
+				Forward.go();
 
                 //---------------------------------------------------------------------
                 //         send information to the next processor, except when this
@@ -156,8 +201,7 @@ namespace impl.sp.solve.ZSolve {
                 //---------------------------------------------------------------------
 
                 if (stage != ncells - 1)
-                {
-					
+                {					
                     #region write buffer
                     //---------------------------------------------------------------------
                     //            create a running pointer for the send buffer  
@@ -201,7 +245,7 @@ namespace impl.sp.solve.ZSolve {
 
                     #endregion
 					
-					Shift.initiate_send();
+					Shift_forward.initiate_send();
                 }
             }
 
@@ -214,7 +258,6 @@ namespace impl.sp.solve.ZSolve {
             //---------------------------------------------------------------------
             for (stage = ncells - 1; stage >= 0; stage--)
             {
-				Matvecproduct.enterStage(stage);
 				Backward.enterStage(stage);
 				
                 c = slice[stage, 2];
@@ -224,19 +267,26 @@ namespace impl.sp.solve.ZSolve {
 
                 isize = cell_size[c, 0] + 2;
                 jsize = cell_size[c, 1] + 2;
-                buffer_size = (isize - start[c, 0] - end[c, 0]) *
-                             (jsize - start[c, 1] - end[c, 1]);
 
-                Input_buffer.Array = in_buffer_z = new double[10 * buffer_size];
-                Output_buffer.Array = out_buffer_z = new double[10 * buffer_size];
+                /* Console.WriteLine("c = " + c + ", length = in_buffer_z_b = " + in_buffer_z_b[c].Length);
+                Console.WriteLine("c = " + c + ", length = out_buffer_z_b = " + out_buffer_z_b[c].Length);
+                Input_buffer_backward.Array = in_buffer_z = in_buffer_z_b[c]; //new double[10 * buffer_size];
+                Output_buffer_backward.Array = out_buffer_z = out_buffer_z_b[c]; //new double[10 * buffer_size];
+                */
+                int buffer_size = (isize - start[c, 0] - end[c, 0]) *  (jsize - start[c, 1] - end[c, 1]);
+
+                Input_buffer_backward.Array = in_buffer_z = new double[10 * buffer_size];
+                Output_buffer_backward.Array = out_buffer_z = new double[10 * buffer_size];
+                
 
                 if (stage != ncells - 1)
                 {
-					Shift.initiate_recv();
+					Shift_backward.initiate_recv();
 
-					Matvecproduct.compute(); //tzetar
+				    Matvecproduct.enterStage(stage + 1);
+					Matvecproduct.go(); //tzetar
 
-					Shift.synchronize();
+					Shift_backward.go();
 
                     #region read buffer
                     //---------------------------------------------------------------------
@@ -252,6 +302,8 @@ namespace impl.sp.solve.ZSolve {
                         {
                             for (i = start[c, 0]; i < isize - end[c, 0]; i++)
                             {
+		                 //       Console.WriteLine("in_buffer_z["+ p + "] = " + in_buffer_z[p]);
+		                 //       Console.WriteLine("in_buffer_z["+ (p+1) + "] = " + in_buffer_z[p+1]);
                                 sm1 = in_buffer_z[p];
                                 sm2 = in_buffer_z[p + 1];
                                 rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
@@ -275,6 +327,8 @@ namespace impl.sp.solve.ZSolve {
                         {
                             for (i = start[c, 0]; i < isize - end[c, 0]; i++)
                             {
+		        //                Console.WriteLine("in_buffer_z["+ p + "] = " + in_buffer_z[p]);
+		         //               Console.WriteLine("in_buffer_z["+ (p+1) + "] = " + in_buffer_z[p+1]);
                                 sm1 = in_buffer_z[p];
                                 sm2 = in_buffer_z[p + 1];
                                 rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
@@ -294,7 +348,7 @@ namespace impl.sp.solve.ZSolve {
 					Backward.init();
                 }
 				
-				Backward.compute();
+				Backward.go();
 
                 //---------------------------------------------------------------------
                 //         send on information to the previous processor, if needed
@@ -319,7 +373,7 @@ namespace impl.sp.solve.ZSolve {
                     }
                     #endregion
 					
-					Shift.initiate_send();
+					Shift_backward.initiate_send();
                 }
 
                 // if (timeron) timer.stop(t_zsolve);
@@ -329,10 +383,12 @@ namespace impl.sp.solve.ZSolve {
                 //---------------------------------------------------------------------
                 if (stage == 0)
                 {
-					Matvecproduct.compute(); // tzetar
+                    Matvecproduct.enterStage(stage);
+					Matvecproduct.go(); // tzetar
                 }
 
             }
+			return 0;
 		} // end activate method 
 		
 	}

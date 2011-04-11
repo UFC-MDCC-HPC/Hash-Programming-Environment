@@ -159,7 +159,7 @@ protected IComputeRHS<IInstance_SP<C>, C> Compute_rhs {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

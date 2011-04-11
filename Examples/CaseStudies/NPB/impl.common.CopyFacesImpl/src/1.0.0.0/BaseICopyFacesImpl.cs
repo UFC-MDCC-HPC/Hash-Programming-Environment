@@ -87,7 +87,7 @@ private IBuffer output_buffer_x_east = null;
 protected IBuffer Output_buffer_x_east  {
 	get {
 		if (this.output_buffer_x_east  == null)
-			this.output_buffer_x_east  = (IBuffer) Services.getPort("output_buffer_x_east ");
+			this.output_buffer_x_east  = (IBuffer) Services.getPort("output_buffer_x_east");
 		return this.output_buffer_x_east ;
 	}
 }
@@ -108,7 +108,7 @@ private IBuffer input_buffer_x_east = null;
 protected IBuffer Input_buffer_x_east  {
 	get {
 		if (this.input_buffer_x_east  == null)
-			this.input_buffer_x_east  = (IBuffer) Services.getPort("input_buffer_x_east ");
+			this.input_buffer_x_east  = (IBuffer) Services.getPort("input_buffer_x_east");
 		return this.input_buffer_x_east ;
 	}
 }
@@ -243,7 +243,7 @@ public BaseICopyFacesImpl() {
 
 } 
 
-abstract public void synchronize(); 
+abstract public int go(); 
 
 	
 

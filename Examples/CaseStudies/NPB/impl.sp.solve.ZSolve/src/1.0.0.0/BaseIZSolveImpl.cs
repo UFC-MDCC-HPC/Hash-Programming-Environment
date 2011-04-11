@@ -17,6 +17,7 @@ using common.solve.BeamWarmingMethod;
 using common.orientation.Z;
 using common.interactionpattern.Shift;
 using common.direction.LeftToRight;
+using common.direction.RightToLeft;
 using environment.MPIDirect;
 using common.problem_size.Instance;
 using common.solve.Backward;
@@ -47,6 +48,8 @@ override public void initialize()
 	ncells = Problem.NCells;
 	lhs = Problem.Field_lhs;
 	rhs = Problem.Field_rhs;
+	
+	
 }
 		
 #endregion
@@ -105,23 +108,43 @@ protected IBlockDiagonalMatVecProduct<I, C, DIR, MTH> Matvecproduct {
 	}
 }
 
-private IBuffer output_buffer = null;
+private IBuffer output_buffer_forward = null;
 
-protected IBuffer Output_buffer {
+protected IBuffer Output_buffer_forward {
 	get {
-		if (this.output_buffer == null)
-			this.output_buffer = (IBuffer) Services.getPort("output_buffer");
-		return this.output_buffer;
+		if (this.output_buffer_forward == null)
+			this.output_buffer_forward = (IBuffer) Services.getPort("output_buffer_forward");
+		return this.output_buffer_forward;
 	}
 }
 
-private IBuffer input_buffer = null;
+private IBuffer input_buffer_forward = null;
 
-protected IBuffer Input_buffer {
+protected IBuffer Input_buffer_forward {
 	get {
-		if (this.input_buffer == null)
-			this.input_buffer = (IBuffer) Services.getPort("input_buffer");
-		return this.input_buffer;
+		if (this.input_buffer_forward == null)
+			this.input_buffer_forward = (IBuffer) Services.getPort("input_buffer_forward");
+		return this.input_buffer_forward;
+	}
+}
+
+private IBuffer output_buffer_backward = null;
+
+protected IBuffer Output_buffer_backward {
+	get {
+		if (this.output_buffer_backward == null)
+			this.output_buffer_backward = (IBuffer) Services.getPort("output_buffer_backward");
+		return this.output_buffer_backward;
+	}
+}
+
+private IBuffer input_buffer_backward = null;
+
+protected IBuffer Input_buffer_backward {
+	get {
+		if (this.input_buffer_backward == null)
+			this.input_buffer_backward = (IBuffer) Services.getPort("input_buffer_backward");
+		return this.input_buffer_backward;
 	}
 }
 
@@ -135,13 +158,23 @@ protected IForward<I, C, MTH, DIR> Forward {
 	}
 }
 
-private IShift<ILeftToRight> shift = null;
+private IShift<ILeftToRight> shift_forward = null;
 
-protected IShift<ILeftToRight> Shift {
+protected IShift<ILeftToRight> Shift_forward {
 	get {
-		if (this.shift == null)
-			this.shift = (IShift<ILeftToRight>) Services.getPort("shift");
-		return this.shift;
+		if (this.shift_forward == null)
+			this.shift_forward = (IShift<ILeftToRight>) Services.getPort("shift_forward");
+		return this.shift_forward;
+	}
+}
+
+private IShift<IRightToLeft> shift_backward = null;
+
+protected IShift<IRightToLeft> Shift_backward {
+	get {
+		if (this.shift_backward == null)
+			this.shift_backward = (IShift<IRightToLeft>) Services.getPort("shift_backward");
+		return this.shift_backward;
 	}
 }
 
@@ -166,7 +199,7 @@ protected IBackward<I, C, DIR, MTH> Backward {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

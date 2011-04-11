@@ -99,7 +99,7 @@ protected MTH Method {
 }
 		
 		
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

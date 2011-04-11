@@ -30,7 +30,7 @@ namespace impl.sp.solve.XLHS {
 		}
 			
 						
-		public override void compute() 
+		public override int go() 
 		{ 
             double ru1;
             int i, j, k;
@@ -152,6 +152,7 @@ namespace impl.sp.solve.XLHS {
                 }
             }
 			
+			return 0;
 		} // end activate method 
 		
 		public double dmax1(double a, double b)

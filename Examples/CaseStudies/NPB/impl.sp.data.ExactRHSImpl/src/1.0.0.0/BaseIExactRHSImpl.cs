@@ -75,7 +75,7 @@ override public void initialize()
 	yycon4 = Constants.yycon4;
 	yycon5 = Constants.yycon5;
 	dy5ty1 = Constants.dy5ty1;
-	tz2 = Constants.tx2;
+	tz2 = Constants.tz2;
 	dz1tz1 = Constants.dz1tz1;
 	dz2tz1 = Constants.dz2tz1;
     dz3tz1 = Constants.dz3tz1;
@@ -125,7 +125,7 @@ protected IExactSolution Exact_solution {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

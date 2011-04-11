@@ -8,7 +8,8 @@ using common.topology.Ring;
 using common.Buffer;
 using environment.MPIDirect;
 using common.interactionpattern.Shift;
-using common.direction.Direction;
+using common.direction.LeftToRight;
+using common.direction.RightToLeft;
 using common.interactionpattern.Interact;
 using MPI;
 
@@ -23,7 +24,7 @@ protected Intracommunicator comm;
 		
 override public void initialize()
 {
-	comm = Mpi.localComm(this);
+	comm = this.WorldComm; // Mpi.localComm(this);
 }
 		
 #endregion
@@ -190,67 +191,67 @@ public IMPIDirect Mpi {
 	}
 }
 
-private IShift<IDirection> shift_y_south = null;
+private IShift<ILeftToRight> shift_y_south = null;
 
-protected IShift<IDirection> Shift_y_south {
+protected IShift<ILeftToRight> Shift_y_south {
 	get {
 		if (this.shift_y_south == null)
-			this.shift_y_south = (IShift<IDirection>) Services.getPort("shift_y_south");
+			this.shift_y_south = (IShift<ILeftToRight>) Services.getPort("shift_y_south");
 		return this.shift_y_south;
 	}
 }
 
-private IShift<IDirection> shift_y_north = null;
+private IShift<IRightToLeft> shift_y_north = null;
 
-protected IShift<IDirection> Shift_y_north {
+protected IShift<IRightToLeft> Shift_y_north {
 	get {
 		if (this.shift_y_north == null)
-			this.shift_y_north = (IShift<IDirection>) Services.getPort("shift_y_north");
+			this.shift_y_north = (IShift<IRightToLeft>) Services.getPort("shift_y_north");
 		return this.shift_y_north;
 	}
 }
 
-private IShift<IDirection> shift_x_west = null;
+private IShift<IRightToLeft> shift_x_west = null;
 
-protected IShift<IDirection> Shift_x_west {
+protected IShift<IRightToLeft> Shift_x_west {
 	get {
 		if (this.shift_x_west == null)
-			this.shift_x_west = (IShift<IDirection>) Services.getPort("shift_x_west");
+			this.shift_x_west = (IShift<IRightToLeft>) Services.getPort("shift_x_west");
 		return this.shift_x_west;
 	}
 }
 
-private IShift<IDirection> shift_x_east = null;
+private IShift<ILeftToRight> shift_x_east = null;
 
-protected IShift<IDirection> Shift_x_east {
+protected IShift<ILeftToRight> Shift_x_east {
 	get {
 		if (this.shift_x_east == null)
-			this.shift_x_east = (IShift<IDirection>) Services.getPort("shift_x_east");
+			this.shift_x_east = (IShift<ILeftToRight>) Services.getPort("shift_x_east");
 		return this.shift_x_east;
 	}
 }
 
-private IShift<IDirection> shift_z_top = null;
+private IShift<IRightToLeft> shift_z_top = null;
 
-protected IShift<IDirection> Shift_z_top {
+protected IShift<IRightToLeft> Shift_z_top {
 	get {
 		if (this.shift_z_top == null)
-			this.shift_z_top = (IShift<IDirection>) Services.getPort("shift_z_top");
+			this.shift_z_top = (IShift<IRightToLeft>) Services.getPort("shift_z_top");
 		return this.shift_z_top;
 	}
 }
 
-private IShift<IDirection> shift_z_bottom = null;
+private IShift<ILeftToRight> shift_z_bottom = null;
 
-protected IShift<IDirection> Shift_z_bottom {
+protected IShift<ILeftToRight> Shift_z_bottom {
 	get {
 		if (this.shift_z_bottom == null)
-			this.shift_z_bottom = (IShift<IDirection>) Services.getPort("shift_z_bottom");
+			this.shift_z_bottom = (IShift<ILeftToRight>) Services.getPort("shift_z_bottom");
 		return this.shift_z_bottom;
 	}
 }
 
-abstract public void synchronize(); 
+abstract public int go(); 
 
 
 }

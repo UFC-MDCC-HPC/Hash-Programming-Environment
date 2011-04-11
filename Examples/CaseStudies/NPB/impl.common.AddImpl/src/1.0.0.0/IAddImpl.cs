@@ -18,7 +18,7 @@ namespace impl.common.AddImpl {
 		} 
 		
 		
-		public override void compute() 
+		public override int go() 
 		{ 			
 		    int c, i, j, k, m;
 		
@@ -32,12 +32,17 @@ namespace impl.common.AddImpl {
 		                {
 		                    for (m = 0; m < 5; m++)
 		                    {
+		                      //  Console.Write("u["+ c + "," + k + "," + j + "," + i + "," + m +"] = " + u[c, k, j, i, m]);
+		                      //  Console.Write(", ");
+		                      //  Console.WriteLine("rhs["+ c + "," + k + "," + j + "," + i + "," + m +"] : " + rhs[c, k, j, i, m]);
 		                        u[c, k, j, i, m] += rhs[c, k, j, i, m];
 		                    }
 		                }
 		            }
 		        }
 		    }
+			
+			return 0;
 		
 		} // end activate method 
 		

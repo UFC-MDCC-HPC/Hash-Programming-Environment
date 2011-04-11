@@ -23,51 +23,52 @@ public class IRHSNormImpl<I,C> : BaseIRHSNormImpl<I,C>, IRHSNorm<I,C>
 		
 	public double[] xcr { get { return rms; } }
 		
-	public override void compute() { 
+	public override int go() { 
 		
-            int c, i, j, k, d, m, ksize, jsize, isize;
-            double add;
-            double[] rms_work = new double[5];
+        int c, i, j, k, d, m, ksize, jsize, isize;
+        double add;
+        double[] rms_work = new double[5];
+
+        for (m = 0; m < 5; m++)
+        {
+            rms_work[m] = 0.0d;
+        }
+
+        for (c = 0; c < ncells; c++)
+        {
+            ksize = cell_size[c, 2] + 2;
+            jsize = cell_size[c, 1] + 2;
+            isize = cell_size[c, 0] + 2;
 
             for (m = 0; m < 5; m++)
             {
-                rms_work[m] = 0.0d;
-            }
-
-            for (c = 0; c < ncells; c++)
-            {
-                ksize = cell_size[c, 2] + 2;
-                jsize = cell_size[c, 1] + 2;
-                isize = cell_size[c, 0] + 2;
-
-                for (m = 0; m < 5; m++)
+                for (k = start[c, 2]; k < ksize - end[c, 2]; k++)
                 {
-                    for (k = start[c, 2]; k < ksize - end[c, 2]; k++)
+                    for (j = start[c, 1]; j < jsize - end[c, 1]; j++)
                     {
-                        for (j = start[c, 1]; j < jsize - end[c, 1]; j++)
+                        for (i = start[c, 0]; i < isize - end[c, 0]; i++)
                         {
-                            for (i = start[c, 0]; i < isize - end[c, 0]; i++)
-                            {
-                                add = rhs[c, k, j, i, m];
-                                rms_work[m] += add * add;
-                            }
+                            add = rhs[c, k, j, i, m];
+                            rms_work[m] += add * add;
                         }
                     }
                 }
             }
+        }
 
-			comm_setup.Allreduce<double>(rms_work, Operation<double>.Add, ref rms);
+		comm_setup.Allreduce<double>(rms_work, Operation<double>.Add, ref rms);
 
 
-            for (m = 0; m < 5; m++)
+        for (m = 0; m < 5; m++)
+        {
+            for (d = 0; d < 3; d++)
             {
-                for (d = 0; d < 3; d++)
-                {
-                    rms[m] = rms[m] / (grid_points[d] - 2);
-                }
-                rms[m] = Math.Sqrt(rms[m]);
+                rms[m] = rms[m] / (grid_points[d] - 2);
             }
-	
+            rms[m] = Math.Sqrt(rms[m]);
+        }
+
+		return 0;
 	} 
 
 }

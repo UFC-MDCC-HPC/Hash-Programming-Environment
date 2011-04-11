@@ -20,7 +20,8 @@ namespace impl.sp.solve.YSolve {
 		{
 		}
 			
-		public override void compute() { 
+		public override int go() 
+		{ 
             int i, j, k, stage, n, isize, jend, ksize, j1, buffer_size, c, m, p, jstart; /* requests(2), statuses(MPI_STATUS_SIZE, 2);*/
             double r1, r2, d, e, sm1, sm2;
             double[] s = new double[5];
@@ -44,7 +45,7 @@ namespace impl.sp.solve.YSolve {
             for (stage = 0; stage < ncells; stage++)
             {
 				Lhs.enterStage(stage);
-				Backward.enterStage(stage);
+				Forward.enterStage(stage);
 				
                 c = slice[stage, 1];
 
@@ -56,16 +57,16 @@ namespace impl.sp.solve.YSolve {
 
                 buffer_size = (isize - start[c, 0] - end[c, 0]) * (ksize - start[c, 2] - end[c, 2]);
 
-                Input_buffer.Array = in_buffer_y = new double[22*buffer_size];
-                Output_buffer.Array = out_buffer_y = new double[22*buffer_size];
+                Input_buffer_forward.Array = in_buffer_y = new double[22*buffer_size];
+                Output_buffer_forward.Array = out_buffer_y = new double[22*buffer_size];
 
                 if (stage != 0)
                 {
-					Shift.initiate_recv();
+					Shift_forward.initiate_recv();
 
-					Lhs.compute();
+					Lhs.go();
 
-					Shift.synchronize();
+					Shift_forward.go();
 
                     #region read buffer
                     //---------------------------------------------------------------------
@@ -82,19 +83,25 @@ namespace impl.sp.solve.YSolve {
                     {
                         for (i = start[c, 0]; i < isize - end[c, 0]; i++)
                         {
+                      //      Console.WriteLine("in_buffer_y_f["+ p + "] = " + in_buffer_y[p]);
+                      //      Console.WriteLine("in_buffer_y_f["+ (p+1) + "] = " + in_buffer_y[p+1]);
                             lhs[c, k, j, i, n + 2] = lhs[c, k, j, i, n + 2] -
                                     in_buffer_y[p] * lhs[c, k, j, i, n + 1];
                             lhs[c, k, j, i, n + 3] = lhs[c, k, j, i, n + 3] -
                                     in_buffer_y[p + 1] * lhs[c, k, j, i, n + 1];
                             for (m = 0; m <= 2; m++)
                             {
+                      //          Console.WriteLine("in_buffer_y_f["+ (p+2+m) + "] = " + in_buffer_y[p+2+m]);
                                 rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
                                       in_buffer_y[p + 2 + m] * lhs[c, k, j, i, n + 1];
                             }
+                      //      Console.WriteLine("in_buffer_y_f["+ (p+5) + "] = " + in_buffer_y[p+5]);
+                      //      Console.WriteLine("in_buffer_y_f["+ (p+6) + "] = " + in_buffer_y[p+6]);
                             d = in_buffer_y[p + 5]; ;
                             e = in_buffer_y[p + 6];
                             for (m = 0; m <= 2; m++)
                             {
+                       //        Console.WriteLine("in_buffer_y_f["+ (p+7+m) + "] = " + in_buffer_y[p+7+m]);
                                 s[m] = in_buffer_y[p + 7 + m];
                             }
                             r1 = lhs[c, k, j, i, n + 2];
@@ -147,10 +154,10 @@ namespace impl.sp.solve.YSolve {
                 }
                 else
                 {
-					Lhs.compute();
+					Lhs.go();
                 }
 
-				Forward.compute();
+				Forward.go();
 
                 //---------------------------------------------------------------------
                 //         send information to the next processor, except when this
@@ -173,9 +180,12 @@ namespace impl.sp.solve.YSolve {
                             {
                                 out_buffer_y[p    ] = lhs[c, k, j, i, n + 4];
                                 out_buffer_y[p + 1] = lhs[c, k, j, i, n + 5];
+                           //     Console.WriteLine("out_buffer_y["+ p + "] = " + out_buffer_y[p]);
+                            //    Console.WriteLine("out_buffer_y["+ (p+1) + "] = " + out_buffer_y[p+1]);
                                 for (m = 0; m <= 2; m++)
                                 {
                                     out_buffer_y[p + 2 + m] = rhs[c, k, j, i, m];
+                             //       Console.WriteLine("out_buffer_y["+ (p+2+m) + "] = " + out_buffer_y[p+2+m]);
                                 }
                                 p = p + 5;
                             }
@@ -194,6 +204,9 @@ namespace impl.sp.solve.YSolve {
                                     out_buffer_y[p] = lhs[c, k, j, i, n + 4];
                                     out_buffer_y[p + 1] = lhs[c, k, j, i, n + 5];
                                     out_buffer_y[p + 2] = rhs[c, k, j, i, m];
+                               //     Console.WriteLine("out_buffer_y["+ (p) + "] = " + out_buffer_y[p]);
+                                //    Console.WriteLine("out_buffer_y["+ (p+1) + "] = " + out_buffer_y[p+1]);
+                               //     Console.WriteLine("out_buffer_y["+ (p+2) + "] = " + out_buffer_y[p+2]);
                                     p = p + 3;
                                 }
                             }
@@ -202,7 +215,7 @@ namespace impl.sp.solve.YSolve {
 
                     #endregion
 					
-					Shift.initiate_send();
+					Shift_forward.initiate_send();
                 }
             }
 
@@ -215,7 +228,6 @@ namespace impl.sp.solve.YSolve {
             //---------------------------------------------------------------------
             for (stage = ncells - 1; stage >= 0; stage--)
             {
-				Matvecproduct.enterStage(stage);
 				Backward.enterStage(stage);
 				
                 c = slice[stage, 1];
@@ -229,16 +241,17 @@ namespace impl.sp.solve.YSolve {
                 buffer_size = (isize - start[c, 0] - end[c, 0]) *
                              (ksize - start[c, 2] - end[c, 2]);
 
-                Input_buffer.Array = in_buffer_y = new double[10 * buffer_size];
-                Output_buffer.Array = out_buffer_y = new double[10 * buffer_size];
+                Input_buffer_backward.Array = in_buffer_y = new double[10 * buffer_size];
+                Output_buffer_backward.Array = out_buffer_y = new double[10 * buffer_size];
 
                 if (stage != ncells - 1)
                 {
-					Shift.initiate_recv();
+					Shift_backward.initiate_recv();
 					
-					Matvecproduct.compute();
+				    Matvecproduct.enterStage(stage + 1);
+					Matvecproduct.go();
 
-					Shift.synchronize();
+					Shift_backward.go();
 
                     #region read_buffer
                     //---------------------------------------------------------------------
@@ -254,6 +267,8 @@ namespace impl.sp.solve.YSolve {
                         {
                             for (i = start[c, 0]; i < isize - end[c, 0]; i++)
                             {
+		                  //      Console.WriteLine("in_buffer_y["+ p + "] = " + in_buffer_y[p]);
+		                  //      Console.WriteLine("in_buffer_y["+ (p+1) + "] = " + in_buffer_y[p+1]);
                                 sm1 = in_buffer_y[p];
                                 sm2 = in_buffer_y[p + 1];
                                 rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
@@ -277,6 +292,8 @@ namespace impl.sp.solve.YSolve {
                         {
                             for (i = start[c, 0]; i < isize - end[c, 0]; i++)
                             {
+		                   //     Console.WriteLine("in_buffer_y["+ p + "] = " + in_buffer_y[p]);
+		                   //     Console.WriteLine("in_buffer_y["+ (p+1) + "] = " + in_buffer_y[p+1]);
                                 sm1 = in_buffer_y[p];
                                 sm2 = in_buffer_y[p + 1];
                                 rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
@@ -296,7 +313,7 @@ namespace impl.sp.solve.YSolve {
 					Backward.init();
                 }
 
-				Backward.compute();
+				Backward.go();
 
                 //---------------------------------------------------------------------
                 //         send on information to the previous processor, if needed
@@ -323,7 +340,7 @@ namespace impl.sp.solve.YSolve {
 
                     #endregion
 					
-					Shift.initiate_send();
+					Shift_backward.initiate_send();
                 }
 
                 //---------------------------------------------------------------------
@@ -331,11 +348,13 @@ namespace impl.sp.solve.YSolve {
                 //---------------------------------------------------------------------
                 if (stage == 0)
                 {
-					Matvecproduct.compute();
+                   Matvecproduct.enterStage(stage);
+				   Matvecproduct.go();
                 }
 
             }
-		
+			
+			return 0;		
 		} // end activate method 
 		
 	}

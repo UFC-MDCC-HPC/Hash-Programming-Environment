@@ -20,8 +20,8 @@ namespace impl.sp.solve.XSolve {
 		{
 		}
 					
-		public override void compute() { 
-					
+		public override int go() 
+		{					
 		    int c, i, j, k, n, iend, jsize, ksize, i1, i2, m, buffer_size, p, istart, stage;
 		    double r1, r2, d, e, sm1, sm2, fac1, fac2;
 		    double[] s = new double[5];
@@ -44,16 +44,16 @@ namespace impl.sp.solve.XSolve {
 				buffer_size = (jsize - start[c, 1] - end[c, 1]) *
 		                      (ksize - start[c, 2] - end[c, 2]);
 						
-		        Input_buffer.Array = in_buffer_x = new double[22*buffer_size];
-		        Output_buffer.Array = out_buffer_x = new double[22*buffer_size];
+		        Input_buffer_forward.Array = in_buffer_x = new double[22*buffer_size];
+		        Output_buffer_forward.Array = out_buffer_x = new double[22*buffer_size];
 		        
 		        if (stage != 0)
 		        {
-					Shift.initiate_recv();
+					Shift_forward.initiate_recv();
 					
-					Lhs.compute();
+					Lhs.go();
 					
-					Shift.synchronize();
+					Shift_forward.go();
 		            
 		            #region read buffer
 		            //---------------------------------------------------------------------
@@ -72,19 +72,29 @@ namespace impl.sp.solve.XSolve {
 		            {
 		                for (j = start[c, 1]; j < jsize - end[c, 1]; j++)
 		                {
+		                   
+		                    //Console.WriteLine("in_buffer_x["+ p + "] = " + in_buffer_x[p]);
+		                    //Console.WriteLine("in_buffer_x["+ (p+1) + "] = " +in_buffer_x[p+1]);
+		                    
 		                    lhs[c, k, j, i, n + 2] = lhs[c, k, j, i, n + 2] -
 		                             in_buffer_x[p    ] * lhs[c, k, j, i, n + 1];
 		                    lhs[c, k, j, i, n + 3] = lhs[c, k, j, i, n + 3] -
 		                             in_buffer_x[p + 1] * lhs[c, k, j, i, n + 1];
 		                    for (m = 0; m <= 2; m++)
-		                    {
+		                    {		                       
+		                       // Console.WriteLine("in_buffer_x["+ (p+2+m) + "] = " +in_buffer_x[p+2+m]);
 		                        rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
 		                              in_buffer_x[p + 2 + m] * lhs[c, k, j, i, n + 1];
 		                    }
+		                    //Console.WriteLine("in_buffer_x["+ (p+5) + "] = " +in_buffer_x[p+5]);
+		                    //Console.WriteLine("in_buffer_x["+ (p+6) + "] = " +in_buffer_x[p+6]);
+		                    
 		                    d = in_buffer_x[p + 5];
 		                    e = in_buffer_x[p + 6];
 		                    for (m = 0; m <= 2; m++)
 		                    {
+		                       //Console.WriteLine("in_buffer_x["+ (p+5) + "] = " +in_buffer_x[p+5]);
+  		                        //Console.WriteLine(in_buffer_x[p+7+m]);
 		                        s[m] = in_buffer_x[p + 7 + m];
 		                    }
 		                    r1 = lhs[c, k, j, i, n + 2];
@@ -137,11 +147,11 @@ namespace impl.sp.solve.XSolve {
 		        }
 		        else
 		        {
-					Lhs.compute();
+					Lhs.go();
 		        }
 		
 				
-				Forward.compute();
+				Forward.go();
 		
 		        //---------------------------------------------------------------------
 		        //         send information to the next processor, except when this
@@ -191,7 +201,7 @@ namespace impl.sp.solve.XSolve {
 		            }
 		            #endregion
 					
-					Shift.initiate_send();
+					Shift_forward.initiate_send();
 		        }
 		
 		
@@ -204,7 +214,6 @@ namespace impl.sp.solve.XSolve {
 		    for (stage = ncells - 1; stage >= 0; stage--)
 		    {
 		        Backward.enterStage(stage);
-				Matvecproduct.enterStage(stage);
 						
 				c = slice[stage, 0];
 		
@@ -216,16 +225,17 @@ namespace impl.sp.solve.XSolve {
 		
 		        buffer_size = (jsize - start[c, 1] - end[c, 1]) * (ksize - start[c, 2] - end[c, 2]);
 		
-		        in_buffer_x = Input_buffer.Array = new double[10 * buffer_size];
-		        out_buffer_x = Output_buffer.Array = new double[10 * buffer_size];
+		        in_buffer_x = Input_buffer_backward.Array = new double[10 * buffer_size];
+		        out_buffer_x = Output_buffer_backward.Array = new double[10 * buffer_size];
 		
 		        if (stage != ncells - 1)
 		        {
-					Shift.initiate_recv();
+					Shift_backward.initiate_recv();
 		
-					Matvecproduct.compute();
+				    Matvecproduct.enterStage(stage + 1);
+					Matvecproduct.go();
 		
-					Shift.synchronize();
+					Shift_backward.go();
 		
 		            #region read_buffer_x_back
 		
@@ -242,6 +252,8 @@ namespace impl.sp.solve.XSolve {
 		                {
 		                    for (j = start[c, 1]; j < jsize - end[c, 1]; j++)
 		                    {
+		                      //  Console.WriteLine("in_buffer_x["+ p + "] = " + in_buffer_x[p]);
+		                      //  Console.WriteLine("in_buffer_x["+ (p+1) + "] = " + in_buffer_x[p+1]);
 		                        sm1 = in_buffer_x[p];
 		                        sm2 = in_buffer_x[p + 1];
 		                        rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
@@ -265,6 +277,8 @@ namespace impl.sp.solve.XSolve {
 		                {
 		                    for (j = start[c, 1]; j < jsize - end[c, 1]; j++)
 		                    {
+		                      //  Console.WriteLine("in_buffer_x["+ p + "] = " + in_buffer_x[p]);
+		                      //  Console.WriteLine("in_buffer_x["+ (p+1) + "] = " + in_buffer_x[p+1]);
 		                        sm1 = in_buffer_x[p];
 		                        sm2 = in_buffer_x[p + 1];
 		                        rhs[c, k, j, i, m] = rhs[c, k, j, i, m] -
@@ -284,7 +298,7 @@ namespace impl.sp.solve.XSolve {
 					Backward.init();
 		        }
 				
-				Backward.compute();
+				Backward.go();
 		
 		        //---------------------------------------------------------------------
 		        //         send on information to the previous processor, if needed
@@ -309,7 +323,7 @@ namespace impl.sp.solve.XSolve {
                     }
                     #endregion
 					
-					Shift.initiate_send();
+					Shift_backward.initiate_send();
 		        }
 		
 		        //if (timeron) timer.stop(t_xsolve);
@@ -319,10 +333,12 @@ namespace impl.sp.solve.XSolve {
 		        //---------------------------------------------------------------------
 		        if (stage == 0)
 		        {
-					Matvecproduct.compute();
+		           Matvecproduct.enterStage(stage);
+				   Matvecproduct.go();
 		        }
 		    }
 					
+			return 0;
 		} // end activate method 
 	
 	}

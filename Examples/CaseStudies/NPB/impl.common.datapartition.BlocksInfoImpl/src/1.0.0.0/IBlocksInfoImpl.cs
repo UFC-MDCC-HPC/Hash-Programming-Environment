@@ -31,10 +31,7 @@ public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks
 		
 		_cell_start_ = new int[maxcells,3];
 		_cell_end_ = new int[maxcells,3];
-		
-//		_predecessor_ = new int[3];
-//		_sucessor_ = new int[3]; 
-		
+				
 		_grid_points_ = new int[3] {0, 0, 0};
 	}
 		
@@ -47,9 +44,6 @@ public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks
 	
 	private int[,] _cell_start_;
 	private int[,] _cell_end_;
-	
-//	private int[] _predecessor_;
-//	private int[] _sucessor_;
 	
 	private int _ncells_;
 	private int _ndirs_;
@@ -65,12 +59,10 @@ public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks
 	public int[,] cell_start {get { return _cell_start_; } }
 	public int[,] cell_end {get { return _cell_end_; } }
 	
-//	public int[] predecessor {get { return _predecessor_; } }
-//	public int[] sucessor {get { return _sucessor_; } } 
-	
 	public int ncells {get { return _ncells_; } set { _ncells_ = value; } } // sqrt(nodes)
 	public int ndirs {get { return _ndirs_; } set { _ndirs_ = value; } }  // Assumed to be 3 ?
 		
+	public int[] grid_points { get { return _grid_points_; } }
 }
 
 }

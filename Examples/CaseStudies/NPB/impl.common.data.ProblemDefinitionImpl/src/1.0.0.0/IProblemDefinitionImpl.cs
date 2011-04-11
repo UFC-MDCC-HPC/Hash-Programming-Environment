@@ -51,18 +51,21 @@ where C:IClass
 		
 	override public void initialize() 
 	{			
-		set_constants(0);
 			
 		setProblemClass();
 		
 		int total_nodes = this.Ranks.Length;
 		maxcells =  Convert.ToInt32(Math.Sqrt(total_nodes));
+		ncells = Convert.ToInt32(Math.Sqrt(total_nodes));
 			
 	    MAX_CELL_DIM = (problem_size/maxcells)+1;                
-		IMAX = JMAX = KMAX = _grid_points_[0] = _grid_points_[1] = _grid_points_[2] = MAX_CELL_DIM;
+		IMAX = JMAX = KMAX =  MAX_CELL_DIM; 
+		_grid_points_[0] = _grid_points_[1] = _grid_points_[2] = problem_size;
 	    IMAXP = IMAX/2 * 2 + 1;
 	    JMAXP = JMAX/2 * 2 + 1;
 			
+		set_constants(0, dt_default);
+
 		U.initialize_field("u", maxcells, KMAX+4, JMAXP+4, IMAXP+4, 5);
 		Rhs.initialize_field("rhs", maxcells, KMAX+2, JMAXP+2, IMAXP+2, 5);
 		Lhs.initialize_field("lhs", maxcells, KMAX+2, JMAXP+2, IMAXP+2, 15);
@@ -86,9 +89,9 @@ where C:IClass
 		niter_default = Instance.niter_default;
 	}	
 	
-  private void set_constants(int ndid)
+  private void set_constants(int ndid, double dt)
   {			
-	Constants.set_constants(ndid,grid_points);
+	Constants.set_constants(ndid,grid_points, dt);
   }
 		
 						

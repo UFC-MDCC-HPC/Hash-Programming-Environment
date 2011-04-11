@@ -41,11 +41,8 @@ override public void initialize()
 	ncells = Problem.NCells;
 	u = Problem.Field_u;
 	grid_points = Problem.grid_points;
-	dnzm1 = Constants.dnxm1;
-	dnym1 = Constants.dnym1;
-	dnxm1 = Constants.dnzm1;				
 	
-	comm_setup = Mpi.localComm(this);	
+	comm_setup = this.WorldComm; //Mpi.localComm(this);	
 			
 	rms = new double[5];
 }
@@ -99,7 +96,7 @@ public IMPIDirect Mpi {
 }
 
 		
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

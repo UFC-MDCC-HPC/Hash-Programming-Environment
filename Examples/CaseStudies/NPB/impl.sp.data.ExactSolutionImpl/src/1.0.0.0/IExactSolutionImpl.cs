@@ -47,7 +47,7 @@ namespace impl.sp.data.ExactSolutionImpl {
 			ce[0,0] = 2.0d * (1.0d + ((double)ndid) * 0.01d);
 		}
 				
-		public override void compute() { 
+		public override int go() { 
 			
 			for (int m = 0; m < 5; m++)
 			{
@@ -58,7 +58,7 @@ namespace impl.sp.data.ExactSolutionImpl {
 				zeta * ce[12,m])));
 			}
 					
-		
+			return 0;		
 		} // end activate method 
 	
 	}

@@ -26,7 +26,7 @@ private int verified = -1;
 		
 public int Verified { get { return verified; } }		
 		
-public override void compute() { 
+public override int go() { 
 			
 		int no_time_steps = Instance.niter_default;
 		double dt = Instance.dt_default;
@@ -46,22 +46,25 @@ public override void compute() {
         //---------------------------------------------------------------------
 			
         // error_norm(xce);		
-		Error_norm.compute();
+		Error_norm.go();
 		
         // copy_faces();
-		Copy_faces.synchronize();
-		
+		if (Ranks.Length > 1)
+			Copy_faces.go();
+			
+		Compute_rhs.go();	
+			
         //rhs_norm(xcr);
-		Rhs_norm.compute();
+		Rhs_norm.go();
 
         for (m = 0; m < 5; m++) 
             xcr[m] /= dt;
 
-        for (m = 0; m < 5; m++)
-        {
-            xcrref[m] = 1.0d;
-            xceref[m] = 1.0d;
-        }
+        //for (m = 0; m < 5; m++)
+        //{
+        //    xcrref[m] = 1.0d;
+        //    xceref[m] = 1.0d;
+        //}
 			
         //---------------------------------------------------------------------
         //    verification test for residuals if gridsize is either 12X12X12 or 
@@ -118,6 +121,8 @@ public override void compute() {
                                                  xce, xceref, xcedif);
 
         BMResults.printVerificationStatus(clss.ToString()[0], verified, BMName);
+			
+		return 0;
 			
 } // end activate method 
 

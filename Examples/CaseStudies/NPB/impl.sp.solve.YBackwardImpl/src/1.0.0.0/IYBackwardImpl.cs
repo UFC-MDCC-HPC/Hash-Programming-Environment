@@ -75,7 +75,7 @@ namespace impl.sp.solve.YBackwardImpl {
 		
 		}
 				
-		public override void compute() { 
+		public override int go() { 
 			
             int i, j, k, n, j1, j2, m; /* requests(2), statuses(MPI_STATUS_SIZE, 2);*/              
 
@@ -130,6 +130,7 @@ namespace impl.sp.solve.YBackwardImpl {
             }
             #endregion
 		
+			return 0;
 		} // end activate method 
 	
 	}

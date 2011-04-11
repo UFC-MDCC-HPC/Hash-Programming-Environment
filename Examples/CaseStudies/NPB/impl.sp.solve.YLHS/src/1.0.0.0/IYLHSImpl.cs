@@ -29,7 +29,7 @@ namespace impl.sp.solve.YLHS {
             c = slice[stage, 1];
 		}
 		
-		public override void compute() 
+		public override int go() 
 		{ 
             double ru1;
             int i, j, k;
@@ -155,6 +155,8 @@ namespace impl.sp.solve.YLHS {
                     }
                 }
             }
+			
+			return 0;
 		} // end activate method 
 
 		public double dmax1(double a, double b)

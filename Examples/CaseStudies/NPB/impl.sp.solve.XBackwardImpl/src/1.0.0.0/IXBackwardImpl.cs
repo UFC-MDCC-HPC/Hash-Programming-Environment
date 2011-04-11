@@ -72,7 +72,7 @@ namespace impl.sp.solve.XBackwardImpl {
             ksize = cell_size[c, 2] + 2;
 		}
 				
-		public override void compute() 
+		public override int go() 
 		{ 		
             int i, j, k, n, i1, i2, m;
 			
@@ -126,6 +126,8 @@ namespace impl.sp.solve.XBackwardImpl {
                 }
             }
             #endregion backward
+			
+			return 0;
 		
 		} // end activate method 
 	

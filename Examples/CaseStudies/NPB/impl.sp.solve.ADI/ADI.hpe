@@ -109,44 +109,44 @@
         <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
         <visualDescription h="10" w="10" x="18" y="2"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@10a0655" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@3dc2a573" repeat="0">
         <visualDescription h="550" w="510" x="145" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@125eb4c" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@35fc40b2" repeat="0">
           <visualDescription h="450" w="430" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7aed04" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@43fb81ce" repeat="0">
             <visualDescription h="350" w="350" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@5eda46" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@35071e40" repeat="0">
               <visualDescription h="250" w="270" x="70" y="50"/>
-              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@14c4ec8" repeat="0">
+              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@665316f2" repeat="0">
                 <visualDescription h="150" w="190" x="70" y="50"/>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c85316" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@59079e59" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="10" y="50"/>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1c70a61" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@32d12b9" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="70" y="50"/>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7a6f65" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4283150" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="130" y="50"/>
                 </action>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@276192" repeat="0" sliceRef="copy_faces">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6abd7d51" repeat="0" sliceRef="copy_faces">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@176c294" repeat="0" sliceRef="compute_rhs">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3e6e8796" repeat="0" sliceRef="compute_rhs">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1e095c3" repeat="0" sliceRef="add">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4a87a8df" repeat="0" sliceRef="add">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1884174" repeat="0" sliceRef="txinvr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@105feeb3" repeat="0" sliceRef="txinvr">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.topology.Ring;&#xA;using common.CopyFaces;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.solve.Solve;&#xA;using common.solve.BeamWarmingMethod;&#xA;using common.orientation.Y;&#xA;using common.orientation.Z;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;using common.orientation.XYZ;&#xA;using environment.MPIDirect;&#xA;using common.Add;&#xA;using common.data.ProblemDefinition;&#xA;using common.ComputeRHS;&#xA;using common.orientation.X;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public abstract class BaseIADIImpl&lt;C>: Computation, BaseIADI&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICopyFaces&lt;IInstance_SP&lt;C>, C> copy_faces = null;&#xA;&#xA;protected ICopyFaces&lt;IInstance_SP&lt;C>, C> Copy_faces {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.copy_faces == null)&#xA;&#x9;&#x9;&#x9;this.copy_faces = (ICopyFaces&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;copy_faces&quot;);&#xA;&#x9;&#x9;return this.copy_faces;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IX> x_solve = null;&#xA;&#xA;protected ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IX> X_solve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x_solve == null)&#xA;&#x9;&#x9;&#x9;this.x_solve = (ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IX>) Services.getPort(&quot;x_solve&quot;);&#xA;&#x9;&#x9;return this.x_solve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IY> y_solve = null;&#xA;&#xA;protected ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IY> Y_solve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y_solve == null)&#xA;&#x9;&#x9;&#x9;this.y_solve = (ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IY>) Services.getPort(&quot;y_solve&quot;);&#xA;&#x9;&#x9;return this.y_solve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IZ> z_solve = null;&#xA;&#xA;protected ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IZ> Z_solve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z_solve == null)&#xA;&#x9;&#x9;&#x9;this.z_solve = (ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IZ>) Services.getPort(&quot;z_solve&quot;);&#xA;&#x9;&#x9;return this.z_solve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlockDiagonalMatVecProduct&lt;IInstance_SP&lt;C>, C, IXYZ, IBeamWarmingMethod> txinvr = null;&#xA;&#xA;protected IBlockDiagonalMatVecProduct&lt;IInstance_SP&lt;C>, C, IXYZ, IBeamWarmingMethod> Txinvr {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.txinvr == null)&#xA;&#x9;&#x9;&#x9;this.txinvr = (IBlockDiagonalMatVecProduct&lt;IInstance_SP&lt;C>, C, IXYZ, IBeamWarmingMethod>) Services.getPort(&quot;txinvr&quot;);&#xA;&#x9;&#x9;return this.txinvr;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IAdd&lt;IInstance_SP&lt;C>, C> add = null;&#xA;&#xA;protected IAdd&lt;IInstance_SP&lt;C>, C> Add {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.add == null)&#xA;&#x9;&#x9;&#x9;this.add = (IAdd&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;add&quot;);&#xA;&#x9;&#x9;return this.add;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance_SP&lt;C>, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;IInstance_SP&lt;C>, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IComputeRHS&lt;IInstance_SP&lt;C>, C> compute_rhs = null;&#xA;&#xA;protected IComputeRHS&lt;IInstance_SP&lt;C>, C> Compute_rhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.compute_rhs == null)&#xA;&#x9;&#x9;&#x9;this.compute_rhs = (IComputeRHS&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;compute_rhs&quot;);&#xA;&#x9;&#x9;return this.compute_rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIADIImpl.cs" srcType="base" uri="impl.sp.solve.ADI/bin/1.0.0.0/BaseIADIImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.topology.Ring;&#xA;using common.CopyFaces;&#xA;using sp.problem_size.Instance_SP;&#xA;using common.problem_size.Class;&#xA;using common.solve.Solve;&#xA;using common.solve.BeamWarmingMethod;&#xA;using common.orientation.Y;&#xA;using common.orientation.Z;&#xA;using common.solve.BlockDiagonalMatVecProduct;&#xA;using common.orientation.XYZ;&#xA;using environment.MPIDirect;&#xA;using common.Add;&#xA;using common.data.ProblemDefinition;&#xA;using common.ComputeRHS;&#xA;using common.orientation.X;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public abstract class BaseIADIImpl&lt;C>: Computation, BaseIADI&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell x = null;&#xA;&#xA;public ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell y = null;&#xA;&#xA;public ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;public ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICopyFaces&lt;IInstance_SP&lt;C>, C> copy_faces = null;&#xA;&#xA;protected ICopyFaces&lt;IInstance_SP&lt;C>, C> Copy_faces {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.copy_faces == null)&#xA;&#x9;&#x9;&#x9;this.copy_faces = (ICopyFaces&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;copy_faces&quot;);&#xA;&#x9;&#x9;return this.copy_faces;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IX> x_solve = null;&#xA;&#xA;protected ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IX> X_solve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x_solve == null)&#xA;&#x9;&#x9;&#x9;this.x_solve = (ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IX>) Services.getPort(&quot;x_solve&quot;);&#xA;&#x9;&#x9;return this.x_solve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IY> y_solve = null;&#xA;&#xA;protected ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IY> Y_solve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y_solve == null)&#xA;&#x9;&#x9;&#x9;this.y_solve = (ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IY>) Services.getPort(&quot;y_solve&quot;);&#xA;&#x9;&#x9;return this.y_solve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IZ> z_solve = null;&#xA;&#xA;protected ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IZ> Z_solve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z_solve == null)&#xA;&#x9;&#x9;&#x9;this.z_solve = (ISolve&lt;IInstance_SP&lt;C>, C, IBeamWarmingMethod, IZ>) Services.getPort(&quot;z_solve&quot;);&#xA;&#x9;&#x9;return this.z_solve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlockDiagonalMatVecProduct&lt;IInstance_SP&lt;C>, C, IXYZ, IBeamWarmingMethod> txinvr = null;&#xA;&#xA;protected IBlockDiagonalMatVecProduct&lt;IInstance_SP&lt;C>, C, IXYZ, IBeamWarmingMethod> Txinvr {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.txinvr == null)&#xA;&#x9;&#x9;&#x9;this.txinvr = (IBlockDiagonalMatVecProduct&lt;IInstance_SP&lt;C>, C, IXYZ, IBeamWarmingMethod>) Services.getPort(&quot;txinvr&quot;);&#xA;&#x9;&#x9;return this.txinvr;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IAdd&lt;IInstance_SP&lt;C>, C> add = null;&#xA;&#xA;protected IAdd&lt;IInstance_SP&lt;C>, C> Add {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.add == null)&#xA;&#x9;&#x9;&#x9;this.add = (IAdd&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;add&quot;);&#xA;&#x9;&#x9;return this.add;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance_SP&lt;C>, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;IInstance_SP&lt;C>, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IComputeRHS&lt;IInstance_SP&lt;C>, C> compute_rhs = null;&#xA;&#xA;protected IComputeRHS&lt;IInstance_SP&lt;C>, C> Compute_rhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.compute_rhs == null)&#xA;&#x9;&#x9;&#x9;this.compute_rhs = (IComputeRHS&lt;IInstance_SP&lt;C>, C>) Services.getPort(&quot;compute_rhs&quot;);&#xA;&#x9;&#x9;return this.compute_rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public int go(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIADIImpl.cs" srcType="base" uri="impl.sp.solve.ADI/bin/1.0.0.0/BaseIADIImpl.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
           <dependency>common.CopyFaces/bin/1.0.0.0/ICopyFaces.dll</dependency>
@@ -166,7 +166,7 @@
           <dependency>common.orientation.X/bin/1.0.0.0/IX.dll</dependency>
           <dependency>sp.ADI/bin/1.0.0.0/BaseIADI.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public class IADIImpl&lt;C> : BaseIADIImpl&lt;C>, IADI&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public override void compute() &#xA;{ &#xA;&#x9;Copy_faces.synchronize();&#xA;&#x9;Txinvr.compute();&#xA;&#x9;X_solve.compute();&#xA;&#x9;Y_solve.compute();&#xA;&#x9;Z_solve.compute();&#xA;&#x9;Add.compute();&#xA;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;" fileType="library" name="IADIImpl.cs" srcType="user" uri="impl.sp.solve.ADI/bin/1.0.0.0/IADIImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public class IADIImpl&lt;C> : BaseIADIImpl&lt;C>, IADI&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public override int go() &#xA;{ &#xA;&#x9;int no_nodes = Ranks.Length;&#xA;&#x9;if (no_nodes > 1) {&#xA;&#x9;   Copy_faces.go();&#xA;&#x9;}&#xA;&#x9;Compute_rhs.go();&#xA;&#x9;Txinvr.go();&#xA;&#x9;X_solve.go();&#xA;&#x9;Y_solve.go();&#xA;&#x9;Z_solve.go();&#xA;&#x9;Add.go();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;//Console.WriteLine(&quot;Iterate !!!&quot;);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;return 0;&#xA;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;" fileType="library" name="IADIImpl.cs" srcType="user" uri="impl.sp.solve.ADI/bin/1.0.0.0/IADIImpl.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.sp.solve.ADI/bin/1.0.0.0/BaseIADIImpl.dll</dependency>
           <dependency>sp.ADI/bin/1.0.0.0/IADI.dll</dependency>
@@ -175,15 +175,17 @@
       <visualDescription h="65" w="217" x="271" y="22">
         <color b="0" g="128" r="128"/>
       </visualDescription>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="43" y="4"/>
-        <slice pRef="blocks" sRef="z_solve"/>
-        <slice pRef="blocks" sRef="y_solve"/>
-        <slice pRef="blocks" sRef="x_solve"/>
-        <slice pRef="blocks" sRef="copy_faces"/>
-        <slice pRef="blocks" sRef="compute_rhs"/>
-        <slice pRef="blocks" sRef="add"/>
-        <slice pRef="blocks" sRef="txinvr"/>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="z_solve"/>
+        <slice pRef="mpi" sRef="y_solve"/>
+        <slice pRef="mpi" sRef="x_solve"/>
+        <slice pRef="mpi" sRef="copy_faces"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="77" y="104"/>
+        <slice pRef="cell" sRef="z_solve"/>
+        <slice pRef="z" sRef="copy_faces"/>
       </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="162" y="9"/>
@@ -195,17 +197,15 @@
         <slice pRef="problem" sRef="add"/>
         <slice pRef="problem" sRef="txinvr"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="77" y="104"/>
-        <slice pRef="cell" sRef="z_solve"/>
-        <slice pRef="z" sRef="copy_faces"/>
-      </port>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="mpi" sRef="z_solve"/>
-        <slice pRef="mpi" sRef="y_solve"/>
-        <slice pRef="mpi" sRef="x_solve"/>
-        <slice pRef="mpi" sRef="copy_faces"/>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="43" y="4"/>
+        <slice pRef="blocks" sRef="z_solve"/>
+        <slice pRef="blocks" sRef="y_solve"/>
+        <slice pRef="blocks" sRef="x_solve"/>
+        <slice pRef="blocks" sRef="copy_faces"/>
+        <slice pRef="blocks" sRef="compute_rhs"/>
+        <slice pRef="blocks" sRef="add"/>
+        <slice pRef="blocks" sRef="txinvr"/>
       </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="224" y="24"/>
@@ -284,16 +284,15 @@
         <port>blocks</port>
         <port>problem</port>
       </slices>
-      <visualDescription h="40" w="80" x="104" y="233"/>
+      <visualDescription h="40" w="80" x="88" y="275"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@b9c6cb1294972272571" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>base</originRef>
-      <originRef>copy_faces</originRef>
-      <originRef>interact</originRef>
-      <originRef>shift_y_north</originRef>
-      <originRef>topology</originRef>
+      <originRef>txinvr</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="adi"/>
-      <visualDescription h="60" w="61" x="126" y="492"/>
+      <visualDescription h="48" w="47" x="153" y="62"/>
     </enumerator>
   </componentInfo>
 </component:component>

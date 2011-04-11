@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
@@ -33,6 +34,12 @@ namespace impl.sp.SP {
 		private void runBenchmark()
 		{
 			setup_mpi();
+			
+        //   FileStream fs = new FileStream("/home/heron/output-" + node + "-1.txt", FileMode.Create);
+        //   TextWriter sw = new StreamWriter(fs);
+        //   TextWriter stdout = Console.Out;
+        //   Console.SetOut(sw);
+
 
 			if (!active)
 		    {
@@ -40,7 +47,6 @@ namespace impl.sp.SP {
 		        System.Environment.Exit(0);
 		    }
 		
-		    int niter = -1;
 		    if (node == root)
 		    {
 		        BMArgs.Banner(BMName, problem_class.ToString()[0], false, total_nodes);
@@ -63,16 +69,16 @@ namespace impl.sp.SP {
 //			Problem.initialize_problem_data();
 //			Problem.set_constants(0);
 			
-			Initialize.compute();
-			Lhsinit.compute();
-			Exact_rhs.compute();
+			Initialize.go();
+			Lhsinit.go();
+			Exact_rhs.go();
 		    //compute_buffer_size(5);
 		
 		    //---------------------------------------------------------------------
 		    //      do one time step to touch all code, and reinitialize
 		    //---------------------------------------------------------------------
-		    Adi.compute();
-		    Initialize.compute();
+		    Adi.go();
+		    Initialize.go();
 		
 		    //---------------------------------------------------------------------
 		    //      Synchronize before placing time stamp
@@ -91,12 +97,12 @@ namespace impl.sp.SP {
 		        {
 		            Console.WriteLine("Time step " + step);
 		        }
-				Adi.compute();
+				Adi.go();
 		    }
 			
 			Timer.stop(1);
 			
-			Verify.compute(); 
+			Verify.go(); 
 		    int verified = Verify.Verified;
 		
 		    double tmax = Timer.readTimerGlobal(t_total); 
@@ -120,12 +126,18 @@ namespace impl.sp.SP {
 		        results.print();
 		    }
 		
+          //  Console.Out.Flush();
+          // sw.Close();
+          // fs.Close();            
+          // Console.SetOut(stdout);
+			
 		    worldcomm.Barrier();
 		}
 		
-		public override void compute() 
+		public override int go() 
 		{           
 			runBenchmark();	
+			return 0;
 		
 		} // end activate method 
 		
@@ -133,10 +145,12 @@ namespace impl.sp.SP {
 	    {
 	        int nc, color;
 	
-	        worldcomm = this.LocalCommunicator;
+	        Console.WriteLine("BEFORE SETUP MPI !");
+	        worldcomm = this.WorldComm;
 	
 	        total_nodes = worldcomm.Size;
 	        node = worldcomm.Rank;
+	        Console.WriteLine(node + ": SETUP MPI - size = " + total_nodes);
 	
 	        //---------------------------------------------------------------------
 	        //     compute square root; add small number to allow for roundoff

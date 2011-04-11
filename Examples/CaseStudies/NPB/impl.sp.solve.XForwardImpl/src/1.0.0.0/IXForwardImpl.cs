@@ -34,7 +34,7 @@ namespace impl.sp.solve.XForwardImpl {
             ksize = cell_size[c, 2] + 2;
 		}
 		
-		public override void compute() 
+		public override int go() 
 		{ 
 			int i, j, k, n,  i1, i2, m;
 			double fac1, fac2;
@@ -172,24 +172,26 @@ namespace impl.sp.solve.XForwardImpl {
                         fac1 = 1.0d / lhs[c, k, j, i, n + 3];
                         lhs[c, k, j, i, n + 4] = fac1 * lhs[c, k, j, i, n + 4];
                         lhs[c, k, j, i, n + 5] = fac1 * lhs[c, k, j, i, n + 5];
-                        rhs[c, k, j, i, m] = fac1 * rhs[c, k, j, i, m];                        //*
+                        rhs[c, k, j, i, m] = fac1 * rhs[c, k, j, i, m];                        
                         lhs[c, k, j, i1, n + 3] = lhs[c, k, j, i1, n + 3] -
-                                       lhs[c, k, j, i1, n + 2] * lhs[c, k, j, i, n + 4];       //*
+                                       lhs[c, k, j, i1, n + 2] * lhs[c, k, j, i, n + 4];       
                         lhs[c, k, j, i1, n + 4] = lhs[c, k, j, i1, n + 4] -
                                        lhs[c, k, j, i1, n + 2] * lhs[c, k, j, i, n + 5];
                         rhs[c, k, j, i1, m] = rhs[c, k, j, i1, m] -
-                                       lhs[c, k, j, i1, n + 2] * rhs[c, k, j, i, m];           //*
+                                       lhs[c, k, j, i1, n + 2] * rhs[c, k, j, i, m];           
                         //---------------------------------------------------------------------
                         //               Scale the last row immediately
                         //---------------------------------------------------------------------
                         fac2 = 1.0d / lhs[c, k, j, i1, n + 3];
                         lhs[c, k, j, i1, n + 4] = fac2 * lhs[c, k, j, i1, n + 4];
                         lhs[c, k, j, i1, n + 5] = fac2 * lhs[c, k, j, i1, n + 5];
-                        rhs[c, k, j, i1, m] = fac2 * rhs[c, k, j, i1, m];                     //*
+                        rhs[c, k, j, i1, m] = fac2 * rhs[c, k, j, i1, m];                     
 
                     }
                 }
             }
+			
+			return 0;
 		} // end activate method 
 		
 	}

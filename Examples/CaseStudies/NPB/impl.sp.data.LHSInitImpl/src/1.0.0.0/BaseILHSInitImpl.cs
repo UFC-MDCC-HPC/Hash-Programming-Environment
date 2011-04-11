@@ -34,7 +34,7 @@ override public void initialize()
 	slice = Blocks.cell_slice;
 	
 	ncells = Problem.NCells;
-	lhs = Problem.Field_u;			
+	lhs = Problem.Field_lhs;			
 				
 	IMAX = Problem.IMAX;
 	JMAX = Problem.JMAX;
@@ -70,7 +70,7 @@ public IProblemDefinition<I, C> Problem {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

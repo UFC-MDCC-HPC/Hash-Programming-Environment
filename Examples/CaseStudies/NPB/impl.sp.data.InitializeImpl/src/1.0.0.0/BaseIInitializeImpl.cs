@@ -85,7 +85,7 @@ protected IExactSolution Exact_solution {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

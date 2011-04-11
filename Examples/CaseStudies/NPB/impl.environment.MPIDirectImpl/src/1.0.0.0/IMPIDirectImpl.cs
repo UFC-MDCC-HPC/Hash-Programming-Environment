@@ -16,13 +16,13 @@ public class IMPIDirectImpl : BaseIMPIDirectImpl, IMPIDirect
 
    } 
    
-   new public void initialize()
+   override public void initialize()
    {
    
       // string[] args = System.Environment.GetCommandLineArgs();
    	  // mpi = new MPI.Environment(ref args);
    	
-   	   Console.WriteLine("MPI.NET Init for process #" + Communicator.world.Rank);
+   	   Console.WriteLine("MPI.NET Init for process #" + this.WorldComm.Rank);
    }
 
    public MPI.Environment MPI {
@@ -31,21 +31,23 @@ public class IMPIDirectImpl : BaseIMPIDirectImpl, IMPIDirect
 
    public Intracommunicator worldComm()
    {
-      return Communicator.world;
+      return this.WorldComm; // Communicator.world;
    
    }
    
    public Intracommunicator localComm(IUnit caller)
    {
        Intracommunicator _localComm;   
-       _localComm = (Intracommunicator)Communicator.world.Create(Communicator.world.Group.IncludeOnly(caller.Ranks));
+       //_localComm = (Intracommunicator)Communicator.world.Create(Communicator.world.Group.IncludeOnly(caller.Ranks));
+       _localComm = (Intracommunicator)this.WorldComm.Create(this.WorldComm.Group.IncludeOnly(caller.Ranks));
        return _localComm;
    }
    
    public Intracommunicator enumComm(IUnit caller)
    {
        Intracommunicator _enumComm;   
-       _enumComm = (Intracommunicator)Communicator.world.Create(Communicator.world.Group.IncludeOnly(caller.EnumPeers));
+       //_enumComm = (Intracommunicator)Communicator.world.Create(Communicator.world.Group.IncludeOnly(caller.EnumPeers));
+       _enumComm = (Intracommunicator)this.WorldComm.Create(this.WorldComm.Group.IncludeOnly(caller.EnumPeers));
        return _enumComm;
    }
    

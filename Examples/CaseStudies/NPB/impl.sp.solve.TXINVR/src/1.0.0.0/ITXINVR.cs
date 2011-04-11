@@ -30,7 +30,8 @@ public void enterStage(int stage)
 		
 
 		
-public override void compute() { 
+public override int go() 
+{ 
     int c, i, j, k, isize, jsize, ksize;
     double t1, t2, t3, ac, ru1, xvel, yvel, zvel,
            r1, r2, r3, r4, r5, ac2inv;
@@ -70,11 +71,15 @@ public override void compute() {
                     rhs[c, k, j, i, 2] = ru1 * (yvel * r1 - r3);
                     rhs[c, k, j, i, 3] = -t2 + t3;
                     rhs[c, k, j, i, 4] = t2 + t3;
+                    
+                   //     for (int m=0;m<5;m++)		                
+		           //         Console.WriteLine("txinvr - rhs" + "[" + c + "," + k + "," + j + "," + i + "," + m + "] = " + rhs[c, k, j, i, m]);
                 }
             }
         }
     }
-
+			
+	return 0;
 } // end activate method 
 
 }

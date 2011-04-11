@@ -112,7 +112,7 @@ public BaseIXLHSImpl() {
 
 } 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

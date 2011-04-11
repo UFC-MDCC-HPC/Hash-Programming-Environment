@@ -21,7 +21,7 @@ public class IFieldImpl : BaseIFieldImpl, IField
 			} 
 		}
 		
-	public void initialize_field(string fieldName, int maxcells, int IMAX, int JMAX, int KMAX, int neq) 
+	public void initialize_field(string fieldName, int maxcells, int KMAX, int JMAX, int IMAX, int neq) 
 	{
 		this.fieldName = fieldName;
 		this._IMAX = IMAX;
@@ -30,12 +30,12 @@ public class IFieldImpl : BaseIFieldImpl, IField
 		this.maxcells = maxcells;
 		this.neq = neq;
 			
-		field = new double[maxcells, KMAX + 3, JMAX + 3, IMAX + 3, neq];
+		field = new double[maxcells, KMAX, JMAX, IMAX, neq];
 	}
 		
-	public void initialize_field(string fieldName, int maxcells, int IMAX, int JMAX, int KMAX) 
+	public void initialize_field(string fieldName, int maxcells, int KMAX, int JMAX, int IMAX) 
 	{
-		this.initialize_field(fieldName, maxcells, IMAX, JMAX, KMAX, 1);
+		this.initialize_field(fieldName, maxcells, KMAX, JMAX, IMAX, 1);
 	}
 
 	private string fieldName;

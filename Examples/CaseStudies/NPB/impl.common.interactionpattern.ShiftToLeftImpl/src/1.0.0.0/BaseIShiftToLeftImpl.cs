@@ -19,12 +19,17 @@ public abstract class BaseIShiftToLeftImpl<DIR>: Synchronizer, BaseIShift<DIR>
 
 protected Intracommunicator comm;		
 		
+override public void initialize()
+{
+   comm = this.WorldComm; //Mpi.localComm(this);
+}
+	
 private ICell cell = null;
 
 public ICell Cell {
 	get {
 		if (this.cell == null)
-			this.cell = (ICell) Services.getPort("cell");
+			this.cell = (ICell) Services.getPort("topology");
 		return this.cell;
 	}
 }
@@ -73,7 +78,7 @@ protected DIR Direction {
 	}
 }
 
-abstract public void synchronize(); 
+abstract public int go(); 
 
 
 }

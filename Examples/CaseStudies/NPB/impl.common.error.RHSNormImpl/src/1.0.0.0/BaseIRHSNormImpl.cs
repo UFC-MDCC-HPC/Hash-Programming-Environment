@@ -37,7 +37,7 @@ override public void initialize()
 	rhs = Problem.Field_rhs;
 	grid_points = Problem.grid_points;
 	
-	comm_setup = Mpi.localComm(this);			
+	comm_setup = this.WorldComm; // Mpi.localComm(this);			
 }
 		
 #endregion
@@ -79,7 +79,7 @@ public IMPIDirect Mpi {
 }
 		
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

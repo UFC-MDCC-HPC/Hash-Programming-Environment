@@ -24,6 +24,8 @@ public class IShiftToLeftImpl<DIR> : BaseIShiftToLeftImpl<DIR>, IShift<DIR>
 	{
 		if (handle_left != null)
 				requestList.Remove(handle_left);
+		int rank = comm.Rank;
+		// Console.WriteLine(rank + ": shift-to-left : initiate_send : " + Cell.predecessor);
 		handle_left = comm.ImmediateSend<double>(Output_buffer.Array, Cell.predecessor, DEFAULT_TAG);      
 		requestList.Add(handle_left);
 	}
@@ -32,6 +34,8 @@ public class IShiftToLeftImpl<DIR> : BaseIShiftToLeftImpl<DIR>, IShift<DIR>
 	{
 		if (handle_right != null)
 				requestList.Remove(handle_right);
+		int rank = comm.Rank;
+		//Console.WriteLine(rank + ": shift-to-left : initiate_recv : " + Cell.successor);
 		handle_right = comm.ImmediateReceive<double>(Cell.successor, DEFAULT_TAG, Input_buffer.Array);			
 		requestList.Add(handle_right);
 	}
@@ -42,10 +46,14 @@ public class IShiftToLeftImpl<DIR> : BaseIShiftToLeftImpl<DIR>, IShift<DIR>
 	public Request HandleLeft { get { return handle_left; } }
 	public Request HandleRight { get { return handle_right; } }
 			
-	public override void synchronize() { 
-	   
+	public override int go() 
+	{ 	   
+	   int rank = comm.Rank;
+	   //Console.Error.WriteLine(rank + ": shift to left begin");
 	   requestList.WaitAll();
-				
+	   //Console.Error.WriteLine(rank + ": shift to left end");
+			
+	   return 0;		
 	} // end activate method 
 
 }

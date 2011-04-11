@@ -145,7 +145,7 @@ protected IField Forcing {
 	get {
 		if (forcing==null) 
 			forcing = (IField) Services.getPort("forcing");
-		return rhs;
+		return forcing;
 	}
 }
 

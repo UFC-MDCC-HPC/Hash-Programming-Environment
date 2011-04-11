@@ -26,11 +26,11 @@ namespace impl.sp.solve.PINVR {
 		
 		public void enterStage(int stage)			
 		{
-		    c = slice[stage, 0];
+		    c = slice[stage, 1];
 		}	                       
 				
 		
-		public override void compute() { 
+		public override int go() { 
 					
 		    int i, j, k;
 		    double r1, r2, r3, r4, r5, t1, t2;
@@ -60,10 +60,13 @@ namespace impl.sp.solve.PINVR {
 		                rhs[c, k, j, i, 2] = r2;
 		                rhs[c, k, j, i, 3] = -t1 + t2;
 		                rhs[c, k, j, i, 4] = t1 + t2;
+                    //    for (int m=0;m<5;m++)		                
+		             //       Console.WriteLine("pinvr - rhs" + "[" + c + "," + k + "," + j + "," + i + "," + m + "] = " + rhs[c, k, j, i, m]);
 		            }
 		        }
 		    }
-		
+			
+			return 0;		
 		} // end activate method 
 	
 	}
