@@ -80,7 +80,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="topology" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
-        <visualDescription h="35" w="38" x="288" y="155">
+        <visualDescription h="35" w="38" x="279" y="150">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="cell">
@@ -218,7 +218,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
-        <visualDescription h="35" w="38" x="288" y="155">
+        <visualDescription h="35" w="38" x="279" y="150">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="cell">
@@ -352,17 +352,12 @@
     <supplyParameter cRef="x_dir" varName="DIR_X"/>
     <supplyParameter cRef="dir_z" varName="DIR_Z"/>
     <supplyParameter cRef="xyz" varName="DIR"/>
-    <supplyParameter cRef="instance" varName="I"/>
     <supplyParameter cRef="method" varName="MTH"/>
+    <supplyParameter cRef="instance" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
-    <innerRenaming cNewName="z" cOldName="topology" cRef="z_solve"/>
     <innerRenaming cNewName="y" cOldName="topology" cRef="y_solve"/>
+    <innerRenaming cNewName="z" cOldName="topology" cRef="z_solve"/>
     <innerRenaming cNewName="x" cOldName="topology" cRef="x_solve"/>
-    <fusion>
-      <cRefs>copy_faces</cRefs>
-      <cRefs>z_solve</cRefs>
-      <pRef>z</pRef>
-    </fusion>
     <fusion>
       <cRefs>txinvr</cRefs>
       <cRefs>add</cRefs>
@@ -380,8 +375,8 @@
     </fusion>
     <fusion>
       <cRefs>copy_faces</cRefs>
-      <cRefs>x_solve</cRefs>
-      <pRef>x</pRef>
+      <cRefs>z_solve</cRefs>
+      <pRef>z</pRef>
     </fusion>
     <fusion>
       <cRefs>txinvr</cRefs>
@@ -399,6 +394,11 @@
       <cRefs>y_solve</cRefs>
       <cRefs>z_solve</cRefs>
       <pRef>mpi</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>copy_faces</cRefs>
+      <cRefs>x_solve</cRefs>
+      <pRef>x</pRef>
     </fusion>
     <interface iRef="IADI" nArgs="1">
       <slice isRef="z_solve">
@@ -429,27 +429,27 @@
         <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
         <visualDescription h="10" w="10" x="194" y="90"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@300ae423" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorSeqType" label="hPE.frontend.kinds.activate.model.protocol.HSeqAction@7039bc80" repeat="0">
         <visualDescription h="493" w="490" x="145" y="125"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b07ce79" repeat="0" sliceRef="copy_faces">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5e86b10f" repeat="0" sliceRef="copy_faces">
           <visualDescription h="50" w="50" x="225" y="38"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1d8477cc" repeat="0" sliceRef="compute_rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5cd28044" repeat="0" sliceRef="compute_rhs">
           <visualDescription h="50" w="50" x="222" y="103"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@63d50137" repeat="0" sliceRef="txinvr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7fe31ff7" repeat="0" sliceRef="txinvr">
           <visualDescription h="50" w="50" x="224" y="167"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3542f515" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1847d2b9" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="231" y="231"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3ee85104" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@135b7c23" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="230" y="298"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@61efde0" repeat="0" sliceRef="z_solve">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5b32e7c2" repeat="0" sliceRef="z_solve">
           <visualDescription h="50" w="50" x="230" y="366"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5cad8043" repeat="0" sliceRef="add">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6b0da054" repeat="0" sliceRef="add">
           <visualDescription h="50" w="50" x="224" y="420"/>
         </action>
       </protocol>
@@ -474,17 +474,15 @@
       <visualDescription h="140" w="313" x="431" y="89">
         <color b="0" g="128" r="128"/>
       </visualDescription>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="11" y="97"/>
-        <slice pRef="mpi" sRef="z_solve"/>
-        <slice pRef="mpi" sRef="y_solve"/>
-        <slice pRef="mpi" sRef="x_solve"/>
-        <slice pRef="mpi" sRef="copy_faces"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="77" y="104"/>
-        <slice pRef="cell" sRef="z_solve"/>
-        <slice pRef="z" sRef="copy_faces"/>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="162" y="9"/>
+        <slice pRef="problem" sRef="z_solve"/>
+        <slice pRef="problem" sRef="y_solve"/>
+        <slice pRef="problem" sRef="x_solve"/>
+        <slice pRef="problem" sRef="copy_faces"/>
+        <slice pRef="problem" sRef="compute_rhs"/>
+        <slice pRef="problem" sRef="add"/>
+        <slice pRef="problem" sRef="txinvr"/>
       </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="43" y="4"/>
@@ -496,15 +494,17 @@
         <slice pRef="blocks" sRef="add"/>
         <slice pRef="blocks" sRef="txinvr"/>
       </port>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="162" y="9"/>
-        <slice pRef="problem" sRef="z_solve"/>
-        <slice pRef="problem" sRef="y_solve"/>
-        <slice pRef="problem" sRef="x_solve"/>
-        <slice pRef="problem" sRef="copy_faces"/>
-        <slice pRef="problem" sRef="compute_rhs"/>
-        <slice pRef="problem" sRef="add"/>
-        <slice pRef="problem" sRef="txinvr"/>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="11" y="97"/>
+        <slice pRef="mpi" sRef="z_solve"/>
+        <slice pRef="mpi" sRef="y_solve"/>
+        <slice pRef="mpi" sRef="x_solve"/>
+        <slice pRef="mpi" sRef="copy_faces"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="77" y="104"/>
+        <slice pRef="cell" sRef="z_solve"/>
+        <slice pRef="z" sRef="copy_faces"/>
       </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="224" y="24"/>

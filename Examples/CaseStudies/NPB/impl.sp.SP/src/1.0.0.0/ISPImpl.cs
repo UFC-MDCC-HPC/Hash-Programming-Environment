@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
@@ -13,34 +12,22 @@ using common.problem_size.Instance;
 namespace impl.sp.SP { 
 
 	public class ISPImpl<CLASS> : BaseISPImpl<CLASS>, ISP<CLASS>
-		where CLASS:IClass
+	where CLASS:IClass
 	{
         public int bid = -1;
 		public static int t_total = 1;
-    	public static String BMName = "SP";
-		
+    	public static String BMName = "SP";		
 		protected bool active;
 		protected int node, no_nodes, total_nodes, root ,maxcells;
-	    protected Intracommunicator worldcomm, comm_setup, comm_solve, comm_rhs = null;
-		
-		
+	    protected Intracommunicator worldcomm, comm_setup, comm_solve, comm_rhs = null;	
 		public BMResults results;
 		
-		public ISPImpl() 
-	    { 			
-			
-		} 
+		public ISPImpl() {} 
 		
 		private void runBenchmark()
 		{
 			setup_mpi();
 			
-        //   FileStream fs = new FileStream("/home/heron/output-" + node + "-1.txt", FileMode.Create);
-        //   TextWriter sw = new StreamWriter(fs);
-        //   TextWriter stdout = Console.Out;
-        //   Console.SetOut(sw);
-
-
 			if (!active)
 		    {
 		        Console.WriteLine("not active !");
@@ -49,8 +36,7 @@ namespace impl.sp.SP {
 		
 		    if (node == root)
 		    {
-		        BMArgs.Banner(BMName, problem_class.ToString()[0], false, total_nodes);
-		
+		        BMArgs.Banner(BMName, problem_class.ToString()[0], false, total_nodes);		
 		    }
 		
 			// Process.make_set();
@@ -125,12 +111,6 @@ namespace impl.sp.SP {
 		                      bid);
 		        results.print();
 		    }
-		
-          //  Console.Out.Flush();
-          // sw.Close();
-          // fs.Close();            
-          // Console.SetOut(stdout);
-			
 		    worldcomm.Barrier();
 		}
 		
@@ -145,12 +125,10 @@ namespace impl.sp.SP {
 	    {
 	        int nc, color;
 	
-	        Console.WriteLine("BEFORE SETUP MPI !");
 	        worldcomm = this.WorldComm;
 	
 	        total_nodes = worldcomm.Size;
 	        node = worldcomm.Rank;
-	        Console.WriteLine(node + ": SETUP MPI - size = " + total_nodes);
 	
 	        //---------------------------------------------------------------------
 	        //     compute square root; add small number to allow for roundoff
@@ -204,8 +182,5 @@ namespace impl.sp.SP {
 	        }
 	        return mflops;
 	    }
-		
-
 	}
-
 }
