@@ -7,6 +7,7 @@ namespace lu.ssor.SSOR {
 	where I:IInstance<C>
 	where C:IClass{
 	   double[] Rsdnm { get; }
+	   double Maxtime { get; }
 	   void setParameters(int niter);
 	}
 }
