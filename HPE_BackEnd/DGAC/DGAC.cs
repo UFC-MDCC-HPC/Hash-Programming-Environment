@@ -111,6 +111,8 @@ namespace br.ufc.pargo.hpe.backend
                         }
                     }
 
+                    Console.Error.Write("Compiling sources ...");
+
                     ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
 
                     foreach (LoaderApp.InfoCompile interfaceToCompile in infoCompile)
@@ -123,11 +125,13 @@ namespace br.ufc.pargo.hpe.backend
                         string library_path = interfaceToCompile.library_path;
                         int outputType = interfaceToCompile.output_type;
 
+                        Console.Error.Write(moduleName + ", ");
+
                         string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                            worker,
                                                                            sourceCode,
                                                                            moduleName,
-                                                                          interfaceToCompile.references,
+                                                                           interfaceToCompile.references,
                                                                            outputType,
                                                                            userName,
                                                                            password,
@@ -137,12 +141,18 @@ namespace br.ufc.pargo.hpe.backend
                             idao.setPublicKey(id_abstract, interfaceName, publicKey);
                     }
 
+                    Console.Error.Write("ok ");
+
                     Connector.commitTransaction(); // if it is ok, commit ...
+
+		    Console.Error.WriteLine("commited !");
 
                 }
                 catch (Exception e)
                 {
+                    Console.Error.Write("Rolling back transaction...");
                     Connector.rollBackTransaction();
+                    Console.Error.WriteLine("ok");
                     throw e;
                 }
                 finally
@@ -182,6 +192,7 @@ namespace br.ufc.pargo.hpe.backend
                         exists = true;
                     }
 
+                    Console.Error.Write("Compiling sources ...");
 
                     ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
 
@@ -194,6 +205,8 @@ namespace br.ufc.pargo.hpe.backend
                         string unitName = unitToCompile.unitId;
                         string sourceCode = unitToCompile.sourceCode;
                         int outputType = unitToCompile.output_type;
+
+                        Console.Error.Write(moduleName + ", ");
 
                         string publicKey = this.sendCompileCommandToWorker(library_path,
                                                                            worker,
@@ -208,11 +221,17 @@ namespace br.ufc.pargo.hpe.backend
                             udao.setPublicKey(id_concrete, unitName, publicKey);
                     }
 
+                    Console.Error.Write("ok ");
+
                     Connector.commitTransaction(); // if it is ok, commit ...
+
+                    Console.Error.WriteLine("commited !");
+
 
                 }
                 catch (Exception e)
                 {
+                    Console.Error.WriteLine("Rolling back transaction !");
                     Connector.rollBackTransaction();
                     throw e;
                 }
@@ -299,6 +318,7 @@ namespace br.ufc.pargo.hpe.backend
                     r[i] = new DeployedParameterType();
                     r[i].parameter_id = sp.Id_parameter;
                     AbstractComponentFunctorApplication acfa = acfadao.retrieve(sp.Id_functor_app_actual);
+                    if (acfa==null) Console.Error.WriteLine("Id_functor_app_actual = " + sp.Id_functor_app_actual);
                     r[i].actualSpecified = true;
                     r[i].actual = acfa.Id_abstract;
                     r[i].parameter = readEnvironmentConcreteParameters(sp.Id_functor_app_actual);
@@ -354,6 +374,7 @@ namespace br.ufc.pargo.hpe.backend
                     foreach (EnumerationInterface ei in eiList)
                     {
                         Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
+                        if (e==null) Console.Error.WriteLine("id_abstract=" + ei.Id_abstract + ", id_enumerator=" + ei.Id_enumerator + ", id_interface=" + i.Id_interface);
                         if (e.Valuation == -1 && !rList.Contains(e.Variable))
                         {
                             rList.Add(e.Variable);
@@ -419,7 +440,7 @@ namespace br.ufc.pargo.hpe.backend
 
                     DGAC.database.Component c = cdao.retrieve(id_concrete);
 
-                    int[] nodes = new int[] { 0, 1, 2, 3, 4 };
+                    int[] nodes = new int[] { 0, 1, 2, 3/*, 4, 5, 6, 7 ,8, 9, 10, 11, 12, 13, 14, 15*/};
 
                     /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();
@@ -431,7 +452,7 @@ namespace br.ufc.pargo.hpe.backend
 
                     String session_id_string = "session_" + session_id.ToString();
 
-                    string instantiatior_string = File.ReadAllText("h:\\temp\\teste.xml");
+                    string instantiatior_string = File.ReadAllText("/media/HERON/temp/teste.xml");
 
                     ComponentID cid = manager.createInstance(session_id_string + ".application", /*c.Library_path*/ instantiatior_string, properties);
 
@@ -910,10 +931,12 @@ namespace br.ufc.pargo.hpe.backend
                     framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
 
                     // GET THE UNIT SLICE AND RETURNS IT
-                    return (IUnit)services.getPort(portName);
+                    the_unit = (IUnit)services.getPort(portName);
+                    the_unit.GlobalRank = ownerUnit.GlobalRank;
+                    the_unit.Id_inner = slice.Id_inner;
                 }
-                else
-                    return the_unit;
+                
+                return the_unit;
             }
 
             public static void setupSlice(br.ufc.pargo.hpe.basic.IUnit unit, br.ufc.pargo.hpe.basic.IUnit unit_slice, string id_inner)

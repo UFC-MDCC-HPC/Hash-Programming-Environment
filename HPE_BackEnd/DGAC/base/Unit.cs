@@ -22,7 +22,7 @@ namespace br.ufc.pargo.hpe.basic
         int Id_functor_app { set; get; }
         int Id_abstract { get; }
         string Id_unit { set; get; }
-        // string Id_inner { set; get; }
+        string Id_inner { set; get; }
 
         int GlobalRank { set; get; }                         // The rank of the process (application) where the unit is placed on
         int LocalRank { get; }                               // = RanksInv[globalRank]

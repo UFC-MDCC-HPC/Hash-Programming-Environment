@@ -740,13 +740,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     /* BEGIN FOM RunApplication */
 
-                    Console.WriteLine("ENTROU createInstance manager");
+                    Console.Error.WriteLine("createInstance manager");
 
                     IDictionary<string, int> files = new Dictionary<string, int>();
                     IDictionary<string, int> enums = readEnumerators(properties);
 
                     int[] nodes = this.fetchNodes(properties);
 
+                    Console.Error.WriteLine("Number of nodes = " + nodes.Length);
+                    
                     FileInfo file = FileUtil.writingToFile(instanceName + ".xml", instantiator_string);
                     ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
 
@@ -791,6 +793,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         nprocs += count;
                     }
 
+                    Console.Error.WriteLine("Number of processes = " + nprocs);
+
                     Connector.commitTransaction();
 
                     if (nprocs != aprocs)
@@ -803,7 +807,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     bool[] node_marking = new bool[worker.Length];
                     for (int i = 0; i < node_marking.Length; i++)
                         node_marking[i] = false;
-
+                    
                     IDictionary<Thread, GoWorker> go_objs = new Dictionary<Thread, GoWorker>();
                     IDictionary<Thread, int> thread_node = new Dictionary<Thread, int>();
                     IDictionary<Thread, string> thread_unit_id = new Dictionary<Thread, string>();
@@ -1034,6 +1038,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 /* The Worker Object of each computing node */
                 private WorkerObject[] worker = null;
                 private string[] node = null;
+                private int[] port = null;
+
                // private TcpChannel tcpChannel = null;
 
                 private string workerFails = null;
@@ -1053,35 +1059,40 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         //System.Threading.Thread.Sleep(10000);
 
                         IList<string> nodeList = new List<string>();
+                        IList<int> portList = new List<int>();
                         using (TextReader tr = new StreamReader(Constants.hosts_file))
                         {
                             string one_line;
                             while ((one_line = tr.ReadLine()) != null)
                             {
-                                nodeList.Add(one_line);
-                                Console.WriteLine(one_line); // Write to console.
+                                int my_port = Constants.WORKER_PORT;
+                                string[] s = one_line.Split(' ');                                
+                                if (s.Length > 1)
+                                   my_port = System.Convert.ToInt32(s[1], 10);
+                                nodeList.Add(s[0]);
+                                portList.Add(my_port);
+                                Console.Write(s[0]); Console.WriteLine(" - port = " + my_port);
                             }
                             node = new string[nodeList.Count];
+                            port = new int[portList.Count];
                             nodeList.CopyTo(node, 0);
+                            portList.CopyTo(port, 0);
                         }
                         
 
                         worker = new WorkerObject[node.Length];
 
-                       // tcpChannel = new TcpChannel();
-                       // ChannelServices.RegisterChannel(tcpChannel, false);
-
                         /* Create each worker object and fill the worker array */
                         foreach (string n in node)
                         {
                             try
-                            {
-                                createWorkerObject(i++, n);
+                            {   
+                                createWorkerObject(i, n, port[i]);
+                                i++;
                                 Console.WriteLine("CONNECTED TO WORKER " + n);
                             }
                             catch (Exception e)
                             {
-                                i--;
                                 failsCount++;
                                 workerFails = (e.Message == null ? "NULL" : e.Message) + "  ---  "; // + e.InnerException.Message == null ? "NULL" : e.InnerException.Message;
                                 Console.WriteLine("ERROR CONNECTING TO WORKER " + n + ". Exception : " + e.Message);
@@ -1104,14 +1115,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                  //   ChannelServices.UnregisterChannel(ch);
                 }
 
-                private void createWorkerObject(int i, string node)
+                private void createWorkerObject(int i, string node, int port)
                 {
                     WorkerObject wo = null;
 
                     System.Type requiredType = typeof(WorkerObject);
 
                     wo = (WorkerObject)Activator.GetObject(requiredType,
-                        "tcp://" + node + ":" + Constants.WORKER_PORT + "/" + Constants.WORKER_SERVICE_NAME);
+                        "tcp://" + node + ":" + port /* Constants.WORKER_PORT */ + "/" + Constants.WORKER_SERVICE_NAME);
 
                     wo.sayHi();
 
@@ -1133,6 +1144,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     {
                         t.Join();
                     }
+                    Console.Error.WriteLine("Joined Threads : " + session_id_string);
                 }
 
                 internal class RunApplicationThread

@@ -28,21 +28,25 @@ public class Connector {
 
     public static void beginTransaction() 
     {
+        Console.Error.WriteLine("begin transaction");
         dbtrans = dbcon.BeginTransaction();
     }
 
     public static void commitTransaction()
     {
+        Console.Error.WriteLine("commit transaction");
         dbtrans.Commit();
     }
 
     public static void rollBackTransaction()
     {
+        Console.Error.WriteLine("rollback transaction");
         dbtrans.Rollback();
     }
 
     public static void endTransaction()
     {
+        Console.Error.WriteLine("end transaction");
         dbtrans = null;
     }
 

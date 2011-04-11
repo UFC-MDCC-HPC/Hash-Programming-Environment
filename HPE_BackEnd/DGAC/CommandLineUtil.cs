@@ -153,7 +153,7 @@ public class CommandLineUtil {
   public static bool gacutil_install(string cuid, string assembly, int gac, string userName, string password){
 
       // runCommand(Constants.gac_util, "-u " + assembly);
-      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" /* + " -package " + cuid */, userName, password, null);
+      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid, userName, password, null);
 
 //      runCommand("copy", Constants.PATH_TEMP_WORKER + assembly + ".dll" + " " + Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + cuid );
 
@@ -163,6 +163,7 @@ public class CommandLineUtil {
       string fileTarget = pathTarget + Path.DirectorySeparatorChar + assembly + ".dll";
       if (!Directory.Exists(pathTarget))
       {
+	  Console.WriteLine("From " + fileSource + " to " + fileTarget);
           Directory.CreateDirectory(pathTarget);
       }
       File.Copy(fileSource, fileTarget, true);
@@ -196,7 +197,6 @@ public class CommandLineUtil {
 
     public static int runCommand(string cmd, string args, string userName, string password_, String curDir)
     {
-
         int ExitCode;
 
         System.Security.SecureString password = null;
@@ -259,13 +259,13 @@ public class CommandLineUtil {
         }
         catch (System.ComponentModel.Win32Exception w)
         {
-            Console.WriteLine(w.Message);
-            Console.WriteLine(w.ErrorCode.ToString());
-            Console.WriteLine(w.NativeErrorCode.ToString());
-            Console.WriteLine(w.StackTrace);
-            Console.WriteLine(w.Source);
+            Console.WriteLine("Message: " + w.Message);
+            Console.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
+            Console.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
+            Console.WriteLine("StackTrace: " + w.StackTrace);
+            Console.WriteLine("Source: " + w.Source);
             Exception e = w.GetBaseException();
-            Console.WriteLine(e.Message);
+            Console.WriteLine("Base Exception Message: " + e.Message);
 
             throw w;
         }

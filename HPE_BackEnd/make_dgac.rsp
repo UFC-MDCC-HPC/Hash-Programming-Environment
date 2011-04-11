@@ -36,7 +36,7 @@ DGAC/ManagerServices.cs
 -optimize+
 
 -r:System.Data
--r:DGAC/database/MySql.Data
+-r:MySql.Data
 -r:System.Runtime.Remoting
 -r:System.Xml
 -r:MPI

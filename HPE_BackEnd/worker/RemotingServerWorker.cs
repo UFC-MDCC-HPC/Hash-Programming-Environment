@@ -14,6 +14,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
     public class WorkerService : System.ServiceProcess.ServiceBase
     {
         private TcpChannel ch;
+        private static int port = Constants.WORKER_PORT;
 
         private MPI.Environment mpi = null;
         private Intracommunicator global_communicator = null;
@@ -24,7 +25,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             InitializeComponent();
 
+            Console.WriteLine("Starting MPI ... ");
             mpi = new MPI.Environment(ref args, Threading.Multiple);
+            Console.Write("ok !");
             this.global_communicator = MPI.Communicator.world;
             number_of_workers = this.global_communicator.Size;
             my_rank = this.global_communicator.Rank;
@@ -33,6 +36,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public static void Main(string[] args)
         {
+            port = args.Length == 0 ? port : System.Convert.ToInt32(args[0], 10);
+            Console.WriteLine("Initializing Worker - port = " +  port);
             System.ServiceProcess.ServiceBase[] ServicesToRun;
             ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService(args) };
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
@@ -49,7 +54,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             //System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
             server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
             IDictionary prop = new Hashtable();
-            prop["port"] = Constants.WORKER_PORT;
+            prop["port"] = port;
             ch = new TcpChannel(prop, /*client_provider*/ null, server_provider);
 
             //ch = new TcpChannel(Constants.WORKER_PORT);
@@ -78,46 +83,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             this.startWorkerServer();
 
-           // mpi_listener = new Thread(mpi_listening);
-           // mpi_listener.Start();
-        }
+         }
 
-        // protected Thread mpi_listener = null;
-
-        // protected ReceiveRequest request = null;
-
-        // protected bool cancel = false;
-
-       /* protected void mpi_listening()
-        {
-            do
-            {
-                Console.WriteLine("Worker " + my_rank + " is listening !");
-
-                request = this.global_communicator.ImmediateReceive<int>(Communicator.anySource, MPIWorkerMessagingConstants.DEFAULT_TAG);
-
-                if (!cancel)
-                {
-
-                    int v = (int)request.GetValue();
-
-                    switch (v)
-                    {
-                        case MPIWorkerMessagingConstants.CREATE_INSTANCE:
-                            Console.WriteLine("CREATE_INSTANCE on " + this.global_communicator.Rank);
-                            break;
-                    }
-                }
-            } while (!cancel);
-
-            Console.WriteLine("Worker is no more listening !");
-        }
-        */
         protected override void OnStop()
         {
-            //cancel = true;
-            //request.Cancel();
-            //mpi_listener.Join();
             mpi.Dispose();
             this.stopWorkerServer();
         }

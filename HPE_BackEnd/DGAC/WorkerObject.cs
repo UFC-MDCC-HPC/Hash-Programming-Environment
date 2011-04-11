@@ -295,7 +295,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 // This part is only performed by applications.
                 DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
+                Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
                 pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
+                Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
+                pmain.GlobalRank = pmain.LocalCommunicator.Rank;
                 //pmain.createSlices();
                 
                 // --------------------------------------------
@@ -934,9 +937,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void createInstanceNull()
         {
-            this.global_communicator = MPI.Communicator.world;
             my_rank = this.global_communicator.Rank;
+            Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split NULL !!!");
             this.global_communicator.Split(0, my_rank);
+            Console.Error.WriteLine("END - Worker " + my_rank + ": Split NULL !!!");
         }
 
         private hpe.kinds.IApplicationKind createUnitInstanceApplication(string library_path, string id_unit, TypeMapImpl properties)
@@ -1211,7 +1215,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             services.registerUsesPort(DEFAULT_GO_PORT_USES, Constants.GO_PORT_TYPE, new TypeMapImpl());
             builder_service.connect(my_cid, DEFAULT_GO_PORT_USES, wcid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
             GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
-            go_port.go();
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);            go_port.go();
+            
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
         }
     }
 

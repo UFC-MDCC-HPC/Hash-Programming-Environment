@@ -170,7 +170,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             string id_inner_original, 
             string id_interface_slice_original, 
             int id_abstract, 
-            string id_interface)
+            string id_interface,
+            string id_inner_owner)
         {
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
@@ -181,7 +182,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "WHERE id_inner_original like '" + id_inner_original + "' and " +
                       "id_interface_slice_original like '" + id_interface_slice_original + "' and " +
                       "id_abstract = " + id_abstract + " and " +
-                      "id_interface_slice_owner = '" + id_interface + "'";
+                      "id_interface_slice_owner like '" + id_interface + "' and " +
+                      "id_inner_owner like '" + id_inner_owner + "'";
             dbcmd.CommandText = sql;
                 IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())

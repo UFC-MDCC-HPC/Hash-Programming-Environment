@@ -79,13 +79,24 @@ namespace br.ufc.pargo.hpe.basic
 
                         Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
 
+                        /* The actual name of the current component */
+                        string id_inner_owner = this.Id_inner;
+
                         SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
                                                                   slice.Id_inner,
                                                                   slice.Id_interface_slice_top,
                                                                   this.containerSlice.Id_abstract,
-                                                                  i.Id_interface_super_top
+                                                                  i.Id_interface_super_top,
+                                                                  id_inner_owner
                                                                   );
 
+                        if (se==null) Console.Error.WriteLine(" id_inner_original = " + slice.Id_inner +
+                                                              " id_interface_slice_original = " + slice.Id_interface_slice_top +
+                                                              " id_abstract = " + this.containerSlice.Id_abstract +
+                                                              " id_interface = " + i.Id_interface_super_top + 
+                                                              " id_inner_owner = " + id_inner_owner);
+                        // else Console.Error.WriteLine("id_abstract = " + this.Id_abstract + "id_inner_owner = " + id_inner_owner);
+                        
                         string container_portName = se.Id_inner;
 
                         BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
@@ -153,6 +164,14 @@ namespace br.ufc.pargo.hpe.basic
         {
             get { return id_interface; }
             set { id_interface = value; }
+        }
+
+        private string id_inner = "top";
+        
+        public string Id_inner
+        {
+            get { return id_inner; }
+            set { id_inner = value; }
         }
 
         private int id_abstract = 0;
