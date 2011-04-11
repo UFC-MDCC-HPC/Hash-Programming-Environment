@@ -7,16 +7,19 @@ using common.problem_size.Class;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.BinvRhs;
 
-namespace impl.bt.solve.BinvRhsImpl { 
+namespace impl.bt.solve.BinvRhsImpl 
+{ 
 	public class IBinvRhsImpl<I, C, MTH> : BaseIBinvRhsImpl<I, C, MTH>, IBinvRhs<I, C, MTH>
-	where I:IInstance_BT<C>
-	where C:IClass
-	where MTH:IBeamWarmingMethod {
+		where I:IInstance_BT<C>
+		where C:IClass
+		where MTH:IBeamWarmingMethod 
+	{
 		private double[,,] lhs;
 		private double[,,,,] r;
 		private int l1, r1, r2, r3, r4;
 		
-		public void setParameters(double[,,] lhs, double[,,,,] r, int l1, int r1, int r2, int r3, int r4) {
+		public void setParameters(double[,,] lhs, double[,,,,] r, int l1, int r1, int r2, int r3, int r4) 
+		{
 			this.lhs = lhs;
 			this.r = r;
 			this.l1 = l1;
@@ -25,10 +28,9 @@ namespace impl.bt.solve.BinvRhsImpl {
 			this.r3 = r3;
 			this.r4 = r4;
 		}
-		public IBinvRhsImpl() { 
-		
-		}
-		public override void compute() { 
+
+		public override int go()   
+		{ 
 			double pivot, coeff;
 			
 			pivot = 1.00d / lhs[l1, 0, 0];
@@ -155,6 +157,8 @@ namespace impl.bt.solve.BinvRhsImpl {
 			
 			coeff = lhs[l1, 4, 3];
 			r[r1, r2, r3, r4, 3] = r[r1, r2, r3, r4, 3] - coeff * r[r1, r2, r3, r4, 4];
+			
+			return 0;
 		} // end activate method 
 	}
 }

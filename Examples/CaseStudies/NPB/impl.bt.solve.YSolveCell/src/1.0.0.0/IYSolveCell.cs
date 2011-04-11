@@ -8,27 +8,29 @@ using common.orientation.Y;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.SolveCell;
 
-namespace impl.bt.solve.YSolveCell { 
+namespace impl.bt.solve.YSolveCell 
+{ 
 	public class IYSolveCell<I, C, DIR, MTH> : BaseIYSolveCell<I, C, DIR, MTH>, ISolveCell<I, C, DIR, MTH>
 	where I:IInstance_BT<C>
 	where C:IClass
 	where DIR:IY
-	where MTH:IBeamWarmingMethod {
+	where MTH:IBeamWarmingMethod 
+	{
 		private double[,,,,,] lhsc;
 		private int first;
 		private int last;
 		private int c;
-		public void setParameters(double[,,,,,] lhsc, int first, int last, int c){
+		
+		public void setParameters(double[,,,,,] lhsc, int first, int last, int c)
+		{
 			this.lhsc = lhsc;
 			this.first = first;
 			this.last = last;
 			this.c = c;
 		}
-		public IYSolveCell() { 
 		
-		} 
-		
-		public override void compute() { 
+		public override int go()  
+		{ 
             int i, j, k, isize, ksize, jsize, jstart;
             double tmp1, tmp2, tmp3;
             double[,] utmp = new double[JMAX + 4, 7];
@@ -42,11 +44,14 @@ namespace impl.bt.solve.YSolveCell {
             ksize = cell_size[c, 2] - end[c, 2] + 1;
 
             Lhsabinit.setParameters(lhsa, lhsb, jsize);
-            Lhsabinit.compute();
+            Lhsabinit.go();
 
-            for(k = start[c, 2]; k <= ksize; k++) {
-                for(i = start[c, 0]; i <= isize; i++) {
-                    for(j = start[c, 1]-1; j <= cell_size[c, 1] - end[c, 1] + 2; j++) {
+            for(k = start[c, 2]; k <= ksize; k++) 
+            {
+                for(i = start[c, 0]; i <= isize; i++)
+                {
+                    for(j = start[c, 1]-1; j <= cell_size[c, 1] - end[c, 1] + 2; j++) 
+                    {
                         utmp[j, 1] = 1.0d / u[c, k, j, i, 0];  
                         utmp[j, 2] = u[c, k, j, i, 1];         
                         utmp[j, 3] = u[c, k, j, i, 2];         
@@ -55,7 +60,8 @@ namespace impl.bt.solve.YSolveCell {
                         utmp[j, 6] = qs[c, k, j, i, 0];           
                     }
 
-                    for(j = start[c, 1]-1; j <= cell_size[c, 1] - end[c, 1] + 2; j++) {
+                    for(j = start[c, 1]-1; j <= cell_size[c, 1] - end[c, 1] + 2; j++) 
+                    {
                         tmp1 = utmp[j, 1];
                         tmp2 = tmp1 * tmp1;
                         tmp3 = tmp1 * tmp2;
@@ -122,7 +128,9 @@ namespace impl.bt.solve.YSolveCell {
                         njac[j+1, 3, 4] = (c3c4 - c1345) * tmp2 * utmp[j, 4];
                         njac[j+1, 4, 4] = (c1345) * tmp1;
                     }
-                    for(j = start[c, 1]; j <= jsize - end[c, 1]; j++) {
+                    
+                    for(j = start[c, 1]; j <= jsize - end[c, 1]; j++) 
+                    {
                         tmp1 = dt * ty1;
                         tmp2 = dt * ty2;
                         lhsa[j, 0, 0] = -tmp2 * fjac[j, 0, 0] - tmp1 * njac[j, 0, 0] - tmp1 * dy1;
@@ -215,28 +223,36 @@ namespace impl.bt.solve.YSolveCell {
                         lhsc[c, k, j, i, 3, 4] = tmp2 * fjac[j+2, 3, 4] - tmp1 * njac[j+2, 3, 4];
                         lhsc[c, k, j, i, 4, 4] = tmp2 * fjac[j+2, 4, 4] - tmp1 * njac[j+2, 4, 4] - tmp1 * dy5;
                     }
-                    if(first == 1) {
+                    
+                    if(first == 1) 
+                    {
                         Binvcrhs.setParameters(lhsb, lhsc, rhs, jstart, c, k, jstart, i, c, k, jstart, i);
-                        Binvcrhs.compute();
+                        Binvcrhs.go();
                     }
-                    for(j = jstart + first; j <= jsize - last; j++) {
+                    
+                    for(j = jstart + first; j <= jsize - last; j++) 
+                    {
                         Matvec_sub.setParameters(lhsa, rhs, rhs, j, c, k, j-1, i, c, k, j, i);
-                        Matvec_sub.compute();
+                        Matvec_sub.go();
                         Matmul_sub.setParameters(lhsa, lhsc, lhsb, j, c, k, j-1, i, j);
-                        Matmul_sub.compute();
+                        Matmul_sub.go();
                         Binvcrhs.setParameters(lhsb, lhsc, rhs, j, c, k, j, i, c, k, j, i);
-                        Binvcrhs.compute();
+                        Binvcrhs.go();
                     }
-                    if(last == 1) {
+                    
+                    if(last == 1) 
+                    {
                         Matvec_sub.setParameters(lhsa, rhs, rhs, jsize, c, k, jsize-1, i, c, k, jsize, i);
-                        Matvec_sub.compute();
+                        Matvec_sub.go();
                         Matmul_sub.setParameters(lhsa, lhsc, lhsb, jsize, c, k, jsize-1, i, jsize);
-                        Matmul_sub.compute();
+                        Matmul_sub.go();
                         Binvrhs.setParameters(lhsb, rhs, jsize, c, k, jsize, i);
-                        Binvrhs.compute();
+                        Binvrhs.go();
                     }
                 }
             }
+            
+            return 0;
 		}
 	}
 }

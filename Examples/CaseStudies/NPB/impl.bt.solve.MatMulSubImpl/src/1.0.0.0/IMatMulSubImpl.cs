@@ -7,17 +7,20 @@ using common.problem_size.Class;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.MatMulSub;
 
-namespace impl.bt.solve.MatMulSubImpl { 
+namespace impl.bt.solve.MatMulSubImpl 
+{ 
 	public class IMatMulSubImpl<I, C, MTH> : BaseIMatMulSubImpl<I, C, MTH>, IMatMulSub<I, C, MTH>
-	where I:IInstance_BT<C>
-	where C:IClass
-	where MTH:IBeamWarmingMethod {
+		where I:IInstance_BT<C>
+		where C:IClass
+		where MTH:IBeamWarmingMethod 
+	{
 		private double[,,] ablock;
 		private double[,,,,,] bblock;
 		private double[,,] cblock;
 		private int a1, b1, b2, b3, b4, c1;
 		
-		public void setParameters(double[,,] ablock, double[,,,,,] bblock, double[,,] cblock, int a1, int b1, int b2, int b3, int b4, int c1) {
+		public void setParameters(double[,,] ablock, double[,,,,,] bblock, double[,,] cblock, int a1, int b1, int b2, int b3, int b4, int c1) 
+		{
 			this.ablock = ablock;
 			this.bblock = bblock;
 			this.cblock = cblock;
@@ -28,10 +31,9 @@ namespace impl.bt.solve.MatMulSubImpl {
 			this.b4 = b4;
 			this.c1 = c1;
 		}
-		public IMatMulSubImpl() { 
 		
-		}		
-		public override void compute() { 
+		public override int go()   
+		{ 
 			cblock[c1, 0, 0] = cblock[c1, 0, 0] - ablock[a1, 0, 0] * bblock[b1, b2, b3, b4, 0, 0]
 			                         - ablock[a1, 1, 0] * bblock[b1, b2, b3, b4, 0, 1]
 			                         - ablock[a1, 2, 0] * bblock[b1, b2, b3, b4, 0, 2]
@@ -181,6 +183,8 @@ namespace impl.bt.solve.MatMulSubImpl {
 			                         - ablock[a1, 2, 4] * bblock[b1, b2, b3, b4, 4, 2]
 			                         - ablock[a1, 3, 4] * bblock[b1, b2, b3, b4, 4, 3]
 			                         - ablock[a1, 4, 4] * bblock[b1, b2, b3, b4, 4, 4];
+			                         
+			return 0;
 		} // end activate method 
 	}
 }

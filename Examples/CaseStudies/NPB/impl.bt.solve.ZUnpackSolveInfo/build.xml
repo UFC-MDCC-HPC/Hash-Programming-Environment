@@ -1,7 +1,43 @@
-<?xml version='1.0'?>
-<project basedir='.' default='all' name='impl.bt.solve.ZUnpackSolveInfo'>
-  <property name='src' value='src'/>
-  <property name='build' value='bin'/>
-  <property name='nant.settings.currentframework' value='mono-2.0'/>
-  <target depends='' name='all'/>
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe/cache" default="all" name="ZUnpackSolveInfo">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="ZUnpackSolveInfo-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/ZUnpackSolveInfo.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/BaseIZUnpackSolveInfo.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/src/1.0.0.0/BaseIZUnpackSolveInfo.cs"/>
+      </sources>
+      <references>
+        <include name="common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll"/>
+        <include name="common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll"/>
+        <include name="bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll"/>
+        <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
+        <include name="common.orientation.Axis/bin/1.0.0.0/IAxis.dll"/>
+        <include name="common.solve.Method/bin/1.0.0.0/IMethod.dll"/>
+        <include name="common.orientation.Z/bin/1.0.0.0/IZ.dll"/>
+        <include name="bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll"/>
+        <include name="bt.solve.UnpackSolveInfo/bin/1.0.0.0/BaseIUnpackSolveInfo.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/ZUnpackSolveInfo.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/IZUnpackSolveInfo.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.bt.solve.ZUnpackSolveInfo/src/1.0.0.0/IZUnpackSolveInfo.cs"/>
+      </sources>
+      <references>
+        <include name="bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll"/>
+        <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
+        <include name="common.orientation.Z/bin/1.0.0.0/IZ.dll"/>
+        <include name="bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll"/>
+        <include name="/impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/BaseIZUnpackSolveInfo.dll"/>
+        <include name="bt.solve.UnpackSolveInfo/bin/1.0.0.0/IUnpackSolveInfo.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="ZUnpackSolveInfo-1.0.0.0" name="all"/>
 </project>

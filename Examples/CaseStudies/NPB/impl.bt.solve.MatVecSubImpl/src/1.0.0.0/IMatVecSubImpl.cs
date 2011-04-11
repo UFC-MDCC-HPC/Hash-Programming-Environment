@@ -7,17 +7,20 @@ using common.problem_size.Class;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.MatVecSub;
 
-namespace impl.bt.solve.MatVecSubImpl { 
+namespace impl.bt.solve.MatVecSubImpl 
+{ 
 	public class IMatVecSubImpl<I, C, MTH> : BaseIMatVecSubImpl<I, C, MTH>, IMatVecSub<I, C, MTH>
-	where I:IInstance_BT<C>
-	where C:IClass
-	where MTH:IBeamWarmingMethod {
+		where I:IInstance_BT<C>
+		where C:IClass
+		where MTH:IBeamWarmingMethod 
+	{
 		private double[,,] ablock;
 		private double[,,,,] avec;
 		private double[,,,,] bvec;
 		private int ab1, av1, av2, av3, av4, bv1, bv2, bv3, bv4;
 		
-		public void setParameters(double[,,] ablock, double[,,,,] avec, double[,,,,] bvec, int ab1, int av1, int av2, int av3, int av4, int bv1, int bv2, int bv3, int bv4) {
+		public void setParameters(double[,,] ablock, double[,,,,] avec, double[,,,,] bvec, int ab1, int av1, int av2, int av3, int av4, int bv1, int bv2, int bv3, int bv4) 
+		{
 			this.ablock = ablock;
 			this.avec = avec;
 			this.bvec = bvec;
@@ -31,15 +34,16 @@ namespace impl.bt.solve.MatVecSubImpl {
 			this.bv3 = bv3;
 			this.bv4 = bv4;
 		}
-		public IMatVecSubImpl() { 
-		
-		}		
-		public override void compute() { 
+
+		public override int go()   
+		{ 
 			bvec[bv1, bv2, bv3, bv4, 0] = bvec[bv1, bv2, bv3, bv4, 0] - ablock[ab1, 0, 0] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 0] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 0] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 0] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 0] * avec[av1, av2, av3, av4, 4];
 			bvec[bv1, bv2, bv3, bv4, 1] = bvec[bv1, bv2, bv3, bv4, 1] - ablock[ab1, 0, 1] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 1] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 1] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 1] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 1] * avec[av1, av2, av3, av4, 4];
 			bvec[bv1, bv2, bv3, bv4, 2] = bvec[bv1, bv2, bv3, bv4, 2] - ablock[ab1, 0, 2] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 2] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 2] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 2] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 2] * avec[av1, av2, av3, av4, 4];
 			bvec[bv1, bv2, bv3, bv4, 3] = bvec[bv1, bv2, bv3, bv4, 3] - ablock[ab1, 0, 3] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 3] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 3] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 3] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 3] * avec[av1, av2, av3, av4, 4];
 			bvec[bv1, bv2, bv3, bv4, 4] = bvec[bv1, bv2, bv3, bv4, 4] - ablock[ab1, 0, 4] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 4] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 4] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 4] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 4] * avec[av1, av2, av3, av4, 4];
+			
+			return 0;
 		} // end activate method 
 	}
 }

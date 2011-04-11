@@ -11,16 +11,21 @@ public class IADIImpl<C> : BaseIADIImpl<C>, IADI<C>
 where C:IClass
 {
 
-public IADIImpl() { 
-
-} 
-
-public override void compute() { 
-	Copy_faces.synchronize();
-	X_solve.compute();
-	Y_solve.compute();
-	Z_solve.compute();
-	Add.compute();
+public override int go() 
+{
+	int no_nodes = Ranks.Length;
+	if (no_nodes > 1) 
+	{
+	   Copy_faces.go();
+	}
+	Compute_rhs.go();
+	
+	X_solve.go();
+	Y_solve.go();
+	Z_solve.go();
+	Add.go();
+	
+	return 0;
 } // end activate method 
 
 }

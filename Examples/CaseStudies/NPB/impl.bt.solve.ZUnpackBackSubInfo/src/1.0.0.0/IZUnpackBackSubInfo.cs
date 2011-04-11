@@ -19,26 +19,28 @@ namespace impl.bt.solve.ZUnpackBackSubInfo {
 		private double[] out_buffer_z;
 		private int c;
 
-		public void setParameters(double[,,,] backsub_info, double[] out_buffer_z, int c) {
+		public void setParameters(double[,,,] backsub_info, double[] out_buffer_z, int c) 
+		{
 			this.backsub_info = backsub_info;
 			this.out_buffer_z = out_buffer_z;
 			this.c = c;
 		}
 		
-		public IZUnpackBackSubInfo() { 
-		
-		} 
-		
-		public override void compute() { 
+		public override int go() 
+		{
             int ptr = 0;
-            for(int j = 0; j <= JMAX - 1; j++) {
-                for(int i = 0; i <= IMAX - 1; i++) {
-                    for(int n = 0; n < 5; n++) {
+            for(int j = 0; j <= JMAX - 1; j++) 
+            {
+                for(int i = 0; i <= IMAX - 1; i++) 
+                {
+                    for(int n = 0; n < 5; n++) 
+                    {
                         backsub_info[c, j+2, i+2, n] = out_buffer_z[ptr + n];
                     }
                     ptr = ptr + 5;
                 }
             }
+            return 0;
 		}
 	}
 }
