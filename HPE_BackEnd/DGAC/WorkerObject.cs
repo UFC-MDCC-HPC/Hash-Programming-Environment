@@ -282,7 +282,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             try
             {
-                int key = properties.getInt(Constants.KEY_KEY, my_rank);
+                int key = properties.getInt(Constants.KEY_KEY, my_rank);                
                 string id_unit = properties.getString(Constants.UNIT_KEY, "");
                 string library_path = properties.getString(Constants.COMPONENT_KEY, "");
                 int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
@@ -295,10 +295,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 // This part is only performed by applications.
                 DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
-                Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
-                pmain.LocalCommunicator = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-                Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
-                pmain.GlobalRank = pmain.LocalCommunicator.Rank;
+                //Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
+                //pmain.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
+                //Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
+                //pmain.GlobalRank = pmain.WorldComm.Rank;
                 //pmain.createSlices();
                 
                 // --------------------------------------------
@@ -336,6 +336,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             Services services = new WorkerServicesImpl(this, cid, unit_slice);
             unit_slice.setServices(services);
+                        
+            if (properties.hasKey(Constants.KEY_KEY)) {
+                int key = properties.getInt(Constants.KEY_KEY, my_rank);
+	            Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
+	            unit_slice.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
+	            Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
+	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
+            }
 
             return cid;
         }
@@ -486,6 +494,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
             connectionList.Add(connection);
             bool first_connection = addConnByProviderPort(provider.getInstanceName() + ":" + providingPortName, connection);
+          //  Console.WriteLine(my_rank + ": CONNECT !" + user.getInstanceName() + ":" + usingPortName);
             connByUserPort.Add(user.getInstanceName() + ":" + usingPortName, connection);
             this.tryAwakeConnectingUserPort(usingPortName);
 
@@ -708,6 +717,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPort(string portName)
         {
+          //  Console.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
             if (!usesPortNamesInv.ContainsKey(portName))
             {
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
@@ -722,7 +732,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 wait_handle.WaitOne();
             }
 
-            return this.getPortProceed(portName);
+            Port port = this.getPortProceed(portName);
+         //   Console.WriteLine("Worker" + my_rank + ": END getPort " + portName);
+            return port;
 
         }
 
@@ -1188,10 +1200,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void runApplication(string session_id_string, WorkerComponentID wcid)
+        public string runApplication(string session_id_string, WorkerComponentID wcid)
         {
+           
+           string file_session = Constants.PATH_TEMP_WORKER + "output-" + my_rank + "-" + session_id_string + ".txt";
+           FileStream fs = new FileStream(file_session, FileMode.Create);
+           TextWriter sw = new StreamWriter(fs);
+           TextWriter stdout = Console.Out;
+           Console.SetOut(sw);
+           
+           
             const string DEFAULT_CREATESLICES_PORT_USES = "create_slices";
             const string DEFAULT_GO_PORT_USES = "go";
+            string output = session_id_string + " - " + wcid.getInstanceName();
 
             AbstractFramework frw = (AbstractFramework)this;
 
@@ -1205,19 +1226,36 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             BuilderService builder_service = (BuilderService)this; // services.getPort("builder_service");
 
             // REGISTER USES PORT "CreateSlices"
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER CREATESLICES PORT " + session_id_string);
             services.registerUsesPort(DEFAULT_CREATESLICES_PORT_USES, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CONNECT CREATESLICES PORT " + session_id_string);
             builder_service.connect(my_cid, DEFAULT_CREATESLICES_PORT_USES, wcid, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS);
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET CREATESLICES PORT " + session_id_string);
             AutomaticSlicesPort create_slice_port = (AutomaticSlicesPort)services.getPort(DEFAULT_CREATESLICES_PORT_USES);
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL CREATE SLICES " + session_id_string);
             create_slice_port.create_slices();
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL INITIALIZE SLICES " + session_id_string);
             create_slice_port.initialize_slices();
 
             // REGISTER USES PORT "Go"
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER GO PORT " + session_id_string);
             services.registerUsesPort(DEFAULT_GO_PORT_USES, Constants.GO_PORT_TYPE, new TypeMapImpl());
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CONNECT GO PORT " + session_id_string);
             builder_service.connect(my_cid, DEFAULT_GO_PORT_USES, wcid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET GO PORT " + session_id_string);
             GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);            go_port.go();
-            
+            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);
+            go_port.go();
             Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
+            
+            Console.Out.Flush();
+           sw.Close();
+           fs.Close();            
+           Console.SetOut(stdout);
+           
+            output = System.IO.File.ReadAllText(file_session);
+          
+            return output;
         }
     }
 

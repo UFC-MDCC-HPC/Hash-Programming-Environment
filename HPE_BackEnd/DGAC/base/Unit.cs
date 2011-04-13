@@ -16,6 +16,8 @@ namespace br.ufc.pargo.hpe.basic
 {
     public interface IUnit : Component, AutomaticSlicesPort
     {
+        Intracommunicator WorldComm {get; set;}
+       
         gov.cca.Services Services { get; }
 
         int Id_concrete { set; get; }

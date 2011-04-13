@@ -11,6 +11,7 @@ using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using br.ufc.pargo.hpe.ports;
+using MPI;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -90,11 +91,11 @@ namespace br.ufc.pargo.hpe.basic
                                                                   id_inner_owner
                                                                   );
 
-                        if (se==null) Console.Error.WriteLine(" id_inner_original = " + slice.Id_inner +
-                                                              " id_interface_slice_original = " + slice.Id_interface_slice_top +
-                                                              " id_abstract = " + this.containerSlice.Id_abstract +
-                                                              " id_interface = " + i.Id_interface_super_top + 
-                                                              " id_inner_owner = " + id_inner_owner);
+                      //  if (se==null) Console.Error.WriteLine(" id_inner_original = " + slice.Id_inner +
+                      //                                        " id_interface_slice_original = " + slice.Id_interface_slice_top +
+                      //                                        " id_abstract = " + this.containerSlice.Id_abstract +
+                      //                                        " id_interface = " + i.Id_interface_super_top + 
+                      //                                        " id_inner_owner = " + id_inner_owner);
                         // else Console.Error.WriteLine("id_abstract = " + this.Id_abstract + "id_inner_owner = " + id_inner_owner);
                         
                         string container_portName = se.Id_inner;
@@ -388,6 +389,10 @@ namespace br.ufc.pargo.hpe.basic
         virtual public void initialize()
         {
         }
+        
+        private Intracommunicator comm = null;
+        
+        public Intracommunicator WorldComm {get { return comm; } set { this.comm = value; }}
 
         #endregion
 

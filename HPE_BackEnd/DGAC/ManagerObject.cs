@@ -745,12 +745,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     IDictionary<string, int> files = new Dictionary<string, int>();
                     IDictionary<string, int> enums = readEnumerators(properties);
 
-                    int[] nodes = this.fetchNodes(properties);
+                    //int[] nodes = this.fetchNodes(properties);
 
-                    Console.Error.WriteLine("Number of nodes = " + nodes.Length);
                     
                     FileInfo file = FileUtil.writingToFile(instanceName + ".xml", instantiator_string);
                     ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
+                    
+                    int[] nodes = instantiator.node;
+                    Console.Error.Write("Number of nodes = " + nodes.Length + ": ");
+                    foreach (int n in nodes) Console.Write(n + ", ");
+                    Console.WriteLine("end");
 
                     DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
                     id_functor_app = acfaRef.Id_functor_app;
@@ -1130,21 +1134,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 }
 
                 [MethodImpl(MethodImplOptions.Synchronized)]
-                public void runApplication(string session_id_string, ManagerComponentID mcid)
+                public string[] runApplication(string session_id_string, ManagerComponentID mcid)
                 {
-                    IList<Thread> thread_list = new List<Thread>();
+                    string[] outputs = new String[mcid.WorkerNodes.Length]; 
+                    IDictionary<Thread, RunApplicationThread> thread_list = new Dictionary<Thread,RunApplicationThread>();
                     foreach (int node in mcid.WorkerNodes)
                     {
                         RunApplicationThread thread = new RunApplicationThread(node, worker[node], session_id_string, mcid);
                         Thread t = new Thread(thread.Run);
-                        thread_list.Add(t);
+                        thread_list.Add(t,thread);
                         t.Start();
                     }
-                    foreach (Thread t in thread_list)
+                    foreach (KeyValuePair<Thread,RunApplicationThread> t in thread_list)
                     {
-                        t.Join();
+                        t.Key.Join();
+                        outputs[t.Value.Node] = t.Value.Output;
                     }
                     Console.Error.WriteLine("Joined Threads : " + session_id_string);
+                    
+                    return outputs;
                 }
 
                 internal class RunApplicationThread
@@ -1152,7 +1160,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     private string session_id_string;
                     private ManagerComponentID mcid;
                     private int node;
+                    public int Node {get {return node;}}
                     private WorkerObject worker;
+                    private string result;
+                    public string Output {get {return result;}}
 
                     public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid)
                     {
@@ -1164,7 +1175,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     public void Run()
                     {
-                        worker.runApplication(session_id_string, mcid.getWorkerComponentID(node));
+                        result = worker.runApplication(session_id_string, mcid.getWorkerComponentID(node));
                     }
 
                 }

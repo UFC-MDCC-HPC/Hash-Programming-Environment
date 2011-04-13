@@ -423,12 +423,6 @@ namespace br.ufc.pargo.hpe.backend
 
                     session_id = getSessionID(id_concrete);
 
-                    //IDictionary<string, int> enums = new Dictionary<string, int>();
-                    //for (int i = 0; i < eIds.Length; i++)
-                    //{
-                    //    enums.Add(eIds[i], eVls[i]);
-                    //}
-
                     IList<string> enumList = new List<string>();
                     for (int i = 0; i < eIds.Length; i++)
                     {
@@ -440,12 +434,12 @@ namespace br.ufc.pargo.hpe.backend
 
                     DGAC.database.Component c = cdao.retrieve(id_concrete);
 
-                    int[] nodes = new int[] { 0, 1, 2, 3/*, 4, 5, 6, 7 ,8, 9, 10, 11, 12, 13, 14, 15*/};
+//                    int[] nodes = new int[] { 0, 1, 2, 3/*, 4, 5, 6, 7 ,8, 9, 10, 11, 12, 13, 14, 15*/};
 
                     /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();
                     properties.putStringArray(Constants.ENUMS_KEY, enums);
-                    properties.putIntArray(Constants.NODES_KEY, nodes);
+//                    properties.putIntArray(Constants.NODES_KEY, nodes);
                     properties.putInt(Constants.SESSION_KEY, session_id);
 
                     Console.WriteLine("before manager.createInstance");
@@ -456,7 +450,7 @@ namespace br.ufc.pargo.hpe.backend
 
                     ComponentID cid = manager.createInstance(session_id_string + ".application", /*c.Library_path*/ instantiatior_string, properties);
 
-                    manager.runApplication(session_id_string, (ManagerComponentID)cid);
+                    str_output = manager.runApplication(session_id_string, (ManagerComponentID)cid);
                     
                 }
                 catch (Exception e)
@@ -932,7 +926,9 @@ namespace br.ufc.pargo.hpe.backend
 
                     // GET THE UNIT SLICE AND RETURNS IT
                     the_unit = (IUnit)services.getPort(portName);
+                   // the_unit.ContainerSlice = ownerUnit;
                     the_unit.GlobalRank = ownerUnit.GlobalRank;
+                    the_unit.WorldComm = ownerUnit.WorldComm;
                     the_unit.Id_inner = slice.Id_inner;
                 }
                 
@@ -968,6 +964,7 @@ namespace br.ufc.pargo.hpe.backend
                 unit_slice.ActualParametersTop = unit.ActualParametersTop;
                 unit_slice.ContainerSlice = unit;
                 unit_slice.GlobalRank = unit.GlobalRank;
+                unit_slice.WorldComm = unit.WorldComm;
 
                 calculateTopology(unit, unit_slice, id_inner);
 
