@@ -90,7 +90,7 @@
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
           <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;&#xA;namespace bt.solve.PackBackSubInfo { &#xA;&#xA;public interface IPackBackSubInfo&lt;I, C, DIR, MTH> : BaseIPackBackSubInfo&lt;I, C, DIR, MTH>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IPackBackSubInfo.cs" srcType="user" uri="bt.solve.PackBackSubInfo/bin/1.0.0.0/IPackBackSubInfo.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;&#xA;namespace bt.solve.PackBackSubInfo { &#xA;&#x9;public interface IPackBackSubInfo&lt;I, C, DIR, MTH> : BaseIPackBackSubInfo&lt;I, C, DIR, MTH>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IAxis&#xA;&#x9;where MTH:IMethod {&#xA;&#x9;&#x9;   void setParameters(double[] buffer, int c);&#xA;&#x9;} // end main interface &#xA;} // end namespace &#xA;" fileType="library" name="IPackBackSubInfo.cs" srcType="user" uri="bt.solve.PackBackSubInfo/bin/1.0.0.0/IPackBackSubInfo.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
@@ -153,13 +153,13 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>orientation</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
         <originRef>problem_data</originRef>
         <originRef>qs</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>orientation</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
