@@ -6,14 +6,19 @@ using lu.problem_size.Instance;
 using common.problem_size.Class;
 using common.Buffer;
 using lu.datapartition.BlocksInfo;
-using lu.topology.Neighbors;
+using common.topology.Ring;
+using environment.MPIDirect;
 
-namespace lu.Exchange4 { 
+namespace lu.Exchange4 
+{ 
 	public interface BaseIExchange4<I, C> : IComputationKind 
-	where I:IInstance<C>
-	where C:IClass {
-		IProblemDefinition<I, C> Problem {get;}
-		IBlocksInfo Blocks {get;}
-		INeighbors Neighbors {get;}
+		where I:IInstance<C>
+		where C:IClass 
+	{
+	   IProblemDefinition<I, C> Problem {get;}
+	   IBlocksInfo Blocks {get;}
+	   ICell Y {get;}
+	   ICell X {get;}
+	   IMPIDirect Mpi {get;}
 	}
 }

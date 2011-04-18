@@ -2,7 +2,7 @@
 
 using br.ufc.pargo.hpe.kinds;
 using lu.datapartition.BlocksInfo;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 using lu.problem_size.Instance;
 using common.problem_size.Class;
 
@@ -14,7 +14,8 @@ where C:IClass
 {
 
 	IBlocksInfo Blocks {get;}
-	INeighbors Neighbors {get;}
+	ICell X {get;}
+	ICell Y {get;}
 
 
 } // end main interface 

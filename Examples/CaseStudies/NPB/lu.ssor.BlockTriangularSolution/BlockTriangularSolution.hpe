@@ -8,7 +8,7 @@
   </header>
   <componentInfo>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000095f4efebba63c712c97d33cc474b000a6e3e0cc590f886403c79aaebe2ae41018ea9fa6bd724012fa8f882d08d86539f5dc5d8734a4353b5a76ee59ac76bbe018148c7c776301ee9dd785c67217fbce97bf90aaaabec0168b2fab5911c1c3d0ec1f1de9a2144871a0dab127361fd0ca5be1fd08131288da0f920d970a9f60a0" localRef="exchange1" location="lu.Exchange1/Exchange1.hpe" name="Exchange1" package="lu" exposed="false">
-      <visualDescription h="39" w="90" x="239" y="431">
+      <visualDescription h="39" w="90" x="278" y="461">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="instance_type" varName="I"/>
@@ -31,12 +31,28 @@
           <visualDescription h="10" w="10" x="10" y="24"/>
         </unitBounds>
       </port>
-      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a5f16b771d8e6498d2d3de28ff69055bf66aa7e281fc4b0ebd4b16e81176b4e3da49a70c73092d2f9616290fa7acb2e06f92a486f19d7c2b61b569e4e990c21941ac8db14315fcead8106a62cd8e81a7ce87e967196af8b5d8b3647706c0121ae7dd36c0144f157e051a1e08938e4b954a423dff981f6493aa277f9639d533c9" localRef="neighbors" location="lu.topology.Neighbors/Neighbors.hpe" name="Neighbors" package="lu.topology" exposed="true">
-        <visualDescription h="24" w="61" x="246" y="527">
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+        <visualDescription h="49" w="133" x="111" y="485">
           <color b="255" g="255" r="255"/>
         </visualDescription>
-        <unitBounds uRef="neighbors">
-          <visualDescription h="10" w="10" x="64" y="15"/>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="63" y="6"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
+        <visualDescription h="30" w="50" x="373" y="334">
+          <color b="240" g="32" r="160"/>
+        </visualDescription>
+        <unitBounds uRef="mpi">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </port>
+      <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+        <visualDescription h="49" w="133" x="450" y="395">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="cell">
+          <visualDescription h="10" w="10" x="63" y="6"/>
         </unitBounds>
       </port>
       <unitBounds uRef="exchange1">
@@ -80,9 +96,9 @@
         <originRef cRef="discretization" iRef="IDiscretization"/>
         <visualDescription h="10" w="10" x="165" y="26"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@6281b7f8" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1aef1482" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@32552d4e" repeat="0" sliceRef="exchange1">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@462b709e" repeat="0" sliceRef="exchange1">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -107,17 +123,25 @@
       <visualDescription h="87" w="231" x="143" y="136">
         <color b="64" g="64" r="0"/>
       </visualDescription>
-      <port name="neighbors">
-        <visualDescription h="10" w="10" x="20" y="4"/>
-        <slice pRef="neighbors" sRef="exchange1"/>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="exchange1"/>
       </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="72" y="11"/>
-        <slice pRef="blocks" sRef="exchange1"/>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="exchange1"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="exchange1"/>
       </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="5" y="65"/>
         <slice pRef="problem" sRef="exchange1"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="72" y="11"/>
+        <slice pRef="blocks" sRef="exchange1"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -130,99 +154,52 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
         <visualDescription h="10" w="10" x="113" y="18"/>
       </slices>
-      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="true">
-        <visualDescription h="10" w="10" x="8" y="25"/>
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
+      </slices>
+      <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
+        <visualDescription h="10" w="10" x="11" y="22"/>
+      </slices>
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="exchange1" replica="0" uRef="exchange1" sliceName="exchange1" transitive="false">
         <visualDescription h="10" w="10" x="89" y="42"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>neighbors</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
       </slices>
       <slices cRef="discretization" replica="0" uRef="discretization" sliceName="discretization" transitive="false">
         <visualDescription h="10" w="10" x="165" y="26"/>
       </slices>
       <visualDescription h="56" w="187" x="168" y="294"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
-      <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>rsd</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
-      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="38" w="41" x="32" y="119"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>exchange1</originRef>
       <originRef>shift_to_west</originRef>
-      <originRef>neighbors</originRef>
+      <originRef>direction</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
       <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="47" w="48" x="44" y="273"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
-      <originRef>exchange1</originRef>
-      <originRef>shift_to_north</originRef>
-      <originRef>neighbors</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
-      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="47" w="48" x="27" y="208"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
-      <originRef>exchange1</originRef>
-      <originRef>shift_to_east</originRef>
-      <originRef>neighbors</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
-      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="47" w="48" x="19" y="148"/>
-    </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
-      <originRef>exchange1</originRef>
-      <originRef>shift_to_south</originRef>
-      <originRef>neighbors</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
-      <visualDescription h="47" w="48" x="28" y="176"/>
+      <visualDescription h="38" w="41" x="32" y="176"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="discretization" uRef="discretization"/>
       <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="20" w="20" x="64" y="150"/>
+      <visualDescription h="20" w="20" x="64" y="130"/>
     </enumerator>
     <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
-        <originRef>exchange1</originRef>
-        <originRef>shift_to_east</originRef>
-        <originRef>neighbors</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
-        <originRef>exchange1</originRef>
-        <originRef>shift_to_south</originRef>
-        <originRef>neighbors</originRef>
-      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
         <originRef>discretization</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
-        <originRef>exchange1</originRef>
-        <originRef>shift_to_north</originRef>
-        <originRef>neighbors</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>rsd</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>exchange1</originRef>
         <originRef>shift_to_west</originRef>
-        <originRef>neighbors</originRef>
+        <originRef>direction</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

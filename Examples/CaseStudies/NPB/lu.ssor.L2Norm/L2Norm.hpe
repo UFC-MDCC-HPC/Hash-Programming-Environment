@@ -81,7 +81,7 @@
           <dependency>%WORKSPACE/lu.ssor.L2Norm/bin/1.0.0.0/BaseIL2Norm.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="104" w="214" x="197" y="119">
+      <visualDescription h="104" w="214" x="221" y="115">
         <color b="0" g="0" r="255"/>
       </visualDescription>
       <port name="problem">

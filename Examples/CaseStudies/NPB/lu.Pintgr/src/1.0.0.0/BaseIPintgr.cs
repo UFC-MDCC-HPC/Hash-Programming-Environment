@@ -6,7 +6,7 @@ using lu.problem_size.Instance;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
 using environment.MPIDirect;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 
 namespace lu.Pintgr {
 	public interface BaseIPintgr<I, C> : IComputationKind 
@@ -14,7 +14,8 @@ namespace lu.Pintgr {
 	where C:IClass {
 		IProblemDefinition<I, C> Problem {get;}
 		IBlocksInfo Blocks {get;}
+		ICell X {get;}
+		ICell Y {get;}
 		IMPIDirect Mpi {get;}
-		INeighbors Neighbors {get;}
 	}
 }

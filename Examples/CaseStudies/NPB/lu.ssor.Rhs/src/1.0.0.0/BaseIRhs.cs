@@ -5,7 +5,8 @@ using lu.data.ProblemDefinition;
 using lu.problem_size.Instance;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
-using lu.topology.Neighbors;
+using common.topology.Ring;
+using environment.MPIDirect;
 
 namespace lu.ssor.Rhs { 
 
@@ -16,7 +17,9 @@ where C:IClass
 
 	IProblemDefinition<I, C> Problem {get;}
 	IBlocksInfo Blocks {get;}
-	INeighbors Neighbors {get;}
+	ICell X {get;}
+	ICell Y {get;}
+	IMPIDirect Mpi {get;}
 
 
 } // end main interface 

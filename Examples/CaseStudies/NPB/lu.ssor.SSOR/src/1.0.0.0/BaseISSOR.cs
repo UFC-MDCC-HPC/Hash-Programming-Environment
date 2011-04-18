@@ -6,7 +6,7 @@ using lu.problem_size.Instance;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
 using environment.MPIDirect;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 
 namespace lu.ssor.SSOR { 
 
@@ -18,7 +18,8 @@ where C:IClass
 	IProblemDefinition<I, C> Problem {get;}
 	IBlocksInfo Blocks {get;}
 	IMPIDirect Mpi {get;}
-	INeighbors Neighbors {get;}
+	ICell X {get;}
+	ICell Y {get;}
 
 
 } // end main interface 

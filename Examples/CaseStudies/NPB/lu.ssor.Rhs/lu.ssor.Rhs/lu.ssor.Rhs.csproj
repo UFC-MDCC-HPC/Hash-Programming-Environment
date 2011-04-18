@@ -65,13 +65,17 @@
       <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
       <Name>lu.datapartition.BlocksInfo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.Exchange1\lu.Exchange1\lu.Exchange1.csproj">
       <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
       <Name>lu.Exchange1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

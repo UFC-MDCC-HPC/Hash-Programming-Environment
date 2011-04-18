@@ -69,10 +69,6 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.Exchange4\lu.Exchange4\lu.Exchange4.csproj">
       <Project>{62073609-B2FB-47F0-9315-C1428021C4F1}</Project>
       <Name>lu.Exchange4</Name>
@@ -80,6 +76,10 @@
     <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
       <Project>{F87BB0AE-CB6C-4CD0-B131-C7DD0E218376}</Project>
       <Name>lu.Exchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

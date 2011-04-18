@@ -5,8 +5,9 @@ using lu.data.ProblemDefinition;
 using lu.problem_size.Instance;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 using common.Discretization;
+using environment.MPIDirect;
 
 namespace lu.ssor.BlockTriangularSolution { 
 	public interface BaseIBlockTriangularSolution<I, C, DIS> : IComputationKind 
@@ -15,6 +16,8 @@ namespace lu.ssor.BlockTriangularSolution {
 	where DIS:IDiscretization{
 		IProblemDefinition<I, C> Problem {get;}
 		IBlocksInfo Blocks {get;}
-		INeighbors Neighbors {get;}
+		ICell X {get;}
+		ICell Y {get;}
+		IMPIDirect Mpi {get;}
 	}
 }
