@@ -291,6 +291,15 @@
       <cRefs>adi</cRefs>
       <cRefs>data_partition</cRefs>
       <cRefs>verify</cRefs>
+      <cRefs>exact_rhs</cRefs>
+      <cRefs>initialize</cRefs>
+      <cRefs>lhsinit</cRefs>
+      <pRef>blocks_info</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>adi</cRefs>
+      <cRefs>data_partition</cRefs>
+      <cRefs>verify</cRefs>
       <pRef>y</pRef>
     </fusion>
     <fusion>
@@ -303,22 +312,13 @@
       <cRefs>adi</cRefs>
       <cRefs>data_partition</cRefs>
       <cRefs>verify</cRefs>
-      <pRef>x</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>adi</cRefs>
-      <cRefs>data_partition</cRefs>
-      <cRefs>verify</cRefs>
-      <cRefs>exact_rhs</cRefs>
-      <cRefs>initialize</cRefs>
-      <cRefs>lhsinit</cRefs>
-      <pRef>blocks_info</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>adi</cRefs>
-      <cRefs>data_partition</cRefs>
-      <cRefs>verify</cRefs>
       <pRef>z</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>adi</cRefs>
+      <cRefs>data_partition</cRefs>
+      <cRefs>verify</cRefs>
+      <pRef>x</pRef>
     </fusion>
     <fusion>
       <cRefs>adi</cRefs>
@@ -361,24 +361,24 @@
         <originRef cRef="adi" iRef="IADI"/>
         <visualDescription h="10" w="10" x="5" y="28"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@30c921fd" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@46764885" repeat="0">
         <visualDescription h="250" w="330" x="175" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@64d68210" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7f9337e6" repeat="0">
           <visualDescription h="150" w="250" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3ef51c28" repeat="0" sliceRef="lhsinit">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a3b1e79" repeat="0" sliceRef="lhsinit">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4e0ba662" repeat="0" sliceRef="initialize">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1f4da763" repeat="0" sliceRef="initialize">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5ed893f5" repeat="0" sliceRef="exact_rhs">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@232864a3" repeat="0" sliceRef="exact_rhs">
             <visualDescription h="50" w="50" x="130" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5cd9ea78" repeat="0" sliceRef="verify">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@30e71b5d" repeat="0" sliceRef="verify">
             <visualDescription h="50" w="50" x="190" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@66b09be7" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14b58fc0" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -400,16 +400,8 @@
       <visualDescription h="81" w="121" x="237" y="51">
         <color b="255" g="255" r="0"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="problem" sRef="lhsinit"/>
-        <slice pRef="problem" sRef="initialize"/>
-        <slice pRef="problem" sRef="exact_rhs"/>
-        <slice pRef="problem" sRef="verify"/>
-        <slice pRef="problem" sRef="adi"/>
-      </port>
       <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="73" y="64"/>
         <slice pRef="blocks" sRef="lhsinit"/>
         <slice pRef="blocks" sRef="initialize"/>
         <slice pRef="blocks" sRef="exact_rhs"/>
@@ -417,28 +409,36 @@
         <slice pRef="blocks" sRef="verify"/>
         <slice pRef="blocks" sRef="adi"/>
       </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="99" y="37"/>
+        <slice pRef="problem" sRef="lhsinit"/>
+        <slice pRef="problem" sRef="initialize"/>
+        <slice pRef="problem" sRef="exact_rhs"/>
+        <slice pRef="problem" sRef="verify"/>
+        <slice pRef="problem" sRef="adi"/>
+      </port>
       <port name="mpi">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="89" y="55"/>
         <slice pRef="mpi" sRef="timer"/>
         <slice pRef="mpi" sRef="verify"/>
         <slice pRef="mpi" sRef="adi"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="process"/>
-        <slice pRef="z" sRef="verify"/>
-        <slice pRef="z" sRef="adi"/>
-      </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="process"/>
-        <slice pRef="y" sRef="verify"/>
-        <slice pRef="cell" sRef="adi"/>
-      </port>
       <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="88" y="26"/>
         <slice pRef="x" sRef="process"/>
         <slice pRef="x" sRef="verify"/>
+        <slice pRef="x" sRef="adi"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="76" y="40"/>
+        <slice pRef="y" sRef="process"/>
+        <slice pRef="y" sRef="verify"/>
+        <slice pRef="y" sRef="adi"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="34" y="53"/>
+        <slice pRef="z" sRef="process"/>
+        <slice pRef="z" sRef="verify"/>
         <slice pRef="z" sRef="adi"/>
       </port>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
@@ -456,7 +456,7 @@
       <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
         <visualDescription h="10" w="10" x="6" y="25"/>
       </slices>
-      <slices cRef="y" replica="0" uRef="cell" sliceName="cell" transitive="true">
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
         <visualDescription h="10" w="10" x="31" y="26"/>
       </slices>
       <slices cRef="z" replica="0" uRef="cell" sliceName="z" transitive="true">
@@ -488,7 +488,7 @@
         <visualDescription h="10" w="10" x="67" y="17"/>
         <port>blocks</port>
         <port>x</port>
-        <port>cell</port>
+        <port>y</port>
         <port>z</port>
       </slices>
       <slices cRef="verify" replica="0" uRef="verify" sliceName="verify" transitive="false">
@@ -496,7 +496,7 @@
         <port>problem</port>
         <port>blocks</port>
         <port>mpi</port>
-        <port>cell</port>
+        <port>y</port>
         <port>x</port>
         <port>z</port>
       </slices>
@@ -506,7 +506,7 @@
         <port>blocks</port>
         <port>x</port>
         <port>mpi</port>
-        <port>cell</port>
+        <port>y</port>
         <port>z</port>
       </slices>
       <visualDescription h="40" w="80" x="375" y="180"/>

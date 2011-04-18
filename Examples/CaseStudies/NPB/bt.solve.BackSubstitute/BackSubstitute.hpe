@@ -77,7 +77,7 @@
       </slice>
       <slice isRef="method">
         <originRef cRef="method" iRef="IMethod"/>
-        <visualDescription h="10" w="10" x="52" y="40"/>
+        <visualDescription h="10" w="10" x="38" y="42"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.solve.Method;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace bt.solve.BackSubstitute { &#xA;&#xA;public interface BaseIBackSubstitute&lt;I, C, DIR, MTH> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBackSubstitute.cs" srcType="base" uri="bt.solve.BackSubstitute/bin/1.0.0.0/BaseIBackSubstitute.dll" versionId="1.0.0.0">
@@ -102,11 +102,11 @@
         <color b="128" g="128" r="0"/>
       </visualDescription>
       <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="81" y="24"/>
         <slice pRef="problem" sRef="problem"/>
       </port>
       <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="61" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
@@ -135,20 +135,20 @@
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="48" w="47" x="51" y="331"/>
+      <visualDescription h="48" w="47" x="175" y="82"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="52" w="51" x="313" y="366"/>
+      <visualDescription h="52" w="51" x="279" y="57"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="back_substitute"/>
-      <visualDescription h="56" w="60" x="273" y="112"/>
+      <visualDescription h="56" w="60" x="377" y="75"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
@@ -159,13 +159,6 @@
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>orientation</originRef>
-      </fusionOfReplicators>
-    </fusionsOfReplicators>
-    <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>problem_data</originRef>
-        <originRef>qs</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
