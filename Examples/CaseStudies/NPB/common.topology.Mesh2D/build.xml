@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe/cache" default="all" name="Mesh2D">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Mesh2D-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/Mesh2D.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/bin/1.0.0.0/BaseICell2D.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/src/1.0.0.0/BaseICell2D.cs"/>
+      </sources>
+      <references>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/Mesh2D.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/bin/1.0.0.0/ICell2D.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/common.topology.Mesh2D/src/1.0.0.0/ICell2D.cs"/>
+      </sources>
+      <references>
+        <include name="/common.topology.Mesh2D/bin/1.0.0.0/BaseICell2D.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Mesh2D-1.0.0.0" name="all"/>
+</project>
