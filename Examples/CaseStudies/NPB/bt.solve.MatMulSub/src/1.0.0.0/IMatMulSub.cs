@@ -1,12 +1,8 @@
 using br.ufc.pargo.hpe.kinds;
-using common.problem_size.Instance;
-using common.problem_size.Class;
 using common.solve.Method;
 
 namespace bt.solve.MatMulSub { 
-	public interface IMatMulSub<I, C, MTH> : BaseIMatMulSub<I, C, MTH>
-	where I:IInstance<C>
-	where C:IClass
+	public interface IMatMulSub<MTH> : BaseIMatMulSub<MTH>
 	where MTH:IMethod {
 	   void setParameters(double[,,] ablock, 
 	                      double[,,,,,] bblock, 
