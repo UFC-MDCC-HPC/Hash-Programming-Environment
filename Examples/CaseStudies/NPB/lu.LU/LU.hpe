@@ -16,7 +16,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f0ea6289aae73c87e11a45c2927e6ab70f2457e0024fba1f468cc8df9e63f253637415cd4e5e1f5c34fd1af04d82afc7ebb3797f50582d42948163cba9916268c9aee410ea8c9ce1e2a0294f3a48663031f66a0e141a7acbc91d8900961c609719808340e448968be1891b9f41f1cb1208939349fac37dac84329725e0c75af" localRef="setbv" location="lu.data.BoundaryValues/BoundaryValues.hpe" name="BoundaryValues" package="lu.data" exposed="false">
-      <visualDescription h="49" w="77" x="52" y="179">
+      <visualDescription h="49" w="77" x="164" y="179">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="instance_type" varName="I"/>
@@ -44,7 +44,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000089f3412831007f146fee0270d9bb8c6e9b2533016dfa737ff5e681e89e5e9b819430e28fdfc749b428345f95a9083582f05c92a88cf02e4f3f893ce3bbc0d720915d0a1d65eabd3d022eb341da2e34092e81df35b1bc3e934a8348757e2c65b77dcb4c9b15799723a33fe180662b62e744d8e87cbb8b01072b6b8e6c5647cdaf" localRef="setiv" location="lu.data.InitialValues/InitialValues.hpe" name="InitialValues" package="lu.data" exposed="false">
-      <visualDescription h="33" w="82" x="93" y="247">
+      <visualDescription h="33" w="82" x="297" y="62">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="instance_type" varName="I"/>
@@ -297,16 +297,6 @@
     <supplyParameter cRef="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <fusion>
-      <cRefs>verify</cRefs>
-      <cRefs>pintgr</cRefs>
-      <cRefs>error</cRefs>
-      <cRefs>ssor</cRefs>
-      <cRefs>erhs</cRefs>
-      <cRefs>setiv</cRefs>
-      <cRefs>setbv</cRefs>
-      <pRef>problem_data</pRef>
-    </fusion>
-    <fusion>
       <cRefs>pintgr</cRefs>
       <cRefs>error</cRefs>
       <cRefs>ssor</cRefs>
@@ -329,6 +319,16 @@
       <cRefs>setiv</cRefs>
       <cRefs>setbv</cRefs>
       <pRef>blocks_info</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>verify</cRefs>
+      <cRefs>pintgr</cRefs>
+      <cRefs>error</cRefs>
+      <cRefs>ssor</cRefs>
+      <cRefs>erhs</cRefs>
+      <cRefs>setiv</cRefs>
+      <cRefs>setbv</cRefs>
+      <pRef>problem_data</pRef>
     </fusion>
     <interface iRef="ILU" nArgs="1">
       <slice isRef="boundary_values">
@@ -367,32 +367,32 @@
         <originRef cRef="instance_type" iRef="IInstance_LU"/>
         <visualDescription h="10" w="10" x="93" y="28"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a17759" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@12141052" repeat="0">
         <visualDescription h="150" w="430" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@a2b502" repeat="0" sliceRef="boundary_values">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@633b80c3" repeat="0" sliceRef="boundary_values">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@19a3f7" repeat="0" sliceRef="initial_values">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5782b51a" repeat="0" sliceRef="initial_values">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@15bc5cc" repeat="0" sliceRef="erhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@463fead8" repeat="0" sliceRef="erhs">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17070a" repeat="0" sliceRef="ssor">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@e532ef0" repeat="0" sliceRef="ssor">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1cf30f4" repeat="0" sliceRef="error">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@772e95e8" repeat="0" sliceRef="error">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@19721a6" repeat="0" sliceRef="pintgr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1373ef79" repeat="0" sliceRef="pintgr">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@122224f" repeat="0" sliceRef="verify">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@206efae9" repeat="0" sliceRef="verify">
           <visualDescription h="50" w="50" x="370" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using lu.topology.Neighbors;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.LU { &#xA;&#xA;public interface BaseILU&lt;C> : IApplicationKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseILU.cs" srcType="base" uri="lu.LU/bin/1.0.0.0/BaseILU.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using lu.topology.Neighbors;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.LU { &#xA;&#x9;public interface BaseILU&lt;C> : IApplicationKind &#xA;&#x9;where C:IClass{&#xA;&#x9;&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseILU.cs" srcType="base" uri="lu.LU/bin/1.0.0.0/BaseILU.dll" versionId="1.0.0.0">
           <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
@@ -401,7 +401,7 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.LU { &#xA;&#xA;public interface ILU&lt;C> : BaseILU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ILU.cs" srcType="user" uri="lu.LU/bin/1.0.0.0/ILU.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.LU { &#xA;&#x9;public interface ILU&lt;C> : BaseILU&lt;C>&#xA;&#x9;where C:IClass{&#xA;&#x9;&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ILU.cs" srcType="user" uri="lu.LU/bin/1.0.0.0/ILU.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.LU/bin/1.0.0.0/BaseILU.dll</dependency>
         </file>
@@ -513,60 +513,58 @@
       <originRef>setbv</originRef>
       <originRef>exact</originRef>
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="setbv" uRef="boundary_values"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="58" w="67" x="545" y="357"/>
+      <visualDescription h="24" w="27" x="66" y="310"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>setiv</originRef>
       <originRef>exact</originRef>
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="setiv" uRef="initial_values"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="24" w="27" x="92" y="295"/>
+      <visualDescription h="24" w="27" x="42" y="303"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
       <originRef>erhs</originRef>
       <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>shift_to_south</originRef>
+      <originRef>neighbors</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="erhs" uRef="erhs"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="27" w="29" x="168" y="443"/>
+      <visualDescription h="77" w="37" x="57" y="312"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>ssor</originRef>
-      <originRef>rhs</originRef>
-      <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>buts</originRef>
+      <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="ssor" uRef="ssor"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="53" w="53" x="324" y="476"/>
+      <visualDescription h="20" w="20" x="58" y="197"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>error</originRef>
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="error" uRef="error"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="37" w="40" x="519" y="427"/>
+      <visualDescription h="37" w="40" x="101" y="211"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>pintgr</originRef>
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="pintgr" uRef="pintgr"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="45" w="41" x="588" y="303"/>
+      <visualDescription h="20" w="20" x="35" y="172"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>verify</originRef>
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="verify" uRef="verify"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="22" w="22" x="704" y="158"/>
+      <visualDescription h="22" w="22" x="85" y="262"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
       <originRef>data_partition</originRef>
@@ -574,42 +572,22 @@
       <originRef>neighbors</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="data_partition" uRef="process"/>
       <links xsi:type="component:EnumerableUnitType" ref="lu"/>
-      <visualDescription h="20" w="20" x="551" y="113"/>
+      <visualDescription h="20" w="20" x="56" y="247"/>
     </enumerator>
     <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
+        <originRef>erhs</originRef>
+        <originRef>exchange1</originRef>
+        <originRef>shift_to_south</originRef>
+        <originRef>neighbors</originRef>
+      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
         <originRef>setbv</originRef>
         <originRef>exact</originRef>
         <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>setiv</originRef>
-        <originRef>exact</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>erhs</originRef>
-        <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>ssor</originRef>
-        <originRef>rhs</originRef>
-        <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
-        <originRef>error</originRef>
-        <originRef>mpi</originRef>
+        <originRef>rsd</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
@@ -617,10 +595,28 @@
         <originRef>mpi</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <originRef>error</originRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
+        <originRef>setiv</originRef>
+        <originRef>exact</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>rsd</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
         <originRef>verify</originRef>
         <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>rsd</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
+        <originRef>ssor</originRef>
+        <originRef>buts</originRef>
+        <originRef>discretization</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>

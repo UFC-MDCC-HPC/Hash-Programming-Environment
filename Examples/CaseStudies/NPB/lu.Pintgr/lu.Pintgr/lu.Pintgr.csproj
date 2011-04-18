@@ -43,9 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\usr\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -65,14 +65,6 @@
       <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
       <Name>lu.datapartition.BlocksInfo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
-      <Project>{F87BB0AE-CB6C-4CD0-B131-C7DD0E218376}</Project>
-      <Name>lu.Exchange</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange4\lu.Exchange4\lu.Exchange4.csproj">
-      <Project>{62073609-B2FB-47F0-9315-C1428021C4F1}</Project>
-      <Name>lu.Exchange4</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
@@ -80,6 +72,14 @@
     <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
       <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
       <Name>lu.topology.Neighbors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exchange4\lu.Exchange4\lu.Exchange4.csproj">
+      <Project>{62073609-B2FB-47F0-9315-C1428021C4F1}</Project>
+      <Name>lu.Exchange4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
+      <Project>{F87BB0AE-CB6C-4CD0-B131-C7DD0E218376}</Project>
+      <Name>lu.Exchange</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

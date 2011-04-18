@@ -80,8 +80,14 @@
         <originRef cRef="discretization" iRef="IDiscretization"/>
         <visualDescription h="10" w="10" x="165" y="26"/>
       </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@6281b7f8" repeat="0">
+        <visualDescription h="150" w="70" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@32552d4e" repeat="0" sliceRef="exchange1">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.BlockTriangularSolution { &#xA;&#xA;public interface BaseIBlockTriangularSolution&lt;I, C, DIS> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIS:IDiscretization&#xA;{&#xA;&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;INeighbors Neighbors {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlockTriangularSolution.cs" srcType="base" uri="lu.ssor.BlockTriangularSolution/bin/1.0.0.0/BaseIBlockTriangularSolution.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.BlockTriangularSolution { &#xA;&#x9;public interface BaseIBlockTriangularSolution&lt;I, C, DIS> : IComputationKind &#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIS:IDiscretization{&#xA;&#x9;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;&#x9;INeighbors Neighbors {get;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIBlockTriangularSolution.cs" srcType="base" uri="lu.ssor.BlockTriangularSolution/bin/1.0.0.0/BaseIBlockTriangularSolution.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -91,7 +97,7 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.BlockTriangularSolution { &#xA;&#xA;public interface IBlockTriangularSolution&lt;I, C, DIS> : BaseIBlockTriangularSolution&lt;I, C, DIS>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIS:IDiscretization&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBlockTriangularSolution.cs" srcType="user" uri="lu.ssor.BlockTriangularSolution/bin/1.0.0.0/IBlockTriangularSolution.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.BlockTriangularSolution { &#xA;&#x9;public interface IBlockTriangularSolution&lt;I, C, DIS> : BaseIBlockTriangularSolution&lt;I, C, DIS>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIS:IDiscretization{&#xA;&#x9;   void setParameters(int k, double omega, double[,,,] dx, double[,,,] dy, double[,,,] dz);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IBlockTriangularSolution.cs" srcType="user" uri="lu.ssor.BlockTriangularSolution/bin/1.0.0.0/IBlockTriangularSolution.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
@@ -141,27 +147,82 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>exchange1</originRef>
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
       <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="38" w="41" x="401" y="381"/>
+      <visualDescription h="38" w="41" x="32" y="119"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
+      <originRef>exchange1</originRef>
+      <originRef>shift_to_west</originRef>
+      <originRef>neighbors</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
+      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
+      <visualDescription h="47" w="48" x="44" y="273"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
+      <originRef>exchange1</originRef>
+      <originRef>shift_to_north</originRef>
+      <originRef>neighbors</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
+      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
+      <visualDescription h="47" w="48" x="27" y="208"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
+      <originRef>exchange1</originRef>
+      <originRef>shift_to_east</originRef>
+      <originRef>neighbors</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
+      <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
+      <visualDescription h="47" w="48" x="19" y="148"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
+      <originRef>exchange1</originRef>
+      <originRef>shift_to_south</originRef>
+      <originRef>neighbors</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exchange1" uRef="exchange1"/>
+      <visualDescription h="47" w="48" x="28" y="176"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="discretization" uRef="discretization"/>
       <links xsi:type="component:EnumerableUnitType" ref="block_triangular_solution"/>
-      <visualDescription h="20" w="20" x="421" y="208"/>
+      <visualDescription h="20" w="20" x="64" y="150"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
         <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>shift_to_east</originRef>
+        <originRef>neighbors</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
+        <originRef>exchange1</originRef>
+        <originRef>shift_to_south</originRef>
+        <originRef>neighbors</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
         <originRef>discretization</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
+        <originRef>exchange1</originRef>
+        <originRef>shift_to_north</originRef>
+        <originRef>neighbors</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
+        <originRef>exchange1</originRef>
+        <originRef>problem_data</originRef>
+        <originRef>rsd</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
+        <originRef>exchange1</originRef>
+        <originRef>shift_to_west</originRef>
+        <originRef>neighbors</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

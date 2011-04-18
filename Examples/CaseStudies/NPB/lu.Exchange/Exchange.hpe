@@ -131,17 +131,17 @@
     <fusion>
       <cRefs>shift_to_west</cRefs>
       <cRefs>shift_to_north</cRefs>
+      <pRef>input_buffer</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>shift_to_west</cRefs>
+      <cRefs>shift_to_north</cRefs>
       <pRef>neighbors</pRef>
     </fusion>
     <fusion>
       <cRefs>shift_to_west</cRefs>
       <cRefs>shift_to_north</cRefs>
       <pRef>output_buffer</pRef>
-    </fusion>
-    <fusion>
-      <cRefs>shift_to_west</cRefs>
-      <cRefs>shift_to_north</cRefs>
-      <pRef>input_buffer</pRef>
     </fusion>
     <interface iRef="IExchange" nArgs="2">
       <slice isRef="blocks">
@@ -156,12 +156,12 @@
         <originRef cRef="shift_to_north" iRef="IShift"/>
         <visualDescription h="10" w="10" x="13" y="24"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@113e30a" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@16763a3" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9ebb9e" repeat="0" sliceRef="shift">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2abe630d" repeat="0" sliceRef="shift">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12f95e0" repeat="0" sliceRef="shift">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@39590067" repeat="0" sliceRef="shift">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
@@ -198,15 +198,15 @@
         <slice pRef="buffer" sRef="shift"/>
         <slice pRef="buffer" sRef="shift"/>
       </port>
-      <port name="neighbors">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="neighbors" sRef="shift"/>
-        <slice pRef="neighbors" sRef="shift"/>
-      </port>
       <port name="buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="buffer" sRef="shift"/>
         <slice pRef="buffer" sRef="shift"/>
+      </port>
+      <port name="neighbors">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="neighbors" sRef="shift"/>
+        <slice pRef="neighbors" sRef="shift"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -243,55 +243,55 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="29" w="30" x="274" y="399"/>
+      <visualDescription h="20" w="20" x="82" y="193"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
       <originRef>shift_to_north</originRef>
-      <originRef>mpi</originRef>
+      <originRef>neighbors</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift_to_north" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="47" w="48" x="255" y="385"/>
+      <visualDescription h="20" w="20" x="59" y="200"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
       <originRef>shift_to_west</originRef>
-      <originRef>mpi</originRef>
+      <originRef>neighbors</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="shift_to_west" uRef="shift"/>
       <links xsi:type="component:EnumerableUnitType" ref="exchange"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="28" w="36" x="247" y="447"/>
+      <visualDescription h="20" w="20" x="70" y="218"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>direction2</originRef>
       <originRef>base</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="direction2" uRef="direction"/>
-      <visualDescription h="20" w="20" x="360" y="138"/>
+      <visualDescription h="20" w="20" x="89" y="386"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>direction1</originRef>
       <originRef>base</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="direction1" uRef="direction"/>
-      <visualDescription h="20" w="20" x="421" y="235"/>
+      <visualDescription h="20" w="20" x="127" y="272"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
+        <originRef>shift_to_west</originRef>
+        <originRef>neighbors</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
         <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>rsd</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
         <originRef>shift_to_north</originRef>
-        <originRef>mpi</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
-        <originRef>shift_to_west</originRef>
-        <originRef>mpi</originRef>
+        <originRef>neighbors</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

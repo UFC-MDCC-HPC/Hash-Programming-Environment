@@ -42,11 +42,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\usr\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
@@ -56,10 +56,6 @@
     <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
       <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
       <Name>common.problem_size.Class</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange1\lu.Exchange1\lu.Exchange1.csproj">
-      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
-      <Name>lu.Exchange1</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\lu.data.ProblemDefinition\lu.data.ProblemDefinition\lu.data.ProblemDefinition.csproj">
       <Project>{E07F89D2-70CB-46FD-BB84-E0DEC7CBDFF0}</Project>
@@ -72,6 +68,10 @@
     <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
       <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
       <Name>lu.topology.Neighbors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exchange1\lu.Exchange1\lu.Exchange1.csproj">
+      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
+      <Name>lu.Exchange1</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

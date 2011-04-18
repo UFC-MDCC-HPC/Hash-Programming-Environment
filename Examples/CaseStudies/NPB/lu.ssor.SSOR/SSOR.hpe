@@ -14,7 +14,7 @@
       <parameter formFieldId="instance_type" varName="I"/>
       <parameter formFieldId="class" varName="C"/>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-        <visualDescription h="29" w="76" x="406" y="98">
+        <visualDescription h="29" w="76" x="434" y="74">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -60,7 +60,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-        <visualDescription h="29" w="76" x="406" y="98">
+        <visualDescription h="29" w="76" x="434" y="74">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -97,7 +97,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-        <visualDescription h="29" w="76" x="406" y="98">
+        <visualDescription h="29" w="76" x="434" y="74">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -126,7 +126,7 @@
         </unitBounds>
       </port>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-        <visualDescription h="29" w="76" x="406" y="98">
+        <visualDescription h="29" w="76" x="434" y="74">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -145,7 +145,7 @@
       <parameter formFieldId="class" varName="C"/>
       <parameter formFieldId="discretization" varName="DISL2"/>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-        <visualDescription h="29" w="76" x="406" y="98">
+        <visualDescription h="29" w="76" x="434" y="74">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -182,7 +182,7 @@
       <parameter formFieldId="class" varName="C"/>
       <parameter formFieldId="discretization" varName="DISU2"/>
       <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-        <visualDescription h="29" w="76" x="406" y="98">
+        <visualDescription h="29" w="76" x="434" y="74">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <unitBounds uRef="blocks">
@@ -285,11 +285,8 @@
     <fusion>
       <cRefs>buts</cRefs>
       <cRefs>blts</cRefs>
-      <cRefs>jacu</cRefs>
-      <cRefs>jacld</cRefs>
-      <cRefs>l2norm</cRefs>
       <cRefs>rhs</cRefs>
-      <pRef>problem_data</pRef>
+      <pRef>neighbors</pRef>
     </fusion>
     <fusion>
       <cRefs>timer</cRefs>
@@ -308,8 +305,11 @@
     <fusion>
       <cRefs>buts</cRefs>
       <cRefs>blts</cRefs>
+      <cRefs>jacu</cRefs>
+      <cRefs>jacld</cRefs>
+      <cRefs>l2norm</cRefs>
       <cRefs>rhs</cRefs>
-      <pRef>neighbors</pRef>
+      <pRef>problem_data</pRef>
     </fusion>
     <interface iRef="ISSOR" nArgs="2">
       <slice isRef="rhs">
@@ -336,24 +336,24 @@
         <originRef cRef="instance_type" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="86" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@b0d5f5" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@238e7d8" repeat="0">
         <visualDescription h="150" w="370" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1aeeb0e" repeat="0" sliceRef="rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@65fd170b" repeat="0" sliceRef="rhs">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c9ffaa" repeat="0" sliceRef="l2norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4af4077c" repeat="0" sliceRef="l2norm">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1b02ab9" repeat="0" sliceRef="triangular_part_jacobian_matrix">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5b178455" repeat="0" sliceRef="triangular_part_jacobian_matrix">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c4dfba" repeat="0" sliceRef="triangular_part_jacobian_matrix">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@64f1172b" repeat="0" sliceRef="triangular_part_jacobian_matrix">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@13c6940" repeat="0" sliceRef="block_triangular_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@10283bd3" repeat="0" sliceRef="block_triangular_solution">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@12225e8" repeat="0" sliceRef="block_triangular_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@416fa1ee" repeat="0" sliceRef="block_triangular_solution">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
       </protocol>
@@ -368,7 +368,7 @@
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.ssor.SSOR { &#xA;&#xA;public interface ISSOR&lt;I, C> : BaseISSOR&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ISSOR.cs" srcType="user" uri="lu.ssor.SSOR/bin/1.0.0.0/ISSOR.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.ssor.SSOR { &#xA;&#x9;public interface ISSOR&lt;I, C> : BaseISSOR&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass{&#xA;&#x9;   double[] Rsdnm { get; }&#xA;&#x9;   double Maxtime { get; }&#xA;&#x9;   void setParameters(int niter);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ISSOR.cs" srcType="user" uri="lu.ssor.SSOR/bin/1.0.0.0/ISSOR.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.ssor.SSOR/bin/1.0.0.0/BaseISSOR.dll</dependency>
@@ -465,63 +465,56 @@
       </slices>
       <visualDescription h="54" w="105" x="406" y="295"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c0820b1301635998140" varId="n">
       <originRef>rhs</originRef>
       <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>shift_to_south</originRef>
+      <originRef>neighbors</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="rhs" uRef="rhs"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="53" w="53" x="236" y="95"/>
+      <visualDescription h="20" w="20" x="64" y="214"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>l2norm</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="l2norm" uRef="l2norm"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="57" w="56" x="175" y="498"/>
+      <visualDescription h="20" w="20" x="71" y="168"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>jacld</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="jacld" uRef="triangular_part_jacobian_matrix"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="57" w="56" x="625" y="125"/>
+      <visualDescription h="20" w="20" x="82" y="144"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>jacu</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="jacu" uRef="triangular_part_jacobian_matrix"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="57" w="56" x="644" y="155"/>
+      <visualDescription h="20" w="20" x="51" y="188"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>blts</originRef>
-      <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="blts" uRef="block_triangular_solution"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="38" w="41" x="669" y="376"/>
+      <visualDescription h="20" w="20" x="64" y="150"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>buts</originRef>
-      <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="buts" uRef="block_triangular_solution"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="38" w="41" x="576" y="481"/>
+      <visualDescription h="20" w="20" x="64" y="150"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>timer</originRef>
       <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="timer" uRef="timer"/>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="20" w="20" x="350" y="559"/>
+      <visualDescription h="20" w="20" x="43" y="132"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>discretization_l1</originRef>
@@ -549,37 +542,16 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@1c0820b1301635998140</eRef>
         <originRef>rhs</originRef>
         <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>shift_to_south</originRef>
+        <originRef>neighbors</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>jacld</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>jacu</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
-        <originRef>blts</originRef>
-        <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
         <originRef>buts</originRef>
-        <originRef>exchange1</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>discretization</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
@@ -587,10 +559,24 @@
         <originRef>mpi</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
+        <originRef>blts</originRef>
+        <originRef>discretization</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
+        <originRef>jacld</originRef>
+        <originRef>discretization</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1c777361255142002310</eRef>
         <originRef>l2norm</originRef>
-        <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>mpi</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
+        <originRef>jacu</originRef>
+        <originRef>discretization</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>

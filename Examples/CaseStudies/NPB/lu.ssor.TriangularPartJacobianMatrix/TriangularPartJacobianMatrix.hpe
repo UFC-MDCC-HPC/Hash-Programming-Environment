@@ -71,7 +71,7 @@
         <visualDescription h="10" w="10" x="210" y="75"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.TriangularPartJacobianMatrix { &#xA;&#xA;public interface BaseITriangularPartJacobianMatrix&lt;I, C, DIS> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIS:IDiscretization&#xA;{&#xA;&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseITriangularPartJacobianMatrix.cs" srcType="base" uri="lu.ssor.TriangularPartJacobianMatrix/bin/1.0.0.0/BaseITriangularPartJacobianMatrix.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.TriangularPartJacobianMatrix { &#xA;&#x9;public interface BaseITriangularPartJacobianMatrix&lt;I, C, DIS> : IComputationKind &#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIS:IDiscretization{&#xA;&#x9;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseITriangularPartJacobianMatrix.cs" srcType="base" uri="lu.ssor.TriangularPartJacobianMatrix/bin/1.0.0.0/BaseITriangularPartJacobianMatrix.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -80,7 +80,7 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.TriangularPartJacobianMatrix { &#xA;&#xA;public interface ITriangularPartJacobianMatrix&lt;I, C, DIS> : BaseITriangularPartJacobianMatrix&lt;I, C, DIS>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIS:IDiscretization&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ITriangularPartJacobianMatrix.cs" srcType="user" uri="lu.ssor.TriangularPartJacobianMatrix/bin/1.0.0.0/ITriangularPartJacobianMatrix.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.ssor.TriangularPartJacobianMatrix { &#xA;&#x9;public interface ITriangularPartJacobianMatrix&lt;I, C, DIS> : BaseITriangularPartJacobianMatrix&lt;I, C, DIS>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIS:IDiscretization{&#xA;&#x9;   void setParameters(int k);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ITriangularPartJacobianMatrix.cs" srcType="user" uri="lu.ssor.TriangularPartJacobianMatrix/bin/1.0.0.0/ITriangularPartJacobianMatrix.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.Discretization/bin/1.0.0.0/IDiscretization.dll</dependency>
@@ -119,24 +119,24 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="triangular_part_jacobian_matrix"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="57" w="56" x="360" y="464"/>
+      <visualDescription h="20" w="20" x="100" y="344"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="discretization" uRef="discretization"/>
       <links xsi:type="component:EnumerableUnitType" ref="triangular_part_jacobian_matrix"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="20" w="20" x="389" y="405"/>
+      <visualDescription h="20" w="20" x="76" y="278"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
         <originRef>problem_data</originRef>
-        <originRef>d</originRef>
+        <originRef>rsd</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>

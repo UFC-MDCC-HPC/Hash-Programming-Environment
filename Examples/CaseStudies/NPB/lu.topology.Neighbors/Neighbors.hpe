@@ -10,7 +10,7 @@
     <interface iRef="INeighbors" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.topology.Neighbors { &#xA;&#xA;public interface BaseINeighbors : IEnvironmentKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseINeighbors.cs" srcType="base" uri="lu.topology.Neighbors/bin/1.0.0.0/BaseINeighbors.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.topology.Neighbors { &#xA;&#xA;public interface INeighbors : BaseINeighbors&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="INeighbors.cs" srcType="user" uri="lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.topology.Neighbors { &#xA;&#xA;public interface INeighbors : BaseINeighbors&#xA;{&#xA;&#x9;&#x9;int north {get; set;}&#xA;&#x9;&#x9;int south {get; set;}&#xA;&#x9;&#x9;int east {get; set;}&#xA;&#x9;&#x9;int west {get; set;}&#x9;&#xA;&#x9;&#x9;&#xA;//        int ydim {get;}&#xA;//        int node {get;}&#xA;//        int xdim {get;}&#xA;//        int row {get;}&#xA;//        int col {get;}&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="INeighbors.cs" srcType="user" uri="lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/lu.topology.Neighbors/bin/1.0.0.0/BaseINeighbors.dll</dependency>
         </file>
       </sources>

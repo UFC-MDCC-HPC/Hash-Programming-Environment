@@ -59,6 +59,12 @@
         <originRef cRef="exact" iRef="IExact"/>
         <visualDescription h="10" w="10" x="89" y="39"/>
       </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19e247a0" repeat="0">
+        <visualDescription h="150" w="70" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@56cc66a6" repeat="0" sliceRef="exact">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+      </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;&#xA;namespace lu.data.InitialValues { &#xA;&#xA;public interface BaseIInitialValues&lt;I, C> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInitialValues.cs" srcType="base" uri="lu.data.InitialValues/bin/1.0.0.0/BaseIInitialValues.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
@@ -77,13 +83,13 @@
       <visualDescription h="53" w="166" x="202" y="186">
         <color b="128" g="255" r="255"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="problem" sRef="exact"/>
-      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="exact"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="exact"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -105,10 +111,10 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>exact</originRef>
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="exact" uRef="exact"/>
       <links xsi:type="component:EnumerableUnitType" ref="initial_values"/>
-      <visualDescription h="24" w="27" x="122" y="351"/>
+      <visualDescription h="24" w="27" x="166" y="346"/>
     </enumerator>
   </componentInfo>
 </component:component>

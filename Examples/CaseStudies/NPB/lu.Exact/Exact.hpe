@@ -62,14 +62,14 @@
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Exact { &#xA;&#xA;public interface IExact&lt;I, C> : BaseIExact&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IExact.cs" srcType="user" uri="lu.Exact/bin/1.0.0.0/IExact.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Exact { &#xA;&#x9;public interface IExact&lt;I, C> : BaseIExact&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;   void setParameters(int i, int j, int k, double[,,,] u000ijk, int i1, int i2, int i3);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IExact.cs" srcType="user" uri="lu.Exact/bin/1.0.0.0/IExact.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.Exact/bin/1.0.0.0/BaseIExact.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="221" y="171">
-        <color b="244" g="244" r="244"/>
+      <visualDescription h="40" w="80" x="271" y="126">
+        <color b="255" g="144" r="30"/>
       </visualDescription>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -89,11 +89,11 @@
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
         <visualDescription h="10" w="10" x="9" y="7"/>
       </slices>
-      <visualDescription h="40" w="80" x="222" y="257"/>
+      <visualDescription h="40" w="80" x="106" y="204"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="exact"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
