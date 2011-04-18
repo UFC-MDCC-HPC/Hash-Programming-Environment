@@ -203,6 +203,10 @@ where C:IClass
   double [,,,,] Field_speed   { get; }	
   double [,,,,] Field_square  { get; }
 
+//  double [,,] Field_lhsa     { get; }	
+//  double [,,] Field_lhsb     { get; }	
+//  double [,,] Field_lhsc     { get; }	
+		
   int MAX_CELL_DIM { get; set; }	
   int maxcells { get; set;}	
   int IMAX { get; set; }	

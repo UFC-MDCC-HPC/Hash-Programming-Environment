@@ -158,7 +158,7 @@ public IProblemDefinition<IInstance_BT<C>, C> Problem {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

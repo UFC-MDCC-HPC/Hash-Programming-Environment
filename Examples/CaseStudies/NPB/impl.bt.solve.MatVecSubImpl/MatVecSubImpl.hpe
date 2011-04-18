@@ -12,24 +12,6 @@
         <parameter formFieldId="instance_type" varName="I"/>
         <parameter formFieldId="class" varName="C"/>
         <parameter formFieldId="method" varName="MTH"/>
-        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
-          <visualDescription h="43" w="110" x="437" y="354">
-            <color b="255" g="255" r="255"/>
-          </visualDescription>
-          <parameter formFieldId="instance_type" varName="I"/>
-          <parameter formFieldId="class" varName="C"/>
-          <unitBounds uRef="problem">
-            <visualDescription h="10" w="10" x="88" y="16"/>
-          </unitBounds>
-        </port>
-        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-          <visualDescription h="42" w="86" x="109" y="356">
-            <color b="255" g="255" r="255"/>
-          </visualDescription>
-          <unitBounds uRef="blocks">
-            <visualDescription h="10" w="10" x="5" y="15"/>
-          </unitBounds>
-        </port>
         <unitBounds uRef="matvec_sub">
           <visualDescription h="10" w="10" x="5" y="2"/>
         </unitBounds>
@@ -69,24 +51,16 @@
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance_type" varName="I"/>
-    <interface iRef="IMatVecSubImpl" nArgs="3">
-      <slice isRef="problem">
-        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
-        <visualDescription h="10" w="10" x="14" y="23"/>
-      </slice>
-      <slice isRef="blocks">
-        <originRef cRef="blocks_info" iRef="IBlocks"/>
-        <visualDescription h="10" w="10" x="62" y="16"/>
-      </slice>
+    <interface iRef="IMatVecSubImpl" nArgs="1">
       <slice isRef="method">
         <originRef cRef="method" iRef="IMethod"/>
         <visualDescription h="10" w="10" x="36" y="29"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@aaf5a4" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@378f95c8" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.solve.Method;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.MatVecSub;&#xA;&#xA;namespace impl.bt.solve.MatVecSubImpl { &#xA;&#xA;public abstract class BaseIMatVecSubImpl&lt;I, C, MTH>: Computation, BaseIMatVecSub&lt;I, C, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private MTH method = default(MTH);&#xA;&#xA;protected MTH Method {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.method == null)&#xA;&#x9;&#x9;&#x9;this.method = (MTH) Services.getPort(&quot;method&quot;);&#xA;&#x9;&#x9;return this.method;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIMatVecSubImpl.cs" srcType="base" uri="impl.bt.solve.MatVecSubImpl/bin/1.0.0.0/BaseIMatVecSubImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.Method;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.MatVecSub;&#xA;&#xA;namespace impl.bt.solve.MatVecSubImpl { &#xA;&#xA;public abstract class BaseIMatVecSubImpl&lt;MTH>: Computation, BaseIMatVecSub&lt;MTH>&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;/*private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;*/&#xA;private MTH method = default(MTH);&#xA;&#xA;protected MTH Method {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.method == null)&#xA;&#x9;&#x9;&#x9;this.method = (MTH) Services.getPort(&quot;method&quot;);&#xA;&#x9;&#x9;return this.method;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public int go(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIMatVecSubImpl.cs" srcType="base" uri="impl.bt.solve.MatVecSubImpl/bin/1.0.0.0/BaseIMatVecSubImpl.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
@@ -95,7 +69,7 @@
           <dependency>bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
           <dependency>bt.solve.MatVecSub/bin/1.0.0.0/BaseIMatVecSub.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.MatVecSub;&#xA;&#xA;namespace impl.bt.solve.MatVecSubImpl { &#xA;&#xA;public class IMatVecSubImpl&lt;I, C, MTH> : BaseIMatVecSubImpl&lt;I, C, MTH>, IMatVecSub&lt;I, C, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;public IMatVecSubImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IMatVecSubImpl.cs" srcType="user" uri="impl.bt.solve.MatVecSubImpl/bin/1.0.0.0/IMatVecSubImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.MatVecSub;&#xA;&#xA;namespace impl.bt.solve.MatVecSubImpl &#xA;{ &#xA;&#x9;public class IMatVecSubImpl&lt;MTH> : BaseIMatVecSubImpl&lt;MTH>, IMatVecSub&lt;MTH>&#xA;&#x9;&#x9;where MTH:IBeamWarmingMethod &#xA;&#x9;{&#xA;&#x9;&#x9;private double[,,] ablock;&#xA;&#x9;&#x9;private double[,,,,] avec;&#xA;&#x9;&#x9;private double[,,,,] bvec;&#xA;&#x9;&#x9;private int ab1, av1, av2, av3, av4, bv1, bv2, bv3, bv4;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setParameters(double[,,] ablock, double[,,,,] avec, double[,,,,] bvec, int ab1, int av1, int av2, int av3, int av4, int bv1, int bv2, int bv3, int bv4) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;this.ablock = ablock;&#xA;&#x9;&#x9;&#x9;this.avec = avec;&#xA;&#x9;&#x9;&#x9;this.bvec = bvec;&#xA;&#x9;&#x9;&#x9;this.ab1 = ab1;&#xA;&#x9;&#x9;&#x9;this.av1 = av1;&#xA;&#x9;&#x9;&#x9;this.av2 = av2;&#xA;&#x9;&#x9;&#x9;this.av3 = av3;&#xA;&#x9;&#x9;&#x9;this.av4 = av4;&#xA;&#x9;&#x9;&#x9;this.bv1 = bv1;&#xA;&#x9;&#x9;&#x9;this.bv2 = bv2;&#xA;&#x9;&#x9;&#x9;this.bv3 = bv3;&#xA;&#x9;&#x9;&#x9;this.bv4 = bv4;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;&#x9;public override int go()   &#xA;&#x9;&#x9;{ &#xA;&#x9;&#x9;&#x9;bvec[bv1, bv2, bv3, bv4, 0] = bvec[bv1, bv2, bv3, bv4, 0] - ablock[ab1, 0, 0] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 0] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 0] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 0] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 0] * avec[av1, av2, av3, av4, 4];&#xA;&#x9;&#x9;&#x9;bvec[bv1, bv2, bv3, bv4, 1] = bvec[bv1, bv2, bv3, bv4, 1] - ablock[ab1, 0, 1] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 1] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 1] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 1] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 1] * avec[av1, av2, av3, av4, 4];&#xA;&#x9;&#x9;&#x9;bvec[bv1, bv2, bv3, bv4, 2] = bvec[bv1, bv2, bv3, bv4, 2] - ablock[ab1, 0, 2] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 2] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 2] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 2] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 2] * avec[av1, av2, av3, av4, 4];&#xA;&#x9;&#x9;&#x9;bvec[bv1, bv2, bv3, bv4, 3] = bvec[bv1, bv2, bv3, bv4, 3] - ablock[ab1, 0, 3] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 3] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 3] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 3] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 3] * avec[av1, av2, av3, av4, 4];&#xA;&#x9;&#x9;&#x9;bvec[bv1, bv2, bv3, bv4, 4] = bvec[bv1, bv2, bv3, bv4, 4] - ablock[ab1, 0, 4] * avec[av1, av2, av3, av4, 0] - ablock[ab1, 1, 4] * avec[av1, av2, av3, av4, 1] - ablock[ab1, 2, 4] * avec[av1, av2, av3, av4, 2] - ablock[ab1, 3, 4] * avec[av1, av2, av3, av4, 3] - ablock[ab1, 4, 4] * avec[av1, av2, av3, av4, 4];&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;} // end activate method &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IMatVecSubImpl.cs" srcType="user" uri="impl.bt.solve.MatVecSubImpl/bin/1.0.0.0/IMatVecSubImpl.dll" versionId="1.0.0.0">
           <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
@@ -106,37 +80,20 @@
       <visualDescription h="40" w="148" x="225" y="136">
         <color b="255" g="128" r="255"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="problem" sRef="problem"/>
-      </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="blocks"/>
-      </port>
-      <parameter iname="IInstance_BT" order="0" parid="instance_type" uname="instance" varid="I"/>
-      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
-      <parameter iname="IBeamWarmingMethod" order="2" parid="method" uname="method" varid="MTH"/>
+      <parameter iname="IBeamWarmingMethod" order="0" parid="method" uname="method" varid="MTH"/>
     </interface>
     <unit iRef="IMatVecSubImpl" private="false" uRef="matvec_sub" visibleInterface="true">
       <super cRef="base" uRef="matvec_sub"/>
-      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
-        <visualDescription h="10" w="10" x="14" y="23"/>
-      </slices>
-      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
-        <visualDescription h="10" w="10" x="62" y="16"/>
-      </slices>
       <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
         <visualDescription h="10" w="10" x="36" y="29"/>
       </slices>
       <visualDescription h="40" w="80" x="260" y="252"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>base</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>qs</originRef>
+      <originRef>method</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="matvec_sub"/>
-      <visualDescription h="48" w="47" x="117" y="255"/>
+      <visualDescription h="20" w="20" x="398" y="273"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
       <originRef>method</originRef>

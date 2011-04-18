@@ -62,7 +62,7 @@
           <dependency>%WORKSPACE/common.Add/bin/1.0.0.0/BaseIAdd.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="115" y="149">
+      <visualDescription h="40" w="80" x="170" y="134">
         <color b="0" g="255" r="0"/>
       </visualDescription>
       <port name="problem">

@@ -14,9 +14,9 @@ public interface IInstance<C> : BaseIInstance<C>
 	double dt_default { get; }
 	PROBLEM_CLASS CLASS { get; }
 
-    
-
-
+	double[] xcrref { get; }
+	double[] xceref { get; }
+	double dtref { get; }	
 } // end main interface 
 
 } // end namespace 

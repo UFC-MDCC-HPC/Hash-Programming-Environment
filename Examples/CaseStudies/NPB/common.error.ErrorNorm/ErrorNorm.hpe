@@ -77,15 +77,15 @@
         <originRef cRef="exact_solution" iRef="IExactSolution"/>
         <visualDescription h="10" w="10" x="13" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@43dcd9c6" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@550596c2" repeat="0">
         <visualDescription h="250" w="150" x="85" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@585d78f8" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@61ecc629" repeat="0">
           <visualDescription h="150" w="70" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@60b10f1a" repeat="0">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7fc5dff8" repeat="0">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@856a58e" repeat="0" sliceRef="exact_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17f35451" repeat="0" sliceRef="exact_solution">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>

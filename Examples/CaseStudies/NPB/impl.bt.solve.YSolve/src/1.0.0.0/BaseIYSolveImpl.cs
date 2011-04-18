@@ -185,6 +185,6 @@ namespace impl.bt.solve.YSolve {
 				return this.unpack_back_sub_info;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

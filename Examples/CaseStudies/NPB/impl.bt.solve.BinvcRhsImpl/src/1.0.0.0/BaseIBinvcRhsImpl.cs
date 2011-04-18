@@ -4,22 +4,17 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using common.datapartition.BlocksInfo;
-using common.data.ProblemDefinition;
-using bt.problem_size.Instance_BT;
-using common.problem_size.Class;
 using common.solve.Method;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.BinvcRhs;
 
 namespace impl.bt.solve.BinvcRhsImpl { 
 
-public abstract class BaseIBinvcRhsImpl<I, C, MTH>: Computation, BaseIBinvcRhs<I, C, MTH>
-where I:IInstance_BT<C>
-where C:IClass
+public abstract class BaseIBinvcRhsImpl<MTH>: Computation, BaseIBinvcRhs<MTH>
 where MTH:IBeamWarmingMethod
 {
-
+		
+/*		
 private IBlocks blocks = null;
 
 public IBlocks Blocks {
@@ -39,7 +34,9 @@ public IProblemDefinition<I, C> Problem {
 		return this.problem;
 	}
 }
-
+		 
+		 */
+		
 private MTH method = default(MTH);
 
 protected MTH Method {
@@ -51,7 +48,7 @@ protected MTH Method {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

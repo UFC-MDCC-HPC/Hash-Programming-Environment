@@ -264,15 +264,10 @@
     <parameter componentRef="method" formFieldId="method" varName="MTH"/>
     <parameter componentRef="instance" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
-    <innerRenaming cNewName="output_buffer_forward" cOldName="output_buffer" cRef="shift_forward"/>
-    <innerRenaming cNewName="input_buffer_forward" cOldName="input_buffer" cRef="shift_forward"/>
-    <innerRenaming cNewName="output_buffer_backward" cOldName="output_buffer" cRef="shift_backward"/>
     <innerRenaming cNewName="input_buffer_backward" cOldName="input_buffer" cRef="shift_backward"/>
-    <fusion>
-      <cRefs>shift_backward</cRefs>
-      <cRefs>shift_forward</cRefs>
-      <pRef>mpi</pRef>
-    </fusion>
+    <innerRenaming cNewName="input_buffer_forward" cOldName="input_buffer" cRef="shift_forward"/>
+    <innerRenaming cNewName="output_buffer_forward" cOldName="output_buffer" cRef="shift_forward"/>
+    <innerRenaming cNewName="output_buffer_backward" cOldName="output_buffer" cRef="shift_backward"/>
     <fusion>
       <cRefs>backward</cRefs>
       <cRefs>forward</cRefs>
@@ -281,16 +276,21 @@
       <pRef>blocks_info</pRef>
     </fusion>
     <fusion>
-      <cRefs>shift_backward</cRefs>
-      <cRefs>shift_forward</cRefs>
-      <pRef>topology</pRef>
-    </fusion>
-    <fusion>
       <cRefs>backward</cRefs>
       <cRefs>forward</cRefs>
       <cRefs>lhs</cRefs>
       <cRefs>matvecproduct</cRefs>
       <pRef>problem_data</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>shift_backward</cRefs>
+      <cRefs>shift_forward</cRefs>
+      <pRef>topology</pRef>
+    </fusion>
+    <fusion>
+      <cRefs>shift_backward</cRefs>
+      <cRefs>shift_forward</cRefs>
+      <pRef>mpi</pRef>
     </fusion>
     <interface iRef="ISolve" nArgs="4">
       <slice isRef="shift_forward">
@@ -317,27 +317,27 @@
         <originRef cRef="shift_backward" iRef="IShift"/>
         <visualDescription h="10" w="10" x="39" y="5"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@51ce95a1" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1433a4c" repeat="0">
         <visualDescription h="250" w="390" x="205" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@51c1a6fc" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a88470" repeat="0">
           <visualDescription h="150" w="310" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ba1453" repeat="0" sliceRef="forward">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@18ef118" repeat="0" sliceRef="forward">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@388c5584" repeat="0" sliceRef="lhs">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@17698e6" repeat="0" sliceRef="lhs">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5426a1d" repeat="0" sliceRef="matvecproduct">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1305500" repeat="0" sliceRef="matvecproduct">
             <visualDescription h="50" w="50" x="130" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4b44989d" repeat="0" sliceRef="backward">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ca5df" repeat="0" sliceRef="backward">
             <visualDescription h="50" w="50" x="190" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@47f9206" repeat="0" sliceRef="shift_forward">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@ce121a" repeat="0" sliceRef="shift_forward">
             <visualDescription h="50" w="50" x="250" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@534bca38" repeat="0" sliceRef="shift_backward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@106a1cb" repeat="0" sliceRef="shift_backward">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -366,23 +366,23 @@
       <visualDescription h="90" w="147" x="42" y="52">
         <color b="0" g="0" r="255"/>
       </visualDescription>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="32" y="67"/>
-        <slice pRef="cell" sRef="shift_forward"/>
-        <slice pRef="cell" sRef="shift_backward"/>
-      </port>
-      <port name="output_buffer_forward">
-        <visualDescription h="10" w="10" x="86" y="56"/>
-        <slice pRef="output_buffer" sRef="shift_forward"/>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="112" y="62"/>
+        <slice pRef="mpi" sRef="shift_forward"/>
+        <slice pRef="mpi" sRef="shift_backward"/>
       </port>
       <port name="input_buffer_forward">
         <visualDescription h="10" w="10" x="8" y="66"/>
         <slice pRef="input_buffer" sRef="shift_forward"/>
       </port>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="112" y="62"/>
-        <slice pRef="mpi" sRef="shift_forward"/>
-        <slice pRef="mpi" sRef="shift_backward"/>
+      <port name="output_buffer_forward">
+        <visualDescription h="10" w="10" x="86" y="56"/>
+        <slice pRef="output_buffer" sRef="shift_forward"/>
+      </port>
+      <port name="cell">
+        <visualDescription h="10" w="10" x="32" y="67"/>
+        <slice pRef="cell" sRef="shift_forward"/>
+        <slice pRef="cell" sRef="shift_backward"/>
       </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="107" y="28"/>

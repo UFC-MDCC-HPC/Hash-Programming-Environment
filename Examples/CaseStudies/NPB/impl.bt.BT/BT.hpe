@@ -63,29 +63,55 @@
         <originRef cRef="adi" iRef="IADI"/>
         <visualDescription h="10" w="10" x="5" y="28"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@728a5c" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@64aacab6" repeat="0">
         <visualDescription h="250" w="330" x="175" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1d9d8b7" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@8e2a65c" repeat="0">
           <visualDescription h="150" w="250" x="70" y="50"/>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@122f61a" repeat="0" sliceRef="lhsinit">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5817e692" repeat="0" sliceRef="lhsinit">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4b3a0f" repeat="0" sliceRef="initialize">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@922a86d" repeat="0" sliceRef="initialize">
             <visualDescription h="50" w="50" x="70" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d0caa2" repeat="0" sliceRef="exact_rhs">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@425f90ca" repeat="0" sliceRef="exact_rhs">
             <visualDescription h="50" w="50" x="130" y="50"/>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a75426" repeat="0" sliceRef="verify">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@101adfd1" repeat="0" sliceRef="verify">
             <visualDescription h="50" w="50" x="190" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@859f20" repeat="0" sliceRef="adi">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@545c1a99" repeat="0" sliceRef="adi">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
-      <sources sourceType="C# Language" versionId="1.0.0.0"/>
-      <visualDescription h="53" w="122" x="132" y="126">
+      <sources sourceType="C# Executable" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.topology.Ring;&#xA;using common.datapartition.BlocksInfo;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.data.ExactRHS;&#xA;using environment.MPIDirect;&#xA;using common.Verify;&#xA;using common.benchmarking.Timer;&#xA;using common.data.Initialize;&#xA;using common.datapartition.Blocks3D;&#xA;using common.data.LHSInit;&#xA;using bt.ADI;&#xA;using common.data.ProblemDefinition;&#xA;using bt.BT;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace impl.bt.BT { &#xA;&#xA;public abstract class BaseIBTImpl&lt;CLASS>: Application, BaseIBT&lt;CLASS>&#xA;where CLASS:IClass&#xA;{&#xA;&#xA;#region MyRegion&#xA;&#x9;&#x9;&#xA;public PROBLEM_CLASS problem_class;&#xA;&#x9;&#x9;&#xA;protected int ncells;&#xA;protected int[,] cell_size;&#xA;protected int[] grid_points;&#x9;&#x9;&#xA;protected int problem_size;&#xA;protected int niter;&#xA;&#x9;&#x9;&#xA;override public void initialize()&#xA;{&#x9;&#xA;&#x9;cell_size = Blocks.cell_size;&#x9;&#xA;&#x9;&#xA;&#x9;problem_size = Instance.problem_size;&#x9;&#x9;&#x9;&#xA;&#x9;problem_class = Instance.CLASS;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;niter = Instance.niter_default;&#xA;&#x9;&#xA;&#x9;ncells = Problem.NCells;&#x9;&#x9;&#x9;&#xA;&#x9;grid_points = Problem.grid_points;&#x9;&#x9;&#x9;&#xA;}&#xA;&#x9;&#x9;&#xA;#endregion&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private ITimer timer = null;&#xA;&#xA;protected ITimer Timer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.timer == null)&#xA;&#x9;&#x9;&#x9;this.timer = (ITimer) Services.getPort(&quot;timer&quot;);&#xA;&#x9;&#x9;return this.timer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IInitialize&lt;IInstance_BT&lt;CLASS>, CLASS> initialize_ = null;&#xA;&#xA;protected IInitialize&lt;IInstance_BT&lt;CLASS>, CLASS> Initialize {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.initialize_ == null)&#xA;&#x9;&#x9;&#x9;this.initialize_ = (IInitialize&lt;IInstance_BT&lt;CLASS>, CLASS>) Services.getPort(&quot;initialize&quot;);&#xA;&#x9;&#x9;return this.initialize_;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExactRHS&lt;IInstance_BT&lt;CLASS>, CLASS> exact_rhs = null;&#xA;&#xA;protected IExactRHS&lt;IInstance_BT&lt;CLASS>, CLASS> Exact_rhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exact_rhs == null)&#xA;&#x9;&#x9;&#x9;this.exact_rhs = (IExactRHS&lt;IInstance_BT&lt;CLASS>, CLASS>) Services.getPort(&quot;exact_rhs&quot;);&#xA;&#x9;&#x9;return this.exact_rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ILHSInit&lt;IInstance_BT&lt;CLASS>, CLASS> lhsinit = null;&#xA;&#xA;protected ILHSInit&lt;IInstance_BT&lt;CLASS>, CLASS> Lhsinit {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.lhsinit == null)&#xA;&#x9;&#x9;&#x9;this.lhsinit = (ILHSInit&lt;IInstance_BT&lt;CLASS>, CLASS>) Services.getPort(&quot;lhsinit&quot;);&#xA;&#x9;&#x9;return this.lhsinit;&#xA;&#x9;}&#xA;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private IBlocks blocks = null;&#xA;&#xA;protected IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell x = null;&#xA;&#xA;protected ICell X {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;return this.x;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell y = null;&#xA;&#xA;protected ICell Y {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;return this.y;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICell z = null;&#xA;&#xA;protected ICell Z {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.z == null)&#xA;&#x9;&#x9;&#x9;this.z = (ICell) Services.getPort(&quot;z&quot;);&#xA;&#x9;&#x9;return this.z;&#xA;&#x9;}&#xA;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private IInstance_BT&lt;CLASS> instance = default(IInstance_BT&lt;CLASS>);&#xA;&#xA;protected IInstance_BT&lt;CLASS> Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (instance==null) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;this.instance = (IInstance_BT&lt;CLASS>) Services.getPort(&quot;instance&quot;);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;return instance;&#xA;&#x9;}&#xA;}&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#xA;private IProblemDefinition&lt;IInstance_BT&lt;CLASS>, CLASS> problem = null;&#xA;&#xA;protected IProblemDefinition&lt;IInstance_BT&lt;CLASS>, CLASS> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_BT&lt;CLASS>, CLASS>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocks3D&lt;IInstance_BT&lt;CLASS>, CLASS> process = null;&#xA;&#xA;protected IBlocks3D&lt;IInstance_BT&lt;CLASS>, CLASS> Process {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.process == null)&#xA;&#x9;&#x9;&#x9;this.process = (IBlocks3D&lt;IInstance_BT&lt;CLASS>, CLASS>) Services.getPort(&quot;data_partition&quot;);&#xA;&#x9;&#x9;return this.process;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IVerify&lt;IInstance_BT&lt;CLASS>, CLASS> verify = null;&#xA;&#xA;protected IVerify&lt;IInstance_BT&lt;CLASS>, CLASS> Verify {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.verify == null)&#xA;&#x9;&#x9;&#x9;this.verify = (IVerify&lt;IInstance_BT&lt;CLASS>, CLASS>) Services.getPort(&quot;verify&quot;);&#xA;&#x9;&#x9;return this.verify;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IADI&lt;CLASS> adi = null;&#xA;&#xA;protected IADI&lt;CLASS> Adi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.adi == null)&#xA;&#x9;&#x9;&#x9;this.adi = (IADI&lt;CLASS>) Services.getPort(&quot;adi&quot;);&#xA;&#x9;&#x9;return this.adi;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public int go(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBTImpl.cs" srcType="base" uri="impl.bt.BT/bin/1.0.0.0/BaseIBTImpl.dll" versionId="1.0.0.0">
+          <dependency>common.topology.Ring/bin/1.0.0.0/ICell.dll</dependency>
+          <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.data.ExactRHS/bin/1.0.0.0/IExactRHS.dll</dependency>
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>common.Verify/bin/1.0.0.0/IVerify.dll</dependency>
+          <dependency>common.benchmarking.Timer/bin/1.0.0.0/ITimer.dll</dependency>
+          <dependency>common.data.Initialize/bin/1.0.0.0/IInitialize.dll</dependency>
+          <dependency>common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll</dependency>
+          <dependency>common.data.LHSInit/bin/1.0.0.0/ILHSInit.dll</dependency>
+          <dependency>bt.ADI/bin/1.0.0.0/IADI.dll</dependency>
+          <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>bt.BT/bin/1.0.0.0/BaseIBT.dll</dependency>
+          <externalDependency>MPI</externalDependency>
+          <externalDependency>BMInOut</externalDependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using bt.BT;&#xA;using common.data.ProblemDefinition;&#xA;using MPI;&#xA;using NPB3_0_JAV.BMInOut;&#xA;using common.problem_size.Instance;&#xA;&#xA;namespace impl.bt.BT { &#xA;   &#xA;&#x9;public class IBTImpl&lt;CLASS> : BaseIBTImpl&lt;CLASS>, IBT&lt;CLASS> &#xA;&#x9;where CLASS:IClass &#xA;&#x9;{&#xA;        public int bid = -1;&#xA;&#x9;&#x9;public static int t_total = 1;&#xA;    &#x9;public static String BMName = &quot;BT&quot;;&#xA;&#x9;&#x9;protected bool active;&#xA;&#x9;&#x9;protected int node, no_nodes, total_nodes, root ,maxcells;&#xA;&#x9;    protected Intracommunicator worldcomm, comm_setup, comm_solve, comm_rhs = null;&#xA;&#x9;&#x9;public BMResults results;&#xA;&#x9;&#x9;&#x9;   &#xA;&#x9;&#x9;public IBTImpl() {} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private void runBenchmark()&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;setup_mpi();&#xA;&#xA;&#x9;&#x9;&#x9;if (!active)&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;        Console.WriteLine(&quot;not active !&quot;);&#xA;&#x9;&#x9;        System.Environment.Exit(0);&#xA;&#x9;&#x9;    }&#x9;&#x9;&#xA;&#x9;&#x9;    //int niter = -1;&#xA;&#x9;&#x9;    if (node == root)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        BMArgs.Banner(BMName, problem_class.ToString()[0], false, total_nodes);&#x9;&#x9;&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;// Process.make_set();&#xA;&#x9;&#x9;&#x9;&#x9;    &#x9;&#x9;&#xA;&#x9;&#x9;    for (int c = 0; c &lt; ncells; c++) &#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        if ((cell_size[c, 0] > Problem.IMAX) || &#xA;&#x9;&#x9;            (cell_size[c, 1] > Problem.JMAX) || &#xA;&#x9;&#x9;            (cell_size[c, 2] > Problem.KMAX))&#xA;&#x9;&#x9;        {&#xA;&#x9;&#x9;            Console.WriteLine(&quot;Problem size too big for compiled array sizes&quot;);&#xA;&#x9;&#x9;            System.Environment.Exit(0);&#xA;&#x9;&#x9;        }&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;//Problem.initialize_problem_data();&#xA;&#x9;&#x9;&#x9;//Problem.set_constants(0);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Initialize.go();&#xA;&#x9;&#x9;&#x9;Lhsinit.go();&#xA;&#x9;&#x9;&#x9;Exact_rhs.go();&#xA;&#x9;&#x9;    //compute_buffer_size(5);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    //      do one time step to touch all code, and reinitialize&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    Adi.go();&#xA;&#x9;&#x9;    Initialize.go();&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    //      Synchronize before placing time stamp&#xA;&#x9;&#x9;    //---------------------------------------------------------------------&#xA;&#x9;&#x9;    &#xA;&#x9;&#x9;    comm_setup.Barrier();&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Timer.resetAllTimers();&#xA;&#x9;&#x9;&#x9;Timer.start(t_total);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    Console.WriteLine(&quot;STARTING&quot;); Console.Out.Flush();&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    for (int step = 1; step &lt;= niter; step++)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        if (node == 0 &amp;&amp; (step % 20 == 0 || step == 1 || step == niter))&#xA;&#x9;&#x9;        {&#xA;&#x9;&#x9;            Console.WriteLine(&quot;Time step &quot; + step);&#xA;&#x9;&#x9;        }&#xA;&#x9;&#x9;&#x9;&#x9;Adi.go();&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Timer.stop(1);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Verify.go(); &#xA;&#x9;&#x9;    int verified = Verify.Verified;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    double tmax = Timer.readTimerGlobal(t_total); &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;    if (node == root)&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;        double time = Timer.readTimer(t_total);&#xA;&#x9;&#x9;        results = new BMResults(BMName,&#xA;&#x9;&#x9;                      problem_class.ToString()[0],&#xA;&#x9;&#x9;                      grid_points[0],&#xA;&#x9;&#x9;                      grid_points[1],&#xA;&#x9;&#x9;                      grid_points[2],&#xA;&#x9;&#x9;                      niter,&#xA;&#x9;&#x9;                      time,&#xA;&#x9;&#x9;                      getMFLOPS(time, niter),&#xA;&#x9;&#x9;                      &quot;floating point&quot;,&#xA;&#x9;&#x9;                      verified,&#xA;&#x9;&#x9;                      true,&#xA;&#x9;&#x9;                      total_nodes,&#xA;&#x9;&#x9;                      bid);&#xA;&#x9;&#x9;        results.print();&#xA;&#x9;&#x9;    }&#xA;&#x9;&#x9;    worldcomm.Barrier();&#xA;&#x9;&#x9;}&#x9;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{           &#xA;&#x9;&#x9;&#x9;runBenchmark();&#x9;&#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} // end activate method &#xA;&#xA;&#x9;    private void setup_mpi()&#xA;&#x9;    {&#xA;&#x9;        int nc, color;&#xA;&#x9;&#xA;&#x9;        worldcomm = this.WorldComm;&#xA;&#x9;&#xA;&#x9;        total_nodes = worldcomm.Size;&#xA;&#x9;        node = worldcomm.Rank;&#xA;&#x9;&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        //     compute square root; add small number to allow for roundoff&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        nc = Convert.ToInt32(Math.Sqrt(total_nodes) + 0.00001d);&#xA;&#x9;        maxcells = Convert.ToInt32(Math.Sqrt(total_nodes));&#xA;&#x9;&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        // We handle a non-square number of nodes by making the excess nodes&#xA;&#x9;        // inactive. However, we can never handle more cells than were compiled&#xA;&#x9;        // in. &#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;&#xA;&#x9;        if (nc > maxcells) nc = maxcells;&#xA;&#x9;&#xA;&#x9;        if (node >= nc * nc)&#xA;&#x9;        {&#xA;&#x9;            active = false;&#xA;&#x9;            color = 1;&#xA;&#x9;        }&#xA;&#x9;        else&#xA;&#x9;        {&#xA;&#x9;            active = true;&#xA;&#x9;            color = 0;&#xA;&#x9;        }&#xA;&#x9;&#xA;&#x9;        comm_setup = (Intracommunicator)worldcomm.Split(color, node);&#xA;&#x9;&#xA;&#x9;        if (!active) return;&#xA;&#x9;&#xA;&#x9;        no_nodes = comm_setup.Size;&#xA;&#x9;        comm_solve = (Intracommunicator)comm_setup.Clone();&#xA;&#x9;        comm_rhs = (Intracommunicator)comm_setup.Clone();&#xA;&#x9;&#xA;&#x9;&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        //     let node 0 be the root for the group (there is only one)&#xA;&#x9;        //---------------------------------------------------------------------&#xA;&#x9;        root = 0;&#xA;&#x9;    }&#xA;&#x9;&#xA;&#x9;    public double getMFLOPS(double total_time, int niter)&#xA;&#x9;    {&#xA;&#x9;        double mflops = 0.0d;&#xA;&#x9;        if (total_time > 0)&#xA;&#x9;        {&#xA;&#x9;            mflops = (881.174d * Math.Pow(problem_size, 3)&#xA;&#x9;                    - 4683.91d * Math.Pow(problem_size, 2)&#xA;&#x9;                    + 11484.5d * problem_size&#xA;&#x9;                    - 19272.4d) * niter / (1.0d * 1000000.0d);&#xA;&#x9;        }&#xA;&#x9;        return mflops;&#xA;&#x9;    }&#x9;&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IBTImpl.cs" srcType="user" uri="impl.bt.BT/bin/1.0.0.0/IBTImpl.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.bt.BT/bin/1.0.0.0/BaseIBTImpl.dll</dependency>
+          <dependency>bt.BT/bin/1.0.0.0/IBT.dll</dependency>
+          <externalDependency>MPI</externalDependency>
+          <externalDependency>BMInOut</externalDependency>
+        </file>
+      </sources>
+      <visualDescription h="53" w="122" x="191" y="109">
         <color b="255" g="255" r="0"/>
       </visualDescription>
       <port name="blocks">
@@ -111,37 +137,26 @@
         <slice pRef="mpi" sRef="verify"/>
         <slice pRef="mpi" sRef="adi"/>
       </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="process"/>
-        <slice pRef="y" sRef="verify"/>
-      </port>
       <port name="z">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="z" sRef="process"/>
         <slice pRef="z" sRef="verify"/>
+        <slice pRef="z" sRef="adi"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="process"/>
+        <slice pRef="y" sRef="verify"/>
+        <slice pRef="y" sRef="adi"/>
       </port>
       <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="x" sRef="process"/>
         <slice pRef="x" sRef="verify"/>
-      </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="adi"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="adi"/>
-      </port>
-      <port name="y">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="y" sRef="adi"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="x" sRef="adi"/>
       </port>
+      <externalReferences>MPI</externalReferences>
+      <externalReferences>BMInOut</externalReferences>
       <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
     </interface>
     <unit iRef="IBTImpl" private="false" uRef="bt" visibleInterface="true">

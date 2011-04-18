@@ -2,16 +2,12 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using bt.problem_size.Instance_BT;
-using common.problem_size.Class;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.BinvcRhs;
 
 namespace impl.bt.solve.BinvcRhsImpl 
 { 
-	public class IBinvcRhsImpl<I, C, MTH> : BaseIBinvcRhsImpl<I, C, MTH>, IBinvcRhs<I, C, MTH>
-		where I:IInstance_BT<C>
-		where C:IClass
+	public class IBinvcRhsImpl<MTH> : BaseIBinvcRhsImpl<MTH>, IBinvcRhs<MTH>
 		where MTH:IBeamWarmingMethod 
 	{
 		private double[,,] lhs;

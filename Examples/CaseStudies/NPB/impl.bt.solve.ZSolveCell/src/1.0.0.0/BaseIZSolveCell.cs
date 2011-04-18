@@ -36,7 +36,8 @@ namespace impl.bt.solve.ZSolveCell {
 			                  c3c4, con43, c1345, dt,
 			                  dx1, dx2, dx3, dx4, dx5, dy1, dy2, dy3, dy4, dy5, dz1, dz2, dz3, dz4, dz5;
 
-			override public void initialize(){
+			override public void initialize()
+			{
 	            start = Blocks.cell_start;
 				end = Blocks.cell_end;
 				cell_size = Blocks.cell_size;
@@ -108,22 +109,22 @@ namespace impl.bt.solve.ZSolveCell {
 			}
 		}
 		
-		private IBinvRhs<I, C, MTH> binvrhs = null;
+		private IBinvRhs<MTH> binvrhs = null;
 		
-		protected IBinvRhs<I, C, MTH> Binvrhs {
+		protected IBinvRhs<MTH> Binvrhs {
 			get {
 				if (this.binvrhs == null)
-					this.binvrhs = (IBinvRhs<I, C, MTH>) Services.getPort("binvrhs");
+					this.binvrhs = (IBinvRhs<MTH>) Services.getPort("binvrhs");
 				return this.binvrhs;
 			}
 		}
 		
-		private IMatMulSub<I, C, MTH> matmul_sub = null;
+		private IMatMulSub<MTH> matmul_sub = null;
 		
-		protected IMatMulSub<I, C, MTH> Matmul_sub {
+		protected IMatMulSub<MTH> Matmul_sub {
 			get {
 				if (this.matmul_sub == null)
-					this.matmul_sub = (IMatMulSub<I, C, MTH>) Services.getPort("matmulsub");
+					this.matmul_sub = (IMatMulSub<MTH>) Services.getPort("matmulsub");
 				return this.matmul_sub;
 			}
 		}
@@ -148,12 +149,12 @@ namespace impl.bt.solve.ZSolveCell {
 			}
 		}
 		
-		private IBinvcRhs<I, C, MTH> binvcrhs = null;
+		private IBinvcRhs<MTH> binvcrhs = null;
 		
-		protected IBinvcRhs<I, C, MTH> Binvcrhs {
+		protected IBinvcRhs<MTH> Binvcrhs {
 			get {
 				if (this.binvcrhs == null)
-					this.binvcrhs = (IBinvcRhs<I, C, MTH>) Services.getPort("binvcrhs");
+					this.binvcrhs = (IBinvcRhs<MTH>) Services.getPort("binvcrhs");
 				return this.binvcrhs;
 			}
 		}
@@ -168,18 +169,18 @@ namespace impl.bt.solve.ZSolveCell {
 			}
 		}
 		
-		private IMatVecSub<I, C, MTH> matvec_sub = null;
+		private IMatVecSub<MTH> matvec_sub = null;
 		
-		protected IMatVecSub<I, C, MTH> Matvec_sub {
+		protected IMatVecSub<MTH> Matvec_sub {
 			get {
 				if (this.matvec_sub == null)
-					this.matvec_sub = (IMatVecSub<I, C, MTH>) Services.getPort("matvecsub");
+					this.matvec_sub = (IMatVecSub<MTH>) Services.getPort("matvecsub");
 				return this.matvec_sub;
 			}
 		}
 		
 		public static double pow2(double p) { return p * p; }
 		
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

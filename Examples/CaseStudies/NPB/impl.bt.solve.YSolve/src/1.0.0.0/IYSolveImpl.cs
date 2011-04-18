@@ -24,7 +24,7 @@ namespace impl.bt.solve.YSolve
             double[, , , , ,] lhsc = new double[maxcells, KMAX+2, JMAX+2, IMAX+2, 5, 5];
             double[, , ,] backsub_info = new double[maxcells, MAX_CELL_DIM+3, MAX_CELL_DIM+3, 5];
             
-            Output_buffer.Array = out_buffer_y = new double[buffer_size];
+            Input_buffer.Array = out_buffer_y = new double[buffer_size];
             
             for(stage = 0; stage < ncells; stage++) 
             {
@@ -47,8 +47,8 @@ namespace impl.bt.solve.YSolve
                 else 
                 {
                     first = 0;
-                    int ip = cell_coord[c,0];
-                    int kp = cell_coord[c,2];
+                   // int ip = cell_coord[c,0];
+                   // int kp = cell_coord[c,2];
 			        Shift_lr.initiate_recv();
 			        Shift_lr.go();                    
                     //requests[0] = comm_solve.ImmediateReceive<double>(predecessor[1], SOUTH+ip+kp*ncells, out_buffer_y);
@@ -62,10 +62,9 @@ namespace impl.bt.solve.YSolve
                 
                 if(last == 0) 
                 {
-                    int ip = cell_coord[c,0];
-                    int kp = cell_coord[c,2];
-                    double[] in_buffer_y;// = new double[buffer_size];
-                    Input_buffer.Array = in_buffer_y = new double[buffer_size];
+                   // int ip = cell_coord[c,0];
+                   // int kp = cell_coord[c,2];
+                    double[] in_buffer_y = Output_buffer.Array = new double[buffer_size];
                     Pack_solve_info.setParameters(lhsc, in_buffer_y, c);
                     Pack_solve_info.go();
 			        Shift_lr.initiate_send();                    
@@ -74,10 +73,10 @@ namespace impl.bt.solve.YSolve
             }
             
             //out_buffer_y = null;
-            Output_buffer.Array = out_buffer_y = null;
+            Input_buffer.Array = out_buffer_y = null;
             buffer_size = MAX_CELL_DIM * MAX_CELL_DIM * 5;
             //out_buffer_y = new double[buffer_size];
-            Output_buffer.Array = out_buffer_y = new double[buffer_size];
+            Input_buffer.Array = out_buffer_y = new double[buffer_size];
             
             for(stage = ncells-1; stage >= 0; stage--) 
             {  
@@ -94,8 +93,8 @@ namespace impl.bt.solve.YSolve
                 }
                 else 
                 {
-                    int ip = cell_coord[c, 0];
-                    int kp = cell_coord[c, 2];
+                    //int ip = cell_coord[c, 0];
+                    //int kp = cell_coord[c, 2];
 			        Shift_rl.initiate_recv();
 			        Shift_rl.go();                    
                     //requests[0] = comm_solve.ImmediateReceive<double>(successor[1], NORTH+ip+kp*ncells, out_buffer_y);
@@ -109,10 +108,9 @@ namespace impl.bt.solve.YSolve
                 
                 if(first == 0) 
                 {
-                    int ip = cell_coord[c,0];
-                    int kp = cell_coord[c,2];                    
-                    double[] in_buffer_y;// = new double[buffer_size];
-                    Input_buffer.Array = in_buffer_y = new double[buffer_size];
+                   // int ip = cell_coord[c,0];
+                    //int kp = cell_coord[c,2];                    
+                    double[] in_buffer_y = Output_buffer.Array = new double[buffer_size];
                     Pack_back_sub_info.setParameters(in_buffer_y, c);
                     Pack_back_sub_info.go(); 
 			        Shift_rl.initiate_send();

@@ -65,9 +65,9 @@
         <originRef cRef="exact_solution" iRef="IExactSolution"/>
         <visualDescription h="10" w="10" x="31" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19eb0670" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@63f4ad66" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14f3b05b" repeat="0" sliceRef="exact_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@54a436ce" repeat="0" sliceRef="exact_solution">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>

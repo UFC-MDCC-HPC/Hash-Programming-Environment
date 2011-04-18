@@ -77,8 +77,8 @@
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="orientation" varName="DIR"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance_type" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <interface iRef="IZUnpackSolveInfo" nArgs="4">
       <slice isRef="problem">
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
@@ -96,11 +96,11 @@
         <originRef cRef="method" iRef="IMethod"/>
         <visualDescription h="10" w="10" x="131" y="27"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@afce24" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@352d8328" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;using common.orientation.Z;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.UnpackSolveInfo;&#xA;&#xA;namespace impl.bt.solve.ZUnpackSolveInfo { &#xA;&#xA;public abstract class BaseIZUnpackSolveInfo&lt;I, C, DIR, MTH>: Computation, BaseIUnpackSolveInfo&lt;I, C, DIR, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where DIR:IZ&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;private MTH method = default(MTH);&#xA;&#xA;protected MTH Method {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.method == null)&#xA;&#x9;&#x9;&#x9;this.method = (MTH) Services.getPort(&quot;method&quot;);&#xA;&#x9;&#x9;return this.method;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIZUnpackSolveInfo.cs" srcType="base" uri="impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/BaseIZUnpackSolveInfo.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.solve.Method;&#xA;using common.orientation.Z;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.UnpackSolveInfo;&#xA;&#xA;namespace impl.bt.solve.ZUnpackSolveInfo { &#xA;&#xA;public abstract class BaseIZUnpackSolveInfo&lt;I, C, DIR, MTH>: Computation, BaseIUnpackSolveInfo&lt;I, C, DIR, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where DIR:IZ&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;#region data&#xA;&#x9;protected double[,,,,] rhs;&#xA;&#x9;protected int JMAX;&#xA;&#x9;protected int IMAX;&#xA;&#x9;&#xA;&#x9;override public void initialize(){&#xA;&#x9;&#x9;rhs = Problem.Field_rhs;&#xA;&#x9;&#x9;JMAX = Problem.JMAX;&#xA;&#x9;&#x9;IMAX = Problem.IMAX;&#xA;&#x9;}&#xA;#endregion&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;private MTH method = default(MTH);&#xA;&#xA;protected MTH Method {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.method == null)&#xA;&#x9;&#x9;&#x9;this.method = (MTH) Services.getPort(&quot;method&quot;);&#xA;&#x9;&#x9;return this.method;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public int go(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIZUnpackSolveInfo.cs" srcType="base" uri="impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/BaseIZUnpackSolveInfo.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
@@ -111,7 +111,7 @@
           <dependency>bt.solve.BeamWarmingMethod/bin/1.0.0.0/IBeamWarmingMethod.dll</dependency>
           <dependency>bt.solve.UnpackSolveInfo/bin/1.0.0.0/BaseIUnpackSolveInfo.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Z;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.UnpackSolveInfo;&#xA;&#xA;namespace impl.bt.solve.ZUnpackSolveInfo { &#xA;&#xA;public class IZUnpackSolveInfo&lt;I, C, DIR, MTH> : BaseIZUnpackSolveInfo&lt;I, C, DIR, MTH>, IUnpackSolveInfo&lt;I, C, DIR, MTH>&#xA;where I:IInstance_BT&lt;C>&#xA;where C:IClass&#xA;where DIR:IZ&#xA;where MTH:IBeamWarmingMethod&#xA;{&#xA;&#xA;public IZUnpackSolveInfo() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IZUnpackSolveInfo.cs" srcType="user" uri="impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/IZUnpackSolveInfo.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Z;&#xA;using bt.solve.BeamWarmingMethod;&#xA;using bt.solve.UnpackSolveInfo;&#xA;&#xA;namespace impl.bt.solve.ZUnpackSolveInfo { &#xA;&#x9;public class IZUnpackSolveInfo&lt;I, C, DIR, MTH> : BaseIZUnpackSolveInfo&lt;I, C, DIR, MTH>, IUnpackSolveInfo&lt;I, C, DIR, MTH>&#xA;&#x9;where I:IInstance_BT&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IZ&#xA;&#x9;where MTH:IBeamWarmingMethod {&#xA;&#x9;&#x9;private double[,,,,,] lhsc;&#xA;&#x9;&#x9;private double[] out_buffer_z;&#xA;&#x9;&#x9;private int c;&#xA;&#xA;&#x9;&#x9;public void setParameters(double[,,,,,] lhsc, double[] out_buffer_z, int c) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;this.lhsc = lhsc;&#xA;&#x9;&#x9;&#x9;this.out_buffer_z = out_buffer_z;&#xA;&#x9;&#x9;&#x9;this.c = c;&#xA;&#x9;&#x9;}&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{&#xA;            int ptr = 0, kstart = 2;&#xA;            for(int j = 0; j &lt;= JMAX - 1; j++) &#xA;            {&#xA;                for(int i = 0; i &lt;= IMAX - 1; i++) &#xA;                {&#xA;                    for(int m = 1; m &lt;= 5; m++) &#xA;                    {&#xA;                        for(int n = 0; n &lt; 5; n++) &#xA;                        {&#xA;                            lhsc[c, kstart-1, j+2, i+2, n, m-1] = out_buffer_z[ptr + n];&#xA;                        }&#xA;                        ptr = ptr + 5;&#xA;                    }&#xA;                    &#xA;                    for(int n = 0; n &lt; 5; n++) &#xA;                    {&#xA;                        rhs[c, kstart-1, j+2, i+2, n] = out_buffer_z[ptr + n];&#xA;                    }&#xA;                    ptr = ptr + 5;&#xA;                }&#xA;            }&#xA;            &#xA;            return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IZUnpackSolveInfo.cs" srcType="user" uri="impl.bt.solve.ZUnpackSolveInfo/bin/1.0.0.0/IZUnpackSolveInfo.dll" versionId="1.0.0.0">
           <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Z/bin/1.0.0.0/IZ.dll</dependency>
@@ -120,7 +120,7 @@
           <dependency>bt.solve.UnpackSolveInfo/bin/1.0.0.0/IUnpackSolveInfo.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="149" x="144" y="135">
+      <visualDescription h="40" w="149" x="210" y="132">
         <color b="255" g="128" r="128"/>
       </visualDescription>
       <port name="problem">
@@ -152,18 +152,18 @@
       </slices>
       <visualDescription h="40" w="149" x="202" y="308"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
-      <originRef>method</originRef>
-      <originRef>base</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
-      <visualDescription h="20" w="20" x="327" y="263"/>
-    </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
       <originRef>base</originRef>
       <originRef>problem_data</originRef>
       <originRef>qs</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="unpack_solve_info"/>
       <visualDescription h="48" w="47" x="89" y="317"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@129a52a1295029089610" varId="n">
+      <originRef>method</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
+      <visualDescription h="20" w="20" x="327" y="263"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>

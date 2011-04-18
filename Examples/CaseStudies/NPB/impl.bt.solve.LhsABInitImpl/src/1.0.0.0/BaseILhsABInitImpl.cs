@@ -30,6 +30,6 @@ namespace impl.bt.solve.LhsABInitImpl {
 				return this.problem;
 			}
 		}
-	    abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

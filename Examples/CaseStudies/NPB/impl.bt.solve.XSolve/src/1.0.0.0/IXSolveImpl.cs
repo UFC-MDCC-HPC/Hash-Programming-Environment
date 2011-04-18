@@ -24,7 +24,7 @@ namespace impl.bt.solve.XSolve
 			double[,,,,,] lhsc = new double[maxcells, KMAX+2, JMAX+2, IMAX+2, 5, 5];
 			double[,,,] backsub_info = new double[maxcells, MAX_CELL_DIM+3, MAX_CELL_DIM+3, 5];
 			
-			Output_buffer.Array = out_buffer_x = new double[buffer_size];
+			Input_buffer.Array = out_buffer_x = new double[buffer_size];
 			
 			for(stage = 0; stage < ncells; stage++) 
 			{
@@ -62,19 +62,19 @@ namespace impl.bt.solve.XSolve
 			    
 			    if(last == 0) 
 			    {
-			        double[] in_buffer_x;// = new double[buffer_size];
-			        Input_buffer.Array = in_buffer_x = new double[buffer_size];
+			        double[] in_buffer_x = Output_buffer.Array = new double[buffer_size];
 			        Pack_solve_info.setParameters(lhsc, in_buffer_x, c);
 			        Pack_solve_info.go();
-			        int jp = cell_coord[c,1];
-			        int kp = cell_coord[c,2];
+			        //int jp = cell_coord[c,1];
+			        //int kp = cell_coord[c,2];
 			        Shift_lr.initiate_send();
 			        //requests[1] = comm_solve.ImmediateSend<double>(in_buffer_x, successor[0], WEST+jp+kp*ncells);
 			    }
 			}
-			Output_buffer.Array = out_buffer_x = null;
+			
+			Input_buffer.Array = out_buffer_x = null;
 			buffer_size = MAX_CELL_DIM * MAX_CELL_DIM * 5;
-			Output_buffer.Array = out_buffer_x = new double[buffer_size];
+			Input_buffer.Array = out_buffer_x = new double[buffer_size];
 			
 			for(stage = ncells-1; stage >= 0; stage--) 
 			{
@@ -93,8 +93,8 @@ namespace impl.bt.solve.XSolve
 			    }
 			    else 
 			    {
-			        int jp = cell_coord[c,1];
-			        int kp = cell_coord[c,2];
+			       // int jp = cell_coord[c,1];
+			       // int kp = cell_coord[c,2];
 				    Shift_rl.initiate_recv();
 			        Shift_rl.go();		        
 			        //requests[0] = comm_solve.ImmediateReceive<double>(successor[0], EAST+jp+kp*ncells, out_buffer_x); 
@@ -108,10 +108,9 @@ namespace impl.bt.solve.XSolve
 			    
 			    if(first == 0) 
 			    {
-			        int jp = cell_coord[c,1];
-			        int kp = cell_coord[c,2];
-			        double[] in_buffer_x;// = new double[buffer_size];
-			        Input_buffer.Array = in_buffer_x = new double[buffer_size];
+			      //  int jp = cell_coord[c,1];
+			       // int kp = cell_coord[c,2];
+			        double[] in_buffer_x = Output_buffer.Array = new double[buffer_size];
 			        Pack_back_sub_info.setParameters(in_buffer_x, c);
 			        Pack_back_sub_info.go();
 			        Shift_rl.initiate_send();

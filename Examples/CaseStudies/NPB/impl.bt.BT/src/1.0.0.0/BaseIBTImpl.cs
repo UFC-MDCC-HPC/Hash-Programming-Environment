@@ -34,6 +34,7 @@ protected int ncells;
 protected int[,] cell_size;
 protected int[] grid_points;		
 protected int problem_size;
+protected int niter;
 		
 override public void initialize()
 {	
@@ -41,6 +42,7 @@ override public void initialize()
 	
 	problem_size = Instance.problem_size;			
 	problem_class = Instance.CLASS;								
+	niter = Instance.niter_default;
 	
 	ncells = Problem.NCells;			
 	grid_points = Problem.grid_points;			
@@ -199,7 +201,7 @@ protected IADI<CLASS> Adi {
 }
 
 
-abstract public void compute(); 
+abstract public int go(); 
 
 
 }

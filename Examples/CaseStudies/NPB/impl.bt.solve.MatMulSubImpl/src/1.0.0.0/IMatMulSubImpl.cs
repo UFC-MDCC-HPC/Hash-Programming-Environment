@@ -2,16 +2,12 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using bt.problem_size.Instance_BT;
-using common.problem_size.Class;
 using bt.solve.BeamWarmingMethod;
 using bt.solve.MatMulSub;
 
 namespace impl.bt.solve.MatMulSubImpl 
 { 
-	public class IMatMulSubImpl<I, C, MTH> : BaseIMatMulSubImpl<I, C, MTH>, IMatMulSub<I, C, MTH>
-		where I:IInstance_BT<C>
-		where C:IClass
+	public class IMatMulSubImpl<MTH> : BaseIMatMulSubImpl<MTH>, IMatMulSub<MTH>
 		where MTH:IBeamWarmingMethod 
 	{
 		private double[,,] ablock;
