@@ -29,7 +29,7 @@ namespace impl.lu.Exchange4Impl {
             if(jfin1==ny) {
                 double[] dum;
                 dum = Input_buffer.Array = new double[2*nx];
-                ShiftToWest.initiate_recv();//msgid3 = worldcomm.ImmediateReceive<double>(east, from_e, dum);msgid3.Wait();
+                Shift_to_west.initiate_recv();//msgid3 = worldcomm.ImmediateReceive<double>(east, from_e, dum);msgid3.Wait();
                 for(i = 1; i<=nx; i++) {
                     g[ny+1, i] = dum[i-1];
                     h[ny+1, i] = dum[i+nx-1];
@@ -42,12 +42,12 @@ namespace impl.lu.Exchange4Impl {
                     dum[i-1]    = g[1, i];
                     dum[i+nx-1] = h[1, i];
                 }
-                ShiftToWest.initiate_send();//worldcomm.Send<double>(dum, west, from_e);
+                Shift_to_west.initiate_send();//worldcomm.Send<double>(dum, west, from_e);
             }
             if(ifin1==nx) {
                 double[] dum;
                 dum = Input_buffer.Array = new double[2*ny2];
-                ShiftToNorth.initiate_recv();//msgid1 = worldcomm.ImmediateReceive<double>(south, from_s, dum); msgid1.Wait();
+                Shift_to_north.initiate_recv();//msgid1 = worldcomm.ImmediateReceive<double>(south, from_s, dum); msgid1.Wait();
                 for(j = 0; j<=ny+1; j++) {
                     g[j, nx+1] = dum[j];
                     h[j, nx+1] = dum[j+ny2];
@@ -60,7 +60,7 @@ namespace impl.lu.Exchange4Impl {
                     dum[j]     = g[j, 1];
                     dum[j+ny2] = h[j, 1];
                 }
-                ShiftToNorth.initiate_send();//worldcomm.Send<double>(dum, north, from_s);
+                Shift_to_north.initiate_send();//worldcomm.Send<double>(dum, north, from_s);
             }
 			return 0;
 		}

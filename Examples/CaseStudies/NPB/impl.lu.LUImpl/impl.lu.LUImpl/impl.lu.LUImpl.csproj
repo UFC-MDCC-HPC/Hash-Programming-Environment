@@ -109,10 +109,6 @@
       <Project>{42F2B05E-5C5C-4DAF-A060-55C67011F385}</Project>
       <Name>lu.LU</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU.csproj">
       <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
       <Name>lu.problem_size.Instance_LU</Name>
@@ -120,6 +116,10 @@
     <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
       <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
       <Name>lu.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

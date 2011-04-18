@@ -9,11 +9,11 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using common.Buffer;
 using lu.datapartition.BlocksInfo;
-using lu.interactionpattern.Shift;
-using common.direction.EastToWest;
-using common.direction.SouthToNorth;
-using lu.topology.Neighbors;
+using common.interactionpattern.Shift;
+using common.direction.RightToLeft;
 using lu.Exchange4;
+using common.topology.Ring;
+using environment.MPIDirect;
 
 namespace impl.lu.Exchange4Impl { 
 	public abstract class BaseIExchange4Impl<I, C>: Computation, BaseIExchange4<I, C>
@@ -69,33 +69,55 @@ namespace impl.lu.Exchange4Impl {
 			}
 		}
 		
-		private IShift<IEastToWest> shift_to_west = null;
+		private IShift<IRightToLeft> shift_to_west = null;
 		
-		protected IShift<IEastToWest> ShiftToWest {
+		protected IShift<IRightToLeft> Shift_to_west {
 			get {
 				if (this.shift_to_west == null)
-					this.shift_to_west = (IShift<IEastToWest>) Services.getPort("shift_to_west");
+					this.shift_to_west = (IShift<IRightToLeft>) Services.getPort("shift_to_west");
 				return this.shift_to_west;
 			}
 		}
 		
-		private IShift<ISouthToNorth> shift_to_north = null;
+		private IShift<IRightToLeft> shift_to_north = null;
 		
-		protected IShift<ISouthToNorth> ShiftToNorth {
+		protected IShift<IRightToLeft> Shift_to_north {
 			get {
 				if (this.shift_to_north == null)
-					this.shift_to_north = (IShift<ISouthToNorth>) Services.getPort("shift_to_north");
+					this.shift_to_north = (IShift<IRightToLeft>) Services.getPort("shift_to_north");
 				return this.shift_to_north;
 			}
 		}
 		
-		private INeighbors neighbors = null;
+		private ICell y = null;
 		
-		public INeighbors Neighbors {
+		public ICell Y {
 			get {
-				if (this.neighbors == null)
-					this.neighbors = (INeighbors) Services.getPort("neighbors");
-				return this.neighbors;
+				if (this.y == null)
+					this.y = (ICell) Services.getPort("y");
+				return this.y;
+			}
+		}
+		
+		private ICell x = null;
+		
+		public ICell X {
+			get {
+				if (this.x == null)
+					this.x = (ICell) Services.getPort("x");
+				return this.x;
+			}
+		}
+		
+		private IMPIDirect mpi = null;
+		
+		public IMPIDirect Mpi {
+			get {
+				if (this.mpi == null) 
+				{
+					this.mpi = (IMPIDirect) Services.getPort("mpi");
+				}
+				return this.mpi;
 			}
 		}
 

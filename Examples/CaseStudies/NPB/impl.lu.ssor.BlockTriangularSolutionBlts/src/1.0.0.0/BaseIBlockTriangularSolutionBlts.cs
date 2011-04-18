@@ -9,7 +9,8 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
 using common.Discretization;
-using lu.topology.Neighbors;
+using common.topology.Ring;
+using environment.MPIDirect;
 using lu.Exchange1;
 using lu.triangular.Lower;
 using lu.ssor.BlockTriangularSolution;
@@ -64,13 +65,35 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
 			}
 		}
 		
-		private INeighbors neighbors = null;
+		private ICell y = null;
 		
-		public INeighbors Neighbors {
+		public ICell Y {
 			get {
-				if (this.neighbors == null)
-					this.neighbors = (INeighbors) Services.getPort("neighbors");
-				return this.neighbors;
+				if (this.y == null)
+					this.y = (ICell) Services.getPort("y");
+				return this.y;
+			}
+		}
+		
+		private ICell x = null;
+		
+		public ICell X {
+			get {
+				if (this.x == null)
+					this.x = (ICell) Services.getPort("x");
+				return this.x;
+			}
+		}
+		
+		private IMPIDirect mpi = null;
+		
+		public IMPIDirect Mpi {
+			get {
+				if (this.mpi == null) 
+				{
+					this.mpi = (IMPIDirect) Services.getPort("mpi");
+				}
+				return this.mpi;
 			}
 		}
 		

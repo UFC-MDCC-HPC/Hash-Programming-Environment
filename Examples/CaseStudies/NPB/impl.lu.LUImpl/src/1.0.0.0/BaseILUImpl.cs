@@ -17,7 +17,7 @@ using lu.data.InitialValues;
 using lu.data.BoundaryValues;
 using lu.ssor.SSOR;
 using lu.data.ProblemDefinition;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 using lu.LU;
 using lu.problem_size.Instance;
 using MPI;
@@ -168,15 +168,27 @@ where C:IClass{
 			}
 		}
 		
-		private INeighbors neighbors = null;
+		private ICell y = null;
 		
-		protected INeighbors Neighbors {
+		public ICell Y {
 			get {
-				if (this.neighbors == null)
-					this.neighbors = (INeighbors) Services.getPort("neighbors");
-				return this.neighbors;
+				if (this.y == null)
+					this.y = (ICell) Services.getPort("y");
+				return this.y;
 			}
 		}
+		
+		private ICell x = null;
+		
+		public ICell X {
+			get {
+				if (this.x == null)
+					this.x = (ICell) Services.getPort("x");
+				return this.x;
+			}
+		}
+		
+
 		abstract public int go(); 
 	}
 }

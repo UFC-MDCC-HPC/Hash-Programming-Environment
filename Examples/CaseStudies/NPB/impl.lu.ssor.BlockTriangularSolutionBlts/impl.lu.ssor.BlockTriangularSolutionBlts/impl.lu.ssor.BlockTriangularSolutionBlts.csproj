@@ -73,10 +73,6 @@
       <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
       <Name>lu.problem_size.Instance_LU</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.triangular.Lower\lu.triangular.Lower\lu.triangular.Lower.csproj">
       <Project>{39F5D9A6-8239-4A74-916A-786069635AC1}</Project>
       <Name>lu.triangular.Lower</Name>
@@ -88,6 +84,14 @@
     <ProjectReference Include="..\..\common.Discretization\common.Discretization\common.Discretization.csproj">
       <Project>{B3AE2AA8-4CC8-4D43-9373-1A193CFA13DB}</Project>
       <Name>common.Discretization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

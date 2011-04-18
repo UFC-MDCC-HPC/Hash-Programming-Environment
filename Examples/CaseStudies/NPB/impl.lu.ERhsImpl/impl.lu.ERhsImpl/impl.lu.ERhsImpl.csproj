@@ -54,10 +54,6 @@
       <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
       <Name>lu.problem_size.Instance</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.ERhs\lu.ERhs\lu.ERhs.csproj">
       <Project>{C328A2BA-944C-4EC2-A968-3DA127037C48}</Project>
       <Name>lu.ERhs</Name>
@@ -73,6 +69,14 @@
     <ProjectReference Include="..\..\lu.Exchange1\lu.Exchange1\lu.Exchange1.csproj">
       <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
       <Name>lu.Exchange1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -8,9 +8,10 @@ using lu.data.ProblemDefinition;
 using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 using lu.Exchange1;
 using lu.ssor.Rhs;
+using environment.MPIDirect;
 
 namespace impl.lu.ssor.RhsImpl {
 	public abstract class BaseIRhsImpl<I, C>: Computation, BaseIRhs<I, C>
@@ -103,16 +104,6 @@ namespace impl.lu.ssor.RhsImpl {
 			}
 		}
 		
-		private INeighbors neighbors = null;
-		
-		public INeighbors Neighbors {
-			get {
-				if (this.neighbors == null)
-					this.neighbors = (INeighbors) Services.getPort("neighbors");
-				return this.neighbors;
-			}
-		}
-		
 		private IExchange1<I, C> exchange1 = null;
 		
 		protected IExchange1<I, C> Exchange1 {
@@ -122,6 +113,39 @@ namespace impl.lu.ssor.RhsImpl {
 				return this.exchange1;
 			}
 		}
+
+		private ICell y = null;
+		
+		public ICell Y {
+			get {
+				if (this.y == null)
+					this.y = (ICell) Services.getPort("y");
+				return this.y;
+			}
+		}
+		
+		private ICell x = null;
+		
+		public ICell X {
+			get {
+				if (this.x == null)
+					this.x = (ICell) Services.getPort("x");
+				return this.x;
+			}
+		}
+		
+		private IMPIDirect mpi = null;
+		
+		public IMPIDirect Mpi {
+			get {
+				if (this.mpi == null) 
+				{
+					this.mpi = (IMPIDirect) Services.getPort("mpi");
+				}
+				return this.mpi;
+			}
+		}
+
 		abstract public int go(); 
 	}
 }

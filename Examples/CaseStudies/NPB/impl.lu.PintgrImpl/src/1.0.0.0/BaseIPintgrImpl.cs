@@ -11,7 +11,7 @@ using lu.datapartition.BlocksInfo;
 using environment.MPIDirect;
 using lu.Exchange4;
 using lu.Exchange;
-using lu.topology.Neighbors;
+using common.topology.Ring;
 using lu.problem_size.Instance;
 using lu.Pintgr;
 using MPI;
@@ -74,15 +74,6 @@ namespace impl.lu.PintgrImpl {
 			}
 		}
 		
-		private IMPIDirect mpi = null;
-		
-		public IMPIDirect Mpi {
-			get {
-				if (this.mpi == null)
-					this.mpi = (IMPIDirect) Services.getPort("mpi");
-				return this.mpi;
-			}
-		}
 		
 		private IExchange4<I, C> exchange4 = null;
 		
@@ -104,13 +95,35 @@ namespace impl.lu.PintgrImpl {
 			}
 		}
 		
-		private INeighbors neighbors = null;
+		private ICell y = null;
 		
-		public INeighbors Neighbors {
+		public ICell Y {
 			get {
-				if (this.neighbors == null)
-					this.neighbors = (INeighbors) Services.getPort("neighbors");
-				return this.neighbors;
+				if (this.y == null)
+					this.y = (ICell) Services.getPort("y");
+				return this.y;
+			}
+		}
+		
+		private ICell x = null;
+		
+		public ICell X {
+			get {
+				if (this.x == null)
+					this.x = (ICell) Services.getPort("x");
+				return this.x;
+			}
+		}
+		
+		private IMPIDirect mpi = null;
+		
+		public IMPIDirect Mpi {
+			get {
+				if (this.mpi == null) 
+				{
+					this.mpi = (IMPIDirect) Services.getPort("mpi");
+				}
+				return this.mpi;
 			}
 		}
 		

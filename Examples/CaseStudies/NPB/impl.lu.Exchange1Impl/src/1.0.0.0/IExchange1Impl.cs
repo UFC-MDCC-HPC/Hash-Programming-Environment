@@ -28,7 +28,7 @@ namespace impl.lu.Exchange1Impl {
                         double[] dum1;
                         dum1 = Input_buffer.Array = new double[5*(jend-jst+1)];
                         int idx = 0;
-                        ShiftToSouth.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(north, from_n, dum1);mid.Wait();
+                        Shift_to_south.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(north, from_n, dum1);mid.Wait();
                         for(j=jst; j<=jend; j++) {
                             g[k-1, j+1, 1, 0] = dum1[0+idx];
                             g[k-1, j+1, 1, 1] = dum1[1+idx];
@@ -42,7 +42,7 @@ namespace impl.lu.Exchange1Impl {
                         double[] dum1;
                         dum1 = Input_buffer.Array = new double[(5*(iend-ist+1))];
                         int idx = 0;
-                        ShiftToEast.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(west, from_w, dum1);mid.Wait();
+                        Shift_to_east.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(west, from_w, dum1);mid.Wait();
                         for(i=ist; i<=iend; i++) {
                             g[k-1, 1, i+1, 0] = dum1[0+idx];
                             g[k-1, 1, i+1, 1] = dum1[1+idx];
@@ -58,7 +58,7 @@ namespace impl.lu.Exchange1Impl {
                         double[] dum1;
                         dum1 = Input_buffer.Array = new double[(5*(jend-jst+1))];
                         int idx = 0;
-                        ShiftToNorth.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(south, from_s, dum1);mid.Wait();
+                        Shift_to_north.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(south, from_s, dum1);mid.Wait();
                         for(j=jst; j<=jend; j++) {
                             g[k-1, j+1, nx+2, 0] = dum1[0+idx];
                             g[k-1, j+1, nx+2, 1] = dum1[1+idx];
@@ -72,7 +72,7 @@ namespace impl.lu.Exchange1Impl {
                         double[] dum1;
                         dum1 = Input_buffer.Array = new double[(5*(iend-ist+1))];
                         int idx = 0;
-                        ShiftToWest.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(east, from_e, dum1);mid.Wait();
+                        Shift_to_west.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(east, from_e, dum1);mid.Wait();
                         for(i=ist; i<=iend; i++) {
                             g[k-1, ny+2, i+1, 0] = dum1[0+idx];
                             g[k-1, ny+2, i+1, 1] = dum1[1+idx];
@@ -96,7 +96,7 @@ namespace impl.lu.Exchange1Impl {
                             dum[4+idx] = g[k-1, j+1, nx+1, 4];
                             idx = idx + 5;
                         }
-                        ShiftToSouth.initiate_send();//worldcomm.Send<double>(dum, south, from_n);
+                        Shift_to_south.initiate_send();//worldcomm.Send<double>(dum, south, from_n);
                     }
                     if(east != -1) {
                         double[] dum;
@@ -110,7 +110,7 @@ namespace impl.lu.Exchange1Impl {
                             dum[4+idx] = g[k-1, ny+1, i+1, 4];
                             idx = idx + 5;
                         }
-                        ShiftToEast.initiate_send();//worldcomm.Send<double>(dum, east, from_w);
+                        Shift_to_east.initiate_send();//worldcomm.Send<double>(dum, east, from_w);
                     }
                 }
                 else {
@@ -126,7 +126,7 @@ namespace impl.lu.Exchange1Impl {
                             dum[4+idx] = g[k-1, j+1, 2, 4];
                             idx = idx + 5;
                         }
-                        ShiftToNorth.initiate_send();//worldcomm.Send<double>(dum, north, from_s);
+                        Shift_to_north.initiate_send();//worldcomm.Send<double>(dum, north, from_s);
                     }
                     if(west != -1) {
                         double[] dum;
@@ -140,7 +140,7 @@ namespace impl.lu.Exchange1Impl {
                             dum[4+idx] = g[k-1, 2, i+1, 4];
                             idx = idx + 5;
                         }
-                        ShiftToWest.initiate_send();//worldcomm.Send<double>(dum, west, from_e);
+                        Shift_to_west.initiate_send();//worldcomm.Send<double>(dum, west, from_e);
                     }
                 }
             }
@@ -156,7 +156,7 @@ namespace impl.lu.Exchange1Impl {
 
                 if(iex==0) {
                     if(north!=-1) {
-                        ShiftToSouth.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(north, from_n, buf1);mid.Wait();
+                        Shift_to_south.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(north, from_n, buf1);mid.Wait();
                     }
                     if(south!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -176,7 +176,7 @@ namespace impl.lu.Exchange1Impl {
                                 buf[4*size2+ipos2] = g[k0-1, j+1, nx+1, 4];
                             }
                         }
-                        ShiftToSouth.initiate_send();//worldcomm.Send<double>(buf, south, from_n);
+                        Shift_to_south.initiate_send();//worldcomm.Send<double>(buf, south, from_n);
                     }
                     if(north!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -198,7 +198,7 @@ namespace impl.lu.Exchange1Impl {
                         }
                     }
                     if(south!=-1) {
-                        ShiftToNorth.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(south, from_s, buf1);mid.Wait();
+                        Shift_to_north.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(south, from_s, buf1);mid.Wait();
                     }
                     if(north!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -218,7 +218,7 @@ namespace impl.lu.Exchange1Impl {
                                 buf[4*size2+ipos2] = g[k0-1, j+1, 2, 4];
                             }
                         }
-                        ShiftToNorth.initiate_send();//worldcomm.Send<double>(buf, north, from_s);
+                        Shift_to_north.initiate_send();//worldcomm.Send<double>(buf, north, from_s);
                     }
                     if(south!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -246,7 +246,7 @@ namespace impl.lu.Exchange1Impl {
                     buf1 = Input_buffer.Array  = new double[bsize];
                     buf  = Output_buffer.Array = new double[bsize];
                     if(west!=-1) {
-                        ShiftToEast.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(west, from_w, buf1);mid.Wait();
+                        Shift_to_east.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(west, from_w, buf1);mid.Wait();
                     }
                     if(east!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -266,7 +266,7 @@ namespace impl.lu.Exchange1Impl {
                                 buf[4*size2+ipos2] = g[k0-1, ny+1, i+1, 4];
                             }
                         }
-                        ShiftToEast.initiate_send();//worldcomm.Send<double>(buf, east, from_w);
+                        Shift_to_east.initiate_send();//worldcomm.Send<double>(buf, east, from_w);
                     }
                     if(west!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -288,7 +288,7 @@ namespace impl.lu.Exchange1Impl {
                         }
                     }
                     if(east!=-1) {
-                        ShiftToWest.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(east, from_e, buf1);mid.Wait();
+                        Shift_to_west.initiate_recv();//mid = worldcomm.ImmediateReceive<double>(east, from_e, buf1);mid.Wait();
                     }
                     if(west!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {
@@ -308,7 +308,7 @@ namespace impl.lu.Exchange1Impl {
                                 buf[4*size2+ipos2] = g[k0-1, 2, i+1, 4];
                             }
                         }
-                        ShiftToWest.initiate_send();//worldcomm.Send<double>(buf, west, from_e);
+                        Shift_to_west.initiate_send();//worldcomm.Send<double>(buf, west, from_e);
                     }
                     if(east!=-1) {
                         for(k0 = 1; k0<=nz; k0++) {

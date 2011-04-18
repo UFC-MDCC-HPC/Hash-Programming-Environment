@@ -57,22 +57,6 @@
       <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
       <Name>common.direction.Direction</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.direction.EastToWest\common.direction.EastToWest\common.direction.EastToWest.csproj">
-      <Project>{A771F520-7EDF-4BE2-8275-91483AC5DBE4}</Project>
-      <Name>common.direction.EastToWest</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.direction.NorthToSouth\common.direction.NorthToSouth\common.direction.NorthToSouth.csproj">
-      <Project>{B1E0270E-F929-4CAD-9F77-9A7A24A59F2B}</Project>
-      <Name>common.direction.NorthToSouth</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.direction.SouthToNorth\common.direction.SouthToNorth\common.direction.SouthToNorth.csproj">
-      <Project>{9261D8E6-0F84-4FAF-8F84-8009888C46A7}</Project>
-      <Name>common.direction.SouthToNorth</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.direction.WestToEast\common.direction.WestToEast\common.direction.WestToEast.csproj">
-      <Project>{63D41EC8-1078-442C-BD1A-38869DB006A6}</Project>
-      <Name>common.direction.WestToEast</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
       <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
       <Name>common.problem_size.Class</Name>
@@ -89,10 +73,6 @@
       <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
       <Name>lu.Exchange1</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.interactionpattern.Shift\lu.interactionpattern.Shift\lu.interactionpattern.Shift.csproj">
-      <Project>{AB62BCB2-79C6-4193-9E0E-DA19B8BA7F94}</Project>
-      <Name>lu.interactionpattern.Shift</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
       <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
       <Name>lu.problem_size.Instance</Name>
@@ -101,9 +81,25 @@
       <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
       <Name>lu.problem_size.Instance_LU</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
+    <ProjectReference Include="..\..\common.direction.LeftToRight\common.direction.LeftToRight\common.direction.LeftToRight.csproj">
+      <Project>{835C07D3-3F76-482D-8127-C02CA1D79CE9}</Project>
+      <Name>common.direction.LeftToRight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.interactionpattern.Shift\common.interactionpattern.shift\common.interactionpattern.shift.csproj">
+      <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
+      <Name>common.interactionpattern.shift</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.RightToLeft\common.direction.RightToLeft\common.direction.RightToLeft.csproj">
+      <Project>{99E276F9-4541-4E11-8D64-4BB9C2E93980}</Project>
+      <Name>common.direction.RightToLeft</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

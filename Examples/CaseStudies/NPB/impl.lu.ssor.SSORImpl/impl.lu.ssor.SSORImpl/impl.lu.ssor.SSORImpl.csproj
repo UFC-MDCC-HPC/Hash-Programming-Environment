@@ -69,10 +69,6 @@
       <Project>{39F5D9A6-8239-4A74-916A-786069635AC1}</Project>
       <Name>lu.triangular.Lower</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.topology.Neighbors\lu.topology.Neighbors\lu.topology.Neighbors.csproj">
-      <Project>{7F9C0874-C560-4C4F-8B70-C0DD76865DDC}</Project>
-      <Name>lu.topology.Neighbors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.ssor.TriangularPartJacobianMatrix\lu.ssor.TriangularPartJacobianMatrix\lu.ssor.TriangularPartJacobianMatrix.csproj">
       <Project>{F0DC38B7-CCEA-4CD0-8171-40901E720C60}</Project>
       <Name>lu.ssor.TriangularPartJacobianMatrix</Name>
@@ -116,6 +112,10 @@
     <ProjectReference Include="..\..\common.Discretization\common.Discretization\common.Discretization.csproj">
       <Project>{B3AE2AA8-4CC8-4D43-9373-1A193CFA13DB}</Project>
       <Name>common.Discretization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

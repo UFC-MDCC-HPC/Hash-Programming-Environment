@@ -8,14 +8,13 @@ using lu.data.ProblemDefinition;
 using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using common.Buffer;
-using lu.interactionpattern.Shift;
-using common.direction.WestToEast;
+using common.interactionpattern.Shift;
+using common.direction.LeftToRight;
 using lu.datapartition.BlocksInfo;
-using common.direction.EastToWest;
-using common.direction.SouthToNorth;
-using lu.topology.Neighbors;
-using common.direction.NorthToSouth;
+using common.direction.RightToLeft;
+using common.topology.Ring;
 using lu.Exchange1;
+using environment.MPIDirect;
 
 namespace impl.lu.Exchange1Impl { 
 	public abstract class BaseIExchange1Impl<I, C>: Computation, BaseIExchange1<I, C>
@@ -44,6 +43,26 @@ namespace impl.lu.Exchange1Impl {
 			}
 		#endregion
 	
+		private ICell y = null;
+		
+		public ICell Y {
+			get {
+				if (this.y == null)
+					this.y = (ICell) Services.getPort("y");
+				return this.y;
+			}
+		}
+		
+		private ICell x = null;
+		
+		public ICell X {
+			get {
+				if (this.x == null)
+					this.x = (ICell) Services.getPort("x");
+				return this.x;
+			}
+		}
+
 		private IProblemDefinition<I, C> problem = null;
 		
 		public IProblemDefinition<I, C> Problem {
@@ -54,6 +73,18 @@ namespace impl.lu.Exchange1Impl {
 			}
 		}
 		
+		private IMPIDirect mpi = null;
+		
+		public IMPIDirect Mpi {
+			get {
+				if (this.mpi == null) 
+				{
+					this.mpi = (IMPIDirect) Services.getPort("mpi");
+				}
+				return this.mpi;
+			}
+		}
+
 		private IBuffer output_buffer = null;
 		
 		protected IBuffer Output_buffer {
@@ -74,12 +105,12 @@ namespace impl.lu.Exchange1Impl {
 			}
 		}
 		
-		private IShift<IWestToEast> shift_to_east = null;
+		private IShift<ILeftToRight> shift_to_east = null;
 		
-		protected IShift<IWestToEast> ShiftToEast {
+		protected IShift<ILeftToRight> Shift_to_east {
 			get {
 				if (this.shift_to_east == null)
-					this.shift_to_east = (IShift<IWestToEast>) Services.getPort("shift_to_east");
+					this.shift_to_east = (IShift<ILeftToRight>) Services.getPort("shift_to_east");
 				return this.shift_to_east;
 			}
 		}
@@ -94,42 +125,32 @@ namespace impl.lu.Exchange1Impl {
 			}
 		}
 		
-		private IShift<IEastToWest> shift_to_west = null;
+		private IShift<IRightToLeft> shift_to_west = null;
 		
-		protected IShift<IEastToWest> ShiftToWest {
+		protected IShift<IRightToLeft> Shift_to_west {
 			get {
 				if (this.shift_to_west == null)
-					this.shift_to_west = (IShift<IEastToWest>) Services.getPort("shift_to_west");
+					this.shift_to_west = (IShift<IRightToLeft>) Services.getPort("shift_to_west");
 				return this.shift_to_west;
 			}
 		}
 		
-		private IShift<ISouthToNorth> shift_to_north = null;
+		private IShift<IRightToLeft> shift_to_north = null;
 		
-		protected IShift<ISouthToNorth> ShiftToNorth {
+		protected IShift<IRightToLeft> Shift_to_north {
 			get {
 				if (this.shift_to_north == null)
-					this.shift_to_north = (IShift<ISouthToNorth>) Services.getPort("shift_to_north");
+					this.shift_to_north = (IShift<IRightToLeft>) Services.getPort("shift_to_north");
 				return this.shift_to_north;
 			}
 		}
+				
+		private IShift<ILeftToRight> shift_to_south = null;
 		
-		private INeighbors neighbors = null;
-		
-		public INeighbors Neighbors {
-			get {
-				if (this.neighbors == null)
-					this.neighbors = (INeighbors) Services.getPort("neighbors");
-				return this.neighbors;
-			}
-		}
-		
-		private IShift<INorthToSouth> shift_to_south = null;
-		
-		protected IShift<INorthToSouth> ShiftToSouth {
+		protected IShift<ILeftToRight> Shift_to_south {
 			get {
 				if (this.shift_to_south == null)
-					this.shift_to_south = (IShift<INorthToSouth>) Services.getPort("shift_to_south");
+					this.shift_to_south = (IShift<ILeftToRight>) Services.getPort("shift_to_south");
 				return this.shift_to_south;
 			}
 		}
