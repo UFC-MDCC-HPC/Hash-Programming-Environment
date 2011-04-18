@@ -1,12 +1,8 @@
 using br.ufc.pargo.hpe.kinds;
-using common.problem_size.Instance;
-using common.problem_size.Class;
 using common.solve.Method;
 
 namespace bt.solve.MatVecSub { 
-	public interface IMatVecSub<I, C, MTH> : BaseIMatVecSub<I, C, MTH>
-	where I:IInstance<C>
-	where C:IClass
+	public interface IMatVecSub<MTH> : BaseIMatVecSub<MTH>
 	where MTH:IMethod {
 	   void setParameters(double[, ,] ablock, 
 	                      double[, , , ,] avec, 
