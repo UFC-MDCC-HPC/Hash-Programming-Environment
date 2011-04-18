@@ -109,39 +109,39 @@
         <originRef cRef="txinvr" iRef="IBlockDiagonalMatVecProduct"/>
         <visualDescription h="10" w="10" x="18" y="2"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@3dc2a573" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2ced9f7a" repeat="0">
         <visualDescription h="550" w="510" x="145" y="125"/>
-        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@35fc40b2" repeat="0">
+        <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@248119a1" repeat="0">
           <visualDescription h="450" w="430" x="70" y="50"/>
-          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@43fb81ce" repeat="0">
+          <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@17b9abc0" repeat="0">
             <visualDescription h="350" w="350" x="70" y="50"/>
-            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@35071e40" repeat="0">
+            <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1ebad66b" repeat="0">
               <visualDescription h="250" w="270" x="70" y="50"/>
-              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@665316f2" repeat="0">
+              <action xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7c531a8f" repeat="0">
                 <visualDescription h="150" w="190" x="70" y="50"/>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@59079e59" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@33f4e20d" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="10" y="50"/>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@32d12b9" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1224de21" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="70" y="50"/>
                 </action>
-                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4283150" repeat="0" sliceRef="z_solve">
+                <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@327351d5" repeat="0" sliceRef="z_solve">
                   <visualDescription h="50" w="50" x="130" y="50"/>
                 </action>
               </action>
-              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6abd7d51" repeat="0" sliceRef="copy_faces">
+              <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@310190d3" repeat="0" sliceRef="copy_faces">
                 <visualDescription h="50" w="50" x="10" y="50"/>
               </action>
             </action>
-            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3e6e8796" repeat="0" sliceRef="compute_rhs">
+            <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5dcb25c7" repeat="0" sliceRef="compute_rhs">
               <visualDescription h="50" w="50" x="10" y="50"/>
             </action>
           </action>
-          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4a87a8df" repeat="0" sliceRef="add">
+          <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@441d5bec" repeat="0" sliceRef="add">
             <visualDescription h="50" w="50" x="10" y="50"/>
           </action>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@105feeb3" repeat="0" sliceRef="txinvr">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@637e05e3" repeat="0" sliceRef="txinvr">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -166,7 +166,7 @@
           <dependency>common.orientation.X/bin/1.0.0.0/IX.dll</dependency>
           <dependency>sp.ADI/bin/1.0.0.0/BaseIADI.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public class IADIImpl&lt;C> : BaseIADIImpl&lt;C>, IADI&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public override int go() &#xA;{ &#xA;&#x9;int no_nodes = Ranks.Length;&#xA;&#x9;if (no_nodes > 1) {&#xA;&#x9;   Copy_faces.go();&#xA;&#x9;}&#xA;&#x9;Compute_rhs.go();&#xA;&#x9;Txinvr.go();&#xA;&#x9;X_solve.go();&#xA;&#x9;Y_solve.go();&#xA;&#x9;Z_solve.go();&#xA;&#x9;Add.go();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;//Console.WriteLine(&quot;Iterate !!!&quot;);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;return 0;&#xA;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;" fileType="library" name="IADIImpl.cs" srcType="user" uri="impl.sp.solve.ADI/bin/1.0.0.0/IADIImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using sp.ADI;&#xA;&#xA;namespace impl.sp.solve.ADI { &#xA;&#xA;public class IADIImpl&lt;C> : BaseIADIImpl&lt;C>, IADI&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public override int go() &#xA;{ &#xA;&#x9;int no_nodes = Ranks.Length;&#xA;&#x9;if (no_nodes > 1) &#xA;&#x9;{&#xA;&#x9;   Copy_faces.go();&#xA;&#x9;}&#xA;&#x9;Compute_rhs.go();&#xA;&#x9;Txinvr.go();&#xA;&#x9;X_solve.go();&#xA;&#x9;Y_solve.go();&#xA;&#x9;Z_solve.go();&#xA;&#x9;Add.go();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;return 0;&#xA;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;" fileType="library" name="IADIImpl.cs" srcType="user" uri="impl.sp.solve.ADI/bin/1.0.0.0/IADIImpl.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.sp.solve.ADI/bin/1.0.0.0/BaseIADIImpl.dll</dependency>
           <dependency>sp.ADI/bin/1.0.0.0/IADI.dll</dependency>
@@ -175,18 +175,6 @@
       <visualDescription h="65" w="217" x="271" y="22">
         <color b="0" g="128" r="128"/>
       </visualDescription>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="mpi" sRef="z_solve"/>
-        <slice pRef="mpi" sRef="y_solve"/>
-        <slice pRef="mpi" sRef="x_solve"/>
-        <slice pRef="mpi" sRef="copy_faces"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="77" y="104"/>
-        <slice pRef="cell" sRef="z_solve"/>
-        <slice pRef="z" sRef="copy_faces"/>
-      </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="162" y="9"/>
         <slice pRef="problem" sRef="z_solve"/>
@@ -206,6 +194,18 @@
         <slice pRef="blocks" sRef="compute_rhs"/>
         <slice pRef="blocks" sRef="add"/>
         <slice pRef="blocks" sRef="txinvr"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="77" y="104"/>
+        <slice pRef="cell" sRef="z_solve"/>
+        <slice pRef="z" sRef="copy_faces"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="z_solve"/>
+        <slice pRef="mpi" sRef="y_solve"/>
+        <slice pRef="mpi" sRef="x_solve"/>
+        <slice pRef="mpi" sRef="copy_faces"/>
       </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="224" y="24"/>

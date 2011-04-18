@@ -73,7 +73,7 @@ public INeighbors Neighbors {
 }
 
 
-abstract public void synchronize(); 
+abstract public int go(); 
 
 
 }

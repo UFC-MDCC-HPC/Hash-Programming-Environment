@@ -16,7 +16,8 @@ namespace impl.lu.ssor.L2NormImpl {
 		public IL2NormImpl() {
 		   
 		} 		
-		public override void compute() { 
+		public override int go() { 
+
             double[] dummy = new double[5];
             for(int m = 0; m< 5; m++) {
                 dummy[m] = 0.0d;
@@ -37,6 +38,7 @@ namespace impl.lu.ssor.L2NormImpl {
             for(int m = 0; m< 5; m++) {
                 sum[m] = Math.Sqrt(sum[m]/((nx0-2)*(ny0-2)*(nz0-2)));
             }
+			return 0;
 		}
 		public void setParameters(double[, , ,] v, double[] sum){
 		   this.v = v;

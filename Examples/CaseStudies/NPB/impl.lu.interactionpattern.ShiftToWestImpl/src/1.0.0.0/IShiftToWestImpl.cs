@@ -14,8 +14,9 @@ namespace impl.lu.interactionpattern.ShiftToWestImpl {
 		
 		} 
 		
-		public override void synchronize() { 
-		
+		public override int go() { 
+
+			return 0;
 		}
 		 
 		private static int from_e = 3; //from_s = 1, from_n = 2, from_w = 4;

@@ -14,7 +14,8 @@ namespace impl.lu.ErrorImpl {
 		public IErrorImpl() { 
 		
 		} 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, k, m, iglob, jglob;
             double tmp;
             double[,,,] u000ijk = new double[1, 1, 1, 5];
@@ -30,7 +31,7 @@ namespace impl.lu.ErrorImpl {
                     for(i = ist; i<= iend; i++) {
                         iglob = ipt + i;
                         Exact.setParameters(iglob, jglob, k, u000ijk, 0, 0, 0);
-                        Exact.compute();
+                        Exact.go();
                         for(m = 0; m< 5; m++) {
                             tmp = (u000ijk[0, 0, 0, m] - u[k-1, j+1, i+1, m]);
                             dummy[m] = dummy[m] + pow2(tmp);
@@ -42,6 +43,7 @@ namespace impl.lu.ErrorImpl {
             for(m = 0; m< 5; m++) {
                 errnm[m] = Math.Sqrt(errnm[m]/((nx0-2)*(ny0-2)*(nz0-2)));
             }
+			return 0;
 		}
 		
 		private double[] errnm;

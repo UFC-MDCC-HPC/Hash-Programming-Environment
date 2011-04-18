@@ -122,6 +122,6 @@ namespace impl.lu.ssor.RhsImpl {
 				return this.exchange1;
 			}
 		}
-		abstract public void compute();
+		abstract public int go(); 
 	}
 }

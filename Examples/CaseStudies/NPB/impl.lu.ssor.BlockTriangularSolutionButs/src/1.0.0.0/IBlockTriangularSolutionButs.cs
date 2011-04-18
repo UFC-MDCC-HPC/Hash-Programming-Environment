@@ -22,14 +22,15 @@ namespace impl.lu.ssor.BlockTriangularSolutionButs {
 		
 		} 
 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, m, iex;
             double tmp, tmp1;
             double[,] tmat = new double[5, 5];
             double[,,] tv = new double[isiz2, isiz1, 5];
             iex = 1;
             Exchange1.setParameters(rsd, iex, k);
-            Exchange1.compute();
+            Exchange1.go();
             for(j = jend-1; j>= jst-1; j--) {
                 for(i = iend-1; i>= ist-1; i--) {
                     for(m = 0; m< 5; m++) {
@@ -148,7 +149,8 @@ namespace impl.lu.ssor.BlockTriangularSolutionButs {
 
             iex = 3;
             Exchange1.setParameters(rsd, iex, k);
-            Exchange1.compute();
+            Exchange1.go();
+			return 0;
 		}
 		
 		public void setParameters(int k, double omega, double[,,,] dx, double[,,,] dy, double[,,,] dz){

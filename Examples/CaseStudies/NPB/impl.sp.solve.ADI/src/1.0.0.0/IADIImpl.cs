@@ -14,7 +14,8 @@ where C:IClass
 public override int go() 
 { 
 	int no_nodes = Ranks.Length;
-	if (no_nodes > 1) {
+	if (no_nodes > 1) 
+	{
 	   Copy_faces.go();
 	}
 	Compute_rhs.go();
@@ -24,12 +25,10 @@ public override int go()
 	Z_solve.go();
 	Add.go();
 			
-	//Console.WriteLine("Iterate !!!");
-			
 	return 0;
-}
-
 } // end activate method 
+
+} 
 
 }
 

@@ -12,7 +12,8 @@ namespace impl.lu.ERhsImpl {
 	where C:IClass {
 		public IERhsImpl() {
 		} 	
-		public override void compute() {
+		public override int go() { 
+
             int i, j, k, m;
             int iglob, jglob;
             int iex;
@@ -71,7 +72,7 @@ namespace impl.lu.ERhsImpl {
             //   communicate and receive/send two rows of data
             //---------------------------------------------------------------------
             Exchange1.setParameters(rsd, iex);
-            Exchange1.compute();
+            Exchange1.go();
             L1 = 0;
             if(north==-1)
                 L1 = 1;
@@ -160,7 +161,7 @@ namespace impl.lu.ERhsImpl {
             //   communicate and receive/send two rows of data
             //---------------------------------------------------------------------
             Exchange1.setParameters(rsd, iex);
-            Exchange1.compute();
+            Exchange1.go();
             L1 = 0;
             if(west==-1)
                 L1 = 1;
@@ -335,6 +336,7 @@ namespace impl.lu.ERhsImpl {
                     }
                 }
             }
+			return 0;
 		}
 		public static double pow2(double p) { return p * p; } 
 	}

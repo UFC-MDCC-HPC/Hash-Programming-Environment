@@ -19,7 +19,8 @@ namespace impl.lu.ExchangeImpl {
  	    public IExchangeImpl() { 
 		
 		}		
-		public override void compute() {
+		public override int go() { 
+
             int k;
             int from_s = 1, from_e = 3;
             if(_from==from_s) {
@@ -59,6 +60,7 @@ namespace impl.lu.ExchangeImpl {
                     ShiftToWest.initiate_send();//worldcomm.Send<double>(dum, west, from_e);
                 }
             }
+			return 0;
 		}
 		public void setParameters(double[,] g, int beg, int fin1, int _from){
 		   this.g = g;

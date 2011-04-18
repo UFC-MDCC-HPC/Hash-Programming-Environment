@@ -6,14 +6,14 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 using common.problem_size.Class;
 using common.data.LHSInit;
 
-namespace impl.sp.data.LHSInitImpl { 
+namespace impl.common.data.LHSInitImpl { 
 
 public abstract class BaseILHSInitImpl<I, C>: Computation, BaseILHSInit<I, C>
-where I:IInstance_SP<C>
+where I:IInstance<C>
 where C:IClass
 {
 		

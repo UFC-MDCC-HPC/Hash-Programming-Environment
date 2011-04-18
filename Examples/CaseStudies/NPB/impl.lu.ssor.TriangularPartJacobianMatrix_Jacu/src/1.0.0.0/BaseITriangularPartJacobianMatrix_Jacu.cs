@@ -119,6 +119,6 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacu {
 				return this.instance;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

@@ -13,7 +13,9 @@ namespace impl.lu.interactionpattern.ShiftToSouthImpl {
 		
 		} 
 		
-		public override void synchronize() { 
+		public override int go() { 
+			return 0;
+
 		
 		}
 		

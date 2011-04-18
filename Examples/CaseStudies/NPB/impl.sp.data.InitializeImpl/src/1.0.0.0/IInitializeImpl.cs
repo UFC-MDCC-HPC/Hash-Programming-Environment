@@ -2,15 +2,15 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 using common.problem_size.Class;
 using common.data.Initialize;
 using common.data.ProblemDefinition;
 
-namespace impl.sp.data.InitializeImpl { 
+namespace impl.common.data.InitializeImpl { 
 
 	public class IInitializeImpl<I, C> : BaseIInitializeImpl<I, C>, IInitialize<I, C>
-		where I:IInstance_SP<C>
+		where I:IInstance<C>
 		where C:IClass
 	{
 	

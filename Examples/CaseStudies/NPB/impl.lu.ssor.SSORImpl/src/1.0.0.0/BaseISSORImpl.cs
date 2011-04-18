@@ -176,6 +176,6 @@ namespace impl.lu.ssor.SSORImpl {
 				return this.instance;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

@@ -14,7 +14,8 @@ namespace impl.lu.PintgrImpl {
 		public IPintgrImpl() { 
 
 		} 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, k, ibeg, ifin, ifin1, jbeg, jfin, jfin1, iglob, iglob1, iglob2, jglob, jglob1, jglob2, ind1, ind2;
             double[,] phi1 = new double[isiz3+2, isiz2+2];
             double[,] phi2 = new double[isiz3+2, isiz2+2];
@@ -75,7 +76,7 @@ namespace impl.lu.PintgrImpl {
                 }
             }
             Exchange4.setParameters(phi1, phi2, ibeg, ifin1, jbeg, jfin1); 
-            Exchange4.compute();
+            Exchange4.go();
             frc1 = 0.0d;
             for(j = jbeg; j<=jfin1; j++) {
                 for(i = ibeg; i<= ifin1; i++) {
@@ -130,11 +131,11 @@ namespace impl.lu.PintgrImpl {
             }
             if(ind1==1) {
                 Exchange.setParameters(phi1, ibeg, ifin1, from_s);
-                Exchange.compute();
+                Exchange.go();
             }
             if(ind2==1) {
                 Exchange.setParameters(phi2, ibeg, ifin1, from_s);
-                Exchange.compute();
+                Exchange.go();
             }
             frc2 = 0.0d;
             for(k = ki1; k<= ki2-1; k++) {
@@ -190,11 +191,11 @@ namespace impl.lu.PintgrImpl {
             }
             if(ind1==1) {
                 Exchange.setParameters(phi1, jbeg, jfin1, from_e);
-                Exchange.compute();
+                Exchange.go();
             }
             if(ind2==1) {
                 Exchange.setParameters(phi2, jbeg, jfin1, from_e);
-                Exchange.compute();
+                Exchange.go();
             }
             frc3 = 0.0d;
             for(k = ki1; k<= ki2-1; k++) {
@@ -213,6 +214,7 @@ namespace impl.lu.PintgrImpl {
             frc3 = worldcomm.Allreduce<double>(dummy, MPI.Operation<double>.Add);
             frc3 = deta * dzeta * frc3;
             frc = 0.25d * (frc1 + frc2 + frc3);
+			return 0;
 		}
 		
 		public static double pow2(double p) { return p * p; } 

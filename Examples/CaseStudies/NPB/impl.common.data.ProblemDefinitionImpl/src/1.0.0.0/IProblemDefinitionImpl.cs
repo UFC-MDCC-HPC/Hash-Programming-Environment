@@ -4,12 +4,12 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.data.ProblemDefinition;
 using common.problem_size.Class;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 
 namespace impl.common.data.ProblemDefinitionImpl { 
 	     
 public class IProblemDefinitionImpl<I, C> : BaseIProblemDefinitionImpl<I, C>, IProblemDefinition<I, C>
-where I:IInstance_SP<C>
+where I:IInstance<C>
 where C:IClass
 {
 		
@@ -41,6 +41,9 @@ where C:IClass
 	public double [,,,,] Field_speed    { get { return Speed.Field; } }	
 	public double [,,,,] Field_square   { get { return Square.Field; } }	
 				
+//	public double [,,] Field_lhsa     { get { return Lhsa.Field; } }	
+//	public double [,,] Field_lhsb     { get { return Lhsb.Field; } }	
+//	public double [,,] Field_lhsc     { get { return Lhsc.Field; } }	
 		
 	public int MAX_CELL_DIM { get { return _MAX_CELL_DIM_; } set { _MAX_CELL_DIM_ = value; } }	
 	public int maxcells { get { return _maxcells_; } set { _maxcells_ = value; }}	
@@ -80,6 +83,9 @@ where C:IClass
 		Speed.initialize_field("speed", maxcells, KMAX+3, JMAX+3, IMAX+3);
 		Square.initialize_field("square", maxcells, KMAX+3, JMAX+3, IMAX+3);	
 			
+		//Lhsa.initialize_field("lhsa", maxcells, KMAX+2, JMAXP+2, IMAXP+2, 15);
+		//Lhsb.initialize_field("lhsb", maxcells, KMAX+2, JMAXP+2, IMAXP+2, 15);
+		//Lhsc.initialize_field("lhsc", maxcells, KMAX+2, JMAXP+2, IMAXP+2, 15);
 	}
 		
 	private void setProblemClass() 

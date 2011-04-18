@@ -20,7 +20,7 @@ namespace impl.lu.VerifyImpl {
 		
 		} 
 		
-		public override void compute() { 
+		public override int go() { 
             double[] xcrdif = new double[5];
             double[] xcedif = new double[5];
             double epsilon, xcidif;
@@ -107,6 +107,7 @@ namespace impl.lu.VerifyImpl {
             else {
                 Console.WriteLine(" Verification failed");
             }
+			return 0;
 		}
 		
 		public void setParameters(double[] xcr, double[] xce, double xci){

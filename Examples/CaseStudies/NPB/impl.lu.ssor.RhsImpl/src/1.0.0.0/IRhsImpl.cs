@@ -13,7 +13,8 @@ namespace impl.lu.ssor.RhsImpl {
 		public IRhsImpl() { 
 		
 		}		
-		public override void compute() {
+		public override int go() { 
+
             int i, j, k, m;
             int iex;
             int L1, L2;
@@ -40,7 +41,7 @@ namespace impl.lu.ssor.RhsImpl {
             }
             iex   = 0;
             Exchange1.setParameters(u, iex);
-            Exchange1.compute();
+            Exchange1.go();
             L1 = 0;
             if(north==-1)
                 L1 = 1;
@@ -120,7 +121,7 @@ namespace impl.lu.ssor.RhsImpl {
             }
             iex   = 1;
             Exchange1.setParameters(u, iex);
-            Exchange1.compute();
+            Exchange1.go();
 
             L1 = 0;
             if(west==-1)
@@ -292,6 +293,7 @@ namespace impl.lu.ssor.RhsImpl {
                     }
                 }
             }
+			return 0;
 		}
 		
 		public static double pow2(double p) { return p * p; } 

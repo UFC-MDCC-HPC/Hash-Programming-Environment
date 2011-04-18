@@ -7,7 +7,7 @@ using br.ufc.pargo.hpe.kinds;
 using common.topology.Ring;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 using common.error.RHSNorm;
 using environment.MPIDirect;
 using common.error.ErrorNorm;
@@ -19,7 +19,7 @@ using common.ComputeRHS;
 namespace impl.common.VerifyImpl { 
 
 public abstract class BaseIVerifyImpl<I,C>: Computation, BaseIVerify<I,C>
-		where I:IInstance_SP<C>
+		where I:IInstance<C>
 		where C:IClass
 {
 

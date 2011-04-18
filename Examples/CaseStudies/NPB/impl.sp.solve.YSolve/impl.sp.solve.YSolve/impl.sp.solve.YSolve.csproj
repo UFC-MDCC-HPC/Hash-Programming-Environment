@@ -33,9 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="DGAC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\usr\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -101,10 +101,6 @@
       <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
       <Name>common.orientation.Axis</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.interactionpattern.Shift\common.interactionpattern.shift\common.interactionpattern.Shift.csproj">
-      <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
-      <Name>common.interactionpattern.Shift</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.direction.LeftToRight\common.direction.LeftToRight\common.direction.LeftToRight.csproj">
       <Project>{835C07D3-3F76-482D-8127-C02CA1D79CE9}</Project>
       <Name>common.direction.LeftToRight</Name>
@@ -128,6 +124,14 @@
     <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
       <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
       <Name>common.direction.Direction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.RightToLeft\common.direction.RightToLeft\common.direction.RightToLeft.csproj">
+      <Project>{99E276F9-4541-4E11-8D64-4BB9C2E93980}</Project>
+      <Name>common.direction.RightToLeft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.interactionpattern.Shift\common.interactionpattern.shift\common.interactionpattern.shift.csproj">
+      <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
+      <Name>common.interactionpattern.shift</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

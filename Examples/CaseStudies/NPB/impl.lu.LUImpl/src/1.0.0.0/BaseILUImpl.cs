@@ -177,6 +177,6 @@ where C:IClass{
 				return this.neighbors;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

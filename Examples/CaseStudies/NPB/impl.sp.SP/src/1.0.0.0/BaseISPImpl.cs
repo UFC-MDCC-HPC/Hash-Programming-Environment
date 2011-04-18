@@ -35,7 +35,6 @@ protected int[,] cell_size;
 protected int[] grid_points;		
 protected int problem_size;
 protected int niter;
-protected double dt;
 		
 override public void initialize()
 {	
@@ -45,7 +44,6 @@ override public void initialize()
 	problem_size = Instance.problem_size;			
 	problem_class = Instance.CLASS;	
 	niter = Instance.niter_default;
-    dt = Instance.dt_default;
 	
 	grid_points = Problem.grid_points;			
 }

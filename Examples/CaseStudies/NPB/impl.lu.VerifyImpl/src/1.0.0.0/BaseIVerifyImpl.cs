@@ -62,6 +62,6 @@ namespace impl.lu.VerifyImpl {
 				return this.instance;
 			}
 		}	
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

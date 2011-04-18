@@ -19,7 +19,8 @@ namespace impl.lu.Exchange1Impl {
 
 		}
 
-		public override void compute() {
+		public override int go() { 
+
             if(k>=0) {
                 int i, j;
                 if(iex == 0) {
@@ -330,6 +331,7 @@ namespace impl.lu.Exchange1Impl {
                     }
                 }            
             }
+			return 0;
 		}
 		
 		public void setParameters(double[,,,] g, int iex, int k){

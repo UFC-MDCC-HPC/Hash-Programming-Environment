@@ -4,14 +4,13 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.Verify;
 using common.problem_size.Class;
-using sp.problem_size.Instance_SP;
 using common.problem_size.Instance;
 using NPB3_0_JAV.BMInOut;
 
 namespace impl.common.VerifyImpl { 
 
 public class IVerifyImpl<I,C> : BaseIVerifyImpl<I,C>, IVerify<I,C>
-where I:IInstance_SP<C>
+where I:IInstance<C>
 where C:IClass
 {
 

@@ -18,7 +18,8 @@ namespace impl.lu.ExactImpl {
 		
 		}
 		
-		public override void compute() { 
+		public override int go() { 
+
             int m;
             double xi, eta, zeta;
             xi   = ((double)(i-1))/(nx0-1);
@@ -39,6 +40,8 @@ namespace impl.lu.ExactImpl {
                     + ce[11, m]*eta*eta*eta*eta 
                     + ce[12, m]*zeta*zeta*zeta*zeta;
             }
+						return 0;
+
 		}
 		
 		public void setParameters(int i, int j, int k, double[,,,] u000ijk, int i1, int i2, int i3){

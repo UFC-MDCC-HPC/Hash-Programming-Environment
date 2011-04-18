@@ -18,7 +18,8 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
 		
 		} 
 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j;
             double  r43;
             double  c1345;
@@ -177,6 +178,7 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
                     c[j-1, i-1, 4, 4] = -dt * tx2* (c1 * (u[k-1, j+1, i, 1] * tmp1))- dt * tx1 * c1345 * tmp1- dt * tx1 * dx5;
                 }
             }
+			return 0;
 		}
 		public void setParameters(int k){
 		   this.k = k;

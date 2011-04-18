@@ -16,7 +16,8 @@ namespace impl.lu.data.InitialValues_Setiv {
 		
 		} 
 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, k, m;
             int iglob, jglob;
             double  xi, eta, zeta;
@@ -38,17 +39,17 @@ namespace impl.lu.data.InitialValues_Setiv {
                             if(iglob!=1 && iglob!=nx0) {
                                 xi = ((double)(iglob-1))/(nx0-1);
                                 Exact.setParameters(1, jglob, k, ue_1jk, 0, 0, 0);
-                                Exact.compute();
+                                Exact.go();
                                 Exact.setParameters(nx0, jglob, k, ue_nx0jk, 0, 0, 0);
-                                Exact.compute();
+                                Exact.go();
                                 Exact.setParameters(iglob, 1, k, ue_i1k, 0, 0, 0);
-                                Exact.compute();
+                                Exact.go();
                                 Exact.setParameters(iglob, ny0, k, ue_iny0k, 0, 0, 0);
-                                Exact.compute();
+                                Exact.go();
                                 Exact.setParameters(iglob, jglob, 1, ue_ij1, 0, 0, 0);
-                                Exact.compute();
+                                Exact.go();
                                 Exact.setParameters(iglob, jglob, nz, ue_ijnz, 0, 0, 0);
-                                Exact.compute();
+                                Exact.go();
                                 for(m = 0; m< 5; m++) {
                                     pxi =   (1.0d-xi) * ue_1jk[0, 0, 0, m] + xi   * ue_nx0jk[0, 0, 0, m];
                                     peta =  (1.0d-eta) * ue_i1k[0, 0, 0, m] + eta   * ue_iny0k[0, 0, 0, m];
@@ -60,6 +61,7 @@ namespace impl.lu.data.InitialValues_Setiv {
                     }
                 }
             }
+			return 0;
 		}
 	}
 }

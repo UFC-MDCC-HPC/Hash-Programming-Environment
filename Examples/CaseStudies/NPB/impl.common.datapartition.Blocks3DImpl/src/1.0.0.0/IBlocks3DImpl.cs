@@ -4,12 +4,12 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.Blocks3D;
 using common.problem_size.Class;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 
 namespace impl.common.datapartition.Blocks3DImpl { 
 
 public class IBlocks3DImpl<I, C> : BaseIBlocks3DImpl<I, C>, IBlocks3D<I, C>
-where I:IInstance_SP<C>
+where I:IInstance<C>
 where C:IClass
 {
 

@@ -69,6 +69,6 @@ namespace impl.lu.data.InitialValues_Setiv {
 				return this.exact;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

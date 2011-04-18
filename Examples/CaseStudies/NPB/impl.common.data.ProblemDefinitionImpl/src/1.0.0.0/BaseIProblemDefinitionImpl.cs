@@ -7,12 +7,12 @@ using br.ufc.pargo.hpe.kinds;
 using common.data.Field;
 using common.data.ProblemDefinition;
 using common.problem_size.Class;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 
 namespace impl.common.data.ProblemDefinitionImpl { 
 
 public abstract class BaseIProblemDefinitionImpl<I, C>: DataStructure, BaseIProblemDefinition<I,C>
-where I:IInstance_SP<C>
+where I:IInstance<C>
 where C:IClass
 {
 		
@@ -148,6 +148,36 @@ protected IField Forcing {
 		return forcing;
 	}
 }
+
+/*private IField lhsa = null;
+
+protected IField Lhsa {
+	get {
+		if (lhsa==null) 
+			lhsa = (IField) Services.getPort("lhsa");
+		return lhsa;
+	}
+}
+
+private IField lhsb = null;
+
+protected IField Lhsb {
+	get {
+		if (lhsb==null) 
+			lhsb = (IField) Services.getPort("lhsb");
+		return lhsb;
+	}
+}
+
+private IField lhsc = null;
+
+protected IField Lhsc {
+	get {
+		if (lhsc==null) 
+			lhsc = (IField) Services.getPort("lhsc");
+		return lhsc;
+	}
+}*/
 
 }
 

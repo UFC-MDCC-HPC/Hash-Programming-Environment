@@ -16,7 +16,8 @@ namespace impl.lu.ssor.SSORImpl {
 		
 		} 
 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, k, m;
             int istep;
             double  tmp;
@@ -46,12 +47,12 @@ namespace impl.lu.ssor.SSORImpl {
             //---------------------------------------------------------------------
             //   compute the steady-state residuals
             //---------------------------------------------------------------------
-            Rhs.compute();
+            Rhs.go();
             //---------------------------------------------------------------------
             //   compute the L2 norms of newton iteration residuals
             //---------------------------------------------------------------------
             L2norm.setParameters(rsd, rsdnm);
-            L2norm.compute();
+            L2norm.go();
             worldcomm.Barrier();
             Timer.resetTimer(1);
             Timer.start(1);
@@ -82,24 +83,24 @@ namespace impl.lu.ssor.SSORImpl {
                     //   form the lower triangular part of the jacobian matrix
                     //---------------------------------------------------------------------
                     Jacld.setParameters(k);
-                    Jacld.compute();
+                    Jacld.go();
                     //---------------------------------------------------------------------
                     //   perform the lower triangular solution
                     //---------------------------------------------------------------------
                     Blts.setParameters(k, omega, a, b, c);
-                    Blts.compute();
+                    Blts.go();
                 }
                 for(k=nz-1; k>= 2; k--) {
                     //---------------------------------------------------------------------
                     //   form the strictly upper triangular part of the jacobian matrix
                     //---------------------------------------------------------------------
                     Jacu.setParameters(k);
-                    Jacu.compute();
+                    Jacu.go();
                     //---------------------------------------------------------------------
                     //   perform the upper triangular solution
                     //---------------------------------------------------------------------
                     Buts.setParameters(k, omega, a, b, c);
-                    Buts.compute();
+                    Buts.go();
                 }
                 //---------------------------------------------------------------------
                 //   update the variables
@@ -118,29 +119,30 @@ namespace impl.lu.ssor.SSORImpl {
                 //---------------------------------------------------------------------
                 if(mod(istep, inorm) == 0) {
                     L2norm.setParameters(rsd, delunm);
-                    L2norm.compute();
+                    L2norm.go();
                 }
                 //---------------------------------------------------------------------
                 //   compute the steady-state residuals
                 //---------------------------------------------------------------------
-                Rhs.compute();
+                Rhs.go();
                 //---------------------------------------------------------------------
                 //   compute the max-norms of newton iteration residuals
                 //---------------------------------------------------------------------
                 if((mod(istep, inorm)== 0) || (istep==itmax)) {
                     L2norm.setParameters(rsd, rsdnm);
-                    L2norm.compute();
+                    L2norm.go();
                 }
                 //---------------------------------------------------------------------
                 //   check the newton-iteration residuals against the tolerance levels
                 //---------------------------------------------------------------------
                 if((rsdnm[0]<tolrsd[0]) && (rsdnm[1]<tolrsd[1]) && (rsdnm[2]<tolrsd[2]) && (rsdnm[3]<tolrsd[3]) && (rsdnm[4]<tolrsd[4])) {
-                    return;
+                    return 0;
                 }
             }
             Timer.stop(1);
             wtime = Timer.readTimer(1);
             maxtime = worldcomm.Allreduce<double>(wtime, MPI.Operation<double>.Max);
+			return 0;
 		}
 		public static double mod(double a, double b) { return (a % b); }
 		public void setParameters(int niter){

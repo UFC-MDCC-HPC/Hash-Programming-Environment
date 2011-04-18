@@ -21,7 +21,8 @@ namespace impl.lu.Exchange4Impl {
 		public IExchange4Impl() { 
 		
 		} 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, ny2;
             int from_s = 1, from_e = 3;
             ny2 = ny + 2;
@@ -61,6 +62,7 @@ namespace impl.lu.Exchange4Impl {
                 }
                 ShiftToNorth.initiate_send();//worldcomm.Send<double>(dum, north, from_s);
             }
+			return 0;
 		}
 		public void setParameters(double[,] g, double[,] h, int ibeg, int ifin1, int jbeg, int jfin1){
 		   this.g     = g;

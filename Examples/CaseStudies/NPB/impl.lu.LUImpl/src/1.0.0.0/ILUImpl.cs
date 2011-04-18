@@ -34,40 +34,40 @@ namespace impl.lu.LUImpl {
             //---------------------------------------------------------------------
             //   set the boundary values for dependent variables
             //---------------------------------------------------------------------
-            Setbv.compute();
+            Setbv.go();
             //---------------------------------------------------------------------
             //   set the initial values for dependent variables
             //---------------------------------------------------------------------
-            Setiv.compute();
+            Setiv.go();
             //---------------------------------------------------------------------
             //   compute the forcing term based on prescribed exact solution
             //---------------------------------------------------------------------
-            Erhs.compute();
+            Erhs.go();
             //---------------------------------------------------------------------
             //   perform one SSOR iteration to touch all data and program pages 
             //---------------------------------------------------------------------
             Ssor.setParameters(1);
-            Ssor.compute();
+            Ssor.go();
             //---------------------------------------------------------------------
             //   reset the boundary and initial values
             //---------------------------------------------------------------------
-            Setbv.compute();
-            Setiv.compute();
+            Setbv.go();
+            Setiv.go();
             //---------------------------------------------------------------------
             //   perform the SSOR iterations
             //---------------------------------------------------------------------            
             Ssor.setParameters(itmax);
-            Ssor.compute();
+            Ssor.go();
             double[] rsdnm  = Ssor.Rsdnm;
             //---------------------------------------------------------------------
             //   compute the solution error
             //---------------------------------------------------------------------            
-            Error.compute();
+            Error.go();
             double[] errnm = Error.Errnm;
             //---------------------------------------------------------------------
             //   compute the surface integral
             //---------------------------------------------------------------------
-            Pintgr.compute();
+            Pintgr.go();
             double frc = Pintgr.Frc;
             //---------------------------------------------------------------------
             //   verification test
@@ -76,7 +76,7 @@ namespace impl.lu.LUImpl {
             if(node==0) {
                 double mflops = ((double)(itmax))*(1984.77*((double)(nx0))*((double)(ny0))*((double)(nz0))-10923.3*pow2((((double)(nx0+ny0+nz0))/3.0))+27770.9*((double)(nx0+ny0+nz0))/3.0-144010.0) / (maxtime*1000000.0);
                 Verify.setParameters(rsdnm, errnm, frc);
-                Verify.compute();
+                Verify.go();
                 int verified = Verify.Verified;
                 BMResults results = new BMResults(BMName,
                                         problem_class.ToString()[0],
@@ -96,8 +96,11 @@ namespace impl.lu.LUImpl {
             //mpi.Dispose();
 		}
 		
-		public override void compute() { 
+		public override int go() { 
+
 		   runBenchmark();
+			
+			return  0;
 		}
 		
 		public static double pow2(double p) { return p * p; } 

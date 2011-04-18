@@ -4,7 +4,7 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.data.ExactSolution;
 
-namespace impl.sp.data.ExactSolutionImpl { 
+namespace impl.common.data.ExactSolutionImpl { 
 
 	public class IExactSolutionImpl : BaseIExactSolutionImpl, IExactSolution
 	{

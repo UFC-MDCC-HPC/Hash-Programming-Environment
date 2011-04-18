@@ -2,15 +2,15 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 using common.problem_size.Class;
 using common.data.LHSInit;
 using common.data.ProblemDefinition;
 
-namespace impl.sp.data.LHSInitImpl { 
+namespace impl.common.data.LHSInitImpl { 
 
 	public class ILHSInitImpl<I, C> : BaseILHSInitImpl<I, C>, ILHSInit<I, C>
-		where I:IInstance_SP<C>
+		where I:IInstance<C>
 		where C:IClass
 	{
 		

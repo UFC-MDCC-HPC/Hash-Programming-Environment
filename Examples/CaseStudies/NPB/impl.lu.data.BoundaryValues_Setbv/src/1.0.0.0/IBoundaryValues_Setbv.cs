@@ -15,16 +15,17 @@ namespace impl.lu.data.BoundaryValues_Setbv {
 		
 		} 
 		
-		public override void compute() { 
+		public override int go() { 
+
             int i, j, k, iglob, jglob;
             for(j = 1; j<= ny; j++) {
                 jglob = jpt + j;
                 for(i = 1; i<= nx; i++) {
                     iglob = ipt + i;
                     Exact.setParameters(iglob, jglob, 1, u, 0, j+1, i+1);
-                    Exact.compute();
+                    Exact.go();
                     Exact.setParameters(iglob, jglob, nz, u, nz-1, j+1, i+1);
-                    Exact.compute();
+                    Exact.go();
                 }
             }
             if(west==-1) {
@@ -32,7 +33,7 @@ namespace impl.lu.data.BoundaryValues_Setbv {
                     for(i = 1; i<= nx; i++) {
                         iglob = ipt + i;
                         Exact.setParameters(iglob, 1, k, u, k-1, 1+1, i+1);
-                        Exact.compute();
+                        Exact.go();
                     }
                 }
             }
@@ -41,7 +42,7 @@ namespace impl.lu.data.BoundaryValues_Setbv {
                     for(i = 1; i<= nx; i++) {
                         iglob = ipt + i;
                         Exact.setParameters(iglob, ny0, k, u, k-1, ny+1, i+1);
-                        Exact.compute();
+                        Exact.go();
                     }
                 }
             }
@@ -50,7 +51,7 @@ namespace impl.lu.data.BoundaryValues_Setbv {
                     for(j = 1; j<= ny; j++) {
                         jglob = jpt + j;
                         Exact.setParameters(1, jglob, k, u, k-1, j+1, 1+1);
-                        Exact.compute();
+                        Exact.go();
                     }
                 }
             }
@@ -59,10 +60,11 @@ namespace impl.lu.data.BoundaryValues_Setbv {
                     for(j = 1; j<= ny; j++) {
                         jglob = jpt + j;
                         Exact.setParameters(nx0, jglob, k, u, k-1, j+1, nx+1);
-                        Exact.compute();
+                        Exact.go();
                     }
                 }
             }
+			return 0;
 		}
 	}
 }

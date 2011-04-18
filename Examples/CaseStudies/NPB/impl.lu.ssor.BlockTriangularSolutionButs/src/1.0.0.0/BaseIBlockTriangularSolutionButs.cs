@@ -87,6 +87,6 @@ namespace impl.lu.ssor.BlockTriangularSolutionButs {
 				return this.exchange1;
 			}
 		}	
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

@@ -46,6 +46,6 @@ namespace impl.lu.ExactImpl {
 				return this.blocks;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

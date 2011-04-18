@@ -77,6 +77,6 @@ namespace impl.lu.ErrorImpl {
 				return this.mpi;
 			}
 		}
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

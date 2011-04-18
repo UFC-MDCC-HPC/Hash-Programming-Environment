@@ -6,15 +6,15 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.datapartition.BlocksInfo;
 using common.data.ProblemDefinition;
-using sp.problem_size.Instance_SP;
+using common.problem_size.Instance;
 using common.problem_size.Class;
 using common.data.ExactSolution;
 using common.data.Initialize;
 
-namespace impl.sp.data.InitializeImpl { 
+namespace impl.common.data.InitializeImpl { 
 
 public abstract class BaseIInitializeImpl<I, C>: Computation, BaseIInitialize<I, C>
-where I:IInstance_SP<C>
+where I:IInstance<C>
 where C:IClass
 {
 		

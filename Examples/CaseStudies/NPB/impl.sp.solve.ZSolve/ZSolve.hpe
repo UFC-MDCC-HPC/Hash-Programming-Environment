@@ -93,8 +93,8 @@
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="zdir" varName="DIR"/>
-    <supplyParameter cRef="method" varName="MTH"/>
     <supplyParameter cRef="instance" varName="I"/>
+    <supplyParameter cRef="method" varName="MTH"/>
     <interface iRef="IZSolveImpl" nArgs="4">
       <slice isRef="shift_forward">
         <originRef cRef="shift_forward" iRef="IShift"/>
@@ -120,21 +120,21 @@
         <originRef cRef="shift_backward" iRef="IShift"/>
         <visualDescription h="10" w="10" x="39" y="5"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@ccfe446" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1b5fc8d" repeat="0">
         <visualDescription h="150" w="310" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@2493b63c" repeat="0" sliceRef="forward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d7c74d" repeat="0" sliceRef="forward">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5da12fe6" repeat="0" sliceRef="lhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5dc2ed" repeat="0" sliceRef="lhs">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14fd510" repeat="0" sliceRef="matvecproduct">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1a878ab" repeat="0" sliceRef="matvecproduct">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@202d0e1c" repeat="0" sliceRef="backward">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@18a57b7" repeat="0" sliceRef="backward">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6df960c4" repeat="0">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@184e375" repeat="0">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
       </protocol>
@@ -170,23 +170,23 @@
       <visualDescription h="40" w="80" x="127" y="86">
         <color b="0" g="0" r="255"/>
       </visualDescription>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="112" y="62"/>
-        <slice pRef="mpi" sRef="shift_forward"/>
-        <slice pRef="mpi" sRef="shift_backward"/>
+      <port name="output_buffer">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="output_buffer" sRef="shift_forward"/>
       </port>
       <port name="input_buffer">
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="input_buffer" sRef="shift_forward"/>
       </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="112" y="62"/>
+        <slice pRef="mpi" sRef="shift_forward"/>
+        <slice pRef="mpi" sRef="shift_backward"/>
+      </port>
       <port name="cell">
         <visualDescription h="10" w="10" x="32" y="67"/>
         <slice pRef="cell" sRef="shift_forward"/>
         <slice pRef="cell" sRef="shift_backward"/>
-      </port>
-      <port name="output_buffer">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="output_buffer" sRef="shift_forward"/>
       </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="0"/>

@@ -134,6 +134,6 @@ namespace impl.lu.Exchange1Impl {
 			}
 		}
 	
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

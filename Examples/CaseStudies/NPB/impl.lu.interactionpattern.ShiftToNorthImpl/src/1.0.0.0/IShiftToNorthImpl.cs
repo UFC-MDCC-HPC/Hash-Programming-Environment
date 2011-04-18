@@ -27,7 +27,9 @@ namespace impl.lu.interactionpattern.ShiftToNorthImpl {
 		private Request handle;
 		public Request Handle { get { return handle; } }
 
-		public override void synchronize() { 
+		public override int go() { 
+			return 0;
+
 		   
 		}
 	}

@@ -63,6 +63,6 @@ namespace impl.lu.ssor.L2NormImpl {
 				return this.mpi;
 			}
 		}	
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }

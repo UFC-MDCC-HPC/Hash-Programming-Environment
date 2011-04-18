@@ -99,6 +99,6 @@ namespace impl.lu.Exchange4Impl {
 			}
 		}
 
-		abstract public void compute(); 
+		abstract public int go(); 
 	}
 }
