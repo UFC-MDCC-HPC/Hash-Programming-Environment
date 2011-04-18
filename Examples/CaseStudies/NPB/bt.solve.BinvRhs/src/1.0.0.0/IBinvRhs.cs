@@ -1,12 +1,8 @@
 using br.ufc.pargo.hpe.kinds;
-using common.problem_size.Instance;
-using common.problem_size.Class;
 using common.solve.Method;
 
 namespace bt.solve.BinvRhs { 
-	public interface IBinvRhs<I, C, MTH> : BaseIBinvRhs<I, C, MTH>
-	where I:IInstance<C>
-	where C:IClass
+	public interface IBinvRhs<MTH> : BaseIBinvRhs<MTH>
 	where MTH:IMethod {
 	   void setParameters(double[,,] lhs, 
 	                      double[,,,,] r, 
