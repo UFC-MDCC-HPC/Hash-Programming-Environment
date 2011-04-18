@@ -32,42 +32,16 @@
         <visualDescription h="10" w="10" x="50" y="13"/>
       </unitBounds>
     </innerComponent>
-    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000009b97ce4f3981d78e251ff90894751a2f19e3d7fcafeadee8da1cb93890a7d9ed59b4773f575afc0782c61b877ac17cea1ab4429bfd162c1bdff0b6c7fe9d07f8e9ccdcd219b58671c77cf6cfbada633e18309cb4c2e518fedeaa6aecf435a12dc4a18c8384c15d61dfab5a2056f58c2bcf936823b8d84a8c5cc5e25827a1598" localRef="problem_data" location="common.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="common.data" exposed="true">
-      <visualDescription h="42" w="115" x="62" y="422">
-        <color b="255" g="255" r="255"/>
-      </visualDescription>
-      <parameter formFieldId="instance_type" varName="I"/>
-      <parameter formFieldId="class" varName="C"/>
-      <unitBounds uRef="problem">
-        <visualDescription h="10" w="10" x="97" y="14"/>
-      </unitBounds>
-    </innerComponent>
-    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfe94b8926d4a7de4f70d204303375a68658c9c988f5e0ec7f1f3dce28b75501399411f8002d0637e06b03a2849ef779a22e26ae137759213f595fd13ccb5101bb6f07e7560df0d8b1beadc8dacecefd49c7844d298e78991b98dd4650ec7bf0b26716727a7bc437f39a5ccede87c7db6829de68c511abb9d0b4e3644bcf66ad" localRef="blocks_info" location="common.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="common.datapartition" exposed="true">
-      <visualDescription h="58" w="102" x="431" y="377">
-        <color b="255" g="255" r="255"/>
-      </visualDescription>
-      <unitBounds uRef="blocks">
-        <visualDescription h="10" w="10" x="9" y="26"/>
-      </unitBounds>
-    </innerComponent>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="method" formFieldId="method" varName="MTH"/>
-    <interface iRef="IBinvcRhs" nArgs="3">
-      <slice isRef="problem">
-        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
-        <visualDescription h="10" w="10" x="13" y="24"/>
-      </slice>
-      <slice isRef="blocks">
-        <originRef cRef="blocks_info" iRef="IBlocks"/>
-        <visualDescription h="10" w="10" x="44" y="30"/>
-      </slice>
+    <interface iRef="IBinvcRhs" nArgs="1">
       <slice isRef="method">
         <originRef cRef="method" iRef="IMethod"/>
         <visualDescription h="10" w="10" x="23" y="26"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.solve.Method;&#xA;&#xA;namespace bt.solve.BinvcRhs { &#xA;&#xA;public interface BaseIBinvcRhs&lt;I, C, MTH> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBinvcRhs.cs" srcType="base" uri="bt.solve.BinvcRhs/bin/1.0.0.0/BaseIBinvcRhs.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.Method;&#xA;&#xA;namespace bt.solve.BinvcRhs { &#xA;&#xA;public interface BaseIBinvcRhs&lt;MTH> : IComputationKind &#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#x9;//IBlocks Blocks {get;}&#xA;&#x9;//IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBinvcRhs.cs" srcType="base" uri="bt.solve.BinvcRhs/bin/1.0.0.0/BaseIBinvcRhs.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
@@ -76,35 +50,19 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.solve.Method;&#xA;&#xA;namespace bt.solve.BinvcRhs { &#xA;&#xA;public interface IBinvcRhs&lt;I, C, MTH> : BaseIBinvcRhs&lt;I, C, MTH>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where MTH:IMethod&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IBinvcRhs.cs" srcType="user" uri="bt.solve.BinvcRhs/bin/1.0.0.0/IBinvcRhs.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.solve.Method;&#xA;&#xA;namespace bt.solve.BinvcRhs { &#xA;&#x9;public interface IBinvcRhs&lt;MTH> : BaseIBinvcRhs&lt;MTH>&#xA;&#x9;where MTH:IMethod {&#xA;&#x9;   void setParameters(double[,,] lhs, &#xA;&#x9;                      double[,,,,,] c, &#xA;&#x9;                      double[, , , ,] r, &#xA;&#x9;                      int l1, &#xA;&#x9;                      int c1, int c2, int c3, int c4, &#xA;&#x9;                      int r1, int r2, int r3, int r4);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IBinvcRhs.cs" srcType="user" uri="bt.solve.BinvcRhs/bin/1.0.0.0/IBinvcRhs.dll" versionId="1.0.0.0">
           <dependency>common.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.solve.Method/bin/1.0.0.0/IMethod.dll</dependency>
           <dependency>%WORKSPACE/bt.solve.BinvcRhs/bin/1.0.0.0/BaseIBinvcRhs.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="196" y="125">
+      <visualDescription h="40" w="80" x="186" y="135">
         <color b="255" g="128" r="255"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="problem" sRef="problem"/>
-      </port>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="blocks"/>
-      </port>
-      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
-      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
-      <parameter iname="IMethod" order="2" parid="method" uname="method" varid="MTH"/>
+      <parameter iname="IMethod" order="0" parid="method" uname="method" varid="MTH"/>
     </interface>
     <unit iRef="IBinvcRhs" private="false" uRef="binvcrhs" visibleInterface="true">
-      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
-        <visualDescription h="10" w="10" x="13" y="24"/>
-      </slices>
-      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
-        <visualDescription h="10" w="10" x="44" y="30"/>
-      </slices>
       <slices cRef="method" replica="0" uRef="method" sliceName="method" transitive="false">
         <visualDescription h="10" w="10" x="23" y="26"/>
       </slices>
@@ -114,27 +72,7 @@
       <originRef>method</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="method" uRef="method"/>
       <links xsi:type="component:EnumerableUnitType" ref="binvcrhs"/>
-      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
       <visualDescription h="20" w="20" x="384" y="377"/>
     </enumerator>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
-      <originRef>problem_data</originRef>
-      <originRef>qs</originRef>
-      <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
-      <links xsi:type="component:EnumerableUnitType" ref="binvcrhs"/>
-      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="48" w="47" x="294" y="444"/>
-    </enumerator>
-    <fusionsOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1b2533d1295099559883</eRef>
-        <originRef>problem_data</originRef>
-        <originRef>qs</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@129a52a1295029089610</eRef>
-        <originRef>method</originRef>
-      </fusionOfReplicators>
-    </fusionsOfReplicators>
   </componentInfo>
 </component:component>
