@@ -7,9 +7,6 @@ namespace sp.problem_size.Instance_SP {
 public interface IInstance_SP<C> : BaseIInstance_SP<C>, IInstance<C>
 		where C:IClass
 {
-		double[] xcrref { get; }
-		double[] xceref { get; }
-		double dtref { get; }		
 		
 } // end main interface 
 
