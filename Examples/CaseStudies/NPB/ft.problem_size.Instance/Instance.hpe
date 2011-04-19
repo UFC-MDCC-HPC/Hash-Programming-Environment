@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a3c75b4c6a2aae61bde961a3d63804eb45e2a72ec900f48c77325137c428cd05f011917bbf0e09c93a36f529c9af7323d471c0126e2bac590a5805a8916e2c625d861aef6e3a3dc12e4d9d60cc79cfa0a94efd01e2984ee38f14ef288478476e4d8a7985a30114a034284e3c981c31be438785000e186b84812b16eb6bea1183" isAbstract="true" kind="Environment" name="Instance" packagePath="ft.problem_size">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="37" w="50" x="246" y="339">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="19" y="3"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <interface iRef="IInstance" nArgs="1">
+      <slice isRef="class">
+        <originRef cRef="class" iRef="IClass"/>
+        <visualDescription h="10" w="10" x="33" y="27"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace ft.problem_size.Instance { &#xA;&#xA;public interface BaseIInstance&lt;C> : IEnvironmentKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInstance.cs" srcType="base" uri="ft.problem_size.Instance/bin/1.0.0.0/BaseIInstance.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace ft.problem_size.Instance { &#xA;&#xA;public interface IInstance&lt;C> : BaseIInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInstance.cs" srcType="user" uri="ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/ft.problem_size.Instance/bin/1.0.0.0/BaseIInstance.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="232" y="172">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+      <parameter iname="IClass" order="0" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IInstance" private="false" uRef="instance" visibleInterface="true">
+      <slices cRef="class" replica="0" uRef="class" sliceName="class" transitive="false">
+        <visualDescription h="10" w="10" x="33" y="27"/>
+      </slices>
+      <visualDescription h="40" w="80" x="232" y="252"/>
+    </unit>
+  </componentInfo>
+</component:component>
