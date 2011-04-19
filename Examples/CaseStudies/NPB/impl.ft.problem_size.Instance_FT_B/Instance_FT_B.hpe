@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071843cfa7f617b18ac6118da4a3a20ec20f5022cad912a13f978e2f89fe1c81fa52accf99609beeda07f5e19af183cb4eb138a64ba9415f168a6ce7ccccb55fa54c4a03eceab74e5a742d7dc532b1233f6d69edd9908c381f6760bbbd0c32c50fa5eb181f047be0529a0bfcedd2a133b4c4b5453880d1ce19236763c31482095" isAbstract="false" kind="Environment" name="Instance_FT_B" packagePath="impl.ft.problem_size">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" localRef="base" location="ft.problem_size.Instance_FT/Instance_FT.hpe" name="Instance_FT" package="ft.problem_size" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="229" y="330">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="instance">
+          <visualDescription h="10" w="10" x="20" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d76ada745d0479a7eff879cb836ee7123457ed13c4050bd57b23355f5fd55b301b8ebfaa0774d1f2976a27eacca47d4eb321a1e13a1d91a2f4a515e0f27b606c4015a783b57cdf4262fc091cc4e0d34d4f9bb46def6de75b38a270c56ed1979743fb07f43b90b98cb8d2216f152f09d4f38763e4ade9caa72719be504472c690" localRef="class" location="common.problem_size.Class_B/Class_B.hpe" name="Class_B" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="332" y="123">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <interface iRef="IInstance_FT_B_Impl" nArgs="1">
+      <slice isRef="class">
+        <originRef cRef="class" iRef="IClass"/>
+        <visualDescription h="10" w="10" x="33" y="27"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Class_B;&#xA;using ft.problem_size.Instance_FT;&#xA;&#xA;namespace impl.ft.problem_size.Instance_FT_B { &#xA;&#xA;public abstract class BaseIInstance_FT_B_Impl&lt;C>: Environment, BaseIInstance&lt;C>&#xA;where C:IClass_B&#xA;{&#xA;&#xA;private C class = default(C);&#xA;&#xA;protected C Class {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.class == null)&#xA;&#x9;&#x9;&#x9;this.class = (C) Services.getPort(&quot;class&quot;);&#xA;&#x9;&#x9;return this.class;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIInstance_FT_B_Impl.cs" srcType="base" uri="impl.ft.problem_size.Instance_FT_B/bin/1.0.0.0/BaseIInstance_FT_B_Impl.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.problem_size.Class_B/bin/1.0.0.0/IClass_B.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/BaseIInstance.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class_B;&#xA;using ft.problem_size.Instance_FT;&#xA;&#xA;namespace impl.ft.problem_size.Instance_FT_B { &#xA;&#xA;public class IInstance_FT_B_Impl&lt;C> : BaseIInstance_FT_B_Impl&lt;C>, IInstance&lt;C>&#xA;where C:IClass_B&#xA;{&#xA;&#xA;public IInstance_FT_B_Impl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IInstance_FT_B_Impl.cs" srcType="user" uri="impl.ft.problem_size.Instance_FT_B/bin/1.0.0.0/IInstance_FT_B_Impl.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class_B/bin/1.0.0.0/IClass_B.dll</dependency>
+          <dependency>%WORKSPACE/impl.ft.problem_size.Instance_FT_B/bin/1.0.0.0/BaseIInstance_FT_B_Impl.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="128" x="190" y="135">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+      <parameter iname="IClass_B" order="0" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IInstance_FT_B_Impl" private="false" uRef="instance" visibleInterface="true">
+      <super cRef="base" uRef="instance"/>
+      <slices cRef="class" replica="0" uRef="class" sliceName="class" transitive="false">
+        <visualDescription h="10" w="10" x="33" y="27"/>
+      </slices>
+      <visualDescription h="40" w="80" x="214" y="240"/>
+    </unit>
+  </componentInfo>
+</component:component>
