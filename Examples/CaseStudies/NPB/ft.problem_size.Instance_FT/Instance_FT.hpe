@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" isAbstract="true" kind="Environment" name="Instance_FT" packagePath="ft.problem_size">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a3c75b4c6a2aae61bde961a3d63804eb45e2a72ec900f48c77325137c428cd05f011917bbf0e09c93a36f529c9af7323d471c0126e2bac590a5805a8916e2c625d861aef6e3a3dc12e4d9d60cc79cfa0a94efd01e2984ee38f14ef288478476e4d8a7985a30114a034284e3c981c31be438785000e186b84812b16eb6bea1183" localRef="base" location="ft.problem_size.Instance/Instance.hpe" name="Instance" package="ft.problem_size" version="1.0.0.0">
+        <visualDescription h="30" w="60" x="221" y="419">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="instance">
+          <visualDescription h="10" w="10" x="24" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="465" y="291">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <interface iRef="IInstance_FT" nArgs="1">
+      <slice isRef="class">
+        <originRef cRef="class" iRef="IClass"/>
+        <visualDescription h="10" w="10" x="33" y="27"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using ft.problem_size.Instance;&#xA;&#xA;namespace ft.problem_size.Instance_FT { &#xA;&#xA;public interface BaseIInstance_FT&lt;C> : BaseIInstance&lt;C>, IEnvironmentKind &#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIInstance_FT.cs" srcType="base" uri="ft.problem_size.Instance_FT/bin/1.0.0.0/BaseIInstance_FT.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>ft.problem_size.Instance/bin/1.0.0.0/BaseIInstance.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using common.problem_size.Class;&#xA;using ft.problem_size.Instance;&#xA;&#xA;namespace ft.problem_size.Instance_FT { &#xA;&#xA;public interface IInstance_FT&lt;C> : BaseIInstance_FT&lt;C>, IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IInstance_FT.cs" srcType="user" uri="ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll" versionId="1.0.0.0">
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/ft.problem_size.Instance_FT/bin/1.0.0.0/BaseIInstance_FT.dll</dependency>
+          <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="210" y="207">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+      <parameter iname="IClass" order="0" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IInstance_FT" private="false" uRef="instance" visibleInterface="true">
+      <super cRef="base" uRef="instance"/>
+      <slices cRef="class" replica="0" uRef="class" sliceName="class" transitive="false">
+        <visualDescription h="10" w="10" x="33" y="27"/>
+      </slices>
+      <visualDescription h="40" w="80" x="210" y="312"/>
+    </unit>
+  </componentInfo>
+</component:component>

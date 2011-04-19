@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3BFFEDDF-65E1-4ABF-B056-89CAFB792A10}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ft.problem_size.Instance_FT</RootNamespace>
+    <AssemblyName>IInstance_FT</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Instance_FT.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIInstance_FT.cs">
+      <Link>BaseIInstance_FT.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IInstance_FT.cs">
+      <Link>IInstance_FT.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.problem_size.Instance\ft.problem_size.Instance\ft.problem_size.Instance.csproj">
+      <Project>{70792EF3-E787-4073-94FC-13AFE5011577}</Project>
+      <Name>ft.problem_size.Instance</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
