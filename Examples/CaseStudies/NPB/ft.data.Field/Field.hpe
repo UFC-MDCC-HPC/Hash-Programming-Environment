@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000002595ebf88f1737f31ecf8d3fa9904957a9a860c8966bf2130111dafc0188537d05edc350dc0e0e2dd576d431771c36d44975385ba2abb2e770437901fc90c2b8f617dbaef60f55b6359b085c86d49525f2e143481e664fa82cc78d3d28203202daae0dc990efb4e04b028f7ee8eda5bc32f9a441480d7614c7baf7cceddd5d8c" isAbstract="true" kind="Data" name="Field" packagePath="ft.data">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IField" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace ft.data.Field { &#xA;&#xA;public interface BaseIField : IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIField.cs" srcType="base" uri="ft.data.Field/bin/1.0.0.0/BaseIField.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace ft.data.Field { &#xA;&#xA;public interface IField : BaseIField&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IField.cs" srcType="user" uri="ft.data.Field/bin/1.0.0.0/IField.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/ft.data.Field/bin/1.0.0.0/BaseIField.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="80" x="210" y="238">
+        <color b="251" g="4" r="134"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IField" private="false" uRef="field" visibleInterface="true">
+      <visualDescription h="40" w="80" x="210" y="318"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <links xsi:type="component:EnumerableUnitType" ref="field"/>
+      <visualDescription h="20" w="20" x="376" y="326"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
