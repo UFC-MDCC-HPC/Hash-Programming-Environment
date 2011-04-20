@@ -5,7 +5,6 @@ using br.ufc.pargo.hpe.kinds;
 using ft.problem_size.Instance_FT;
 using common.problem_size.Class;
 using ft.data.ProblemDefinition;
-using ft.problem_size.Instance;
 
 namespace impl.ft.data.ProblemDefinitionImpl { 
 	public class IProblemDefinitionImpl<I, C> : BaseIProblemDefinitionImpl<I, C>, IProblemDefinition<I, C>
