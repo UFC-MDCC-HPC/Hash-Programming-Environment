@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000089f9bda353dc19b65dddc0d421ee2f5e47b41b5d150fc2a5befe010d5ea167e798f2c3e3b72a5441065a2afe7647f631a83dcde994a0cce2d31041fb4cd93e4777df4a550de7dbfceeff04715afb8f596b4f5b32810d5c52bfb826c7b4948f219b2efc48ff5b52d13e84b336f35f6fab4ab94709d2a5bb76f14c929cfa028580" isAbstract="false" kind="Data" name="ProblemDefinitionImpl" packagePath="impl.ft.data">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="base" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="358" y="367">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <unitBounds uRef="problem">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" localRef="instance_type" location="ft.problem_size.Instance_FT/Instance_FT.hpe" name="Instance_FT" package="ft.problem_size" exposed="false">
+      <visualDescription h="38" w="79" x="235" y="169">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="463" y="198">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IProblemDefinitionImpl" nArgs="2">
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="3" y="17"/>
+      </slice>
+      <slice isRef="field">
+        <originRef cRef="u0" iRef="IField"/>
+        <visualDescription h="10" w="10" x="66" y="2"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using ft.data.Field;&#xA;using ft.problem_size.Instance_FT;&#xA;using ft.data.ProblemDefinition;&#xA;&#xA;namespace impl.ft.data.ProblemDefinitionImpl { &#xA;&#xA;public abstract class BaseIProblemDefinitionImpl&lt;I, C>: DataStructure, BaseIProblemDefinition&lt;I, C>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private I instance = default(I);&#xA;&#xA;protected I Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;return this.instance;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;u0&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;u1&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IField field = null;&#xA;&#xA;protected IField Field {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.field == null)&#xA;&#x9;&#x9;&#x9;this.field = (IField) Services.getPort(&quot;u2&quot;);&#xA;&#x9;&#x9;return this.field;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIProblemDefinitionImpl.cs" srcType="base" uri="impl.ft.data.ProblemDefinitionImpl/bin/1.0.0.0/BaseIProblemDefinitionImpl.dll" versionId="1.0.0.0">
+          <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>ft.data.Field/bin/1.0.0.0/IField.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/BaseIProblemDefinition.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.data.ProblemDefinition;&#xA;&#xA;namespace impl.ft.data.ProblemDefinitionImpl { &#xA;&#xA;public class IProblemDefinitionImpl&lt;I, C> : BaseIProblemDefinitionImpl&lt;I, C>, IProblemDefinition&lt;I, C>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IProblemDefinitionImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IProblemDefinitionImpl.cs" srcType="user" uri="impl.ft.data.ProblemDefinitionImpl/bin/1.0.0.0/IProblemDefinitionImpl.dll" versionId="1.0.0.0">
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.ft.data.ProblemDefinitionImpl/bin/1.0.0.0/BaseIProblemDefinitionImpl.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="158" x="281" y="186">
+        <color b="0" g="255" r="0"/>
+      </visualDescription>
+      <parameter iname="IInstance_FT" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IProblemDefinitionImpl" private="false" uRef="problem" visibleInterface="true">
+      <super cRef="base" uRef="problem"/>
+      <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="3" y="17"/>
+      </slices>
+      <slices cRef="u0" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="2"/>
+      </slices>
+      <slices cRef="u1" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="65" y="13"/>
+      </slices>
+      <slices cRef="u2" replica="0" uRef="field" sliceName="field" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="24"/>
+      </slices>
+      <visualDescription h="40" w="80" x="324" y="283"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <originRef>base</originRef>
+      <originRef>u0</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="problem"/>
+      <visualDescription h="28" w="27" x="200" y="297"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
