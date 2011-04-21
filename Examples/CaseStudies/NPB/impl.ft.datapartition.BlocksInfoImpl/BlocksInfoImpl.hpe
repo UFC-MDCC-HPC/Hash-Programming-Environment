@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006f49c5d2352797d76f35531ee377a3d9eb45557b6a6ce5567d918048b2ffac022efe3ae393ffbc08459f573fea939edc83f98623e85737e77f706766f61362d889510a6b3d30453896ed8ba04bb9fbd229035a69b9c9411a41a030c842f20ca54e82d38e9184f4c7a35b22a10a412c5d88af5b29b39f6db193114b5f7982ebb5" isAbstract="false" kind="Environment" name="BlocksInfoImpl" packagePath="impl.ft.datapartition">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="base" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="333" y="324">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="blocks">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IBlocksInfoImpl" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;&#xA;namespace impl.ft.datapartition.BlocksInfoImpl { &#xA;&#xA;public abstract class BaseIBlocksInfoImpl: Environment, BaseIBlocks&#xA;{&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIBlocksInfoImpl.cs" srcType="base" uri="impl.ft.datapartition.BlocksInfoImpl/bin/1.0.0.0/BaseIBlocksInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/BaseIBlocks.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;&#xA;namespace impl.ft.datapartition.BlocksInfoImpl { &#xA;&#xA;public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocks&#xA;{&#xA;&#xA;public IBlocksInfoImpl() { &#xA;&#xA;} &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IBlocksInfoImpl.cs" srcType="user" uri="impl.ft.datapartition.BlocksInfoImpl/bin/1.0.0.0/IBlocksInfoImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.ft.datapartition.BlocksInfoImpl/bin/1.0.0.0/BaseIBlocksInfoImpl.dll</dependency>
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="115" x="240" y="153">
+        <color b="0" g="128" r="255"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IBlocksInfoImpl" private="false" uRef="blocks" visibleInterface="true">
+      <super cRef="base" uRef="blocks"/>
+      <visualDescription h="40" w="80" x="297" y="241"/>
+    </unit>
+  </componentInfo>
+</component:component>
