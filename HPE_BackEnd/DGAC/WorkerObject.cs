@@ -1202,58 +1202,71 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string runApplication(string session_id_string, WorkerComponentID wcid)
         {
-           
+            string output = session_id_string + " - " + wcid.getInstanceName();
+
            string file_session = Constants.PATH_TEMP_WORKER + "output-" + my_rank + "-" + session_id_string + ".txt";
            FileStream fs = new FileStream(file_session, FileMode.Create);
            TextWriter sw = new StreamWriter(fs);
            TextWriter stdout = Console.Out;
            Console.SetOut(sw);
-           
-           
-            const string DEFAULT_CREATESLICES_PORT_USES = "create_slices";
-            const string DEFAULT_GO_PORT_USES = "go";
-            string output = session_id_string + " - " + wcid.getInstanceName();
 
-            AbstractFramework frw = (AbstractFramework)this;
+           try
+           {
+               const string DEFAULT_CREATESLICES_PORT_USES = "create_slices";
+               const string DEFAULT_GO_PORT_USES = "go";
+               
 
-            // REGISTER THE DRIVER COMPONENT
-            Services services = frw.getServices(session_id_string, this.GetType().FullName, new TypeMapImpl());
-            ComponentID my_cid = services.getComponentID();
+               AbstractFramework frw = (AbstractFramework)this;
 
-            // REGISTER "BuilderService" USES PORT AND CONNECTS
-            // services.registerUsesPort("builder_service", "gov.cca.BuilderService", new TypeMapImpl());
-            // services.getPort("builder_service");
-            BuilderService builder_service = (BuilderService)this; // services.getPort("builder_service");
+               // REGISTER THE DRIVER COMPONENT
+               Services services = frw.getServices(session_id_string, this.GetType().FullName, new TypeMapImpl());
+               ComponentID my_cid = services.getComponentID();
 
-            // REGISTER USES PORT "CreateSlices"
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER CREATESLICES PORT " + session_id_string);
-            services.registerUsesPort(DEFAULT_CREATESLICES_PORT_USES, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CONNECT CREATESLICES PORT " + session_id_string);
-            builder_service.connect(my_cid, DEFAULT_CREATESLICES_PORT_USES, wcid, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS);
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET CREATESLICES PORT " + session_id_string);
-            AutomaticSlicesPort create_slice_port = (AutomaticSlicesPort)services.getPort(DEFAULT_CREATESLICES_PORT_USES);
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL CREATE SLICES " + session_id_string);
-            create_slice_port.create_slices();
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL INITIALIZE SLICES " + session_id_string);
-            create_slice_port.initialize_slices();
+               // REGISTER "BuilderService" USES PORT AND CONNECTS
+               // services.registerUsesPort("builder_service", "gov.cca.BuilderService", new TypeMapImpl());
+               // services.getPort("builder_service");
+               BuilderService builder_service = (BuilderService)this; // services.getPort("builder_service");
 
-            // REGISTER USES PORT "Go"
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER GO PORT " + session_id_string);
-            services.registerUsesPort(DEFAULT_GO_PORT_USES, Constants.GO_PORT_TYPE, new TypeMapImpl());
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CONNECT GO PORT " + session_id_string);
-            builder_service.connect(my_cid, DEFAULT_GO_PORT_USES, wcid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET GO PORT " + session_id_string);
-            GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);
-            go_port.go();
-            Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
-            
-            Console.Out.Flush();
-           sw.Close();
-           fs.Close();            
-           Console.SetOut(stdout);
-           
-            output = System.IO.File.ReadAllText(file_session);
+               // REGISTER USES PORT "CreateSlices"
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER CREATESLICES PORT " + session_id_string);
+               services.registerUsesPort(DEFAULT_CREATESLICES_PORT_USES, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CONNECT CREATESLICES PORT " + session_id_string);
+               builder_service.connect(my_cid, DEFAULT_CREATESLICES_PORT_USES, wcid, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS);
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET CREATESLICES PORT " + session_id_string);
+               AutomaticSlicesPort create_slice_port = (AutomaticSlicesPort)services.getPort(DEFAULT_CREATESLICES_PORT_USES);
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL CREATE SLICES " + session_id_string);
+               create_slice_port.create_slices();
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL INITIALIZE SLICES " + session_id_string);
+               create_slice_port.initialize_slices();
+
+               // REGISTER USES PORT "Go"
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER GO PORT " + session_id_string);
+               services.registerUsesPort(DEFAULT_GO_PORT_USES, Constants.GO_PORT_TYPE, new TypeMapImpl());
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CONNECT GO PORT " + session_id_string);
+               builder_service.connect(my_cid, DEFAULT_GO_PORT_USES, wcid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET GO PORT " + session_id_string);
+               GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);
+               go_port.go();
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
+
+           }
+           catch (Exception e)
+           {
+               String message = e.Message;
+               String stackTrace = e.StackTrace;
+               Console.Out.WriteLine(message);
+               Console.Out.WriteLine(stackTrace);
+           }
+           finally
+           {
+               Console.Out.Flush();
+               sw.Close();
+               fs.Close();
+               Console.SetOut(stdout);
+
+               output = System.IO.File.ReadAllText(file_session);
+           }
           
             return output;
         }
