@@ -26,6 +26,6 @@ namespace ft.data.ProblemDefinition {
 		int np2 { get; set; }
 		int layout_type { get; set; }
 		int ntdivnp { get; set; }
-		void problemConfig(int _np1, int _np2);
+		void problemConfig(int _np1, int _np2, int _layout_type);
 	}
 }
