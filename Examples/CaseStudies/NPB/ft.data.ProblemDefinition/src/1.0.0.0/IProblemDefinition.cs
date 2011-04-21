@@ -5,6 +5,7 @@ using common.problem_size.Class;
 namespace ft.data.ProblemDefinition { 
 	public class Constants {
 		public static int layout_0D = 0, layout_1D = 1, layout_2D = 2;
+		public static int REAL=0,IMAG=1;
 		public static int T_total = 1, T_setup = 2, T_fft = 3, T_evolve = 4, T_checksum = 5, T_fftlow = 6, 
 		                          T_fftcopy = 7, T_transpose = 8, T_transxzloc = 9, T_transxzglo = 10, T_transxzfin = 11, 
 		                          T_transxyloc = 12, T_transxyglo = 13, T_transxyfin = 14,  T_synch = 15, T_max = 15;
