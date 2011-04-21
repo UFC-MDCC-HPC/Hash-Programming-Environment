@@ -16,25 +16,26 @@ namespace impl.ft.data.ProblemDefinitionImpl {
         override public void initialize(){
            
         }
-        public void problemConfig(int _np1, int _np2){
+        public void problemConfig(int _np1, int _np2, int _layout_type){
             setProblemClass();
             _np = this.Ranks.Length;
 			this._np1 = _np1;
 			this._np2 = _np2;
 			_ntdivnp = ((nx*ny)/_np)*nz;
+			this._layout_type = _layout_type;
 			int layout_0D = Constants.layout_0D;
 			int layout_1D = Constants.layout_1D;
 			int layout_2D = Constants.layout_2D;
 
-            if(_np1 == 1 && _np2 == 1) {
-                _layout_type = layout_0D;
-            }
-            else if(_np1 == 1) {
-                _layout_type = layout_1D;
-            }
-            else {
-                _layout_type = layout_2D;
-            }
+//            if(_np1 == 1 && _np2 == 1) {
+//                _layout_type = layout_0D;
+//            }
+//            else if(_np1 == 1) {
+//                _layout_type = layout_1D;
+//            }
+//            else {
+//                _layout_type = layout_2D;
+//            }
 
             if(_layout_type == layout_0D) {
                 for(int i = 0; i < 3; i++) {
