@@ -79,7 +79,7 @@ namespace impl.ft.data.ProblemDefinitionImpl {
             _dims[2, 2] = _dims[2, 2] / _np2;
 
             U0.initialize_field("u0", _dims[1, 0], _dims[2, 0], _dims[0, 0], 2);
-            U1.initialize_field("u1", _dims[2, 0], _dims[1, 0], _dims[0, 0], 2);
+            U1.initialize_field("u1", _dims[1, 0], _dims[2, 0], _dims[0, 0], 2);
             U2.initialize_field("u2", _dims[1, 0], _dims[2, 0], _dims[0, 0], 2);
 
             _u = new double[nx, 2];
