@@ -7,6 +7,8 @@ namespace ft.datapartition.BlocksInfo {
 		int node {get;set;}
 		int me1 {get;set;}
 		int me2 {get;set;}
+		int size1 {get;set;}
+		int size2 {get;set;}
 		int[] xstart {get;}
 		int[] ystart {get;}
 		int[] zstart {get;}
