@@ -76,7 +76,7 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace ft.fft.TransposeFinish { &#xA;&#x9;public interface ITransposeFinish&lt;I, C, DIR> : BaseITransposeFinish&lt;I, C, DIR>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IAxis{&#xA;&#x9;   void setParameters(int d1, int d2, int d3, double[, , ,] xin, double[, , ,] xout);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ITransposeFinish.cs" srcType="user" uri="ft.fft.TransposeFinish/bin/1.0.0.0/ITransposeFinish.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace ft.fft.TransposeFinish { &#xA;&#xA;public interface ITransposeFinish&lt;I, C, DIR> : BaseITransposeFinish&lt;I, C, DIR>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ITransposeFinish.cs" srcType="user" uri="ft.fft.TransposeFinish/bin/1.0.0.0/ITransposeFinish.dll" versionId="1.0.0.0">
           <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
