@@ -6,14 +6,14 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e1e3b90983347de85eddf7d5b0057f10201db6f1de612170b3378c90ab8b6d6404d0c6b853a400d3fb0b544b36b909d99c285ad060d0c530384d2b011f0a9073180037cb175fc29bf62b942a998e933e3e298044e0ca8daa89b662ca7d9cda24bafd29df2bffe9ccacbbffb26fb8f43e100d48fe3abd24876bd9e8c3345388d9" localRef="transpose_xy_z_finish" location="ft.fft.TransposeFinish/TransposeFinish.hpe" name="TransposeFinish" package="ft.fft" version="1.0.0.0">
-        <visualDescription h="75" w="183" x="267" y="404">
+        <visualDescription h="75" w="183" x="260" y="425">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="instance_type" varName="I"/>
         <parameter formFieldId="orientation" varName="DIR"/>
         <parameter formFieldId="class" varName="C"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="problem_data" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" exposed="true">
-          <visualDescription h="55" w="121" x="86" y="470">
+          <visualDescription h="55" w="121" x="58" y="477">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <parameter formFieldId="instance_type" varName="I"/>
@@ -23,7 +23,7 @@
           </unitBounds>
         </port>
         <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="blocks_info" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" exposed="true">
-          <visualDescription h="53" w="90" x="519" y="448">
+          <visualDescription h="53" w="90" x="460" y="536">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="blocks">
@@ -82,7 +82,7 @@
         <originRef cRef="orientation" iRef="IAxis"/>
         <visualDescription h="10" w="10" x="4" y="26"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1b531de" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1432076" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -103,7 +103,7 @@
           <dependency>ft.fft.TransposeFinish/bin/1.0.0.0/ITransposeFinish.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="131" x="183" y="192">
+      <visualDescription h="40" w="131" x="154" y="195">
         <color b="64" g="0" r="64"/>
       </visualDescription>
       <port name="problem">
@@ -129,14 +129,14 @@
       <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
         <visualDescription h="10" w="10" x="36" y="26"/>
       </slices>
-      <visualDescription h="40" w="119" x="219" y="301"/>
+      <visualDescription h="40" w="119" x="201" y="314"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
       <originRef>transpose_xy_z_finish</originRef>
       <originRef>problem_data</originRef>
       <originRef>u0</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="transpose_finish"/>
-      <visualDescription h="41" w="40" x="534" y="287"/>
+      <visualDescription h="41" w="40" x="450" y="333"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
