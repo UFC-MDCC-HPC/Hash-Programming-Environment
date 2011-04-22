@@ -92,11 +92,14 @@ namespace impl.ft.datapartition.BlocksInfoImpl {
 
             if(_fftblock != fftblock_default)
                 _fftblockpad = _fftblock + 3;
+                
+            _size1 = ((int)(nz/np2))*nx*2;
+            _size2 = nx*2;
 		}
 		
 		public static double mod(double a, double b) { return (a % b); }
 		
-		private int _fftblock, _fftblockpad, _node, _me1, _me2;
+		private int _fftblock, _fftblockpad, _node, _me1, _me2, _size1, _size2;
 		private int[] _xstart = {0,0,0};
 		private int[] _ystart = {0,0,0};
 		private int[] _zstart = {0,0,0};
@@ -109,6 +112,9 @@ namespace impl.ft.datapartition.BlocksInfoImpl {
 		public int node        {get { return _node; }        set { _node = value; } }
 		public int me1         {get { return _me1; }         set { _me1 = value; } }
 		public int me2         {get { return _me2; }         set { _me2 = value; } }
+		
+		public int size1       { get { return _size1;       } set { _size1 = value;       } }
+		public int size2       { get { return _size2;       } set { _size2 = value;       } }
 		
 		public int[] xstart {get { return _xstart; } }
 		public int[] ystart {get { return _ystart; } }
