@@ -24,15 +24,15 @@ namespace impl.ft.fft.TransposeXY_ZGlobal {
 		} 
 		
 		public override int go() { 
-           double[] src = new double[ntdivnp*2];
-           double[] dst = new double[ntdivnp*2];
+           double[] src = new double[d1*d2*d3*2];
+           double[] dst = new double[d1*d2*d3*2];
            
            worldcomm = this.WorldComm;
 		   commslice1 = (Intracommunicator)worldcomm.Split(me1, me2);
            int np = worldcomm.Size;
            
            setVetor(xin, src);
-           commslice1.AlltoallFlattened<double>(src, ntdivnp * 2 / np, ref dst);
+           commslice1.AlltoallFlattened<double>(src, (d1*d2*d3*2)/np, ref dst);
            setVetor(dst, xout);
 		   return 0;
 		}

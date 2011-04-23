@@ -19,11 +19,10 @@ namespace impl.ft.fft.TransposeXY_ZGlobal {
 	where DIR:IXY_Z{
 	   
 		#region data
-			protected int me1,me2,ntdivnp;
+			protected int me1,me2;
 			override public void initialize(){
 				me1 = Blocks.me1;
 				me2 = Blocks.me2;
-				ntdivnp = Problem.ntdivnp;
 			}
 		#endregion
 	
