@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000b70f9dbfa949d4ba9c1c5c741c6b6b1a2038a6836843eae32e1d78e5aa9396219c9fcd8e5cee10bfffe8da20fd1196eafbc34b69371aa8a8ec48eedb8a8bc18fb373bf2e42b49588a6794b5dd9ec13fe9749f512b9a758e7041fe5f6b2514cc3e8b94cb6c94e3cb2891b1e9978d5d34e3137a94ca631c7abfba97858f7b060ad" isAbstract="false" kind="Computation" name="TransposeXZfinish" packagePath="impl.ft.fft">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e1e3b90983347de85eddf7d5b0057f10201db6f1de612170b3378c90ab8b6d6404d0c6b853a400d3fb0b544b36b909d99c285ad060d0c530384d2b011f0a9073180037cb175fc29bf62b942a998e933e3e298044e0ca8daa89b662ca7d9cda24bafd29df2bffe9ccacbbffb26fb8f43e100d48fe3abd24876bd9e8c3345388d9" localRef="base" location="ft.fft.TransposeFinish/TransposeFinish.hpe" name="TransposeFinish" package="ft.fft" version="1.0.0.0">
+        <visualDescription h="53" w="82" x="289" y="436">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="problem_data" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" exposed="true">
+          <visualDescription h="55" w="121" x="68" y="455">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="56" y="3"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="blocks_info" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" exposed="true">
+          <visualDescription h="53" w="90" x="519" y="456">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="4" y="22"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="transpose_finish">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" localRef="instance_type" location="ft.problem_size.Instance_FT/Instance_FT.hpe" name="Instance_FT" package="ft.problem_size" exposed="false">
+      <visualDescription h="51" w="129" x="102" y="241">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="466" y="141">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000878836055544d29b57151fddba727569e16e131382434197c7eaed0fa8a31934d02b1a1f176e04173a12374d277a6039b6a301abcbae17bf4a9d588dcf65e246fa7cb81ad9b5b6e67a90ec3d8ef627ebe9107f03bf0ca46bedeae087debc3869b4bd90937be46cadbf7eecd7ee7478a900fc88b546c63879ee6ecb2529e98691" localRef="orientation" location="common.orientation.XZ/XZ.hpe" name="XZ" package="common.orientation" exposed="false">
+      <visualDescription h="45" w="119" x="230" y="283">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="xz">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="orientation" varName="DIR"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="ITransposeXZfinish" nArgs="3">
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="55" y="24"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="101" y="14"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="4" y="26"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@1409d27" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.orientation.XZ;&#xA;using ft.fft.TransposeFinish;&#xA;&#xA;namespace impl.ft.fft.TransposeXZfinish { &#xA;&#xA;public abstract class BaseITransposeXZfinish&lt;I, C, DIR>: Computation, BaseITransposeFinish&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IXZ&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseITransposeXZfinish.cs" srcType="base" uri="impl.ft.fft.TransposeXZfinish/bin/1.0.0.0/BaseITransposeXZfinish.dll" versionId="1.0.0.0">
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
+          <dependency>ft.fft.TransposeFinish/bin/1.0.0.0/BaseITransposeFinish.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.XZ;&#xA;using ft.fft.TransposeFinish;&#xA;&#xA;namespace impl.ft.fft.TransposeXZfinish { &#xA;&#xA;public class ITransposeXZfinish&lt;I, C, DIR> : BaseITransposeXZfinish&lt;I, C, DIR>, ITransposeFinish&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IXZ&#xA;{&#xA;&#xA;public ITransposeXZfinish() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITransposeXZfinish.cs" srcType="user" uri="impl.ft.fft.TransposeXZfinish/bin/1.0.0.0/ITransposeXZfinish.dll" versionId="1.0.0.0">
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
+          <dependency>%WORKSPACE/impl.ft.fft.TransposeXZfinish/bin/1.0.0.0/BaseITransposeXZfinish.dll</dependency>
+          <dependency>ft.fft.TransposeFinish/bin/1.0.0.0/ITransposeFinish.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="119" x="178" y="206">
+        <color b="64" g="0" r="64"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <parameter iname="IInstance_FT" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IXZ" order="2" parid="orientation" uname="xz" varid="DIR"/>
+    </interface>
+    <unit iRef="ITransposeXZfinish" private="false" uRef="transpose_finish" visibleInterface="true">
+      <super cRef="base" uRef="transpose_finish"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="6" y="27"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="101" y="14"/>
+      </slices>
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+        <visualDescription h="10" w="10" x="36" y="26"/>
+      </slices>
+      <visualDescription h="40" w="119" x="288" y="306"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>u0</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="transpose_finish"/>
+      <visualDescription h="41" w="40" x="521" y="365"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>orientation</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="xz"/>
+      <visualDescription h="20" w="20" x="184" y="292"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
