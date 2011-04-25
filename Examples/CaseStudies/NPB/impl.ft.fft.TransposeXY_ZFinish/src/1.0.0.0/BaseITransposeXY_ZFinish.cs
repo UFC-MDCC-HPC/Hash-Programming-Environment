@@ -20,14 +20,16 @@ namespace impl.ft.fft.TransposeXY_ZFinish {
 	
 		#region data
 			protected int np1, np2, size1, size2;
-			protected const int REAL = 0;
-			protected const int IMAG = 1;
+			protected int REAL;
+			protected int IMAG;
 			
 			override public void initialize(){
 				np1 = Problem.np1;
 				np2 = Problem.np2;
 				size1 = Blocks.size1;
 				size2 = Blocks.size2;
+				REAL = Constants.REAL;
+				IMAG = Constants.IMAG;
 			}
 		#endregion
 	
