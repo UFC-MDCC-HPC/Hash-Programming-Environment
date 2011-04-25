@@ -4,6 +4,7 @@ using common.problem_size.Class;
 
 namespace ft.data.ProblemDefinition { 
 	public class Constants {
+	    public static int transblock=32, transblockpad=34;
 		public static int layout_0D = 0, layout_1D = 1, layout_2D = 2;
 		public static int REAL=0,IMAG=1;
 		public static int T_total = 1, T_setup = 2, T_fft = 3, T_evolve = 4, T_checksum = 5, T_fftlow = 6, 
