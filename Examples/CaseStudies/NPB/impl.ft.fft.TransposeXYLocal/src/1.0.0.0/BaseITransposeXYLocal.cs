@@ -20,12 +20,14 @@ namespace impl.ft.fft.TransposeXYLocal {
 	   
 		#region data
 			protected int size1, size2;
-			protected const int REAL = 0;
-			protected const int IMAG = 1;
+			protected int REAL;
+			protected int IMAG;
 			
 			override public void initialize(){
 				size1 = Blocks.size1;
 				size2 = Blocks.size2;
+				REAL = Constants.REAL;
+				IMAG = Constants.IMAG;
 			}
 		#endregion
 	
