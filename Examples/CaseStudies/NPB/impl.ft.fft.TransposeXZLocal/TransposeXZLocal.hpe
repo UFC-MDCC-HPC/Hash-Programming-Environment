@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000091dcfebec956a3d2fddb0ecb2e054cd70fc541e52ed14f644b78704cfdd377e07940ab7b10d25e06db327231ca1ebc0514cbcfeb294b5a2ee1ef57a83295d0d9070f494d2d8c727f6ef01563617a0fd8ddd6a513ac14d675b048c7f7e451e49826504423e394dae15f5e6d4fe850e168907a86b60eaedb7400eb02ceec2a0686" isAbstract="false" kind="Computation" name="TransposeXZLocal" packagePath="impl.ft.fft">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000dd521d53d83aac04708b0593ea4b9f08af4c88c4aed660343ee392bcdb6e9f8df7b892a578d42167899e089098fd85a12451dd200082752ac71fbcbf2db8d69c9df2b931d620eba4ed78ebf0f6f49a2f3a4720fa73f4f50c6b950be65d9fc6e04812b05adb7d52b4b33bac89f88aa83d38cd2a3ea5fa172b72f1aaee29b3f3a6" localRef="base" location="ft.fft.TransposeLocal/TransposeLocal.hpe" name="TransposeLocal" package="ft.fft" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="328" y="494">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="orientation" varName="DIR"/>
+        <parameter formFieldId="class" varName="C"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="problem_data" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" exposed="true">
+          <visualDescription h="42" w="110" x="114" y="501">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="94" y="17"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="blocks_info" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" exposed="true">
+          <visualDescription h="39" w="87" x="461" y="496">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="5" y="16"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="transpose_local">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" localRef="instance_type" location="ft.problem_size.Instance_FT/Instance_FT.hpe" name="Instance_FT" package="ft.problem_size" exposed="false">
+      <visualDescription h="40" w="95" x="124" y="192">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="492" y="118">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000878836055544d29b57151fddba727569e16e131382434197c7eaed0fa8a31934d02b1a1f176e04173a12374d277a6039b6a301abcbae17bf4a9d588dcf65e246fa7cb81ad9b5b6e67a90ec3d8ef627ebe9107f03bf0ca46bedeae087debc3869b4bd90937be46cadbf7eecd7ee7478a900fc88b546c63879ee6ecb2529e98691" localRef="orientation" location="common.orientation.XZ/XZ.hpe" name="XZ" package="common.orientation" exposed="false">
+      <visualDescription h="34" w="97" x="311" y="321">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="xz">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="orientation" varName="DIR"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="ITransposeXZLocal" nArgs="3">
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="70" y="29"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="127" y="15"/>
+      </slice>
+      <slice isRef="axis">
+        <originRef cRef="orientation" iRef="IAxis"/>
+        <visualDescription h="10" w="10" x="64" y="24"/>
+      </slice>
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="8" y="15"/>
+      </slice>
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@acaaae" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.orientation.XZ;&#xA;using ft.fft.TransposeLocal;&#xA;&#xA;namespace impl.ft.fft.TransposeXZLocal { &#xA;&#x9;public abstract class BaseITransposeXZLocal&lt;I, C, DIR>: Computation, BaseITransposeLocal&lt;I, C, DIR>&#xA;&#x9;where I:IInstance_FT&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IXZ{&#xA;&#x9;   &#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#x9;protected int size1,size2, transblock, transblockpad, maxdim;&#xA;&#x9;&#x9;&#x9;protected int REAL;&#xA;&#x9;&#x9;&#x9;protected int IMAG;&#xA;&#x9;&#x9;&#x9;override public void initialize(){&#xA;&#x9;&#x9;&#x9;&#x9;size1 = Blocks.size1;&#xA;&#x9;&#x9;&#x9;&#x9;size2 = Blocks.size2;&#xA;&#x9;&#x9;&#x9;&#x9;transblock = Constants.transblock;&#xA;&#x9;&#x9;&#x9;&#x9;transblockpad = Constants.transblockpad;&#xA;&#x9;&#x9;&#x9;&#x9;REAL = Constants.REAL;&#xA;&#x9;&#x9;&#x9;&#x9;IMAG = Constants.IMAG;&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;maxdim = Instance.maxdim;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;#endregion&#xA;&#x9;&#xA;&#x9;&#x9;private IBlocks blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocks Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private DIR axis = default(DIR);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected DIR Axis {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.axis;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseITransposeXZLocal.cs" srcType="base" uri="impl.ft.fft.TransposeXZLocal/bin/1.0.0.0/BaseITransposeXZLocal.dll" versionId="1.0.0.0">
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
+          <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
+          <dependency>ft.fft.TransposeLocal/bin/1.0.0.0/BaseITransposeLocal.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.XZ;&#xA;using ft.fft.TransposeLocal;&#xA;&#xA;namespace impl.ft.fft.TransposeXZLocal { &#xA;&#x9;public class ITransposeXZLocal&lt;I, C, DIR> : BaseITransposeXZLocal&lt;I, C, DIR>, ITransposeLocal&lt;I, C, DIR>&#xA;&#x9;where I:IInstance_FT&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IXZ{&#xA;&#x9;   &#xA;&#x9;    private int d1, d2, d3;&#xA;&#x9;    private double[, , ,] xin;&#xA;&#x9;    private double[, , ,] xout;&#xA;&#x9;&#xA;&#x9;&#x9;public ITransposeXZLocal() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go() { &#xA;            double[,,] buf = new double[maxdim, transblockpad, 2];&#xA;            int block1, block3;&#xA;            int i, j, k, kk, ii, i1, k1;&#xA;            int m1, m2, _i, _j, _k, om1, om2, o_i, o_j, o_k;&#xA;&#xA;            if(d1 &lt; 32)&#xA;                goto G100;&#xA;            block3 = d3;&#xA;            if(block3 == 1)&#xA;                goto G100;&#xA;            if(block3 > transblock)&#xA;                block3 = transblock;&#xA;            block1 = d1;&#xA;            if(block1*block3 > transblock*transblock)&#xA;                block1 = transblock*transblock/block3;&#xA;            int iin = 0, io = 0;&#xA;            for(j = 0; j &lt; d2; j++) {&#xA;                for(kk = 0; kk &lt;= d3 - block3; kk = kk + block3) {&#xA;                    for(ii = 0; ii &lt;= d1 - block1; ii = ii + block1) {&#xA;                        for(k = 0; k &lt; block3; k++) {&#xA;                            k1 = k + kk;&#xA;                            for(i = 0; i &lt; block1; i++) {&#xA;                                iin = ((k1*d2+j)*d1+(i+ii))*2;&#xA;&#xA;                                m1 = (iin % size1);&#xA;                                m2 = (m1 % size2);&#xA;                                _i = iin/size1;&#xA;                                _j = m1/size2;&#xA;                                _k = m2/2;&#xA;&#xA;                                buf[i, k, REAL] = xin[_i, _j, _k, REAL];&#xA;                                buf[i, k, IMAG] = xin[_i, _j, _k, IMAG];&#xA;                            }&#xA;                        }&#xA;                        for(i = 0; i &lt; block1; i++) {&#xA;                            i1 = i + ii;&#xA;                            for(k = 0; k &lt; block3; k++) {&#xA;                                io  = ((i1*d2+j)*d3+(k+kk))*2;&#xA;&#xA;                                m1 = (io % size1);&#xA;                                m2 = (m1 % size2);&#xA;                                _i = io/size1;&#xA;                                _j = m1/size2;&#xA;                                _k = m2/2;&#xA;&#xA;                                xout[_i, _j, _k, REAL] = buf[i, k, REAL];&#xA;                                xout[_i, _j, _k, IMAG] = buf[i, k, IMAG];&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;            return 0;&#xA;&#xA;            G100: {&#xA;                for(j = 0; j &lt; d2; j++) {&#xA;                    for(k = 0; k &lt; d3; k++) {&#xA;                        for(i = 0; i &lt; d1; i++) {&#xA;                            iin = ((k*d2+j)*d1+i)*2;&#xA;                            io  = ((i*d2+j)*d3+k)*2;&#xA;&#xA;                            m1 = (iin % size1);&#xA;                            m2 = (m1 % size2);&#xA;                            _i = iin/size1;&#xA;                            _j = m1/size2;&#xA;                            _k = m2/2;&#xA;&#xA;                            om1 = (io % size1);&#xA;                            om2 = (om1 % size2);&#xA;                            o_i = io/size1;&#xA;                            o_j = om1/size2;&#xA;                            o_k = om2/2;&#xA;&#xA;                            xout[o_i, o_j, o_k, REAL] = xin[_i, _j, _k, REAL];&#xA;                            xout[o_i, o_j, o_k, IMAG] = xin[_i, _j, _k, IMAG];&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;&#x9;&#x9;   return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;public void setParameters(int d1, int d2, int d3, double[, , ,] xin, double[, , ,] xout){&#xA;&#x9;&#x9;   this.d1 = d1;&#xA;&#x9;&#x9;   this.d2 = d2;&#xA;&#x9;&#x9;   this.d3 = d3;&#xA;&#x9;&#x9;   this.xin = xin;&#xA;&#x9;&#x9;   this.xout = xout;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ITransposeXZLocal.cs" srcType="user" uri="impl.ft.fft.TransposeXZLocal/bin/1.0.0.0/ITransposeXZLocal.dll" versionId="1.0.0.0">
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
+          <dependency>%WORKSPACE/impl.ft.fft.TransposeXZLocal/bin/1.0.0.0/BaseITransposeXZLocal.dll</dependency>
+          <dependency>ft.fft.TransposeLocal/bin/1.0.0.0/ITransposeLocal.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="144" x="179" y="226">
+        <color b="6" g="121" r="72"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <parameter iname="IInstance_FT" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IXZ" order="2" parid="orientation" uname="xz" varid="DIR"/>
+    </interface>
+    <unit iRef="ITransposeXZLocal" private="false" uRef="transpose_local" visibleInterface="true">
+      <super cRef="base" uRef="transpose_local"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="11" y="27"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="127" y="15"/>
+      </slices>
+      <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
+        <visualDescription h="10" w="10" x="64" y="24"/>
+      </slices>
+      <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="8" y="15"/>
+      </slices>
+      <visualDescription h="40" w="144" x="226" y="370"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <originRef>base</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>u0</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="transpose_local"/>
+      <visualDescription h="41" w="40" x="493" y="359"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>orientation</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="xz"/>
+      <visualDescription h="20" w="20" x="184" y="292"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
