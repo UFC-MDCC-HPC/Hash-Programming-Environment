@@ -9,6 +9,7 @@ using ft.data.ProblemDefinition;
 using ft.problem_size.Instance_FT;
 using common.problem_size.Class;
 using common.orientation.Axis;
+using ft.problem_size.Instance;
 using common.orientation.XZ;
 using ft.fft.TransposeLocal;
 
@@ -54,16 +55,6 @@ namespace impl.ft.fft.TransposeXZLocal {
 			}
 		}
 		
-		private I instance = default(I);
-		
-		protected I Instance {
-			get {
-				if (this.instance == null)
-					this.instance = (I) Services.getPort("instance_type");
-				return this.instance;
-			}
-		}
-		
 		private DIR axis = default(DIR);
 		
 		protected DIR Axis {
@@ -71,6 +62,16 @@ namespace impl.ft.fft.TransposeXZLocal {
 				if (this.axis == null)
 					this.axis = (DIR) Services.getPort("orientation");
 				return this.axis;
+			}
+		}
+		
+		private I instance = default(I);
+		
+		protected I Instance {
+			get {
+				if (this.instance == null)
+					this.instance = (I) Services.getPort("instance_type");
+				return this.instance;
 			}
 		}
 		abstract public int go(); 
