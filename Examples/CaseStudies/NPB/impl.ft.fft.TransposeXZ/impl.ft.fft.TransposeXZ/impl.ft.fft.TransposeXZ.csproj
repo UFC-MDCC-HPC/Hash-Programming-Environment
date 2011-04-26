@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1A7E75E6-0F59-4BE6-8F8B-F3CBF6F9D1CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.ft.fft.TransposeXZ</RootNamespace>
+    <AssemblyName>ITransposeXZ</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\TransposeXZ.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseITransposeXZ.cs">
+      <Link>BaseITransposeXZ.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\ITransposeXZ.cs">
+      <Link>ITransposeXZ.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.orientation.Axis\common.orientation.Axis\common.orientation.Axis.csproj">
+      <Project>{51EC4A8A-6014-4197-9264-0DF08BC0BDDD}</Project>
+      <Name>common.orientation.Axis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.orientation.XZ\common.orientation.XZ\common.orientation.XZ.csproj">
+      <Project>{3055A150-C1A2-4601-B28B-E89628E1516F}</Project>
+      <Name>common.orientation.XZ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.data.ProblemDefinition\ft.data.ProblemDefinition\ft.data.ProblemDefinition.csproj">
+      <Project>{6575A9B7-B808-47C9-97C2-624BBC747EB9}</Project>
+      <Name>ft.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.datapartition.BlocksInfo\ft.datapartition.BlocksInfo\ft.datapartition.BlocksInfo.csproj">
+      <Project>{D674171F-DECC-4EC3-B6E8-9F4E9FE8F738}</Project>
+      <Name>ft.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.fft.Transpose\ft.fft.Transpose\ft.fft.Transpose.csproj">
+      <Project>{02E3D3A8-052E-4BCF-AF6D-469F3564DCE8}</Project>
+      <Name>ft.fft.Transpose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.fft.TransposeFinish\ft.fft.TransposeFinish\ft.fft.TransposeFinish.csproj">
+      <Project>{A6F1FABA-0A73-4441-984C-D4C36779C0B9}</Project>
+      <Name>ft.fft.TransposeFinish</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.fft.TransposeGlobal\ft.fft.TransposeGlobal\ft.fft.TransposeGlobal.csproj">
+      <Project>{D5378DD6-8A4D-42A0-8CF3-40DA9D9CA387}</Project>
+      <Name>ft.fft.TransposeGlobal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.fft.TransposeLocal\ft.fft.TransposeLocal\ft.fft.TransposeLocal.csproj">
+      <Project>{3CAF1244-AD4D-43C2-B1AB-806C43167A29}</Project>
+      <Name>ft.fft.TransposeLocal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.problem_size.Instance\ft.problem_size.Instance\ft.problem_size.Instance.csproj">
+      <Project>{70792EF3-E787-4073-94FC-13AFE5011577}</Project>
+      <Name>ft.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.problem_size.Instance_FT\ft.problem_size.Instance_FT\ft.problem_size.Instance_FT.csproj">
+      <Project>{3BFFEDDF-65E1-4ABF-B056-89CAFB792A10}</Project>
+      <Name>ft.problem_size.Instance_FT</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
