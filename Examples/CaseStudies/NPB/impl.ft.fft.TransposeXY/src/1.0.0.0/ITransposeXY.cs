@@ -19,7 +19,8 @@ namespace impl.ft.fft.TransposeXY {
 	   
 		public ITransposeXY() { 
 		
-		} 		
+		}
+			
 		public override int go() { 
            Transpose_local.setParameters(dims[0, l1], dims[1, l1], dims[2, l1], xin, xout);
            Transpose_local.go();
