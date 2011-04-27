@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000e15a779b547a3a8ab3dc12f8f882aa7f1545994fae9457faf7eeea36f690c93c118acc97fd9020e363774970c9561e2cc3d6e3511ab4f3cc16efaec904a748644df7318eefdd94f8974898fdd79750a0459a5690adcd028e84fb6da973dadcb3ff50fce47424c94c6d063594e3a7be09ec294bc9babda0718bff86eda4ef4981" isAbstract="true" kind="Computation" name="ComputeIndexMap" packagePath="ft.data">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="problem_data" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" exposed="true">
+      <visualDescription h="37" w="111" x="202" y="421">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="instance_type" varName="I"/>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="problem">
+        <visualDescription h="10" w="10" x="49" y="4"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="blocks_info" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" exposed="true">
+      <visualDescription h="38" w="94" x="457" y="269">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="blocks">
+        <visualDescription h="10" w="10" x="6" y="15"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a3c75b4c6a2aae61bde961a3d63804eb45e2a72ec900f48c77325137c428cd05f011917bbf0e09c93a36f529c9af7323d471c0126e2bac590a5805a8916e2c625d861aef6e3a3dc12e4d9d60cc79cfa0a94efd01e2984ee38f14ef288478476e4d8a7985a30114a034284e3c981c31be438785000e186b84812b16eb6bea1183" localRef="instance_type" location="ft.problem_size.Instance/Instance.hpe" name="Instance" package="ft.problem_size" parameter_id="instance_type" exposed="false">
+      <visualDescription h="47" w="125" x="30" y="274">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="111" y="18"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" parameter_id="class" exposed="false">
+      <visualDescription h="30" w="50" x="444" y="121">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
+    <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <interface iRef="IComputeIndexMap" nArgs="2">
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slice>
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocks"/>
+        <visualDescription h="10" w="10" x="112" y="17"/>
+      </slice>
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="3" y="18"/>
+      </slice>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace ft.data.ComputeIndexMap { &#xA;&#xA;public interface BaseIComputeIndexMap&lt;I, C> : IComputationKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IBlocks Blocks {get;}&#xA;&#x9;IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIComputeIndexMap.cs" srcType="base" uri="ft.data.ComputeIndexMap/bin/1.0.0.0/BaseIComputeIndexMap.dll" versionId="1.0.0.0">
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace ft.data.ComputeIndexMap { &#xA;&#xA;public interface IComputeIndexMap&lt;I, C> : BaseIComputeIndexMap&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IComputeIndexMap.cs" srcType="user" uri="ft.data.ComputeIndexMap/bin/1.0.0.0/IComputeIndexMap.dll" versionId="1.0.0.0">
+          <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/ft.data.ComputeIndexMap/bin/1.0.0.0/BaseIComputeIndexMap.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="125" x="219" y="190">
+        <color b="64" g="0" r="64"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IComputeIndexMap" private="false" uRef="compute_index_map" visibleInterface="true">
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="60" y="24"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="112" y="17"/>
+      </slices>
+      <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="3" y="18"/>
+      </slices>
+      <visualDescription h="40" w="125" x="192" y="274"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <originRef>problem_data</originRef>
+      <originRef>u0</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
+      <links xsi:type="component:EnumerableUnitType" ref="compute_index_map"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
+      <visualDescription h="41" w="40" x="414" y="400"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
