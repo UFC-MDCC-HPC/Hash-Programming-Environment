@@ -25,7 +25,7 @@ namespace impl.ft.fft.CfftzImpl {
                 Console.WriteLine("CFFTZ: Either U has not been initialized, or else one of the input parameters iis invalid " + dir + " " + m + " " + mx);
             }
             for(l = 1; l <= m; l = l + 2) {
-                Fftz2.setParameters(dir, l, m, n, fftblock, fftblockpad, u, y, 0, 1);
+                Fftz2.setParameters(dir, l, m, n, u, y, 0, 1);
                 Fftz2.go();
                 if(l == m) {
                     for(j = 0; j < n; j++) {
@@ -36,7 +36,7 @@ namespace impl.ft.fft.CfftzImpl {
                     }
                     return 0;
                 }
-                Fftz2.setParameters(dir, l + 1, m, n, fftblock, fftblockpad, u, y, 1, 0);
+                Fftz2.setParameters(dir, l + 1, m, n, u, y, 1, 0);
                 Fftz2.go();
             }
             return 0;
