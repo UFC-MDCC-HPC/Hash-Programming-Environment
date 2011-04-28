@@ -19,11 +19,10 @@ namespace impl.ft.fft.CfftzImpl {
 		#region data
 			protected int REAL;
 			protected int IMAG;
-			protected int fftblock, fftblockpad;
+			protected int fftblock;
 			protected double[,] u;
 			override public void initialize(){
 				fftblock    = Blocks.fftblock;
-				fftblockpad = Blocks.fftblockpad;
 				REAL        = Constants.REAL;
 				IMAG        = Constants.IMAG;
 				u           = Problem.u;
