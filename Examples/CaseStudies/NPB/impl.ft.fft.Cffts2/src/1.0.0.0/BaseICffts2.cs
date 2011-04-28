@@ -8,6 +8,7 @@ using ft.datapartition.BlocksInfo;
 using ft.data.ProblemDefinition;
 using ft.problem_size.Instance_FT;
 using common.problem_size.Class;
+using ft.fft.Swarztrauber;
 using common.orientation.Axis;
 using common.orientation.Y;
 using ft.fft.Cffts;
@@ -47,6 +48,16 @@ namespace impl.ft.fft.Cffts2 {
 				if (this.problem == null)
 					this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
 				return this.problem;
+			}
+		}
+		
+		private ISwarztrauber<I, C> swarztrauber = null;
+		
+		protected ISwarztrauber<I, C> Swarztrauber {
+			get {
+				if (this.swarztrauber == null)
+					this.swarztrauber = (ISwarztrauber<I, C>) Services.getPort("swarztrauber_cfftz");
+				return this.swarztrauber;
 			}
 		}
 		

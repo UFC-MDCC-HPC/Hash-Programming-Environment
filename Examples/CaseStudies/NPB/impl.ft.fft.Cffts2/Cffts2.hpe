@@ -6,28 +6,28 @@
         <implements>true</implements>
       </extensionType>
       <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000dbc02fbc6a5286aeebd25f1e99d833a55cd5d83ffd348b45bedd08e7b9baa0b3748a320e3afda9c989ef095102d7bbd023844939faa0dc70b015dd2f46e88efe751a8057c489ba2d6dd39989aeadc3b2b0e7089e7e6291d170d02b922e372b57741b1e4a64bce93d7f18c46c706d65ecc90d16e6fd87baa054413c2a08ad84b5" localRef="base" location="ft.fft.Cffts/Cffts.hpe" name="Cffts" package="ft.fft" version="1.0.0.0">
-        <visualDescription h="30" w="50" x="294" y="515">
+        <visualDescription h="30" w="50" x="250" y="490">
           <color b="255" g="255" r="255"/>
         </visualDescription>
         <parameter formFieldId="instance_type" varName="I"/>
         <parameter formFieldId="orientation" varName="DIR"/>
         <parameter formFieldId="class" varName="C"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="problem_data" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" exposed="true">
-          <visualDescription h="37" w="93" x="87" y="520">
+          <visualDescription h="37" w="95" x="54" y="518">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <parameter formFieldId="instance_type" varName="I"/>
           <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
-            <visualDescription h="10" w="10" x="40" y="3"/>
+            <visualDescription h="10" w="10" x="41" y="3"/>
           </unitBounds>
         </port>
         <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="blocks_info" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" exposed="true">
-          <visualDescription h="41" w="103" x="461" y="521">
+          <visualDescription h="36" w="107" x="393" y="489">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="blocks">
-            <visualDescription h="10" w="10" x="5" y="2"/>
+            <visualDescription h="10" w="10" x="7" y="15"/>
           </unitBounds>
         </port>
         <unitBounds uRef="cffts">
@@ -42,7 +42,7 @@
   </header>
   <componentInfo>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" localRef="instance_type" location="ft.problem_size.Instance_FT/Instance_FT.hpe" name="Instance_FT" package="ft.problem_size" exposed="false">
-      <visualDescription h="32" w="117" x="112" y="93">
+      <visualDescription h="39" w="100" x="118" y="77">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="class" varName="C"/>
@@ -51,7 +51,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
-      <visualDescription h="30" w="50" x="320" y="122">
+      <visualDescription h="30" w="50" x="240" y="42">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="class">
@@ -59,7 +59,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000ffcae3e9a0ecbf9c4629fdb52bc2acc0e2cc392d40ed0441b527e752c9079cf609fb0785045e3d2c5ace2f492d755021fd6cf82d853e202471136832c6cf8fdffec701b57bfde7017dd2ef51f1a4c4adca40833d6c6165b9123411a3dc7be80a59839ab3316debcc5e4d0d6e17dcb8400cf7e4bc1eca328e130aa9f8182bfccb" localRef="orientation" location="common.orientation.Y/Y.hpe" name="Y" package="common.orientation" exposed="false">
-      <visualDescription h="42" w="106" x="155" y="179">
+      <visualDescription h="32" w="117" x="84" y="167">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <unitBounds uRef="y">
@@ -70,32 +70,32 @@
     <supplyParameter cRef="orientation" varName="DIR"/>
     <supplyParameter cRef="instance_type" varName="I"/>
     <interface iRef="ICffts2" nArgs="3">
-      <slice isRef="problem">
-        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
-        <visualDescription h="10" w="10" x="38" y="29"/>
-      </slice>
-      <slice isRef="blocks">
-        <originRef cRef="blocks_info" iRef="IBlocks"/>
-        <visualDescription h="10" w="10" x="65" y="16"/>
+      <slice isRef="swarztrauber">
+        <originRef cRef="swarztrauber_cfftz" iRef="ISwarztrauber"/>
+        <visualDescription h="10" w="10" x="64" y="13"/>
       </slice>
       <slice isRef="axis">
         <originRef cRef="orientation" iRef="IAxis"/>
-        <visualDescription h="10" w="10" x="34" y="25"/>
+        <visualDescription h="10" w="10" x="13" y="24"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@10bff0b" repeat="0">
-        <visualDescription h="50" w="50" x="75" y="75"/>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@949cfe" repeat="0">
+        <visualDescription h="150" w="70" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@cf2484" repeat="0" sliceRef="swarztrauber">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;using common.orientation.Y;&#xA;using ft.fft.Cffts;&#xA;&#xA;namespace impl.ft.fft.Cffts2 { &#xA;&#xA;public abstract class BaseICffts2&lt;I, C, DIR>: Computation, BaseICffts&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IY&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICffts2.cs" srcType="base" uri="impl.ft.fft.Cffts2/bin/1.0.0.0/BaseICffts2.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.fft.Swarztrauber;&#xA;using common.orientation.Axis;&#xA;using common.orientation.Y;&#xA;using ft.fft.Cffts;&#xA;&#xA;namespace impl.ft.fft.Cffts2 { &#xA;&#xA;public abstract class BaseICffts2&lt;I, C, DIR>: Computation, BaseICffts&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IY&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ISwarztrauber&lt;I, C> swarztrauber = null;&#xA;&#xA;protected ISwarztrauber&lt;I, C> Swarztrauber {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.swarztrauber == null)&#xA;&#x9;&#x9;&#x9;this.swarztrauber = (ISwarztrauber&lt;I, C>) Services.getPort(&quot;swarztrauber_cfftz&quot;);&#xA;&#x9;&#x9;return this.swarztrauber;&#xA;&#x9;}&#xA;}&#xA;&#xA;private DIR axis = default(DIR);&#xA;&#xA;protected DIR Axis {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.axis == null)&#xA;&#x9;&#x9;&#x9;this.axis = (DIR) Services.getPort(&quot;orientation&quot;);&#xA;&#x9;&#x9;return this.axis;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseICffts2.cs" srcType="base" uri="impl.ft.fft.Cffts2/bin/1.0.0.0/BaseICffts2.dll" versionId="1.0.0.0">
           <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>ft.fft.Swarztrauber/bin/1.0.0.0/ISwarztrauber.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
           <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
           <dependency>ft.fft.Cffts/bin/1.0.0.0/BaseICffts.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Y;&#xA;using ft.fft.Cffts;&#xA;&#xA;namespace impl.ft.fft.Cffts2 { &#xA;&#xA;public class ICffts2&lt;I, C, DIR> : BaseICffts2&lt;I, C, DIR>, ICffts&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IY&#xA;{&#xA;&#xA;public ICffts2() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICffts2.cs" srcType="user" uri="impl.ft.fft.Cffts2/bin/1.0.0.0/ICffts2.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Y;&#xA;using ft.fft.Cffts;&#xA;&#xA;namespace impl.ft.fft.Cffts2 { &#xA;&#xA;public class ICffts2&lt;I, C, DIR> : BaseICffts2&lt;I, C, DIR>, ICffts&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IY&#xA;{&#xA;&#xA;public ICffts2() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;swarztrauber.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ICffts2.cs" srcType="user" uri="impl.ft.fft.Cffts2/bin/1.0.0.0/ICffts2.dll" versionId="1.0.0.0">
           <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
@@ -103,16 +103,16 @@
           <dependency>ft.fft.Cffts/bin/1.0.0.0/ICffts.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="259" y="274">
+      <visualDescription h="40" w="80" x="174" y="297">
         <color b="255" g="0" r="255"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="problem" sRef="problem"/>
-      </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="blocks"/>
+        <slice pRef="blocks" sRef="swarztrauber"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="swarztrauber"/>
       </port>
       <parameter iname="IInstance_FT" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -120,29 +120,35 @@
     </interface>
     <unit iRef="ICffts2" private="false" uRef="cffts" visibleInterface="true">
       <super cRef="base" uRef="cffts"/>
-      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
-        <visualDescription h="10" w="10" x="5" y="27"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
+        <visualDescription h="10" w="10" x="80" y="26"/>
       </slices>
-      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
-        <visualDescription h="10" w="10" x="65" y="16"/>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="true">
+        <visualDescription h="10" w="10" x="161" y="14"/>
+      </slices>
+      <slices cRef="swarztrauber_cfftz" replica="0" uRef="swarztrauber" sliceName="swarztrauber" transitive="false">
+        <visualDescription h="10" w="10" x="64" y="13"/>
+        <port>problem</port>
+        <port>blocks</port>
       </slices>
       <slices cRef="orientation" replica="0" uRef="axis" sliceName="axis" transitive="false">
-        <visualDescription h="10" w="10" x="34" y="25"/>
+        <visualDescription h="10" w="10" x="13" y="24"/>
       </slices>
-      <visualDescription h="40" w="80" x="257" y="390"/>
+      <visualDescription h="40" w="80" x="221" y="407"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
       <originRef>base</originRef>
+      <originRef>swarztrauber_cfftz</originRef>
       <originRef>problem_data</originRef>
       <originRef>u0</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="cffts"/>
-      <visualDescription h="41" w="40" x="501" y="398"/>
+      <visualDescription h="41" w="40" x="415" y="407"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <originRef>base</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="y"/>
-      <visualDescription h="20" w="20" x="354" y="190"/>
+      <visualDescription h="20" w="20" x="50" y="163"/>
     </enumerator>
   </componentInfo>
 </component:component>
