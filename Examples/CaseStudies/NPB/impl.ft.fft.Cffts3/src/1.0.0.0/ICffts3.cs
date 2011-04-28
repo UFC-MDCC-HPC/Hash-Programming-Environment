@@ -45,7 +45,8 @@ namespace impl.ft.fft.Cffts3 {
                         }
                     }
 
-                    Swarztrauber_cfftz(dir, logd3, d3, y);
+                    Swarztrauber.setParameters(dir, logd3, d3, y);
+                    Swarztrauber.go();
 
                     for(k = 0; k < d3; k++) {
                         for(i = 0; i < fftblock; i++) {
