@@ -16,10 +16,12 @@ namespace impl.ft.fft.Fftz2Impl {
 	where C:IClass{
 	   
 		#region data
-			protected int REAL, IMAG;
+			protected int REAL, IMAG, fftblock, fftblockpad;
 			override public void initialize(){
 				REAL = Constants.REAL;
 				IMAG = Constants.IMAG;
+			    fftblock = Blocks.fftblock;
+                fftblockpad = Blocks.fftblockpad;
 			}
 		#endregion
 	

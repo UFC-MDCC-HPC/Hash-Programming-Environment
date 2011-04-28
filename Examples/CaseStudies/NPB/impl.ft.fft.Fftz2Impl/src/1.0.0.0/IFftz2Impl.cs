@@ -11,7 +11,7 @@ namespace impl.ft.fft.Fftz2Impl {
 	where I:IInstance_FT<C>
 	where C:IClass{
 	   
-	    private int dir, l, m, n, ny, ny1, iread, iwrite;
+	    private int dir, l, m, n, iread, iwrite;
 		private double[, , ,] y;
 		private double[,] u;
 	
@@ -24,6 +24,9 @@ namespace impl.ft.fft.Fftz2Impl {
             double[] u1 = new double[2];
             double[] x11= new double[2];
             double[] x21= new double[2];
+
+            int ny  = fftblock;
+            int ny1 = fftblockpad;
 
             n1 = n / 2;
             lk = (int)Math.Pow(2, (l - 1));
@@ -60,13 +63,11 @@ namespace impl.ft.fft.Fftz2Impl {
             }
 		    return 0;
 		}
-		public void setParameters(int dir, int l, int m, int n, int ny, int ny1, double[,] u, double[, , ,] y, int iread, int iwrite){
+		public void setParameters(int dir, int l, int m, int n, double[,] u, double[, , ,] y, int iread, int iwrite){
 		   this.dir    = dir;
 		   this.l      = l;
 		   this.m      = m;
 		   this.n      = n;
-		   this.ny     = ny;
-		   this.ny1    = ny1;
 		   this.iread  = iread;
 		   this.iwrite = iwrite;
 		   
