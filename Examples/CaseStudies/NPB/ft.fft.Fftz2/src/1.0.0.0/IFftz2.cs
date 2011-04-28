@@ -8,7 +8,7 @@ public interface IFftz2<I, C> : BaseIFftz2<I, C>
 where I:IInstance<C>
 where C:IClass
 {
-   void setParameters(int dir, int l, int m, int n, int ny, int ny1, double[,] u, double[, , ,] y, int iread, int iwrite);
+   void setParameters(int dir, int l, int m, int n, double[,] u, double[, , ,] y, int iread, int iwrite);
 } // end main interface 
 
 } // end namespace 
