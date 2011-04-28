@@ -43,7 +43,8 @@ namespace impl.ft.fft.Cffts1 {
                             y[0, i, j, IMAG] = x[_i, _j, _k, IMAG];
                         }
                     }
-                    Swarztrauber_cfftz(dir, logd1, d1, y);
+                    Swarztrauber.setParameters(dir, logd1, d1, y);
+                    Swarztrauber.go();
 
                     for(j = 0; j < fftblock; j++) {
                         for(i = 0; i < d1; i++) {
