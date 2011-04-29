@@ -4,6 +4,8 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using common.problem_size.Class;
 using ft.FT;
+using MPI;
+using NPB3_0_JAV.BMInOut;
 
 namespace impl.ft.FTImpl { 
 	public class IFTImpl<C> : BaseIFTImpl<C>, IFT<C>
