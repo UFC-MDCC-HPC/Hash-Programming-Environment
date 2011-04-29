@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006f824c7074689711fbd4ce3f65724a9452041d166ebec39d6ea9163ea2faa48408beffd403413de2d674060a9a88a7e428a9cd9bef9bc8e32571c92fec25d303b503d34adc912b6198d63995041f8aeb01ae53c37524338378608b260bca42a080c25fe4eec49deda0b5bff4f3e71688895fd9c1e2e010cf951b6f18bfa683a2" isAbstract="false" kind="Computation" name="FftImpl" packagePath="impl.ft.fft">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000df06cbfecfe77ffb9a85f67e2a110edf8a28744d951b2959dc2e1cf0cc0fa5fc24c9bb6c2618c862744fed678a8a754b20aa976918de91e40af448a2b796fc938adfa11cdfa4950d58942d18f822bfd2e6847d9eaa898b6b1a96d87f90ef34367cfbe6c7057ca7bfc0221e7178e276acd83bfc5abe7f84c9193bb81bbab880a9" localRef="base" location="ft.fft.Fft/Fft.hpe" name="Fft" package="ft.fft" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="276" y="505">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="class" varName="C"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c1356ca9b2057b2cdaf7bab412ca75fdb39021bca4f4290f39b086b8aa2f45538e23e1af3360a5e85aa8ee62ffd7b1d4b10715fa0b45745b78c496d18d59a1ccb3f0c4a6bb86a302fa6a6ddeba6177db23a3c2f83b018ebec4ecc0035817670de32d367791764d224e4a7387fdcc3f9eea7a6f591775c9b9e13b978d62d79de8" localRef="problem_data" location="ft.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="ft.data" exposed="true">
+          <visualDescription h="30" w="93" x="88" y="514">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="41" y="3"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="002400000480000094000000060200000024000052534131000400001100000095e97e58b9ed73eb389d5d67e242ab61d50128486f43ba0afe8ff6bd8d08840f848c22ffad8acff4ef3bd7a6d1af46fd7413f1bf81704ab9152bd0c5c5f6ee8c128f38a1196abb5039132524dd4a4294fda2d6a19c7f1019c9e09736f96280d2298e765b3e51d1f8e779c60cbb6ccff11284a8fd11385bfdb9a8c9d44ada4f92" localRef="blocks_info" location="ft.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="ft.datapartition" exposed="true">
+          <visualDescription h="35" w="74" x="450" y="502">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="7" y="15"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="fft">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000697d9c305173b3189be802c3ff79de737b8611ceba3908e4e506fe84eb48c13ee6bcff5465c546d3f17f9c4be9fd4c3730beb0cdbb834a2cd9a48238e589010fa646d420fa851da6a7fa169817d907191deacca367dd83200354bbdc96d3c5f2986b7d7a8bfceacfa46cb59e4a094c15363a95dc6f9f631d9955d8a6cc75f593" localRef="instance_type" location="ft.problem_size.Instance_FT/Instance_FT.hpe" name="Instance_FT" package="ft.problem_size" exposed="false">
+      <visualDescription h="30" w="122" x="153" y="182">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="483" y="147">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IFftImpl" nArgs="2">
+      <slice isRef="cffts">
+        <originRef cRef="cffts1" iRef="ICffts"/>
+        <visualDescription h="10" w="10" x="6" y="4"/>
+      </slice>
+      <slice isRef="transpose">
+        <originRef cRef="transpose_xy_z" iRef="ITranspose"/>
+        <visualDescription h="10" w="10" x="170" y="92"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1d71041" repeat="0">
+        <visualDescription h="150" w="430" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6c2073" repeat="0" sliceRef="cffts">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@c66150" repeat="0" sliceRef="cffts">
+          <visualDescription h="50" w="50" x="70" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1ede0c" repeat="0" sliceRef="cffts">
+          <visualDescription h="50" w="50" x="130" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@841513" repeat="0" sliceRef="transpose">
+          <visualDescription h="50" w="50" x="190" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@183cb14" repeat="0" sliceRef="transpose">
+          <visualDescription h="50" w="50" x="250" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1899f3c" repeat="0" sliceRef="transpose">
+          <visualDescription h="50" w="50" x="310" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3546fc" repeat="0" sliceRef="transpose">
+          <visualDescription h="50" w="50" x="370" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.fft.Transpose;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.XY_Z;&#xA;using ft.data.ProblemDefinition;&#xA;using common.orientation.X_YZ;&#xA;using common.orientation.XY;&#xA;using common.orientation.XZ;&#xA;using ft.fft.Cffts;&#xA;using common.orientation.Y;&#xA;using common.orientation.Z;&#xA;using common.orientation.X;&#xA;using ft.fft.Fft;&#xA;&#xA;namespace impl.ft.fft.FftImpl { &#xA;&#xA;public abstract class BaseIFftImpl&lt;I, C>: Computation, BaseIFft&lt;I, C>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITranspose&lt;I, C, IXY_Z> transpose = null;&#xA;&#xA;protected ITranspose&lt;I, C, IXY_Z> Transpose {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.transpose == null)&#xA;&#x9;&#x9;&#x9;this.transpose = (ITranspose&lt;I, C, IXY_Z>) Services.getPort(&quot;transpose_xy_z&quot;);&#xA;&#x9;&#x9;return this.transpose;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITranspose&lt;I, C, IX_YZ> transpose = null;&#xA;&#xA;protected ITranspose&lt;I, C, IX_YZ> Transpose {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.transpose == null)&#xA;&#x9;&#x9;&#x9;this.transpose = (ITranspose&lt;I, C, IX_YZ>) Services.getPort(&quot;transpose_x_yz&quot;);&#xA;&#x9;&#x9;return this.transpose;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITranspose&lt;I, C, IXY> transpose = null;&#xA;&#xA;protected ITranspose&lt;I, C, IXY> Transpose {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.transpose == null)&#xA;&#x9;&#x9;&#x9;this.transpose = (ITranspose&lt;I, C, IXY>) Services.getPort(&quot;transpose_x_y&quot;);&#xA;&#x9;&#x9;return this.transpose;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITranspose&lt;I, C, IXZ> transpose = null;&#xA;&#xA;protected ITranspose&lt;I, C, IXZ> Transpose {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.transpose == null)&#xA;&#x9;&#x9;&#x9;this.transpose = (ITranspose&lt;I, C, IXZ>) Services.getPort(&quot;transpose_x_z&quot;);&#xA;&#x9;&#x9;return this.transpose;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICffts&lt;I, C, IY> cffts = null;&#xA;&#xA;protected ICffts&lt;I, C, IY> Cffts {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.cffts == null)&#xA;&#x9;&#x9;&#x9;this.cffts = (ICffts&lt;I, C, IY>) Services.getPort(&quot;cffts2&quot;);&#xA;&#x9;&#x9;return this.cffts;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICffts&lt;I, C, IZ> cffts = null;&#xA;&#xA;protected ICffts&lt;I, C, IZ> Cffts {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.cffts == null)&#xA;&#x9;&#x9;&#x9;this.cffts = (ICffts&lt;I, C, IZ>) Services.getPort(&quot;cffts3&quot;);&#xA;&#x9;&#x9;return this.cffts;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ICffts&lt;I, C, IX> cffts = null;&#xA;&#xA;protected ICffts&lt;I, C, IX> Cffts {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.cffts == null)&#xA;&#x9;&#x9;&#x9;this.cffts = (ICffts&lt;I, C, IX>) Services.getPort(&quot;cffts1&quot;);&#xA;&#x9;&#x9;return this.cffts;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIFftImpl.cs" srcType="base" uri="impl.ft.fft.FftImpl/bin/1.0.0.0/BaseIFftImpl.dll" versionId="1.0.0.0">
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>ft.fft.Transpose/bin/1.0.0.0/ITranspose.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.orientation.XY_Z/bin/1.0.0.0/IXY_Z.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>common.orientation.X_YZ/bin/1.0.0.0/IX_YZ.dll</dependency>
+          <dependency>common.orientation.XY/bin/1.0.0.0/IXY.dll</dependency>
+          <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
+          <dependency>ft.fft.Cffts/bin/1.0.0.0/ICffts.dll</dependency>
+          <dependency>common.orientation.Y/bin/1.0.0.0/IY.dll</dependency>
+          <dependency>common.orientation.Z/bin/1.0.0.0/IZ.dll</dependency>
+          <dependency>common.orientation.X/bin/1.0.0.0/IX.dll</dependency>
+          <dependency>ft.fft.Fft/bin/1.0.0.0/BaseIFft.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.fft.Fft;&#xA;&#xA;namespace impl.ft.fft.FftImpl { &#xA;&#x9;public class IFftImpl&lt;I, C> : BaseIFftImpl&lt;I, C>, IFft&lt;I, C>&#xA;&#x9;where I:IInstance_FT&lt;C>&#xA;&#x9;where C:IClass{&#xA;&#x9;&#xA;&#x9;&#x9;public IFftImpl() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IFftImpl.cs" srcType="user" uri="impl.ft.fft.FftImpl/bin/1.0.0.0/IFftImpl.dll" versionId="1.0.0.0">
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.ft.fft.FftImpl/bin/1.0.0.0/BaseIFftImpl.dll</dependency>
+          <dependency>ft.fft.Fft/bin/1.0.0.0/IFft.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="105" w="184" x="152" y="234">
+        <color b="128" g="0" r="255"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="5" y="87"/>
+        <slice pRef="blocks" sRef="cffts"/>
+        <slice pRef="blocks" sRef="cffts"/>
+        <slice pRef="blocks" sRef="cffts"/>
+        <slice pRef="blocks" sRef="transpose"/>
+        <slice pRef="blocks" sRef="transpose"/>
+        <slice pRef="blocks" sRef="transpose"/>
+        <slice pRef="blocks" sRef="transpose"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="165" y="5"/>
+        <slice pRef="problem" sRef="cffts"/>
+        <slice pRef="problem" sRef="cffts"/>
+        <slice pRef="problem" sRef="cffts"/>
+        <slice pRef="problem" sRef="transpose"/>
+        <slice pRef="problem" sRef="transpose"/>
+        <slice pRef="problem" sRef="transpose"/>
+        <slice pRef="problem" sRef="transpose"/>
+      </port>
+      <parameter iname="IInstance_FT" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+    </interface>
+    <unit iRef="IFftImpl" private="false" uRef="fft" visibleInterface="true">
+      <super cRef="base" uRef="fft"/>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
+        <visualDescription h="10" w="10" x="80" y="26"/>
+      </slices>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="true">
+        <visualDescription h="10" w="10" x="161" y="14"/>
+      </slices>
+      <slices cRef="cffts1" replica="0" uRef="cffts" sliceName="cffts" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="1"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <slices cRef="cffts2" replica="0" uRef="cffts" sliceName="cffts" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="10"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <slices cRef="cffts3" replica="0" uRef="cffts" sliceName="cffts" transitive="false">
+        <visualDescription h="10" w="10" x="66" y="20"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <slices cRef="transpose_xy_z" replica="0" uRef="transpose" sliceName="transpose" transitive="false">
+        <visualDescription h="10" w="10" x="45" y="45"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <slices cRef="transpose_x_y" replica="0" uRef="transpose" sliceName="transpose" transitive="false">
+        <visualDescription h="10" w="10" x="28" y="46"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <slices cRef="transpose_x_yz" replica="0" uRef="transpose" sliceName="transpose" transitive="false">
+        <visualDescription h="10" w="10" x="67" y="31"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <slices cRef="transpose_x_z" replica="0" uRef="transpose" sliceName="transpose" transitive="false">
+        <visualDescription h="10" w="10" x="68" y="43"/>
+        <port>problem</port>
+        <port>blocks</port>
+      </slices>
+      <visualDescription h="58" w="85" x="247" y="395"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <originRef>base</originRef>
+      <originRef>cffts1</originRef>
+      <originRef>swarztrauber_cfftz</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>u0</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="fft"/>
+      <visualDescription h="47" w="61" x="451" y="398"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
