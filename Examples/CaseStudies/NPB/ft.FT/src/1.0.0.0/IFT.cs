@@ -3,8 +3,8 @@ using common.problem_size.Class;
 
 namespace ft.FT { 
 
-public interface IFT<CLASS> : BaseIFT<CLASS>
-where CLASS:IClass
+public interface IFT<C> : BaseIFT<C>
+where C:IClass
 {
 
 

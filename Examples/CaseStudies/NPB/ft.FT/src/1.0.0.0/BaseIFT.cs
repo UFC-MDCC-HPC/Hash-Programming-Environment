@@ -2,15 +2,15 @@
 
 using br.ufc.pargo.hpe.kinds;
 using ft.datapartition.BlocksInfo;
-using environment.MPIDirect;
 using ft.data.ProblemDefinition;
 using ft.problem_size.Instance_FT;
 using common.problem_size.Class;
+using environment.MPIDirect;
 
 namespace ft.FT { 
 
-public interface BaseIFT<CLASS> : IApplicationKind 
-where CLASS:IClass
+public interface BaseIFT<C> : IApplicationKind 
+where C:IClass
 {
 
 
