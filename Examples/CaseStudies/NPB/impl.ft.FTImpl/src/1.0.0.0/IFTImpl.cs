@@ -2,14 +2,12 @@ using System;
 using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
-using ft.FT;
 using common.problem_size.Class;
-using MPI;
-using NPB3_0_JAV.BMInOut;
+using ft.FT;
 
 namespace impl.ft.FTImpl { 
-	public class IFTImpl<CLASS> : BaseIFTImpl<CLASS>, IFT<CLASS>
-	where CLASS:IClass{
+	public class IFTImpl<C> : BaseIFTImpl<C>, IFT<C>
+	where C:IClass{
 	   
 	    private Intracommunicator worldcomm;
 	    private int node, np, np1, np2, layout_type, root=0;

@@ -5,24 +5,24 @@ using br.ufc.pargo.hpe.backend.DGAC;
 using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using ft.datapartition.BlocksInfo;
-using ft.Checksum;
+using ft.data.ComputeIndexMap;
 using ft.problem_size.Instance_FT;
-using ft.Evolve;
+using common.problem_size.Class;
+using ft.data.ProblemDefinition;
+using ft.Checksum;
 using ft.data.FftInit;
+using ft.data.ComputeInitialConditions;
 using environment.MPIDirect;
 using common.benchmarking.Timer;
-using ft.data.ProblemDefinition;
-using ft.data.ComputeIndexMap;
-using ft.data.ComputeInitialConditions;
+using ft.Evolve;
 using ft.Verify;
 using ft.fft.Fft;
 using ft.FT;
-using common.problem_size.Class;
 using ft.problem_size.Instance;
 
 namespace impl.ft.FTImpl { 
-	public abstract class BaseIFTImpl<CLASS>: Application, BaseIFT<CLASS> 
-	where CLASS:IClass{
+	public abstract class BaseIFTImpl<C>: Application, BaseIFT<C>
+	where C:IClass{
 	   
 		#region data
 			protected int nx, ny, nz, niter_default, layout_0D, layout_1D, layout_2D;
@@ -54,43 +54,63 @@ namespace impl.ft.FTImpl {
 			}
 		}
 		
-		private IChecksum<IInstance_FT<CLASS>, CLASS> checksum = null;
+		private IComputeIndexMap<IInstance_FT<C>, C> compute_index_map = null;
 		
-		protected IChecksum<IInstance_FT<CLASS>, CLASS> Checksum {
+		protected IComputeIndexMap<IInstance_FT<C>, C> Compute_index_map {
+			get {
+				if (this.compute_index_map == null)
+					this.compute_index_map = (IComputeIndexMap<IInstance_FT<C>, C>) Services.getPort("compute_indexmap");
+				return this.compute_index_map;
+			}
+		}
+		
+		private IProblemDefinition<IInstance_FT<C>, C> problem = null;
+		
+		protected IProblemDefinition<IInstance_FT<C>, C> Problem {
+			get {
+				if (this.problem == null)
+					this.problem = (IProblemDefinition<IInstance_FT<C>, C>) Services.getPort("problem_data");
+				return this.problem;
+			}
+		}
+		
+		private IChecksum<IInstance_FT<C>, C> checksum = null;
+		
+		protected IChecksum<IInstance_FT<C>, C> Checksum {
 			get {
 				if (this.checksum == null)
-					this.checksum = (IChecksum<IInstance_FT<CLASS>, CLASS>) Services.getPort("checksum");
+					this.checksum = (IChecksum<IInstance_FT<C>, C>) Services.getPort("checksum");
 				return this.checksum;
 			}
 		}
 		
-		private IEvolve<IInstance_FT<CLASS>, CLASS> evolve = null;
+		private IInstance_FT<C> instance = null;
 		
-		protected IEvolve<IInstance_FT<CLASS>, CLASS> Evolve {
-			get {
-				if (this.evolve == null)
-					this.evolve = (IEvolve<IInstance_FT<CLASS>, CLASS>) Services.getPort("evolve");
-				return this.evolve;
-			}
-		}
-		
-		private IInstance_FT<CLASS> instance = null;
-		
-		protected IInstance_FT<CLASS> Instance {
+		protected IInstance_FT<C> Instance {
 			get {
 				if (this.instance == null)
-					this.instance = (IInstance_FT<CLASS>) Services.getPort("instance_type");
+					this.instance = (IInstance_FT<C>) Services.getPort("instance_type");
 				return this.instance;
 			}
 		}
 		
-		private IFftInit<IInstance_FT<CLASS>, CLASS> fftinit = null;
+		private IFftInit<IInstance_FT<C>, C> fftinit = null;
 		
-		protected IFftInit<IInstance_FT<CLASS>, CLASS> Fftinit {
+		protected IFftInit<IInstance_FT<C>, C> Fftinit {
 			get {
 				if (this.fftinit == null)
-					this.fftinit = (IFftInit<IInstance_FT<CLASS>, CLASS>) Services.getPort("fft_init");
+					this.fftinit = (IFftInit<IInstance_FT<C>, C>) Services.getPort("fft_init");
 				return this.fftinit;
+			}
+		}
+		
+		private IComputeInitialConditions<IInstance_FT<C>, C> compute_initial_conditions = null;
+		
+		protected IComputeInitialConditions<IInstance_FT<C>, C> Compute_initial_conditions {
+			get {
+				if (this.compute_initial_conditions == null)
+					this.compute_initial_conditions = (IComputeInitialConditions<IInstance_FT<C>, C>) Services.getPort("compute_initial_conditions");
+				return this.compute_initial_conditions;
 			}
 		}
 		
@@ -114,52 +134,32 @@ namespace impl.ft.FTImpl {
 			}
 		}
 		
-		private IProblemDefinition<IInstance_FT<CLASS>, CLASS> problem = null;
+		private IEvolve<IInstance_FT<C>, C> evolve = null;
 		
-		protected IProblemDefinition<IInstance_FT<CLASS>, CLASS> Problem {
+		protected IEvolve<IInstance_FT<C>, C> Evolve {
 			get {
-				if (this.problem == null)
-					this.problem = (IProblemDefinition<IInstance_FT<CLASS>, CLASS>) Services.getPort("problem_data");
-				return this.problem;
+				if (this.evolve == null)
+					this.evolve = (IEvolve<IInstance_FT<C>, C>) Services.getPort("evolve");
+				return this.evolve;
 			}
 		}
 		
-		private IComputeIndexMap<IInstance_FT<CLASS>, CLASS> compute_index_map = null;
+		private IVerify<IInstance_FT<C>, C> verify = null;
 		
-		protected IComputeIndexMap<IInstance_FT<CLASS>, CLASS> Compute_index_map {
-			get {
-				if (this.compute_index_map == null)
-					this.compute_index_map = (IComputeIndexMap<IInstance_FT<CLASS>, CLASS>) Services.getPort("compute_indexmap");
-				return this.compute_index_map;
-			}
-		}
-		
-		private IComputeInitialConditions<IInstance_FT<CLASS>, CLASS> compute_initial_conditions = null;
-		
-		protected IComputeInitialConditions<IInstance_FT<CLASS>, CLASS> Compute_initial_conditions {
-			get {
-				if (this.compute_initial_conditions == null)
-					this.compute_initial_conditions = (IComputeInitialConditions<IInstance_FT<CLASS>, CLASS>) Services.getPort("compute_initial_conditions");
-				return this.compute_initial_conditions;
-			}
-		}
-		
-		private IVerify<IInstance_FT<CLASS>, CLASS> verify = null;
-		
-		protected IVerify<IInstance_FT<CLASS>, CLASS> Verify {
+		protected IVerify<IInstance_FT<C>, C> Verify {
 			get {
 				if (this.verify == null)
-					this.verify = (IVerify<IInstance_FT<CLASS>, CLASS>) Services.getPort("verify");
+					this.verify = (IVerify<IInstance_FT<C>, C>) Services.getPort("verify");
 				return this.verify;
 			}
 		}
 		
-		private IFft<IInstance_FT<CLASS>, CLASS> fft = null;
+		private IFft<IInstance_FT<C>, C> fft = null;
 		
-		protected IFft<IInstance_FT<CLASS>, CLASS> Fft {
+		protected IFft<IInstance_FT<C>, C> Fft {
 			get {
 				if (this.fft == null)
-					this.fft = (IFft<IInstance_FT<CLASS>, CLASS>) Services.getPort("fft");
+					this.fft = (IFft<IInstance_FT<C>, C>) Services.getPort("fft");
 				return this.fft;
 			}
 		}
