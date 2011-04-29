@@ -27,11 +27,6 @@ namespace impl.ft.FTImpl {
 		#region data
 			protected int nx, ny, nz, niter_default, layout_0D, layout_1D, layout_2D;
 			protected int T_max, T_total, T_checksum;
-			protected int[,] dims;
-			protected double[] twiddle;
-		    protected double [,,,] u0;
-		    protected double [,,,] u1;
-		    protected double [,,,] u2;
 		    public PROBLEM_CLASS problem_class;
 			override public void initialize(){
 				nx = Instance.nx;
@@ -42,11 +37,6 @@ namespace impl.ft.FTImpl {
 				T_max = Constants.T_max;
 				T_total = Constants.T_total;
 				T_checksum = Constants.T_checksum;
-				dims = Problem.dims;
-				twiddle = Problem.twiddle;
-				u0 = Problem.Field_u0;
-				u1 = Problem.Field_u1;
-				u2 = Problem.Field_u2;
 				
 				layout_0D = Constants.layout_0D;
 				layout_1D = Constants.layout_1D;

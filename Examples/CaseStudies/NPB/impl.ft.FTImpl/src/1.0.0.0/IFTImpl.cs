@@ -14,6 +14,11 @@ namespace impl.ft.FTImpl {
 	    private Intracommunicator worldcomm;
 	    private int node, np, np1, np2, layout_type, root=0;
 	    public static String BMName = "FT";
+		protected int[,] dims;
+		protected double[] twiddle;
+	    protected double [,,,] u0;
+	    protected double [,,,] u1;
+	    protected double [,,,] u2;
 	
 		public IFTImpl() { 
 		
@@ -29,11 +34,16 @@ namespace impl.ft.FTImpl {
             node = worldcomm.Rank;
             for(int i = 1; i <= T_max; i++) Timer.resetTimer(i);
             int niter = initialConfig();
+            
             Problem.problemConfig(np1, np2, layout_type);
             Blocks.blocksConfig(nx, ny, nz, np1, np2, layout_type);
-            //problemDefination();
-            //blocksInfo();            
-            //if(timers_enabled) synchup();
+            
+			dims = Problem.dims;
+			twiddle = Problem.twiddle;
+			u0 = Problem.Field_u0;
+			u1 = Problem.Field_u1;
+			u2 = Problem.Field_u2;
+            
             Compute_index_map.setParameters(twiddle, dims[0, 2], dims[1, 2], dims[2, 2]);
             Compute_index_map.go();            
             Compute_initial_conditions.setParameters(u1);
@@ -47,7 +57,6 @@ namespace impl.ft.FTImpl {
             worldcomm.Barrier();
 
             Timer.start(T_total);
-            //if(timers_enabled) timer.start(T_setup);
 
             Compute_index_map.setParameters(twiddle, dims[0, 2], dims[1, 2], dims[2, 2]);
             Compute_index_map.go();
@@ -56,29 +65,17 @@ namespace impl.ft.FTImpl {
             Fftinit.setParameters(dims[0, 0]);
             Fftinit.go();
 
-            //if(timers_enabled) synchup();
-            //if(timers_enabled) timer.stop(T_setup);
-
-            //if(timers_enabled) timer.start(T_fft);
             Fft.setParameters(1, u1, u0);
             Fft.go();
-            //if(timers_enabled) timer.stop(T_fft);
 
             double[] sums = new double[niter_default*2];
             for(int iter = 0; iter < niter; iter++) {
-                //if(timers_enabled) timer.start(T_evolve);
                 Evolve.setParameters(u0, u1, twiddle, dims[0, 0], dims[1, 0], dims[2, 0]);
                 Evolve.go();
-                //if(timers_enabled) timer.stop(T_evolve);
-                //if(timers_enabled) timer.start(T_fft);
                 Fft.setParameters(-1, u1, u2);
                 Fft.go();
-                //if(timers_enabled) timer.stop(T_fft);
-                //if(timers_enabled) synchup();
-                //if(timers_enabled) timer.start(T_checksum);
                 Checksum.setParameters(iter, sums, u2, dims[0, 0], dims[1, 0], dims[2, 0]);
                 Checksum.go();
-                //if(timers_enabled) timer.stop(T_checksum);
             }
             Verify.setParameters(niter, sums);
             int verified = Verify.go();
@@ -109,8 +106,6 @@ namespace impl.ft.FTImpl {
                                         -1);
                 results.print();
             }
-            //if(timers_enabled) print_timers();
-            //mpi.Dispose();
         }
         public int initialConfig() {
             int fstatus=0, niter=0;
@@ -118,7 +113,7 @@ namespace impl.ft.FTImpl {
                 Console.WriteLine(" NAS Parallel Benchmarks "+ "3.3" +" -- FT Benchmark ");
                 try {
                     Console.Write("Trying Read from input file inputft.data: ");
-                    int[] conf = { 1, 1, 2 };
+                    int[] conf = { 1, 1, 2 };//Line 1: 1 var; Line 2: 1 var; Line 3: 2 vars;
                     string[] vetTemp = readFileData("inputft.data", conf);
                     niter = int.Parse(vetTemp[0]);
                     layout_type = int.Parse(vetTemp[1]);
