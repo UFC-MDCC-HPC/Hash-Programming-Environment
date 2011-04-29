@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d33aabe06df8a7056d3251cf7c50127a8f6e8cd06eb366a48dd4be7b3ef3d0b0cc4efa42f19c5afe41159d5b9b45d827e502a11f0289730c9d78165cc61adfb94cbbaafd18f7483a16a6679123ebc0147bc5d6cfb3a5b8648bd6d343933bc30a2df3238f54039af249de414881f75e298d39ae68be6b22f83b8346fea95159f4" isAbstract="false" kind="Application" name="FTImpl" packagePath="impl.ft">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="00240000048000009400000006020000002400005253413100040000110000003def20d3dac7f61b6b4e42821d470e346d872acb161f57b49f430d09abbde7c9ec35cce9b279cf00d75d1e52d1a04a9487dd6d146b3756134839be2db7dc424bee8241e82b74d0102ad86191b9346a2cd01755935ab1b0145c9834882cd43d44e9f456b0d82e0c4ce2ff488ab9ca3f57bc0c6c9dc35249ee2fcce271dee05682" localRef="base" location="ft.FT/FT.hpe" name="FT" package="ft" version="1.0.0.0">
+        <visualDescription h="48" w="109" x="316" y="388">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="class" varName="CLASS"/>
+        <unitBounds uRef="ft">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="322" y="209">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="class" varName="CLASS"/>
+    <interface iRef="IFTImpl" nArgs="1">
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance_FT"/>
+        <visualDescription h="10" w="10" x="15" y="40"/>
+      </slice>
+      <slice isRef="checksum">
+        <originRef cRef="checksum" iRef="IChecksum"/>
+        <visualDescription h="10" w="10" x="4" y="2"/>
+      </slice>
+      <slice isRef="timer">
+        <originRef cRef="timer" iRef="ITimer"/>
+        <visualDescription h="10" w="10" x="4" y="11"/>
+      </slice>
+      <slice isRef="compute_index_map">
+        <originRef cRef="compute_indexmap" iRef="IComputeIndexMap"/>
+        <visualDescription h="10" w="10" x="4" y="24"/>
+      </slice>
+      <slice isRef="compute_initial_conditions">
+        <originRef cRef="compute_initial_conditions" iRef="IComputeInitialConditions"/>
+        <visualDescription h="10" w="10" x="37" y="39"/>
+      </slice>
+      <slice isRef="fftinit">
+        <originRef cRef="fft_init" iRef="IFftInit"/>
+        <visualDescription h="10" w="10" x="50" y="41"/>
+      </slice>
+      <slice isRef="evolve">
+        <originRef cRef="evolve" iRef="IEvolve"/>
+        <visualDescription h="10" w="10" x="65" y="38"/>
+      </slice>
+      <slice isRef="fft">
+        <originRef cRef="fft" iRef="IFft"/>
+        <visualDescription h="10" w="10" x="90" y="30"/>
+      </slice>
+      <slice isRef="verify">
+        <originRef cRef="verify" iRef="IVerify"/>
+        <visualDescription h="10" w="10" x="85" y="9"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@a028b6" repeat="0">
+        <visualDescription h="150" w="430" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@d0ce47" repeat="0" sliceRef="checksum">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@96c0c4" repeat="0" sliceRef="compute_index_map">
+          <visualDescription h="50" w="50" x="70" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@149a2ef" repeat="0" sliceRef="compute_initial_conditions">
+          <visualDescription h="50" w="50" x="130" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@168208d" repeat="0" sliceRef="fftinit">
+          <visualDescription h="50" w="50" x="190" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1311810" repeat="0" sliceRef="evolve">
+          <visualDescription h="50" w="50" x="250" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@22d26f" repeat="0" sliceRef="fft">
+          <visualDescription h="50" w="50" x="310" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@18c1922" repeat="0" sliceRef="verify">
+          <visualDescription h="50" w="50" x="370" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Executable" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.Checksum;&#xA;using ft.problem_size.Instance_FT;&#xA;using ft.Evolve;&#xA;using ft.data.FftInit;&#xA;using environment.MPIDirect;&#xA;using common.benchmarking.Timer;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.data.ComputeIndexMap;&#xA;using ft.data.ComputeInitialConditions;&#xA;using ft.Verify;&#xA;using ft.fft.Fft;&#xA;using ft.FT;&#xA;&#xA;namespace impl.ft.FTImpl { &#xA;&#xA;public abstract class BaseIFTImpl&lt;IClass>: Application, BaseIFT&lt;IClass>&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;protected IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IChecksum&lt;IInstance_FT> checksum = null;&#xA;&#xA;protected IChecksum&lt;IInstance_FT> Checksum {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.checksum == null)&#xA;&#x9;&#x9;&#x9;this.checksum = (IChecksum&lt;IInstance_FT>) Services.getPort(&quot;checksum&quot;);&#xA;&#x9;&#x9;return this.checksum;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IEvolve&lt;IInstance_FT> evolve = null;&#xA;&#xA;protected IEvolve&lt;IInstance_FT> Evolve {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.evolve == null)&#xA;&#x9;&#x9;&#x9;this.evolve = (IEvolve&lt;IInstance_FT>) Services.getPort(&quot;evolve&quot;);&#xA;&#x9;&#x9;return this.evolve;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IInstance_FT instance = null;&#xA;&#xA;protected IInstance_FT Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;this.instance = (IInstance_FT) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;return this.instance;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IFftInit&lt;IInstance_FT> fftinit = null;&#xA;&#xA;protected IFftInit&lt;IInstance_FT> Fftinit {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.fftinit == null)&#xA;&#x9;&#x9;&#x9;this.fftinit = (IFftInit&lt;IInstance_FT>) Services.getPort(&quot;fft_init&quot;);&#xA;&#x9;&#x9;return this.fftinit;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;protected IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITimer timer = null;&#xA;&#xA;protected ITimer Timer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.timer == null)&#xA;&#x9;&#x9;&#x9;this.timer = (ITimer) Services.getPort(&quot;timer&quot;);&#xA;&#x9;&#x9;return this.timer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;IInstance_FT> problem = null;&#xA;&#xA;protected IProblemDefinition&lt;IInstance_FT> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;IInstance_FT>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IComputeIndexMap&lt;IInstance_FT> compute_index_map = null;&#xA;&#xA;protected IComputeIndexMap&lt;IInstance_FT> Compute_index_map {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.compute_index_map == null)&#xA;&#x9;&#x9;&#x9;this.compute_index_map = (IComputeIndexMap&lt;IInstance_FT>) Services.getPort(&quot;compute_indexmap&quot;);&#xA;&#x9;&#x9;return this.compute_index_map;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IComputeInitialConditions&lt;IInstance_FT> compute_initial_conditions = null;&#xA;&#xA;protected IComputeInitialConditions&lt;IInstance_FT> Compute_initial_conditions {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.compute_initial_conditions == null)&#xA;&#x9;&#x9;&#x9;this.compute_initial_conditions = (IComputeInitialConditions&lt;IInstance_FT>) Services.getPort(&quot;compute_initial_conditions&quot;);&#xA;&#x9;&#x9;return this.compute_initial_conditions;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IVerify&lt;IInstance_FT> verify = null;&#xA;&#xA;protected IVerify&lt;IInstance_FT> Verify {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.verify == null)&#xA;&#x9;&#x9;&#x9;this.verify = (IVerify&lt;IInstance_FT>) Services.getPort(&quot;verify&quot;);&#xA;&#x9;&#x9;return this.verify;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IFft&lt;IInstance_FT> fft = null;&#xA;&#xA;protected IFft&lt;IInstance_FT> Fft {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.fft == null)&#xA;&#x9;&#x9;&#x9;this.fft = (IFft&lt;IInstance_FT>) Services.getPort(&quot;fft&quot;);&#xA;&#x9;&#x9;return this.fft;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIFTImpl.cs" srcType="base" uri="impl.ft.FTImpl/bin/1.0.0.0/BaseIFTImpl.dll" versionId="1.0.0.0">
+          <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
+          <dependency>ft.Checksum/bin/1.0.0.0/IChecksum.dll</dependency>
+          <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
+          <dependency>ft.Evolve/bin/1.0.0.0/IEvolve.dll</dependency>
+          <dependency>ft.data.FftInit/bin/1.0.0.0/IFftInit.dll</dependency>
+          <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
+          <dependency>common.benchmarking.Timer/bin/1.0.0.0/ITimer.dll</dependency>
+          <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>ft.data.ComputeIndexMap/bin/1.0.0.0/IComputeIndexMap.dll</dependency>
+          <dependency>ft.data.ComputeInitialConditions/bin/1.0.0.0/IComputeInitialConditions.dll</dependency>
+          <dependency>ft.Verify/bin/1.0.0.0/IVerify.dll</dependency>
+          <dependency>ft.fft.Fft/bin/1.0.0.0/IFft.dll</dependency>
+          <dependency>ft.FT/bin/1.0.0.0/BaseIFT.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.FT;&#xA;&#xA;namespace impl.ft.FTImpl { &#xA;&#xA;public class IFTImpl&lt;IClass> : BaseIFTImpl&lt;IClass>, IFT&lt;IClass>&#xA;{&#xA;&#xA;public IFTImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;checksum.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;compute_index_map.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;compute_initial_conditions.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;fftinit.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;evolve.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;fft.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;verify.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IFTImpl.cs" srcType="user" uri="impl.ft.FTImpl/bin/1.0.0.0/IFTImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.ft.FTImpl/bin/1.0.0.0/BaseIFTImpl.dll</dependency>
+          <dependency>ft.FT/bin/1.0.0.0/IFT.dll</dependency>
+        </file>
+        <file contents="using DGAC;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace impl.ft.FTImpl { &#xA;&#xA;&#x9;public class IFTImplMain {&#xA;&#xA;&#x9;&#x9;static void Main(string [] args) {&#xA;&#xA;&#x9;&#x9;&#x9;IFTImpl ft = new IFTImpl();&#xA;&#xA;&#x9;&#x9;&#x9;BackEnd.DGACInit(&quot;0024000004800000940000000602000000240000525341310004000011000000d33aabe06df8a7056d3251cf7c50127a8f6e8cd06eb366a48dd4be7b3ef3d0b0cc4efa42f19c5afe41159d5b9b45d827e502a11f0289730c9d78165cc61adfb94cbbaafd18f7483a16a6679123ebc0147bc5d6cfb3a5b8648bd6d343933bc30a2df3238f54039af249de414881f75e298d39ae68be6b22f83b8346fea95159f4&quot;,&quot;ft&quot;,ft,args);&#xA;&#x9;&#x9;&#x9;ft.createSlices();&#xA;&#x9;&#x9;&#x9;ft.compute();&#xA;&#x9;&#x9;&#x9;BackEnd.DGACFinalize();&#xA;&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;}&#xA;&#xA;}&#xA;" fileType="exe" name="IFTImplMain.cs" srcType="main" uri="file:/H:/Components/impl.ft.FTImpl/bin/1.0.0.0/IFTImplMain.exe" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/impl.ft.FTImpl/bin/1.0.0.0/IFTImpl.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="65" w="128" x="133" y="163">
+        <color b="255" g="255" r="0"/>
+      </visualDescription>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="checksum"/>
+        <slice pRef="problem" sRef="compute_index_map"/>
+        <slice pRef="problem" sRef="compute_initial_conditions"/>
+        <slice pRef="problem" sRef="fftinit"/>
+        <slice pRef="problem" sRef="evolve"/>
+        <slice pRef="problem" sRef="fft"/>
+        <slice pRef="problem" sRef="verify"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="checksum"/>
+        <slice pRef="blocks" sRef="compute_index_map"/>
+        <slice pRef="blocks" sRef="compute_initial_conditions"/>
+        <slice pRef="blocks" sRef="fftinit"/>
+        <slice pRef="blocks" sRef="evolve"/>
+        <slice pRef="blocks" sRef="fft"/>
+        <slice pRef="blocks" sRef="verify"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="mpi" sRef="timer"/>
+      </port>
+      <parameter iname="IClass" order="0" parid="class" uname="class" varid="CLASS"/>
+    </interface>
+    <unit iRef="IFTImpl" private="false" uRef="ft" visibleInterface="true">
+      <super cRef="base" uRef="ft"/>
+      <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
+        <visualDescription h="10" w="10" x="44" y="42"/>
+      </slices>
+      <slices cRef="checksum" replica="0" uRef="checksum" sliceName="checksum" transitive="false">
+        <visualDescription h="10" w="10" x="98" y="2"/>
+      </slices>
+      <slices cRef="timer" replica="0" uRef="timer" sliceName="timer" transitive="false">
+        <visualDescription h="10" w="10" x="57" y="42"/>
+      </slices>
+      <slices cRef="compute_indexmap" replica="0" uRef="compute_index_map" sliceName="compute_index_map" transitive="false">
+        <visualDescription h="10" w="10" x="69" y="43"/>
+      </slices>
+      <slices cRef="compute_initial_conditions" replica="0" uRef="compute_initial_conditions" sliceName="compute_initial_conditions" transitive="false">
+        <visualDescription h="10" w="10" x="84" y="42"/>
+      </slices>
+      <slices cRef="fft_init" replica="0" uRef="fftinit" sliceName="fftinit" transitive="false">
+        <visualDescription h="10" w="10" x="98" y="43"/>
+      </slices>
+      <slices cRef="evolve" replica="0" uRef="evolve" sliceName="evolve" transitive="false">
+        <visualDescription h="10" w="10" x="98" y="34"/>
+      </slices>
+      <slices cRef="fft" replica="0" uRef="fft" sliceName="fft" transitive="false">
+        <visualDescription h="10" w="10" x="98" y="24"/>
+      </slices>
+      <slices cRef="verify" replica="0" uRef="verify" sliceName="verify" transitive="false">
+        <visualDescription h="10" w="10" x="98" y="13"/>
+      </slices>
+      <visualDescription h="53" w="109" x="170" y="282"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
+      <originRef>base</originRef>
+      <originRef>verify</originRef>
+      <originRef>problem_data</originRef>
+      <originRef>u0</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="ft"/>
+      <visualDescription h="62" w="73" x="104" y="406"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

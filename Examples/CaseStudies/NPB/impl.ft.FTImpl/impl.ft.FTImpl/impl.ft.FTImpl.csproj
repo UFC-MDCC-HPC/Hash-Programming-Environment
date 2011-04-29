@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DA558FA9-7B99-425D-B289-4F2DF9BE6309}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.ft.FTImpl</RootNamespace>
+    <AssemblyName>IFTImpl</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\FTImpl.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIFTImpl.cs">
+      <Link>BaseIFTImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IFTImpl.cs">
+      <Link>IFTImpl.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\Program Files %28x86%29\Mono-2.6.1\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+    <Reference Include="MPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=29b4a045737654fe">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\MPI.NET\Lib\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="BMInOut, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e3d31ba250e8460c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files %28x86%29\Mono-2.6.1\lib\mono\BMInOut\BMInOut.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.Checksum\ft.Checksum\ft.Checksum.csproj">
+      <Project>{5AD97C22-A9E0-42FF-BE66-9DAAA2410CCE}</Project>
+      <Name>ft.Checksum</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.data.ComputeIndexMap\ft.data.ComputeIndexMap\ft.data.ComputeIndexMap.csproj">
+      <Project>{37F972A2-A930-4072-BDAF-4E37A54FA435}</Project>
+      <Name>ft.data.ComputeIndexMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.data.ComputeInitialConditions\ft.data.ComputeInitialConditions\ft.data.ComputeInitialConditions.csproj">
+      <Project>{DB6DBBC6-BBA5-4146-A303-A4512D412897}</Project>
+      <Name>ft.data.ComputeInitialConditions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.data.FftInit\ft.data.FftInit\ft.data.FftInit.csproj">
+      <Project>{3FBBA9D6-BCB4-4606-927A-2E3FA567BD62}</Project>
+      <Name>ft.data.FftInit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.data.ProblemDefinition\ft.data.ProblemDefinition\ft.data.ProblemDefinition.csproj">
+      <Project>{6575A9B7-B808-47C9-97C2-624BBC747EB9}</Project>
+      <Name>ft.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.datapartition.BlocksInfo\ft.datapartition.BlocksInfo\ft.datapartition.BlocksInfo.csproj">
+      <Project>{D674171F-DECC-4EC3-B6E8-9F4E9FE8F738}</Project>
+      <Name>ft.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.Evolve\ft.Evolve\ft.Evolve.csproj">
+      <Project>{E64EFD66-4E5F-4FE8-A86A-FF57E58F4807}</Project>
+      <Name>ft.Evolve</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.fft.Fft\ft.fft.Fft\ft.fft.Fft.csproj">
+      <Project>{865B1D7A-009E-4E95-8BC4-5B85AF07A17C}</Project>
+      <Name>ft.fft.Fft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.FT\ft.FT\ft.FT.csproj">
+      <Project>{DCA10D5A-B678-4A0F-BC1F-DAD5739F4EF0}</Project>
+      <Name>ft.FT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.problem_size.Instance\ft.problem_size.Instance\ft.problem_size.Instance.csproj">
+      <Project>{70792EF3-E787-4073-94FC-13AFE5011577}</Project>
+      <Name>ft.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.problem_size.Instance_FT\ft.problem_size.Instance_FT\ft.problem_size.Instance_FT.csproj">
+      <Project>{3BFFEDDF-65E1-4ABF-B056-89CAFB792A10}</Project>
+      <Name>ft.problem_size.Instance_FT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ft.Verify\ft.Verify\ft.Verify.csproj">
+      <Project>{AEA3DE40-96DD-4667-A36D-FC96CA089772}</Project>
+      <Name>ft.Verify</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.benchmarking.Timer\common.benchmarking.Timer\common.benchmarking.Timer.csproj">
+      <Project>{D477316A-7431-4538-BC0B-8D386F0FF20C}</Project>
+      <Name>common.benchmarking.Timer</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
