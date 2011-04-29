@@ -301,6 +301,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ft.fft.Fft", "ft.fft.Fft\ft
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.ft.fft.FftImpl", "impl.ft.fft.FftImpl\impl.ft.fft.FftImpl\impl.ft.fft.FftImpl.csproj", "{522D7C4F-C923-4B3A-A35E-77970591AC0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ft.FT", "ft.FT\ft.FT\ft.FT.csproj", "{DCA10D5A-B678-4A0F-BC1F-DAD5739F4EF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.ft.FTImpl", "impl.ft.FTImpl\impl.ft.FTImpl\impl.ft.FTImpl.csproj", "{DA558FA9-7B99-425D-B289-4F2DF9BE6309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -815,6 +819,10 @@ Global
 		{D77D11E8-B93F-4D6C-A34A-EC629C3A966B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D77D11E8-B93F-4D6C-A34A-EC629C3A966B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D77D11E8-B93F-4D6C-A34A-EC629C3A966B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA558FA9-7B99-425D-B289-4F2DF9BE6309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA558FA9-7B99-425D-B289-4F2DF9BE6309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA558FA9-7B99-425D-B289-4F2DF9BE6309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA558FA9-7B99-425D-B289-4F2DF9BE6309}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAB70174-CF3E-4EEF-8AA9-A32F775A293F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAB70174-CF3E-4EEF-8AA9-A32F775A293F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAB70174-CF3E-4EEF-8AA9-A32F775A293F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -827,6 +835,10 @@ Global
 		{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC71BFA5-7AB3-44F4-AC61-FF3C0E02561F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA10D5A-B678-4A0F-BC1F-DAD5739F4EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA10D5A-B678-4A0F-BC1F-DAD5739F4EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA10D5A-B678-4A0F-BC1F-DAD5739F4EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA10D5A-B678-4A0F-BC1F-DAD5739F4EF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E308F8A8-C2CE-4159-8073-B8A31100D7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E308F8A8-C2CE-4159-8073-B8A31100D7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E308F8A8-C2CE-4159-8073-B8A31100D7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
