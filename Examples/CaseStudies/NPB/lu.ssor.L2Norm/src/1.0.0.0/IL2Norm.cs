@@ -8,7 +8,7 @@ public interface IL2Norm<I, C> : BaseIL2Norm<I, C>
 where I:IInstance<C>
 where C:IClass
 {
-   void setParameters(double[, , ,] v, double[] sum);
+   void setParameters(double[] sum);
 
 } // end main interface 
 

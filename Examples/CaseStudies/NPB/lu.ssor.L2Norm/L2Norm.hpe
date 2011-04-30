@@ -75,13 +75,13 @@
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.ssor.L2Norm { &#xA;&#xA;public interface IL2Norm&lt;I, C> : BaseIL2Norm&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;   void setParameters(double[, , ,] v, double[] sum);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IL2Norm.cs" srcType="user" uri="lu.ssor.L2Norm/bin/1.0.0.0/IL2Norm.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.ssor.L2Norm { &#xA;&#xA;public interface IL2Norm&lt;I, C> : BaseIL2Norm&lt;I, C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;   void setParameters(double[] sum);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IL2Norm.cs" srcType="user" uri="lu.ssor.L2Norm/bin/1.0.0.0/IL2Norm.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.ssor.L2Norm/bin/1.0.0.0/BaseIL2Norm.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="104" w="214" x="221" y="115">
+      <visualDescription h="104" w="214" x="239" y="79">
         <color b="0" g="0" r="255"/>
       </visualDescription>
       <port name="problem">

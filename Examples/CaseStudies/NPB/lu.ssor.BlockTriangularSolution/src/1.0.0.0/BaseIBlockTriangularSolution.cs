@@ -10,7 +10,7 @@ using common.Discretization;
 using environment.MPIDirect;
 
 namespace lu.ssor.BlockTriangularSolution { 
-	public interface BaseIBlockTriangularSolution<I, C, DIS> : IComputationKind 
+	public interface BaseIBlockTriangularSolution<DIS, I, C> : IComputationKind 
 	where I:IInstance<C>
 	where C:IClass
 	where DIS:IDiscretization{

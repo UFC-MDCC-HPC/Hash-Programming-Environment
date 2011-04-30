@@ -134,13 +134,13 @@
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
+        <originRef>discretization</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
         <originRef>problem_data</originRef>
         <originRef>rsd</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
-        <originRef>discretization</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
