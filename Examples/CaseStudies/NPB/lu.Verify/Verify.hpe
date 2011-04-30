@@ -45,10 +45,6 @@
     <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
     <interface iRef="IVerify" nArgs="2">
-      <slice isRef="instance">
-        <originRef cRef="instance_type" iRef="IInstance"/>
-        <visualDescription h="10" w="10" x="3" y="17"/>
-      </slice>
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocksInfo"/>
         <visualDescription h="10" w="10" x="64" y="13"/>
@@ -57,12 +53,16 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="37" y="28"/>
       </slice>
+      <slice isRef="instance">
+        <originRef cRef="instance_type" iRef="IInstance"/>
+        <visualDescription h="10" w="10" x="3" y="17"/>
+      </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Verify { &#xA;&#x9;public interface BaseIVerify&lt;I, C> : IComputationKind &#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIVerify.cs" srcType="base" uri="lu.Verify/bin/1.0.0.0/BaseIVerify.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Verify { &#xA;&#x9;public interface IVerify&lt;I, C> : BaseIVerify&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;   int Verified { get; }&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IVerify.cs" srcType="user" uri="lu.Verify/bin/1.0.0.0/IVerify.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Verify { &#xA;&#x9;public interface IVerify&lt;I, C> : BaseIVerify&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;   int Verified { get; }&#xA;&#x9;   void setParameters(double[] xcr, double[] xce, double xci);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IVerify.cs" srcType="user" uri="lu.Verify/bin/1.0.0.0/IVerify.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/lu.Verify/bin/1.0.0.0/BaseIVerify.dll</dependency>
@@ -96,7 +96,7 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="verify"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
