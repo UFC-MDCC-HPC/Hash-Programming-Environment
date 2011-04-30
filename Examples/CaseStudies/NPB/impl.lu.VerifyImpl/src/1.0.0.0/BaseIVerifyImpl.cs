@@ -16,11 +16,14 @@ namespace impl.lu.VerifyImpl {
 	where I:IInstance_LU<C>
 	where C:IClass {
 	
-		#region data			
+		#region data
+					
 			protected int nx0,ny0,nz0,itmax;
 		    protected double[] xcrref, xceref;
-		    protected double dtref, xciref, dt;		    
-			override public void initialize(){
+		    protected double dtref, xciref, dt;
+		    		    
+			override public void initialize()
+			{
 				nx0    = Blocks.nx0;
 				ny0    = Blocks.ny0;
 				nz0    = Blocks.nz0;
@@ -31,6 +34,7 @@ namespace impl.lu.VerifyImpl {
 				xciref = Instance.xciref;
 				dt     = Instance.dt;
 			}
+			
 		#endregion
 	
 		private IProblemDefinition<I, C> problem = null;

@@ -22,7 +22,7 @@ using lu.LU;
 using lu.problem_size.Instance;
 using MPI;
 
-namespace impl.lu.LUImpl { 
+namespace impl.lu.LU { 
 
 public abstract class BaseILUImpl<C>: Application, BaseILU<C>
 where C:IClass{

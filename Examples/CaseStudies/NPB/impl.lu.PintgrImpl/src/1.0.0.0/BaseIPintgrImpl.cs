@@ -9,17 +9,22 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
 using environment.MPIDirect;
-using lu.Exchange4;
 using lu.Exchange;
 using common.topology.Ring;
 using lu.problem_size.Instance;
 using lu.Pintgr;
+using lu.exchange.ExchangePattern4;
+using lu.exchange.ExchangePattern5;
+using lu.exchange.ExchangePattern6;
 using MPI;
+using common.Discretization;
 
-namespace impl.lu.PintgrImpl { 
+namespace impl.lu.PintgrImpl 
+{ 
 	public abstract class BaseIPintgrImpl<I, C>: Computation, BaseIPintgr<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass {
+		where I:IInstance_LU<C>
+		where C:IClass 
+	{
 		#region data
 			protected Intracommunicator worldcomm;//Mpi
 			protected int nx,ny,ipt,jpt;//Blocks
@@ -27,14 +32,15 @@ namespace impl.lu.PintgrImpl {
 			protected int isiz1, isiz2, ii1, ii2, ji1, ji2, ki1, ki2;//Problem Constants
 			protected double c2, dxi, deta, dzeta;
 			protected double [,,,] u;
-			override public void initialize(){
+			override public void initialize()
+			{
 			    nx  = Blocks.nx;
 			    ny  = Blocks.ny;
                 ipt = Blocks.ipt;
                 jpt = Blocks.jpt;
                 
                 isiz3 = Instance.isiz3;
-                
+			
                 isiz1 = Problem.isiz1;
                 isiz2 = Problem.isiz2; 
                 u     = Problem.Field_u;
@@ -50,7 +56,7 @@ namespace impl.lu.PintgrImpl {
                 deta  = Constants.deta;
                 dzeta = Constants.dzeta;
 
-				worldcomm = Mpi.worldComm();
+				worldcomm = this.WorldComm; // Mpi.worldComm();
 			}
 		#endregion
 
@@ -74,29 +80,35 @@ namespace impl.lu.PintgrImpl {
 			}
 		}
 		
-		
-		private IExchange4<I, C> exchange4 = null;
-		
-		protected IExchange4<I, C> Exchange4 {
+				
+		private IExchange<I, C, IExchangePattern4, IDiscretization> exchange4 = null;
+		protected IExchange<I, C, IExchangePattern4, IDiscretization> Exchange4 {
 			get {
 				if (this.exchange4 == null)
-					this.exchange4 = (IExchange4<I, C>) Services.getPort("exchange4");
+					this.exchange4 = (IExchange<I, C, IExchangePattern4, IDiscretization>) Services.getPort("exchange4");
 				return this.exchange4;
 			}
 		}
 		
-		private IExchange<I, C> exchange = null;
-		
-		protected IExchange<I, C> Exchange {
+		private IExchange<I, C, IExchangePattern5, IDiscretization> exchange5 = null;
+		protected IExchange<I, C, IExchangePattern5, IDiscretization> Exchange5 {
 			get {
-				if (this.exchange == null)
-					this.exchange = (IExchange<I, C>) Services.getPort("exchange");
-				return this.exchange;
+				if (this.exchange5 == null)
+					this.exchange5 = (IExchange<I, C, IExchangePattern5, IDiscretization>) Services.getPort("exchange5");
+				return this.exchange5;
+			}
+		}
+
+		private IExchange<I, C, IExchangePattern6, IDiscretization> exchange6 = null;
+		protected IExchange<I, C, IExchangePattern6, IDiscretization> Exchange6 {
+			get {
+				if (this.exchange6 == null)
+					this.exchange6 = (IExchange<I, C, IExchangePattern6, IDiscretization>) Services.getPort("exchange6");
+				return this.exchange6;
 			}
 		}
 		
-		private ICell y = null;
-		
+		private ICell y = null;		
 		public ICell Y {
 			get {
 				if (this.y == null)

@@ -80,26 +80,28 @@
         <originRef cRef="mpi" iRef="IMPIDirect"/>
         <visualDescription h="10" w="10" x="86" y="72"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@192394d" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@78da0072" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using lu.ssor.L2Norm;&#xA;&#xA;namespace impl.lu.ssor.L2NormImpl { &#xA;&#xA;public abstract class BaseIL2NormImpl&lt;I, C>: Computation, BaseIL2Norm&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIL2NormImpl.cs" srcType="base" uri="impl.lu.ssor.L2NormImpl/bin/1.0.0.0/BaseIL2NormImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using lu.ssor.L2Norm;&#xA;using MPI;&#xA;&#xA;namespace impl.lu.ssor.L2NormImpl &#xA;{ &#xA;&#x9;public abstract class BaseIL2NormImpl&lt;I, C>: Computation, BaseIL2Norm&lt;I, C>&#xA;&#x9;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;&#x9;{&#xA;&#x9;   &#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;protected Intracommunicator worldcomm;//Mpi&#xA;&#x9;&#x9;&#x9;protected int nx0,ny0,nz0,ist,jst,iend,jend;//Blocks&#xA;&#x9;&#x9;&#x9;protected double[, , ,] v;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;override public void initialize()&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;    nx0  = Blocks.nx0;&#xA;&#x9;&#x9;&#x9;    ny0  = Blocks.ny0;&#xA;&#x9;&#x9;&#x9;    nz0  = Blocks.nz0;&#xA;&#x9;&#x9;&#x9;    &#xA;                ist  = Blocks.ist;&#xA;                jst  = Blocks.jst;                &#xA;                iend = Blocks.iend;&#xA;                jend = Blocks.jend;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;    v = Problem.Field_rsd;&#xA;                &#xA;&#x9;&#x9;&#x9;&#x9;worldcomm = this.WorldComm;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;#endregion&#xA;&#x9;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlocksInfo blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocksInfo Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IMPIDirect mpi = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IMPIDirect Mpi {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.mpi;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#x9;&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIL2NormImpl.cs" srcType="base" uri="impl.lu.ssor.L2NormImpl/bin/1.0.0.0/BaseIL2NormImpl.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
           <dependency>environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll</dependency>
           <dependency>lu.ssor.L2Norm/bin/1.0.0.0/BaseIL2Norm.dll</dependency>
+          <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.ssor.L2Norm;&#xA;&#xA;namespace impl.lu.ssor.L2NormImpl { &#xA;&#xA;public class IL2NormImpl&lt;I, C> : BaseIL2NormImpl&lt;I, C>, IL2Norm&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IL2NormImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IL2NormImpl.cs" srcType="user" uri="impl.lu.ssor.L2NormImpl/bin/1.0.0.0/IL2NormImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.ssor.L2Norm;&#xA;using MPI;&#xA;&#xA;namespace impl.lu.ssor.L2NormImpl &#xA;{ &#xA;&#x9;public class IL2NormImpl&lt;I, C> : BaseIL2NormImpl&lt;I, C>, IL2Norm&lt;I, C>&#xA;&#x9;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;&#x9;{&#xA;&#x9;   // private double[, , ,] v;&#xA;&#x9;    private double[] sum;&#xA;&#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{ &#xA;&#xA;            double[] dummy = new double[5];&#xA;            for(int m = 0; m&lt; 5; m++) &#xA;&#x9;&#x9;&#x9;{&#xA;                dummy[m] = 0.0d;&#xA;            }&#xA;&#x9;&#x9;&#x9;&#xA;            for(int k = 2; k&lt;= nz0-1; k++) &#xA;&#x9;&#x9;&#x9;{&#xA;                for(int j = jst; j&lt;= jend; j++) &#xA;&#x9;&#x9;&#x9;&#x9;{&#xA;                    for(int i = ist; i&lt;= iend; i++) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;{&#xA;                        for(int m = 0; m&lt; 5; m++) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;{&#xA;                            dummy[m] = dummy[m] + v[k-1, j+1, i+1, m] * v[k-1, j+1, i+1, m];&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;&#x9;&#x9;&#x9;&#xA;            //---------------------------------------------------------------------&#xA;            //   compute the global sum of individual contributions to dot product.&#xA;            //---------------------------------------------------------------------&#xA;            worldcomm.Allreduce&lt;double>(dummy, MPI.Operation&lt;double>.Add, ref sum);&#xA;&#x9;&#x9;&#x9;&#xA;            for(int m = 0; m &lt; 5; m++) &#xA;&#x9;&#x9;&#x9;{&#xA;                sum[m] = Math.Sqrt(sum[m]/((nx0-2)*(ny0-2)*(nz0-2)));&#xA;            }&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setParameters(double[] sum)&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;   this.sum = sum;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IL2NormImpl.cs" srcType="user" uri="impl.lu.ssor.L2NormImpl/bin/1.0.0.0/IL2NormImpl.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.lu.ssor.L2NormImpl/bin/1.0.0.0/BaseIL2NormImpl.dll</dependency>
           <dependency>lu.ssor.L2Norm/bin/1.0.0.0/IL2Norm.dll</dependency>
+          <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="104" w="214" x="197" y="119">
+      <visualDescription h="104" w="214" x="151" y="102">
         <color b="0" g="0" r="255"/>
       </visualDescription>
       <port name="problem">
@@ -114,6 +116,7 @@
         <visualDescription h="10" w="10" x="40" y="65"/>
         <slice pRef="mpi" sRef="mpi"/>
       </port>
+      <externalReferences>MPI</externalReferences>
       <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
@@ -130,12 +133,11 @@
       </slices>
       <visualDescription h="40" w="80" x="284" y="255"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
       <originRef>base</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>mpi</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="l2norm"/>
-      <visualDescription h="57" w="56" x="120" y="223"/>
+      <visualDescription h="20" w="20" x="130" y="254"/>
     </enumerator>
   </componentInfo>
 </component:component>

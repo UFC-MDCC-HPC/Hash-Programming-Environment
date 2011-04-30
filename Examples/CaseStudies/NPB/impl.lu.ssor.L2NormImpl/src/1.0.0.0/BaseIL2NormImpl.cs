@@ -12,15 +12,21 @@ using environment.MPIDirect;
 using lu.ssor.L2Norm;
 using MPI;
 
-namespace impl.lu.ssor.L2NormImpl { 
+namespace impl.lu.ssor.L2NormImpl 
+{ 
 	public abstract class BaseIL2NormImpl<I, C>: Computation, BaseIL2Norm<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass{
+		where I:IInstance_LU<C>
+		where C:IClass
+	{
 	   
 		#region data
+		
 			protected Intracommunicator worldcomm;//Mpi
 			protected int nx0,ny0,nz0,ist,jst,iend,jend;//Blocks
-			override public void initialize(){
+			protected double[, , ,] v;
+			
+			override public void initialize()
+			{
 			    nx0  = Blocks.nx0;
 			    ny0  = Blocks.ny0;
 			    nz0  = Blocks.nz0;
@@ -29,9 +35,12 @@ namespace impl.lu.ssor.L2NormImpl {
                 jst  = Blocks.jst;                
                 iend = Blocks.iend;
                 jend = Blocks.jend;
+			
+			    v = Problem.Field_rsd;
                 
-				worldcomm = Mpi.worldComm();
+				worldcomm = this.WorldComm;
 			}
+			
 		#endregion
 	
 		private IProblemDefinition<I, C> problem = null;

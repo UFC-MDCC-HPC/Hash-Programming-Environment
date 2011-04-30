@@ -16,7 +16,6 @@ namespace impl.lu.ssor.RhsImpl {
 		public override int go() { 
 
             int i, j, k, m;
-            int iex;
             int L1, L2;
             int ist1, iend1;
             int jst1, jend1;
@@ -39,9 +38,9 @@ namespace impl.lu.ssor.RhsImpl {
                     }
                 }
             }
-            iex   = 0;
-            Exchange1.setParameters(u, iex);
-            Exchange1.go();
+			
+            Exchange30.setParameters(u);
+            Exchange30.go();
             L1 = 0;
             if(north==-1)
                 L1 = 1;
@@ -119,9 +118,9 @@ namespace impl.lu.ssor.RhsImpl {
                     }
                 }
             }
-            iex   = 1;
-            Exchange1.setParameters(u, iex);
-            Exchange1.go();
+			
+            Exchange31.setParameters(u);
+            Exchange31.go();
 
             L1 = 0;
             if(west==-1)

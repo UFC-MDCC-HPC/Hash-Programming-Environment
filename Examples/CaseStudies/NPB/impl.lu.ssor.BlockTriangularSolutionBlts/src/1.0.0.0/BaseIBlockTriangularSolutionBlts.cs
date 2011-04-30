@@ -11,20 +11,31 @@ using lu.datapartition.BlocksInfo;
 using common.Discretization;
 using common.topology.Ring;
 using environment.MPIDirect;
-using lu.Exchange1;
+using lu.Exchange;
 using lu.triangular.Lower;
 using lu.ssor.BlockTriangularSolution;
+using lu.exchange.ExchangePattern10;
+using lu.exchange.ExchangePattern11;
 
-namespace impl.lu.ssor.BlockTriangularSolutionBlts { 
-	public abstract class BaseIBlockTriangularSolutionBlts<I, C, DIS>: Computation, BaseIBlockTriangularSolution<I, C, DIS>
-	where I:IInstance_LU<C>
-	where C:IClass
-	where DIS:ILower{
+namespace impl.lu.ssor.BlockTriangularSolutionBlts 
+{ 
+	public abstract class BaseIBlockTriangularSolutionBlts<DIS, I, C>: Computation, BaseIBlockTriangularSolution<DIS, I, C>
+		where I:IInstance_LU<C>
+		where C:IClass
+		where DIS:ILower
+	{
 
 		#region data
+		
 			protected int ist,jst,iend,jend;
 			protected double [,,,] rsd,d;
-			override public void initialize(){
+
+			protected double[,,,] ldx;
+		    protected double[,,,] ldy;
+		    protected double[,,,] ldz;
+			
+			override public void initialize()
+			{
                 ist  = Blocks.ist;
                 jst  = Blocks.jst;                
                 iend = Blocks.iend;
@@ -32,7 +43,12 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
                 
                 rsd  = Problem.Field_rsd;
                 d = Problem.Field_d;
+			
+				ldx = Problem.Field_c;
+				ldy = Problem.Field_b;
+				ldz = Problem.Field_a;
 			}
+			
 		#endregion
 
 		private IProblemDefinition<I, C> problem = null;
@@ -97,15 +113,26 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
 			}
 		}
 		
-		private IExchange1<I, C> exchange1 = null;
+		private IExchange<I, C, IExchangePattern10, DIS> exchange_102 = null;
 		
-		protected IExchange1<I, C> Exchange1 {
+		protected IExchange<I, C, IExchangePattern10, DIS> Exchange_102 {
 			get {
-				if (this.exchange1 == null)
-					this.exchange1 = (IExchange1<I, C>) Services.getPort("exchange1");
-				return this.exchange1;
+				if (this.exchange_102 == null)
+					this.exchange_102 = (IExchange<I, C, IExchangePattern10, DIS>) Services.getPort("exchange_102");
+				return this.exchange_102;
 			}
 		}
+		
+		private IExchange<I, C, IExchangePattern11, DIS> exchange_113 = null;
+		
+		protected IExchange<I, C, IExchangePattern11, DIS> Exchange_113 {
+			get {
+				if (this.exchange_113 == null)
+					this.exchange_113 = (IExchange<I, C, IExchangePattern11, DIS>) Services.getPort("exchange_113");
+				return this.exchange_113;
+			}
+		}
+		
 		abstract public int go(); 
 	}
 }

@@ -19,7 +19,7 @@ namespace impl.lu.problem_size.Instance_LU_W {
 		private	int    _isiz02 = 33;
 		private	int    _isiz03 = 33;
 		private	int    _isiz3  = 33;
-		private PROBLEM_CLASS _CLASS_ = PROBLEM_CLASS.A;
+		private PROBLEM_CLASS _CLASS_ = PROBLEM_CLASS.W;
 
 		public double dt  { get { return _dt;     } }
 		public int itmax  { get { return _itmax;  } }

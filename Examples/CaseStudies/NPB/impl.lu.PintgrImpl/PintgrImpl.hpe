@@ -16,7 +16,7 @@
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="blocks">
-            <visualDescription h="10" w="10" x="64" y="16"/>
+            <visualDescription h="10" w="10" x="71" y="18"/>
           </unitBounds>
         </port>
         <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f8aadd94be2122c6dbf97a8db4c368df4aa14e5eef40999c777e681c973106bec55b80c133f1e7301d0ff36e2ee37a1d7d095ffff4581f295b2e8fc055fc07304178d993e14731e9c3d1e72370eee41c30ae18e6d096d5d70ac13a2833e8945cd641f4a3cab17bc2397b395bc234fdfa244afa599eb514a94d884e663b3a3a5" localRef="problem_data" location="lu.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="lu.data" exposed="true">
@@ -26,15 +26,15 @@
           <parameter formFieldId="instance_type" varName="I"/>
           <parameter formFieldId="class" varName="C"/>
           <unitBounds uRef="problem">
-            <visualDescription h="10" w="10" x="5" y="21"/>
+            <visualDescription h="10" w="10" x="10" y="24"/>
           </unitBounds>
         </port>
-        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a5f16b771d8e6498d2d3de28ff69055bf66aa7e281fc4b0ebd4b16e81176b4e3da49a70c73092d2f9616290fa7acb2e06f92a486f19d7c2b61b569e4e990c21941ac8db14315fcead8106a62cd8e81a7ce87e967196af8b5d8b3647706c0121ae7dd36c0144f157e051a1e08938e4b954a423dff981f6493aa277f9639d533c9" localRef="neighbors" location="lu.topology.Neighbors/Neighbors.hpe" name="Neighbors" package="lu.topology" exposed="true">
-          <visualDescription h="24" w="78" x="259" y="468">
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="38" w="37" x="387" y="105">
             <color b="255" g="255" r="255"/>
           </visualDescription>
-          <unitBounds uRef="neighbors">
-            <visualDescription h="10" w="10" x="64" y="15"/>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="63" y="6"/>
           </unitBounds>
         </port>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
@@ -42,7 +42,15 @@
             <color b="240" g="32" r="160"/>
           </visualDescription>
           <unitBounds uRef="mpi">
-            <visualDescription h="10" w="10" x="36" y="10"/>
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="34" w="39" x="465" y="188">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="63" y="6"/>
           </unitBounds>
         </port>
         <unitBounds uRef="pintgr">
@@ -76,33 +84,33 @@
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="instance_type" varName="I"/>
     <interface iRef="IPintgrImpl" nArgs="2">
-      <slice isRef="mpi">
-        <originRef cRef="mpi" iRef="IMPIDirect"/>
-        <visualDescription h="10" w="10" x="204" y="82"/>
-      </slice>
       <slice isRef="instance">
         <originRef cRef="instance_type" iRef="IInstance"/>
-        <visualDescription h="10" w="10" x="172" y="84"/>
+        <visualDescription h="10" w="10" x="98" y="5"/>
       </slice>
-      <slice isRef="exchange">
-        <originRef cRef="exchange" iRef="IExchange"/>
-        <visualDescription h="10" w="10" x="97" y="10"/>
+      <slice isRef="exchange5">
+        <originRef cRef="exchange5" iRef="IExchange"/>
+        <visualDescription h="10" w="10" x="25" y="4"/>
+      </slice>
+      <slice isRef="exchange6">
+        <originRef cRef="exchange6" iRef="IExchange"/>
+        <visualDescription h="10" w="10" x="5" y="23"/>
       </slice>
       <slice isRef="exchange4">
-        <originRef cRef="exchange4" iRef="IExchange4"/>
-        <visualDescription h="10" w="10" x="16" y="86"/>
+        <originRef cRef="exchange4" iRef="IExchange"/>
+        <visualDescription h="10" w="10" x="39" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1d3d9e7" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@3f2e5ae0" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@186f7af" repeat="0" sliceRef="exchange">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7c504887" repeat="0">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@38e358" repeat="0" sliceRef="exchange4">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7ac9d6d3" repeat="0" sliceRef="exchange4">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using lu.Exchange4;&#xA;using lu.Exchange;&#xA;using lu.topology.Neighbors;&#xA;using lu.problem_size.Instance;&#xA;using lu.Pintgr;&#xA;&#xA;namespace impl.lu.PintgrImpl { &#xA;&#xA;public abstract class BaseIPintgrImpl&lt;I, C>: Computation, BaseIPintgr&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExchange4&lt;I, C> exchange4 = null;&#xA;&#xA;protected IExchange4&lt;I, C> Exchange4 {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exchange4 == null)&#xA;&#x9;&#x9;&#x9;this.exchange4 = (IExchange4&lt;I, C>) Services.getPort(&quot;exchange4&quot;);&#xA;&#x9;&#x9;return this.exchange4;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IExchange&lt;I, C> exchange = null;&#xA;&#xA;protected IExchange&lt;I, C> Exchange {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.exchange == null)&#xA;&#x9;&#x9;&#x9;this.exchange = (IExchange&lt;I, C>) Services.getPort(&quot;exchange&quot;);&#xA;&#x9;&#x9;return this.exchange;&#xA;&#x9;}&#xA;}&#xA;&#xA;private INeighbors neighbors = null;&#xA;&#xA;public INeighbors Neighbors {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.neighbors == null)&#xA;&#x9;&#x9;&#x9;this.neighbors = (INeighbors) Services.getPort(&quot;neighbors&quot;);&#xA;&#x9;&#x9;return this.neighbors;&#xA;&#x9;}&#xA;}&#xA;&#xA;private I instance = default(I);&#xA;&#xA;protected I Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;return this.instance;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIPintgrImpl.cs" srcType="base" uri="impl.lu.PintgrImpl/bin/1.0.0.0/BaseIPintgrImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using environment.MPIDirect;&#xA;using lu.Exchange;&#xA;using common.topology.Ring;&#xA;using lu.problem_size.Instance;&#xA;using lu.Pintgr;&#xA;using lu.exchange.ExchangePattern4;&#xA;using lu.exchange.ExchangePattern5;&#xA;using lu.exchange.ExchangePattern6;&#xA;using MPI;&#xA;using common.Discretization;&#xA;&#xA;namespace impl.lu.PintgrImpl &#xA;{ &#xA;&#x9;public abstract class BaseIPintgrImpl&lt;I, C>: Computation, BaseIPintgr&lt;I, C>&#xA;&#x9;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;&#x9;where C:IClass &#xA;&#x9;{&#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#x9;protected Intracommunicator worldcomm;//Mpi&#xA;&#x9;&#x9;&#x9;protected int nx,ny,ipt,jpt;//Blocks&#xA;&#x9;&#x9;&#x9;protected int isiz3;//Instance&#xA;&#x9;&#x9;&#x9;protected int isiz1, isiz2, ii1, ii2, ji1, ji2, ki1, ki2;//Problem Constants&#xA;&#x9;&#x9;&#x9;protected double c2, dxi, deta, dzeta;&#xA;&#x9;&#x9;&#x9;protected double [,,,] u;&#xA;&#x9;&#x9;&#x9;override public void initialize()&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;    nx  = Blocks.nx;&#xA;&#x9;&#x9;&#x9;    ny  = Blocks.ny;&#xA;                ipt = Blocks.ipt;&#xA;                jpt = Blocks.jpt;&#xA;                &#xA;                isiz3 = Instance.isiz3;&#xA;&#x9;&#x9;&#x9;&#xA;                isiz1 = Problem.isiz1;&#xA;                isiz2 = Problem.isiz2; &#xA;                u     = Problem.Field_u;&#xA;                &#xA;                ii1   = Constants.ii1;&#xA;                ii2   = Constants.ii2;&#xA;                ji1   = Constants.ji1;&#xA;                ji2   = Constants.ji2;&#xA;                ki1   = Constants.ki1;&#xA;                ki2   = Constants.ki2;&#xA;                c2    = Constants.c2;&#xA;                dxi   = Constants.dxi;&#xA;                deta  = Constants.deta;&#xA;                dzeta = Constants.dzeta;&#xA;&#xA;&#x9;&#x9;&#x9;&#x9;worldcomm = this.WorldComm; // Mpi.worldComm();&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;#endregion&#xA;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlocksInfo blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocksInfo Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;private IExchange&lt;I, C, IExchangePattern4, IDiscretization> exchange4 = null;&#xA;&#x9;&#x9;protected IExchange&lt;I, C, IExchangePattern4, IDiscretization> Exchange4 {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.exchange4 == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.exchange4 = (IExchange&lt;I, C, IExchangePattern4, IDiscretization>) Services.getPort(&quot;exchange4&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.exchange4;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IExchange&lt;I, C, IExchangePattern5, IDiscretization> exchange5 = null;&#xA;&#x9;&#x9;protected IExchange&lt;I, C, IExchangePattern5, IDiscretization> Exchange5 {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.exchange5 == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.exchange5 = (IExchange&lt;I, C, IExchangePattern5, IDiscretization>) Services.getPort(&quot;exchange5&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.exchange5;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;&#x9;private IExchange&lt;I, C, IExchangePattern6, IDiscretization> exchange6 = null;&#xA;&#x9;&#x9;protected IExchange&lt;I, C, IExchangePattern6, IDiscretization> Exchange6 {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.exchange6 == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.exchange6 = (IExchange&lt;I, C, IExchangePattern6, IDiscretization>) Services.getPort(&quot;exchange6&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.exchange6;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ICell y = null;&#x9;&#x9;&#xA;&#x9;&#x9;public ICell Y {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.y;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ICell x = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public ICell X {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.x;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IMPIDirect mpi = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IMPIDirect Mpi {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.mpi == null) &#xA;&#x9;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#x9;return this.mpi;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private I instance = default(I);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected I Instance {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.instance;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIPintgrImpl.cs" srcType="base" uri="impl.lu.PintgrImpl/bin/1.0.0.0/BaseIPintgrImpl.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -113,75 +121,106 @@
           <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>lu.Pintgr/bin/1.0.0.0/BaseIPintgr.dll</dependency>
+          <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.Pintgr;&#xA;&#xA;namespace impl.lu.PintgrImpl { &#xA;&#xA;public class IPintgrImpl&lt;I, C> : BaseIPintgrImpl&lt;I, C>, IPintgr&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IPintgrImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;exchange.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;exchange4.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IPintgrImpl.cs" srcType="user" uri="impl.lu.PintgrImpl/bin/1.0.0.0/IPintgrImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.Pintgr;&#xA;using MPI;&#xA;&#xA;namespace impl.lu.PintgrImpl &#xA;{&#xA;&#x9;public class IPintgrImpl&lt;I, C> : BaseIPintgrImpl&lt;I, C>, IPintgr&lt;I, C>&#xA;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;where C:IClass &#xA;&#x9;{&#x9;&#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{ &#xA;            int i, j, k, ibeg, ifin, ifin1, jbeg, jfin, jfin1, iglob, iglob1, iglob2, jglob, jglob1, jglob2, ind1, ind2;&#xA;            double[,] phi1 = new double[isiz3+2, isiz2+2];&#xA;            double[,] phi2 = new double[isiz3+2, isiz2+2];&#xA;            double frc1, frc2, frc3, dummy;&#xA;&#x9;&#x9;&#x9;&#xA;            ibeg = nx + 1;&#xA;            ifin = 0;&#xA;            iglob1 = ipt + 1;&#xA;            iglob2 = ipt + nx;&#xA;            if(iglob1>=ii1 &amp;&amp; iglob2&lt;ii2+nx)&#xA;                ibeg = 1;&#xA;            if(iglob1>ii1-nx &amp;&amp; iglob2&lt;=ii2)&#xA;                ifin = nx;&#xA;            if(ii1>=iglob1 &amp;&amp; ii1&lt;=iglob2)&#xA;                ibeg = ii1 - ipt;&#xA;            if(ii2>=iglob1 &amp;&amp; ii2&lt;=iglob2)&#xA;                ifin = ii2 - ipt;&#xA;            jbeg = ny + 1;&#xA;            jfin = 0;&#xA;            jglob1 = jpt + 1;&#xA;            jglob2 = jpt + ny;&#xA;            if(jglob1>=ji1 &amp;&amp; jglob2&lt;ji2+ny)&#xA;                jbeg = 1;&#xA;            if(jglob1>ji1-ny &amp;&amp; jglob2&lt;=ji2)&#xA;                jfin = ny;&#xA;            if(ji1>=jglob1 &amp;&amp; ji1&lt;=jglob2)&#xA;                jbeg = ji1 - jpt;&#xA;            if(ji2>=jglob1 &amp;&amp; ji2&lt;=jglob2)&#xA;                jfin = ji2 - jpt;&#xA;            ifin1 = ifin;&#xA;            jfin1 = jfin;&#xA;            if(ipt+ifin1 == ii2)&#xA;                ifin1 = ifin - 1;&#xA;            if(jpt+jfin1 == ji2)&#xA;                jfin1 = jfin - 1;&#xA;                &#xA;            for(i = 0; i&lt;=isiz2+1; i++) &#xA;            {&#xA;                for(k = 0; k&lt;=isiz3+1; k++) &#xA;                {&#xA;                    phi1[k, i] = 0.0;&#xA;                    phi2[k, i] = 0.0;&#xA;                }&#xA;            }&#xA;            &#xA;            for(j = jbeg; j&lt;=jfin; j++) &#xA;            {&#xA;                jglob = jpt + j;&#xA;                for(i = ibeg; i&lt;=ifin; i++) &#xA;                {&#xA;                    iglob = ipt + i;&#xA;                    k = ki1;&#xA;                    phi1[j, i] = c2*(u[k-1, j+1, i+1, 4]&#xA;                      -0.50d*(pow2(u[k-1, j+1, i+1, 1])&#xA;                            + pow2(u[k-1, j+1, i+1, 2])&#xA;                            + pow2(u[k-1, j+1, i+1, 3]))&#xA;                                 / u[k-1, j+1, i+1, 0]);&#xA;                    k = ki2;&#xA;                    phi2[j, i] = c2*(u[k-1, j+1, i+1, 4]&#xA;                      -0.50d*(pow2(u[k-1, j+1, i+1, 1])&#xA;                            + pow2(u[k-1, j+1, i+1, 2])&#xA;                            + pow2(u[k-1, j+1, i+1, 3]))&#xA;                                 / u[k-1, j+1, i+1, 0]);&#xA;                }&#xA;            }&#xA;            &#xA;            Exchange4.setParameters(phi1, phi2, ibeg, ifin1, jbeg, jfin1); &#xA;            Exchange4.go();&#xA;            frc1 = 0.0d;&#xA;            for(j = jbeg; j&lt;=jfin1; j++) &#xA;            {&#xA;                for(i = ibeg; i&lt;= ifin1; i++) &#xA;                {&#xA;                    frc1 = frc1 + (phi1[j, i]&#xA;                                + phi1[j, i+1]&#xA;                                + phi1[j+1, i]&#xA;                                + phi1[j+1, i+1]&#xA;                                + phi2[j, i]    &#xA;                                + phi2[j, i+1]  &#xA;                                + phi2[j+1, i]  &#xA;                                + phi2[j+1, i+1]);&#xA;                }&#xA;            }&#xA;            &#xA;            dummy = frc1;&#xA;            frc1 = worldcomm.Allreduce&lt;double>(dummy, MPI.Operation&lt;double>.Add);&#xA;            frc1 = dxi * deta * frc1;&#xA;            &#xA;            for(i = 0; i&lt;=isiz2+1; i++) &#xA;            {&#xA;                for(k = 0; k&lt;=isiz3+1; k++) &#xA;                {&#xA;                    phi1[k, i] = 0.0;&#xA;                    phi2[k, i] = 0.0;&#xA;                }&#xA;            }&#xA;            &#xA;            jglob = jpt + jbeg;&#xA;            ind1 = 0;&#xA;            if(jglob==ji1) &#xA;            {&#xA;                ind1 = 1;&#xA;                for(k = ki1; k&lt;= ki2; k++) &#xA;                {&#xA;                    for(i = ibeg; i&lt;= ifin; i++) &#xA;                    {&#xA;                        iglob = ipt + i;&#xA;                        phi1[k, i] = c2 * (u[k-1, jbeg+1, i+1, 4]&#xA;                        - 0.50d*(pow2(u[k-1, jbeg+1, i+1, 1])&#xA;                               + pow2(u[k-1, jbeg+1, i+1, 2])&#xA;                               + pow2(u[k-1, jbeg+1, i+1, 3]))&#xA;                                    / u[k-1, jbeg+1, i+1, 0]);&#xA;                    }&#xA;                }&#xA;            }&#xA;            &#xA;            jglob = jpt + jfin;&#xA;            ind2 = 0;&#xA;            if(jglob==ji2) &#xA;            {&#xA;                ind2 = 1;&#xA;                for(k = ki1; k&lt;= ki2; k++) &#xA;                {&#xA;                    for(i = ibeg; i&lt;= ifin; i++) &#xA;                    {&#xA;                        iglob = ipt + i;&#xA;                        phi2[k, i] = c2*(u[k-1, jfin+1, i+1, 4]&#xA;                        -0.50d*(pow2(u[k-1, jfin+1, i+1, 1])&#xA;                              + pow2(u[k-1, jfin+1, i+1, 2])&#xA;                              + pow2(u[k-1, jfin+1, i+1, 3]))&#xA;                                   / u[k-1, jfin+1, i+1, 0]);&#xA;                    }&#xA;                }&#xA;            }&#xA;            &#xA;            if(ind1 == 1) &#xA;            {&#xA;                Exchange5.setParameters(phi1, ibeg, ifin1);&#xA;                Exchange5.go();&#xA;            }&#xA;            &#xA;            if(ind2 == 1) &#xA;            {&#xA;                Exchange5.setParameters(phi2, ibeg, ifin1);&#xA;                Exchange5.go();&#xA;            }&#xA;            &#xA;            frc2 = 0.0d;&#xA;            for(k = ki1; k&lt;= ki2-1; k++) &#xA;            {&#xA;                for(i = ibeg; i&lt;= ifin1; i++) &#xA;                {&#xA;                    frc2 = frc2 + (phi1[k, i]&#xA;                                + phi1[k, i+1]&#xA;                                + phi1[k+1, i]&#xA;                                + phi1[k+1, i+1]&#xA;                                + phi2[k, i]    &#xA;                                + phi2[k, i+1]  &#xA;                                + phi2[k+1, i]  &#xA;                                + phi2[k+1, i+1]);&#xA;                }&#xA;            }&#xA;            &#xA;            dummy = frc2;&#xA;            frc2 = worldcomm.Allreduce&lt;double>(dummy, MPI.Operation&lt;double>.Add);&#xA;            frc2 = dxi * dzeta * frc2;&#xA;            for(i = 0; i&lt;=isiz2+1; i++) &#xA;            {&#xA;                for(k = 0; k&lt;=isiz3+1; k++) &#xA;                {&#xA;                    phi1[k, i] = 0.0;&#xA;                    phi2[k, i] = 0.0;&#xA;                }&#xA;            }&#xA;            &#xA;            iglob = ipt + ibeg;&#xA;            ind1 = 0;&#xA;            if(iglob==ii1) &#xA;            {&#xA;                ind1 = 1;&#xA;                for(k = ki1; k&lt;= ki2; k++) {&#xA;                    for(j = jbeg; j&lt;= jfin; j++) {&#xA;                        jglob = jpt + j;&#xA;                        phi1[k, j] = c2*(u[k-1, j+1, ibeg+1, 4]&#xA;                        -0.50d*(pow2(u[k-1, j+1, ibeg+1, 1])&#xA;                              + pow2(u[k-1, j+1, ibeg+1, 2])&#xA;                              + pow2(u[k-1, j+1, ibeg+1, 3]))&#xA;                                   / u[k-1, j+1, ibeg+1, 0]);&#xA;                    }&#xA;                }&#xA;            }&#xA;            &#xA;            iglob = ipt + ifin;&#xA;            ind2 = 0;&#xA;            if(iglob==ii2) &#xA;            {&#xA;                ind2 = 1;&#xA;                for(k = ki1; k&lt;= ki2; k++) &#xA;                {&#xA;                    for(j = jbeg; j&lt;= jfin; j++) &#xA;                    {&#xA;                        jglob = jpt + j;&#xA;                        phi2[k, j] = c2*(u[k-1, j+1, ifin+1, 4]&#xA;                        -0.50d*(pow2(u[k-1, j+1, ifin+1, 1])&#xA;                              + pow2(u[k-1, j+1, ifin+1, 2])&#xA;                              + pow2(u[k-1, j+1, ifin+1, 3]))&#xA;                                   / u[k-1, j+1, ifin+1, 0]);&#xA;                    }&#xA;                }&#xA;            }&#xA;            &#xA;            if(ind1==1) &#xA;            {&#xA;                Exchange6.setParameters(phi1, jbeg, jfin1);&#xA;                Exchange6.go();&#xA;            }&#xA;            &#xA;            if(ind2==1) &#xA;            {&#xA;                Exchange6.setParameters(phi2, jbeg, jfin1);&#xA;                Exchange6.go();&#xA;            }&#xA;            frc3 = 0.0d;&#xA;            for(k = ki1; k&lt;= ki2-1; k++)&#xA;            {&#xA;                for(j = jbeg; j&lt;= jfin1; j++) &#xA;                {&#xA;                    frc3 = frc3 + (phi1[k, j]&#xA;                                + phi1[k, j+1]&#xA;                                + phi1[k+1, j]&#xA;                                + phi1[k+1, j+1]&#xA;                                + phi2[k, j]    &#xA;                                + phi2[k, j+1]  &#xA;                                + phi2[k+1, j]  &#xA;                                + phi2[k+1, j+1]);&#xA;                }&#xA;            }&#xA;            &#xA;            dummy = frc3;&#xA;            frc3 = worldcomm.Allreduce&lt;double>(dummy, MPI.Operation&lt;double>.Add);&#xA;            frc3 = deta * dzeta * frc3;&#xA;&#x9;&#x9;&#x9;&#xA;            frc = 0.25d * (frc1 + frc2 + frc3);&#xA;            &#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public static double pow2(double p) { return p * p; } &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected double frc;&#xA;&#x9;&#x9;public double Frc {get { return frc; } }&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IPintgrImpl.cs" srcType="user" uri="impl.lu.PintgrImpl/bin/1.0.0.0/IPintgrImpl.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.lu.PintgrImpl/bin/1.0.0.0/BaseIPintgrImpl.dll</dependency>
           <dependency>lu.Pintgr/bin/1.0.0.0/IPintgr.dll</dependency>
+          <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="110" w="243" x="186" y="113">
+      <visualDescription h="110" w="243" x="136" y="91">
         <color b="64" g="0" r="64"/>
       </visualDescription>
+      <port name="y">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="y" sRef="exchange5"/>
+        <slice pRef="y" sRef="exchange6"/>
+        <slice pRef="y" sRef="exchange4"/>
+      </port>
       <port name="mpi">
-        <visualDescription h="10" w="10" x="204" y="14"/>
-        <slice pRef="mpi" sRef="mpi"/>
-      </port>
-      <port name="neighbors">
-        <visualDescription h="10" w="10" x="39" y="35"/>
-        <slice pRef="neighbors" sRef="exchange"/>
-        <slice pRef="neighbors" sRef="exchange4"/>
-      </port>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="61" y="55"/>
-        <slice pRef="problem" sRef="exchange"/>
-        <slice pRef="problem" sRef="exchange4"/>
+        <visualDescription h="10" w="10" x="166" y="38"/>
+        <slice pRef="mpi" sRef="exchange5"/>
+        <slice pRef="mpi" sRef="exchange6"/>
+        <slice pRef="mpi" sRef="exchange4"/>
       </port>
       <port name="blocks">
-        <visualDescription h="10" w="10" x="21" y="15"/>
-        <slice pRef="blocks" sRef="exchange"/>
+        <visualDescription h="10" w="10" x="62" y="13"/>
+        <slice pRef="blocks" sRef="exchange5"/>
+        <slice pRef="blocks" sRef="exchange6"/>
         <slice pRef="blocks" sRef="exchange4"/>
       </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="exchange5"/>
+        <slice pRef="x" sRef="exchange6"/>
+        <slice pRef="x" sRef="exchange4"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="176" y="21"/>
+        <slice pRef="problem" sRef="exchange5"/>
+        <slice pRef="problem" sRef="exchange6"/>
+        <slice pRef="problem" sRef="exchange4"/>
+      </port>
+      <externalReferences>MPI</externalReferences>
       <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="IPintgrImpl" private="false" uRef="pintgr" visibleInterface="true">
       <super cRef="base" uRef="pintgr"/>
-      <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="false">
-        <visualDescription h="10" w="10" x="5" y="28"/>
-      </slices>
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="true">
-        <visualDescription h="10" w="10" x="2" y="22"/>
+        <visualDescription h="10" w="10" x="0" y="21"/>
       </slices>
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
-        <visualDescription h="10" w="10" x="63" y="13"/>
+        <visualDescription h="10" w="10" x="113" y="18"/>
       </slices>
-      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="true">
-        <visualDescription h="10" w="10" x="8" y="25"/>
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
+      </slices>
+      <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
+        <visualDescription h="10" w="10" x="11" y="22"/>
+      </slices>
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
-        <visualDescription h="10" w="10" x="101" y="5"/>
+        <visualDescription h="10" w="10" x="98" y="5"/>
       </slices>
-      <slices cRef="exchange" replica="0" uRef="exchange" sliceName="exchange" transitive="false">
-        <visualDescription h="10" w="10" x="3" y="3"/>
+      <slices cRef="exchange5" replica="0" uRef="exchange1" sliceName="exchange5" transitive="false">
+        <visualDescription h="10" w="10" x="25" y="4"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>neighbors</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
       </slices>
-      <slices cRef="exchange4" replica="0" uRef="exchange4" sliceName="exchange4" transitive="false">
-        <visualDescription h="10" w="10" x="101" y="26"/>
+      <slices cRef="exchange6" replica="0" uRef="exchange1" sliceName="exchange6" transitive="false">
+        <visualDescription h="10" w="10" x="5" y="23"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>neighbors</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
+      </slices>
+      <slices cRef="exchange4" replica="0" uRef="exchange1" sliceName="exchange4" transitive="false">
+        <visualDescription h="10" w="10" x="39" y="23"/>
+        <port>blocks</port>
+        <port>problem</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
       </slices>
       <visualDescription h="40" w="115" x="211" y="267"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1c777361255142002310" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>base</originRef>
-      <originRef>mpi</originRef>
+      <originRef>exchange6</originRef>
+      <originRef>shift_to_west</originRef>
+      <originRef>direction</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="pintgr"/>
-      <visualDescription h="32" w="29" x="114" y="284"/>
+      <visualDescription h="20" w="20" x="125" y="240"/>
     </enumerator>
   </componentInfo>
 </component:component>

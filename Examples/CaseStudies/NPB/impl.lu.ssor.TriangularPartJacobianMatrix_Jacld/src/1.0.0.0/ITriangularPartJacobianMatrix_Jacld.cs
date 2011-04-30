@@ -7,19 +7,17 @@ using common.problem_size.Class;
 using lu.triangular.Lower;
 using lu.ssor.TriangularPartJacobianMatrix;
 
-namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld { 
+namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld 
+{ 
 	public class ITriangularPartJacobianMatrix_Jacld<I, C, DIS> : BaseITriangularPartJacobianMatrix_Jacld<I, C, DIS>, ITriangularPartJacobianMatrix<I, C, DIS>
-	where I:IInstance_LU<C>
-	where C:IClass
-	where DIS:ILower{
+		where I:IInstance_LU<C>
+		where C:IClass
+		where DIS:ILower
+	{
 	    private int k;
 	
-		public ITriangularPartJacobianMatrix_Jacld() { 
-		
-		} 
-		
-		public override int go() { 
-
+		public override int go() 
+		{
             int i, j;
             double  r43;
             double  c1345;
@@ -30,8 +28,10 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
             c1345 = c1*c3*c4*c5;
             c34 = c3*c4;
 
-            for(j = jst; j<= jend; j++) {
-                for(i = ist; i<= iend; i++) {
+            for(j = jst; j<= jend; j++) 
+			{
+                for(i = ist; i<= iend; i++) 
+				{
                     //---------------------------------------------------------------------
                     //   form the block daigonal
                     //---------------------------------------------------------------------
@@ -68,6 +68,7 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
                     d[j-1, i-1, 2, 4] = dt*2.0d*(tx1*(c34-c1345)*tmp2*u[k-1, j+1, i+1, 2]+ty1*(r43*c34-c1345)*tmp2*u[k-1, j+1, i+1, 2]+tz1*(c34-c1345)*tmp2*u[k-1, j+1, i+1, 2]);
                     d[j-1, i-1, 3, 4] = dt*2.0d*(tx1*(c34-c1345)*tmp2*u[k-1, j+1, i+1, 3]+ty1*(c34-c1345)*tmp2*u[k-1, j+1, i+1, 3]+tz1*(r43*c34-c1345)*tmp2*u[k-1, j+1, i+1, 3]);
                     d[j-1, i-1, 4, 4] = 1.0d+dt*2.0d*(tx1*c1345*tmp1+ty1*c1345*tmp1+tz1*c1345*tmp1)+dt*2.0d*(tx1*dx5+ty1*dy5+tz1*dz5);
+										
                     //---------------------------------------------------------------------
                     //   form the first block sub-diagonal
                     //---------------------------------------------------------------------
@@ -104,6 +105,7 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
                     a[j-1, i-1, 2, 4] = -dt*tz2*(-c2*(u[k-2, j+1, i+1, 2]*u[k-2, j+1, i+1, 3])*tmp2)-dt*tz1*(c34-c1345)*tmp2*u[k-2, j+1, i+1, 2];
                     a[j-1, i-1, 3, 4] = -dt*tz2*(c1*(u[k-2, j+1, i+1, 4]*tmp1)-0.50d*c2*((u[k-2, j+1, i+1, 1]*u[k-2, j+1, i+1, 1]+u[k-2, j+1, i+1, 2]*u[k-2, j+1, i+1, 2]+3.0d*u[k-2, j+1, i+1, 3]*u[k-2, j+1, i+1, 3])*tmp2))-dt*tz1*(r43*c34-c1345)*tmp2*u[k-2, j+1, i+1, 3];
                     a[j-1, i-1, 4, 4] = -dt*tz2*(c1*(u[k-2, j+1, i+1, 3]*tmp1))-dt*tz1*c1345*tmp1-dt*tz1*dz5;
+										
                     //---------------------------------------------------------------------
                     //   form the second block sub-diagonal
                     //---------------------------------------------------------------------
@@ -140,6 +142,7 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
                     b[j-1, i-1, 2, 4] = -dt * ty2* (c1 *(u[k-1, j, i+1, 4] * tmp1)- 0.50d * c2 *((u[k-1, j, i+1, 1]*u[k-1, j, i+1, 1]+ 3.0d * u[k-1, j, i+1, 2]*u[k-1, j, i+1, 2]+u[k-1, j, i+1, 3]*u[k-1, j, i+1, 3]) * tmp2))- dt * ty1* (r43*c34 - c1345) * tmp2 * u[k-1, j, i+1, 2];
                     b[j-1, i-1, 3, 4] = -dt * ty2* (-c2 *(u[k-1, j, i+1, 2]*u[k-1, j, i+1, 3])* tmp2)- dt * ty1 * (c34 - c1345)* tmp2 *u[k-1, j, i+1, 3];
                     b[j-1, i-1, 4, 4] = -dt * ty2* (c1 *(u[k-1, j, i+1, 2] * tmp1))- dt * ty1 * c1345 * tmp1- dt * ty1 * dy5;
+					
                     //---------------------------------------------------------------------
                     //   form the third block sub-diagonal
                     //---------------------------------------------------------------------                      
@@ -176,13 +179,17 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacld {
                     c[j-1, i-1, 2, 4] = -dt * tx2* (-c2 * (u[k-1, j+1, i, 2]*u[k-1, j+1, i, 1]) * tmp2)- dt * tx1* (c34 - c1345) * tmp2 * u[k-1, j+1, i, 2];
                     c[j-1, i-1, 3, 4] = -dt * tx2* (-c2 * (u[k-1, j+1, i, 3]*u[k-1, j+1, i, 1]) * tmp2)- dt * tx1* (c34 - c1345) * tmp2 * u[k-1, j+1, i, 3];
                     c[j-1, i-1, 4, 4] = -dt * tx2* (c1 * (u[k-1, j+1, i, 1] * tmp1))- dt * tx1 * c1345 * tmp1- dt * tx1 * dx5;
+					
                 }
             }
 			return 0;
 		}
-		public void setParameters(int k){
+		
+		public void setParameters(int k)
+		{
 		   this.k = k;
 		}
+		
 		public static double pow2(double p) { return p * p; } 
 	}
 }

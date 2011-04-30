@@ -7,33 +7,32 @@ using common.problem_size.Class;
 using lu.triangular.Lower;
 using lu.ssor.BlockTriangularSolution;
 
-namespace impl.lu.ssor.BlockTriangularSolutionBlts { 
-	public class IBlockTriangularSolutionBlts<I, C, DIS> : BaseIBlockTriangularSolutionBlts<I, C, DIS>, IBlockTriangularSolution<I, C, DIS>
-	where I:IInstance_LU<C>
-	where C:IClass
-	where DIS:ILower {
+namespace impl.lu.ssor.BlockTriangularSolutionBlts 
+{ 
+	public class IBlockTriangularSolutionBlts<DIS, I, C> : BaseIBlockTriangularSolutionBlts<DIS, I, C>, IBlockTriangularSolution<DIS, I, C>
+		where I:IInstance_LU<C>
+		where C:IClass
+		where DIS:ILower 
+	{
 	    private int k;
 	    private double omega;
-	    private double[,,,] ldx;
-	    private double[,,,] ldy;
-	    private double[,,,] ldz;
-	
-		public IBlockTriangularSolutionBlts() { 
-		
-		} 
-		
-		public override int go() { 
-
-            int i, j, m, iex;
+			
+		public override int go() 
+		{ 
+            int i, j, m;
             double  tmp, tmp1;
             double[,] tmat = new double[5, 5];
-            iex = 0;
-            Exchange1.setParameters(rsd, iex, k);
-            Exchange1.go();
-            for(j = jst; j<= jend; j++) {
-                for(i = ist; i<= iend; i++) {
-                    for(m = 1; m<= 5; m++) {
-                        rsd[k-1, j+1, i+1, m -1] =  rsd[k-1, j+1, i+1, m -1]
+			
+            Exchange_102.setParameters(rsd, k);
+            Exchange_102.go();
+			
+            for(j = jst; j<= jend; j++) 
+			{
+                for(i = ist; i<= iend; i++) 
+				{
+                    for(m = 1; m<= 5; m++) 
+					{
+                        rsd[k-1, j+1, i+1, m-1] =  rsd[k-1, j+1, i+1, m -1]
              - omega * (  ldz[j-1, i-1, 0, m-1] * rsd[k-2, j+1, i+1, 0]
                         + ldz[j-1, i-1, 1, m-1] * rsd[k-2, j+1, i+1, 1]
                         + ldz[j-1, i-1, 2, m-1] * rsd[k-2, j+1, i+1, 2]
@@ -42,9 +41,13 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
                     }
                 }
             }
-            for(j=jst; j<=jend; j++) {
-                for(i = ist; i<= iend; i++) {
-                    for(m = 1; m<= 5; m++) {
+			
+            for(j=jst; j<=jend; j++) 
+			{
+                for(i = ist; i<= iend; i++) 
+				{
+                    for(m = 1; m<= 5; m++) 
+					{
                         rsd[k-1, j+1, i+1, m-1] =  rsd[k-1, j+1, i+1, m-1]
                         - omega * ( ldy[j-1, i-1, 0, m-1] * rsd[k-1, j, i+1, 0]
                                   + ldx[j-1, i-1, 0, m-1] * rsd[k-1, j+1, i, 0]
@@ -57,13 +60,21 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
                                   + ldy[j-1, i-1, 4, m-1] * rsd[k-1, j, i+1, 4]
                                   + ldx[j-1, i-1, 4, m-1] * rsd[k-1, j+1, i, 4]);
                     }
-                    for(m = 0; m< 5; m++) {
+					
+                    //---------------------------------------------------------------------
+                    //   diagonal block inversion
+                    //
+                    //   forward elimination
+                    //---------------------------------------------------------------------
+					for(m = 0; m< 5; m++) 
+					{
                         tmat[0, m] = d[j-1, i-1, 0, m];
                         tmat[1, m] = d[j-1, i-1, 1, m];
                         tmat[2, m] = d[j-1, i-1, 2, m];
                         tmat[3, m] = d[j-1, i-1, 3, m];
                         tmat[4, m] = d[j-1, i-1, 4, m];
                     }
+					
                     tmp1 = 1.0d /tmat[0, 0];
                     tmp = tmp1 * tmat[0, 1];
                     tmat[1, 1] =  tmat[1, 1] - tmp * tmat[1, 0];
@@ -128,7 +139,11 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
                     tmat[4, 4] =  tmat[4, 4] - tmp * tmat[4, 3];
                     rsd[k-1, j+1, i+1, 4] = rsd[k-1, j+1, i+1, 4] - rsd[k-1, j+1, i+1, 3] * tmp;
 
-                    rsd[k-1, j+1, i+1, 4] = rsd[k-1, j+1, i+1, 4]/ tmat[4, 4];
+                    //---------------------------------------------------------------------
+                    //   back substitution
+                    //---------------------------------------------------------------------
+
+					rsd[k-1, j+1, i+1, 4] = rsd[k-1, j+1, i+1, 4]/ tmat[4, 4];
                     rsd[k-1, j+1, i+1, 3] = rsd[k-1, j+1, i+1, 3]- tmat[4, 3] * rsd[k-1, j+1, i+1, 4];
                     rsd[k-1, j+1, i+1, 3] = rsd[k-1, j+1, i+1, 3]/ tmat[3, 3];
                     rsd[k-1, j+1, i+1, 2] = rsd[k-1, j+1, i+1, 2] -tmat[3, 2] * rsd[k-1, j+1, i+1, 3] - tmat[4, 2] * 
@@ -143,21 +158,33 @@ namespace impl.lu.ssor.BlockTriangularSolutionBlts {
                                                            tmat[3, 0] * rsd[k-1, j+1, i+1, 3]-
                                                            tmat[4, 0] * rsd[k-1, j+1, i+1, 4];
                     rsd[k-1, j+1, i+1, 0] = rsd[k-1, j+1, i+1, 0] /tmat[0, 0];
-
-                }
+					
+				
+				}
             }
-            iex = 2;
-            Exchange1.setParameters(rsd, iex, k);
-            Exchange1.go();
+			
+            Exchange_113.setParameters(rsd, k);
+            Exchange_113.go();
+			
+          /*  for(j=jst; j<=jend; j++) 
+			{
+                for(i = ist; i<= iend; i++) 
+				{
+					for(m = 0; m< 5; m++)
+				        Console.WriteLine("rsd4[" + (k-1) + "," + (j+1) + "," + (i+1) + "," + (m) +"] = " + rsd[k-1, j+1, i+1, m]);
+				}
+			}*/
+
 			return 0;
 		}
 		
-		public void setParameters(int k, double omega, double[,,,] dx, double[,,,] dy, double[,,,] dz){
+		public void setParameters(int k, double omega/*, double[,,,] dz, double[,,,] dy, double[,,,] dx*/)
+		{
 		   this.k     = k;
 		   this.omega = omega;
-		   this.ldx   = dx;
+/*		   this.ldx   = dx;
 		   this.ldy   = dy;
-		   this.ldz   = dz;
+		   this.ldz   = dz;*/
 		}
 	}
 }

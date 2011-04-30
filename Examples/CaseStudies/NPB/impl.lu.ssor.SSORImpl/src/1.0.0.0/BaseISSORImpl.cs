@@ -21,19 +21,24 @@ using lu.problem_size.Instance;
 using lu.ssor.SSOR;
 using MPI;
 
-namespace impl.lu.ssor.SSORImpl { 
+namespace impl.lu.ssor.SSORImpl 
+{ 
 	public abstract class BaseISSORImpl<I, C>: Computation, BaseISSOR<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass{
+		where I:IInstance_LU<C>
+		where C:IClass
+	{
 	   
 		#region data
+		
 			protected Intracommunicator worldcomm;
 			protected int nz,ist,jst,iend,jend;
 			protected int isiz1, isiz2;
 			protected int itmax,inorm;
 			protected double dt;
 			protected double [,,,] u,a,b,c,d,rsd;
-			override public void initialize(){
+			
+			override public void initialize()
+			{
 			    itmax = Instance.itmax;
 			    inorm = Instance.inorm;
 			    dt    = Instance.dt;
@@ -55,6 +60,7 @@ namespace impl.lu.ssor.SSORImpl {
                 
 				worldcomm = Mpi.worldComm();
 			}
+			
 		#endregion
 	
 		private IRhs<I, C> rhs = null;
@@ -97,22 +103,22 @@ namespace impl.lu.ssor.SSORImpl {
 			}
 		}
 		
-		private IBlockTriangularSolution<I, C, ILower> blts = null;
+		private IBlockTriangularSolution<ILower, I, C> blts = null;
 		
-		protected IBlockTriangularSolution<I, C, ILower> Blts {
+		protected IBlockTriangularSolution<ILower, I, C> Blts {
 			get {
 				if (this.blts == null)
-					this.blts = (IBlockTriangularSolution<I, C, ILower>) Services.getPort("blts");
+					this.blts = (IBlockTriangularSolution<ILower, I, C>) Services.getPort("blts");
 				return this.blts;
 			}
 		}
 		
-		private IBlockTriangularSolution<I, C, IUpper> buts = null;
+		private IBlockTriangularSolution<IUpper, I, C> buts = null;
 		
-		protected IBlockTriangularSolution<I, C, IUpper> Buts {
+		protected IBlockTriangularSolution<IUpper, I, C> Buts {
 			get {
 				if (this.buts == null)
-					this.buts = (IBlockTriangularSolution<I, C, IUpper>) Services.getPort("buts");
+					this.buts = (IBlockTriangularSolution<IUpper, I, C>) Services.getPort("buts");
 				return this.buts;
 			}
 		}

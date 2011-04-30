@@ -16,67 +16,89 @@ namespace impl.lu.VerifyImpl {
 	    private double[] xce;
 	    private double xci;
 		
-		public IVerifyImpl() { 
-		
-		} 
-		
-		public override int go() { 
+		public override int go() 
+		{ 
             double[] xcrdif = new double[5];
             double[] xcedif = new double[5];
             double epsilon, xcidif;
             int m;
+            Console.WriteLine("BEGIN VERIFY 1");
             PROBLEM_CLASS clss = Instance.CLASS;
             epsilon = 1.0E-08;
             verified = 1;
-            for(m = 0; m< 5; m++) {
+            Console.WriteLine("BEGIN VERIFY 2 " + (xcr == null) + " - " + (xce == null) + " - " + (xcrref == null));
+            for(m = 0; m < 5; m++) 
+            {
                 xcrdif[m] = Math.Abs((xcr[m]-xcrref[m])/xcrref[m]);
                 xcedif[m] = Math.Abs((xce[m]-xceref[m])/xceref[m]);
             }
+            Console.WriteLine("BEGIN VERIFY 3");
+            
             xcidif = Math.Abs((xci - xciref)/xciref);
-            if(clss != PROBLEM_CLASS.U) {
+            
+            if(clss != PROBLEM_CLASS.U) 
+            {
                 Console.WriteLine(" Verification being performed for class " + clss);
                 Console.WriteLine(" Accuracy setting for epsilon = " + epsilon);
                 verified = (Math.Abs(dt-dtref) <= epsilon)?1:0;
-                if(!(verified==1)) {
+                if(!(verified==1)) 
+                {
                     clss = PROBLEM_CLASS.U;
                     Console.WriteLine(" DT does not match the reference value of " + dtref);
                 }
             }
-            else {
+            else 
+            {
                 Console.WriteLine(" Unknown class");
             }
-            if(clss != PROBLEM_CLASS.U) {
+            
+            if(clss != PROBLEM_CLASS.U) 
+            {
                 Console.WriteLine(" Comparison of RMS-norms of residual");
             }
-            else {
+            else 
+            {
                 Console.WriteLine(" RMS-norms of residual");
             }
-            for(m = 0; m< 5; m++) {
-                if(clss == PROBLEM_CLASS.U) {
+            
+            for(m = 0; m< 5; m++) 
+            {
+                if(clss == PROBLEM_CLASS.U) 
+                {
                     Console.WriteLine("          " + m + " " + xcr[m]);
                 }
-                else if(xcrdif[m] <= epsilon) {
+                else if(xcrdif[m] <= epsilon) 
+                {
                     Console.WriteLine("          " + m + " " + xcr[m] + " " + xcrref[m] + " " + xcrdif[m]);
                 }
-                else {
+                else 
+                {
                     Console.WriteLine(" FAILURE: "+m+" "+xcr[m]+" "+xcrref[m]+" "+xcrdif[m]);
                     verified = 0;
                 }
             }
-            if(clss != PROBLEM_CLASS.U) {
+            
+            if(clss != PROBLEM_CLASS.U) 
+            {
                 Console.WriteLine(" Comparison of RMS-norms of solution error");
             }
-            else {
+            else 
+            {
                 Console.WriteLine(" RMS-norms of solution error");
             }
-            for(m = 0; m< 5; m++) {
-                if(clss == PROBLEM_CLASS.U) {
+            
+            for(m = 0; m< 5; m++) 
+            {
+                if(clss == PROBLEM_CLASS.U) 
+                {
                     Console.WriteLine("          " + m + " " + xce[m]);
                 }
-                else if(xcedif[m] <= epsilon) {
+                else if(xcedif[m] <= epsilon) 
+                {
                     Console.WriteLine("          "+m+" "+xce[m]+" "+xceref[m]+" "+xcedif[m]);
                 }
-                else {
+                else 
+                {
                     verified = 0;
                     Console.WriteLine(" FAILURE: "+m+" "+xce[m]+" "+xceref[m]+" "+xcedif[m]);
                 }
@@ -98,7 +120,7 @@ namespace impl.lu.VerifyImpl {
                 Console.WriteLine(" FAILURE: " + xci + " " + xciref + " " + xcidif);
             }
             if(clss == PROBLEM_CLASS.U) {
-                Console.WriteLine("' No reference values provided");
+                Console.WriteLine("No reference values provided");
                 Console.WriteLine(" No verification performed");
             }
             else if(verified==1) {
@@ -110,7 +132,8 @@ namespace impl.lu.VerifyImpl {
 			return 0;
 		}
 		
-		public void setParameters(double[] xcr, double[] xce, double xci){
+		public void setParameters(double[] xcr, double[] xce, double xci)
+		{
 		   this.xcr = xcr;
 		   this.xce = xce;
 		   this.xci = xci;

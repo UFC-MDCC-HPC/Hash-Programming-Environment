@@ -73,14 +73,6 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange4\lu.Exchange4\lu.Exchange4.csproj">
-      <Project>{62073609-B2FB-47F0-9315-C1428021C4F1}</Project>
-      <Name>lu.Exchange4</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
-      <Project>{F87BB0AE-CB6C-4CD0-B131-C7DD0E218376}</Project>
-      <Name>lu.Exchange</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo.csproj">
       <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
       <Name>lu.datapartition.BlocksInfo</Name>
@@ -92,6 +84,26 @@
     <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
       <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
       <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
+      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
+      <Name>lu.Exchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.exchange.ExchangePattern4\lu.exchange.ExchangePattern4\lu.exchange.ExchangePattern4.csproj">
+      <Project>{E4F7CAF1-C4A5-435B-9DD2-F79E66B88056}</Project>
+      <Name>lu.exchange.ExchangePattern4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.exchange.ExchangePattern5\lu.exchange.ExchangePattern5\lu.exchange.ExchangePattern5.csproj">
+      <Project>{B10F7405-57C9-4AA6-B314-427B69343328}</Project>
+      <Name>lu.exchange.ExchangePattern5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.exchange.ExchangePattern6\lu.exchange.ExchangePattern6\lu.exchange.ExchangePattern6.csproj">
+      <Project>{A961D18B-600E-4966-A1C5-4B88DADB3DCF}</Project>
+      <Name>lu.exchange.ExchangePattern6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Discretization\common.Discretization\common.Discretization.csproj">
+      <Project>{B3AE2AA8-4CC8-4D43-9373-1A193CFA13DB}</Project>
+      <Name>common.Discretization</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

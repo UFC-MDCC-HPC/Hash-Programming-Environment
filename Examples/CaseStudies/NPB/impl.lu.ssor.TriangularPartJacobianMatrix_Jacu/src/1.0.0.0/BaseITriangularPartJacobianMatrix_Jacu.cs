@@ -13,11 +13,13 @@ using lu.problem_size.Instance;
 using lu.triangular.Upper;
 using lu.ssor.TriangularPartJacobianMatrix;
 
-namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacu { 
+namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacu 
+{ 
 	public abstract class BaseITriangularPartJacobianMatrix_Jacu<I, C, DIS>: Computation, BaseITriangularPartJacobianMatrix<I, C, DIS>
-	where I:IInstance_LU<C>
-	where C:IClass
-	where DIS:IUpper{
+		where I:IInstance_LU<C>
+		where C:IClass
+		where DIS:IUpper
+	{
 	
 		#region data
 			protected int ist,jst,iend,jend;
@@ -30,14 +32,15 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacu {
 			                 dy1, dy2, dy3, dy4, dy5, 
 			                 dz1, dz2, dz3, dz4, dz5;
 			protected double [,,,] u,d,a,b,c;
-			override public void initialize(){
+			
+			override public void initialize()
+			{
 			    dt = Instance.dt;
 			    
                 ist  = Blocks.ist;
                 jst  = Blocks.jst;                
                 iend = Blocks.iend;
-                jend = Blocks.jend;
-                
+                jend = Blocks.jend;                
                 
                 u    = Problem.Field_u;
                 d    = Problem.Field_d;
@@ -78,6 +81,7 @@ namespace impl.lu.ssor.TriangularPartJacobianMatrix_Jacu {
                 dz4 = Constants.dz4;
                 dz5 = Constants.dz5;  
 			}
+			
 		#endregion
 	
 		private IProblemDefinition<I, C> problem = null;

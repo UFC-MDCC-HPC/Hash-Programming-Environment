@@ -12,7 +12,7 @@
         <parameter formFieldId="instance_type" varName="I"/>
         <parameter formFieldId="class" varName="C"/>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-          <visualDescription h="29" w="76" x="58" y="360">
+          <visualDescription h="29" w="76" x="72" y="387">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="blocks">
@@ -29,12 +29,12 @@
             <visualDescription h="10" w="10" x="10" y="24"/>
           </unitBounds>
         </port>
-        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a5f16b771d8e6498d2d3de28ff69055bf66aa7e281fc4b0ebd4b16e81176b4e3da49a70c73092d2f9616290fa7acb2e06f92a486f19d7c2b61b569e4e990c21941ac8db14315fcead8106a62cd8e81a7ce87e967196af8b5d8b3647706c0121ae7dd36c0144f157e051a1e08938e4b954a423dff981f6493aa277f9639d533c9" localRef="neighbors" location="lu.topology.Neighbors/Neighbors.hpe" name="Neighbors" package="lu.topology" exposed="true">
-          <visualDescription h="25" w="61" x="471" y="267">
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="34" w="35" x="43" y="347">
             <color b="255" g="255" r="255"/>
           </visualDescription>
-          <unitBounds uRef="neighbors">
-            <visualDescription h="10" w="10" x="64" y="15"/>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="63" y="6"/>
           </unitBounds>
         </port>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
@@ -42,7 +42,15 @@
             <color b="240" g="32" r="160"/>
           </visualDescription>
           <unitBounds uRef="mpi">
-            <visualDescription h="10" w="10" x="22" y="3"/>
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="35" w="33" x="238" y="88">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="63" y="6"/>
           </unitBounds>
         </port>
         <unitBounds uRef="ssor">
@@ -100,29 +108,29 @@
         <originRef cRef="instance_type" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="86" y="23"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1c7cc1d" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@78b14c0f" repeat="0">
         <visualDescription h="150" w="370" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@299852" repeat="0" sliceRef="rhs">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3ff8aab0" repeat="0" sliceRef="rhs">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@cf472b" repeat="0" sliceRef="l2norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5e8e299f" repeat="0" sliceRef="l2norm">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@496f08" repeat="0" sliceRef="triangular_part_jacobian_matrix">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@474eb638" repeat="0" sliceRef="triangular_part_jacobian_matrix">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@118a58d" repeat="0" sliceRef="triangular_part_jacobian_matrix">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9d3b1b" repeat="0" sliceRef="triangular_part_jacobian_matrix">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@11cf9ad" repeat="0" sliceRef="block_triangular_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@529369ed" repeat="0" sliceRef="block_triangular_solution">
           <visualDescription h="50" w="50" x="250" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@14bfeaa" repeat="0" sliceRef="block_triangular_solution">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4c0f70f5" repeat="0" sliceRef="block_triangular_solution">
           <visualDescription h="50" w="50" x="310" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.ssor.Rhs;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.ssor.L2Norm;&#xA;using lu.ssor.BlockTriangularSolution;&#xA;using lu.triangular.Lower;&#xA;using lu.triangular.Upper;&#xA;using environment.MPIDirect;&#xA;using common.benchmarking.Timer;&#xA;using lu.ssor.TriangularPartJacobianMatrix;&#xA;using lu.topology.Neighbors;&#xA;using lu.problem_size.Instance;&#xA;using lu.ssor.SSOR;&#xA;&#xA;namespace impl.lu.ssor.SSORImpl { &#xA;&#xA;public abstract class BaseISSORImpl&lt;I, C>: Computation, BaseISSOR&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IRhs&lt;I, C> rhs = null;&#xA;&#xA;protected IRhs&lt;I, C> Rhs {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.rhs == null)&#xA;&#x9;&#x9;&#x9;this.rhs = (IRhs&lt;I, C>) Services.getPort(&quot;rhs&quot;);&#xA;&#x9;&#x9;return this.rhs;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IL2Norm&lt;I, C> l2norm = null;&#xA;&#xA;protected IL2Norm&lt;I, C> L2norm {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.l2norm == null)&#xA;&#x9;&#x9;&#x9;this.l2norm = (IL2Norm&lt;I, C>) Services.getPort(&quot;l2norm&quot;);&#xA;&#x9;&#x9;return this.l2norm;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlockTriangularSolution&lt;I, C, ILower> block_triangular_solution = null;&#xA;&#xA;protected IBlockTriangularSolution&lt;I, C, ILower> Block_triangular_solution {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.block_triangular_solution == null)&#xA;&#x9;&#x9;&#x9;this.block_triangular_solution = (IBlockTriangularSolution&lt;I, C, ILower>) Services.getPort(&quot;blts&quot;);&#xA;&#x9;&#x9;return this.block_triangular_solution;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlockTriangularSolution&lt;I, C, IUpper> block_triangular_solution = null;&#xA;&#xA;protected IBlockTriangularSolution&lt;I, C, IUpper> Block_triangular_solution {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.block_triangular_solution == null)&#xA;&#x9;&#x9;&#x9;this.block_triangular_solution = (IBlockTriangularSolution&lt;I, C, IUpper>) Services.getPort(&quot;buts&quot;);&#xA;&#x9;&#x9;return this.block_triangular_solution;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IMPIDirect mpi = null;&#xA;&#xA;public IMPIDirect Mpi {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;return this.mpi;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITimer timer = null;&#xA;&#xA;protected ITimer Timer {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.timer == null)&#xA;&#x9;&#x9;&#x9;this.timer = (ITimer) Services.getPort(&quot;timer&quot;);&#xA;&#x9;&#x9;return this.timer;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITriangularPartJacobianMatrix&lt;I, C, ILower> triangular_part_jacobian_matrix = null;&#xA;&#xA;protected ITriangularPartJacobianMatrix&lt;I, C, ILower> Triangular_part_jacobian_matrix {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.triangular_part_jacobian_matrix == null)&#xA;&#x9;&#x9;&#x9;this.triangular_part_jacobian_matrix = (ITriangularPartJacobianMatrix&lt;I, C, ILower>) Services.getPort(&quot;jacld&quot;);&#xA;&#x9;&#x9;return this.triangular_part_jacobian_matrix;&#xA;&#x9;}&#xA;}&#xA;&#xA;private ITriangularPartJacobianMatrix&lt;I, C, IUpper> triangular_part_jacobian_matrix = null;&#xA;&#xA;protected ITriangularPartJacobianMatrix&lt;I, C, IUpper> Triangular_part_jacobian_matrix {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.triangular_part_jacobian_matrix == null)&#xA;&#x9;&#x9;&#x9;this.triangular_part_jacobian_matrix = (ITriangularPartJacobianMatrix&lt;I, C, IUpper>) Services.getPort(&quot;jacu&quot;);&#xA;&#x9;&#x9;return this.triangular_part_jacobian_matrix;&#xA;&#x9;}&#xA;}&#xA;&#xA;private INeighbors neighbors = null;&#xA;&#xA;public INeighbors Neighbors {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.neighbors == null)&#xA;&#x9;&#x9;&#x9;this.neighbors = (INeighbors) Services.getPort(&quot;neighbors&quot;);&#xA;&#x9;&#x9;return this.neighbors;&#xA;&#x9;}&#xA;}&#xA;&#xA;private I instance = default(I);&#xA;&#xA;protected I Instance {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;return this.instance;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseISSORImpl.cs" srcType="base" uri="impl.lu.ssor.SSORImpl/bin/1.0.0.0/BaseISSORImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.ssor.Rhs;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.ssor.L2Norm;&#xA;using lu.ssor.BlockTriangularSolution;&#xA;using lu.triangular.Lower;&#xA;using lu.triangular.Upper;&#xA;using environment.MPIDirect;&#xA;using common.benchmarking.Timer;&#xA;using lu.ssor.TriangularPartJacobianMatrix;&#xA;using common.topology.Ring;&#xA;using lu.problem_size.Instance;&#xA;using lu.ssor.SSOR;&#xA;using MPI;&#xA;&#xA;namespace impl.lu.ssor.SSORImpl &#xA;{ &#xA;&#x9;public abstract class BaseISSORImpl&lt;I, C>: Computation, BaseISSOR&lt;I, C>&#xA;&#x9;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;&#x9;{&#xA;&#x9;   &#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;protected Intracommunicator worldcomm;&#xA;&#x9;&#x9;&#x9;protected int nz,ist,jst,iend,jend;&#xA;&#x9;&#x9;&#x9;protected int isiz1, isiz2;&#xA;&#x9;&#x9;&#x9;protected int itmax,inorm;&#xA;&#x9;&#x9;&#x9;protected double dt;&#xA;&#x9;&#x9;&#x9;protected double [,,,] u,a,b,c,d,rsd;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;override public void initialize()&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;    itmax = Instance.itmax;&#xA;&#x9;&#x9;&#x9;    inorm = Instance.inorm;&#xA;&#x9;&#x9;&#x9;    dt    = Instance.dt;&#xA;&#x9;&#x9;&#x9;    &#xA;&#x9;&#x9;&#x9;    nz   = Blocks.nz;&#xA;                ist  = Blocks.ist;&#xA;                jst  = Blocks.jst;&#xA;                iend = Blocks.iend;&#xA;                jend = Blocks.jend;&#xA;                &#xA;                isiz1 = Problem.isiz1;&#xA;                isiz2 = Problem.isiz2; &#xA;                u     = Problem.Field_u;                &#xA;                a     = Problem.Field_a;&#xA;                b     = Problem.Field_b;&#xA;                c     = Problem.Field_c;&#xA;                d     = Problem.Field_d;&#xA;                rsd   = Problem.Field_rsd;&#xA;                &#xA;&#x9;&#x9;&#x9;&#x9;worldcomm = Mpi.worldComm();&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;#endregion&#xA;&#x9;&#xA;&#x9;&#x9;private IRhs&lt;I, C> rhs = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IRhs&lt;I, C> Rhs {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.rhs == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.rhs = (IRhs&lt;I, C>) Services.getPort(&quot;rhs&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.rhs;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlocksInfo blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocksInfo Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IL2Norm&lt;I, C> l2norm = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IL2Norm&lt;I, C> L2norm {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.l2norm == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.l2norm = (IL2Norm&lt;I, C>) Services.getPort(&quot;l2norm&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.l2norm;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlockTriangularSolution&lt;ILower, I, C> blts = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IBlockTriangularSolution&lt;ILower, I, C> Blts {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blts == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blts = (IBlockTriangularSolution&lt;ILower, I, C>) Services.getPort(&quot;blts&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blts;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlockTriangularSolution&lt;IUpper, I, C> buts = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IBlockTriangularSolution&lt;IUpper, I, C> Buts {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.buts == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.buts = (IBlockTriangularSolution&lt;IUpper, I, C>) Services.getPort(&quot;buts&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.buts;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IMPIDirect mpi = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IMPIDirect Mpi {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.mpi == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.mpi;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ITimer timer = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected ITimer Timer {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.timer == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.timer = (ITimer) Services.getPort(&quot;timer&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.timer;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ITriangularPartJacobianMatrix&lt;I, C, ILower> jacld = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected ITriangularPartJacobianMatrix&lt;I, C, ILower> Jacld {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.jacld == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.jacld = (ITriangularPartJacobianMatrix&lt;I, C, ILower>) Services.getPort(&quot;jacld&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.jacld;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ITriangularPartJacobianMatrix&lt;I, C, IUpper> jacu = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected ITriangularPartJacobianMatrix&lt;I, C, IUpper> Jacu {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.jacu == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.jacu = (ITriangularPartJacobianMatrix&lt;I, C, IUpper>) Services.getPort(&quot;jacu&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.jacu;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ICell y = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public ICell Y {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.y;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ICell x = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public ICell X {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.x;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private I instance = default(I);&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected I Instance {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.instance == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.instance = (I) Services.getPort(&quot;instance_type&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.instance;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseISSORImpl.cs" srcType="base" uri="impl.lu.ssor.SSORImpl/bin/1.0.0.0/BaseISSORImpl.dll" versionId="1.0.0.0">
           <dependency>lu.ssor.Rhs/bin/1.0.0.0/IRhs.dll</dependency>
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -138,15 +146,17 @@
           <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>lu.ssor.SSOR/bin/1.0.0.0/BaseISSOR.dll</dependency>
+          <externalDependency>MPI</externalDependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.ssor.SSOR;&#xA;&#xA;namespace impl.lu.ssor.SSORImpl { &#xA;&#xA;public class ISSORImpl&lt;I, C> : BaseISSORImpl&lt;I, C>, ISSOR&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public ISSORImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;#pragma omp parallel sections&#xA;&#x9;{&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;rhs.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;l2norm.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;triangular_part_jacobian_matrix.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;null.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;block_triangular_solution.compute();&#xA;&#x9;&#x9;#pragma omp section&#xA;&#x9;&#x9;null.compute();&#xA;&#x9;}&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ISSORImpl.cs" srcType="user" uri="impl.lu.ssor.SSORImpl/bin/1.0.0.0/ISSORImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.ssor.SSOR;&#xA;&#xA;namespace impl.lu.ssor.SSORImpl &#xA;{ &#xA;&#x9;public class ISSORImpl&lt;I, C> : BaseISSORImpl&lt;I, C>, ISSOR&lt;I, C>&#xA;&#x9;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;&#x9;where C:IClass&#xA;&#x9;{&#xA;&#x9;    private int niter;&#xA;&#x9;&#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{&#xA;            int i, j, k, m;&#xA;            int istep;&#xA;            double  tmp;&#xA;            double[] delunm = new double[5];&#xA;            double[] tolrsd = {1.0E-08, 1.0E-08, 1.0E-08, 1.0E-08, 1.0E-08};&#xA;            double omega=1.2d;&#xA;            rsdnm  = new double[5];&#xA;            double wtime;&#xA;            int node = this.GlobalRank;&#xA;            tmp = 1.0d/(omega*(2.0d-omega));&#xA;            &#xA;            //---------------------------------------------------------------------&#xA;            //   initialize a,b,c,d to zero [guarantees that page tables have been&#xA;            //   formed, if applicable on given architecture, before timestepping].&#xA;            //---------------------------------------------------------------------&#xA;            for(m=0; m&lt;isiz2; m++) &#xA;            {&#xA;                for(k=0; k&lt;isiz1; k++) &#xA;                {&#xA;                    for(j=0; j&lt;5; j++) &#xA;                    {&#xA;                        for(i=0; i&lt;5; i++) &#xA;                        {&#xA;                            a[m, k, j, i] = 0.0;&#xA;                            b[m, k, j, i] = 0.0;&#xA;                            c[m, k, j, i] = 0.0;&#xA;                            d[m, k, j, i] = 0.0;&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;&#x9;&#x9;&#x9;&#xA;            //---------------------------------------------------------------------&#xA;            //   compute the steady-state residuals&#xA;            //---------------------------------------------------------------------&#xA;            Rhs.go();&#xA;&#x9;&#x9;&#x9;&#xA;            //---------------------------------------------------------------------&#xA;            //   compute the L2 norms of newton iteration residuals&#xA;            //---------------------------------------------------------------------&#xA;            L2norm.setParameters(rsdnm);&#xA;            L2norm.go();&#xA;            &#xA;            worldcomm.Barrier();&#xA;            &#xA;            Timer.resetTimer(1);&#xA;            Timer.start(1);&#xA;            &#xA;            //---------------------------------------------------------------------&#xA;            //   the timestep loop&#xA;            //---------------------------------------------------------------------&#xA;            for(istep = 1; istep&lt;= niter; istep++) &#xA;            {&#xA;                if(node == 0) &#xA;                {&#xA;                    if(mod(istep, 20) == 0 || istep == itmax || istep == 1) &#xA;                    {&#xA;                        if(niter > 1)&#xA;                            Console.WriteLine(&quot; Time step &quot;+istep);&#xA;                    }&#xA;                }&#xA;                &#xA;                //---------------------------------------------------------------------&#xA;                //   perform SSOR iteration&#xA;                //---------------------------------------------------------------------&#xA;                for(k = 1; k &lt; nz - 1; k++) &#xA;                {&#xA;                    for(j = jst+1; j &lt;= jend+1; j++) &#xA;                    {&#xA;                        for(i = ist+1; i &lt;= iend+1; i++) &#xA;                        {&#xA;                            for(m = 0; m &lt; 5; m++) &#xA;                            {&#xA;                                rsd[k, j, i, m] = dt * rsd[k, j, i, m];&#xA;//&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Console.WriteLine(&quot;rsd1[&quot; + k + &quot;,&quot; + j + &quot;,&quot; + i + &quot;,&quot; + m +&quot;] = &quot; + rsd[k, j, i, m]);&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;                &#xA;                for(k = 2; k &lt;= nz-1; k++) &#xA;                {&#xA;                    //---------------------------------------------------------------------&#xA;                    //   form the lower triangular part of the jacobian matrix&#xA;                    //---------------------------------------------------------------------&#xA;                    Jacld.setParameters(k);&#xA;                    Jacld.go();&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;                    //---------------------------------------------------------------------&#xA;                    //   perform the lower triangular solution&#xA;                    //---------------------------------------------------------------------&#xA;                    Blts.setParameters(k, omega/*, a, b, c*/);&#xA;                    Blts.go();&#xA;                }&#xA;                 &#x9;&#x9;&#x9;    &#xA;                for(k = nz-1; k >= 2; k--) &#xA;                {&#xA;                    //---------------------------------------------------------------------&#xA;                    //   form the strictly upper triangular part of the jacobian matrix&#xA;                    //---------------------------------------------------------------------&#xA;                    Jacu.setParameters(k);&#xA;                    Jacu.go();&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;                    //---------------------------------------------------------------------&#xA;                    //   perform the upper triangular solution&#xA;                    //---------------------------------------------------------------------&#xA;                    Buts.setParameters(k, omega/*, a, b, c*/);&#xA;                    Buts.go();&#xA;                }&#xA;                &#xA;                //---------------------------------------------------------------------&#xA;                //   update the variables&#xA;                //---------------------------------------------------------------------&#xA;                for(k = 1; k&lt; nz-1; k++) &#xA;                {&#xA;                    for(j = jst+1; j&lt;= jend+1; j++) &#xA;                    {&#xA;                        for(i = ist+1; i&lt;= iend+1; i++) &#xA;                        {&#xA;                            for(m = 0; m&lt; 5; m++) &#xA;                            {&#xA;//   &#x9;&#x9;&#x9;&#x9;                Console.WriteLine(&quot;rsd5[&quot; + k + &quot;,&quot; + j + &quot;,&quot; + i + &quot;,&quot; + m +&quot;] = &quot; + rsd[k, j, i, m]);&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;//Console.WriteLine(&quot;u1[&quot; + k + &quot;,&quot; + j + &quot;,&quot; + i + &quot;,&quot; + m + &quot;] = &quot; + u[k, j, i, m]);&#xA;                                u[k, j, i, m] = u[k, j, i, m] + tmp * rsd[k, j, i, m];&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;//Console.WriteLine(&quot;u2[&quot; + k + &quot;,&quot; + j + &quot;,&quot; + i + &quot;,&quot; + m + &quot;] = &quot; + u[k, j, i, m]);&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;                &#xA;                //---------------------------------------------------------------------&#xA;                //   compute the max-norms of newton iteration corrections&#xA;                //---------------------------------------------------------------------&#xA;                if(mod(istep, inorm) == 0) &#xA;                {&#xA;                    L2norm.setParameters(delunm);&#xA;                    L2norm.go();&#xA;                }&#xA;                &#xA;                //---------------------------------------------------------------------&#xA;                //   compute the steady-state residuals&#xA;                //---------------------------------------------------------------------&#xA;                Rhs.go();&#xA;                &#xA;                //---------------------------------------------------------------------&#xA;                //   compute the max-norms of newton iteration residuals&#xA;                //---------------------------------------------------------------------&#xA;                if((mod(istep, inorm)== 0) || (istep==itmax)) &#xA;                {&#xA;                    L2norm.setParameters(rsdnm);&#xA;                    L2norm.go();&#xA;                }&#xA;                &#xA;                //---------------------------------------------------------------------&#xA;                //   check the newton-iteration residuals against the tolerance levels&#xA;                //---------------------------------------------------------------------&#xA;                if((rsdnm[0]&lt;tolrsd[0]) &amp;&amp; &#xA;                   (rsdnm[1]&lt;tolrsd[1]) &amp;&amp; &#xA;                   (rsdnm[2]&lt;tolrsd[2]) &amp;&amp; &#xA;                   (rsdnm[3]&lt;tolrsd[3]) &amp;&amp; &#xA;                   (rsdnm[4]&lt;tolrsd[4])) &#xA;                {&#xA;                    return 0;&#xA;                }&#xA;            }&#xA;            &#xA;            Timer.stop(1);&#xA;            wtime = Timer.readTimer(1);&#xA;            &#xA;            maxtime = worldcomm.Allreduce&lt;double>(wtime, MPI.Operation&lt;double>.Max);&#xA;            &#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public static double mod(double a, double b) { return (a % b); }&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setParameters(int niter)&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;   this.niter = niter;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected double[] rsdnm;&#xA;&#x9;&#x9;protected double maxtime;&#xA;&#x9;&#x9;public double[] Rsdnm { get{ return rsdnm; } }&#xA;&#x9;&#x9;public double Maxtime { get{ return maxtime; } }&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ISSORImpl.cs" srcType="user" uri="impl.lu.ssor.SSORImpl/bin/1.0.0.0/ISSORImpl.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.lu.ssor.SSORImpl/bin/1.0.0.0/BaseISSORImpl.dll</dependency>
           <dependency>lu.ssor.SSOR/bin/1.0.0.0/ISSOR.dll</dependency>
+          <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="91" w="147" x="173" y="102">
+      <visualDescription h="91" w="147" x="189" y="72">
         <color b="255" g="128" r="0"/>
       </visualDescription>
       <port name="blocks">
@@ -157,12 +167,6 @@
         <slice pRef="blocks" sRef="triangular_part_jacobian_matrix"/>
         <slice pRef="blocks" sRef="block_triangular_solution"/>
         <slice pRef="blocks" sRef="block_triangular_solution"/>
-      </port>
-      <port name="neighbors">
-        <visualDescription h="10" w="10" x="39" y="60"/>
-        <slice pRef="neighbors" sRef="rhs"/>
-        <slice pRef="neighbors" sRef="block_triangular_solution"/>
-        <slice pRef="neighbors" sRef="block_triangular_solution"/>
       </port>
       <port name="problem">
         <visualDescription h="10" w="10" x="0" y="76"/>
@@ -175,9 +179,25 @@
       </port>
       <port name="mpi">
         <visualDescription h="10" w="10" x="131" y="76"/>
+        <slice pRef="mpi" sRef="rhs"/>
         <slice pRef="mpi" sRef="l2norm"/>
+        <slice pRef="mpi" sRef="block_triangular_solution"/>
+        <slice pRef="mpi" sRef="block_triangular_solution"/>
         <slice pRef="mpi" sRef="timer"/>
       </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="x" sRef="rhs"/>
+        <slice pRef="x" sRef="block_triangular_solution"/>
+        <slice pRef="x" sRef="block_triangular_solution"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="36" y="52"/>
+        <slice pRef="y" sRef="rhs"/>
+        <slice pRef="y" sRef="block_triangular_solution"/>
+        <slice pRef="y" sRef="block_triangular_solution"/>
+      </port>
+      <externalReferences>MPI</externalReferences>
       <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
@@ -189,17 +209,22 @@
       <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="true">
         <visualDescription h="10" w="10" x="113" y="18"/>
       </slices>
-      <slices cRef="neighbors" replica="0" uRef="neighbors" sliceName="neighbors" transitive="true">
-        <visualDescription h="10" w="10" x="8" y="25"/>
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
-        <visualDescription h="10" w="10" x="25" y="18"/>
+        <visualDescription h="10" w="10" x="11" y="22"/>
+      </slices>
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
       </slices>
       <slices cRef="rhs" replica="0" uRef="rhs" sliceName="rhs" transitive="false">
         <visualDescription h="10" w="10" x="13" y="3"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>neighbors</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
       </slices>
       <slices cRef="l2norm" replica="0" uRef="l2norm" sliceName="l2norm" transitive="false">
         <visualDescription h="10" w="10" x="23" y="42"/>
@@ -221,13 +246,17 @@
         <visualDescription h="10" w="10" x="8" y="30"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>neighbors</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
       </slices>
       <slices cRef="buts" replica="0" uRef="block_triangular_solution" sliceName="block_triangular_solution" transitive="false">
         <visualDescription h="10" w="10" x="4" y="18"/>
         <port>blocks</port>
         <port>problem</port>
-        <port>neighbors</port>
+        <port>x</port>
+        <port>mpi</port>
+        <port>y</port>
       </slices>
       <slices cRef="timer" replica="0" uRef="timer" sliceName="timer" transitive="false">
         <visualDescription h="10" w="10" x="48" y="43"/>
@@ -236,16 +265,14 @@
       <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
         <visualDescription h="10" w="10" x="86" y="23"/>
       </slices>
-      <visualDescription h="54" w="105" x="230" y="241"/>
+      <visualDescription h="54" w="105" x="206" y="235"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
       <originRef>base</originRef>
-      <originRef>rhs</originRef>
-      <originRef>exchange1</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>buts</originRef>
+      <originRef>discretization</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="ssor"/>
-      <visualDescription h="53" w="53" x="52" y="253"/>
+      <visualDescription h="47" w="37" x="59" y="121"/>
     </enumerator>
   </componentInfo>
 </component:component>
