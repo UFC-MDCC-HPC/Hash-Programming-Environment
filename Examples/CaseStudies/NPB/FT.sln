@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common.Buffer", "common.Buffer\common.Buffer\common.Buffer.csproj", "{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common.data.Field", "common.data.Field\common.data.Field\common.data.Field.csproj", "{52E16A15-880E-4088-8A2A-53C16CC14E31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common.orientation.X", "common.orientation.X\common.orientation.X\common.orientation.X.csproj", "{944FBD84-2F3B-432F-BB71-9597D2D25457}"
@@ -155,8 +153,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ft.FT", "ft.FT\ft.FT\ft.FT.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.ft.FTImpl", "impl.ft.FTImpl\impl.ft.FTImpl\impl.ft.FTImpl.csproj", "{DA558FA9-7B99-425D-B289-4F2DF9BE6309}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "impl.common.BufferImpl", "impl.common.BufferImpl\impl.common.BufferImpl\impl.common.BufferImpl.csproj", "{366928AD-F67F-4DF8-9297-633AB8AA3E31}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,10 +215,6 @@ Global
 		{36468C6E-E54D-484A-8070-A77801ACB480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36468C6E-E54D-484A-8070-A77801ACB480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36468C6E-E54D-484A-8070-A77801ACB480}.Release|Any CPU.Build.0 = Release|Any CPU
-		{366928AD-F67F-4DF8-9297-633AB8AA3E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{366928AD-F67F-4DF8-9297-633AB8AA3E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{366928AD-F67F-4DF8-9297-633AB8AA3E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{366928AD-F67F-4DF8-9297-633AB8AA3E31}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37F972A2-A930-4072-BDAF-4E37A54FA435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37F972A2-A930-4072-BDAF-4E37A54FA435}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37F972A2-A930-4072-BDAF-4E37A54FA435}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -455,10 +447,6 @@ Global
 		{EE0515C5-4EAA-4EF7-A02A-5D49326A4EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE0515C5-4EAA-4EF7-A02A-5D49326A4EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE0515C5-4EAA-4EF7-A02A-5D49326A4EEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F1ACE8D2-028D-45F9-A9C7-A79E93B9254E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1ACE8D2-028D-45F9-A9C7-A79E93B9254E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1ACE8D2-028D-45F9-A9C7-A79E93B9254E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -477,6 +465,6 @@ Global
 		{F8C5F58F-1424-4DD1-8FB6-19FC771B16AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = common.Buffer\common.Buffer\common.Buffer.csproj
+		StartupItem = common.data.Field\common.data.Field\common.data.Field.csproj
 	EndGlobalSection
 EndGlobal
