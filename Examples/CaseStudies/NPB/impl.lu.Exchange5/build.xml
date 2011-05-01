@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe/cache" default="all" name="Exchange5">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Exchange5-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/Exchange5.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/bin/1.0.0.0/BaseIExchange5.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/src/1.0.0.0/BaseIExchange5.cs"/>
+      </sources>
+      <references>
+        <include name="common.topology.Ring/bin/1.0.0.0/ICell.dll"/>
+        <include name="lu.exchange.ExchangePattern/bin/1.0.0.0/IExchangePattern.dll"/>
+        <include name="lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll"/>
+        <include name="lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll"/>
+        <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
+        <include name="common.Buffer/bin/1.0.0.0/IBuffer.dll"/>
+        <include name="lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll"/>
+        <include name="common.interactionpattern.Shift/bin/1.0.0.0/IShift.dll"/>
+        <include name="common.direction.LeftToRight/bin/1.0.0.0/ILeftToRight.dll"/>
+        <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
+        <include name="common.direction.RightToLeft/bin/1.0.0.0/IRightToLeft.dll"/>
+        <include name="common.Discretization/bin/1.0.0.0/IDiscretization.dll"/>
+        <include name="lu.exchange.ExchangePattern5/bin/1.0.0.0/IExchangePattern5.dll"/>
+        <include name="lu.Exchange/bin/1.0.0.0/BaseIExchange.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/Exchange5.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/bin/1.0.0.0/IExchange5.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.Exchange5/src/1.0.0.0/IExchange5.cs"/>
+      </sources>
+      <references>
+        <include name="lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll"/>
+        <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
+        <include name="lu.exchange.ExchangePattern5/bin/1.0.0.0/IExchangePattern5.dll"/>
+        <include name="common.Discretization/bin/1.0.0.0/IDiscretization.dll"/>
+        <include name="/impl.lu.Exchange5/bin/1.0.0.0/BaseIExchange5.dll"/>
+        <include name="lu.Exchange/bin/1.0.0.0/IExchange.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Exchange5-1.0.0.0" name="all"/>
+</project>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="002400000480000094000000060200000024000052534131000400001100000025d81cecd25fd880f9c74de0a9a81fe36bfbfab05bba12b7303c078aa4ae196474421a2565fd3d83b736a2935d4d92a3d69057926822a882f37d13228708c9be2f52683dec1ac09f908ad19e1d93d355e1cdc78a558d7a1e237ba9ad81bac2904f71449580a6d5289c60f7e3b004af96f91185a49ff7799b78adcc3ee9b04cd0" isAbstract="false" kind="Computation" name="Exchange12" packagePath="impl.lu">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000095f4efebba63c712c97d33cc474b000a6e3e0cc590f886403c79aaebe2ae41018ea9fa6bd724012fa8f882d08d86539f5dc5d8734a4353b5a76ee59ac76bbe018148c7c776301ee9dd785c67217fbce97bf90aaaabec0168b2fab5911c1c3d0ec1f1de9a2144871a0dab127361fd0ca5be1fd08131288da0f920d970a9f60a0" localRef="base" location="lu.Exchange/Exchange.hpe" name="Exchange" package="lu" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="260" y="388">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <parameter formFieldId="instance_type" varName="I"/>
+        <parameter formFieldId="exchange_pattern" varName="E"/>
+        <parameter formFieldId="class" varName="C"/>
+        <parameter formFieldId="discretization" varName="DIS"/>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
+          <visualDescription h="25" w="65" x="93" y="319">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="blocks">
+            <visualDescription h="10" w="10" x="71" y="18"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009f8aadd94be2122c6dbf97a8db4c368df4aa14e5eef40999c777e681c973106bec55b80c133f1e7301d0ff36e2ee37a1d7d095ffff4581f295b2e8fc055fc07304178d993e14731e9c3d1e72370eee41c30ae18e6d096d5d70ac13a2833e8945cd641f4a3cab17bc2397b395bc234fdfa244afa599eb514a94d884e663b3a3a5" localRef="problem_data" location="lu.data.ProblemDefinition/ProblemDefinition.hpe" name="ProblemDefinition" package="lu.data" exposed="true">
+          <visualDescription h="32" w="111" x="399" y="351">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <parameter formFieldId="instance_type" varName="I"/>
+          <parameter formFieldId="class" varName="C"/>
+          <unitBounds uRef="problem">
+            <visualDescription h="10" w="10" x="10" y="24"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="x" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="49" w="133" x="152" y="441">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="63" y="6"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
+          <visualDescription h="30" w="50" x="373" y="334">
+            <color b="240" g="32" r="160"/>
+          </visualDescription>
+          <unitBounds uRef="mpi">
+            <visualDescription h="10" w="10" x="5" y="2"/>
+          </unitBounds>
+        </port>
+        <port hash_component_UID="00240000048000009400000006020000002400005253413100040000110000009b5fdf9e2fd2e1d4c40d5d105e19369c7729126e13c1d35d7124531d9c4fa1a01ecb25564a9fc1e7175d98659a5280d86a339f77d53abc6eff4debf0c86ea2c480a3ffedb149923bba754c2bb0fb6117e2416acad5d23bebfe734b82b120e8ca3451465ce29e2c470da1b915836a5db31d0e17997a541c0f79ea1aed03990587" localRef="y" location="common.topology.Ring/Ring.hpe" name="Ring" package="common.topology" exposed="true">
+          <visualDescription h="49" w="133" x="471" y="408">
+            <color b="255" g="255" r="255"/>
+          </visualDescription>
+          <unitBounds uRef="cell">
+            <visualDescription h="10" w="10" x="63" y="6"/>
+          </unitBounds>
+        </port>
+        <unitBounds uRef="exchange1">
+          <visualDescription h="10" w="10" x="19" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000004d9c75ae5f43eaaeb10762b3e7c65b336ea4790b679668da776b55e1821b1f59388b8ea2e5f25263fc4cebe208bc2cb79d9bcbbc6167a4bd4b552d03cca4ef35f734d0cbac01feb8e9a6d6296807fccc63cd003ba735a6445bb240120f051f046aa5787203f6fd7fd7b0cd0e18a980c63f35f8918343d6ea5563d8c3211f8ab1" localRef="instance_type" location="lu.problem_size.Instance_LU/Instance_LU.hpe" name="Instance_LU" package="lu.problem_size" exposed="false">
+      <visualDescription h="38" w="96" x="363" y="172">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <parameter formFieldId="class" varName="C"/>
+      <unitBounds uRef="instance">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000237f437b205f7bfa00c2d0b40167897c37f84c96a62c077e2832a5360fa8c1c7438dfa969d99bb36a48a7baefcbd50d84ae2e3e71a349dce24c2b0bc473997871be48fdb29d0d48b0928ca968440c6b6663c6740810dab7b664db0e0cfbfe5b21f223402d0d9bd601294898724b6a1da46e78261ef1ee37ac63ca9b2dbdc0d90" localRef="class" location="common.problem_size.Class/Class.hpe" name="Class" package="common.problem_size" exposed="false">
+      <visualDescription h="30" w="50" x="517" y="62">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="class">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="00240000048000009400000006020000002400005253413100040000110000006ffc7e8d90a6052df9b471a40e077ea9cb37be660ee672ad779a9c5ecf270923c90268dd436a682c74f5ef786d938a02d52ecdab1fab3d41896882a84ca391c75788ffa95c1b141d255694d66abd12440ee48ccafdf4ac2dfd076571ac32e02e58cdcbc34502b1eae61b4ffc8bf7bb443192e07b112424eddedfd8985f01dc93" localRef="exchange_pattern" location="lu.exchange.ExchangePattern11/ExchangePattern11.hpe" name="ExchangePattern11" package="lu.exchange" exposed="false">
+      <visualDescription h="30" w="50" x="91" y="262">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="exchange_pattern">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000c7a9e559057cfaba9f6af10e78a28dd44207a4f47320761e707598d1d2abb6f9406ffe9d716dc4999b57320639284d74d87fd848d5c4f4021310f4cd2ec8b550e9165ba70a1b2e8ba515de1b2215e02d431ce8dbfc6b43f5483d31c050da96ad28836bd6ef7d4534fa652870a534829b415c48981b0d13546a2cb2f2564b3a9f" localRef="lower" location="lu.triangular.Lower/Lower.hpe" name="Lower" package="lu.triangular" exposed="false">
+      <visualDescription h="30" w="50" x="36" y="245">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="discretization">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <supplyParameter cRef="exchange_pattern" varName="E"/>
+    <supplyParameter cRef="class" varName="C"/>
+    <supplyParameter cRef="lower" varName="DIS"/>
+    <supplyParameter cRef="instance_type" varName="I"/>
+    <interface iRef="IExchange12" nArgs="4">
+      <slice isRef="blocks">
+        <originRef cRef="blocks_info" iRef="IBlocksInfo"/>
+        <visualDescription h="10" w="10" x="0" y="21"/>
+      </slice>
+      <slice isRef="problem">
+        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
+        <visualDescription h="10" w="10" x="113" y="18"/>
+      </slice>
+      <slice isRef="shift">
+        <originRef cRef="shift_to_west" iRef="IShift"/>
+        <visualDescription h="10" w="10" x="18" y="21"/>
+      </slice>
+      <slice isRef="shift_to_north">
+        <originRef cRef="shift_to_north" iRef="IShift"/>
+        <visualDescription h="10" w="10" x="167" y="81"/>
+      </slice>
+      <slice isRef="shift_to_east">
+        <originRef cRef="shift_to_east" iRef="IShift"/>
+        <visualDescription h="10" w="10" x="27" y="27"/>
+      </slice>
+      <slice isRef="shift_to_south">
+        <originRef cRef="shift_to_south" iRef="IShift"/>
+        <visualDescription h="10" w="10" x="121" y="81"/>
+      </slice>
+      <slice isRef="exchange_pattern">
+        <originRef cRef="exchange_patttern" iRef="IExchangePattern"/>
+        <visualDescription h="10" w="10" x="5" y="0"/>
+      </slice>
+      <slice isRef="discretization">
+        <originRef cRef="discretization" iRef="IDiscretization"/>
+        <visualDescription h="10" w="10" x="49" y="2"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@32bb8931" repeat="0">
+        <visualDescription h="150" w="250" x="75" y="75"/>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@362c09fc" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="10" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5439b2d" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="70" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1980aa0e" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="130" y="50"/>
+        </action>
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4e1c8a36" repeat="0" sliceRef="shift">
+          <visualDescription h="50" w="50" x="190" y="50"/>
+        </action>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using common.Buffer;&#xA;using common.interactionpattern.Shift;&#xA;using common.direction.LeftToRight;&#xA;using lu.datapartition.BlocksInfo;&#xA;using common.direction.RightToLeft;&#xA;using common.topology.Ring;&#xA;using lu.Exchange;&#xA;using environment.MPIDirect;&#xA;using lu.exchange.ExchangePattern11;&#xA;using lu.triangular.Lower;&#xA;&#xA;namespace impl.lu.Exchange12 &#xA;{ &#xA;&#x9;public abstract class BaseIExchange12&lt;I, C, E, DIS>: Computation, BaseIExchange&lt;I, C, E, DIS>&#xA;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;where C:IClass &#xA;&#x9;where E:IExchangePattern11&#xA;&#x9;where DIS:ILower&#xA;&#x9;{&#x9;   &#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#x9;protected int nx,ny,nz;&#xA;&#x9;&#x9;&#x9;protected int north, south, east, west;&#xA;&#x9;&#x9;&#x9;protected int jst, jend, ist, iend;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;override public void initialize()&#xA;&#x9;&#x9;    {&#xA;&#x9;&#x9;&#x9;&#x9;nx = Blocks.nx;&#xA;&#x9;&#x9;&#x9;&#x9;ny = Blocks.ny;&#xA;&#x9;&#x9;&#x9;&#x9;nz = Blocks.nz;&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;north = Blocks.north;&#xA;&#x9;&#x9;&#x9;&#x9;south = Blocks.south;&#xA;&#x9;&#x9;&#x9;&#x9;east  = Blocks.east;&#xA;&#x9;&#x9;&#x9;&#x9;west  = Blocks.west;&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;jst  = Blocks.jst;&#xA;                jend = Blocks.jend;                &#xA;&#x9;&#x9;&#x9;&#x9;ist  = Blocks.ist;&#xA;                iend = Blocks.iend;                &#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;#endregion&#xA;&#x9;&#xA;&#x9;&#x9;private ICell y = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public ICell Y {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.y == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.y = (ICell) Services.getPort(&quot;y&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.y;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private ICell x = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public ICell X {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.x == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.x = (ICell) Services.getPort(&quot;x&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.x;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IMPIDirect mpi = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IMPIDirect Mpi {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.mpi == null) &#xA;&#x9;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.mpi = (IMPIDirect) Services.getPort(&quot;mpi&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#x9;return this.mpi;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#xA;&#x9;&#x9;private IBuffer output_buffer = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IBuffer Output_buffer {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.output_buffer == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.output_buffer = (IBuffer) Services.getPort(&quot;output_buffer&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.output_buffer;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBuffer input_buffer = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IBuffer Input_buffer {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.input_buffer == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.input_buffer = (IBuffer) Services.getPort(&quot;input_buffer&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.input_buffer;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IShift&lt;ILeftToRight> shift_to_east = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IShift&lt;ILeftToRight> Shift_to_east {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.shift_to_east == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.shift_to_east = (IShift&lt;ILeftToRight>) Services.getPort(&quot;shift_to_east&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.shift_to_east;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlocksInfo blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocksInfo Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IShift&lt;IRightToLeft> shift_to_west = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IShift&lt;IRightToLeft> Shift_to_west {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.shift_to_west == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.shift_to_west = (IShift&lt;IRightToLeft>) Services.getPort(&quot;shift_to_west&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.shift_to_west;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IShift&lt;IRightToLeft> shift_to_north = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IShift&lt;IRightToLeft> Shift_to_north {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.shift_to_north == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.shift_to_north = (IShift&lt;IRightToLeft>) Services.getPort(&quot;shift_to_north&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.shift_to_north;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;private IShift&lt;ILeftToRight> shift_to_south = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;protected IShift&lt;ILeftToRight> Shift_to_south {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.shift_to_south == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.shift_to_south = (IShift&lt;ILeftToRight>) Services.getPort(&quot;shift_to_south&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.shift_to_south;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIExchange12.cs" srcType="base" uri="impl.lu.Exchange12/bin/1.0.0.0/BaseIExchange12.dll" versionId="1.0.0.0">
+          <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>common.Buffer/bin/1.0.0.0/IBuffer.dll</dependency>
+          <dependency>lu.interactionpattern.Shift/bin/1.0.0.0/IShift.dll</dependency>
+          <dependency>common.direction.WestToEast/bin/1.0.0.0/IWestToEast.dll</dependency>
+          <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
+          <dependency>common.direction.EastToWest/bin/1.0.0.0/IEastToWest.dll</dependency>
+          <dependency>common.direction.SouthToNorth/bin/1.0.0.0/ISouthToNorth.dll</dependency>
+          <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
+          <dependency>common.direction.NorthToSouth/bin/1.0.0.0/INorthToSouth.dll</dependency>
+          <dependency>lu.Exchange1/bin/1.0.0.0/BaseIExchange1.dll</dependency>
+          <externalDependency>MPI</externalDependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.Exchange;&#xA;using lu.exchange.ExchangePattern11;&#xA;using lu.triangular.Lower;&#xA;&#xA;&#xA;namespace impl.lu.Exchange12 &#xA;{ &#xA;&#x9;public class IExchange12&lt;I, C, E, DIS> : BaseIExchange12&lt;I, C, E, DIS>, IExchange&lt;I, C, E, DIS>&#xA;&#x9;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;&#x9;where C:IClass &#xA;&#x9;&#x9;where E:IExchangePattern11&#xA;&#x9;&#x9;where DIS:ILower&#xA;&#x9;{&#x9;   &#xA;&#x9;    private double[,,,] g;&#xA;&#x9;    private int k;&#xA;&#x9;    &#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{ &#xA;&#x9;        int i,j;&#xA;            if(south != -1) &#xA;&#x9;&#x9;&#x9;{&#xA;                double[] dum;&#xA;                dum = Output_buffer.Array = new double[5*(jend-jst+1)];&#xA;                int idx = 0;&#xA;                for(j=jst; j&lt;=jend; j++) {&#xA;                    dum[0+idx] = g[k-1, j+1, nx+1, 0];&#xA;                    dum[1+idx] = g[k-1, j+1, nx+1, 1];&#xA;                    dum[2+idx] = g[k-1, j+1, nx+1, 2];&#xA;                    dum[3+idx] = g[k-1, j+1, nx+1, 3];&#xA;                    dum[4+idx] = g[k-1, j+1, nx+1, 4];&#xA;                    idx = idx + 5;&#xA;                }&#xA;                Shift_to_south.initiate_send();//worldcomm.Send&lt;double>(dum, south, from_n);&#xA;&#x9;&#x9;&#x9;&#x9;Shift_to_south.go();&#xA;            }&#xA;            &#xA;            if(east != -1) &#xA;&#x9;&#x9;&#x9;{&#xA;                double[] dum;&#xA;                dum = Output_buffer.Array = new double[(5*(iend-ist+1))];&#xA;                int idx = 0;&#xA;                for(i=ist; i&lt;=iend; i++) {&#xA;                    dum[0+idx] = g[k-1, ny+1, i+1, 0];&#xA;                    dum[1+idx] = g[k-1, ny+1, i+1, 1];&#xA;                    dum[2+idx] = g[k-1, ny+1, i+1, 2];&#xA;                    dum[3+idx] = g[k-1, ny+1, i+1, 3];&#xA;                    dum[4+idx] = g[k-1, ny+1, i+1, 4];&#xA;                    idx = idx + 5;&#xA;                }&#xA;                Shift_to_east.initiate_send();//worldcomm.Send&lt;double>(dum, east, from_w);&#xA;&#x9;&#x9;&#x9;&#x9;Shift_to_east.go();&#xA;            }&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setParameters(double[,,,] g, int k)&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;   this.g = g;&#xA;&#x9;&#x9;   this.k = k;&#xD;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setParameters(double[,,,] g) {}&#xA;&#x9;    public void setParameters(double[,] g, int beg, int fin1) {}&#xA;&#x9;    public void setParameters(double[,] g, double[,] h, int ibeg, int ifin1, int jbeg, int jfin1) {}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IExchange12.cs" srcType="user" uri="impl.lu.Exchange12/bin/1.0.0.0/IExchange12.dll" versionId="1.0.0.0">
+          <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
+          <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
+          <dependency>%WORKSPACE/impl.lu.Exchange12/bin/1.0.0.0/BaseIExchange12.dll</dependency>
+          <dependency>lu.Exchange1/bin/1.0.0.0/IExchange1.dll</dependency>
+          <externalDependency>MPI</externalDependency>
+        </file>
+      </sources>
+      <visualDescription h="75" w="192" x="137" y="104">
+        <color b="0" g="0" r="64"/>
+      </visualDescription>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="blocks" sRef="blocks"/>
+      </port>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="problem" sRef="problem"/>
+      </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="219" y="27"/>
+        <slice pRef="cell" sRef="shift"/>
+        <slice pRef="cell" sRef="shift_to_east"/>
+      </port>
+      <port name="output_buffer">
+        <visualDescription h="10" w="10" x="187" y="20"/>
+        <slice pRef="output_buffer" sRef="shift"/>
+        <slice pRef="output_buffer" sRef="shift_to_north"/>
+        <slice pRef="output_buffer" sRef="shift_to_east"/>
+        <slice pRef="output_buffer" sRef="shift_to_south"/>
+      </port>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="35" y="64"/>
+        <slice pRef="mpi" sRef="shift"/>
+        <slice pRef="mpi" sRef="shift_to_north"/>
+        <slice pRef="mpi" sRef="shift_to_east"/>
+        <slice pRef="mpi" sRef="shift_to_south"/>
+      </port>
+      <port name="input_buffer">
+        <visualDescription h="10" w="10" x="150" y="61"/>
+        <slice pRef="input_buffer" sRef="shift"/>
+        <slice pRef="input_buffer" sRef="shift_to_north"/>
+        <slice pRef="input_buffer" sRef="shift_to_east"/>
+        <slice pRef="input_buffer" sRef="shift_to_south"/>
+      </port>
+      <port name="y">
+        <visualDescription h="10" w="10" x="79" y="81"/>
+        <slice pRef="cell" sRef="shift_to_north"/>
+        <slice pRef="cell" sRef="shift_to_south"/>
+      </port>
+      <externalReferences>MPI</externalReferences>
+      <parameter iname="IInstance_LU" order="0" parid="instance_type" uname="instance" varid="I"/>
+      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IExchangePattern11" order="2" parid="exchange_pattern" uname="exchange_pattern" varid="E"/>
+      <parameter iname="ILower" order="3" parid="discretization" uname="discretization" varid="DIS"/>
+    </interface>
+    <unit iRef="IExchange12" private="false" uRef="exchange1" visibleInterface="true">
+      <super cRef="base" uRef="exchange1"/>
+      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
+        <visualDescription h="10" w="10" x="0" y="21"/>
+      </slices>
+      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
+        <visualDescription h="10" w="10" x="113" y="18"/>
+      </slices>
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
+      </slices>
+      <slices cRef="mpi" replica="0" uRef="mpi" sliceName="mpi" transitive="true">
+        <visualDescription h="10" w="10" x="11" y="22"/>
+      </slices>
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
+        <visualDescription h="10" w="10" x="35" y="27"/>
+      </slices>
+      <slices cRef="shift_to_west" replica="0" uRef="shift" sliceName="shift" transitive="false">
+        <visualDescription h="10" w="10" x="13" y="27"/>
+        <port>x</port>
+        <port>mpi</port>
+      </slices>
+      <slices cRef="shift_to_north" replica="0" uRef="shift" sliceName="shift_to_north" transitive="false">
+        <visualDescription h="10" w="10" x="114" y="30"/>
+        <port>y</port>
+        <port>mpi</port>
+      </slices>
+      <slices cRef="shift_to_east" replica="0" uRef="shift" sliceName="shift_to_east" transitive="false">
+        <visualDescription h="10" w="10" x="27" y="27"/>
+        <port>x</port>
+        <port>mpi</port>
+      </slices>
+      <slices cRef="shift_to_south" replica="0" uRef="shift" sliceName="shift_to_south" transitive="false">
+        <visualDescription h="10" w="10" x="98" y="30"/>
+        <port>y</port>
+        <port>mpi</port>
+      </slices>
+      <slices cRef="exchange_patttern" replica="0" uRef="exchange_pattern" sliceName="exchange_pattern" transitive="false">
+        <visualDescription h="10" w="10" x="5" y="0"/>
+      </slices>
+      <slices cRef="discretization" replica="0" uRef="discretization" sliceName="discretization" transitive="false">
+        <visualDescription h="10" w="10" x="49" y="2"/>
+      </slices>
+      <visualDescription h="40" w="126" x="211" y="242"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <originRef>shift_to_west</originRef>
+      <originRef>direction</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <visualDescription h="20" w="20" x="298" y="280"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>exchange_pattern</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exchange_pattern" uRef="exchange_pattern"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
+      <originRef>lower</originRef>
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="lower" uRef="discretization"/>
+      <visualDescription h="20" w="20" x="107" y="275"/>
+    </enumerator>
+  </componentInfo>
+</component:component>

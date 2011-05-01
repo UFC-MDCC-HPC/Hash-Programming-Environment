@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D050402B-6186-425B-9781-F210190BDFEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>impl.lu.Exchange1Impl</RootNamespace>
+    <AssemblyName>IExchange11</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Exchange1Impl.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\1.0.0.0</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\src\1.0.0.0\BaseIExchange11.cs">
+      <Link>BaseIExchange11.cs</Link>
+    </Compile>
+    <Compile Include="..\src\1.0.0.0\IExchange11.cs">
+      <Link>IExchange11.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="DGAC, Version=0.0.0.0, Culture=neutral, PublicKeyToken=13cebbba0e117a7c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\usr\lib\mono\DGAC\DGAC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common.Buffer\common.Buffer\common.Buffer.csproj">
+      <Project>{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}</Project>
+      <Name>common.Buffer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
+      <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
+      <Name>common.direction.Direction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
+      <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
+      <Name>common.problem_size.Class</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.data.ProblemDefinition\lu.data.ProblemDefinition\lu.data.ProblemDefinition.csproj">
+      <Project>{E07F89D2-70CB-46FD-BB84-E0DEC7CBDFF0}</Project>
+      <Name>lu.data.ProblemDefinition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo\lu.datapartition.BlocksInfo.csproj">
+      <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
+      <Name>lu.datapartition.BlocksInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance\lu.problem_size.Instance\lu.problem_size.Instance.csproj">
+      <Project>{FAB2133D-CFCB-4F7E-95FE-64FC2090416C}</Project>
+      <Name>lu.problem_size.Instance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU\lu.problem_size.Instance_LU.csproj">
+      <Project>{FF9AE01F-5921-4D51-BE52-01C828B84666}</Project>
+      <Name>lu.problem_size.Instance_LU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.LeftToRight\common.direction.LeftToRight\common.direction.LeftToRight.csproj">
+      <Project>{835C07D3-3F76-482D-8127-C02CA1D79CE9}</Project>
+      <Name>common.direction.LeftToRight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.interactionpattern.Shift\common.interactionpattern.shift\common.interactionpattern.shift.csproj">
+      <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
+      <Name>common.interactionpattern.shift</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
+      <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
+      <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
+      <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
+      <Name>common.topology.Ring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.direction.RightToLeft\common.direction.RightToLeft\common.direction.RightToLeft.csproj">
+      <Project>{99E276F9-4541-4E11-8D64-4BB9C2E93980}</Project>
+      <Name>common.direction.RightToLeft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
+      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
+      <Name>lu.Exchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.exchange.ExchangePattern11\lu.exchange.ExchangePattern11\lu.exchange.ExchangePattern11.csproj">
+      <Project>{EAD57CC3-057B-47E4-8553-E838B4ED949C}</Project>
+      <Name>lu.exchange.ExchangePattern11</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.triangular.Upper\lu.triangular.Upper\lu.triangular.Upper.csproj">
+      <Project>{2331DF96-EDF8-4DF7-B5AF-4099B5BB9EE1}</Project>
+      <Name>lu.triangular.Upper</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
