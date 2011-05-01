@@ -13,20 +13,26 @@ using common.direction.LeftToRight;
 using lu.datapartition.BlocksInfo;
 using common.direction.RightToLeft;
 using common.topology.Ring;
-using lu.Exchange1;
+using lu.Exchange;
 using environment.MPIDirect;
+using lu.exchange.ExchangePattern10;
+using lu.triangular.Lower;
 
-namespace impl.lu.Exchange1Impl { 
-	public abstract class BaseIExchange1Impl<I, C>: Computation, BaseIExchange1<I, C>
+namespace impl.lu.Exchange10 
+{ 
+	public abstract class BaseIExchange10<I, C, E, DIS>: Computation, BaseIExchange<I, C, E, DIS>
 	where I:IInstance_LU<C>
-	where C:IClass {
-	   
+	where C:IClass 
+	where E:IExchangePattern10
+	where DIS:ILower
+	{	   
 		#region data
 			protected int nx,ny,nz;
 			protected int north, south, east, west;
 			protected int jst, jend, ist, iend;
 			
-			override public void initialize(){
+			override public void initialize()
+		    {
 				nx = Blocks.nx;
 				ny = Blocks.ny;
 				nz = Blocks.nz;
