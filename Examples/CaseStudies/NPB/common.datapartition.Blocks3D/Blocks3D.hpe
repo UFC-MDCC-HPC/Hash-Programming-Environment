@@ -48,7 +48,7 @@
       </unitBounds>
     </innerComponent>
     <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000071d38687e0d5d2c316c5b3d07d8aa67134a4623aa2696b4c1af143b9dfb26a795943f7fad788e11c36c09b5001b5422f85c04f6580101d9e27cbf7d06c6cec1d87e42c3a8940336c5c2d63abadb4ac8c1519030710b5b087e1d7e415c91fe07522356c2184e3ea18bf6684dd71bda7b7e5e4411c6b9941ea98fa97bde5ccceb1" localRef="instance" location="common.problem_size.Instance/Instance.hpe" name="Instance" package="common.problem_size" parameter_id="instance_type" exposed="false">
-      <visualDescription h="84" w="399" x="499" y="484">
+      <visualDescription h="84" w="399" x="397" y="316">
         <color b="255" g="255" r="255"/>
       </visualDescription>
       <parameter formFieldId="class" varName="C"/>
@@ -99,13 +99,13 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="88" y="37"/>
-        <slice pRef="z" sRef="cell"/>
-      </port>
       <port name="x">
         <visualDescription h="10" w="10" x="79" y="2"/>
         <slice pRef="x" sRef="cell"/>
+      </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="88" y="37"/>
+        <slice pRef="z" sRef="cell"/>
       </port>
       <port name="y">
         <visualDescription h="10" w="10" x="32" y="0"/>

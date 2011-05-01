@@ -217,7 +217,7 @@
           <dependency>%WORKSPACE/common.data.ProblemDefinition/bin/1.0.0.0/BaseIProblemDefinition.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="88" w="132" x="132" y="71">
+      <visualDescription h="88" w="132" x="180" y="64">
         <color b="0" g="255" r="0"/>
       </visualDescription>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
