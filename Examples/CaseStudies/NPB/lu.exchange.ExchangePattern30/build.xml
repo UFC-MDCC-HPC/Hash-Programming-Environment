@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe/cache" default="all" name="ExchangePattern10">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="ExchangePattern10-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/ExchangePattern10.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/bin/1.0.0.0/BaseIExchangePattern10.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/src/1.0.0.0/BaseIExchangePattern10.cs"/>
+      </sources>
+      <references>
+        <include name="lu.exchange.ExchangePattern/bin/1.0.0.0/BaseIExchangePattern.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/ExchangePattern10.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/bin/1.0.0.0/IExchangePattern10.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/lu.exchange.ExchangePattern10/src/1.0.0.0/IExchangePattern10.cs"/>
+      </sources>
+      <references>
+        <include name="/lu.exchange.ExchangePattern10/bin/1.0.0.0/BaseIExchangePattern10.dll"/>
+        <include name="lu.exchange.ExchangePattern/bin/1.0.0.0/IExchangePattern.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="ExchangePattern10-1.0.0.0" name="all"/>
+</project>

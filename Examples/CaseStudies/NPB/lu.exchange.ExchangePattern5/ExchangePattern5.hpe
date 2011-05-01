@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000d75d2e7ae01951ffc016c5e22a1c589c9233f416fbadd32619456c0f4e9065b5b8de6f6329e87d60e9c445adf1e85b0d8836da54fe0b955f9d7934637749cea0d3c048b889f00cc79185c12a7f6b635d11c115896fd4953b903a3170a5c96ac4a0fe90f7ed659faa2f3d90cd8951d7f986f53cb3ed7df227067c814f2b950e88" isAbstract="true" kind="Qualifier" name="ExchangePattern5" packagePath="lu.exchange">
+    <baseType>
+      <extensionType>
+        <extends>true</extends>
+      </extensionType>
+      <component hash_component_UID="002400000480000094000000060200000024000052534131000400001100000085e04d85c3943118e20cd068c4a1ec4576e03d3bf5eb1bba85e4fadcdf54d0df68bff62d84faa12b2b2e369aea9e87d240808daac68d9bb35201c01c093c11df652595e3f02510e1adb438dc4bda4c876af017a5784f8e52fefb9d60ef2c5a2760d5a133c9da3add6dfc110018abd9f1d35a346a4a640abfb0504631ffda5eaa" localRef="base" location="lu.exchange.ExchangePattern/ExchangePattern.hpe" name="ExchangePattern" package="lu.exchange" version="1.0.0.0">
+        <visualDescription h="30" w="50" x="370" y="269">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="exchange_pattern">
+          <visualDescription h="10" w="10" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IExchangePattern5" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.exchange.ExchangePattern;&#xA;&#xA;namespace lu.exchange.ExchangePattern5 { &#xA;&#xA;public interface BaseIExchangePattern5 : BaseIExchangePattern, IQualifierKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIExchangePattern5.cs" srcType="base" uri="lu.exchange.ExchangePattern5/bin/1.0.0.0/BaseIExchangePattern5.dll" versionId="1.0.0.0">
+          <dependency>lu.exchange.ExchangePattern/bin/1.0.0.0/BaseIExchangePattern.dll</dependency>
+        </file>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.exchange.ExchangePattern;&#xA;&#xA;namespace lu.exchange.ExchangePattern5 { &#xA;&#xA;public interface IExchangePattern5 : BaseIExchangePattern5, IExchangePattern&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IExchangePattern5.cs" srcType="user" uri="lu.exchange.ExchangePattern5/bin/1.0.0.0/IExchangePattern5.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/lu.exchange.ExchangePattern5/bin/1.0.0.0/BaseIExchangePattern5.dll</dependency>
+          <dependency>lu.exchange.ExchangePattern/bin/1.0.0.0/IExchangePattern.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="40" w="200" x="62" y="110">
+        <color b="128" g="128" r="64"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IExchangePattern5" private="false" uRef="exchange_pattern" visibleInterface="true">
+      <super cRef="base" uRef="exchange_pattern"/>
+      <visualDescription h="40" w="183" x="69" y="283"/>
+    </unit>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>base</originRef>
+      <links xsi:type="component:EnumerableUnitType" ref="exchange_pattern"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+  </componentInfo>
+</component:component>
