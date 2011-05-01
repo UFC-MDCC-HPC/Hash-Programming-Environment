@@ -138,12 +138,12 @@ namespace impl.bt.solve.YSolveCell {
 			}
 		}
 		
-		private ILhsABInit<I, C> lhsabinit = null;
+		private ILhsABInit lhsabinit = null;
 		
-		protected ILhsABInit<I, C> Lhsabinit {
+		protected ILhsABInit Lhsabinit {
 			get {
 				if (this.lhsabinit == null)
-					this.lhsabinit = (ILhsABInit<I, C>) Services.getPort("lhsabinit");
+					this.lhsabinit = (ILhsABInit) Services.getPort("lhsabinit");
 				return this.lhsabinit;
 			}
 		}
