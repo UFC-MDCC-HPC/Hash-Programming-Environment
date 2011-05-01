@@ -83,7 +83,7 @@
         <originRef cRef="direction" iRef="IDirection"/>
         <visualDescription h="10" w="10" x="9" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@9675e68" repeat="0">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5dc46cfb" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -101,7 +101,7 @@
           <externalDependency>MPI</externalDependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="100" y="80">
+      <visualDescription h="40" w="80" x="169" y="67">
         <color b="64" g="0" r="128"/>
       </visualDescription>
       <port name="input_buffer">

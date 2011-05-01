@@ -35,7 +35,7 @@
           </unitBounds>
         </port>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000059fdc60f0095a1142aef66ff82b5e8659158d29c9ae6eedd576a96e33ae1faaddaf78b57c8cab897deeb79b165ed011c3cd25deeeed69da38fc30a1143e39fa67ab658c278a82203de07eafa3dafe7704a84c1fffc42035b92d09563efdfe7b59862d01f598f626efa5cd4eef962fb18970112f8a530495c2a482922a19258b" localRef="mpi" location="environment.MPIDirect/MPIDirect.hpe" name="MPIDirect" package="environment" exposed="true">
-          <visualDescription h="30" w="50" x="92" y="364">
+          <visualDescription h="30" w="50" x="101" y="327">
             <color b="240" g="32" r="160"/>
           </visualDescription>
           <unitBounds uRef="mpi">
@@ -83,7 +83,7 @@
         <originRef cRef="direction" iRef="IDirection"/>
         <visualDescription h="10" w="10" x="9" y="6"/>
       </slice>
-      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@3e27562f" repeat="0">
+      <protocol xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@23653628" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
