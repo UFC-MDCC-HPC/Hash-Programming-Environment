@@ -3,8 +3,10 @@ using br.ufc.pargo.hpe.kinds;
 using lu.problem_size.Instance;
 using common.problem_size.Class;
 
-namespace lu.data.ProblemDefinition { 
-	public class Constants{	   
+namespace lu.data.ProblemDefinition 
+{ 
+	public class Constants
+	{	   
 	    public static double dx1, dx2, dx3, dx4, dx5, dy1, dy2, dy3, dy4, dy5, dz1, dz2, dz3, dz4, dz5, dssp;
 	    public static double dxi, deta, dzeta, tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3;
 	    public static int ii1, ii2, ji1, ji2, ki1, ki2;
@@ -24,7 +26,8 @@ namespace lu.data.ProblemDefinition {
                                          {4.0E-01, 3.0E-01, 5.0E-01, 1.0E-01, 3.0E-01},
                                          {3.0E-01, 5.0E-01, 4.0E-01, 3.0E-01, 2.0E-01}};
                                          
-		public static void setConstants(int nx0, int ny0, int nz0){
+		public static void setConstants(int nx0, int ny0, int nz0)
+		{
             dxi   = 1.0d / (nx0 - 1);
             deta  = 1.0d / (ny0 - 1);
             dzeta = 1.0d / (nz0 - 1);

@@ -72,7 +72,7 @@
         <visualDescription h="10" w="10" x="5" y="6"/>
       </slice>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.datapartition.Blocks3D { &#xA;&#xA;public interface BaseIBlocks3D&lt;I, C> : IEnvironmentKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;INeighbors Neighbors {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks3D.cs" srcType="base" uri="lu.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.datapartition.BlocksInfo;&#xA;using common.topology.Ring;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.datapartition.Blocks3D { &#xA;&#xA;public interface BaseIBlocks3D&lt;I, C> : IEnvironmentKind &#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;&#x9;IBlocksInfo Blocks {get;}&#xA;&#x9;ICell X {get;}&#xA;&#x9;ICell Y {get;}&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIBlocks3D.cs" srcType="base" uri="lu.datapartition.Blocks3D/bin/1.0.0.0/BaseIBlocks3D.dll" versionId="1.0.0.0">
           <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
           <dependency>lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
@@ -91,13 +91,13 @@
         <visualDescription h="10" w="10" x="49" y="28"/>
         <slice pRef="blocks" sRef="blocks"/>
       </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="22" y="35"/>
-        <slice pRef="cell" sRef="cell"/>
+      <port name="x">
+        <visualDescription h="10" w="10" x="17" y="31"/>
+        <slice pRef="x" sRef="cell"/>
       </port>
-      <port name="cell">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="cell" sRef="cell"/>
+      <port name="y">
+        <visualDescription h="10" w="10" x="60" y="0"/>
+        <slice pRef="y" sRef="cell"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
@@ -106,10 +106,10 @@
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
         <visualDescription h="10" w="10" x="33" y="24"/>
       </slices>
-      <slices cRef="x" replica="0" uRef="cell" sliceName="cell" transitive="true">
+      <slices cRef="x" replica="0" uRef="cell" sliceName="x" transitive="true">
         <visualDescription h="10" w="10" x="60" y="19"/>
       </slices>
-      <slices cRef="y" replica="0" uRef="cell" sliceName="cell" transitive="true">
+      <slices cRef="y" replica="0" uRef="cell" sliceName="y" transitive="true">
         <visualDescription h="10" w="10" x="61" y="5"/>
       </slices>
       <slices cRef="instance_type" replica="0" uRef="instance" sliceName="instance" transitive="false">
@@ -117,8 +117,8 @@
       </slices>
       <slices cRef="topology" replica="0" uRef="cell" sliceName="cell" transitive="false">
         <visualDescription h="10" w="10" x="5" y="6"/>
-        <port>cell</port>
-        <port>cell</port>
+        <port>x</port>
+        <port>y</port>
       </slices>
       <visualDescription h="40" w="80" x="192" y="251"/>
     </unit>

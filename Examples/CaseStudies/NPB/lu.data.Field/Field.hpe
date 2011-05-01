@@ -10,7 +10,7 @@
     <interface iRef="IField" nArgs="0">
       <sources sourceType="C# Language" versionId="1.0.0.0">
         <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.data.Field { &#xA;&#xA;public interface BaseIField : IDataStructureKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIField.cs" srcType="base" uri="lu.data.Field/bin/1.0.0.0/BaseIField.dll" versionId="1.0.0.0"/>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.data.Field { &#xA;&#xA;public interface IField : BaseIField&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IField.cs" srcType="user" uri="lu.data.Field/bin/1.0.0.0/IField.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace lu.data.Field { &#xA;&#x9;public interface IField : BaseIField {&#xA;&#x9;&#x9;double[,,,] Field { get; }&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;void initialize_field(string fieldName, int i0, int i1, int i2, int i3);&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;string FieldName { get; }&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IField.cs" srcType="user" uri="lu.data.Field/bin/1.0.0.0/IField.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/lu.data.Field/bin/1.0.0.0/BaseIField.dll</dependency>
         </file>
       </sources>

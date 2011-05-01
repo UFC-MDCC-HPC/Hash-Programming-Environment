@@ -59,9 +59,9 @@
         <originRef cRef="exact" iRef="IExact"/>
         <visualDescription h="10" w="10" x="89" y="39"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@19e247a0" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@3cde27" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@56cc66a6" repeat="0" sliceRef="exact">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@1cdfe6" repeat="0" sliceRef="exact">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -83,13 +83,13 @@
       <visualDescription h="53" w="166" x="202" y="186">
         <color b="128" g="255" r="255"/>
       </visualDescription>
-      <port name="blocks">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="blocks" sRef="exact"/>
-      </port>
       <port name="problem">
-        <visualDescription h="10" w="10" x="0" y="0"/>
+        <visualDescription h="10" w="10" x="10" y="23"/>
         <slice pRef="problem" sRef="exact"/>
+      </port>
+      <port name="blocks">
+        <visualDescription h="10" w="10" x="29" y="38"/>
+        <slice pRef="blocks" sRef="exact"/>
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
