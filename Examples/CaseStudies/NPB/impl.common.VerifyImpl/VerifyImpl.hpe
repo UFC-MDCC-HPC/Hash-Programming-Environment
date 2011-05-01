@@ -112,12 +112,12 @@
         <originRef cRef="compute_rhs" iRef="IComputeRHS"/>
         <visualDescription h="10" w="10" x="0" y="26"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@54748db1" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@7922a52f" repeat="0">
         <visualDescription h="150" w="130" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@30028ac8" repeat="0" sliceRef="rhs_norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@518aeeca" repeat="0" sliceRef="rhs_norm">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@76e56917" repeat="0" sliceRef="error_norm">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@78433998" repeat="0" sliceRef="error_norm">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
       </protocol>
@@ -132,23 +132,24 @@
           <dependency>common.error.ErrorNorm/bin/1.0.0.0/IErrorNorm.dll</dependency>
           <dependency>common.datapartition.Blocks3D/bin/1.0.0.0/IBlocks3D.dll</dependency>
           <dependency>common.Verify/bin/1.0.0.0/BaseIVerify.dll</dependency>
+          <externalDependency>MPI</externalDependency>
           <externalDependency>BMInOut</externalDependency>
         </file>
         <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.Verify;&#xA;using common.problem_size.Class;&#xA;using common.problem_size.Instance;&#xA;using NPB3_0_JAV.BMInOut;&#xA;&#xA;namespace impl.common.VerifyImpl { &#xA;&#xA;public class IVerifyImpl&lt;I,C> : BaseIVerifyImpl&lt;I,C>, IVerify&lt;I,C>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IVerifyImpl() { &#xA;&#xA;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;private int[] grid_points;&#xA;private static String BMName = &quot;SP&quot;;&#xA;private int verified = -1;&#xA;&#x9;&#x9;&#xA;public int Verified { get { return verified; } }&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;public override int go() { &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;int no_time_steps = Instance.niter_default;&#xA;&#x9;&#x9;double dt = Instance.dt_default;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;grid_points = Problem.grid_points;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;        double[] xcrref = Instance.xcrref, xceref = Instance.xceref,&#xA;                 xcrdif = new double[5], xcedif = new double[5],&#xA;                 xce = Error_norm.xce, xcr = Rhs_norm.xcr;&#xA;        double dtref = Instance.dtref;&#xA;        int m;&#xA;        &#xA;        PROBLEM_CLASS clss = Instance.CLASS;&#xA;&#x9;&#x9;&#x9;&#xA;        //---------------------------------------------------------------------&#xA;        //   compute the error norm and the residual norm, and exit if not printing&#xA;        //---------------------------------------------------------------------&#xA;&#x9;&#x9;&#x9;&#xA;        // error_norm(xce);&#x9;&#x9;&#xA;&#x9;&#x9;Error_norm.go();&#xA;&#x9;&#x9;&#xA;        // copy_faces();&#xA;&#x9;&#x9;if (Ranks.Length > 1)&#xA;&#x9;&#x9;&#x9;Copy_faces.go();&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;Compute_rhs.go();&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;        //rhs_norm(xcr);&#xA;&#x9;&#x9;Rhs_norm.go();&#xA;&#xA;        for (m = 0; m &lt; 5; m++) &#xA;            xcr[m] /= dt;&#xA;&#xA;        //for (m = 0; m &lt; 5; m++)&#xA;        //{&#xA;        //    xcrref[m] = 1.0d;&#xA;        //    xceref[m] = 1.0d;&#xA;        //}&#xA;&#x9;&#x9;&#x9;&#xA;        //---------------------------------------------------------------------&#xA;        //    verification test for residuals if gridsize is either 12X12X12 or &#xA;        //    64X64X64 or 102X102X102 or 162X162X162&#xA;        //---------------------------------------------------------------------&#xA;&#xA;        //---------------------------------------------------------------------&#xA;        //    Compute the difference of solution values and the known reference values.&#xA;        //---------------------------------------------------------------------&#xA;        for (m = 0; m &lt; 5; m++)&#xA;        {&#xA;            xcrdif[m] = Math.Abs((xcr[m] - xcrref[m]) / xcrref[m]);&#xA;            xcedif[m] = Math.Abs((xce[m] - xceref[m]) / xceref[m]);&#xA;        }&#xA;        //---------------------------------------------------------------------&#xA;        //   tolerance level&#xA;        //---------------------------------------------------------------------&#xA;        double epsilon = 1.0E-8d;&#xA;        //---------------------------------------------------------------------&#xA;        //    Output the comparison of computed results to known cases.&#xA;        //---------------------------------------------------------------------&#xA;        if (clss != PROBLEM_CLASS.U)&#xA;        {&#xA;            Console.WriteLine(&quot; Verification being performed for class &quot; + clss);&#xA;            Console.WriteLine(&quot; Accuracy setting for epsilon = &quot; + epsilon);&#xA;            if (Math.Abs(dt - dtref) &lt;= epsilon)&#xA;            {&#xA;                if (verified == -1) verified = 1;&#xA;            }&#xA;            else&#xA;            {&#xA;                verified = 0;&#xA;                clss = PROBLEM_CLASS.U;&#xA;                Console.WriteLine(&quot;DT does not match the reference value of &quot; + dtref);&#xA;            }&#xA;            Console.WriteLine(&quot; Comparison of RMS-norms of residual&quot;);&#xA;        }&#xA;        else&#xA;        {&#xA;            Console.WriteLine(&quot; Unknown CLASS&quot;);&#xA;            Console.WriteLine(&quot; RMS-norms of residual&quot;);&#xA;        }&#xA;        verified = BMResults.printComparisonStatus(clss.ToString()[0], verified, epsilon,&#xA;                                                 xcr, xcrref, xcrdif);&#xA;        if (clss != PROBLEM_CLASS.U)&#xA;        {&#xA;            Console.WriteLine(&quot; Comparison of RMS-norms of solution error&quot;);&#xA;        }&#xA;        else&#xA;        {&#xA;            Console.WriteLine(&quot; RMS-norms of solution error&quot;);&#xA;        }&#xA;        verified = BMResults.printComparisonStatus(clss.ToString()[0], verified, epsilon,&#xA;                                                 xce, xceref, xcedif);&#xA;&#xA;        BMResults.printVerificationStatus(clss.ToString()[0], verified, BMName);&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;&#x9;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IVerifyImpl.cs" srcType="user" uri="impl.common.VerifyImpl/bin/1.0.0.0/IVerifyImpl.dll" versionId="1.0.0.0">
           <dependency>%WORKSPACE/impl.common.VerifyImpl/bin/1.0.0.0/BaseIVerifyImpl.dll</dependency>
           <dependency>common.Verify/bin/1.0.0.0/IVerify.dll</dependency>
+          <externalDependency>MPI</externalDependency>
           <externalDependency>BMInOut</externalDependency>
         </file>
       </sources>
       <visualDescription h="40" w="80" x="70" y="94">
         <color b="255" g="0" r="128"/>
       </visualDescription>
-      <port name="problem">
-        <visualDescription h="10" w="10" x="107" y="40"/>
-        <slice pRef="problem" sRef="rhs_norm"/>
-        <slice pRef="problem" sRef="error_norm"/>
-        <slice pRef="problem" sRef="copy_faces"/>
-        <slice pRef="problem" sRef="compute_rhs"/>
+      <port name="mpi">
+        <visualDescription h="10" w="10" x="92" y="5"/>
+        <slice pRef="mpi" sRef="rhs_norm"/>
+        <slice pRef="mpi" sRef="error_norm"/>
+        <slice pRef="mpi" sRef="copy_faces"/>
       </port>
       <port name="blocks">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -157,15 +158,12 @@
         <slice pRef="blocks" sRef="copy_faces"/>
         <slice pRef="blocks" sRef="compute_rhs"/>
       </port>
-      <port name="mpi">
-        <visualDescription h="10" w="10" x="92" y="5"/>
-        <slice pRef="mpi" sRef="rhs_norm"/>
-        <slice pRef="mpi" sRef="error_norm"/>
-        <slice pRef="mpi" sRef="copy_faces"/>
-      </port>
-      <port name="z">
-        <visualDescription h="10" w="10" x="0" y="0"/>
-        <slice pRef="z" sRef="copy_faces"/>
+      <port name="problem">
+        <visualDescription h="10" w="10" x="107" y="40"/>
+        <slice pRef="problem" sRef="rhs_norm"/>
+        <slice pRef="problem" sRef="error_norm"/>
+        <slice pRef="problem" sRef="copy_faces"/>
+        <slice pRef="problem" sRef="compute_rhs"/>
       </port>
       <port name="x">
         <visualDescription h="10" w="10" x="0" y="0"/>
@@ -175,6 +173,11 @@
         <visualDescription h="10" w="10" x="0" y="0"/>
         <slice pRef="y" sRef="copy_faces"/>
       </port>
+      <port name="z">
+        <visualDescription h="10" w="10" x="0" y="0"/>
+        <slice pRef="z" sRef="copy_faces"/>
+      </port>
+      <externalReferences>MPI</externalReferences>
       <externalReferences>BMInOut</externalReferences>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
