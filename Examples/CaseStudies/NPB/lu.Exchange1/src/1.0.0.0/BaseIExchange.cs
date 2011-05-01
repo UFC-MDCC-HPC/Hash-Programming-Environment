@@ -8,12 +8,17 @@ using common.topology.Ring;
 using common.Buffer;
 using environment.MPIDirect;
 using lu.datapartition.BlocksInfo;
+using lu.exchange.ExchangePattern;
+using common.Discretization;
 
-namespace lu.Exchange1 
+
+namespace lu.Exchange 
 { 
-	public interface BaseIExchange1<I, C> : IComputationKind 
+	public interface BaseIExchange<I, C, E, DIS> : IComputationKind 
 		where I:IInstance<C>
 		where C:IClass 
+		where E:IExchangePattern
+		where DIS:IDiscretization
 	{
 	   IProblemDefinition<I, C> Problem {get;}
 	   IBlocksInfo Blocks {get;}

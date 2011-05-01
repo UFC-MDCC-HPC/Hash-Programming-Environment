@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
-  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000095f4efebba63c712c97d33cc474b000a6e3e0cc590f886403c79aaebe2ae41018ea9fa6bd724012fa8f882d08d86539f5dc5d8734a4353b5a76ee59ac76bbe018148c7c776301ee9dd785c67217fbce97bf90aaaabec0168b2fab5911c1c3d0ec1f1de9a2144871a0dab127361fd0ca5be1fd08131288da0f920d970a9f60a0" isAbstract="true" kind="Computation" name="Exchange1" packagePath="lu">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000095f4efebba63c712c97d33cc474b000a6e3e0cc590f886403c79aaebe2ae41018ea9fa6bd724012fa8f882d08d86539f5dc5d8734a4353b5a76ee59ac76bbe018148c7c776301ee9dd785c67217fbce97bf90aaaabec0168b2fab5911c1c3d0ec1f1de9a2144871a0dab127361fd0ca5be1fd08131288da0f920d970a9f60a0" isAbstract="true" kind="Computation" name="Exchange" packagePath="lu">
     <versions field1="1" field2="0" field3="0" field4="0"/>
     <visualAttributes>
       <color b="255" g="255" r="255"/>
@@ -222,10 +222,28 @@
         <visualDescription h="10" w="10" x="5" y="2"/>
       </unitBounds>
     </innerComponent>
+    <innerComponent hash_component_UID="002400000480000094000000060200000024000052534131000400001100000085e04d85c3943118e20cd068c4a1ec4576e03d3bf5eb1bba85e4fadcdf54d0df68bff62d84faa12b2b2e369aea9e87d240808daac68d9bb35201c01c093c11df652595e3f02510e1adb438dc4bda4c876af017a5784f8e52fefb9d60ef2c5a2760d5a133c9da3add6dfc110018abd9f1d35a346a4a640abfb0504631ffda5eaa" localRef="exchange_patttern" location="lu.exchange.ExchangePattern/ExchangePattern.hpe" name="ExchangePattern" package="lu.exchange" parameter_id="exchange_pattern" exposed="false">
+      <visualDescription h="44" w="159" x="55" y="107">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="exchange_pattern">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
+    <innerComponent hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cfffd7d324d17d3a99722babbc2397f07a119214ee4574e1c380ca9014b5f77cc67a74d09c32301cf23e190e524f7a8693618ec78b242b2d2dfc21ae6606f31d5832fe65fe0721fcb355479c77392993afe1191d7fd177114ac6b7ff5864d7b07167c9f63b321d4156c01da8099defbaae07267292b9b03dbbed23bd0c5b5f8e" localRef="discretization" location="common.Discretization/Discretization.hpe" name="Discretization" package="common" parameter_id="discretization" exposed="false">
+      <visualDescription h="47" w="124" x="70" y="493">
+        <color b="255" g="255" r="255"/>
+      </visualDescription>
+      <unitBounds uRef="discretization">
+        <visualDescription h="10" w="10" x="5" y="2"/>
+      </unitBounds>
+    </innerComponent>
     <supplyParameter cRef="direction_forward" varName="DIR_FORWARD"/>
     <supplyParameter cRef="direction_backward" varName="DIR_BACKWARD"/>
     <parameter componentRef="instance_type" formFieldId="instance_type" varName="I"/>
     <parameter componentRef="class" formFieldId="class" varName="C"/>
+    <parameter componentRef="exchange_patttern" formFieldId="exchange_pattern" varName="E"/>
+    <parameter componentRef="discretization" formFieldId="discretization" varName="DIS"/>
     <innerRenaming cNewName="x" cOldName="topology" cRef="shift_to_west"/>
     <innerRenaming cNewName="x" cOldName="topology" cRef="shift_to_east"/>
     <innerRenaming cNewName="y" cOldName="topology" cRef="shift_to_north"/>
@@ -240,7 +258,7 @@
       <cRefs>shift_to_east</cRefs>
       <cRefs>shift_to_north</cRefs>
       <cRefs>shift_to_west</cRefs>
-      <pRef>mpi</pRef>
+      <pRef>input_buffer</pRef>
     </fusion>
     <fusion>
       <cRefs>shift_to_south</cRefs>
@@ -252,16 +270,16 @@
       <cRefs>shift_to_east</cRefs>
       <cRefs>shift_to_north</cRefs>
       <cRefs>shift_to_west</cRefs>
-      <pRef>input_buffer</pRef>
+      <pRef>output_buffer</pRef>
     </fusion>
     <fusion>
       <cRefs>shift_to_south</cRefs>
       <cRefs>shift_to_east</cRefs>
       <cRefs>shift_to_north</cRefs>
       <cRefs>shift_to_west</cRefs>
-      <pRef>output_buffer</pRef>
+      <pRef>mpi</pRef>
     </fusion>
-    <interface iRef="IExchange1" nArgs="2">
+    <interface iRef="IExchange" nArgs="4">
       <slice isRef="blocks">
         <originRef cRef="blocks_info" iRef="IBlocksInfo"/>
         <visualDescription h="10" w="10" x="0" y="21"/>
@@ -284,25 +302,33 @@
       </slice>
       <slice isRef="shift_to_south">
         <originRef cRef="shift_to_south" iRef="IShift"/>
-        <visualDescription h="10" w="10" x="121" y="81"/>
+        <visualDescription h="10" w="10" x="137" y="93"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@287dcdd5" repeat="0">
+      <slice isRef="exchange_pattern">
+        <originRef cRef="exchange_patttern" iRef="IExchangePattern"/>
+        <visualDescription h="10" w="10" x="5" y="0"/>
+      </slice>
+      <slice isRef="discretization">
+        <originRef cRef="discretization" iRef="IDiscretization"/>
+        <visualDescription h="10" w="10" x="49" y="2"/>
+      </slice>
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1fcfbd1d" repeat="0">
         <visualDescription h="150" w="250" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@5b546fb7" repeat="0" sliceRef="shift_to_west">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7f88cb3b" repeat="0" sliceRef="shift_to_west">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4728639" repeat="0" sliceRef="shift_to_west">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@6dd6cfe6" repeat="0" sliceRef="shift_to_west">
           <visualDescription h="50" w="50" x="70" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@7aca0a76" repeat="0" sliceRef="shift_to_west">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@31eb3d60" repeat="0" sliceRef="shift_to_west">
           <visualDescription h="50" w="50" x="130" y="50"/>
         </action>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@667507f4" repeat="0" sliceRef="shift_to_west">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@4b0a833a" repeat="0" sliceRef="shift_to_west">
           <visualDescription h="50" w="50" x="190" y="50"/>
         </action>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.topology.Ring;&#xA;using common.Buffer;&#xA;using environment.MPIDirect;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.topology.Neighbors;&#xA;&#xA;namespace lu.Exchange1 &#xA;{ &#xA;&#x9;public interface BaseIExchange1&lt;I, C> : IComputationKind &#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass &#xA;&#x9;{&#xA;&#x9;   IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;   IBlocksInfo Blocks {get;}&#xA;&#x9;   ICell Y {get;}&#xA;&#x9;   ICell X {get;}&#xA;&#x9;   IMPIDirect Mpi {get;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIExchange1.cs" srcType="base" uri="lu.Exchange1/bin/1.0.0.0/BaseIExchange1.dll" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.topology.Ring;&#xA;using common.Buffer;&#xA;using environment.MPIDirect;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.exchange.ExchangePattern;&#xA;using common.Discretization;&#xA;&#xA;&#xA;namespace lu.Exchange &#xA;{ &#xA;&#x9;public interface BaseIExchange&lt;I, C, E, DIS> : IComputationKind &#xA;&#x9;&#x9;where I:IInstance&lt;C>&#xA;&#x9;&#x9;where C:IClass &#xA;&#x9;&#x9;where E:IExchangePattern&#xA;&#x9;&#x9;where DIS:IDiscretization&#xA;&#x9;{&#xA;&#x9;   IProblemDefinition&lt;I, C> Problem {get;}&#xA;&#x9;   IBlocksInfo Blocks {get;}&#xA;&#x9;   ICell Y {get;}&#xA;&#x9;   ICell X {get;}&#xA;&#x9;   IMPIDirect Mpi {get;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIExchange.cs" srcType="base" uri="lu.Exchange/bin/1.0.0.0/BaseIExchange.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
@@ -312,10 +338,10 @@
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;&#xA;namespace lu.Exchange1 { &#xA;&#x9;public interface IExchange1&lt;I, C> : BaseIExchange1&lt;I, C>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;   void setParameters(double[,,,] g, int iex);&#xA;&#x9;   void setParameters(double[,,,] g, int iex, int k);&#x9;   &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IExchange1.cs" srcType="user" uri="lu.Exchange1/bin/1.0.0.0/IExchange1.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using lu.exchange.ExchangePattern;&#xA;using common.Discretization;&#xA;&#xA;namespace lu.Exchange { &#xA;&#x9;public interface IExchange&lt;I, C, E, DIS> : BaseIExchange&lt;I, C, E, DIS>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass &#xA;&#x9;where E:IExchangePattern&#xA;&#x9;where DIS: IDiscretization&#xA;&#x9;{&#xA;&#x9;   void setParameters(double[,,,] g);&#xA;&#x9;   void setParameters(double[,,,] g, int k);&#x9;   &#xA;&#x9;   void setParameters(double[,] g, int beg, int fin1);&#xA;&#x9;   void setParameters(double[,] g, double[,] h, int ibeg, int ifin1, int jbeg, int jfin1);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IExchange.cs" srcType="user" uri="lu.Exchange/bin/1.0.0.0/IExchange.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
-          <dependency>%WORKSPACE/lu.Exchange1/bin/1.0.0.0/BaseIExchange1.dll</dependency>
+          <dependency>%WORKSPACE/lu.Exchange/bin/1.0.0.0/BaseIExchange.dll</dependency>
         </file>
       </sources>
       <visualDescription h="113" w="270" x="255" y="77">
@@ -343,17 +369,17 @@
         <slice pRef="mpi" sRef="shift_to_east"/>
         <slice pRef="mpi" sRef="shift_to_south"/>
       </port>
+      <port name="x">
+        <visualDescription h="10" w="10" x="219" y="27"/>
+        <slice pRef="cell" sRef="shift_to_west"/>
+        <slice pRef="cell" sRef="shift_to_east"/>
+      </port>
       <port name="input_buffer">
         <visualDescription h="10" w="10" x="150" y="61"/>
         <slice pRef="input_buffer" sRef="shift_to_west"/>
         <slice pRef="input_buffer" sRef="shift_to_north"/>
         <slice pRef="input_buffer" sRef="shift_to_east"/>
         <slice pRef="input_buffer" sRef="shift_to_south"/>
-      </port>
-      <port name="x">
-        <visualDescription h="10" w="10" x="219" y="27"/>
-        <slice pRef="cell" sRef="shift_to_west"/>
-        <slice pRef="cell" sRef="shift_to_east"/>
       </port>
       <port name="y">
         <visualDescription h="10" w="10" x="79" y="81"/>
@@ -362,8 +388,10 @@
       </port>
       <parameter iname="IInstance" order="0" parid="instance_type" uname="instance" varid="I"/>
       <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
+      <parameter iname="IExchangePattern" order="2" parid="exchange_pattern" uname="exchange_pattern" varid="E"/>
+      <parameter iname="IDiscretization" order="3" parid="discretization" uname="discretization" varid="DIS"/>
     </interface>
-    <unit iRef="IExchange1" private="false" uRef="exchange1" visibleInterface="true">
+    <unit iRef="IExchange" private="false" uRef="exchange1" visibleInterface="true">
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
         <visualDescription h="10" w="10" x="0" y="21"/>
       </slices>
@@ -412,6 +440,12 @@
         <port>output_buffer</port>
         <port>y</port>
         <port>mpi</port>
+      </slices>
+      <slices cRef="exchange_patttern" replica="0" uRef="exchange_pattern" sliceName="exchange_pattern" transitive="false">
+        <visualDescription h="10" w="10" x="5" y="0"/>
+      </slices>
+      <slices cRef="discretization" replica="0" uRef="discretization" sliceName="discretization" transitive="false">
+        <visualDescription h="10" w="10" x="49" y="2"/>
       </slices>
       <visualDescription h="40" w="126" x="288" y="200"/>
     </unit>
@@ -463,7 +497,24 @@
       <links xsi:type="component:EnumerableEntryType" cRef="direction_backward" uRef="right_to_left"/>
       <visualDescription h="20" w="20" x="354" y="190"/>
     </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
+      <originRef>exchange_patttern</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="exchange_patttern" uRef="exchange_pattern"/>
+      <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <visualDescription h="20" w="20" x="354" y="190"/>
+    </enumerator>
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@8bf18c1302284940125" varId="n">
+      <originRef>discretization</originRef>
+      <links xsi:type="component:EnumerableEntryType" cRef="discretization" uRef="discretization"/>
+      <links xsi:type="component:EnumerableUnitType" ref="exchange1"/>
+      <visualDescription h="20" w="20" x="141" y="268"/>
+    </enumerator>
     <fusionsOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>shift_to_west</originRef>
+        <originRef>direction</originRef>
+      </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>shift_to_east</originRef>
@@ -476,11 +527,6 @@
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
-        <originRef>shift_to_west</originRef>
-        <originRef>direction</originRef>
-      </fusionOfReplicators>
-      <fusionOfReplicators>
-        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
         <originRef>shift_to_south</originRef>
         <originRef>direction</originRef>
       </fusionOfReplicators>
@@ -488,6 +534,14 @@
         <eRef>hPE.frontend.base.model.HReplicator@196ae3e1301427817312</eRef>
         <originRef>problem_data</originRef>
         <originRef>rsd</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>
+        <originRef>exchange_patttern</originRef>
+      </fusionOfReplicators>
+      <fusionOfReplicators>
+        <eRef>hPE.frontend.base.model.HReplicator@8bf18c1302284940125</eRef>
+        <originRef>discretization</originRef>
       </fusionOfReplicators>
     </fusionsOfReplicators>
   </componentInfo>
