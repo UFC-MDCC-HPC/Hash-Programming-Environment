@@ -41,27 +41,19 @@
     </innerComponent>
     <supplyParameter cRef="class" varName="C"/>
     <supplyParameter cRef="instance_type" varName="I"/>
-    <interface iRef="ILhsABInitImpl" nArgs="2">
-      <slice isRef="blocks">
-        <originRef cRef="blocks_info" iRef="IBlocks"/>
-        <visualDescription h="10" w="10" x="35" y="25"/>
-      </slice>
-      <slice isRef="problem">
-        <originRef cRef="problem_data" iRef="IProblemDefinition"/>
-        <visualDescription h="10" w="10" x="65" y="24"/>
-      </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@48dede36" repeat="0">
+    <interface iRef="ILhsABInitImpl" nArgs="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@22967f8e" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using bt.solve.LhsABInit;&#xA;&#xA;namespace impl.bt.solve.LhsABInitImpl { &#xA;&#x9;public abstract class BaseILhsABInitImpl&lt;I, C>: Computation, BaseILhsABInit&lt;I, C>&#xA;&#x9;where I:IInstance_BT&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;&#x9;private IBlocks blocks = null;&#xA;&#x9;&#x9;protected IBlocks Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;protected IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseILhsABInitImpl.cs" srcType="base" uri="impl.bt.solve.LhsABInitImpl/bin/1.0.0.0/BaseILhsABInitImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using common.datapartition.BlocksInfo;&#xA;using common.data.ProblemDefinition;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using bt.solve.LhsABInit;&#xA;&#xA;namespace impl.bt.solve.LhsABInitImpl { &#xA;&#x9;public abstract class BaseILhsABInitImpl: Computation, BaseILhsABInit&#xA;&#x9;{&#xA;&#x9;&#x9;private IBlocks blocks = null;&#xA;&#x9;&#x9;protected IBlocks Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;protected IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseILhsABInitImpl.cs" srcType="base" uri="impl.bt.solve.LhsABInitImpl/bin/1.0.0.0/BaseILhsABInitImpl.dll" versionId="1.0.0.0">
           <dependency>common.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>common.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>bt.solve.LhsABInit/bin/1.0.0.0/BaseILhsABInit.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using bt.solve.LhsABInit;&#xA;&#xA;namespace impl.bt.solve.LhsABInitImpl &#xA;{&#xA;&#x9;public class ILhsABInitImpl&lt;I, C> : BaseILhsABInitImpl&lt;I, C>, ILhsABInit&lt;I, C>&#xA;&#x9;&#x9;where I:IInstance_BT&lt;C>&#xA;&#x9;&#x9;where C:IClass &#xA;&#x9;{&#xA;&#x9;&#x9;private double[,,] lhsa;&#xA;&#x9;&#x9;private double[,,] lhsb;&#xA;&#x9;&#x9;private int size;&#xA;&#x9;&#xA;&#x9;&#x9;public void setParameters(double[,,] lhsa, double[,,] lhsb, int size) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;   this.lhsa = lhsa;&#xA;&#x9;&#x9;   this.lhsb = lhsb;&#xA;&#x9;&#x9;   this.size = size;&#xD;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go()   &#xA;&#x9;&#x9;{ &#xA;            for(int i = 2; i &lt;= size; i++) &#xA;            {&#xA;                for(int m = 0; m &lt; 5; m++) &#xA;                {&#xA;                    for(int n = 0; n &lt; 5; n++) &#xA;                    {&#xA;                        lhsa[i, n, m] = 0.0d;&#xA;                        lhsb[i, n, m] = 0.0d;&#xA;                    }&#xA;                    lhsb[i, m, m] = 1.0d;&#xA;                }&#xA;            }&#xA;            &#xA;            return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ILhsABInitImpl.cs" srcType="user" uri="impl.bt.solve.LhsABInitImpl/bin/1.0.0.0/ILhsABInitImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using bt.problem_size.Instance_BT;&#xA;using common.problem_size.Class;&#xA;using bt.solve.LhsABInit;&#xA;&#xA;namespace impl.bt.solve.LhsABInitImpl &#xA;{&#xA;&#x9;public class ILhsABInitImpl : BaseILhsABInitImpl, ILhsABInit&#xA;&#x9;{&#xA;&#x9;&#x9;private double[,,] lhsa;&#xA;&#x9;&#x9;private double[,,] lhsb;&#xA;&#x9;&#x9;private int size;&#xA;&#x9;&#xA;&#x9;&#x9;public void setParameters(double[,,] lhsa, double[,,] lhsb, int size) &#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;   this.lhsa = lhsa;&#xA;&#x9;&#x9;   this.lhsb = lhsb;&#xA;&#x9;&#x9;   this.size = size;&#xD;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go()   &#xA;&#x9;&#x9;{ &#xA;            for(int i = 2; i &lt;= size; i++) &#xA;            {&#xA;                for(int m = 0; m &lt; 5; m++) &#xA;                {&#xA;                    for(int n = 0; n &lt; 5; n++) &#xA;                    {&#xA;                        lhsa[i, n, m] = 0.0d;&#xA;                        lhsb[i, n, m] = 0.0d;&#xA;                    }&#xA;                    lhsb[i, m, m] = 1.0d;&#xA;                }&#xA;            }&#xA;            &#xA;            return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ILhsABInitImpl.cs" srcType="user" uri="impl.bt.solve.LhsABInitImpl/bin/1.0.0.0/ILhsABInitImpl.dll" versionId="1.0.0.0">
           <dependency>bt.problem_size.Instance_BT/bin/1.0.0.0/IInstance_BT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.bt.solve.LhsABInitImpl/bin/1.0.0.0/BaseILhsABInitImpl.dll</dependency>
@@ -71,25 +63,15 @@
       <visualDescription h="40" w="133" x="276" y="170">
         <color b="0" g="255" r="128"/>
       </visualDescription>
-      <parameter iname="IInstance_BT" order="0" parid="instance_type" uname="instance" varid="I"/>
-      <parameter iname="IClass" order="1" parid="class" uname="class" varid="C"/>
     </interface>
     <unit iRef="ILhsABInitImpl" private="false" uRef="lhsabinit" visibleInterface="true">
       <super cRef="base" uRef="lhsabinit"/>
-      <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
-        <visualDescription h="10" w="10" x="35" y="25"/>
-      </slices>
-      <slices cRef="problem_data" replica="0" uRef="problem" sliceName="problem" transitive="false">
-        <visualDescription h="10" w="10" x="65" y="24"/>
-      </slices>
-      <visualDescription h="40" w="80" x="303" y="298"/>
+      <visualDescription h="40" w="80" x="237" y="305"/>
     </unit>
-    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1b2533d1295099559883" varId="n">
+    <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@96c25eb1303133450196" varId="n">
       <originRef>base</originRef>
-      <originRef>problem_data</originRef>
-      <originRef>qs</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="lhsabinit"/>
-      <visualDescription h="60" w="61" x="156" y="288"/>
+      <visualDescription h="20" w="20" x="79" y="215"/>
     </enumerator>
   </componentInfo>
 </component:component>

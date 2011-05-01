@@ -8,9 +8,7 @@ using bt.solve.LhsABInit;
 
 namespace impl.bt.solve.LhsABInitImpl 
 {
-	public class ILhsABInitImpl<I, C> : BaseILhsABInitImpl<I, C>, ILhsABInit<I, C>
-		where I:IInstance_BT<C>
-		where C:IClass 
+	public class ILhsABInitImpl : BaseILhsABInitImpl, ILhsABInit
 	{
 		private double[,,] lhsa;
 		private double[,,] lhsb;

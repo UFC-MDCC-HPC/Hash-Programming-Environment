@@ -11,10 +11,9 @@ using common.problem_size.Class;
 using bt.solve.LhsABInit;
 
 namespace impl.bt.solve.LhsABInitImpl { 
-	public abstract class BaseILhsABInitImpl<I, C>: Computation, BaseILhsABInit<I, C>
-	where I:IInstance_BT<C>
-	where C:IClass {
-		private IBlocks blocks = null;
+	public abstract class BaseILhsABInitImpl: Computation, BaseILhsABInit
+	{
+/*		private IBlocks blocks = null;
 		protected IBlocks Blocks {
 			get {
 				if (this.blocks == null)
@@ -29,7 +28,7 @@ namespace impl.bt.solve.LhsABInitImpl {
 					this.problem = (IProblemDefinition<I, C>) Services.getPort("problem_data");
 				return this.problem;
 			}
-		}
+		}*/
 		abstract public int go(); 
 	}
 }
