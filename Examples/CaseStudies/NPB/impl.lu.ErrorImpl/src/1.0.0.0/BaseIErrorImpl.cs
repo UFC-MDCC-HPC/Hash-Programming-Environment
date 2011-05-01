@@ -13,16 +13,21 @@ using environment.MPIDirect;
 using lu.Error;
 using MPI;
 
-namespace impl.lu.ErrorImpl { 
+namespace impl.lu.ErrorImpl 
+{ 
 	public abstract class BaseIErrorImpl<I, C>: Computation, BaseIError<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass {
+		where I:IInstance_LU<C>
+		where C:IClass 
+	{
 
 		#region data
+		
 			protected Intracommunicator worldcomm;//Mpi
 			protected int nz,nx0,ny0,nz0,ipt,jpt,ist,jst,iend,jend;//Blocks
 			protected double [,,,] u;
-			override public void initialize(){
+			
+			override public void initialize()
+			{
 			    nz   = Blocks.nz;
 			    nx0  = Blocks.nx0;
 			    ny0  = Blocks.ny0;
@@ -34,8 +39,10 @@ namespace impl.lu.ErrorImpl {
                 iend = Blocks.iend;
                 jend = Blocks.jend;                                
                 u    = Problem.Field_u;
-				worldcomm = Mpi.worldComm();
+                
+				worldcomm = this.WorldComm;
 			}
+			
 		#endregion
 
 		private IProblemDefinition<I, C> problem = null;

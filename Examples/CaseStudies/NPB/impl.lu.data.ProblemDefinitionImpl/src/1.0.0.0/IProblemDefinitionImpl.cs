@@ -6,10 +6,12 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.data.ProblemDefinition;
 
-namespace impl.lu.data.ProblemDefinitionImpl { 
+namespace impl.lu.data.ProblemDefinitionImpl 
+{ 
 	public class IProblemDefinitionImpl<I, C> : BaseIProblemDefinitionImpl<I, C>, IProblemDefinition<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass {
+		where I:IInstance_LU<C>
+		where C:IClass 
+	{
         //protected int _nx0 = 0, _ny0 = 0, _nz0 = 0;
 		protected int _isiz01 = 0, _isiz3 = 0;//_isiz02 = 0, _isiz03 = 0,_itmax = 0, _inorm = 0, 
 		protected double _dt = 0.0;		
@@ -17,10 +19,8 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 				
 		protected bool[] _icommn, _icomms, _icomme, _icommw;
 
-		public IProblemDefinitionImpl() {
-		}
-		
-		override public void initialize(){
+		override public void initialize()
+		{
 		    setProblemClass();
 
             int _num    = this.Ranks.Length;
@@ -73,7 +73,7 @@ namespace impl.lu.data.ProblemDefinitionImpl {
 			_isiz01 = Instance.isiz01;
 //			_isiz02 = Instance.isiz02;
 //			_isiz03 = Instance.isiz03;
-//			_isiz3  = Instance.isiz3;
+			_isiz3  = Instance.isiz3;
 //            _dt     = Instance.dt;
 		}
 		

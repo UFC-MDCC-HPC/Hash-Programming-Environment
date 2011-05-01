@@ -1,7 +1,41 @@
-<?xml version='1.0'?>
-<project basedir='.' default='all' name='impl.lu.ERhsImpl'>
-  <property name='src' value='src'/>
-  <property name='build' value='bin'/>
-  <property name='nant.settings.currentframework' value='mono-2.0'/>
-  <target depends='' name='all'/>
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe/cache" default="all" name="ERhsImpl">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="ERhsImpl-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/ERhsImpl.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/bin/1.0.0.0/BaseIERhsImpl.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/src/1.0.0.0/BaseIERhsImpl.cs"/>
+      </sources>
+      <references>
+        <include name="lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll"/>
+        <include name="lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll"/>
+        <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
+        <include name="lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll"/>
+        <include name="lu.topology.Neighbors/bin/1.0.0.0/INeighbors.dll"/>
+        <include name="lu.Exchange1/bin/1.0.0.0/IExchange1.dll"/>
+        <include name="lu.ERhs/bin/1.0.0.0/BaseIERhs.dll"/>
+        <include name="/usr/lib/mono/MPI/MPI.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+    <csc debug="false" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/ERhsImpl.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/bin/1.0.0.0/IERhsImpl.dll" target="library" unsafe="true">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/impl.lu.ERhsImpl/src/1.0.0.0/IERhsImpl.cs"/>
+      </sources>
+      <references>
+        <include name="lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll"/>
+        <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
+        <include name="/impl.lu.ERhsImpl/bin/1.0.0.0/BaseIERhsImpl.dll"/>
+        <include name="lu.ERhs/bin/1.0.0.0/IERhs.dll"/>
+        <include name="/usr/lib/mono/MPI/MPI.dll"/>
+        <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
+      </references>
+    </csc>
+  </target>
+  <target depends="ERhsImpl-1.0.0.0" name="all"/>
 </project>

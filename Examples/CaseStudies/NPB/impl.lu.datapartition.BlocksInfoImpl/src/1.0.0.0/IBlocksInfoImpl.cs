@@ -4,49 +4,55 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using lu.datapartition.BlocksInfo;
 
-namespace impl.lu.datapartition.BlocksInfoImpl { 
-	public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocksInfo {
-		public IBlocksInfoImpl() { 
-		
-		}	
-		
-//		override public void initialize(){
-//		   
-//		}	
-		
-		public void subDomain(){
-            int mm;
-            mm   = (int)mod(_nx0, _xdim);
-            if(_row<=mm) {
+namespace impl.lu.datapartition.BlocksInfoImpl 
+{ 
+	public class IBlocksInfoImpl : BaseIBlocksInfoImpl, IBlocksInfo 
+	{		
+		public void subDomain()
+		{
+            int mm = (int)mod(_nx0, _xdim);
+			
+            if(_row <= mm) 
+            {
                 _nx = _nx0/_xdim + 1;
                 _ipt = (_row-1)*_nx;
             }
-            else {
+            else 
+            {
                 _nx = _nx0/_xdim;
                 _ipt = (_row-1)*_nx + mm;
             }
+            
             mm   = (int)mod(_ny0, _ydim);
-            if(_col<=mm) {
+            
+            if(_col<=mm) 
+            {
                 _ny = _ny0/_ydim + 1;
                 _jpt = (_col-1)*_ny;
             }
-            else {
+            else 
+            {
                 _ny = _ny0/_ydim;
                 _jpt = (_col-1)*_ny + mm;
             }
+            
             _nz = _nz0;
             
             //setCheck();
             
-            if((_nx < 4) || (_ny < 4) || (_nz < 4)) {
+            if((_nx < 4) || (_ny < 4) || (_nz < 4)) 
+			{
                 Console.WriteLine("SUBDOMAIN SIZE IS TOO SMALL - ADJUST PROBLEM SIZE OR NUMBER OF PROCESSORS, "+
                     "SO THAT NX, NY AND NZ ARE GREATER THAN OR EQUAL TO 4 THEY ARE CURRENTLY: "+_nx+"x"+_ny+"x"+_nz);
                 //worldcomm.Abort(0);//CALL MPI_ABORT[ MPI_COMM_WORLD,ERRORCODE,IERROR ]
                 //mpi.Dispose();
                 throw new System.Exception("Check SUBDOMAIN SIZE");
             }
+			
             setCheck();
-            if((_nx > _isiz1) || (_ny > _isiz2) || (_nz > _isiz3)) {
+			
+            if((_nx > _isiz1) || (_ny > _isiz2) || (_nz > _isiz3)) 
+			{
                 Console.WriteLine("SUBDOMAIN SIZE IS TOO LARGE - ADJUST PROBLEM SIZE OR NUMBER OF PROCESSORS" +
                     "SO THAT NX, NY AND NZ ARE LESS THAN OR EQUAL TO ISIZ1, ISIZ2 AND ISIZ3 RESPECTIVELY. THEY ARE CURRENTLY"+
                     " "+_nx+"x"+_ny+"x"+_nz);
@@ -54,6 +60,7 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
                 //mpi.Dispose();
                 throw new System.Exception("Check SUBDOMAIN SIZE");
             }
+			
             _ist = 1;
             _iend = _nx;
             if(_north==-1)
@@ -68,7 +75,8 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
                 _jend = _ny - 1;
 		}
 		
-		private void setCheck(){
+		private void setCheck()
+		{
 		    int _num    = this.Ranks.Length;
             int ydiv = ilog2(_num) / 2;
             int xdiv = ydiv;
@@ -82,7 +90,9 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
 		}
 		
 		public static double mod(double a, double b) { return (a % b); }
-        public static int ilog2(int i) {
+		
+        public static int ilog2(int i) 
+        {
             int log2, exp2 = 1;
             if(i <= 0) return (-1);
             for(log2 = 0; log2 < 20; log2++) {
@@ -91,7 +101,9 @@ namespace impl.lu.datapartition.BlocksInfoImpl {
             }
             return (-1);
         }        
-        public static int ipow2(int i) {
+        
+        public static int ipow2(int i) 
+        {
             int pow2 = 1;
             if(i < 0) return (-1);
             if(i == 0) return (1);

@@ -10,21 +10,26 @@ using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
 using lu.Exact;
 
-namespace impl.lu.ExactImpl { 
+namespace impl.lu.ExactImpl 
+{ 
 	public abstract class BaseIExactImpl<I, C>: Computation, BaseIExact<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass {
+		where I:IInstance_LU<C>
+		where C:IClass 
+	{
 	
 		#region data
+		
 			protected int nx0,ny0,nz;
 			protected double[,] ce;
 			
-			override public void initialize(){
+			override public void initialize()
+			{
 				nx0 = Blocks.nx0;
 				ny0 = Blocks.ny0;
 				nz = Blocks.nz;				
-				ce = Constants.ce;              
+				ce = Constants.ce;   
 			}
+			
 		#endregion
 	
 		private IProblemDefinition<I, C> problem = null;

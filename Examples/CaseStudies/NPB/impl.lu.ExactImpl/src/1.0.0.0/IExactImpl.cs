@@ -6,26 +6,25 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.Exact;
 
-namespace impl.lu.ExactImpl { 
+namespace impl.lu.ExactImpl 
+{ 
 	public class IExactImpl<I, C> : BaseIExactImpl<I, C>, IExact<I, C>
 	where I:IInstance_LU<C>
-	where C:IClass {
-	   
+	where C:IClass 
+	{	   
 	    private int i,j,k,i1,i2,i3;
 	    private double[,,,] u000ijk;
 	    
-		public IExactImpl() { 
-		
-		}
-		
-		public override int go() { 
-
+		public override int go() 
+		{
             int m;
             double xi, eta, zeta;
             xi   = ((double)(i-1))/(nx0-1);
             eta  = ((double)(j-1))/(ny0-1);
             zeta = ((double)(k-1))/(nz -1);
-            for(m = 0; m< 5; m++) {
+            //Console.WriteLine("i1=" + i1 + " i2=" + i2 + " i3=" + i3);
+            for(m = 0; m< 5; m++)    
+            {  
                 u000ijk[i1, i2, i3, m] = ce[0, m] 
                     + ce[1, m]*xi 
                     + ce[2, m]*eta 
@@ -40,11 +39,12 @@ namespace impl.lu.ExactImpl {
                     + ce[11, m]*eta*eta*eta*eta 
                     + ce[12, m]*zeta*zeta*zeta*zeta;
             }
-						return 0;
-
+            
+			return 0;
 		}
 		
-		public void setParameters(int i, int j, int k, double[,,,] u000ijk, int i1, int i2, int i3){
+		public void setParameters(int i, int j, int k, double[,,,] u000ijk, int i1, int i2, int i3)
+		{
 		   this.i  = i;
 		   this.j  = j;
 		   this.k  = k;

@@ -9,9 +9,12 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.datapartition.BlocksInfo;
 using common.topology.Ring;
-using lu.Exchange1;
+using lu.Exchange;
 using lu.ERhs;
 using environment.MPIDirect;
+using lu.exchange.ExchangePattern31;
+using lu.exchange.ExchangePattern30;
+using common.Discretization;
 
 namespace impl.lu.ERhsImpl { 
 	public abstract class BaseIERhsImpl<I, C>: Computation, BaseIERhs<I, C>
@@ -29,7 +32,9 @@ namespace impl.lu.ERhsImpl {
 			                 dssp, ty1, ty2, ty3, tz1, tz2, tz3;
 			protected double [,,,] u,rsd,frct,flux;
 			protected double[,] ce;
-			override public void initialize(){
+			
+			override public void initialize()
+			{
 			    nx  = Blocks.nx;
 			    ny  = Blocks.ny;
 			    nz  = Blocks.nz;
@@ -43,6 +48,10 @@ namespace impl.lu.ERhsImpl {
                 iend = Blocks.iend;
                 jend = Blocks.jend;
                 
+/*                Console.WriteLine("nx=" + nx + " ny=" + ny + " nz=" + nz + " nx0=" + nx0 + " ny0=" + ny0 +
+                                  " ipt=" + ipt + " jpt=" + jpt + " ist=" + ist + " jst=" + jst + 
+                                  " iend=" + iend + " jend=" + jend);
+  */              
                 north = Blocks.north;
                 south = Blocks.south;
                 east  = Blocks.east;
@@ -141,15 +150,25 @@ namespace impl.lu.ERhsImpl {
 			}
 		}
 		
-		private IExchange1<I, C> exchange1 = null;
-		
-		protected IExchange1<I, C> Exchange1 {
+		private IExchange<I, C, IExchangePattern30, IDiscretization> exchange30 = null;
+		protected IExchange<I, C, IExchangePattern30, IDiscretization> Exchange30 {
 			get {
-				if (this.exchange1 == null)
-					this.exchange1 = (IExchange1<I, C>) Services.getPort("exchange1");
-				return this.exchange1;
+				if (this.exchange30 == null)
+					this.exchange30 = (IExchange<I, C, IExchangePattern30, IDiscretization>) Services.getPort("exchange30");
+				return this.exchange30;
 			}
 		}
+
+		private IExchange<I, C, IExchangePattern31, IDiscretization> exchange31 = null;
+		protected IExchange<I, C, IExchangePattern31, IDiscretization> Exchange31 {
+			get {
+				if (this.exchange31 == null)
+					this.exchange31 = (IExchange<I, C, IExchangePattern31, IDiscretization>) Services.getPort("exchange31");
+				return this.exchange31;
+			}
+		}
+		
+		
 		abstract public int go(); 
 	}
 }

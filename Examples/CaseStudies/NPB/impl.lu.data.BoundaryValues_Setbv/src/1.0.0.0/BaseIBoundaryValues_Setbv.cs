@@ -11,16 +11,21 @@ using lu.datapartition.BlocksInfo;
 using lu.Exact;
 using lu.data.BoundaryValues;
 
-namespace impl.lu.data.BoundaryValues_Setbv { 
+namespace impl.lu.data.BoundaryValues_Setbv 
+{ 
 	public abstract class BaseIBoundaryValues_Setbv<I, C>: Computation, BaseIBoundaryValues<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass{
+		where I:IInstance_LU<C>
+		where C:IClass
+	{
 	   
 		#region data
+		
 			protected int nx,ny,nz,nx0,ny0,ipt,jpt;
 			protected int north, south, east, west;
 			protected double [,,,] u;
-			override public void initialize(){
+			
+			override public void initialize()
+			{
 			    nx0  = Blocks.nx0;
 			    ny0  = Blocks.ny0;
 			    
@@ -38,6 +43,7 @@ namespace impl.lu.data.BoundaryValues_Setbv {
                 
                 u    = Problem.Field_u;
 			}
+			
 		#endregion
 	
 		private IProblemDefinition<I, C> problem = null;

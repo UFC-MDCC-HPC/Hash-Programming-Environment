@@ -22,7 +22,7 @@
           </unitBounds>
         </port>
         <port hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000f3194c0a7b197fb560dfcad8ee5b421b78f1f03d002a081027a334aa25ebf3ca7669300c0fd23f8f1547226d2833753b8583e09a6b1fcc393107abb8e8670fb2d48b48ea486fa7f94cb968f2760707e531b14426dedc94542dfdf89efcdf612aeabb738a4b713e0a7a9b3ee97b95d783693b746ddcce119ba7c5080176270d8a" localRef="blocks_info" location="lu.datapartition.BlocksInfo/BlocksInfo.hpe" name="BlocksInfo" package="lu.datapartition" exposed="true">
-          <visualDescription h="25" w="71" x="72" y="434">
+          <visualDescription h="25" w="71" x="60" y="409">
             <color b="255" g="255" r="255"/>
           </visualDescription>
           <unitBounds uRef="blocks">
@@ -68,18 +68,18 @@
         <originRef cRef="blocks_info" iRef="IBlocksInfo"/>
         <visualDescription h="10" w="10" x="1" y="14"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@eee0a8" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@c83c2" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.Exact;&#xA;&#xA;namespace impl.lu.ExactImpl { &#xA;&#xA;public abstract class BaseIExactImpl&lt;I, C>: Computation, BaseIExact&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IBlocksInfo blocks = null;&#xA;&#xA;public IBlocksInfo Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIExactImpl.cs" srcType="base" uri="impl.lu.ExactImpl/bin/1.0.0.0/BaseIExactImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.data.ProblemDefinition;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.datapartition.BlocksInfo;&#xA;using lu.Exact;&#xA;&#xA;namespace impl.lu.ExactImpl { &#xA;&#x9;public abstract class BaseIExactImpl&lt;I, C>: Computation, BaseIExact&lt;I, C>&#xA;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;where C:IClass {&#xA;&#x9;&#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;protected int nx0,ny0,nz;&#xA;&#x9;&#x9;&#x9;protected double[,] ce;&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;override public void initialize()&#xA;&#x9;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;nx0 = Blocks.nx0;&#xA;&#x9;&#x9;&#x9;&#x9;ny0 = Blocks.ny0;&#xA;&#x9;&#x9;&#x9;&#x9;nz = Blocks.nz;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;ce = Constants.ce;   &#xA;&#x9;&#x9;&#x9;&#x9;Console.WriteLine(&quot;nx0=&quot; + nx0 + &#xA;&#x9;&#x9;&#x9;&#x9;                  &quot; ny0=&quot; + ny0 + &#xA;&#x9;&#x9;&#x9;&#x9;                  &quot; nz=&quot; + nz +&#xA;&#x9;&#x9;&#x9;&#x9;                  &quot; ce[0,0]=&quot; + ce[0,0] +&#xA;&#x9;&#x9;&#x9;&#x9;                  &quot; ce[12,4]=&quot; + ce[12,4]);           &#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;#endregion&#xA;&#x9;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlocksInfo blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocksInfo Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocksInfo) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIExactImpl.cs" srcType="base" uri="impl.lu.ExactImpl/bin/1.0.0.0/BaseIExactImpl.dll" versionId="1.0.0.0">
           <dependency>lu.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>lu.datapartition.BlocksInfo/bin/1.0.0.0/IBlocksInfo.dll</dependency>
           <dependency>lu.Exact/bin/1.0.0.0/BaseIExact.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.Exact;&#xA;&#xA;namespace impl.lu.ExactImpl { &#xA;&#xA;public class IExactImpl&lt;I, C> : BaseIExactImpl&lt;I, C>, IExact&lt;I, C>&#xA;where I:IInstance_LU&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IExactImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IExactImpl.cs" srcType="user" uri="impl.lu.ExactImpl/bin/1.0.0.0/IExactImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using lu.problem_size.Instance_LU;&#xA;using common.problem_size.Class;&#xA;using lu.Exact;&#xA;&#xA;namespace impl.lu.ExactImpl &#xA;{ &#xA;&#x9;public class IExactImpl&lt;I, C> : BaseIExactImpl&lt;I, C>, IExact&lt;I, C>&#xA;&#x9;where I:IInstance_LU&lt;C>&#xA;&#x9;where C:IClass &#xA;&#x9;{&#x9;   &#xA;&#x9;    private int i,j,k,i1,i2,i3;&#xA;&#x9;    private double[,,,] u000ijk;&#xA;&#x9;    &#xA;&#x9;&#x9;public override int go() &#xA;&#x9;&#x9;{&#xA;            int m;&#xA;            double xi, eta, zeta;&#xA;            xi   = ((double)(i-1))/(nx0-1);&#xA;            eta  = ((double)(j-1))/(ny0-1);&#xA;            zeta = ((double)(k-1))/(nz -1);&#xA;            //Console.WriteLine(&quot;i1=&quot; + i1 + &quot; i2=&quot; + i2 + &quot; i3=&quot; + i3);&#xA;            for(m = 0; m&lt; 5; m++)    &#xA;            {  &#xA;                u000ijk[i1, i2, i3, m] = ce[0, m] &#xA;                    + ce[1, m]*xi &#xA;                    + ce[2, m]*eta &#xA;                    + ce[3, m]*zeta &#xA;                    + ce[4, m]*xi*xi &#xA;                    + ce[5, m]*eta*eta&#xA;                    + ce[6, m]*zeta*zeta &#xA;                    + ce[7, m]*xi*xi*xi &#xA;                    + ce[8, m]*eta*eta*eta &#xA;                    + ce[9, m]*zeta*zeta*zeta &#xA;                    + ce[10, m]*xi*xi*xi*xi&#xA;                    + ce[11, m]*eta*eta*eta*eta &#xA;                    + ce[12, m]*zeta*zeta*zeta*zeta;&#xA;            }&#xA;            &#xA;&#x9;&#x9;&#x9;return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public void setParameters(int i, int j, int k, double[,,,] u000ijk, int i1, int i2, int i3)&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;   this.i  = i;&#xA;&#x9;&#x9;   this.j  = j;&#xA;&#x9;&#x9;   this.k  = k;&#xA;&#x9;&#x9;   this.i1 = i1;&#xA;&#x9;&#x9;   this.i2 = i2;&#xA;&#x9;&#x9;   this.i3 = i3;&#xA;&#x9;&#x9;   this.u000ijk = u000ijk;&#xD;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IExactImpl.cs" srcType="user" uri="impl.lu.ExactImpl/bin/1.0.0.0/IExactImpl.dll" versionId="1.0.0.0">
           <dependency>lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.lu.ExactImpl/bin/1.0.0.0/BaseIExactImpl.dll</dependency>
@@ -108,14 +108,14 @@
       <slices cRef="blocks_info" replica="0" uRef="blocks" sliceName="blocks" transitive="false">
         <visualDescription h="10" w="10" x="9" y="7"/>
       </slices>
-      <visualDescription h="40" w="80" x="182" y="344"/>
+      <visualDescription h="40" w="80" x="94" y="161"/>
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@196ae3e1301427817312" varId="n">
       <originRef>base</originRef>
       <originRef>problem_data</originRef>
-      <originRef>d</originRef>
+      <originRef>rsd</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="exact"/>
-      <visualDescription h="24" w="27" x="86" y="355"/>
+      <visualDescription h="24" w="27" x="211" y="342"/>
     </enumerator>
   </componentInfo>
 </component:component>

@@ -6,19 +6,27 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using lu.datapartition.Blocks3D;
 
-namespace impl.lu.datapartition.Blocks3DImpl { 
+namespace impl.lu.datapartition.Blocks3DImpl 
+{ 
 	public class IBlocks3DImpl<I, C> : BaseIBlocks3DImpl<I, C>, IBlocks3D<I, C>
-	where I:IInstance_LU<C>
-	where C:IClass {
-		public IBlocks3DImpl() { 
+		where I:IInstance_LU<C>
+		where C:IClass 
+	{
 		
-		} 
+		public static double mod(double a, double b) 
+		{ 
+			return (a % b); 
+		}
 		
-		public static double mod(double a, double b) { return (a % b); }
-		public static int nodedim(double n) { return (int)(Math.Log(n) / Math.Log(2.0d) + 0.00001); }
+		public static int nodedim(double n) 
+		{ 
+			return (int)(Math.Log(n) / Math.Log(2.0d) + 0.00001); 
+		}
+		
 		protected int _north, _south, _east, _west, _node, _xdim, _ydim, _row, _col;
 		
-		override public void initialize(){
+		override public void initialize()
+		{
             int _num    = this.Ranks.Length;
             _node   = this.GlobalRank;         
             int _ndim   = nodedim(_num);
@@ -56,6 +64,8 @@ namespace impl.lu.datapartition.Blocks3DImpl {
 		    Blocks.ny0   = Instance.isiz02;
 		    Blocks.nz0   = Instance.isiz03;
 		    Blocks.isiz3 = Instance.isiz3;
+		    
+		    configBlock();
 		}
 		
 		public void configBlock(){

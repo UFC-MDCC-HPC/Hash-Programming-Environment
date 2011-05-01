@@ -9,7 +9,6 @@ using common.topology.Ring;
 using lu.problem_size.Instance;
 using common.problem_size.Class;
 using common.topology.Mesh2D;
-using common.topology.Ring;
 using lu.problem_size.Instance_LU;
 using lu.datapartition.Blocks3D;
 

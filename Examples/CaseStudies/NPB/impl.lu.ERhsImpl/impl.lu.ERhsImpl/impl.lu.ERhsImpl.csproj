@@ -66,10 +66,6 @@
       <Project>{B74F8912-AA26-434F-A585-DB3387FB0072}</Project>
       <Name>lu.datapartition.BlocksInfo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange1\lu.Exchange1\lu.Exchange1.csproj">
-      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
-      <Name>lu.Exchange1</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
       <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
       <Name>common.topology.Ring</Name>
@@ -77,6 +73,22 @@
     <ProjectReference Include="..\..\environment.MPIDirect\environment.MPIDirect\environment.MPIDirect.csproj">
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
+      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
+      <Name>lu.Exchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.exchange.ExchangePattern30\lu.exchange.ExchangePattern30\lu.exchange.ExchangePattern30.csproj">
+      <Project>{A0739162-12C7-4BF8-89D3-E4A0AFD257A9}</Project>
+      <Name>lu.exchange.ExchangePattern30</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lu.exchange.ExchangePattern31\lu.exchange.ExchangePattern31\lu.exchange.ExchangePattern31.csproj">
+      <Project>{DF27C965-9C05-4975-B11C-32825786A555}</Project>
+      <Name>lu.exchange.ExchangePattern31</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common.Discretization\common.Discretization\common.Discretization.csproj">
+      <Project>{B3AE2AA8-4CC8-4D43-9373-1A193CFA13DB}</Project>
+      <Name>common.Discretization</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
