@@ -6,9 +6,7 @@ using common.problem_size.Class;
 
 namespace bt.solve.LhsABInit { 
 
-public interface BaseILhsABInit<I, C> : IComputationKind 
-where I:IInstance<C>
-where C:IClass
+public interface BaseILhsABInit : IComputationKind 
 {
 
 
