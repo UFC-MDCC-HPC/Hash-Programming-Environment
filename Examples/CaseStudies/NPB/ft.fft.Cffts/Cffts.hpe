@@ -72,9 +72,9 @@
         <originRef cRef="orientation" iRef="IAxis"/>
         <visualDescription h="10" w="10" x="13" y="24"/>
       </slice>
-      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@1415e7d" repeat="0">
+      <protocol xsi:type="component:ActionCombinatorParType" label="hPE.frontend.kinds.activate.model.protocol.HParAction@2288e718" repeat="0">
         <visualDescription h="150" w="70" x="75" y="75"/>
-        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@a27ad5" repeat="0" sliceRef="swarztrauber">
+        <action xsi:type="component:ActionActivateType" label="hPE.frontend.kinds.activate.model.protocol.HDoAction@49fbea5e" repeat="0" sliceRef="swarztrauber">
           <visualDescription h="50" w="50" x="10" y="50"/>
         </action>
       </protocol>
@@ -88,7 +88,7 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace ft.fft.Cffts { &#xA;&#xA;public interface ICffts&lt;I, C, DIR> : BaseICffts&lt;I, C, DIR>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICffts.cs" srcType="user" uri="ft.fft.Cffts/bin/1.0.0.0/ICffts.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace ft.fft.Cffts { &#xA;&#xA;public interface ICffts&lt;I, C, DIR> : BaseICffts&lt;I, C, DIR>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;   void setParameters(int dir, int d1, int d2, int d3, double[, , ,] x, double[, , ,] xout);&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ICffts.cs" srcType="user" uri="ft.fft.Cffts/bin/1.0.0.0/ICffts.dll" versionId="1.0.0.0">
           <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
@@ -130,23 +130,23 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
       <originRef>swarztrauber_cfftz</originRef>
       <originRef>problem_data</originRef>
-      <originRef>u0</originRef>
+      <originRef>u1</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="swarztrauber_cfftz" uRef="swarztrauber"/>
       <links xsi:type="component:EnumerableUnitType" ref="cffts"/>
-      <visualDescription h="41" w="40" x="211" y="374"/>
+      <visualDescription h="41" w="40" x="262" y="377"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="cffts"/>
-      <visualDescription h="20" w="20" x="143" y="354"/>
+      <visualDescription h="20" w="20" x="315" y="495"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab3c361303241898625</eRef>
         <originRef>swarztrauber_cfftz</originRef>
         <originRef>problem_data</originRef>
-        <originRef>u0</originRef>
+        <originRef>u1</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>

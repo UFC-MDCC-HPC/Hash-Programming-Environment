@@ -80,7 +80,7 @@
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
         </file>
-        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace ft.fft.TransposeLocal { &#xA;&#xA;public interface ITransposeLocal&lt;I, C, DIR> : BaseITransposeLocal&lt;I, C, DIR>&#xA;where I:IInstance&lt;C>&#xA;where C:IClass&#xA;where DIR:IAxis&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="ITransposeLocal.cs" srcType="user" uri="ft.fft.TransposeLocal/bin/1.0.0.0/ITransposeLocal.dll" versionId="1.0.0.0">
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance;&#xA;using common.problem_size.Class;&#xA;using common.orientation.Axis;&#xA;&#xA;namespace ft.fft.TransposeLocal { &#xA;&#x9;public interface ITransposeLocal&lt;I, C, DIR> : BaseITransposeLocal&lt;I, C, DIR>&#xA;&#x9;where I:IInstance&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IAxis{&#xA;&#x9;   void setParameters(int d1, int d2, int d3, double[, , ,] xin, double[, , ,] xout);&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ITransposeLocal.cs" srcType="user" uri="ft.fft.TransposeLocal/bin/1.0.0.0/ITransposeLocal.dll" versionId="1.0.0.0">
           <dependency>ft.problem_size.Instance/bin/1.0.0.0/IInstance.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.Axis/bin/1.0.0.0/IAxis.dll</dependency>
@@ -119,23 +119,24 @@
     </unit>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
       <originRef>problem_data</originRef>
-      <originRef>u0</originRef>
+      <originRef>u1</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="problem_data" uRef="problem"/>
       <links xsi:type="component:EnumerableUnitType" ref="transpose_local"/>
       <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
-      <visualDescription h="41" w="40" x="474" y="394"/>
+      <visualDescription h="20" w="20" x="335" y="393"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
       <links xsi:type="component:EnumerableEntryType" cRef="orientation" uRef="axis"/>
       <links xsi:type="component:EnumerableUnitType" ref="transpose_local"/>
-      <visualDescription h="20" w="20" x="384" y="442"/>
+      <links xsi:type="component:EnumerableComponentType" ref="blocks_info"/>
+      <visualDescription h="20" w="20" x="443" y="345"/>
     </enumerator>
     <fusionsOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab3c361303241898625</eRef>
         <originRef>problem_data</originRef>
-        <originRef>u0</originRef>
+        <originRef>u1</originRef>
       </fusionOfReplicators>
       <fusionOfReplicators>
         <eRef>hPE.frontend.base.model.HReplicator@1ab5deb1295025097082</eRef>

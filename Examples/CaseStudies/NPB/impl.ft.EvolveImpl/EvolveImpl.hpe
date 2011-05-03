@@ -68,25 +68,25 @@
         <originRef cRef="problem_data" iRef="IProblemDefinition"/>
         <visualDescription h="10" w="10" x="34" y="17"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@cce3db" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@2db68692" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
-        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.Evolve;&#xA;&#xA;namespace impl.ft.EvolveImpl { &#xA;&#xA;public abstract class BaseIEvolveImpl&lt;I, C>: Computation, BaseIEvolve&lt;I, C>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;private IBlocks blocks = null;&#xA;&#xA;public IBlocks Blocks {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;return this.blocks;&#xA;&#x9;}&#xA;}&#xA;&#xA;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#xA;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;get {&#xA;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;return this.problem;&#xA;&#x9;}&#xA;}&#xA;&#xA;&#xA;abstract public void compute(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIEvolveImpl.cs" srcType="base" uri="impl.ft.EvolveImpl/bin/1.0.0.0/BaseIEvolveImpl.dll" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.datapartition.BlocksInfo;&#xA;using ft.data.ProblemDefinition;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.Evolve;&#xA;&#xA;namespace impl.ft.EvolveImpl { &#xA;&#x9;public abstract class BaseIEvolveImpl&lt;I, C>: Computation, BaseIEvolve&lt;I, C>&#xA;&#x9;where I:IInstance_FT&lt;C>&#xA;&#x9;where C:IClass{&#xA;&#x9;&#xA;&#x9;&#x9;#region data&#xA;&#x9;&#x9;&#x9;protected int REAL;&#xA;&#x9;&#x9;&#x9;protected int IMAG;&#xA;&#x9;&#x9;&#x9;protected int size1, size2;&#xA;&#x9;&#x9;&#x9;override public void initialize(){&#xA;&#x9;&#x9;&#x9;&#x9;size1=Blocks.size1;&#xA;&#x9;&#x9;&#x9;&#x9;size2=Blocks.size2;&#xA;&#x9;&#x9;&#x9;&#x9;REAL = Constants.REAL;&#xA;&#x9;&#x9;&#x9;&#x9;IMAG = Constants.IMAG;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;#endregion&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IBlocks blocks = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IBlocks Blocks {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.blocks == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.blocks = (IBlocks) Services.getPort(&quot;blocks_info&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.blocks;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;private IProblemDefinition&lt;I, C> problem = null;&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public IProblemDefinition&lt;I, C> Problem {&#xA;&#x9;&#x9;&#x9;get {&#xA;&#x9;&#x9;&#x9;&#x9;if (this.problem == null)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.problem = (IProblemDefinition&lt;I, C>) Services.getPort(&quot;problem_data&quot;);&#xA;&#x9;&#x9;&#x9;&#x9;return this.problem;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;abstract public int go(); &#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="BaseIEvolveImpl.cs" srcType="base" uri="impl.ft.EvolveImpl/bin/1.0.0.0/BaseIEvolveImpl.dll" versionId="1.0.0.0">
           <dependency>ft.datapartition.BlocksInfo/bin/1.0.0.0/IBlocks.dll</dependency>
           <dependency>ft.data.ProblemDefinition/bin/1.0.0.0/IProblemDefinition.dll</dependency>
           <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>ft.Evolve/bin/1.0.0.0/BaseIEvolve.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.Evolve;&#xA;&#xA;namespace impl.ft.EvolveImpl { &#xA;&#xA;public class IEvolveImpl&lt;I, C> : BaseIEvolveImpl&lt;I, C>, IEvolve&lt;I, C>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;{&#xA;&#xA;public IEvolveImpl() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IEvolveImpl.cs" srcType="user" uri="impl.ft.EvolveImpl/bin/1.0.0.0/IEvolveImpl.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using ft.Evolve;&#xA;&#xA;namespace impl.ft.EvolveImpl { &#xA;&#x9;public class IEvolveImpl&lt;I, C> : BaseIEvolveImpl&lt;I, C>, IEvolve&lt;I, C>&#xA;&#x9;where I:IInstance_FT&lt;C>&#xA;&#x9;where C:IClass{&#xA;&#x9;    private double[, , ,] u0;&#xA;&#x9;    private double[, , ,] u1;&#xA;&#x9;    private double[] twiddle;&#xA;&#x9;    private int d1, d2, d3;&#xA;&#x9;&#xA;&#x9;&#x9;public IEvolveImpl() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go() { &#xA;            int i, j, k, idx, m1, m2, _i, _j, _k;&#xA;            for(k = 0; k &lt; d3; k++) {&#xA;                for(j = 0; j &lt; d2; j++) {&#xA;                    for(i = 0; i &lt; d1; i++) {&#xA;                        idx = ((k*d2+j)*d1+i);&#xA;&#xA;                        m1 = (idx*2 % size1);&#xA;                        m2 = (m1 % size2);&#xA;                        _i = idx*2/size1;&#xA;                        _j = m1/size2;&#xA;                        _k = m2/2;&#xA;&#xA;                        u0[_i,_j,_k,REAL] = u0[_i,_j,_k,REAL]*twiddle[idx];&#xA;                        u0[_i,_j,_k,IMAG] = u0[_i,_j,_k,IMAG]*twiddle[idx];&#xA;                        u1[_i,_j,_k,REAL] = u0[_i,_j,_k,REAL];&#xA;                        u1[_i,_j,_k,IMAG] = u0[_i,_j,_k,IMAG];&#xA;                    }&#xA;                }&#xA;            }&#xA;            return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;public void setParameters(double[, , ,] u0, double[, , ,] u1, double[] twiddle, int d1, int d2, int d3){&#xA;&#x9;&#x9;    this.u0      = u0;&#xA;&#x9;&#x9;    this.u1      = u1;&#xA;&#x9;&#x9;    this.twiddle = twiddle;&#xA;&#x9;&#x9;    this.d1      = d1;&#xA;&#x9;&#x9;    this.d2      = d2;&#xA;&#x9;&#x9;    this.d3      = d3;&#xD;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="IEvolveImpl.cs" srcType="user" uri="impl.ft.EvolveImpl/bin/1.0.0.0/IEvolveImpl.dll" versionId="1.0.0.0">
           <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>%WORKSPACE/impl.ft.EvolveImpl/bin/1.0.0.0/BaseIEvolveImpl.dll</dependency>
           <dependency>ft.Evolve/bin/1.0.0.0/IEvolve.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="80" x="266" y="308">
+      <visualDescription h="40" w="80" x="172" y="234">
         <color b="244" g="196" r="227"/>
       </visualDescription>
       <port name="blocks">
@@ -113,9 +113,9 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
       <originRef>base</originRef>
       <originRef>problem_data</originRef>
-      <originRef>u0</originRef>
+      <originRef>u1</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="evolve"/>
-      <visualDescription h="41" w="40" x="484" y="397"/>
+      <visualDescription h="41" w="40" x="459" y="408"/>
     </enumerator>
   </componentInfo>
 </component:component>

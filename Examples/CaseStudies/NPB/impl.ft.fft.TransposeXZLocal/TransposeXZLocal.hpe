@@ -86,7 +86,7 @@
         <originRef cRef="instance_type" iRef="IInstance"/>
         <visualDescription h="10" w="10" x="8" y="15"/>
       </slice>
-      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@dd7bee" repeat="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@7bd03730" repeat="0">
         <visualDescription h="50" w="50" x="75" y="75"/>
       </protocol>
       <sources sourceType="C# Language" versionId="1.0.0.0">
@@ -100,7 +100,7 @@
           <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
           <dependency>ft.fft.TransposeLocal/bin/1.0.0.0/BaseITransposeLocal.dll</dependency>
         </file>
-        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.XZ;&#xA;using ft.fft.TransposeLocal;&#xA;&#xA;namespace impl.ft.fft.TransposeXZLocal { &#xA;&#xA;public class ITransposeXZLocal&lt;I, C, DIR> : BaseITransposeXZLocal&lt;I, C, DIR>, ITransposeLocal&lt;I, C, DIR>&#xA;where I:IInstance_FT&lt;C>&#xA;where C:IClass&#xA;where DIR:IXZ&#xA;{&#xA;&#xA;public ITransposeXZLocal() { &#xA;&#xA;} &#xA;&#xA;public override void compute() { &#xA;&#x9;;&#xA;&#xA;} // end activate method &#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="ITransposeXZLocal.cs" srcType="user" uri="impl.ft.fft.TransposeXZLocal/bin/1.0.0.0/ITransposeXZLocal.dll" versionId="1.0.0.0">
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using ft.problem_size.Instance_FT;&#xA;using common.problem_size.Class;&#xA;using common.orientation.XZ;&#xA;using ft.fft.TransposeLocal;&#xA;&#xA;namespace impl.ft.fft.TransposeXZLocal { &#xA;&#x9;public class ITransposeXZLocal&lt;I, C, DIR> : BaseITransposeXZLocal&lt;I, C, DIR>, ITransposeLocal&lt;I, C, DIR>&#xA;&#x9;where I:IInstance_FT&lt;C>&#xA;&#x9;where C:IClass&#xA;&#x9;where DIR:IXZ{&#xA;&#x9;   &#xA;&#x9;    private int d1, d2, d3;&#xA;&#x9;    private double[, , ,] xin;&#xA;&#x9;    private double[, , ,] xout;&#xA;&#x9;&#xA;&#x9;&#x9;public ITransposeXZLocal() { &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;} &#xA;&#x9;&#x9;&#xA;&#x9;&#x9;public override int go() { &#xA;            double[,,] buf = new double[maxdim, transblockpad, 2];&#xA;            int block1, block3;&#xA;            int i, j, k, kk, ii, i1, k1;&#xA;            int m1, m2, _i, _j, _k, om1, om2, o_i, o_j, o_k;&#xA;&#xA;            if(d1 &lt; 32)&#xA;                goto G100;&#xA;            block3 = d3;&#xA;            if(block3 == 1)&#xA;                goto G100;&#xA;            if(block3 > transblock)&#xA;                block3 = transblock;&#xA;            block1 = d1;&#xA;            if(block1*block3 > transblock*transblock)&#xA;                block1 = transblock*transblock/block3;&#xA;            int iin = 0, io = 0;&#xA;            for(j = 0; j &lt; d2; j++) {&#xA;                for(kk = 0; kk &lt;= d3 - block3; kk = kk + block3) {&#xA;                    for(ii = 0; ii &lt;= d1 - block1; ii = ii + block1) {&#xA;                        for(k = 0; k &lt; block3; k++) {&#xA;                            k1 = k + kk;&#xA;                            for(i = 0; i &lt; block1; i++) {&#xA;                                iin = ((k1*d2+j)*d1+(i+ii))*2;&#xA;&#xA;                                m1 = (iin % size1);&#xA;                                m2 = (m1 % size2);&#xA;                                _i = iin/size1;&#xA;                                _j = m1/size2;&#xA;                                _k = m2/2;&#xA;&#xA;                                buf[i, k, REAL] = xin[_i, _j, _k, REAL];&#xA;                                buf[i, k, IMAG] = xin[_i, _j, _k, IMAG];&#xA;                            }&#xA;                        }&#xA;                        for(i = 0; i &lt; block1; i++) {&#xA;                            i1 = i + ii;&#xA;                            for(k = 0; k &lt; block3; k++) {&#xA;                                io  = ((i1*d2+j)*d3+(k+kk))*2;&#xA;&#xA;                                m1 = (io % size1);&#xA;                                m2 = (m1 % size2);&#xA;                                _i = io/size1;&#xA;                                _j = m1/size2;&#xA;                                _k = m2/2;&#xA;&#xA;                                xout[_i, _j, _k, REAL] = buf[i, k, REAL];&#xA;                                xout[_i, _j, _k, IMAG] = buf[i, k, IMAG];&#xA;                            }&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;            return 0;&#xA;&#xA;            G100: {&#xA;                for(j = 0; j &lt; d2; j++) {&#xA;                    for(k = 0; k &lt; d3; k++) {&#xA;                        for(i = 0; i &lt; d1; i++) {&#xA;                            iin = ((k*d2+j)*d1+i)*2;&#xA;                            io  = ((i*d2+j)*d3+k)*2;&#xA;&#xA;                            m1 = (iin % size1);&#xA;                            m2 = (m1 % size2);&#xA;                            _i = iin/size1;&#xA;                            _j = m1/size2;&#xA;                            _k = m2/2;&#xA;&#xA;                            om1 = (io % size1);&#xA;                            om2 = (om1 % size2);&#xA;                            o_i = io/size1;&#xA;                            o_j = om1/size2;&#xA;                            o_k = om2/2;&#xA;&#xA;                            xout[o_i, o_j, o_k, REAL] = xin[_i, _j, _k, REAL];&#xA;                            xout[o_i, o_j, o_k, IMAG] = xin[_i, _j, _k, IMAG];&#xA;                        }&#xA;                    }&#xA;                }&#xA;            }&#xA;&#x9;&#x9;   return 0;&#xA;&#x9;&#x9;}&#xA;&#x9;&#x9;public void setParameters(int d1, int d2, int d3, double[, , ,] xin, double[, , ,] xout){&#xA;&#x9;&#x9;   this.d1 = d1;&#xA;&#x9;&#x9;   this.d2 = d2;&#xA;&#x9;&#x9;   this.d3 = d3;&#xA;&#x9;&#x9;   this.xin = xin;&#xA;&#x9;&#x9;   this.xout = xout;&#xA;&#x9;&#x9;}&#xA;&#x9;}&#xA;}&#xA;" fileType="library" name="ITransposeXZLocal.cs" srcType="user" uri="impl.ft.fft.TransposeXZLocal/bin/1.0.0.0/ITransposeXZLocal.dll" versionId="1.0.0.0">
           <dependency>ft.problem_size.Instance_FT/bin/1.0.0.0/IInstance_FT.dll</dependency>
           <dependency>common.problem_size.Class/bin/1.0.0.0/IClass.dll</dependency>
           <dependency>common.orientation.XZ/bin/1.0.0.0/IXZ.dll</dependency>
@@ -108,7 +108,7 @@
           <dependency>ft.fft.TransposeLocal/bin/1.0.0.0/ITransposeLocal.dll</dependency>
         </file>
       </sources>
-      <visualDescription h="40" w="144" x="179" y="226">
+      <visualDescription h="40" w="144" x="186" y="193">
         <color b="6" g="121" r="72"/>
       </visualDescription>
       <port name="problem">
@@ -142,9 +142,9 @@
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab3c361303241898625" varId="n">
       <originRef>base</originRef>
       <originRef>problem_data</originRef>
-      <originRef>u0</originRef>
+      <originRef>u1</originRef>
       <links xsi:type="component:EnumerableUnitType" ref="transpose_local"/>
-      <visualDescription h="41" w="40" x="493" y="359"/>
+      <visualDescription h="20" w="20" x="335" y="393"/>
     </enumerator>
     <enumerator cardinality="-1" fromSplit="false" ref="hPE.frontend.base.model.HReplicator@1ab5deb1295025097082" varId="n">
       <originRef>orientation</originRef>
