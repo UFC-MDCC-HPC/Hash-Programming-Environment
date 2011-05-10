@@ -39,5 +39,5 @@ DGAC/ManagerServices.cs
 -r:MySql.Data
 -r:System.Runtime.Remoting
 -r:System.Xml
--r:MPI
+-r:/usr/lib/mono/MPI/MPI.dll
 -out:bin/DGAC.dll
