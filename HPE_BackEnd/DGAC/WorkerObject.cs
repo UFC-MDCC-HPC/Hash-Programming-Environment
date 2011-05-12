@@ -1203,7 +1203,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public string runApplication(string session_id_string, WorkerComponentID wcid)
         {
             string output = session_id_string + " - " + wcid.getInstanceName();
-
+ 
+           Console.WriteLine(Constants.PATH_TEMP_WORKER);
            string file_session = Constants.PATH_TEMP_WORKER + "output-" + my_rank + "-" + session_id_string + ".txt";
            FileStream fs = new FileStream(file_session, FileMode.Create);
            TextWriter sw = new StreamWriter(fs);

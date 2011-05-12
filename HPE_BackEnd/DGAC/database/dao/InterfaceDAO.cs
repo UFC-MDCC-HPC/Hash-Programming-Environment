@@ -148,7 +148,7 @@ public class InterfaceDAO{
 
         if (i.Assembly_string.IndexOf(s) < 0)
         {
-            i.Assembly_string += ", PublicKey=" + publicKey;
+            i.Assembly_string += s + publicKey;
         }
         else
         {

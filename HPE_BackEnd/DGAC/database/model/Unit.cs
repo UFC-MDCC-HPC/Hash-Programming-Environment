@@ -59,7 +59,14 @@ public class Unit {
 	 
 	
 	public string Assembly_string{
-        get {return assembly_string;}
+        get {
+              string[] s = assembly_string.Split(',');
+              string culture = s[1];
+              string version = s[2];
+              string key = s[3];
+              string new_assembly_string = Class_name + "," + s[1] + "," + s[2] + "," + s[3];
+              return new_assembly_string;
+        }
         set {assembly_string = value;}
     }
 
