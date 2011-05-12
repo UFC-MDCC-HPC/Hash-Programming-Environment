@@ -372,7 +372,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static string buildDllNameBase(string library_path, string assemblyString)
         {
-            return library_path + Path.DirectorySeparatorChar + "Base" + assemblyString.Split(',')[0] /* + ".dll" */;
+            return library_path + Path.DirectorySeparatorChar  + library_path + "." + "Base" + assemblyString.Split(',')[0] /* + ".dll" */;
 
         } // get references
 
