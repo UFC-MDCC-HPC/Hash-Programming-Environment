@@ -991,15 +991,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 public string compileClass
                     (string library_path,                                            
                      string contents, 
-                     string moduleName, 
+                     string moduleName_, 
                      string[] references, 
                      int outFile, 
                      string userName, 
                      string password, 
                      string curDir)
                 {
+                    string moduleName = library_path + "." + moduleName_;
                     string publicKeyToken = null; 
-                    string moduleNameWithoutExtension = moduleName.Split('.')[0];
+                    string moduleNameWithoutExtension = moduleName; // .Split('.')[0];
+
                     if (outFile == Constants.EXE_OUT)
                     {
                         CommandLineUtil.compile_to_exe(contents, moduleName, references, userName, password, curDir);
@@ -1007,9 +1009,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     else
                     {
                         //creates the strong key, for new assembly
-                        publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password, curDir);
+                        publicKeyToken = CommandLineUtil.create_strong_key(moduleNameWithoutExtension, userName, password, curDir);
                         //compile, generate dll 
-                        CommandLineUtil.compile_source(contents, moduleName, references, userName, password, curDir);
+                        CommandLineUtil.compile_source(contents, moduleNameWithoutExtension, references, userName, password, curDir);
                         //installing on local GAC
                         CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1, userName, password);
                     }

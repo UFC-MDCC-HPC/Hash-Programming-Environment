@@ -162,6 +162,9 @@ public class Interface {
                 collectParameters(pars, acfa, out parsSlice);
 
                 Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
+                if (i == null) {
+                   Console.WriteLine("i is null : " + acfa.Id_abstract + "," + ic.Id_abstract_inner + "," + s.Id_interface_slice);
+                }
                 AbstractComponentFunctor acfSlice = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
 
                 // ---------------------------------------------------------------------------------------

@@ -84,9 +84,9 @@ public class CommandLineUtil {
   /// </summary>
   /// <param name="name">The string that include de source file name, wich will be the key file name. Null means that will be used the default name.</param>
   /// <returns>bool</returns>
-  public static string create_strong_key(string name, string userName, string password, string curDir){
+  public static string create_strong_key(string nameWithoutExtension, string userName, string password, string curDir){
 
-      string nameWithoutExtension = name.Split('.')[0];
+      // string nameWithoutExtension = name.Split('.')[0];
 
       String snkFileName = Constants.PATH_TEMP_WORKER + nameWithoutExtension + ".snk";
 
@@ -113,9 +113,9 @@ public class CommandLineUtil {
   /// <param name="file">The command line that includes de source file name</param>
   /// <returns>bool</returns>
   /// 
-  public static bool compile_source(string contents, string moduleName, string[] references, 
+  public static bool compile_source(string contents, string moduleNameWithoutExtension, string[] references, 
 		                            string userName, string password, String curDir){
-          string moduleNameWithoutExtension = moduleName.Split('.')[0];
+//          string moduleNameWithoutExtension = moduleName.Split('.')[0];
           
           //references
 
@@ -129,9 +129,9 @@ public class CommandLineUtil {
 
           // CREATE THE FILE <moduleName>.cs in the temporary directory with <contents> as the contents:
 
-          createFile(contents, moduleName);
+          createFile(contents, moduleNameWithoutExtension + ".cs");
 
-          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + "-debug+ -unsafe -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleName + mounted_references, userName, password, curDir);
+          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + "-debug+ -unsafe -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs"  + mounted_references, userName, password, curDir);
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }
@@ -152,7 +152,7 @@ public class CommandLineUtil {
   /// <returns>bool</returns>
   public static bool gacutil_install(string cuid, string assembly, int gac, string userName, string password){
 
-      // runCommand(Constants.gac_util, "-u " + assembly);
+      runCommand(Constants.gac_util, "-u " + assembly);
       runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid, userName, password, null);
 
 //      runCommand("copy", Constants.PATH_TEMP_WORKER + assembly + ".dll" + " " + Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + cuid );

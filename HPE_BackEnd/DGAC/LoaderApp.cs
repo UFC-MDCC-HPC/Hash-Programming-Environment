@@ -276,7 +276,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
 
                     InfoCompile info = new InfoCompile();
-                    info.moduleName = sc.File_name; // buildDllName(unit.Assembly_string); ;
+                    info.moduleName = sc.File_name.Split('.')[0]; // buildDllName(unit.Assembly_string); ;
                     info.unitId = unit.Id_unit;
                     info.sourceCode = sc.Contents;
                     info.cuid = component.Hash_component_UID;
@@ -310,26 +310,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         //returns an icollection of 
         public static IList<InfoCompile> getReferences_Abstract(int id_abstract)
         {
-            //  SourceCodeDAO scdao = new SourceCodeDAO();
 
             IList<InfoCompile> referencesSet = new List<InfoCompile>();
-            // InnerComponentDAO innerDAO = new InnerComponentDAO();
-            //  SliceDAO sDAO = new SliceDAO();
-            //  InterfaceDAO iDAO = new InterfaceDAO();
-            // AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
-            //  AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
-
             IList<Interface> iList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(id_abstract);
 
             foreach (Interface i in iList)
             {
 
                 IList<string> stringCompilationSet = new List<string>();
-
-                //            foreach (string reference in i.ExternalReferences)
-                //            {
-                //                stringCompilationSet.Add(reference);
-                //            }
 
                 foreach (string reference in i.References)
                 {
@@ -356,7 +344,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     info.references = referencesArray_;
 
                     AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
-                    info.moduleName = sc.File_name;//  buildDllName(i.Assembly_string);
+                    info.moduleName = sc.File_name.Split('.')[0];//  buildDllName(i.Assembly_string);
                     info.unitId = i.Id_interface;
                     info.sourceCode = sc.Contents;
                     info.cuid = acf1.Hash_component_UID;
@@ -378,7 +366,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         // assembly.
         public static string buildDllName(string library_path, string assemblyString)
         {
-            return library_path + Path.DirectorySeparatorChar + assemblyString.Split(',')[0] /* + ".dll" */;
+            return library_path + Path.DirectorySeparatorChar + library_path + "." + (assemblyString.Split(',')[0]) /* + ".dll" */;
 
         } // get references
 
