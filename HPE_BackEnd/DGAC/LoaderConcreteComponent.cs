@@ -630,7 +630,7 @@ namespace HPE_DGAC_LoadDB
                 uu.Id_index = -1;
                 uu.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                 uu.Class_nargs = i.Class_nargs;
-                uu.Assembly_string = iRef + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
+                uu.Assembly_string = uu.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
                 uu.Order = i.Order;
 
                 units.Add(uu.Id_unit, uu);

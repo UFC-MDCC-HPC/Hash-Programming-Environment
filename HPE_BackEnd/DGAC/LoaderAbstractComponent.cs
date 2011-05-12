@@ -788,7 +788,7 @@ namespace HPE_DGAC_LoadDB
                     i.Id_interface_super = uRefSuper;
                     i.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                     i.Class_nargs = nargs; // TODO
-                    i.Assembly_string = iRef + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
+                    i.Assembly_string = i.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
                     i.Order = ++count;
 
                     if (ui.parameter != null)
