@@ -2,23 +2,19 @@ package hPE.frontend.backend;
 
 import hPE.backend.BackEnd_WSLocator;
 import hPE.backend.BackEnd_WSSoap;
-import hPE.frontend.BackEndLocationList;
-import hPE.frontend.BackEndLocationList.BackEndLocationInfo;
-import hPE.frontend.BackEndLocationList.DeployedComponentInfo;
 import hPE.frontend.base.model.HComponent;
 import hPE.xml.factory.HComponentFactoryImpl;
+import hPE.xml.factory.HPEInvalidComponentResourceException;
 
-import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
-import java.util.Map;
 
-import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 
 public class HPEPlatform {
 	
@@ -59,6 +55,20 @@ public class HPEPlatform {
 		return result;
 	}
 	
+	public static HComponent getConfiguration(URI uri) {
+		
+		HComponent c = null;
+				
+		try {
+			c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
+		} catch (HPEInvalidComponentResourceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+
+		return c;
+	}
+
 	
 }
 	

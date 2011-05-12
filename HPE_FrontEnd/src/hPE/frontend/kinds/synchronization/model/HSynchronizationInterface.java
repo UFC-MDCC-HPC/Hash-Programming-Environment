@@ -35,7 +35,7 @@ public class HSynchronizationInterface extends HActivateInterface {
 	}
 
 	public String getActivateMethodName() {
-		return "synchronize";
+		return "go";
 	}
 
 }

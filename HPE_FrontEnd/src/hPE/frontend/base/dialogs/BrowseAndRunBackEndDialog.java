@@ -637,7 +637,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 
 	}
 	
-    private void reorderGrouping(int grouping_type) {
+
+	private void reorderGrouping(int grouping_type) {
 	    int j = 1;
 	    int[] grouping_ = new int[3];
 		grouping_[0] = grouping_type;
@@ -746,14 +747,14 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 				String[] result = HPEPlatform.run(urlWS, deployed.cid, deployed.enumerators, deployed.enumValuation, userName, password, curdir);
 					
 				if (result.length >= 1) {
-					d.setTitle("Running of " + deployed.name + "has finished on " + loc.name + " ! See below console output of the processes." );
+					d.setTitle("Running of " + deployed.name + " has finished on " + loc.name + " ! See below console output of the processes." );
 					Integer i = 0;
 					for (String s : result) {
 						String processId = "Process " + i.toString(); i++;
 					    d.newTab(processId, s);
 					}
 				} else {
-					d.setTitle("Running of " + deployed.name + "has FAILED on " + loc.name + "!");
+					d.setTitle("Running of " + deployed.name + " has FAILED on " + loc.name + "!");
 				    if (result.length==1) 
 				    	d.newTab("Error Message", result[0]);
 				}	

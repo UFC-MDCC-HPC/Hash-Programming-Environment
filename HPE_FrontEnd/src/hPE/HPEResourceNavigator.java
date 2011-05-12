@@ -1,10 +1,18 @@
 package hPE;
 
+import hPE.frontend.backend.HPEPlatform;
+import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
+import hPE.frontend.base.model.HComponent;
+
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
+import javax.xml.rpc.ServiceException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.TreeSelection;
@@ -58,6 +66,38 @@ public class HPEResourceNavigator extends ResourceNavigator {
 						   }
 						}
 				);
+		   } else if (pathIn.getFileExtension().equals("hpe")) {
+			   String fname = pathIn.lastSegment();
+			   IMenuManager mainMenu = menu;//get ref to main menu manager
+			   mainMenu.add(
+					   new Action("Deploy " + fname) {
+						   public void run() { 							   
+                                    try {
+										String password = null;
+										String curDir = "";
+										String userName = null;
+										String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+										
+//										BrowseAndRunBackEndDialog.getCurrentEditor().doSave(null);
+										
+										URI uri = URI.createFileURI(pathIn.makeAbsolute().toOSString());
+										HComponent c = HPEPlatform.getConfiguration(uri);
+
+										String result = HPEPlatform.deploy(urlWS, c, userName, password, curDir);
+										
+										if (result != null)
+										    JOptionPane.showMessageDialog(null, result);
+										else
+											JOptionPane.showMessageDialog(null, "The component " + c.getComponentName() + " has been succesfully deployed !");
+									} catch (IOException e) {
+										e.printStackTrace();
+									} catch (ServiceException e) {										
+										e.printStackTrace();
+									}
+						   }
+						}
+				);
+			   
 		   }
 	   }
 

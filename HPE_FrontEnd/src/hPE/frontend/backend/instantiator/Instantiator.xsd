@@ -9,10 +9,11 @@
     			type="tns:ContextParameterType" maxOccurs="unbounded"
     			minOccurs="0">
     		</element>
+    		<element name="node" type="int" maxOccurs="unbounded" minOccurs="0"></element>
     	</sequence>
     	<attribute name="library_path" type="string"></attribute>
     </complexType>
-    
+
 
     <complexType name="ContextParameterType">
     	<sequence>
