@@ -294,7 +294,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     }
                     else
                     {
-                        libRefs.Add(buildDllName(component.Library_path, info.moduleName.Split('.')[0]));
+                        libRefs.Add(buildDllName(component.Library_path, component.Library_path + "." + info.moduleName.Split('.')[0]));
                         info.output_type = Constants.DLL_OUT;
                     }
 
@@ -352,7 +352,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     info.id = acf1.Id_abstract;
                     info.output_type = sc.File_type.Equals("exe") ? Constants.EXE_OUT : Constants.DLL_OUT;
                     referencesSet.Add(info);
-                    libRefs.Add(buildDllName(acf1.Library_path, info.moduleName.Split('.')[0]));
+                    libRefs.Add(buildDllName(acf1.Library_path, acf1.Library_path + "." + info.moduleName.Split('.')[0]));
                 }
 
 
@@ -366,13 +366,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         // assembly.
         public static string buildDllName(string library_path, string assemblyString)
         {
-            return library_path + Path.DirectorySeparatorChar + library_path + "." + (assemblyString.Split(',')[0]) /* + ".dll" */;
+            return library_path + Path.DirectorySeparatorChar + (assemblyString.Split(',')[0]) /* + ".dll" */;
 
         } // get references
 
         public static string buildDllNameBase(string library_path, string assemblyString)
         {
-            return library_path + Path.DirectorySeparatorChar  + library_path + "." + "Base" + assemblyString.Split(',')[0] /* + ".dll" */;
+            Console.Error.WriteLine(assemblyString);
+            int dllpos = assemblyString.IndexOf(",");
+            string s = assemblyString.Substring(0, dllpos);
+            int i = s.LastIndexOf(".");
+            i = i >= 0 ? i : 0;
+            s = s.Insert(i+1, "Base");            
+            
+            return library_path + Path.DirectorySeparatorChar  + s + ".dll" ;
 
         } // get references
 
