@@ -372,7 +372,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static string buildDllNameBase(string library_path, string assemblyString)
         {
-            Console.Error.WriteLine(assemblyString);
             int dllpos = assemblyString.IndexOf(",");
             string s = assemblyString.Substring(0, dllpos);
             int i = s.LastIndexOf(".");

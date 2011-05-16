@@ -446,7 +446,7 @@ namespace br.ufc.pargo.hpe.backend
 
                     String session_id_string = "session_" + session_id.ToString();
 
-                    string instantiatior_string = File.ReadAllText("/home/hpe.backend/hash-programming-environment/teste.xml");
+                    string instantiatior_string = File.ReadAllText("/home/heron/hash-programming-environment/teste.xml");
 
                     ComponentID cid = manager.createInstance(session_id_string + ".application", /*c.Library_path*/ instantiatior_string, properties);
 

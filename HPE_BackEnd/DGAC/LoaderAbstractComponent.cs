@@ -941,14 +941,9 @@ namespace HPE_DGAC_LoadDB
 
         internal void updateSources(ComponentType ct, AbstractComponentFunctor c)
         {
-          //  UnitDAO udao = new UnitDAO();
-
             LoadBodyItems(ct.componentInfo);
 
             IDictionary<string, Unit> units = new Dictionary<string, Unit>();
-
-         //   SourceCodeDAO scdao = new SourceCodeDAO();
-          //  SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
             int id_abstract = c.Id_abstract;
 
@@ -973,6 +968,7 @@ namespace HPE_DGAC_LoadDB
                     ss.File_type = "dll";
                     ss.File_name = sft.name;
                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.update(ss);
+
                     if (sft.externalDependency != null)
                     {
                         foreach (string extRef in sft.externalDependency)

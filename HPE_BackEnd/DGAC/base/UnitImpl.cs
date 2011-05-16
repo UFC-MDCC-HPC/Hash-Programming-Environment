@@ -91,7 +91,7 @@ namespace br.ufc.pargo.hpe.basic
                                                                   id_inner_owner
                                                                   );
 
-                        /*if (se==null) { 
+                        if (se==null) { 
 							Console.Error.WriteLine(container_id.ToString());
 							Console.Error.WriteLine(user_id.ToString());
 							Console.Error.WriteLine(" id_inner_original = " + slice.Id_inner +
@@ -99,7 +99,7 @@ namespace br.ufc.pargo.hpe.basic
                                                               " id_abstract = " + this.containerSlice.Id_abstract +
                                                               " id_interface = " + i.Id_interface_super_top + 
                                                               " id_inner_owner = " + id_inner_owner);
-						}
+						} /*
                          else Console.Error.WriteLine("id_abstract = " + this.Id_abstract + "id_inner_owner = " + id_inner_owner);
                         */
                         string container_portName = se.Id_inner;
