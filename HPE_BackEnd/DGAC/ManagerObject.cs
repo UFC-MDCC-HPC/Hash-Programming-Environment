@@ -1149,8 +1149,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     }
                     foreach (KeyValuePair<Thread,RunApplicationThread> t in thread_list)
                     {
-                        t.Key.Join();
-                        outputs[t.Value.Node] = t.Value.Output;
+                        try 
+                        {
+                           t.Key.Join();
+                           Console.Error.WriteLine("Worker thread arrived : " + session_id_string);
+                           outputs[t.Value.Node] = t.Value.Output;
+                        } 
+                        catch (Exception e)
+                        {
+                           Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                        }
                     }
                     Console.Error.WriteLine("Joined Threads : " + session_id_string);
                     
