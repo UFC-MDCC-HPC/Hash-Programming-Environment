@@ -1,0 +1,14 @@
+./run_app/Program.cs
+
+-lib:"/usr/lib/mono/DGAC"
+-r:System.Runtime.Remoting
+-r:System.Data 
+-r:System.Xml
+-r:System
+-r:Mono.Web
+
+-r:DGAC
+
+-target:exe
+
+-out:./bin/hpe_run.exe
