@@ -745,9 +745,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     IDictionary<string, int> files = new Dictionary<string, int>();
                     IDictionary<string, int> enums = readEnumerators(properties);
 
-                    //int[] nodes = this.fetchNodes(properties);
-
-                    
                     FileInfo file = FileUtil.writingToFile(instanceName + ".xml", instantiator_string);
                     ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
                     
@@ -808,6 +805,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     /* END FOM RunApplication */
 
+                   Console.WriteLine("PASS 1 ?" + (worker == null));
+
                     bool[] node_marking = new bool[worker.Length];
                     for (int i = 0; i < node_marking.Length; i++)
                         node_marking[i] = false;
@@ -820,7 +819,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     IList<Thread> wthreads = new List<Thread>();
                     int k = 0;
                     foreach (KeyValuePair<string, int> unit in files)
-                    {
+                    {                        
                         for (int j = 0; j < unit.Value; j++)
                         {
                             TypeMapImpl worker_properties = new TypeMapImpl(properties);
@@ -837,7 +836,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             System.Type[] actualParams;
                             DGAC.BackEnd.calculateActualParams(acfaRef, unit.Key, out actualParams);
                             DGAC.BackEnd.calculateGenericClassName(u, actualParams, out class_name_worker);
-                            
+
                             GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, class_name_worker, worker_properties);
                             Thread t = new Thread(gw.Run);
                             t.Start();

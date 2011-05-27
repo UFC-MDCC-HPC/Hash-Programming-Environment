@@ -476,7 +476,7 @@ namespace br.ufc.pargo.hpe.backend
                     ManagerObject manager = connectToManager(out ch);
                     Connector.openConnection();
 					
-					int id_concrete = 0;
+		    int id_concrete = 0;
                     session_id = getSessionID(id_concrete);
 
                     IList<string> enumList = new List<string>();

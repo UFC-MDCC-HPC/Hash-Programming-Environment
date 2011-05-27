@@ -27,11 +27,20 @@ namespace Back_End_Test
 				string[] eIds = new string[] {eId};
 				int[] eVls = new int[] {eVl};
 				
-	            dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
+	                        dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
 				
-	            string instantiator_string = File.ReadAllText(instantiator_string_file);
+                 	        string instantiator_string = File.ReadAllText(instantiator_string_file);
 				
-				dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir);
+				string[] output = dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir);
+
+                                int i = 0;
+                                foreach (string o in output) 
+                                {
+                                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
+                                    Console.WriteLine(o);
+                                }
+
+
 			} 
 			catch (Exception e)
 			{
