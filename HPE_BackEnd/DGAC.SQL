@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctor`;
+﻿DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctor`;
 CREATE TABLE  `hashmodel`.`abstractcomponentfunctor` (
   `id_functor_app_supertype` int(11) DEFAULT NULL,
   `library_path` varchar(150) DEFAULT NULL,
@@ -7,14 +7,14 @@ CREATE TABLE  `hashmodel`.`abstractcomponentfunctor` (
   `kind` varchar(45) NOT NULL,
   PRIMARY KEY (`id_abstract`),
   UNIQUE KEY `UID` (`hash_component_UID`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctorapplication`;
 CREATE TABLE  `hashmodel`.`abstractcomponentfunctorapplication` (
   `id_functor_app` int(11) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   PRIMARY KEY (`id_functor_app`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctorparameter`;
 CREATE TABLE  `hashmodel`.`abstractcomponentfunctorparameter` (
@@ -22,7 +22,7 @@ CREATE TABLE  `hashmodel`.`abstractcomponentfunctorparameter` (
   `id_abstract` int(11) NOT NULL,
   `bounds_of` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_parameter`,`id_abstract`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`component`;
 CREATE TABLE  `hashmodel`.`component` (
@@ -33,7 +33,7 @@ CREATE TABLE  `hashmodel`.`component` (
   `hash_component_UID` varchar(320) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_concrete`),
   UNIQUE KEY `UID` (`hash_component_UID`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeration_inner`;
 CREATE TABLE  `hashmodel`.`enumeration_inner` (
@@ -41,7 +41,7 @@ CREATE TABLE  `hashmodel`.`enumeration_inner` (
   `id_enumerator` varchar(255) NOT NULL,
   `id_inner` varchar(40) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_abstract`,`id_enumerator`,`id_inner`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeration_interface`;
 CREATE TABLE  `hashmodel`.`enumeration_interface` (
@@ -49,7 +49,7 @@ CREATE TABLE  `hashmodel`.`enumeration_interface` (
   `id_enumerator` varchar(255) NOT NULL,
   `id_interface` varchar(40) NOT NULL DEFAULT '"',
   PRIMARY KEY (`id_abstract`,`id_enumerator`,`id_interface`)
-) ENGINE=NDBCLUSTER AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeration_item_concrete_inner`;
 CREATE TABLE  `hashmodel`.`enumeration_item_concrete_inner` (
@@ -59,7 +59,7 @@ CREATE TABLE  `hashmodel`.`enumeration_item_concrete_inner` (
   `value` int(11) NOT NULL DEFAULT '0',
   `id_index` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id_concrete`,`id_inner`,`id_index`,`id_enumerator`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeration_item_unit`;
 CREATE TABLE  `hashmodel`.`enumeration_item_unit` (
@@ -69,7 +69,7 @@ CREATE TABLE  `hashmodel`.`enumeration_item_unit` (
   `value` int(11) NOT NULL DEFAULT '0',
   `id_index` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id_concrete`,`id_unit`,`id_index`,`id_enumerator`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeration_item_unit_slice`;
 CREATE TABLE  `hashmodel`.`enumeration_item_unit_slice` (
@@ -82,7 +82,7 @@ CREATE TABLE  `hashmodel`.`enumeration_item_unit_slice` (
   `id_index` int(11) NOT NULL DEFAULT '-1',
   `split_replica` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_concrete`,`id_inner`,`id_index_inner`,`id_interface_slice`,`split_replica`,`id_index`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeration_slice`;
 CREATE TABLE  `hashmodel`.`enumeration_slice` (
@@ -92,7 +92,7 @@ CREATE TABLE  `hashmodel`.`enumeration_slice` (
   `id_inner` varchar(40) NOT NULL DEFAULT '"',
   `id_split_replica` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_inner`,`id_interface_slice`,`id_split_replica`,`id_enumerator`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumerator`;
 CREATE TABLE  `hashmodel`.`enumerator` (
@@ -102,7 +102,7 @@ CREATE TABLE  `hashmodel`.`enumerator` (
   `variable` varchar(10) NOT NULL,
   `valuation` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_enumerator`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumerator_mapping`;
 CREATE TABLE  `hashmodel`.`enumerator_mapping` (
@@ -111,7 +111,7 @@ CREATE TABLE  `hashmodel`.`enumerator_mapping` (
   `id_enumerator_inner` varchar(255) NOT NULL DEFAULT '',
   `id_enumerator_container` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_abstract`,`id_inner`,`id_enumerator_inner`)
-) ENGINE=NDBCLUSTER AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumerator_valuation`;
 CREATE TABLE  `hashmodel`.`enumerator_valuation` (
@@ -120,7 +120,7 @@ CREATE TABLE  `hashmodel`.`enumerator_valuation` (
   `range_inf` int(11) NOT NULL,
   `range_sup` int(11) NOT NULL,
   PRIMARY KEY (`id_concrete`,`id_enumerator`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`enumeratorsplit`;
 CREATE TABLE  `hashmodel`.`enumeratorsplit` (
@@ -130,7 +130,7 @@ CREATE TABLE  `hashmodel`.`enumeratorsplit` (
   `id_split` int(11) NOT NULL DEFAULT '0',
   `id_total_split` int(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`id_abstract`,`id_enumerator`,`id_enumerator_split`,`id_split`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`innercomponent`;
 CREATE TABLE  `hashmodel`.`innercomponent` (
@@ -142,7 +142,7 @@ CREATE TABLE  `hashmodel`.`innercomponent` (
   `transitive` int(11) DEFAULT '0',
   `public` int(11) DEFAULT '0',
   PRIMARY KEY (`id_abstract_owner`,`id_inner`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`innercomponentexposed`;
 CREATE TABLE  `hashmodel`.`innercomponentexposed` (
@@ -151,7 +151,7 @@ CREATE TABLE  `hashmodel`.`innercomponentexposed` (
   `id_inner_owner` varchar(40) NOT NULL DEFAULT '"',
   `id_inner` varchar(40) DEFAULT '"',
   PRIMARY KEY (`id_abstract`,`id_inner_rename`,`id_inner_owner`)
-) ENGINE=NDBCLUSTER AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`innerconcrete`;
 CREATE TABLE  `hashmodel`.`innerconcrete` (
@@ -160,7 +160,7 @@ CREATE TABLE  `hashmodel`.`innerconcrete` (
   `id_index` int(11) NOT NULL DEFAULT '-1',
   `id_concrete_actual` int(11) NOT NULL,
   PRIMARY KEY (`id_concrete`,`id_inner`,`id_index`)
-) ENGINE=NDBCLUSTER AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`interface`;
 CREATE TABLE  `hashmodel`.`interface` (
@@ -174,7 +174,7 @@ CREATE TABLE  `hashmodel`.`interface` (
   `id_interface_super_top` varchar(40) DEFAULT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_interface`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`interfaceparameters`;
 CREATE TABLE  `hashmodel`.`interfaceparameters` (
@@ -186,14 +186,14 @@ CREATE TABLE  `hashmodel`.`interfaceparameters` (
   `id_unit_parameter` varchar(40) NOT NULL,
   `par_order` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_interface`,`parid`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`sessions`;
 CREATE TABLE  `hashmodel`.`sessions` (
   `session_id` int(11) NOT NULL AUTO_INCREMENT,
   `id_concrete` int(11) DEFAULT NULL,
   PRIMARY KEY (`session_id`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`slice`;
 CREATE TABLE  `hashmodel`.`slice` (
@@ -205,7 +205,7 @@ CREATE TABLE  `hashmodel`.`slice` (
   `transitive` int(11) NOT NULL DEFAULT '0',
   `property_name` varchar(40) NOT NULL,
   PRIMARY KEY (`id_inner`,`id_interface_slice`,`id_abstract`,`id_split_replica`,`id_interface`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`sliceexposed`;
 CREATE TABLE  `hashmodel`.`sliceexposed` (
@@ -219,7 +219,7 @@ CREATE TABLE  `hashmodel`.`sliceexposed` (
   `id_inner_original` varchar(40) NOT NULL DEFAULT '"',
   `id_interface_slice_original` varchar(40) NOT NULL DEFAULT '"',
   PRIMARY KEY (`id_abstract`,`id_inner`,`id_inner_owner`,`id_interface_slice`,`id_interface_slice_owner`,`id_split_replica`,`id_split_replica_owner`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`sourcecode`;
 CREATE TABLE  `hashmodel`.`sourcecode` (
@@ -231,7 +231,7 @@ CREATE TABLE  `hashmodel`.`sourcecode` (
   `id_owner_container` int(11) NOT NULL,
   `file_order` int(11) NOT NULL,
   PRIMARY KEY (`type_owner`,`id_owner_container`,`id_owner`,`file_name`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`sourcecode_references`;
 CREATE TABLE  `hashmodel`.`sourcecode_references` (
@@ -241,7 +241,7 @@ CREATE TABLE  `hashmodel`.`sourcecode_references` (
   `file_name` varchar(45) NOT NULL,
   `reference` varchar(45) NOT NULL,
   PRIMARY KEY (`type_owner`,`id_owner_container`,`id_owner`,`file_name`,`reference`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`supplyparameter`;
 CREATE TABLE  `hashmodel`.`supplyparameter` (
@@ -249,7 +249,7 @@ CREATE TABLE  `hashmodel`.`supplyparameter` (
   `id_functor_app` int(11) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`supplyparametercomponent`;
 CREATE TABLE  `hashmodel`.`supplyparametercomponent` (
@@ -257,7 +257,7 @@ CREATE TABLE  `hashmodel`.`supplyparametercomponent` (
   `id_functor_app` int(11) NOT NULL,
   `id_functor_app_actual` int(11) NOT NULL,
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`supplyparameterparameter`;
 CREATE TABLE  `hashmodel`.`supplyparameterparameter` (
@@ -266,7 +266,7 @@ CREATE TABLE  `hashmodel`.`supplyparameterparameter` (
   `id_parameter_actual` varchar(30) NOT NULL,
   `freeVariable` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`unit`;
 CREATE TABLE  `hashmodel`.`unit` (
@@ -282,7 +282,7 @@ CREATE TABLE  `hashmodel`.`unit` (
   `class_nargs` int(11) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_concrete`,`id_unit`,`id_index`)
-) ENGINE=NDBCLUSTER DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `hashmodel`.`unitslice`;
 CREATE TABLE  `hashmodel`.`unitslice` (
@@ -295,4 +295,4 @@ CREATE TABLE  `hashmodel`.`unitslice` (
   `id_index` int(11) NOT NULL DEFAULT '-1',
   `split_replica` int(11) NOT NULL,
   PRIMARY KEY (`id_concrete`,`id_inner`,`id_index_inner`,`id_interface_slice`,`split_replica`,`id_index`,`id_unit`)
-) ENGINE=NDBCLUSTER AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;

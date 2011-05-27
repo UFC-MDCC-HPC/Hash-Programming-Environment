@@ -153,7 +153,7 @@ public class CommandLineUtil {
   public static bool gacutil_install(string cuid, string assembly, int gac, string userName, string password){
 
       runCommand(Constants.gac_util, "-u " + assembly);
-      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid, userName, password, null);
+      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" /*+ " -package " + cuid*/, userName, password, null);
 
 //      runCommand("copy", Constants.PATH_TEMP_WORKER + assembly + ".dll" + " " + Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + cuid );
 
