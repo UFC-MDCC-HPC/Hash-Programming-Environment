@@ -467,9 +467,9 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
-            public String[] runApplicationNew(string instantiatior_string, String[] eIds, int[] eVls, string userName, string password, string curDir)
+            public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir)
             {
-                String[] str_output = null;
+                string[] str_output = null;
                 // assert: eIds.Length = eVls.Length
                 try
                 {
@@ -488,21 +488,15 @@ namespace br.ufc.pargo.hpe.backend
                     string[] enums = new string[enumList.Count];
                     enumList.CopyTo(enums, 0);
 
-                  //  DGAC.database.Component c = cdao.retrieve(id_concrete);
-
-//                    int[] nodes = new int[] { 0, 1, 2, 3/*, 4, 5, 6, 7 ,8, 9, 10, 11, 12, 13, 14, 15*/};
 
                     /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();
                     properties.putStringArray(Constants.ENUMS_KEY, enums);
-//                    properties.putIntArray(Constants.NODES_KEY, nodes);
                     properties.putInt(Constants.SESSION_KEY, session_id);
 
                     Console.WriteLine("before manager.createInstance");
 
                     String session_id_string = "session_" + session_id.ToString();
-
-                    // string instantiatior_string = File.ReadAllText("/home/hpe.backend/hash-programming-environment/teste.xml");
 
                     ComponentID cid = manager.createInstance(session_id_string + ".application", instantiatior_string, properties);
 
