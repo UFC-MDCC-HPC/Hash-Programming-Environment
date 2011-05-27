@@ -1,4 +1,5 @@
 ./run_app/Program.cs
+./run_app/CommandLine.cs
 
 -lib:"/usr/lib/mono/DGAC"
 -r:System.Runtime.Remoting
