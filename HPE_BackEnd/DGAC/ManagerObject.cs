@@ -63,7 +63,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 foreach (int i in nodes)
                 {
-                    WorkerObject w = worker[i];
+                    WorkerObject w = Worker[i];
                     WorkerServices worker_services = (WorkerServices) w.getServices(selfInstanceName, selfClassName, selfProperties);
                     manager_services.addWorkerServicesObject(i, worker_services);
                 }
@@ -90,7 +90,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void shutdownFramework()
             {
-                foreach (WorkerObject w in worker) 
+                foreach (WorkerObject w in Worker) 
                 {
                     w.shutdownFramework();
                 }
@@ -182,7 +182,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 // foreach (KeyValuePair<WorkerComponentID, int> pair in list)
                 foreach (int node in list)
                 {
-                     WorkerObject worker = this.worker[node];
+                     WorkerObject worker = this.Worker[node];
                      WorkerComponentID wcid = toDie_.getWorkerComponentID(node);
                      worker.destroyInstance(wcid, timeout);
                 }
@@ -208,7 +208,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.worker[node];
+                    WorkerObject worker = this.Worker[node];
                     string[] portNames = worker.getProvidedPortNames(wcid);
                     foreach (string portName in portNames)
                     {
@@ -255,7 +255,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.worker[node];
+                    WorkerObject worker = this.Worker[node];
                     string[] portNames = worker.getUsedPortNames(wcid);
                     foreach (string portName in portNames)
                     {
@@ -294,7 +294,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.worker[node];
+                    WorkerObject worker = this.Worker[node];
                     HPETypeMap properties = (HPETypeMap) worker.getPortProperties(wcid, portName);
                     
                     foreach (KeyValuePair<string, object> p in properties)
@@ -330,7 +330,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.worker[node];
+                    WorkerObject worker = this.Worker[node];
                     worker.setPortProperties(cid, portName, map);
                 }
             }
@@ -466,7 +466,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
                 foreach (int node in nodes)
                 {
-                    ConnectionID conn = worker[node].connect(cid_user, usingPortName, cid_prov, providingPortName);
+                    ConnectionID conn = Worker[node].connect(cid_user, usingPortName, cid_prov, providingPortName);
                 }
             }
 
@@ -653,7 +653,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     if (id2_ws_inv.ContainsKey(node))
                     {
                         id2_ws_inv.TryGetValue(node, out cid2);
-                        WorkerObject w = worker[node];
+                        WorkerObject w = Worker[node];
                         w.disconnectAll(cid1, cid2, timeout);
                     }
                     else
@@ -702,7 +702,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 if (!properties.TryGetValue(Constants.NODES_KEY, out nodesObj))
                 {
                     // Se NODES_KEY não está disponível, considerar todos.
-                    nodes = new int[worker.Length];
+                    nodes = new int[Worker.Length];
                     for (int i = 0; i < nodes.Length; i++)
                     {
                         nodes[i] = i;
@@ -805,9 +805,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     /* END FOM RunApplication */
 
-                   Console.WriteLine("PASS 1 ?" + (worker == null));
+                   //Console.WriteLine("PASS 1 ?" + (worker == null));
 
-                    bool[] node_marking = new bool[worker.Length];
+                    bool[] node_marking = new bool[Worker.Length];
                     for (int i = 0; i < node_marking.Length; i++)
                         node_marking[i] = false;
                     
@@ -837,7 +837,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             DGAC.BackEnd.calculateActualParams(acfaRef, unit.Key, out actualParams);
                             DGAC.BackEnd.calculateGenericClassName(u, actualParams, out class_name_worker);
 
-                            GoWorker gw = new GoWorker(worker[nodes[k]], instanceName + "." + unit.Key, class_name_worker, worker_properties);
+                            GoWorker gw = new GoWorker(Worker[nodes[k]], instanceName + "." + unit.Key, class_name_worker, worker_properties);
                             Thread t = new Thread(gw.Run);
                             t.Start();
                             wthreads.Add(t);
@@ -854,7 +854,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     {
                         if (!node_marking[i])
                         {
-                            Thread t = new Thread(worker[i].createInstanceNull);
+                            Thread t = new Thread(Worker[i].createInstanceNull);
                             wthreads.Add(t);
                             t.Start();
                         }
@@ -1042,6 +1042,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 /* The Worker Object of each computing node */
                 private WorkerObject[] worker = null;
+		
+		        private WorkerObject[] Worker 
+		        {
+			       get {   
+				           if (worker == null) 
+				           {
+					          startWorkerClients();
+				           }
+				           return worker;			
+			           } 
+		        }
+		
+		
                 private string[] node = null;
                 private int[] port = null;
 
@@ -1109,7 +1122,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         Console.WriteLine(e.Message);
                     }
 
-                    Console.WriteLine(worker.Length + " Worker clients started !");
+                    Console.WriteLine(Worker.Length + " Worker clients started !");
                 }
 
                 [MethodImpl(MethodImplOptions.Synchronized)]
@@ -1141,7 +1154,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     IDictionary<Thread, RunApplicationThread> thread_list = new Dictionary<Thread,RunApplicationThread>();
                     foreach (int node in mcid.WorkerNodes)
                     {
-                        RunApplicationThread thread = new RunApplicationThread(node, worker[node], session_id_string, mcid);
+				       
+                        RunApplicationThread thread = new RunApplicationThread(node, Worker[node], session_id_string, mcid);
                         Thread t = new Thread(thread.Run);
                         thread_list.Add(t,thread);
                         t.Start();
