@@ -469,20 +469,21 @@ namespace br.ufc.pargo.hpe.backend
 
             public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir)
             {
-				return runApplicationNew(instantiatior_string, eIds, eVls, userName, password, curDir, 1);
+		    	int id_concrete = 0;
+                session_id = getSessionID(id_concrete);
+				string session_id_string = "session_" + session_id.ToString();
+				
+				return runApplicationNew(instantiatior_string, eIds, eVls, userName, password, curDir, 1, session_id_string);
 			}
 			
-            public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir, int rounds)
+            public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir, int rounds, string session_id_string)
             {
                 string[] str_output = null;
                 // assert: eIds.Length = eVls.Length
                 try
                 {
                     ManagerObject manager = connectToManager(out ch);
-                    Connector.openConnection();
-					
-		    int id_concrete = 0;
-                    session_id = getSessionID(id_concrete);
+                    Connector.openConnection();					
 
                     IList<string> enumList = new List<string>();
                     for (int i = 0; i < eIds.Length; i++)
@@ -499,9 +500,7 @@ namespace br.ufc.pargo.hpe.backend
                     properties.putStringArray(Constants.ENUMS_KEY, enums);
                     properties.putInt(Constants.SESSION_KEY, session_id);
 
-                    Console.WriteLine("before manager.createInstance");
-
-                    String session_id_string = "session_" + session_id.ToString();
+                    Console.WriteLine("before manager.createInstance");                    
 
                     ComponentID cid = manager.createInstance(session_id_string + ".application", instantiatior_string, properties);
 

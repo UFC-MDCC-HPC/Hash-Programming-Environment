@@ -1256,7 +1256,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				{	
 					try 
 					{
-	    	           file_session = Constants.PATH_TEMP_WORKER + "output-" + my_rank + "-" + session_id_string + "." + round + ".txt";
+	    	           file_session = Constants.PATH_TEMP_WORKER + session_id_string + "." + my_rank + "." + round + ".txt";
 						
 			           fs = new FileStream(file_session, FileMode.Create);
 			           sw = new StreamWriter(fs);
