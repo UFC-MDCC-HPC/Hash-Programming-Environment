@@ -1149,13 +1149,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public string[] runApplication(string session_id_string, ManagerComponentID mcid)
+		        {
+					return runApplication(session_id_string, mcid, 1);
+		        }
+		
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public string[] runApplication(string session_id_string, ManagerComponentID mcid, int rounds)
                 {
                     string[] outputs = new String[mcid.WorkerNodes.Length]; 
                     IDictionary<Thread, RunApplicationThread> thread_list = new Dictionary<Thread,RunApplicationThread>();
                     foreach (int node in mcid.WorkerNodes)
                     {
 				       
-                        RunApplicationThread thread = new RunApplicationThread(node, Worker[node], session_id_string, mcid);
+                        RunApplicationThread thread = new RunApplicationThread(node, Worker[node], session_id_string, mcid, rounds);
                         Thread t = new Thread(thread.Run);
                         thread_list.Add(t,thread);
                         t.Start();
@@ -1186,19 +1192,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     public int Node {get {return node;}}
                     private WorkerObject worker;
                     private string result;
+			        private int rounds;
                     public string Output {get {return result;}}
 
-                    public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid)
+                    public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid, int rounds)
                     {
                         this.session_id_string = session_id_string;
                         this.mcid = mcid;
                         this.node = node;
                         this.worker = worker;
+				        this.rounds = rounds;
                     }
 
                     public void Run()
                     {
-                        result = worker.runApplication(session_id_string, mcid.getWorkerComponentID(node));
+                        result = worker.runApplication(session_id_string, mcid.getWorkerComponentID(node), rounds);
                     }
 
                 }

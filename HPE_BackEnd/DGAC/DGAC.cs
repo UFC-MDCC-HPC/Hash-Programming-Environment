@@ -469,6 +469,11 @@ namespace br.ufc.pargo.hpe.backend
 
             public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir)
             {
+				return runApplicationNew(instantiatior_string, eIds, eVls, userName, password, curDir, 1);
+			}
+			
+            public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir, int rounds)
+            {
                 string[] str_output = null;
                 // assert: eIds.Length = eVls.Length
                 try
@@ -500,7 +505,7 @@ namespace br.ufc.pargo.hpe.backend
 
                     ComponentID cid = manager.createInstance(session_id_string + ".application", instantiatior_string, properties);
 
-                    str_output = manager.runApplication(session_id_string, (ManagerComponentID)cid);
+                    str_output = manager.runApplication(session_id_string, (ManagerComponentID)cid, rounds);
                     
                 }
                 catch (Exception e)
