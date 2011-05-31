@@ -1247,15 +1247,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
 				
 				
-			   string file_session = null;
-			   FileStream fs = null;
-			   TextWriter sw = null;
-			   TextWriter stdout = Console.Out;
+	       string file_session = null;
+	       FileStream fs = null;
+	       TextWriter sw = null;
+	       TextWriter stdout = Console.Out;
 				
-			   for (int round = 0; round < times; round ++) 
-				{	
-					try 
-					{
+	       for (int round = 0; round < times; round ++) 
+	       {	
+		  try 
+		  {
 	    	           file_session = Constants.PATH_TEMP_WORKER + session_id_string + "." + my_rank + "." + round + ".txt";
 						
 			           fs = new FileStream(file_session, FileMode.Create);
@@ -1263,9 +1263,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			           
 			           Console.SetOut(sw);
 	
-	               	   Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);
+	               	   Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": #" + round + " BEGIN APPLICATION PROCESS " + session_id_string);
 	                   go_port.go();
-	                   Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
+	                   Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": #" + round + " END APPLICATION PROCESS " + session_id_string);
 					}
 					catch (Exception e) 
 					{
