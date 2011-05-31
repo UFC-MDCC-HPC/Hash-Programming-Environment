@@ -1198,21 +1198,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             return d2;
         }
 
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public string runApplication(string session_id_string, WorkerComponentID wcid)
         {
+			return this.runApplication(session_id_string, wcid, 1);
+		}
+		
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public string runApplication(string session_id_string, WorkerComponentID wcid, int times)
+        {
             string output = session_id_string + " - " + wcid.getInstanceName();
- 
-           Console.WriteLine(Constants.PATH_TEMP_WORKER);
-           string file_session = Constants.PATH_TEMP_WORKER + "output-" + my_rank + "-" + session_id_string + ".txt";
-           FileStream fs = new FileStream(file_session, FileMode.Create);
-           TextWriter sw = new StreamWriter(fs);
-           TextWriter stdout = Console.Out;
-           Console.SetOut(sw);
 
-           try
-           {
+            try
+            {
                const string DEFAULT_CREATESLICES_PORT_USES = "create_slices";
                const string DEFAULT_GO_PORT_USES = "go";
                
@@ -1247,10 +1245,43 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                builder_service.connect(my_cid, DEFAULT_GO_PORT_USES, wcid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
                Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": GET GO PORT " + session_id_string);
                GoPort go_port = (GoPort)services.getPort(DEFAULT_GO_PORT_USES);
-               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);
-               go_port.go();
-               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
-
+				
+				
+			   string file_session = null;
+			   FileStream fs = null;
+			   TextWriter sw = null;
+			   TextWriter stdout = Console.Out;
+				
+			   for (int round = 0; round < times; round ++) 
+				{	
+					try 
+					{
+	    	           file_session = Constants.PATH_TEMP_WORKER + "output-" + my_rank + "-" + session_id_string + "." + round + ".txt";
+						
+			           fs = new FileStream(file_session, FileMode.Create);
+			           sw = new StreamWriter(fs);
+			           
+			           Console.SetOut(sw);
+	
+	               	   Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": BEGIN APPLICATION PROCESS " + session_id_string);
+	                   go_port.go();
+	                   Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": END APPLICATION PROCESS " + session_id_string);
+					}
+					catch (Exception e) 
+					{
+						throw e;
+					}
+					finally 
+					{
+		               Console.Out.Flush();		               
+					   if (sw != null) sw.Close();
+		               if (fs != null) fs.Close();
+		               Console.SetOut(stdout);
+					   
+					   // The output is the output of the last execution.
+					   output = System.IO.File.ReadAllText(file_session);
+					}
+				}
            }
            catch (Exception e)
            {
@@ -1259,17 +1290,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                Console.Out.WriteLine(message);
                Console.Out.WriteLine(stackTrace);
            }
-           finally
-           {
-               Console.Out.Flush();
-               sw.Close();
-               fs.Close();
-               Console.SetOut(stdout);
-
-               output = System.IO.File.ReadAllText(file_session);
-           }
           
-            return output;
+           return output;
         }
     }
 
