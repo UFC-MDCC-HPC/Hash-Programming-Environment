@@ -20,25 +20,35 @@ namespace Back_End_Test
 			string curDir;
 			string eId;
 			int eVl;
+			int rounds;
+			string prefix;
 			
-			try {
-				readArguments(args, out instantiator_string_file, out eId, out eVl, out user, out password, out curDir);
+			try 
+			{
+				readArguments(args, out instantiator_string_file, out eId, out eVl, out user, out password, out curDir, out rounds, out prefix);
 						
 				string[] eIds = new string[] {eId};
 				int[] eVls = new int[] {eVl};
 				
-	                        dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
+	            dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
 				
-                 	        string instantiator_string = File.ReadAllText(instantiator_string_file);
-				
-				string[] output = dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir);
+                string instantiator_string = File.ReadAllText(instantiator_string_file);
+				string[] output = null;
+				if (prefix == null) 
+				{					
+				  output = dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir);
+				} 
+				else 
+				{
+				  output = dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir, rounds, prefix);
+				}
 
-                                int i = 0;
-                                foreach (string o in output) 
-                                {
-                                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
-                                    Console.WriteLine(o);
-                                }
+                int i = 0;
+                foreach (string o in output) 
+                {
+                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
+                    Console.WriteLine(o);
+                }
 
 
 			} 
@@ -60,14 +70,18 @@ namespace Back_End_Test
 			                   out int eVl, 
 			                   out string user, 
 			                   out string password, 
-			                   out string curDir) 
+			                   out string curDir,
+			                   out int rounds, 
+			                   out string prefix) 
 	 {
 			instantiator_string_file = "";
 			user = "";
 			password = "";
 			curDir = "";
 			eId = "";
-			eVl = 0;		
+			eVl = 0;	
+			rounds = 1;
+			prefix = null;
 
 			Arguments CommandLine = new Arguments(args);			
 			
@@ -121,7 +135,23 @@ namespace Back_End_Test
 			   Console.Error.WriteLine("'-enumerator_value = <integer>' is required");
 			   Environment.Exit(0);
 			}
+			
+			if(CommandLine["rounds"] != null) 
+			{
+               if (!Int32.TryParse(CommandLine["rounds"], out rounds)) 
+			   {
+				   Console.Error.WriteLine("'-rounds <integer>' is expected");
+				   Environment.Exit(0);
+			   }
+			   Console.WriteLine("--rounds = " + rounds);
+			}
 
+			if(CommandLine["prefix"] != null) 
+			{
+               prefix = CommandLine["prefix"];
+			   Console.WriteLine("--prefix = " + prefix);
+			}
+			
 		}
 
 		
