@@ -22,9 +22,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         int number_of_workers = -1;
 
         public WorkerService(string[] args)
-        {
+        {            
             InitializeComponent();
-
+            StartMPI(args);
+        }
+ 
+        public void StartMPI(string[] args)
+        {
             Console.WriteLine("Starting MPI ... ");
             mpi = new MPI.Environment(ref args, Threading.Multiple);
             Console.Write("ok !");
@@ -34,10 +38,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             Console.WriteLine("Threading = " + MPI.Environment.Threading);
         }
 
+
         public static void Main(string[] args)
         {
-            port = args.Length == 0 ? port : System.Convert.ToInt32(args[0], 10);
-            Console.WriteLine("Initializing Worker - port = " +  port);
+            port = args.Length == 0 ? -1 : System.Convert.ToInt32(args[0], 10);
+            Console.WriteLine("Initializing Worker");
             System.ServiceProcess.ServiceBase[] ServicesToRun;
             ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService(args) };
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
@@ -47,8 +52,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private void startWorkerServer()
         {
           try 
-          {
-            Console.WriteLine("Starting Worker ");
+          {  
+            if (port < 0) 
+            {          
+                port = Constants.WORKER_PORT + my_rank;
+            }
+
+            Console.WriteLine("Starting Worker #" + my_rank + " listening on port ... " + port);
 
             System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
             //System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
@@ -64,6 +74,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             Type commonInterfaceType = typeof(WorkerObject);
 
             RemotingConfiguration.RegisterWellKnownServiceType(commonInterfaceType, Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.Singleton);
+            Console.WriteLine("Worker #" + my_rank + " running !");
           }
           catch (Exception e)
           {
