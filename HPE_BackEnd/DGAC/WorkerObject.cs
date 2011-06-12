@@ -1253,9 +1253,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	       TextWriter stdout = Console.Out;
 				
 	       for (int round = 0; round < times; round ++) 
-	       {	
+	       {               
 		  try 
-		  {
+		  {        Console.WriteLine("#" + round + " STARING GARBAGE COLLECTION");
+                           System.GC.Collect();
+                           Console.WriteLine("#" + round + " FINISHED GARBAGE COLLECTION");
+                  
 	    	           file_session = Constants.PATH_TEMP_WORKER + session_id_string + "." + my_rank + "." + round + ".txt";
 						
 			           fs = new FileStream(file_session, FileMode.Create);

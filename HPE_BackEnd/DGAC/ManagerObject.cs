@@ -1066,9 +1066,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public void startWorkerClients()
                 {
-                    Console.WriteLine("Starting worker clients !");
-
-                    int i = 0;
+                    Console.WriteLine("Starting worker clients !");                  
 
                     try
                     {
@@ -1100,6 +1098,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                         worker = new WorkerObject[node.Length];
 
+                        int i = 0;
                         /* Create each worker object and fill the worker array */
                         foreach (string n in node)
                         {
