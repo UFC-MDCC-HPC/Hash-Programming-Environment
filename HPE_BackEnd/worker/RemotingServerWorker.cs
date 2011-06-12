@@ -35,7 +35,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.global_communicator = MPI.Communicator.world;
             number_of_workers = this.global_communicator.Size;
             my_rank = this.global_communicator.Rank;
-            Console.WriteLine("Threading = " + MPI.Environment.Threading);
+            Console.WriteLine("Rank #" + my_rank + " at processor " + MPI.Environment.ProcessorName + " - threading is " + MPI.Environment.Threading);
         }
 
 
