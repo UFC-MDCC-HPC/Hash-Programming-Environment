@@ -495,25 +495,67 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		Collection<HComponent> cs = new ArrayList<HComponent>();
 
-		for (HComponent c : this.getComponents()) if (!c.isHiddenInnerComponent()){
-			if (!c.isSuperType() && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop()))) {
-				if (!cs.contains(c))
-					cs.add(c);
-				for (HComponent c_ : c.getExposedComponents()) 
+		for (HComponent c : this.getComponents()) 
+		{ 
+			HComponent cx = (HComponent) (c.getSupplier() == null ? c : c.getSupplier()); 
+			if (!c.isHiddenInnerComponent())				
+			{		
+				if (!c.isSuperType() && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop()))) 
 				{
-					if (!cs.contains(c_))
-						cs.add(c_);
-				}
-			} else {
-				for (HComponent c_ : c.getExposedComponents()) 
+					if (!cs.contains(c))
+						cs.add(c);
+					
+					if (cx == c) {
+						for (HComponent c_ : c.getExposedComponents()) 
+						{
+							if (!cs.contains(c_))
+								cs.add(c_);
+						}
+					} 
+					else
+					{
+						for (HComponent cx_ : cx.getExposedComponents()) 
+						{
+							HComponent c_ = this.getInnerComponent(cx_.getRef());
+							
+							if (!cs.contains(c_) && (c_ == null || c_.isPublic()))
+								cs.add(cx_);
+						}
+					}					
+				} 
+				else 
 				{
-					if (!cs.contains(c_))
-						cs.add(c_);
+					if (cx == c) {
+						for (HComponent c_ : c.getExposedComponents()) 
+						{
+							if (!cs.contains(c_))
+								cs.add(c_);
+						}
+					}
+					else
+					{
+						for (HComponent cx_ : cx.getExposedComponents()) 
+						{
+							HComponent c_ = this.getInnerComponent(cx_.getRef());
+							
+							if (!cs.contains(c_) && (c_ == null || c_.isPublic()))
+								cs.add(cx_);
+						}
+					}					
 				}
-			}
+		    }
 		}
 
 		return cs;
+	}
+
+	private HComponent getInnerComponent(String ref) 
+	{
+		for (HComponent c : this.getInnerComponents()) {
+		   if (c.getRef().equals(ref)) return c;
+		
+		}		
+		return null;
 	}
 
 	public List<HComponent> getInnerComponents() {

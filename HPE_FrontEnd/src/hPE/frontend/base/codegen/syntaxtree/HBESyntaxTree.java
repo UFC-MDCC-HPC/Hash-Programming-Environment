@@ -187,7 +187,12 @@ public class HBESyntaxTree {
 	        	
 	        	// BEGIN POG Block
 	        	if (activations.containsKey(i)) {
-	        		pc = activations.get(i);
+	        		HBEProcedureCall pc_ = activations.get(i);
+	        		if (pc_ == null) 
+	        		{
+	        			activations.remove(i);
+	        			activations.put(i, pc);
+	        		}
 	        	} else {
 	        		activations.put(i, pc);
 	        	} 

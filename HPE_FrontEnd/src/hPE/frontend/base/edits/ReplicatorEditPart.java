@@ -138,7 +138,8 @@ public class ReplicatorEditPart extends AbstractGraphicalEditPart
 				IHUnit p_ = (IHUnit) p;
 				if (!p_.isCloned()) {
 					if (p_.isEntry()) {
-						if (p_.getComponent().isDirectSonOfTheTopConfiguration()) {
+						HComponent cp_ = (HComponent) p_.getComponent();
+						if (cp_.isDirectSonOfTheTopConfiguration() && !cp_.isHiddenInnerComponent()) {
 					       r.add(l);
 						}
 					} else if (p_.getConfiguration() == topConfiguration){

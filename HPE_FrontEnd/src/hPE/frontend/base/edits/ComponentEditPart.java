@@ -1,13 +1,11 @@
  
 package hPE.frontend.base.edits;
 
-import hPE.frontend.base.exceptions.HPEInvalidNameException;
 import hPE.frontend.base.figures.ComponentFigure;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HLinkToReplicator;
-import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.IReplicatedElement;
 import hPE.frontend.base.policies.ChangeVariableNameEditPolicy;
 import hPE.frontend.base.policies.ExposedEditPolicy;
@@ -23,15 +21,14 @@ import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
@@ -222,15 +219,52 @@ public class ComponentEditPart<ModelType extends HComponent,
 		if (j!=null) r.addAll(j);
 		
 		ModelType c = (ModelType) this.getModel();
-		if (c.isDirectSonOfTheTopConfiguration()) {
-			for (HComponent x : c.getExposedComponents()) {
-				r.add(c.hashCode() + ".exposed_link." + x.hashCode());
+		if (c.isDirectSonOfTheTopConfiguration()) 
+		{
+			for (HComponent x : c.getExposedComponents()) 
+			{
+				List<HComponent> cParents = x.getTopParentConfigurations();
+				if (cParents.contains(c)) 
+				{
+				   // Nesse caso, o componente x é aninhado público de um componente que está no topo da configuração, portanto pode estar ligado a ele.
+				   r.add(c.hashCode() + ".exposed_link." + x.hashCode());
+				}
+				else 
+				{
+					// Caso contrário, o componente pai de x deve ter suprido algum parametro de c, no qual x agora deve ser ligado. 
+					// Isso acontece pq o pai de x possui mais componentes aninhados do que o componente aninhado de c que é seu supertipo e que 
+					// supre na configuração.
+					for (HComponent c_ : cParents) 
+					{					   
+					   if (/*c_.isHiddenInnerComponent() && */check_if_the_first_has_been_passed_as_parameter_to_the_second(c_,c)) 
+					   {
+					      r.add(c_.hashCode() + ".exposed_link." + x.hashCode());
+					      break;
+					   }
+					}
+				}
 		    }
 		}
 		
 		return r;
 	}
 	
+	// Verifica se o componente c_ foi passado como parametro (supplyParameter) a algum parametro de c.
+	private boolean check_if_the_first_has_been_passed_as_parameter_to_the_second(HComponent c_, ModelType c) {
+		
+		String varName = c_.getVariableName();
+		if (varName != null) {
+			for (Entry<String, List<HComponent>>  par : c.getParameters().entrySet()) 
+			{
+			   HComponent cVar = par.getValue().get(0);
+			   if (cVar.getVariableName().equals(varName)) 
+				   return true;
+			}
+		}
+		
+		return false;
+	}
+
 	public List getModelTargetConnections() {
 		
 		List l = new ArrayList();

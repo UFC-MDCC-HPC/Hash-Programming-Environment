@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 
+import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
 import org.eclipse.core.runtime.Path;
@@ -67,6 +68,28 @@ public class HPEPlatform {
 		}		
 
 		return c;
+	}
+
+	public static void deployByPath(String pathIn) throws Exception 
+	{
+		String password = null;
+		String curDir = "";
+		String userName = null;
+		// String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+		String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+		
+//		BrowseAndRunBackEndDialog.getCurrentEditor().doSave(null);
+		
+		URI uri = URI.createFileURI(pathIn);
+		HComponent c = HPEPlatform.getConfiguration(uri);
+
+		String result = HPEPlatform.deploy(urlWS, c, userName, password, curDir);
+		
+		if (result != null)
+		    throw new Exception(result); //JOptionPane.showMessageDialog(null, result);
+		else
+			System.out.println("The component " + c.getComponentName() + " has been succesfully deployed !");
+		
 	}
 
 	

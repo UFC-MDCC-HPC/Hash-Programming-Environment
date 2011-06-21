@@ -4,7 +4,11 @@ import hPE.frontend.backend.HPEPlatform;
 import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.model.HComponent;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
@@ -12,6 +16,7 @@ import javax.xml.rpc.ServiceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -71,28 +76,44 @@ public class HPEResourceNavigator extends ResourceNavigator {
 			   IMenuManager mainMenu = menu;//get ref to main menu manager
 			   mainMenu.add(
 					   new Action("Deploy " + fname) {
-						   public void run() { 							   
-                                    try {
-										String password = null;
-										String curDir = "";
-										String userName = null;
-										String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
-										
-//										BrowseAndRunBackEndDialog.getCurrentEditor().doSave(null);
-										
-										URI uri = URI.createFileURI(pathIn.makeAbsolute().toOSString());
-										HComponent c = HPEPlatform.getConfiguration(uri);
-
-										String result = HPEPlatform.deploy(urlWS, c, userName, password, curDir);
-										
-										if (result != null)
-										    JOptionPane.showMessageDialog(null, result);
-										else
-											JOptionPane.showMessageDialog(null, "The component " + c.getComponentName() + " has been succesfully deployed !");
-									} catch (IOException e) {
-										e.printStackTrace();
-									} catch (ServiceException e) {										
-										e.printStackTrace();
+						   public void run()  {
+							        DataInputStream in = null;
+                                    try{
+									    // Open the file that is the first 
+									    // command line parameter
+									    FileInputStream fstream = new FileInputStream("/home/heron/to_deploy");
+									    // Get the object of DataInputStream
+									    in = new DataInputStream(fstream);
+									    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+									    
+									    String strLine;
+									    //Read File Line By Line
+									    while ((strLine = br.readLine()) != null)   {
+									        int i = strLine.lastIndexOf('.');
+									        String p = strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
+									    	
+											System.out.println("started: deploying " + p);
+										    HPEPlatform.deployByPath(p);
+										    System.out.println("finished: deploying " + p);
+									    }
+									    
+								    	JOptionPane.showMessageDialog(null, "Finished ! All deployed !");
+									       
+									    }
+                                    catch (Exception e)
+									{//Catch exception if any
+									      //System.err.println("Error: " + e.getMessage());
+									    	JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+									}
+									finally {
+									  	if (in != null) {
+											try {
+												in.close();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+									  	}
 									}
 						   }
 						}
