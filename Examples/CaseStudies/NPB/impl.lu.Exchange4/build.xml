@@ -23,7 +23,7 @@
         <include name="common.direction.LeftToRight/bin/1.0.0.0/ILeftToRight.dll"/>
         <include name="environment.MPIDirect/bin/1.0.0.0/IMPIDirect.dll"/>
         <include name="common.direction.RightToLeft/bin/1.0.0.0/IRightToLeft.dll"/>
-        <include name="common.Discretization/bin/1.0.0.0/IDiscretization.dll"/>
+        <include name="common.direction.Direction/bin/1.0.0.0/IDirection.dll"/>
         <include name="lu.exchange.ExchangePattern4/bin/1.0.0.0/IExchangePattern4.dll"/>
         <include name="lu.Exchange/bin/1.0.0.0/BaseIExchange.dll"/>
         <include name="/usr/lib/mono/DGAC/DGAC.dll"/>
@@ -37,7 +37,7 @@
         <include name="lu.problem_size.Instance_LU/bin/1.0.0.0/IInstance_LU.dll"/>
         <include name="common.problem_size.Class/bin/1.0.0.0/IClass.dll"/>
         <include name="lu.exchange.ExchangePattern4/bin/1.0.0.0/IExchangePattern4.dll"/>
-        <include name="common.Discretization/bin/1.0.0.0/IDiscretization.dll"/>
+        <include name="common.direction.Direction/bin/1.0.0.0/IDirection.dll"/>
         <include name="/impl.lu.Exchange4/bin/1.0.0.0/BaseIExchange4.dll"/>
         <include name="lu.Exchange/bin/1.0.0.0/IExchange.dll"/>
         <include name="/usr/lib/mono/DGAC/DGAC.dll"/>

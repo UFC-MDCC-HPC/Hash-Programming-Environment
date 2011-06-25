@@ -4,18 +4,19 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
-using lu.Exchange;
 using lu.exchange.ExchangePattern4;
-using common.Discretization;
+using lu.exchange.Exchange2D;
+using MPI;
+
 
 namespace impl.lu.Exchange4 { 
-	public class IExchange4<I, C, E, DIS> : BaseIExchange4<I, C, E, DIS>, IExchange<I, C, E, DIS>
+	public class IExchange4<I, C, E> : BaseIExchange4<I, C, E>, IExchange2D<I, C, E>
 	where I:IInstance_LU<C>
 	where C:IClass 
 	where E:IExchangePattern4
-	where DIS:IDiscretization
 	{
-	   
+	    protected static int from_s = 1, from_n = 2, from_e = 3, from_w = 4;
+		
 	    private double[,] g;
 	    private double[,] h;
 	    private int ibeg;
@@ -30,10 +31,10 @@ namespace impl.lu.Exchange4 {
 			
             if(jfin1==ny) 
 			{
-                double[] dum;
-                dum = Input_buffer.Array = new double[2*nx];
-                Shift_to_west.initiate_recv();//msgid3 = worldcomm.ImmediateReceive<double>(east, from_e, dum);msgid3.Wait();
-				Shift_to_west.go();
+                double[] dum = new double[2*nx];
+                MPI.Request msgid3 = worldcomm.ImmediateReceive<double>(east, from_e, dum);
+				msgid3.Wait();
+				
                 for(i = 1; i<=nx; i++) 
 				{
                     g[ny+1, i] = dum[i-1];
@@ -44,22 +45,22 @@ namespace impl.lu.Exchange4 {
             if(jbeg==1) 
 			{
                 double[] dum;
-                dum = Output_buffer.Array = new double[2*nx];
+                dum = new double[2*nx];
                 for(i = 1; i<=nx; i++) 
 				{
                     dum[i-1]    = g[1, i];
                     dum[i+nx-1] = h[1, i];
                 }
-                Shift_to_west.initiate_send();//worldcomm.Send<double>(dum, west, from_e);
-				Shift_to_west.go();
+                worldcomm.Send<double>(dum, west, from_e);				
             }
 			
             if(ifin1==nx) 
 			{
                 double[] dum;
-                dum = Input_buffer.Array = new double[2*ny2];
-                Shift_to_north.initiate_recv();//msgid1 = worldcomm.ImmediateReceive<double>(south, from_s, dum); msgid1.Wait();
-				Shift_to_north.go();
+                dum = new double[2*ny2];
+                MPI.Request msgid1 = worldcomm.ImmediateReceive<double>(south, from_s, dum); 
+				msgid1.Wait();
+				
                 for(j = 0; j<=ny+1; j++) 
 				{
                     g[j, nx+1] = dum[j];
@@ -70,15 +71,16 @@ namespace impl.lu.Exchange4 {
             if(ibeg==1) 
 			{
                 double[] dum;
-                dum = Output_buffer.Array = new double[2*ny2];
+                dum = new double[2*ny2];
                 for(j = 0; j<=ny+1; j++) 
 				{
                     dum[j]     = g[j, 1];
                     dum[j+ny2] = h[j, 1];
                 }
-                Shift_to_north.initiate_send();//worldcomm.Send<double>(dum, north, from_s);
-				Shift_to_north.go();
+                worldcomm.Send<double>(dum, north, from_s);
+				
             }
+            
 			return 0;
 		}
 		
@@ -93,8 +95,7 @@ namespace impl.lu.Exchange4 {
 		   this.ibeg  = ibeg;
 		   this.ifin1 = ifin1;
 		   this.jbeg  = jbeg;
-		   this.jfin1 = jfin1;
-		   
+		   this.jfin1 = jfin1;		   
 		}
 	}
 }

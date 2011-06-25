@@ -9,29 +9,33 @@ using lu.problem_size.Instance_LU;
 using common.problem_size.Class;
 using common.Buffer;
 using lu.datapartition.BlocksInfo;
-using common.interactionpattern.Shift;
-using common.direction.RightToLeft;
-using lu.Exchange;
 using common.topology.Ring;
 using environment.MPIDirect;
 using lu.exchange.ExchangePattern4;
-using common.Discretization;
+using lu.exchange.Exchange2D;
+using MPI;
 
 
 namespace impl.lu.Exchange4 { 
-	public abstract class BaseIExchange4<I, C, E, DIS>: Computation, BaseIExchange<I, C, E, DIS>
+	public abstract class BaseIExchange4<I, C, E>: Synchronizer, BaseIExchange2D<I, C, E>
 	where I:IInstance_LU<C>
 	where C:IClass 
 	where E:IExchangePattern4
-	where DIS:IDiscretization
 	{
 	
 		#region data
 			protected int nx,ny,nz;
+			protected int east, west, south, north;
+		    protected Intracommunicator worldcomm;
 			override public void initialize(){
 				nx = Blocks.nx;
 				ny = Blocks.ny;
 				nz = Blocks.nz;
+			    east = X.successor;
+			 	west = X.predecessor;
+				south = Y.successor;
+				north = Y.predecessor;
+				worldcomm = this.WorldComm;
 			}
 		#endregion
 	
@@ -44,27 +48,7 @@ namespace impl.lu.Exchange4 {
 				return this.problem;
 			}
 		}
-		
-		private IBuffer input_buffer = null;
-		
-		protected IBuffer Input_buffer {
-			get {
-				if (this.input_buffer == null)
-					this.input_buffer = (IBuffer) Services.getPort("input_buffer");
-				return this.input_buffer;
-			}
-		}
-		
-		private IBuffer output_buffer = null;
-		
-		protected IBuffer Output_buffer {
-			get {
-				if (this.output_buffer == null)
-					this.output_buffer = (IBuffer) Services.getPort("output_buffer");
-				return this.output_buffer;
-			}
-		}
-		
+				
 		private IBlocksInfo blocks = null;
 		
 		public IBlocksInfo Blocks {
@@ -75,25 +59,6 @@ namespace impl.lu.Exchange4 {
 			}
 		}
 		
-		private IShift<IRightToLeft> shift_to_west = null;
-		
-		protected IShift<IRightToLeft> Shift_to_west {
-			get {
-				if (this.shift_to_west == null)
-					this.shift_to_west = (IShift<IRightToLeft>) Services.getPort("shift_to_west");
-				return this.shift_to_west;
-			}
-		}
-		
-		private IShift<IRightToLeft> shift_to_north = null;
-		
-		protected IShift<IRightToLeft> Shift_to_north {
-			get {
-				if (this.shift_to_north == null)
-					this.shift_to_north = (IShift<IRightToLeft>) Services.getPort("shift_to_north");
-				return this.shift_to_north;
-			}
-		}
 		
 		private ICell y = null;
 		

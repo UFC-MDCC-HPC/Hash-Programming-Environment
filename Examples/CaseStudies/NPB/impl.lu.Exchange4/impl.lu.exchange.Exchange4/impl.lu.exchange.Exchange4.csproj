@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7C3500C5-147F-4B51-96C2-F3E9910CF225}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>impl.lu.Exchange4</RootNamespace>
+    <RootNamespace>impl.lu.exchange.Exchange4</RootNamespace>
     <AssemblyName>IExchange4</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
@@ -47,15 +47,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\usr\lib\mono\DGAC\DGAC.dll</HintPath>
     </Reference>
+    <Reference Include="MPI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=29b4a045737654fe">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\usr\lib\mono\MPI\MPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common.Buffer\common.Buffer\common.Buffer.csproj">
       <Project>{EEAC9F12-55E9-4AEE-8996-5A72FA4FE6CD}</Project>
       <Name>common.Buffer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common.direction.Direction\common.direction.Direction\common.direction.Direction.csproj">
-      <Project>{A6AAE482-FC56-4FC4-8994-D3B6ADBDBBB8}</Project>
-      <Name>common.direction.Direction</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\common.problem_size.Class\common.problem_size.Class\common.problem_size.Class.csproj">
       <Project>{A57D6AA6-B371-4188-BD22-97494B834BCB}</Project>
@@ -81,10 +81,6 @@
       <Project>{786FD2E9-0926-473A-90F5-0B694DA96383}</Project>
       <Name>common.interactionpattern.shift</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.direction.RightToLeft\common.direction.RightToLeft\common.direction.RightToLeft.csproj">
-      <Project>{99E276F9-4541-4E11-8D64-4BB9C2E93980}</Project>
-      <Name>common.direction.RightToLeft</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\common.topology.Ring\common.topology.Ring\common.topology.Ring.csproj">
       <Project>{F77E3063-55D1-4BFE-B504-611A612ACACA}</Project>
       <Name>common.topology.Ring</Name>
@@ -93,17 +89,13 @@
       <Project>{1F563648-2878-4A44-B98C-BBED70407F5D}</Project>
       <Name>environment.MPIDirect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\lu.Exchange\lu.Exchange\lu.Exchange.csproj">
-      <Project>{D80E43DA-828C-41A2-B8B1-9D9BC5D67776}</Project>
-      <Name>lu.Exchange</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lu.exchange.ExchangePattern4\lu.exchange.ExchangePattern4\lu.exchange.ExchangePattern4.csproj">
       <Project>{E4F7CAF1-C4A5-435B-9DD2-F79E66B88056}</Project>
       <Name>lu.exchange.ExchangePattern4</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\common.Discretization\common.Discretization\common.Discretization.csproj">
-      <Project>{B3AE2AA8-4CC8-4D43-9373-1A193CFA13DB}</Project>
-      <Name>common.Discretization</Name>
+    <ProjectReference Include="..\..\lu.exchange.Exchange2D\lu.exchange.Exchange2D\lu.exchange.Exchange2D.csproj">
+      <Project>{9C50BBEC-A83D-486C-B957-9BDED98355BD}</Project>
+      <Name>lu.exchange.Exchange2D</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
