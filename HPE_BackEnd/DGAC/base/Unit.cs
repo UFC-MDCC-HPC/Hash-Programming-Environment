@@ -24,7 +24,9 @@ namespace br.ufc.pargo.hpe.basic
         int Id_functor_app { set; get; }
         int Id_abstract { get; }
         string Id_unit { set; get; }
-        string Id_inner { set; get; }
+        //string Id_inner { set; get; }
+		string get_id_inner(IUnit container);
+		void set_id_inner(IUnit container, string id_inner);
 
         int GlobalRank { set; get; }                         // The rank of the process (application) where the unit is placed on
         int LocalRank { get; }                               // = RanksInv[globalRank]
@@ -38,7 +40,9 @@ namespace br.ufc.pargo.hpe.basic
 
         IList<IUnit> Slices { get; }
         IList<IUnit> AllSlices { get; }
-        IUnit ContainerSlice { get; set; }
+        IList<IUnit> ContainerSlice { get;}
+		void addContainerSlice(IUnit u);
+		
         void addSlice(IUnit slice);
         void addSliceAll(IUnit slice);
         void initialize();
@@ -52,7 +56,7 @@ namespace br.ufc.pargo.hpe.basic
 
         #endregion CreateSlicesPort
 
-
+		void create_slices(IUnit owner_unit);
 
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }

@@ -386,7 +386,9 @@ namespace HPE_DGAC_LoadDB
                 foreach (InnerComponentType c in inner)
                 {
                     // innerAll.Add(c);
-                    if (((isNotInSupply(c) || this.findInSlices(c.localRef)) && (isNotParameter(c) || this.findInSlices(c.localRef) )) || includeAsInner.Contains(c))
+                    if (((isNotInSupply(c) || this.findInSlices(c.localRef)) 
+						 && (isNotParameter(c) || this.findInSlices(c.localRef))) 
+						|| includeAsInner.Contains(c))
                     {
                         // CREATE INNER COMPONENT
                         InnerComponent iNew = new InnerComponent();
@@ -409,7 +411,7 @@ namespace HPE_DGAC_LoadDB
 
                         iNew.Transitive = false;
                         iNew.IsPublic = c.exposed;
-
+						
                         // LOAD EXPOSED INNER COMPONENTS
                         if (c.port != null)
                         {
@@ -419,8 +421,10 @@ namespace HPE_DGAC_LoadDB
                                 string varName = null;
                                 int id_abstract_port = app.Id_abstract;
                                 string id_inner_port = port.localRef;
+								
                                 InnerComponent ic_port = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(id_abstract_port,id_inner_port);
-                                if (c.parameter != null)
+								
+                                if (c.parameter != null && ic_port != null)
                                 {
                                     foreach (ParameterRenaming par in c.parameter)
                                     {
@@ -470,6 +474,7 @@ namespace HPE_DGAC_LoadDB
 
                                 if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
                                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.insert(iNewPort);
+								
                             }
                         }
                         if (includeAsInner.Contains(c) && br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNew.Id_abstract_owner, iNew.Id_inner) != null)
@@ -517,16 +522,20 @@ namespace HPE_DGAC_LoadDB
 
         private bool findInSlices(string cref)
         {
-            foreach (InterfaceType i in anInterface)
-            {
-                foreach (InterfaceSliceType s in i.slice)
-                {
-                    if (s.originRef.cRef.Equals(cref))
-                    {
-                        return true;
-                    }
-                }
-            }
+			foreach (UnitType u in unit)
+			{
+				if (u.slices != null) 
+				{
+	                foreach (UnitSliceType s in u.slices)
+	                {
+	                    if (s.cRef.Equals(cref))
+	                    {
+	                        return true;
+						}					
+	                }					
+				}
+			}
+			
             return false;
         }
 
@@ -791,7 +800,7 @@ namespace HPE_DGAC_LoadDB
                     i.Assembly_string = i.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
                     i.Order = ++count;
 
-                    if (ui.parameter != null)
+					if (ui.parameter != null)
                     {
                         foreach (InterfaceParameterType ipx in ui.parameter)
                         {
@@ -807,7 +816,7 @@ namespace HPE_DGAC_LoadDB
                         }
                     }
 
-                    int order = 0;
+					int order = 0;
                     foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
                     {
                         SourceCode ss = new SourceCode();
@@ -855,6 +864,7 @@ namespace HPE_DGAC_LoadDB
                         IList<String> mP = new List<string>();
                         IDictionary<string, UnitSliceType> m = new Dictionary<string, UnitSliceType>();
                         
+						
                         // 1st PASS: COLLECT ALL MAPPINGS SLICE/EXPOSED SLICES
                         foreach (UnitSliceType uS in u.slices)
                         {
@@ -877,6 +887,7 @@ namespace HPE_DGAC_LoadDB
                             }
                         }
 
+					Console.Error.WriteLine("STEP 5.7");
                         // 3rd PASS:
                         foreach (UnitSliceType uS in u.slices)
                         {
@@ -889,7 +900,7 @@ namespace HPE_DGAC_LoadDB
                             InnerComponent inner = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract,cRefS);
                             Interface iii = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveTop(inner.Id_abstract_inner, uRefS);
 
-                            Slice s = new Slice();
+							Slice s = new Slice();
                             s.Id_abstract = absC.Id_abstract;
                             s.Id_interface = uRef;
                             s.Id_interface_slice = iii == null ? uRefS : iii.Id_interface;
@@ -908,8 +919,9 @@ namespace HPE_DGAC_LoadDB
                                 foreach (string pname in uS.port) {
                                     UnitSliceType usPort = null;
                                     m.TryGetValue(pname, out usPort);
-
+																		
                                     InnerComponentType innerCPort = lookForInnerComponent(usPort.cRef);
+									
 
                                     InnerComponent inner2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract,usPort.cRef);
                                     Interface iii2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveTop(inner2.Id_abstract_inner, usPort.uRef);
@@ -918,7 +930,7 @@ namespace HPE_DGAC_LoadDB
                                     se.Id_abstract = s.Id_abstract;
                                     se.Id_inner = innerCPort.localRef;
                                     se.Id_inner_owner = s.Id_inner;
-                                    se.Id_interface_slice_owner = s.Id_interface_slice;
+                                    se.Id_interface_slice_owner = s.Id_interface_slice_top; // mudado de s.Id_interface_slice em 28/06/2011
                                     se.Id_split_replica_owner = s.Id_split_replica;
                                     se.Id_split_replica = usPort.replica; // s.Id_split_replica;
                                     se.Id_interface_slice = iii2 == null ? usPort.uRef : iii2.Id_interface;
@@ -934,6 +946,7 @@ namespace HPE_DGAC_LoadDB
                             //if (sdao.retrieve(s.Id_abstract,s.Id_inner,s.Id_interface_slice,s.Id_split_replica) == null) 
                             br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.insert(s);
                         }
+
                     }
                 }
             }

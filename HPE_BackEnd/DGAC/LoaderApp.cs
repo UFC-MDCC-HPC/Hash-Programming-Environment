@@ -154,44 +154,24 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component resolveImpl(AbstractComponentFunctorApplication acfaRef, IDictionary<string, int> actualParameters, IDictionary<string, int> actualParametersTop)
         {
-
+			//Console.WriteLine("RESOLVE IMPL - id_functor_app=" + acfaRef.Id_functor_app + " - id_abstract=" + acfaRef.Id_abstract);
 
             // get inner component application
             if (acfaRef != null)
             {
-                IList<SupplyParameter> supplyParameters = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(acfaRef.Id_functor_app);
-
-                foreach (SupplyParameter supplyParameter in supplyParameters)
-                {
-
-                    //if exist a supplied parameter, then check if it is suppllie for a component
-                    SupplyParameterComponent spc = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spcdao.retrieve(supplyParameter.Id_parameter,
-                                                                                        supplyParameter.Id_functor_app);
-
-                    if (spc != null)
-                    {
-                        acfaRef.addParameter(spc.Id_parameter, spc.Id_functor_app_actual);
-                    }
-                    else
-                    {
-                        SupplyParameterParameter spp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sppdao.retrieve(supplyParameter.Id_parameter,
-                                                                                            supplyParameter.Id_functor_app);
-                        if (spp != null)
-                        {
-                            int id_functor_app_actual_top;
-                            actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
-                            if (id_functor_app_actual_top == 0)
-                            {
-                                actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual_top);
-                            }
-                            acfaRef.addParameter(spp.Id_parameter, id_functor_app_actual_top);
-
-                        } // else NOT EXPECTED !!! A parameter is either a supplied component or an enclosing parameter.
-
-                    }//else
-
-                }//for each SupplyParameter
-
+				IDictionary<string,int> actualParameters_new = new Dictionary<string,int>();
+				IDictionary<string,int> actualParameters_old = new Dictionary<string,int>(actualParametersTop);
+				foreach (KeyValuePair<string,int> pair in actualParameters)
+				{
+					if (!actualParameters_old.ContainsKey(pair.Key)) actualParameters_old.Add(pair);
+				}				
+				
+				DGAC.BackEnd.determineActualParameters(actualParameters_old,acfaRef.Id_functor_app, out actualParameters_new);
+				
+				foreach (KeyValuePair<string,int> pair in actualParameters_new)
+				{
+					acfaRef.addParameter(pair.Key, pair.Value);
+				}				
             }
 
             // AT THIS POINT, the FUNCTOR OF THE INNER COMPONENT, WITH PARAMETERS SUPPLIED, 

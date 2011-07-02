@@ -50,11 +50,19 @@ namespace br.ufc.pargo.hpe.basic
         }
 
         #region CreateSlicesPort
-
-        public void create_slices()
+		
+		private IDictionary<string, bool> connected_slice = new Dictionary<string,bool>();
+		
+		public void create_slices()
+		{
+			create_slices(null);
+		}
+		
+        public void create_slices(IUnit owner_unit)
         {
             Connector.openConnection();
             // CREATE SLICES !!!
+			Console.WriteLine("BEGIN SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
             foreach (Slice slice in sList)
             {
@@ -63,57 +71,73 @@ namespace br.ufc.pargo.hpe.basic
                 int slice_kind = Constants.kindMapping[acf.Kind];
                 if (slice_kind != Constants.KIND_QUALIFIER)
                 {
-                    if (!slice.isPublic())
-                    {
-                        /* This method will:
-                         *   1. instantiate the inner component (local slice) if it is not yet be instantiated and connected
-                         *   2. connect the uses port to the implements (provides) port of the inner component                     * 
-                         */
-                        BackEnd.createSlice(this, slice);
-                    }
-                    else
-                    {
-                        // Look for the port in the enclosing unit.
-                        ComponentID user_id = this.CID;
-                        string portName = slice.Id_inner; /*slice.PortName;*/
-                        ComponentID container_id = this.containerSlice.CID;
-
-                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
-
-                        /* The actual name of the current component */
-                        string id_inner_owner = this.Id_inner;
-
-                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
-                                                                  slice.Id_inner,
-                                                                  slice.Id_interface_slice_top,
-                                                                  this.containerSlice.Id_abstract,
-                                                                  i.Id_interface_super_top,
-                                                                  id_inner_owner
-                                                                  );
-
-                        if (se==null) { 
-							Console.Error.WriteLine(container_id.ToString());
-							Console.Error.WriteLine(user_id.ToString());
-							Console.Error.WriteLine(" id_inner_original = " + slice.Id_inner +
-                                                              " id_interface_slice_original = " + slice.Id_interface_slice_top +
-                                                              " id_abstract = " + this.containerSlice.Id_abstract +
-                                                              " id_interface = " + i.Id_interface_super_top + 
-                                                              " id_inner_owner = " + id_inner_owner);
-						} /*
-                         else Console.Error.WriteLine("id_abstract = " + this.Id_abstract + "id_inner_owner = " + id_inner_owner);
-                        */
-                        string container_portName = se.Id_inner;
-
-                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
-                    }
+					if (!this.connected_slice.ContainsKey(slice.Id_inner)) 
+					{
+	                    if (!slice.isPublic())
+	                    {
+	                        /* This method will:
+	                         *   1. instantiate the inner component (local slice) if it is not yet be instantiated and connected
+	                         *   2. connect the uses port to the implements (provides) port of the inner component                     * 
+	                         */
+	                        BackEnd.createSlice(this, slice);
+							Console.WriteLine("CREATE SLICE : " + slice.Id_inner);
+							connected_slice.Add(slice.Id_inner, true);
+	                    }
+	                    else
+	                    {
+	                        // Look for the port in the enclosing unit.
+	                        ComponentID user_id = this.CID;
+	                        string portName = slice.Id_inner; /*slice.PortName;*/
+	                        ComponentID container_id = owner_unit.CID;
+	
+	                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
+	
+	                        /* The actual name of the current component */
+	                        string id_inner_owner = this.get_id_inner(owner_unit);
+							int id_abstract_owner = owner_unit.Id_abstract; // this.ContainerSlice.Id_abstract;
+	
+	                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
+	                                                                  slice.Id_inner,
+	                                                                  slice.Id_interface_slice_top,
+	                                                                  id_abstract_owner,
+	                                                                  i.Id_interface_super_top,
+	                                                                  id_inner_owner
+	                                                                  );
+	                           
+							
+							
+							if (se != null)
+							{
+		                        string container_portName = se.Id_inner;		
+								Console.WriteLine("REDIRECT SLICE " + slice.Id_inner);
+		                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
+								IUnit unit = (IUnit) Services.getPort(portName);
+								unit.set_id_inner(this, portName);
+								//unit.Id_inner = portName;
+								unit.addContainerSlice(this);
+								//unit.ContainerSlice = this;
+								connected_slice.Add(slice.Id_inner, true);
+							} else 
+							{
+								Console.WriteLine("PASS THROUGH " + slice.Id_inner);
+							}
+	                    }						
+					}
+					else 
+					{
+						Console.WriteLine("ALREADY CONNECTED - " + slice.Id_inner);
+					}
                 }
             }            
             
-            foreach (IUnit unit_slice in this.Slices)
+			Console.WriteLine("STARTING SLICES ... " + this.AllSlices.Count);
+            foreach (IUnit unit_slice in this.AllSlices)
             {
-                unit_slice.create_slices();
+			    unit_slice.create_slices(this);
             }
 
+			Console.WriteLine("END SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
+			Console.WriteLine();
             Connector.closeConnection();
         }
 
@@ -171,14 +195,34 @@ namespace br.ufc.pargo.hpe.basic
             set { id_interface = value; }
         }
 
-        private string id_inner = "top";
+        //private string id_inner = "top";
+	    private IDictionary<IUnit,string> id_inner_map = null;
         
-        public string Id_inner
-        {
-            get { return id_inner; }
-            set { id_inner = value; }
-        }
-
+        //public string Id_inner
+        //{
+        //    get { return id_inner; }
+        //    set { id_inner = value; }
+        //}
+		
+		public string get_id_inner(IUnit container)
+		{
+			if (id_inner_map == null)
+				id_inner_map = new Dictionary<IUnit,string>();
+			
+			string id_inner;
+			if (container == null) return "top";
+			if (id_inner_map.TryGetValue(container, out id_inner))
+				return id_inner;
+			return null;
+		}
+		
+		public void set_id_inner(IUnit container, string id_inner)
+		{
+			if (id_inner_map == null)
+				id_inner_map = new Dictionary<IUnit,string>();
+			id_inner_map.Add(container,id_inner);
+		}
+		
         private int id_abstract = 0;
 
         public int Id_abstract
@@ -263,18 +307,31 @@ namespace br.ufc.pargo.hpe.basic
         {
         }
 
-        private IUnit containerSlice;
+        private IList<IUnit> containerSlice = null;
 
-        public IUnit ContainerSlice
+        public IList<IUnit> ContainerSlice
         {
-            get { return containerSlice; }
-            set
-            {
-                containerSlice = value;
-                value.addSlice(this);
-            }
+            get 
+			{ 
+				if (containerSlice == null) 
+					containerSlice = new List<IUnit>();
+			  	return containerSlice; 
+			}
+            //set
+            //{
+            //    containerSlice = value;
+            //    value.addSlice(this);
+            //}
         }
 
+	    public void addContainerSlice(IUnit u)
+		{
+			if (containerSlice == null) 
+				containerSlice = new List<IUnit>();
+			containerSlice.Add(u);
+			if (u!=null) 
+				u.addSlice(this);
+		}
 
 
         private int[] myRanksInv = null;

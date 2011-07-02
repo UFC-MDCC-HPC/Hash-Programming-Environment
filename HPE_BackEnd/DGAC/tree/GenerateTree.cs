@@ -33,12 +33,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             while (queue.Count != 0)
             {
-
                 TreeNode nodeRef = (TreeNode)queue[0];
 
                 int id_abstract = nodeRef.Functor_app.Id_abstract;
                 int id_functor_app_actual = nodeRef.Functor_app.Id_functor_app;
-
                 int id_abstract_top = nodeRef.Functor_app_top.Id_abstract;
 
                 queue.RemoveAt(0);
@@ -65,13 +63,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaTop = acfp == null ? null : br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                     }
 
-
                     AbstractComponentFunctorApplication acfaActual = null;
                     if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
-
                     }
                     else if (sp is SupplyParameterParameter)
                     {
@@ -80,10 +76,22 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         if (Id_functor_app_actual <= 0) // LOOK AT THE TOP PARAMETERS
                         {
                             SupplyParameterParameter spp = (SupplyParameterParameter)sp;
-                            actualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
+                            bool found = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
+							if (!found)
+							{
+								string key = spp.Id_parameter_actual + "#" + sp.Id_functor_app;
+								acfaRef.ParametersList.TryGetValue(key, out Id_functor_app_actual);
+							}
+							
+							/* if (acfaActual == null) {
+								Console.WriteLine("acfaActial NULL 2 !!!!" + spp.Id_parameter_actual + " - " + parameter_id);
+								foreach (KeyValuePair<string,int> par in acfaRef.ParametersList) 
+								{
+									Console.WriteLine("pair: " + par.Key + " -> " + par.Value);
+								}
+							}*/
                         }
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_actual);
-                        // parameter_id = ((SupplyParameterParameter)sp).Id_parameter_actual; // this line has been included but was not tested.
                     }
 
 
@@ -122,12 +130,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
                     if (node == null)
                     {
-                        //   foreach (KeyValuePair<String, TreeNode> n in memory)
-                        //  {
-                        //      Console.Write(n.Key + ",");
-                        //  }
-                        //  Console.WriteLine("LOOKING FOR " + /*acfp.Id_parameter*/parameter_id + " : " + b + " , " + memory.Count);
-                        //    Console.WriteLine("*****");
                         node = new TreeNode(generalizeSteps, nodeRef);
                         node.addParameterIdSyn(parameter_id);
                         node.Parameter_id = parameter_id;
@@ -154,7 +156,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             AbstractComponentFunctorApplication id_abstract_step = acfActual;
             AbstractComponentFunctorApplication id_abstract_top = acfaTop;
             IList<AbstractComponentFunctorApplication> gs = new List<AbstractComponentFunctorApplication>();
-
        //     AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
         //    AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
             AbstractComponentFunctor acf;

@@ -858,7 +858,7 @@ namespace br.ufc.pargo.hpe.backend
                 string class_name = u.Class_name;  // the name of the class inside the DLL.
                 int class_nargs = u.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-
+				
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
 
@@ -944,7 +944,9 @@ namespace br.ufc.pargo.hpe.backend
                 string id_inner = slice.Id_inner;
                 string id_interface = slice.Id_interface_slice;
                 string portName = id_inner; /*slice.PortName;*/
-
+				
+				//Console.WriteLine("CREATE SLICE: id_inner=" + id_inner + ", id_interface=" +  id_interface);
+				
                 ComponentID user_cid = ownerUnit.CID;
                 Services services = ownerUnit.Services;
                 string instanceName = user_cid.getInstanceName();
@@ -976,13 +978,17 @@ namespace br.ufc.pargo.hpe.backend
 
                     // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
                     framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+			Console.WriteLine("PROVIDER1: " + provider_cid.getInstanceName() + ":" + Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+			Console.WriteLine("USER1: " + user_cid.getInstanceName() + ":" + portName);
 
                     // GET THE UNIT SLICE AND RETURNS IT
                     the_unit = (IUnit)services.getPort(portName);
                    // the_unit.ContainerSlice = ownerUnit;
                     the_unit.GlobalRank = ownerUnit.GlobalRank;
                     the_unit.WorldComm = ownerUnit.WorldComm;
-                    the_unit.Id_inner = slice.Id_inner;
+					
+                    //the_unit.Id_inner = slice.Id_inner;
+					the_unit.set_id_inner(ownerUnit,slice.Id_inner);
                 }
                 
                 return the_unit;
@@ -1015,7 +1021,8 @@ namespace br.ufc.pargo.hpe.backend
                 // unit_slice.Id_abstract = ic.Id_abstract_inner;
                 unit_slice.setActualParameters(actualParameters_new);
                 unit_slice.ActualParametersTop = unit.ActualParametersTop;
-                unit_slice.ContainerSlice = unit;
+                //unit_slice.ContainerSlice = unit;
+				unit_slice.addContainerSlice(unit);
                 unit_slice.GlobalRank = unit.GlobalRank;
                 unit_slice.WorldComm = unit.WorldComm;
 
@@ -1425,8 +1432,6 @@ namespace br.ufc.pargo.hpe.backend
                 string re_Key;
                 int re_Value;
 
-                //   Console.WriteLine("findReplicator:" + id_abstract + "," + id_inner + "," + id_unit + ", " + re.Key);
-
                 EnumeratorSplitDAO esplitdao = new EnumeratorSplitDAO();
                 EnumeratorSplit es = esplitdao.retrieve1(id_abstract, re.Key);
                 if (es != null && s.Id_split_replica > 0)
@@ -1444,30 +1449,21 @@ namespace br.ufc.pargo.hpe.backend
                 foreach (KeyValuePair<string, int> ke in enumeratorCardinality)
                     dictReplaceKey(enumeratorCardinality_prime, ke.Key, ke.Value);
 
-                // if (!enumeratorCardinality_prime.ContainsKey(ke.Key))
-                //    {
-                //        enumeratorCardinality_prime.Add(ke);
-                //    }
-
                 string id_inner_container = id_inner;
                 IList<string> id_inner_container_list = new List<string>();
                 IList<SliceExposed> seMap = new List<SliceExposed>();
 
                 // FIND THE ORIGINAL REPLICATOR OF THE INNER COMPONENT THAT HAS BEEN FUSED.
-                //    EnumeratorMappingDAO emdao = new EnumeratorMappingDAO();
-                //            EnumeratorMapping em = null;
 
                 IList<SliceExposed> lse = null;
                 if (ic.Transitive)
                 {
-                    //  SliceExposedDAO sedao = new SliceExposedDAO();
                     lse = BackEnd.sedao.listContainers(s.Id_abstract, s.Id_inner, s.Id_interface_slice, s.Id_split_replica);
 
                     foreach (SliceExposed se_ in lse)
                     {
                         id_inner_container = se_.Id_inner_owner;
                         id_inner_container_list.Add(id_inner_container);
-                        //             Console.WriteLine("SLICE EXPOSED: " + id_inner_container);
                         seMap.Add(se_);
                     }
                 }
@@ -1476,7 +1472,6 @@ namespace br.ufc.pargo.hpe.backend
                 {
                     id_inner_container_list.Add(id_inner_container);
                 }
-
 
                 string re_Key_before = re_Key;
 
@@ -1500,7 +1495,7 @@ namespace br.ufc.pargo.hpe.backend
                     return false;
                 }
 
-                IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
+				IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
 
                 // UPDATE CARDINALITY
                 foreach (KeyValuePair<string, int> ke in enumeratorCardinality_prime)
@@ -1508,11 +1503,6 @@ namespace br.ufc.pargo.hpe.backend
                     if (ke.Key.Equals(re_Key_before))
                     {
                         dictReplaceKey(enumeratorCardinalityTemp, re_Key, ke.Value);
-
-                        //                    if (!enumeratorCardinalityTemp.ContainsKey(re_Key))
-                        //                    {
-                        //                        enumeratorCardinalityTemp.Add(re_Key, ke.Value);                        
-                        //                    }
                     }
                     else
                     {
@@ -1525,47 +1515,43 @@ namespace br.ufc.pargo.hpe.backend
                             re_Key_ = re_Key_.Substring(cc_ + (id_inner_container + ".").Length);
                             re_Value_ = ke.Value;
                             dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
-                            // if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
-                            // {
-                            //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
-                            // }
                         }
                         else
                         {
                             dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
-                            //if (!enumeratorCardinalityTemp.ContainsKey(re_Key_))
-                            //{
-                            //     enumeratorCardinalityTemp.Add(re_Key_, re_Value_);
-                            // }
                         }
                     }
                 }
 
-                enumeratorCardinality_prime = enumeratorCardinalityTemp;
+
+				enumeratorCardinality_prime = enumeratorCardinalityTemp;
 
                 KeyValuePair<string, int> ke_prime = new KeyValuePair<string, int>(re_Key, re_Value);
-
+				
                 if (ic.Transitive && seMap.Count > 0)     // in fact, ic.Transitive <=> se != null
                 {
-                    //   InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
+				Console.WriteLine("find Replicator 10 " + "id_abstract=" + id_abstract + " id_inner_container=" + id_inner_container +" id_inner=" + id_inner);
                     InnerComponentExposed ice = BackEnd.icedao.retrieve(id_abstract, id_inner_container, id_inner);
 
-                    //  InnerComponentDAO icdao = new InnerComponentDAO();
+				Console.WriteLine("find Replicator 11 " + "ic.Id_abstract_owner=" + ic.Id_abstract_owner + " ice.Id_inner_owner=" + ice.Id_inner_owner);
                     InnerComponent ic_owner = BackEnd.icdao.retrieve(ic.Id_abstract_owner, ice.Id_inner_owner);
+				Console.WriteLine("find Replicator 12 " + "ic_owner.Id_abstract_inner=" + ic_owner.Id_abstract_inner + " ice.Id_inner=" + ice.Id_inner);
                     InnerComponent ic_prime = BackEnd.icdao.retrieve(ic_owner.Id_abstract_inner, ice.Id_inner);
 
-                    //  SliceDAO sdao = new SliceDAO();
                     Slice s_prime = null;
 
+					
+				Console.WriteLine("find Replicator 2 - " + ic_owner.Id_abstract_inner + "," + (ice.Id_inner) + " - "+  (ic_prime==null));
+					
                     foreach (SliceExposed se in seMap)
-                    {
-                        s_prime = BackEnd.sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice, se.Id_interface_slice_owner);
+                    {						
+                        s_prime = BackEnd.sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice_original, se.Id_interface_slice_owner);
                         if (s_prime != null)
                             break;
-                        // else
-                        //     Console.WriteLine("Fetched in seMap : " + se.Id_interface_slice_owner);
                     }
 
+				Console.WriteLine("find Replicator 3 - " + (s_prime==null));
+					
                     IList<EnumeratorMapping> emList = BackEnd.exmdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
 
                     int kkk;
@@ -1575,19 +1561,19 @@ namespace br.ufc.pargo.hpe.backend
                     foreach (EnumeratorMapping em in emList)
                     {
                         dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
-                        //                    if (!enumeratorCardinality_prime.ContainsKey(em.Id_enumerator_inner))
-                        //                    {
-                        //                        enumeratorCardinality_prime.Add(em.Id_enumerator_inner, kkk /* ke_prime.Value*/);
-                        //                    }
                     }
 
-                    //     Console.WriteLine("emList.Count = " + emList.Count + " => " + ic_prime.Id_abstract_owner + " - " + ke_prime.Key + "," + ic_owner.Id_abstract_inner + "," + ice.Id_inner);
-                    if (emList.Count > 0)
+					
+				Console.WriteLine("find Replicator 4");
+
+					if (emList.Count > 0)
                     {
                         foreach (EnumeratorMapping em in emList)
                         {
                             KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string, int>(em.Id_enumerator_inner, ke_prime.Value);
-                            if (findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
+							
+							bool found = findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator);
+                            if (found)
                             {
                                 return true;
                             }
@@ -1601,11 +1587,12 @@ namespace br.ufc.pargo.hpe.backend
                         }
                     }
 
+				Console.WriteLine("find Replicator 5");
 
-                    replicator = new KeyValuePair<string, int>(); ;
+					replicator = new KeyValuePair<string, int>(); ;
 
                     enumeratorCardinality_return = new Dictionary<string, int>();
-
+					
                     return false;
                 }
                 else
@@ -1626,6 +1613,8 @@ namespace br.ufc.pargo.hpe.backend
 
                     return true;
                 }
+				Console.WriteLine("find Replicator 6");
+
 
             }
 
@@ -1654,13 +1643,14 @@ namespace br.ufc.pargo.hpe.backend
                         if (achou)
                         {
                             actualParameters_new.Add(spp.Id_parameter, id_functor_app_actual);
-                        }
+                        } 
+						
                     }
                     else if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                         actualParameters_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
-                        traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
+						traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
                     }
                 }
             }

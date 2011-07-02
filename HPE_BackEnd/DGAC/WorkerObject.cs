@@ -232,6 +232,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ConnectionID conn_id;
             this.connByUserPort.TryGetValue(container_id.getInstanceName() + ":" + container_portName, out conn_id);
+			Console.WriteLine("PROVIDER: " + container_id.getInstanceName() + ":" + container_portName + " --- " + (conn_id==null));
+			Console.WriteLine("USER: " + user_id.getInstanceName() + ":" + user_portName);
             ComponentID provider_id = conn_id.getProvider();
             string provider_portName = conn_id.getProviderPortName();
             this.connect(user_id, user_portName, provider_id, provider_portName);
@@ -339,9 +341,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         
             if (properties.hasKey(Constants.KEY_KEY)) {
                 int key = properties.getInt(Constants.KEY_KEY, my_rank);
-	            Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
+//	            Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
 	            unit_slice.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-	            Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
+//	            Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
 	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
             }
 
@@ -720,13 +722,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
           //  Console.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
             if (!usesPortNamesInv.ContainsKey(portName))
             {
+				Console.WriteLine("PORT NOT FOUND is " + portName);
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
             if (!connByUserPort.ContainsKey(portName))
             {
                 // WAIT UNTIL THE PORT IS AVAILABLE.
-
+				
+				Console.Error.WriteLine("Waiting for " + portName);
+				
                 AutoResetEvent wait_handle = new AutoResetEvent(false);
                 waitingUserPorts.Add(portName, wait_handle);
                 wait_handle.WaitOne();
@@ -743,6 +748,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             if (!usesPortNamesInv.ContainsKey(portName))
             {
+				Console.Error.WriteLine("PORT NOT FOUND is " + portName);
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
