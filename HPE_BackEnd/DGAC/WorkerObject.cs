@@ -232,8 +232,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ConnectionID conn_id;
             this.connByUserPort.TryGetValue(container_id.getInstanceName() + ":" + container_portName, out conn_id);
-			Console.WriteLine("PROVIDER: " + container_id.getInstanceName() + ":" + container_portName + " --- " + (conn_id==null));
-			Console.WriteLine("USER: " + user_id.getInstanceName() + ":" + user_portName);
+			//Console.WriteLine("PROVIDER: " + container_id.getInstanceName() + ":" + container_portName + " --- " + (conn_id==null));
+			//Console.WriteLine("USER: " + user_id.getInstanceName() + ":" + user_portName);
             ComponentID provider_id = conn_id.getProvider();
             string provider_portName = conn_id.getProviderPortName();
             this.connect(user_id, user_portName, provider_id, provider_portName);

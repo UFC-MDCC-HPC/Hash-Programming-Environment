@@ -185,7 +185,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                       "id_interface_slice_owner like '" + id_interface + "' and " +
                       "id_inner_owner like '" + id_inner_owner + "'";
             dbcmd.CommandText = sql;
-			Console.WriteLine(sql);
+			//Console.WriteLine(sql);
                 IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
             {

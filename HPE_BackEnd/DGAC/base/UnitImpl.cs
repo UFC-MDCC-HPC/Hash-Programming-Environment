@@ -137,7 +137,7 @@ namespace br.ufc.pargo.hpe.basic
             }
 
 //			Console.WriteLine("END SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
-			Console.WriteLine();
+			//Console.WriteLine();
             Connector.closeConnection();
         }
 
