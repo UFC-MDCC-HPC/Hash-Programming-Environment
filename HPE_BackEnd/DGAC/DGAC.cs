@@ -1530,18 +1530,18 @@ namespace br.ufc.pargo.hpe.backend
 				
                 if (ic.Transitive && seMap.Count > 0)     // in fact, ic.Transitive <=> se != null
                 {
-				Console.WriteLine("find Replicator 10 " + "id_abstract=" + id_abstract + " id_inner_container=" + id_inner_container +" id_inner=" + id_inner);
+//				Console.WriteLine("find Replicator 10 " + "id_abstract=" + id_abstract + " id_inner_container=" + id_inner_container +" id_inner=" + id_inner);
                     InnerComponentExposed ice = BackEnd.icedao.retrieve(id_abstract, id_inner_container, id_inner);
 
-				Console.WriteLine("find Replicator 11 " + "ic.Id_abstract_owner=" + ic.Id_abstract_owner + " ice.Id_inner_owner=" + ice.Id_inner_owner);
+//				Console.WriteLine("find Replicator 11 " + "ic.Id_abstract_owner=" + ic.Id_abstract_owner + " ice.Id_inner_owner=" + ice.Id_inner_owner);
                     InnerComponent ic_owner = BackEnd.icdao.retrieve(ic.Id_abstract_owner, ice.Id_inner_owner);
-				Console.WriteLine("find Replicator 12 " + "ic_owner.Id_abstract_inner=" + ic_owner.Id_abstract_inner + " ice.Id_inner=" + ice.Id_inner);
+//				Console.WriteLine("find Replicator 12 " + "ic_owner.Id_abstract_inner=" + ic_owner.Id_abstract_inner + " ice.Id_inner=" + ice.Id_inner);
                     InnerComponent ic_prime = BackEnd.icdao.retrieve(ic_owner.Id_abstract_inner, ice.Id_inner);
 
                     Slice s_prime = null;
 
 					
-				Console.WriteLine("find Replicator 2 - " + ic_owner.Id_abstract_inner + "," + (ice.Id_inner) + " - "+  (ic_prime==null));
+//				Console.WriteLine("find Replicator 2 - " + ic_owner.Id_abstract_inner + "," + (ice.Id_inner) + " - "+  (ic_prime==null));
 					
                     foreach (SliceExposed se in seMap)
                     {						
@@ -1550,7 +1550,7 @@ namespace br.ufc.pargo.hpe.backend
                             break;
                     }
 
-				Console.WriteLine("find Replicator 3 - " + (s_prime==null));
+//				Console.WriteLine("find Replicator 3 - " + (s_prime==null));
 					
                     IList<EnumeratorMapping> emList = BackEnd.exmdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
 
@@ -1564,7 +1564,7 @@ namespace br.ufc.pargo.hpe.backend
                     }
 
 					
-				Console.WriteLine("find Replicator 4");
+//				Console.WriteLine("find Replicator 4");
 
 					if (emList.Count > 0)
                     {
@@ -1613,7 +1613,7 @@ namespace br.ufc.pargo.hpe.backend
 
                     return true;
                 }
-				Console.WriteLine("find Replicator 6");
+//				Console.WriteLine("find Replicator 6");
 
 
             }

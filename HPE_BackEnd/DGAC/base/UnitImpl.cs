@@ -62,7 +62,7 @@ namespace br.ufc.pargo.hpe.basic
         {
             Connector.openConnection();
             // CREATE SLICES !!!
-			Console.WriteLine("BEGIN SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
+//			Console.WriteLine("BEGIN SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
             foreach (Slice slice in sList)
             {
@@ -80,7 +80,7 @@ namespace br.ufc.pargo.hpe.basic
 	                         *   2. connect the uses port to the implements (provides) port of the inner component                     * 
 	                         */
 	                        BackEnd.createSlice(this, slice);
-							Console.WriteLine("CREATE SLICE : " + slice.Id_inner);
+//							Console.WriteLine("CREATE SLICE : " + slice.Id_inner);
 							connected_slice.Add(slice.Id_inner, true);
 	                    }
 	                    else
@@ -109,7 +109,7 @@ namespace br.ufc.pargo.hpe.basic
 							if (se != null)
 							{
 		                        string container_portName = se.Id_inner;		
-								Console.WriteLine("REDIRECT SLICE " + slice.Id_inner);
+//								Console.WriteLine("REDIRECT SLICE " + slice.Id_inner);
 		                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
 								IUnit unit = (IUnit) Services.getPort(portName);
 								unit.set_id_inner(this, portName);
@@ -119,24 +119,24 @@ namespace br.ufc.pargo.hpe.basic
 								connected_slice.Add(slice.Id_inner, true);
 							} else 
 							{
-								Console.WriteLine("PASS THROUGH " + slice.Id_inner);
+//								Console.WriteLine("PASS THROUGH " + slice.Id_inner);
 							}
 	                    }						
 					}
 					else 
 					{
-						Console.WriteLine("ALREADY CONNECTED - " + slice.Id_inner);
+//						Console.WriteLine("ALREADY CONNECTED - " + slice.Id_inner);
 					}
                 }
             }            
             
-			Console.WriteLine("STARTING SLICES ... " + this.AllSlices.Count);
+//			Console.WriteLine("STARTING SLICES ... " + this.AllSlices.Count);
             foreach (IUnit unit_slice in this.AllSlices)
             {
 			    unit_slice.create_slices(this);
             }
 
-			Console.WriteLine("END SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
+//			Console.WriteLine("END SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
 			Console.WriteLine();
             Connector.closeConnection();
         }
