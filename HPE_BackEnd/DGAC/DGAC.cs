@@ -978,8 +978,8 @@ namespace br.ufc.pargo.hpe.backend
 
                     // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
                     framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-			Console.WriteLine("PROVIDER1: " + provider_cid.getInstanceName() + ":" + Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-			Console.WriteLine("USER1: " + user_cid.getInstanceName() + ":" + portName);
+			//Console.WriteLine("PROVIDER1: " + provider_cid.getInstanceName() + ":" + Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+			//Console.WriteLine("USER1: " + user_cid.getInstanceName() + ":" + portName);
 
                     // GET THE UNIT SLICE AND RETURNS IT
                     the_unit = (IUnit)services.getPort(portName);
@@ -1587,7 +1587,7 @@ namespace br.ufc.pargo.hpe.backend
                         }
                     }
 
-				Console.WriteLine("find Replicator 5");
+//				Console.WriteLine("find Replicator 5");
 
 					replicator = new KeyValuePair<string, int>(); ;
 
