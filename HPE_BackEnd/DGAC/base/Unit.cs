@@ -46,12 +46,14 @@ namespace br.ufc.pargo.hpe.basic
         void addSlice(IUnit slice);
         void addSliceAll(IUnit slice);
         void initialize();
+        void post_initialize();
         void destroySlice();
 
         #region CreateSlicesPort
 
         void create_slices();
         void initialize_slices();
+        void post_initialize_slices();
         void destroy_slices();
 
         #endregion CreateSlicesPort

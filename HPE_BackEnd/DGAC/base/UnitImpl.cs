@@ -159,6 +159,22 @@ namespace br.ufc.pargo.hpe.basic
 			Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
         }
 
+        public void post_initialize_slices()
+        {
+
+            foreach (IUnit unit_slice in this.AllSlices)
+            {
+                if (!initialized.ContainsKey(unit_slice))
+                {
+                    unit_slice.post_initialize_slices();
+                    initialized.Add(unit_slice, true);
+                }
+            }
+						
+			post_initialize();
+			Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " post initialized !!! ");
+        }
+		
         private static IDictionary<IUnit, bool> destroyed = new Dictionary<IUnit, bool>();
 
         public void destroy_slices()
@@ -452,6 +468,10 @@ namespace br.ufc.pargo.hpe.basic
         {
         }
         
+        virtual public void post_initialize()
+        {
+        }
+		
         private Intracommunicator comm = null;
         
         public Intracommunicator WorldComm {get { return comm; } set { this.comm = value; }}
