@@ -162,7 +162,9 @@ namespace br.ufc.pargo.hpe.basic
         public void post_initialize_slices()
         {
 
-            foreach (IUnit unit_slice in this.AllSlices)
+			post_initialize();
+
+			foreach (IUnit unit_slice in this.AllSlices)
             {
                 if (!initialized.ContainsKey(unit_slice))
                 {
@@ -171,7 +173,6 @@ namespace br.ufc.pargo.hpe.basic
                 }
             }
 						
-			post_initialize();
 			Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " post initialized !!! ");
         }
 		
