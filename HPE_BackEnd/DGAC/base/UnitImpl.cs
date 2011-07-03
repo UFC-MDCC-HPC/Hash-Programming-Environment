@@ -142,6 +142,7 @@ namespace br.ufc.pargo.hpe.basic
         }
 
         private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
+        private static IDictionary<IUnit, bool> post_initialized = new Dictionary<IUnit, bool>();
 
         public void initialize_slices()
         {
@@ -166,7 +167,7 @@ namespace br.ufc.pargo.hpe.basic
 
 			foreach (IUnit unit_slice in this.AllSlices)
             {
-                if (!initialized.ContainsKey(unit_slice))
+                if (!post_initialized.ContainsKey(unit_slice))
                 {
                     unit_slice.post_initialize_slices();
                     initialized.Add(unit_slice, true);
