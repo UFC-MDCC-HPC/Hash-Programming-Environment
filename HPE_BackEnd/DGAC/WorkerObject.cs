@@ -1243,6 +1243,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                create_slice_port.create_slices();
                Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL INITIALIZE SLICES " + session_id_string);
                create_slice_port.initialize_slices();
+               Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": CALL POST INITIALIZE SLICES " + session_id_string);
+               create_slice_port.post_initialize_slices();
 
                // REGISTER USES PORT "Go"
                Console.Error.WriteLine("Worker " + this.global_communicator.Rank + ": REGISTER GO PORT " + session_id_string);
