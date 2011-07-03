@@ -156,7 +156,7 @@ namespace br.ufc.pargo.hpe.basic
             }
 						
 			initialize();
-			Console.WriteLine(this.GlobalRank + ": " + cid.getInstanceName + " initialized !!! ");
+			Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName + " initialized !!! ");
         }
 
         private static IDictionary<IUnit, bool> destroyed = new Dictionary<IUnit, bool>();
