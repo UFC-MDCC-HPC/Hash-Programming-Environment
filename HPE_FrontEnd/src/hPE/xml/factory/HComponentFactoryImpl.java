@@ -1995,8 +1995,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				ActionType a = null;
 				String iRef = null;
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 
 				int nargs = i.getParametersCount();
 

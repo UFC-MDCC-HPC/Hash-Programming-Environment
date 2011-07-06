@@ -160,15 +160,6 @@ public class HInterfaceSig implements Serializable, IHasColor  {
 	}
 
 
-	/** 
-	 * Setter of the property <tt>slices</tt>
-	 * @param slices  The slices to set.
-	 * @uml.property  name="slices"
-	 */
-	public void setSlices(List<HInterfaceSlice> slices) {
-		this.slices = slices;
-	}
-
 	public void replaceSlice (HInterfaceSlice s1, HInterfaceSlice s2) {
 		
 		this.slices.add(s1);

@@ -504,45 +504,30 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				{
 					if (!cs.contains(c))
 						cs.add(c);
-					
-					if (cx == c) {
-						for (HComponent c_ : c.getExposedComponents()) 
-						{
-							if (!cs.contains(c_))
-								cs.add(c_);
-						}
-					} 
-					else
-					{
-						for (HComponent cx_ : cx.getExposedComponents()) 
-						{
-							HComponent c_ = this.getInnerComponent(cx_.getRef());
-							
-							if (!cs.contains(c_) && (c_ == null || c_.isPublic()))
-								cs.add(cx_);
-						}
-					}					
-				} 
-				else 
-				{
-					if (cx == c) {
-						for (HComponent c_ : c.getExposedComponents()) 
-						{
-							if (!cs.contains(c_))
-								cs.add(c_);
-						}
-					}
-					else
-					{
-						for (HComponent cx_ : cx.getExposedComponents()) 
-						{
-							HComponent c_ = this.getInnerComponent(cx_.getRef());
-							
-							if (!cs.contains(c_) && (c_ == null || c_.isPublic()))
-								cs.add(cx_);
-						}
-					}					
 				}
+				
+				if (cx == c) 
+				{
+					for (HComponent c_ : c.getExposedComponents()) 
+					{
+						if (!cs.contains(c_))
+							cs.add(c_);
+					}
+				} 
+				else
+				{
+					for (HComponent cx_ : cx.getExposedComponents()) 
+					{
+						
+						String n1 = cx_.getSavedName().get(cx);
+						HComponent cx_prime = c.getInnerComponent(n1);
+						
+						// HComponent c_ = this.getInnerComponent(cx_.getRef());
+						
+						if (!cs.contains(cx_prime) && (cx_prime == null || cx_prime.isPublic()))
+							cs.add(cx_);
+					}
+				}					
 		    }
 		}
 
@@ -552,7 +537,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	private HComponent getInnerComponent(String ref) 
 	{
 		for (HComponent c : this.getInnerComponents()) {
-		   if (c.getRef().equals(ref)) return c;
+		   //if (c.getRef().equals(ref)) return c;
+			if (!c.getSavedName().isEmpty()) 
+			{
+			   if (c.getSavedName().get(this).equals(ref)) return c;
+			}
+		    else 
+		    {
+			   if (c.getRef().equals(ref)) return c;
+		    }
 		
 		}		
 		return null;
@@ -3796,7 +3789,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public HComponent getExposedComponentByName(String name) {
 
-		for (HComponent c : this.getExposedComponents()) {
+		Collection<HComponent> exposedComponents = this.getExposedComponents();
+		
+		for (HComponent c : exposedComponents) {
 			if (c.getName2().equals(name))
 				return c;
 		}
@@ -4295,6 +4290,21 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				return i;
 		}
 		return null;
+	}
+
+	public HComponent getInnerComponentByName(String ref2) {
+		
+		List<HComponent> innerComponents = this.getComponents();
+		
+		for (HComponent cs : innerComponents)
+		{
+		   if (!cs.isHiddenInnerComponent() && cs.getRef().equals(ref2))
+		   {
+		      return cs;
+		   }
+		}
+		
+		return  this.getExposedComponentByName(ref2);
 	}
 
 	

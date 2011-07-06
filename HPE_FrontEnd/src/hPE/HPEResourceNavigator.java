@@ -3,9 +3,12 @@ package hPE;
 import hPE.frontend.backend.HPEPlatform;
 import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.model.HComponent;
+import hPE.xml.factory.HComponentFactory;
+import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -81,11 +84,11 @@ public class HPEResourceNavigator extends ResourceNavigator {
                                     try{
 									    // Open the file that is the first 
 									    // command line parameter
-									    FileInputStream fstream = new FileInputStream("/home/heron/to_deploy");
+									    FileInputStream fstream = new FileInputStream("/home/heron/to_deploy.txt");
 									    // Get the object of DataInputStream
 									    in = new DataInputStream(fstream);
 									    BufferedReader br = new BufferedReader(new InputStreamReader(in));
-									    
+									    HComponentFactory factory = HComponentFactory.eInstance;
 									    String strLine;
 									    //Read File Line By Line
 									    while ((strLine = br.readLine()) != null)   {
@@ -93,6 +96,11 @@ public class HPEResourceNavigator extends ResourceNavigator {
 									        String p = strLine + Path.SEPARATOR + strLine.substring(i+1) + ".hpe";
 									    	
 											System.out.println("started: deploying " + p);
+											java.io.File file2 = new File(p);
+											URI uri = URI.createFileURI(p);
+											HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
+											factory.saveComponent(c,file2,null);
+											
 										    HPEPlatform.deployByPath(p);
 										    System.out.println("finished: deploying " + p);
 									    }

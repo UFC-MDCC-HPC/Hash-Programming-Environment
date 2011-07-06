@@ -45,31 +45,56 @@ public abstract class HUnit extends HPrimUnit
 		return unitSlices;
 	}
 	
-	public List<HUnitSlice> getPorts() {
-
-		 List<HUnitSlice> ports = new ArrayList<HUnitSlice>();
-		 List<HUnit> units = new ArrayList<HUnit>();
+	public List<HUnitSlice> getPorts() 
+	{
+		HUnit this_ = this;
 		
-  	     for (HUnitSlice us : this.getSlices()) {  	    	 
-  	    	 HUnit u = (HUnit) us.getBinding().getEntry();
-  	    	 
-  	    	 HComponent c = (HComponent) u.getConfiguration();
-  	    	 
-  	    	 if (c.isPublic() || c.IsExposedFalsifiedContextTop()) {
-  	    		 ports.add(us);
-  	    		 units.add(u);
-  	    	 }
-  	    	 
-  	    	 for (HUnitSlice us_ : u.getPorts()) {
-  	    		 HUnit u_ = (HUnit)us_.getBinding().getEntry();
-  	    		 if (!units.contains(u_)) {
-  	    			 ports.add(us_);
-  	    		     units.add(u_);
-  	    		 }
-  	    	 }  	    	 
-  	     }
+		List<HUnitSlice> ports = new ArrayList<HUnitSlice>();
+		HComponent c0 = (HComponent) this_.getConfiguration();
 		
-		 return ports;
+		{
+			HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
+			
+			if (c0x != c0) {
+			   int index = c0.getUnits().indexOf(this);
+			   this_ = (HUnit) c0x.getUnits().get(index);
+			}
+			 
+			 List<HUnit> units = new ArrayList<HUnit>();
+			
+	  	     for (HUnitSlice us : this_.getSlices()) 
+	  	     {  	    	 
+	  	    	 HUnit u = (HUnit) us.getBinding().getEntry();
+	  	    	 
+	  	    	 HComponent c = (HComponent) u.getConfiguration();
+	  	    	 
+	  	    	 HComponent cTop = (HComponent) c.getTopConfiguration();
+	  	    	HComponent c_  = cTop.getInnerComponentByName(c.getRef());
+	  	    	 
+	  	    	 //HComponent c_ = cTop.getExposedComponentByName(c.getRef());
+	  	    	 
+	  	    	 
+	  	    	 // if ()	  	    	 
+	  	    	 {	  	    		
+		  	    	 if (c_ != null && (c.isPublic() || c.IsExposedFalsifiedContextTop())) 
+		  	    	 {
+		  	    		 ports.add(us);
+		  	    		 units.add(u);
+		  	    	 }
+		  	    	 
+		  	    	 for (HUnitSlice us_ : u.getPorts()) 
+		  	    	 {
+		  	    		 HUnit u_ = (HUnit)us_.getBinding().getEntry();
+		  	    		 if (!units.contains(u_)) 
+		  	    		 {
+		  	    			 ports.add(us_);
+		  	    		     units.add(u_);
+		  	    		 }
+		  	    	 }  	    	 
+	  	    	 }
+	  	     }
+		}
+		return ports; 
     } 
 	
 

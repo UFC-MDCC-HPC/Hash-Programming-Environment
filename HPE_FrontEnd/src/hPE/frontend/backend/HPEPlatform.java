@@ -76,7 +76,7 @@ public class HPEPlatform {
 		String curDir = "";
 		String userName = null;
 		// String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
-		String urlWS = "http://castanhao.lia.ufc.br/hpe_backend/BackEndWS.asmx";
+		String urlWS = "http://localhost:8080/BackEndWS.asmx";
 		
 //		BrowseAndRunBackEndDialog.getCurrentEditor().doSave(null);
 		
