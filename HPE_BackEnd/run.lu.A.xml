@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" library_path="sp.SP" xmlns="http://www.example.org/Instantiator" >
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" library_path="lu.LU" xmlns="http://www.example.org/Instantiator" >
 	<context_parameter formal_parameter_id="class">
-		<actual_parameter library_path="common.problem_size.Class_S">
+		<actual_parameter library_path="common.problem_size.Class_A">
 	    </actual_parameter>
 	</context_parameter>
 	<node>0</node>
