@@ -4,6 +4,7 @@ import hPE.frontend.base.commands.BindingCreateCommand;
 import hPE.frontend.base.commands.LiftUnitCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
+import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IUnit;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
@@ -891,19 +892,18 @@ public abstract class HUnit extends HPrimUnit
 		}
 		
 		public boolean isExposed() {
+			
 			HComponent c = null;
-		//	if (this.getStubs().isEmpty()) 
-			    c = (HComponent)this.getConfiguration();
-			    HComponent cc = (HComponent) c.getTopConfiguration();
-			    
-			    if (c.getTopParentConfigurations().isEmpty()) {
-			        System.out.print(true);
-			    }
-			    
-			    HComponent ccc = !c.getTopParentConfigurations().isEmpty() ? c.getTopParentConfigurations().get(0) : null;
-			//else 
-			//	c = (HComponent)this.getStubs().get(0).getConfiguration();
+			
+		    c = (HComponent)this.getConfiguration();
+		    HComponent cc = (HComponent) c.getTopConfiguration();
+		    
+		    HComponent ccc = !c.getTopParentConfigurations().isEmpty() ? c.getTopParentConfigurations().get(0) : null;
 			return ccc != null && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop()) || (!c.isPublic() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc));
+			
+			// (!c.isSuperType() && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop())))
+			
+			
 		}
 		
 /*		public Map<HUnitSlice,List<HUnitSlice>> getExposedSlices() {
@@ -959,8 +959,19 @@ public abstract class HUnit extends HPrimUnit
             Map<HUnitSlice,List<HUnitSlice>> l = new HashMap<HUnitSlice,List<HUnitSlice>>();
             
             for (HUnitSlice s : this.getSlices()) {
+            	
+            	    /* LOOK FOR SUPPLYING IF IT EXISTS ... */
                     IHUnit u = (IHUnit)s.getBinding().getEntry();
-                    if (u.isExposed()) 
+                    HComponent cu = (HComponent) u.getConfiguration();                    
+                    HComponent cu_ = (HComponent) (cu.getSupplier() == null ? cu : cu.getSupplier());
+                    IHUnit ux = cu_.getUnits().get(cu.getUnits().indexOf(u));
+                    if (ux==null) {
+                       System.err.print("unexpected behavior inside HUnit (getExposedSlices) - CHECK !");
+                       ux = u;
+                    }
+                    
+                    if (ux.isExposed()) 
+                    {
                             if (l.containsKey(s)) {
                                     List<HUnitSlice> _l = l.get(s);
                                     if (!_l.contains(s)) _l.add(s);
@@ -968,20 +979,61 @@ public abstract class HUnit extends HPrimUnit
                                     List<HUnitSlice> _l = new ArrayList<HUnitSlice>();
                                     if (!_l.contains(s)) _l.add(s);
                                     l.put(s, _l);
-                            }                                       
-                    //else{
-                            for (Entry<HUnitSlice,List<HUnitSlice>> e : u.getExposedSlices().entrySet()) {
-                                    List<HUnitSlice> _l = e.getValue();
-                                    if (l.containsKey(s)) {
-                                            List<HUnitSlice> _ll = l.get(s);
-                                            _ll.addAll(_l);
-                                    } else {
-                                            List<HUnitSlice> _ll = new ArrayList<HUnitSlice>();
-                                            _ll.addAll(_l);
-                                            l.put(s, _ll);
-                                    }                                       
                             }
-                //}
+                    }
+                    
+                    if (ux == u) 
+                    {
+	                    for (Entry<HUnitSlice,List<HUnitSlice>> e : u.getExposedSlices().entrySet()) 
+	                    {
+                            List<HUnitSlice> _l = e.getValue();
+                            if (l.containsKey(s)) 
+                            {
+                                List<HUnitSlice> _ll = l.get(s);
+                                _ll.addAll(_l);
+                            } else 
+                            {
+                                List<HUnitSlice> _ll = new ArrayList<HUnitSlice>();
+                                _ll.addAll(_l);
+                                l.put(s, _ll);
+                            }                                       
+	                    }
+                    } 
+                    else 
+                    {
+                    	HComponent c = (HComponent) u.getConfiguration();
+                    	HComponent cx = (HComponent) ux.getConfiguration();
+	                    for (Entry<HUnitSlice,List<HUnitSlice>> e : ux.getExposedSlices().entrySet()) 
+	                    {
+                            List<HUnitSlice> _l = e.getValue();
+                            if (l.containsKey(s)) 
+                            {
+                                List<HUnitSlice> _ll = l.get(s);
+                                for (HUnitSlice item  : _l) 
+                                {
+                                	HComponent cx_ = (HComponent) item.getBinding().getEntry().getConfiguration();
+            						String n1 = cx_.getSavedName().get(cx);
+            						HComponent cx_prime = c.getInnerComponent(n1);
+            						if (cx_prime == null || cx_prime.isPublic())
+            							_ll.add(item);
+                                }
+                            } else 
+                            {
+                                List<HUnitSlice> _ll = new ArrayList<HUnitSlice>();
+                                for (HUnitSlice item  : _l) 
+                                {
+                                	HComponent cx_ = (HComponent) item.getBinding().getEntry().getConfiguration();
+            						String n1 = cx_.getSavedName().get(cx);
+            						HComponent cx_prime = c.getInnerComponent(n1);
+            						if (cx_prime == null || cx_prime.isPublic())
+            							_ll.add(item);
+                                }
+                                l.put(s, _ll);
+                            }                                       
+	                    }
+                    }
+                    
+                    
             }
             
             return l;                       

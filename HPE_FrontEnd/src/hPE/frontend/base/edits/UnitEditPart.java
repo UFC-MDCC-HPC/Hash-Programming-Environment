@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Collection;
+import java.util.Map;
 
 
 import org.eclipse.swt.SWT;
@@ -37,11 +38,13 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 
 import hPE.HPEVersionEditor;
 
+import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.figures.UnitFigure;
 import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
+import hPE.frontend.base.model.HPort;
 import hPE.frontend.base.model.HPrimUnitStub;
 import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HUnit;
@@ -92,11 +95,11 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 	
 	}
 	
-	protected void refreshVisuals() {
-
+	protected void refreshVisuals() 
+	{		
 		ModelType unit = (ModelType) getModel();
 		FigureType unit_figure = (FigureType) getFigure();
-        
+		        
 	    unit_figure.setBounds(unit.getBounds());
         
 	    System.err.println(unit.getMyClones());

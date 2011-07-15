@@ -147,7 +147,7 @@ public class HPEProperties {
 		/*
 	     * Pegando o properties
 	     */
-	    public static String getPropertiesFile(){
+	    private static String getPropertiesFile(){
 	    	 
         	String s = null;
 
@@ -162,9 +162,9 @@ public class HPEProperties {
             return s;                	        
 	    }
 	    
-	    public static String[] args = {};
+	    private static String[] args = {};
 	    
-	    public static String getArgVal(String argId)
+	    private static String getArgVal(String argId)
 	    {      
 	        int pos = 0;
 	        for (String arg : args)

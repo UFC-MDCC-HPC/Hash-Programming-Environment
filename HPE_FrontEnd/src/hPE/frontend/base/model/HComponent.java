@@ -517,12 +517,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				else
 				{
 					for (HComponent cx_ : cx.getExposedComponents()) 
-					{
-						
+					{						
 						String n1 = cx_.getSavedName().get(cx);
 						HComponent cx_prime = c.getInnerComponent(n1);
-						
-						// HComponent c_ = this.getInnerComponent(cx_.getRef());
 						
 						if (!cs.contains(cx_prime) && (cx_prime == null || cx_prime.isPublic()))
 							cs.add(cx_);
@@ -534,7 +531,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return cs;
 	}
 
-	private HComponent getInnerComponent(String ref) 
+	public HComponent getInnerComponent(String ref) 
 	{
 		for (HComponent c : this.getInnerComponents()) {
 		   //if (c.getRef().equals(ref)) return c;
@@ -2515,6 +2512,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return null;
 	}
 
+	
 	public IHUnit getUnitByName(String uname, int index) {
 		for (IHUnit u : this.getUnits()) {
 			if (u.getName2().equals(uname))
@@ -3482,12 +3480,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		// c2 will replace its c1-image.
 		if (c1 != c2) {
 
-			for (HComponent c : c1.getDirectParentConfigurations()) {
+			for (HComponent c : c1.getDirectParentConfigurations()) 
+			{
 				int i = c.getComponents().indexOf(c1);
 				c.injectComponent(c2, i);
 			}
 
-			if (c2.isParameter()) {
+			if (c2.isParameter()) 
+			{
 				// c2.setVariableName(c1.getVariableName());
 				c2.variableName.putAll(c1.variableName);
 				if (c1.isParameter())

@@ -2688,8 +2688,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (UnitSliceType uSliceX : xU.getSlices()) 
 		 {
-			if ((!uSliceX.isTransitive())) {
-
+			if ((!uSliceX.isTransitive())) 
+			{
 				String cRef = uSliceX.getCRef();
 				String uRef = uSliceX.getURef();
 				String sName = uSliceX.getSliceName();
