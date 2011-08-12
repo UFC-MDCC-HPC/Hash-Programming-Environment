@@ -20,9 +20,8 @@ namespace br.ufc.pargo.hpe.cca.ports.ComponentRepository
     [ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
-
-
     [System.Xml.Serialization.XmlInclude(typeof(gov.cca.ManagerComponentClassDescriptionImpl))]
+	
     public class ComponentRepository : System.Web.Services.WebService, gov.cca.ports.ComponentRepository
     {
         private IpcClientChannel ch;
@@ -37,10 +36,25 @@ namespace br.ufc.pargo.hpe.cca.ports.ComponentRepository
             gov.cca.ComponentClassDescription[] cs = manager.getAvailableComponentClasses();
 
             br.ufc.pargo.hpe.backend.DGAC.BackEnd.releaseManager(ch);
-
-            return cs;           
+			
+			/*foreach (gov.cca.ComponentClassDescription u in cs) 
+			{
+				string t = u.getComponentClassName();
+				Console.WriteLine(t);
+			}*/
+			
+            return /*new gov.cca.ComponentClassDescription[0]; // */ cs;           
         }
-
+		
+        [WebMethod]
+        public gov.cca.ManagerComponentClassDescriptionImpl[] presisei_colocar_esse_metodo()
+        {
+			
+            return new gov.cca.ManagerComponentClassDescriptionImpl[0]; 
+        } 
         #endregion
+		
+		
     }
+		
 }

@@ -675,7 +675,8 @@ namespace gov
          *  An opaque reference to a Component Class.  
          *  (This interface is expected to grow substantially.)
          */
-        public abstract class ComponentClassDescription
+        [Serializable]
+		public abstract class ComponentClassDescription
         {
 
             /** 

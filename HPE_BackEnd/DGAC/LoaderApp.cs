@@ -114,6 +114,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             XmlWriter writer = new XmlTextWriter(fs, null);
 
             serializer.Serialize(writer, env);
+			
+			fs.Close();			
 
 			return File.ReadAllText(filename);	
         }

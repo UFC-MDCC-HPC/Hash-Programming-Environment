@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace gov
 {
     namespace cca
     {
-
+		[Serializable]
         public abstract class ManagerComponentClassDescription : ComponentClassDescription
         {
-            public abstract string ComponentClassName { get; set; }
+           // public abstract string ComponentClassName { get; set; }
         }
-
+		
+		[Serializable]
         public class ManagerComponentClassDescriptionImpl : ManagerComponentClassDescription
         {
 
@@ -25,17 +27,18 @@ namespace gov
             {
             }
 
-            public ManagerComponentClassDescriptionImpl(string cname)
-            {
-                this.cname = cname;
-            }
+         //   public ManagerComponentClassDescriptionImpl(string cname)
+         //   {
+         //       this.cname = cname;
+         //   }
 
             #endregion
             
             #region properties (for serialization purposes)
 
             /* The name of the concrete component */
-            public override string ComponentClassName { get { return cname; } set { this.cname = value; } }
+			
+            public string ComponentClassName { get { return cname; } set { this.cname = value; } }
 
             #endregion
 
