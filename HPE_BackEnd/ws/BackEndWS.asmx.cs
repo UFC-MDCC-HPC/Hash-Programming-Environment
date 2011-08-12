@@ -66,7 +66,7 @@ namespace Back_End_WS
         {
             Console.WriteLine("Reading Environment");
 
-            EnvironmentType env = DGAC.Backend.readEnvironment();
+            EnvironmentType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readEnvironment();
 
             byte[] xmlEnv = LoaderApp.SerializeEnvironment(Constants.PATH_TEMP_WORKER + "environment.xml", env);
 
