@@ -104,7 +104,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             return data;
         }
+		
+        public static string SerializeDeployedComponentInfoType(string filename, DeployedComponentInfoType env)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(DeployedComponentInfoType));
 
+            FileStream fs = new FileStream(filename, FileMode.Create);
+
+            XmlWriter writer = new XmlTextWriter(fs, null);
+
+            serializer.Serialize(writer, env);
+
+			return File.ReadAllText(filename);	
+        }
+		
         public static byte[] serializeInstantiator(string filename, ComponentFunctorApplicationType inst)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));

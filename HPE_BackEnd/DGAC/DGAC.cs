@@ -253,7 +253,7 @@ namespace br.ufc.pargo.hpe.backend
             }
 
 
-            public EnvironmentType readEnvironment()
+            public static EnvironmentType readEnvironment()
             {
                 Connector.openConnection();
 
@@ -272,7 +272,7 @@ namespace br.ufc.pargo.hpe.backend
                 return env;
             }
 
-            private IList<DeployedComponentInfoType> readEnvironmentConcrete()
+            private static IList<DeployedComponentInfoType> readEnvironmentConcrete()
             {
                 IList<DeployedComponentInfoType> l = new List<DeployedComponentInfoType>();
 
@@ -306,7 +306,7 @@ namespace br.ufc.pargo.hpe.backend
                 return l;
             }
 
-            private DeployedParameterType[] readEnvironmentConcreteParameters(int id_functor_app)
+            private static DeployedParameterType[] readEnvironmentConcreteParameters(int id_functor_app)
             {
                 IList<SupplyParameter> spList = spdao.list(id_functor_app);
 
@@ -328,7 +328,7 @@ namespace br.ufc.pargo.hpe.backend
                 return r;
             }
 
-            private IList<DeployedComponentInfoType> readEnvironmentAbstract()
+            public static IList<DeployedComponentInfoType> readEnvironmentAbstract()
             {
                 IList<DeployedComponentInfoType> l = new List<DeployedComponentInfoType>();
 
@@ -359,7 +359,7 @@ namespace br.ufc.pargo.hpe.backend
                 return l;
             }
 
-            private string[] readEnvironmentEnumerators(int id_abstract)
+            private static string[] readEnvironmentEnumerators(int id_abstract)
             {
                 //     EnumeratorDAO edao = new EnumeratorDAO();
                 //   EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
@@ -388,7 +388,7 @@ namespace br.ufc.pargo.hpe.backend
                 return r;
             }
 
-            private DeployedParameterType[] readEnvironmentAbstractParameters(int id_abstract)
+            private static DeployedParameterType[] readEnvironmentAbstractParameters(int id_abstract)
             {
                 //     AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
                 //     AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();

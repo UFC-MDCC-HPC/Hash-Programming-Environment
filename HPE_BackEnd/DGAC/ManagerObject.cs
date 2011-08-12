@@ -676,13 +676,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	
 	            ComponentClassDescription[] classArray;
 	            IList<ComponentClassDescription> classList = new List<ComponentClassDescription>();
-	
-	            foreach (br.ufc.pargo.hpe.backend.DGAC.database.Component c in BackEnd.cdao.list())
-	            {
-                    string cname = c.Library_path;
-                    classList.Add(new ManagerComponentClassDescriptionImpl(cname));
-	            }
-	
+				
+                IList<DeployedComponentInfoType> eabs =  DGAC.BackEnd.readEnvironmentAbstract();
+			    foreach (DeployedComponentInfoType d in eabs)
+			    {
+				   string fname = Constants.PATH_TEMP_WORKER + "deployed-" + d.cid + ".xml";
+				   string cname = LoaderApp.SerializeDeployedComponentInfoType(fname, d);
+				   classList.Add(new ManagerComponentClassDescriptionImpl(cname));
+			    }
+			
 	            classArray = new ComponentClassDescription[classList.Count];
 	            classList.CopyTo(classArray, 0);
 	
