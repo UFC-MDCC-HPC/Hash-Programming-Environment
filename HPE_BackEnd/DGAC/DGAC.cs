@@ -321,6 +321,7 @@ namespace br.ufc.pargo.hpe.backend
                     if (acfa==null) Console.Error.WriteLine("Id_functor_app_actual = " + sp.Id_functor_app_actual);
                     r[i].actualSpecified = true;
                     r[i].actual = acfa.Id_abstract;
+					//r[i].bound = ??
                     r[i].parameter = readEnvironmentConcreteParameters(sp.Id_functor_app_actual);
                     i++;
                 }
@@ -402,7 +403,7 @@ namespace br.ufc.pargo.hpe.backend
                     r[i].parameter_id = acfp.Id_parameter;
                     r[i].actualSpecified = true;
                     AbstractComponentFunctorApplication acfa = acfadao.retrieve(acfp.Bounds_of);
-                    r[i].actual = acfa.Id_abstract;
+                    r[i].bound = acfa.Id_abstract;
                     r[i].parameter = readEnvironmentAbstractParameters(acfa.Id_abstract);
                     i++;
                 }
