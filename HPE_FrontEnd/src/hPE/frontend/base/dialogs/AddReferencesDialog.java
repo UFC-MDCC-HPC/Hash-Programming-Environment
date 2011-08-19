@@ -46,6 +46,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jface.dialogs.MessageDialog;
 
 //Refatorado para o novo HPEProperties
 //TODO acredito que não deve ser usado swing, mas sim SWT. Isso pode ser causar problemas na geração do plugin.
@@ -127,7 +128,8 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 			IPath monoBinPath = new Path(monoBin);
 			String monoHome = monoBinPath.toFile().getParent();
 
-			File monoLibPath = new File(monoHome + File.pathSeparator + "lib");
+			File monoLibPath = new File(monoHome
+					+ System.getProperty("file.separator") + "lib");
 
 			File[] files = monoLibPath.listFiles();
 			for (File f : files) {
@@ -151,67 +153,47 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 		}
 	}
 
-	private static String fileReferences = null; // @jve:decl-index=0:
-
-	private static String getFileReferences() {
-		if (fileReferences == null) {
-			fileReferences = HPEProperties
-					.get(PreferenceConstants.EXTERNAL_REFERENCES_XML);
-		}
-		return fileReferences;
-	}
-
 	public static void loadExternalReferences(Map<String, Reference> references) {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+		resourceSet
+				.getResourceFactoryRegistry()
+				.getExtensionToFactoryMap()
 				.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
 						new ExternalreferencesResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(ExternalreferencesPackage.eNS_URI,
 				ExternalreferencesPackage.eINSTANCE);
 
-		URI uri = URI.createFileURI(getFileReferences());
+		URI uri = URI.createFileURI(HPEProperties
+				.get(PreferenceConstants.EXTERNAL_REFERENCES_XML));
 
 		Resource resource = null;
 
-		boolean confirm = true;
-
 		try {
-
 			resource = resourceSet.getResource(uri, true);
 
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			if (e.getCause() instanceof FileNotFoundException) {
-				int i = JOptionPane
-						.showConfirmDialog(
-								null,
-								"External references file not found. Create a externalreferences.xml in the home path ?",
-								"Confirmation", JOptionPane.YES_NO_OPTION);
-				if (i == JOptionPane.OK_OPTION) {
-					resource = createNewReferenceFile(references);
-				} else {
-					confirm = false;
-				}
+				resource = createNewReferenceFile(references);
 			}
 		} finally {
 
-			if (confirm) {
-				ExternalreferencesResourceImpl cResource = (ExternalreferencesResourceImpl) resource;
-				EList rs = cResource.getContents();
+			ExternalreferencesResourceImpl cResource = (ExternalreferencesResourceImpl) resource;
+			EList rs = cResource.getContents();
 
-				ReferenceListType refList = ((DocumentRootImpl) rs.get(0))
-						.getExternal();
-				if (refList.getReference() != null) {
-					for (ReferenceType l : refList.getReference()) {
-						File thePath = new File(l.getPath());
-						String theDescription = l.getDescription();
-						String theName = l.getDestailedName();
-						Reference bel = new Reference(theName, thePath,
-								theDescription, true);
-						references.put(theName, bel);
-					}
+			ReferenceListType refList = ((DocumentRootImpl) rs.get(0))
+					.getExternal();
+			if (refList.getReference() != null) {
+				for (ReferenceType l : refList.getReference()) {
+					File thePath = new File(l.getPath());
+					String theDescription = l.getDescription();
+					String theName = l.getDestailedName();
+					Reference bel = new Reference(theName, thePath,
+							theDescription, true);
+					references.put(theName, bel);
 				}
 			}
+
 		}
 	}
 
@@ -227,7 +209,9 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 			// Register the appropriate resource factory to handle all file
 			// extentions.
 			//
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+			resourceSet
+					.getResourceFactoryRegistry()
+					.getExtensionToFactoryMap()
 					.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
 							new ExternalreferencesResourceFactoryImpl());
 
@@ -239,7 +223,8 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 
 			// If there are no arguments, emit an appropriate usage message.
 			//
-			URI uri = URI.createFileURI(getFileReferences());
+			URI uri = URI.createFileURI(HPEProperties
+					.get(PreferenceConstants.EXTERNAL_REFERENCES_XML));
 			Resource resource = resourceSet.createResource(uri);
 
 			DocumentRoot dX = factory.createDocumentRoot();
