@@ -1,142 +1,107 @@
 package hPE.frontend.base.policies;
 
-import org.eclipse.gef.Request;
-import org.eclipse.gef.commands.Command;
-import org.eclipse.gef.editpolicies.ComponentEditPolicy;
-import org.eclipse.gef.editparts.AbstractEditPart;
-
-import org.eclipse.jface.dialogs.InputDialog;
-
-import hPE.frontend.base.dialogs.DialogChangeVarName;
 import hPE.frontend.base.dialogs.SetParameterDialog;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.model.HComponent;
 
-import java.util.List;
-
-import org.eclipse.swt.SWT;
-
-import hPE.util.Triple;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.editparts.AbstractEditPart;
+import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 
 public class SetParameterEditPolicy extends ComponentEditPolicy {
 
+	private static final String SET_PARAMETER_REQUEST = "Set Parameter";
+
+	private static final String UNSET_PARAMETER_REQUEST = "Unset Parameter";
+
 	public SetParameterEditPolicy() {
 		super();
-		
 	}
-	
-private static final String
-	SET_PARAMETER_REQUEST = "Set Parameter",  //$NON-NLS-1$
-    UNSET_PARAMETER_REQUEST = "Unset Parameter";  //$NON-NLS-1$
 
-public Command getCommand(Request request) {
-	
-	HComponent model = (HComponent) ((AbstractEditPart) getHost()).getModel();
-	
-	if (SET_PARAMETER_REQUEST.equals(request.getType()))
-		return new SetParameterCommand(model);
-	else if (UNSET_PARAMETER_REQUEST.equals(request.getType()))
-		return new UnsetParameterCommand(model);
-	return 
-	    super.getCommand(request);
-	
-}
+	public Command getCommand(Request request) {
 
-public static class SetParameterCommand 
-extends org.eclipse.gef.commands.Command{
+		HComponent model = (HComponent) ((AbstractEditPart) getHost())
+				.getModel();
 
-private HComponent model;
+		if (SET_PARAMETER_REQUEST.equals(request.getType()))
+			return new SetParameterCommand(model);
+		else if (UNSET_PARAMETER_REQUEST.equals(request.getType()))
+			return new UnsetParameterCommand(model);
+		return super.getCommand(request);
 
-public SetParameterCommand(HComponent model){
+	}
 
-  this.model = model;
+	public static class SetParameterCommand extends
+			org.eclipse.gef.commands.Command {
 
-}
+		private HComponent model;
 
-private SetParameterDialog dialog = null;
+		private SetParameterDialog dialog = null;
 
-//public void setDialog(InputDialog dialog) {
-//	this.dialog = dialog;
-//}
+		private String varName = null;
 
-private String varName = null;
-private boolean cancel = false;
+		private boolean cancel = false;
 
-public void execute(){
+		public SetParameterCommand(HComponent model) {
+			this.model = model;
+		}
 
-  // dialog.open();
-  // int r = dialog.getReturnCode();
-   
-   this.dialog = new SetParameterDialog();
+		public void execute() {
 
-   dialog.setAlwaysOnTop(true);
-   dialog.setModal(true);
-   dialog.pack();
-   dialog.setVisible(true);
-   
-	// BEGIN TODO: EXISTENTIAL TYPE
-   //boolean isExistential = this.dialog.isExistential();
-   //boolean isUniversal   = this.dialog.isUniversal();
-	// END TODO: EXISTENTIAL TYPE
+			dialog = SetParameterDialog.getInstance();
+			dialog.setModel(model);
 
-   String parId = this.dialog.getParId().trim();
-   
-    if (dialog.getButtonPressed() == SetParameterDialog.BUTTON_OK) {
-        varName = parId;        
-        model.setParameter(varName);
-        ((HComponent)model.getTopConfiguration()).invalidateInterfaceNames();       
-   } else {
-	   cancel = true;
-   }
+			// BEGIN TODO: EXISTENTIAL TYPE
+			// boolean isExistential = this.dialog.isExistential();
+			// boolean isUniversal = this.dialog.isUniversal();
+			// END TODO: EXISTENTIAL TYPE
+		}
 
-}
+		public void undo() {
+			if (!cancel) {
+				model.setNonAbstract(varName);
+				((HComponent) model.getTopConfiguration())
+						.invalidateInterfaceNames();
+			}
+		}
 
+		public void redo() {
+			execute();
+		}
+	}
 
-public void undo(){
-	if (!cancel) { 
-       model.setNonAbstract(varName);
-       ((HComponent)model.getTopConfiguration()).invalidateInterfaceNames();
-	}       
-}
+	public static class UnsetParameterCommand extends
+			org.eclipse.gef.commands.Command {
 
-public void redo(){
-   execute();
-}
-}
+		HComponent model;
 
+		private String varName = null;
 
-public static class UnsetParameterCommand 
-extends org.eclipse.gef.commands.Command{
+		public UnsetParameterCommand(HComponent model) {
 
-HComponent model;
+			this.model = model;
 
-private String varName = null;
+		}
 
-public UnsetParameterCommand(HComponent model){
+		public void execute() {
 
-  this.model = model;
+			varName = model.getParameterIdentifier((IComponent) model
+					.getTopConfiguration());
+			model.setNonAbstract(varName);
+			((HComponent) model.getTopConfiguration())
+					.invalidateInterfaceNames();
 
-}
+		}
 
-public void execute(){
+		public void undo() {
+			model.setParameter(varName);
+			((HComponent) model.getTopConfiguration())
+					.invalidateInterfaceNames();
+		}
 
-   varName = model.getParameterIdentifier((IComponent)model.getTopConfiguration());	
-   model.setNonAbstract(varName);
-   ((HComponent)model.getTopConfiguration()).invalidateInterfaceNames();
-
-}
-
-
-public void undo(){
-   model.setParameter(varName);
-   ((HComponent)model.getTopConfiguration()).invalidateInterfaceNames();
-}
-
-public void redo(){
-   execute();
-}
-
-}
-
-
+		public void redo() {
+			execute();
+		}
+	}
 }

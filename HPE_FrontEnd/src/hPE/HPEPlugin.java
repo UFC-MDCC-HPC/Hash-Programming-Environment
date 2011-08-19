@@ -1,10 +1,7 @@
 package hPE;
 
-import hPE.core.library.HPEComponentLibraryView;
 import hPE.frontend.NAntBuilder;
-import hPE.frontend.base.model.HComponent;
-import hPE.util.CommandLine;
-import hPE.xml.factory.HComponentFactoryImpl;
+import hPE.ui.preferences.HPEPreferenceStore;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
 
 import java.util.ArrayList;
@@ -21,7 +18,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
 import org.eclipse.core.runtime.Preferences.PropertyChangeEvent;
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -31,9 +29,11 @@ import org.osgi.framework.BundleContext;
  */
 public class HPEPlugin extends AbstractUIPlugin {
 
-	//The shared instance.
+	// The shared instance.
 	private static HPEPlugin plugin;
-	
+
+	protected HPEPreferenceStore hpePreferenceStore;
+
 	/**
 	 * The constructor.
 	 */
@@ -42,10 +42,10 @@ public class HPEPlugin extends AbstractUIPlugin {
 	}
 
 	private List<IPropertyChangeListener> myListeners = new ArrayList<IPropertyChangeListener>();
-	
+
 	// A public method that allows listener registration
 	public void addPropertyChangeListener(IPropertyChangeListener listener) {
-		if(!myListeners.contains(listener))
+		if (!myListeners.contains(listener))
 			myListeners.add(listener);
 	}
 
@@ -56,13 +56,8 @@ public class HPEPlugin extends AbstractUIPlugin {
 
 	public void notifyListeners(String property) {
 		for (IPropertyChangeListener listener : myListeners) {
-			listener.propertyChange(new MyPropertyChangeEvent(
-					this, 
-					property, 
-					null, 
-					null
-					)
-			);
+			listener.propertyChange(new MyPropertyChangeEvent(this, property,
+					null, null));
 		}
 	}
 
@@ -76,91 +71,85 @@ public class HPEPlugin extends AbstractUIPlugin {
 		public MyPropertyChangeEvent(Object arg0, String arg1, Object arg2,
 				Object arg3) {
 			super(arg0, arg1, arg2, arg3);
-			// TODO Auto-generated constructor stub
 		}
-	
+
 	}
-	
-	
+
 	public class MyResourceChangeReporter implements IResourceChangeListener {
-		      public void resourceChanged(IResourceChangeEvent event) {
-	               try {
-	            	    Object source = null;
-				         IResource res = event.getResource();
-				         switch (event.getType()) {
-				            case IResourceChangeEvent.POST_BUILD:
-					           source = event.getSource();
-				               event.getDelta().accept(new DeltaPrinter());
-				               break;
-				            case IResourceChangeEvent.PRE_BUILD:
-					           System.out.println("Starting build.");
-					           source = event.getSource();
-					           if (source instanceof IProject) {
-					        	   IProject project = (IProject) source;
-					        	   IPath path = project.getFullPath().makeRelative();
-					        	   String pathStr = path.toString();
-					        	   String[] pathStrArr = pathStr.replace(".", "#").split("#");
-					        	   String cName = pathStrArr[pathStrArr.length - 1];
-					        	   IPath path2 = path.append(cName + ".hpe");
-					        	   
-					        	   NAntBuilder.createBuildFile(path2.toString(), true);
-					        	   
-								   project.refreshLocal(IResource.DEPTH_INFINITE, null);								   
-								   System.out.println("generated build.xml for " + path2);
-					           }
+		public void resourceChanged(IResourceChangeEvent event) {
+			try {
+				Object source = null;
+				IResource res = event.getResource();
+				switch (event.getType()) {
+				case IResourceChangeEvent.POST_BUILD:
+					source = event.getSource();
+					event.getDelta().accept(new DeltaPrinter());
+					break;
+				case IResourceChangeEvent.PRE_BUILD:
+					System.out.println("Starting build.");
+					source = event.getSource();
+					if (source instanceof IProject) {
+						IProject project = (IProject) source;
+						IPath path = project.getFullPath().makeRelative();
+						String pathStr = path.toString();
+						String[] pathStrArr = pathStr.replace(".", "#").split(
+								"#");
+						String cName = pathStrArr[pathStrArr.length - 1];
+						IPath path2 = path.append(cName + ".hpe");
 
-					           
-					           event.getDelta().accept(new DeltaPrinter());
-					           break; 
-				         }
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (HPEInvalidComponentResourceException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		      }
-	   }
+						NAntBuilder.createBuildFile(path2.toString(), true);
 
-	   class DeltaPrinter implements IResourceDeltaVisitor {
-		      public boolean visit(IResourceDelta delta) {
-		       /*  IResource res = delta.getResource();
-		         
-                 IPath fileName = res.getLocation();
-                 String ext = fileName.getFileExtension(); 
-                 String gacutil_path = HPEProperties.getInstance().getValue("gacutil_path");
-		         switch (delta.getKind()) {
-		            case IResourceDelta.ADDED:
-		               if (ext != null && fileName.getFileExtension().equals("dll"))
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()},null);		               
-		               break;
-		            case IResourceDelta.REMOVED:
-		               if (ext != null && fileName.getFileExtension().equals("dll")) {
-						CommandLine.runCommand(new String[] {gacutil_path, "-u", fileName.removeFileExtension().lastSegment()},null);
+						project.refreshLocal(IResource.DEPTH_INFINITE, null);
+						System.out.println("generated build.xml for " + path2);
 					}
-		               
-		               break;
-		            case IResourceDelta.CHANGED:
-		               if (ext != null && ext.equals("dll")) {
-		                  CommandLine.runCommand(new String[] {gacutil_path, "-i", fileName.toString()},null);
-		               }
-		               break;
-		         } */
-		         return true; // visit the children
-		      }
-		   }
-	   /**
+
+					event.getDelta().accept(new DeltaPrinter());
+					break;
+				}
+			} catch (CoreException e) {
+				e.printStackTrace();
+			} catch (HPEInvalidComponentResourceException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	class DeltaPrinter implements IResourceDeltaVisitor {
+		public boolean visit(IResourceDelta delta) {
+			/*
+			 * IResource res = delta.getResource();
+			 * 
+			 * IPath fileName = res.getLocation(); String ext =
+			 * fileName.getFileExtension(); String gacutil_path =
+			 * HPEProperties.getInstance().getValue("gacutil_path"); switch
+			 * (delta.getKind()) { case IResourceDelta.ADDED: if (ext != null &&
+			 * fileName.getFileExtension().equals("dll"))
+			 * CommandLine.runCommand(new String[] {gacutil_path, "-i",
+			 * fileName.toString()},null); break; case IResourceDelta.REMOVED:
+			 * if (ext != null && fileName.getFileExtension().equals("dll")) {
+			 * CommandLine.runCommand(new String[] {gacutil_path, "-u",
+			 * fileName.removeFileExtension().lastSegment()},null); }
+			 * 
+			 * break; case IResourceDelta.CHANGED: if (ext != null &&
+			 * ext.equals("dll")) { CommandLine.runCommand(new String[]
+			 * {gacutil_path, "-i", fileName.toString()},null); } break; }
+			 */
+			return true; // visit the children
+		}
+	}
+
+	/**
 	 * This method is called upon plug-in activation
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		   IResourceChangeListener listener = new MyResourceChangeReporter();
-		   ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
-                IResourceChangeEvent.POST_BUILD
-		      | IResourceChangeEvent.POST_CHANGE 
-		      | IResourceChangeEvent.PRE_BUILD);
-		
+		IResourceChangeListener listener = new MyResourceChangeReporter();
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(
+				listener,
+				IResourceChangeEvent.POST_BUILD
+						| IResourceChangeEvent.POST_CHANGE
+						| IResourceChangeEvent.PRE_BUILD);
+
 	}
 
 	/**
@@ -179,13 +168,23 @@ public class HPEPlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path.
-	 *
-	 * @param path the path
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path.
+	 * 
+	 * @param path
+	 *            the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return AbstractUIPlugin.imageDescriptorFromPlugin("HPE", path);
+	}
+
+	@Override
+	public IPreferenceStore getPreferenceStore() {
+		if (hpePreferenceStore == null) {
+			hpePreferenceStore = new HPEPreferenceStore(
+					new InstanceScope(), getBundle().getSymbolicName());
+		}
+		return hpePreferenceStore;
 	}
 }

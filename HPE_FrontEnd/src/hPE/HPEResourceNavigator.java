@@ -1,7 +1,6 @@
 package hPE;
 
 import hPE.frontend.backend.HPEPlatform;
-import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.model.HComponent;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import javax.swing.JOptionPane;
-import javax.xml.rpc.ServiceException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -40,8 +38,6 @@ public class HPEResourceNavigator extends ResourceNavigator {
 	}
 
 	private void initialize() {
-	
-	   
 		
 	}
 	
@@ -51,7 +47,7 @@ public class HPEResourceNavigator extends ResourceNavigator {
 	@SuppressWarnings(DEPRECATION)
 	protected void fillContextMenu(IMenuManager menu) {
 		   
-	   super.fillContextMenu(menu);		 
+	   super.fillContextMenu(menu);
 		   
 	   TreeSelection s = (TreeSelection) this.getTreeViewer().getSelection();
 	   Object r = s.getFirstElement();

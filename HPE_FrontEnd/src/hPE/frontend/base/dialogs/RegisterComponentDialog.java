@@ -3,36 +3,21 @@ package hPE.frontend.base.dialogs;
 import hPE.HPEPlugin;
 import hPE.core.library.HPEComponentLibraryView;
 import hPE.core.library.HPELocationEntry;
-import hPE.core.library.HPELocationFileTraversor;
 import hPE.core.library.InexistentSourcesException;
 import hPE.core.library.UncompiledSourcesException;
 import hPE.frontend.CoreLocationList;
-import hPE.frontend.base.codegen.HBEAbstractFile;
-import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
-import hPE.location.HPE_Location_Server;
-import hPE.location.HPE_Location_ServerService;
-import hPE.location.HPE_Location_ServerServiceLocator;
-import hPE.xml.component.ComponentType;
-import hPE.xml.factory.HComponentFactory;
-import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
 
 import java.awt.Frame;
 import java.awt.Rectangle;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,24 +31,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.xml.rpc.ServiceException;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import java.awt.Dimension;
 
+//TODO substituir Swing por SWT.
 public class RegisterComponentDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
-	private HComponent c;  //  @jve:decl-index=0:
+	private HComponent c; // @jve:decl-index=0:
 	private JComboBox jComboBoxLocations = null;
 	private JCheckBox jCheckBoxFreeSource = null;
 	private JButton jButtonRegister = null;
 	private JButton jButtonInfo = null;
-	private Map<String, URI> locations = new HashMap<String,URI>();  //  @jve:decl-index=0:
+	private Map<String, URI> locations = new HashMap<String, URI>(); // @jve:decl-index=0:
 	private JComboBox jComboBoxVersions = null;
 	private JLabel jLabelLocation = null;
 	private JLabel jLabelVersion = null;
@@ -72,7 +53,7 @@ public class RegisterComponentDialog extends JDialog {
 
 	/**
 	 * @param owner
-	 * @param c 
+	 * @param c
 	 */
 	public RegisterComponentDialog(Frame owner, HComponent c) {
 		super(owner);
@@ -89,8 +70,9 @@ public class RegisterComponentDialog extends JDialog {
 		this.setSize(421, 168);
 		this.setTitle("Register " + c.getComponentName() + " in a Location");
 		this.setContentPane(getJContentPane());
-		//HPELocationFileTraversor locationFileTraversor = new HPELocationFileTraversor();
-		
+		// HPELocationFileTraversor locationFileTraversor = new
+		// HPELocationFileTraversor();
+
 		List<URI> l = CoreLocationList.fetchLocations();
 		for (URI uri : l) {
 			String locationName = null;
@@ -104,20 +86,22 @@ public class RegisterComponentDialog extends JDialog {
 				e.printStackTrace();
 			}
 			if (locationName != null) {
-			   this.locations.put(locationName, uri);
-		       this.getJComboBoxLocations().addItem(locationName);
+				this.locations.put(locationName, uri);
+				this.getJComboBoxLocations().addItem(locationName);
 			} else {
-				JOptionPane.showMessageDialog(null, "Unable to reach location at \n" + uri.toString(), "Location Fetch Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"RegisterComponentDialog: Unable to reach location at \n"
+								+ uri.toString(), "Location Fetch Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
+
 		List<Integer[]> vs = c.getVersions();
 		for (Integer[] v : vs) {
-		    this.getJComboBoxVersions().addItem(HInterface.toStringVersion(v));
+			this.getJComboBoxVersions().addItem(HInterface.toStringVersion(v));
 		}
-		this.getJComboBoxVersions().setSelectedIndex(vs.size()-1);
+		this.getJComboBoxVersions().setSelectedIndex(vs.size() - 1);
 	}
-
 
 	/**
 	 * This method initializes jContentPane
@@ -144,7 +128,7 @@ public class RegisterComponentDialog extends JDialog {
 			jContentPane.add(getJButtonRegisterMarkObsolete(), null);
 			jContentPane.add(getJButtonUnregisterComponent(), null);
 			jLabelVersion.setVisible(!c.isAbstract());
-			
+
 		}
 		return jContentPane;
 	}
@@ -158,9 +142,9 @@ public class RegisterComponentDialog extends JDialog {
 	}
 
 	/**
-	 * This method initializes jComboBoxLocations	
-	 * 	
-	 * @return javax.swing.JComboBox	
+	 * This method initializes jComboBoxLocations
+	 * 
+	 * @return javax.swing.JComboBox
 	 */
 	private JComboBox getJComboBoxLocations() {
 		if (jComboBoxLocations == null) {
@@ -171,9 +155,9 @@ public class RegisterComponentDialog extends JDialog {
 	}
 
 	/**
-	 * This method initializes jCheckBoxFreeSource	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes jCheckBoxFreeSource
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getJCheckBoxFreeSource() {
 		if (jCheckBoxFreeSource == null) {
@@ -186,94 +170,124 @@ public class RegisterComponentDialog extends JDialog {
 	}
 
 	/**
-	 * This method initializes jButtonRegister	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButtonRegister
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonRegister() {
 		if (jButtonRegister == null) {
 			jButtonRegister = new JButton();
 			jButtonRegister.setBounds(new Rectangle(265, 40, 141, 26));
 			jButtonRegister.setText("Register");
-			jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					String locationName = (String) getJComboBoxLocations().getSelectedItem();
-					URI uri = locations.get(locationName);
-					String version = c.isAbstract() ? null : (String) getJComboBoxVersions().getSelectedItem(); 
-					registerComponent(uri, version, getJCheckBoxFreeSource().isSelected());
-				}
-			});
+			jButtonRegister
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							String locationName = (String) getJComboBoxLocations()
+									.getSelectedItem();
+							URI uri = locations.get(locationName);
+							String version = c.isAbstract() ? null
+									: (String) getJComboBoxVersions()
+											.getSelectedItem();
+							registerComponent(uri, version,
+									getJCheckBoxFreeSource().isSelected());
+						}
+					});
 		}
 		return jButtonRegister;
 	}
 
 	private void registerComponent(URI uri, String version, boolean freeSource) {
-		
+
 		String errorMessage = null;
-		
-				try {
-		
-                    String message = HPELocationEntry.registerComponent(c, uri, version, freeSource);					
-					
-					JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
 
-					HPEPlugin plugin = HPEPlugin.getDefault();
- 			        plugin.notifyListeners(HPEComponentLibraryView.PROPERTY_LOCATION_CHANGED);
+		try {
 
-					
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (ServiceException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (RemoteException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (IOException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (CoreException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (UndefinedRefInnerException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (DuplicatedRefInnerException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (DuplicatedSliceNamesException e) {
-					e.printStackTrace();
-					errorMessage = e.getMessage();
-				} catch (UncompiledSourcesException e) {
-					e.printStackTrace();
-					if (!c.isAbstract()) {
-					   JOptionPane.showMessageDialog(null, "Version " + version + " of " + c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(null, c.getComponentName() + " has uncompiled sources !", "Error",JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (InexistentSourcesException e) {
-					e.printStackTrace();
-					 if (!c.isAbstract()) {
-	   			        JOptionPane.showMessageDialog(null, " The sources for version " + version + " of " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);
-				     } else {
-    					 JOptionPane.showMessageDialog(null, " The sources for " + c.getComponentName() + " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of " + c.getComponentName() + ".", "Error",JOptionPane.ERROR_MESSAGE);	
-				     } 
-				} finally {
-					if (errorMessage != null)
-					    JOptionPane.showMessageDialog(null, errorMessage, "Register Error", JOptionPane.ERROR_MESSAGE);
-				}
-		
-		
+			String message = HPELocationEntry.registerComponent(c, uri,
+					version, freeSource);
+
+			JOptionPane.showMessageDialog(null, message, "Location Answer",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			HPEPlugin plugin = HPEPlugin.getDefault();
+			plugin
+					.notifyListeners(HPEComponentLibraryView.PROPERTY_LOCATION_CHANGED);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (IOException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (CoreException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (UndefinedRefInnerException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (DuplicatedRefInnerException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (DuplicatedSliceNamesException e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		} catch (UncompiledSourcesException e) {
+			e.printStackTrace();
+			if (!c.isAbstract()) {
+				JOptionPane.showMessageDialog(null,
+						"[RegisterComponentDialog] Version " + version + " of "
+								+ c.getComponentName()
+								+ " has uncompiled sources !", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"[RegisterComponentDialog] " + c.getComponentName()
+								+ " has uncompiled sources !", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (InexistentSourcesException e) {
+			e.printStackTrace();
+			if (!c.isAbstract()) {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								" The sources for version "
+										+ version
+										+ " of "
+										+ c.getComponentName()
+										+ " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of "
+										+ c.getComponentName() + ".", "Error",
+								JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								" The sources for "
+										+ c.getComponentName()
+										+ " must be generated !\n hint: execute \"Edit Source\" on the pop-up menu of each interface of "
+										+ c.getComponentName() + ".", "Error",
+								JOptionPane.ERROR_MESSAGE);
+			}
+		} finally {
+			if (errorMessage != null)
+				JOptionPane.showMessageDialog(null, errorMessage,
+						"Register Error", JOptionPane.ERROR_MESSAGE);
+		}
+
 	}
 
 	/**
-	 * This method initializes jButtonInfo	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButtonInfo
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonInfo() {
 		if (jButtonInfo == null) {
@@ -282,20 +296,23 @@ public class RegisterComponentDialog extends JDialog {
 			jButtonInfo.setText("About Location");
 			jButtonInfo.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					String locationName = (String) getJComboBoxLocations().getSelectedItem();
+					String locationName = (String) getJComboBoxLocations()
+							.getSelectedItem();
 					URI uri = locations.get(locationName);
 					String message = "Error connecting to location to fetch information.";
 					try {
-						message = HPELocationEntry.getLocationPresentationMessage(uri);
+						message = HPELocationEntry
+								.getLocationPresentationMessage(uri);
 					} catch (RemoteException e1) {
 						e1.printStackTrace();
 					} catch (MalformedURLException e1) {
 						e1.printStackTrace();
 					} catch (ServiceException e1) {
 						e1.printStackTrace();
-					}					
-					
-					JOptionPane.showMessageDialog(null,message, "About " + locationName,JOptionPane.INFORMATION_MESSAGE);
+					}
+
+					JOptionPane.showMessageDialog(null, message, "About "
+							+ locationName, JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			});
@@ -303,11 +320,10 @@ public class RegisterComponentDialog extends JDialog {
 		return jButtonInfo;
 	}
 
-
 	/**
-	 * This method initializes jComboBoxVersions	
-	 * 	
-	 * @return javax.swing.JComboBox	
+	 * This method initializes jComboBoxVersions
+	 * 
+	 * @return javax.swing.JComboBox
 	 */
 	private JComboBox getJComboBoxVersions() {
 		if (jComboBoxVersions == null) {
@@ -319,24 +335,29 @@ public class RegisterComponentDialog extends JDialog {
 	}
 
 	/**
-	 * This method initializes jButtonRegisterMarkObsolete	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButtonRegisterMarkObsolete
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonRegisterMarkObsolete() {
 		if (jButtonRegisterMarkObsolete == null) {
 			jButtonRegisterMarkObsolete = new JButton();
-			jButtonRegisterMarkObsolete.setBounds(new Rectangle(265, 100, 141, 26));
+			jButtonRegisterMarkObsolete.setBounds(new Rectangle(265, 100, 141,
+					26));
 			jButtonRegisterMarkObsolete.setText("Make Obsolete");
 			jButtonRegisterMarkObsolete
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-							String locationName = (String) getJComboBoxLocations().getSelectedItem();
+							String locationName = (String) getJComboBoxLocations()
+									.getSelectedItem();
 							URI uri = locations.get(locationName);
-							String version = c.isAbstract() ? null : (String) getJComboBoxVersions().getSelectedItem(); 
+							String version = c.isAbstract() ? null
+									: (String) getJComboBoxVersions()
+											.getSelectedItem();
 							String message = "";
 							try {
-								message = HPELocationEntry.markAsObsolete(c, uri, version);
+								message = HPELocationEntry.markAsObsolete(c,
+										uri, version);
 							} catch (RemoteException e1) {
 								message = e1.getMessage();
 								e1.printStackTrace();
@@ -347,7 +368,9 @@ public class RegisterComponentDialog extends JDialog {
 								message = e1.getMessage();
 								e1.printStackTrace();
 							}
-							JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, message,
+									"Location Answer",
+									JOptionPane.INFORMATION_MESSAGE);
 						}
 
 					});
@@ -355,23 +378,26 @@ public class RegisterComponentDialog extends JDialog {
 		return jButtonRegisterMarkObsolete;
 	}
 
-
 	/**
-	 * This method initializes jButtonUnregisterComponent	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButtonUnregisterComponent
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonUnregisterComponent() {
 		if (jButtonUnregisterComponent == null) {
 			jButtonUnregisterComponent = new JButton();
-			jButtonUnregisterComponent.setBounds(new Rectangle(265, 70, 141, 26));
+			jButtonUnregisterComponent
+					.setBounds(new Rectangle(265, 70, 141, 26));
 			jButtonUnregisterComponent.setText("Unregister");
 			jButtonUnregisterComponent
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-							String locationName = (String) getJComboBoxLocations().getSelectedItem();
+							String locationName = (String) getJComboBoxLocations()
+									.getSelectedItem();
 							URI uri = locations.get(locationName);
-							String version = c.isAbstract() ? null : (String) getJComboBoxVersions().getSelectedItem(); 
+							String version = c.isAbstract() ? null
+									: (String) getJComboBoxVersions()
+											.getSelectedItem();
 							unregisterComponent(uri, version);
 						}
 					});
@@ -393,8 +419,9 @@ public class RegisterComponentDialog extends JDialog {
 			message = e.getMessage();
 			e.printStackTrace();
 		}
-		
-		JOptionPane.showMessageDialog(null, message, "Location Answer", JOptionPane.INFORMATION_MESSAGE);
+
+		JOptionPane.showMessageDialog(null, message, "Location Answer",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
-	
-}  //  @jve:decl-index=0:visual-constraint="10,10"
+
+} // @jve:decl-index=0:visual-constraint="10,10"

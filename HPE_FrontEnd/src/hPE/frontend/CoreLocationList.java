@@ -1,17 +1,16 @@
 package hPE.frontend;
 
 import hPE.HPEProperties;
+import hPE.frontend.backend.locations.Location;
+import hPE.frontend.core.locations.LocationManager;
 import hPE.frontend.core.locations.locations.CoreType;
 import hPE.frontend.core.locations.locations.DocumentRoot;
 import hPE.frontend.core.locations.locations.LocationType;
 import hPE.frontend.core.locations.locations.LocationsFactory;
 import hPE.frontend.core.locations.locations.LocationsPackage;
-import hPE.frontend.core.locations.locations.impl.DocumentRootImpl;
 import hPE.frontend.core.locations.locations.util.LocationsResourceFactoryImpl;
-import hPE.frontend.core.locations.locations.util.LocationsResourceImpl;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -30,18 +29,20 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+//TODO usar a classe LocationManager.
+//refatorada!
 public class CoreLocationList {
 
 	private static LocationsFactory factory = LocationsFactory.eINSTANCE;
 
 	private static String fileSites = null;
-	
+
+	@Deprecated
 	private static String getFileSites() {
 		if (fileSites == null) {
 			fileSites = HPEProperties.getInstance().getValue("core_locations");
@@ -49,175 +50,209 @@ public class CoreLocationList {
 		return fileSites;
 	}
 
-	public static void readCoreLocationsFile(Map<String,CoreLocationInfo> coreLocations) {
+	@Deprecated
+	//Usar o LocationManager.
+	public static void readCoreLocationsFile(
+			Map<String, CoreLocationInfo> coreLocations) {
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put	(Resource.Factory.Registry.DEFAULT_EXTENSION, new LocationsResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI, LocationsPackage.eINSTANCE);
-    			
-		URI uri = URI.createFileURI(getFileSites());
-		
-		Resource resource = null;
-		
-		try {
-			
-			resource = resourceSet.getResource(uri, true);
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			if (e.getCause() instanceof FileNotFoundException) {
-				resource = saveData(coreLocations);
-			}			
-		} finally {
-			
-			LocationsResourceImpl cResource = (LocationsResourceImpl) resource;
-			EList rs = cResource.getContents();
+		Collection<Location> locations = LocationManager.getInstance()
+				.getCoreLocations().values();
 
-		    CoreType services = ((DocumentRootImpl) rs.get(0)).getCore();
-			if (services.getLocation() != null) {
-				for (LocationType l : services.getLocation()) {
-					String name = l.getName();
-					String locURI = l.getUri();
-					CoreLocationInfo bel = new CoreLocationInfo(name, locURI);
-					coreLocations.put(name,bel);                	
-				}
-			}
+		CoreLocationInfo core;
+		for (Location l : locations) {
+			core = new CoreLocationInfo();
+			core.name = l.getName();
+			core.locURI = l.getUri();
+
+			coreLocations.put(core.name, core);
 		}
+
+		// ResourceSet resourceSet = new ResourceSetImpl();
+		// resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+		// .put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+		// new LocationsResourceFactoryImpl());
+		// resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI,
+		// LocationsPackage.eINSTANCE);
+		//
+		// URI uri = URI.createFileURI(getFileSites());
+		//
+		// Resource resource = null;
+		//
+		// try {
+		//
+		// resource = resourceSet.getResource(uri, true);
+		//
+		// } catch (Exception e) {
+		// System.out.println(e.getMessage());
+		// if (e.getCause() instanceof FileNotFoundException) {
+		// resource = saveData(coreLocations);
+		// }
+		// } finally {
+		//
+		// LocationsResourceImpl cResource = (LocationsResourceImpl) resource;
+		// EList rs = cResource.getContents();
+		//
+		// CoreType services = ((DocumentRootImpl) rs.get(0)).getCore();
+		// if (services.getLocation() != null) {
+		// for (LocationType l : services.getLocation()) {
+		// String name = l.getName();
+		// String locURI = l.getUri();
+		// CoreLocationInfo bel = new CoreLocationInfo(name, locURI);
+		// coreLocations.put(name, bel);
+		// }
+		// }
+		// }
 	}
 
-	
-	public static Resource saveData(Map<String,CoreLocationInfo> coreLocations) {
+	@Deprecated
+	// aparentemente esse método só transforma um Map num Resource.
+	public static Resource saveData(Map<String, CoreLocationInfo> coreLocations) {
 		try {
 			// Create a resource set to hold the resources.
 			//
 			ResourceSet resourceSet = new ResourceSetImpl();
-			
-			// Register the appropriate resource factory to handle all file extentions.
+
+			// Register the appropriate resource factory to handle all file
+			// extentions.
 			//
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				(Resource.Factory.Registry.DEFAULT_EXTENSION, 
-				 new LocationsResourceFactoryImpl());
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+					.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+							new LocationsResourceFactoryImpl());
 
 			// Register the package to ensure it is available during loading.
 			//
-			resourceSet.getPackageRegistry().put
-				(LocationsPackage.eNS_URI, 
-				 LocationsPackage.eINSTANCE);
-	        
+			resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI,
+					LocationsPackage.eINSTANCE);
+
 			// If there are no arguments, emit an appropriate usage message.
 			//
 			URI uri = URI.createFileURI(getFileSites());
 			Resource resource = resourceSet.createResource(uri);
-			
+
 			DocumentRoot dX = factory.createDocumentRoot();
 			CoreType cX = saveInfo(coreLocations.values());
 			dX.setCore(cX);
-		
+
 			resource.getContents().add(dX);
-			resource.save(null); 
-			
+			resource.save(null);
+
 			return resource;
 		} catch (IOException e) {
 			return null;
 		}
-		
+
 	}
-	
+
+	//transforma um collection em um CoreType
+	@Deprecated
 	private static CoreType saveInfo(Collection<CoreLocationInfo> values) {
 		CoreType s = factory.createCoreType();
-		
+
 		for (CoreLocationInfo b : values) {
-		   LocationType l = factory.createLocationType();
-		   l.setName(b.name);
-		   l.setUri(b.locURI);
-		   s.getLocation().add(l);
+			LocationType l = factory.createLocationType();
+			l.setName(b.name);
+			l.setUri(b.locURI);
+			s.getLocation().add(l);
 		}
-		
-	    return s;	
+
+		return s;
 	}
 
 	/**
 	 * Creates a file resource given the file handle and contents.
-	 *
-	 * @param fileHandle the file handle to create a file resource with
-	 * @param contents the initial contents of the new file resource, or
-	 *   <code>null</code> if none (equivalent to an empty stream)
-	 * @param monitor the progress monitor to show visual progress with
-	 * @exception CoreException if the operation fails
-	 * @exception OperationCanceledException if the operation is canceled
+	 * 
+	 * @param fileHandle
+	 *            the file handle to create a file resource with
+	 * @param contents
+	 *            the initial contents of the new file resource, or
+	 *            <code>null</code> if none (equivalent to an empty stream)
+	 * @param monitor
+	 *            the progress monitor to show visual progress with
+	 * @exception CoreException
+	 *                if the operation fails
+	 * @exception OperationCanceledException
+	 *                if the operation is canceled
 	 */
+	//TODO realmente é necessário? Verificar para simplificar a classe.
 	protected static void createFile(IFile fileHandle, InputStream contents,
-	        IProgressMonitor monitor) throws CoreException {
-	    if (contents == null)
-	        contents = new ByteArrayInputStream(new byte[0]);
+			IProgressMonitor monitor) throws CoreException {
+		if (contents == null)
+			contents = new ByteArrayInputStream(new byte[0]);
 
-	    try {
+		try {
 
-	            IPath path = fileHandle.getFullPath();
-	            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-	            int numSegments= path.segmentCount();
-	            if (numSegments > 2 && !root.getFolder(path.removeLastSegments(1)).exists()) {
-	                // If the direct parent of the path doesn't exist, try to create the
-	                // necessary directories.
-	                for (int i= numSegments - 2; i > 0; i--) {
-	                    IFolder folder = root.getFolder(path.removeLastSegments(i));
-	                    if (!folder.exists()) {
-	                        folder.create(false, true, monitor);
-	                    }
-	                }
-	            }
-	            fileHandle.create(contents, true, monitor);
-	        
-	    } catch (CoreException e) {
-	        // If the file already existed locally, just refresh to get contents
-	        if (e.getStatus().getCode() == IResourceStatus.PATH_OCCUPIED)
-	            fileHandle.refreshLocal(IResource.DEPTH_ZERO, null);
-	        else {
-	            throw e;
-	        }
-	    }
+			IPath path = fileHandle.getFullPath();
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			int numSegments = path.segmentCount();
+			if (numSegments > 2
+					&& !root.getFolder(path.removeLastSegments(1)).exists()) {
+				// If the direct parent of the path doesn't exist, try to create
+				// the
+				// necessary directories.
+				for (int i = numSegments - 2; i > 0; i--) {
+					IFolder folder = root.getFolder(path.removeLastSegments(i));
+					if (!folder.exists()) {
+						folder.create(false, true, monitor);
+					}
+				}
+			}
+			fileHandle.create(contents, true, monitor);
 
-	    if (monitor.isCanceled())
-	        throw new OperationCanceledException();
+		} catch (CoreException e) {
+			// If the file already existed locally, just refresh to get contents
+			if (e.getStatus().getCode() == IResourceStatus.PATH_OCCUPIED)
+				fileHandle.refreshLocal(IResource.DEPTH_ZERO, null);
+			else {
+				throw e;
+			}
+		}
+
+		if (monitor.isCanceled())
+			throw new OperationCanceledException();
 	}
-	
+
+	@Deprecated
+	// TODO usar a classe Location.
 	public static class CoreLocationInfo {
 		public String name = null;
 		public String locURI = null;
 
-		public CoreLocationInfo() {}
-		
-		public CoreLocationInfo(String name, String locURI) {
-		   this.name = name;
-		   this.locURI = locURI;
+		public CoreLocationInfo() {
 		}
-		
+
+		public CoreLocationInfo(String name, String locURI) {
+			this.name = name;
+			this.locURI = locURI;
+		}
+
 		public String toString() {
 			return name;
 		}
-		
+
 	}
 
+	@Deprecated
+	// deve ser utilizado o LocationManager.
 	public static List<URI> fetchLocations() {
 
 		List<URI> locations = new ArrayList<URI>();
-		Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
+		Map<String, CoreLocationInfo> coreLocations = new HashMap<String, CoreLocationInfo>();
 		readCoreLocationsFile(coreLocations);
-		
+
 		for (CoreLocationInfo c : coreLocations.values()) {
 			locations.add(URI.createURI(c.locURI));
 		}
-		
+
 		return locations;
 	}
-	
+
 	public static URI fetchURI(String loc_name) {
 
-		Map<String,CoreLocationInfo> coreLocations = new HashMap<String,CoreLocationInfo>();
+		Map<String, CoreLocationInfo> coreLocations = new HashMap<String, CoreLocationInfo>();
 		readCoreLocationsFile(coreLocations);
 
 		if (coreLocations.containsKey(loc_name)) {
-		    return URI.createURI(coreLocations.get(loc_name).locURI);
+			return URI.createURI(coreLocations.get(loc_name).locURI);
 		} else {
 			return null;
 		}

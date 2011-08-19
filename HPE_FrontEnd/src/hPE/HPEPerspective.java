@@ -6,13 +6,10 @@ import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveFactory;
 
-
 public class HPEPerspective implements IPerspectiveDescriptor,
 		IPerspectiveFactory {
 
 	public HPEPerspective() {
-		super();
-		// TODO Auto-generated constructor stub    
 	}
 
 	public String getDescription() {
@@ -32,36 +29,37 @@ public class HPEPerspective implements IPerspectiveDescriptor,
 	}
 
 	public void createInitialLayout(IPageLayout layout) {
-	    defineActions(layout);
-	    defineLayout(layout);
+		defineActions(layout);
+		defineLayout(layout);
 	}
 
-	
 	public void defineActions(IPageLayout layout) {
-        // Add "new wizards".
-        layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.folder");
-        layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.file");
+		// Add "new wizards".
+		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.folder");
+		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.file");
+		layout.addNewWizardShortcut("org.eclipse.HPE.HPEWizard");
 
-        // Add "show views".
-        layout.addShowViewShortcut(IPageLayout.ID_RES_NAV);
-        layout.addShowViewShortcut(IPageLayout.ID_BOOKMARKS);
-        layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
-        layout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET);
-        layout.addShowViewShortcut(IPageLayout.ID_TASK_LIST);
-}
-	
+		// Add "show views".
+		layout.addShowViewShortcut("hPE.HPEResourceNavigator");
+		layout.addShowViewShortcut("hPE.library.HPEComponentLibraryView");
+		layout.addShowViewShortcut("hPE.core.library.LocationView");
+	}
+
 	public void defineLayout(IPageLayout layout) {
-        // Editors are placed for free.
-        String editorArea = layout.getEditorArea();
+		// Editors are placed for free.
+		String editorArea = layout.getEditorArea();
 
-        // Place navigator and outline to left of
-        // editor area.
-        IFolderLayout left = layout.createFolder("left", IPageLayout.LEFT, (float) 0.20, editorArea);
-        IFolderLayout right = layout.createFolder("right", IPageLayout.RIGHT, (float) 0.75, editorArea);
-        
-        left.addView("hPE.HPEResourceNavigator" );
-        right.addView("hPE.library.HPEComponentLibraryView");
-        
-}
+		// Place navigator and outline to left of
+		// editor area.
+		IFolderLayout left = layout.createFolder("left", IPageLayout.LEFT,
+				(float) 0.20, editorArea);
+		IFolderLayout right = layout.createFolder("right", IPageLayout.RIGHT,
+				(float) 0.75, editorArea);
+		IFolderLayout bottom = layout.createFolder("bottom",
+				IPageLayout.BOTTOM, (float) 0.7, editorArea);
 
+		left.addView("hPE.HPEResourceNavigator");
+		right.addView("hPE.library.HPEComponentLibraryView");
+		bottom.addView("hPE.core.library.LocationView");
+	}
 }

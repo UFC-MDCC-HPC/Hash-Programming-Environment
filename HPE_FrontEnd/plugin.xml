@@ -24,12 +24,11 @@
          point="org.eclipse.ui.newWizards">
       <category
             id="org.eclipse.HPEWizardCategory"
-            name="%HPE_wizard_category"
-            parentCategory="org.eclipse.HPE"/>
+            name="HPE"/>
       <wizard
-            category="org.eclipse.HPE"
+            category="org.eclipse.HPEWizardCategory"
             class="hPE.HPEWizard"
-            icon="src/hPE/util/icons/component.gif"
+            icon="hPE/util/icons/component.gif"
             id="org.eclipse.HPE.HPEWizard"
             name="# Configuration">
          <selection class="org.eclipse.core.resources.IResource"/>
@@ -44,18 +43,30 @@
           id="org.eclipse.HPEPerspective"
           name="Hash Programming Environment">
 	   </perspective>
-         
    </extension>
+
    <extension
          point="org.eclipse.ui.views">
+      <category 
+           id="hPE.frontend"
+           name="HPE Frontend">
+      </category>
       <view
             class="hPE.HPEResourceNavigator"
             id="hPE.HPEResourceNavigator"
-            name="Configuration Sessions"/>
+            name="Configuration Sessions"
+            category="hPE.frontend"/>
       <view
             class="hPE.core.library.HPEComponentLibraryView"
             id="hPE.library.HPEComponentLibraryView"
-            name="Repository"/>
+            name="Repository"
+            category="hPE.frontend"/>
+
+      <view
+            class="hPE.core.library.LocationView"
+            id="hPE.core.library.LocationView"
+            name="Location's Server List"
+            category="hPE.frontend"/>
    </extension>
    <extension
          point="org.eclipse.core.runtime.adapters">
@@ -122,6 +133,29 @@
             </command>
          </toolbar>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="hPE.ui.preferences.HPEPreferencePage"
+            id="hPE.ui.preferences.HPEPreferencePage"
+            name="HPE">
+      </page>
+      <page
+            class="hPE.ui.preferences.BackendPreferencePage"
+            id="hPE.ui.preferences.BackendPreferencePage"
+            name="Backend Address"
+            category="hPE.ui.preferences.HPEPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="hPE.ui.preferences.PreferenceInitializer">
+      </initializer>
+      <initializer
+            class="hPE.ui.preferences.PreferenceInitializer">
+      </initializer>
    </extension>
 
 </plugin>

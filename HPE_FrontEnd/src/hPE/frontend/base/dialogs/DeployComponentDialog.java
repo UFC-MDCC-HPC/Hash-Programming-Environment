@@ -273,7 +273,7 @@ public class DeployComponentDialog extends JDialog
 		    b.password = jTextFieldBackEndPassword.getText();
 		    b.curdir = jTextField_BackEndCurDir.getText() != null ? new Path(jTextField_BackEndCurDir.getText()) : null;
 		    backendList.put(b.name, b);
-		    
+
 		    BackEndLocationList.saveData(backendList);
 			this.loadBackEndsInfo();
 		} else if (event.getSource() == jButtonDeleteBackEnd) {
