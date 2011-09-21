@@ -702,9 +702,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		IPath path = HComponentFactoryImpl.buildWPath(pathC.setDevice(null))
 				.removeLastSegments(1);
 
-		String cachePath = addSegment(HPEProperties
-				.get(PreferenceConstants.CACHE_PATH), (new Path(locationURI
-				.toString())).removeLastSegments(1).toString());
+		String cachePath = addSegment(HPEProperties.get(PreferenceConstants.CACHE_PATH), (new Path(locationURI.toString())).removeLastSegments(1).toString());
 
 		try {
 			copyDirectory(new File(path.toString()), new File(cachePath));
@@ -728,7 +726,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		if (srcPath.isDirectory()) {
 
 			if (!dstPath.exists()) {
-				dstPath.mkdir();
+				dstPath.mkdirs();
 			}
 
 			String files[] = srcPath.list();

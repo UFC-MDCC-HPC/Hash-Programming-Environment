@@ -27,10 +27,7 @@ public class HPEProperties implements IPropertyChangeListener {
 
 	private static HPEProperties eInstance = null;
 
-	private static final String CACHE_DIR = System
-			.getProperty("file.separator")
-			+ System.getProperty("user.name")
-			+ System.getProperty("file.separator") + "cache";
+	private static final String CACHE_DIR = System.getProperty("file.separator") + System.getProperty("user.name") + System.getProperty("file.separator") + "cache";
 
 	private static final String LIB_DIR = System.getProperty("file.separator")
 			+ "lib";
@@ -58,24 +55,20 @@ public class HPEProperties implements IPropertyChangeListener {
 		if (System.getProperty("os.name").toUpperCase().contains("WIN")) {
 			extension = ".bat";
 		}
-		map.put(GACUTIL_PATH, store.getString(MONO_BIN_PATH) + "gacutil"
-				+ extension);
-		map.put(SN_PATH,
-				store.getString(MONO_BIN_PATH)
-						+ System.getProperty("file.separator") + "sn"
-						+ extension);
+		map.put(GACUTIL_PATH, store.getString(MONO_BIN_PATH) + System.getProperty("file.separator") + "gacutil" + extension);
+		
+		map.put(SN_PATH, store.getString(MONO_BIN_PATH) + System.getProperty("file.separator") + "sn" + extension);
 
-		map.put(EXTERNAL_REFERENCES_XML,
-				store.getString(EXTERNAL_REFERENCES_XML));
+		map.put(EXTERNAL_REFERENCES_XML, store.getString(EXTERNAL_REFERENCES_XML));
 
-		// TODO os valores est‹o fixos. Qual o n’vel de variabilidade: por
+		// TODO os valores estï¿½o fixos. Qual o nï¿½vel de variabilidade: por
 		// componente? Por application? Determinar essa variabilidade para
 		// definir a melhor forma de atribuir a propriedade.
 		map.put(COMPILER_FLAG_DEBUG, "true");
 		map.put(COMPILER_FLAG_OPTIMIZE, "true");
 		map.put(COMPILER_FLAG_UNSAFE, "false");
 
-		// TODO n‹o Ž para existir: Tempor‡rio
+		// TODO nï¿½o ï¿½ para existir: Temporï¿½rio
 		map.put(LOCAL_LOCATION,
 				"http://localhost:8080/HPE_Location/HPE_Location_Server.jws");
 	}
