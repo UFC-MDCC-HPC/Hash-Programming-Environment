@@ -26,11 +26,12 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 		store.setDefault(PreferenceConstants.HPE_HOME, defaultHpeHome);
 		store.setDefault(PreferenceConstants.EXTERNAL_REFERENCES_XML,
-				defaultHpeHome + System.getProperty("file.separator")
-						+ "references.xml");
+				defaultHpeHome + System.getProperty("file.separator") + "references.xml");
+		store.setDefault(PreferenceConstants.BACKEND_LOCATIONS_XML,
+				defaultHpeHome + System.getProperty("file.separator") + "backend_locations.xml");
 
 		// Default values for WIN
-		//TODO valor padr‹o para o Win.
+		//TODO valor padrï¿½o para o Win.
 		store.setDefault(PreferenceConstants.WIN
 				+ PreferenceConstants.MONO_BIN_PATH, "");
 
@@ -40,7 +41,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 				"/Library/Frameworks/Mono.framework/Versions/Current/bin");
 
 		// Default values for UNIX (default os)
-		//TODO valor padr‹o para o Win.
+		//TODO valor padrï¿½o para o Win.
 		store.setDefault(PreferenceConstants.UNIX
 				+ PreferenceConstants.MONO_BIN_PATH, "");
 	}

@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Path;
 
 import java.awt.Dimension;
 
-public class DeployComponentDialog extends JDialog 
+public class BackendLocationsDialog extends JDialog 
                                    implements	ActionListener, ListSelectionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -49,18 +49,20 @@ public class DeployComponentDialog extends JDialog
 	 * @param owner
 	 * @param c 
 	 */
-	
-	private HComponent c = null;
-	
-	public DeployComponentDialog(Frame owner, HComponent c) {
-		super(owner);
-		this.c = c;
-		initialize();
-	}
 
-	public DeployComponentDialog(Frame owner) {
+	protected static BackendLocationsDialog instance;
+	
+	public static BackendLocationsDialog getInstance() {
+		if (instance == null) {
+			instance = new BackendLocationsDialog(null);
+		}
+		return instance;
+	}
+	
+	
+
+	public BackendLocationsDialog(Frame owner) {
 		super(owner);
-		this.c = null;
 		initialize();
 	}
 

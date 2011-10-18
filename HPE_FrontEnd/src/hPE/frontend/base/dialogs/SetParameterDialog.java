@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.eclipse.swt.widgets.Display;
+
 @SuppressWarnings("serial")
 public class SetParameterDialog extends JDialog {
 
@@ -137,17 +139,25 @@ public class SetParameterDialog extends JDialog {
 			jButtonOK = new JButton();
 			jButtonOK.setText("Ok");
 			jButtonOK.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (!jTextFieldParameterId.getText().equals("")
-							&& jTextFieldParameterId.getText() != null) {
+				public void actionPerformed(ActionEvent e) 
+				{
+					if (!jTextFieldParameterId.getText().equals("") && jTextFieldParameterId.getText() != null) 
+					{
 						buttonPressed = BUTTON_OK;
-
-						String parId = getParId().trim();
-						model.setParameter(parId);
-						((HComponent) model.getTopConfiguration())
-								.invalidateInterfaceNames();
-
-					} else {
+						Display display = Display.getDefault(); 
+						display.syncExec( new Runnable() 
+						                               {
+						    								public void run()
+						    								{
+						    									    String parId = getParId().trim();
+						    										model.setParameter(parId);
+						    										((HComponent) model.getTopConfiguration()).invalidateInterfaceNames();
+						    								}
+						                               }
+						      );
+						      
+					} else 
+					{
 						JOptionPane
 								.showMessageDialog(
 										null,
@@ -169,7 +179,7 @@ public class SetParameterDialog extends JDialog {
 	private JButton getJButtonCancel() {
 		if (jButtonCancel == null) {
 			jButtonCancel = new JButton();
-			jButtonCancel.setText("Cancel");
+			jButtonCancel.setText("Close");
 			jButtonCancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					buttonPressed = BUTTON_CANCEL;

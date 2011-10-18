@@ -1687,8 +1687,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public void changeVariableName(String oldVarName, String newVarName) {
-		changeVariableName((HComponent) this.getTopConfiguration(), oldVarName,
-				newVarName);
+		changeVariableName((HComponent) this.getTopConfiguration(), oldVarName,	newVarName);
 	}
 
 	public void changeVariableName(HComponent ctx, String oldVarName,

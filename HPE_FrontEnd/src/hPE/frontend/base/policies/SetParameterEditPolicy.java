@@ -51,6 +51,7 @@ public class SetParameterEditPolicy extends ComponentEditPolicy {
 
 			dialog = SetParameterDialog.getInstance();
 			dialog.setModel(model);
+			dialog.setVisible(true);
 
 			// BEGIN TODO: EXISTENTIAL TYPE
 			// boolean isExistential = this.dialog.isExistential();

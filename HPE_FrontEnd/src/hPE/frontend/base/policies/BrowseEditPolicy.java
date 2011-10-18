@@ -48,7 +48,7 @@ public void execute(){
 	IProgressMonitor monitor = null;
 	BrowseAndRunBackEndDialog.getCurrentEditor().doSave(monitor);
 	
-	dialog.setAlwaysOnTop(true);
+	//dialog.setAlwaysOnTop(true);
 	dialog.setVisible(true);
 		
 }

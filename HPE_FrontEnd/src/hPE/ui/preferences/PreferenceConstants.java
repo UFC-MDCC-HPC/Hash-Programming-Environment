@@ -10,18 +10,19 @@ public class PreferenceConstants {
 	/*
 	 * TODO temporariamente vamos utilizar um campo para indicar o XML contendo
 	 * as referencias (EXTERNAL_REFERENCES_XML). num segundo momento, essas dll
-	 * serão atribuidas diretamente ao projeto HPE em aba específica.
+	 * serÔøΩo atribuidas diretamente ao projeto HPE em aba especÔøΩfica.
 	 * 
 	 * De forma semelhante, as propriedades COMPILER* devem ser avaliadas para
-	 * saber qual o melhor local de sua localização.
+	 * saber qual o melhor local de sua localizaÔøΩÔøΩo.
 	 * 
-	 * LOCAL_LOCATION existe apenas temporáriamente para fazer funcionar com uma
+	 * LOCAL_LOCATION existe apenas temporÔøΩriamente para fazer funcionar com uma
 	 * refatoracao menor.
 	 */
 
 	public static final String HPE_HOME = "hpe_home";
-	public static final String MONO_BIN_PATH = "mono_bin_path";
+	public static final String MONO_BIN_PATH = "mono_bin_path";	
 	public static final String EXTERNAL_REFERENCES_XML = "x-references";
+	public static final String BACKEND_LOCATIONS_XML = "backend_locations";
 
 	public static final String CACHE_PATH = "cache_path";
 	public static final String LIB_PATH = "lib_path";
@@ -31,6 +32,7 @@ public class PreferenceConstants {
 	static final String HPE_HOME_D = "HPE Home Path: ";
 	static final String MONO_BIN_PATH_D = "MONO Bin Path: ";
 	static final String EXTERNAL_REFERENCES_XML_D = "External References XML: ";
+	static final String BACKEND_LOCATIONS_XML_D = "BackEnd Locations XML: ";
 
 	// TEMPORARIOS
 	public static final String COMPILER_FLAG_DEBUG = "compiler_flag_debug";

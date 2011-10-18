@@ -49,7 +49,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 //Refatorado para o novo HPEProperties
-//TODO acredito que não deve ser usado swing, mas sim SWT. Isso pode ser causar problemas na geração do plugin.
+//TODO acredito que nÔøΩo deve ser usado swing, mas sim SWT. Isso pode ser causar problemas na geraÔøΩÔøΩo do plugin.
 public class AddReferencesDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -129,7 +129,7 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 			String monoHome = monoBinPath.toFile().getParent();
 
 			File monoLibPath = new File(monoHome
-					+ System.getProperty("file.separator") + "lib");
+					+ System.getProperty("file.separator") + "lib"+ System.getProperty("file.separator") + "mono");
 
 			File[] files = monoLibPath.listFiles();
 			for (File f : files) {
@@ -146,7 +146,7 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 				}
 			}
 		} else {
-			// TODO USAR SWT, não SWING. Tem que mudar a classe dialog toda.
+			// TODO USAR SWT, nÔøΩo SWING. Tem que mudar a classe dialog toda.
 			JOptionPane.showMessageDialog(null,
 					"Variable MONO_PATH not set in hpe.frontend.properties.",
 					"Error", JOptionPane.ERROR_MESSAGE);

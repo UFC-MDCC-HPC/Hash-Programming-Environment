@@ -110,7 +110,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 	
 	private static String EDIT_LABEL = "manage ...";  //  @jve:decl-index=0:
 	
-	private void loadBackEndsInfo() {
+	private void loadBackEndsInfo() 
+	{
 		// TODO Auto-generated method stub
 		backendList = new HashMap<String,BackEndLocationInfo>();
 		BackEndLocationList.loadBackEndsInfo(backendList);		
@@ -133,8 +134,8 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 						if (b.name.equals(EDIT_LABEL)) {
 							dcList = new ArrayList<DeployedComponentInfo>();
 						    browseUpdate();
-							DeployComponentDialog dialog = new DeployComponentDialog(null);
-							dialog.setAlwaysOnTop(true);
+							BackendLocationsDialog dialog =  BackendLocationsDialog.getInstance();
+							//dialog.setAlwaysOnTop(true);
 							dialog.setVisible(true);				
 							jButtonDeploy.setEnabled(false);
 						} else if (b.name.equals("")) {
@@ -1144,7 +1145,7 @@ public class BrowseAndRunBackEndDialog extends JDialog implements ActionListener
 					if (b.name.equals(EDIT_LABEL)) {
 						dcList = new ArrayList<DeployedComponentInfo>();
 					    browseUpdate();
-						DeployComponentDialog dialog = new DeployComponentDialog(null);
+						BackendLocationsDialog dialog = new BackendLocationsDialog(null);
 						dialog.setAlwaysOnTop(true);
 						dialog.setVisible(true);				
 						jButtonDeploy.setEnabled(false);

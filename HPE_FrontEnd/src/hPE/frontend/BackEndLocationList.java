@@ -1,6 +1,7 @@
 package hPE.frontend;
 
 import hPE.HPEProperties;
+
 import hPE.backend.BackEnd_WSLocator;
 import hPE.backend.BackEnd_WSSoap;
 import hPE.frontend.backend.environment.DeployedComponentInfoType;
@@ -16,8 +17,12 @@ import hPE.frontend.backend.locations.LocationsPackage;
 import hPE.frontend.backend.locations.Services;
 import hPE.frontend.backend.locations.util.LocationsResourceFactoryImpl;
 import hPE.frontend.core.locations.LocationManager;
+import hPE.frontend.backend.locations.impl.DocumentRootImpl;
+import hPE.frontend.backend.locations.util.LocationsResourceImpl;
+import org.eclipse.core.runtime.Path;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,20 +60,18 @@ public class BackEndLocationList {
 
 	private static String fileSites = null;
 
-	@Deprecated
 	private static String getFileSites() {
 		if (fileSites == null) {
-			fileSites = HPEProperties.getInstance().getValue(
-					"backend_locations");
+			fileSites = HPEProperties.getInstance().getValue("backend_locations");
 		}
 		return fileSites;
 	}
 
 	@Deprecated
-	public static void loadBackEndsInfo(
-			Map<String, BackEndLocationInfo> backendList) {
-		Collection<Location> locations = LocationManager.getInstance()
-				.getBackendLocations().values();
+	public static void loadBackEndsInfo2
+	(
+		Map<String, BackEndLocationInfo> backendList) {
+		Collection<Location> locations = LocationManager.getInstance().getBackendLocations().values();
 
 		BackEndLocationInfo backend;
 		for (Location l : locations) {
@@ -81,57 +84,55 @@ public class BackEndLocationList {
 
 	}
 
-	// TODO a œnica coisa que esse mŽtodo faz Ž carregar a lista de backend? Que
-	// confus‹o Ž essa?
-	// public static void loadBackEndsInfo(
-	// Map<String, BackEndLocationInfo> backendList) {
-	//
-	// ResourceSet resourceSet = new ResourceSetImpl();
-	//
-	// resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-	// .put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-	// new LocationsResourceFactoryImpl());
-	//
-	// resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI,
-	// LocationsPackage.eINSTANCE);
-	//
-	// URI uri = URI.createFileURI(getFileSites());
-	//
-	// Resource resource = null;
-	//
-	// try {
-	//
-	// resource = resourceSet.getResource(uri, true);
-	//
-	// } catch (Exception e) {
-	// System.out.println(e.getMessage());
-	// if (e.getCause() instanceof FileNotFoundException) {
-	// resource = saveData(backendList);
-	// }
-	// } finally {
-	//
-	// LocationsResourceImpl cResource = (LocationsResourceImpl) resource;
-	// EList rs = cResource.getContents();
-	//
-	// Services services = ((DocumentRootImpl) rs.get(0)).getServices();
-	// if (services.getBackend() != null) {
-	// for (Location l : services.getBackend()) {
-	// String name = l.getName();
-	// String locURI = l.getUri();
-	// String login = l.getLogin();
-	// String password = l.getPassword();
-	// IPath curdir = l.getCurdir() != null ? new Path(l
-	// .getCurdir()) : null;
-	// BackEndLocationInfo bel = new BackEndLocationInfo(name,
-	// locURI, login, password, curdir);
-	// backendList.put(name, bel);
-	// }
-	// }
-	// }
-	// }
+	// TODO a ï¿½nica coisa que esse mï¿½todo faz ï¿½ carregar a lista de backend? Que
+	// confusï¿½o ï¿½ essa?
+	 public static void loadBackEndsInfo(Map<String, BackEndLocationInfo> backendList) 
+	 {
+	
+	 ResourceSet resourceSet = new ResourceSetImpl();
+	
+	 resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new LocationsResourceFactoryImpl());
+	
+	 resourceSet.getPackageRegistry().put(LocationsPackage.eNS_URI, LocationsPackage.eINSTANCE);
+	
+	 URI uri = URI.createFileURI(getFileSites());
+	
+	 Resource resource = null;
+	
+	 try {
+	
+		 resource = resourceSet.getResource(uri, true);
+	
+	 } 
+	 catch (Exception e) 
+	 {
+		 System.out.println(e.getMessage());
+		 if (e.getCause() instanceof FileNotFoundException) {
+			 resource = saveData(backendList);
+		 }
+	 } 
+	 finally {
+		 LocationsResourceImpl cResource = (LocationsResourceImpl) resource;
+		 EList rs = cResource.getContents();
+		
+		 Services services = ((DocumentRootImpl) rs.get(0)).getServices();
+		 
+		 if (services.getBackend() != null) {
+			 for (Location l : services.getBackend()) {
+				 String name = l.getName();
+				 String locURI = l.getUri();
+				 String login = l.getLogin();
+				 String password = l.getPassword();
+				 IPath curdir = l.getCurdir() != null ? new Path(l.getCurdir()) : null;
+				 BackEndLocationInfo bel = new BackEndLocationInfo(name,locURI, login, password, curdir);
+				 backendList.put(name, bel);
+			 }
+		 }
+	 }
+	 }
 
 	@Deprecated
-	// aparentemente esse mŽtodo s— transforma um Map num Resource.
+	// aparentemente esse mï¿½todo sï¿½ transforma um Map num Resource.
 	public static Resource saveData(Map<String, BackEndLocationInfo> backendList) {
 		try {
 			// Create a resource set to hold the resources.
@@ -192,7 +193,7 @@ public class BackEndLocationList {
 	}
 
 	@Deprecated
-	// TODO se a classe Ž realmente necess‡ria, criar uma classe tradicional num
+	// TODO se a classe ï¿½ realmente necessï¿½ria, criar uma classe tradicional num
 	// arquivo a parte.
 	public static class DeployedComponentInfo {
 		public boolean isAbstract;
@@ -231,7 +232,7 @@ public class BackEndLocationList {
 	}
 
 	@Deprecated
-	// TODO se a classe Ž realmente necess‡ria, criar uma classe tradicional num
+	// TODO se a classe ï¿½ realmente necessï¿½ria, criar uma classe tradicional num
 	// arquivo a parte.
 	public static class DeployedComponentInfoParameter {
 		public String parameter_id = null;
@@ -429,7 +430,7 @@ public class BackEndLocationList {
 		List<URI> locations = new ArrayList<URI>();
 		Map<String, BackEndLocationInfo> coreLocations = new HashMap<String, BackEndLocationInfo>();
 		loadBackEndsInfo(coreLocations);
-
+		
 		for (BackEndLocationInfo c : coreLocations.values()) {
 			locations.add(URI.createURI(c.locURI));
 		}

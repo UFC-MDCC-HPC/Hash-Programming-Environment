@@ -29,10 +29,10 @@ public class ChangeVariableNameCommand extends Command {
 	
 	
 	public void execute() {
-		this.newVarNameDialog = new DialogChangeVarName(c);
-        this.newVarNameDialog.setAlwaysOnTop(true);
-        this.newVarNameDialog.setModal(true);
-        Map<String,List<HComponent>> m = c.getParameters();
+		this.newVarNameDialog = new DialogChangeVarName();
+		this.newVarNameDialog.setModel(c);
+        
+		Map<String,List<HComponent>> m = c.getParameters();
         
         List<HComponent> cupdate = new ArrayList<HComponent>();
         
@@ -43,13 +43,10 @@ public class ChangeVariableNameCommand extends Command {
         	 if (cVar.getSupplier()==null) // Só pode alterar se for filho direto da configuração ...
         		 this.newVarNameDialog.addVarName(new Pair<String,List<HComponent>>(var,innerCs));
         }
-        this.newVarNameDialog.show();
-                
-        for (HComponent c : cupdate) {
-        	c.forceUpdateName();
-        }
         
-        c.adviceChangeParameterName();
+        this.newVarNameDialog.setUpdates(cupdate);
+		this.newVarNameDialog.setVisible(true);
+                
 
         return;
 	}

@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.eclipse.swt.widgets.Display;
+
 public class DialogChangeVarName extends JDialog {
 
 	/**
@@ -40,12 +42,25 @@ public class DialogChangeVarName extends JDialog {
 	
 	private HComponent c = null;
 
-	public DialogChangeVarName(HComponent c) {
+	public DialogChangeVarName() {
 		super();
-		this.c = c;
 		initialize();
 	}
 	
+	public void setModel(HComponent c)
+	{
+		this.c = c;
+	}
+	
+	protected static DialogChangeVarName instance;
+		
+	public static DialogChangeVarName getInstance() 
+	{
+		if (instance == null) {
+			instance = new DialogChangeVarName();
+		}
+		return instance;
+	}
 	
 
 	/**
@@ -158,10 +173,24 @@ public class DialogChangeVarName extends JDialog {
 	            	if (!jTextFieldNewVarName.getText().equals("") && jTextFieldNewVarName.getText() != null) {	            	
 	            	   buttonPressed = BUTTON_SET;
 	            	   
-	       	        Pair<String, List<HComponent>> varToBeChanged = (Pair<String, List<HComponent>>) getOldVarName();
-	    	        String newVarName = getNewVarName();
 	            	   
-                    changeVarName(varToBeChanged, newVarName);
+					Display display = Display.getDefault(); 
+					display.syncExec( new Runnable() 
+					                               {
+					    								public void run()
+					    								{
+					    					       	        Pair<String, List<HComponent>> varToBeChanged = (Pair<String, List<HComponent>>) getOldVarName();
+					    					    	        String newVarName = getNewVarName();
+					    				                    changeVarName(varToBeChanged, newVarName);
+					    				                    for (HComponent c : cupdate) {
+					    				                    	c.forceUpdateName();
+					    				                    }
+					    				                    
+					    				                    c.adviceChangeParameterName();
+					    								}
+					                               }
+					      );
+	    	        
 	    	        
 	                } else {
 	                	JOptionPane.showMessageDialog(null,
@@ -235,5 +264,12 @@ public class DialogChangeVarName extends JDialog {
         	
         }
     }
+
+    
+    private List<HComponent> cupdate;
+	public void setUpdates(List<HComponent> cupdate) 
+	{
+		this.cupdate = cupdate;		
+	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

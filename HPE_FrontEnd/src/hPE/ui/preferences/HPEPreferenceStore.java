@@ -1008,8 +1008,7 @@ public class HPEPreferenceStore extends EventManager implements
 
 				for (String nativeKey : keys) {
 					if (nativeKey.substring(0, prefix.length()).equals(prefix)) {
-						s = nativeKey.substring(prefix.length(), nativeKey
-								.length());
+						s = nativeKey.substring(prefix.length(), nativeKey.length());
 						if (s.substring(0, URI.length()).equals(URI)) {
 							realKey = s.substring(URI.length(), s.length());
 

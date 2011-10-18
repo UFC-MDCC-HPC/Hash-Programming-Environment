@@ -1,7 +1,7 @@
 package hPE.frontend.base.policies;
 
 import hPE.HPEVersionEditor;
-import hPE.frontend.base.dialogs.DeployComponentDialog;
+import hPE.frontend.base.dialogs.BackendLocationsDialog;
 import hPE.frontend.base.edits.ConfigurationEditPart;
 import hPE.frontend.base.model.HComponent;
 
@@ -53,7 +53,7 @@ public void execute(){
 	
 	// try {
 	
-		DeployComponentDialog dialog = new DeployComponentDialog(null, c);
+		BackendLocationsDialog dialog = new BackendLocationsDialog(null);
 
 		dialog.setAlwaysOnTop(true);
 	//	dialog.pack();

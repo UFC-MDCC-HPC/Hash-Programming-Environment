@@ -5,6 +5,7 @@ import static hPE.ui.preferences.PreferenceConstants.COMPILER_FLAG_DEBUG;
 import static hPE.ui.preferences.PreferenceConstants.COMPILER_FLAG_OPTIMIZE;
 import static hPE.ui.preferences.PreferenceConstants.COMPILER_FLAG_UNSAFE;
 import static hPE.ui.preferences.PreferenceConstants.EXTERNAL_REFERENCES_XML;
+import static hPE.ui.preferences.PreferenceConstants.BACKEND_LOCATIONS_XML;
 import static hPE.ui.preferences.PreferenceConstants.GACUTIL_PATH;
 import static hPE.ui.preferences.PreferenceConstants.HPE_HOME;
 import static hPE.ui.preferences.PreferenceConstants.LIB_PATH;
@@ -40,8 +41,7 @@ public class HPEProperties implements IPropertyChangeListener {
 	}
 
 	protected HPEProperties() {
-		store = (HPEPreferenceStore) HPEPlugin.getDefault()
-				.getPreferenceStore();
+		store = (HPEPreferenceStore) HPEPlugin.getDefault().getPreferenceStore();
 		store.addPropertyChangeListener(this);
 		initialize();
 	}
@@ -60,6 +60,9 @@ public class HPEProperties implements IPropertyChangeListener {
 		map.put(SN_PATH, store.getString(MONO_BIN_PATH) + System.getProperty("file.separator") + "sn" + extension);
 
 		map.put(EXTERNAL_REFERENCES_XML, store.getString(EXTERNAL_REFERENCES_XML));
+		map.put(BACKEND_LOCATIONS_XML, store.getString(BACKEND_LOCATIONS_XML));
+		
+		
 
 		// TODO os valores est�o fixos. Qual o n�vel de variabilidade: por
 		// componente? Por application? Determinar essa variabilidade para

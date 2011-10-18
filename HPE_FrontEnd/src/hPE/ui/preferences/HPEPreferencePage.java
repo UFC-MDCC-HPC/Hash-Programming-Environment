@@ -47,6 +47,13 @@ public class HPEPreferencePage extends FieldEditorPreferencePage implements
 				PreferenceConstants.EXTERNAL_REFERENCES_XML_D,
 				getFieldEditorParent());
 		addField(xreferences);
+		
+		StringFieldEditor backend_locations = new StringFieldEditor(
+				PreferenceConstants.BACKEND_LOCATIONS_XML,
+				PreferenceConstants.BACKEND_LOCATIONS_XML_D,
+				getFieldEditorParent());
+		addField(backend_locations);
+		
 	}
 
 	/*
