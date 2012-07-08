@@ -6,7 +6,6 @@ import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
@@ -147,7 +146,6 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			case 6: c = new HQualifierComponent(s,null,uriAbsolutePath); break;
 			case 7: c = new HApplicationComponent(s,null,uriAbsolutePath); break;
 		    case 8: c = new HServiceComponent(s,null,uriAbsolutePath); break;
-			case 9: c = new HEnumeratorComponent(s,null,uriAbsolutePath); break;
 			case 10: c = new HFacetComponent(s,null,uriAbsolutePath); break;
 			case 11: c = new HDomainComponent(s,null,uriAbsolutePath); break;
 			}

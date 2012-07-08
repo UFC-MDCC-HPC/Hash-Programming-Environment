@@ -5,7 +5,6 @@ import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IComponentEntry;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
-import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.interfaces.IUnitSlice;
 
 import java.beans.PropertyChangeListener;
@@ -25,7 +24,6 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
                                    IPropertyChangeListener, 
                                    INode, 
                                    IHasInterface, 
-                                   IReplicatedElement, 
                                    IUnitSlice {
 	
 	/* A INTERFACE SLICE ABSTRACTION ASSOCIADA A UNIT SLICE ABSTRACTION DEVE TER A MESMA INTERFACE DA 
@@ -71,26 +69,13 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 			this.setBounds(r);
 			
 			unit.addUnitSlice(this);
-			if (!unit.isClone()) {
+//			if (!unit.isClone()) {
 				HInterface i = (HInterface) unit.getInterface();
 				if (i!=null) {
 					i.addInterfaceSlice(this,unitEntry.getName2());			
 				}
 				
-				List<HReplicator> allRs = new ArrayList<HReplicator>();
-				allRs.addAll(unitEntry.getReplicators());
-				allRs.addAll(((HComponent) unitEntry.getConfiguration()).getReplicators());
-							
-				for (HReplicator replicator : allRs) {
-					if (!this.isReplicatedBy(replicator) && !this.getUnit().isReplicatedBy(replicator)) {
-		                try {					
-							this.setReplicator(replicator,true);
-			    		} catch (HPEUnmatchingEnumeratorsException e) {
-			    			System.err.println("Unexpected Exception !" + e.getMessage());
-			    		}
-					}
-				} 
-			}
+//			}
 			
 		} catch (HPEAbortException e) {
 			unit.removeUnitSlice(this);
@@ -270,211 +255,7 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 		listeners.firePropertyChange(INTERFACE_HIDE,false,true);
 	}
 
-	/**
-	 * @uml.property   name="linkToReplicator"
-	 * @uml.associationEnd   multiplicity="(0 -1)" inverse="IHUnitSliceAbstraction:hPE.base.model.HLinkToReplicator"
-	 */
-	private Collection<HLinkToReplicator> linkToReplicator = new ArrayList();
-
-	/** 
-	 * Getter of the property <tt>linkToReplicator</tt>
-	 * @return  Returns the linkToReplicator.
-	 * @uml.property  name="linkToReplicator"
-	 */
-	public List<HLinkToReplicator> getLinksToVisibleReplicators() {
-		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
-		for (HLinkToReplicator l : this.linkToReplicator) {
-			HReplicator r = l.getReplicator();
-			if (!r.getHidden() && !r.isUnitaryAndNotShow()) 
-				visibleLinks.add(l);
-		}
-		
-		return visibleLinks;
-	}
-
-	public List<HLinkToReplicator> getLinksToReplicators() {
-		List<HLinkToReplicator> theLinks = new ArrayList<HLinkToReplicator>();
-		Iterator<HLinkToReplicator> links = linkToReplicator.iterator(); 
-		while (links.hasNext()) {
-			HLinkToReplicator l = links.next();
-			theLinks.add(l);
-		}
-		
-		return theLinks;
-	}
-
-	public boolean isReplicatedBy(IReplicator which_replicator) {
-		return (findLink((HReplicator)which_replicator) != null);
-	}
-
-	public boolean isReplicatedByVarId(String varId) {
-		Iterator<HReplicator> rs = this.getReplicators().iterator();
-		while (rs.hasNext()) {
-			HReplicator r = rs.next();
-			if (r.getVarId().equals(varId)) return true;
-		}
-		return false;
-	}
-	
-	/**
-	 */
-	public List<HReplicator> getReplicators() {
-		List replicators = new ArrayList();
-		if (this.getLinksToReplicators().size() > 0) {
-			Iterator rs = this.getLinksToReplicators().iterator();
-		    while (rs.hasNext()) {
-		    	HReplicator r = ((HLinkToReplicator) rs.next()).getReplicator();
-		    	replicators.add(r);
-		    }
-		}			
-		return replicators;
-	}
-
-	public final static String REPLICATED = "replicated";
-
-	/**
-	 */
-	public void setReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException{
-
-		if (!this.isReplicatedBy(the_replicator)) {
-			HLinkToReplicator linkToReplicator = new HLinkToReplicator(this,the_replicator);
-			this.linkToReplicator.add(linkToReplicator);
-			
-	//		 PROPAGATE TO COMPONENTS ! ...
-	/*		try {
-				propagateReplicator(the_replicator);
-			} catch (HPEUnmatchingEnumeratorsException e) {
-				this.linkToReplicator.remove(linkToReplicator); // ROLL BACK !
-				throw new HPEUnmatchingEnumeratorsException();
-			} */
-			listeners.firePropertyChange(REPLICATED,null,this.getBounds());
-		}
-
-	}
-	
-	private void propagateReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException{
-	   
-		if (this.getBinding() != null) {
-			IHUnit u = this.getBinding().getEntry();
-			
-			HReplicator r = u.getReplicatorByVarId(the_replicator.getVarId());
-			if (r==null) {
-				HComponent c = (HComponent) u.getConfiguration();
-				HReplicator rc = c.getReplicatorByVarId(the_replicator.getVarId());
-				if (rc==null) {
-					//if (c.someUnitIsReplicatedByVarIdOf(the_replicator))
-					//	throw new HPEUnmatchingEnumeratorsException();
-					//else 
-						c.setReplicator(the_replicator,true);
-				} else {
-					if (!c.isReplicatedBy(the_replicator)) 
-						c.setReplicator(the_replicator,true);
-				}
-			} else {
-				u.setReplicator(the_replicator,true);
-			}
-			
-			/* if (!u.isReplicatedBy(the_replicator)) {
-				HComponent c = (HComponent) u.getConfiguration();
-				if (!c.isReplicatedBy(the_replicator) && !c.someUnitIsReplicatedBy(the_replicator)) 
-					   c.setReplicator(the_replicator,true);
-			} */
-		}
-	}
-
-	public HReplicator getReplicatorByVarId(String v) {
-		HLinkToReplicator link = null;
-		Iterator ls = ((List) ((ArrayList) this.linkToReplicator).clone()).iterator();
-		while (ls.hasNext()) {
-			link = (HLinkToReplicator) ls.next();
-			if (link.getReplicator().getName2().equals(v)) return link.getReplicator();   		
-		}
-		return null;
-	}
-
-	public void setReplicator (HReplicator the_replicator, boolean permanent) throws HPEUnmatchingEnumeratorsException {
-		setReplicator(the_replicator);
-		for (HReplicator r : the_replicator.getMyJoined()) {
-			setReplicator(r,permanent);
-		}
-		this.findLink(the_replicator).setPermanent(true);
-	}
-	
-	private HLinkToReplicator findLink(HReplicator which_replicator) {
-		HLinkToReplicator link = null;
-		Iterator ls = ((List) ((ArrayList) this.linkToReplicator).clone()).iterator();
-		while (ls.hasNext()) {
-			link = (HLinkToReplicator) ls.next();
-			if (link.getReplicator() == which_replicator.getTopJoined()) return link;   		
-		}
-		return null;
-	}
-	
-	public void unSetReplicator(HReplicator which_replicator) {
-		HLinkToReplicator link = findLink(which_replicator);
-    	link.unlinkFromReplicator();
-    	this.linkToReplicator.remove(link);
-    	List<HReplicator> rs = which_replicator.getMyJoined();    	
-    	if (!rs.isEmpty())
-			for (HReplicator s : rs) 
-			    if (this.isReplicatedBy(s)) 
-			    	this.unSetReplicator(s);
-		listeners.firePropertyChange(REPLICATED,null,getBounds());
-	}
-	
-	public void addLinkToReplicator(HLinkToReplicator linkToReplicator) {
-		this.linkToReplicator.add(linkToReplicator);
-		
-	}
-
-	@Override
-	public void removeLinkToReplicator(HLinkToReplicator linkToReplicator) {
-		this.linkToReplicator.remove(linkToReplicator);
-	}
-
-	/**
-	 */
-		public boolean isReplicated() {
-			return this.getLinksToReplicators().size() > 0;
-		}
-
-	/**
-	 */
-	public List getMyReplicas() {
-		// TODO: model (getMyReplicas)
-		return null;
-	}
    
-	/**
-	 */
-	public boolean isReplicatorFactorDetermined(HReplicator which_replicator) {
-		HLinkToReplicator link = findLink(which_replicator);
-		if (link != null) 
-			return link.isReplicatorFactorDetermined();
-		else
-			return false; // RAISES EXCEPTION !!!! ERROR !!!
-	}
-
-	/**
-	 */
-	public int getReplicationFactor(HReplicator which_replicator) {
-		HLinkToReplicator link = findLink(which_replicator);
-		if (link != null) 
-		        return which_replicator.getFactor();
-		else
-			return -1; // RAISES EXCEPTION !!!! ERROR !!!
-	}
-
-
-	/** 
-	 * Setter of the property <tt>linkToReplicator</tt>
-	 * @param linkToReplicator  The linkToReplicator to set.
-	 * @uml.property  name="linkToReplicator"
-	 */
-	public void setLinkToReplicator(Collection linkToReplicator) {
-		this.linkToReplicator = linkToReplicator;
-	}
-	
 	private int nestingFactor = 0;
 	
 	public final static String NESTING_FACTOR_PROPERTY = "nesting_factor_property";

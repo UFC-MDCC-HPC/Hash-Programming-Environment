@@ -3,40 +3,30 @@ package hPE;
 
 
 import hPE.frontend.ConfigurationEditPartFactory;
-import hPE.frontend.NAntBuilder;
 import hPE.frontend.base.actions.AddReferencesAction;
 import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
-import hPE.frontend.base.actions.DeployAction;
 import hPE.frontend.base.actions.DetachInterfaceAction;
 import hPE.frontend.base.actions.ExposedAction;
 import hPE.frontend.base.actions.FuseComponentsAction;
-import hPE.frontend.base.actions.FuseReplicatorAction;
 import hPE.frontend.base.actions.ImplementsAction;
 import hPE.frontend.base.actions.InheritFromAction;
-import hPE.frontend.base.actions.JoinReplicatorAction;
-import hPE.frontend.base.actions.LiftReplicatorAction;
 import hPE.frontend.base.actions.LiftUnitAction;
 import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.RegisterComponentAction;
+import hPE.frontend.base.actions.SetMultipleAction;
 import hPE.frontend.base.actions.SetParameterAction;
-import hPE.frontend.base.actions.SetPermutationAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
-import hPE.frontend.base.actions.SetReplicatorFactorAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
 import hPE.frontend.base.actions.ShowInterfaceAction;
-import hPE.frontend.base.actions.SplitReplicatorAction;
 import hPE.frontend.base.actions.SupplyParameterAction;
 import hPE.frontend.base.actions.UnbindAction;
-import hPE.frontend.base.actions.UnfuseReplicatorAction;
-import hPE.frontend.base.actions.UnsetReplicatorAction;
 import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.dnd.FileTransferDropTargetListener;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.activate.actions.AltAbsorbtionAction;
 import hPE.frontend.kinds.activate.actions.CombineActionsAction;
@@ -52,7 +42,6 @@ import hPE.frontend.kinds.activate.actions.UnnestActionAction;
 import hPE.frontend.kinds.activate.model.HActivateConfiguration;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HPEInvalidComponentResourceException;
@@ -78,7 +67,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gef.ContextMenuProvider;
@@ -464,16 +452,6 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ExposedAction.EXPOSED;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = FuseReplicatorAction.FUSE_REPLICATOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = SetPermutationAction.SET_PERMUTATION;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = LiftReplicatorAction.LIFT_REPLICATOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = SetReplicatorFactorAction.SET_REPLICATOR_FACTOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = UnfuseReplicatorAction.UNFUSE_REPLICATOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetPrivateUnitAction.SET_PRIVATE_UNIT;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetPrivateUnitAction.SET_PUBLIC_UNIT;
@@ -496,12 +474,6 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ShowInterfaceAction.HIDE_INTERFACE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = UnsetReplicatorAction.UNSET_REPLICATOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = SplitReplicatorAction.SPLIT_REPLICATOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = JoinReplicatorAction.JOIN_REPLICATOR;
-		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ChangeColorAction.CHANGE_COLOR;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ChangeVariableNameAction.CHANGE_VARIABLE_NAME;
@@ -519,6 +491,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		id = AddReferencesAction.ADD_REFERENCES;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetRecursiveAction.SET_RECURSIVE;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = SetMultipleAction.SET_MULTIPLE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ImplementsAction.IMPLEMENTS;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
@@ -643,26 +617,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		getSelectionActions().add(action.getId());
 
 
-		action = new FuseReplicatorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
-		action = new SetPermutationAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-
-		action = new LiftReplicatorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
-		action = new SetReplicatorFactorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
-		action = new UnfuseReplicatorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
+			
 		action = new SetPrivateUnitAction(this,true);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
@@ -707,18 +662,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 		
-		action = new UnsetReplicatorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
-		action = new SplitReplicatorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
-		action = new JoinReplicatorAction(this);
-		registry.registerAction(action);
-		getSelectionActions().add(action.getId());
-		
+	
 		action = new ChangeColorAction(this,new ColorDialog(getSite().getWorkbenchWindow().getShell()));
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
@@ -752,6 +696,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		getSelectionActions().add(action.getId());
 
 		action = new SetRecursiveAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+
+		action = new SetMultipleAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 
@@ -887,14 +835,6 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/rectangle24.gif"));
 		componentsDrawer.add(component);		
 
-		component = new CombinedTemplateCreationEntry(
-				"Enumerator",
-				"Create an enumerator", 
-				HReplicator.class,
-				new SimpleFactory(HReplicator.class), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"), 
-				ImageDescriptor.createFromFile(HPEPlugin.class, "util/icons/port.gif"));
-		componentsDrawer.add(component);		
 		
 		
 		categories.add(controls);

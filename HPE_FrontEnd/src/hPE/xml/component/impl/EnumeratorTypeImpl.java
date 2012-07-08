@@ -522,9 +522,9 @@ public class EnumeratorTypeImpl extends EObjectImpl implements EnumeratorType {
 			case ComponentPackage.ENUMERATOR_TYPE__FROM_RECURSION:
 				return getFromRecursion();
 			case ComponentPackage.ENUMERATOR_TYPE__CARDINALITY:
-				return new Integer(getCardinality());
+				return getCardinality();
 			case ComponentPackage.ENUMERATOR_TYPE__FROM_SPLIT:
-				return isFromSplit() ? Boolean.TRUE : Boolean.FALSE;
+				return isFromSplit();
 			case ComponentPackage.ENUMERATOR_TYPE__REF:
 				return getRef();
 			case ComponentPackage.ENUMERATOR_TYPE__VAR_ID:
@@ -557,10 +557,10 @@ public class EnumeratorTypeImpl extends EObjectImpl implements EnumeratorType {
 				setFromRecursion((EnumeratorFromRecursionType)newValue);
 				return;
 			case ComponentPackage.ENUMERATOR_TYPE__CARDINALITY:
-				setCardinality(((Integer)newValue).intValue());
+				setCardinality((Integer)newValue);
 				return;
 			case ComponentPackage.ENUMERATOR_TYPE__FROM_SPLIT:
-				setFromSplit(((Boolean)newValue).booleanValue());
+				setFromSplit((Boolean)newValue);
 				return;
 			case ComponentPackage.ENUMERATOR_TYPE__REF:
 				setRef((String)newValue);

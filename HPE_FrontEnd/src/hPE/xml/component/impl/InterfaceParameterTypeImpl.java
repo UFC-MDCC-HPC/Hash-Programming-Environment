@@ -303,7 +303,7 @@ public class InterfaceParameterTypeImpl extends EObjectImpl implements Interface
 			case ComponentPackage.INTERFACE_PARAMETER_TYPE__INAME:
 				return getIname();
 			case ComponentPackage.INTERFACE_PARAMETER_TYPE__ORDER:
-				return new Integer(getOrder());
+				return getOrder();
 			case ComponentPackage.INTERFACE_PARAMETER_TYPE__PARID:
 				return getParid();
 			case ComponentPackage.INTERFACE_PARAMETER_TYPE__UNAME:
@@ -326,7 +326,7 @@ public class InterfaceParameterTypeImpl extends EObjectImpl implements Interface
 				setIname((String)newValue);
 				return;
 			case ComponentPackage.INTERFACE_PARAMETER_TYPE__ORDER:
-				setOrder(((Integer)newValue).intValue());
+				setOrder((Integer)newValue);
 				return;
 			case ComponentPackage.INTERFACE_PARAMETER_TYPE__PARID:
 				setParid((String)newValue);

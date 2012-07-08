@@ -321,7 +321,7 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 			case ComponentPackage.SPLIT_TYPE__EREF:
 				return getERef();
 			case ComponentPackage.SPLIT_TYPE__N:
-				return new Integer(getN());
+				return getN();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -354,7 +354,7 @@ public class SplitTypeImpl extends EObjectImpl implements SplitType {
 				setERef((String)newValue);
 				return;
 			case ComponentPackage.SPLIT_TYPE__N:
-				setN(((Integer)newValue).intValue());
+				setN((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

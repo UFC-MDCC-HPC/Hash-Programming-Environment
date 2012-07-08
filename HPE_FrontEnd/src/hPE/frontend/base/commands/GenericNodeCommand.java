@@ -34,10 +34,6 @@ public class GenericNodeCommand extends Command {
 			AttachInterfaceCommand cmd = new AttachInterfaceCommand((IHUnit) source);
   		    cmd.setTarget((HInterface) target);
   		    actual_command = cmd;
-		} else if (source instanceof IHUnit && target instanceof HReplicator) {
-			SetReplicatorCommand cmd = new SetReplicatorCommand((IHUnit) source);
-			cmd.setTarget((HReplicator) target);
-  		    actual_command = cmd;
 		} else if (source instanceof IHUnit && target instanceof IHUnit) {
 			if (((IHUnit) source).isEntry()) {
 				int d = HUnitSlice.raio;
@@ -49,14 +45,7 @@ public class GenericNodeCommand extends Command {
 	 		    cmd.setWhere(loc);
 	  		    actual_command = cmd;
 			}
-		} 
-        else if (source instanceof IHUnit && target instanceof HReplicator) {
-			if (((IHUnit) source).isEntry()) {
-				SetReplicatorCommand cmd = new SetReplicatorCommand((IHUnit) source);
-				cmd.setTarget((HReplicator) target);
-	  		    actual_command = cmd;
-			}
-        }  /* else if (source instanceof IHUnit && target instanceof HComponent) {
+		}  /* else if (source instanceof IHUnit && target instanceof HComponent) {
         	if (((IHUnit) source).isEntry()) {
         		BindingCreateCommand cmd = new BindingCreateCommand((IHUnit) source);
 				Point loc = where.getCopy();
@@ -64,16 +53,7 @@ public class GenericNodeCommand extends Command {
 	  		    actual_command = cmd;
         	} 
         } */
-        else if (source instanceof HComponent && target instanceof HReplicator) {
-			SetReplicatorCommand cmd = new SetReplicatorCommand((HComponent) source);
-			cmd.setTarget((HReplicator) target);
-  		    actual_command = cmd;
-        }
-        else if (source instanceof HUnitSlice && target instanceof HReplicator) {
-			SetReplicatorCommand cmd = new SetReplicatorCommand((HUnitSlice) source);
-			cmd.setTarget((HReplicator) target);
-  		    actual_command = cmd;
-        }/* else if (source != target && source instanceof HComponent && target instanceof HComponent) {
+        /* else if (source != target && source instanceof HComponent && target instanceof HComponent) {
         	System.out.println(target.hashCode() + "-" + source.hashCode());
         	SupersedeCommand cmd = new SupersedeCommand((HComponent)source, (HComponent)target);
         	actual_command = cmd;
@@ -84,14 +64,9 @@ public class GenericNodeCommand extends Command {
 	public boolean canComplete() {
 		
 		
-		return ((source instanceof IHUnit && target instanceof HInterface) || 
-		        (source instanceof IHUnit && target instanceof HReplicator && !((IHUnit) source).isEntry()) || 
+		return ((source instanceof IHUnit && target instanceof HInterface) ||
 		        (source instanceof IHUnit && target instanceof IHUnit && ((IHUnit) source).isEntry()) || 
-                /* (source instanceof IHUnit && target instanceof HReplicator && ((IHUnit) source).isEntry()) || */
-                (source instanceof HComponent && target instanceof HReplicator) ||
-                (source instanceof HUnitSlice && target instanceof HReplicator) ||
-                (source != target && source instanceof HComponent && target instanceof HComponent)/* ||
-                (source instanceof IHUnit && target instanceof HComponent && ((IHUnit) source).isEntry())) */ ); 
+                (source != target && source instanceof HComponent && target instanceof HComponent)); 
         
 	}
 	

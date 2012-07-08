@@ -41,8 +41,8 @@ public class DialogChangeVarName extends JDialog {
 	 */
 	
 	private HComponent c = null;
-
-	public DialogChangeVarName() {
+	
+	private DialogChangeVarName() {
 		super();
 		initialize();
 	}
@@ -142,6 +142,11 @@ public class DialogChangeVarName extends JDialog {
 			jTextFieldNewVarName.setSize(new java.awt.Dimension(153,25));
 		}
 		return jTextFieldNewVarName;
+	}
+	
+	public void clearVars()
+	{
+	  this.jComboBoxVarName.removeAllItems();
 	}
 	
 	public void addVarName(Object varName) {

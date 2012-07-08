@@ -1,7 +1,8 @@
 package hPE.frontend.base.actions;
 
 import hPE.HPEPlugin;
-import hPE.frontend.base.commands.SetRecursiveCommand;
+import hPE.frontend.base.commands.SetMultipleCommand;
+import hPE.frontend.base.interfaces.IElement;
 import hPE.frontend.base.model.HComponent;
 
 import java.util.List;
@@ -15,22 +16,22 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
 
-public class SetRecursiveAction extends SelectionAction {
+public class SetMultipleAction extends SelectionAction {
 
 	private static final String
-		SET_RECURSIVE_REQUEST = "Set Recursive";  //$NON-NLS-1$
+		SET_MULTIPLE_REQUEST = "Set Multiple";  //$NON-NLS-1$
 	
 	public static final String
-	    SET_RECURSIVE = "Set Recursive";  //$NON-NLS-1$
+	    SET_MULTIPLE = "Set Multiple";  //$NON-NLS-1$
 	
 	Request request;
 	
-	public SetRecursiveAction(IWorkbenchPart part) {
+	public SetMultipleAction(IWorkbenchPart part) {
 		super(part);
-	    request = new Request(SET_RECURSIVE_REQUEST);
-	    setText("Set Recursive");
-	    setId("Set Recursive");
-	    setToolTipText("Set Recursive");
+	    request = new Request(SET_MULTIPLE_REQUEST);
+	    setText("Set Multiple");
+	    setId("Set Multiple");
+	    setToolTipText("Set Multiple");
 	    setImageDescriptor(
 	    ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 	    setHoverImageDescriptor(getImageDescriptor());		
@@ -49,18 +50,16 @@ public class SetRecursiveAction extends SelectionAction {
 			Object o = parts.get(i);
 			if (!(o instanceof EditPart)) return false;
 			EditPart part = (EditPart)o;
-			if (!(part.getModel() instanceof HComponent)) return false;
-		 
-  		    HComponent cBasis = (HComponent) ((EditPart)parts.get(i)).getModel();
-  		    if (cBasis.isTopConfiguration()) return false;
-            if (!cBasis.isDirectSonOfTheTopConfiguration()) return false;
-  		    HComponent superType = ((HComponent)cBasis.getTopConfiguration()).getSuperType();
-  		    // TODO: (getConfiguration) the recursive action is always applied at the top level of the top configuration
-		    if (superType == null) return false;
-			if (cBasis == superType || !cBasis.isSubTypeOf(superType)) 
-				return false;
-            if (!cBasis.isDirectSonOfTheTopConfiguration()) return false;
-
+			if (!(part.getModel() instanceof IElement)) return false;
+		    if (part.getModel() instanceof HComponent) 
+		    {
+		    	HComponent c = (HComponent) part.getModel();
+		    	if (!c.isDirectSonOfTheTopConfiguration()) return false;
+		    	HComponent cTop = (HComponent) c.getTopConfiguration();
+		    	if (c == cTop.getSuperType()) return false;
+		    	
+		    }
+			
 		}
 	   
 		return true;
@@ -71,13 +70,13 @@ public class SetRecursiveAction extends SelectionAction {
 		List parts = getSelectedObjects();
 
 		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Set Recursive");//$NON-NLS-1$
+		cc.setDebugLabel("Set Multiple");//$NON-NLS-1$
 		for (int i=0; i<parts.size(); i++){
 			EditPart part = (EditPart) parts.get(i);
 			cc.add(part.getCommand(request));
 			
-     		HComponent cBasis = (HComponent) ((EditPart)parts.get(i)).getModel();		
-  	        SetRecursiveCommand c =  new SetRecursiveCommand(cBasis);  // part.getCommand(request);
+     		IElement cBasis = (IElement) ((EditPart)parts.get(i)).getModel();		
+  	        SetMultipleCommand c =  new SetMultipleCommand(cBasis);  // part.getCommand(request);
 			
 		    cc.add(c);
 		}

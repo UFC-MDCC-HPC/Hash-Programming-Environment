@@ -36,9 +36,6 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		return getActualUnit().getSlices();
 	}
 	
-	public boolean isReplicatedByVar(String varId) {
-	    return getActualUnit().isReplicatedByVar(varId);	
-	}
 
 	public HUnitSlice newSlice(IHUnit the_source, Point where) throws HPEAbortException{
 		return getActualUnit().newSlice(the_source,where);
@@ -138,13 +135,7 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		return this.getActualUnit().getUnitSlices();
 	}
 	
-	public HReplicator getReplicatorByVarId(String v) {
-		return this.getActualUnit().getReplicatorByVarId(v);
-	}
 	
-	public IHPrimUnit getClone(int i) {
-		return getActualUnit().getClone(i);
-	}
 
 	@Override
 	public Map<HUnitSlice, List<HUnitSlice>> getExposedSlices() {
@@ -159,32 +150,9 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	}
 
 	@Override
-	public void addLinkToReplicator(HLinkToReplicator l) {
-		this.getActualUnit().addLinkToReplicator(l);
-		
-	}
-
-	@Override
-	public void removeLinkToReplicator(HLinkToReplicator linkToReplicator) {
-		this.getActualUnit().removeLinkToReplicator(linkToReplicator);
-		
-	}
-
-	@Override
 	public Map<HPrimUnit, Integer> whatIsThePath(HUnitSlice uslice) {
 		
 		return this.getActualUnit().whatIsThePath(uslice);
-	}
-
-	@Override
-	public List<IHPrimUnit> getMyClones() {
-		
-		return this.getActualUnit().getMyClones();
-	}
-
-	@Override
-	public HReplicatorSplit splitBy(HReplicatorSplit cloneBySplit) {
-		return this.getActualUnit().splitBy(cloneBySplit);		
 	}
 
 	@Override
@@ -204,10 +172,6 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		
 	}
 
-	@Override
-	public List<IHPrimUnit> getMyClonesSorted() {
-		return this.getActualUnit().getMyClonesSorted();
-	}
 
 	@Override
 	public void setSupersededName(String name2) {
@@ -222,18 +186,16 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	}
 
 	@Override
-	public void createAllPermutationSlices(IHUnit the_source)
-			throws HPEAbortException {
-		this.getActualUnit().createAllPermutationSlices(the_source);
-		
+	public boolean isMultiple() {		
+		return this.getActualUnit().isMultiple();
 	}
 
 	@Override
-	public void createPermutationSlices(IHUnit the_source, HReplicator r,
-			HReplicatorSplit split) throws HPEAbortException {
-		this.createPermutationSlices(the_source, r, split);
-		
+	public void setMultiple(boolean is_multiple) {
+		this.getActualUnit().setMultiple(is_multiple);		
 	}
+
+
 
 
 }

@@ -253,7 +253,7 @@ public class PortTypeImpl extends EObjectImpl implements PortType {
 			case ComponentPackage.PORT_TYPE__VISUAL_DESCRIPTION:
 				return getVisualDescription();
 			case ComponentPackage.PORT_TYPE__EXPOSED:
-				return isExposed() ? Boolean.TRUE : Boolean.FALSE;
+				return isExposed();
 			case ComponentPackage.PORT_TYPE__PREF:
 				return getPRef();
 		}
@@ -273,7 +273,7 @@ public class PortTypeImpl extends EObjectImpl implements PortType {
 				setVisualDescription((VisualElementAttributes)newValue);
 				return;
 			case ComponentPackage.PORT_TYPE__EXPOSED:
-				setExposed(((Boolean)newValue).booleanValue());
+				setExposed((Boolean)newValue);
 				return;
 			case ComponentPackage.PORT_TYPE__PREF:
 				setPRef((String)newValue);

@@ -5,7 +5,6 @@ import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
@@ -13,7 +12,6 @@ import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -124,12 +122,6 @@ public class SetVersionDialog extends Composite {
 		radioArchitecture.setBounds(new Rectangle(128, 38, 106, 16));
 		radioArchitecture.addSelectionListener(sl);
 		radioArchitecture.setSelection(false);
-
-		radioEnumerator = new Button(groupKinds, SWT.RADIO);
-		radioEnumerator.setBounds(new Rectangle(128, 58, 106, 16));
-		radioEnumerator.setText(HEnumeratorComponent.KIND);
-		radioEnumerator.addSelectionListener(sl);
-		radioEnumerator.setSelection(false);
 
 		radioSynchronizer = new Button(groupKinds, SWT.RADIO);
 		radioSynchronizer.setText(HSynchronizationComponent.KIND);

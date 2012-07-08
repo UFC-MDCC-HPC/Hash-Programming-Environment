@@ -2,7 +2,7 @@ package hPE.frontend.base.interfaces;
 
 import java.util.List;
 
-public interface IUnit extends ICanReplicate {
+public interface IUnit extends IElement {
 
 	public String getName2();
 	 
@@ -10,9 +10,8 @@ public interface IUnit extends ICanReplicate {
 
 	public boolean isRepetitive();
 	
-	// public List getPorts();
-
 	public IInterface getInterface();
 	
 	public List getSlices();
+	
 }

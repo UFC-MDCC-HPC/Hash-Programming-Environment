@@ -5,7 +5,7 @@ import hPE.core.library.model.interfaces.ILComponentView;
 import java.util.Collection;
 
 
-public interface IComponent extends ICanReplicate {
+public interface IComponent extends IElement {
 
 	public IConfiguration getConfiguration(); // configuration where the component is being used.
 	
@@ -26,4 +26,5 @@ public interface IComponent extends ICanReplicate {
 	public IComponent getMyCopy();
 
 	public boolean isAbstract();
+	
 }

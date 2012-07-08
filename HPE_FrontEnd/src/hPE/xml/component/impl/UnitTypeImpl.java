@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getSlices <em>Slices</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getIRef <em>IRef</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isPrivate <em>Private</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getURef <em>URef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isVisibleInterface <em>Visible Interface</em>}</li>
@@ -97,6 +98,35 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 	 * @ordered
 	 */
 	protected String iRef = IREF_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isMultiple()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean MULTIPLE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isMultiple()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean multiple = MULTIPLE_EDEFAULT;
+
+	/**
+	 * This is true if the Multiple attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean multipleESet;
 
 	/**
 	 * The default value of the '{@link #isPrivate() <em>Private</em>}' attribute.
@@ -319,6 +349,52 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isMultiple() {
+		return multiple;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMultiple(boolean newMultiple) {
+		boolean oldMultiple = multiple;
+		multiple = newMultiple;
+		boolean oldMultipleESet = multipleESet;
+		multipleESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_TYPE__MULTIPLE, oldMultiple, multiple, !oldMultipleESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetMultiple() {
+		boolean oldMultiple = multiple;
+		boolean oldMultipleESet = multipleESet;
+		multiple = MULTIPLE_EDEFAULT;
+		multipleESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_TYPE__MULTIPLE, oldMultiple, MULTIPLE_EDEFAULT, oldMultipleESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetMultiple() {
+		return multipleESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isPrivate() {
 		return private_;
 	}
@@ -461,12 +537,14 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				return getVisualDescription();
 			case ComponentPackage.UNIT_TYPE__IREF:
 				return getIRef();
+			case ComponentPackage.UNIT_TYPE__MULTIPLE:
+				return isMultiple();
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
-				return isPrivate() ? Boolean.TRUE : Boolean.FALSE;
+				return isPrivate();
 			case ComponentPackage.UNIT_TYPE__UREF:
 				return getURef();
 			case ComponentPackage.UNIT_TYPE__VISIBLE_INTERFACE:
-				return isVisibleInterface() ? Boolean.TRUE : Boolean.FALSE;
+				return isVisibleInterface();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -493,14 +571,17 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 			case ComponentPackage.UNIT_TYPE__IREF:
 				setIRef((String)newValue);
 				return;
+			case ComponentPackage.UNIT_TYPE__MULTIPLE:
+				setMultiple((Boolean)newValue);
+				return;
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
-				setPrivate(((Boolean)newValue).booleanValue());
+				setPrivate((Boolean)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__UREF:
 				setURef((String)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__VISIBLE_INTERFACE:
-				setVisibleInterface(((Boolean)newValue).booleanValue());
+				setVisibleInterface((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -525,6 +606,9 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				return;
 			case ComponentPackage.UNIT_TYPE__IREF:
 				setIRef(IREF_EDEFAULT);
+				return;
+			case ComponentPackage.UNIT_TYPE__MULTIPLE:
+				unsetMultiple();
 				return;
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
 				unsetPrivate();
@@ -555,6 +639,8 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				return visualDescription != null;
 			case ComponentPackage.UNIT_TYPE__IREF:
 				return IREF_EDEFAULT == null ? iRef != null : !IREF_EDEFAULT.equals(iRef);
+			case ComponentPackage.UNIT_TYPE__MULTIPLE:
+				return isSetMultiple();
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
 				return isSetPrivate();
 			case ComponentPackage.UNIT_TYPE__UREF:
@@ -577,6 +663,8 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (iRef: ");
 		result.append(iRef);
+		result.append(", multiple: ");
+		if (multipleESet) result.append(multiple); else result.append("<unset>");
 		result.append(", private: ");
 		if (privateESet) result.append(private_); else result.append("<unset>");
 		result.append(", uRef: ");

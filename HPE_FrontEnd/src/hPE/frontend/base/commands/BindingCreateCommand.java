@@ -2,29 +2,15 @@
 package hPE.frontend.base.commands;
 
 
-import javax.swing.JOptionPane;
-
-import org.eclipse.gef.commands.Command;
-
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HInterface;
-import hPE.frontend.base.model.HLinkToReplicator;
-import hPE.frontend.base.model.HPrimUnit;
-import hPE.frontend.base.model.HUnit;
-import hPE.frontend.base.model.HUnitSlice;
-import hPE.frontend.base.model.HUnitStub;
 import hPE.frontend.base.model.IBindingTarget;
 import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.kinds.computation.model.HComputationUnit;
-import hPE.frontend.kinds.computation.model.HComputationUnitSlice;
-import hPE.frontend.kinds.data.model.HDataUnit;
-import hPE.frontend.kinds.data.model.HDataUnitSlice;
+
+import javax.swing.JOptionPane;
 
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gef.commands.Command;
 
 public class BindingCreateCommand extends Command {
 	

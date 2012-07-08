@@ -361,13 +361,13 @@ public class VersionTypeImpl extends EObjectImpl implements VersionType {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ComponentPackage.VERSION_TYPE__FIELD1:
-				return new Integer(getField1());
+				return getField1();
 			case ComponentPackage.VERSION_TYPE__FIELD2:
-				return new Integer(getField2());
+				return getField2();
 			case ComponentPackage.VERSION_TYPE__FIELD3:
-				return new Integer(getField3());
+				return getField3();
 			case ComponentPackage.VERSION_TYPE__FIELD4:
-				return new Integer(getField4());
+				return getField4();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -381,16 +381,16 @@ public class VersionTypeImpl extends EObjectImpl implements VersionType {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.VERSION_TYPE__FIELD1:
-				setField1(((Integer)newValue).intValue());
+				setField1((Integer)newValue);
 				return;
 			case ComponentPackage.VERSION_TYPE__FIELD2:
-				setField2(((Integer)newValue).intValue());
+				setField2((Integer)newValue);
 				return;
 			case ComponentPackage.VERSION_TYPE__FIELD3:
-				setField3(((Integer)newValue).intValue());
+				setField3((Integer)newValue);
 				return;
 			case ComponentPackage.VERSION_TYPE__FIELD4:
-				setField4(((Integer)newValue).intValue());
+				setField4((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

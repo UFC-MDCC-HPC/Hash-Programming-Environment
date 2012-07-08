@@ -9,7 +9,6 @@ import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 public class HServiceComponent extends HBaseKindComponent {
 

@@ -33,7 +33,11 @@ public class UnitFigure extends ConfigurationNodeFigure {
 		return hidden;
 	}
 	
-	protected void drawFigure(Graphics g, Rectangle r) {
+	private boolean is_multiple = false;	
+	public void setMultiple(boolean hidden) { this.is_multiple = hidden; }
+	protected boolean isMultiple() { return is_multiple;}
+
+	protected void drawFigure(Graphics g, Rectangle r0) {
 			
 		if (getHidden()) {
 		   g.setLineStyle(SWT.LINE_DOT);
@@ -43,8 +47,21 @@ public class UnitFigure extends ConfigurationNodeFigure {
 		   //g.setAlpha(255);
 		}
 		
-		g.fillRectangle(r);
-		g.drawRectangle(r);
+		if (!this.isMultiple())
+		{
+		  g.fillRectangle(r0);
+		  g.drawRectangle(r0);
+		} 
+		else if (this.isMultiple()) 
+		{
+			Rectangle r1 = r0.resize(-6,-6).translate(+6,0);
+			g.fillRectangle(r1); g.drawRectangle(r1);
+			Rectangle r2 = r1.translate(-3,+3);
+			g.fillRectangle(r2); g.drawRectangle(r2);
+			Rectangle r3 = r2.translate(-3,+3);
+			g.fillRectangle(r3); g.drawRectangle(r3);
+        }		
+		
 	}
 	
 	

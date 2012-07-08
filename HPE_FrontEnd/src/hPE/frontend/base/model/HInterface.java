@@ -9,7 +9,6 @@ import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
@@ -974,9 +973,6 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		@Override
 		public int compare(HInterfaceSlice o1, HInterfaceSlice o2) {
 
-			if ((o1 instanceof HEnumeratorInterfaceSlice)
-					&& !(o2 instanceof HEnumeratorInterfaceSlice))
-				return +1;
 
 			HComponent c1 = (HComponent) o1.getConfiguration();
 			HComponent c2 = (HComponent) o2.getConfiguration();

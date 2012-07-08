@@ -958,13 +958,22 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_IN_USE_TYPE__LOCATION = 6;
 
 	/**
+	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IN_USE_TYPE__MULTIPLE = 7;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__NAME = 7;
+	int COMPONENT_IN_USE_TYPE__NAME = 8;
 
 	/**
 	 * The feature id for the '<em><b>Package</b></em>' attribute.
@@ -973,7 +982,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__PACKAGE = 8;
+	int COMPONENT_IN_USE_TYPE__PACKAGE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Parameter Id</b></em>' attribute.
@@ -982,7 +991,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__PARAMETER_ID = 9;
+	int COMPONENT_IN_USE_TYPE__PARAMETER_ID = 10;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -991,7 +1000,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE__VERSION = 10;
+	int COMPONENT_IN_USE_TYPE__VERSION = 11;
 
 	/**
 	 * The number of structural features of the '<em>In Use Type</em>' class.
@@ -1000,7 +1009,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 11;
+	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 12;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentTypeImpl <em>Type</em>}' class.
@@ -1794,6 +1803,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int INNER_COMPONENT_TYPE__LOCATION = COMPONENT_IN_USE_TYPE__LOCATION;
+
+	/**
+	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_COMPONENT_TYPE__MULTIPLE = COMPONENT_IN_USE_TYPE__MULTIPLE;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2998,13 +3016,22 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_TYPE__IREF = 3;
 
 	/**
+	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_TYPE__MULTIPLE = 4;
+
+	/**
 	 * The feature id for the '<em><b>Private</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__PRIVATE = 4;
+	int UNIT_TYPE__PRIVATE = 5;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -3013,7 +3040,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__UREF = 5;
+	int UNIT_TYPE__UREF = 6;
 
 	/**
 	 * The feature id for the '<em><b>Visible Interface</b></em>' attribute.
@@ -3022,7 +3049,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__VISIBLE_INTERFACE = 6;
+	int UNIT_TYPE__VISIBLE_INTERFACE = 7;
 
 	/**
 	 * The number of structural features of the '<em>Unit Type</em>' class.
@@ -3031,7 +3058,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE_FEATURE_COUNT = 7;
+	int UNIT_TYPE_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.VersionTypeImpl <em>Version Type</em>}' class.
@@ -3783,6 +3810,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getComponentInUseType_Location();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#isMultiple <em>Multiple</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Multiple</em>'.
+	 * @see hPE.xml.component.ComponentInUseType#isMultiple()
+	 * @see #getComponentInUseType()
+	 * @generated
+	 */
+	EAttribute getComponentInUseType_Multiple();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ComponentInUseType#getName <em>Name</em>}'.
@@ -5525,6 +5563,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getUnitType_IRef();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitType#isMultiple <em>Multiple</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Multiple</em>'.
+	 * @see hPE.xml.component.UnitType#isMultiple()
+	 * @see #getUnitType()
+	 * @generated
+	 */
+	EAttribute getUnitType_Multiple();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitType#isPrivate <em>Private</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6209,6 +6258,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT_IN_USE_TYPE__LOCATION = eINSTANCE.getComponentInUseType_Location();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_IN_USE_TYPE__MULTIPLE = eINSTANCE.getComponentInUseType_Multiple();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -7589,6 +7646,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIT_TYPE__IREF = eINSTANCE.getUnitType_IRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_TYPE__MULTIPLE = eINSTANCE.getUnitType_Multiple();
 
 		/**
 		 * The meta object literal for the '<em><b>Private</b></em>' attribute feature.

@@ -121,14 +121,22 @@ public enum SupportedKinds implements Enumerator {
 	DOMAIN(9, "Domain", "Domain"),
 
 	/**
-	 * The '<em><b>Domain</b></em>' literal object.
+	 * The '<em><b>Service</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #DOMAIN_VALUE
+	 * @see #SERVICE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SERVICE(9, "Service", "Service");
+	SERVICE(10, "Service", "Service"), /**
+	 * The '<em><b>Value</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #VALUE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	VALUE(11, "value", "value");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -298,6 +306,21 @@ public enum SupportedKinds implements Enumerator {
 	public static final int SERVICE_VALUE = 10;
 
 	/**
+	 * The '<em><b>Value</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Value</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #VALUE
+	 * @model name="value"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VALUE_VALUE = 11;
+
+	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -316,6 +339,7 @@ public enum SupportedKinds implements Enumerator {
 			FACET,
 			DOMAIN,
 			SERVICE,
+			VALUE,
 		};
 
 	/**
@@ -374,8 +398,10 @@ public enum SupportedKinds implements Enumerator {
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
 			case ENUMERATOR_VALUE: return ENUMERATOR;
-			case DOMAIN_VALUE: return DOMAIN;
 			case FACET_VALUE: return FACET;
+			case DOMAIN_VALUE: return DOMAIN;
+			case SERVICE_VALUE: return SERVICE;
+			case VALUE_VALUE: return VALUE;
 		}
 		return null;
 	}

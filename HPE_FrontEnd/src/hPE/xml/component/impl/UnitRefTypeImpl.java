@@ -253,7 +253,7 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return getCRef();
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				return new Integer(getReplica());
+				return getReplica();
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				return getURef();
 		}
@@ -272,7 +272,7 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 				setCRef((String)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				setReplica(((Integer)newValue).intValue());
+				setReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				setURef((String)newValue);

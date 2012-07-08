@@ -46,12 +46,10 @@ import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
 import hPE.frontend.base.model.HPort;
 import hPE.frontend.base.model.HPrimUnitStub;
-import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.base.model.IReplicatedElement;
 import hPE.frontend.base.policies.BuildInterfaceEditPolicy;
 import hPE.frontend.base.policies.DetachInterfaceEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
@@ -85,7 +83,7 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		this.installEditPolicy("BuildInterfaceFromSlicesEditPolicy", new BuildInterfaceEditPolicy());
 		this.installEditPolicy("DetachInterfaceEditPolicy", new DetachInterfaceEditPolicy());
 		this.installEditPolicy("ShowInterfaceEditPolicy", new ShowInterfaceEditPolicy());
-		this.installEditPolicy("SetPrivateUnitEditPolicy", new SetPrivateUnitEditPolicy());
+		this.installEditPolicy("SetPrivateUnitEditPolicy", new SetPrivateUnitEditPolicy());		
 		// allow the creation of connections and and the reconnection of connections between Shape instances
 		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		
@@ -100,29 +98,11 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		ModelType unit = (ModelType) getModel();
 		FigureType unit_figure = (FigureType) getFigure();
 		        
-	    unit_figure.setBounds(unit.getBounds());
-        
-	    System.err.println(unit.getMyClones());
-	    
+	    unit_figure.setBounds(unit.getBounds());        
 	    
 	    String name = unit.getName2();
 	    
 	    List<String> names = new ArrayList<String>(); 
-	    Iterator<HReplicator> rs = ((HUnit)unit).getReplicators().iterator();
-	    if (rs.hasNext()) {
-		    name = name.concat("[");
-		    boolean f = false;
-            while (rs.hasNext()) {
-                HReplicator r = rs.next();
-                if (r.getFactor() != 1 && !names.contains(r.getName2())) {
-                	if (f) name = name.concat(",");
-                	name = name.concat(r.getName2().equals("*") ? "" : r.getName2());
-	            	names.add(r.getName2());
-	            	f = true;
-            	}
-            }		    
-		    name = name.concat("]");
-	    }
 	    
 	    if (names.size() == 0) name = unit.getName2();
 	    
@@ -134,6 +114,8 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
            unit_figure.setBackgroundColor(HUnit.default_color);
         
         unit_figure.setHidden(unit.getHidden());
+
+        unit_figure.setMultiple(unit.isMultiple());
     
         Label ff = null;
         try {
@@ -218,6 +200,7 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		if (ev.getPropertyName().equals(ModelType.REMOVE_UNIT))   ((ConfigurationEditPart)this.getParent()).refresh(); 
 		if (ev.getPropertyName().equalsIgnoreCase("labelContents")) this.refreshVisuals(); //$NON-NLS-1$ 
 		if (ev.getPropertyName().equals(ModelType.ADD_UNIT_ITEM)) this.refreshChildren();
+		if (ev.getPropertyName().equals(ModelType.CHANGE_MULTIPLE)) this.refreshVisuals();
 		if (ev.getPropertyName().equals(ModelType.INTERFACE_SHOW)) {
 			  ((ConfigurationEditPart) getParent()).refresh();
 			  this.refreshSourceConnections();
@@ -275,8 +258,6 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		HLinkToInterface i = ((ModelType) getModel()).getLinkToInterface();
 		if (i!=null) if (i.visibleInterface() && !i.getWhich_interface().getHidden()) r.add(i);
 		
-		Collection j = ((IReplicatedElement) getModel()).getLinksToVisibleReplicators();
-		if (j!=null) r.addAll(j);
 		
 		return r;
 	}

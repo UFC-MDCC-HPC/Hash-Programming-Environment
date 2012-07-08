@@ -276,7 +276,7 @@ public class UnitSliceTypeImpl extends UnitRefTypeImpl implements UnitSliceType 
 			case ComponentPackage.UNIT_SLICE_TYPE__SLICE_NAME:
 				return getSliceName();
 			case ComponentPackage.UNIT_SLICE_TYPE__TRANSITIVE:
-				return isTransitive() ? Boolean.TRUE : Boolean.FALSE;
+				return isTransitive();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -301,7 +301,7 @@ public class UnitSliceTypeImpl extends UnitRefTypeImpl implements UnitSliceType 
 				setSliceName((String)newValue);
 				return;
 			case ComponentPackage.UNIT_SLICE_TYPE__TRANSITIVE:
-				setTransitive(((Boolean)newValue).booleanValue());
+				setTransitive((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

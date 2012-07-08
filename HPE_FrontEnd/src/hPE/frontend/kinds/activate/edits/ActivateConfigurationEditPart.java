@@ -1,19 +1,16 @@
 package hPE.frontend.kinds.activate.edits;
 
+import hPE.frontend.base.edits.ConfigurationEditPart;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.kinds.activate.figures.ActivateConfigurationFigure;
+import hPE.frontend.kinds.activate.model.HActivateConfiguration;
+import hPE.frontend.kinds.activate.model.HActivateInterface;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
-
-import hPE.frontend.base.edits.ConfigurationEditPart;
-import hPE.frontend.base.figures.ConfigurationFigure;
-import hPE.frontend.base.model.HInterface;
-import hPE.frontend.base.model.HReplicator;
-import hPE.frontend.kinds.activate.figures.ActivateConfigurationFigure;
-import hPE.frontend.kinds.activate.model.HActivateConfiguration;
-import hPE.frontend.kinds.activate.model.HActivateInterface;
-import hPE.frontend.kinds.computation.model.HComputationInterface;
 
 
 

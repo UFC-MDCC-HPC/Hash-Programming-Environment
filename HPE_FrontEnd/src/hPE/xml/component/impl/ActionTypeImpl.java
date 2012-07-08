@@ -250,7 +250,7 @@ public class ActionTypeImpl extends EObjectImpl implements ActionType {
 			case ComponentPackage.ACTION_TYPE__LABEL:
 				return getLabel();
 			case ComponentPackage.ACTION_TYPE__REPEAT:
-				return new Long(getRepeat());
+				return getRepeat();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -270,7 +270,7 @@ public class ActionTypeImpl extends EObjectImpl implements ActionType {
 				setLabel((String)newValue);
 				return;
 			case ComponentPackage.ACTION_TYPE__REPEAT:
-				setRepeat(((Long)newValue).longValue());
+				setRepeat((Long)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

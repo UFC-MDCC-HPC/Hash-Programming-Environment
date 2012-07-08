@@ -142,7 +142,7 @@ public class InnerComponentTypeImpl extends ComponentInUseTypeImpl implements In
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ComponentPackage.INNER_COMPONENT_TYPE__EXPOSED:
-				return isExposed() ? Boolean.TRUE : Boolean.FALSE;
+				return isExposed();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -157,7 +157,7 @@ public class InnerComponentTypeImpl extends ComponentInUseTypeImpl implements In
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.INNER_COMPONENT_TYPE__EXPOSED:
-				setExposed(((Boolean)newValue).booleanValue());
+				setExposed((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

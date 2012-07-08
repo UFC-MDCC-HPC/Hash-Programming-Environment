@@ -63,7 +63,10 @@
 		<attribute name="uRef" type="string" use="required"></attribute>
 		<attribute name="iRef" type="string" use="required"></attribute>
 		<attribute name="private" type="boolean"></attribute>
-		<attribute name="visibleInterface" type="boolean" use="optional" default="true"></attribute>
+		<attribute name="visibleInterface" type="boolean" use="optional"
+			default="true">
+		</attribute>
+		<attribute name="multiple" type="boolean" use="optional"></attribute>
 	</complexType>
 
 	<complexType name="InterfaceType">
@@ -127,6 +130,7 @@
 		<attribute name="hash_component_UID" type="string"></attribute>
 		<attribute name="parameter_id" type="string"></attribute>
 		<attribute name="package" type="string"></attribute>
+		<attribute name="multiple" type="boolean" use="optional"></attribute>
 	</complexType>
 
 	<simpleType name="SupportedKinds">

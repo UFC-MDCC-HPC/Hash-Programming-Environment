@@ -260,7 +260,7 @@ public class EnumerableUnitSliceTypeImpl extends EnumerableTypeImpl implements E
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE__CREF:
 				return getCRef();
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE__SPLIT_REPLICA:
-				return new Integer(getSplitReplica());
+				return getSplitReplica();
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE__SREF:
 				return getSRef();
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE__UREF:
@@ -281,7 +281,7 @@ public class EnumerableUnitSliceTypeImpl extends EnumerableTypeImpl implements E
 				setCRef((String)newValue);
 				return;
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE__SPLIT_REPLICA:
-				setSplitReplica(((Integer)newValue).intValue());
+				setSplitReplica((Integer)newValue);
 				return;
 			case ComponentPackage.ENUMERABLE_UNIT_SLICE_TYPE__SREF:
 				setSRef((String)newValue);

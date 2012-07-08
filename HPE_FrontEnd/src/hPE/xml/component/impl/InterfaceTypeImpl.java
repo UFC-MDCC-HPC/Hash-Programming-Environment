@@ -455,7 +455,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
-				return new Integer(getNArgs());
+				return getNArgs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -499,7 +499,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				setIRef((String)newValue);
 				return;
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
-				setNArgs(((Integer)newValue).intValue());
+				setNArgs((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -17,8 +17,6 @@ import javax.swing.JOptionPane;
 public class ChangeVariableNameCommand extends Command {
 
 	private HComponent c;
-	private String new_name;
-	
 	public ChangeVariableNameCommand(HComponent c) {
 		super();
 		this.c = c;
@@ -29,11 +27,13 @@ public class ChangeVariableNameCommand extends Command {
 	
 	
 	public void execute() {
-		this.newVarNameDialog = new DialogChangeVarName();
+		this.newVarNameDialog = DialogChangeVarName.getInstance();
 		this.newVarNameDialog.setModel(c);
         
 		Map<String,List<HComponent>> m = c.getParameters();
         
+		this.newVarNameDialog.clearVars();
+		 
         List<HComponent> cupdate = new ArrayList<HComponent>();
         
         for (String var : m.keySet()) {

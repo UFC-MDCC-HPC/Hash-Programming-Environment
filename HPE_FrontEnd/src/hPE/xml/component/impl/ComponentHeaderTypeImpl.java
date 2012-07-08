@@ -544,7 +544,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 			case ComponentPackage.COMPONENT_HEADER_TYPE__HASH_COMPONENT_UID:
 				return getHashComponentUID();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
-				return isIsAbstract() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsAbstract();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				return getKind();
 			case ComponentPackage.COMPONENT_HEADER_TYPE__LOCATION_URI:
@@ -580,7 +580,7 @@ public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHea
 				setHashComponentUID((String)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__IS_ABSTRACT:
-				setIsAbstract(((Boolean)newValue).booleanValue());
+				setIsAbstract((Boolean)newValue);
 				return;
 			case ComponentPackage.COMPONENT_HEADER_TYPE__KIND:
 				setKind((SupportedKinds)newValue);

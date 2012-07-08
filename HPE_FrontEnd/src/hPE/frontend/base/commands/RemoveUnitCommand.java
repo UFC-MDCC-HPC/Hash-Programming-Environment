@@ -22,7 +22,7 @@ public class RemoveUnitCommand extends Command {
 
 	public boolean canExecute() {
 		if (the_unit instanceof IHUnit) {
-			return ((IHUnit)the_unit).getSlices().size() == 0 && the_unit.getReplicators().size() == 0;
+			return ((IHUnit)the_unit).getSlices().size() == 0 ;
 		} else {
 			return true;
 		}

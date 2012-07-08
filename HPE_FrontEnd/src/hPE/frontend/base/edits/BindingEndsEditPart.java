@@ -1,31 +1,20 @@
 package hPE.frontend.base.edits;
 
-import org.eclipse.gef.NodeEditPart;
-
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import hPE.frontend.base.commands.BindingCreateCommand;
-import hPE.frontend.base.commands.SetReplicatorCommand;
 import hPE.frontend.base.figures.NodeFigure;
-import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IPropertyChangeListener;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.ShowInterfaceEditPolicy;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
-import org.eclipse.gef.commands.Command;
-import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
-import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
-import org.eclipse.gef.requests.CreateConnectionRequest;
-import org.eclipse.gef.requests.ReconnectRequest;
 
 
 

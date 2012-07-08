@@ -5,30 +5,22 @@ import hPE.frontend.base.actions.BrowseAction;
 import hPE.frontend.base.actions.BuildInterfaceFromSlicesAction;
 import hPE.frontend.base.actions.ChangeColorAction;
 import hPE.frontend.base.actions.ChangeVariableNameAction;
-import hPE.frontend.base.actions.DeployAction;
 import hPE.frontend.base.actions.DetachInterfaceAction;
 import hPE.frontend.base.actions.ExposedAction;
 import hPE.frontend.base.actions.FuseComponentsAction;
-import hPE.frontend.base.actions.FuseReplicatorAction;
 import hPE.frontend.base.actions.ImplementsAction;
 import hPE.frontend.base.actions.InheritFromAction;
-import hPE.frontend.base.actions.JoinReplicatorAction;
-import hPE.frontend.base.actions.LiftReplicatorAction;
 import hPE.frontend.base.actions.LiftUnitAction;
 import hPE.frontend.base.actions.NewVersionAction;
 import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.RegisterComponentAction;
+import hPE.frontend.base.actions.SetMultipleAction;
 import hPE.frontend.base.actions.SetParameterAction;
-import hPE.frontend.base.actions.SetPermutationAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
-import hPE.frontend.base.actions.SetReplicatorFactorAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
 import hPE.frontend.base.actions.ShowInterfaceAction;
-import hPE.frontend.base.actions.SplitReplicatorAction;
 import hPE.frontend.base.actions.SupplyParameterAction;
 import hPE.frontend.base.actions.UnbindAction;
-import hPE.frontend.base.actions.UnfuseReplicatorAction;
-import hPE.frontend.base.actions.UnsetReplicatorAction;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.kinds.activate.actions.AltAbsorbtionAction;
 import hPE.frontend.kinds.activate.actions.CombineActionsAction;
@@ -205,32 +197,7 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 				
-		
-		action = getAction(FuseReplicatorAction.FUSE_REPLICATOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
-		action = getAction(SetPermutationAction.SET_PERMUTATION);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-
-		action = getAction(LiftReplicatorAction.LIFT_REPLICATOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
-		action = getAction(SetReplicatorFactorAction.SET_REPLICATOR_FACTOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
-		action = getAction(UnfuseReplicatorAction.UNFUSE_REPLICATOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
+			
 		action = getAction(SetPrivateUnitAction.SET_PRIVATE_UNIT);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
@@ -282,21 +249,6 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 		
-		action = getAction(UnsetReplicatorAction.UNSET_REPLICATOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
-		action = getAction(SplitReplicatorAction.SPLIT_REPLICATOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
-		action = getAction(JoinReplicatorAction.JOIN_REPLICATOR);
-		if (action.isEnabled())	{ 
-			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-		
 		action = getAction(ChangeColorAction.CHANGE_COLOR);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
@@ -342,6 +294,11 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 		
+		action = getAction(SetMultipleAction.SET_MULTIPLE);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+
 		action = getAction(ImplementsAction.IMPLEMENTS);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		

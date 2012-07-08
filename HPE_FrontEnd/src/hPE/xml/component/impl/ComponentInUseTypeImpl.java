@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getLocalRef <em>Local Ref</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentInUseTypeImpl#getParameterId <em>Parameter Id</em>}</li>
@@ -155,6 +156,35 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 	 * @ordered
 	 */
 	protected String location = LOCATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isMultiple()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean MULTIPLE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isMultiple()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean multiple = MULTIPLE_EDEFAULT;
+
+	/**
+	 * This is true if the Multiple attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean multipleESet;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -402,6 +432,52 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isMultiple() {
+		return multiple;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMultiple(boolean newMultiple) {
+		boolean oldMultiple = multiple;
+		multiple = newMultiple;
+		boolean oldMultipleESet = multipleESet;
+		multipleESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.COMPONENT_IN_USE_TYPE__MULTIPLE, oldMultiple, multiple, !oldMultipleESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetMultiple() {
+		boolean oldMultiple = multiple;
+		boolean oldMultipleESet = multipleESet;
+		multiple = MULTIPLE_EDEFAULT;
+		multipleESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.COMPONENT_IN_USE_TYPE__MULTIPLE, oldMultiple, MULTIPLE_EDEFAULT, oldMultipleESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetMultiple() {
+		return multipleESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		return name;
 	}
@@ -523,6 +599,8 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 				return getLocalRef();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCATION:
 				return getLocation();
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__MULTIPLE:
+				return isMultiple();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				return getName();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE:
@@ -567,6 +645,9 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCATION:
 				setLocation((String)newValue);
+				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__MULTIPLE:
+				setMultiple((Boolean)newValue);
 				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				setName((String)newValue);
@@ -613,6 +694,9 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCATION:
 				setLocation(LOCATION_EDEFAULT);
 				return;
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__MULTIPLE:
+				unsetMultiple();
+				return;
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -651,6 +735,8 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 				return LOCAL_REF_EDEFAULT == null ? localRef != null : !LOCAL_REF_EDEFAULT.equals(localRef);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__LOCATION:
 				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+			case ComponentPackage.COMPONENT_IN_USE_TYPE__MULTIPLE:
+				return isSetMultiple();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ComponentPackage.COMPONENT_IN_USE_TYPE__PACKAGE:
@@ -679,6 +765,8 @@ public class ComponentInUseTypeImpl extends EObjectImpl implements ComponentInUs
 		result.append(localRef);
 		result.append(", location: ");
 		result.append(location);
+		result.append(", multiple: ");
+		if (multipleESet) result.append(multiple); else result.append("<unset>");
 		result.append(", name: ");
 		result.append(name);
 		result.append(", package: ");

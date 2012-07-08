@@ -59,7 +59,6 @@ public class SupplyParameterAction extends SelectionAction {
 			// if (c.isConnected()) return false; 
 			if (c.isParameter()) return false;
 			
-			if (c.isReplicated())return false;
 			if (!c.isAbstractConfiguration()) return false; // only abstract configurations are parameterized ... 
 		}	
 		return true;

@@ -5,8 +5,6 @@ import hPE.frontend.base.figures.ComponentFigure;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.base.model.HLinkToReplicator;
-import hPE.frontend.base.model.IReplicatedElement;
 import hPE.frontend.base.policies.ChangeVariableNameEditPolicy;
 import hPE.frontend.base.policies.ExposedEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
@@ -115,6 +113,7 @@ public class ComponentEditPart<ModelType extends HComponent,
         component_figure.setBackgroundColor(component_.getColor());
         component_figure.setIsSuperType(component_.isSuperType());
         component_figure.setExposed(component_.isPublic());
+        component_figure.setMultiple(component_.isMultiple());
 				
 	}
 	
@@ -160,6 +159,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 	public void propertyChange(PropertyChangeEvent ev) {
 		if (ev.getPropertyName().equals(ModelType.NEW_UNIT)) 
 			this.refreshChildren();
+		if (ev.getPropertyName().equals(ModelType.CHANGE_MULTIPLE)) this.refreshVisuals();
 		if (ev.getPropertyName().equals(ModelType.PROPERTY_BOUNDS)) {
 			this.refresh();
 		}
@@ -215,8 +215,6 @@ public class ComponentEditPart<ModelType extends HComponent,
 		
 		List<Object> r = new ArrayList<Object>();
 				
-		List<HLinkToReplicator> j = ((IReplicatedElement) getModel()).getLinksToVisibleReplicators();
-		if (j!=null) r.addAll(j);
 		
 		ModelType c = (ModelType) this.getModel();
 		if (c.isDirectSonOfTheTopConfiguration()) 

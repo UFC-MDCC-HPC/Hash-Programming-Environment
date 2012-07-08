@@ -6,11 +6,9 @@ import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
 import hPE.frontend.base.model.HPrimUnitStub;
-import hPE.frontend.base.model.HReplicator;
 import hPE.frontend.base.model.HUnitStub;
 import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.base.model.IReplicatedElement;
 import hPE.frontend.base.policies.LiftUnitEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
 
@@ -65,8 +63,7 @@ public class EntryEditPart<ModelType extends IHUnit,
         } else
             entry_figure.setBackgroundColor(ColorConstants.black);
         
-        // entry_figure.setOpen(entry.isOpen());
-        
+
 		Label ff = new Label(" unit " + entry.getName2() + " ");
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font);
@@ -90,8 +87,6 @@ public class EntryEditPart<ModelType extends IHUnit,
 			if (i!=null)
 			     if (i.visibleInterface() && !i.getWhich_interface().getHidden()) r.add(i);
 	
-			Collection j = ((IReplicatedElement) getModel()).getLinksToVisibleReplicators();
-			if (j!=null) r.addAll(j);
   	    }	
 		
 		return r;

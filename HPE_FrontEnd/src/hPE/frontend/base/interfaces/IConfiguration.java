@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import hPE.core.library.model.interfaces.ILComponentView;
 import hPE.frontend.base.model.HComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 
 public interface IConfiguration {
 

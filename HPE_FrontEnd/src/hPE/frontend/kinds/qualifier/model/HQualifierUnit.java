@@ -33,8 +33,7 @@ public class HQualifierUnit extends HHasPortsUnit implements IHQualifierUnit {
 	}
 
 	@Override
-	protected HInterface newInterface(HComponent c, HInterfaceSig s,
-			IHPrimUnit unit, Point l) throws HPEAbortException{
+	protected HInterface newInterface(HComponent c, HInterfaceSig s, IHPrimUnit unit, Point l) throws HPEAbortException{
 		return new HQualifierInterface(c,s,unit,l);	
 	}
 

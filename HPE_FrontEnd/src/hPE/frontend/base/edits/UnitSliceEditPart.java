@@ -6,7 +6,6 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
 import hPE.frontend.base.model.HUnitSlice;
-import hPE.frontend.base.model.IReplicatedElement;
 import hPE.frontend.kinds.activate.policies.SetNestingFactorEditPolicy;
 
 import java.beans.PropertyChangeEvent;
@@ -100,10 +99,6 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
 			this.refreshSourceConnections();
 			((ConfigurationEditPart)((UnitEditPart)this.getParent()).getParent()).refresh();
 		}
-		if (ev.getPropertyName().equals(ModelType.REPLICATED)) {
-			this.refreshSourceConnections();
-			((ConfigurationEditPart)((UnitEditPart)this.getParent()).getParent()).refresh();
-		}
 	}
 	
 	public List getModelSourceConnections() {
@@ -112,10 +107,7 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
 		
 		HLinkToInterface i = ((ModelType) getModel()).getLinkToInterface();
 		if (i.visibleInterface() && !i.getWhich_interface().getHidden()) r.add(i);
-		
-		Collection j = ((IReplicatedElement) getModel()).getLinksToVisibleReplicators();
-		if (j!=null) r.addAll(j);
-		
+				
 		return r;
 	}
 	

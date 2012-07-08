@@ -5,7 +5,6 @@ import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
 import hPE.frontend.base.interfaces.IInterfaceSlice;
-import hPE.frontend.base.interfaces.IReplicator;
 
 import java.util.Iterator;
 
@@ -102,67 +101,9 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 		return configuration;
 	}
 
-	public List<HReplicator> getReplicators() {		
-		return unit.getReplicators();
-	}
-
-	public void setReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException{
-		unit.setReplicator(the_replicator);
-		listeners.firePropertyChange(REPLICATED,null,getName2());
-
-	}
-
-	public void setReplicator(HReplicator the_replicator, boolean permanent) throws HPEUnmatchingEnumeratorsException{
-		unit.setReplicator(the_replicator,permanent);
-		listeners.firePropertyChange(REPLICATED,null,getName2());
-
-	}
-
-	public void unSetReplicator(HReplicator which_replicator) {
-		unit.unSetReplicator(which_replicator);
-		listeners.firePropertyChange(REPLICATED,null,getName2());
-	}
-
-	public void unsetAllReplicators() {
-		unit.unsetAllReplicators();
-
-	}
-
-	public boolean isReplicated() {
-		
-		return unit.isReplicated();
-	}
 
 
-	public boolean isReplicatorFactorDetermined(HReplicator which_replicator) {
-		return unit.isReplicatorFactorDetermined(which_replicator);
-	}
 
-	public int getReplicationFactor(HReplicator which_replicator) {
-		
-		return unit.getReplicationFactor(which_replicator);
-	}
-
-	public IHPrimUnit cloneOf() {
-	    return unit.cloneOf();	
-	}
-	
-	public List<HLinkToReplicator> getLinksToVisibleReplicators() {
-		return unit.getLinksToVisibleReplicators();
-	}
-
-	public List<HLinkToReplicator>  getLinksToReplicators() {
-		return unit.getLinksToReplicators();
-	}
-	
-	public void setLinkToReplicator(Collection<HLinkToReplicator> linkToReplicator) {
-        unit.setLinkToReplicator(linkToReplicator);
-	}
-
-	public boolean isReplicatedBy(IReplicator which_replicator) {
-		
-		return unit.isReplicatedBy(which_replicator);
-	}
 
 	public boolean getObservable() {
 		return unit.getObservable();
@@ -281,13 +222,6 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 		return ucs; 
 	}
 	
-	public boolean isCloned() {
-		return unit.isCloned();
-	}
-	
-	public int getIndexOfClone(IHPrimUnit u) {
-	   return unit.getIndexOfClone(u);	
-	}
 	
 	public HPrimUnit createReplica(int i) {
 		return unit.createReplica(i);
@@ -364,16 +298,7 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 	public boolean isNewNameValid(String name) {
 		return this.unit.isNewNameValid(null);
 	}
-    public boolean isClone() {
-    	return this.unit.isClone();
-    }
 
-	public HReplicatorSplit getCloneBySplit() {
-		return this.getActualUnit().getCloneBySplit();
-	}
 	
-	public void setCloneBySplit(HReplicatorSplit cloneBySplit) {
-		this.getActualUnit().setCloneBySplit(cloneBySplit);
-	}
     
 }

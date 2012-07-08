@@ -19,7 +19,11 @@ public class ComponentFigure extends ConfigurationNodeFigure {
 		
 	}	
 	
-	protected void drawFigure(Graphics g, Rectangle r) {
+	private boolean is_multiple = false;	
+	public void setMultiple(boolean hidden) { this.is_multiple = hidden; }
+	protected boolean isMultiple() { return is_multiple;}
+
+	protected void drawFigure(Graphics g, Rectangle r0) {
         if (isAbstract()) {
 //			g.setAlpha(100);
 			g.setLineStyle(SWT.LINE_DOT);
@@ -41,11 +45,33 @@ public class ComponentFigure extends ConfigurationNodeFigure {
         }
         
        if (!isPort) {
-			g.fillOval(r);
-			g.drawOval(r);
+    	   if (!this.isMultiple()) 
+    	   {
+    		    g.fillOval(r0); g.drawOval(r0);
+    	   } else
+    	   {
+    		   Rectangle r1 = r0.resize(-6,-6).translate(+6,0);
+    		   g.fillOval(r1); g.drawOval(r1);
+    		   Rectangle r2 = r1.translate(-3,+3);
+    		   g.fillOval(r2); g.drawOval(r2);
+    		   Rectangle r3 = r2.translate(-3,+3);
+    		   g.fillOval(r3); g.drawOval(r3);
+    	   }
        } else {
     	    //g.fillGradient(r, true);
-    	    g.drawRoundRectangle(r, 40, 40);
+    	   if (!this.isMultiple()) 
+    	   {
+    		   g.drawRoundRectangle(r0, 40, 40);
+    	   }
+    	   else 
+    	   {
+    		   Rectangle r1 = r0.resize(-6,-6).translate(+6,0);
+    		   g.drawRoundRectangle(r1, 40, 40);
+    		   Rectangle r2 = r1.translate(-3,+3);
+    		   g.drawRoundRectangle(r2, 40, 40);
+    		   Rectangle r3 = r2.translate(-3,+3);
+    		   g.drawRoundRectangle(r3, 40, 40);
+    	   }
        }
        
 		

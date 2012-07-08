@@ -13,7 +13,6 @@ import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.computation.model.HComputationUnit;
 import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
@@ -42,7 +41,6 @@ public class HApplicationComponent extends HComputationComponent {
     	if (c instanceof HEnvironmentComponent) return true;
     	if (c instanceof HSynchronizationComponent) return true;
     	if (c instanceof HComputationComponent) return true;
-    	if (c instanceof HEnumeratorComponent) return true;
     	return super.accepts(c);
     }
     

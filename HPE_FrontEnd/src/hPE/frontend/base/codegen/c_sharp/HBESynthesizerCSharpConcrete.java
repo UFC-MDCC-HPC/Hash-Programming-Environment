@@ -8,10 +8,7 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HPort;
-import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorInterfaceSlice;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;
 
@@ -21,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 
 public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESourceCSharpClassDefinition,HBESourceVersionCSharp,HInterface> {
@@ -403,13 +398,6 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 					    	sourceCode += tabs(2) + ss.getName() + "." + firstUpper(ss_name) + " = value;\n";
 					    }				    
 				    }*/
-				    if (slice instanceof HEnumeratorInterfaceSlice) {
-				    	HEnumeratorInterfaceSlice permutationSlice = (HEnumeratorInterfaceSlice) slice;
-				    	String key = permutationSlice.getReplicatorID();
-				    	String value = "value";
-				    	String prefix = ((HEnumeratorUnitSlice)permutationSlice.getCompliantUnitSlices().get(0)).getAssocSlice().getBinding().getEntry().getConfiguration().getRef();
-				    	sourceCode += tabs(2) + "this.addPermutation(\""  + prefix + "." + key + "\"," + value + ");\n	";
-				    }
 				    	
 				    sourceCode += tabs(1) + "}\n";
 				    sourceCode += "}\n\n";

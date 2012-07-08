@@ -549,20 +549,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link ComponentPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -574,7 +564,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		if (isInited) return (ComponentPackage)EPackage.Registry.INSTANCE.getEPackage(ComponentPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ComponentPackageImpl theComponentPackage = (ComponentPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof ComponentPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new ComponentPackageImpl());
+		ComponentPackageImpl theComponentPackage = (ComponentPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ComponentPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ComponentPackageImpl());
 
 		isInited = true;
 
@@ -590,6 +580,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		// Mark meta-data to indicate it can't be changed
 		theComponentPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(ComponentPackage.eNS_URI, theComponentPackage);
 		return theComponentPackage;
 	}
 
@@ -1093,7 +1086,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Name() {
+	public EAttribute getComponentInUseType_Multiple() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -1102,7 +1095,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Package() {
+	public EAttribute getComponentInUseType_Name() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -1111,7 +1104,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_ParameterId() {
+	public EAttribute getComponentInUseType_Package() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(9);
 	}
 
@@ -1120,8 +1113,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentInUseType_Version() {
+	public EAttribute getComponentInUseType_ParameterId() {
 		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentInUseType_Version() {
+		return (EAttribute)componentInUseTypeEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -2551,7 +2553,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_Private() {
+	public EAttribute getUnitType_Multiple() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -2560,7 +2562,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_URef() {
+	public EAttribute getUnitType_Private() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -2569,8 +2571,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_VisibleInterface() {
+	public EAttribute getUnitType_URef() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitType_VisibleInterface() {
+		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2804,6 +2815,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__HASH_COMPONENT_UID);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__LOCAL_REF);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__LOCATION);
+		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__MULTIPLE);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__NAME);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PACKAGE);
 		createEAttribute(componentInUseTypeEClass, COMPONENT_IN_USE_TYPE__PARAMETER_ID);
@@ -3008,6 +3020,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(unitTypeEClass, UNIT_TYPE__SLICES);
 		createEReference(unitTypeEClass, UNIT_TYPE__VISUAL_DESCRIPTION);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__IREF);
+		createEAttribute(unitTypeEClass, UNIT_TYPE__MULTIPLE);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__PRIVATE);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__UREF);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__VISIBLE_INTERFACE);
@@ -3149,6 +3162,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getComponentInUseType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_LocalRef(), theXMLTypePackage.getString(), "localRef", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Location(), theXMLTypePackage.getAnyURI(), "location", null, 1, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentInUseType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Package(), theXMLTypePackage.getString(), "package", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_ParameterId(), theXMLTypePackage.getString(), "parameterId", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3353,6 +3367,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getUnitType_Slices(), this.getUnitSliceType(), null, "slices", null, 0, -1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnitType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Private(), theXMLTypePackage.getBoolean(), "private", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_VisibleInterface(), theXMLTypePackage.getBoolean(), "visibleInterface", "true", 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3384,6 +3399,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUALIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.FACET);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.DOMAIN);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SERVICE);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.VALUE);
 
 		// Initialize data types
 		initEDataType(quantificationTypeObjectEDataType, QuantificationType.class, "QuantificationTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
@@ -3801,6 +3820,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "location"
+		   });		
+		addAnnotation
+		  (getComponentInUseType_Multiple(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "multiple"
 		   });		
 		addAnnotation
 		  (getComponentInUseType_Name(), 
@@ -4963,6 +4989,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "iRef"
+		   });		
+		addAnnotation
+		  (getUnitType_Multiple(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "multiple"
 		   });		
 		addAnnotation
 		  (getUnitType_Private(), 

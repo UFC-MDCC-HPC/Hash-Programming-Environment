@@ -8,7 +8,6 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 
 public class HEnvironmentComponent extends HQualifierComponent {
@@ -31,7 +30,6 @@ public class HEnvironmentComponent extends HQualifierComponent {
     public boolean accepts(IComponent c) {
     	if (c instanceof HQualifierComponent) return true;
     	if (c instanceof HEnvironmentComponent) return true;
-    	if (c instanceof HEnumeratorComponent) return true;
     	return super.accepts(c);
     }
 

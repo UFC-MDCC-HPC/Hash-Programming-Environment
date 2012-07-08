@@ -3,7 +3,7 @@ package hPE.frontend.base.interfaces;
 import hPE.frontend.base.model.HInterfaceSlice;
 
 
-public interface IUnitSlice extends ICanReplicate {
+public interface IUnitSlice {
 
 	public IComponentEntry getComponentEntry();
 	

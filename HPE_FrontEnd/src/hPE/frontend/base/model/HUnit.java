@@ -6,8 +6,6 @@ import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IUnit;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorComponent;
-import hPE.frontend.kinds.enumerator.model.HEnumeratorUnitSlice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,73 +109,7 @@ public abstract class HUnit extends HPrimUnit
 		return new HUnitSlice(this, the_source, where);
 	}*/
 
-	protected void propagateReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException {
-		
-		List<IPointsToReplicator> ps = new ArrayList<IPointsToReplicator>();
-		try {
-		Iterator<HUnitSlice> ss = this.getSlices().iterator();
-		while (ss.hasNext()) {			
-			HUnitSlice s = ss.next();
-			IHUnit e = s.getBinding().getEntry();
-			HReplicator r = e.getReplicatorByVarId(the_replicator.getVarId());
-			if (r==null) {
-				HComponent c = (HComponent) e.getConfiguration();
-				HReplicator rc = c.getReplicatorByVarId(the_replicator.getVarId());
-				if (rc==null) {
-					//if (c.someUnitIsReplicatedByVarIdOf(the_replicator))
-					//	throw new HPEUnmatchingEnumeratorsException();
-					//else
-						c.setReplicator(the_replicator,true);
-				} else {
-					if (!c.isReplicatedBy(the_replicator)) {
-						c.setReplicator(the_replicator,true);
-						ps.add(c);
-					}
-					
-				}
-			} else if (!e.isReplicatedBy(the_replicator)) {
-				e.setReplicator(the_replicator,true);
-				ps.add(e);
-			}
-			/* if (!e.isReplicatedBy(the_replicator)) {
-				HComponent c = (HComponent) e.getConfiguration();
-				if (!c.isReplicatedBy(the_replicator) && !c.someUnitIsReplicatedBy(the_replicator)) 
-					c.setReplicator(the_replicator,true);
-			} */
-		}
-		} catch (HPEUnmatchingEnumeratorsException e) {
-			Iterator<IPointsToReplicator> ips = ps.iterator();
-			while (ips.hasNext()) {
-				IPointsToReplicator ip = ips.next();
-				ip.unSetReplicator(the_replicator); // ROLL BACK
-			}
-			throw new HPEUnmatchingEnumeratorsException();
-		}
-		
-		
-	}
 
-    public HUnitSlice someSliceIsReplicatedByVarIdOf(HReplicator r) {
-      	 
-    	for (HUnitSlice s : this.getSlices()) {
-      		 if (s.getReplicatorByVarId(r.getVarId()) != null) 
-      			 return s;
-      	 }
-      	 
-      	 return null;   	 
-      	 
-       }
-
-    public HUnitSlice someSliceIsReplicatedBy(HReplicator r) {
-     	 
-    	for (HUnitSlice s : this.getSlices()) {
-     		 if (s.isReplicatedBy(r)) 
-     			 return s;
-     	 }
-     	 
-     	 return null;   	 
-     	 
-      }
     
     /**
 	 * @uml.property   name="unit_slices"
@@ -287,13 +219,7 @@ public abstract class HUnit extends HPrimUnit
 	public Map<HPrimUnit, Integer> whatIsThePath(HUnitSlice uslice) {
 
 		HashMap<HPrimUnit,Integer> path = null;
-		
-		if (this.isClone()) { 
-			int i = this.cloneOf().getIndexOfClone(this);
-			if (path == null) path = new HashMap<HPrimUnit,Integer>();
-			path.put((HPrimUnit)this.cloneOf(), i);
-		}
-		
+				
 		for (HUnitSlice s : this.getSlices()) {
 			if (s == uslice) 
 				return path;
@@ -651,14 +577,6 @@ public abstract class HUnit extends HPrimUnit
     		}
     	}
 
-	    for (HReplicator r : u.getReplicators()) {
-	    		try {
-	    			 new_u.setReplicator(r);
-	    			//r.setReplicated(new_u);
-	    		} catch (HPEUnmatchingEnumeratorsException e) {
-	    			System.err.println("Unexpected Exception !" + e.getMessage());
-	    		}
-	    }
 	    
     	u.killMe();
     	
@@ -1039,38 +957,18 @@ public abstract class HUnit extends HPrimUnit
             return l;                       
     }
 		
+    private boolean is_multiple = true;
+        
+	@Override
+	public boolean isMultiple() {		
+		return is_multiple;
+	}
 
-		public void createPermutationSlices(IHUnit the_source, HReplicator r, HReplicatorSplit rSplit) throws HPEAbortException {
-
-			HComponent c = (HComponent) this.getConfiguration();
-			HComponent topC = (HComponent) c.getTopConfiguration();
-
-			HEnumeratorComponent cPermutation = rSplit.getPermutation();
-			if (cPermutation != null) {
-				HEnumeratorComponent cPermutationClone = (HEnumeratorComponent) HComponent.getMyCopy(cPermutation);
-				cPermutationClone.setDerivedFromPermutation(true);
-				topC.loadComponent(cPermutationClone, new Point(0,0));
-			    try {
-					cPermutationClone.setReplicator(r);
-				} catch (HPEUnmatchingEnumeratorsException e) {						
-					e.printStackTrace();
-				}
-				IHUnit uPermutation = cPermutationClone.getUnits().get(0);					
-				HEnumeratorUnitSlice the_target = (HEnumeratorUnitSlice) c.createBinding(uPermutation, this, null);
-				the_target.setMappedReplicator(rSplit.getOwnerReplicator());
-				the_target.setAssocSlice((HUnitSlice)the_source.getBinding().getPort());			
-			}
-			
-		}
-
-		public void createAllPermutationSlices(IHUnit the_source) throws HPEAbortException {
-			for (HReplicator r : the_source.getReplicators()) {
-				HReplicatorSplit rSplit = r.getParentSplit(); 
-				if (rSplit != null) {
-					this.createPermutationSlices(the_source, r /*rSplit.getOwnerReplicator()*/, rSplit);
-				}
-			}
-		}
+	@Override
+	public void setMultiple(boolean is_multiple) {
+		this.is_multiple = is_multiple;
+		getListeners().firePropertyChange(CHANGE_MULTIPLE,null,this.getBounds());	
+	}
 		
 
 

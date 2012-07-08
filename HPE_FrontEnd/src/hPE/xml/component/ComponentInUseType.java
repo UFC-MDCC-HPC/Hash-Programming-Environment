@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ComponentInUseType#getHashComponentUID <em>Hash Component UID</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getLocalRef <em>Local Ref</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getLocation <em>Location</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentInUseType#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getName <em>Name</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getPackage <em>Package</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentInUseType#getParameterId <em>Parameter Id</em>}</li>
@@ -195,6 +196,60 @@ public interface ComponentInUseType extends EObject {
 	 * @generated
 	 */
 	void setLocation(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Multiple</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Multiple</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Multiple</em>' attribute.
+	 * @see #isSetMultiple()
+	 * @see #unsetMultiple()
+	 * @see #setMultiple(boolean)
+	 * @see hPE.xml.component.ComponentPackage#getComponentInUseType_Multiple()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='multiple'"
+	 * @generated
+	 */
+	boolean isMultiple();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ComponentInUseType#isMultiple <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Multiple</em>' attribute.
+	 * @see #isSetMultiple()
+	 * @see #unsetMultiple()
+	 * @see #isMultiple()
+	 * @generated
+	 */
+	void setMultiple(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.ComponentInUseType#isMultiple <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetMultiple()
+	 * @see #isMultiple()
+	 * @see #setMultiple(boolean)
+	 * @generated
+	 */
+	void unsetMultiple();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.ComponentInUseType#isMultiple <em>Multiple</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Multiple</em>' attribute is set.
+	 * @see #unsetMultiple()
+	 * @see #isMultiple()
+	 * @see #setMultiple(boolean)
+	 * @generated
+	 */
+	boolean isSetMultiple();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

@@ -1,9 +1,34 @@
 package hPE.frontend.base.edits;
 
+import hPE.frontend.base.commands.NewComponentCommand;
+import hPE.frontend.base.commands.NewUnitCommand;
+import hPE.frontend.base.commands.ResizeCommand;
+import hPE.frontend.base.figures.ConfigurationFigure;
+import hPE.frontend.base.figures.INameEditableFigure;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HUnit;
+import hPE.frontend.base.model.HVisualElement;
+import hPE.frontend.base.model.IHVisualElement;
+import hPE.frontend.base.policies.BrowseEditPolicy;
+import hPE.frontend.base.policies.ChangeColorEditPolicy;
+import hPE.frontend.base.policies.ChangeVariableNameEditPolicy;
+import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
+import hPE.frontend.base.policies.NewVersionEditPolicy;
+import hPE.frontend.base.policies.RegisterComponentEditPolicy;
+import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
+import hPE.frontend.kinds.data.model.HDataUnit;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
@@ -13,48 +38,11 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.editpolicies.RootComponentEditPolicy;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
-
-import hPE.frontend.base.commands.NewComponentCommand;
-import hPE.frontend.base.commands.NewReplicatorCommand;
-import hPE.frontend.base.commands.NewUnitCommand;
-import hPE.frontend.base.commands.ResizeCommand;
-import hPE.frontend.base.figures.ConfigurationFigure;
-import hPE.frontend.base.figures.INameEditableFigure;
-import hPE.frontend.base.interfaces.IComponent;
-import hPE.frontend.base.model.*;
-import hPE.frontend.base.policies.BrowseEditPolicy;
-import hPE.frontend.base.policies.ChangeColorEditPolicy;
-import hPE.frontend.base.policies.ChangeVariableNameEditPolicy;
-import hPE.frontend.base.policies.DeployEditPolicy;
-import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
-import hPE.frontend.base.policies.ImplementsEditPolicy;
-import hPE.frontend.base.policies.NewVersionEditPolicy;
-import hPE.frontend.base.policies.RegisterComponentEditPolicy;
-import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
-import hPE.frontend.kinds.activate.model.HActivateInterface;
-import hPE.frontend.kinds.activate.model.protocol.HProtocol;
-import hPE.frontend.kinds.data.model.HDataUnit;
-
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-
-
-
-import java.beans.PropertyChangeEvent;
-import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
-
-import org.eclipse.draw2d.geometry.Rectangle;
-
-
-import java.beans.PropertyChangeListener;
-import org.eclipse.core.resources.IResource;
-
-import org.eclipse.core.resources.IFile;
 
 public class ConfigurationEditPart<ModelType extends HComponent,
                                    FigureType extends ConfigurationFigure>
@@ -115,14 +103,6 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 			} 
 		}
 		
-		for (HReplicator a_replicator : ((ModelType) getModel()).gettReplicators()) {
-			if (!(a_replicator.getHidden()) && 
-				!(a_replicator.isJoined()) &&  
-				!a_replicator.isUnitaryAndNotShow() && 
-				!a_replicator.getConfigurationTop().isHiddenInnerComponent()) { 
-				children.add(a_replicator);
-			} 
-		}
 		
 	    return children;		
 	}
@@ -183,9 +163,6 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		Object childClass = request.getNewObjectType();
 		if (childClass == HDataUnit.class || childClass == HUnit.class) {
 			return new NewUnitCommand("unit", (HComponent) this.getHost().getModel(),request.getLocation());
-		}
-		if (childClass == HReplicator.class) {
-			return new NewReplicatorCommand((HComponent) this.getHost().getModel(),request.getLocation());
 		}
 		if (childClass == HComponent.class) {
 			return new NewComponentCommand((HComponent) this.getHost().getModel(), (String[]) request.getNewObject(), request.getLocation());

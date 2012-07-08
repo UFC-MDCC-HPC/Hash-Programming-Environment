@@ -16,7 +16,7 @@ public interface IHUnit extends IHPrimUnit, IUnit,
                                 Cloneable {
 
 	public final static String ADD_UNIT_ITEM = "remove_unit";
-
+	public final static String CHANGE_MULTIPLE = "change_multiple";
 	/**
 	 * Getter of the property <tt>unit_slice_abstractions</tt>
 	 * @return  Returns the unit_slice_abstractions.
@@ -84,10 +84,6 @@ public interface IHUnit extends IHPrimUnit, IUnit,
 	public abstract void setStubEnc(HUnitStub stub, HComponent enc);
 
 	public abstract Map<HPrimUnit, Integer> whatIsThePath(HUnitSlice uslice);
-
-	public abstract void createPermutationSlices(IHUnit the_source, HReplicator r, HReplicatorSplit split) throws HPEAbortException;
-
-	public abstract void createAllPermutationSlices(IHUnit the_source) throws HPEAbortException;
 
 
 

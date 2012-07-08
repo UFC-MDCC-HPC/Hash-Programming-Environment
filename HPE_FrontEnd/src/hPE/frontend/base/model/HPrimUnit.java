@@ -7,7 +7,6 @@ import hPE.frontend.base.interfaces.IComponentEntry;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
 import hPE.frontend.base.interfaces.IInterfaceSlice;
-import hPE.frontend.base.interfaces.IReplicator;
 import hPE.frontend.base.interfaces.IUnit;
 import hPE.frontend.base.interfaces.IUnitSlice;
 import hPE.util.Pair;
@@ -140,7 +139,6 @@ public abstract class HPrimUnit extends HVisualElement
 	}
 	
 	public void killMe() {		
-		this.unsetAllReplicators();
 		if (this.getInterface() != null) this.detachFromInterface();
 		//this.remove();
 	}
@@ -160,228 +158,13 @@ public abstract class HPrimUnit extends HVisualElement
     }
 	
 	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#getReplicators()
-	 */
-	public List<HReplicator> getReplicators() {
-		List<HReplicator> replicators = new ArrayList<HReplicator>();
-		if (this.getLinksToReplicators().size() > 0) {
-			for (HLinkToReplicator l : this.getLinksToReplicators()) {
-		    	HReplicator r = l.getReplicator();
-		    	replicators.add(r);
-		    }
-		}			
-		return replicators;
-	}
 
-	private boolean isLinkedTo(HReplicator r) 
-	{
-		for (HLinkToReplicator l : this.getLinksToReplicators()) {
-			if (l.getTheReplicator().equals(r)) 
-				return true;
-		}
-		return false;
-	}
 	
 	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#setReplicator(hPE.model.HReplicator)
-	 */
-	public void setReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException{
-		
-		if (!(this.isReplicatedBy(the_replicator) || (this.isLinkedTo(the_replicator.getTopJoined()) && this.isLinkedTo(the_replicator)))) {
-			
-			HUnitSlice s = this.someSliceIsReplicatedByVarIdOf(the_replicator);
-			if (s != null) {
-			    for (HLinkToReplicator l : s.getLinksToReplicators()) { 
-			    	if (l.getReplicator().getVarId().equals(the_replicator.getVarId()))
-			    	   l.liftReplicator();
-			    }
-			}
-			
-			HLinkToReplicator linkToReplicator = new HLinkToReplicator(this,the_replicator);
-			this.linkToReplicator.add(linkToReplicator);
-			
-			// PROPAGATE TO COMPONENTS ... only propagates
-	/*		try {
-				propagateReplicator(the_replicator);
-			} catch (HPEUnmatchingEnumeratorsException e) {
-				this.unSetReplicator(the_replicator);
-				throw new HPEUnmatchingEnumeratorsException();
-			}
-	*/	
-			for (HReplicator r : the_replicator.getMyJoined()) {
-				setReplicator(r);
-			}
-			
-			listeners.firePropertyChange(REPLICATED,null,name);
-		}
-	}
-	
-    public abstract HUnitSlice someSliceIsReplicatedByVarIdOf(HReplicator r); 
-
-    public abstract HUnitSlice someSliceIsReplicatedBy(HReplicator r);
-    
-    protected abstract void propagateReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException ;
-
-	public void setReplicator (HReplicator the_replicator, boolean permanent) throws HPEUnmatchingEnumeratorsException{
-		setReplicator(the_replicator);
-		this.findLink(the_replicator).setPermanent(true);
-	}
-	
-    public void addLinkToReplicator(HLinkToReplicator l) {
-    	this.linkToReplicator.add(l);
-    }
-    
-	public HReplicator getReplicatorByVarId(String v) {
-		HLinkToReplicator link = null;
-		Iterator ls = ((List) ((ArrayList) this.linkToReplicator).clone()).iterator();
-		while (ls.hasNext()) {
-			link = (HLinkToReplicator) ls.next();
-			if (link.getReplicator().getName2().equals(v)) return link.getReplicator();   		
-		}
-		return null;
-	}
-
-	public HLinkToReplicator findLink(HReplicator which_replicator) {
-		HLinkToReplicator link = null;
-		Iterator ls = ((List) ((ArrayList) this.linkToReplicator).clone()).iterator();
-		while (ls.hasNext()) {
-			link = (HLinkToReplicator) ls.next();
-			if (link.getReplicator() == which_replicator.getTopJoined()) return link;   		
-		}
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#unSetReplicator(hPE.model.HReplicator)
-	 */
-	public void unSetReplicator(HReplicator which_replicator) {
-		HLinkToReplicator link = findLink(which_replicator);
-    	link.unlinkFromReplicator();
-    	this.linkToReplicator.remove(link);
-    	
-    	List<HReplicator> rs = which_replicator.getMyJoined();    	
-    	if (!rs.isEmpty())
-			for (HReplicator s : rs) 
-			    if (this.isReplicatedBy(s)) 
-			    	this.unSetReplicator(s);
-    	
-		listeners.firePropertyChange(REPLICATED,null,name);
-	}
-	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#unsetAllReplicators()
-	 */
-	public void unsetAllReplicators() {
-		
-		
-		for (HLinkToReplicator r : (List<HLinkToReplicator>)((ArrayList<HLinkToReplicator>)this.getLinksToVisibleReplicators()).clone()) {
-			if (this.getLinksToReplicators().contains(r)) 
-				this.unSetReplicator(r.getReplicator());
-		}
-	}
-	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#isReplicated()
-	 */
-	public boolean isReplicated() {
-		return this.getLinksToReplicators().size() > 0;
-	}
 
   
 	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#isReplicatorFactorDetermined(hPE.model.HReplicator)
-	 */
-	public boolean isReplicatorFactorDetermined(HReplicator which_replicator) {
-		HLinkToReplicator link = findLink(which_replicator);
-		if (link != null) 
-			return link.isReplicatorFactorDetermined();
-		else
-			return false; // RAISES EXCEPTION !!!! ERROR !!!
-	}
 
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#getReplicationFactor(hPE.model.HReplicator)
-	 */
-	public int getReplicationFactor(HReplicator which_replicator) {
-		HLinkToReplicator link = findLink(which_replicator);
-		if (link != null) 
-		        return which_replicator.getFactor();
-		else
-			return -1; // RAISES EXCEPTION !!!! ERROR !!!
-	}
-
-	/**
-	 * @uml.property   name="linkToReplicator"
-	 * @uml.associationEnd   multiplicity="(0 -1)" inverse="hUnit:hPE.base.model.HLinkToReplicator"
-	 */
-	private Collection<HLinkToReplicator> linkToReplicator = new ArrayList<HLinkToReplicator>();
-
-
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#getLinksToReplicators()
-	 */
-	public List<HLinkToReplicator> getLinksToVisibleReplicators() {
-		Map<HReplicator, HLinkToReplicator> rs = new HashMap<HReplicator,HLinkToReplicator>();
-		List<HLinkToReplicator> visibleLinks = new ArrayList<HLinkToReplicator>();
-		for (HLinkToReplicator l : linkToReplicator) {
-			HReplicator r = l.getReplicator();
-			boolean check = true;
-	/*		if (rs.containsKey(r)) {
-			    HReplicator r_ = l.getTheReplicator();
-			    if (!r_.isJoined()) {
-			       visibleLinks.remove(rs.get(r));
-			    } else {
-			    	check = false;
-			    }
-			} */ 			
-			if (check && !r.getHidden()  && !r.isUnitaryAndNotShow()) { 
-				visibleLinks.add(l);
-				rs.put(r,l);
-			}
-		}
-		
-		return visibleLinks;
-	}
-
-	public List<HLinkToReplicator> getLinksToReplicators() {
-		List<HLinkToReplicator> theLinks = new ArrayList<HLinkToReplicator>();
-		Iterator<HLinkToReplicator> links = linkToReplicator.iterator(); 
-		while (links.hasNext()) {
-			HLinkToReplicator l = links.next();
-			theLinks.add(l);
-		}
-		
-		return theLinks;
-	}
-
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#setLinkToReplicator(java.util.Collection)
-	 */
-	public void setLinkToReplicator(Collection linkToReplicator) {
-		this.linkToReplicator = linkToReplicator;
-	}
-	
-	/* (non-Javadoc)
-	 * @see hPE.model.IHPrimUnit#isReplicatedBy(hPE.model.interfaces.IReplicator)
-	 */
-	public boolean isReplicatedBy(IReplicator which_replicator) {
-		return (findLink((HReplicator)which_replicator) != null);
-	}
-
-	public boolean isReplicatedByVar(String varId) {
-		
-		for (HLinkToReplicator rlink : this.getLinksToReplicators()) {
-			if (rlink.getReplicator().getVarId().equals(varId)) {
-				return true;
-			}
-		}
-		
-		return false;
-		
-	}
 
 	/**
 	 * @uml.property  name="observable"
@@ -505,10 +288,6 @@ public abstract class HPrimUnit extends HVisualElement
 
 	public void align(HPrimUnit u) {
 		
-		this.cloneOf = u.cloneOf;
-		int k = u.cloneOf.getIndexOfClone(u);
-		u.cloneOf.getMyClones().remove(k-1);
-		u.cloneOf.getMyClones().add(k-1, this);
 		
 	}
 	
@@ -535,7 +314,7 @@ public abstract class HPrimUnit extends HVisualElement
 	
 	// INTERFACE SLICE: Unit as slice
 	
-	public static int raio = 5;
+	public static int raio = 10;
 	public static int diameter = raio*2;
 			
 	
@@ -777,44 +556,7 @@ public abstract class HPrimUnit extends HVisualElement
 	
 	private IHPrimUnit cloneOf = null;
 	private List<IHPrimUnit> myClones = new ArrayList<IHPrimUnit>();
-	private HReplicatorSplit cloneBySplit = null;
 
-	public HReplicatorSplit splitBy(HReplicatorSplit split) {
-		int i = 0;
-		HReplicatorSplit theSplit = split;
-		
-		if (!this.isCloned()) {
-			List<HBinding> bindings = new ArrayList<HBinding>(this.getBindings());
-			for (HBinding b : bindings) {
-				if (b.getCloneId() == -1) {
-					HUnitSlice s = (HUnitSlice) b.getPort();
-					IHPrimUnit u_ =  s.getUnit();
-					theSplit = u_.splitBy(split);
-				}
-			}
-		
-			this.setCloneBySplit(theSplit);
-			for (HLinkToReplicator l : theSplit.getLinksToReplicators()) {
-				HReplicator r = l.getReplicator();
-				IHPrimUnit u = (IHUnit) this.createReplica(i++);
-				try {
-					u.setReplicator(r);
-			    } catch (HPEUnmatchingEnumeratorsException e) {
-				        System.err.println("Unexpected Exception !" + e.getMessage());
-			    }			
-			}
-		//} else 
-			//return this.getCloneBySplit();
-			//if (this.getCloneBySplit() != split) { 
-		       // System.err.println("Unexpected Error (splitBy in HPrimUnit) !");
-		//} else {
-			// ok ! Top cloned unit reached !!!
-		} else {
-			theSplit = this.getCloneBySplit();
-		}
-
-		return theSplit;
-	}
 	
 	
 	/* (non-Javadoc)
@@ -822,63 +564,21 @@ public abstract class HPrimUnit extends HVisualElement
 	 */
 	public List<IHPrimUnit> getClones() {
 		List<IHPrimUnit> ucs = new ArrayList<IHPrimUnit>();
-		if (isCloned()) {
-			for (IHPrimUnit u_ : this.myClones) {
-		        ucs.addAll(u_.getClones());
-			}
-		}
-		else {
+//		if (isCloned()) {
+//			for (IHPrimUnit u_ : this.myClones) {
+//		        ucs.addAll(u_.getClones());
+//			}
+//		}
+//		else 
+		{
 			ucs.add(this);
 		}   
 		return ucs;
 	}
 	
-	public void setCloneBySplit(HReplicatorSplit cloneBySplit) {
-		this.cloneBySplit = cloneBySplit;
-	}
-
-	public HReplicatorSplit getCloneBySplit() {
-		return cloneBySplit;
-	}
 
 	public List<IHPrimUnit> getMyClones() {		   
 		return myClones;
-	}
-	
-	public List<IHPrimUnit> getMyClonesSorted() {
-		
-		List<IHPrimUnit> clonesSorted = new ArrayList<IHPrimUnit>();
-		
-		if (this.getCloneBySplit() != null) {			
-			List<Pair<String,IHPrimUnit>> ps = new ArrayList<Pair<String,IHPrimUnit>>();
-			List<HReplicator> rs = this.getCloneBySplit().getReplicators();
-			for (IHPrimUnit u : this.getMyClones()) {
-				List<String> vars = new ArrayList<String>();
-				for (HReplicator r : u.getReplicators()) {
-					if (!vars.contains(r.getVarId())) {
-						vars.add(r.getVarId());
-						for (HReplicator r_ : rs) {
-							if (r_.getVarId().equals(r.getVarId())) {
-								ps.add(new Pair<String,IHPrimUnit>(r.getVarId(),u));
-							}
-						}
-					}
-				}
-			}
-		
-			ps = sortClones(ps);
-			
-			for (Pair<String,IHPrimUnit> p : ps) {
-				if (!clonesSorted.contains(p.snd())) 
-					clonesSorted.add(p.snd());
-			}
-		
-		} else {
-            clonesSorted.add(this);			
-		}
-		
-		return clonesSorted;
-		
 	}
 	
 	
@@ -942,12 +642,12 @@ public abstract class HPrimUnit extends HVisualElement
 		try {
 			HPrimUnit cloneOfThis = (HPrimUnit) this.clone();
 			cloneOfThis.myClones = null;
-	    	cloneOfThis.cloneBySplit = null;
+//	    	cloneOfThis.cloneBySplit = null;
 			cloneOfThis.isClone = true;
 			cloneOfThis.setClone(this);
 			this.addClone(cloneOfThis,shift);
 			cloneOfThis.setBounds(this.getBounds().getCopy().translate((this.getBounds().width+2)*(shift+1),0));
-			cloneOfThis.linkToReplicator = new ArrayList<HLinkToReplicator>();
+//			cloneOfThis.linkToReplicator = new ArrayList<HLinkToReplicator>();
 			cloneOfThis.linkToInterface = this.linkToInterface != null ? this.linkToInterface.replicateMe(cloneOfThis) : null;
 			cloneOfThis.myClones = new ArrayList<IHPrimUnit>();
 			cloneOfThis.bindings = new ArrayList<HBinding>();
@@ -1122,8 +822,4 @@ public abstract class HPrimUnit extends HVisualElement
     	this.supersededName = name;
     }
 
-    @Override
-    public void removeLinkToReplicator(HLinkToReplicator linkToReplicator) {
-    	this.linkToReplicator.remove(linkToReplicator);
-    }
 }

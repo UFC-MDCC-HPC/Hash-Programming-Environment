@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.UnitType#getSlices <em>Slices</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#getIRef <em>IRef</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitType#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#isPrivate <em>Private</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#getURef <em>URef</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#isVisibleInterface <em>Visible Interface</em>}</li>
@@ -130,6 +131,60 @@ public interface UnitType extends EObject {
 	 * @generated
 	 */
 	void setIRef(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Multiple</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Multiple</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Multiple</em>' attribute.
+	 * @see #isSetMultiple()
+	 * @see #unsetMultiple()
+	 * @see #setMultiple(boolean)
+	 * @see hPE.xml.component.ComponentPackage#getUnitType_Multiple()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='multiple'"
+	 * @generated
+	 */
+	boolean isMultiple();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitType#isMultiple <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Multiple</em>' attribute.
+	 * @see #isSetMultiple()
+	 * @see #unsetMultiple()
+	 * @see #isMultiple()
+	 * @generated
+	 */
+	void setMultiple(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitType#isMultiple <em>Multiple</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetMultiple()
+	 * @see #isMultiple()
+	 * @see #setMultiple(boolean)
+	 * @generated
+	 */
+	void unsetMultiple();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitType#isMultiple <em>Multiple</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Multiple</em>' attribute is set.
+	 * @see #unsetMultiple()
+	 * @see #isMultiple()
+	 * @see #setMultiple(boolean)
+	 * @generated
+	 */
+	boolean isSetMultiple();
 
 	/**
 	 * Returns the value of the '<em><b>Private</b></em>' attribute.

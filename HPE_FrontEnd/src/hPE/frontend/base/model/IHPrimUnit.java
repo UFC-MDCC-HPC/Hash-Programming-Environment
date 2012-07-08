@@ -1,24 +1,20 @@
 package hPE.frontend.base.model;
 
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
-import hPE.frontend.base.interfaces.IInterfaceSlice;
-import hPE.frontend.base.interfaces.IReplicator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
-public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IPropertyChangeListener, HNamed, Serializable {
+public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNamed, Serializable {
 
 	public final static String REMOVE_UNIT = "remove_unit";
 
@@ -59,52 +55,7 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 
 	/**
 	 */
-	public abstract List<HReplicator> getReplicators();
-
 	public final static String REPLICATED = "replicated";
-
-	/**
-	 */
-	public abstract void setReplicator(HReplicator the_replicator) throws HPEUnmatchingEnumeratorsException;
-
-	public abstract void setReplicator(HReplicator the_replicator,
-			boolean permanent) throws HPEUnmatchingEnumeratorsException;
-
-	public abstract void unSetReplicator(HReplicator which_replicator);
-
-	public abstract void unsetAllReplicators();
-
-	
-	/**
-	 */
-	public abstract boolean isReplicated();
-
-	/**
-	 */
-	public abstract boolean isReplicatorFactorDetermined(
-			HReplicator which_replicator);
-
-	/**
-	 */
-	public abstract int getReplicationFactor(HReplicator which_replicator);
-
-	/** 
-	 * @uml.property  name="linkToReplicator"
-	 */
-	public abstract List<HLinkToReplicator> getLinksToVisibleReplicators();
-
-	public abstract void addLinkToReplicator(HLinkToReplicator l);
-	
-	public abstract List<HLinkToReplicator> getLinksToReplicators();
-	/** 
-	 * Setter of the property <tt>linkToReplicator</tt>
-	 * @param linkToReplicator  The replicator to set.
-	 * @uml.property  name="linkToReplicator"
-	 */
-	public abstract void setLinkToReplicator(Collection<HLinkToReplicator> linkToReplicator);
-
-	public abstract boolean isReplicatedBy(IReplicator which_replicator);
-	public abstract boolean isReplicatedByVar(String varId);
 
 	/**
 	 * Getter of the property <tt>observable</tt>
@@ -255,30 +206,8 @@ public interface IHPrimUnit extends IHasInterface, IReplicatedElement, IProperty
 	public List<HPrimUnit> getTopUnits(Map<HPrimUnit,Integer> path);
 	
 	public IHPrimUnit getActualUnit();
-
-	public boolean isClone();
 	
-	public HReplicatorSplit getCloneBySplit();
-	
-	public void setCloneBySplit(HReplicatorSplit cloneBySplit);
-	
-	public abstract List<IHPrimUnit> getClones();
-
-	public abstract List<IHPrimUnit> getMyClones();
-	
-	public IHPrimUnit getClone(int i);
-	
-	public IHPrimUnit cloneOf();
-	
-	public boolean isCloned();
-	
-	public int getIndexOfClone(IHPrimUnit u);
-
-	public abstract HReplicatorSplit splitBy(HReplicatorSplit cloneBySplit);
-
 	public abstract void align(HPrimUnit u1);
-
-	public abstract List<IHPrimUnit> getMyClonesSorted();
 
 	public abstract void setSupersededName(String name2);
 	
