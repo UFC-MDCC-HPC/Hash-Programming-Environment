@@ -6,10 +6,10 @@ import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.base.model.HBaseKindComponent;
 import hPE.frontend.kinds.base.model.HHasPortsConfiguration;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
+import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
 
@@ -32,7 +32,7 @@ public class HDataComponent extends HHasPortsConfiguration {
     	if (c instanceof HQualifierComponent) return true;
     	if (c instanceof HDataComponent) return true;
     	if (c instanceof HEnvironmentComponent) return true;
-    	if (c instanceof HArchitectureComponent) return true;
+    	if (c instanceof HPlatformComponent) return true;
     	return super.accepts(c);
     }	
 	

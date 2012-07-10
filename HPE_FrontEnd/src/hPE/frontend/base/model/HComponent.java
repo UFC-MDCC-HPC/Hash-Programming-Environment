@@ -1957,7 +1957,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public boolean accepts(IComponent c) {
-		return true;
+		return false;
 	}
 
 	/*

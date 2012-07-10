@@ -64,26 +64,6 @@ import hPE.frontend.kinds.application.model.HApplicationInterfaceSlice;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.application.model.HApplicationUnitSlice;
 import hPE.frontend.kinds.application.model.IHApplicationUnit;
-import hPE.frontend.kinds.architecture.edits.ArchitectureComponentEditPart;
-import hPE.frontend.kinds.architecture.edits.ArchitectureConfigurationEditPart;
-import hPE.frontend.kinds.architecture.edits.ArchitectureEntryEditPart;
-import hPE.frontend.kinds.architecture.edits.ArchitectureInterfaceEditPart;
-import hPE.frontend.kinds.architecture.edits.ArchitectureInterfaceSliceEditPart;
-import hPE.frontend.kinds.architecture.edits.ArchitectureUnitEditPart;
-import hPE.frontend.kinds.architecture.edits.ArchitectureUnitSliceEditPart;
-import hPE.frontend.kinds.architecture.figures.ArchitectureComponentFigure;
-import hPE.frontend.kinds.architecture.figures.ArchitectureConfigurationFigure;
-import hPE.frontend.kinds.architecture.figures.ArchitectureEntryFigure;
-import hPE.frontend.kinds.architecture.figures.ArchitectureInterfaceFigure;
-import hPE.frontend.kinds.architecture.figures.ArchitectureInterfaceSliceFigure;
-import hPE.frontend.kinds.architecture.figures.ArchitectureUnitFigure;
-import hPE.frontend.kinds.architecture.figures.ArchitectureUnitSliceFigure;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureInterface;
-import hPE.frontend.kinds.architecture.model.HArchitectureInterfaceSlice;
-import hPE.frontend.kinds.architecture.model.HArchitectureUnit;
-import hPE.frontend.kinds.architecture.model.HArchitectureUnitSlice;
-import hPE.frontend.kinds.architecture.model.IHArchitectureUnit;
 import hPE.frontend.kinds.computation.edits.ComputationComponentEditPart;
 import hPE.frontend.kinds.computation.edits.ComputationConfigurationEditPart;
 import hPE.frontend.kinds.computation.edits.ComputationEntryEditPart;
@@ -184,6 +164,26 @@ import hPE.frontend.kinds.facet.model.HFacetInterfaceSlice;
 import hPE.frontend.kinds.facet.model.HFacetUnit;
 import hPE.frontend.kinds.facet.model.HFacetUnitSlice;
 import hPE.frontend.kinds.facet.model.IHFacetUnit;
+import hPE.frontend.kinds.platform.edits.PlatformComponentEditPart;
+import hPE.frontend.kinds.platform.edits.PlatformConfigurationEditPart;
+import hPE.frontend.kinds.platform.edits.PlatformEntryEditPart;
+import hPE.frontend.kinds.platform.edits.PlatformInterfaceEditPart;
+import hPE.frontend.kinds.platform.edits.PlatformInterfaceSliceEditPart;
+import hPE.frontend.kinds.platform.edits.PlatformUnitEditPart;
+import hPE.frontend.kinds.platform.edits.PlatformUnitSliceEditPart;
+import hPE.frontend.kinds.platform.figures.PlatformComponentFigure;
+import hPE.frontend.kinds.platform.figures.PlatformConfigurationFigure;
+import hPE.frontend.kinds.platform.figures.PlatformEntryFigure;
+import hPE.frontend.kinds.platform.figures.PlatformInterfaceFigure;
+import hPE.frontend.kinds.platform.figures.PlatformInterfaceSliceFigure;
+import hPE.frontend.kinds.platform.figures.PlatformUnitFigure;
+import hPE.frontend.kinds.platform.figures.PlatformUnitSliceFigure;
+import hPE.frontend.kinds.platform.model.HPlatformComponent;
+import hPE.frontend.kinds.platform.model.HPlatformInterface;
+import hPE.frontend.kinds.platform.model.HPlatformInterfaceSlice;
+import hPE.frontend.kinds.platform.model.HPlatformUnit;
+import hPE.frontend.kinds.platform.model.HPlatformUnitSlice;
+import hPE.frontend.kinds.platform.model.IHPlatformUnit;
 import hPE.frontend.kinds.qualifier.edits.QualifierComponentEditPart;
 import hPE.frontend.kinds.qualifier.edits.QualifierConfigurationEditPart;
 import hPE.frontend.kinds.qualifier.edits.QualifierEntryEditPart;
@@ -204,26 +204,6 @@ import hPE.frontend.kinds.qualifier.model.HQualifierInterfaceSlice;
 import hPE.frontend.kinds.qualifier.model.HQualifierUnit;
 import hPE.frontend.kinds.qualifier.model.HQualifierUnitSlice;
 import hPE.frontend.kinds.qualifier.model.IHQualifierUnit;
-import hPE.frontend.kinds.service.edits.ServiceComponentEditPart;
-import hPE.frontend.kinds.service.edits.ServiceConfigurationEditPart;
-import hPE.frontend.kinds.service.edits.ServiceEntryEditPart;
-import hPE.frontend.kinds.service.edits.ServiceInterfaceEditPart;
-import hPE.frontend.kinds.service.edits.ServiceInterfaceSliceEditPart;
-import hPE.frontend.kinds.service.edits.ServiceUnitEditPart;
-import hPE.frontend.kinds.service.edits.ServiceUnitSliceEditPart;
-import hPE.frontend.kinds.service.figures.ServiceComponentFigure;
-import hPE.frontend.kinds.service.figures.ServiceConfigurationFigure;
-import hPE.frontend.kinds.service.figures.ServiceEntryFigure;
-import hPE.frontend.kinds.service.figures.ServiceInterfaceFigure;
-import hPE.frontend.kinds.service.figures.ServiceInterfaceSliceFigure;
-import hPE.frontend.kinds.service.figures.ServiceUnitFigure;
-import hPE.frontend.kinds.service.figures.ServiceUnitSliceFigure;
-import hPE.frontend.kinds.service.model.HServiceComponent;
-import hPE.frontend.kinds.service.model.HServiceInterface;
-import hPE.frontend.kinds.service.model.HServiceInterfaceSlice;
-import hPE.frontend.kinds.service.model.HServiceUnit;
-import hPE.frontend.kinds.service.model.HServiceUnitSlice;
-import hPE.frontend.kinds.service.model.IHServiceUnit;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationComponentEditPart;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationConfigurationEditPart;
 import hPE.frontend.kinds.synchronization.edits.SynchronizationEntryEditPart;
@@ -244,6 +224,26 @@ import hPE.frontend.kinds.synchronization.model.HSynchronizationInterfaceSlice;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationUnit;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationUnitSlice;
 import hPE.frontend.kinds.synchronization.model.IHSynchronizationUnit;
+import hPE.frontend.kinds.topology.edits.TopologyComponentEditPart;
+import hPE.frontend.kinds.topology.edits.TopologyConfigurationEditPart;
+import hPE.frontend.kinds.topology.edits.TopologyEntryEditPart;
+import hPE.frontend.kinds.topology.edits.TopologyInterfaceEditPart;
+import hPE.frontend.kinds.topology.edits.TopologyInterfaceSliceEditPart;
+import hPE.frontend.kinds.topology.edits.TopologyUnitEditPart;
+import hPE.frontend.kinds.topology.edits.TopologyUnitSliceEditPart;
+import hPE.frontend.kinds.topology.figures.TopologyComponentFigure;
+import hPE.frontend.kinds.topology.figures.TopologyConfigurationFigure;
+import hPE.frontend.kinds.topology.figures.TopologyEntryFigure;
+import hPE.frontend.kinds.topology.figures.TopologyInterfaceFigure;
+import hPE.frontend.kinds.topology.figures.TopologyInterfaceSliceFigure;
+import hPE.frontend.kinds.topology.figures.TopologyUnitFigure;
+import hPE.frontend.kinds.topology.figures.TopologyUnitSliceFigure;
+import hPE.frontend.kinds.topology.model.HTopologyComponent;
+import hPE.frontend.kinds.topology.model.HTopologyInterface;
+import hPE.frontend.kinds.topology.model.HTopologyInterfaceSlice;
+import hPE.frontend.kinds.topology.model.HTopologyUnit;
+import hPE.frontend.kinds.topology.model.HTopologyUnitSlice;
+import hPE.frontend.kinds.topology.model.IHTopologyUnit;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
@@ -263,12 +263,12 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			if (context == null) {
 				if (model instanceof HApplicationComponent)
 					part = new ApplicationConfigurationEditPart<HApplicationComponent,ApplicationConfigurationFigure>();
-				else if (model instanceof HServiceComponent)
-			        part = new ServiceConfigurationEditPart<HServiceComponent,ServiceConfigurationFigure>();
+				else if (model instanceof HTopologyComponent)
+			        part = new TopologyConfigurationEditPart<HTopologyComponent,TopologyConfigurationFigure>();
 				else if (model instanceof HComputationComponent)
 			        part = new ComputationConfigurationEditPart<HComputationComponent,ComputationConfigurationFigure>();
-				else if (model instanceof HArchitectureComponent)
-					part = new ArchitectureConfigurationEditPart<HArchitectureComponent,ArchitectureConfigurationFigure>();
+				else if (model instanceof HPlatformComponent)
+					part = new PlatformConfigurationEditPart<HPlatformComponent,PlatformConfigurationFigure>();
 				else if (model instanceof HDataComponent)
 					part = new DataConfigurationEditPart<HDataComponent,DataConfigurationFigure>();
 				else if (model instanceof HSynchronizationComponent)
@@ -290,14 +290,14 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			} else {
 				if (model instanceof HApplicationComponent)
 					part = new ApplicationComponentEditPart<HApplicationComponent,ApplicationComponentFigure>();
-				else if (model instanceof HServiceComponent)
-			        part = new ServiceComponentEditPart<HServiceComponent,ServiceComponentFigure>();
+				else if (model instanceof HTopologyComponent)
+			        part = new TopologyComponentEditPart<HTopologyComponent,TopologyComponentFigure>();
 				else if (model instanceof HComputationComponent)
 			        part = new ComputationComponentEditPart<HComputationComponent,ComputationComponentFigure>();
 				else if (model instanceof HDataComponent)
 					part = new DataComponentEditPart<HDataComponent,DataComponentFigure>();
-				else if (model instanceof HArchitectureComponent)
-					part = new ArchitectureComponentEditPart<HArchitectureComponent,ArchitectureComponentFigure>();
+				else if (model instanceof HPlatformComponent)
+					part = new PlatformComponentEditPart<HPlatformComponent,PlatformComponentFigure>();
 				else if (model instanceof HSynchronizationComponent)
 					part = new SynchronizationComponentEditPart<HSynchronizationComponent,SynchronizationComponentFigure>();
 				else if (model instanceof HQualifierComponent)
@@ -317,12 +317,12 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new ApplicationUnitEditPart<HApplicationUnit,ApplicationUnitFigure>();
 				else if (model instanceof IHComputationUnit)
 					part = new ComputationUnitEditPart<HComputationUnit,ComputationUnitFigure>();				
-				else if (model instanceof IHServiceUnit)
-					part = new ServiceUnitEditPart<HServiceUnit,ServiceUnitFigure>();				
+				else if (model instanceof IHTopologyUnit)
+					part = new TopologyUnitEditPart<HTopologyUnit,TopologyUnitFigure>();				
 				else if (model instanceof IHDataUnit) 
 					part = new DataUnitEditPart<HDataUnit,DataUnitFigure>();
-				else if (model instanceof IHArchitectureUnit) 
-					part = new ArchitectureUnitEditPart<HArchitectureUnit,ArchitectureUnitFigure>();
+				else if (model instanceof IHPlatformUnit) 
+					part = new PlatformUnitEditPart<HPlatformUnit,PlatformUnitFigure>();
 				else if (model instanceof IHSynchronizationUnit) 
 					part = new SynchronizationUnitEditPart<HSynchronizationUnit,SynchronizationUnitFigure>();
 				else if (model instanceof IHEnvironmentUnit) 
@@ -340,12 +340,12 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new ApplicationEntryEditPart<HApplicationUnit,ApplicationEntryFigure>();
 				else if (model instanceof HComputationUnit)
 			        part = new ComputationEntryEditPart<HComputationUnit,ComputationEntryFigure>();
-				else if (model instanceof HServiceUnit)
-			        part = new ServiceEntryEditPart<HServiceUnit,ServiceEntryFigure>();
+				else if (model instanceof HTopologyUnit)
+			        part = new TopologyEntryEditPart<HTopologyUnit,TopologyEntryFigure>();
 				else if (model instanceof HDataUnit) 
 					part = new DataEntryEditPart<HDataUnit,DataEntryFigure>();
-				else if (model instanceof HArchitectureUnit) 
-					part = new ArchitectureEntryEditPart<HArchitectureUnit,ArchitectureEntryFigure>();
+				else if (model instanceof HPlatformUnit) 
+					part = new PlatformEntryEditPart<HPlatformUnit,PlatformEntryFigure>();
 				else if (model instanceof HSynchronizationUnit) 
 					part = new SynchronizationEntryEditPart<HSynchronizationUnit,SynchronizationEntryFigure>();
 				else if (model instanceof HEnvironmentUnit) 
@@ -363,14 +363,14 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		} else if (model instanceof HUnitSlice) {
 			if (model instanceof HApplicationUnitSlice) 
 			    part = new ApplicationUnitSliceEditPart<HApplicationUnitSlice,ApplicationUnitSliceFigure>();
-			else if (model instanceof HServiceUnitSlice)
-			    part = new ServiceUnitSliceEditPart<HServiceUnitSlice,ServiceUnitSliceFigure>();
+			else if (model instanceof HTopologyUnitSlice)
+			    part = new TopologyUnitSliceEditPart<HTopologyUnitSlice,TopologyUnitSliceFigure>();
 			else if (model instanceof HComputationUnitSlice)
 			    part = new ComputationUnitSliceEditPart<HComputationUnitSlice,ComputationUnitSliceFigure>();
 			else if (model instanceof HDataUnitSlice) 
 			    part = new DataUnitSliceEditPart<HDataUnitSlice,DataUnitSliceFigure>();
-			else if (model instanceof HArchitectureUnitSlice) 
-			    part = new ArchitectureUnitSliceEditPart<HArchitectureUnitSlice,ArchitectureUnitSliceFigure>();
+			else if (model instanceof HPlatformUnitSlice) 
+			    part = new PlatformUnitSliceEditPart<HPlatformUnitSlice,PlatformUnitSliceFigure>();
 			else if (model instanceof HSynchronizationUnitSlice) 
 			    part = new SynchronizationUnitSliceEditPart<HSynchronizationUnitSlice,SynchronizationUnitSliceFigure>();
 			else if (model instanceof HEnvironmentUnitSlice) 
@@ -386,14 +386,14 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		} else if (model instanceof HInterfaceSlice) {
 			if (model instanceof HApplicationInterfaceSlice) 
 			    part = new ApplicationInterfaceSliceEditPart<HApplicationInterfaceSlice,ApplicationInterfaceSliceFigure>();
-			else if (model instanceof HServiceInterfaceSlice)
-			    part = new ServiceInterfaceSliceEditPart<HServiceInterfaceSlice,ServiceInterfaceSliceFigure>();
+			else if (model instanceof HTopologyInterfaceSlice)
+			    part = new TopologyInterfaceSliceEditPart<HTopologyInterfaceSlice,TopologyInterfaceSliceFigure>();
 			else if (model instanceof HComputationInterfaceSlice)
 			    part = new ComputationInterfaceSliceEditPart<HComputationInterfaceSlice,ComputationInterfaceSliceFigure>();
 			else if (model instanceof HDataInterfaceSlice) 
 			    part = new DataInterfaceSliceEditPart<HDataInterfaceSlice,DataInterfaceSliceFigure>();
-			else if (model instanceof HArchitectureInterfaceSlice) 
-			    part = new ArchitectureInterfaceSliceEditPart<HArchitectureInterfaceSlice,ArchitectureInterfaceSliceFigure>();
+			else if (model instanceof HPlatformInterfaceSlice) 
+			    part = new PlatformInterfaceSliceEditPart<HPlatformInterfaceSlice,PlatformInterfaceSliceFigure>();
 			else if (model instanceof HSynchronizationInterfaceSlice) 
 			    part = new SynchronizationInterfaceSliceEditPart<HSynchronizationInterfaceSlice,SynchronizationInterfaceSliceFigure>();
 			else if (model instanceof HEnvironmentInterfaceSlice) 
@@ -411,14 +411,14 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		} else if (model instanceof HInterface) {
 			if (model instanceof HApplicationInterface)
 				part = new ApplicationInterfaceEditPart<HApplicationInterface,ApplicationInterfaceFigure>();
-			else if (model instanceof HServiceInterface)
-			    part = new ServiceInterfaceEditPart<HServiceInterface,ServiceInterfaceFigure>();
+			else if (model instanceof HTopologyInterface)
+			    part = new TopologyInterfaceEditPart<HTopologyInterface,TopologyInterfaceFigure>();
 			else if (model instanceof HComputationInterface)
 			    part = new ComputationInterfaceEditPart<HComputationInterface,ComputationInterfaceFigure>();
 			else if (model instanceof HDataInterface)
 				part = new DataInterfaceEditPart<HDataInterface,DataInterfaceFigure>();
-			else if (model instanceof HArchitectureInterface)
-				part = new ArchitectureInterfaceEditPart<HArchitectureInterface,ArchitectureInterfaceFigure>();
+			else if (model instanceof HPlatformInterface)
+				part = new PlatformInterfaceEditPart<HPlatformInterface,PlatformInterfaceFigure>();
 			else if (model instanceof HSynchronizationInterface)
 				part = new SynchronizationInterfaceEditPart<HSynchronizationInterface,SynchronizationInterfaceFigure>();
 			else if (model instanceof HEnvironmentInterface)

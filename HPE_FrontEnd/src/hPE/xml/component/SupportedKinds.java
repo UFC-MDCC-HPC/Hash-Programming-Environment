@@ -53,16 +53,14 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	SYNCHRONIZER(2, "Synchronizer", "Synchronizer"), /**
-	 * The '<em><b>Architecture</b></em>' literal object.
+	 * The '<em><b>Platform</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #ARCHITECTURE_VALUE
+	 * @see #PLATFORM_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	ARCHITECTURE(3, "Architecture", "Architecture"),
-
-	/**
+	PLATFORM(3, "Platform", "Platform"), /**
 	 * The '<em><b>Environment</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -121,14 +119,14 @@ public enum SupportedKinds implements Enumerator {
 	DOMAIN(9, "Domain", "Domain"),
 
 	/**
-	 * The '<em><b>Service</b></em>' literal object.
+	 * The '<em><b>Topology</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SERVICE_VALUE
+	 * @see #TOPOLOGY_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SERVICE(10, "Service", "Service"), /**
+	TOPOLOGY(10, "Topology", "Topology"), /**
 	 * The '<em><b>Value</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -184,19 +182,19 @@ public enum SupportedKinds implements Enumerator {
 	public static final int SYNCHRONIZER_VALUE = 2;
 
 	/**
-	 * The '<em><b>Architecture</b></em>' literal value.
+	 * The '<em><b>Platform</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Architecture</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Platform</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #ARCHITECTURE
-	 * @model name="Architecture"
+	 * @see #PLATFORM
+	 * @model name="Platform"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ARCHITECTURE_VALUE = 3;
+	public static final int PLATFORM_VALUE = 3;
 
 	/**
 	 * The '<em><b>Environment</b></em>' literal value.
@@ -291,19 +289,19 @@ public enum SupportedKinds implements Enumerator {
 	
 	
 	/**
-	 * The '<em><b>Service</b></em>' literal value.
+	 * The '<em><b>Topology</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Service</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Topology</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #SERVICE
-	 * @model name="Service"
+	 * @see #TOPOLOGY
+	 * @model name="Topology"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SERVICE_VALUE = 10;
+	public static final int TOPOLOGY_VALUE = 10;
 
 	/**
 	 * The '<em><b>Value</b></em>' literal value.
@@ -331,14 +329,14 @@ public enum SupportedKinds implements Enumerator {
 			DATA,
 			COMPUTATION,
 			SYNCHRONIZER,
-			ARCHITECTURE,
+			PLATFORM,
 			ENVIRONMENT,
 			QUALIFIER,
 			APPLICATION,
 			ENUMERATOR,
 			FACET,
 			DOMAIN,
-			SERVICE,
+			TOPOLOGY,
 			VALUE,
 		};
 
@@ -393,14 +391,14 @@ public enum SupportedKinds implements Enumerator {
 			case DATA_VALUE: return DATA;
 			case COMPUTATION_VALUE: return COMPUTATION;
 			case SYNCHRONIZER_VALUE: return SYNCHRONIZER;
-			case ARCHITECTURE_VALUE: return ARCHITECTURE;
+			case PLATFORM_VALUE: return PLATFORM;
 			case ENVIRONMENT_VALUE: return ENVIRONMENT;
 			case QUALIFIER_VALUE: return QUALIFIER;
 			case APPLICATION_VALUE: return APPLICATION;
 			case ENUMERATOR_VALUE: return ENUMERATOR;
 			case FACET_VALUE: return FACET;
 			case DOMAIN_VALUE: return DOMAIN;
-			case SERVICE_VALUE: return SERVICE;
+			case TOPOLOGY_VALUE: return TOPOLOGY;
 			case VALUE_VALUE: return VALUE;
 		}
 		return null;

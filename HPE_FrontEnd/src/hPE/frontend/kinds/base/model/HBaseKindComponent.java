@@ -22,7 +22,7 @@ public abstract class HBaseKindComponent extends HComponent {
 	}
 
 	public boolean accepts(IComponent c) {
-		if (c instanceof HFacetComponent) return true;
+		//if (c instanceof HFacetComponent) return true;
 		return super.accepts(c);
 	}
 	

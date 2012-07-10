@@ -2,15 +2,15 @@ package hPE;
 
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
+import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
-import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.frontend.kinds.topology.model.HTopologyComponent;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
@@ -141,11 +141,11 @@ public class HPEPage extends WizardNewFileCreationPage implements
 			case 1: c = new HDataComponent(s,null,uriAbsolutePath); break;
 			case 2: c = new HComputationComponent(s,null,uriAbsolutePath); break;
 			case 3: c = new HSynchronizationComponent(s,null,uriAbsolutePath); break;
-			case 4: c = new HArchitectureComponent(s,null,uriAbsolutePath); break;
+			case 4: c = new HPlatformComponent(s,null,uriAbsolutePath); break;
 			case 5: c = new HEnvironmentComponent(s,null,uriAbsolutePath); break;
 			case 6: c = new HQualifierComponent(s,null,uriAbsolutePath); break;
 			case 7: c = new HApplicationComponent(s,null,uriAbsolutePath); break;
-		    case 8: c = new HServiceComponent(s,null,uriAbsolutePath); break;
+		    case 8: c = new HTopologyComponent(s,null,uriAbsolutePath); break;
 			case 10: c = new HFacetComponent(s,null,uriAbsolutePath); break;
 			case 11: c = new HDomainComponent(s,null,uriAbsolutePath); break;
 			}
@@ -244,7 +244,7 @@ public class HPEPage extends WizardNewFileCreationPage implements
 		} if( e.getSource() == composite2.getRadioApplication() ){
 			modelSelected1 = 7;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
-		} if( e.getSource() == composite2.getRadioService() ){
+		} if( e.getSource() == composite2.getRadioTopology() ){
 			modelSelected1 = 8;
 			// setFileName("Unamed" + exampleCount + ".hpe");  //$NON-NLS-2$//$NON-NLS-1$
 		} if( e.getSource() == composite2.getRadioEnumerator() ){

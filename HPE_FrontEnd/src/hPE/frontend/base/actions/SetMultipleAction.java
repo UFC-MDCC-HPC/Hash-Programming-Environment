@@ -4,6 +4,7 @@ import hPE.HPEPlugin;
 import hPE.frontend.base.commands.SetMultipleCommand;
 import hPE.frontend.base.interfaces.IElement;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HUnit;
 
 import java.util.List;
 
@@ -54,10 +55,16 @@ public class SetMultipleAction extends SelectionAction {
 		    if (part.getModel() instanceof HComponent) 
 		    {
 		    	HComponent c = (HComponent) part.getModel();
-		    	if (!c.isDirectSonOfTheTopConfiguration()) return false;
+		    	if (!c.isDirectSonOfTheTopConfiguration()) return false;		    	
 		    	HComponent cTop = (HComponent) c.getTopConfiguration();
-		    	if (c == cTop.getSuperType()) return false;
-		    	
+		    	if (c == cTop.getSuperType()) return false;		    	
+		    }
+		    else if (part.getModel() instanceof HUnit) 
+		    {
+		    	HUnit u = (HUnit) part.getModel();
+		    	HComponent c = (HComponent) u.getConfiguration();		    	
+		    	HComponent cTop = (HComponent) c.getTopConfiguration();
+		    	if (cTop.getSuperType() != null) return false;		    	
 		    }
 			
 		}

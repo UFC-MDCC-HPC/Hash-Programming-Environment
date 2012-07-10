@@ -39,7 +39,7 @@ import hPE.frontend.kinds.activate.actions.SetNestingFactorAction;
 import hPE.frontend.kinds.activate.actions.SetPrivateUnitAction;
 import hPE.frontend.kinds.activate.actions.UnfoldActionAction;
 import hPE.frontend.kinds.activate.actions.UnnestActionAction;
-import hPE.frontend.kinds.activate.model.HActivateConfiguration;
+import hPE.frontend.kinds.activate.model.HActivateComponent;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.xml.factory.HComponentFactory;
@@ -404,7 +404,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 
 		
-		if (configuration instanceof HActivateConfiguration) {
+		if (configuration instanceof HActivateComponent) {
 			
 //			bars.setGlobalActionHandler(id, registry.getAction(id));		
 			id = EditProtocolAction.SHOW_PROTOCOL;
@@ -533,7 +533,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		SelectionAction action;
 		ActionRegistry registry = getActionRegistry();
 
-		if (configuration instanceof HActivateConfiguration) {
+		if (configuration instanceof HActivateComponent) {
 						
 			action = new EditProtocolAction(this,true);
 			registry.registerAction(action);

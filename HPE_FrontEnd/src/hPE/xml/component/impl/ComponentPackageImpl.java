@@ -3394,14 +3394,14 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.DATA);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.COMPUTATION);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SYNCHRONIZER);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ARCHITECTURE);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.PLATFORM);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENVIRONMENT);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.QUALIFIER);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.FACET);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.DOMAIN);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SERVICE);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TOPOLOGY);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.VALUE);
 
 		// Initialize data types

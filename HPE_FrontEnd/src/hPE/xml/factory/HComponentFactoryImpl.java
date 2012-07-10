@@ -38,15 +38,15 @@ import hPE.frontend.kinds.activate.model.protocol.HSignalAction;
 import hPE.frontend.kinds.activate.model.protocol.HSkipAction;
 import hPE.frontend.kinds.activate.model.protocol.HWaitAction;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
+import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
-import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.frontend.kinds.topology.model.HTopologyComponent;
 import hPE.ui.preferences.PreferenceConstants;
 import hPE.util.CommandLine;
 import hPE.util.Pair;
@@ -2789,8 +2789,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			c = new HApplicationComponent(name, location, uri);
 		} else if (kind.getName().equals(HSynchronizationComponent.KIND)) {
 			c = new HSynchronizationComponent(name, location, uri);
-		} else if (kind.getName().equals(HArchitectureComponent.KIND)) {
-			c = new HArchitectureComponent(name, location, uri);
+		} else if (kind.getName().equals(HPlatformComponent.KIND)) {
+			c = new HPlatformComponent(name, location, uri);
 		} else if (kind.getName().equals(HDataComponent.KIND)) {
 			c = new HDataComponent(name, location, uri);
 		} else if (kind.getName().equals(HEnvironmentComponent.KIND)) {
@@ -2803,8 +2803,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			c = new HFacetComponent(name, location, uri);
 		} else if (kind.getName().equals(HDomainComponent.KIND)) {
 			c = new HDomainComponent(name, location, uri);
-		} else if (kind.getName().equals(HServiceComponent.KIND)) {
-			c = new HServiceComponent(name, location, uri);
+		} else if (kind.getName().equals(HTopologyComponent.KIND)) {
+			c = new HTopologyComponent(name, location, uri);
 		} else {
 			throw new HPEUnknownKindException("Component Kind Not Supported !");
 		}

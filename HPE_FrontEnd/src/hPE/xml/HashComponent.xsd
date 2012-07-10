@@ -138,16 +138,15 @@
 			<enumeration value="Data"></enumeration>
 			<enumeration value="Computation"></enumeration>
 			<enumeration value="Synchronizer"></enumeration>
-			<enumeration value="Architecture"></enumeration>
+			<enumeration value="Platform"></enumeration>
 			<enumeration value="Environment"></enumeration>
 			<enumeration value="Qualifier"></enumeration>
 			<enumeration value="Application"></enumeration>
 			<enumeration value="Enumerator"></enumeration>
 			<enumeration value="Facet"></enumeration>
 			<enumeration value="Domain"></enumeration>
-			<enumeration value="Service"></enumeration>
+			<enumeration value="Topology"></enumeration>
 			<enumeration value="value"></enumeration>
-			<enumeration value="Service"></enumeration>
 		</restriction>
 	</simpleType>
 

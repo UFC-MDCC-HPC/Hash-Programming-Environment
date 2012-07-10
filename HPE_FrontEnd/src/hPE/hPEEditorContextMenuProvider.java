@@ -33,7 +33,7 @@ import hPE.frontend.kinds.activate.actions.SetNestingFactorAction;
 import hPE.frontend.kinds.activate.actions.SetPrivateUnitAction;
 import hPE.frontend.kinds.activate.actions.UnfoldActionAction;
 import hPE.frontend.kinds.activate.actions.UnnestActionAction;
-import hPE.frontend.kinds.activate.model.HActivateConfiguration;
+import hPE.frontend.kinds.activate.model.HActivateComponent;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
 
@@ -92,7 +92,7 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 		
 		IAction action;
 
-		if (configuration instanceof HActivateConfiguration) {			
+		if (configuration instanceof HActivateComponent) {			
 			
 			action = getAction(EditProtocolAction.SHOW_PROTOCOL);
 			if (action.isEnabled())	{ 

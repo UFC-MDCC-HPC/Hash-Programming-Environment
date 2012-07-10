@@ -1,15 +1,15 @@
 package hPE;
 
 import hPE.frontend.kinds.application.model.HApplicationComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
+import hPE.frontend.kinds.platform.model.HPlatformComponent;
 import hPE.frontend.kinds.qualifier.model.HQualifierComponent;
-import hPE.frontend.kinds.service.model.HServiceComponent;
 import hPE.frontend.kinds.synchronization.model.HSynchronizationComponent;
+import hPE.frontend.kinds.topology.model.HTopologyComponent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
@@ -118,7 +118,7 @@ public class SetVersionDialog extends Composite {
 		radioComputation.setSelection(false);
 		
 		radioArchitecture = new Button(groupKinds, SWT.RADIO);
-		radioArchitecture.setText(HArchitectureComponent.KIND);
+		radioArchitecture.setText(HPlatformComponent.KIND);
 		radioArchitecture.setBounds(new Rectangle(128, 38, 106, 16));
 		radioArchitecture.addSelectionListener(sl);
 		radioArchitecture.setSelection(false);
@@ -139,7 +139,7 @@ public class SetVersionDialog extends Composite {
 		radioService.addSelectionListener(sl);
 		radioService.setSelection(false);
 		radioService.setBounds(new Rectangle(238, 58, 100, 16));
-		radioService.setText(HServiceComponent.KIND);
+		radioService.setText(HTopologyComponent.KIND);
 		
 		radioFacet = new Button(groupKinds, SWT.RADIO);
 		radioFacet.addSelectionListener(sl);
@@ -189,7 +189,7 @@ public class SetVersionDialog extends Composite {
   		return this.radioQualifier;
 	}
 
-	public Button getRadioService() {
+	public Button getRadioTopology() {
 		return this.radioService;
 	}
 	

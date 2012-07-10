@@ -1345,14 +1345,14 @@
     <eLiterals name="Data"/>
     <eLiterals name="Computation" value="1"/>
     <eLiterals name="Synchronizer" value="2"/>
-    <eLiterals name="Architecture" value="3"/>
+    <eLiterals name="Platform" value="3"/>
     <eLiterals name="Environment" value="4"/>
     <eLiterals name="Qualifier" value="5"/>
     <eLiterals name="Application" value="6"/>
     <eLiterals name="Enumerator" value="7"/>
     <eLiterals name="Facet" value="8"/>
     <eLiterals name="Domain" value="9"/>
-    <eLiterals name="Service" value="10"/>
+    <eLiterals name="Topology" value="10"/>
     <eLiterals name="value" value="11"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="SupportedKindsObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">

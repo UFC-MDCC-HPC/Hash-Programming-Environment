@@ -90,8 +90,8 @@ public class NewComponentCommand extends Command {
 		for (HComponent c : components) {
 			if (!c.isAbstract()) return false;
 			if (!the_configuration.accepts(c)) {
-				String message = the_configuration.kindString() + "s do not support inner components of kind " + c.kindString() + "."; 
-				JOptionPane.showMessageDialog(null, message , "New Inner Component Error", JOptionPane.WARNING_MESSAGE);
+				String message = "A " + the_configuration.kindString() + " cannot have an inner component of kind " + c.kindString() + "."; 
+				JOptionPane.showMessageDialog(null, message , "Error adding an inner component", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 		}

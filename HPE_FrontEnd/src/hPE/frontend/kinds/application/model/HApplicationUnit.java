@@ -15,10 +15,10 @@ import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.HUnitStub;
 import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.kinds.architecture.model.HArchitectureComponent;
-import hPE.frontend.kinds.architecture.model.HArchitectureUnit;
-import hPE.frontend.kinds.architecture.model.HArchitectureUnitSlice;
 import hPE.frontend.kinds.computation.model.HComputationUnit;
+import hPE.frontend.kinds.platform.model.HPlatformComponent;
+import hPE.frontend.kinds.platform.model.HPlatformUnit;
+import hPE.frontend.kinds.platform.model.HPlatformUnitSlice;
 
 public class HApplicationUnit extends HComputationUnit implements IHApplicationUnit {
 
@@ -43,12 +43,12 @@ public class HApplicationUnit extends HComputationUnit implements IHApplicationU
 		return new HApplicationUnitSlice(this, the_source, where);
 	}
 	
-	public HArchitectureUnit getProcessor() {
+	public HPlatformUnit getProcessor() {
     	Iterator<HUnitSlice> cs = getSlices().iterator();
     	while (cs.hasNext()) {
     		HUnitSlice c = cs.next();
-    		if (c instanceof HArchitectureUnitSlice) 
-    			return (HArchitectureUnit) c.getBinding().getEntry();
+    		if (c instanceof HPlatformUnitSlice) 
+    			return (HPlatformUnit) c.getBinding().getEntry();
     	}
     	
     	return null;

@@ -3,7 +3,7 @@ package hPE.frontend.kinds.activate.edits;
 import hPE.frontend.base.edits.ConfigurationEditPart;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.kinds.activate.figures.ActivateConfigurationFigure;
-import hPE.frontend.kinds.activate.model.HActivateConfiguration;
+import hPE.frontend.kinds.activate.model.HActivateComponent;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.eclipse.draw2d.IFigure;
 
 
 
-public class ActivateConfigurationEditPart<ModelType extends HActivateConfiguration,
+public class ActivateConfigurationEditPart<ModelType extends HActivateComponent,
 			                                  FigureType extends ActivateConfigurationFigure> 
                extends ConfigurationEditPart<ModelType, FigureType> {
 
