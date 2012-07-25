@@ -36,6 +36,7 @@ namespace br.ufc.pargo.hpe.basic
             // REGISTER USES PORTS !
             int id_abstract = this.Id_abstract;
             string id_interface = this.Id_unit;
+			int partition_index = this.partition_index;
 
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
             foreach (Slice slice in sList)
@@ -44,7 +45,7 @@ namespace br.ufc.pargo.hpe.basic
                services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
             }
 
-            Interface i = BackEnd.idao.retrieve(id_abstract, id_interface);            
+            Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);            
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, i.Class_name, new TypeMapImpl());
             services.addProvidesPort(this, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
         }
@@ -90,7 +91,7 @@ namespace br.ufc.pargo.hpe.basic
 	                        string portName = slice.Id_inner; /*slice.PortName;*/
 	                        ComponentID container_id = owner_unit.CID;
 	
-	                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface);
+	                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface, this.partition_index);
 	
 	                        /* The actual name of the current component */
 	                        string id_inner_owner = this.get_id_inner(owner_unit);
@@ -156,7 +157,7 @@ namespace br.ufc.pargo.hpe.basic
             }
 						
 			initialize();
-			Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
+			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
         }
 
         public void post_initialize_slices()
@@ -173,7 +174,7 @@ namespace br.ufc.pargo.hpe.basic
                 }
             }
 						
-			Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " post initialized !!! ");
+			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " post initialized !!! ");
         }
 		
         private static IDictionary<IUnit, bool> destroyed = new Dictionary<IUnit, bool>();
@@ -213,14 +214,16 @@ namespace br.ufc.pargo.hpe.basic
             set { id_interface = value; }
         }
 
-        //private string id_inner = "top";
-	    private IDictionary<IUnit,string> id_inner_map = null;
+        private int partition_index;
+
+        public int PartitionIndex
+        {
+            get { return partition_index; }
+            set { partition_index = value; }
+        }
+
+		private IDictionary<IUnit,string> id_inner_map = null;
         
-        //public string Id_inner
-        //{
-        //    get { return id_inner; }
-        //    set { id_inner = value; }
-        //}
 		
 		public string get_id_inner(IUnit container)
 		{
@@ -298,27 +301,27 @@ namespace br.ufc.pargo.hpe.basic
             all_slices.Add(slice);
         }
 
-        private int myGlobalRank = -1;
-        public int GlobalRank { set { this.myGlobalRank = value; } get { return myGlobalRank; } }                        // The rank of the process (application) where the unit is placed on
+  //      private int myGlobalRank = -1;
+   //     public int GlobalRank { set { this.myGlobalRank = value; } get { return myGlobalRank; } }                        // The rank of the process (application) where the unit is placed on
 
-        private int[] myRanks = null;
-        public int[] Ranks
-        {
-            set
-            {
-                this.myRanks = value;
-                Array.Sort<int>(this.myRanks);
-            }
-            get { return myRanks; }
-        }
+   //     private int[] myRanks = null;
+   //     public int[] Ranks
+    //    {
+   //         set
+   //         {
+   //             this.myRanks = value;
+   //             Array.Sort<int>(this.myRanks);
+    //        }
+   //         get { return myRanks; }
+   //     }
 
         // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
 
-        private IDictionary<string, int[]> myUnits = null;
-        public IDictionary<string, int[]> Units { set { this.myUnits = value; } get { return myUnits; } }
+   //     private IDictionary<string, int[]> myUnits = null;
+   //     public IDictionary<string, int[]> Units { set { this.myUnits = value; } get { return myUnits; } }
 
-        private IDictionary<string, int>[] myEnumRanks = null;
-        public IDictionary<string, int>[] EnumRanks { set { this.myEnumRanks = value; } get { return myEnumRanks; } }
+   //     private IDictionary<string, int>[] myEnumRanks = null;
+   //     public IDictionary<string, int>[] EnumRanks { set { this.myEnumRanks = value; } get { return myEnumRanks; } }
 
 
         virtual public void destroySlice()
@@ -335,11 +338,6 @@ namespace br.ufc.pargo.hpe.basic
 					containerSlice = new List<IUnit>();
 			  	return containerSlice; 
 			}
-            //set
-            //{
-            //    containerSlice = value;
-            //    value.addSlice(this);
-            //}
         }
 
 	    public void addContainerSlice(IUnit u)
@@ -351,7 +349,7 @@ namespace br.ufc.pargo.hpe.basic
 				u.addSlice(this);
 		}
 
-
+/*
         private int[] myRanksInv = null;
         public int[] RanksInv
         {
@@ -401,6 +399,10 @@ namespace br.ufc.pargo.hpe.basic
                 return arrRanks;
             }
         }
+        
+        */
+		
+		
         public void setActualParameters(IDictionary<string, int> actualParameters_new)
         {
             ActualParameters = actualParameters_new;
@@ -432,7 +434,7 @@ namespace br.ufc.pargo.hpe.basic
             set { id_functor_app = value; }
         }
 
-        private IDictionary<string, br.ufc.pargo.hpe.kinds.IEnumeratorKind> permutations = null;
+/*        private IDictionary<string, br.ufc.pargo.hpe.kinds.IEnumeratorKind> permutations = null;
 
         public bool getPermutation(string id_enumerator, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation)
         {
@@ -448,7 +450,8 @@ namespace br.ufc.pargo.hpe.basic
             permutations.Add(id_enumerator, u);
             u.V = id_enumerator;
         }
-
+		 */
+		
         #region IUnit Members
 
         private ComponentID cid = null;

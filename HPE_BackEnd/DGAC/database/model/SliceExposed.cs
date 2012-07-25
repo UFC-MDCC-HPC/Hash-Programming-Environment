@@ -16,14 +16,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         private string id_inner_original;
         private string id_interface_slice_original;
         private string id_interface_slice_owner;
-        private int id_split_replica;
+        private int partition_index;
         private string id_inner_owner;
-        private int id_split_replica_owner;
+        private int partition_index_owner;
 
-        public int Id_split_replica_owner
+        public int Partition_index_owner
         {
-            get { return id_split_replica_owner; }
-            set { id_split_replica_owner = value; }
+            get { return partition_index_owner; }
+            set { partition_index_owner = value; }
         }
 
         public string Id_inner_owner
@@ -68,10 +68,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             set { id_interface_slice_original = value; }
         }
 
-        public int Id_split_replica
+        public int Partition_index
         {
-            get { return id_split_replica; }
-            set { id_split_replica = value; }
+            get { return partition_index; }
+            set { partition_index = value; }
         }
 
 

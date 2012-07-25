@@ -19,7 +19,7 @@ public class UnitDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-             "SELECT MAX(id_index) AS fresh_index " +
+             "SELECT MAX(partition_index) AS fresh_index " +
              "FROM unit " +
              "WHERE id_concrete=" + id_concrete + " AND " +
              "id_unit like '" + id_unit + "' " +
@@ -43,8 +43,8 @@ public class UnitDAO{
     public void insert(Unit ac)
     {
         String sql =
-            "INSERT INTO unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source, `order`)" +
-            " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_interface_abstract + ",'" + ac.Id_interface_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "',"+  ac.Id_index + ",'" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"'," + ac.Order + ")";
+            "INSERT INTO unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, partition_index, class_name, class_nargs, uri_source, `order`)" +
+            " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "',"+  ac.Partition_index + ",'" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"'," + ac.Order + ")";
 
         Connector.performSQLUpdate(sql);
     }
@@ -55,12 +55,12 @@ public class UnitDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_unit, id_concrete, id_interface,id_abstract, assembly_string, `order`, id_unit_super, id_index, class_name, class_nargs, uri_source " +
+           "SELECT id_unit, id_concrete, id_interface,id_abstract, assembly_string, `order`, id_unit_super, partition_index, class_name, class_nargs, uri_source " +
            "FROM unit "+
            "WHERE id_concrete="+id_concrete + " " +
-           "ORDER BY id_unit, id_index";
+           "ORDER BY id_unit, partition_index";
 //		string sql =
-//           "SELECT id_unit, id_concrete, id_abstract, id_interface, assembly_string, id_unit_super, id_index, class_name " +
+//           "SELECT id_unit, id_concrete, id_abstract, id_interface, assembly_string, id_unit_super, partition_index, class_name " +
 //           "FROM unit "+
 //           "WHERE id_concrete="+id_concrete;
        dbcmd.CommandText = sql;
@@ -69,11 +69,11 @@ public class UnitDAO{
        	   Unit u = new Unit();
        	   u.Id_unit = (string)reader["id_unit"];
        	   u.Id_concrete = (int)reader["id_concrete"];
-       	   u.Id_interface_interface = (string)reader["id_interface"];
-           u.Id_interface_abstract = (int)reader["id_abstract"];
+       	   u.Id_interface = (string)reader["id_interface"];
+           u.Id_abstract = (int)reader["id_abstract"];
            u.Assembly_string = (string)reader["assembly_string"];
            u.Id_unit_super = (string)reader["id_unit_super"];
-           u.Id_index = (int)reader["id_index"];
+           u.Partition_index = (int)reader["partition_index"];
            u.Class_name = (string)reader["class_name"];
            u.Class_nargs = (int)reader["class_nargs"];
            u.URI_Source = (string)reader["uri_source"];
@@ -90,17 +90,17 @@ public class UnitDAO{
 	}//list
 
     // ADDED BY HERON
-    public Unit retrieve(int id_concrete, string id_unit, int id_index)
+    public Unit retrieve(int id_concrete, string id_unit, int partition_index)
     {
         Unit u = null;
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source " +
+            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, partition_index, class_name, class_nargs, uri_source " +
             "FROM unit " +
             "WHERE id_concrete=" + id_concrete + " AND " + 
             "id_unit like '" + id_unit + "'" /*+ " AND " +
-            "id_index=" + id_index */;
+            "partition_index=" + partition_index */;
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
         if (reader.Read())
@@ -108,11 +108,11 @@ public class UnitDAO{
             u = new Unit();
             u.Id_unit = (string)reader["id_unit"];
             u.Id_concrete = (int)reader["id_concrete"];
-            u.Id_interface_interface = (string)reader["id_interface"];
-            u.Id_interface_abstract = (int)reader["id_abstract"];
+            u.Id_interface = (string)reader["id_interface"];
+            u.Id_abstract = (int)reader["id_abstract"];
             u.Assembly_string = (string)reader["assembly_string"];
             u.Id_unit_super = (string)reader["id_unit_super"];
-            u.Id_index = (int) reader["id_index"];
+            u.Partition_index = (int) reader["partition_index"];
             u.Class_name = (string)reader["class_name"];
             u.Class_nargs = (int)reader["class_nargs"];
             u.URI_Source = (string)reader["uri_source"];
@@ -140,7 +140,7 @@ public class UnitDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, id_index, class_name, class_nargs, uri_source " +
+            "SELECT id_unit, id_concrete, id_interface, id_abstract, `order`, assembly_string, id_unit_super, partition_index, class_name, class_nargs, uri_source " +
             "FROM unit " +
             "WHERE id_concrete=" + id_concrete + " AND " +
             "id_unit like '" + id_unit +"'";
@@ -151,11 +151,11 @@ public class UnitDAO{
             u = new Unit();
             u.Id_unit = (string)reader["id_unit"];
             u.Id_concrete = (int)reader["id_concrete"];
-            u.Id_interface_interface = (string)reader["id_interface"];
-            u.Id_interface_abstract = (int)reader["id_abstract"];
+            u.Id_interface = (string)reader["id_interface"];
+            u.Id_abstract = (int)reader["id_abstract"];
             u.Assembly_string = (string)reader["assembly_string"];
             u.Id_unit_super = (string)reader["id_unit_super"];
-            u.Id_index = (int)reader["id_index"];
+            u.Partition_index = (int)reader["partition_index"];
             u.Class_nargs = (int)reader["class_nargs"];
             u.Class_name = (string)reader["class_name"];
             u.URI_Source = (string)reader["uri_source"];
@@ -200,7 +200,7 @@ public class UnitDAO{
         String sql = "UPDATE unit SET assembly_string = '" + u.Assembly_string + "'" +
                      " WHERE id_concrete=" + u.Id_concrete + " AND " +
                      " id_unit like '" + u.Id_unit + "' AND " +
-                     " id_index=" + u.Id_index;
+                     " partition_index=" + u.Partition_index;
 
         Connector.performSQLUpdate(sql);
     }
@@ -211,11 +211,11 @@ public class UnitDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_unit, id_concrete, id_interface, id_abstract, assembly_string, id_unit_super, id_index, `order`, class_name, class_nargs, uri_source" +
+            "SELECT id_unit, id_concrete, id_interface, id_abstract, assembly_string, id_unit_super, partition_index, `order`, class_name, class_nargs, uri_source" +
             "FROM unit " +
             "WHERE id_concrete=" + Id_concrete + " AND " +
             "`order` = " + order /*+ " AND " +
-            "id_index=" + id_index */
+            "partition_index=" + partition_index */
                                      ;
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
@@ -224,11 +224,11 @@ public class UnitDAO{
             u = new Unit();
             u.Id_unit = (string)reader["id_unit"];
             u.Id_concrete = (int)reader["id_concrete"];
-            u.Id_interface_interface = (string)reader["id_interface"];
-            u.Id_interface_abstract = (int)reader["id_abstract"];
+            u.Id_interface = (string)reader["id_interface"];
+            u.Id_abstract = (int)reader["id_abstract"];
             u.Assembly_string = (string)reader["assembly_string"];
             u.Id_unit_super = (string)reader["id_unit_super"];
-            u.Id_index = (int)reader["id_index"];
+            u.Partition_index = (int)reader["partition_index"];
             u.Class_name = (string)reader["class_name"];
             u.Class_nargs = (int)reader["class_nargs"];
             u.URI_Source = (string)reader["uri_source"];

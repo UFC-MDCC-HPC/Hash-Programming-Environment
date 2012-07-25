@@ -30,21 +30,25 @@ public class Interface {
 
                 if (id_interface_super.Equals("")) {
                     id_interface_super_top = id_interface;
+					partition_index_super_top = partition_index;
                 } else {
                     string id_interface_super_ = Id_interface_super;
+					int partition_index_super_ = Partition_index_super;
                     AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                     if (acf.Id_functor_app_supertype != 0)
                     {
                         AbstractComponentFunctorApplication acfaSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
-                        Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_);
+                        Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_, partition_index_super_);
                         id_interface_super_top = iSuper.Id_interface_super_top;
+						partition_index_super_top = iSuper.Partition_index_super_top;
                     }
                     else
                     {
                         id_interface_super_top = id_interface;
+						partition_index_super_top = partition_index;
                     }
                 }
-                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, id_interface_super_top);
+                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, partition_index, id_interface_super_top, partition_index_super_top);
                 return id_interface_super_top;
             } else {
                 return id_interface_super_top;
@@ -57,6 +61,9 @@ public class Interface {
     }
     
     private int id_abstract;
+    private int partition_index;
+	private int partition_index_super;
+	private int partition_index_super_top;
 	private string assembly_string;
 
     private string class_name; // Nome da interface no Front-End.
@@ -93,6 +100,18 @@ public class Interface {
         get { return id_interface_super; }
         set { id_interface_super = value; }
     }
+		
+    public int Partition_index_super
+    {
+        get {return partition_index_super;}
+        set {partition_index_super = value;}
+    }
+		
+    public int Partition_index_super_top
+    {
+        get {return partition_index_super_top;}
+        set {partition_index_super_top = value;}
+    }
 
     public int Id_abstract
     {
@@ -100,6 +119,12 @@ public class Interface {
         set {id_abstract = value;}
     }
     
+    public int Partition_index
+    {
+        get {return partition_index;}
+        set {partition_index = value;}
+    }
+		
     public string Assembly_string{
         get {
     //          string[] s = assembly_string.Split(',');
@@ -135,7 +160,7 @@ public class Interface {
             AbstractComponentFunctor acfsuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
             IDictionary<string, AbstractComponentFunctorApplication> parsSuper = null;
             collectParameters(pars, cSuperApp, out parsSuper);
-            Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super);
+            Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super, this.Partition_index_super);
             refs = iSuper.fetchReferences(parsSuper);
             string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
             if (!refs.Contains(refname))
@@ -169,7 +194,7 @@ public class Interface {
 
                 collectParameters(pars, acfa, out parsSlice);
 
-                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice);
+                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice, s.Partition_index);
                 if (i == null) {
                    Console.WriteLine("i is null : " + acfa.Id_abstract + "," + ic.Id_abstract_inner + "," + s.Id_interface_slice);
                 }

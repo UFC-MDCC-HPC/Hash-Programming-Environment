@@ -12,7 +12,7 @@ public class Slice {
     private string id_interface;
     private string id_interface_slice;
     private string property_name;
-    private int id_split_replica;
+    private int partition_index;
     private string id_inner;
     bool transitive;
 
@@ -51,7 +51,7 @@ public class Slice {
         get
         {
             InnerComponent ic = BackEnd.icdao.retrieve(this.id_abstract, this.id_inner);
-            Interface i = BackEnd.idao.retrieve(ic.Id_abstract_inner, this.id_interface_slice);
+            Interface i = BackEnd.idao.retrieve(ic.Id_abstract_inner, this.id_interface_slice, this.partition_index);
             return i.Id_interface_super_top;
         }
     }
@@ -63,10 +63,10 @@ public class Slice {
     }
 
 
-    public int Id_split_replica
+    public int Partition_index
     {
-        get { return id_split_replica; }
-        set { id_split_replica = value; }
+        get { return partition_index; }
+        set { partition_index = value; }
     }
 
     public bool isPublic()

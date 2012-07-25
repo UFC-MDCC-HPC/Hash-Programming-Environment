@@ -87,14 +87,6 @@ public class Component : HashComponent {
     }
 
 
-    internal Unit fetchUnit(string id_interface)
-    {
-        //InterfaceDAO idao = new InterfaceDAO();
-        Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(this.Id_abstract, id_interface);
-
-       // UnitDAO udao = new UnitDAO();
-        return br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(Id_concrete, i.Order);
-    }
 }//class
 
 }//namespace

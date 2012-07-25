@@ -24,19 +24,20 @@ namespace br.ufc.pargo.hpe.basic
         int Id_functor_app { set; get; }
         int Id_abstract { get; }
         string Id_unit { set; get; }
-        //string Id_inner { set; get; }
+		int PartitionIndex {set; get;}
+        
 		string get_id_inner(IUnit container);
 		void set_id_inner(IUnit container, string id_inner);
 
-        int GlobalRank { set; get; }                         // The rank of the process (application) where the unit is placed on
-        int LocalRank { get; }                               // = RanksInv[globalRank]
-        int[] Ranks { set; get; }                            // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
-        int[] RanksInv { get; }                              // Ranks[i]==j iif RanksInv[j]==i
-        IDictionary<string, int[]> Units { get; set; }
-        IDictionary<string, int>[] EnumRanks { set; get; }
-        IDictionary<string, int> EnumRank { get; }           // = EnumRanks[localRank]
-        int[] EnumPeers { get; }
-        IDictionary<string, int> EnumeratorCardinality { get; set; }
+       // int GlobalRank { set; get; }                         // The rank of the process (application) where the unit is placed on
+       // int LocalRank { get; }                               // = RanksInv[globalRank]
+       // int[] Ranks { set; get; }                            // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
+       // int[] RanksInv { get; }                              // Ranks[i]==j iif RanksInv[j]==i
+       // IDictionary<string, int[]> Units { get; set; }
+       // IDictionary<string, int>[] EnumRanks { set; get; }
+       // IDictionary<string, int> EnumRank { get; }           // = EnumRanks[localRank]
+       // int[] EnumPeers { get; }
+       // IDictionary<string, int> EnumeratorCardinality { get; set; }
 
         IList<IUnit> Slices { get; }
         IList<IUnit> AllSlices { get; }
@@ -51,10 +52,10 @@ namespace br.ufc.pargo.hpe.basic
 
         #region CreateSlicesPort
 
-        void create_slices();
-        void initialize_slices();
-        void post_initialize_slices();
-        void destroy_slices();
+        new void create_slices();
+        new void initialize_slices();
+        new void post_initialize_slices();
+        new void destroy_slices();
 
         #endregion CreateSlicesPort
 
@@ -65,8 +66,8 @@ namespace br.ufc.pargo.hpe.basic
         void setActualParameters(IDictionary<string, int> actualParameters_new);
         void setUpParameters(int id_functor_app);
 
-        bool getPermutation(string varid, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation);
-        void addPermutation(string varid, br.ufc.pargo.hpe.kinds.IEnumeratorKind u);
+//        bool getPermutation(string varid, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation);
+//        void addPermutation(string varid, br.ufc.pargo.hpe.kinds.IEnumeratorKind u);
 
 
         ComponentID CID { get; set; }

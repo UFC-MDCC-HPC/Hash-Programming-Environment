@@ -12,9 +12,9 @@ public class Unit {
     private string id_unit_super;
     private int id_concrete;
 	private string assembly_string;
-    private int id_interface_abstract;
-    private string id_interface_interface;
-    private int id_index;
+    private int id_abstract;
+    private string id_interface;
+    private int partition_index;
     private int order;
 
     public int Order
@@ -48,12 +48,6 @@ public class Unit {
     {
         get { return class_nargs; }
         set { class_nargs = value; }
-    }
-
-    public int Id_index
-    {
-        get { return id_index; }
-        set { id_index = value; }
     }
 	
 	 
@@ -96,16 +90,22 @@ public class Unit {
         set {id_concrete = value;}
 	}
 	
-	public string Id_interface_interface 
+	public string Id_interface 
     {
-		get {return id_interface_interface;}
-        set {id_interface_interface = value;}
+		get {return id_interface;}
+        set {id_interface = value;}
+	}
+		
+	public int Partition_index
+    {
+		get {return partition_index;}
+        set {partition_index = value;}
 	}
 
-    public int Id_interface_abstract
+    public int Id_abstract
     {
-        get { return id_interface_abstract; }
-        set { id_interface_abstract = value; }
+        get { return id_abstract; }
+        set { id_abstract = value; }
     }
 
 

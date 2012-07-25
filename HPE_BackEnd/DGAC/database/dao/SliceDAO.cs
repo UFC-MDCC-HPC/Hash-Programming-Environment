@@ -16,8 +16,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         {
 
             String sql =
-                "INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name)" +
-                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Id_split_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
+                "INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name)" +
+                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Partition_index + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
 
             Connector.performSQLUpdate(sql);
 
@@ -25,18 +25,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 
         // ADDED BY HERON
-        public Slice retrieve(int id_abstract, string id_inner, string id_interface_slice, int id_split_replica)
+        public Slice retrieve(int id_abstract, string id_inner, string id_interface_slice, int partition_index)
         {
             Slice s = null;
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name " +
+                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " + 
                 "id_interface_slice like '" + id_interface_slice + "' AND " + 
-                "id_split_replica = " + id_split_replica;
+                "partition_index = " + partition_index;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
@@ -46,7 +46,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
-                s.Id_split_replica = (int)reader["id_split_replica"];
+                s.Partition_index = (int)reader["partition_index"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
             }
@@ -73,7 +73,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name " +
+                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
@@ -88,7 +88,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
-                s.Id_split_replica = (int)reader["id_split_replica"];
+                s.Partition_index = (int)reader["partition_index"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
             }
@@ -119,7 +119,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcon.Open();
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, id_split_replica, transitive, property_name " +
+                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, partition_index, transitive, property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'";
             dbcmd.CommandText = sql;
@@ -131,7 +131,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface = (string)reader["id_interface"];
-                s.Id_split_replica = (int)reader["id_split_replica"];
+                s.Partition_index = (int)reader["partition_index"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);
@@ -154,7 +154,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, id_split_replica, transitive, property_name " +
+                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and " + "id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;
@@ -166,7 +166,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
-                s.Id_split_replica = (int)reader["id_split_replica"];
+                s.Partition_index = (int)reader["partition_index"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);
@@ -188,7 +188,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcon.Open();
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, id_split_replica, transitive, property_name " +
+                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, partition_index, transitive, property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + 
                  " and id_inner like '" + id_inner + "'" +
@@ -202,7 +202,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface = (string)reader["id_interface"];
-                s.Id_split_replica = (int)reader["id_split_replica"];
+                s.Partition_index = (int)reader["partition_index"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);
@@ -225,7 +225,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcon.Open();
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, id_split_replica, transitive, property_name " +
+                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, partition_index, transitive, property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'" + " and id_interface_slice like '" + id_interface_slice + "'";
             dbcmd.CommandText = sql;
@@ -237,7 +237,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface = (string)reader["id_interface"];
-                s.Id_split_replica = (int)reader["id_split_replica"];
+                s.Partition_index = (int)reader["partition_index"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);

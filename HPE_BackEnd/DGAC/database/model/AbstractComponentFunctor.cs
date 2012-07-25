@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 
 using System.Runtime.Serialization;
 
@@ -8,12 +8,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database{
 
 [Serializable()]
 public class AbstractComponentFunctor : HashComponent {
- 
 	
 	private int id_functor_app_supertype;
 	private int id_abstract;
 	
-	private IList parameters;
+	//private IList parameters;
 
     private string library_path;
     public string Library_path
@@ -39,10 +38,17 @@ public class AbstractComponentFunctor : HashComponent {
         set {id_abstract = value;}
     }
     
-    public IList Parameters{
-        get {return parameters;}
-        set {parameters = value;}
-    }
+  //  public IList Parameters{
+  //      get {return parameters;}
+   //     set {parameters = value;}
+  //  }
+		
+	public int getPartitionCount (string id_interface)
+	{
+		IList<Interface> iList = DGAC.BackEnd.idao.listByInterface(id_abstract,id_interface);
+		return iList.Count;
+	}
+		
 	
 }//class
 
