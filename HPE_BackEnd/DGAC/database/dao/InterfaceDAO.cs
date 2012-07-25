@@ -20,9 +20,9 @@ public class InterfaceDAO{
                                    "partition_index, " +
                                    "id_abstract, " +
                                    "assembly_string, " +
-                                   "id_interface_super, " +
+                                   "id_interface_super, " /*+
                                    "partition_index_super, " +
-                                   "id_interface_super_top, " +
+                                   "id_interface_super_top, " */+
                                    "partition_index_super_top, " +
                                    "class_name, " +
                                    "class_nargs, " +
@@ -33,9 +33,9 @@ public class InterfaceDAO{
 					     + ac.Id_abstract + ",'" 
 					     + ac.Assembly_string + "','" 
 					     + ac.Id_interface_super + "'," 
-					     + ac.Partition_index_super + ",'"
+					     + ac.Partition_index_super + ",'" /*
 					     + ac.Id_interface_super_top + "'," 
-					     + ac.Partition_index_super_top + ",'" 
+					     + ac.Partition_index_super_top + ",'" */
 					     + ac.Class_name + "'," 
 					     + ac.Class_nargs + ",'" 
 					     + ac.URI_Source + "'," 

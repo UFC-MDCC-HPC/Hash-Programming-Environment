@@ -31,7 +31,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
                 XmlReader reader = new XmlTextReader(fs);
 
-
                 // Use the Deserialize method to restore the object's state.
                 i = (ComponentType)serializer.Deserialize(reader);
 
