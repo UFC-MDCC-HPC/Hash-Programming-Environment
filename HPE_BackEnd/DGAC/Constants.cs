@@ -18,6 +18,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 
         private static string getPropertiesFilePath()
         {
+			Console.Write("LOADING PROPERTIES FILE: ");
             string properties_file_path = getArgVal("--properties");
             Console.WriteLine(properties_file_path);
             if (properties_file_path == null)
@@ -33,6 +34,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
                     properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
                 }
             }
+			Console.WriteLine(properties_file_path);
             return properties_file_path;
         }
         public static int WORKER_PORT = 4865;
@@ -89,6 +91,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const int KIND_QUALIFIER = 6;
         public const int KIND_SERVICE = 7;
         public const int KIND_DATASTRUCTURE = 8;
+        public const int KIND_TOPOLOGY = 8;
 
         public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()
         {
@@ -99,7 +102,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
             {"Enumerator",Constants.KIND_ENUMERATOR},
             {"Environment",Constants.KIND_ENVIRONMENT},
             {"Qualifier",Constants.KIND_QUALIFIER},
-            {"Synchronizer", Constants.KIND_SYNCHRONIZER}
+            {"Synchronizer", Constants.KIND_SYNCHRONIZER},
+            {"Topology", Constants.KIND_TOPOLOGY}
         };
 
         public static string getArgVal(string argId)

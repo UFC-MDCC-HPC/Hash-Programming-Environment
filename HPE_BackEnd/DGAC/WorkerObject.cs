@@ -284,10 +284,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             try
             {
-                int key = properties.getInt(Constants.KEY_KEY, my_rank);                
-                string id_unit = properties.getString(Constants.UNIT_KEY, "");
-                string library_path = properties.getString(Constants.COMPONENT_KEY, "");
-                int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
+              //  int key = properties.getInt(Constants.KEY_KEY, my_rank);                
+             //   string id_unit = properties.getString(Constants.UNIT_KEY, "");
+              //  string library_path = properties.getString(Constants.COMPONENT_KEY, "");
+              //  int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
 
                 ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
@@ -296,11 +296,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind)unit_slice;
 
                 // This part is only performed by applications.
-                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
+//                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
+				
                 //Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
                 //pmain.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
                 //Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
                 //pmain.GlobalRank = pmain.WorldComm.Rank;
+				
                 //pmain.createSlices();
                 
                 // --------------------------------------------
@@ -341,10 +343,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         
             if (properties.hasKey(Constants.KEY_KEY)) {
                 int key = properties.getInt(Constants.KEY_KEY, my_rank);
-//	            Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
 	            unit_slice.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-//	            Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
-	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
+//	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
             }
 
             return cid;
@@ -1048,8 +1048,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 int id_functor_app_inner = ic.Id_functor_app;
                 string parameter_top = ic.Parameter_top;
                 string id_interface_slice = i.Id_interface_slice;
+				int partition_index_slice = i.Partition_index;
 
-                Interface iSlice = BackEnd.idao.retrieve(id_abstract_inner, id_interface_slice);
+                Interface iSlice = BackEnd.idao.retrieve(id_abstract_inner, id_interface_slice, partition_index_slice);
 
                 if (parameter_top != null && !parameter_top.Equals(""))
                 {
@@ -1119,7 +1120,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 if (acf.Id_functor_app_supertype > 0)
                 {
                     AbstractComponentFunctorApplication acfa2 = BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
-                    iSuper = BackEnd.idao.retrieve(acfa2.Id_abstract, i.Id_interface_super);
+                    iSuper = BackEnd.idao.retrieve(acfa2.Id_abstract, i.Id_interface_super,i.Partition_index_super);
                 }
                 inames.Push(i.Id_interface);
                 mybot.Add(i.Id_interface, i);
@@ -1156,7 +1157,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                                 if (acf3.Id_functor_app_supertype > 0)
                                 {
                                     AbstractComponentFunctorApplication acfa4 = BackEnd.acfadao.retrieve(acf3.Id_functor_app_supertype);
-                                    iSuperSuper = BackEnd.idao.retrieve(acfa4.Id_abstract, iSuper.Id_interface_super);
+                                    iSuperSuper = BackEnd.idao.retrieve(acfa4.Id_abstract, iSuper.Id_interface_super, iSuper.Partition_index_super);
                                 }
 
                                 inames.Push(iSuper.Id_interface);
@@ -1218,8 +1219,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             try
             {
                const string DEFAULT_CREATESLICES_PORT_USES = "create_slices";
-               const string DEFAULT_GO_PORT_USES = "go";
-               
+               const string DEFAULT_GO_PORT_USES = "go";               
 
                AbstractFramework frw = (AbstractFramework)this;
 

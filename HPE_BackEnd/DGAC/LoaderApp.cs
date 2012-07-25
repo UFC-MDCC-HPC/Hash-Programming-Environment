@@ -114,10 +114,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             XmlWriter writer = new XmlTextWriter(fs, null);
 
             serializer.Serialize(writer, env);
-			
-			fs.Close();			
 
+			fs.Close();
+			
 			return File.ReadAllText(filename);	
+			
         }
 		
         public static byte[] serializeInstantiator(string filename, ComponentFunctorApplicationType inst)
@@ -227,18 +228,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             //	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
             //	InnerComponentDAO innerDAO = new InnerComponentDAO();		
 
-            int id_abstract = acfa.Id_abstract;
+            //int id_abstract = acfa.Id_abstract;
             //	UnitDAO uDAO = new UnitDAO();
             IList<Unit> unitList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.list(id_concrete);
 
             //	UnitSliceDAO usDAO = new UnitSliceDAO(); 
             //	InterfaceDAO interfaceDAO = new InterfaceDAO();
 
-            foreach (Unit unit in unitList)
+            foreach (br.ufc.pargo.hpe.backend.DGAC.database.Unit unit in unitList)
             {
 
                 // IList<UnitSlice> unitSliceList = usDAO.listByUnit(id_concrete, unit.Id_unit, unit.Id_index);
-                Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_interface_abstract, unit.Id_interface_interface);
+                Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_abstract, unit.Id_interface, unit.Partition_index);
                 //                   AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
                 AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
@@ -341,6 +342,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                     info.moduleName = sc.File_name.Split('.')[0];//  buildDllName(i.Assembly_string);
                     info.unitId = i.Id_interface;
+					info.partition_index = i.Partition_index;
                     info.sourceCode = sc.Contents;
                     info.cuid = acf1.Hash_component_UID;
                     info.library_path = acf1.Library_path;
@@ -391,6 +393,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             public string[] references;
             public string moduleName;
+			public int partition_index;
             public string unitId;
             public string sourceCode;
             public string cuid;

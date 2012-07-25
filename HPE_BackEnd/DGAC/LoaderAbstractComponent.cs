@@ -35,10 +35,11 @@ namespace HPE_DGAC_LoadDB
             AbstractComponentFunctor absC = (AbstractComponentFunctor)base.loadComponent(c);
             loadInnerComponents(absC);
             loadInterfaces(absC);
-            loadEnumerators(absC);
+            //loadEnumerators(absC);
             return absC;
         }
-
+		
+		/*
         private void loadEnumerators(AbstractComponentFunctor absC)
         {
             int id_abstract = absC.Id_abstract;
@@ -176,12 +177,7 @@ namespace HPE_DGAC_LoadDB
                             string uRef = rX_s.uRef;
                             string sRef = uRef;
 
-                            /* }
-                            else if (rX is EnumerableUnitSliceType)
-                            { 
-                                EnumerableUnitSliceType rX_s = (EnumerableUnitSliceType)rX;
-                                string cRef = rX_s.cRef;
-                                string sRef = rX_s.sRef; */
+                            
                             int splitReplica = rX_s.index; //splitReplica;
 
                             EnumerationSlice s = new EnumerationSlice();
@@ -240,8 +236,9 @@ namespace HPE_DGAC_LoadDB
             }
 
             loadSplits(absC.Id_abstract, es);
-        }
-
+        } */
+		
+		/*
         private void loadSplits(int id_abstract, Dictionary<string,string> es)
         {
             int splitIx = 0;
@@ -273,8 +270,9 @@ namespace HPE_DGAC_LoadDB
                         br.ufc.pargo.hpe.backend.DGAC.BackEnd.exldao.insert(ews);
                     }
                 }
-            }
+            
         }
+        */
 
         private IList<ParameterRenaming> parameterRenamingSupper = null;
 
@@ -786,6 +784,7 @@ namespace HPE_DGAC_LoadDB
                 {
                     string uRef = u.uRef;
                     string iRef = u.iRef;
+					int partition_index = u.replicaSpecified ? u.replica : 0;
                     string uRefSuper = u.super == null ? null : u.super.uRef;
 
                     InterfaceType ui = lookForInterface(iRef);
@@ -794,6 +793,7 @@ namespace HPE_DGAC_LoadDB
                     Interface i = new Interface();
                     i.Id_abstract = absC.Id_abstract;
                     i.Id_interface = uRef;
+					i.Partition_index = partition_index;
                     i.Id_interface_super = uRefSuper;
                     i.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                     i.Class_nargs = nargs; // TODO
@@ -856,7 +856,6 @@ namespace HPE_DGAC_LoadDB
                         }
                     }
 
-                //    InterfaceDAO idao = new InterfaceDAO();
                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.insert(i);
                     if (u.slices != null)
                     {
@@ -905,7 +904,7 @@ namespace HPE_DGAC_LoadDB
                             s.Id_interface = uRef;
                             s.Id_interface_slice = iii == null ? uRefS : iii.Id_interface;
                             s.Id_inner = innerC.localRef;
-                            s.Id_split_replica = uS.replica;
+                            s.Partition_index = uS.replica;
                             s.Transitive = mP.Contains(sname);
 
                             string property_name = uS.sliceName;
@@ -931,8 +930,8 @@ namespace HPE_DGAC_LoadDB
                                     se.Id_inner = innerCPort.localRef;
                                     se.Id_inner_owner = s.Id_inner;
                                     se.Id_interface_slice_owner = s.Id_interface_slice_top; // mudado de s.Id_interface_slice em 28/06/2011
-                                    se.Id_split_replica_owner = s.Id_split_replica;
-                                    se.Id_split_replica = usPort.replica; // s.Id_split_replica;
+                                    se.Partition_index_owner = s.Partition_index;
+                                    se.Partition_index = usPort.replica; // s.Id_split_replica;
                                     se.Id_interface_slice = iii2 == null ? usPort.uRef : iii2.Id_interface;
                                     
                                     // achar innerRenaming para cNewName = usPort.cRef e cRef = cRefS (uS.cRef) -- Id_inner_original = cOldName
@@ -968,7 +967,7 @@ namespace HPE_DGAC_LoadDB
                 string urefSuper = u.super == null ? null : u.super.uRef;
 
              //   InterfaceDAO idao = new InterfaceDAO();
-                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
+                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref,u.replicaSpecified ? u.replica : 0);
                 InterfaceType ui = lookForInterface(iRef);
 
                 foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)

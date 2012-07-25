@@ -501,7 +501,6 @@ namespace HPE_DGAC_LoadDB
                 
             }
 
-          //  ComponentDAO c_dao = new ComponentDAO();
             br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.insert(c_);
 
             return c_;
@@ -509,7 +508,6 @@ namespace HPE_DGAC_LoadDB
 
        private Component lookForHashComponent(string hash_component_UID)
        {
-         //  ComponentDAO cdao = new ComponentDAO();
            Component c = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve_uid(hash_component_UID);
            return c;
        }
@@ -524,13 +522,10 @@ namespace HPE_DGAC_LoadDB
 
        private void loadInners(Component cConc)
        {
-         //  AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
            AbstractComponentFunctorApplication absCapp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cConc.Id_functor_app);
 
            int id_abstract = absCapp.Id_abstract;
 
-     //      InnerConcreteComponentDAO iccdao = new InnerConcreteComponentDAO();
-      //     InnerComponentDAO icdao = new InnerComponentDAO();
            IList<InnerComponent> cs = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.list(id_abstract);
 
            foreach (InnerComponent c in cs)
@@ -558,9 +553,7 @@ namespace HPE_DGAC_LoadDB
 
                br.ufc.pargo.hpe.backend.DGAC.BackEnd.iccdao.insert(icc);
 
-          //     UnitSliceDAO usdao = new UnitSliceDAO();
-          //     SliceDAO sdao = new SliceDAO();
-               IList<Slice> ss = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInner(id_abstract, c.Id_inner);
+            /*   IList<Slice> ss = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInner(id_abstract, c.Id_inner);
                foreach (Slice s in ss) 
                {
                    UnitSlice us = new UnitSlice();
@@ -572,9 +565,9 @@ namespace HPE_DGAC_LoadDB
                    us.Id_index = -1;
                    us.Id_unit = s.Id_interface;
                    us.Id_index_unit = -1;
+				 
 
-
-                   /*                   EnumerationItemUnitSliceDAO eiusdao = new EnumerationItemUnitSliceDAO();
+                                      EnumerationItemUnitSliceDAO eiusdao = new EnumerationItemUnitSliceDAO();
                                       EnumerationSliceDAO esdao = new EnumerationSliceDAO();
                                       IList<EnumerationSlice> ess = esdao.list(id_abstract, icc.Id_inner, us.Id_unit_slice, us.Split_replica);
                                       foreach (EnumerationSlice es in ess)
@@ -592,9 +585,9 @@ namespace HPE_DGAC_LoadDB
 
                                           eiusdao.insert(eiu);
                                       }
-                   */
+                   
                    br.ufc.pargo.hpe.backend.DGAC.BackEnd.usdao.insert(us);
-               }
+               }*/
            }
        }
 
@@ -602,12 +595,7 @@ namespace HPE_DGAC_LoadDB
         {
             IDictionary<string, Unit> units = new Dictionary<string, Unit>();
 
-          //  AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
             AbstractComponentFunctorApplication absCapp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(c.Id_functor_app);
-
-          //  InterfaceDAO idao = new InterfaceDAO();
-         //   SourceCodeDAO scdao = new SourceCodeDAO();
-         //   SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
 
             int id_abstract = absCapp.Id_abstract;
 
@@ -617,17 +605,18 @@ namespace HPE_DGAC_LoadDB
                 string uref = u.uRef;
                 string iRef = u.iRef;
                 string urefSuper = u.super == null ? null : u.super.uRef;
+				int partition_index = u.replicaSpecified ? u.replica : 0;
 
-                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
+                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref, partition_index);
                 InterfaceType ui = lookForInterface(iRef);
 
                 Unit uu = new Unit();
                 uu.Id_concrete = c.Id_concrete;
                 uu.Id_unit = uref;
-                uu.Id_interface_abstract = id_abstract;
-                uu.Id_interface_interface = uref;
+                uu.Id_abstract = id_abstract;
+                uu.Id_interface = uref;
                 uu.Id_unit_super = urefSuper;
-                uu.Id_index = -1;
+                uu.Partition_index = partition_index;
                 uu.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                 uu.Class_nargs = i.Class_nargs;
                 uu.Assembly_string = uu.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
@@ -702,19 +691,14 @@ namespace HPE_DGAC_LoadDB
 
        internal void updateSources(ComponentType ct, Component c)
        {
-        //   UnitDAO udao = new UnitDAO();
 
            LoadBodyItems(ct.componentInfo);
 
            IDictionary<string, Unit> units = new Dictionary<string, Unit>();
 
-        //   AbstractComponentFunctorApplicationDAO absCappdao = new AbstractComponentFunctorApplicationDAO();
            AbstractComponentFunctorApplication absCapp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(c.Id_functor_app);
 
-        //   SourceCodeDAO scdao = new SourceCodeDAO();
-         //  SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
-
-           int id_abstract = absCapp.Id_abstract;
+            int id_abstract = absCapp.Id_abstract;
 
            // for each unit ...
            foreach (UnitType u in unit)
@@ -722,9 +706,9 @@ namespace HPE_DGAC_LoadDB
                string uref = u.uRef;
                string iRef = u.iRef;
                string urefSuper = u.super == null ? null : u.super.uRef;
+			   int partition_index =  u.replicaSpecified ? u.replica : 0;
 
-            //   InterfaceDAO idao = new InterfaceDAO();
-               Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref);
+               Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, uref, partition_index);
                InterfaceType ui = lookForInterface(iRef);
 
                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
@@ -761,6 +745,5 @@ namespace HPE_DGAC_LoadDB
            }
        }
 
-               //      uu.Source_code = ui.sources[ui.sources.Length - 1].file[0].contents; // Suppose the existence of only one source with only one file...
     }
 }

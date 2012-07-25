@@ -120,6 +120,7 @@ namespace br.ufc.pargo.hpe.backend
                         int id_abstract = interfaceToCompile.id;
                         string moduleName = interfaceToCompile.moduleName;
                         string interfaceName = interfaceToCompile.unitId;
+						int partition_index = interfaceToCompile.partition_index;
                         string sourceCode = interfaceToCompile.sourceCode;
                         string cuid = interfaceToCompile.cuid;
                         string library_path = interfaceToCompile.library_path;
@@ -138,7 +139,7 @@ namespace br.ufc.pargo.hpe.backend
                                                                            curDir);
 
                         if (!exists)
-                            idao.setPublicKey(id_abstract, interfaceName, publicKey);
+                            idao.setPublicKey(id_abstract, interfaceName, partition_index, publicKey);
                     }
 
                     Console.Error.Write("ok ");
@@ -296,8 +297,7 @@ namespace br.ufc.pargo.hpe.backend
                     deployed.cidBaseSpecified = true;
                     deployed.cidBase = id_abstract;
                     deployed.kind = c.Kind;
-                    // deployed.locationURI;
-                    deployed.enumerator = readEnvironmentEnumerators(id_abstract);
+                    // deployed.enumerator = readEnvironmentEnumerators(id_abstract);
                     deployed.parameter = readEnvironmentConcreteParameters(c.Id_functor_app);
 
                     l.Add(deployed);
@@ -350,8 +350,8 @@ namespace br.ufc.pargo.hpe.backend
                     deployed.cid = acf.Id_abstract;
                     deployed.cidBaseSpecified = false;
                     deployed.kind = acf.Kind;
-                    // deployed.locationURI; 
-                    deployed.enumerator = readEnvironmentEnumerators(acf.Id_abstract);
+                    
+                    //deployed.enumerator = readEnvironmentEnumerators(acf.Id_abstract);
                     deployed.parameter = readEnvironmentAbstractParameters(acf.Id_abstract);
 
                     l.Add(deployed);
@@ -359,13 +359,9 @@ namespace br.ufc.pargo.hpe.backend
 
                 return l;
             }
-
+/*
             private static string[] readEnvironmentEnumerators(int id_abstract)
             {
-                //     EnumeratorDAO edao = new EnumeratorDAO();
-                //   EnumerationInterfaceDAO eidao = new EnumerationInterfaceDAO();
-                //    InterfaceDAO idao = new InterfaceDAO();
-
                 IList<string> rList = new List<string>();
                 IList<DGAC.database.Interface> iList = idao.list(id_abstract);
 
@@ -388,8 +384,9 @@ namespace br.ufc.pargo.hpe.backend
 
                 return r;
             }
-
-            private static DeployedParameterType[] readEnvironmentAbstractParameters(int id_abstract)
+*/
+           
+			private static DeployedParameterType[] readEnvironmentAbstractParameters(int id_abstract)
             {
                 //     AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
                 //     AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
@@ -522,7 +519,7 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
-            public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
+/*            public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
             {
                 String[] str_output = null;
                 // assert: eIds.Length = eVls.Length
@@ -611,7 +608,8 @@ namespace br.ufc.pargo.hpe.backend
 
                 return str_output == null ? new String[] { } : str_output;
             }
-
+*/
+			
             private int getSessionID(int id_concrete)
             {
                 int session_id = -1;
@@ -652,16 +650,16 @@ namespace br.ufc.pargo.hpe.backend
             private static InnerConcreteComponentDAO iccdao_ = null;
             private static InnerComponentExposedDAO icedao_ = null;
             private static SliceDAO sdao_ = null;
-            private static UnitSliceDAO usdao_ = null;
+//            private static UnitSliceDAO usdao_ = null;
             private static SourceCodeDAO scdao_ = null;
             private static SourceCodeReferenceDAO scrdao_ = null;
             private static SliceExposedDAO sedao_ = null;
-            private static EnumeratorDAO exdao_ = null;
-            private static EnumerationInnerDAO exindao_ = null;
-            private static EnumerationSliceDAO exsdao_ = null;
-            private static EnumerationInterfaceDAO exitdao_ = null;
-            private static EnumeratorMappingDAO exmdao_ = null;
-            private static EnumeratorSplitDAO exldao_ = null;
+//            private static EnumeratorDAO exdao_ = null;
+//            private static EnumerationInnerDAO exindao_ = null;
+//            private static EnumerationSliceDAO exsdao_ = null;
+//            private static EnumerationInterfaceDAO exitdao_ = null;
+//            private static EnumeratorMappingDAO exmdao_ = null;
+//            private static EnumeratorSplitDAO exldao_ = null;
 
             public static AbstractComponentFunctorDAO acfdao { get { if (acfdao_ == null) acfdao_ = new AbstractComponentFunctorDAO(); return acfdao_; } }
             public static AbstractComponentFunctorApplicationDAO acfadao { get { if (acfadao_ == null) acfadao_ = new AbstractComponentFunctorApplicationDAO(); return acfadao_; } }
@@ -677,16 +675,16 @@ namespace br.ufc.pargo.hpe.backend
             public static InnerConcreteComponentDAO iccdao { get { if (iccdao_ == null) iccdao_ = new InnerConcreteComponentDAO(); return iccdao_; } }
             public static InnerComponentExposedDAO icedao { get { if (icedao_ == null) icedao_ = new InnerComponentExposedDAO(); return icedao_; } }
             public static SliceDAO sdao { get { if (sdao_ == null) sdao_ = new SliceDAO(); return sdao_; } }
-            public static UnitSliceDAO usdao { get { if (usdao_ == null) usdao_ = new UnitSliceDAO(); return usdao_; } }
+//            public static UnitSliceDAO usdao { get { if (usdao_ == null) usdao_ = new UnitSliceDAO(); return usdao_; } }
             public static SourceCodeDAO scdao { get { if (scdao_ == null) scdao_ = new SourceCodeDAO(); return scdao_; } }
             public static SourceCodeReferenceDAO scrdao { get { if (scrdao_ == null) scrdao_ = new SourceCodeReferenceDAO(); return scrdao_; } }
             public static SliceExposedDAO sedao { get { if (sedao_ == null) sedao_ = new SliceExposedDAO(); return sedao_; } }
-            public static EnumeratorDAO edao { get { if (exdao_ == null) exdao_ = new EnumeratorDAO(); return exdao_; } }
-            public static EnumerationInnerDAO exindao { get { if (exindao_ == null) exindao_ = new EnumerationInnerDAO(); return exindao_; } }
-            public static EnumerationSliceDAO exsdao { get { if (exsdao_ == null) exsdao_ = new EnumerationSliceDAO(); return exsdao_; } }
-            public static EnumerationInterfaceDAO exitdao { get { if (exitdao_ == null) exitdao_ = new EnumerationInterfaceDAO(); return exitdao_; } }
-            public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
-            public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
+//            public static EnumeratorDAO edao { get { if (exdao_ == null) exdao_ = new EnumeratorDAO(); return exdao_; } }
+//            public static EnumerationInnerDAO exindao { get { if (exindao_ == null) exindao_ = new EnumerationInnerDAO(); return exindao_; } }
+//            public static EnumerationSliceDAO exsdao { get { if (exsdao_ == null) exsdao_ = new EnumerationSliceDAO(); return exsdao_; } }
+//            public static EnumerationInterfaceDAO exitdao { get { if (exitdao_ == null) exitdao_ = new EnumerationInterfaceDAO(); return exitdao_; } }
+//            public static EnumeratorMappingDAO exmdao { get { if (exmdao_ == null) exmdao_ = new EnumeratorMappingDAO(); return exmdao_; } }
+//           public static EnumeratorSplitDAO exldao { get { if (exldao_ == null) exldao_ = new EnumeratorSplitDAO(); return exldao_; } }
 
             public static DGAC.database.Component resolveUnit(
                             AbstractComponentFunctorApplication acfaRef,
@@ -721,7 +719,7 @@ namespace br.ufc.pargo.hpe.backend
                 return br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(c.Id_concrete, id_unit, 1);
             }
             
-            private static System.Type[] calculateActualClassParameteres(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
+            public static System.Type[] calculateActualClassParameteres(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
             {
                 IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
                 System.Type[] result = new System.Type[ipars.Count];
@@ -984,22 +982,22 @@ namespace br.ufc.pargo.hpe.backend
 
                     // GET THE UNIT SLICE AND RETURNS IT
                     the_unit = (IUnit)services.getPort(portName);
-                   // the_unit.ContainerSlice = ownerUnit;
-                    the_unit.GlobalRank = ownerUnit.GlobalRank;
+                   
+                 //   the_unit.GlobalRank = ownerUnit.GlobalRank;
                     the_unit.WorldComm = ownerUnit.WorldComm;
 					
-                    //the_unit.Id_inner = slice.Id_inner;
 					the_unit.set_id_inner(ownerUnit,slice.Id_inner);
                 }
                 
                 return the_unit;
             }
 
-            public static void setupSlice(br.ufc.pargo.hpe.basic.IUnit unit, br.ufc.pargo.hpe.basic.IUnit unit_slice, string id_inner)
+
+			public static void setupSlice(br.ufc.pargo.hpe.basic.IUnit unit, br.ufc.pargo.hpe.basic.IUnit unit_slice, string id_inner)
             {
                 int id_abstract = unit.Id_abstract;
-                //string id_inner = unit_slice.Id_inner;
-                string id_interface = unit_slice.Id_unit;
+                
+//                string id_interface = unit_slice.Id_unit;
                 InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
 
                 int id_functor_app_inner_actual = ic.Id_functor_app;
@@ -1019,18 +1017,17 @@ namespace br.ufc.pargo.hpe.backend
                 determineActualParameters(unit.ActualParameters, id_functor_app_inner_actual, out actualParameters_new);
 
                 unit_slice.Id_functor_app = ic.Id_functor_app;
-                // unit_slice.Id_abstract = ic.Id_abstract_inner;
                 unit_slice.setActualParameters(actualParameters_new);
                 unit_slice.ActualParametersTop = unit.ActualParametersTop;
-                //unit_slice.ContainerSlice = unit;
 				unit_slice.addContainerSlice(unit);
-                unit_slice.GlobalRank = unit.GlobalRank;
+ //               unit_slice.GlobalRank = unit.GlobalRank;
                 unit_slice.WorldComm = unit.WorldComm;
 
-                calculateTopology(unit, unit_slice, id_inner);
+                //calculateTopology(unit, unit_slice, id_inner);
 
             }
-
+			
+			/*
             public static void calculateInitialTopology(ComponentID cid, string library_path, string my_id_unit, int id_functor_app_startup, IUnit pmain)
             {
                 Connector.openConnection();
@@ -1154,11 +1151,12 @@ namespace br.ufc.pargo.hpe.backend
 
                 Connector.closeConnection();
             }
-
-            private static void calculateTopology(IUnit unit, IUnit unit_slice, string id_inner)
+			*/
+			
+            /*
+			private static void calculateTopology(IUnit unit, IUnit unit_slice, string id_inner)
             {
                 int id_abstract = unit.Id_abstract;
-                // string id_inner = unit_slice.Id_inner;
                 string id_interface = unit_slice.Id_unit;
 
                 // Configure the knowledge of the slices about the topology.
@@ -1377,7 +1375,7 @@ namespace br.ufc.pargo.hpe.backend
                         insertEnumeratorFusions(unit_slice, id_unit_slice, enumRanks);
 
                     foreach (IDictionary<string, int> d in enumRanks)
-                        enumRanksList.Insert(pos1++, /* removePrefixes( id_inner ,*/ d /* ) */);
+                        enumRanksList.Insert(pos1++, d );
 
                     // Calculate o.Units ...
                     int count;
@@ -1398,7 +1396,9 @@ namespace br.ufc.pargo.hpe.backend
                 unit_slice.EnumRanks = enumRanksArr;
                 unit_slice.Units = unitsRanks;
             }
-
+			*/
+			
+			/*
             private static int enumeratorCardinality(string[] enums, string var)
             {
                 int step = 0;
@@ -1416,6 +1416,9 @@ namespace br.ufc.pargo.hpe.backend
 
                 return 0;
             }
+			*/
+			
+			/*
 
             private static bool findReplicator(IUnit unit, KeyValuePair<string, int> re,
                                                Slice s,
@@ -1618,6 +1621,7 @@ namespace br.ufc.pargo.hpe.backend
 
 
             }
+            */
 
             public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
             {
@@ -1695,7 +1699,7 @@ namespace br.ufc.pargo.hpe.backend
                 dict.Add(key, value);
             }
 
-
+			/*
             private static void insertEnumeratorFusions(IUnit o, string id_unit_slice, IList<IDictionary<string, int>> enumRanks)
             {
                 int id_abstract = o.Id_abstract;
@@ -1755,7 +1759,8 @@ namespace br.ufc.pargo.hpe.backend
                     }
                 }
             }
-
+			*/
+			
             internal static void redirectSlice(ComponentID user_id, string portName, ComponentID container_id, string container_portName)
             {
                 framework.redirectSlice(user_id, portName, container_id, container_portName);                
