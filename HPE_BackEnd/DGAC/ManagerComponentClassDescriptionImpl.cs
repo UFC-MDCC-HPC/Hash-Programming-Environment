@@ -27,10 +27,10 @@ namespace gov
             {
             }
 
-         //   public ManagerComponentClassDescriptionImpl(string cname)
-         //   {
-         //       this.cname = cname;
-         //   }
+            public ManagerComponentClassDescriptionImpl(string cname)
+            {
+               this.cname = cname;
+            }
 
             #endregion
             
