@@ -53,16 +53,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 ManagerComponentID cid = new ManagerComponentIDImpl(selfInstanceName);
                 this.registerComponentID(cid, selfProperties);
 
-                ManagerServices manager_services = new ManagerServices(cid);
+               // ManagerServices manager_services = new ManagerServices(cid);
 
-                foreach (int i in nodes)
-                {
-                    WorkerObject w = Worker[i];
-                    WorkerServices worker_services = (WorkerServices) w.getServices(selfInstanceName, selfClassName, selfProperties);
-                    manager_services.addWorkerServicesObject(i, worker_services);
-                }
+                //foreach (int i in nodes)
+                //{
+                 //   WorkerObject w = Worker[i];
+                 //   WorkerServices worker_services = (WorkerServices) w.getServices(selfInstanceName, selfClassName, selfProperties);
+                 //   manager_services.addWorkerServicesObject(i, worker_services);
+                //}
 
-                return manager_services; 
+                return null; //manager_services; 
             }
 
            // private IDictionary<Services, ComponentRelease> releaseRegister = new Dictionary<Services, ComponentRelease>();
