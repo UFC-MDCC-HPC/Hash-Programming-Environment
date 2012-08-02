@@ -33,12 +33,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             private IDictionary<string, ConnectionID> connByUserPort = new Dictionary<string, ConnectionID>();
             private IDictionary<string, ConnectionID> connByProviderPort = new Dictionary<string, ConnectionID>();
         
-            private void registerComponentID(ComponentID cid, TypeMap properties)
-            {
-                componentIDs.Add(cid.getInstanceName(), cid);
-                componentProperties.Add(cid, properties);
-            }
-
 
             #region AbstractFramework Members
 
@@ -664,7 +658,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
 
             #endregion
-
         
         
             #region ComponentRepository Members
@@ -694,7 +687,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
 
             #endregion
-
+		
+		
+            private void registerComponentID(ComponentID cid, TypeMap properties)
+            {
+                componentIDs.Add(cid.getInstanceName(), cid);
+                componentProperties.Add(cid, properties);
+            }
         
 
             private int[] fetchNodes(HPETypeMap properties)

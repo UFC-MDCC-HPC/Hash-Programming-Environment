@@ -181,7 +181,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 					if (!actualParameters_old.ContainsKey(pair.Key)) actualParameters_old.Add(pair);
 				}				
 				
-				DGAC.BackEnd.determineActualParameters(actualParameters_old,acfaRef.Id_functor_app, out actualParameters_new);
+				DGAC.BackEnd.determineActualParameters(actualParameters_old, acfaRef.Id_functor_app, out actualParameters_new);
 				
 				foreach (KeyValuePair<string,int> pair in actualParameters_new)
 				{

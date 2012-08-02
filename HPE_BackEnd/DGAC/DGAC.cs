@@ -484,19 +484,8 @@ namespace br.ufc.pargo.hpe.backend
                     ManagerObject manager = connectToManager(out ch);
                     Connector.openConnection();					
 
-/*                    IList<string> enumList = new List<string>();
-                    for (int i = 0; i < eIds.Length; i++)
-                    {
-                        enumList.Add(eIds[i]);
-                        enumList.Add(eVls[i].ToString());
-                    }
-                    string[] enums = new string[enumList.Count];
-                    enumList.CopyTo(enums, 0);
-					 */
-
                     /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();
-                    //properties.putStringArray(Constants.ENUMS_KEY, enums);
                     properties.putInt(Constants.SESSION_KEY, session_id);
 
                     Console.WriteLine("before manager.createInstance");                    

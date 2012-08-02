@@ -42,6 +42,7 @@ namespace br.ufc.pargo.hpe.basic
             foreach (Slice slice in sList)
             {
                 // The uses port name will be the name of the property
+				Console.WriteLine ("REGISTER USES PORT: " + slice.Id_inner);
                services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
             }
 

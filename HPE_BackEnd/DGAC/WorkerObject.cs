@@ -298,6 +298,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 // This part is only performed by applications.
 //                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
+
 				
 				pmain.setUpParameters(id_functor_app);
                 pmain.ActualParametersTop = pmain.ActualParameters;
@@ -810,6 +811,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
+			Console.Error.WriteLine("registering port " + portName);
+			
             HPETypeMap hpe_properties = (HPETypeMap) properties;
 
             Connector.openConnection();
