@@ -21,37 +21,64 @@ public class InnerComponentDAO{
         Connector.performSQLUpdate(sql);
     }
 
-    public InnerComponent retrieve(int id_abstract, string id_inner)
+    public InnerComponent retrieve(int id_abstract_start, string id_inner)
     {
-        InnerComponent ic = null;
+    	InnerComponent ic = null;
 
-        IDbConnection dbcon = Connector.DBcon;
-        IDbCommand dbcmd = dbcon.CreateCommand();
-        string sql =
-            "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public " +
-            "FROM innercomponent " +
-            "WHERE id_abstract_owner=" + id_abstract + " AND " +
-                  "id_inner like '" + id_inner + "'";
-        dbcmd.CommandText = sql;
-        IDataReader reader = dbcmd.ExecuteReader();
-        if (reader.Read())
-        {
-            ic = new InnerComponent();
-
-            ic.Id_abstract_owner = (int)reader["id_abstract_owner"];
-            ic.Id_inner = (string)reader["id_inner"];
-            ic.Id_functor_app = (int)reader["id_functor_app"];
-            ic.Id_abstract_inner = (int)reader["id_abstract_inner"];
-            ic.Parameter_top = (string)reader["parameter_top"];
-            ic.Transitive = ((int)reader["transitive"])==0 ? false : true;
-            ic.IsPublic = ((int)reader["public"]) == 0 ? false : true;
-            
-        }//if
-        // clean up
-        reader.Close();
-        reader = null;
-        dbcmd.Dispose();
-        dbcmd = null;
+		int id_abstract = id_abstract_start;
+		
+		while (id_abstract > 0) 
+		{
+	        IDbConnection dbcon = Connector.DBcon;
+	        IDbCommand dbcmd = dbcon.CreateCommand();
+	        string sql =
+	            "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public " +
+	            "FROM innercomponent " +
+	            "WHERE id_abstract_owner=" + id_abstract + " AND " +
+	                  "id_inner like '" + id_inner + "'";
+	        dbcmd.CommandText = sql;
+	        IDataReader reader = dbcmd.ExecuteReader();
+	        if (reader.Read())
+	        {
+	            ic = new InnerComponent();
+	
+	            ic.Id_abstract_owner = (int)reader["id_abstract_owner"];
+	            ic.Id_inner = (string)reader["id_inner"];
+	            ic.Id_functor_app = (int)reader["id_functor_app"];
+	            ic.Id_abstract_inner = (int)reader["id_abstract_inner"];
+	            ic.Parameter_top = (string)reader["parameter_top"];
+	            ic.Transitive = ((int)reader["transitive"])==0 ? false : true;
+	            ic.IsPublic = ((int)reader["public"]) == 0 ? false : true;
+	            
+	        }//if
+	        // clean up
+	        reader.Close();
+	        reader = null;
+	        dbcmd.Dispose();
+	        dbcmd = null;
+			
+			if (ic==null) 
+			{				
+                AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+                Console.WriteLine("acf is null ? " + (acf==null) + ", " + id_abstract);					
+				if (acf != null && acf.Id_functor_app_supertype > 0)
+				{
+				   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+				   
+				   id_abstract = acfa.Id_abstract;
+				}
+				else 
+				   id_abstract = -1;
+			} else
+				   id_abstract = -1;
+			
+		}
+			
+			if (ic==null) 
+			{
+				Console.WriteLine("InnerComponentDAO.cs: INNER NOT FOUND " + id_abstract_start + "," + id_inner);
+			}
+			
         return ic;
 
     }//retrieve

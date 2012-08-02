@@ -489,20 +489,17 @@ namespace HPE_DGAC_LoadDB
                 }
             }
 
-        //    SupplyParameterParameterDAO sppdao = new SupplyParameterParameterDAO();
-            IList<SupplyParameterParameter> sppList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sppdao.listFreeVariables(absC);
-
- 
-          //  InnerComponentDAO icdao = new InnerComponentDAO();
-          //  InnerComponentExposedDAO icedao = new InnerComponentExposedDAO();
+/*            IList<SupplyParameterParameter> sppList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sppdao.listFreeVariables(absC);
+			Console.WriteLine ("free variables = " + absC.Id_abstract);
 
             foreach (SupplyParameterParameter spp in sppList)
             {
+				Console.WriteLine ("variable = " + spp.Id_parameter);
                 InnerComponent ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve2(absC.Id_abstract, spp.Id_functor_app);
                 IList<InnerComponentExposed> ice = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icedao.listOwnerOfExposedInner(ic.Id_abstract_owner, ic.Id_inner);
-                InnerComponent icc = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract, ice[0].Id_inner_owner);
+                Console.WriteLine ("TRACING ERROR: ic.Id_abstract_owner =" + ic.Id_abstract_owner + ", ic.Id_inner="+ ic.Id_inner + ", " + ice.Count);
+				InnerComponent icc = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract, ice[0].Id_inner_owner);
                 InnerComponent ic_ = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(icc.Id_abstract_inner, ice[0].Id_inner);
-               // SupplyParameterComponentDAO spcdao = new SupplyParameterComponentDAO();
                 SupplyParameterComponent spc = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spcdao.retrieve(spp.Id_parameter, ic_.Id_functor_app);
 
                 SupplyParameterComponent spcNew = new SupplyParameterComponent();
@@ -514,8 +511,8 @@ namespace HPE_DGAC_LoadDB
 
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.sppdao.remove(spp);
 
-            }
-
+            } 
+			 */
         }
 
         private bool findInSlices(string cref)
@@ -790,6 +787,8 @@ namespace HPE_DGAC_LoadDB
                     InterfaceType ui = lookForInterface(iRef);
                     int nargs = ui.nArgsSpecified ? ui.nArgs : 0;
 
+				//	Console.Error.WriteLine("STEP 5.3");
+					
                     Interface i = new Interface();
                     i.Id_abstract = absC.Id_abstract;
                     i.Id_interface = uRef;
@@ -799,7 +798,9 @@ namespace HPE_DGAC_LoadDB
                     i.Class_nargs = nargs; // TODO
                     i.Assembly_string = i.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
                     i.Order = ++count;
-
+					
+				//	Console.Error.WriteLine("STEP 5.4");
+					
 					if (ui.parameter != null)
                     {
                         foreach (InterfaceParameterType ipx in ui.parameter)
@@ -815,10 +816,12 @@ namespace HPE_DGAC_LoadDB
                             br.ufc.pargo.hpe.backend.DGAC.BackEnd.ipdao.insert(ip);
                         }
                     }
-
+					
+				//	Console.Error.WriteLine("STEP 5.5 --- " + (ui==null) + "," + (ui.sources[ui.sources.Length - 1].file==null));
 					int order = 0;
                     foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
                     {
+				//		Console.Error.WriteLine("STEP 5.5.0");
                         SourceCode ss = new SourceCode();
                         ss.Type_owner = 'i';
                         ss.Id_owner_container = i.Id_abstract;
@@ -828,9 +831,13 @@ namespace HPE_DGAC_LoadDB
                         ss.File_type = "dll";
                         ss.Order = order++; 
                         
+				//		Console.Error.WriteLine("STEP 5.5.1");
+						
                         br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert(ss);
                         int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
                                    (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+						
+				//		Console.Error.WriteLine("STEP 5.5.2");
                         if (size > 0)
                         {
                             string[] allRefs = new string[size];
@@ -839,7 +846,8 @@ namespace HPE_DGAC_LoadDB
 
                             if (sft.externalDependency != null)
                                 sft.externalDependency.CopyTo(allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
-
+							
+					//		Console.Error.WriteLine("STEP 5.5.3");
                             foreach (string extRef in allRefs)
                             {
                                 SourceCodeReference ssr = new SourceCodeReference();
@@ -853,9 +861,11 @@ namespace HPE_DGAC_LoadDB
                                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
                                 }
                             }
+					//		Console.Error.WriteLine("STEP 5.5.4");
                         }
                     }
-
+					
+					//Console.Error.WriteLine("STEP 5.6");
                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.insert(i);
                     if (u.slices != null)
                     {
@@ -886,7 +896,7 @@ namespace HPE_DGAC_LoadDB
                             }
                         }
 
-					Console.Error.WriteLine("STEP 5.7");
+					//Console.Error.WriteLine("STEP 5.7");
                         // 3rd PASS:
                         foreach (UnitSliceType uS in u.slices)
                         {
@@ -895,10 +905,14 @@ namespace HPE_DGAC_LoadDB
                             string uRefS = uS.uRef;
                             
                             InnerComponentType innerC = lookForInnerComponent(cRefS);
-
+							//Console.Error.WriteLine("STEP 5.8");
+							
                             InnerComponent inner = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract,cRefS);
-                            Interface iii = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveTop(inner.Id_abstract_inner, uRefS);
-
+                          //  Console.Error.WriteLine("STEP 5.9 ---" + absC.Id_abstract + "," + cRefS);
+							Interface iii = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveTop(inner.Id_abstract_inner, uRefS, uS.replica);
+                          //  Console.Error.WriteLine("STEP 5.9.5 ---" + (iii==null));
+							
+							
 							Slice s = new Slice();
                             s.Id_abstract = absC.Id_abstract;
                             s.Id_interface = uRef;
@@ -906,24 +920,34 @@ namespace HPE_DGAC_LoadDB
                             s.Id_inner = innerC.localRef;
                             s.Partition_index = uS.replica;
                             s.Transitive = mP.Contains(sname);
-
+						//	Console.Error.WriteLine("STEP 5.10");
+							
                             string property_name = uS.sliceName;
                             string fstletter = property_name.Substring(0, 1);
                             property_name = fstletter.ToUpper() + property_name.Substring(1, property_name.Length - 1);
-
+							
+						//	Console.Error.WriteLine("STEP 5.11");
+							
                             s.PortName = property_name;
-
+							
                             if (!s.Transitive && uS.port != null)
                             {
+							//	Console.Error.WriteLine("STEP 5.12");
                                 foreach (string pname in uS.port) {
+							//		Console.Error.WriteLine("STEP 5.12.1 -- " + pname + ", " + (m.Count));
+									
                                     UnitSliceType usPort = null;
                                     m.TryGetValue(pname, out usPort);
+							//		Console.Error.WriteLine("STEP 5.12.2 -- " + pname + ", " + (usPort==null));
 																		
+							//		Console.Error.WriteLine("STEP 5.12.5 -- " + usPort.cRef);
+									
                                     InnerComponentType innerCPort = lookForInnerComponent(usPort.cRef);
 									
+							//		Console.Error.WriteLine("STEP 5.13");
 
                                     InnerComponent inner2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(absC.Id_abstract,usPort.cRef);
-                                    Interface iii2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveTop(inner2.Id_abstract_inner, usPort.uRef);
+                                    Interface iii2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveTop(inner2.Id_abstract_inner, usPort.uRef, usPort.replica);
 
                                     SliceExposed se = new SliceExposed();
                                     se.Id_abstract = s.Id_abstract;

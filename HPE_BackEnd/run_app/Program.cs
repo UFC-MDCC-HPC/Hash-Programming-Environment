@@ -18,17 +18,17 @@ namespace Back_End_Test
 			string user;
 			string password;
 			string curDir;
-			string eId;
-			int eVl;
+//			string eId;
+//			int eVl;
 			int rounds;
 			string prefix;
 			
 			try 
 			{
-				readArguments(args, out instantiator_string_file, out eId, out eVl, out user, out password, out curDir, out rounds, out prefix);
+				readArguments(args, out instantiator_string_file, out user, out password, out curDir, out rounds, out prefix);
 						
-				string[] eIds = new string[] {eId};
-				int[] eVls = new int[] {eVl};
+				//string[] eIds = new string[] {eId};
+				//int[] eVls = new int[] {eVl};
 				
 	            dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
 				
@@ -36,11 +36,11 @@ namespace Back_End_Test
 				string[] output = null;
 				if (prefix == null) 
 				{					
-				  output = dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir);
+				  output = dgac.runApplicationNew(instantiator_string, user, password, curDir);
 				} 
 				else 
 				{
-				  output = dgac.runApplicationNew(instantiator_string, eIds, eVls, user, password, curDir, rounds, prefix);
+				  output = dgac.runApplicationNew(instantiator_string, user, password, curDir, rounds, prefix);
 				}
 
                 int i = 0;
@@ -66,8 +66,8 @@ namespace Back_End_Test
 
      static void readArguments(string[] args,
 			                   out string instantiator_string_file, 
-			                   out string eId, 
-			                   out int eVl, 
+//			                   out string eId, 
+//			                   out int eVl, 
 			                   out string user, 
 			                   out string password, 
 			                   out string curDir,
@@ -78,8 +78,8 @@ namespace Back_End_Test
 			user = "";
 			password = "";
 			curDir = "";
-			eId = "";
-			eVl = 0;	
+//			eId = "";
+//			eVl = 0;	
 			rounds = 1;
 			prefix = null;
 
@@ -114,7 +114,7 @@ namespace Back_End_Test
 			   Console.WriteLine("--current_dir = " + curDir);
 			}
 			
-			if(CommandLine["enumerator_id"] != null) 
+/*			if(CommandLine["enumerator_id"] != null) 
 			{
                eId = CommandLine["enumerator_id"];
 			   Console.WriteLine("--enumerator_id = " + eId);
@@ -135,7 +135,7 @@ namespace Back_End_Test
 			   Console.Error.WriteLine("'-enumerator_value = <integer>' is required");
 			   Environment.Exit(0);
 			}
-			
+*/			
 			if(CommandLine["rounds"] != null) 
 			{
                if (!Int32.TryParse(CommandLine["rounds"], out rounds)) 

@@ -46,8 +46,13 @@ public class SupplyParameterComponentDAO{
        reader = null;
        dbcmd.Dispose();
        dbcmd = null;
-       return spc;
        
+	   if (spc==null) 
+	   {
+	  	  Console.WriteLine("SupplyParameterComponentDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
+	   }
+			
+       return spc;
 	}//list
 
     private IDictionary<int, IList<SupplyParameterComponent>> cache_c_pars = new Dictionary<int, IList<SupplyParameterComponent>>();

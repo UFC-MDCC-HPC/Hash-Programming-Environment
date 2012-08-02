@@ -38,7 +38,7 @@ namespace br.ufc.pargo.hpe.basic
             string id_interface = this.Id_unit;
 			int partition_index = this.partition_index;
 
-            IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
+            IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
             foreach (Slice slice in sList)
             {
                 // The uses port name will be the name of the property
@@ -63,8 +63,17 @@ namespace br.ufc.pargo.hpe.basic
         {
             Connector.openConnection();
             // CREATE SLICES !!!
-//			Console.WriteLine("BEGIN SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
-            IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface);
+			Console.WriteLine("BEGIN - SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
+            
+			IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
+			
+			foreach (Slice slice in sList)
+			{
+				Console.WriteLine("inner = " + slice.Id_inner + ", unit =" + slice.Id_interface_slice);
+			}
+			Console.WriteLine("END - SLICES OF " + this.get_id_inner(owner_unit));
+			
+			
             foreach (Slice slice in sList)
             {
                 InnerComponent ic = BackEnd.icdao.retrieve(slice.Id_abstract, slice.Id_inner);
@@ -86,41 +95,59 @@ namespace br.ufc.pargo.hpe.basic
 	                    }
 	                    else
 	                    {
-	                        // Look for the port in the enclosing unit.
-	                        ComponentID user_id = this.CID;
-	                        string portName = slice.Id_inner; /*slice.PortName;*/
-	                        ComponentID container_id = owner_unit.CID;
-	
-	                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface, this.partition_index);
-	
-	                        /* The actual name of the current component */
-	                        string id_inner_owner = this.get_id_inner(owner_unit);
-							int id_abstract_owner = owner_unit.Id_abstract; // this.ContainerSlice.Id_abstract;
-	
-	                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
-	                                                                  slice.Id_inner,
-	                                                                  slice.Id_interface_slice_top,
-	                                                                  id_abstract_owner,
-	                                                                  i.Id_interface_super_top,
-	                                                                  id_inner_owner
-	                                                                  );
-	                           
-							
-							
-							if (se != null)
+							IUnit owner_unit_ = owner_unit;
+							while (owner_unit_ != null) 
 							{
-		                        string container_portName = se.Id_inner;		
-//								Console.WriteLine("REDIRECT SLICE " + slice.Id_inner);
-		                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
-								IUnit unit = (IUnit) Services.getPort(portName);
-								unit.set_id_inner(this, portName);
-								//unit.Id_inner = portName;
-								unit.addContainerSlice(this);
-								//unit.ContainerSlice = this;
+		                        // Look for the port in the enclosing unit.
+		                        ComponentID user_id = this.CID;
+		                        string portName = slice.Id_inner; /*slice.PortName;*/
+		                        ComponentID container_id = owner_unit_.CID;
+		
+		                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface, this.partition_index);
+		
+		                        /* The actual name of the current component */
+		                        string id_inner_owner = this.get_id_inner(owner_unit_);
+								int id_abstract_owner = owner_unit_.Id_abstract; // this.ContainerSlice.Id_abstract;
+		
+		                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
+	                                                      slice.Id_inner,               // id_inner_original
+	                                                      slice.Id_interface_slice_top, // id_interface_slice_original
+	                                                      id_abstract_owner,            // id_abstract
+	                                                      i.Id_interface_super_top,     // id_interface_slice_owner
+	                                                      id_inner_owner                // id_inner_owner
+	                                                      );
+								
+								
+								Console.WriteLine ("BEGIN /////////////");
+								Console.WriteLine(slice.Id_inner);                 // id_inner_original
+								Console.WriteLine(slice.Id_interface_slice_top);   // id_interface_slice_original
+								Console.WriteLine(id_abstract_owner);              // id_abstract
+								Console.WriteLine(i.Id_interface_super_top);       // id_interface_slice_owner
+								Console.WriteLine(id_inner_owner);                 // id_inner_owner
+								Console.WriteLine ("END /////////////");
+								if (se != null)
+								{
+			                        string container_portName = se.Id_inner;		
+									Console.WriteLine("REDIRECT SLICE id_inner_original = " + slice.Id_inner + ", id_inner_owner = " + id_inner_owner);
+			                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
+									IUnit unit = (IUnit) Services.getPort(portName);
+									unit.set_id_inner(this, portName);
+									//unit.Id_inner = portName;
+									unit.addContainerSlice(this);
+									//unit.ContainerSlice = this;
+									connected_slice.Add(slice.Id_inner, true);
+									break;
+								} 
+								
+
+								owner_unit_ = owner_unit_.ContainerSlice.Count == 0 ? null : owner_unit_.ContainerSlice[0];
+							}
+							
+							if (owner_unit_ == null)
+							{
+								
+		                        BackEnd.createSlice(this, slice);
 								connected_slice.Add(slice.Id_inner, true);
-							} else 
-							{
-//								Console.WriteLine("PASS THROUGH " + slice.Id_inner);
 							}
 	                    }						
 					}
@@ -155,7 +182,8 @@ namespace br.ufc.pargo.hpe.basic
                     initialized.Add(unit_slice, true);
                 }
             }
-						
+					
+			Console.WriteLine("initialize " + this.CID.getInstanceName());
 			initialize();
 			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
         }
@@ -224,6 +252,17 @@ namespace br.ufc.pargo.hpe.basic
 
 		private IDictionary<IUnit,string> id_inner_map = null;
         
+/*		public string get_id_inner_0()
+		{
+			if (id_inner_map != null && id_inner_map.Count > 0)
+			{
+				foreach (KeyValuePair<IUnit, string> k in id_inner_map) 
+				{
+				  return k.Value;
+				}
+			}
+			return "NOTHING";
+		}*/
 		
 		public string get_id_inner(IUnit container)
 		{
@@ -481,6 +520,16 @@ namespace br.ufc.pargo.hpe.basic
         public Intracommunicator WorldComm {get { return comm; } set { this.comm = value; }}
 
         #endregion
+		
+		private int rank = -1;
+		private int size = -1;
+		private int[] ranks = null;
+		private int global_rank = -1;
+		
+        public int Rank {get {return rank;} set {rank = value;}}   // Rank of the parallel unit.
+		public int Size {get {return size;} set {size = value;}}   // Number of the parallel units.		
+		public int[] Ranks {get {return ranks;} set {ranks = value;}}   // Number of the parallel units.		
+		public int GlobalRank {get {return global_rank;} set {global_rank = value;}}   // Number of the parallel units.		
 
     }
 }

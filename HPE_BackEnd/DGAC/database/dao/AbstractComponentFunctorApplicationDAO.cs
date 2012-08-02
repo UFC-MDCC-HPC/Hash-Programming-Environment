@@ -19,8 +19,8 @@ public class AbstractComponentFunctorApplicationDAO{
             nextKey = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
 
         String sql =
-            "INSERT INTO abstractcomponentfunctorapplication (id_functor_app, id_abstract)" +
-            "VALUES (" + nextKey + "," + ac.Id_abstract + ")";
+            "INSERT INTO abstractcomponentfunctorapplication (id_functor_app, id_abstract, id_functor_app_next)" +
+            "VALUES (" + nextKey + "," + ac.Id_abstract + "," +  ac.Id_functor_app_next + ")";
 
         Connector.performSQLUpdate(sql);
 
@@ -44,7 +44,7 @@ public class AbstractComponentFunctorApplicationDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
-           "SELECT id_abstract, id_functor_app " +
+           "SELECT id_abstract, id_functor_app, id_functor_app_next " +
            "FROM abstractcomponentfunctorapplication " +
            "WHERE id_functor_app="+id_functor_app;
        dbcmd.CommandText = sql;
@@ -53,6 +53,7 @@ public class AbstractComponentFunctorApplicationDAO{
        		acfa = new AbstractComponentFunctorApplication();
        		acfa.Id_functor_app = (int)reader["id_functor_app"];
        		acfa.Id_abstract = (int)reader["id_abstract"];
+       		acfa.Id_functor_app_next = (int)reader["id_functor_app_next"];
             cache_acfa.Add(acfa.Id_functor_app, acfa);
        }//while
        // clean up
@@ -60,16 +61,54 @@ public class AbstractComponentFunctorApplicationDAO{
        reader = null;
        dbcmd.Dispose();
        dbcmd = null;
+			
+	   if (acfa==null) 
+	   {
+	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA NOT FOUND "+ id_functor_app);
+	   }
+			
        return acfa;
 	}
 	
+    public AbstractComponentFunctorApplication retrieve_next(int id_functor_app_next)
+    {
+        AbstractComponentFunctorApplication acfa = null;
+
+	   IDbConnection dbcon = Connector.DBcon;
+       IDbCommand dbcmd = dbcon.CreateCommand();
+      string sql =
+           "SELECT id_abstract, id_functor_app, id_functor_app_next " +
+           "FROM abstractcomponentfunctorapplication " +
+           "WHERE id_functor_app_next="+id_functor_app_next;
+       dbcmd.CommandText = sql;
+       IDataReader reader = dbcmd.ExecuteReader();
+       while(reader.Read()) {
+       		acfa = new AbstractComponentFunctorApplication();
+       		acfa.Id_functor_app = (int)reader["id_functor_app"];
+       		acfa.Id_abstract = (int)reader["id_abstract"];
+       		acfa.Id_functor_app_next = (int)reader["id_functor_app_next"];
+       }//while
+       // clean up
+       reader.Close();
+       reader = null;
+       dbcmd.Dispose();
+       dbcmd = null;
+			
+	   if (acfa==null) 
+	   {
+	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
+	   }
+			
+       return acfa;
+	}
+
 	public IList<AbstractComponentFunctorApplication> list(){
 		  IList<AbstractComponentFunctorApplication> list = new List<AbstractComponentFunctorApplication>();
 		  AbstractComponentFunctorApplication acfa = null;
 		  IDbConnection dbcon = Connector.DBcon;
 	      IDbCommand dbcmd = dbcon.CreateCommand();
 	      string sql =
-	           "SELECT id_abstract, id_functor_app " +
+	           "SELECT id_abstract, id_functor_app, id_functor_app_next " +
 	           "FROM abstractcomponentfunctorapplication ";
 	            
 	       dbcmd.CommandText = sql;
@@ -78,6 +117,7 @@ public class AbstractComponentFunctorApplicationDAO{
 	       		acfa = new AbstractComponentFunctorApplication();
 	       		acfa.Id_functor_app = (int)reader["id_functor_app"];
 	       		acfa.Id_abstract = (int)reader["id_abstract"];
+       		    acfa.Id_functor_app_next = (int)reader["id_functor_app_next"];
 	       		list.Add(acfa);
                 if (!cache_acfa.ContainsKey(acfa.Id_functor_app)) cache_acfa.Add(acfa.Id_functor_app, acfa);
 	       }//while
@@ -102,7 +142,7 @@ public class AbstractComponentFunctorApplicationDAO{
 		  IDbConnection dbcon = Connector.DBcon;
 	      IDbCommand dbcmd = dbcon.CreateCommand();
 	      string sql =
-	           "SELECT acfa.id_abstract, acfa.id_functor_app " +
+	           "SELECT acfa.id_abstract, acfa.id_functor_app, acfa.id_functor_app_next " +
 	           "FROM component as c, abstractcomponentfunctorapplication as acfa " + 
 			   "WHERE c.id_functor_app = acfa.id_functor_app AND " + 
 					 "acfa.id_abstract = " + id_abstract;
@@ -113,6 +153,7 @@ public class AbstractComponentFunctorApplicationDAO{
 	       		acfa = new AbstractComponentFunctorApplication();
 	       		acfa.Id_functor_app = (int)reader["id_functor_app"];
 	       		acfa.Id_abstract = (int)reader["id_abstract"];
+       		    acfa.Id_functor_app_next = (int)reader["id_functor_app_next"];
 	       		list.Add(acfa);
                 if (!cache_acfa.ContainsKey(acfa.Id_functor_app)) cache_acfa.Add(acfa.Id_functor_app, acfa);
 	       }//while
@@ -124,6 +165,13 @@ public class AbstractComponentFunctorApplicationDAO{
 	       return list;
 	}
 	 
+	public void updateIdFunctorAppNext(AbstractComponentFunctorApplication acfa, int id_functor_app_next) 
+	{
+        String sql = "UPDATE abstractcomponentfunctorapplication SET id_functor_app_next = " + id_functor_app_next + " " +
+                     " WHERE id_functor_app=" + acfa.Id_functor_app + "";
+
+        Connector.performSQLUpdate(sql);
+	}
 
 }//class
 

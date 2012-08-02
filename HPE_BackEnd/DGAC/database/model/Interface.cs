@@ -152,11 +152,11 @@ public class Interface {
     public IList<string> fetchReferences(IDictionary <string, AbstractComponentFunctorApplication> pars) {
 
         IList<string> refs = new List<string>();
-
+			
         AbstractComponentFunctor cThis = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(this.Id_abstract);
         AbstractComponentFunctorApplication cSuperApp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app_supertype);
         if (cSuperApp != null)
-        {
+        {				
             AbstractComponentFunctor acfsuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
             IDictionary<string, AbstractComponentFunctorApplication> parsSuper = null;
             collectParameters(pars, cSuperApp, out parsSuper);
@@ -171,7 +171,7 @@ public class Interface {
         }
 
         // Traverse slices.
-        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface);
+        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface, Partition_index);
 
         foreach (Slice s in slices)
         {
@@ -270,8 +270,10 @@ public class Interface {
                     {
                         // find bound ...
                      //   AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-                        AbstractComponentFunctorParameter acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract, sp_.Id_parameter);
-                        acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
+                        AbstractComponentFunctorParameter acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(/*sp_.Id_abstract,*/ Id_abstract, sp_.Id_parameter_actual/* sp_.Id_parameter */);
+                        if (acfp == null)
+								acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract,sp_.Id_parameter);
+						acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
                     }
                 }

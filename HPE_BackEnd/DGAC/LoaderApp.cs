@@ -212,44 +212,27 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         //returns an icollection of 
         public static IList<InfoCompile> getReferences_Concrete(int id_concrete)
         {
-
-            //  SourceCodeDAO scdao = new SourceCodeDAO();
-            //   SourceCodeReferenceDAO scrdao = new SourceCodeReferenceDAO();
-
-            //	ComponentDAO cDAO = new ComponentDAO();		
             Component component = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve(id_concrete);
-
             IList<InfoCompile> referencesSet = new List<InfoCompile>();
-
-            //	AbstractComponentFunctorApplicationDAO acfaDAO = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(component.Id_functor_app);
-
-            //	AbstractComponentFunctorDAO acfDAO = new AbstractComponentFunctorDAO();
-            //	InnerComponentDAO innerDAO = new InnerComponentDAO();		
-
-            //int id_abstract = acfa.Id_abstract;
-            //	UnitDAO uDAO = new UnitDAO();
             IList<Unit> unitList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.list(id_concrete);
-
-            //	UnitSliceDAO usDAO = new UnitSliceDAO(); 
-            //	InterfaceDAO interfaceDAO = new InterfaceDAO();
 
             foreach (br.ufc.pargo.hpe.backend.DGAC.database.Unit unit in unitList)
             {
-
-                // IList<UnitSlice> unitSliceList = usDAO.listByUnit(id_concrete, unit.Id_unit, unit.Id_index);
                 Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_abstract, unit.Id_interface, unit.Partition_index);
-                //                   AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-                AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
+
+				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
                 IList<string> stringCompilationSet = new List<string>();
 
                 IDictionary<string, AbstractComponentFunctorApplication> pars = component.Parameters;
-
+				
+				Console.WriteLine ("BEGIN TAKING REFERENCES OF " + (unit.Id_abstract) + ", " + id_concrete);
                 foreach (string reference in interfaceUnit.fetchReferences(pars))
                 {
+					Console.WriteLine(reference);
                     stringCompilationSet.Add(reference);
                 }
+				Console.WriteLine ("END TAKING REFERENCES OF " + (unit.Id_abstract));
 
                 string file_name_Interface = buildDllName(acf.Library_path, interfaceUnit.Assembly_string);
                 if (!stringCompilationSet.Contains(file_name_Interface))
@@ -305,13 +288,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         //returns an icollection of 
         public static IList<InfoCompile> getReferences_Abstract(int id_abstract)
         {
-
+			
             IList<InfoCompile> referencesSet = new List<InfoCompile>();
             IList<Interface> iList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(id_abstract);
 
             foreach (Interface i in iList)
-            {
-
+            {				
                 IList<string> stringCompilationSet = new List<string>();
 
                 foreach (string reference in i.References)

@@ -9,6 +9,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database{
 public class AbstractComponentFunctorApplication{
  
 	private int id_functor_app = -1;
+	private int id_functor_app_next = -1;
 	private int id_abstract = -1;
   	private IDictionary<string, int> parametersList = null;
   	
@@ -20,6 +21,11 @@ public class AbstractComponentFunctorApplication{
   	public int Id_functor_app{
         get {return id_functor_app;}
         set {id_functor_app = value;}
+    }
+		
+  	public int Id_functor_app_next {
+        get {return id_functor_app_next;}
+        set {id_functor_app_next = value;}
     }
     
     public int Id_abstract{
@@ -37,6 +43,7 @@ public class AbstractComponentFunctorApplication{
     public IDictionary<string,int> ParametersList {
         get { return parametersList; }
     }
+		
 	
 }//class
 

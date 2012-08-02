@@ -169,43 +169,61 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         internal SliceExposed retrieveContainerByOriginal(
             string id_inner_original, 
             string id_interface_slice_original, 
-            int id_abstract, 
-            string id_interface,
+            int id_abstract_start, 
+            string id_interface_owner,
             string id_inner_owner)
         {
-            IDbConnection dbcon = Connector.DBcon;
-            IDbCommand dbcmd = dbcon.CreateCommand();
-            SliceExposed se = null;
-            string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, partition_index, partition_index_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
-                "FROM sliceexposed " +
-                "WHERE id_inner_original like '" + id_inner_original + "' and " +
-                      "id_interface_slice_original like '" + id_interface_slice_original + "' and " +
-                      "id_abstract = " + id_abstract + " and " +
-                      "id_interface_slice_owner like '" + id_interface + "' and " +
-                      "id_inner_owner like '" + id_inner_owner + "'";
-            dbcmd.CommandText = sql;
-			//Console.WriteLine(sql);
-                IDataReader reader = dbcmd.ExecuteReader();
-            if (reader.Read())
-            {
-                se = new SliceExposed();
-                se.Id_inner = (string)reader["id_inner"];
-                se.Id_abstract = (int)reader["id_abstract"];
-                se.Id_interface_slice = (string)reader["id_interface_slice"];
-                se.Partition_index = (int)reader["partition_index"];
-                se.Id_inner_owner = (string)reader["id_inner_owner"];
-                se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
-                se.Partition_index_owner = (int)reader["partition_index_owner"];
-                se.Id_inner_original = (string)reader["id_inner_original"];
-                se.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
-            }
-            //if
-            // clean up
-            reader.Close();
-            reader = null;
-            dbcmd.Dispose();
-            dbcmd = null;
+			int id_abstract = id_abstract_start;
+	            SliceExposed se = null;
+			
+			while (id_abstract > 0) 
+			{
+	            IDbConnection dbcon = Connector.DBcon;
+	            IDbCommand dbcmd = dbcon.CreateCommand();
+	            string sql =
+	                "SELECT id_abstract, id_inner, id_interface_slice, partition_index, partition_index_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
+	                "FROM sliceexposed " +
+	                "WHERE id_inner_original like '" + id_inner_original + "' and " +
+	                      "id_interface_slice_original like '" + id_interface_slice_original + "' and " +
+	                      "id_abstract = " + id_abstract + " and " +
+	                      "id_interface_slice_owner like '" + id_interface_owner + "' and " +
+	                      "id_inner_owner like '" + id_inner_owner + "'";
+	            dbcmd.CommandText = sql;
+	            IDataReader reader = dbcmd.ExecuteReader();
+	            if (reader.Read())
+	            {
+	                se = new SliceExposed();
+	                se.Id_inner = (string)reader["id_inner"];
+	                se.Id_abstract = (int)reader["id_abstract"];
+	                se.Id_interface_slice = (string)reader["id_interface_slice"];
+	                se.Partition_index = (int)reader["partition_index"];
+	                se.Id_inner_owner = (string)reader["id_inner_owner"];
+	                se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
+	                se.Partition_index_owner = (int)reader["partition_index_owner"];
+	                se.Id_inner_original = (string)reader["id_inner_original"];
+	                se.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
+	            }
+	            //if
+	            // clean up
+	            reader.Close();
+	            reader = null;
+	            dbcmd.Dispose();
+	            dbcmd = null;
+				
+				if (se == null) 
+				{
+	                AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+					if (acf.Id_functor_app_supertype > 0)
+					{
+					   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+					   id_abstract = acfa.Id_abstract;
+					}
+					else 
+						id_abstract = -1;
+				}
+				else 
+				   id_abstract = -1;
+			}
 
             return se;
         }

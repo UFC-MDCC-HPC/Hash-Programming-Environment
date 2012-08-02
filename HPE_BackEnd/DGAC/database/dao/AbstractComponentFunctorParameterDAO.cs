@@ -100,6 +100,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         reader = null;
         dbcmd.Dispose();
         dbcmd = null;
+			
+	   if (acfp==null) 
+	   {
+	  	  Console.WriteLine("AbstractComponentFunctorParameterDAO.cs: PARAMETER NOT FOUND "+ id_abstract + "," + id_parameter);
+	   }
+			
         return acfp;
     }
 }//class

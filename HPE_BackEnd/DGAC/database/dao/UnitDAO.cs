@@ -174,25 +174,30 @@ public class UnitDAO{
     }//list
 
 
-    internal void setPublicKey(int id_concrete, string id_unit, string publicKey)
+    internal void setPublicKey(string cuid, string id_unit, string publicKey)
     {
-        IList<Unit> us = this.retrieveEnumeration(id_concrete, id_unit);
-        
-        foreach (Unit u in us) {
-            String s = ", PublicKey=";
-
-            if (u.Assembly_string.IndexOf(s) < 0)
-            {
-                u.Assembly_string += ", PublicKey=" + publicKey;
-            }
-            else
-            {
-                int index = u.Assembly_string.IndexOf(s);
-                u.Assembly_string = u.Assembly_string.Substring(0, index) + s + publicKey;
-            }
-
-            this.updatePublicKey(u);
-        }
+		IList<Component> cs = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.listByUID(cuid);
+			
+		foreach (Component c in cs)
+		{			
+	        IList<Unit> us = this.retrieveEnumeration(c.Id_concrete, id_unit);
+	        
+	        foreach (Unit u in us) {
+	            String s = ", PublicKey=";
+	
+	            if (u.Assembly_string.IndexOf(s) < 0)
+	            {
+	                u.Assembly_string += ", PublicKey=" + publicKey;
+	            }
+	            else
+	            {
+	                int index = u.Assembly_string.IndexOf(s);
+	                u.Assembly_string = u.Assembly_string.Substring(0, index) + s + publicKey;
+	            }
+	
+	            this.updatePublicKey(u);
+	        }
+		}
     }
 
     private void updatePublicKey(Unit u)

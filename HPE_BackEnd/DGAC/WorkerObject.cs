@@ -101,7 +101,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				portList = new List<string>();				
 				usesPortNames.Add(cid,portList);
 			}
-
+			Console.WriteLine("registerUsesPortInfo -- " + portName);
             usesPortNamesInv.Add(portName, cid);
 			portList.Add(portName);
             portProperties.Add(portName, properties);
@@ -232,8 +232,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ConnectionID conn_id;
             this.connByUserPort.TryGetValue(container_id.getInstanceName() + ":" + container_portName, out conn_id);
-			//Console.WriteLine("PROVIDER: " + container_id.getInstanceName() + ":" + container_portName + " --- " + (conn_id==null));
-			//Console.WriteLine("USER: " + user_id.getInstanceName() + ":" + user_portName);
+			Console.WriteLine ("conn_id is null ? " + (conn_id==null) + " = " + container_id.getInstanceName() + ":" + container_portName);
+			Console.WriteLine("PROVIDER: " + container_id.getInstanceName() + ":" + container_portName + " --- " + (conn_id==null));
+			Console.WriteLine("USER: " + user_id.getInstanceName() + ":" + user_portName);
             ComponentID provider_id = conn_id.getProvider();
             string provider_portName = conn_id.getProviderPortName();
             this.connect(user_id, user_portName, provider_id, provider_portName);
@@ -284,10 +285,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             try
             {
-              //  int key = properties.getInt(Constants.KEY_KEY, my_rank);                
+                int key = properties.getInt(Constants.KEY_KEY, my_rank);                
              //   string id_unit = properties.getString(Constants.UNIT_KEY, "");
               //  string library_path = properties.getString(Constants.COMPONENT_KEY, "");
-              //  int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
+                int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
 
                 ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
@@ -298,10 +299,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 // This part is only performed by applications.
 //                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
 				
-                //Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
-                //pmain.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
+				pmain.setUpParameters(id_functor_app);
+                pmain.ActualParametersTop = pmain.ActualParameters;
+
+				//Console.Error.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
+                pmain.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
                 //Console.Error.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
-                //pmain.GlobalRank = pmain.WorldComm.Rank;
+                pmain.GlobalRank = pmain.WorldComm.Rank;
 				
                 //pmain.createSlices();
                 
@@ -344,7 +348,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             if (properties.hasKey(Constants.KEY_KEY)) {
                 int key = properties.getInt(Constants.KEY_KEY, my_rank);
 	            unit_slice.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-//	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
+	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
             }
 
             return cid;
@@ -493,6 +497,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public ConnectionID connect(ComponentID user, string usingPortName, ComponentID provider, string providingPortName)
         {
+			Console.WriteLine("connect " + usingPortName + " to " + providingPortName);
+			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
             connectionList.Add(connection);
             bool first_connection = addConnByProviderPort(provider.getInstanceName() + ":" + providingPortName, connection);
@@ -711,6 +717,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             Port providesPort;
             providesPorts.TryGetValue(providesPortName, out providesPort);
+            
+			Console.WriteLine("PORT TYPE of " + providesPortName + " = " + providesPort.GetType());
+			
             return providesPort;
         }
 
@@ -723,6 +732,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             if (!usesPortNamesInv.ContainsKey(portName))
             {
 				Console.WriteLine("PORT NOT FOUND is " + portName);
+				foreach (string p in usesPortNamesInv.Keys)
+				{
+					Console.WriteLine("KEY = " + p);
+				}
+				
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
@@ -1031,7 +1045,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			Console.WriteLine("Hi!");
 		}
 	
-        private void fetchParameters(IDictionary<string, int> actualParameters,
+/*        private void fetchParameters(IDictionary<string, int> actualParameters,
                                             int id_functor_app_owner,
                                             int id_abstract,
                                             Interface the_interface,
@@ -1086,7 +1100,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     string parid = kvp.Key;
                     string id_interface_bound = kvp.Value.Id_interface;
 
-                    SupplyParameter sp = BackEnd.spdao.retrieve(parid, /*id_functor_app_inner*/ ic.Id_functor_app);
+                    SupplyParameter sp = BackEnd.spdao.retrieve(parid,  ic.Id_functor_app);
 
                     if (sp is SupplyParameterParameter)
                     {
@@ -1101,7 +1115,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     }
                 }
             }
-        }
+        } */
 
         private Interface fetchActualInterface(IDictionary<string, int> actualParameters,
                                                       int id_functor_app_actual,

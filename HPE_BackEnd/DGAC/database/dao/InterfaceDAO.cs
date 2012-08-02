@@ -92,6 +92,10 @@ public class InterfaceDAO{
        reader = null;
        dbcmd.Dispose();
        dbcmd = null;
+			
+	   if (i == null)
+				Console.Error.WriteLine("InterfaceDAO.cs: Interface not found ! id_abstract=" + id_abstract + ", id_interface=" + id_interface);
+			
        return i;
 	}
 
@@ -300,12 +304,12 @@ public class InterfaceDAO{
         return i;
     }
 
-    internal Interface retrieveTop(int id_abstract, string id_interface)
+    internal Interface retrieveTop(int id_abstract, string id_interface, int partition_index)
     {
         IList<Interface> iList = BackEnd.idao.list(id_abstract);
         foreach (Interface i in iList)
         {
-            if (i.Id_interface_super_top.Equals(id_interface))
+            if (i.Id_interface_super_top.Equals(id_interface) && i.Partition_index == partition_index)
             {
                 return i;
             }
@@ -314,7 +318,7 @@ public class InterfaceDAO{
         return null;
     }
 
-    internal Interface retrieveSuper(int id_abstract, string id_interface)
+    internal Interface retrieveSuper(int id_abstract, string id_interface, int partition_index)
     {
         bool loop;
         AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract);
@@ -326,7 +330,7 @@ public class InterfaceDAO{
             AbstractComponentFunctor acfCurr = acf;
             do
             {
-                if (iCurr.Id_interface.Equals(id_interface))
+                if (iCurr.Id_interface.Equals(id_interface) && iCurr.Partition_index == partition_index)
                 {
                     return i;
                 }

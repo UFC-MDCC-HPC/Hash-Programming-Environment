@@ -68,7 +68,6 @@ public class ComponentDAO{
     {
 
         Component c = null;
-        if (cache_c_uid.TryGetValue(hash_component_uid, out c)) return c;        
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
@@ -85,7 +84,6 @@ public class ComponentDAO{
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
             c.Hash_component_UID = (string) reader["hash_component_UID"];
-            cache_c_uid.Add(hash_component_uid, c);
         }//while
         // clean up
         reader.Close();
@@ -233,6 +231,36 @@ public class ComponentDAO{
         dbcmd = null;
         return cList;
     }
+
+    public IList<Component> listByUID(string cuid)
+    {
+        IList<Component> cList = new List<Component>();
+        IDbConnection dbcon = Connector.DBcon;
+        IDbCommand dbcmd = dbcon.CreateCommand();
+        string sql =
+             "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
+             "FROM component WHERE hash_component_UID = '" + cuid + "'";
+        dbcmd.CommandText = sql;
+        IDataReader reader = dbcmd.ExecuteReader();
+        while (reader.Read())
+        {
+            Component c = new Component();
+            c.Id_concrete = (int)reader["id_concrete"];
+            c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
+            c.Library_path = (string)reader["library_path"];
+            c.Id_functor_app = (int)reader["id_functor_app"];
+            c.Hash_component_UID = (string)reader["hash_component_UID"];
+            cList.Add(c);
+        }//while
+        // clean up
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        return cList;
+    }
+		
+
 }//class
 
 }//namespace

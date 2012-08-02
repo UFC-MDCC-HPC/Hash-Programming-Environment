@@ -54,18 +54,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         {
 			int id_abstract = CTop.Functor_app.Id_abstract;
          
-           // AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
             IList<AbstractComponentFunctorApplication> acfaList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.listByIdAbstract(id_abstract);
 
 //            writeTreeNode(CTop); Console.Write("TESTING ... ");
             foreach (AbstractComponentFunctorApplication acfa in acfaList)
             {
 //                Console.Write(acfa.Id_functor_app + ",");
-                if (recMatchParameters(CTop, acfa)) {
-					//ComponentDAO cdao = new ComponentDAO();
-//                    Console.WriteLine("... END TEST");
-                    return br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
-				}
+				
+					if (recMatchParameters(CTop, acfa)) 
+					{
+	                    return br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
+					} 
             }
 //            Console.WriteLine("... END TEST");
 
@@ -165,7 +164,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
         {
-
+			Console.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
+				
             Component c;
 
             if (acfaRef.ParametersList.Count == 0)
@@ -181,12 +181,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             Resolution.sort(root);
 
             c = Resolution.tryGeneralize(root, root);
+/*			while (c==null && (root.trySpecializeRoot()))			
+			{
+				c = Resolution.tryGeneralize(root, root);
+			}*/
 
             if (acfaRef.ParametersList.Count == 0)
             {
                 cache.Add(acfaRef.Id_abstract, c);
             }
-
+			
+			if (c!=null)
+				Console.WriteLine("HASH COMPONENT FOUND: " + c.Id_concrete);
+			else
+				Console.WriteLine("HASH COMPONENT NOT FOUND: " + acfaRef.Id_functor_app);
+			
             return c; // if c is null, there is not an implementation ....			
         }
 

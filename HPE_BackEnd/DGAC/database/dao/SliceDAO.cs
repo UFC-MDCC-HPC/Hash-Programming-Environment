@@ -62,6 +62,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             reader = null;
             dbcmd.Dispose();
             dbcmd = null;
+			
+		    if (s==null) 
+		    {
+		  	   Console.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice + ", partition_index=" + partition_index);
+		    }
+				
             return s;
 
         }//list
@@ -147,35 +153,60 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         }//list2
 
-        public IList<Slice> listByInterface(int id_abstract, string id_interface)
+        public IList<Slice> listByInterface(int id_abstract_start, string id_interface, int partition_index)
         {
-
+			IDictionary<string,string> mem = new Dictionary<string,string>();
             IList<Slice> list = new List<Slice>();
-            IDbConnection dbcon = Connector.DBcon;
-            IDbCommand dbcmd = dbcon.CreateCommand();
-            string sql =
-                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
-                "FROM slice " +
-                "WHERE id_abstract=" + id_abstract + " and " + "id_interface like '" + id_interface + "'";
-            dbcmd.CommandText = sql;
-            IDataReader reader = dbcmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Slice s = new Slice();
-                s.Id_abstract = (int)reader["id_abstract"];
-                s.Id_interface = (string)reader["id_interface"];
-                s.Id_interface_slice = (string)reader["id_interface_slice"];
-                s.Id_inner = (string)reader["id_inner"];
-                s.Partition_index = (int)reader["partition_index"];
-                s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
-                s.PortName = (string)reader["property_name"];
-                list.Add(s);
-            }//while
-            // clean up
-            reader.Close();
-            reader = null;
-            dbcmd.Dispose();
-            dbcmd = null;
+			
+			int id_abstract = id_abstract_start;
+			
+			while (id_abstract > 0) 
+			{
+	            IDbConnection dbcon = Connector.DBcon;
+	            IDbCommand dbcmd = dbcon.CreateCommand();
+	            string sql =
+	                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
+	                "FROM slice " +
+	                "WHERE id_abstract=" + id_abstract + " and id_interface like '" + id_interface + "' and partition_index = " + partition_index;
+	            dbcmd.CommandText = sql;
+	            IDataReader reader = dbcmd.ExecuteReader();
+	            while (reader.Read())
+	            {
+	                Slice s = new Slice();
+	                s.Id_abstract = (int)reader["id_abstract"];
+	                s.Id_interface = (string)reader["id_interface"];
+	                s.Id_interface_slice = (string)reader["id_interface_slice"];
+	                s.Id_inner = (string)reader["id_inner"];
+	                s.Partition_index = (int)reader["partition_index"];
+	                s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
+	                s.PortName = (string)reader["property_name"];
+					if (!mem.ContainsKey(s.Id_inner))
+					{
+					   mem.Add(s.Id_inner, s.Id_inner);
+		               list.Add(s);
+				    }
+	            }//while
+				
+				// clean up
+	            reader.Close();
+	            reader = null;
+	            dbcmd.Dispose();
+	            dbcmd = null;
+	            
+                AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+				if (acf.Id_functor_app_supertype > 0)
+				{
+				   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+				   Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);					
+				   id_abstract = acfa.Id_abstract;
+				   id_interface = i.Id_interface_super;
+				   partition_index = i.Partition_index_super;
+				}
+				else 
+					id_abstract = -1;
+				   
+			}
+			
             return list;
 
         }//list

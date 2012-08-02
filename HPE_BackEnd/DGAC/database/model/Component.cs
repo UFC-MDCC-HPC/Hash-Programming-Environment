@@ -39,10 +39,26 @@ public class Component : HashComponent {
     public int Id_abstract
     {
         get { 
-             //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-            AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(this.Id_functor_app);             
+			AbstractComponentFunctorApplication acfa = null;
+			AbstractComponentFunctorApplication acfa_previous = null;
+			bool found = false;
+			Component cThis = this;
+			while (!found)
+			{
+				acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app);             
+                acfa_previous = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve_next(acfa.Id_functor_app);					
+				if (acfa_previous == null)
+				{
+					found = true;
+				} 
+				else
+				{
+					cThis = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa_previous.Id_functor_app);					
+				}
+					
+			}
+				
              return acfa.Id_abstract; 
-        
         }
     }
 

@@ -46,8 +46,13 @@ public class SupplyParameterParameterDAO{
        reader = null;
        dbcmd.Dispose();
        dbcmd = null;
+			
+	   if (spc==null) 
+	   {
+	  	  Console.WriteLine("SupplyParameterParameterDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
+	   }
+			
        return spc;
-       
 	}//list
 
 

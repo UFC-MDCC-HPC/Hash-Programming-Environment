@@ -151,7 +151,7 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 catch (Exception e)
                 {
-                    Console.Error.Write("Rolling back transaction...");
+                    Console.Error.Write("Rolling back transaction... " + e.Message);
                     Connector.rollBackTransaction();
                     Console.Error.WriteLine("ok");
                     throw e;
@@ -219,7 +219,7 @@ namespace br.ufc.pargo.hpe.backend
                                                                            password,
                                                                            curDir);
                         if (!exists && outputType != Constants.EXE_OUT)
-                            udao.setPublicKey(id_concrete, unitName, publicKey);
+                            udao.setPublicKey(cuid, unitName, publicKey);
                     }
 
                     Console.Error.Write("ok ");
@@ -232,7 +232,8 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine("Rolling back transaction !");
+					Console.Error.WriteLine("Rolling back transaction ! Exception: " + e.Message);
+					Console.Error.WriteLine(e.StackTrace);
                     Connector.rollBackTransaction();
                     throw e;
                 }
@@ -465,16 +466,16 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
-            public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir)
+            public String[] runApplicationNew(string instantiatior_string, string userName, string password, string curDir)
             {
 		    	int id_concrete = 0;
                 session_id = getSessionID(id_concrete);
 				string session_id_string = "session_" + session_id.ToString();
 				
-				return runApplicationNew(instantiatior_string, eIds, eVls, userName, password, curDir, 1, session_id_string);
+				return runApplicationNew(instantiatior_string, userName, password, curDir, 1, session_id_string);
 			}
 			
-            public String[] runApplicationNew(string instantiatior_string, string[] eIds, int[] eVls, string userName, string password, string curDir, int rounds, string session_id_string)
+            public String[] runApplicationNew(string instantiatior_string, string userName, string password, string curDir, int rounds, string session_id_string)
             {
                 string[] str_output = null;
                 // assert: eIds.Length = eVls.Length
@@ -483,7 +484,7 @@ namespace br.ufc.pargo.hpe.backend
                     ManagerObject manager = connectToManager(out ch);
                     Connector.openConnection();					
 
-                    IList<string> enumList = new List<string>();
+/*                    IList<string> enumList = new List<string>();
                     for (int i = 0; i < eIds.Length; i++)
                     {
                         enumList.Add(eIds[i]);
@@ -491,11 +492,11 @@ namespace br.ufc.pargo.hpe.backend
                     }
                     string[] enums = new string[enumList.Count];
                     enumList.CopyTo(enums, 0);
-
+					 */
 
                     /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();
-                    properties.putStringArray(Constants.ENUMS_KEY, enums);
+                    //properties.putStringArray(Constants.ENUMS_KEY, enums);
                     properties.putInt(Constants.SESSION_KEY, session_id);
 
                     Console.WriteLine("before manager.createInstance");                    
@@ -704,10 +705,10 @@ namespace br.ufc.pargo.hpe.backend
 
             public static br.ufc.pargo.hpe.backend.DGAC.database.Unit takeUnit(
                 DGAC.database.Component c,
-                string id_interface)
+                string id_interface, int partition_index)
             {
                 string id_unit = null;
-                Interface i2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveSuper(c.Id_abstract, id_interface);
+                Interface i2 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveSuper(c.Id_abstract, id_interface, partition_index);
                 foreach (Interface i in br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.list(c.Id_abstract))
                 {
                     if (i.Id_interface_super_top.Equals(i2.Id_interface_super_top))
@@ -723,8 +724,11 @@ namespace br.ufc.pargo.hpe.backend
             {
                 IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
                 System.Type[] result = new System.Type[ipars.Count];
+				
+				Console.WriteLine ("IPARS.LENGTH = " + ipars.Count);
                 foreach (InterfaceParameter ipar in ipars)
                 {
+					Console.WriteLine("parameter ----- " + ipar.ParId);
                     int id_functor_app_parameter;
                     string parid = ipar.ParId;
                     if (actualParameters.TryGetValue(parid, out id_functor_app_parameter) || 
@@ -732,7 +736,7 @@ namespace br.ufc.pargo.hpe.backend
                     {
                         AbstractComponentFunctorApplication acfa_parameter = BackEnd.acfadao.retrieve(id_functor_app_parameter);
                         AbstractComponentFunctor acf_parameter = BackEnd.acfdao.retrieve(acfa_parameter.Id_abstract);
-                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter);
+                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter,0);
 
                         IDictionary<string, int> actualParameters_new;
                         determineActualParameters(actualParameters, id_functor_app_parameter, out actualParameters_new);
@@ -746,6 +750,11 @@ namespace br.ufc.pargo.hpe.backend
                         int class_nargs = iPar.Class_nargs;
                         string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 
+//				Console.WriteLine("PAR class_name = "  + class_name);
+//				Console.WriteLine("PAR class_nargs = " + class_nargs);
+//				Console.WriteLine ("PAR strType = " + strType);
+//				Console.WriteLine ("PAR parameters.Length = " + parameters.Length);
+						
                         Assembly a = Assembly.Load(assembly_string);
                         System.Type t = a.GetType(strType);
 
@@ -758,7 +767,56 @@ namespace br.ufc.pargo.hpe.backend
                 return result;
             }
 
-            private static System.Type setupParameters2(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
+            public static System.Type[] calculateParameterConstraints(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
+            {
+                IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
+                System.Type[] result = new System.Type[ipars.Count];
+				
+				Console.WriteLine ("IPARS.LENGTH = " + ipars.Count);
+                foreach (InterfaceParameter ipar in ipars)
+                {
+					
+					
+					Console.WriteLine("parameter ----- " + ipar.ParId);
+                    int id_functor_app_parameter;
+                    string parid = ipar.ParId;
+                    if (actualParameters.TryGetValue(parid, out id_functor_app_parameter) || 
+                        actualParameters.TryGetValue(parid + "#" + id_functor_app, out id_functor_app_parameter))
+                    {
+                        AbstractComponentFunctorApplication acfa_parameter = BackEnd.acfadao.retrieve(id_functor_app_parameter);
+                        AbstractComponentFunctor acf_parameter = BackEnd.acfdao.retrieve(acfa_parameter.Id_abstract);
+                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter, 0);
+
+                        IDictionary<string, int> actualParameters_new;
+                        determineActualParameters(actualParameters, id_functor_app_parameter, out actualParameters_new);
+                        
+                        System.Type[] parameters = calculateActualClassParameteres(iPar, id_functor_app_parameter, actualParameters_new);
+                        
+                        // Build a type from iPar applied to parType.
+
+                        string assembly_string = iPar.Assembly_string;      // where to found the DLL (retrieve from the component).
+                        string class_name = iPar.Class_name;  // the name of the class inside the DLL.
+                        int class_nargs = iPar.Class_nargs;
+                        string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
+
+//				Console.WriteLine("PAR class_name = "  + class_name);
+//				Console.WriteLine("PAR class_nargs = " + class_nargs);
+//				Console.WriteLine ("PAR strType = " + strType);
+//				Console.WriteLine ("PAR parameters.Length = " + parameters.Length);
+						
+                        Assembly a = Assembly.Load(assembly_string);
+                        System.Type t = a.GetType(strType);
+
+                        System.Type closedT = parameters.Length > 0 ? t.MakeGenericType(parameters) : t;
+
+                        result[ipar.ParOrder] = closedT;
+
+                    }
+                }
+                return result;
+            }
+
+			private static System.Type setupParameters2(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
             {
                 IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract, i.Id_interface);
                 System.Type[] parameters = new System.Type[ipars.Count];
@@ -771,7 +829,7 @@ namespace br.ufc.pargo.hpe.backend
                     {
                         AbstractComponentFunctorApplication acfa_parameter = BackEnd.acfadao.retrieve(id_functor_app_parameter);
                         AbstractComponentFunctor acf_parameter = BackEnd.acfdao.retrieve(acfa_parameter.Id_abstract);
-                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter);
+                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter, 0);
 
                         IDictionary<string, int> actualParameters_new;
                         determineActualParameters(actualParameters, id_functor_app_parameter, out actualParameters_new);
@@ -808,31 +866,31 @@ namespace br.ufc.pargo.hpe.backend
             private static void calculateActualParams_(
                 IDictionary<string,int> actualParameters,
                 AbstractComponentFunctorApplication acfaRef,
-                string id_interface,
+                string id_interface, int partition_index,
                 out System.Type[] actualParams)
             {
                 IDictionary<string, int> actualParameters_new;
                 determineActualParameters(actualParameters, acfaRef.Id_functor_app, out actualParameters_new);
 
-                Interface i = BackEnd.idao.retrieveSuper(acfaRef.Id_abstract, id_interface);
+                Interface i = BackEnd.idao.retrieveSuper(acfaRef.Id_abstract, id_interface, partition_index);
                 actualParams = calculateActualClassParameteres(i, acfaRef.Id_functor_app, actualParameters_new);
             }
 
             public static void calculateActualParams(
                 AbstractComponentFunctorApplication acfaRef,
-                string id_interface,
+                string id_interface, int partition_index,
                 out System.Type[] actualParams)
             {
-                calculateActualParams_(new Dictionary<string, int>(), acfaRef, id_interface, out actualParams);
+                calculateActualParams_(new Dictionary<string, int>(), acfaRef, id_interface, partition_index, out actualParams);
             }
             
             public static void calculateActualParams(
                 IUnit enclosing_unit, 
                 AbstractComponentFunctorApplication acfaRef,
-                string id_interface, 
+                string id_interface, int partition_index, 
                 out System.Type[] actualParams)
             {
-                calculateActualParams_(enclosing_unit.ActualParameters, acfaRef, id_interface, out actualParams);
+                calculateActualParams_(enclosing_unit.ActualParameters, acfaRef, id_interface, partition_index, out actualParams);
             }
 
             private static void updateInnerComponentType(IUnit enclosing_unit, InnerComponent ic)
@@ -858,12 +916,69 @@ namespace br.ufc.pargo.hpe.backend
                 int class_nargs = u.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 				
+				Console.WriteLine("assembly_string = "  + assembly_string);
+				Console.WriteLine("class_name = "  + class_name);
+				Console.WriteLine("class_nargs = " + class_nargs);
+				Console.WriteLine ("strType = " + strType);
+				Console.WriteLine ("actualParams.Length = " + actualParams.Length);
+				
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
+				
+				for (int i=0; i < actualParams.Length; i++)
+				{
+					System.Type ttt = actualParams[i];
+					if (ttt == null) 
+					{
+					   Console.WriteLine("PARAM (actualParams): NULL ---" + t);
+					   actualParams[i] = fetchTypeConstraint(u,i);					
+					}
+					else 
+					{
+					   Console.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
+					}
+				}
+				
 
                 System.Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
                 type = closedT.FullName;
             }
+			
+			public static System.Type fetchTypeConstraint(br.ufc.pargo.hpe.backend.DGAC.database.Unit u, int i) 
+			{
+			    br.ufc.pargo.hpe.backend.DGAC.database.Component c = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve(u.Id_concrete);	
+				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(c.Id_abstract);
+
+				InterfaceParameter ip = br.ufc.pargo.hpe.backend.DGAC.BackEnd.ipdao.retrieveByOrder(acf.Id_abstract, u.Id_interface, i);
+				
+               // AbstractComponentFunctorParameter acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(acf.Id_abstract,ip.ParId);
+				
+			   //	AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
+				
+				SupplyParameterComponent spc = (SupplyParameterComponent) br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.retrieve(ip.ParId, c.Id_functor_app);
+				AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
+				
+				Interface iPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveSuper(acfa.Id_abstract, ip.Id_unit_parameter, 0);
+			    	
+                string assembly_string = iPar.Assembly_string;      // where to found the DLL (retrieve from the component).
+                string class_name = iPar.Class_name;  // the name of the class inside the DLL.
+                int class_nargs = iPar.Class_nargs;
+                string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
+
+				Console.WriteLine("PAR class_name = "  + class_name);
+				Console.WriteLine("PAR class_nargs = " + class_nargs);
+				Console.WriteLine ("PAR strType = " + strType);
+						
+                Assembly a = Assembly.Load(assembly_string);
+                System.Type t = a.GetType(strType);
+
+                //System.Type closedT = parameters.Length > 0 ? t.MakeGenericType(parameters) : t;
+
+                //result[ipar.ParOrder] = closedT;
+				
+				
+				return t;
+			}
 
             public static AbstractComponentFunctorApplication loadACFAFromInstantiator(ComponentFunctorApplicationType instantiator)
             {
@@ -942,9 +1057,10 @@ namespace br.ufc.pargo.hpe.backend
             {
                 string id_inner = slice.Id_inner;
                 string id_interface = slice.Id_interface_slice;
+				int partition_index = slice.Partition_index;
                 string portName = id_inner; /*slice.PortName;*/
 				
-				//Console.WriteLine("CREATE SLICE: id_inner=" + id_inner + ", id_interface=" +  id_interface);
+				Console.WriteLine("CREATE SLICE: id_inner=" + id_inner + ", id_interface=" +  id_interface + ", owner id_inner = " + ownerUnit.get_id_inner(ownerUnit) +  ", owner id_interface = " + ownerUnit.Id_unit);
 				
                 ComponentID user_cid = ownerUnit.CID;
                 Services services = ownerUnit.Services;
@@ -959,14 +1075,15 @@ namespace br.ufc.pargo.hpe.backend
                     br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
                     br.ufc.pargo.hpe.backend.DGAC.database.Component c;
                     InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
+					Console.WriteLine ("ic is null ?" + (ic==null) + ":" + ownerUnit.Id_abstract + "," + id_inner);
                     updateInnerComponentType(ownerUnit, ic);
                     AbstractComponentFunctorApplication acfaRef = BackEnd.acfadao.retrieve(ic.Id_functor_app);
                     c = resolveUnit(acfaRef, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop);
-                    u = takeUnit(c, id_interface);
+                    u = takeUnit(c, id_interface, partition_index);
                     if (u == null)
                         throw new ConcreteComponentNotFoundException(acfaRef.Id_functor_app);
                     System.Type[] actualParams;
-                    calculateActualParams(ownerUnit, acfaRef, id_interface, out actualParams);
+                    calculateActualParams(ownerUnit, acfaRef, id_interface, partition_index, out actualParams);
                     calculateGenericClassName(u, actualParams, out className);
 
                     // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
@@ -983,8 +1100,13 @@ namespace br.ufc.pargo.hpe.backend
                     // GET THE UNIT SLICE AND RETURNS IT
                     the_unit = (IUnit)services.getPort(portName);
                    
-                 //   the_unit.GlobalRank = ownerUnit.GlobalRank;
+                    the_unit.GlobalRank = ownerUnit.GlobalRank;
                     the_unit.WorldComm = ownerUnit.WorldComm;
+					
+					/* --- TODO: NOT VALID FOR MPMD */
+					the_unit.Rank = the_unit.GlobalRank;
+					the_unit.Size = the_unit.WorldComm.Size;
+					/* --- */
 					
 					the_unit.set_id_inner(ownerUnit,slice.Id_inner);
                 }
@@ -1020,8 +1142,13 @@ namespace br.ufc.pargo.hpe.backend
                 unit_slice.setActualParameters(actualParameters_new);
                 unit_slice.ActualParametersTop = unit.ActualParametersTop;
 				unit_slice.addContainerSlice(unit);
- //               unit_slice.GlobalRank = unit.GlobalRank;
+                unit_slice.GlobalRank = unit.GlobalRank;
                 unit_slice.WorldComm = unit.WorldComm;
+				
+				/* --- TODO: NOT VALID FOR MPMD */
+				unit_slice.Rank = unit_slice.GlobalRank;
+				unit_slice.Size = unit_slice.WorldComm.Size;
+				/* --- */
 
                 //calculateTopology(unit, unit_slice, id_inner);
 
@@ -1625,13 +1752,17 @@ namespace br.ufc.pargo.hpe.backend
 
             public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
             {
+				Console.WriteLine ("START determineActualParameters " + id_functor_app);
+				
                 actualParameters_new = new Dictionary<string, int>(); ;
 
                 foreach (KeyValuePair<string, int> parameter in actualParameters)
                 {
+					Console.WriteLine("traversing actual Parameters : " + parameter.Key);
                     if (parameter.Key.Contains("#"))
                     {
                         actualParameters_new.Add(parameter);
+						Console.WriteLine("adding parameter " + parameter);
                     }
                 }
 
@@ -1645,9 +1776,11 @@ namespace br.ufc.pargo.hpe.backend
                         SupplyParameterParameter spp = (SupplyParameterParameter)sp;
                         int id_functor_app_actual;
                         bool achou = actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+						Console.WriteLine("TESTING " + spp.Id_parameter_actual + " : " + achou + " , " + id_functor_app_actual);
                         if (achou)
                         {
                             actualParameters_new.Add(spp.Id_parameter, id_functor_app_actual);
+						    Console.WriteLine("adding parameter 1 " + spp.Id_parameter);
                         } 
 						
                     }
@@ -1655,9 +1788,11 @@ namespace br.ufc.pargo.hpe.backend
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                         actualParameters_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+						Console.WriteLine("adding parameter 2 " + spc.Id_parameter);
 						traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
                     }
                 }
+				Console.WriteLine ("END determineActualParameters " + id_functor_app);
             }
 
             private static void traverseParameters(int id_functor_app_top,
@@ -1676,14 +1811,16 @@ namespace br.ufc.pargo.hpe.backend
                         int id_functor_app_actual;
                         bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
                         string key = spp.Id_parameter + "#" + id_functor_app_top;
-                        if (!actualParameters.ContainsKey(key))
+                        if (!actualParameters.ContainsKey(key)) {
                             actualParameters.Add(key, id_functor_app_actual);
+						    Console.WriteLine("adding parameter 3 " + key);
+						}
                     }
                     else if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                         traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParametersTop, actualParameters);
-                    }
+                    } 
                 }
 
 

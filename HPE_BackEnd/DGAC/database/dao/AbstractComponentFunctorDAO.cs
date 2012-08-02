@@ -70,6 +70,10 @@ public class AbstractComponentFunctorDAO{
        reader = null;
        dbcmd.Dispose();
        dbcmd = null;
+			
+	   if (acf == null)
+				Console.Error.WriteLine("AbstractComponentFunctorDAO.cs: abstract component functor not found ! id_abstract=" + id_abstract);
+			
        return acf;
 	}
 

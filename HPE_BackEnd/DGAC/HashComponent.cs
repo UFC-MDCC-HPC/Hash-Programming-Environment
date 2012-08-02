@@ -293,11 +293,11 @@ public partial class ExtensionTypeType {
 public enum ItemChoiceType {
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlEnumAttribute(":extends")]
+    [System.Xml.Serialization.XmlEnumAttribute("extends")]
     extends,
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlEnumAttribute(":implements")]
+    [System.Xml.Serialization.XmlEnumAttribute("implements")]
     implements,
 }
 

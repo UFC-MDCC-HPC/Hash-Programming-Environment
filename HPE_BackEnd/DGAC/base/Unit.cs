@@ -16,6 +16,11 @@ namespace br.ufc.pargo.hpe.basic
 {
     public interface IUnit : Component, AutomaticSlicesPort
     {
+		int Rank {get; set;}      // Rank of the parallel unit.
+		int Size {get; set;}      // Number of the parallel units.
+		int[] Ranks {get; set;}   // Global ranks of the parallel units.
+		int GlobalRank {get; set;} // Global rank of the unit.
+		
         Intracommunicator WorldComm {get; set;}
        
         gov.cca.Services Services { get; }
@@ -26,6 +31,7 @@ namespace br.ufc.pargo.hpe.basic
         string Id_unit { set; get; }
 		int PartitionIndex {set; get;}
         
+		//string get_id_inner_0();
 		string get_id_inner(IUnit container);
 		void set_id_inner(IUnit container, string id_inner);
 

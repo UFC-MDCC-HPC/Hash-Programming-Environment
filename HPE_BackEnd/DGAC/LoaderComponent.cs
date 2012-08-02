@@ -118,6 +118,7 @@ namespace HPE_DGAC_LoadDB
 
                 AbstractComponentFunctorApplication aAppNew = new AbstractComponentFunctorApplication();
                 aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+			  //  Console.WriteLine("+++++++++++++++ " +  aAppNew.Id_functor_app);
                 aAppNew.Id_abstract = a.Id_abstract;
 
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
@@ -129,6 +130,53 @@ namespace HPE_DGAC_LoadDB
        //     }
         }
 
+        protected IList<AbstractComponentFunctorApplication> newAbstractComponentFunctorApplicationForImplements(ComponentInUseType c)
+        {
+			Console.WriteLine("----------- 1");
+		    IList<AbstractComponentFunctor> ancestrals = new List<AbstractComponentFunctor>();
+			
+			{
+                AbstractComponentFunctor a = lookForAbstractComponentFunctor(c.hash_component_UID);
+				if (a == null)
+                {
+                    return null;
+                }
+				
+			    Console.WriteLine("----------- 2" + (a.Id_functor_app_supertype));
+			    ancestrals.Add(a);				
+			    while (a.Id_functor_app_supertype >0) 
+			    {
+				   AbstractComponentFunctorApplication acfa_ancestral = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(a.Id_functor_app_supertype);
+				   a = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa_ancestral.Id_abstract);
+			       ancestrals.Add(a);
+			    }
+			
+			
+			}
+			
+			IList<AbstractComponentFunctorApplication> aAppNewList = new List<AbstractComponentFunctorApplication>();
+			
+			AbstractComponentFunctorApplication aAppNewOld = null;
+			AbstractComponentFunctorApplication aAppNew = null;
+			int next_id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+			foreach (AbstractComponentFunctor a in ancestrals) 
+			{
+                // CREATE AbstractComponentFunctorApplication
+				
+                aAppNew = new AbstractComponentFunctorApplication();
+                aAppNew.Id_abstract = a.Id_abstract;
+				aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+			    br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
+                loadAbstractComponentFunctorApplicationParameters(c, aAppNew);
+				aAppNewList.Add(aAppNew);
+				if (aAppNewOld != null)
+				   br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.updateIdFunctorAppNext(aAppNewOld, aAppNew.Id_functor_app);
+				aAppNewOld = aAppNew;				
+			}
+
+            return aAppNewList;
+       //     }
+        }
         
         protected IList<SupplyParameter> loadAbstractComponentFunctorApplicationParameters(ComponentInUseType c, AbstractComponentFunctorApplication aNew)
         {

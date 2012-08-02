@@ -63,7 +63,11 @@
 		<attribute name="uRef" type="string" use="required"></attribute>
 		<attribute name="iRef" type="string" use="required"></attribute>
 		<attribute name="private" type="boolean"></attribute>
-		<attribute name="visibleInterface" type="boolean" use="optional" default="true"></attribute>
+		<attribute name="visibleInterface" type="boolean" use="optional"
+			default="true">
+		</attribute>
+		<attribute name="multiple" type="boolean" use="optional"></attribute>
+		<attribute name="replica" type="int" use="optional"></attribute>
 	</complexType>
 
 	<complexType name="InterfaceType">
@@ -127,6 +131,7 @@
 		<attribute name="hash_component_UID" type="string"></attribute>
 		<attribute name="parameter_id" type="string"></attribute>
 		<attribute name="package" type="string"></attribute>
+		<attribute name="multiple" type="boolean" use="optional"></attribute>
 	</complexType>
 
 	<simpleType name="SupportedKinds">
@@ -134,11 +139,15 @@
 			<enumeration value="Data"></enumeration>
 			<enumeration value="Computation"></enumeration>
 			<enumeration value="Synchronizer"></enumeration>
-			<enumeration value="Architecture"></enumeration>
+			<enumeration value="Platform"></enumeration>
 			<enumeration value="Environment"></enumeration>
 			<enumeration value="Qualifier"></enumeration>
 			<enumeration value="Application"></enumeration>
 			<enumeration value="Enumerator"></enumeration>
+			<enumeration value="Facet"></enumeration>
+			<enumeration value="Domain"></enumeration>
+			<enumeration value="Topology"></enumeration>
+			<enumeration value="value"></enumeration>
 		</restriction>
 	</simpleType>
 
