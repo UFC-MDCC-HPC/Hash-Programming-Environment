@@ -12,12 +12,65 @@ using gov.cca;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using br.ufc.pargo.hpe.ports;
 using MPI;
+using br.ufc.pargo.hpe.kinds;
 
 namespace br.ufc.pargo.hpe.basic
 {
 
-    [Serializable]
-    public abstract class Unit : IUnit
+	public class GoPortWrapper : MarshalByRefObject, gov.cca.ports.GoPort
+	{
+		public delegate int Go_app();
+		
+		private Go_app go_app;
+		
+		
+		public GoPortWrapper(Go_app go_app)
+		{
+			this.go_app = go_app;
+		}
+		
+		
+		#region GoPort implementation
+		public int go ()
+		{
+			return go_app();
+			
+		}
+		#endregion
+	}
+	
+	public class AutomaticSlicesPortWrapper : MarshalByRefObject, AutomaticSlicesPort
+	{
+		
+		public delegate void MTH();
+		
+		private MTH create_slices_mth;
+		private MTH destroy_slices_mth;
+		
+		
+		public AutomaticSlicesPortWrapper(MTH create_slices_mth, MTH destroy_slices_mth)
+		{
+			this.create_slices_mth = create_slices_mth;
+			this.destroy_slices_mth = destroy_slices_mth;
+		}
+		#region AutomaticSlicesPort implementation
+		public void create_slices ()
+		{
+			this.create_slices_mth();
+		}
+
+		public void destroy_slices ()
+		{
+			this.destroy_slices_mth();
+		}
+		#endregion
+
+
+	}
+	
+
+    //[Serializable]
+    public abstract class Unit : MarshalByRefObject, IUnit
     {
         public Unit()
         {
@@ -37,18 +90,31 @@ namespace br.ufc.pargo.hpe.basic
             int id_abstract = this.Id_abstract;
             string id_interface = this.Id_unit;
 			int partition_index = this.partition_index;
-
+			
+            AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(id_abstract);
+            int slice_kind = Constants.kindMapping[acf.Kind];
             IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
+			
             foreach (Slice slice in sList)
             {
                 // The uses port name will be the name of the property
-				Console.WriteLine ("REGISTER USES PORT: " + slice.Id_inner);
                services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
             }
-
-            Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);            
+			
+			
+				
+			
+            Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);  
+			
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, i.Class_name, new TypeMapImpl());
-            services.addProvidesPort(this, Constants.DEFAULT_CREATESLICES_PORT_IMPLEMENTS, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
+			
+			AutomaticSlicesPort create_slices_app_port_wrapper = new AutomaticSlicesPortWrapper(((AutomaticSlicesPort)this).create_slices, ((AutomaticSlicesPort)this).destroy_slices);
+            services.addProvidesPort(create_slices_app_port_wrapper, Constants.CREATE_SLICES_PORT_NAME, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
+			
+			if (slice_kind == Constants.KIND_APPLICATION) {		
+				gov.cca.ports.GoPort app_port_wrapper = new GoPortWrapper(((gov.cca.ports.GoPort) this).go);
+			    services.addProvidesPort(app_port_wrapper, Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
+			}
         }
 
         #region CreateSlicesPort
@@ -64,15 +130,15 @@ namespace br.ufc.pargo.hpe.basic
         {
             Connector.openConnection();
             // CREATE SLICES !!!
-			Console.WriteLine("BEGIN - SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
+		//	Console.WriteLine("BEGIN - SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
             
 			IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
 			
-			foreach (Slice slice in sList)
-			{
-				Console.WriteLine("inner = " + slice.Id_inner + ", unit =" + slice.Id_interface_slice);
-			}
-			Console.WriteLine("END - SLICES OF " + this.get_id_inner(owner_unit));
+		//	foreach (Slice slice in sList)
+		//	{
+		//		Console.WriteLine("inner = " + slice.Id_inner + ", unit =" + slice.Id_interface_slice);
+		//	}
+		//	Console.WriteLine("END - SLICES OF " + this.get_id_inner(owner_unit));
 			
 			
             foreach (Slice slice in sList)
@@ -119,17 +185,17 @@ namespace br.ufc.pargo.hpe.basic
 	                                                      );
 								
 								
-								Console.WriteLine ("BEGIN /////////////");
-								Console.WriteLine(slice.Id_inner);                 // id_inner_original
-								Console.WriteLine(slice.Id_interface_slice_top);   // id_interface_slice_original
-								Console.WriteLine(id_abstract_owner);              // id_abstract
-								Console.WriteLine(i.Id_interface_super_top);       // id_interface_slice_owner
-								Console.WriteLine(id_inner_owner);                 // id_inner_owner
-								Console.WriteLine ("END /////////////");
+								//Console.WriteLine ("BEGIN /////////////");
+								//Console.WriteLine(slice.Id_inner);                 // id_inner_original
+								//Console.WriteLine(slice.Id_interface_slice_top);   // id_interface_slice_original
+								//Console.WriteLine(id_abstract_owner);              // id_abstract
+								//Console.WriteLine(i.Id_interface_super_top);       // id_interface_slice_owner
+								//Console.WriteLine(id_inner_owner);                 // id_inner_owner
+								//Console.WriteLine ("END /////////////");
 								if (se != null)
 								{
 			                        string container_portName = se.Id_inner;		
-									Console.WriteLine("REDIRECT SLICE id_inner_original = " + slice.Id_inner + ", id_inner_owner = " + id_inner_owner);
+									Console.WriteLine("REDIRECT SLICE user_id=" + user_id.getInstanceName() + ", portName=" + portName + ", container_id=" + container_id.getInstanceName() + ", container_portName=" + container_portName);
 			                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
 									IUnit unit = (IUnit) Services.getPort(portName);
 									unit.set_id_inner(this, portName);
@@ -158,51 +224,64 @@ namespace br.ufc.pargo.hpe.basic
 					}
                 }
             }            
+			
             
 //			Console.WriteLine("STARTING SLICES ... " + this.AllSlices.Count);
             foreach (IUnit unit_slice in this.AllSlices)
             {
 			    unit_slice.create_slices(this);
             }
-
+			
+			this.initialize_slices();
+			this.post_initialize_slices();
+			
 //			Console.WriteLine("END SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
 			//Console.WriteLine();
             Connector.closeConnection();
         }
-
-        private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
+		
+		private bool initialized_flag = false;
+		private bool after_initialized_flag = false;
+       // private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
 
         public void initialize_slices()
         {
+			if (!initialized_flag)
+			{
+	            foreach (IUnit unit_slice in this.AllSlices)
+	            {
+	               // if (!initialized.ContainsKey(unit_slice))
+	               // {
+	                    unit_slice.initialize_slices();
+	                   // initialized.Add(unit_slice, true);
+	               // }
+	            }
+						
+				initialize();
+				initialized_flag = true;
 
-            foreach (IUnit unit_slice in this.AllSlices)
-            {
-                if (!initialized.ContainsKey(unit_slice))
-                {
-                    unit_slice.initialize_slices();
-                    initialized.Add(unit_slice, true);
-                }
-            }
-					
-			Console.WriteLine("initialize " + this.CID.getInstanceName());
-			initialize();
+				Console.WriteLine("initialize " + this.CID.getInstanceName());
+			}
 			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
         }
 
         public void post_initialize_slices()
         {
-
-			post_initialize();
-
-			foreach (IUnit unit_slice in this.AllSlices)
-            {
-                if (initialized.ContainsKey(unit_slice))
-                {
-                    unit_slice.post_initialize_slices();
-                    initialized.Remove(unit_slice);
-                }
-            }
-						
+			if (initialized_flag && !after_initialized_flag)
+			{
+				post_initialize();
+				after_initialized_flag = true;
+				Console.WriteLine("after initialize " + this.CID.getInstanceName());			
+	
+				foreach (IUnit unit_slice in this.AllSlices)
+	            {
+	                //if (initialized.ContainsKey(unit_slice))
+	                //{
+	                    unit_slice.post_initialize_slices();
+	                   // initialized.Remove(unit_slice);
+	                //}
+	            }
+			}
 			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " post initialized !!! ");
         }
 		
@@ -533,4 +612,5 @@ namespace br.ufc.pargo.hpe.basic
 		public int GlobalRank {get {return global_rank;} set {global_rank = value;}}   // Number of the parallel units.		
 
     }
+	
 }

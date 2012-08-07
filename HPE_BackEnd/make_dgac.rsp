@@ -27,7 +27,9 @@ DGAC/WorkerObject.cs
 DGAC/BackEndEnvironment.cs
 DGAC/externalreferences.cs
 DGAC/CCAExceptionImpl.cs
-DGAC/ManagerServices.cs
+DGAC/ManagerServicesImpl.cs
+DGAC/GoPortImpl.cs
+DGAC/AutomaticSlicesPortImpl.cs
 
 -target:library
 

@@ -13,7 +13,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
     public class Constants
     {
 
-
         public static string PROPERTIES_FILE = getPropertiesFilePath(); // "h:\\temp\\hpe.backend.properties";
 
         private static string getPropertiesFilePath()
@@ -38,7 +37,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
             return properties_file_path;
         }
         public static int WORKER_PORT = 4865;
+        public static int MANAGER_PORT = 4864;
         public static string WORKER_SERVICE_NAME = "WorkerService";
+        public static string MANAGER_SERVICE_NAME = "ManagerService";
+		public const string BUILDER_SERVICE_PORT_NAME = "builder_service";
+		public const string BUILDER_SERVICE_PORT_TYPE = "gov.cca.BuilderService";
+		public const string REGISTRY_PORT_NAME = "registry";
+		public const string REGISTRY_PORT_TYPE = "gov.cca.ports.ServiceRegistry";
         public static string MANAGER_PORT_NAME = "ManagerHost";
         public const int DLL_OUT = 0;
         public const int EXE_OUT = 1;
@@ -60,26 +65,30 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public static string connectionString = FileUtil.readConstant("connection_string");
         public static string externalRefsFile = FileUtil.readConstant("external_references_file");
 
-        public static string ENUMS_KEY = "enumerator";
-        public static string NODES_KEY = "nodes";
-        public static string KEY_KEY = "key";      
-        public static string UID_KEY = "uid";
-        public static string SESSION_KEY = "session";
+        public const string ENUMS_KEY = "enumerator";
+        public const string NODES_KEY = "nodes";
+        public const string KEY_KEY = "key";      
+        public const string UID_KEY = "uid";
+        public const string SESSION_KEY = "session";
         //public static string ASSEMBLY_STRING_KEY = "assembly_string";
-        public static string COMPONENT_KEY = "id_concrete";
-        public static string ID_FUNCTOR_APP = "id_functor_app";
+        public const string COMPONENT_KEY = "id_concrete";
+        public const string ID_FUNCTOR_APP = "id_functor_app";
         //public static string ID_ABSTRACT_KEY = "id_abstract";
         //public static string ID_INNER_KEY = "id_inner";
-        public static string UNIT_KEY = "id_interface";
+        public const string UNIT_KEY = "id_interface";
        // public static string KIND_KEY = "kind";
 
-        public static string DEFAULT_PROVIDES_PORT_IMPLEMENTS = "implements";
-        public static string DEFAULT_CREATESLICES_PORT_IMPLEMENTS = "create_slices";
-        public static string DEFAULT_PROVIDES_PORT_SERVICE = "service_client";
-        public static string DEFAULT_USES_PORT_SERVICE = "service_server";
+        public const string DEFAULT_PROVIDES_PORT_IMPLEMENTS = "implements";
+        //public const string DEFAULT_CREATESLICES_PORT_IMPLEMENTS = "create_slices";
+        public const string DEFAULT_PROVIDES_PORT_SERVICE = "service_client";
+        public const string DEFAULT_USES_PORT_SERVICE = "service_server";
 
+        public static string CREATE_SLICES_PORT_NAME = "automatic_slices";
         public static string CREATE_SLICES_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";
-        public static string GO_PORT_TYPE = "gov.cca.ports.GoPort";
+        public const string GO_PORT_TYPE = "gov.cca.ports.GoPort";
+        public const string GO_PORT_NAME = "go";
+        public const string PARAMETER_PORT_TYPE = "gov.cca.ports.ParameterPort";
+        public const string PARAMETER_PORT_NAME = "parameter";
 
         public const int KIND_UNRECOGNIZED = -1;
         public const int KIND_APPLICATION   = 0;

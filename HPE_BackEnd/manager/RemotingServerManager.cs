@@ -5,6 +5,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Collections;
+using System.Runtime.Remoting.Activation;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
@@ -26,7 +27,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private ManagerObject manager = null;
 
-        private ManagerObject startManagerServer()
+        private void startManagerServer()
         {
             Console.WriteLine("Starting Manager ");
 
@@ -35,27 +36,32 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
             IDictionary prop = new Hashtable();
             prop["portName"] = Constants.MANAGER_PORT_NAME;
-//                 channelManagerServer = new IpcChannel(Constants.MANAGER_PORT_NAME);
             channelManagerServer = new IpcChannel(prop, client_provider, server_provider);
 
             ChannelServices.RegisterChannel(channelManagerServer, false);
-
-            RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
-                                                              "ManagerHost.rem",
-                                                              WellKnownObjectMode.Singleton);
+			
+			RemotingConfiguration.ApplicationName = "ManagerHost";
+            RemotingConfiguration.RegisterActivatedServiceType(typeof(ManagerObject));
+/*			
+            //RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
+            //                                                  "ManagerHost.rem",
+            //                                                  WellKnownObjectMode.Singleton);
             ManagerObject o = null;
 
             try
             {
-                o = (ManagerObject)Activator.GetObject(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
+				object[] activateAttribute = 
+			              {new UrlAttribute("ipc://ManagerHost")};
+				o = (ManagerObject) Activator.CreateInstance(typeof(ManagerObject), null, activateAttribute);
+                // o = (ManagerObject)Activator.GetObject(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
                 Console.WriteLine("Manager Service Running on ");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message + ", INNER EXCEPTION: " + e.InnerException.Message);
             }
 
-            return o;
+            return o;*/
         }
 
         private void stopManagerServer() 
@@ -68,15 +74,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         protected override void OnStart(string[] args)
         {
-            manager = startManagerServer();
-            if (manager != null)
-            {
-                manager.startWorkerClients();
-            }
-            else
-            {
-                Console.Error.WriteLine("Error initializing the manager object !");
-            }             
+            startManagerServer();
+            //if (manager != null)
+            //{
+            //    manager.startWorkerClients();
+            //}
+            //else
+            //{
+             //   Console.Error.WriteLine("Error initializing the manager object !");
+            //}             
         }
 
         protected override void OnStop()

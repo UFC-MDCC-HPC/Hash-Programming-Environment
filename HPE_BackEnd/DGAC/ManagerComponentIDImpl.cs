@@ -10,12 +10,14 @@ namespace gov
         public abstract class ManagerComponentID : ComponentID
         {
             public abstract string InstanceName { get; set; }
+			public abstract string ClassName { get; set; }
             public abstract int[] WorkerNodes { get; set; }
             public abstract string[] WorkerUnitNames { get; set; }
             public abstract int[] WorkerUnitIndexes { get; set; }
 
            // public abstract WorkerComponentID WorkerComponentID { get; }
             public abstract WorkerComponentID getWorkerComponentID(int node);
+			public abstract void registerWorkerComponentID(int node, WorkerComponentID wcid);
             public abstract int Id_functor_app { get; }
             public abstract int Kind { get; }
         }
@@ -29,20 +31,26 @@ namespace gov
             private string[] unit_ids = null;
             private int[] indexes = null;
             private string instanceNamePrim = null;
+            private string classNamePrim = null;
 
             #endregion
 
             #region constructors
 
-            public ManagerComponentIDImpl()
-            {
-            }
-
-            public ManagerComponentIDImpl(string instanceName)
+            //public ManagerComponentIDImpl()
+            //{
+            //}
+			
+			// For registering a Host Program
+            public ManagerComponentIDImpl(string instanceName, string className, int[] nodes)
             {
                 this.instanceNamePrim = instanceName;
+				this.classNamePrim = className;
+				this.WorkerNodes = nodes;
+                this.wcids = new Dictionary<int, WorkerComponentID>();
             }
-
+			
+			// For registering a #-component
             public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, WorkerComponentID[] wcids, int id_functor_app, int kind)
             {
                 this.instanceNamePrim = instanceName;
@@ -68,6 +76,11 @@ namespace gov
                 set { this.instanceNamePrim = value; }
             }
 
+            public override string ClassName
+            {
+                get { return classNamePrim; }
+                set { this.classNamePrim = value; }
+            }
 
             public override int[] WorkerNodes
             {
@@ -103,8 +116,13 @@ namespace gov
 
             #endregion
 
-            private IDictionary<int,WorkerComponentID> wcids;
-
+            private IDictionary<int, WorkerComponentID> wcids = new Dictionary<int,WorkerComponentID>();
+			
+			public override void registerWorkerComponentID(int node, WorkerComponentID wcid)
+            {
+                wcids.Add (node,wcid);
+            }
+			
             public override WorkerComponentID getWorkerComponentID(int node)
             {
                 WorkerComponentID wcid;

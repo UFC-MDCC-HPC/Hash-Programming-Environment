@@ -164,7 +164,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
         {
-			Console.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
+			//Console.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
 				
             Component c;
 
@@ -191,10 +191,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 cache.Add(acfaRef.Id_abstract, c);
             }
 			
-			if (c!=null)
-				Console.WriteLine("HASH COMPONENT FOUND: " + c.Id_concrete);
-			else
-				Console.WriteLine("HASH COMPONENT NOT FOUND: " + acfaRef.Id_functor_app);
+			//if (c!=null)
+			//	Console.WriteLine("HASH COMPONENT FOUND: " + c.Id_concrete);
+			//else
+			//	Console.WriteLine("HASH COMPONENT NOT FOUND: " + acfaRef.Id_functor_app);
 			
             return c; // if c is null, there is not an implementation ....			
         }

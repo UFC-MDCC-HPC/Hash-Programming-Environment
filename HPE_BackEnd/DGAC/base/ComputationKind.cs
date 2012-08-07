@@ -16,6 +16,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{	
 	}
 	
+	//[Serializable]
 	public abstract class Computation : Unit {
 	   
 	}	

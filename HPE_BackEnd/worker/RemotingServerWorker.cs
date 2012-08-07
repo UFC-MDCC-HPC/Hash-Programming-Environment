@@ -8,6 +8,8 @@ using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Collections;
 using MPI;
 using System.Threading;
+using System.Runtime.Remoting.Channels.Http;
+using System.Runtime.Remoting.Channels.Ipc;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
@@ -53,27 +55,36 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
           try 
           {  
+			string service_name = Constants.WORKER_SERVICE_NAME + "-" + my_rank;	
+				
             if (port < 0) 
             {          
                 port = Constants.WORKER_PORT + my_rank;
             }
 
-            Console.WriteLine("Starting Worker #" + my_rank + " listening on port ... " + port);
+            Console.WriteLine("Starting " + service_name + " listening on port ... " + port);
 
-            System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
-            //System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
-            server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
-            IDictionary prop = new Hashtable();
-            prop["port"] = port;
-            ch = new TcpChannel(prop, /*client_provider*/ null, server_provider);
+            //System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
+            //server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+            //IDictionary prop = new Hashtable();
+            //prop["port"] = port;
+            ch = new TcpChannel(port/*, server_provider */);
 
-            //ch = new TcpChannel(Constants.WORKER_PORT);
-                
-            ChannelServices.RegisterChannel(ch, false);
-
-            Type commonInterfaceType = typeof(WorkerObject);
-
-            RemotingConfiguration.RegisterWellKnownServiceType(commonInterfaceType, Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.Singleton);
+            ChannelServices.RegisterChannel(ch);
+				
+			RemotingConfiguration.ApplicationName = service_name;
+            RemotingConfiguration.RegisterActivatedServiceType(typeof(WorkerObject));
+				
+			//string uri_str = "tcp://" + "localhost" + ":" + Constants.MANAGER_PORT + "/" + Constants.MANAGER_SERVICE_NAME;
+			//RemotingConfiguration.RegisterActivatedClientType(typeof(WorkerServicesImpl), uri_str);
+				
+//			TcpServerChannel channel = new TcpServerChannel(port);
+//		    ChannelServices.RegisterChannel(channel, false);
+//		    WorkerObject remoteObject = new WorkerObject();     
+//		    RemotingServices.Marshal(remoteObject, "WorkerObject.rem");	
+				
+				
+            //RemotingConfiguration.RegisterWellKnownServiceType(typeof(WorkerObject), Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.Singleton);
             Console.WriteLine("Worker #" + my_rank + " running !");
           }
           catch (Exception e)
@@ -107,7 +118,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             // 
             // WorkerService
             // 
-            this.ServiceName = "HPE.BackEnd.Worker";
+            this.ServiceName = Constants.WORKER_SERVICE_NAME;
 
         }
 

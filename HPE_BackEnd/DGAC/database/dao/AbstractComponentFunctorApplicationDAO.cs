@@ -94,10 +94,10 @@ public class AbstractComponentFunctorApplicationDAO{
        dbcmd.Dispose();
        dbcmd = null;
 			
-	   if (acfa==null) 
-	   {
-	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
-	   }
+//	   if (acfa==null) 
+//	   {
+//	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
+//	   }
 			
        return acfa;
 	}

@@ -6,7 +6,7 @@ namespace gov
 {
     namespace cca
     {
-
+		[Serializable]
         public abstract class WorkerConnectionID : ConnectionID
         {
             public abstract bool Fetched { get; }
@@ -15,7 +15,8 @@ namespace gov
             public abstract void blockFetched();
             public abstract void unblockFetched();
         }
-
+		
+		[Serializable]
         public class WorkerConnectionIDImpl : WorkerConnectionID
         {
             # region attribute

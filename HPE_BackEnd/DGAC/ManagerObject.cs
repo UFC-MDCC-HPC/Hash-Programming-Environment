@@ -12,6 +12,9 @@ using System.Runtime.Remoting.Channels;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Threading;
 using gov.cca;
+using System.Runtime.Remoting.Activation;
+using br.ufc.hpe.backend.DGAC;
+using gov.cca.ports;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC
@@ -19,11 +22,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		//MANAGER
     public class ManagerObject : MarshalByRefObject, gov.cca.AbstractFramework, 
 	                                                 gov.cca.ports.BuilderService, 
-	                                                 gov.cca.ports.ComponentRepository
+	                                                 gov.cca.ports.ComponentRepository,
+	                                                 gov.cca.Component,
+													 gov.cca.Services,
+													 gov.cca.ports.ServiceRegistry
     {
             public ManagerObject() 
             {
                 Console.Out.WriteLine("Manager Object UP !");
+				instantiateWorkers();
+				gov.cca.Services frw_services = getServices("manager_framework", "ManagerObject",new TypeMapImpl());
+                this.setServices(frw_services);		        
             }
 
             private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
@@ -33,7 +42,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             private IDictionary<string, ConnectionID> connByUserPort = new Dictionary<string, ConnectionID>();
             private IDictionary<string, ConnectionID> connByProviderPort = new Dictionary<string, ConnectionID>();
         
+		    private IDictionary<ComponentID, ManagerServices> services_registered_hosts = new Dictionary<ComponentID, ManagerServices>();
 
+	        private IDictionary<string, Port> providesPorts = new Dictionary<string, Port>();
+            private IDictionary<string, TypeMap> portProperties = new Dictionary<string, TypeMap>();
+	        private IDictionary<string, string> usesPortTypes = new Dictionary<string, string>();
+            private IDictionary<string, string> providesPortTypes = new Dictionary<string, string>();
+	
+        	private IDictionary<string, AutoResetEvent> waitingUserPorts = new Dictionary<string, AutoResetEvent>();
+
+		    private ManagerServices frw_services = null;
+		    private BuilderService frw_builder = null;
+		
+		
             #region AbstractFramework Members
 
             public TypeMap createTypeMap()
@@ -44,25 +65,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public gov.cca.Services getServices(string selfInstanceName, string selfClassName, TypeMap selfProperties)
             {
-
-                throw new CCAExceptionImpl("This operation is not allowed in the framework manager");
-               
-
-                int[] nodes = this.fetchNodes((HPETypeMap)selfProperties);
-
-                ManagerComponentID cid = new ManagerComponentIDImpl(selfInstanceName);
-                this.registerComponentID(cid, selfProperties);
-
-               // ManagerServices manager_services = new ManagerServices(cid);
-
-                //foreach (int i in nodes)
-                //{
-                 //   WorkerObject w = Worker[i];
-                 //   WorkerServices worker_services = (WorkerServices) w.getServices(selfInstanceName, selfClassName, selfProperties);
-                 //   manager_services.addWorkerServicesObject(i, worker_services);
-                //}
-
-                return null; //manager_services; 
+			   
+			   int[] nodes = new int[WorkerFramework.Length];
+			   for (int i=0; i<nodes.Length; i++)
+					nodes[i] = i;
+			
+			   ManagerComponentID cid = new ManagerComponentIDImpl(selfInstanceName, selfClassName, nodes);				
+			   ManagerServices manager_services = new ManagerServicesImpl(this, cid);
+			
+			   // Register the host in the worker frameworks
+			   for (int i=0; i < WorkerFramework.Length; i ++)
+			   {
+				    WorkerServices worker_service = (WorkerServices) WorkerFramework[i].getServices(selfInstanceName,selfInstanceName, selfProperties);
+                    manager_services.registerWorkerService(i, worker_service);
+			   }
+			
+			   this.registerComponentID(cid, selfProperties);
+			   this.registerExternalService(cid, manager_services);
+			   
+			   return manager_services;
             }
 
            // private IDictionary<Services, ComponentRelease> releaseRegister = new Dictionary<Services, ComponentRelease>();
@@ -70,35 +91,61 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void releaseServices(gov.cca.Services services)
             {
-                // Since getServices cannot be called, there is no sense to call releaseServices
-                throw new CCAExceptionImpl("This operation is not allowed in the framework manager");
-
-                /*  if (releaseRegister.ContainsKey(services))
-                  {
-                      ComponentRelease callBack;
-                      releaseRegister.TryGetValue(services, out callBack);
-                      callBack.releaseServices(services);
-                  } */
+				ManagerServices services_ = (ManagerServices) services;
+                this.services_registered_hosts.Remove (services_.getComponentID());
+			    for (int node=0; node < WorkerFramework.Length; node ++)
+			    {
+                    WorkerFramework[node].releaseServices(services_.WorkerServices[node]);
+                }
             }
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void shutdownFramework()
             {
-                foreach (WorkerObject w in Worker) 
+				foreach (ManagerServices services in services_registered_hosts.Values)
+				{
+					this.releaseServices(services);
+				}
+			
+                foreach (WorkerObject w in WorkerFramework) 
                 {
                     w.shutdownFramework();
-                }
+                }				
             }
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             public AbstractFramework createEmptyFramework()
             {
-                throw new CCAExceptionImpl("This CCA framework forbids creation of another framework instance.");
+                return BackEnd.getFrameworkInstance();
             }
 
             #endregion
+		
+		    private ServiceRegistry frw_registry = null;
+		
+	  		#region Component implementation
+			public void setServices(gov.cca.Services services)
+			{				
+	            frw_services = (ManagerServices) services;			
+			
+			    // FETCH THE REGISTRY PORT TO DECLARE THE BUILDER SERVICE
+			    frw_services.registerUsesPort(Constants.REGISTRY_PORT_NAME, Constants.REGISTRY_PORT_TYPE, new TypeMapImpl());
+				frw_registry = (ServiceRegistry) frw_services.getPort (Constants.REGISTRY_PORT_NAME);
+				frw_registry.addSingletonService(Constants.BUILDER_SERVICE_PORT_TYPE, this);			
+			
+				// FETCH THE BUILDER SERVICE
+				frw_services.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, new TypeMapImpl());
+				frw_builder = (BuilderService) frw_services.getPort(Constants.BUILDER_SERVICE_PORT_NAME);
 
-        
+			    for (int i=0; i<WorkerFramework.Length; i++)
+				{
+					((gov.cca.Component) WorkerFramework[i]).setServices(frw_services.WorkerServices[i]);
+				}
+			
+			}
+			#endregion
+      
+		
             #region BuilderService Members
 
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -119,13 +166,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine(e.Message);
-                    Console.Error.WriteLine(e.StackTrace);
+                    Console.Error.WriteLine("Exception: " + e.Message);
+                    Console.Error.WriteLine("Inner Exception: " + e.InnerException.Message);
+                    Console.Error.WriteLine("Stack Trace: " + e.StackTrace);
                 }
 
                 return cid;
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ComponentID[] getComponentIDs()
             {
@@ -133,7 +182,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 componentIDs.Values.CopyTo(cids, 0);
                 return cids;
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public TypeMap getComponentProperties(ComponentID cid)
             {
@@ -141,7 +191,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 componentProperties.TryGetValue(cid, out properties);
                 return properties;
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void setComponentProperties(ComponentID cid, TypeMap map)
             {
@@ -152,13 +203,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 componentProperties.Add(cid, map);
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ComponentID getDeserialization(string s)
             {
                 return null; /* TODO: XML serialization */
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ComponentID getComponentID(string componentInstanceName)
             {
@@ -166,32 +219,34 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 componentIDs.TryGetValue(componentInstanceName, out cid);
                 return cid;
             }
-
+		
+		    // OK.
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void destroyInstance(ComponentID toDie, float timeout)
             {
                 // CALL DESTROY FOR EACH UNIT ...
                 ManagerComponentID toDie_ = (ManagerComponentID)toDie;
-                int[] list = toDie_.WorkerNodes;
-                // foreach (KeyValuePair<WorkerComponentID, int> pair in list)
-                foreach (int node in list)
+            
+                foreach (int node in toDie_.WorkerNodes)
                 {
-                     WorkerObject worker = this.Worker[node];
+                     gov.cca.ports.BuilderService builder = this.WorkerBuilder[node];
                      WorkerComponentID wcid = toDie_.getWorkerComponentID(node);
-                     worker.destroyInstance(wcid, timeout);
+                     builder.destroyInstance(wcid, timeout);
                 }
             }
-
+		
+		    // OK.
             [MethodImpl(MethodImplOptions.Synchronized)]
             public string[] getProvidedPortNames(ComponentID cid)
             {
-			    IDictionary<string, int[]> ports = this.getUsedPorts(cid);
+			    IDictionary<string, int[]> ports = this.getProvidedPorts(cid);
 			
 			    string[] return_ports = new string[ports.Count];
 			    ports.Keys.CopyTo(return_ports, 0);
                 return return_ports;
 		    }
-
+		
+		    // OK
             public IDictionary<string, int[]> getProvidedPorts(ComponentID cid)
             {
 			    IDictionary<string, IList<int>> ports = new Dictionary<string,IList<int>>();
@@ -202,8 +257,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.Worker[node];
-                    string[] portNames = worker.getProvidedPortNames(wcid);
+                    gov.cca.ports.BuilderService builder = this.WorkerBuilder[node];
+                    string[] portNames = builder.getProvidedPortNames(wcid);
                     foreach (string portName in portNames)
                     {
                         IList<int> node_indexes;
@@ -230,7 +285,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 return ports_;
             }
-
+		
+		    // OK
 		    [MethodImpl(MethodImplOptions.Synchronized)]
             public string[] getUsedPortNames(ComponentID cid)
             {
@@ -240,7 +296,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			    ports.Keys.CopyTo(return_ports, 0);
                 return return_ports;
             }
-
+		
+		    // OK
             public IDictionary<string, int[]> getUsedPorts(ComponentID cid)
             {
                 IDictionary<string, IList<int>> ports = new Dictionary<string, IList<int>>();
@@ -249,8 +306,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.Worker[node];
-                    string[] portNames = worker.getUsedPortNames(wcid);
+                    gov.cca.ports.BuilderService builder = this.WorkerBuilder[node];
+                    string[] portNames = builder.getUsedPortNames(wcid);
                     foreach (string portName in portNames)
                     {
                         IList<int> node_indexes;
@@ -277,7 +334,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 return ports_;
             }
-
+		
+		    // OK
 		    [MethodImpl(MethodImplOptions.Synchronized)]
             public TypeMap getPortProperties(ComponentID cid, string portName)
             {
@@ -288,8 +346,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.Worker[node];
-                    HPETypeMap properties = (HPETypeMap) worker.getPortProperties(wcid, portName);
+                    gov.cca.ports.BuilderService builder = this.WorkerBuilder[node];
+                    HPETypeMap properties = (HPETypeMap) builder.getPortProperties(wcid, portName);
                     
                     foreach (KeyValuePair<string, object> p in properties)
                     {
@@ -315,7 +373,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 return result;
             }
-
+		
+			// OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void setPortProperties(ComponentID cid, string portName, TypeMap map)
             {
@@ -324,76 +383,106 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (int node in list)
                 {
                     WorkerComponentID wcid = cid_.getWorkerComponentID(node);
-                    WorkerObject worker = this.Worker[node];
-                    worker.setPortProperties(cid, portName, map);
+                    gov.cca.ports.BuilderService builder = this.WorkerBuilder[node];
+                    builder.setPortProperties(cid, portName, map);
                 }
             }
-
+		
+			
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ConnectionID connect(ComponentID user, string usingPortName, ComponentID provider, string providingPortName)
             {
+				
+				string usingPortNameQ = user.getInstanceName() + "." + usingPortName;
+				string providingPortNameQ = provider.getInstanceName() + "." + providingPortName;
+			
+				//Console.WriteLine("CONNECT " + usingPortNameQ + " to " + providingPortNameQ);
+			
+				ConnectionID connection = null;
+			
+			    if (this.services_registered_hosts.ContainsKey(user))
+			    {
+				    connection = connect_h2c(user,usingPortName, usingPortNameQ, provider,providingPortName, providingPortNameQ);
+			    }
+			    else
+			    {
+			    	connection = connect_c2c(user,usingPortName, provider,providingPortName);
+			    }
+			    
+
+				connectionList.Add(connection);
+                connByProviderPort.Add(providingPortNameQ, connection);
+                connByUserPort.Add(usingPortNameQ, connection);
+			
+		        AutoResetEvent waiting_handle = null;
+				if (waitingUserPorts.TryGetValue(usingPortNameQ, out waiting_handle))
+				   waiting_handle.Set();
+			
+				return connection;
+			
+            }
+		
+			private ConnectionID connect_h2c (ComponentID user, 
+		                                      string usingPortName, 
+		                                      string usingPortNameQ, 
+		                                      ComponentID provider, 
+		                                      string providingPortName,
+		                                      string providingPortNameQ
+		                                  )
+			{		
+				ManagerComponentID mcid_provider = (ManagerComponentID) provider;
+		        ManagerComponentID mcid_user = (ManagerComponentID) user;
+		
+    			int[] nodes = mcid_provider.WorkerNodes; // all workers must participates.
+			
+		        WorkerConnectionID[] worker_connection = new WorkerConnectionID[nodes.Length];
+		
+		        for (int i=0; i<nodes.Length; i++)
+				{
+				   gov.cca.ports.BuilderService wb = worker_builder[nodes[i]];
+				   WorkerComponentID pcid = (WorkerComponentID) mcid_provider.getWorkerComponentID(i);
+			       WorkerComponentID ucid = (WorkerComponentID) mcid_user.getWorkerComponentID(i);
+				   worker_connection[i] = (WorkerConnectionID) wb.connect(ucid, usingPortName, pcid, providingPortName);							   
+				}
+		
+				ConnectionID connection = null;
+                connection = new ManagerConnectionIDImpl(provider, providingPortNameQ, user, usingPortNameQ, nodes, worker_connection);
+                				
+		 		return connection;
+			
+			}
+		
+			private ConnectionID connect_c2c (ComponentID user, 
+		                                      string usingPortName, 
+		                                      ComponentID provider, 
+		                                      string providingPortName)
+			{
                 ManagerComponentID user_ = (ManagerComponentID)user;
                 ManagerComponentID provider_ = (ManagerComponentID)provider;
 
-                WorkerComponentID cid_user = new WorkerComponentIDImpl(user_.getInstanceName());
-                WorkerComponentID cid_prov = new WorkerComponentIDImpl(provider_.getInstanceName());
+                IDictionary<string, int[]> used_ports = this.getUsedPorts(user_);
 
-                int kind_user = user_.Kind;
-                int kind_prov = provider_.Kind;
-
-                int kind_user_port;
-                int id_functor_app_user_port;
-                findPortKindAndType(user_.Id_functor_app, usingPortName, out kind_user_port, out id_functor_app_user_port);
-                int kind_prov_port;
-                int id_functor_app_prov_port;
-                findPortKindAndType(provider_.Id_functor_app, providingPortName, out kind_prov_port, out id_functor_app_prov_port);
-
-                IDictionary<string, int[]> used_ports = this.getUsedPorts(cid_user);
-                IDictionary<string, int[]> prov_ports = this.getProvidedPorts(cid_prov);
-
-                int[] nodes_user, nodes_prov;
-                used_ports.TryGetValue(usingPortName, out nodes_user);
-                prov_ports.TryGetValue(providingPortName, out nodes_prov);
-                 
                 int[] nodes;
-                int result = compare_nodes_sets(nodes_user, nodes_prov, out nodes);
-
-                ConnectionID connection = null;
-
-                switch (result)
+                used_ports.TryGetValue(usingPortName, out nodes);
+			
+				WorkerConnectionID[] worker_connection = new WorkerConnectionID[nodes.Length];	
+			
+                foreach (int node in nodes)
                 {
-                    case EQUAL:
-                        direct_connect(nodes, cid_user, usingPortName, cid_prov, providingPortName);
-                        connection = new ManagerDirectConnectionID(user, usingPortName, provider, providingPortName, nodes);
-                        break;
-                    case DISJOINT:
-                        if (kind_user == Constants.KIND_APPLICATION && kind_prov == Constants.KIND_APPLICATION &&
-                            kind_user_port == Constants.KIND_SERVICE && kind_prov_port == Constants.KIND_SERVICE)
-                        {
-                            ManagerComponentID cid_binding;
-                            ManagerConnectionID conn_user, conn_prov;
-                            indirect_connect(nodes_user, nodes_prov, cid_user, usingPortName, cid_prov, providingPortName, id_functor_app_user_port, out cid_binding, out conn_user, out conn_prov);
-                            connection = new ManagerIndirectConnectionID(user, usingPortName, provider, providingPortName, cid_binding, conn_user, conn_prov, nodes_user, nodes_prov);                            
-                        }
-                        else
-                        {
-                            throw new CCAExceptionImpl("The nodes sets are disjoint and the ports are not of service kind.");
-                        }
-                        break;
-                    case SIMILAR:
-                    case OVERLAPPING:
-                        throw new CCAExceptionImpl("The nodes sets must be EQUAL or DISJOINT to perform a indirect connection.");
+	                WorkerComponentID cid_user = user_.getWorkerComponentID(node); 
+	                WorkerComponentID cid_prov = provider_.getWorkerComponentID(node); 
+                    worker_connection[node] = (WorkerConnectionID) WorkerBuilder[node].connect(cid_user, usingPortName, cid_prov, providingPortName);
                 }
-
+			
+				ConnectionID connection = null;
+                connection = new ManagerConnectionIDImpl(provider, providingPortName, user, usingPortName, nodes, worker_connection);
                 
-                connectionList.Add(connection);
-                connByProviderPort.Add(providingPortName, connection);
-                connByUserPort.Add(usingPortName, connection);
-
                 return connection;
-            }
-
-            /* */
+			}
+            
+            
+		
+		    // OK
             private int findPortKindAndType(int id_functor_app, string id_inner, out int kind, out int id_functor_app_service)
             {
                 Connector.openConnection();
@@ -410,147 +499,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 return kind;                
             }
 
-            private void indirect_connect(
-                int[] nodes_user, 
-                int[] nodes_prov, 
-                WorkerComponentID cid_user, string usingPortName, 
-                WorkerComponentID cid_prov, string providingPortName, 
-                int id_functor_app_service, 
-                out ManagerComponentID cid_binding,
-                out ManagerConnectionID conn_user,
-                out ManagerConnectionID conn_prov)
-            {
-                // RESOLVES AND CREATE INSTANCE OF A SERVICE COMPONENT 
-                //    with server units residing in nodes_user and client units residing nodes_prov
-                string instantiator_string = null;
-                try
-                {
-                    Connector.openConnection();
-                    Connector.beginTransaction();
-                    ComponentFunctorApplicationType instantiator = DGAC.BackEnd.buildInstantiator(id_functor_app_service);
-                    instantiator_string = LoaderApp.serializeInstantiatorToString(instantiator);
-                    Connector.commitTransaction();
-                }
-                catch (Exception e)
-                {
-                    Connector.rollBackTransaction();
-                    CCAExceptionImpl cca_e = new CCAExceptionImpl("Error creating the service binding.", e);
-                    throw cca_e;
-                }
-                finally
-                {
-                    Connector.closeConnection();
-                }
-
-                string instanceName = "service_" + id_functor_app_service;
-
-                TypeMapImpl properties = new TypeMapImpl();
-                properties[Constants.NODES_KEY] = null; //TODO
-                cid_binding = (ManagerComponentID) this.createInstance(instanceName, instantiator_string, properties);
-                
-                // CONNECT THE USER PORT THE SERVICE PROVIDES PORT
-                conn_user = (ManagerConnectionID) this.connect(cid_user, usingPortName, cid_binding, Constants.DEFAULT_PROVIDES_PORT_SERVICE);                
-
-                // CONNECT THE SERVICE USES PORT TO THE PROVIDER PORT
-                conn_prov = (ManagerConnectionID) this.connect(cid_binding, Constants.DEFAULT_USES_PORT_SERVICE, cid_prov, providingPortName);
-            }
-
-
-            private void direct_connect(int[] nodes, WorkerComponentID cid_user, string usingPortName, WorkerComponentID cid_prov, string providingPortName)
-            {
-                foreach (int node in nodes)
-                {
-                    ConnectionID conn = Worker[node].connect(cid_user, usingPortName, cid_prov, providingPortName);
-                }
-            }
-
-            private const int EQUAL = 0;
-            private const int SIMILAR = 1;
-            private const int OVERLAPPING = 2;
-            private const int DISJOINT = 3;
-
-            // POG 
-            private int compare_nodes_sets(int[] nodes_user, int[] nodes_prov, out int[] nodes)
-            {
-                int[] nodes_user_sorted = (int[])nodes_user.Clone();
-                int[] nodes_prov_sorted = (int[])nodes_prov.Clone();
-                int size = nodes_user_sorted.Length > nodes_prov_sorted.Length ? nodes_user_sorted.Length - 1 : nodes_prov_sorted.Length - 1;
-                int[] nodes_user_sorted_inv = new int[nodes_user_sorted[size]];
-                int[] nodes_prov_sorted_inv = new int[nodes_prov_sorted[size]];
-
-                Array.Sort<int>(nodes_user_sorted);
-                Array.Sort<int>(nodes_prov_sorted);
-
-                for (int i = 0; i < nodes_user_sorted_inv.Length; i++)
-                    nodes_user_sorted_inv[i] = -1;
-                for (int i = 0; i < nodes_prov_sorted_inv.Length; i++)
-                    nodes_prov_sorted_inv[i] = -1;
-
-                for (int i = 0; i < nodes_user_sorted.Length; i++)
-                    nodes_user_sorted_inv[nodes_user_sorted[i]] = i;
-                for (int i = 0; i < nodes_prov_sorted.Length; i++)
-                    nodes_prov_sorted_inv[nodes_prov_sorted[i]] = i;
-
-                nodes = null;
-
-                bool isEqual = true;
-                bool isSimilar = true;
-                bool isOverlapping = true;
-                bool isDisjoint = true;
-                if (nodes_user_sorted.Length != nodes_prov_sorted.Length)
-                {
-                    isEqual = false;
-                    isSimilar = false;
-                    for (int i = 0; i < nodes_user_sorted.Length; i++)
-                    {
-                        if (nodes_prov_sorted_inv[nodes_user_sorted[i]] > 0)
-                        {
-                            isDisjoint = false;
-                            return OVERLAPPING;
-                        }
-                    }
-                    for (int i = 0; i < nodes_prov_sorted.Length; i++)
-                    {
-                        if (nodes_user_sorted_inv[nodes_prov_sorted[i]] > 0)
-                        {
-                            isDisjoint = false;
-                            return OVERLAPPING;
-                        }
-                    }
-                    return DISJOINT;
-                }
-                else
-                {
-                    int count = 4;
-
-                    for (int i = 0; i < nodes_user_sorted.Length; i++)
-                    {
-                        if (nodes_user_sorted[i] == nodes_prov_sorted[i])
-                        {
-                            isDisjoint = false; count--;
-                        }
-                        else if (nodes_user_sorted[i] != nodes_prov_sorted[i])
-                        {
-                            isEqual = false; count--;
-                        }
-                        else if (nodes_prov_sorted_inv[nodes_user_sorted[i]] > 0 && nodes_user_sorted_inv[nodes_prov_sorted[i]] > 0)
-                        {
-                            isSimilar = false; count--;
-                        }
-                        if (count == 1)
-                        {
-                            return OVERLAPPING;
-                        }
-                    }
-                }
-
-                if (isEqual) { nodes = nodes_user; return EQUAL; }
-                else if (isSimilar) return SIMILAR;
-                else if (isDisjoint) return DISJOINT;
-                else if (isOverlapping) return OVERLAPPING;
-                else return -1;
-            }
-
+			// OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public ConnectionID[] getConnectionIDs(ComponentID[] componentList)
             {
@@ -573,7 +522,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                 return connectionArray;
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public TypeMap getConnectionProperties(ConnectionID connID)
             {
@@ -581,7 +531,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                connectionProperties.TryGetValue(connID, out properties);
                return properties;
             }
-
+		
+		    // OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void setConnectionProperties(ConnectionID connID, TypeMap map)
             {
@@ -611,7 +562,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	                connectionProperties.Remove(connID);
 	            }
             }
-
+		
+			// OK
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void disconnectAll(ComponentID id1, ComponentID id2, float timeout)
             {
@@ -647,8 +599,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     if (id2_ws_inv.ContainsKey(node))
                     {
                         id2_ws_inv.TryGetValue(node, out cid2);
-                        WorkerObject w = Worker[node];
-                        w.disconnectAll(cid1, cid2, timeout);
+                        gov.cca.ports.BuilderService builder = WorkerBuilder[node];
+                        builder.disconnectAll(cid1, cid2, timeout);
                     }
                     else
                     {
@@ -658,8 +610,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
 
             #endregion
-        
-        
+
+		
             #region ComponentRepository Members
 
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -687,6 +639,226 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
 
             #endregion
+
+        	public Port getServicePort(ComponentID user, string usedPortName)
+			{
+				string portType;
+				if (usesPortTypes.TryGetValue(usedPortName, out portType))
+				{
+					Port singleton_service_port = null;
+					ServiceProvider service_provider = null;
+					if (usedPortName.EndsWith(Constants.REGISTRY_PORT_NAME)) 
+					{
+						return this;
+					}				
+					else if (this.provided_services_table.TryGetValue(portType,out service_provider))
+				    { 
+						string providedPortName = service_provider.createService(portType);
+					    ConnectionID conn = frw_builder.connect(user, usedPortName, frw_services.getComponentID(), providedPortName);
+					
+						return getPortProceed(conn);
+				    }
+					else if (this.singleton_provided_port_table.TryGetValue(portType, out singleton_service_port))
+				    { 
+						return singleton_service_port;
+				    }
+				}
+				return null;
+			}
+			
+		
+			#region Services implementation
+			
+			public Port getPort(string portName)
+			{
+			    ConnectionID conn = null;
+			
+				string portType;
+				if (usesPortTypes.TryGetValue(portName, out portType))
+				{				
+					if (connByUserPort.TryGetValue(portName, out conn)) 
+					{
+					    return getPortProceed(conn);
+					} 
+					else
+					{
+					    
+						Console.WriteLine("Wait for port " + portName);
+					
+		                AutoResetEvent wait_handle = new AutoResetEvent(false);
+		                waitingUserPorts.Add(portName, wait_handle);
+		                wait_handle.WaitOne();
+						
+						connByUserPort.TryGetValue(portName, out conn);
+					    return getPortProceed(conn);
+					}
+				}
+				else
+					throw new CCAExceptionImpl("Uses port " + portName + " was not registered.");
+			}
+	
+			public Port getPortNonblocking (string portName)
+			{
+			    ConnectionID conn = null;
+				if (connByUserPort.TryGetValue(portName, out conn)) 
+				{
+				    return getPortProceed(conn);
+				}
+				else
+				{
+				   throw new CCAExceptionImpl("ERROR: Port not connected - name=" + portName);
+				}
+			}
+			
+		    public Port getPortProceed(ConnectionID conn)
+			{
+			    //Port port = null;
+			    //if (providesPorts.TryGetValue(conn.getProviderPortName(), out port))
+			    //{
+				//	addPortFetch(conn.getUserPortName());
+			   	//	return port;
+				//}
+				//else
+				//    throw new CCAExceptionImpl("UNEXPECTED ERROR: Connected provider port not found - " + conn.getProviderPortName());
+				
+				ManagerComponentID mcid = (ManagerComponentID) conn.getUser();
+			    ManagerComponentID wcid = (ManagerComponentID) conn.getProvider();
+				ManagerServices ms = null;
+				this.services_registered_hosts.TryGetValue(mcid, out ms);
+			
+			    WorkerServices[] ws = ms.WorkerServices; 
+				int[] nodes = wcid.WorkerNodes;			
+				gov.cca.Port[] ports = new gov.cca.Port[nodes.Length];
+			    
+				for (int i=0; i<nodes.Length; i++)
+				{
+					WorkerConnectionID wconn = ((ManagerConnectionIDImpl)conn).getWorkerConnectionID(i);
+				    WorkerServices ws_ = ws[nodes[i]];
+					ports[i] = ws_.getPort(wconn.getUserPortName());
+				}		
+			    			
+			    string user_port_name = conn.getUserPortName();
+			    gov.cca.Port port = null;
+			
+				if (user_port_name.EndsWith("." + Constants.GO_PORT_NAME))
+				{
+					port = new GoPortImpl(ms, ports);
+			    } 
+				else if (user_port_name.EndsWith("." + Constants.CREATE_SLICES_PORT_NAME))
+				{
+					port = new AutomaticSlicesPortImpl(ms, ports);
+				}
+					//case Constants.PARAMETER_PORT_NAME:
+					//    port = ????
+					//    break;	
+					//case Constants.CREATE_SLICES_PORT_NAME:
+					//    port = ????
+					//    break;	
+				else
+						throw new CCAExceptionImpl("Port not supported for host connections.");
+				
+				return port;
+			
+			}
+
+			private IDictionary<string,int> portFetches = new Dictionary<string, int>();
+			private IDictionary<string,int> portReleases = new Dictionary<string,int>();
+			
+			private void addPortFetch(string portName)
+			{
+				int count = 0;
+				if (portFetches.TryGetValue(portName, out count))
+					portFetches.Remove(portName);
+				portFetches.Add (portName,count + 1);
+			}
+			
+			private void addPortRelease(string portName)
+			{
+				int count = 0;
+				if (portReleases.TryGetValue(portName, out count))
+					portReleases.Remove(portName);
+				portReleases.Add (portName,count + 1);
+			}
+
+	
+			public void releasePort (string portName)
+			{
+				ConnectionID conn = null;
+				int countF=0, countR=0;
+				if (connByUserPort.TryGetValue(portName, out conn)) 
+				{
+					if (portFetches.TryGetValue(portName, out countF))
+					{
+						if (!portReleases.TryGetValue(portName, out countR))
+						{
+						   portFetches.Remove(portName);
+						   addPortRelease(portName);
+						} 
+						else
+						{
+							throw new CCAExceptionImpl("ERROR: Attempt to realease a released port");
+						}
+					}
+					else 
+					{
+						throw new CCAExceptionImpl("ERROR: Attempt to realease a port that was not fetched before");
+					}
+				} 
+				else 
+				{
+				    throw new CCAExceptionImpl("ERROR: Port not connected - name=" + portName);
+				}
+				
+			}
+	
+			public void registerUsesPort (string portName, string type, gov.cca.TypeMap properties)
+			{
+	            portProperties.Add(portName, properties);
+				usesPortTypes.Add (portName, type);
+			}
+	
+			public void unregisterUsesPort (string portName)
+			{
+				portProperties.Remove(portName);
+				usesPortTypes.Remove(portName);
+			}
+	
+			public void addProvidesPort (Port inPort, string portName, string type, gov.cca.TypeMap properties)
+			{
+	            portProperties.Add(portName, properties);
+				providesPortTypes.Add(portName, type);
+	            providesPorts.Add(portName, inPort);
+			    //throw new CCAExceptionImpl("Host programs cannot yet provide ports to applications.");
+			}
+	
+			public gov.cca.TypeMap getPortProperties (string name)
+			{
+				TypeMap properties = null;
+				portProperties.TryGetValue(name, out properties);
+				return properties;
+			}
+	
+			public void removeProvidesPort (string portName)
+			{
+				// portProperties.Remove(portName);
+				// providesPortTypes.Remove(portName);
+				// providesPorts.Remove(portName);
+			    throw new CCAExceptionImpl("Host programs cannot yet provide ports to applications.");
+			}
+	
+			public ComponentID getComponentID ()
+			{
+				return frw_services.getComponentID();
+			}
+		
+		    private IList<ComponentRelease> callBackReleases = new List<ComponentRelease>();
+	
+			public void registerForRelease (ComponentRelease callBack)
+			{
+				callBackReleases.Add(callBack);
+			}
+		
+			#endregion
 		
 		
             private void registerComponentID(ComponentID cid, TypeMap properties)
@@ -695,6 +867,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 componentProperties.Add(cid, properties);
             }
         
+            private void registerExternalService(ComponentID cid, ManagerServices services)
+            {
+                services_registered_hosts.Add(cid, services);
+            }
 
             private int[] fetchNodes(HPETypeMap properties)
             {
@@ -703,7 +879,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 if (!properties.TryGetValue(Constants.NODES_KEY, out nodesObj))
                 {
                     // Se NODES_KEY não está disponível, considerar todos.
-                    nodes = new int[Worker.Length];
+                    nodes = new int[WorkerFramework.Length];
                     for (int i = 0; i < nodes.Length; i++)
                     {
                         nodes[i] = i;
@@ -716,7 +892,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 return nodes;
             }
 
-		public void resolve_topology (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
+			public void resolve_topology (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
 		                              string[] unit_ids, int[] partition_indexes,
 		                              IList<Interface> iList, 
 		                              int[] node_list)
@@ -798,11 +974,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     
                     int[] nodes = instantiator.node;
 				
-                    Console.Error.Write("Number of nodes = " + nodes.Length + ": ");
-                    foreach (int n in nodes) Console.Write(n + ", ");
-                    Console.WriteLine("end");
-
-				
                     DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
                     id_functor_app = acfaRef.Id_functor_app;
 
@@ -827,7 +998,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
                     Connector.commitTransaction();
 
-                    bool[] node_marking = new bool[Worker.Length];
+                    bool[] node_marking = new bool[WorkerFramework.Length];
                     for (int i = 0; i < node_marking.Length; i++) node_marking[i] = false; 
                     
                     IDictionary<Thread, GoWorker> go_objs = new Dictionary<Thread, GoWorker>();
@@ -841,13 +1012,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     {                        
 				        string id_interface = interface_ids[k];
 					    int partition_index = partition_indexes[k];
-				
+
+				        // SETUP PROPERTIES
                         TypeMapImpl worker_properties = new TypeMapImpl(properties);
                         worker_properties[Constants.KEY_KEY] = k;
                         worker_properties[Constants.COMPONENT_KEY] = c.Library_path;
                         worker_properties[Constants.UNIT_KEY] = id_interface ;
                         worker_properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
-
+					
+					    // RUN THE RESOLUTION PROCEDURE					
                         DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, id_interface, partition_index);
 
                         string class_name_worker;
@@ -855,10 +1028,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         System.Type[] actualParams;
                         DGAC.BackEnd.calculateActualParams(acfaRef, id_interface, partition_index, out actualParams);
                         DGAC.BackEnd.calculateGenericClassName(u, actualParams, out class_name_worker);
-
-                        GoWorker gw = new GoWorker(Worker[nodes[k]], instanceName + "." + id_interface, class_name_worker, worker_properties);
+					
+					    // INSTANTIATE THE UNITS ACCROSS THE WORKERS
+                        GoWorker gw = new GoWorker(WorkerBuilder[nodes[k]], instanceName + "." + id_interface, class_name_worker, worker_properties);
                         Thread t = new Thread(gw.Run);
                         t.Start();
+				    Console.WriteLine("START THREAD #" + k + " in " + nodes[k]);
                         wthreads.Add(t);
                         go_objs.Add(t, gw);
                         thread_node.Add(t, nodes[k]);
@@ -866,21 +1041,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         thread_index.Add(t, 0);
                         node_marking[nodes[k]] = true;
                     }
-
+				
+				    Console.WriteLine("START NULL THREADS");
                     for (int i = 0; i < node_marking.Length; i++)
                     {
                         if (!node_marking[i])
                         {
-                            Thread t = new Thread(Worker[i].createInstanceNull);
+                            Thread t = new Thread(((WorkerObject)WorkerBuilder[i]).createInstance);
                             wthreads.Add(t);
                             t.Start();
+				    Console.WriteLine("START NULL THREAD #" + i);
                         }
 
                     }
-
+				    Console.WriteLine("START JOIN");
+				
                     foreach (Thread t in wthreads)
                     {
                         t.Join();
+					    Console.WriteLine("JOINED CREATE INSTANCE THREAD ");
                         if (go_objs.ContainsKey(t))
                         {
                             GoWorker go_obj;
@@ -920,6 +1099,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 indexes_list.CopyTo(indexes, 0);
                 unit_ids_list.CopyTo(unit_ids, 0);
                 worker_cids_list.CopyTo(worker_cids, 0);
+			
                 return cid_nodes;
 
             }
@@ -933,10 +1113,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                  private string instanceName = null; 
                  private string className = null; 
                  private TypeMap properties = null;
-                 private WorkerObject worker = null;
+                 private gov.cca.ports.BuilderService worker = null;
 			     private WorkerComponentID worker_cid = null;
 				
-                 public GoWorker(WorkerObject worker, string instanceName, string className, TypeMap properties) 
+                 public GoWorker(gov.cca.ports.BuilderService worker, string instanceName, string className, TypeMap properties) 
                  { 
                      this.instanceName = instanceName;
                      this.className = className;
@@ -966,6 +1146,210 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			     }
             } 
 
+		
+				
+				//just for test
+				[MethodImpl(MethodImplOptions.Synchronized)]
+				public void sayHi(){
+					Console.WriteLine("Hi!");
+				}
+
+                /* The Worker Object of each computing node */
+                private gov.cca.AbstractFramework[] worker_framework = null;
+		
+		        private gov.cca.AbstractFramework[] WorkerFramework 
+		        {
+			       get {   
+				           if (worker_framework == null) 
+				           {
+					          instantiateWorkers();
+				           }
+				           return worker_framework;			
+			           } 
+		        }
+		
+                private gov.cca.ports.BuilderService[] worker_builder = null;
+		
+		        private gov.cca.ports.BuilderService[] WorkerBuilder 
+		        {
+			       get {   
+				           if (worker_builder == null) 
+				           {
+					          this.connectToWorkerBuilders();
+				           }
+				           return worker_builder;			
+			           } 
+		        }
+
+				private void connectToWorkerBuilders ()
+				{
+					worker_builder = new BuilderService[WorkerFramework.Length];
+			
+				    for (int node=0; node < WorkerFramework.Length; node++)
+					{
+						//worker_builder[node] = (gov.cca.ports.BuilderService) worker_framework[node];
+				
+				        gov.cca.Services srv = this.frw_services.WorkerServices[node]; //.getServices("Manager", "ManagerObject", new TypeMapImpl());
+				        //srv.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, new TypeMapImpl());
+				        worker_builder[node] = (gov.cca.ports.BuilderService) srv.getPort(Constants.BUILDER_SERVICE_PORT_NAME);				          				          
+					}
+					
+				}
+		
+                private string[] node = null;
+                private int[] port = null;
+
+               // private TcpChannel tcpChannel = null;
+
+                private string workerFails = null;
+                private int failsCount = 0;
+
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public string[] instantiateWorkers()
+                {
+                    Console.WriteLine("Starting worker clients !");                  
+
+                    try
+                    {
+                        /* Read nodes file, and fill the node array */
+
+                        //System.Threading.Thread.Sleep(10000);
+
+                        IList<string> nodeList = new List<string>();
+                        IList<int> portList = new List<int>();
+                        using (TextReader tr = new StreamReader(Constants.hosts_file))
+                        {
+                            string one_line;
+                            while ((one_line = tr.ReadLine()) != null)
+                            {
+                                int my_port = Constants.WORKER_PORT;
+                                string[] s = one_line.Split(' ');                                
+                                if (s.Length > 1)
+                                   my_port = System.Convert.ToInt32(s[1], 10);
+                                nodeList.Add(s[0]);
+                                portList.Add(my_port);
+                            }
+                            node = new string[nodeList.Count];
+                            port = new int[portList.Count];
+                            nodeList.CopyTo(node, 0);
+                            portList.CopyTo(port, 0);
+                        }
+                        
+
+                        worker_framework = new gov.cca.AbstractFramework[node.Length];
+				
+                        int i = 0;
+                        /* Create each worker object and fill the worker array */
+                        foreach (string n in node)
+                        {
+                            try
+                            {   
+                                worker_framework[i] = BackEnd.getFrameworkWorkerInstance(n, port[i], i);
+						
+                                Console.WriteLine("CONNECTED TO WORKER #" + i + " in " + n + ":" + port[i]);
+                            }
+                            catch (Exception e)
+                            {
+								Console.WriteLine("ERROR CONNECTING TO WORKER #" + i + " in " + n + ":" + port[i]);
+                                failsCount++;
+								
+//                                workerFails = (e.Message == null ? "NULL" : e.Message) + "  ---  "; // + e.InnerException.Message == null ? "NULL" : e.InnerException.Message;
+                              //  Console.WriteLine("ERROR CONNECTING TO WORKER " + n + ". Exception : " + e.Message + ", STACK: " + e.StackTrace + ", INNER EXCEPTION: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));								
+                            } 
+							finally
+							{
+								i++;
+							}
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("EXCEPTION: " + e.Message);
+                        Console.WriteLine("INNER EXCEPTION: " + e.InnerException.Message);
+                        Console.WriteLine("STACK TRACE: " + e.StackTrace);
+                    }
+
+                    Console.WriteLine(WorkerFramework.Length + " Worker clients started !");
+			
+					return node;
+                }
+
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public void stopWorkerClients()
+                {
+                 //   TcpChannel ch = tcpChannel;
+                 //   ch.StopListening(null);
+                 //   ChannelServices.UnregisterChannel(ch);
+                }
+
+
+/*                [MethodImpl(MethodImplOptions.Synchronized)]
+                public string[] runApplication(string session_id_string, ManagerComponentID mcid)
+		        {
+					return runApplication(session_id_string, mcid, 1);
+		        }
+		
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                public string[] runApplication(string session_id_string, ManagerComponentID mcid, int rounds)
+                {
+                    string[] outputs = new String[mcid.WorkerNodes.Length]; 
+                    IDictionary<Thread, RunApplicationThread> thread_list = new Dictionary<Thread,RunApplicationThread>();
+                    foreach (int node in mcid.WorkerNodes)
+                    {
+				       
+                        RunApplicationThread thread = new RunApplicationThread(node, (WorkerObject)WorkerFramework[node], session_id_string, mcid, rounds);
+                        Thread t = new Thread(thread.Run);
+                        thread_list.Add(t,thread);
+                        t.Start();
+                    }
+                    foreach (KeyValuePair<Thread,RunApplicationThread> t in thread_list)
+                    {
+                        try 
+                        {
+                           t.Key.Join();
+                           Console.Error.WriteLine("Worker thread arrived : " + session_id_string);
+                           outputs[t.Value.Node] = t.Value.Output;
+                        } 
+                        catch (Exception e)
+                        {
+                           Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                        }
+                    }
+                    Console.Error.WriteLine("Joined Threads : " + session_id_string);
+                    
+                    return outputs;
+                }
+
+                internal class RunApplicationThread
+                {
+                    private string session_id_string;
+                    private ManagerComponentID mcid;
+                    private int node;
+                    public int Node {get {return node;}}
+                    private WorkerObject worker;
+                    private string result;
+			        private int rounds;
+                    public string Output {get {return result;}}
+
+                    public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid, int rounds)
+                    {
+                        this.session_id_string = session_id_string;
+                        this.mcid = mcid;
+                        this.node = node;
+                        this.worker = worker;
+				        this.rounds = rounds;
+                    }
+
+                    public void Run()
+                    {
+                        result = worker.runApplication(session_id_string, mcid.getWorkerComponentID(node), rounds);
+                    }
+
+                }
+		 */
+				#region DEPLOYER
+		
+		
             /**
             * Salva arquivo fonte lido como um array de bytes em data, com o nome filename
             * em pasta definida pela classe Constants
@@ -1033,185 +1417,52 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 {
 					CommandLineUtil.run_exe(files, enums, session_id, userName, password, curDir);
 		        }
-				
-				//just for test
-				[MethodImpl(MethodImplOptions.Synchronized)]
-				public void sayHi(){
-					Console.WriteLine("Hi!");
-				}
-
-                /* The Worker Object of each computing node */
-                private WorkerObject[] worker = null;
 		
-		        private WorkerObject[] Worker 
-		        {
-			       get {   
-				           if (worker == null) 
-				           {
-					          startWorkerClients();
-				           }
-				           return worker;			
-			           } 
-		        }
-		
-		
-                private string[] node = null;
-                private int[] port = null;
-
-               // private TcpChannel tcpChannel = null;
-
-                private string workerFails = null;
-                private int failsCount = 0;
-
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                public void startWorkerClients()
-                {
-                    Console.WriteLine("Starting worker clients !");                  
-
-                    try
-                    {
-                        /* Read nodes file, and fill the node array */
-
-                        //System.Threading.Thread.Sleep(10000);
-
-                        IList<string> nodeList = new List<string>();
-                        IList<int> portList = new List<int>();
-                        using (TextReader tr = new StreamReader(Constants.hosts_file))
-                        {
-                            string one_line;
-                            while ((one_line = tr.ReadLine()) != null)
-                            {
-                                int my_port = Constants.WORKER_PORT;
-                                string[] s = one_line.Split(' ');                                
-                                if (s.Length > 1)
-                                   my_port = System.Convert.ToInt32(s[1], 10);
-                                nodeList.Add(s[0]);
-                                portList.Add(my_port);
-                                Console.Write(s[0]); Console.WriteLine(" - port = " + my_port);
-                            }
-                            node = new string[nodeList.Count];
-                            port = new int[portList.Count];
-                            nodeList.CopyTo(node, 0);
-                            portList.CopyTo(port, 0);
-                        }
-                        
-
-                        worker = new WorkerObject[node.Length];
-
-                        int i = 0;
-                        /* Create each worker object and fill the worker array */
-                        foreach (string n in node)
-                        {
-                            try
-                            {   
-                                createWorkerObject(i, n, port[i]);
-                                i++;
-                                Console.WriteLine("CONNECTED TO WORKER " + n);
-                            }
-                            catch (Exception e)
-                            {
-                                failsCount++;
-                                workerFails = (e.Message == null ? "NULL" : e.Message) + "  ---  "; // + e.InnerException.Message == null ? "NULL" : e.InnerException.Message;
-                                Console.WriteLine("ERROR CONNECTING TO WORKER " + n + ". Exception : " + e.Message);
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-
-                    Console.WriteLine(Worker.Length + " Worker clients started !");
-                }
-
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                public void stopWorkerClients()
-                {
-                 //   TcpChannel ch = tcpChannel;
-                 //   ch.StopListening(null);
-                 //   ChannelServices.UnregisterChannel(ch);
-                }
-
-                private void createWorkerObject(int i, string node, int port)
-                {
-                    WorkerObject wo = null;
-
-                    System.Type requiredType = typeof(WorkerObject);
-
-                    wo = (WorkerObject)Activator.GetObject(requiredType,
-                        "tcp://" + node + ":" + port /* Constants.WORKER_PORT */ + "/" + Constants.WORKER_SERVICE_NAME);
-
-                    wo.sayHi();
-
-                    worker[i] = wo;
-                }
-
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                public string[] runApplication(string session_id_string, ManagerComponentID mcid)
-		        {
-					return runApplication(session_id_string, mcid, 1);
-		        }
-		
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                public string[] runApplication(string session_id_string, ManagerComponentID mcid, int rounds)
-                {
-                    string[] outputs = new String[mcid.WorkerNodes.Length]; 
-                    IDictionary<Thread, RunApplicationThread> thread_list = new Dictionary<Thread,RunApplicationThread>();
-                    foreach (int node in mcid.WorkerNodes)
-                    {
-				       
-                        RunApplicationThread thread = new RunApplicationThread(node, Worker[node], session_id_string, mcid, rounds);
-                        Thread t = new Thread(thread.Run);
-                        thread_list.Add(t,thread);
-                        t.Start();
-                    }
-                    foreach (KeyValuePair<Thread,RunApplicationThread> t in thread_list)
-                    {
-                        try 
-                        {
-                           t.Key.Join();
-                           Console.Error.WriteLine("Worker thread arrived : " + session_id_string);
-                           outputs[t.Value.Node] = t.Value.Output;
-                        } 
-                        catch (Exception e)
-                        {
-                           Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
-                        }
-                    }
-                    Console.Error.WriteLine("Joined Threads : " + session_id_string);
-                    
-                    return outputs;
-                }
-
-                internal class RunApplicationThread
-                {
-                    private string session_id_string;
-                    private ManagerComponentID mcid;
-                    private int node;
-                    public int Node {get {return node;}}
-                    private WorkerObject worker;
-                    private string result;
-			        private int rounds;
-                    public string Output {get {return result;}}
-
-                    public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid, int rounds)
-                    {
-                        this.session_id_string = session_id_string;
-                        this.mcid = mcid;
-                        this.node = node;
-                        this.worker = worker;
-				        this.rounds = rounds;
-                    }
-
-                    public void Run()
-                    {
-                        result = worker.runApplication(session_id_string, mcid.getWorkerComponentID(node), rounds);
-                    }
-
-                }
-
-
+			#endregion
      
+		#region ServiceRegistry implementation
+		private IDictionary<string, ServiceProvider> provided_services_table = new Dictionary<string,ServiceProvider>();
+		private IDictionary<string, Port> singleton_provided_port_table = new Dictionary<string,Port>();
+		
+		public bool addService (string serviceType, ServiceProvider portProvider)
+		{
+			if (!provided_services_table.ContainsKey(serviceType)) {
+				provided_services_table.Add(serviceType, portProvider);
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public bool addSingletonService (string serviceType, Port server)
+		{
+			if (!singleton_provided_port_table.ContainsKey(serviceType)) 
+			{
+				singleton_provided_port_table.Add(serviceType, server);
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public void removeService (string serviceType)
+		{			
+			if (provided_services_table.ContainsKey(serviceType)) 
+			{
+				provided_services_table.Remove(serviceType);
+			}   
+			else if (singleton_provided_port_table.ContainsKey(serviceType))
+			{
+				singleton_provided_port_table.Remove(serviceType);
+			}			
+			else
+				throw new CCAExceptionImpl("CCA Exception (Manager.removeService): there is another service registered for type " + serviceType);
+			
+		}
+		
+		#endregion
+		
+
     }
 
         

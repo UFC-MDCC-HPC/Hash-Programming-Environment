@@ -14,8 +14,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
     {
 
     }
-
-    public class WorkerServicesImpl : WorkerServices
+	
+//	[Serializable]
+    public class WorkerServicesImpl : MarshalByRefObject, WorkerServices
     {
         private WorkerObject framework;
         private ComponentID cid;
@@ -23,7 +24,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public WorkerServicesImpl(WorkerObject framework, ComponentID cid, IUnit unit)
         {
-            this.cid = cid;
+			this.cid = cid;
             this.instanceName = cid.getInstanceName();
             this.framework = framework;
             unit.CID = cid;
@@ -49,12 +50,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public Port getPort(string portName)
         {
-            return framework.getPort(mkPortName(portName.Trim()));
+			Port port = framework.getServicePort(cid, mkPortName(portName.Trim()));
+            return port == null ? framework.getPort(mkPortName(portName.Trim())) : port;
         }
 
         public Port getPortNonblocking(string portName)
         {
-            return framework.getPortNonblocking(mkPortName(portName.Trim()));
+			Port port = framework.getServicePort(cid, mkPortName(portName.Trim()));
+            return port==null ? framework.getPortNonblocking(mkPortName(portName.Trim())) : port;
         }
 
         public void releasePort(string portName)

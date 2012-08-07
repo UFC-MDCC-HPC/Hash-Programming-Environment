@@ -1080,7 +1080,7 @@ namespace gov
              * requesting the service.
              *
              */
-            interface ServiceProvider : cca.Port
+            public interface ServiceProvider : cca.Port
             {
                 /**
                 * Create the Port for the Service, informing the framework through
@@ -1101,7 +1101,7 @@ namespace gov
              * ServiceRegistry is a Port that is provided by the framework
              * and can be used by a component wishing to provide service Ports. 
              */
-            interface ServiceRegistry : cca.Port
+            public interface ServiceRegistry : cca.Port
             {
                 /**
                 * Add a ServiceProvider that can be asked to produce service Port's

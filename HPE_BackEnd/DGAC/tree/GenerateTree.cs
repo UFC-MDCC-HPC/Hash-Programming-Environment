@@ -65,13 +65,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaTop = acfp == null ? null : br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                     }
 
-					Console.WriteLine("acfaTop is null ? " + (acfaTop==null));
+					//Console.WriteLine("acfaTop is null ? " + (acfaTop==null));
 					
                     AbstractComponentFunctorApplication acfaActual = null;
                     if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-						Console.WriteLine ("acfaActual 1 ??? " + spc.Id_functor_app_actual);
+						//Console.WriteLine ("acfaActual 1 ??? " + spc.Id_functor_app_actual);
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spc.Id_functor_app_actual);
                     }
                     else if (sp is SupplyParameterParameter)
@@ -80,20 +80,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         int Id_functor_app_actual = 0;
                         acfaRef.ParametersList.TryGetValue(parameter_id, out Id_functor_app_actual);
 						
-						Console.WriteLine (" acfaRef.ParametersList.Count = " + acfaRef.ParametersList.Count);
-						foreach (KeyValuePair<string,int> p in acfaRef.ParametersList)
-							Console.WriteLine("acfaRef.ParametersList -- " + p.Key + " -> " + p.Value);
+						//Console.WriteLine (" acfaRef.ParametersList.Count = " + acfaRef.ParametersList.Count);
+						//foreach (KeyValuePair<string,int> p in acfaRef.ParametersList)
+							//Console.WriteLine("acfaRef.ParametersList -- " + p.Key + " -> " + p.Value);
 						
                         if (Id_functor_app_actual <= 0) // LOOK AT THE TOP PARAMETERS
                         {
                             bool found = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out Id_functor_app_actual);
-						    Console.WriteLine (" actualParametersTop.Count = " + actualParametersTop.Count);
-						    foreach (KeyValuePair<string,int> p in actualParametersTop)
-							     Console.WriteLine("actualParametersTop -- " + p.Key + " -> " + p.Value);
+						   // Console.WriteLine (" actualParametersTop.Count = " + actualParametersTop.Count);
+						   // foreach (KeyValuePair<string,int> p in actualParametersTop)
+							//     Console.WriteLine("actualParametersTop -- " + p.Key + " -> " + p.Value);
 							if (!found)
 							{	
 								string key = spp.Id_parameter_actual + "#" + sp.Id_functor_app;
-								Console.WriteLine ("key ??? " + key);
+								//Console.WriteLine ("key ??? " + key);
 								acfaRef.ParametersList.TryGetValue(key, out Id_functor_app_actual);
 							}
 							
@@ -104,12 +104,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 									Console.WriteLine("pair: " + par.Key + " -> " + par.Value);
 								}
 							}*/
-							Console.WriteLine ("spp.Id_parameter_actual ??? " + spp.Id_parameter_actual);
-							Console.WriteLine ("found ??? " + found);
+							//Console.WriteLine ("spp.Id_parameter_actual ??? " + spp.Id_parameter_actual);
+							//Console.WriteLine ("found ??? " + found);
                         }
-						Console.WriteLine ("acfaRef ??? " + acfaRef.Id_functor_app);
-						Console.WriteLine ("parameter_id ??? " + parameter_id);
-						Console.WriteLine ("acfaActual 2 ??? " + Id_functor_app_actual);
+						//Console.WriteLine ("acfaRef ??? " + acfaRef.Id_functor_app);
+						//Console.WriteLine ("parameter_id ??? " + parameter_id);
+						//Console.WriteLine ("acfaActual 2 ??? " + Id_functor_app_actual);
 						if (Id_functor_app_actual <= 0) {
 							// FREE VARIABLE !!! USE THE BOUND !!!
 							//AbstractComponentFunctorApplication acfaParF = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(spp.Id_functor_app);
@@ -121,7 +121,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaActual = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(Id_functor_app_actual);
                     }
 					
-					Console.WriteLine("acfaActual is null ? " + (acfaActual==null));
+					//Console.WriteLine("acfaActual is null ? " + (acfaActual==null));
 
 					if (!freeVariable) 
 					{
