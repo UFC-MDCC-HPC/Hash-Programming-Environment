@@ -25,12 +25,13 @@ namespace gov
                 connectionString = User + "." + UsesPortName + "->" + Provider + "." + ProvidesPortName;
             }
 
-            public ManagerConnectionID(ComponentID provider, string providesPortName, ComponentID user, string usesPortName)
+            public ManagerConnectionID(ComponentID provider, string providesPortName, ComponentID user, string usesPortName, WorkerConnectionID[] worker_connections)
             {
                 this.provider = provider;
                 this.providesPortName = providesPortName;
                 this.user = user;
                 this.usesPortName = usesPortName;
+				this.worker_connections = worker_connections;
 
                 connectionString = User + "." + UsesPortName + "->" + Provider + "." + ProvidesPortName;
             }
@@ -81,6 +82,15 @@ namespace gov
                 return connectionString.GetHashCode();
             }
 
+			private WorkerConnectionID[] worker_connections = null;
+			
+            public WorkerConnectionID getWorkerConnectionID(int i)
+            {
+                    //WorkerComponentID wProvider = ((ManagerComponentID)Provider).getWorkerComponentID(node);
+                    //WorkerComponentID wUser = ((ManagerComponentID)User).getWorkerComponentID(node);
+                    //return new WorkerConnectionIDImpl(wProvider, providesPortName, wUser, usesPortName);
+					return worker_connections[i];
+            }
         }
 
         public class ManagerConnectionIDImpl : ManagerConnectionID
@@ -107,10 +117,9 @@ namespace gov
 			                                 string usesPortName, 
 			                                 int[] nodes, 
 			                                 WorkerConnectionID[] worker_connections) 
-                :  base(provider, providesPortName,user,usesPortName)
+                :  base(provider, providesPortName,user,usesPortName, worker_connections)
             {
                 this.nodes = nodes;
-				this.worker_connections = worker_connections;
             }
 
             #endregion            
@@ -155,15 +164,6 @@ namespace gov
 
             #endregion
 			
-			private WorkerConnectionID[] worker_connections = null;
-			
-            public WorkerConnectionID getWorkerConnectionID(int i)
-            {
-                    //WorkerComponentID wProvider = ((ManagerComponentID)Provider).getWorkerComponentID(node);
-                    //WorkerComponentID wUser = ((ManagerComponentID)User).getWorkerComponentID(node);
-                    //return new WorkerConnectionIDImpl(wProvider, providesPortName, wUser, usesPortName);
-					return worker_connections[i];
-            }
 
         }
 

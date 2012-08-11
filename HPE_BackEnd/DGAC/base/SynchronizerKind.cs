@@ -11,7 +11,7 @@ using gov.cca.ports;
 namespace br.ufc.pargo.hpe.kinds
 {
 
-    public interface ISynchronizerKind : IUnit, GoPort
+    public interface ISynchronizerKind : IActivateKind, GoPort
 	{
 	}
 	

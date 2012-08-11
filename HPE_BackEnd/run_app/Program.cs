@@ -36,11 +36,11 @@ namespace Back_End_Test
 				string[] output = null;
 				if (prefix == null) 
 				{					
-				  output = dgac.runApplicationNew(instantiator_string, user, password, curDir);
+				  output = dgac.runApplication(instantiator_string, user, password, curDir);
 				} 
 				else 
 				{
-				  output = dgac.runApplicationNew(instantiator_string, user, password, curDir, rounds, prefix);
+				  output = dgac.runApplicationNTimes(instantiator_string, user, password, curDir, rounds, prefix);
 				}
 
                 int i = 0;

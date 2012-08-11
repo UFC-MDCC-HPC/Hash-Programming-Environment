@@ -20,6 +20,7 @@ namespace br.ufc.pargo.hpe.basic
 		int Size {get; set;}      // Number of the parallel units.
 		int[] Ranks {get; set;}   // Global ranks of the parallel units.
 		int GlobalRank {get; set;} // Global rank of the unit.
+		IDictionary<string, IUnit> Slice {get;}
 		
         Intracommunicator WorldComm {get; set;}
        
@@ -31,27 +32,11 @@ namespace br.ufc.pargo.hpe.basic
         string Id_unit { set; get; }
 		int PartitionIndex {set; get;}
         
-		//string get_id_inner_0();
-		string get_id_inner(IUnit container);
-		void set_id_inner(IUnit container, string id_inner);
+		string getSliceName(IUnit container);
 
-       // int GlobalRank { set; get; }                         // The rank of the process (application) where the unit is placed on
-       // int LocalRank { get; }                               // = RanksInv[globalRank]
-       // int[] Ranks { set; get; }                            // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
-       // int[] RanksInv { get; }                              // Ranks[i]==j iif RanksInv[j]==i
-       // IDictionary<string, int[]> Units { get; set; }
-       // IDictionary<string, int>[] EnumRanks { set; get; }
-       // IDictionary<string, int> EnumRank { get; }           // = EnumRanks[localRank]
-       // int[] EnumPeers { get; }
-       // IDictionary<string, int> EnumeratorCardinality { get; set; }
-
-        IList<IUnit> Slices { get; }
-        IList<IUnit> AllSlices { get; }
         IList<IUnit> ContainerSlice { get;}
-		void addContainerSlice(IUnit u);
+		void addContainerSlice(IUnit u, string portName);
 		
-        void addSlice(IUnit slice);
-        void addSliceAll(IUnit slice);
         void initialize();
         void post_initialize();
         void destroySlice();

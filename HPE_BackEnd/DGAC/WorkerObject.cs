@@ -35,35 +35,35 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
 		private IDictionary<ComponentID, TypeMap> unitProperties = new Dictionary<ComponentID, TypeMap>();
 
-        private IDictionary<ComponentID, IList<string>> providesPortNames = new Dictionary<ComponentID, IList<string>>();
-        private IDictionary<ComponentID, IList<string>> usesPortNames = new Dictionary<ComponentID, IList<string>>();
+        private IDictionary<string, IList<string>> providesPortNames = new Dictionary<string, IList<string>>();
+        private IDictionary<string, IList<string>> usesPortNames = new Dictionary<string, IList<string>>();
         private IDictionary<string, ComponentID> usesPortNamesInv = new Dictionary<string, ComponentID>();
         private IDictionary<string, ComponentID> providesPortNamesInv = new Dictionary<string, ComponentID>();
-	        private IDictionary<string, string> usesPortTypes = new Dictionary<string, string>();
-            private IDictionary<string, string> providesPortTypes = new Dictionary<string, string>();
+        private IDictionary<string, string> usesPortTypes = new Dictionary<string, string>();
+        private IDictionary<string, string> providesPortTypes = new Dictionary<string, string>();
 
         private IDictionary<string, Port> providesPorts = new Dictionary<string, Port>();
         private IDictionary<string, TypeMap> portProperties = new Dictionary<string, TypeMap>();
 
-        private IList<ConnectionID> connectionList = new List<ConnectionID>();
+        private IDictionary<string, ConnectionID> connectionList = new Dictionary<string, ConnectionID>();
         private IDictionary<ConnectionID, TypeMap> connectionProperties = new Dictionary<ConnectionID, TypeMap>();
         private IDictionary<string, ConnectionID> connByUserPort = new Dictionary<string, ConnectionID>();
         private IDictionary<string, IList<ConnectionID>> connByProviderPort = new Dictionary<string, IList<ConnectionID>>();
 
-        private IDictionary<ComponentID, Services> componentServices = new Dictionary<ComponentID, Services>();
+        private IDictionary<string, Services> componentServices = new Dictionary<string, Services>();
 
 		
 		private void registerProvidesPortInfo(ComponentID cid, Port port, string portName, string type, TypeMap properties) 
 		{
 			IList<string> portList;
-			if (providesPortNames.ContainsKey(cid)) 
+			if (providesPortNames.ContainsKey(cid.getInstanceName())) 
 			{
-				providesPortNames.TryGetValue(cid,out portList);
+				providesPortNames.TryGetValue(cid.getInstanceName(),out portList);
 			} 
 			else 
 			{
 				portList = new List<string>();				
-				providesPortNames.Add(cid,portList);
+				providesPortNames.Add(cid.getInstanceName(),portList);
 			}
 
             providesPortNamesInv.Add(portName, cid);
@@ -75,13 +75,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		
 		private void unregisterProvidesPortInfo(ComponentID cid, string portName) 
 		{
-			if (providesPortNames.ContainsKey(cid)) 
+			IList<string> portList;
+			if (providesPortNames.TryGetValue(cid.getInstanceName(),out portList)) 
 			{
-				IList<string> portList;
-				providesPortNames.TryGetValue(cid,out portList);
                 portList.Remove(portName);
                 if (portList.Count == 0)
-                    providesPortNames.Remove(cid);
+                    providesPortNames.Remove(cid.getInstanceName());
                 providesPortNamesInv.Remove(portName);
                 portProperties.Remove(portName);
                 providesPorts.Remove(portName);
@@ -96,14 +95,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		private void registerUsesPortInfo(ComponentID cid, string portName, string type, TypeMap properties) 
 		{
 			IList<string> portList;
-			if (usesPortNames.ContainsKey(cid)) 
+			if (usesPortNames.ContainsKey(cid.getInstanceName())) 
 			{
-				usesPortNames.TryGetValue(cid, out portList);
+				usesPortNames.TryGetValue(cid.getInstanceName(), out portList);
 			} 
 			else 
 			{
 				portList = new List<string>();				
-				usesPortNames.Add(cid,portList);
+				usesPortNames.Add(cid.getInstanceName(),portList);
 			}
 		//	Console.WriteLine("registerUsesPortInfo -- " + portName);
 			usesPortTypes.Add (portName, type);
@@ -114,15 +113,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		private void unregisterUsesPortInfo(ComponentID cid, string portName) 
 		{
-			if (usesPortNames.ContainsKey(cid)) 
+			if (usesPortNames.ContainsKey(cid.getInstanceName())) 
 			{
 				IList<string> portList;
-				usesPortNames.TryGetValue(cid, out portList);
+				usesPortNames.TryGetValue(cid.getInstanceName(), out portList);
 				portList.Remove(portName);
                 if (portList.Count == 0)
-                    usesPortNames.Remove(cid);
+                    usesPortNames.Remove(cid.getInstanceName());
                 usesPortNamesInv.Remove(portName);
                 portProperties.Remove(portName);
+				port_manager.resetPort(portName);
 			} 
 			else 
 			{
@@ -136,7 +136,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
                 unitInstances.Add(cid.getInstanceName(), unit);
                 componentIDs.Add(cid.getInstanceName(), cid);
-                componentServices.Add(cid, services);
+                componentServices.Add(cid.getInstanceName(), services);
                 unit.CID = cid;
             }
 		}
@@ -146,7 +146,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             if (!componentIDs.ContainsKey(cid.getInstanceName()))
             {
                 componentIDs.Add(cid.getInstanceName(), cid);
-                componentServices.Add(cid, services);
+                componentServices.Add(cid.getInstanceName(), services);
             }
         }
 
@@ -158,10 +158,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		private gov.cca.Services frw_services = null;
 		
+		private PortUsageManager port_manager = null;
+		
 		public WorkerObject() 
 		{
 			//gov.cca.Services frw_services = getServices("worker_framework","WorkerObject",new TypeMapImpl());
             //this.setServices(frw_services);
+			
+			port_manager = new PortUsageManager();
 			
             DGAC.BackEnd.framework = this;
 
@@ -171,6 +175,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         }
 		
 		#endregion
+
+		public WorkerServices getServicesObjectOf(string instanceName)
+		{
+			Services services;
+			this.componentServices.TryGetValue(instanceName, out services);
+			return (WorkerServices) services;
+		}
 		
 		// ==========================================================================================================
         // BEGIN - CCA INTERFACES (Abstract Framework, Builder Services, Services) ==================================
@@ -194,8 +205,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			//TcpServerChannel channel = new TcpServerChannel(port);
      		//ChannelServices.RegisterChannel(channel, false);     
-     		//RemotingServices.Marshal(services, "WorkerServices.rem");			
-			
+     		//RemotingServices.Marshal(services, "WorkerServices.rem");	
 			
             return services;            
         }
@@ -430,23 +440,100 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void destroyInstance(ComponentID toDie, float timeout)
         {
-			// TODO: destroy unit ... it is necessary to call destroyInstance for all slices in the hierarchy. (?)
+			/* It is supposed that the user has disconnected and unregistered 
+			 * the uses and provides ports of the component 'toDie' 
+			 */
+			Services services = null;
+			componentServices.TryGetValue(toDie.getInstanceName(), out services);
+			
+			Console.WriteLine("TESTE 1");
+			
+			string[] usesPorts = frw_builder.getUsedPortNames(toDie);
+			string[] providesPorts = frw_builder.getProvidedPortNames(toDie);
+			
+			Console.WriteLine("TESTE 2");
+			
+			// CHECK IF USES PORTS ARE RELEASED.
+			foreach (string usesPort in usesPorts) 
+			{
+				if (!port_manager.isReleased(usesPort))
+				{
+					Console.Error.WriteLine("Unsafe component destruction: Port " + usesPort + " of " + toDie.getInstanceName() + " was not released.");
+					throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);				
+				}
+			}			
+			
+			Console.WriteLine("TESTE 3");
+			
+			// CHECK IF THE PORTS CONNECTED TO ITS PROVIDES PORTS ARE RELEASED
+			foreach (string providesPort in providesPorts) 
+			{
+				IList<ConnectionID> connList = null;				
+				if (connByProviderPort.TryGetValue(providesPort, out connList))
+				{
+					foreach (ConnectionID conn in connList) 
+					{
+						string usesPort = conn.getUser().getInstanceName() + ":" + conn.getUserPortName();
+						if (!port_manager.isReleased(usesPort)) 
+						{
+						    Console.Error.WriteLine("Unsafe component destruction: Port " + usesPort + " of " + toDie.getInstanceName() + " was not released.");
+							throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
+						}
+					}
+				}
+			}			
+			
+			Console.WriteLine("TESTE 4");
+			
+			// DISCONNECT AND UNREGISTER THE USES PORTS
+			foreach (string usesPort in usesPorts) 
+			{
+				ConnectionID conn = null;				
+				if (connByUserPort.TryGetValue(usesPort, out conn))
+					frw_builder.disconnect(conn, 0);	
+				services.unregisterUsesPort(usesPort);
+			}			
+			
+			Console.WriteLine("TESTE 5");
+			
+			// DISCONNNECT AND REMOVE THE PROVIDES PORTS
+			foreach (string providesPort in providesPorts) 
+			{
+				IList<ConnectionID> connList = null;				
+				if (connByProviderPort.TryGetValue(providesPort, out connList))
+				{
+					foreach (ConnectionID conn in connList) 
+					{
+						frw_builder.disconnect(conn, 0);						
+					}
+				}
+				services.removeProvidesPort(providesPort);
+			}			
+			
+			Console.WriteLine("TESTE 6");
+			
+			// Remove instance id from tables
+			componentIDs.Remove(toDie.getInstanceName());
+			unitInstances.Remove(toDie.getInstanceName ());
+			
+			Console.WriteLine("TESTE 7");
+			
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string[] getProvidedPortNames(ComponentID cid)
         {
 		    IList<string> portList;
-			if (providesPortNames.ContainsKey(cid)) 
+			if (providesPortNames.ContainsKey(cid.getInstanceName()))
 			{
-				providesPortNames.TryGetValue(cid, out portList);			
+				providesPortNames.TryGetValue(cid.getInstanceName(), out portList);			
 				string[] ports = new string[portList.Count];
 				portList.CopyTo(ports,0);
 	            return ports;
 			}
 			else 
 			{
-				throw new CCAExceptionImpl("Undefined ComponentID");
+				throw new CCAExceptionImpl("Undefined Component (id=" + cid.getInstanceName() + ")");
 			}
         }
 
@@ -454,16 +541,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public string[] getUsedPortNames(ComponentID cid)
         {
 		    IList<string> portList;
-			if (usesPortNames.ContainsKey(cid)) 
+			if (usesPortNames.ContainsKey(cid.getInstanceName())) 
 			{
-				usesPortNames.TryGetValue(cid, out portList);			
+				usesPortNames.TryGetValue(cid.getInstanceName(), out portList);			
 				string[] ports = new string[portList.Count];
 				portList.CopyTo(ports,0);
 	            return ports;
 			} 
 			else 
 			{
-				throw new CCAExceptionImpl("Undefined ComponentID");
+				throw new CCAExceptionImpl("Undefined Component (id=" + cid.getInstanceName() + ")");
 			}
         }
 
@@ -502,32 +589,40 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public ConnectionID connect(ComponentID user, string usingPortName, ComponentID provider, string providingPortName)
         {
-			if (!usesPortNamesInv.ContainsKey(user.getInstanceName() + ":" + usingPortName))
+			string user_port_name = user.getInstanceName() + ":" + usingPortName;
+			string provider_port_name = provider.getInstanceName() + ":" + providingPortName;
+			
+			if (!usesPortNamesInv.ContainsKey(user_port_name))
             {				
-				//foreach (string p in usesPortNamesInv.Keys)
-				//{
-				//	Console.WriteLine("U KEY = " + p);
-				//}
-			   throw new CCAExceptionImpl("Uses port " + user.getInstanceName() + ":" + usingPortName + " not found !");	
-			}
-			if (!providesPortNamesInv.ContainsKey(provider.getInstanceName() + ":" + providingPortName))
-			{
-				//foreach (string p in providesPortNamesInv.Keys)
-				//{
-				//	Console.WriteLine("P KEY = " + p);
-				//}
-				throw new CCAExceptionImpl("Provides port " + provider.getInstanceName() + ":" + providingPortName + " not found !");	
+				foreach (string p in usesPortNamesInv.Keys)
+				{
+					Console.WriteLine("U KEY = " + p);
+				}
+			   throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
 			}
 			
+			if (!providesPortNamesInv.ContainsKey(provider_port_name))
+			{
+				foreach (string p in providesPortNamesInv.Keys)
+				{
+					Console.WriteLine("P KEY = " + p);
+				}
+				throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
+			}						
+			
+			if (port_manager.isReleased(user_port_name))
+			{
+				throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);
+			}
 			
 			//Console.WriteLine("connect " + usingPortName + " to " + providingPortName);
 			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
-            connectionList.Add(connection);
-            bool first_connection = addConnByProviderPort(provider.getInstanceName() + ":" + providingPortName, connection);
+            connectionList.Add(connection.ToString(), connection);
+            bool first_connection = addConnByProviderPort(provider_port_name, connection);
           //  Console.WriteLine(my_rank + ": CONNECT !" + user.getInstanceName() + ":" + usingPortName);
-            connByUserPort.Add(user.getInstanceName() + ":" + usingPortName, connection);
-            this.tryAwakeConnectingUserPort(usingPortName);
+            connByUserPort.Add(user_port_name, connection);
+            this.tryAwakeConnectingUserPort(user_port_name);
 
             IUnit user_unit, provider_unit;
             this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
@@ -537,7 +632,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
                 if (first_connection) /* user is null if it is the driver */
                     DGAC.BackEnd.setupSlice(user_unit, provider_unit, usingPortName);
-                user_unit.addSliceAll(provider_unit);
+                	
+                    provider_unit.GlobalRank = user_unit.GlobalRank;
+                    provider_unit.WorldComm = user_unit.WorldComm;
+					
+					/* --- TODO: NOT VALID FOR MPMD */
+					provider_unit.Rank = provider_unit.GlobalRank;
+					provider_unit.Size = provider_unit.WorldComm.Size;
+				
+					provider_unit.addContainerSlice(user_unit, usingPortName);
             }
 
             return connection;
@@ -563,13 +666,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private void tryAwakeConnectingUserPort(string usingPortName)
         {
-            if (waitingUserPorts.ContainsKey(usingPortName))
+            AutoResetEvent wait_handle = null;
+            if (waitingUserPorts.TryGetValue(usingPortName, out wait_handle))
             {
-                AutoResetEvent wait_handle;
-                waitingUserPorts.TryGetValue(usingPortName, out wait_handle);
+//				Console.WriteLine ("AWAKENING " + usingPortName);   
                 wait_handle.Set();
                 waitingUserPorts.Remove(usingPortName);
             }
+			else
+			{
+//				Console.WriteLine ("NOTHING TO AWAKE - " + usingPortName);
+			}
+				
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -578,7 +686,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             IList<ComponentID> componentListList = new List<ComponentID>(componentList);
 
             IList<ConnectionID> connectionsFilter = new List<ConnectionID>();
-            foreach (ConnectionID conn in connectionList) 
+            foreach (ConnectionID conn in connectionList.Values) 
             {
                 ComponentID user = conn.getUser();
                 ComponentID provider = conn.getProvider();
@@ -617,15 +725,24 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public void disconnect(ConnectionID connID, float timeout)
         {
             WorkerConnectionID hpeconnID = (WorkerConnectionID) connID;
-
-            if (hpeconnID.Fetched)
-            {
-                throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
-            }
-
-            connectionList.Remove(connID);
-            connByUserPort.Remove(connID.getUser().getInstanceName() + ":" + connID.getUserPortName());
-            connByProviderPort.Remove(connID.getProvider().getInstanceName() + ":" + connID.getProviderPortName());
+			
+			string user_port_name = connID.getUser().getInstanceName() + ":" + connID.getUserPortName();
+			string provider_port_name = connID.getProvider().getInstanceName() + ":" + connID.getProviderPortName();
+			
+			if (!port_manager.isReleased(user_port_name))
+			{
+				throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
+			}
+						
+			if (!connectionList.ContainsKey(connID.ToString()))
+			{
+				throw new CCAExceptionImpl(CCAExceptionType.PortNotConnected);
+			}
+			
+            connectionList.Remove(connID.ToString ());
+			Console.WriteLine ("============ REMOVING " + user_port_name);
+            connByUserPort.Remove(user_port_name);
+            connByProviderPort.Remove(provider_port_name);
 
             if (connectionProperties.ContainsKey(connID))
             {
@@ -647,7 +764,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             try
             {
                 // TEST IF ALL PORTS CAN BE DISCONNECT.
-                foreach (ConnectionID conn in connectionList)
+                foreach (ConnectionID conn in connectionList.Values)
                 {
                     ComponentID user = conn.getUser();
                     ComponentID provider = conn.getProvider();
@@ -656,7 +773,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         (id2 == null && (user.Equals(id1) || provider.Equals(id1))))
                     {
                         WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
-                        hpeconn.blockFetched();
+                        //hpeconn.blockFetched();
                         willDisconnect.Add(conn);
 
                     }
@@ -667,7 +784,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 foreach (ConnectionID conn in willDisconnect)
                 {
                     WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
-                    hpeconn.unblockFetched();
+                    //hpeconn.unblockFetched();
                 }
                 throw e;
             }
@@ -725,23 +842,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             ConnectionID conn;
             connByUserPort.TryGetValue(portName, out conn);
             WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
-
-            // NOTE: The following lines ensures that calls to getPort and releasePort are in pairs.... but we only restrict that two calls 
-            // to releasePort for the same port, or a call to releasePort for a not fetched port, will generate exceptions.
-            // Check whether the port was fetched before.
-            //if (hpeconn.Fetched)
-            //{
-            //    throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
-            //}
-
-            hpeconn.setFetched();
-
+			
             string providesPortName = conn.getProvider().getInstanceName() + ":" + conn.getProviderPortName();
 
             Port providesPort;
             providesPorts.TryGetValue(providesPortName, out providesPort);
             
 			//Console.WriteLine("PORT TYPE of " + providesPortName + " = " + providesPort.GetType());
+			
+			port_manager.addPortFetch(portName);
 			
             return providesPort;
         }
@@ -776,7 +885,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				return null;
 			}
 
-		[MethodImpl(MethodImplOptions.Synchronized)]
+//		[MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPort(string portName)
         {
           //  Console.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
@@ -808,7 +917,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
+//        [MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPortNonblocking(string portName)
         {
             if (!usesPortNamesInv.ContainsKey(portName))
@@ -834,24 +943,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
-            if (!connByUserPort.ContainsKey(portName))
-            {
-                throw new CCAExceptionImpl(CCAExceptionType.PortNotConnected);
-            }
-
             ConnectionID conn;
             connByUserPort.TryGetValue(portName, out conn);
             WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
 
-            // Check whether the port was fetched before.
-            if (!hpeconn.Fetched)
-            {
-                throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);
-            }
-            else
-            {
-                hpeconn.unsetFetched();
-            }
+            port_manager.addPortRelease(portName);
         }
 
 
@@ -862,6 +958,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public void registerUsesPort(string portName, string type, TypeMap properties)
         {
 			//Console.Error.WriteLine("registering port " + portName);
+			
+			if (usesPortNamesInv.ContainsKey(portName))
+			{
+				throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
+			}
 			
             HPETypeMap hpe_properties = (HPETypeMap) properties;
 
@@ -906,14 +1007,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             if (connByUserPort.ContainsKey(portName))
             {
-                ConnectionID conn;
-                connByUserPort.TryGetValue(portName, out conn);
-                WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
-                if (hpeconn.Fetched)
-                {
-                    throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
-                }
-                disconnect(conn, 0);
+				throw new CCAExceptionImpl("CCA Exception (worker): it is not possible" +
+										   " to unregister a connected uses port " +
+										   " (" + portName + "). Try disconnect it first.");
             }
 
             if (usesPortNamesInv.ContainsKey(portName))
@@ -922,11 +1018,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 usesPortNamesInv.TryGetValue(portName, out cid);
                 usesPortNamesInv.Remove(portName);
                 IList<string> portList;
-                usesPortNames.TryGetValue(cid, out portList);
+                usesPortNames.TryGetValue(cid.getInstanceName(), out portList);
                 portList.Remove(portName);
                 if (portProperties.ContainsKey(portName))
                     portProperties.Remove(portName);
-            }
+            } 
+			else 
+			{
+				throw new CCAExceptionImpl("CCA Exception (worker): it is not possible" +
+										   " to unregister a no registered port.");
+			}
         }
         
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -937,7 +1038,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             readPortName(portName, out instanceName, out portName_);
 
-            ComponentID cid;
+			if (this.providesPorts.ContainsKey(portName))
+			{
+				throw new CCAExceptionImpl(CCAExceptionType.PortAlreadyDefined);
+			}
+
+			ComponentID cid;
             if (componentIDs.ContainsKey(instanceName))
             {
                 componentIDs.TryGetValue(instanceName, out cid);
@@ -961,6 +1067,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void removeProvidesPort(string portName)
         {
+            if (connByProviderPort.ContainsKey(portName))
+            {
+				throw new CCAExceptionImpl("CCA Exception (worker): it is not possible" +
+										   " to unregister a connected provides port." +
+										   " Try disconnect it first.");
+            }
+			
             if (providesPortNamesInv.ContainsKey(portName))
             {
                 ComponentID cid;

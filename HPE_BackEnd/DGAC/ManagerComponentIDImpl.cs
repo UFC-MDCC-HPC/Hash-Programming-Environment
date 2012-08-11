@@ -51,7 +51,7 @@ namespace gov
             }
 			
 			// For registering a #-component
-            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, WorkerComponentID[] wcids, int id_functor_app, int kind)
+            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind)
             {
                 this.instanceNamePrim = instanceName;
                 this.nodes = nodes;
@@ -60,10 +60,10 @@ namespace gov
                 this.id_functor_app = id_functor_app;
                 this.kind = kind;
                 this.wcids = new Dictionary<int, WorkerComponentID>();
-                for (int i = 0; i < nodes.Length; i++)
-                {
-                    this.wcids[i] = wcids[i];
-                }
+//                for (int i = 0; i < nodes.Length; i++)
+//                {
+ //                   this.wcids[i] = wcids[i];
+  //              }
             }
 
             #endregion
@@ -120,7 +120,7 @@ namespace gov
 			
 			public override void registerWorkerComponentID(int node, WorkerComponentID wcid)
             {
-                wcids.Add (node,wcid);
+                wcids[node] = wcid;
             }
 			
             public override WorkerComponentID getWorkerComponentID(int node)

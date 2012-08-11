@@ -19,25 +19,14 @@ using br.ufc.pargo.hpe.ports;
 using gov.cca.ports;
 using System.Runtime.Remoting.Activation;
 using System.Runtime.Remoting.Channels.Tcp;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace br.ufc.pargo.hpe.backend
 {
 
     namespace DGAC
     {
-
-        namespace ports
-        {
-            public interface CreateSlicePort : Port
-            {
-                void createSlices();
-                IList<IUnit> Slices { get; }
-                IUnit ContainerSlice { get; set; }
-                void addSlice(IUnit slice);
-                void destroySlice();
-
-            }
-        }
 
         public class BackEnd 
         {
@@ -434,19 +423,18 @@ namespace br.ufc.pargo.hpe.backend
             }
 
 
-            public String[] runApplicationNew(string instantiatior_string, string userName, string password, string curDir)
+            public String[] runApplication(string instantiatior_string, string userName, string password, string curDir)
             {
 		    	int id_concrete = 0;
                 session_id = getSessionID(id_concrete);
 				string session_id_string = "session_" + session_id.ToString();
 				
-				return runApplicationNew(instantiatior_string, userName, password, curDir, 1, session_id_string);
+				return runApplicationNTimes(instantiatior_string, userName, password, curDir, 1, session_id_string);
 			}
 			
-            public String[] runApplicationNew(string instantiatior_string, string userName, string password, string curDir, int rounds, string session_id_string)
-            {
+            public String[] runApplicationNTimes(string instantiatior_string, string userName, string password, string curDir, int rounds, string session_id_string)
+            {	
                 string[] str_output = null;
-                // assert: eIds.Length = eVls.Length
                 try
                 {
                     /* BEGIN UNDER CONSTRUCTION */
@@ -457,24 +445,60 @@ namespace br.ufc.pargo.hpe.backend
 					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
 				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
 					
-					Console.WriteLine("BUILDER SERVICE");
+					Console.WriteLine("Connecting to the builder service port");
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					
-					Console.WriteLine("CREATE INSTANCE");
+					Console.WriteLine("Creating an instance of the application");
                     ComponentID app_cid = bsPort.createInstance("app", instantiatior_string, properties);
-										
-					Console.WriteLine("CREATE SLICES PORT");
+					
+					Console.WriteLine("Connecting to the GoPort of the application");
+					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
+					ConnectionID conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
+					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
+					
+				//	Thread thread_go = new Thread((new GoThread(go_port)).go);
+				//	thread_go.Start();
+					
+					//Console.WriteLine("PRESS TO PROCEED --- CREATE SLICES PORT");
+					//System.Console.ReadKey(true);
+					
+					Console.WriteLine("Connecting to the AutomaticSlices port of the application");
 					frwServices.registerUsesPort(Constants.CREATE_SLICES_PORT_NAME, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
-					bsPort.connect(host_cid, Constants.CREATE_SLICES_PORT_NAME, app_cid, Constants.CREATE_SLICES_PORT_NAME);
+					ConnectionID conn_cs = bsPort.connect(host_cid, Constants.CREATE_SLICES_PORT_NAME, app_cid, Constants.CREATE_SLICES_PORT_NAME);
 					AutomaticSlicesPort create_slices_port = (AutomaticSlicesPort) frwServices.getPort (Constants.CREATE_SLICES_PORT_NAME);
 					create_slices_port.create_slices(); 
 					
-					Console.WriteLine("GO PORT");
-					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
-					bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
-					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
-					go_port.go(); 
+				//	thread_go.Join();
+					
+					Console.WriteLine ("Doing 'round' executions of the application.");
+					for (int round=0; round < rounds; round++) 
+					{
+						Console.WriteLine("ROUND #" + round);	
+						go_port.go(); 
+					}
+					
+					// RECURSIVELY, DISCONNECT ALL COMPONENT CONNECTIONS ...
+					//create_slices_port.destroy_slices();
+					
+					frwServices.releasePort(Constants.CREATE_SLICES_PORT_NAME);
+					bsPort.disconnect(conn_cs, 0);
+					frwServices.unregisterUsesPort(Constants.CREATE_SLICES_PORT_NAME);
+					
+					frwServices.releasePort(Constants.GO_PORT_NAME);
+					bsPort.disconnect(conn_go, 0);
+					Console.WriteLine("Test e1");
+					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
+					Console.WriteLine("Test e2");
+					
+					bsPort.destroyInstance(app_cid, 0);
+					Console.WriteLine("Test e3");
+					
+					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
+					Console.WriteLine("Test e4");
+					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
+					
+					Console.WriteLine ("Finishing");
 					
                 }
                 catch (Exception e)
@@ -484,106 +508,27 @@ namespace br.ufc.pargo.hpe.backend
 					Console.WriteLine("## Trace: " + e.StackTrace);
                     throw e;
                 }
-                finally
-                {
-//                    Connector.closeConnection();
-//                    releaseManager(ch);
-                }
 
                 return str_output == null ? new String[] { } : str_output;
 
             }
 
-/*            public String[] runApplication2(int id_concrete, String[] eIds, int[] eVls, string userName, string password, string curDir)
-            {
-                String[] str_output = null;
-                // assert: eIds.Length = eVls.Length
-                try
-                {
-                    ManagerObject server = connectToManager(out ch);
-                    Connector.openConnection();
-
-                    session_id = getSessionID(id_concrete);
-
-                    IDictionary<string, int> files = new Dictionary<string, int>();
-                    IDictionary<string, int> enums = new Dictionary<string, int>();
-
-                    int nprocs = 0;
-
-                    try
-                    {
-                        for (int i = 0; i < eIds.Length; i++)
-                            enums.Add(eIds[i], eVls[i]);
-                    }
-                    catch (ArgumentException)
-                    {
-                        throw new Exception("Argument Exception there 2 !!!!");
-                    }
-
-
-                    DGAC.database.Component c = cdao.retrieve(id_concrete);
-
-                    // IList<DGAC.database.Unit> uList = udao.list(id_concrete);
-                    IList<DGAC.database.Interface> iList = BackEnd.idao.list(c.Id_abstract);
-
-                    foreach (DGAC.database.Interface i in iList)
-                    {
-                        DGAC.database.Unit u = BackEnd.udao.retrieve(c.Id_concrete, i.Id_interface, -1);
-                        IList<EnumerationInterface> eiList = exitdao.listByInterface(c.Id_abstract, i.Id_interface);
-                        int count = 1;
-                        IDictionary<string, int> m = new Dictionary<string, int>();
-                        foreach (EnumerationInterface ei in eiList)
-                        {
-                            Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
-                            int v;
-                            if (!m.TryGetValue(e.Variable, out v))
-                            {
-                                v = 1;
-                                enums.TryGetValue(e.Variable, out v);
-                                count *= v > 0 ? v : 1;
-                                m.Add(e.Variable, v);
-                            }
-                        }
-                        char[] char_sep = new char[] { '.' };
-                        String[] class_name_arr = u.Class_name.Split(char_sep);
-                        try
-                        {
-                            files.Add(class_name_arr[class_name_arr.Length - 1], count);
-                        }
-                        catch (ArgumentException)
-                        {
-                            throw new Exception("Argument Exception there !");
-                        }
-                        nprocs += count;
-                    }
-
-                    sendRunCommandToWorker(server, files, enums, session_id, userName, password, curDir);
-
-                    str_output = new String[nprocs];
-
-                    int count_procs = 0;
-                    DirectoryInfo di = new DirectoryInfo(Constants.PATH_BIN);
-                    FileInfo[] rgFiles = di.GetFiles("output." + session_id + "*");
-                    foreach (FileInfo fi in rgFiles)
-                    {
-                        TextReader tr = new StreamReader(fi.DirectoryName + Path.DirectorySeparatorChar + fi.Name);
-                        str_output[count_procs++] = tr.ReadToEnd();
-                        tr.Close();
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-                finally
-                {
-                    Connector.closeConnection();
-                    releaseManager(ch);
-                }
-
-                return str_output == null ? new String[] { } : str_output;
-            }
-*/
+			private class GoThread
+			{
+				private GoPort go_port = null;
+				
+				public GoThread(GoPort go_port)
+				{
+					this.go_port = go_port;
+				}
+				
+				public void go()
+				{
+					go_port.go();
+				}
+				             
+			}
+			
 			
             private int getSessionID(int id_concrete)
             {
@@ -1012,6 +957,7 @@ namespace br.ufc.pargo.hpe.backend
              *  types will be checked !
              * 
              */
+			[MethodImpl(MethodImplOptions.Synchronized)]
             public static IUnit createSlice(IUnit ownerUnit, Slice slice)                                            
             {
                 string id_inner = slice.Id_inner;
@@ -1019,7 +965,7 @@ namespace br.ufc.pargo.hpe.backend
 				int partition_index = slice.Partition_index;
                 string portName = id_inner; /*slice.PortName;*/
 				
-				Console.WriteLine("CREATE SLICE: id_inner=" + id_inner + ", id_interface=" +  id_interface + ", owner id_inner = " + ownerUnit.get_id_inner(ownerUnit) +  ", owner id_interface = " + ownerUnit.Id_unit);
+				Console.WriteLine("CREATE SLICE: id_inner=" + id_inner + ", id_interface=" +  id_interface + ", owner id_inner = " + ownerUnit.getSliceName(ownerUnit) +  ", owner id_interface = " + ownerUnit.Id_unit);
 				
                 ComponentID user_cid = ownerUnit.CID;
                 Services services = ownerUnit.Services;
@@ -1056,18 +1002,7 @@ namespace br.ufc.pargo.hpe.backend
 			//Console.WriteLine("PROVIDER1: " + provider_cid.getInstanceName() + ":" + Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
 			//Console.WriteLine("USER1: " + user_cid.getInstanceName() + ":" + portName);
 
-                    // GET THE UNIT SLICE AND RETURNS IT
-                    the_unit = (IUnit)services.getPort(portName);
-                   
-                    the_unit.GlobalRank = ownerUnit.GlobalRank;
-                    the_unit.WorldComm = ownerUnit.WorldComm;
 					
-					/* --- TODO: NOT VALID FOR MPMD */
-					the_unit.Rank = the_unit.GlobalRank;
-					the_unit.Size = the_unit.WorldComm.Size;
-					/* --- */
-					
-					the_unit.set_id_inner(ownerUnit,slice.Id_inner);
                 }
                 
                 return the_unit;
@@ -1100,7 +1035,7 @@ namespace br.ufc.pargo.hpe.backend
                 unit_slice.Id_functor_app = ic.Id_functor_app;
                 unit_slice.setActualParameters(actualParameters_new);
                 unit_slice.ActualParametersTop = unit.ActualParametersTop;
-				unit_slice.addContainerSlice(unit);
+				//unit_slice.addContainerSlice(unit);
                 unit_slice.GlobalRank = unit.GlobalRank;
                 unit_slice.WorldComm = unit.WorldComm;
 				
@@ -1862,7 +1797,73 @@ namespace br.ufc.pargo.hpe.backend
                 framework.redirectSlice(user_id, portName, container_id, container_portName);                
             }
         }//DGAC
+		
+		public class PortUsageManager 
+		{
+			private IDictionary<string,int> portFetches = new Dictionary<string, int>();
+			private IDictionary<string,int> portReleases = new Dictionary<string,int>();
+			
+			public bool isFetched(string portname)
+			{
+				int count = 0;
+				return portFetches.TryGetValue(portname, out count) && count > 0;
+			}
+			
+			public bool isReleased(string portname)
+			{
+				int count = 0;
+				return portReleases.TryGetValue(portname, out count) && count > 0;
+			}
+			
+			public void addPortFetch(string portName)
+			{				
+				int count_fetch = 0;
+				if (portFetches.TryGetValue(portName, out count_fetch))
+					portFetches.Remove(portName);
+				
+				int count_release = 0;
+				if (portReleases.TryGetValue(portName, out count_release))
+					portReleases.Remove(portName);
 
+				if (count_release > 0)
+				{
+					Console.Error.WriteLine("Port " + portName + " was released (release count=" + count_release + ")");
+					throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);					
+				}
+								
+/*				if (count_fetch > 0)
+				{
+					Console.Error.WriteLine("Port " + portName + " was fetched before (fetch count=" + count_fetch + ")");
+					throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);					
+				}
+*/				
+				
+				portFetches.Add (portName, count_fetch+1);
+				
+			}
+									
+			public void addPortRelease(string portName)
+			{
+				int count_release = 0;
+				if (portReleases.TryGetValue(portName, out count_release))
+					portReleases.Remove(portName);
+				
+				if (count_release > 0)
+				{
+					Console.Error.WriteLine("Port " + portName + " still in use (release count=" + count_release + ")");
+					throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);
+				}
+				
+				portReleases.Add (portName, count_release+1);				
+			}
+			
+			public void resetPort(string portName)
+			{
+				portReleases.Remove(portName);
+				portFetches.Remove(portName);
+			}
+			
+		}
 
 
 		public class ConcreteComponentNotFoundException : Exception

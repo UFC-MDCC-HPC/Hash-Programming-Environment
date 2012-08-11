@@ -13,6 +13,7 @@ using br.ufc.pargo.hpe.backend.DGAC.utils;
 using br.ufc.pargo.hpe.ports;
 using MPI;
 using br.ufc.pargo.hpe.kinds;
+using System.Runtime.CompilerServices;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -121,11 +122,13 @@ namespace br.ufc.pargo.hpe.basic
 		
 		private IDictionary<string, bool> connected_slice = new Dictionary<string,bool>();
 		
+		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void create_slices()
 		{
 			create_slices(null);
 		}
 		
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public void create_slices(IUnit owner_unit)
         {
             Connector.openConnection();
@@ -156,8 +159,7 @@ namespace br.ufc.pargo.hpe.basic
 	                         *   1. instantiate the inner component (local slice) if it is not yet be instantiated and connected
 	                         *   2. connect the uses port to the implements (provides) port of the inner component                     * 
 	                         */
-	                        BackEnd.createSlice(this, slice);
-//							Console.WriteLine("CREATE SLICE : " + slice.Id_inner);
+	                        BackEnd.createSlice(this, slice);														
 							connected_slice.Add(slice.Id_inner, true);
 	                    }
 	                    else
@@ -173,7 +175,7 @@ namespace br.ufc.pargo.hpe.basic
 		                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface, this.partition_index);
 		
 		                        /* The actual name of the current component */
-		                        string id_inner_owner = this.get_id_inner(owner_unit_);
+		                        string id_inner_owner = this.getSliceName(owner_unit_);
 								int id_abstract_owner = owner_unit_.Id_abstract; // this.ContainerSlice.Id_abstract;
 		
 		                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
@@ -197,11 +199,6 @@ namespace br.ufc.pargo.hpe.basic
 			                        string container_portName = se.Id_inner;		
 									Console.WriteLine("REDIRECT SLICE user_id=" + user_id.getInstanceName() + ", portName=" + portName + ", container_id=" + container_id.getInstanceName() + ", container_portName=" + container_portName);
 			                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
-									IUnit unit = (IUnit) Services.getPort(portName);
-									unit.set_id_inner(this, portName);
-									//unit.Id_inner = portName;
-									unit.addContainerSlice(this);
-									//unit.ContainerSlice = this;
 									connected_slice.Add(slice.Id_inner, true);
 									break;
 								} 
@@ -212,7 +209,6 @@ namespace br.ufc.pargo.hpe.basic
 							
 							if (owner_unit_ == null)
 							{
-								
 		                        BackEnd.createSlice(this, slice);
 								connected_slice.Add(slice.Id_inner, true);
 							}
@@ -220,12 +216,11 @@ namespace br.ufc.pargo.hpe.basic
 					}
 					else 
 					{
-//						Console.WriteLine("ALREADY CONNECTED - " + slice.Id_inner);
+//						Console.WriteLine("INNER COMPONENT CONNECTED - " + slice.Id_inner);
 					}
                 }
             }            
-			
-            
+
 //			Console.WriteLine("STARTING SLICES ... " + this.AllSlices.Count);
             foreach (IUnit unit_slice in this.AllSlices)
             {
@@ -243,7 +238,9 @@ namespace br.ufc.pargo.hpe.basic
 		private bool initialized_flag = false;
 		private bool after_initialized_flag = false;
        // private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
-
+		
+		
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public void initialize_slices()
         {
 			if (!initialized_flag)
@@ -265,6 +262,7 @@ namespace br.ufc.pargo.hpe.basic
 			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
         }
 
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public void post_initialize_slices()
         {
 			if (initialized_flag && !after_initialized_flag)
@@ -287,6 +285,7 @@ namespace br.ufc.pargo.hpe.basic
 		
         private static IDictionary<IUnit, bool> destroyed = new Dictionary<IUnit, bool>();
 
+		[MethodImpl(MethodImplOptions.Synchronized)]
         public void destroy_slices()
         {
 
@@ -332,19 +331,7 @@ namespace br.ufc.pargo.hpe.basic
 
 		private IDictionary<IUnit,string> id_inner_map = null;
         
-/*		public string get_id_inner_0()
-		{
-			if (id_inner_map != null && id_inner_map.Count > 0)
-			{
-				foreach (KeyValuePair<IUnit, string> k in id_inner_map) 
-				{
-				  return k.Value;
-				}
-			}
-			return "NOTHING";
-		}*/
-		
-		public string get_id_inner(IUnit container)
+		public string getSliceName(IUnit container)
 		{
 			if (id_inner_map == null)
 				id_inner_map = new Dictionary<IUnit,string>();
@@ -356,7 +343,7 @@ namespace br.ufc.pargo.hpe.basic
 			return null;
 		}
 		
-		public void set_id_inner(IUnit container, string id_inner)
+		private void set_id_inner(IUnit container, string id_inner)
 		{
 			if (id_inner_map == null)
 				id_inner_map = new Dictionary<IUnit,string>();
@@ -394,59 +381,22 @@ namespace br.ufc.pargo.hpe.basic
             set { actual_parameters_top = value; }
         }
 
-        IList<IUnit> slices;
+       private ICollection<IUnit> AllSlices
+       {
+           get { return slice_map == null ? new List<IUnit>() : slice_map.Values; }
+       }
 
-        public IList<IUnit> Slices
+        private void addSliceAll(IUnit slice)
         {
-            get { return slices == null ? new List<IUnit>() : slices; }
+            if (slice_map == null) 
+				slice_map = new Dictionary<string,IUnit>();
+			string sliceName = slice.getSliceName(this);
+			if (sliceName != null && !slice_map.ContainsKey(sliceName))
+			{
+            	slice_map.Add(sliceName, slice);
+			}
         }
-
-        IList<IUnit> all_slices;
-
-        public IList<IUnit> AllSlices
-        {
-            get { return all_slices == null ? new List<IUnit>() : all_slices; }
-        }
-
-        public void addSlice(IUnit slice)
-        {
-            if (slices == null) slices = new List<IUnit>();
-            slices.Add(slice);
-        }
-
-        public void addSliceAll(IUnit slice)
-        {
-            if (all_slices == null) all_slices = new List<IUnit>();
-            all_slices.Add(slice);
-        }
-
-  //      private int myGlobalRank = -1;
-   //     public int GlobalRank { set { this.myGlobalRank = value; } get { return myGlobalRank; } }                        // The rank of the process (application) where the unit is placed on
-
-   //     private int[] myRanks = null;
-   //     public int[] Ranks
-    //    {
-   //         set
-   //         {
-   //             this.myRanks = value;
-   //             Array.Sort<int>(this.myRanks);
-    //        }
-   //         get { return myRanks; }
-   //     }
-
-        // Global ranks of the units in the component. Ranks[i] = j (the i-th unit of the component is in the j-th process)
-
-   //     private IDictionary<string, int[]> myUnits = null;
-   //     public IDictionary<string, int[]> Units { set { this.myUnits = value; } get { return myUnits; } }
-
-   //     private IDictionary<string, int>[] myEnumRanks = null;
-   //     public IDictionary<string, int>[] EnumRanks { set { this.myEnumRanks = value; } get { return myEnumRanks; } }
-
-
-        virtual public void destroySlice()
-        {
-        }
-
+		
         private IList<IUnit> containerSlice = null;
 
         public IList<IUnit> ContainerSlice
@@ -459,68 +409,20 @@ namespace br.ufc.pargo.hpe.basic
 			}
         }
 
-	    public void addContainerSlice(IUnit u)
+	    public void addContainerSlice(IUnit u, string portName)
 		{
 			if (containerSlice == null) 
 				containerSlice = new List<IUnit>();
 			containerSlice.Add(u);
-			if (u!=null) 
-				u.addSlice(this);
+			set_id_inner(u, portName);
+			((Unit)u).addSliceAll(this);			
 		}
 
-/*
-        private int[] myRanksInv = null;
-        public int[] RanksInv
+
+        virtual public void destroySlice()
         {
-            get
-            {
-                if (myRanksInv != null)
-                    return myRanksInv;
-                else if (myRanks != null)
-                {
-                    int max = 0;
-                    for (int i = 0; i < Ranks.Length; i++)
-                        max = Ranks[i] > max ? Ranks[i] : max;
-                    myRanksInv = new int[max + 1];
-                    for (int i = 0; i < Ranks.Length; i++)
-                        myRanksInv[Ranks[i]] = i;
-                    return myRanksInv;
-                }
-                else
-                    return null;
-            }
-        }                        // Ranks[i]==j iif RanksInv[j]==i
-        public int LocalRank { get { return RanksInv[GlobalRank]; } }                         // = RanksInv[globalRank]
-        public IDictionary<string, int> EnumRank { get { return EnumRanks[LocalRank]; } }     // = EnumRanks[localRank]
-
-        public int[] EnumPeers
-        {
-            get
-            {
-                IList<int> ranks = new List<int>();
-                for (int i = 0; i < EnumRanks.Length; i++)
-                {
-                    ICollection<string> eKeysPeer = EnumRanks[i].Keys;
-                    ICollection<string> eKey = EnumRank.Keys;
-                    if (eKeysPeer.Count == eKey.Count)
-                    {
-                        bool flag = true;
-                        foreach (string k in eKeysPeer)
-                            flag = (eKey.Contains(k));
-                        if (flag)
-                            ranks.Add(Ranks[i]);
-                    }
-                }
-
-                int[] arrRanks = new int[ranks.Count];
-                ranks.CopyTo(arrRanks, 0);
-
-                return arrRanks;
-            }
         }
-        
-        */
-		
+
 		
         public void setActualParameters(IDictionary<string, int> actualParameters_new)
         {
@@ -586,11 +488,13 @@ namespace br.ufc.pargo.hpe.basic
                 return cid;
             }
         }
-
+		
+		[MethodImpl(MethodImplOptions.Synchronized)]
         virtual public void initialize()
         {
         }
         
+		[MethodImpl(MethodImplOptions.Synchronized)]
         virtual public void post_initialize()
         {
         }
@@ -610,6 +514,21 @@ namespace br.ufc.pargo.hpe.basic
 		public int Size {get {return size;} set {size = value;}}   // Number of the parallel units.		
 		public int[] Ranks {get {return ranks;} set {ranks = value;}}   // Number of the parallel units.		
 		public int GlobalRank {get {return global_rank;} set {global_rank = value;}}   // Number of the parallel units.		
+		
+		private IDictionary<string, IUnit> slice_map = new Dictionary<string, IUnit>();
+		
+		#region IUnit implementation
+		public IDictionary<string, IUnit> Slice {
+			get {
+				return slice_map;
+			}
+		}
+		#endregion
+
+
+
+
+
 
     }
 	

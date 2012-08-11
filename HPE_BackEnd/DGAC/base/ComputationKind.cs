@@ -12,7 +12,7 @@ namespace br.ufc.pargo.hpe.kinds
 {
 
 
-    public interface IComputationKind : IUnit, GoPort
+    public interface IComputationKind : IActivateKind, GoPort
 	{	
 	}
 	
