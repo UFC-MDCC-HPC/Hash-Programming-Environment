@@ -71,7 +71,7 @@
       <DependentUpon>HPEManagerService.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="\home\heron\hash-programming-environment\manager\RemotingServerManager.cs">
+    <Compile Include="..\..\manager\RemotingServerManager.cs">
       <SubType>Component</SubType>
       <Link>RemotingServerManager.cs</Link>
     </Compile>

@@ -62,11 +62,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml" />
-    <Reference Include="MySql.Data">
-      <HintPath>database\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="MPI">
       <HintPath>\usr\lib\mono\MPI\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\DGAC\database\MySql.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +77,6 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="manager\ParameterPortImpl.cs" />
     <Compile Include="..\..\DGAC\BackEndEnvironment.cs">
       <Link>deploy\BackEndEnvironment.cs</Link>
     </Compile>
@@ -426,6 +425,9 @@
     </Compile>
     <Compile Include="..\..\DGAC\connector\run\StateControl.cs">
       <Link>connector\run\StateControl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ParameterPortImpl.cs">
+      <Link>manager\ParameterPortImpl.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

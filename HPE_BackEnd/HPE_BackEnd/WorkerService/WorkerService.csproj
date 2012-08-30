@@ -83,7 +83,7 @@
   -->
   <ItemGroup>
     <ProjectReference Include="..\DGAC\DGAC.csproj">
-      <Project>{CC8A5B9B-6610-47AF-B902-8FC6B45D5537}</Project>
+      <Project>{7AC86AB9-255A-480C-B891-C64179B48A83}</Project>
       <Name>DGAC</Name>
     </ProjectReference>
   </ItemGroup>
