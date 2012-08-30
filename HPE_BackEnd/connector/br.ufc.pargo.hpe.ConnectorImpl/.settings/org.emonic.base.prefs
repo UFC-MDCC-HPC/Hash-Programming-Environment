@@ -1,0 +1,6 @@
+#Thu Aug 30 10:50:11 BRT 2012
+eclipse.preferences.version=1
+org.emonic.base.build.file=build.xml
+org.emonic.base.build.mechanism=nant
+org.emonic.base.project.copyright=(c) YEAR by AUTHOR\nAll rights reserved.
+org.emonic.base.project.defaultNamespace=

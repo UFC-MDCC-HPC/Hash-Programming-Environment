@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a79c0a3d90f2ed810d592bc42d313d9a0f7177e28c369516079dab54030989184e2529b73c66c3e7a53f5a1f1874957d3965f01d04a4ddd33472dd6f13814a170e56330c70fdd63bb58955ddca76a40f447b5d29914d1ed18fd5714cf7c02e03b4793baf4205abb8e6af669dece5bf711293dc62e9246d0935533d7f0231e487" isAbstract="true" kind="Computation" name="Connector" packagePath="br.ufc.pargo.hpe">
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IConnector" nArgs="0">
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* AUTOMATICALLY GENERATE CODE */&#xA;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace br.ufc.pargo.hpe.Connector { &#xA;&#xA;public interface BaseIConnector : IComputationKind &#xA;{&#xA;&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="BaseIConnector.cs" srcType="base" uri="br.ufc.pargo.hpe.Connector/bin/1.0.0.0/BaseIConnector.dll" versionId="1.0.0.0"/>
+        <file contents="using br.ufc.pargo.hpe.kinds;&#xA;&#xA;namespace br.ufc.pargo.hpe.Connector { &#xA;&#xA;public interface IConnector : BaseIConnector&#xA;{&#xA;&#xA;&#xA;} // end main interface &#xA;&#xA;} // end namespace &#xA;" fileType="library" name="IConnector.cs" srcType="user" uri="br.ufc.pargo.hpe.Connector/bin/1.0.0.0/IConnector.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/BaseIConnector.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="57" w="126" x="204" y="211">
+        <color b="240" g="32" r="160"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IConnector" multiple="true" private="false" replica="0" uRef="connector" visibleInterface="true">
+      <visualDescription h="57" w="126" x="204" y="325"/>
+    </unit>
+  </componentInfo>
+</component:component>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" basedir="/home/heron/hpe/heron/cache" default="all" name="Connector">
+  <property name="nant.settings.currentframework" value="mono-2.0"/>
+  <property name="build" value="bin"/>
+  <property name="src" value="src"/>
+  <target name="Connector-1.0.0.0">
+    <ifnot targetexists="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/bin/1.0.0.0">
+      <mkdir dir="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/bin/1.0.0.0"/>
+    </ifnot>
+    <csc debug="true" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/Connector.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/BaseIConnector.dll" target="library" unsafe="false">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/src/1.0.0.0/BaseIConnector.cs"/>
+      </sources>
+      <references>
+        <include/>
+      </references>
+    </csc>
+    <csc debug="true" keyfile="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/Connector.snk" optimize="true" output="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/IConnector.dll" target="library" unsafe="false">
+      <sources>
+        <include name="/home/heron/Dropbox/Alunos/Cenez/hpe/br.ufc.pargo.hpe.Connector/src/1.0.0.0/IConnector.cs"/>
+      </sources>
+      <references>
+        <include name="/br.ufc.pargo.hpe.Connector/bin/1.0.0.0/BaseIConnector.dll"/>
+        <include/>
+      </references>
+    </csc>
+  </target>
+  <target depends="Connector-1.0.0.0" name="all"/>
+</project>

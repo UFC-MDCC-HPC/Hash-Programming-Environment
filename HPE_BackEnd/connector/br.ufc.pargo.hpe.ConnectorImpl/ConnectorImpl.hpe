@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<component:component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:component="http://www.example.org/HashComponent">
+  <header hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000cba64ccc0e5ecec86844c2418efbccfa1745f0cf5034cd8c976c4206f0248172cfba2aad6fba03b94a75b5b3aa90b64db06c0d0b0191bd62686d4987ae5fd0c5cf288f4fb5ed842e2252ee35fcb68828221ef08a810d0c4834ed65c15238dd31b6ffcd5c767439861d19726ff923f065a17086cd014e193dda6fc5cf57a4c6a6" isAbstract="false" kind="Computation" name="ConnectorImpl" packagePath="br.ufc.pargo.hpe">
+    <baseType>
+      <extensionType>
+        <implements>true</implements>
+      </extensionType>
+      <component hash_component_UID="0024000004800000940000000602000000240000525341310004000011000000a79c0a3d90f2ed810d592bc42d313d9a0f7177e28c369516079dab54030989184e2529b73c66c3e7a53f5a1f1874957d3965f01d04a4ddd33472dd6f13814a170e56330c70fdd63bb58955ddca76a40f447b5d29914d1ed18fd5714cf7c02e03b4793baf4205abb8e6af669dece5bf711293dc62e9246d0935533d7f0231e487" localRef="base" location="br.ufc.pargo.hpe.Connector/Connector.hpe" name="Connector" package="br.ufc.pargo.hpe" version="1.0.0.0">
+        <visualDescription h="60" w="100" x="79" y="192">
+          <color b="255" g="255" r="255"/>
+        </visualDescription>
+        <unitBounds uRef="connector">
+          <visualDescription h="20" w="20" x="5" y="2"/>
+        </unitBounds>
+      </component>
+    </baseType>
+    <versions field1="1" field2="0" field3="0" field4="0"/>
+    <visualAttributes>
+      <color b="255" g="255" r="255"/>
+    </visualAttributes>
+  </header>
+  <componentInfo>
+    <interface iRef="IConnectorImpl" nArgs="0">
+      <protocol xsi:type="component:ActionSkipType" label="hPE.frontend.kinds.activate.model.protocol.HSkipAction@b692bc4" repeat="0">
+        <visualDescription h="50" w="50" x="75" y="75"/>
+      </protocol>
+      <sources sourceType="C# Language" versionId="1.0.0.0">
+        <file contents="/* Automatically Generated Code */&#xA;&#xA;using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using br.ufc.pargo.hpe.Connector;&#xA;&#xA;namespace br.ufc.pargo.hpe.ConnectorImpl { &#xA;&#xA;public abstract class BaseIConnectorImpl: Computation, BaseIConnector&#xA;{&#xA;&#xA;&#xA;abstract public int go(); &#xA;&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="BaseIConnectorImpl.cs" srcType="base" uri="br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/BaseIConnectorImpl.dll" versionId="1.0.0.0">
+          <dependency>br.ufc.pargo.hpe.Connector/bin/1.0.0.0/BaseIConnector.dll</dependency>
+        </file>
+        <file contents="using System;&#xA;using br.ufc.pargo.hpe.backend.DGAC;&#xA;using br.ufc.pargo.hpe.basic;&#xA;using br.ufc.pargo.hpe.kinds;&#xA;using br.ufc.pargo.hpe.Connector;&#xA;&#xA;namespace br.ufc.pargo.hpe.ConnectorImpl { &#xA;&#xA;public class IConnectorImpl : BaseIConnectorImpl, IConnector&#xA;{&#xA;&#xA;public IConnectorImpl() { &#xA;&#xA;} &#xA;&#xA;public override int go() { &#xA;&#x9;;&#xA;&#xA;&#x9; return 0&#xA;}&#xA;&#xA;}&#xA;&#xA;}&#xA;" fileType="library" name="IConnectorImpl.cs" srcType="user" uri="br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/IConnectorImpl.dll" versionId="1.0.0.0">
+          <dependency>%WORKSPACE/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/BaseIConnectorImpl.dll</dependency>
+          <dependency>br.ufc.pargo.hpe.Connector/bin/1.0.0.0/IConnector.dll</dependency>
+        </file>
+      </sources>
+      <visualDescription h="57" w="126" x="249" y="112">
+        <color b="240" g="32" r="160"/>
+      </visualDescription>
+    </interface>
+    <unit iRef="IConnectorImpl" multiple="true" private="false" replica="0" uRef="connector" visibleInterface="true">
+      <super cRef="base" uRef="connector"/>
+      <visualDescription h="57" w="126" x="204" y="325"/>
+    </unit>
+  </componentInfo>
+</component:component>

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.ufc.pargo.hpe.ConnectorImpl", "br.ufc.pargo.hpe.ConnectorImpl.csproj", "{540B4992-14F4-4756-BB28-4B82D4C0D5FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = br.ufc.pargo.hpe.ConnectorImpl.csproj
+	EndGlobalSection
+EndGlobal
