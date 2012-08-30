@@ -30,6 +30,13 @@ DGAC/CCAExceptionImpl.cs
 DGAC/ManagerServicesImpl.cs
 DGAC/GoPortImpl.cs
 DGAC/AutomaticSlicesPortImpl.cs
+DGAC/connector/*.cs
+DGAC/connector/config/*.cs
+DGAC/connector/config/reconfig/*.cs
+DGAC/connector/config/monitoring/*.cs
+DGAC/connector/load/*.cs
+DGAC/connector/meta/*.cs
+DGAC/connector/run/*.cs
 
 -target:library
 
