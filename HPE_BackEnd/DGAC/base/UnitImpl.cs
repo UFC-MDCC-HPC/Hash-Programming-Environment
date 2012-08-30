@@ -313,7 +313,7 @@ namespace br.ufc.pargo.hpe.basic
             set { id_concrete = value; }
         }
 
-        private string id_interface;
+        protected string id_interface;
 
         public string Id_unit
         {
@@ -505,7 +505,7 @@ namespace br.ufc.pargo.hpe.basic
 
         #endregion
 		
-		private int rank = -1;
+		protected int rank = -1;
 		private int size = -1;
 		private int[] ranks = null;
 		private int global_rank = -1;
