@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7AC86AB9-255A-480C-B891-C64179B48A83}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>br.ufc.hpe.backend.DGAC</RootNamespace>
+    <AssemblyName>DGAC</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\DGAC\DGAC.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="true" pauseExternalConsole="true" />
+        <Command type="AfterBuild" command="sudo /usr/local/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="true" pauseExternalConsole="true" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Xml" />
+    <Reference Include="MySql.Data">
+      <HintPath>database\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MPI">
+      <HintPath>\usr\lib\mono\MPI\MPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="manager\ParameterPortImpl.cs" />
+    <Compile Include="..\..\DGAC\BackEndEnvironment.cs">
+      <Link>deploy\BackEndEnvironment.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\ApplicationKind.cs">
+      <Link>base\ApplicationKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\ArchitectureKind.cs">
+      <Link>base\ArchitectureKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\AutomaticSlicesPort.cs">
+      <Link>base\AutomaticSlicesPort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\ComputationKind.cs">
+      <Link>base\ComputationKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\DataKind.cs">
+      <Link>base\DataKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\DomainKind.cs">
+      <Link>base\DomainKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\EnvironmentKind.cs">
+      <Link>base\EnvironmentKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\FacetKind.cs">
+      <Link>base\FacetKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\QualifierKind.cs">
+      <Link>base\QualifierKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\SynchronizerKind.cs">
+      <Link>base\SynchronizerKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\Unit.cs">
+      <Link>base\Unit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\UnitImpl.cs">
+      <Link>base\UnitImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\CommandLineUtil.cs">
+      <Link>utils\CommandLineUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\Instantiator.cs">
+      <Link>instantiator\Instantiator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerServicesImpl.cs">
+      <Link>manager\ManagerServicesImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TypeMapImplWS.cs">
+      <Link>cca\TypeMapImplWS.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\WorkerComponentClassDescriptionImpl.cs">
+      <Link>worker\WorkerComponentClassDescriptionImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerComponentClassDescriptionImpl.cs">
+      <Link>manager\ManagerComponentClassDescriptionImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\WorkerConnectionIDImpl.cs">
+      <Link>worker\WorkerConnectionIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerConnectionIDImpl.cs">
+      <Link>manager\ManagerConnectionIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\Constants.cs">
+      <Link>utils\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\AbstractComponentFunctorApplicationDAO.cs">
+      <Link>database\dao\AbstractComponentFunctorApplicationDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\AbstractComponentFunctorDAO.cs">
+      <Link>database\dao\AbstractComponentFunctorDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\AbstractComponentFunctorParameterDAO.cs">
+      <Link>database\dao\AbstractComponentFunctorParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\ComponentDAO.cs">
+      <Link>database\dao\ComponentDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\Connector.cs">
+      <Link>database\dao\Connector.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\InnerComponentDAO.cs">
+      <Link>database\dao\InnerComponentDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\InnerComponentExposedDAO.cs">
+      <Link>database\dao\InnerComponentExposedDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\InterfaceDAO.cs">
+      <Link>database\dao\InterfaceDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\InterfaceParameterDAO.cs">
+      <Link>database\dao\InterfaceParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SliceDAO.cs">
+      <Link>database\dao\SliceDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SliceExposedDAO.cs">
+      <Link>database\dao\SliceExposedDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SourceCodeDAO.cs">
+      <Link>database\dao\SourceCodeDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SourceCodeReferenceDAO.cs">
+      <Link>database\dao\SourceCodeReferenceDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SupplyParameterComponentDAO.cs">
+      <Link>database\dao\SupplyParameterComponentDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SupplyParameterDAO.cs">
+      <Link>database\dao\SupplyParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\SupplyParameterParameterDAO.cs">
+      <Link>database\dao\SupplyParameterParameterDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\dao\UnitDAO.cs">
+      <Link>database\dao\UnitDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\AbstractComponentFunctor.cs">
+      <Link>database\model\AbstractComponentFunctor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\AbstractComponentFunctorApplication.cs">
+      <Link>database\model\AbstractComponentFunctorApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\AbstractComponentFunctorParameter.cs">
+      <Link>database\model\AbstractComponentFunctorParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\Component.cs">
+      <Link>database\model\Component.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\HashComponent.cs">
+      <Link>database\model\HashComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\InnerComponent.cs">
+      <Link>database\model\InnerComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\InnerComponentExposed.cs">
+      <Link>database\model\InnerComponentExposed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\Interface.cs">
+      <Link>database\model\Interface.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\InterfaceParameter.cs">
+      <Link>database\model\InterfaceParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\Slice.cs">
+      <Link>database\model\Slice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\SliceExposed.cs">
+      <Link>database\model\SliceExposed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\SourceCode.cs">
+      <Link>database\model\SourceCode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\SourceCodeReference.cs">
+      <Link>database\model\SourceCodeReference.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\SupplyParameter.cs">
+      <Link>database\model\SupplyParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\SupplyParameterComponent.cs">
+      <Link>database\model\SupplyParameterComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\SupplyParameterParameter.cs">
+      <Link>database\model\SupplyParameterParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\Unit.cs">
+      <Link>database\model\Unit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\DGAC.cs" />
+    <Compile Include="..\..\DGAC\externalreferences.cs">
+      <Link>deploy\externalreferences.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\FileUtil.cs">
+      <Link>utils\FileUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\HashComponent.cs">
+      <Link>deploy\HashComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\LoaderAbstractComponent.cs">
+      <Link>deploy\LoaderAbstractComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\LoaderApp.cs">
+      <Link>deploy\LoaderApp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\LoaderComponent.cs">
+      <Link>deploy\LoaderComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\LoaderConcreteComponent.cs">
+      <Link>deploy\LoaderConcreteComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerComponentIDImpl.cs">
+      <Link>manager\ManagerComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ManagerObject.cs">
+      <Link>manager\ManagerObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\tree\GenerateTree.cs">
+      <Link>tree\GenerateTree.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\tree\Resolution.cs">
+      <Link>tree\Resolution.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\tree\TreeNode.cs">
+      <Link>tree\TreeNode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\WorkerComponentIDImpl.cs">
+      <Link>worker\WorkerComponentIDImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\WorkerObject.cs">
+      <Link>worker\WorkerObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\WorkerServicesImpl.cs">
+      <Link>worker\WorkerServicesImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\CCA.cs">
+      <Link>cca\CCA.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\TypeMapImpl.cs">
+      <Link>cca\TypeMapImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\CCAExceptionImpl.cs">
+      <Link>cca\CCAExceptionImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\TopologyKind.cs">
+      <Link>base\TopologyKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\GoPortImpl.cs">
+      <Link>manager\GoPortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\AutomaticSlicesPortImpl.cs">
+      <Link>manager\AutomaticSlicesPortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\ActivateKind.cs">
+      <Link>base\ActivateKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\ConfigurationPort.cs">
+      <Link>connector\ConfigurationPort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\IObservable.cs">
+      <Link>connector\IObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\IObserver.cs">
+      <Link>connector\IObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\MonitorEvent.cs">
+      <Link>connector\MonitorEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\MonitorPort.cs">
+      <Link>connector\MonitorPort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\Configuration.cs">
+      <Link>connector\config\Configuration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\ConfigurationManager.cs">
+      <Link>connector\config\ConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\ExecutionAction.cs">
+      <Link>connector\config\ExecutionAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\IConfigurationManager.cs">
+      <Link>connector\config\IConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\Transition.cs">
+      <Link>connector\config\Transition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\monitoring\IMonitor.cs">
+      <Link>connector\config\monitoring\IMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\monitoring\IMonitorable.cs">
+      <Link>connector\config\monitoring\IMonitorable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\monitoring\Monitor.cs">
+      <Link>connector\config\monitoring\Monitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\monitoring\MonitorEvent.cs">
+      <Link>connector\config\monitoring\MonitorEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\BehavioralChange.cs">
+      <Link>connector\config\reconfig\BehavioralChange.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\BehavioralReconfigurationRequest.cs">
+      <Link>connector\config\reconfig\BehavioralReconfigurationRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\ExecutionStateEvaluation.cs">
+      <Link>connector\config\reconfig\ExecutionStateEvaluation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\Interval.cs">
+      <Link>connector\config\reconfig\Interval.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\ReconfigurationRequest.cs">
+      <Link>connector\config\reconfig\ReconfigurationRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\SecurityAnalyzer.cs">
+      <Link>connector\config\reconfig\SecurityAnalyzer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\StructuralChange.cs">
+      <Link>connector\config\reconfig\StructuralChange.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\config\reconfig\StructuralReconfigurationRequest.cs">
+      <Link>connector\config\reconfig\StructuralReconfigurationRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\load\IdGenerator.cs">
+      <Link>connector\load\IdGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\load\XmlFormatValidator.cs">
+      <Link>connector\load\XmlFormatValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\load\XmlLoadUtil.cs">
+      <Link>connector\load\XmlLoadUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\load\XmlLoader.cs">
+      <Link>connector\load\XmlLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\Condition.cs">
+      <Link>connector\meta\Condition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaAction.cs">
+      <Link>connector\meta\MetaAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaHashComponent.cs">
+      <Link>connector\meta\MetaHashComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaHashEntity.cs">
+      <Link>connector\meta\MetaHashEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaInnerComponent.cs">
+      <Link>connector\meta\MetaInnerComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaParameter.cs">
+      <Link>connector\meta\MetaParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaSlice.cs">
+      <Link>connector\meta\MetaSlice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\meta\MetaUnit.cs">
+      <Link>connector\meta\MetaUnit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\run\BranchInterpreter.cs">
+      <Link>connector\run\BranchInterpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\run\IInterpreter.cs">
+      <Link>connector\run\IInterpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\run\Interpreter.cs">
+      <Link>connector\run\Interpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\run\StateControl.cs">
+      <Link>connector\run\StateControl.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="DGAC.snk" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\all-wcprops">
+      <Link>connector\config\.svn\all-wcprops</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\entries">
+      <Link>connector\config\.svn\entries</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\text-base\Configuration.cs.svn-base">
+      <Link>connector\config\.svn\text-base\Configuration.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\text-base\ConfigurationManager.cs.svn-base">
+      <Link>connector\config\.svn\text-base\ConfigurationManager.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\text-base\ExecutionAction.cs.svn-base">
+      <Link>connector\config\.svn\text-base\ExecutionAction.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\text-base\IConfigurationManager.cs.svn-base">
+      <Link>connector\config\.svn\text-base\IConfigurationManager.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\.svn\text-base\Transition.cs.svn-base">
+      <Link>connector\config\.svn\text-base\Transition.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\monitoring\.svn\all-wcprops">
+      <Link>connector\config\monitoring\.svn\all-wcprops</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\monitoring\.svn\entries">
+      <Link>connector\config\monitoring\.svn\entries</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\monitoring\.svn\text-base\IMonitor.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\IMonitor.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\monitoring\.svn\text-base\IMonitorable.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\IMonitorable.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\monitoring\.svn\text-base\Monitor.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\Monitor.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\monitoring\.svn\text-base\MonitorEvent.cs.svn-base">
+      <Link>connector\config\monitoring\.svn\text-base\MonitorEvent.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\all-wcprops">
+      <Link>connector\config\reconfig\.svn\all-wcprops</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\entries">
+      <Link>connector\config\reconfig\.svn\entries</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\BehavioralChange.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\BehavioralChange.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\BehavioralReconfigurationRequest.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\BehavioralReconfigurationRequest.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\ExecutionStateEvaluation.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\ExecutionStateEvaluation.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\Interval.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\Interval.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\ReconfigurationRequest.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\ReconfigurationRequest.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\SecurityAnalyzer.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\SecurityAnalyzer.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\StructuralChange.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\StructuralChange.cs.svn-base</Link>
+    </None>
+    <None Include="..\..\DGAC\connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base">
+      <Link>connector\config\reconfig\.svn\text-base\StructuralReconfigurationRequest.cs.svn-base</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGAC", "DGAC\DGAC.csproj", "{CC8A5B9B-6610-47AF-B902-8FC6B45D5537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerService", "ManagerService\ManagerService.csproj", "{98DBB949-4C2E-47B8-BDBC-8ECDB70F6D94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{B0F7DADF-2804-432A-AC2F-62C38F0E6A94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPERun", "HPERun\HPERun.csproj", "{155636B3-5B63-4C41-B44B-0069922AE514}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "connector", "connector", "{C87843F7-AA1C-4D1D-AED5-EC65BFA49E58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.ufc.pargo.hpe.Connector", "..\connector\br.ufc.pargo.hpe.Connector\br.ufc.pargo.hpe.Connector.csproj", "{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.ufc.pargo.hpe.ConnectorImpl", "..\connector\br.ufc.pargo.hpe.ConnectorImpl\br.ufc.pargo.hpe.ConnectorImpl.csproj", "{540B4992-14F4-4756-BB28-4B82D4C0D5FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{155636B3-5B63-4C41-B44B-0069922AE514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{155636B3-5B63-4C41-B44B-0069922AE514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{155636B3-5B63-4C41-B44B-0069922AE514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{155636B3-5B63-4C41-B44B-0069922AE514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98DBB949-4C2E-47B8-BDBC-8ECDB70F6D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98DBB949-4C2E-47B8-BDBC-8ECDB70F6D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98DBB949-4C2E-47B8-BDBC-8ECDB70F6D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98DBB949-4C2E-47B8-BDBC-8ECDB70F6D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F7DADF-2804-432A-AC2F-62C38F0E6A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F7DADF-2804-432A-AC2F-62C38F0E6A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F7DADF-2804-432A-AC2F-62C38F0E6A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F7DADF-2804-432A-AC2F-62C38F0E6A94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC8A5B9B-6610-47AF-B902-8FC6B45D5537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8A5B9B-6610-47AF-B902-8FC6B45D5537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8A5B9B-6610-47AF-B902-8FC6B45D5537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8A5B9B-6610-47AF-B902-8FC6B45D5537}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73C7E649-EC22-41C9-9BBD-B00D1B3B5B05} = {C87843F7-AA1C-4D1D-AED5-EC65BFA49E58}
+		{540B4992-14F4-4756-BB28-4B82D4C0D5FC} = {C87843F7-AA1C-4D1D-AED5-EC65BFA49E58}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = DGAC\DGAC.csproj
+	EndGlobalSection
+EndGlobal
