@@ -3,7 +3,7 @@ using br.ufc.pargo.hpe.connector.ports;
 
 namespace br.ufc.pargo.hpe.Connector { 
 
-public interface IConnector : BaseIConnector
+public interface IConnector : IActivateKind 
 {
 
       IConfigurationPort ConfigurationPort {get;}

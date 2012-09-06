@@ -429,34 +429,18 @@
     <Compile Include="..\..\DGAC\ParameterPortImpl.cs">
       <Link>manager\ParameterPortImpl.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC\connector\component\IConnectorImpl.cs">
+      <Link>connector\component\IConnectorImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\connector\wrapper\WrapperGenerator.cs">
+      <Link>connector\wrapper\WrapperGenerator.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DGAC.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\all-wcprops">
-      <Link>connector\config\.svn\all-wcprops</Link>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\entries">
-      <Link>connector\config\.svn\entries</Link>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\text-base\Configuration.cs.svn-base">
-      <Link>connector\config\.svn\text-base\Configuration.cs.svn-base</Link>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\text-base\ConfigurationManager.cs.svn-base">
-      <Link>connector\config\.svn\text-base\ConfigurationManager.cs.svn-base</Link>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\text-base\ExecutionAction.cs.svn-base">
-      <Link>connector\config\.svn\text-base\ExecutionAction.cs.svn-base</Link>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\text-base\IConfigurationManager.cs.svn-base">
-      <Link>connector\config\.svn\text-base\IConfigurationManager.cs.svn-base</Link>
-    </None>
-    <None Include="..\..\DGAC\connector\config\.svn\text-base\Transition.cs.svn-base">
-      <Link>connector\config\.svn\text-base\Transition.cs.svn-base</Link>
     </None>
     <None Include="..\..\DGAC\connector\config\monitoring\.svn\all-wcprops">
       <Link>connector\config\monitoring\.svn\all-wcprops</Link>

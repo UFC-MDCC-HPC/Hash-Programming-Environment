@@ -1,19 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/connector/ConfigurationPort.cs">
-    <Files>
-      <File FileName="ManagerService/HPEManagerService.cs" Line="17" Column="10" />
-      <File FileName="WorkerService/ProjectInstaller.Designer.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/connector/ConfigurationPort.cs" Line="19" Column="3" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="DGAC" expanded="True" selected="True">
-            <Node name="connector" expanded="True" />
+          <Node name="DGAC" expanded="True">
+            <Node name="tree" selected="True" />
           </Node>
           <Node name="HPERun" expanded="True" />
-          <Node name="ManagerService" expanded="True" />
+          <Node name="ManagerService" expanded="True">
+            <Node name="Properties" expanded="True" />
+          </Node>
+          <Node name="WorkerService" expanded="True">
+            <Node name="Properties" expanded="True" />
+            <Node name="ProjectInstaller.cs" expanded="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
