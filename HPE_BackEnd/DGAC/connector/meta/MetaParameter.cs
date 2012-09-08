@@ -25,10 +25,10 @@ namespace br.ufc.pargo.hpe.connector.meta {
       }
 
       //Metadado do componente hash que determina o limite superior do parâmetro.
-      protected MetaHashComponent limit;
-      public MetaHashComponent Limit {
-         get {return limit;}
-         set {limit = value;}
+      protected MetaHashComponent constrain;
+      public MetaHashComponent Constrain {
+         get {return constrain;}
+         set {constrain = value;}
       }
 
    }

@@ -9,10 +9,10 @@ namespace br.ufc.pargo.hpe.connector.meta {
 
    public class MetaSlice : MarshalByRefObject {
 
-      protected string alias;
-      public string Alias {
-         get {return alias;}
-         set {alias = value;}
+      protected string inner;
+      public string Inner {
+         get {return inner;}
+         set {inner = value;}
       }
 
       protected MetaUnit unit;

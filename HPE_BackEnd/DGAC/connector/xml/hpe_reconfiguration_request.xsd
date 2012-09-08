@@ -37,16 +37,14 @@
   <xs:complexType name="hpeparameter">
     <xs:sequence>
       <xs:element name="identifier" type="xs:string"/>
-      <xs:choice>
-        <xs:element name="variable" type="xs:string"/>
-        <xs:element name="limit" type="hpeparameterType"/>
-      </xs:choice>
-    </xs:sequence>
+            <xs:element name="variable" type="xs:string" minOccurs="0"/>
+            <xs:element name="constraint" type="hpeparameterType" />
+        </xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="hpeparameterType">
     <xs:sequence>
-      <xs:element name="componentLimit" type="xs:string"/>
+      <xs:element name="componentConstraint" type="xs:string"/>
       <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -173,10 +171,16 @@
 
 
     <xs:complexType name="hpesliceType">
-    	<xs:attribute use="required" name="innerUnit"
-    		type="xs:string">
+    	<xs:attribute use="required" name="inner" type="xs:string">
     	</xs:attribute>
-    	<xs:attribute name="alias" type="xs:string"></xs:attribute>
+    	<xs:attribute name="unit" type="xs:string" use="required"></xs:attribute>
+    	<xs:attribute name="index" default="0">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:int">
+    				<xs:minInclusive value="0"></xs:minInclusive>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
     </xs:complexType>
 
   <xs:complexType name="hpechangeAction">

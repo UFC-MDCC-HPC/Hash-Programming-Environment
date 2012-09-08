@@ -104,7 +104,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
             IUnit unit = (IUnit) entity;
             
             foreach(MetaSlice slice in slices) {
-               slice.Unit.Entity = unit.Slice[slice.Alias];
+               slice.Unit.Entity = unit.Slice[slice.Inner];
             }
          }
          

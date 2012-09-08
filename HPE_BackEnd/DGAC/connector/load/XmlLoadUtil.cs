@@ -52,18 +52,18 @@ namespace br.ufc.pargo.hpe.connector.load {
                   parameter.Variable = data.InnerText;
                }
                
-               data = paramNode.SelectSingleNode("limit");
+               data = paramNode.SelectSingleNode("constraint");
                if(data != null) {
                   MetaHashComponent limitComponent = new MetaHashComponent();
                   limitComponent.Id = generator.genId();
                   
-                  data = data.SelectSingleNode("componentLimit");
+                  data = data.SelectSingleNode("componentConstraint");
                   limitComponent.Name = data.InnerText;
                   
                   XmlNodeList subParamList = data.SelectNodes("parameter");
                   limitComponent.Parameters = getParameters(subParamList);
                   
-                  parameter.Limit = limitComponent;
+                  parameter.Constrain = limitComponent;
                }
                
                parameterList.Add(parameter);
@@ -191,7 +191,8 @@ namespace br.ufc.pargo.hpe.connector.load {
             
             MetaUnit unit = null;
             MetaSlice slice = null;
-            string innerUnit;
+            string innerName, unitName;
+            int index;
             XmlAttribute attr;
             XmlNode sliceNode;
             
@@ -200,21 +201,25 @@ namespace br.ufc.pargo.hpe.connector.load {
             while (senum.MoveNext()) {
                sliceNode = (XmlNode) senum.Current;
                
-               attr = (XmlAttribute) sliceNode.Attributes.GetNamedItem("innerUnit");
-               innerUnit = attr.Value;
-               
-               string innerName, unitName;
-               int dot = innerUnit.IndexOf(".");
-               
-               innerName = innerUnit.Substring(0, dot);
-               unitName = innerUnit.Substring(dot+1);
-               
+               attr = (XmlAttribute) sliceNode.Attributes.GetNamedItem("inner");
+               innerName = attr.Value;
+
+               attr = (XmlAttribute) sliceNode.Attributes.GetNamedItem("unit");
+               unitName = attr.Value;
+
+               attr = (XmlAttribute) sliceNode.Attributes.GetNamedItem("index");
+               if(attr != null) {
+                  index = Convert.ToInt32(attr.Value);
+               } else {
+                  index = 0;
+               }
+
                foreach(MetaInnerComponent comp in innerComponents) {
                   if(comp.Identifier.Equals(innerName)) {
                      
                      if(comp.Units != null) {
                         foreach(MetaUnit u in comp.Units) {
-                           if(u.Name.Equals(unitName)) {
+                           if(u.Name.Equals(unitName) && u.Index.Equals(index)) {
                               unit = u;
                               break;
                            }
@@ -226,6 +231,7 @@ namespace br.ufc.pargo.hpe.connector.load {
                         unit.Id = generator.genId();
                         unit.Father = comp;
                         unit.Name = unitName;
+                        unit.Index = index;
                         
                         comp.AddUnit(unit);
                      }
@@ -236,14 +242,8 @@ namespace br.ufc.pargo.hpe.connector.load {
                
                if(unit != null) {
                   slice = new MetaSlice(unit);
-                  
-                  attr = (XmlAttribute) sliceNode.Attributes.GetNamedItem("alias");
-                  
-                  if(attr != null) {
-                     slice.Alias = attr.Value;
-                  } else {
-                     slice.Alias = innerName;
-                  }
+                  slice.Inner = inner;
+
                   unit = null;
                }
                
@@ -439,7 +439,7 @@ namespace br.ufc.pargo.hpe.connector.load {
                
                foreach(MetaSlice slice in unit.Slices) {
 
-                  if(slice.Alias.Equals(sliceName)) {
+                  if(slice.Inner.Equals(sliceName)) {
                      
                      if(slice.Unit.Actions != null) {
                         foreach (MetaAction mact in slice.Unit.Actions) {
@@ -457,7 +457,7 @@ namespace br.ufc.pargo.hpe.connector.load {
                         selectedAction.Father = slice.Unit;
                         slice.Unit.AddAction(selectedAction);
                         
-                        //System.Console.WriteLine("Slice: " + slice.Alias + " | Action: " + methodName);
+                        //System.Console.WriteLine("Slice: " + slice.Inner + " | Action: " + methodName);
                      }
                      
                      break;

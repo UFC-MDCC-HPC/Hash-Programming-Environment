@@ -18,9 +18,9 @@ namespace br.ufc.pargo.hpe.connector.load {
       
       protected static XmlFormatValidator validator = new XmlFormatValidator();
       
-      public static readonly string COMPONENT_XSD = "../../HPE_Reconfiguration/xml/hpe_component.xsd";
+      public static readonly string COMPONENT_XSD = "../../HPE_BackEnd/DGAC/connector/xml/hpe_component.xsd";
       
-      public static readonly string REQUEST_XSD = "../../HPE_Reconfiguration/xml/hpe_reconfiguration_request.xsd";
+      public static readonly string REQUEST_XSD = "../../HPE_BackEnd/DGAC/connector/xml/hpe_reconfiguration_request.xsd";
       
       protected IdGenerator generator;
       
