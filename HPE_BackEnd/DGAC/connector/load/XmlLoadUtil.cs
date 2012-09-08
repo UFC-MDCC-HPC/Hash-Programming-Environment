@@ -242,7 +242,7 @@ namespace br.ufc.pargo.hpe.connector.load {
                
                if(unit != null) {
                   slice = new MetaSlice(unit);
-                  slice.Inner = inner;
+                  slice.Inner = innerName;
 
                   unit = null;
                }
