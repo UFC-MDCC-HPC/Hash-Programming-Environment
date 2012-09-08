@@ -435,6 +435,12 @@
     <Compile Include="..\..\DGAC\connector\wrapper\WrapperGenerator.cs">
       <Link>connector\wrapper\WrapperGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\..\DGAC\database\dao\InterfaceActionDAO.cs">
+      <Link>database\dao\InterfaceActionDAO.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\database\model\InterfaceAction.cs">
+      <Link>database\model\InterfaceAction.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

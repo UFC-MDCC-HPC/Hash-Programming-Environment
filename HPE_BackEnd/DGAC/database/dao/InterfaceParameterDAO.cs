@@ -34,7 +34,7 @@ public class InterfaceParameterDAO{
            "FROM interfaceparameters "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
            "id_abstract=" + id_abstract + " AND " + 
-           "parid like '" + parid+ "''";
+           "parid like '" + parid+ "'";
        dbcmd.CommandText = sql;
        IDataReader reader = dbcmd.ExecuteReader();
        if (reader.Read())

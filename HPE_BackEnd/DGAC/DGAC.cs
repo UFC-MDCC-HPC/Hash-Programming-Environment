@@ -562,6 +562,7 @@ namespace br.ufc.pargo.hpe.backend
             private static InterfaceDAO idao_ = null;
             private static UnitDAO udao_ = null;
             private static InterfaceParameterDAO ipdao_ = null;
+            private static InterfaceActionDAO iadao_ = null;
             private static SupplyParameterDAO spdao_ = null;
             private static SupplyParameterComponentDAO spcdao_ = null;
             private static SupplyParameterParameterDAO sppdao_ = null;
@@ -578,6 +579,7 @@ namespace br.ufc.pargo.hpe.backend
             public static AbstractComponentFunctorParameterDAO acfpdao { get { if (acfpdao_ == null) acfpdao_ = new AbstractComponentFunctorParameterDAO(); return acfpdao_; } }
             public static InterfaceDAO idao { get { if (idao_ == null) idao_ = new InterfaceDAO(); return idao_; } }
             public static InterfaceParameterDAO ipdao { get { if (ipdao_ == null) ipdao_ = new InterfaceParameterDAO(); return ipdao_; } }
+            public static InterfaceActionDAO iadao { get { if (iadao_ == null) iadao_ = new InterfaceActionDAO(); return iadao_; } }
             public static UnitDAO udao { get { if (udao_ == null) udao_ = new UnitDAO(); return udao_; } }
             public static SupplyParameterDAO spdao { get { if (spdao_ == null) spdao_ = new SupplyParameterDAO(); return spdao_; } }
             public static SupplyParameterComponentDAO spcdao { get { if (spcdao_ == null) spcdao_ = new SupplyParameterComponentDAO(); return spcdao_; } }

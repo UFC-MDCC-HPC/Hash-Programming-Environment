@@ -22,7 +22,31 @@ public class Interface {
         get { return order; }
         set { order = value; }
     }
+		
+	private string[] actions;	
+		
+	public string[] Actions
+	{
+		get { return Actions; }
+		set { actions = value; }
+	}
 
+	private string[] conditions;	
+		
+	public string[] Conditions
+	{
+		get { return Conditions; }
+		set { conditions = value; }
+	}
+		
+	private string protocol;	
+		
+	public string Protocol
+	{
+		get { return Protocol; }
+		set { protocol = value; }
+	}
+		
     public string Id_interface_super_top
     {
         get {

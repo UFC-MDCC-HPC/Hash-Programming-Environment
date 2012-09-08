@@ -89,7 +89,8 @@ namespace br.ufc.pargo.hpe.connector.meta {
          slices.Add(slice);
       }
       
-      public MetaUnit() {
+      public MetaUnit() 
+	  {
          this.parallel = true;
          this.split = 1;
       }

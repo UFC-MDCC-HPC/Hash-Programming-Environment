@@ -1,11 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="DGAC/connector/wrapper/WrapperGenerator.cs">
+    <Files>
+      <File FileName="DGAC/connector/component/IConnectorImpl.cs" Line="1" Column="1" />
+      <File FileName="DGAC/connector/wrapper/WrapperGenerator.cs" Line="35" Column="4" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="DGAC" expanded="True">
-            <Node name="tree" selected="True" />
+          <Node name="DGAC" expanded="True" selected="True">
+            <Node name="connector" expanded="True">
+              <Node name="component" expanded="True" />
+            </Node>
           </Node>
           <Node name="HPERun" expanded="True" />
           <Node name="ManagerService" expanded="True">
