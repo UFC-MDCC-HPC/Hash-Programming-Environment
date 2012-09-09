@@ -77,7 +77,17 @@
       <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  
+
+  <xs:complexType name="hpecondProtocol">
+  	<xs:complexContent>
+  		<xs:extension base="hpeprotocol">
+  			<xs:sequence>
+  				<xs:element name="guard" type="hpeguard"></xs:element>
+  			</xs:sequence>
+  		</xs:extension>
+  	</xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="hpeprotocol">
     <xs:choice maxOccurs="unbounded">
       <xs:element name="action" type="actionComplexType">
@@ -97,13 +107,6 @@
       </xs:element>
     </xs:choice>
   </xs:complexType>
-
-  <xs:group name="guardAction">
-    <xs:sequence>
-      <xs:element name="guard" type="hpeguard"/>
-      <xs:element name="protocol" type="hpeprotocol"/>
-    </xs:sequence>
-  </xs:group>
   
   <xs:complexType name="hpeguard">
     <xs:choice maxOccurs="unbounded">
@@ -172,21 +175,21 @@
     </xs:complexType>
     <xs:complexType name="altComplexType">
     	<xs:sequence>
-    		<xs:group maxOccurs="unbounded" ref="guardAction"></xs:group>
+    		<xs:element minOccurs="1" maxOccurs ="unbounded" name="protocol" type="hpecondProtocol"></xs:element>
     		<xs:element minOccurs="0" name="else" type="hpeprotocol"></xs:element>
     	</xs:sequence>
     	<xs:attribute name="id" type="xs:string"></xs:attribute>
     </xs:complexType>
     <xs:complexType name="ifComplexType">
     	<xs:sequence>
-    		<xs:group ref="guardAction"></xs:group>
+    		<xs:element minOccurs="1" name="protocol" type="hpecondProtocol"></xs:element>
     		<xs:element minOccurs="0" name="else" type="hpeprotocol"></xs:element>
     	</xs:sequence>
     	<xs:attribute name="id" type="xs:string"></xs:attribute>
     </xs:complexType>
     <xs:complexType name="loopComplexType">
     	<xs:sequence>
-    		<xs:group ref="guardAction"></xs:group>
+    		<xs:element minOccurs="1" name="protocol" type="hpecondProtocol"></xs:element>
     	</xs:sequence>
     	<xs:attribute name="id" type="xs:string"></xs:attribute>
     	<xs:attribute default="while" name="type">
