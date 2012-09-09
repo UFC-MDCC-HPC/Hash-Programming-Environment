@@ -1,21 +1,8 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="hashComponent">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="package" type="xs:string"/>
-        <xs:element name="using" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="kind" type="hpekind"/>
-        <xs:element name="name" type="xs:string"/>
-        <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="innerComponent" type="hpeinnerComponent" minOccurs="0"  maxOccurs="unbounded"/>
-        <xs:element name="superComponent" type="hpetype" minOccurs="0"/>
-        <xs:element name="unit" minOccurs="0" maxOccurs="unbounded" type="unitComplexType">
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
+  <xs:element name="hashComponent" type="hashComponentType">
   </xs:element>
-  
+
   <xs:simpleType name="hpekind">
     <xs:restriction base="xs:string">
       <xs:enumeration value="application"/>
@@ -104,13 +91,7 @@
     	<xs:element name="kind" type="hpekind"/>
         <xs:element name="identifier" type="xs:string"/>
         <xs:element name="type" type="hpetype"/>
-        <xs:element name="access">
-        	<xs:simpleType>
-            <xs:restriction base="xs:string">
-            	<xs:enumeration value="public"/>
-                <xs:enumeration value="private"/>
-            </xs:restriction>
-            </xs:simpleType>
+        <xs:element name="access" type="accessType">
     	</xs:element>
     	<xs:element name="exportActions" type="xs:boolean"/>
 	</xs:sequence>
@@ -120,12 +101,7 @@
     	<xs:attribute use="required" name="inner" type="xs:string">
     	</xs:attribute>
     	<xs:attribute name="unit" type="xs:string" use="required"></xs:attribute>
-    	<xs:attribute name="index" default="0">
-    		<xs:simpleType>
-    			<xs:restriction base="xs:int">
-    				<xs:minInclusive value="0"></xs:minInclusive>
-    			</xs:restriction>
-    		</xs:simpleType>
+    	<xs:attribute name="index" default="0" type="xs:int">
     	</xs:attribute>
     </xs:complexType>
     <xs:complexType name="parComplexType">
@@ -177,33 +153,45 @@
     		</xs:simpleType>
     	</xs:attribute>
     </xs:complexType>
-    <xs:complexType name="unitComplexType">
+
+    <xs:complexType name="unittype">
     	<xs:sequence>
-    		<xs:element name="name">
-    			<xs:complexType>
-    				<xs:simpleContent>
-    					<xs:extension base="xs:string">
-    						<xs:attribute default="0" name="index"
-    							type="xs:int">
-    						</xs:attribute>
-    					</xs:extension>
-    				</xs:simpleContent>
-    			</xs:complexType>
-    		</xs:element>
-    		<xs:element minOccurs="1" maxOccurs="unbounded" name="slice"
+
+    		<xs:element name="slice" minOccurs="1" maxOccurs="unbounded"
     			type="hpesliceType">
     		</xs:element>
-    		<xs:element minOccurs="0" maxOccurs="unbounded"
-    			name="action" type="hpeaction">
-    		</xs:element>
-    		<xs:element minOccurs="0" name="validation"
-    			type="hpeprotocol">
-    		</xs:element>
+    		<xs:element name="action" type="hpeaction" minOccurs="0"
+    			maxOccurs="unbounded" />
+    		<xs:element name="validation" type="hpeprotocol"
+    			minOccurs="0" />
     	</xs:sequence>
-    	<xs:attribute default="true" name="parallel"
-    		type="xs:boolean">
+    	<xs:attribute name="parallel" type="xs:boolean"
+    		default="true">
     	</xs:attribute>
-    	<xs:attribute default="1" name="split" type="xs:int"></xs:attribute>
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    	<xs:attribute name="index" type="xs:int"></xs:attribute>
     </xs:complexType>
+
+    <xs:complexType name="hashComponentType">
+      <xs:sequence>
+        <xs:element name="package" type="xs:string"/>
+        <xs:element name="using" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="kind" type="hpekind"/>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="innerComponent" type="hpeinnerComponent" minOccurs="0"  maxOccurs="unbounded"/>
+        <xs:element name="superComponent" type="hpetype" minOccurs="0"/>
+        <xs:element name="unit" minOccurs="0" maxOccurs="unbounded" type="unittype">
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:simpleType name="accessType">
+            <xs:restriction base="xs:string">
+            	<xs:enumeration value="public"/>
+                <xs:enumeration value="private"/>
+            </xs:restriction>
+    </xs:simpleType>
 </xs:schema> 
 
