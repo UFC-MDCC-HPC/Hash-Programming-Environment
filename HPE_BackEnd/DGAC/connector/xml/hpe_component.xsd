@@ -1,197 +1,188 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="hashComponent" type="hashComponentType">
-  </xs:element>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/HashComponent"
+	xmlns:tns="http://www.example.org/HashComponent">
+  <element name="hashComponent" type="tns:hashComponentType">
+  </element>
 
-  <xs:simpleType name="hpekind">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="application"/>
-      <xs:enumeration value="computation"/>
-      <xs:enumeration value="enumerator"/>
-      <xs:enumeration value="synchronizer"/>
-      <xs:enumeration value="service"/>
-      <xs:enumeration value="data"/>
-      <xs:enumeration value="qualifier"/>
-      <xs:enumeration value="environment"/>
-      <xs:enumeration value="architecture"/>
-      <xs:enumeration value="topology"/>
-    </xs:restriction>
-  </xs:simpleType>
+  <simpleType name="hpekind">
+    <restriction base="string">
+      <enumeration value="application"/>
+      <enumeration value="computation"/>
+      <enumeration value="enumerator"/>
+      <enumeration value="synchronizer"/>
+      <enumeration value="service"/>
+      <enumeration value="data"/>
+      <enumeration value="qualifier"/>
+      <enumeration value="environment"/>
+      <enumeration value="architecture"/>
+      <enumeration value="topology"/>
+    </restriction>
+  </simpleType>
   
-  <xs:complexType name="hpetype">
-    <xs:sequence>
-      <xs:element name="componentName" type="xs:string"/>
-      <xs:element name="publicInnerComponent" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
+  <complexType name="hpetype">
+    <sequence>
+      <element name="componentName" type="string"/>
+      <element name="publicInnerComponent" type="string" minOccurs="0" maxOccurs="unbounded"/>
+      <element name="parameter" type="tns:hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
   
-  <xs:complexType name="hpeparameter">
-    <xs:sequence>
-      <xs:element name="identifier" type="xs:string"/>
-            <xs:element name="variable" type="xs:string" minOccurs="0"/>
-            <xs:element name="constraint" type="hpeparameterType" />
-        </xs:sequence>
-  </xs:complexType>
+  <complexType name="hpeparameter">
+    <sequence>
+      <element name="identifier" type="string"/>
+            <element name="variable" type="string" minOccurs="0"/>
+            <element name="constraint" type="tns:hpeparameterType" />
+        </sequence>
+  </complexType>
   
-  <xs:complexType name="hpeparameterType">
-    <xs:sequence>
-      <xs:element name="componentConstraint" type="xs:string"/>
-      <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
+  <complexType name="hpeparameterType">
+    <sequence>
+      <element name="componentConstraint" type="string"/>
+      <element name="parameter" type="tns:hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
 
-  <xs:complexType name="hpecondProtocol">
-  	<xs:complexContent>
-  		<xs:extension base="hpeprotocol">
-  			<xs:sequence>
-  				<xs:element name="guard" type="hpeguard"></xs:element>
-  			</xs:sequence>
-  		</xs:extension>
-  	</xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="hpeprotocol">
-    <xs:choice maxOccurs="unbounded">
-      <xs:element name="action" type="actionComplexType">
-	  </xs:element>
-	  
-	  <xs:element name="seq" type="seqComplexType">
-	  </xs:element>
-
-	  <xs:element name="par" type="parComplexType">
-	  </xs:element>
-      
-      <xs:element name="alt" type="altComplexType">
-      </xs:element>
-      <xs:element name="if" type="ifComplexType">
-      </xs:element>
-      <xs:element name="loop" type="loopComplexType">
-      </xs:element>
-    </xs:choice>
-  </xs:complexType>
   
-  <xs:complexType name="hpeguard">
-    <xs:choice maxOccurs="unbounded">
-      <xs:element name="condition" type="xs:string"/>
-      <xs:element name="and" type="hpeguard"/>
-      <xs:element name="or" type="hpeguard"/>
-    </xs:choice>
-  </xs:complexType>
+  <complexType name="hpeaction">
+  	<sequence>
+    	<element name="identifier" type="string"/>
+       	<element name="protocol" type="tns:ProtocolType"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="ProtocolType" abstract="true">
+  	<sequence>
+  		<element name="guard" type="tns:GuardType" maxOccurs="1"
+  			minOccurs="0">
+  		</element>
+  	</sequence>
+  	<attribute name="repeat" type="boolean"></attribute>
+  </complexType>
   
-  <xs:complexType name="hpeaction">
-  	<xs:sequence>
-    	<xs:element name="identifier" type="xs:string"/>
-       	<xs:element name="protocol" type="hpeprotocol"/>
-    </xs:sequence>
-  </xs:complexType>
+  
+  <complexType name="ProtocolCompositionType" abstract="true">
+  	<complexContent>
+  		<extension base="tns:ProtocolType">
+  			<sequence>
+  				<element name="actions" type="tns:ProtocolType" maxOccurs="unbounded" minOccurs="1"></element>
+  			</sequence>
+  		</extension>
+  	</complexContent>
+  </complexType>
 
-<xs:complexType name="hpeinnerComponent">
-	<xs:sequence>
-    	<xs:element name="kind" type="hpekind"/>
-        <xs:element name="identifier" type="xs:string"/>
-        <xs:element name="type" type="hpetype"/>
-        <xs:element name="access" type="accessType">
-    	</xs:element>
-    	<xs:element name="exportActions" type="xs:boolean"/>
-	</xs:sequence>
-</xs:complexType>
+  <complexType name="ProtocolSeqType">
+  	<complexContent>
+  		<extension base="tns:ProtocolCompositionType"></extension>
+  	</complexContent>
+  </complexType>
+  
+    <complexType name="ProtocolParType">
+    	<complexContent>
+    		<extension base="tns:ProtocolCompositionType"></extension>
+    	</complexContent>
+    </complexType>
 
-    <xs:complexType name="hpesliceType">
-    	<xs:attribute use="required" name="inner" type="xs:string">
-    	</xs:attribute>
-    	<xs:attribute name="unit" type="xs:string" use="required"></xs:attribute>
-    	<xs:attribute name="index" default="0" type="xs:int">
-    	</xs:attribute>
-    </xs:complexType>
-    <xs:complexType name="parComplexType">
-    	<xs:complexContent>
-    		<xs:extension base="hpeprotocol">
-    			<xs:attribute name="id" type="xs:string"></xs:attribute>
-    		</xs:extension>
-    	</xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="seqComplexType">
-    	<xs:complexContent>
-    		<xs:extension base="hpeprotocol">
-    			<xs:attribute name="id" type="xs:string"></xs:attribute>
-    		</xs:extension>
-    	</xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="actionComplexType">
-    	<xs:simpleContent>
-    		<xs:extension base="xs:string">
-    			<xs:attribute name="id" type="xs:string"></xs:attribute>
-    		</xs:extension>
-    	</xs:simpleContent>
-    </xs:complexType>
-    <xs:complexType name="altComplexType">
-    	<xs:sequence>
-    		<xs:element minOccurs="1" maxOccurs ="unbounded" name="protocol" type="hpecondProtocol"></xs:element>
-    		<xs:element minOccurs="0" name="else" type="hpeprotocol"></xs:element>
-    	</xs:sequence>
-    	<xs:attribute name="id" type="xs:string"></xs:attribute>
-    </xs:complexType>
-    <xs:complexType name="ifComplexType">
-    	<xs:sequence>
-    		<xs:element minOccurs="1" name="protocol" type="hpecondProtocol"></xs:element>
-    		<xs:element minOccurs="0" name="else" type="hpeprotocol"></xs:element>
-    	</xs:sequence>
-    	<xs:attribute name="id" type="xs:string"></xs:attribute>
-    </xs:complexType>
-    <xs:complexType name="loopComplexType">
-    	<xs:sequence>
-    		<xs:element minOccurs="1" name="protocol" type="hpecondProtocol"></xs:element>
-    	</xs:sequence>
-    	<xs:attribute name="id" type="xs:string"></xs:attribute>
-    	<xs:attribute default="while" name="type">
-    		<xs:simpleType>
-    			<xs:restriction base="xs:string">
-    				<xs:enumeration value="while"></xs:enumeration>
-    				<xs:enumeration value="repeat"></xs:enumeration>
-    			</xs:restriction>
-    		</xs:simpleType>
-    	</xs:attribute>
-    </xs:complexType>
+    <complexType name="ProtocolAltType">
+    	<complexContent>
+    		<extension base="tns:ProtocolCompositionType"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="ProtocolActivationType">
+    	<complexContent>
+    		<extension base="tns:ProtocolType">
+    			<attribute name="action_id" type="string"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
 
-    <xs:complexType name="unittype">
-    	<xs:sequence>
+    <complexType name="GuardType" abstract="true">
+    </complexType>
 
-    		<xs:element name="slice" minOccurs="1" maxOccurs="unbounded"
-    			type="hpesliceType">
-    		</xs:element>
-    		<xs:element name="action" type="hpeaction" minOccurs="0"
+    <complexType name="GuardAndType">
+    	<complexContent>
+    		<extension base="tns:GuardType"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="GuardOrType">
+    	<complexContent>
+    		<extension base="tns:GuardType"></extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="GuardNotType">
+    	<complexContent>
+    		<extension base="tns:GuardType"></extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="GuardConditionType">
+    	<complexContent>
+    		<extension base="tns:GuardType">
+    			<attribute name="condition" type="string"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+<complexType name="hpeinnerComponent">
+	<sequence>
+    	<element name="kind" type="tns:hpekind"/>
+        <element name="identifier" type="string"/>
+        <element name="type" type="tns:hpetype"/>
+        <element name="access" type="tns:accessType">
+    	</element>
+    	<element name="exportActions" type="boolean"/>
+	</sequence>
+</complexType>
+
+    <complexType name="hpesliceType">
+    	<attribute use="required" name="inner" type="string">
+    	</attribute>
+    	<attribute name="unit" type="string" use="required"></attribute>
+    	<attribute name="index" default="0" type="int">
+    	</attribute>
+    </complexType>
+
+    <complexType name="unittype">
+    	<sequence>
+
+    		<element name="slice" minOccurs="1" maxOccurs="unbounded"
+    			type="tns:hpesliceType">
+    		</element>
+    		<element name="action" type="tns:hpeaction" minOccurs="0"
     			maxOccurs="unbounded" />
-    		<xs:element name="validation" type="hpeprotocol"
+    		<element name="validation" type="tns:ProtocolType"
     			minOccurs="0" />
-    	</xs:sequence>
-    	<xs:attribute name="parallel" type="xs:boolean"
+    	</sequence>
+    	<attribute name="parallel" type="boolean"
     		default="true">
-    	</xs:attribute>
-    	<xs:attribute name="name" type="xs:string"></xs:attribute>
-    	<xs:attribute name="index" type="xs:int"></xs:attribute>
-    </xs:complexType>
+    	</attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="index" type="int"></attribute>
+    </complexType>
 
-    <xs:complexType name="hashComponentType">
-      <xs:sequence>
-        <xs:element name="package" type="xs:string"/>
-        <xs:element name="using" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="kind" type="hpekind"/>
-        <xs:element name="name" type="xs:string"/>
-        <xs:element name="parameter" type="hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="innerComponent" type="hpeinnerComponent" minOccurs="0"  maxOccurs="unbounded"/>
-        <xs:element name="superComponent" type="hpetype" minOccurs="0"/>
-        <xs:element name="unit" minOccurs="0" maxOccurs="unbounded" type="unittype">
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
+    <complexType name="hashComponentType">
+      <sequence>
+        <element name="package" type="string"/>
+        <element name="using" type="string" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="kind" type="tns:hpekind"/>
+        <element name="name" type="string"/>
+        <element name="parameter" type="tns:hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="innerComponent" type="tns:hpeinnerComponent" minOccurs="0"  maxOccurs="unbounded"/>
+        <element name="superComponent" type="tns:hpetype" minOccurs="0"/>
+        <element name="unit" minOccurs="0" maxOccurs="unbounded" type="tns:unittype">
+        </element>
+      </sequence>
+    </complexType>
 
 
-    <xs:simpleType name="accessType">
-            <xs:restriction base="xs:string">
-            	<xs:enumeration value="public"/>
-                <xs:enumeration value="private"/>
-            </xs:restriction>
-    </xs:simpleType>
-</xs:schema> 
+    <simpleType name="accessType">
+            <restriction base="string">
+            	<enumeration value="public"/>
+                <enumeration value="private"/>
+            </restriction>
+    </simpleType>
+</schema> 
 
