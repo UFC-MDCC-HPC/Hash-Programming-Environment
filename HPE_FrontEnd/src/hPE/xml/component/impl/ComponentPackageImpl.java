@@ -14,6 +14,7 @@ import hPE.xml.component.ActionCombinatorType;
 import hPE.xml.component.ActionSignalType;
 import hPE.xml.component.ActionSkipType;
 import hPE.xml.component.ActionType;
+import hPE.xml.component.AltType;
 import hPE.xml.component.ActionWaitType;
 import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ColorComplexType;
@@ -23,6 +24,7 @@ import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentInUseType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ComponentType;
+import hPE.xml.component.ConditionType;
 import hPE.xml.component.DocumentRoot;
 import hPE.xml.component.EntryType;
 import hPE.xml.component.EnumerableComponentType;
@@ -40,6 +42,15 @@ import hPE.xml.component.FielType;
 import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
+import hPE.xml.component.GuardAndType;
+import hPE.xml.component.GuardConditionType;
+import hPE.xml.component.GuardNotType;
+import hPE.xml.component.GuardOrType;
+import hPE.xml.component.GuardType;
+import hPE.xml.component.Hpeaction;
+import hPE.xml.component.Hpeguard;
+import hPE.xml.component.Hpeprotocol;
+import hPE.xml.component.IfType;
 import hPE.xml.component.ImplementsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
@@ -50,14 +61,26 @@ import hPE.xml.component.InterfaceRefType;
 import hPE.xml.component.InterfaceSliceRefType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.InterfaceType;
+import hPE.xml.component.LoopType;
+import hPE.xml.component.ParType;
 import hPE.xml.component.ParameterRenaming;
 import hPE.xml.component.ParameterSupplyType;
 import hPE.xml.component.ParameterType;
+import hPE.xml.component.PerformType;
 import hPE.xml.component.PortSliceType;
 import hPE.xml.component.PortType;
+import hPE.xml.component.ProtocolChoiceType;
+import hPE.xml.component.ProtocolCombinatorType;
+import hPE.xml.component.ProtocolActivationType;
+import hPE.xml.component.ProtocolAltType;
+import hPE.xml.component.ProtocolCompositionType;
+import hPE.xml.component.ProtocolParType;
+import hPE.xml.component.ProtocolSeqType;
+import hPE.xml.component.ProtocolType;
 import hPE.xml.component.QuantificationType;
 import hPE.xml.component.QuantificationVarType;
 import hPE.xml.component.RecursiveEntryType;
+import hPE.xml.component.SeqType;
 import hPE.xml.component.SourceFileType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.SplitEnumeratorType;
@@ -65,6 +88,7 @@ import hPE.xml.component.SplitLinkType;
 import hPE.xml.component.SplitType;
 import hPE.xml.component.SplitType2;
 import hPE.xml.component.SupportedKinds;
+import hPE.xml.component.TypeType;
 import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
@@ -93,63 +117,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass actionActivateTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionCombinatorAltTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionCombinatorParTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionCombinatorSeqTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionCombinatorTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionSignalTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionSkipTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass actionTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionWaitTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -192,6 +160,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass componentTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass conditionTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -310,6 +285,41 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass guardAndTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass guardConditionTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass guardNotTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass guardOrTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass guardTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass implementsTypeEClass = null;
 
 	/**
@@ -394,6 +404,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass performTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass portSliceTypeEClass = null;
 
 	/**
@@ -408,7 +425,21 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass quantificationVarTypeEClass = null;
+	private EClass protocolChoiceTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass protocolCombinatorTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass protocolTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -591,105 +622,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getActionActivateType() {
-		return actionActivateTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActionActivateType_SliceRef() {
-		return (EAttribute)actionActivateTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionCombinatorAltType() {
-		return actionCombinatorAltTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionCombinatorParType() {
-		return actionCombinatorParTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionCombinatorSeqType() {
-		return actionCombinatorSeqTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionCombinatorType() {
-		return actionCombinatorTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActionCombinatorType_Group() {
-		return (EAttribute)actionCombinatorTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActionCombinatorType_Action() {
-		return (EReference)actionCombinatorTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionSignalType() {
-		return actionSignalTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActionSignalType_Semaphore() {
-		return (EAttribute)actionSignalTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionSkipType() {
-		return actionSkipTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getActionType() {
 		return actionTypeEClass;
 	}
@@ -699,7 +631,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getActionType_VisualDescription() {
+	public EReference getActionType_Protocol() {
 		return (EReference)actionTypeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -708,35 +640,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getActionType_Label() {
+	public EAttribute getActionType_Id() {
 		return (EAttribute)actionTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActionType_Repeat() {
-		return (EAttribute)actionTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionWaitType() {
-		return actionWaitTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActionWaitType_Semaphore() {
-		return (EAttribute)actionWaitTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1151,6 +1056,33 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EReference getComponentType_ComponentInfo() {
 		return (EReference)componentTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getConditionType() {
+		return conditionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConditionType_Guard() {
+		return (EReference)conditionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConditionType_Id() {
+		return (EAttribute)conditionTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1617,6 +1549,60 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getGuardAndType() {
+		return guardAndTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGuardConditionType() {
+		return guardConditionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGuardConditionType_Condition() {
+		return (EAttribute)guardConditionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGuardNotType() {
+		return guardNotTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGuardOrType() {
+		return guardOrTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGuardType() {
+		return guardTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getImplementsType() {
 		return implementsTypeEClass;
 	}
@@ -1897,7 +1883,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EReference getInterfaceType_Protocol() {
-		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(1);
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1906,7 +1892,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EReference getInterfaceType_Sources() {
-		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(2);
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1915,7 +1901,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EReference getInterfaceType_VisualDescription() {
-		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(3);
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1924,7 +1910,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EReference getInterfaceType_Port() {
-		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(4);
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1933,7 +1919,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EAttribute getInterfaceType_ExternalReferences() {
-		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1942,6 +1928,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EReference getInterfaceType_Parameter() {
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInterfaceType_Action() {
 		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -1950,8 +1945,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getInterfaceType_Condition() {
+		return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getInterfaceType_IRef() {
-		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -1960,7 +1964,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	public EAttribute getInterfaceType_NArgs() {
-		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(8);
+		return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -2058,6 +2062,33 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getPerformType() {
+		return performTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPerformType_ActionId() {
+		return (EAttribute)performTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPerformType_SliceId() {
+		return (EAttribute)performTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPortSliceType() {
 		return portSliceTypeEClass;
 	}
@@ -2121,8 +2152,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getQuantificationVarType() {
-		return quantificationVarTypeEClass;
+	public EClass getProtocolChoiceType() {
+		return protocolChoiceTypeEClass;
 	}
 
 	/**
@@ -2130,8 +2161,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getQuantificationVarType_QType() {
-		return (EAttribute)quantificationVarTypeEClass.getEStructuralFeatures().get(0);
+	public EReference getProtocolChoiceType_Par() {
+		return (EReference)protocolChoiceTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2139,8 +2170,80 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getQuantificationVarType_VarName() {
-		return (EAttribute)quantificationVarTypeEClass.getEStructuralFeatures().get(1);
+	public EReference getProtocolChoiceType_Seq() {
+		return (EReference)protocolChoiceTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolChoiceType_Alt() {
+		return (EReference)protocolChoiceTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolChoiceType_Perform() {
+		return (EReference)protocolChoiceTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProtocolCombinatorType() {
+		return protocolCombinatorTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolCombinatorType_Action() {
+		return (EReference)protocolCombinatorTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProtocolType() {
+		return protocolTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolType_Guard() {
+		return (EReference)protocolTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProtocolType_Id() {
+		return (EAttribute)protocolTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProtocolType_Repeat() {
+		return (EAttribute)protocolTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2571,7 +2674,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_URef() {
+	public EAttribute getUnitType_Replica() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -2580,8 +2683,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_VisibleInterface() {
+	public EAttribute getUnitType_URef() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitType_VisibleInterface() {
+		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -2747,31 +2859,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		isCreated = true;
 
 		// Create classes and their features
-		actionActivateTypeEClass = createEClass(ACTION_ACTIVATE_TYPE);
-		createEAttribute(actionActivateTypeEClass, ACTION_ACTIVATE_TYPE__SLICE_REF);
-
-		actionCombinatorAltTypeEClass = createEClass(ACTION_COMBINATOR_ALT_TYPE);
-
-		actionCombinatorParTypeEClass = createEClass(ACTION_COMBINATOR_PAR_TYPE);
-
-		actionCombinatorSeqTypeEClass = createEClass(ACTION_COMBINATOR_SEQ_TYPE);
-
-		actionCombinatorTypeEClass = createEClass(ACTION_COMBINATOR_TYPE);
-		createEAttribute(actionCombinatorTypeEClass, ACTION_COMBINATOR_TYPE__GROUP);
-		createEReference(actionCombinatorTypeEClass, ACTION_COMBINATOR_TYPE__ACTION);
-
-		actionSignalTypeEClass = createEClass(ACTION_SIGNAL_TYPE);
-		createEAttribute(actionSignalTypeEClass, ACTION_SIGNAL_TYPE__SEMAPHORE);
-
-		actionSkipTypeEClass = createEClass(ACTION_SKIP_TYPE);
-
 		actionTypeEClass = createEClass(ACTION_TYPE);
-		createEReference(actionTypeEClass, ACTION_TYPE__VISUAL_DESCRIPTION);
-		createEAttribute(actionTypeEClass, ACTION_TYPE__LABEL);
-		createEAttribute(actionTypeEClass, ACTION_TYPE__REPEAT);
-
-		actionWaitTypeEClass = createEClass(ACTION_WAIT_TYPE);
-		createEAttribute(actionWaitTypeEClass, ACTION_WAIT_TYPE__SEMAPHORE);
+		createEReference(actionTypeEClass, ACTION_TYPE__PROTOCOL);
+		createEAttribute(actionTypeEClass, ACTION_TYPE__ID);
 
 		baseTypeTypeEClass = createEClass(BASE_TYPE_TYPE);
 		createEReference(baseTypeTypeEClass, BASE_TYPE_TYPE__EXTENSION_TYPE);
@@ -2824,6 +2914,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		componentTypeEClass = createEClass(COMPONENT_TYPE);
 		createEReference(componentTypeEClass, COMPONENT_TYPE__HEADER);
 		createEReference(componentTypeEClass, COMPONENT_TYPE__COMPONENT_INFO);
+
+		conditionTypeEClass = createEClass(CONDITION_TYPE);
+		createEReference(conditionTypeEClass, CONDITION_TYPE__GUARD);
+		createEAttribute(conditionTypeEClass, CONDITION_TYPE__ID);
 
 		documentRootEClass = createEClass(DOCUMENT_ROOT);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
@@ -2892,6 +2986,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(fusionTypeEClass, FUSION_TYPE__CREFS);
 		createEAttribute(fusionTypeEClass, FUSION_TYPE__PREF);
 
+		guardAndTypeEClass = createEClass(GUARD_AND_TYPE);
+
+		guardConditionTypeEClass = createEClass(GUARD_CONDITION_TYPE);
+		createEAttribute(guardConditionTypeEClass, GUARD_CONDITION_TYPE__CONDITION);
+
+		guardNotTypeEClass = createEClass(GUARD_NOT_TYPE);
+
+		guardOrTypeEClass = createEClass(GUARD_OR_TYPE);
+
+		guardTypeEClass = createEClass(GUARD_TYPE);
+
 		implementsTypeEClass = createEClass(IMPLEMENTS_TYPE);
 		createEAttribute(implementsTypeEClass, IMPLEMENTS_TYPE__CREF);
 
@@ -2931,12 +3036,14 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		interfaceTypeEClass = createEClass(INTERFACE_TYPE);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__SLICE);
-		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PROTOCOL);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__SOURCES);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__VISUAL_DESCRIPTION);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PORT);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__EXTERNAL_REFERENCES);
 		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PARAMETER);
+		createEReference(interfaceTypeEClass, INTERFACE_TYPE__ACTION);
+		createEReference(interfaceTypeEClass, INTERFACE_TYPE__CONDITION);
+		createEReference(interfaceTypeEClass, INTERFACE_TYPE__PROTOCOL);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__IREF);
 		createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__NARGS);
 
@@ -2953,6 +3060,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__FORM_FIELD_ID);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__VAR_NAME);
 
+		performTypeEClass = createEClass(PERFORM_TYPE);
+		createEAttribute(performTypeEClass, PERFORM_TYPE__ACTION_ID);
+		createEAttribute(performTypeEClass, PERFORM_TYPE__SLICE_ID);
+
 		portSliceTypeEClass = createEClass(PORT_SLICE_TYPE);
 		createEAttribute(portSliceTypeEClass, PORT_SLICE_TYPE__PREF);
 		createEAttribute(portSliceTypeEClass, PORT_SLICE_TYPE__SREF);
@@ -2962,9 +3073,19 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(portTypeEClass, PORT_TYPE__EXPOSED);
 		createEAttribute(portTypeEClass, PORT_TYPE__PREF);
 
-		quantificationVarTypeEClass = createEClass(QUANTIFICATION_VAR_TYPE);
-		createEAttribute(quantificationVarTypeEClass, QUANTIFICATION_VAR_TYPE__QTYPE);
-		createEAttribute(quantificationVarTypeEClass, QUANTIFICATION_VAR_TYPE__VAR_NAME);
+		protocolChoiceTypeEClass = createEClass(PROTOCOL_CHOICE_TYPE);
+		createEReference(protocolChoiceTypeEClass, PROTOCOL_CHOICE_TYPE__PAR);
+		createEReference(protocolChoiceTypeEClass, PROTOCOL_CHOICE_TYPE__SEQ);
+		createEReference(protocolChoiceTypeEClass, PROTOCOL_CHOICE_TYPE__ALT);
+		createEReference(protocolChoiceTypeEClass, PROTOCOL_CHOICE_TYPE__PERFORM);
+
+		protocolCombinatorTypeEClass = createEClass(PROTOCOL_COMBINATOR_TYPE);
+		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ACTION);
+
+		protocolTypeEClass = createEClass(PROTOCOL_TYPE);
+		createEReference(protocolTypeEClass, PROTOCOL_TYPE__GUARD);
+		createEAttribute(protocolTypeEClass, PROTOCOL_TYPE__ID);
+		createEAttribute(protocolTypeEClass, PROTOCOL_TYPE__REPEAT);
 
 		recursiveEntryTypeEClass = createEClass(RECURSIVE_ENTRY_TYPE);
 		createEAttribute(recursiveEntryTypeEClass, RECURSIVE_ENTRY_TYPE__CREF);
@@ -3022,6 +3143,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(unitTypeEClass, UNIT_TYPE__IREF);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__MULTIPLE);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__PRIVATE);
+		createEAttribute(unitTypeEClass, UNIT_TYPE__REPLICA);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__UREF);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__VISIBLE_INTERFACE);
 
@@ -3078,47 +3200,23 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		actionActivateTypeEClass.getESuperTypes().add(this.getActionType());
-		actionCombinatorAltTypeEClass.getESuperTypes().add(this.getActionCombinatorType());
-		actionCombinatorParTypeEClass.getESuperTypes().add(this.getActionCombinatorType());
-		actionCombinatorSeqTypeEClass.getESuperTypes().add(this.getActionCombinatorType());
-		actionCombinatorTypeEClass.getESuperTypes().add(this.getActionType());
-		actionSignalTypeEClass.getESuperTypes().add(this.getActionType());
-		actionSkipTypeEClass.getESuperTypes().add(this.getActionType());
-		actionWaitTypeEClass.getESuperTypes().add(this.getActionType());
 		enumerableComponentTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableEntryTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableUnitSliceTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableUnitTypeEClass.getESuperTypes().add(this.getEnumerableType());
+		guardAndTypeEClass.getESuperTypes().add(this.getGuardType());
+		guardConditionTypeEClass.getESuperTypes().add(this.getGuardType());
+		guardNotTypeEClass.getESuperTypes().add(this.getGuardType());
+		guardOrTypeEClass.getESuperTypes().add(this.getGuardType());
 		innerComponentTypeEClass.getESuperTypes().add(this.getComponentInUseType());
+		protocolChoiceTypeEClass.getESuperTypes().add(this.getProtocolType());
+		protocolCombinatorTypeEClass.getESuperTypes().add(this.getProtocolType());
 		unitSliceTypeEClass.getESuperTypes().add(this.getUnitRefType());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(actionActivateTypeEClass, ActionActivateType.class, "ActionActivateType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getActionActivateType_SliceRef(), theXMLTypePackage.getString(), "sliceRef", null, 1, 1, ActionActivateType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(actionCombinatorAltTypeEClass, ActionCombinatorAltType.class, "ActionCombinatorAltType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(actionCombinatorParTypeEClass, ActionCombinatorParType.class, "ActionCombinatorParType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(actionCombinatorSeqTypeEClass, ActionCombinatorSeqType.class, "ActionCombinatorSeqType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(actionCombinatorTypeEClass, ActionCombinatorType.class, "ActionCombinatorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getActionCombinatorType_Group(), ecorePackage.getEFeatureMapEntry(), "group", null, 0, -1, ActionCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getActionCombinatorType_Action(), this.getActionType(), null, "action", null, 1, -1, ActionCombinatorType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-		initEClass(actionSignalTypeEClass, ActionSignalType.class, "ActionSignalType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getActionSignalType_Semaphore(), theXMLTypePackage.getString(), "semaphore", null, 1, 1, ActionSignalType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(actionSkipTypeEClass, ActionSkipType.class, "ActionSkipType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(actionTypeEClass, ActionType.class, "ActionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getActionType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getActionType_Label(), theXMLTypePackage.getString(), "label", null, 0, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getActionType_Repeat(), theXMLTypePackage.getUnsignedInt(), "repeat", null, 0, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(actionWaitTypeEClass, ActionWaitType.class, "ActionWaitType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getActionWaitType_Semaphore(), theXMLTypePackage.getString(), "semaphore", null, 1, 1, ActionWaitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getActionType_Protocol(), this.getProtocolChoiceType(), null, "protocol", null, 0, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getActionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(baseTypeTypeEClass, BaseTypeType.class, "BaseTypeType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBaseTypeType_ExtensionType(), this.getExtensionTypeType(), null, "extensionType", null, 1, 1, BaseTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3171,6 +3269,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(componentTypeEClass, ComponentType.class, "ComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentType_Header(), this.getComponentHeaderType(), null, "header", null, 1, 1, ComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentType_ComponentInfo(), this.getComponentBodyType(), null, "componentInfo", null, 1, 1, ComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(conditionTypeEClass, ConditionType.class, "ConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getConditionType_Guard(), this.getGuardType(), null, "guard", null, 1, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConditionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3239,6 +3341,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getFusionType_CRefs(), theXMLTypePackage.getString(), "cRefs", null, 1, -1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFusionType_PRef(), theXMLTypePackage.getString(), "pRef", null, 1, 1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(guardAndTypeEClass, GuardAndType.class, "GuardAndType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(guardConditionTypeEClass, GuardConditionType.class, "GuardConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGuardConditionType_Condition(), theXMLTypePackage.getString(), "condition", null, 0, 1, GuardConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(guardNotTypeEClass, GuardNotType.class, "GuardNotType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(guardOrTypeEClass, GuardOrType.class, "GuardOrType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(guardTypeEClass, GuardType.class, "GuardType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(implementsTypeEClass, ImplementsType.class, "ImplementsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getImplementsType_CRef(), theXMLTypePackage.getString(), "cRef", null, 1, 1, ImplementsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3278,12 +3391,14 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(interfaceTypeEClass, InterfaceType.class, "InterfaceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInterfaceType_Slice(), this.getInterfaceSliceType(), null, "slice", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInterfaceType_Protocol(), this.getActionType(), null, "protocol", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Sources(), this.getSourceType(), null, "sources", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Port(), this.getInterfacePortType(), null, "port", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_ExternalReferences(), theXMLTypePackage.getString(), "externalReferences", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Parameter(), this.getInterfaceParameterType(), null, "parameter", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_Action(), this.getActionType(), null, "action", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_Condition(), this.getConditionType(), null, "condition", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_Protocol(), this.getProtocolChoiceType(), null, "protocol", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_NArgs(), theXMLTypePackage.getInt(), "nArgs", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3300,6 +3415,10 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getParameterType_FormFieldId(), theXMLTypePackage.getString(), "formFieldId", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_VarName(), theXMLTypePackage.getString(), "varName", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(performTypeEClass, PerformType.class, "PerformType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPerformType_ActionId(), theXMLTypePackage.getString(), "actionId", null, 0, 1, PerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPerformType_SliceId(), theXMLTypePackage.getString(), "sliceId", null, 0, 1, PerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(portSliceTypeEClass, PortSliceType.class, "PortSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPortSliceType_PRef(), theXMLTypePackage.getString(), "pRef", null, 0, 1, PortSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPortSliceType_SRef(), theXMLTypePackage.getString(), "sRef", null, 0, 1, PortSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3309,9 +3428,19 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getPortType_Exposed(), theXMLTypePackage.getBoolean(), "exposed", null, 0, 1, PortType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPortType_PRef(), theXMLTypePackage.getString(), "pRef", null, 0, 1, PortType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(quantificationVarTypeEClass, QuantificationVarType.class, "QuantificationVarType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getQuantificationVarType_QType(), this.getQuantificationType(), "qType", "Universal", 0, 1, QuantificationVarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getQuantificationVarType_VarName(), theXMLTypePackage.getString(), "varName", null, 1, 1, QuantificationVarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(protocolChoiceTypeEClass, ProtocolChoiceType.class, "ProtocolChoiceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProtocolChoiceType_Par(), this.getProtocolCombinatorType(), null, "par", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Seq(), this.getProtocolCombinatorType(), null, "seq", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Alt(), this.getProtocolCombinatorType(), null, "alt", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Perform(), this.getPerformType(), null, "perform", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(protocolCombinatorTypeEClass, ProtocolCombinatorType.class, "ProtocolCombinatorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProtocolCombinatorType_Action(), this.getProtocolChoiceType(), null, "action", null, 1, -1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(protocolTypeEClass, ProtocolType.class, "ProtocolType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProtocolType_Guard(), this.getGuardType(), null, "guard", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolType_Repeat(), theXMLTypePackage.getBoolean(), "repeat", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recursiveEntryTypeEClass, RecursiveEntryType.class, "RecursiveEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRecursiveEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, RecursiveEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3369,6 +3498,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getUnitType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Private(), theXMLTypePackage.getBoolean(), "private", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitType_Replica(), theXMLTypePackage.getInt(), "replica", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_VisibleInterface(), theXMLTypePackage.getBoolean(), "visibleInterface", "true", 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3425,84 +3555,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	protected void createExtendedMetaDataAnnotations() {
 		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
 		addAnnotation
-		  (actionActivateTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionActivateType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getActionActivateType_SliceRef(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "sliceRef"
-		   });		
-		addAnnotation
-		  (actionCombinatorAltTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionCombinatorAltType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (actionCombinatorParTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionCombinatorParType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (actionCombinatorSeqTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionCombinatorSeqType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (actionCombinatorTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionCombinatorType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getActionCombinatorType_Group(), 
-		   source, 
-		   new String[] {
-			 "kind", "group",
-			 "name", "group:3"
-		   });		
-		addAnnotation
-		  (getActionCombinatorType_Action(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "action",
-			 "group", "#group:3"
-		   });		
-		addAnnotation
-		  (actionSignalTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionSignalType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getActionSignalType_Semaphore(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "semaphore"
-		   });		
-		addAnnotation
-		  (actionSkipTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionSkipType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
 		  (actionTypeEClass, 
 		   source, 
 		   new String[] {
@@ -3510,39 +3562,18 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "elementOnly"
 		   });		
 		addAnnotation
-		  (getActionType_VisualDescription(), 
+		  (getActionType_Protocol(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
-			 "name", "visualDescription"
+			 "name", "protocol"
 		   });		
 		addAnnotation
-		  (getActionType_Label(), 
+		  (getActionType_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
-			 "name", "label"
-		   });		
-		addAnnotation
-		  (getActionType_Repeat(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "repeat"
-		   });		
-		addAnnotation
-		  (actionWaitTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionWaitType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getActionWaitType_Semaphore(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "semaphore"
+			 "name", "id"
 		   });		
 		addAnnotation
 		  (baseTypeTypeEClass, 
@@ -3876,6 +3907,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "componentInfo"
+		   });		
+		addAnnotation
+		  (conditionTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ConditionType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getConditionType_Guard(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "guard"
+		   });		
+		addAnnotation
+		  (getConditionType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
 		   });		
 		addAnnotation
 		  (documentRootEClass, 
@@ -4237,6 +4289,48 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "pRef"
 		   });		
 		addAnnotation
+		  (guardAndTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GuardAndType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (guardConditionTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GuardConditionType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getGuardConditionType_Condition(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "condition"
+		   });		
+		addAnnotation
+		  (guardNotTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GuardNotType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (guardOrTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GuardOrType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (guardTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GuardType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
 		  (implementsTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4454,13 +4548,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "slice"
 		   });		
 		addAnnotation
-		  (getInterfaceType_Protocol(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "protocol"
-		   });		
-		addAnnotation
 		  (getInterfaceType_Sources(), 
 		   source, 
 		   new String[] {
@@ -4494,6 +4581,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "parameter"
+		   });		
+		addAnnotation
+		  (getInterfaceType_Action(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "action"
+		   });		
+		addAnnotation
+		  (getInterfaceType_Condition(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "condition"
+		   });		
+		addAnnotation
+		  (getInterfaceType_Protocol(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "protocol"
 		   });		
 		addAnnotation
 		  (getInterfaceType_IRef(), 
@@ -4580,6 +4688,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "varName"
 		   });		
 		addAnnotation
+		  (performTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "perform_._type",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getPerformType_ActionId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "action_id"
+		   });		
+		addAnnotation
+		  (getPerformType_SliceId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "slice_id"
+		   });		
+		addAnnotation
 		  (portSliceTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4629,6 +4758,83 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "pRef"
 		   });		
 		addAnnotation
+		  (protocolChoiceTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolChoiceType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolChoiceType_Par(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "par"
+		   });		
+		addAnnotation
+		  (getProtocolChoiceType_Seq(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "seq"
+		   });		
+		addAnnotation
+		  (getProtocolChoiceType_Alt(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "alt"
+		   });		
+		addAnnotation
+		  (getProtocolChoiceType_Perform(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "perform"
+		   });		
+		addAnnotation
+		  (protocolCombinatorTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolCombinatorType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolCombinatorType_Action(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "action"
+		   });		
+		addAnnotation
+		  (protocolTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolType_Guard(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "guard"
+		   });		
+		addAnnotation
+		  (getProtocolType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
+		   });		
+		addAnnotation
+		  (getProtocolType_Repeat(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "repeat"
+		   });		
+		addAnnotation
 		  (quantificationTypeEEnum, 
 		   source, 
 		   new String[] {
@@ -4640,27 +4846,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "name", "QuantificationType:Object",
 			 "baseType", "QuantificationType"
-		   });		
-		addAnnotation
-		  (quantificationVarTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "QuantificationVarType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getQuantificationVarType_QType(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "qType"
-		   });		
-		addAnnotation
-		  (getQuantificationVarType_VarName(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "varName"
 		   });		
 		addAnnotation
 		  (recursiveEntryTypeEClass, 
@@ -5003,6 +5188,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "private"
+		   });		
+		addAnnotation
+		  (getUnitType_Replica(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "replica"
 		   });		
 		addAnnotation
 		  (getUnitType_URef(), 

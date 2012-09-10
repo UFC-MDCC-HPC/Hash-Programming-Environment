@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isPrivate <em>Private</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getURef <em>URef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isVisibleInterface <em>Visible Interface</em>}</li>
  * </ul>
@@ -156,6 +157,35 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 	 * @ordered
 	 */
 	protected boolean privateESet;
+
+	/**
+	 * The default value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int REPLICA_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected int replica = REPLICA_EDEFAULT;
+
+	/**
+	 * This is true if the Replica attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean replicaESet;
 
 	/**
 	 * The default value of the '{@link #getURef() <em>URef</em>}' attribute.
@@ -441,6 +471,52 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getReplica() {
+		return replica;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReplica(int newReplica) {
+		int oldReplica = replica;
+		replica = newReplica;
+		boolean oldReplicaESet = replicaESet;
+		replicaESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_TYPE__REPLICA, oldReplica, replica, !oldReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetReplica() {
+		int oldReplica = replica;
+		boolean oldReplicaESet = replicaESet;
+		replica = REPLICA_EDEFAULT;
+		replicaESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_TYPE__REPLICA, oldReplica, REPLICA_EDEFAULT, oldReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetReplica() {
+		return replicaESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getURef() {
 		return uRef;
 	}
@@ -541,6 +617,8 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				return isMultiple();
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
 				return isPrivate();
+			case ComponentPackage.UNIT_TYPE__REPLICA:
+				return getReplica();
 			case ComponentPackage.UNIT_TYPE__UREF:
 				return getURef();
 			case ComponentPackage.UNIT_TYPE__VISIBLE_INTERFACE:
@@ -576,6 +654,9 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				return;
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
 				setPrivate((Boolean)newValue);
+				return;
+			case ComponentPackage.UNIT_TYPE__REPLICA:
+				setReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__UREF:
 				setURef((String)newValue);
@@ -613,6 +694,9 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
 				unsetPrivate();
 				return;
+			case ComponentPackage.UNIT_TYPE__REPLICA:
+				unsetReplica();
+				return;
 			case ComponentPackage.UNIT_TYPE__UREF:
 				setURef(UREF_EDEFAULT);
 				return;
@@ -643,6 +727,8 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 				return isSetMultiple();
 			case ComponentPackage.UNIT_TYPE__PRIVATE:
 				return isSetPrivate();
+			case ComponentPackage.UNIT_TYPE__REPLICA:
+				return isSetReplica();
 			case ComponentPackage.UNIT_TYPE__UREF:
 				return UREF_EDEFAULT == null ? uRef != null : !UREF_EDEFAULT.equals(uRef);
 			case ComponentPackage.UNIT_TYPE__VISIBLE_INTERFACE:
@@ -667,6 +753,8 @@ public class UnitTypeImpl extends EObjectImpl implements UnitType {
 		if (multipleESet) result.append(multiple); else result.append("<unset>");
 		result.append(", private: ");
 		if (privateESet) result.append(private_); else result.append("<unset>");
+		result.append(", replica: ");
+		if (replicaESet) result.append(replica); else result.append("<unset>");
 		result.append(", uRef: ");
 		result.append(uRef);
 		result.append(", visibleInterface: ");

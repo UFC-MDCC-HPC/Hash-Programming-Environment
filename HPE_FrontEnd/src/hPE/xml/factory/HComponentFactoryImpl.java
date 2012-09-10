@@ -7,9 +7,9 @@ import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpClassDefinition;
 import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
+import hPE.frontend.base.commands.BindingCreateCommand;
 import hPE.frontend.base.commands.SupersedeCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IInterfaceSlice;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
@@ -20,7 +20,7 @@ import hPE.frontend.base.model.HPort;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.HUnitStub;
-import hPE.frontend.base.model.HVisualElement;
+import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
@@ -69,17 +69,9 @@ import hPE.xml.component.ComponentInUseType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ComponentType;
 import hPE.xml.component.DocumentRoot;
-import hPE.xml.component.EnumerableComponentType;
-import hPE.xml.component.EnumerableEntryType;
-import hPE.xml.component.EnumerableType;
-import hPE.xml.component.EnumerableUnitSliceType;
-import hPE.xml.component.EnumerableUnitType;
-import hPE.xml.component.EnumeratorFromRecursionType;
 import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExtensionTypeType;
-import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
-import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
 import hPE.xml.component.InterfaceParameterType;
@@ -94,8 +86,6 @@ import hPE.xml.component.PortSliceType;
 import hPE.xml.component.RecursiveEntryType;
 import hPE.xml.component.SourceFileType;
 import hPE.xml.component.SourceType;
-import hPE.xml.component.SplitLinkType;
-import hPE.xml.component.SplitType;
 import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitRefType;
@@ -137,7 +127,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.swt.graphics.Color;
 
 //TODO tirar essa referencia ao LOCAL_LOCATION.
@@ -148,8 +137,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		private static final long serialVersionUID = 7585695943859883441L;
 
 		public DuplicatedSliceNamesException(HUnitSlice slice) {
-			super("Duplicated slice name " + slice.getName() + " in the unit "
+			super("Invalide duplicate slice name " + slice.getName() + " in the unit "
 					+ slice.getUnit().getTopUnit(null).getName2() + ".");
+		}
+
+		public DuplicatedSliceNamesException(HInterfaceSlice slice) {
+			super("Invalid duplicate slice name " + slice.getName() + " in the interface "
+					+ slice.getInterfaceSig().getName() + ".");
 		}
 
 	}
@@ -796,12 +790,38 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return getCachePath(locationURI);
 	}
 
+	private Map<HComponent,Map<String, Integer>> unitSplits = new HashMap<HComponent,Map<String, Integer>>(); 
+	
 	private void loadUnitBounds(ComponentInUseType xInnerC, HComponent innerC) {
 		// Configure unit bounds
-		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) {
-			unitBounds
-					.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
+		Map<String, Integer> unitCounts = new HashMap<String, Integer>();
+		
+		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) {			
+			String uRef = uBound.getURef();
+			long index = uBound.getReplica();
+			unitBounds.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
+			int count = 1;
+			if (unitCounts.containsKey(uRef))
+			{
+				count = unitCounts.get(uRef) + 1;
+				unitCounts.remove(uRef);
+			}
+			unitCounts.put(uRef, count);
 		}
+		
+		for (Entry<String, Integer> u : unitCounts.entrySet()) 
+		{
+		   String uRef = u.getKey();
+		   Integer count = u.getValue();
+		   if (count > 1)
+		      for (int i=0;i<count-1;i++) {
+			      IHUnit top_unit = innerC.fetchUnit(uRef);
+			      top_unit.createReplica(i);
+		      }
+		}
+		
+		unitSplits.put(innerC, unitCounts);
+		
 	}
 
 	private void loadParameterRenamings(ComponentInUseType xInnerC,
@@ -880,8 +900,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			Rectangle bounds = new Rectangle(x1, y1, w1, h1);
 			IHUnit u = null;
 			if (uBound.isSetReplica()) {
-				u = innerC.fetchUnit(uBound.getURef(), (int) uBound
-						.getReplica());
+				u = innerC.fetchUnit(uBound.getURef(), (int) uBound.getReplica());
 				if (u == null)
 					System.err.println("Replicated unit " + uBound.getURef()
 							+ " not found when loading inner component "
@@ -1034,105 +1053,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-/*	private void loadEnumerators(ComponentBodyType xCinfo)
-			throws HPEInvalidComponentResourceException {
-
-		mR1 = new HashMap<String, EnumeratorType>();
-		mR2 = new HashMap<EnumeratorType, HReplicator>();
-		prs = new ArrayList<Pair<HReplicator, EnumerableType>>();
-
-		Map<HReplicator, EnumeratorType> delayConfigureReplicator = new HashMap<HReplicator, EnumeratorType>();
-
-		for (EnumeratorType xE : xCinfo.getEnumerator()) {
-			String ref = xE.getRef().trim();
-			boolean fromSplit = xE.isFromSplit();
-			EnumeratorFromRecursionType fromRecursion = xE.getFromRecursion();
-			List<String> oRef = xE.getOriginRef();
-			HReplicator r = null;
-			if (!oRef.isEmpty()) {
-				List<String> oRefCopy = new ArrayList<String>();
-				for (String s : oRef)
-					oRefCopy.add(s);
-				String oCRef = oRefCopy.get(0);
-				HComponent oC = mC2.get(mC1.get(oCRef));
-				if (oC == null) {
-					System.err.println("Origin component " + oCRef
-							+ " of replicator " + ref + " was not found !");
-					JOptionPane.showMessageDialog(null,
-							"HComponentFactoryImpl.loadEnumerators(): Origin component "
-									+ oCRef + " of replicator " + ref
-									+ " was not found !",
-							"Loading Component Error",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					r = oC.lookForReplicator(ref, oRefCopy);
-
-					if (r == null) {
-						System.err.println("Replicator " + ref
-								+ " not found in origin component " + oCRef
-								+ " !");
-						JOptionPane.showMessageDialog(null,
-								"HComponentFactoryImpl.loadEnumerators(): Replicator "
-										+ ref
-										+ " not found in origin component "
-										+ oCRef + " !",
-								"Loading Component Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-
-			} else if (fromSplit) {
-				delayedSplits.put(ref, xE);
-			} else if (fromRecursion != null) {
-				String cRef = fromRecursion.getCRef();
-				HComponent oC = mC2.get(mC1.get(cRef));
-				r = oC.getRecEnumerator();
-			} else {
-				r = new HReplicator(component, new Point(0, 0));
-				r.setRef(ref);
-			}
-
-			if (r != null) {
-				delayConfigureReplicator.put(r, xE);
-			}
-		}
-
-		for (Entry<HReplicator, EnumeratorType> e : delayConfigureReplicator
-				.entrySet()) {
-			configureReplicator(e.getKey(), e.getValue());
-		}
-	}
-*/
-/*	private void configureReplicator(HReplicator r, EnumeratorType xE) {
-
-		String varId = xE.getVarId();
-		int factor = xE.getCardinality();
-		int x, y, w, h;
-		if (xE.getVisualDescription() != null) {
-			x = (int) xE.getVisualDescription().getX();
-			y = (int) xE.getVisualDescription().getY();
-			w = (int) xE.getVisualDescription().getW();
-			h = (int) xE.getVisualDescription().getH();
-		} else {
-			x = y = w = h = 0;
-		}
-
-		r.setVaridForced(varId);
-		if (factor > 0)
-			r.setFactor(factor);
-		else
-			r.setUndeterminedFactor();
-		r.setBounds(new Rectangle(x, y, w, h));
-
-		// LINKS
-		for (EnumerableType xL : xE.getLinks()) {
-			prs.add(new Pair<HReplicator, EnumerableType>(r, xL));
-		}
-	}
-*/
-	//private Map<String, EnumeratorType> delayedSplits = new HashMap<String, EnumeratorType>();
-
-//	private List<Pair<HReplicator, EnumerableType>> prs;
 
 	private void setRecursive(ComponentBodyType xCinfo) {
 
@@ -1306,7 +1226,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		for (UnitType xU : xCinfo.getUnit()) {
 			String uName = xU.getURef();
-			HUnit u = mU2.get(mU1.get(uName));
+			HUnit u = mU2.get(mU1.get(uName+xU.getReplica()));
 			loadInterface(xU, u, isTop, isImplementing);
 		}
 
@@ -1787,25 +1707,28 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		Integer replica = null;
 
-		for (IHUnit u : units) {
+		for (IHUnit u_ : units) {
 
-/*			if (u.isClone()) {
-				replica = u.cloneOf().getIndexOfClone(u);
-			} else if (u.isCloned()) {
-				replica = 0;
+			for (IHPrimUnit u : u_.getClones()) 
+			{
+			   if (u.isClone()) {
+					replica = u.cloneOf().getIndexOfClone(u);
+				} else if (u.isCloned()) {
+					replica = 0;
+				}
+	
+				UnitBoundsType b = factory.createUnitBoundsType();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
+	
+				b.setURef(u.getName2());
+				if (replica != null)
+					b.setReplica(replica);
+				b.setVisualDescription(v);
+	
+				saveVisualDescription(u, v);
+	
+				unitBounds.add(b);
 			}
-*/
-			UnitBoundsType b = factory.createUnitBoundsType();
-			VisualElementAttributes v = factory.createVisualElementAttributes();
-
-			b.setURef(u.getName2());
-			if (replica != null)
-				b.setReplica(replica);
-			b.setVisualDescription(v);
-
-			saveVisualDescription(u, v);
-
-			unitBounds.add(b);
 		}
 
 	}
@@ -1857,7 +1780,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveInterfaces(HComponent c, EList<InterfaceType> xI) {
+	private void saveInterfaces(HComponent c, EList<InterfaceType> xI) throws DuplicatedSliceNamesException {
 
 		for (HInterface i : c.getInterfaces())
 			if (i.getConfiguration() == c) { // Only interfaces of the top
@@ -1879,7 +1802,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					HActivateInterface ia = (HActivateInterface) i;
 					if (ia.getProtocol() != null) {
 						a = saveAction((HAction) ia.getProtocol().getAction());
-						iX.setProtocol(a);
+						// TODO (action): iX.setProtocol(a);
 					}
 				}
 				// ---------------
@@ -1942,8 +1865,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			VisualElementAttributes v = factory.createVisualElementAttributes();
 			List<PortSliceType> portSliceL = portX.getSlice();
 
-			for (HInterfaceSlice sOwner : p.getOwners()) {
-
+			int count = 0;
+			for (HInterfaceSlice sOwner : p.getOwners()) 
+				if (!sOwner.isInherited()) 
+			{
+				count++;
 				String sRef = sOwner.getName();
 				String pRef = p.getDefaultNameOf(sOwner);
 
@@ -1953,20 +1879,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				portSliceL.add(pst);
 			}
 
-			/*
-			 * List<PortSliceType> portSliceL = portX.getSlice();
-			 * Iterator<HInterfaceSlice> ss1 = p.getOwners().iterator();
-			 * Iterator<HInterfaceSlice> ss2 =
-			 * p.getInterfaceSlices().iterator(); while (ss1.hasNext() &&
-			 * ss2.hasNext()) { HInterfaceSlice s1 = ss1.next(); HInterfaceSlice
-			 * s2 = ss2.next(); String sRef = s1.getName(); String pRef =
-			 * s2.getName(); PortSliceType pst = factory.createPortSliceType();
-			 * pst.setPRef(pRef); pst.setSRef(sRef); portSliceL.add(pst); }
-			 */
-			portX.setName(p.getName());
-			portX.setVisualDescription(v);
-			saveVisualDescription(p, v);
-			portsX.add(portX);
+			if (count > 0) 
+			{
+				portX.setName(p.getName());
+				portX.setVisualDescription(v);
+				saveVisualDescription(p, v);
+				portsX.add(portX);
+			}
 		}
 
 	}
@@ -1974,7 +1893,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private ActionType saveAction(HAction action) {
 
 		ActionType actionX = null;
-
+/* TODO (action):
 		if (action instanceof HCombinatorAction) {
 
 			if (action instanceof HParAction) {
@@ -2018,12 +1937,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				ActionSkipType actionXX = (ActionSkipType) actionX;
 			}
 		}
-
+*/
 		VisualElementAttributes vX = factory.createVisualElementAttributes();
 		saveVisualDescription(action, vX);
-		actionX.setLabel(action.getLabel());
+/*		actionX.setLabel(action.getLabel());
 		actionX.setRepeat(action.getRepeatDepth());
-		actionX.setVisualDescription(vX);
+		actionX.setVisualDescription(vX);*/
 
 		return actionX;
 	}
@@ -2105,115 +2024,125 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveInterfaceSlices(List<HInterfaceSlice> slices,
-			EList<InterfaceSliceType> slicesX) {
+			EList<InterfaceSliceType> slicesX) throws DuplicatedSliceNamesException {
 
 		Map<String, HInterfaceSlice> savedSlices = new HashMap<String, HInterfaceSlice>();
 
 		for (HInterfaceSlice slice : slices)
-			if (!savedSlices.containsKey(slice.getName()))
-			/* if (!(slice instanceof HEnumeratorInterfaceSlice)) */{
-				savedSlices.put(slice.getName(), slice);
-
-				InterfaceSliceType sliceX = factory.createInterfaceSliceType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
-
-				String sRef = null;
-				String cORef = null;
-				String iORef = null;
-
-				// SETUP VARIABLES
-
-				sRef = slice.getName();
-				cORef = slice.getInterface().getConfiguration().getRef();
-				iORef = ((HInterface) slice.getInterface()).getPrimName();
-
-				// ---------------
-
-				sliceX.setIsRef(sRef);
-
-				InterfaceRefType oRef = factory.createInterfaceRefType();
-				oRef.setCRef(cORef);
-				oRef.setIRef(iORef);
-
-				sliceX.setOriginRef(oRef);
-
-				sliceX.setVisualDescription(v);
-
-				saveVisualDescription(slice, v);
-
-				slicesX.add(sliceX);
+			if (!savedSlices.containsKey(slice.getName())) {  
+				if (!slice.isInherited()) {
+				
+				    savedSlices.put(slice.getName(), slice);
+						
+	
+					InterfaceSliceType sliceX = factory.createInterfaceSliceType();
+					VisualElementAttributes v = factory
+							.createVisualElementAttributes();
+	
+					String sRef = null;
+					String cORef = null;
+					String iORef = null;
+	
+					// SETUP VARIABLES
+	
+					sRef = slice.getName();
+					cORef = slice.getInterface().getConfiguration().getRef();
+					iORef = ((HInterface) slice.getInterface()).getPrimName();
+	
+					// ---------------
+	
+					sliceX.setIsRef(sRef);
+	
+					InterfaceRefType oRef = factory.createInterfaceRefType();
+					oRef.setCRef(cORef);
+					oRef.setIRef(iORef);
+	
+					sliceX.setOriginRef(oRef);
+	
+					sliceX.setVisualDescription(v);
+	
+					saveVisualDescription(slice, v);
+	
+					slicesX.add(sliceX);
+				}
 			}
+			else
+				throw new DuplicatedSliceNamesException(slice);
 	}
 
 	private void saveUnits(HComponent c, EList<UnitType> xI)
 			throws DuplicatedSliceNamesException {
 
-		for (IHUnit u_ : c.getUnits()) {
-
-			UnitType uX = factory.createUnitType();
-
+		for (IHUnit u_ : c.getUnits()) 
+		{
 			String uRef = null;
 			String iRef = null;
 			boolean isPrivate = false;
 			boolean isMultiple = false;
 			boolean isSubUnit = false;
 			boolean visibleInterface = true;
+			int index;
 			String cRefSuper = null;
 			String uRefSuper = null;
 			Integer replica = null;
 
-			VisualElementAttributes v = factory.createVisualElementAttributes();
+			for (IHPrimUnit u__ : u_.getClones()) 
+			{			
+				UnitType uX = factory.createUnitType();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 
-			HUnit u = (HUnit) u_;
-
-			isSubUnit = u.hasStubs();
-			isPrivate = u.getHidden();
-			isMultiple = u.isMultiple();
-			visibleInterface = u.visibleInterface();
-			uRef = u.getName2();
-			HInterface i = (HInterface) u.getInterface();
-
-			iRef = i != null ? i.getPrimName() : null;
-			if (isSubUnit) {
-				HUnitStub stubU = u.getMostRecentStub();
-				cRefSuper = ((HComponent) stubU.getConfiguration()).getRef();
-				uRefSuper = stubU.getOriginalName();
+				HUnit u = (HUnit) u__;
+	
+				isSubUnit = u.hasStubs();
+				isPrivate = u.getHidden();
+				isMultiple = u.isMultiple();
+				index = u.getIndex();
+				visibleInterface = u.visibleInterface();
+				uRef = u.getName2();
+				HInterface i = (HInterface) u.getInterface();
+	
+				iRef = i != null ? i.getPrimName() : null;
+				if (isSubUnit) {
+					HUnitStub stubU = u.getMostRecentStub();
+					cRefSuper = ((HComponent) stubU.getConfiguration()).getRef();
+					uRefSuper = stubU.getOriginalName();
+				}
+	
+				// ---------------
+	
+				uX.setURef(uRef);
+				uX.setIRef(iRef);
+				uX.setPrivate(isPrivate);
+				uX.setMultiple(isMultiple);
+				uX.setVisibleInterface(visibleInterface);
+				uX.setVisualDescription(v);
+				uX.setReplica(index);
+	
+				if (isSubUnit) {
+					UnitRefType superUnit = factory.createUnitRefType();
+					superUnit.setCRef(cRefSuper);
+					superUnit.setURef(uRefSuper);
+					if (replica != null)
+						superUnit.setReplica(replica);
+					uX.setSuper(superUnit);
+				}
+				saveVisualDescription(u, v);
+	
+				EList<UnitSliceType> slicesX = uX.getSlices();
+				List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
+				List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
+				List<HUnitSlice> ports = u.getPorts();
+				List<HUnitSlice> slices = u.getSlices();
+				transitiveSlices.addAll(ports);
+				for (HUnitSlice usx : slices) {
+					if (!transitiveSlices.contains(usx))
+						transitiveSlices.add(usx);
+				}
+				directSlices.addAll(slices);
+				saveUnitSlices(directSlices, transitiveSlices, slicesX);
+	
+				xI.add(uX);
 			}
-
-			// ---------------
-
-			uX.setURef(uRef);
-			uX.setIRef(iRef);
-			uX.setPrivate(isPrivate);
-			uX.setMultiple(isMultiple);
-			uX.setVisibleInterface(visibleInterface);
-			uX.setVisualDescription(v);
-
-			if (isSubUnit) {
-				UnitRefType superUnit = factory.createUnitRefType();
-				superUnit.setCRef(cRefSuper);
-				superUnit.setURef(uRefSuper);
-				if (replica != null)
-					superUnit.setReplica(replica);
-				uX.setSuper(superUnit);
-			}
-			saveVisualDescription(u, v);
-
-			EList<UnitSliceType> slicesX = uX.getSlices();
-			List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
-			List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
-			List<HUnitSlice> ports = u.getPorts();
-			List<HUnitSlice> slices = u.getSlices();
-			transitiveSlices.addAll(ports);
-			for (HUnitSlice usx : slices) {
-				if (!transitiveSlices.contains(usx))
-					transitiveSlices.add(usx);
-			}
-			directSlices.addAll(slices);
-			saveUnitSlices(directSlices, transitiveSlices, slicesX);
-
-			xI.add(uX);
 
 		}
 
@@ -2225,8 +2154,29 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
 
-		for (HUnitSlice slice : transitiveSlices) {
-
+		Map<String, String> portNames = new HashMap<String, String>();
+		for (HUnitSlice slice : transitiveSlices)
+		{
+			if (slice.getBinding().getConfiguration() == this.component) 
+			{
+				HUnit uSource = (HUnit) slice.getComponentEntry();
+				List<HUnitSlice> usPorts = uSource.getPorts();
+				for (HUnitSlice usPort : usPorts) 
+				{
+					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
+					String usPortName = usPort.getInterfaceSlice() != null ? usPort
+							.getInterfaceSlice().getName() : usPortSource
+							.getName2();
+					portNames.put(usPortName, usPortName);
+				}
+			}
+		}
+		
+		for (HUnitSlice slice : transitiveSlices)
+			if (slice.getBinding().getConfiguration() == this.component || 
+					(/*!directSlices.contains(slice) && */portNames.containsKey(slice.getName())))
+		{ 
+			
 			if (savedSlices.containsKey(slice.getName())) {
 				// throw new DuplicatedSliceNamesException(slice);
 			}
@@ -2255,6 +2205,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			cRef = uSource.getConfiguration().getRef();
 			uRef = uSource.getName2();
+			replica = uSource.getIndex();
 
 			sName = slice.getName();
 
@@ -2411,14 +2362,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 										"Loading Component Error",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
-								try {
-									HUnitSlice uSlice = (HUnitSlice) component
-											.createBinding(u1, u, new Point(x,
-													y));
+								//try {
+									BindingCreateCommand comm = new BindingCreateCommand(u1);
+									comm.setUnit(u);
+									comm.setWhere(new Point(x,y));
+									comm.execute();
+									HUnitSlice uSlice = (HUnitSlice) comm.getBindingTarget();
+									//HUnitSlice uSlice = (HUnitSlice) component.createBinding(u1, u, new Point(x,y));
 									uSlice.setBounds(new Rectangle(x, y, w, h));
 									if (sName != null)
 										uSlice.setName(sName);
-								} catch (HPEAbortException e) {
+								/*} catch (HPEAbortException e) {
 									System.err
 											.println("HComponentFactoryImpl.loadSlices(): Error creating binding (source = "
 													+ u1.getName2()
@@ -2431,7 +2385,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 													+ u.getName2(),
 											"Loading Component Error",
 											JOptionPane.ERROR_MESSAGE);
-								}
+								}*/
 							}
 						//}
 					} else {
@@ -2505,15 +2459,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				if (xI.getProtocol() != null) {
 					HProtocol p = new HProtocol(ia);
 					HCombinatorAction aaux = new HParAction("dummy", p);
-					HAction action = buildAction(xI.getProtocol(), aaux, i,
-							new HashMap<String, HSemaphore>(), p);
+					/* TODO (action): 
+					HAction action = buildAction(xI.getProtocol(), aaux, i, new HashMap<String, HSemaphore>(), p);
 					action.setProtocol(p);
 					Rectangle r = p.getBounds();
 					r.height = action.getBounds().height + 2
 							* action.getBounds().y;
 					r.width = action.getBounds().width + 2
 							* action.getBounds().x;
-					p.setBounds(r);
+					p.setBounds(r);*/
 
 				}
 			}
@@ -2527,6 +2481,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			throws HPEInvalidComponentResourceException, HPEAbortException {
 
 		String uName = xU.getURef();
+		int index = xU.getReplica();
 		int x = (int) xU.getVisualDescription().getX();
 		int y = (int) xU.getVisualDescription().getY();
 		int w = (int) xU.getVisualDescription().getW();
@@ -2534,24 +2489,38 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		UnitRefType xUsuper = xU.getSuper();
 
-		HUnit u = (HUnit) c.getUnitByName(uName);
-		if (u == null) {
+		HUnit u;// = (HUnit) c.getUnitByName(uName,index);
+		//if (u == null) {
+		if (index==0)
+		{
 			if (component.getSuperType() != null) {
-				u = xUsuper != null ? lookForSuperUnit(xUsuper) : c
-						.createUnit();
+				u = xUsuper != null ? lookForSuperUnit(xUsuper) : c.createUnit();
 			} else if (!component.isAbstractConfiguration()) {
 				u = xUsuper != null ? lookForImplementingUnit(xUsuper) : c.createUnit();
 			} else {
 				u = c.createUnit();
 			}
 		}
+		else
+		{
+			if (component.getSuperType() != null) {
+				u = (HUnit) (xUsuper != null ? lookForSuperUnit(xUsuper) : c.getUnitByName(uName, 0).createReplica(index));
+			} else if (!component.isAbstractConfiguration()) {
+				u = (HUnit) (xUsuper != null ? lookForImplementingUnit(xUsuper) : c.getUnitByName(uName, 0).createReplica(index));
+			} else {
+				u = (HUnit) c.getUnitByName(uName, 0).createReplica(index-1);
+			}
+		}
+		
+		//}
 
-		mU1.put(uName, xU);
+		mU1.put(uName+index, xU);
 		mU2.put(xU, u);
 		u.setName(uName);
 		u.setBounds(new Rectangle(x, y, w, h));
 		u.setHidden(xU.isPrivate());
-		u.setMultiple(xU.isSetMultiple() ? xU.isMultiple() : true);
+		u.setMultiple(xU.isSetMultiple() ? xU.isMultiple() : u.isMultiple());
+		
 		if (xU.getIRef() != null)
 			u.setInterfaceName(xU.getIRef());
 
@@ -2699,7 +2668,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		HAction a = null;
 
-		String label = xP.getLabel();
+		String label = null; // TODO (action): xP.getLabel();
 
 		if (xP instanceof ActionCombinatorType) {
 			ActionCombinatorType xA = null;
@@ -2766,12 +2735,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		}
 
+		/* TODO: ACTION
 		int x = (int) xP.getVisualDescription().getX();
 		int y = (int) xP.getVisualDescription().getY();
 		int w = (int) xP.getVisualDescription().getW();
 		int h = (int) xP.getVisualDescription().getH();
 
-		a.setBounds(new Rectangle(x, y, w, h));
+		a.setBounds(new Rectangle(x, y, w, h));*/
 
 		return a;
 	}

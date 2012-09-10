@@ -8,11 +8,16 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ActionType;
 import hPE.xml.component.ComponentPackage;
+import hPE.xml.component.ConditionType;
+import hPE.xml.component.Hpeaction;
+import hPE.xml.component.Hpeprotocol;
 import hPE.xml.component.InterfaceParameterType;
 import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.InterfaceType;
+import hPE.xml.component.ProtocolChoiceType;
+import hPE.xml.component.ProtocolType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.VisualElementAttributes;
 
@@ -41,12 +46,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getSlice <em>Slice</em>}</li>
- *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getSources <em>Sources</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getPort <em>Port</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getExternalReferences <em>External References</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getAction <em>Action</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.InterfaceTypeImpl#getNArgs <em>NArgs</em>}</li>
  * </ul>
@@ -64,16 +71,6 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * @ordered
 	 */
 	protected EList<InterfaceSliceType> slice;
-
-	/**
-	 * The cached value of the '{@link #getProtocol() <em>Protocol</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProtocol()
-	 * @generated
-	 * @ordered
-	 */
-	protected ActionType protocol;
 
 	/**
 	 * The cached value of the '{@link #getSources() <em>Sources</em>}' containment reference list.
@@ -124,6 +121,36 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * @ordered
 	 */
 	protected EList<InterfaceParameterType> parameter;
+
+	/**
+	 * The cached value of the '{@link #getAction() <em>Action</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAction()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ActionType> action;
+
+	/**
+	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCondition()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ConditionType> condition;
+
+	/**
+	 * The cached value of the '{@link #getProtocol() <em>Protocol</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProtocol()
+	 * @generated
+	 * @ordered
+	 */
+	protected ProtocolChoiceType protocol;
 
 	/**
 	 * The default value of the '{@link #getIRef() <em>IRef</em>}' attribute.
@@ -210,7 +237,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ActionType getProtocol() {
+	public ProtocolChoiceType getProtocol() {
 		return protocol;
 	}
 
@@ -219,8 +246,8 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetProtocol(ActionType newProtocol, NotificationChain msgs) {
-		ActionType oldProtocol = protocol;
+	public NotificationChain basicSetProtocol(ProtocolChoiceType newProtocol, NotificationChain msgs) {
+		ProtocolChoiceType oldProtocol = protocol;
 		protocol = newProtocol;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.INTERFACE_TYPE__PROTOCOL, oldProtocol, newProtocol);
@@ -234,7 +261,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setProtocol(ActionType newProtocol) {
+	public void setProtocol(ProtocolChoiceType newProtocol) {
 		if (newProtocol != protocol) {
 			NotificationChain msgs = null;
 			if (protocol != null)
@@ -344,6 +371,30 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<ActionType> getAction() {
+		if (action == null) {
+			action = new EObjectContainmentEList<ActionType>(ActionType.class, this, ComponentPackage.INTERFACE_TYPE__ACTION);
+		}
+		return action;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ConditionType> getCondition() {
+		if (condition == null) {
+			condition = new EObjectContainmentEList<ConditionType>(ConditionType.class, this, ComponentPackage.INTERFACE_TYPE__CONDITION);
+		}
+		return condition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getIRef() {
 		return iRef;
 	}
@@ -416,8 +467,6 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 		switch (featureID) {
 			case ComponentPackage.INTERFACE_TYPE__SLICE:
 				return ((InternalEList<?>)getSlice()).basicRemove(otherEnd, msgs);
-			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
-				return basicSetProtocol(null, msgs);
 			case ComponentPackage.INTERFACE_TYPE__SOURCES:
 				return ((InternalEList<?>)getSources()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.INTERFACE_TYPE__VISUAL_DESCRIPTION:
@@ -426,6 +475,12 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return ((InternalEList<?>)getPort()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
 				return ((InternalEList<?>)getParameter()).basicRemove(otherEnd, msgs);
+			case ComponentPackage.INTERFACE_TYPE__ACTION:
+				return ((InternalEList<?>)getAction()).basicRemove(otherEnd, msgs);
+			case ComponentPackage.INTERFACE_TYPE__CONDITION:
+				return ((InternalEList<?>)getCondition()).basicRemove(otherEnd, msgs);
+			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
+				return basicSetProtocol(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -440,8 +495,6 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 		switch (featureID) {
 			case ComponentPackage.INTERFACE_TYPE__SLICE:
 				return getSlice();
-			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
-				return getProtocol();
 			case ComponentPackage.INTERFACE_TYPE__SOURCES:
 				return getSources();
 			case ComponentPackage.INTERFACE_TYPE__VISUAL_DESCRIPTION:
@@ -452,6 +505,12 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return getExternalReferences();
 			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
 				return getParameter();
+			case ComponentPackage.INTERFACE_TYPE__ACTION:
+				return getAction();
+			case ComponentPackage.INTERFACE_TYPE__CONDITION:
+				return getCondition();
+			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
+				return getProtocol();
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.INTERFACE_TYPE__NARGS:
@@ -473,9 +532,6 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				getSlice().clear();
 				getSlice().addAll((Collection<? extends InterfaceSliceType>)newValue);
 				return;
-			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
-				setProtocol((ActionType)newValue);
-				return;
 			case ComponentPackage.INTERFACE_TYPE__SOURCES:
 				getSources().clear();
 				getSources().addAll((Collection<? extends SourceType>)newValue);
@@ -494,6 +550,17 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
 				getParameter().clear();
 				getParameter().addAll((Collection<? extends InterfaceParameterType>)newValue);
+				return;
+			case ComponentPackage.INTERFACE_TYPE__ACTION:
+				getAction().clear();
+				getAction().addAll((Collection<? extends ActionType>)newValue);
+				return;
+			case ComponentPackage.INTERFACE_TYPE__CONDITION:
+				getCondition().clear();
+				getCondition().addAll((Collection<? extends ConditionType>)newValue);
+				return;
+			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
+				setProtocol((ProtocolChoiceType)newValue);
 				return;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				setIRef((String)newValue);
@@ -516,9 +583,6 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 			case ComponentPackage.INTERFACE_TYPE__SLICE:
 				getSlice().clear();
 				return;
-			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
-				setProtocol((ActionType)null);
-				return;
 			case ComponentPackage.INTERFACE_TYPE__SOURCES:
 				getSources().clear();
 				return;
@@ -533,6 +597,15 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return;
 			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
 				getParameter().clear();
+				return;
+			case ComponentPackage.INTERFACE_TYPE__ACTION:
+				getAction().clear();
+				return;
+			case ComponentPackage.INTERFACE_TYPE__CONDITION:
+				getCondition().clear();
+				return;
+			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
+				setProtocol((ProtocolChoiceType)null);
 				return;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				setIRef(IREF_EDEFAULT);
@@ -554,8 +627,6 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 		switch (featureID) {
 			case ComponentPackage.INTERFACE_TYPE__SLICE:
 				return slice != null && !slice.isEmpty();
-			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
-				return protocol != null;
 			case ComponentPackage.INTERFACE_TYPE__SOURCES:
 				return sources != null && !sources.isEmpty();
 			case ComponentPackage.INTERFACE_TYPE__VISUAL_DESCRIPTION:
@@ -566,6 +637,12 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return externalReferences != null && !externalReferences.isEmpty();
 			case ComponentPackage.INTERFACE_TYPE__PARAMETER:
 				return parameter != null && !parameter.isEmpty();
+			case ComponentPackage.INTERFACE_TYPE__ACTION:
+				return action != null && !action.isEmpty();
+			case ComponentPackage.INTERFACE_TYPE__CONDITION:
+				return condition != null && !condition.isEmpty();
+			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
+				return protocol != null;
 			case ComponentPackage.INTERFACE_TYPE__IREF:
 				return IREF_EDEFAULT == null ? iRef != null : !IREF_EDEFAULT.equals(iRef);
 			case ComponentPackage.INTERFACE_TYPE__NARGS:

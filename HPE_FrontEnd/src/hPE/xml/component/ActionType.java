@@ -16,9 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link hPE.xml.component.ActionType#getVisualDescription <em>Visual Description</em>}</li>
- *   <li>{@link hPE.xml.component.ActionType#getLabel <em>Label</em>}</li>
- *   <li>{@link hPE.xml.component.ActionType#getRepeat <em>Repeat</em>}</li>
+ *   <li>{@link hPE.xml.component.ActionType#getProtocol <em>Protocol</em>}</li>
+ *   <li>{@link hPE.xml.component.ActionType#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,111 +27,57 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ActionType extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Visual Description</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Protocol</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Visual Description</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Protocol</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Visual Description</em>' containment reference.
-	 * @see #setVisualDescription(VisualElementAttributes)
-	 * @see hPE.xml.component.ComponentPackage#getActionType_VisualDescription()
-	 * @model containment="true" required="true"
-	 *        extendedMetaData="kind='element' name='visualDescription'"
+	 * @return the value of the '<em>Protocol</em>' containment reference.
+	 * @see #setProtocol(ProtocolChoiceType)
+	 * @see hPE.xml.component.ComponentPackage#getActionType_Protocol()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='protocol'"
 	 * @generated
 	 */
-	VisualElementAttributes getVisualDescription();
+	ProtocolChoiceType getProtocol();
 
 	/**
-	 * Sets the value of the '{@link hPE.xml.component.ActionType#getVisualDescription <em>Visual Description</em>}' containment reference.
+	 * Sets the value of the '{@link hPE.xml.component.ActionType#getProtocol <em>Protocol</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Visual Description</em>' containment reference.
-	 * @see #getVisualDescription()
+	 * @param value the new value of the '<em>Protocol</em>' containment reference.
+	 * @see #getProtocol()
 	 * @generated
 	 */
-	void setVisualDescription(VisualElementAttributes value);
+	void setProtocol(ProtocolChoiceType value);
 
 	/**
-	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Label</em>' attribute.
-	 * @see #setLabel(String)
-	 * @see hPE.xml.component.ComponentPackage#getActionType_Label()
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(String)
+	 * @see hPE.xml.component.ComponentPackage#getActionType_Id()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='label'"
+	 *        extendedMetaData="kind='attribute' name='id'"
 	 * @generated
 	 */
-	String getLabel();
+	String getId();
 
 	/**
-	 * Sets the value of the '{@link hPE.xml.component.ActionType#getLabel <em>Label</em>}' attribute.
+	 * Sets the value of the '{@link hPE.xml.component.ActionType#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Label</em>' attribute.
-	 * @see #getLabel()
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
 	 * @generated
 	 */
-	void setLabel(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Repeat</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Repeat</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Repeat</em>' attribute.
-	 * @see #isSetRepeat()
-	 * @see #unsetRepeat()
-	 * @see #setRepeat(long)
-	 * @see hPE.xml.component.ComponentPackage#getActionType_Repeat()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.UnsignedInt"
-	 *        extendedMetaData="kind='attribute' name='repeat'"
-	 * @generated
-	 */
-	long getRepeat();
-
-	/**
-	 * Sets the value of the '{@link hPE.xml.component.ActionType#getRepeat <em>Repeat</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Repeat</em>' attribute.
-	 * @see #isSetRepeat()
-	 * @see #unsetRepeat()
-	 * @see #getRepeat()
-	 * @generated
-	 */
-	void setRepeat(long value);
-
-	/**
-	 * Unsets the value of the '{@link hPE.xml.component.ActionType#getRepeat <em>Repeat</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetRepeat()
-	 * @see #getRepeat()
-	 * @see #setRepeat(long)
-	 * @generated
-	 */
-	void unsetRepeat();
-
-	/**
-	 * Returns whether the value of the '{@link hPE.xml.component.ActionType#getRepeat <em>Repeat</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Repeat</em>' attribute is set.
-	 * @see #unsetRepeat()
-	 * @see #getRepeat()
-	 * @see #setRepeat(long)
-	 * @generated
-	 */
-	boolean isSetRepeat();
+	void setId(String value);
 
 } // ActionType

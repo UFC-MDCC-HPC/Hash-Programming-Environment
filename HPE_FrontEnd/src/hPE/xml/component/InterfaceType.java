@@ -19,12 +19,14 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.InterfaceType#getSlice <em>Slice</em>}</li>
- *   <li>{@link hPE.xml.component.InterfaceType#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getSources <em>Sources</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getPort <em>Port</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getExternalReferences <em>External References</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link hPE.xml.component.InterfaceType#getAction <em>Action</em>}</li>
+ *   <li>{@link hPE.xml.component.InterfaceType#getCondition <em>Condition</em>}</li>
+ *   <li>{@link hPE.xml.component.InterfaceType#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.InterfaceType#getNArgs <em>NArgs</em>}</li>
  * </ul>
@@ -61,13 +63,13 @@ public interface InterfaceType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Protocol</em>' containment reference.
-	 * @see #setProtocol(ActionType)
+	 * @see #setProtocol(ProtocolChoiceType)
 	 * @see hPE.xml.component.ComponentPackage#getInterfaceType_Protocol()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='protocol'"
 	 * @generated
 	 */
-	ActionType getProtocol();
+	ProtocolChoiceType getProtocol();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.InterfaceType#getProtocol <em>Protocol</em>}' containment reference.
@@ -77,7 +79,7 @@ public interface InterfaceType extends EObject {
 	 * @see #getProtocol()
 	 * @generated
 	 */
-	void setProtocol(ActionType value);
+	void setProtocol(ProtocolChoiceType value);
 
 	/**
 	 * Returns the value of the '<em><b>Sources</b></em>' containment reference list.
@@ -173,6 +175,40 @@ public interface InterfaceType extends EObject {
 	 * @generated
 	 */
 	EList<InterfaceParameterType> getParameter();
+
+	/**
+	 * Returns the value of the '<em><b>Action</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.ActionType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Action</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Action</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getInterfaceType_Action()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='action'"
+	 * @generated
+	 */
+	EList<ActionType> getAction();
+
+	/**
+	 * Returns the value of the '<em><b>Condition</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.ConditionType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Condition</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Condition</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getInterfaceType_Condition()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='condition'"
+	 * @generated
+	 */
+	EList<ConditionType> getCondition();
 
 	/**
 	 * Returns the value of the '<em><b>IRef</b></em>' attribute.

@@ -61,21 +61,14 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ComponentPackage.ACTION_ACTIVATE_TYPE: return createActionActivateType();
-			case ComponentPackage.ACTION_COMBINATOR_ALT_TYPE: return createActionCombinatorAltType();
-			case ComponentPackage.ACTION_COMBINATOR_PAR_TYPE: return createActionCombinatorParType();
-			case ComponentPackage.ACTION_COMBINATOR_SEQ_TYPE: return createActionCombinatorSeqType();
-			case ComponentPackage.ACTION_COMBINATOR_TYPE: return createActionCombinatorType();
-			case ComponentPackage.ACTION_SIGNAL_TYPE: return createActionSignalType();
-			case ComponentPackage.ACTION_SKIP_TYPE: return createActionSkipType();
 			case ComponentPackage.ACTION_TYPE: return createActionType();
-			case ComponentPackage.ACTION_WAIT_TYPE: return createActionWaitType();
 			case ComponentPackage.BASE_TYPE_TYPE: return createBaseTypeType();
 			case ComponentPackage.COLOR_COMPLEX_TYPE: return createColorComplexType();
 			case ComponentPackage.COMPONENT_BODY_TYPE: return createComponentBodyType();
 			case ComponentPackage.COMPONENT_HEADER_TYPE: return createComponentHeaderType();
 			case ComponentPackage.COMPONENT_IN_USE_TYPE: return createComponentInUseType();
 			case ComponentPackage.COMPONENT_TYPE: return createComponentType();
+			case ComponentPackage.CONDITION_TYPE: return createConditionType();
 			case ComponentPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case ComponentPackage.ENTRY_TYPE: return createEntryType();
 			case ComponentPackage.ENUMERABLE_COMPONENT_TYPE: return createEnumerableComponentType();
@@ -92,6 +85,10 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.FUSION_OF_REPLICATORS_TYPE: return createFusionOfReplicatorsType();
 			case ComponentPackage.FUSIONS_OF_REPLICATORS_TYPE: return createFusionsOfReplicatorsType();
 			case ComponentPackage.FUSION_TYPE: return createFusionType();
+			case ComponentPackage.GUARD_AND_TYPE: return createGuardAndType();
+			case ComponentPackage.GUARD_CONDITION_TYPE: return createGuardConditionType();
+			case ComponentPackage.GUARD_NOT_TYPE: return createGuardNotType();
+			case ComponentPackage.GUARD_OR_TYPE: return createGuardOrType();
 			case ComponentPackage.IMPLEMENTS_TYPE: return createImplementsType();
 			case ComponentPackage.INNER_COMPONENT_TYPE: return createInnerComponentType();
 			case ComponentPackage.INNER_RENAMING_TYPE: return createInnerRenamingType();
@@ -104,9 +101,12 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.PARAMETER_RENAMING: return createParameterRenaming();
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE: return createParameterSupplyType();
 			case ComponentPackage.PARAMETER_TYPE: return createParameterType();
+			case ComponentPackage.PERFORM_TYPE: return createPerformType();
 			case ComponentPackage.PORT_SLICE_TYPE: return createPortSliceType();
 			case ComponentPackage.PORT_TYPE: return createPortType();
-			case ComponentPackage.QUANTIFICATION_VAR_TYPE: return createQuantificationVarType();
+			case ComponentPackage.PROTOCOL_CHOICE_TYPE: return createProtocolChoiceType();
+			case ComponentPackage.PROTOCOL_COMBINATOR_TYPE: return createProtocolCombinatorType();
+			case ComponentPackage.PROTOCOL_TYPE: return createProtocolType();
 			case ComponentPackage.RECURSIVE_ENTRY_TYPE: return createRecursiveEntryType();
 			case ComponentPackage.SOURCE_FILE_TYPE: return createSourceFileType();
 			case ComponentPackage.SOURCE_TYPE: return createSourceType();
@@ -171,89 +171,9 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ActionActivateType createActionActivateType() {
-		ActionActivateTypeImpl actionActivateType = new ActionActivateTypeImpl();
-		return actionActivateType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionCombinatorAltType createActionCombinatorAltType() {
-		ActionCombinatorAltTypeImpl actionCombinatorAltType = new ActionCombinatorAltTypeImpl();
-		return actionCombinatorAltType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionCombinatorParType createActionCombinatorParType() {
-		ActionCombinatorParTypeImpl actionCombinatorParType = new ActionCombinatorParTypeImpl();
-		return actionCombinatorParType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionCombinatorSeqType createActionCombinatorSeqType() {
-		ActionCombinatorSeqTypeImpl actionCombinatorSeqType = new ActionCombinatorSeqTypeImpl();
-		return actionCombinatorSeqType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionCombinatorType createActionCombinatorType() {
-		ActionCombinatorTypeImpl actionCombinatorType = new ActionCombinatorTypeImpl();
-		return actionCombinatorType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionSignalType createActionSignalType() {
-		ActionSignalTypeImpl actionSignalType = new ActionSignalTypeImpl();
-		return actionSignalType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionSkipType createActionSkipType() {
-		ActionSkipTypeImpl actionSkipType = new ActionSkipTypeImpl();
-		return actionSkipType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ActionType createActionType() {
 		ActionTypeImpl actionType = new ActionTypeImpl();
 		return actionType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionWaitType createActionWaitType() {
-		ActionWaitTypeImpl actionWaitType = new ActionWaitTypeImpl();
-		return actionWaitType;
 	}
 
 	/**
@@ -314,6 +234,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public ComponentType createComponentType() {
 		ComponentTypeImpl componentType = new ComponentTypeImpl();
 		return componentType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConditionType createConditionType() {
+		ConditionTypeImpl conditionType = new ConditionTypeImpl();
+		return conditionType;
 	}
 
 	/**
@@ -481,6 +411,46 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public GuardAndType createGuardAndType() {
+		GuardAndTypeImpl guardAndType = new GuardAndTypeImpl();
+		return guardAndType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GuardConditionType createGuardConditionType() {
+		GuardConditionTypeImpl guardConditionType = new GuardConditionTypeImpl();
+		return guardConditionType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GuardNotType createGuardNotType() {
+		GuardNotTypeImpl guardNotType = new GuardNotTypeImpl();
+		return guardNotType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GuardOrType createGuardOrType() {
+		GuardOrTypeImpl guardOrType = new GuardOrTypeImpl();
+		return guardOrType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ImplementsType createImplementsType() {
 		ImplementsTypeImpl implementsType = new ImplementsTypeImpl();
 		return implementsType;
@@ -601,6 +571,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public PerformType createPerformType() {
+		PerformTypeImpl performType = new PerformTypeImpl();
+		return performType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public PortSliceType createPortSliceType() {
 		PortSliceTypeImpl portSliceType = new PortSliceTypeImpl();
 		return portSliceType;
@@ -621,9 +601,29 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public QuantificationVarType createQuantificationVarType() {
-		QuantificationVarTypeImpl quantificationVarType = new QuantificationVarTypeImpl();
-		return quantificationVarType;
+	public ProtocolChoiceType createProtocolChoiceType() {
+		ProtocolChoiceTypeImpl protocolChoiceType = new ProtocolChoiceTypeImpl();
+		return protocolChoiceType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProtocolCombinatorType createProtocolCombinatorType() {
+		ProtocolCombinatorTypeImpl protocolCombinatorType = new ProtocolCombinatorTypeImpl();
+		return protocolCombinatorType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProtocolType createProtocolType() {
+		ProtocolTypeImpl protocolType = new ProtocolTypeImpl();
+		return protocolType;
 	}
 
 	/**

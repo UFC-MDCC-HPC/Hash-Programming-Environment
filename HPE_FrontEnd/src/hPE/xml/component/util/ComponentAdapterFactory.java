@@ -72,40 +72,8 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	protected ComponentSwitch<Adapter> modelSwitch =
 		new ComponentSwitch<Adapter>() {
 			@Override
-			public Adapter caseActionActivateType(ActionActivateType object) {
-				return createActionActivateTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionCombinatorAltType(ActionCombinatorAltType object) {
-				return createActionCombinatorAltTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionCombinatorParType(ActionCombinatorParType object) {
-				return createActionCombinatorParTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionCombinatorSeqType(ActionCombinatorSeqType object) {
-				return createActionCombinatorSeqTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionCombinatorType(ActionCombinatorType object) {
-				return createActionCombinatorTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionSignalType(ActionSignalType object) {
-				return createActionSignalTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionSkipType(ActionSkipType object) {
-				return createActionSkipTypeAdapter();
-			}
-			@Override
 			public Adapter caseActionType(ActionType object) {
 				return createActionTypeAdapter();
-			}
-			@Override
-			public Adapter caseActionWaitType(ActionWaitType object) {
-				return createActionWaitTypeAdapter();
 			}
 			@Override
 			public Adapter caseBaseTypeType(BaseTypeType object) {
@@ -130,6 +98,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseComponentType(ComponentType object) {
 				return createComponentTypeAdapter();
+			}
+			@Override
+			public Adapter caseConditionType(ConditionType object) {
+				return createConditionTypeAdapter();
 			}
 			@Override
 			public Adapter caseDocumentRoot(DocumentRoot object) {
@@ -196,6 +168,26 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createFusionTypeAdapter();
 			}
 			@Override
+			public Adapter caseGuardAndType(GuardAndType object) {
+				return createGuardAndTypeAdapter();
+			}
+			@Override
+			public Adapter caseGuardConditionType(GuardConditionType object) {
+				return createGuardConditionTypeAdapter();
+			}
+			@Override
+			public Adapter caseGuardNotType(GuardNotType object) {
+				return createGuardNotTypeAdapter();
+			}
+			@Override
+			public Adapter caseGuardOrType(GuardOrType object) {
+				return createGuardOrTypeAdapter();
+			}
+			@Override
+			public Adapter caseGuardType(GuardType object) {
+				return createGuardTypeAdapter();
+			}
+			@Override
 			public Adapter caseImplementsType(ImplementsType object) {
 				return createImplementsTypeAdapter();
 			}
@@ -244,6 +236,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createParameterTypeAdapter();
 			}
 			@Override
+			public Adapter casePerformType(PerformType object) {
+				return createPerformTypeAdapter();
+			}
+			@Override
 			public Adapter casePortSliceType(PortSliceType object) {
 				return createPortSliceTypeAdapter();
 			}
@@ -252,8 +248,16 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createPortTypeAdapter();
 			}
 			@Override
-			public Adapter caseQuantificationVarType(QuantificationVarType object) {
-				return createQuantificationVarTypeAdapter();
+			public Adapter caseProtocolChoiceType(ProtocolChoiceType object) {
+				return createProtocolChoiceTypeAdapter();
+			}
+			@Override
+			public Adapter caseProtocolCombinatorType(ProtocolCombinatorType object) {
+				return createProtocolCombinatorTypeAdapter();
+			}
+			@Override
+			public Adapter caseProtocolType(ProtocolType object) {
+				return createProtocolTypeAdapter();
 			}
 			@Override
 			public Adapter caseRecursiveEntryType(RecursiveEntryType object) {
@@ -324,104 +328,6 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionActivateType <em>Action Activate Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionActivateType
-	 * @generated
-	 */
-	public Adapter createActionActivateTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionCombinatorAltType <em>Action Combinator Alt Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionCombinatorAltType
-	 * @generated
-	 */
-	public Adapter createActionCombinatorAltTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionCombinatorParType <em>Action Combinator Par Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionCombinatorParType
-	 * @generated
-	 */
-	public Adapter createActionCombinatorParTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionCombinatorSeqType <em>Action Combinator Seq Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionCombinatorSeqType
-	 * @generated
-	 */
-	public Adapter createActionCombinatorSeqTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionCombinatorType <em>Action Combinator Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionCombinatorType
-	 * @generated
-	 */
-	public Adapter createActionCombinatorTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionSignalType <em>Action Signal Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionSignalType
-	 * @generated
-	 */
-	public Adapter createActionSignalTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionSkipType <em>Action Skip Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionSkipType
-	 * @generated
-	 */
-	public Adapter createActionSkipTypeAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionType <em>Action Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -432,20 +338,6 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createActionTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ActionWaitType <em>Action Wait Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ActionWaitType
-	 * @generated
-	 */
-	public Adapter createActionWaitTypeAdapter() {
 		return null;
 	}
 
@@ -530,6 +422,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createComponentTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ConditionType <em>Condition Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.ConditionType
+	 * @generated
+	 */
+	public Adapter createConditionTypeAdapter() {
 		return null;
 	}
 
@@ -758,6 +664,76 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.GuardAndType <em>Guard And Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.GuardAndType
+	 * @generated
+	 */
+	public Adapter createGuardAndTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.GuardConditionType <em>Guard Condition Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.GuardConditionType
+	 * @generated
+	 */
+	public Adapter createGuardConditionTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.GuardNotType <em>Guard Not Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.GuardNotType
+	 * @generated
+	 */
+	public Adapter createGuardNotTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.GuardOrType <em>Guard Or Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.GuardOrType
+	 * @generated
+	 */
+	public Adapter createGuardOrTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.GuardType <em>Guard Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.GuardType
+	 * @generated
+	 */
+	public Adapter createGuardTypeAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ImplementsType <em>Implements Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -926,6 +902,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.PerformType <em>Perform Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.PerformType
+	 * @generated
+	 */
+	public Adapter createPerformTypeAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link hPE.xml.component.PortSliceType <em>Port Slice Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -954,16 +944,44 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.QuantificationVarType <em>Quantification Var Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ProtocolChoiceType <em>Protocol Choice Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see hPE.xml.component.QuantificationVarType
+	 * @see hPE.xml.component.ProtocolChoiceType
 	 * @generated
 	 */
-	public Adapter createQuantificationVarTypeAdapter() {
+	public Adapter createProtocolChoiceTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ProtocolCombinatorType <em>Protocol Combinator Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.ProtocolCombinatorType
+	 * @generated
+	 */
+	public Adapter createProtocolCombinatorTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ProtocolType <em>Protocol Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.ProtocolType
+	 * @generated
+	 */
+	public Adapter createProtocolTypeAdapter() {
 		return null;
 	}
 

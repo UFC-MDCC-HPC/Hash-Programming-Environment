@@ -26,69 +26,6 @@ public interface ComponentFactory extends EFactory {
 	ComponentFactory eINSTANCE = hPE.xml.component.impl.ComponentFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Action Activate Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Activate Type</em>'.
-	 * @generated
-	 */
-	ActionActivateType createActionActivateType();
-
-	/**
-	 * Returns a new object of class '<em>Action Combinator Alt Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Combinator Alt Type</em>'.
-	 * @generated
-	 */
-	ActionCombinatorAltType createActionCombinatorAltType();
-
-	/**
-	 * Returns a new object of class '<em>Action Combinator Par Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Combinator Par Type</em>'.
-	 * @generated
-	 */
-	ActionCombinatorParType createActionCombinatorParType();
-
-	/**
-	 * Returns a new object of class '<em>Action Combinator Seq Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Combinator Seq Type</em>'.
-	 * @generated
-	 */
-	ActionCombinatorSeqType createActionCombinatorSeqType();
-
-	/**
-	 * Returns a new object of class '<em>Action Combinator Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Combinator Type</em>'.
-	 * @generated
-	 */
-	ActionCombinatorType createActionCombinatorType();
-
-	/**
-	 * Returns a new object of class '<em>Action Signal Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Signal Type</em>'.
-	 * @generated
-	 */
-	ActionSignalType createActionSignalType();
-
-	/**
-	 * Returns a new object of class '<em>Action Skip Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Skip Type</em>'.
-	 * @generated
-	 */
-	ActionSkipType createActionSkipType();
-
-	/**
 	 * Returns a new object of class '<em>Action Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,15 +33,6 @@ public interface ComponentFactory extends EFactory {
 	 * @generated
 	 */
 	ActionType createActionType();
-
-	/**
-	 * Returns a new object of class '<em>Action Wait Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Wait Type</em>'.
-	 * @generated
-	 */
-	ActionWaitType createActionWaitType();
 
 	/**
 	 * Returns a new object of class '<em>Base Type Type</em>'.
@@ -159,6 +87,15 @@ public interface ComponentFactory extends EFactory {
 	 * @generated
 	 */
 	ComponentType createComponentType();
+
+	/**
+	 * Returns a new object of class '<em>Condition Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Condition Type</em>'.
+	 * @generated
+	 */
+	ConditionType createConditionType();
 
 	/**
 	 * Returns a new object of class '<em>Document Root</em>'.
@@ -305,6 +242,42 @@ public interface ComponentFactory extends EFactory {
 	FusionType createFusionType();
 
 	/**
+	 * Returns a new object of class '<em>Guard And Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Guard And Type</em>'.
+	 * @generated
+	 */
+	GuardAndType createGuardAndType();
+
+	/**
+	 * Returns a new object of class '<em>Guard Condition Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Guard Condition Type</em>'.
+	 * @generated
+	 */
+	GuardConditionType createGuardConditionType();
+
+	/**
+	 * Returns a new object of class '<em>Guard Not Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Guard Not Type</em>'.
+	 * @generated
+	 */
+	GuardNotType createGuardNotType();
+
+	/**
+	 * Returns a new object of class '<em>Guard Or Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Guard Or Type</em>'.
+	 * @generated
+	 */
+	GuardOrType createGuardOrType();
+
+	/**
 	 * Returns a new object of class '<em>Implements Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -413,6 +386,15 @@ public interface ComponentFactory extends EFactory {
 	ParameterType createParameterType();
 
 	/**
+	 * Returns a new object of class '<em>Perform Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Perform Type</em>'.
+	 * @generated
+	 */
+	PerformType createPerformType();
+
+	/**
 	 * Returns a new object of class '<em>Port Slice Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -431,13 +413,31 @@ public interface ComponentFactory extends EFactory {
 	PortType createPortType();
 
 	/**
-	 * Returns a new object of class '<em>Quantification Var Type</em>'.
+	 * Returns a new object of class '<em>Protocol Choice Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Quantification Var Type</em>'.
+	 * @return a new object of class '<em>Protocol Choice Type</em>'.
 	 * @generated
 	 */
-	QuantificationVarType createQuantificationVarType();
+	ProtocolChoiceType createProtocolChoiceType();
+
+	/**
+	 * Returns a new object of class '<em>Protocol Combinator Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Protocol Combinator Type</em>'.
+	 * @generated
+	 */
+	ProtocolCombinatorType createProtocolCombinatorType();
+
+	/**
+	 * Returns a new object of class '<em>Protocol Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Protocol Type</em>'.
+	 * @generated
+	 */
+	ProtocolType createProtocolType();
 
 	/**
 	 * Returns a new object of class '<em>Recursive Entry Type</em>'.
