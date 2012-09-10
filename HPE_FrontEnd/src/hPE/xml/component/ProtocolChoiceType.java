@@ -6,6 +6,8 @@
  */
 package hPE.xml.component;
 
+import org.eclipse.emf.ecore.EObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +28,7 @@ package hPE.xml.component;
  * @model extendedMetaData="name='ProtocolChoiceType' kind='elementOnly'"
  * @generated
  */
-public interface ProtocolChoiceType extends ProtocolType {
+public interface ProtocolChoiceType extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Par</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

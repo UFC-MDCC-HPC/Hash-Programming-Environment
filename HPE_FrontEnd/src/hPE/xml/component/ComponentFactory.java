@@ -431,15 +431,6 @@ public interface ComponentFactory extends EFactory {
 	ProtocolCombinatorType createProtocolCombinatorType();
 
 	/**
-	 * Returns a new object of class '<em>Protocol Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Protocol Type</em>'.
-	 * @generated
-	 */
-	ProtocolType createProtocolType();
-
-	/**
 	 * Returns a new object of class '<em>Recursive Entry Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

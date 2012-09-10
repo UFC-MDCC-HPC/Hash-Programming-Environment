@@ -2176,52 +2176,6 @@ public interface ComponentPackage extends EPackage {
 	int PORT_TYPE_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolTypeImpl <em>Protocol Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hPE.xml.component.impl.ProtocolTypeImpl
-	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolType()
-	 * @generated
-	 */
-	int PROTOCOL_TYPE = 46;
-
-	/**
-	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_TYPE__GUARD = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_TYPE__ID = 1;
-
-	/**
-	 * The feature id for the '<em><b>Repeat</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_TYPE__REPEAT = 2;
-
-	/**
-	 * The number of structural features of the '<em>Protocol Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_TYPE_FEATURE_COUNT = 3;
-
-	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolChoiceTypeImpl <em>Protocol Choice Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2232,40 +2186,13 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_CHOICE_TYPE = 44;
 
 	/**
-	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_CHOICE_TYPE__GUARD = PROTOCOL_TYPE__GUARD;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_CHOICE_TYPE__ID = PROTOCOL_TYPE__ID;
-
-	/**
-	 * The feature id for the '<em><b>Repeat</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_CHOICE_TYPE__REPEAT = PROTOCOL_TYPE__REPEAT;
-
-	/**
 	 * The feature id for the '<em><b>Par</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_CHOICE_TYPE__PAR = PROTOCOL_TYPE_FEATURE_COUNT + 0;
+	int PROTOCOL_CHOICE_TYPE__PAR = 0;
 
 	/**
 	 * The feature id for the '<em><b>Seq</b></em>' containment reference.
@@ -2274,7 +2201,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_CHOICE_TYPE__SEQ = PROTOCOL_TYPE_FEATURE_COUNT + 1;
+	int PROTOCOL_CHOICE_TYPE__SEQ = 1;
 
 	/**
 	 * The feature id for the '<em><b>Alt</b></em>' containment reference.
@@ -2283,7 +2210,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_CHOICE_TYPE__ALT = PROTOCOL_TYPE_FEATURE_COUNT + 2;
+	int PROTOCOL_CHOICE_TYPE__ALT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Perform</b></em>' containment reference.
@@ -2292,7 +2219,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_CHOICE_TYPE__PERFORM = PROTOCOL_TYPE_FEATURE_COUNT + 3;
+	int PROTOCOL_CHOICE_TYPE__PERFORM = 3;
 
 	/**
 	 * The number of structural features of the '<em>Protocol Choice Type</em>' class.
@@ -2301,7 +2228,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_CHOICE_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 4;
+	int PROTOCOL_CHOICE_TYPE_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolCombinatorTypeImpl <em>Protocol Combinator Type</em>}' class.
@@ -2314,13 +2241,22 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_COMBINATOR_TYPE = 45;
 
 	/**
+	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_TYPE__ACTION = 0;
+
+	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_COMBINATOR_TYPE__GUARD = PROTOCOL_TYPE__GUARD;
+	int PROTOCOL_COMBINATOR_TYPE__GUARD = 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2329,7 +2265,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_COMBINATOR_TYPE__ID = PROTOCOL_TYPE__ID;
+	int PROTOCOL_COMBINATOR_TYPE__ID = 2;
 
 	/**
 	 * The feature id for the '<em><b>Repeat</b></em>' attribute.
@@ -2338,16 +2274,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_COMBINATOR_TYPE__REPEAT = PROTOCOL_TYPE__REPEAT;
-
-	/**
-	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROTOCOL_COMBINATOR_TYPE__ACTION = PROTOCOL_TYPE_FEATURE_COUNT + 0;
+	int PROTOCOL_COMBINATOR_TYPE__REPEAT = 3;
 
 	/**
 	 * The number of structural features of the '<em>Protocol Combinator Type</em>' class.
@@ -2356,7 +2283,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 1;
+	int PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.RecursiveEntryTypeImpl <em>Recursive Entry Type</em>}' class.
@@ -2366,7 +2293,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getRecursiveEntryType()
 	 * @generated
 	 */
-	int RECURSIVE_ENTRY_TYPE = 47;
+	int RECURSIVE_ENTRY_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2394,7 +2321,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceFileType()
 	 * @generated
 	 */
-	int SOURCE_FILE_TYPE = 48;
+	int SOURCE_FILE_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
@@ -2485,7 +2412,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceType()
 	 * @generated
 	 */
-	int SOURCE_TYPE = 49;
+	int SOURCE_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' containment reference list.
@@ -2531,7 +2458,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitEnumeratorType()
 	 * @generated
 	 */
-	int SPLIT_ENUMERATOR_TYPE = 50;
+	int SPLIT_ENUMERATOR_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -2559,7 +2486,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitLinkType()
 	 * @generated
 	 */
-	int SPLIT_LINK_TYPE = 51;
+	int SPLIT_LINK_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2596,7 +2523,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitType()
 	 * @generated
 	 */
-	int SPLIT_TYPE = 52;
+	int SPLIT_TYPE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Split Link</b></em>' containment reference list.
@@ -2669,7 +2596,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitBoundsType()
 	 * @generated
 	 */
-	int UNIT_BOUNDS_TYPE = 53;
+	int UNIT_BOUNDS_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2715,7 +2642,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitRefType()
 	 * @generated
 	 */
-	int UNIT_REF_TYPE = 54;
+	int UNIT_REF_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2761,7 +2688,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitSliceType()
 	 * @generated
 	 */
-	int UNIT_SLICE_TYPE = 55;
+	int UNIT_SLICE_TYPE = 54;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2843,7 +2770,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitType()
 	 * @generated
 	 */
-	int UNIT_TYPE = 56;
+	int UNIT_TYPE = 55;
 
 	/**
 	 * The feature id for the '<em><b>Super</b></em>' containment reference.
@@ -2943,7 +2870,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
 	 * @generated
 	 */
-	int VERSION_TYPE = 57;
+	int VERSION_TYPE = 56;
 
 	/**
 	 * The feature id for the '<em><b>Field1</b></em>' attribute.
@@ -2998,7 +2925,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVisualElementAttributes()
 	 * @generated
 	 */
-	int VISUAL_ELEMENT_ATTRIBUTES = 58;
+	int VISUAL_ELEMENT_ATTRIBUTES = 57;
 
 	/**
 	 * The feature id for the '<em><b>Color</b></em>' containment reference.
@@ -3062,7 +2989,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationType()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE = 59;
+	int QUANTIFICATION_TYPE = 58;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.SupportedKinds <em>Supported Kinds</em>}' enum.
@@ -3072,7 +2999,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKinds()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS = 60;
+	int SUPPORTED_KINDS = 59;
 
 	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
@@ -3082,7 +3009,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 61;
+	int QUANTIFICATION_TYPE_OBJECT = 60;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -3092,7 +3019,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 62;
+	int SUPPORTED_KINDS_OBJECT = 61;
 
 
 	/**
@@ -4997,47 +4924,37 @@ public interface ComponentPackage extends EPackage {
 	EReference getProtocolCombinatorType_Action();
 
 	/**
-	 * Returns the meta object for class '{@link hPE.xml.component.ProtocolType <em>Protocol Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Protocol Type</em>'.
-	 * @see hPE.xml.component.ProtocolType
-	 * @generated
-	 */
-	EClass getProtocolType();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ProtocolType#getGuard <em>Guard</em>}'.
+	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ProtocolCombinatorType#getGuard <em>Guard</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Guard</em>'.
-	 * @see hPE.xml.component.ProtocolType#getGuard()
-	 * @see #getProtocolType()
+	 * @see hPE.xml.component.ProtocolCombinatorType#getGuard()
+	 * @see #getProtocolCombinatorType()
 	 * @generated
 	 */
-	EReference getProtocolType_Guard();
+	EReference getProtocolCombinatorType_Guard();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.ProtocolType#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ProtocolCombinatorType#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see hPE.xml.component.ProtocolType#getId()
-	 * @see #getProtocolType()
+	 * @see hPE.xml.component.ProtocolCombinatorType#getId()
+	 * @see #getProtocolCombinatorType()
 	 * @generated
 	 */
-	EAttribute getProtocolType_Id();
+	EAttribute getProtocolCombinatorType_Id();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.ProtocolType#isRepeat <em>Repeat</em>}'.
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ProtocolCombinatorType#isRepeat <em>Repeat</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Repeat</em>'.
-	 * @see hPE.xml.component.ProtocolType#isRepeat()
-	 * @see #getProtocolType()
+	 * @see hPE.xml.component.ProtocolCombinatorType#isRepeat()
+	 * @see #getProtocolCombinatorType()
 	 * @generated
 	 */
-	EAttribute getProtocolType_Repeat();
+	EAttribute getProtocolCombinatorType_Repeat();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.RecursiveEntryType <em>Recursive Entry Type</em>}'.
@@ -7273,22 +7190,12 @@ public interface ComponentPackage extends EPackage {
 		EReference PROTOCOL_COMBINATOR_TYPE__ACTION = eINSTANCE.getProtocolCombinatorType_Action();
 
 		/**
-		 * The meta object literal for the '{@link hPE.xml.component.impl.ProtocolTypeImpl <em>Protocol Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see hPE.xml.component.impl.ProtocolTypeImpl
-		 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolType()
-		 * @generated
-		 */
-		EClass PROTOCOL_TYPE = eINSTANCE.getProtocolType();
-
-		/**
 		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PROTOCOL_TYPE__GUARD = eINSTANCE.getProtocolType_Guard();
+		EReference PROTOCOL_COMBINATOR_TYPE__GUARD = eINSTANCE.getProtocolCombinatorType_Guard();
 
 		/**
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
@@ -7296,7 +7203,7 @@ public interface ComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROTOCOL_TYPE__ID = eINSTANCE.getProtocolType_Id();
+		EAttribute PROTOCOL_COMBINATOR_TYPE__ID = eINSTANCE.getProtocolCombinatorType_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Repeat</b></em>' attribute feature.
@@ -7304,7 +7211,7 @@ public interface ComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROTOCOL_TYPE__REPEAT = eINSTANCE.getProtocolType_Repeat();
+		EAttribute PROTOCOL_COMBINATOR_TYPE__REPEAT = eINSTANCE.getProtocolCombinatorType_Repeat();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.RecursiveEntryTypeImpl <em>Recursive Entry Type</em>}' class.

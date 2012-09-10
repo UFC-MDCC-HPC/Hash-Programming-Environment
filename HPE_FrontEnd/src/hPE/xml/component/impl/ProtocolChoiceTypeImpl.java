@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ProtocolChoiceTypeImpl extends ProtocolTypeImpl implements ProtocolChoiceType {
+public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoiceType {
 	/**
 	 * The cached value of the '{@link #getPar() <em>Par</em>}' containment reference.
 	 * <!-- begin-user-doc -->

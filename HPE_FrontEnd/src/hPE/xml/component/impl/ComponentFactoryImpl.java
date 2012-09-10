@@ -106,7 +106,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.PORT_TYPE: return createPortType();
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE: return createProtocolChoiceType();
 			case ComponentPackage.PROTOCOL_COMBINATOR_TYPE: return createProtocolCombinatorType();
-			case ComponentPackage.PROTOCOL_TYPE: return createProtocolType();
 			case ComponentPackage.RECURSIVE_ENTRY_TYPE: return createRecursiveEntryType();
 			case ComponentPackage.SOURCE_FILE_TYPE: return createSourceFileType();
 			case ComponentPackage.SOURCE_TYPE: return createSourceType();
@@ -614,16 +613,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public ProtocolCombinatorType createProtocolCombinatorType() {
 		ProtocolCombinatorTypeImpl protocolCombinatorType = new ProtocolCombinatorTypeImpl();
 		return protocolCombinatorType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ProtocolType createProtocolType() {
-		ProtocolTypeImpl protocolType = new ProtocolTypeImpl();
-		return protocolType;
 	}
 
 	/**

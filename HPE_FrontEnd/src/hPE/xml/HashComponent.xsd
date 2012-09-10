@@ -570,31 +570,22 @@
   	<attribute name="id" type="string"></attribute>
   </complexType>
 
-  <complexType name="ProtocolType" abstract="false">
-  	<sequence>
-  		<element name="guard" type="tns:GuardType" maxOccurs="1"
-  			minOccurs="0">
-  		</element>
-  	</sequence>
-  	<attribute name="repeat" type="boolean"></attribute>
-  	<attribute name="id" type="string"></attribute>
-  </complexType>
 
   <complexType name="ProtocolCombinatorType" abstract="false">
-  	<complexContent>
-  		<extension base="tns:ProtocolType">
   			<sequence>
-  				<element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1"></element>
+                    <element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1">
+  				</element>
+                    <element name="guard" type="tns:GuardType" maxOccurs="1" minOccurs="0"></element>
   			</sequence>
-  		</extension>
-  	</complexContent>
+  			<attribute name="repeat" type="boolean"></attribute>
+  			<attribute name="id" type="string"></attribute>
   </complexType>
-  
-  
 
-    
-    
-    <complexType name="GuardType" abstract="true">
+
+
+
+
+  <complexType name="GuardType" abstract="true">
     </complexType>
 
     <complexType name="GuardAndType">
@@ -626,8 +617,6 @@
 
 
     <complexType name="ProtocolChoiceType">
-  	<complexContent>
-  		<extension base="tns:ProtocolType">
   				<choice maxOccurs="1" minOccurs="1">
   					<element name="par" type="tns:ProtocolCombinatorType"></element>
   					<element name="seq" type="tns:ProtocolCombinatorType"></element>
@@ -642,7 +631,5 @@
   							</attribute>
   						</complexType></element>
   				</choice>
-  		</extension>
-  	</complexContent>
     </complexType>
 </schema>

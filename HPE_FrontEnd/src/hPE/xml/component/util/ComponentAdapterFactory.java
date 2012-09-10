@@ -256,10 +256,6 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createProtocolCombinatorTypeAdapter();
 			}
 			@Override
-			public Adapter caseProtocolType(ProtocolType object) {
-				return createProtocolTypeAdapter();
-			}
-			@Override
 			public Adapter caseRecursiveEntryType(RecursiveEntryType object) {
 				return createRecursiveEntryTypeAdapter();
 			}
@@ -968,20 +964,6 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createProtocolCombinatorTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ProtocolType <em>Protocol Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hPE.xml.component.ProtocolType
-	 * @generated
-	 */
-	public Adapter createProtocolTypeAdapter() {
 		return null;
 	}
 

@@ -363,20 +363,12 @@ public class ComponentSwitch<T> {
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE: {
 				ProtocolChoiceType protocolChoiceType = (ProtocolChoiceType)theEObject;
 				T result = caseProtocolChoiceType(protocolChoiceType);
-				if (result == null) result = caseProtocolType(protocolChoiceType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ComponentPackage.PROTOCOL_COMBINATOR_TYPE: {
 				ProtocolCombinatorType protocolCombinatorType = (ProtocolCombinatorType)theEObject;
 				T result = caseProtocolCombinatorType(protocolCombinatorType);
-				if (result == null) result = caseProtocolType(protocolCombinatorType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ComponentPackage.PROTOCOL_TYPE: {
-				ProtocolType protocolType = (ProtocolType)theEObject;
-				T result = caseProtocolType(protocolType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1144,21 +1136,6 @@ public class ComponentSwitch<T> {
 	 * @generated
 	 */
 	public T caseProtocolCombinatorType(ProtocolCombinatorType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Protocol Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Protocol Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseProtocolType(ProtocolType object) {
 		return null;
 	}
 

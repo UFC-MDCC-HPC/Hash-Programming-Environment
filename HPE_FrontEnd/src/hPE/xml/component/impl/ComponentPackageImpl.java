@@ -439,13 +439,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass protocolTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass recursiveEntryTypeEClass = null;
 
 	/**
@@ -2215,8 +2208,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getProtocolType() {
-		return protocolTypeEClass;
+	public EReference getProtocolCombinatorType_Guard() {
+		return (EReference)protocolCombinatorTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2224,8 +2217,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getProtocolType_Guard() {
-		return (EReference)protocolTypeEClass.getEStructuralFeatures().get(0);
+	public EAttribute getProtocolCombinatorType_Id() {
+		return (EAttribute)protocolCombinatorTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2233,17 +2226,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProtocolType_Id() {
-		return (EAttribute)protocolTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getProtocolType_Repeat() {
-		return (EAttribute)protocolTypeEClass.getEStructuralFeatures().get(2);
+	public EAttribute getProtocolCombinatorType_Repeat() {
+		return (EAttribute)protocolCombinatorTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3081,11 +3065,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		protocolCombinatorTypeEClass = createEClass(PROTOCOL_COMBINATOR_TYPE);
 		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ACTION);
-
-		protocolTypeEClass = createEClass(PROTOCOL_TYPE);
-		createEReference(protocolTypeEClass, PROTOCOL_TYPE__GUARD);
-		createEAttribute(protocolTypeEClass, PROTOCOL_TYPE__ID);
-		createEAttribute(protocolTypeEClass, PROTOCOL_TYPE__REPEAT);
+		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__GUARD);
+		createEAttribute(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ID);
+		createEAttribute(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__REPEAT);
 
 		recursiveEntryTypeEClass = createEClass(RECURSIVE_ENTRY_TYPE);
 		createEAttribute(recursiveEntryTypeEClass, RECURSIVE_ENTRY_TYPE__CREF);
@@ -3209,8 +3191,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		guardNotTypeEClass.getESuperTypes().add(this.getGuardType());
 		guardOrTypeEClass.getESuperTypes().add(this.getGuardType());
 		innerComponentTypeEClass.getESuperTypes().add(this.getComponentInUseType());
-		protocolChoiceTypeEClass.getESuperTypes().add(this.getProtocolType());
-		protocolCombinatorTypeEClass.getESuperTypes().add(this.getProtocolType());
 		unitSliceTypeEClass.getESuperTypes().add(this.getUnitRefType());
 
 		// Initialize classes and features; add operations and parameters
@@ -3436,11 +3416,9 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(protocolCombinatorTypeEClass, ProtocolCombinatorType.class, "ProtocolCombinatorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProtocolCombinatorType_Action(), this.getProtocolChoiceType(), null, "action", null, 1, -1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(protocolTypeEClass, ProtocolType.class, "ProtocolType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getProtocolType_Guard(), this.getGuardType(), null, "guard", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProtocolType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProtocolType_Repeat(), theXMLTypePackage.getBoolean(), "repeat", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolCombinatorType_Guard(), this.getGuardType(), null, "guard", null, 0, 1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolCombinatorType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolCombinatorType_Repeat(), theXMLTypePackage.getBoolean(), "repeat", null, 0, 1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recursiveEntryTypeEClass, RecursiveEntryType.class, "RecursiveEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRecursiveEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, RecursiveEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4807,28 +4785,21 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "action"
 		   });		
 		addAnnotation
-		  (protocolTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ProtocolType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getProtocolType_Guard(), 
+		  (getProtocolCombinatorType_Guard(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "guard"
 		   });		
 		addAnnotation
-		  (getProtocolType_Id(), 
+		  (getProtocolCombinatorType_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
 		   });		
 		addAnnotation
-		  (getProtocolType_Repeat(), 
+		  (getProtocolCombinatorType_Repeat(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",

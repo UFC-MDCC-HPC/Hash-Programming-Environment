@@ -1130,7 +1130,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProtocolChoiceType" eSuperTypes="#//ProtocolType">
+  <eClassifiers xsi:type="ecore:EClass" name="ProtocolChoiceType">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="ProtocolChoiceType"/>
       <details key="kind" value="elementOnly"/>
@@ -1164,7 +1164,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProtocolCombinatorType" eSuperTypes="#//ProtocolType">
+  <eClassifiers xsi:type="ecore:EClass" name="ProtocolCombinatorType">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="ProtocolCombinatorType"/>
       <details key="kind" value="elementOnly"/>
@@ -1176,12 +1176,6 @@
         <details key="name" value="action"/>
       </eAnnotations>
     </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProtocolType">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="ProtocolType"/>
-      <details key="kind" value="elementOnly"/>
-    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="#//GuardType"
         containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
