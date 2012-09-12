@@ -111,7 +111,7 @@ namespace br.ufc.pargo.hpe.connector.load
 					ok = false;
                
 					foreach (MetaInnerComponent mic in innerComponents) {
-						if (mic.Identifier == innerNode.InnerText) {
+						if (mic.Identifier.Equals (innerNode.InnerText)) {
 							publicInnerList.Add (mic);
 							ok = true;
 							break;
@@ -247,7 +247,7 @@ namespace br.ufc.pargo.hpe.connector.load
                
 					if (unit != null) {
 						slice = new MetaSlice (unit);
-                  slice.Inner = innerName;
+						slice.Inner = innerName;
 
 						unit = null;
 					}
@@ -266,7 +266,8 @@ namespace br.ufc.pargo.hpe.connector.load
 		/*
       Retorna a lista de ações descritas na lista de nós XML.
       */
-      protected List<MetaAction> getActions(XmlNodeList nodes, MetaUnit unit) {
+		protected List<MetaAction> getActions (XmlNodeList nodes, MetaUnit unit)
+		{
          
 			if (nodes != null) {
 				IEnumerator ienum = (IEnumerator)nodes.GetEnumerator ();
@@ -337,16 +338,26 @@ namespace br.ufc.pargo.hpe.connector.load
 				}
 
 				guardNode = pivotNode.SelectSingleNode ("guard");
-				if (guardNode != null) {
-					condition = getCondition (guardNode);
-					initialState = numStates++;
-					transitions.Add (new Transition (t.InitialState, initialState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, condition), Transition.INTERNAL_TRANSITION));
+				condition = null;
 
-					Transition tElse = new Transition (t.InitialState, t.FinalState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, null), Transition.INTERNAL_TRANSITION);
-					tElse.IsElse = true;
-					transitions.Add (tElse);
-				} else {
-					initialState = t.InitialState;
+				if (pivotNode.Name.Equals ("seq") || pivotNode.Name.Equals ("par")) {
+					if (guardNode != null) {
+						condition = getCondition (guardNode);
+						Transition tElse;
+						initialState = numStates++;
+
+						if(condition != null) { //condition nao é else.
+							transitions.Add (new Transition (t.InitialState, initialState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, condition), Transition.INTERNAL_TRANSITION));
+							tElse = new Transition (t.InitialState, t.FinalState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, null), Transition.INTERNAL_TRANSITION);
+						} else {
+							tElse = new Transition (t.InitialState, initialState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, null), Transition.INTERNAL_TRANSITION);
+						}
+
+						tElse.IsElse = true;
+						transitions.Add (tElse);
+					} else {
+						initialState = t.InitialState;
+					}
 				}
 
 				switch (pivotNode.Name) {
@@ -373,6 +384,7 @@ namespace br.ufc.pargo.hpe.connector.load
 					}
                
 					break;
+
 				case "par":
                
 
@@ -394,11 +406,20 @@ namespace br.ufc.pargo.hpe.connector.load
 					break;
 
 				case "perform":
+					bool isElse = false;
 
+					initialState = t.InitialState;
 					finalState = t.FinalState;
                
 					child = pivotNode;
 
+					if (guardNode != null) {
+						condition = getCondition (guardNode);
+	
+						if(condition == null) {
+							isElse = true;
+						}
+					}
 					attr = child.Attributes.GetNamedItem ("slice_id");
 					string sliceName = "";
 					if (attr != null) {
@@ -452,7 +473,9 @@ namespace br.ufc.pargo.hpe.connector.load
 					}
                
 					if (selectedAction != null) {
-						transitions.Add (new Transition (initialState, finalState, new ExecutionAction (selectedAction, null), numTransations++));
+						Transition tst = new Transition (initialState, finalState, new ExecutionAction (selectedAction, condition), numTransations++);
+						tst.IsElse = isElse;
+						transitions.Add (tst);
 					} else {
 						throw new Exception ("Fatia inexistente nesta unidade: " + sliceName);
 					}
@@ -469,35 +492,80 @@ namespace br.ufc.pargo.hpe.connector.load
       
       
 		/*
-      Gera o objeto Condition.
+      Gera o objeto Condition. Se retornar numm, é uma condiçao "else", a qual chamamos, condiçao de escape.
       */
 		protected Condition getCondition (XmlNode node)
 		{
-			if (node.Name.Equals ("guard")) {
-				Condition c = new Condition ();
-				bool not = false;
-            
-				XmlNode child = node.FirstChild;
-            
-				if (child.Name.Equals ("not")) {
-					child = child.FirstChild;
-					not = true;
+
+			//se for uma transiçao else, retorna null.
+			if (node.FirstChild.Name.Equals ("condition")) {
+				if (node.Attributes.GetNamedItem ("cond").Equals ("else")) {
+					return null;
 				}
-            
-				if (child.Name.Equals ("condition")) {
-					//String condString = child.InnerText;
-               
-					//TODO mover para o momento da ligação dos objetos. deve ser gerado por um processo a parte. Apenas iremos pesquisar a existencia.
-					//Condition.DCondition deleg = generateDCondition(condString);
-               
-					c.AddDelegate (not, null);
-				} else {
-					throw new Exception ("Condições compostas não estão implementadas.");
-				}
-            
-				return c;
 			}
-			return null;
+
+			//trata condiçoes normais.
+			Condition result, newCond;
+			KeyValuePair<Condition, XmlNodeList> pivot;
+			bool not = false;
+			string sliceName, condName;
+			XmlNode child;
+			Queue<KeyValuePair<Condition, XmlNodeList>> toTreat = new Queue<KeyValuePair<Condition, XmlNodeList>> ();
+			IEnumerator cenum;
+			Condition.Operator oper;
+
+			XmlAttribute attr = node.Attributes.GetNamedItem ("not");
+			if (attr != null) {
+				not = attr.Value.Equals ("true");
+			}
+
+			result = new Condition (null, not);
+			XmlNodeList children = node.ChildNodes;
+
+			toTreat.Enqueue (new KeyValuePair<Condition, XmlNodeList> (result, children)); 
+     
+			while (toTreat.Count > 0) {
+
+				pivot = toTreat.Dequeue ();
+				cenum = pivot.Value.GetEnumerator;
+
+				while (cenum.MoveNext()) {
+					child = (XmlNode)cenum.Current;
+					not = false;
+
+					attr = node.Attributes.GetNamedItem ("not");
+					if (attr != null) {
+						not = attr.Value.Equals ("true");
+					}
+
+					if (child.Name.Equals ("condition")) {
+						attr = node.Attributes.GetNamedItem ("slice");
+						if (attr != null) {
+							sliceName = attr.Value;
+						}
+               
+						attr = node.Attributes.GetNamedItem ("cond");
+						condName = attr.Value;
+
+						if(condName.Equals ("true") || condName.Equals ("false")) {
+							newCond = new Condition (condName.Equals ("true"), not);
+						} else {
+							newCond = new Condition (sliceName, condName, not);
+						}
+						pivot.Key.Conditions.Add (newCond);
+					} else {
+						if (child.Name.Equals ("and")) {
+							oper = Condition.Operator.AND;
+						} else {
+							oper = Condition.Operator.OR;
+						}
+		
+						newCond = new Condition (oper, not);
+						toTreat.Enqueue (new KeyValuePair<Condition, XmlNodeList> (newCond, child.ChildNodes));
+					}
+				}
+			}
+			return result;
 		}
 	}
 }
