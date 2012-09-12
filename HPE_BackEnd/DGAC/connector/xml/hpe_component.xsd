@@ -47,84 +47,38 @@
   <complexType name="hpeaction">
   	<sequence>
     	<element name="identifier" type="string"/>
-       	<element name="protocol" type="tns:ProtocolType"/>
+       	<element name="protocol" type="tns:ProtocolChoiceType"/>
     </sequence>
   </complexType>
 
-  <complexType name="ProtocolType" abstract="true">
-  	<sequence>
-  		<element name="guard" type="tns:GuardType" maxOccurs="1"
-  			minOccurs="0">
-  		</element>
-  	</sequence>
-  	<attribute name="repeat" type="boolean"></attribute>
-  </complexType>
-  
-  
-  <complexType name="ProtocolCompositionType" abstract="true">
+  <complexType name="ProtocolCombinatorType" abstract="false">
   	<complexContent>
   		<extension base="tns:ProtocolType">
   			<sequence>
-  				<element name="actions" type="tns:ProtocolType" maxOccurs="unbounded" minOccurs="1"></element>
+  				<element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1">
+  				</element>
   			</sequence>
   		</extension>
   	</complexContent>
   </complexType>
 
-  <complexType name="ProtocolSeqType">
-  	<complexContent>
-  		<extension base="tns:ProtocolCompositionType"></extension>
-  	</complexContent>
+  <complexType name="ProtocolChoiceType">
+  				<choice maxOccurs="1" minOccurs="1">
+  					<element name="par" type="tns:ProtocolCombinatorType"></element>
+  					<element name="seq" type="tns:ProtocolCombinatorType"></element>
+  					<element name="alt" type="tns:ProtocolCombinatorType"></element>
+  					<element name="perform" type="tns:ProtocolPerformType"></element>
+  				</choice>
+    </complexType>
+
+  <complexType name="GuardType">
+  	<choice maxOccurs="unbounded">
+  		<element name="condition" type="tns:ConditionType" />
+  		<element name="and" type="tns:GuardType" />
+  		<element name="or" type="tns:GuardType" />
+  	</choice>
+  	<attribute name="not" type="boolean"></attribute>
   </complexType>
-  
-    <complexType name="ProtocolParType">
-    	<complexContent>
-    		<extension base="tns:ProtocolCompositionType"></extension>
-    	</complexContent>
-    </complexType>
-
-    <complexType name="ProtocolAltType">
-    	<complexContent>
-    		<extension base="tns:ProtocolCompositionType"></extension>
-    	</complexContent>
-    </complexType>
-    
-    <complexType name="ProtocolActivationType">
-    	<complexContent>
-    		<extension base="tns:ProtocolType">
-    			<attribute name="action_id" type="string"></attribute>
-    		</extension>
-    	</complexContent>
-    </complexType>
-
-    <complexType name="GuardType" abstract="true">
-    </complexType>
-
-    <complexType name="GuardAndType">
-    	<complexContent>
-    		<extension base="tns:GuardType"></extension>
-    	</complexContent>
-    </complexType>
-    
-    <complexType name="GuardOrType">
-    	<complexContent>
-    		<extension base="tns:GuardType"></extension>
-    	</complexContent>
-    </complexType>
-
-    <complexType name="GuardNotType">
-    	<complexContent>
-    		<extension base="tns:GuardType"></extension>
-    	</complexContent>
-    </complexType>
-
-    <complexType name="GuardConditionType">
-    	<complexContent>
-    		<extension base="tns:GuardType">
-    			<attribute name="condition" type="string"></attribute>
-    		</extension>
-    	</complexContent>
-    </complexType>
 
 <complexType name="hpeinnerComponent">
 	<sequence>
@@ -153,7 +107,7 @@
     		</element>
     		<element name="action" type="tns:hpeaction" minOccurs="0"
     			maxOccurs="unbounded" />
-    		<element name="validation" type="tns:ProtocolType"
+    		<element name="validation" type="tns:ProtocolChoiceType"
     			minOccurs="0" />
     	</sequence>
     	<attribute name="parallel" type="boolean"
@@ -184,5 +138,28 @@
                 <enumeration value="private"/>
             </restriction>
     </simpleType>
+
+    <complexType name="ConditionType">
+    	<attribute name="slice" type="string"></attribute>
+    	<attribute name="cond" type="string" use="required"></attribute>
+    </complexType>
+    <complexType name="ProtocolPerformType">
+    	<complexContent>
+    		<extension base="tns:ProtocolType">
+    			<attribute name="action_id" type="string"></attribute>
+
+    			<attribute name="slice_id" type="string"></attribute>
+
+    		</extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="ProtocolType" abstract="true">
+    	<sequence>
+    		<element name="guard" type="tns:GuardType" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="repeat" type="boolean"></attribute>
+    	<attribute name="id" type="string"></attribute>
+    </complexType>
 </schema> 
 
