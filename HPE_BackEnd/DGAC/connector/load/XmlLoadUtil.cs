@@ -318,6 +318,8 @@ namespace br.ufc.pargo.hpe.connector.load
 			Condition condition;
 			int initialState, finalState;
 			bool repeat;
+	
+			initialState = finalState = 0;
          
 			while (treat.Count > 0) {
 				t = treat.Dequeue ();
@@ -347,10 +349,10 @@ namespace br.ufc.pargo.hpe.connector.load
 						initialState = numStates++;
 
 						if(condition != null) { //condition nao é else.
-							transitions.Add (new Transition (t.InitialState, initialState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, condition), Transition.INTERNAL_TRANSITION));
-							tElse = new Transition (t.InitialState, t.FinalState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, null), Transition.INTERNAL_TRANSITION);
+							transitions.Add (new Transition (t.InitialState, initialState, new ExecutionAction (null, condition), Transition.INTERNAL_TRANSITION));
+							tElse = new Transition (t.InitialState, t.FinalState, Configuration.LAMBDA_TRANSITION, Transition.INTERNAL_TRANSITION);
 						} else {
-							tElse = new Transition (t.InitialState, initialState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, null), Transition.INTERNAL_TRANSITION);
+							tElse = new Transition (t.InitialState, initialState, Configuration.LAMBDA_TRANSITION, Transition.INTERNAL_TRANSITION);
 						}
 
 						tElse.IsElse = true;
@@ -367,6 +369,9 @@ namespace br.ufc.pargo.hpe.connector.load
                
 					for (int r = 0; r < children.Count; r++) {
 						child = children.Item (r);
+
+						if(child.Name.Equals ("guard"))
+						   continue;
                   
 						if (r == (children.Count - 1)) {
 							if (repeat) {
@@ -389,17 +394,21 @@ namespace br.ufc.pargo.hpe.connector.load
                
 
 					children = pivotNode.ChildNodes;
-					finalState = numStates++;
 
 
 					if (repeat) {
-						transitions.Add (new Transition (finalState, t.InitialState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, null), Transition.INTERNAL_TRANSITION));
+						finalState = numStates++;
+						transitions.Add (new Transition (finalState, t.InitialState, Configuration.LAMBDA_TRANSITION, Transition.INTERNAL_TRANSITION));
 					} else {
-						transitions.Add (new Transition (finalState, t.FinalState, new ExecutionAction (Configuration.LAMBDA_TRANSITION, condition), Transition.INTERNAL_TRANSITION));
+						finalState = t.FinalState;
 					}
+
 					for (int r = 0; r < children.Count; r++) {
 						child = children.Item (r);
                   
+						if(child.Name.Equals ("guard"))
+						continue;
+
 						treat.Enqueue (new Transition (initialState, finalState, child.FirstChild, numTransations++));
 					}
 
@@ -420,7 +429,7 @@ namespace br.ufc.pargo.hpe.connector.load
 							isElse = true;
 						}
 					}
-					attr = child.Attributes.GetNamedItem ("slice_id");
+					attr = (XmlAttribute) child.Attributes.GetNamedItem ("slice_id");
 					string sliceName = "";
 					if (attr != null) {
 						sliceName = attr.Value;
@@ -499,7 +508,7 @@ namespace br.ufc.pargo.hpe.connector.load
 
 			//se for uma transiçao else, retorna null.
 			if (node.FirstChild.Name.Equals ("condition")) {
-				if (node.Attributes.GetNamedItem ("cond").Equals ("else")) {
+				if (node.FirstChild.Attributes.GetNamedItem ("cond_id").Equals ("else")) {
 					return null;
 				}
 			}
@@ -514,12 +523,13 @@ namespace br.ufc.pargo.hpe.connector.load
 			IEnumerator cenum;
 			Condition.Operator oper;
 
-			XmlAttribute attr = node.Attributes.GetNamedItem ("not");
+			sliceName = condName = null;
+			XmlAttribute attr = (XmlAttribute) node.Attributes.GetNamedItem ("not");
 			if (attr != null) {
 				not = attr.Value.Equals ("true");
 			}
 
-			result = new Condition (null, not);
+			result = new Condition (Condition.Operator.NULL, not);
 			XmlNodeList children = node.ChildNodes;
 
 			toTreat.Enqueue (new KeyValuePair<Condition, XmlNodeList> (result, children)); 
@@ -527,24 +537,24 @@ namespace br.ufc.pargo.hpe.connector.load
 			while (toTreat.Count > 0) {
 
 				pivot = toTreat.Dequeue ();
-				cenum = pivot.Value.GetEnumerator;
+				cenum = pivot.Value.GetEnumerator();
 
 				while (cenum.MoveNext()) {
 					child = (XmlNode)cenum.Current;
 					not = false;
 
-					attr = node.Attributes.GetNamedItem ("not");
+					attr = (XmlAttribute) node.Attributes.GetNamedItem ("not");
 					if (attr != null) {
 						not = attr.Value.Equals ("true");
 					}
 
 					if (child.Name.Equals ("condition")) {
-						attr = node.Attributes.GetNamedItem ("slice");
+						attr = (XmlAttribute) child.Attributes.GetNamedItem ("slice_id");
 						if (attr != null) {
 							sliceName = attr.Value;
 						}
                
-						attr = node.Attributes.GetNamedItem ("cond");
+						attr = (XmlAttribute) child.Attributes.GetNamedItem ("cond_id");
 						condName = attr.Value;
 
 						if(condName.Equals ("true") || condName.Equals ("false")) {

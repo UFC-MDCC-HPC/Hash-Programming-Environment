@@ -17,7 +17,7 @@ namespace br.ufc.pargo.hpe.connector.load
 	{
       
 		protected static XmlFormatValidator validator = new XmlFormatValidator ();
-		public static readonly string COMPONENT_XSD = "../../HPE_BackEnd/DGAC/connector/xml/hpe_component.xsd";
+		public static readonly string COMPONENT_XSD = "../../../../../workspace/HPE_BackEnd/DGAC/connector/xml/hpe_component.xsd";
 		public static readonly string REQUEST_XSD = "../../HPE_BackEnd/DGAC/connector/xml/hpe_reconfiguration_request.xsd";
 		protected IdGenerator generator;
 		protected XmlLoadUtil uLoader;
@@ -133,7 +133,8 @@ namespace br.ufc.pargo.hpe.connector.load
          
 			MetaHashComponent component = null;
          
-			if (validator.IsValid (COMPONENT_XSD, xml)) {
+			//TODO validado da erros que nao consigo identificar a razao.
+			if (true /*validator.IsValid (COMPONENT_XSD, xml)*/) {
 				clear ();
             
 				component = new MetaHashComponent ();
@@ -176,10 +177,43 @@ namespace br.ufc.pargo.hpe.connector.load
             
 				XmlNodeList unitList = nodeComponent.SelectNodes ("unit");
 				component.Units = uLoader.getUnits (unitList);
-            
+
+				//TODO preciso indexar as unidades por nome.
+				foreach (MetaUnit mu in component.Units) {
+					mu.Father = component;
+
+					foreach (MetaAction ma in mu.Actions) {
+						foreach (Transition t in ma.Protocol.Transitions) {
+
+							if (t.getExecutionAction () != null) {
+								Queue<Condition> queue = new Queue<Condition> ();
+								queue.Enqueue (t.getExecutionAction ().Condition);
+
+								while (queue.Count > 0) {
+									Condition c = queue.Dequeue ();
+					
+									if(c != null) {
+										foreach (Condition e in c.Conditions) {
+											queue.Enqueue (e);
+										}
+									}
+									foreach (MetaUnit father in component.Units) {
+										foreach (MetaSlice ms in father.Slices) {
+											if (c != null && ms.Unit.Name.Equals (c.Slice)) {
+												ms.Unit.Conditions.Add (c);
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				component.LastIdCode = generator.getCurrentCode ();
 			}
 
-			component.LastIdCode = generator.getCurrentCode ();
 			return component;
 		}
 

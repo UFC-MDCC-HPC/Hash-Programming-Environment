@@ -7,7 +7,7 @@ using br.ufc.pargo.hpe.connector.config;
 
 namespace br.ufc.pargo.hpe.ConnectorImpl { 
 
-public interface IConnector
+	public interface IConnector : IActivateKind
 {
 
       IConfigurationPort ConfigurationPort {get;}
@@ -134,6 +134,10 @@ public class IConnectorImpl : Activate, IConnector
 	 
 	 return result;
 	}
+
+		public int go() {
+			return perform_action("go");
+		}
 		
 }
 

@@ -2,94 +2,103 @@
 (c) 2012 by Juliano Efson Sales
       www.mdcc.ufc.br
 ================================================================*/
-
 using System;
 using System.Threading;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 using br.ufc.pargo.hpe.connector.meta;
 using br.ufc.pargo.hpe.connector.config;
 
-namespace br.ufc.pargo.hpe.connector.run {
+namespace br.ufc.pargo.hpe.connector.run
+{
    
-   //Classe controladora de estado do autômato. Tem a responsabilidade de iniciar os executores de ramo (BranchInterpreter)
-   //e de receber os resultados de suas execuções.
-   //Esta classe trata ainda de identificar quando a condição de "else" é atingida.
-   public class StateControl {
+	//Classe controladora de estado do autômato. Tem a responsabilidade de iniciar os executores de ramo (BranchInterpreter)
+	//e de receber os resultados de suas execuções.
+	//Esta classe trata ainda de identificar quando a condição de "else" é atingida.
+	public class StateControl
+	{
 
-      //Estado a ser controlado pela instância.
-      protected int _stateId;
+		//Estado a ser controlado pela instância.
+		protected int stateId;
 
-      //Número de transações que falta reportar o seu resultado.
-      protected int _transationsCount;
+		//Número de transações que falta reportar o seu resultado.
+		protected int count;
 
-      //Condição de else. Indica se a transação "else" deverá ser disparada.
-      protected bool _elseResult;
+		//Condição de else. Indica se a transação "else" deverá ser disparada.
+		protected bool elseResult;
 
-      //Número de iterações.
-      protected int _iterations;
+		//Número de iterações.
+		protected int iterations;
 
-      //Configuration que está sendo executado.
-      protected Configuration _protocol;
+		//Configuration que está sendo executado.
+		protected Configuration protocol;
 
-      public Configuration Protocol {
-         get{return _protocol;}
-      }
+		public Configuration Protocol {
+			get{ return protocol;}
+		}
 
-      public StateControl(Configuration protocol) {
-         this._protocol = protocol;
-         this._stateId = Configuration.INITIAL_STATE;
-      }
+		public StateControl (Configuration protocol) : this (protocol, Configuration.INITIAL_STATE)
+		{
+		}
 
-      public StateControl(Configuration protocol, int stateId) {
-         this._protocol = protocol;
-         this._stateId = stateId;
-      }
+		public StateControl (Configuration protocol, int stateId)
+		{
+			this.protocol = protocol;
+			this.stateId = stateId;
+			protocol.RestartArriving(stateId);
+		}
 
-      //Dispara a execução do estado.
-      public void Go() {
+		//Dispara a execução do estado.
+		public void Go ()
+		{
 
-         //artifício para suspender a execução do estado nos casos de reconfiguração.
-         ManualResetEvent resetEvent = _protocol.getResetEvent(_stateId);
-         System.Console.WriteLine("STATE: " + _stateId);
+			//artifício para suspender a execução do estado nos casos de reconfiguração.
+			ManualResetEvent resetEvent = protocol.getResetEvent (stateId);
+			System.Console.WriteLine ("STATE: " + stateId);
 
-         if(resetEvent != null) {
-            WaitHandle.WaitAll(new ManualResetEvent[] {resetEvent});
-         }
+			if (resetEvent != null) {
+				WaitHandle.WaitAll (new ManualResetEvent[] {resetEvent});
+			}
 
-         int[] transitions = _protocol.matrix[_stateId];
-         BranchInterpreter branch;
-         //a última transição será considerada o "else".
-         this._transationsCount = (transitions.Length/Configuration.BASE)-1;
-         this._elseResult = false;
+			Dictionary<int, int> transitions = protocol.Matrix [stateId];
+			BranchInterpreter branch;
+			//a última transição será considerada o "else".
+			this.count = (transitions.Count / Configuration.BASE) - 1;
+			this.elseResult = false;
          
-         if(transitions[Configuration.RUNNABLE] != Configuration.END) {
+			if (transitions [Configuration.RUNNABLE] != Configuration.END) {
             
-            _transationsCount = (_transationsCount == 0? 1: _transationsCount);
-            _iterations = _transationsCount-1;
+				count = (count == 0 ? 1 : count);
+				iterations = count - 1;
             
-            for (int i=0; i <= _iterations; i++) {
-               branch = new BranchInterpreter(_stateId, i, this);
-               ThreadPool.QueueUserWorkItem(branch.Go, null);
-            }
-         } else {
-            _protocol.doneEvent.Set();
-            //StateControl: Execução finalizada!
-         }
-      }
+				for (int i=0; i <= iterations; i++) {
+					branch = new BranchInterpreter (stateId, i, this);
+					ThreadPool.QueueUserWorkItem (branch.Go, null);
+				}
+			} else {
+				protocol.doneEvent.Set ();
+				//StateControl: Execução finalizada!
+			}
+		}
 
-      //Método que notifica ao estado que a execução de uma transação vinculada ao estado foi concluída.
-      [MethodImpl(MethodImplOptions.Synchronized)]
-      public void Notify(bool result) {
-         BranchInterpreter branch;
+		//Método que notifica ao estado que a execução de uma transação vinculada ao estado foi concluída.
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public void Notify (bool result)
+		{
+			BranchInterpreter branch;
          
-         _elseResult = _elseResult || result;
-         _transationsCount--;
+			elseResult = elseResult || result;
+			count--;
          
-         if(_transationsCount == 0 && !_elseResult) {
-            branch = new BranchInterpreter(_stateId, _iterations+1, this);
-            ThreadPool.QueueUserWorkItem(branch.Go, null);
-         }
-      }
-   }
+			//System.Console.WriteLine("count: " + count);
+			//System.Console.WriteLine("!elseResult: " + !elseResult);
+			if (count == 0 && !elseResult) {
+				//Esse objeto morre. count = iterations + 1; //reinicio a contagem, caso haja uma nova exeucao do estado.
+				branch = new BranchInterpreter (stateId, iterations + 1, this);
+				//System.Console.WriteLine("stateId: " + stateId + " | iterations + 1:" + iterations + 1);
+				ThreadPool.QueueUserWorkItem (branch.Go, null);
+			}
+		}
+	}
 }

@@ -87,7 +87,11 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		public ExecutionAction getExecutionAction ()
 		{
-			return (ExecutionAction)action;
+			if (type == TransitionType.SIMPLE) {
+				return (ExecutionAction) action;
+			}
+
+			return null;
 		}
 
 		public override string ToString ()
@@ -97,10 +101,13 @@ namespace br.ufc.pargo.hpe.connector.config
 			s += " | initialState: " + initialState;
 			s += " | finalState: " + finalState;
 			s += " | isElse: " + isElse;
-			if (type == TransitionType.SIMPLE) {
+			if (type == TransitionType.SIMPLE && getExecutionAction ().MetaAction != null) {
 				s += " | action: " + getExecutionAction ().MetaAction.Name;
 			}
-         
+
+			if (type == TransitionType.SIMPLE && getExecutionAction ().Condition != null) {
+				s += " | condition: " + getExecutionAction ().Condition.Slice + "." + getExecutionAction ().Condition.Cond;
+			}         
 			return s;
 		}
 	}

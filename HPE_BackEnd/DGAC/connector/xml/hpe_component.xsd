@@ -140,8 +140,8 @@
     </simpleType>
 
     <complexType name="ConditionType">
-    	<attribute name="slice" type="string"></attribute>
-    	<attribute name="cond" type="string" use="required"></attribute>
+    	<attribute name="slice_id" type="string"></attribute>
+    	<attribute name="cond_id" type="string" use="required"></attribute>
     </complexType>
     <complexType name="ProtocolPerformType">
     	<complexContent>

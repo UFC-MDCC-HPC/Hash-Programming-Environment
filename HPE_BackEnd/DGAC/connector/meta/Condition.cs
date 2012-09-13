@@ -15,6 +15,8 @@ namespace br.ufc.pargo.hpe.connector.meta
 
 		public enum Operator
 		{
+			NULL,
+			FIXED,
 			AND,
 			OR}
 		;
@@ -39,10 +41,10 @@ namespace br.ufc.pargo.hpe.connector.meta
 
 		protected bool fixedValue;
 
-		protected List<Condition> conditions;
+		protected List<Condition> conditions = new List<Condition>();
 
 		protected DCondition guard;
-		protected DCondition Guard {
+		public DCondition Guard {
 			set { guard = value;}
 		}
 
@@ -68,7 +70,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			this.fixedValue = fixedValue;
 			this.slice = null;
 			this.guard = null;
-			oper = null;
+			oper = Operator.FIXED;
 		}
 
 		//TODO criar uma soluçao interativa.
@@ -76,11 +78,14 @@ namespace br.ufc.pargo.hpe.connector.meta
 		{
 			bool result;
 
-			if (guard == null && oper == null) {
+			if (guard == null && oper == Operator.FIXED) {
 				result = fixedValue;
 
 			} else if (guard != null) {
-				result = guard ();
+				result = guard();
+
+			} else if (oper == Operator.NULL) {
+				result = conditions[0].Evaluate();
 
 			} else {
 				result = (oper == Operator.AND);

@@ -51,8 +51,8 @@ namespace br.ufc.pargo.hpe.connector.reconfig {
                 1- se a ação faz parte da unidade a ser removida;
                2- se a ação faz parte da unidade que possúi uma fatia (em qualquer nível) a ser removida;
                */
-               for(int i=0; i< protocol.actions.Length; i++) {
-                  usingAction = protocol.actions[i].MetaAction;
+               for(int i=0; i< protocol.Actions.Count; i++) {
+                  usingAction = protocol.Actions[i].MetaAction;
                   usingSlices.Enqueue((MetaUnit) usingAction.Father);
                   
                   while(!find && usingSlices.Count > 0) {
@@ -75,9 +75,9 @@ namespace br.ufc.pargo.hpe.connector.reconfig {
                      
                      criticalActions.Add(usingAction.Id);
                      
-                     for(int j = 0; j < protocol.matrix.Length; j++) {
-                        for(int k = 0; k < protocol.matrix[j].Length/2; k++) {
-                           if(protocol.matrix[j][k*2] == i) {
+                     for(int j = 0; j < protocol.Matrix.Count; j++) {
+                        for(int k = 0; k < protocol.Matrix[j].Count/Configuration.BASE; k++) {
+                           if(protocol.Matrix[j][k*Configuration.BASE] == i) {
                               statesToStop.Add(j);
                            }
                         }

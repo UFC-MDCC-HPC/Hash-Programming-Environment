@@ -2,7 +2,6 @@
 (c) 2012 by Juliano Efson Sales
       www.mdcc.ufc.br
 ================================================================*/
-
 using System;
 using System.Threading;
 using System.Collections.Generic;
@@ -11,55 +10,72 @@ using br.ufc.pargo.hpe.connector.meta;
 using br.ufc.pargo.hpe.connector.config;
 using br.ufc.pargo.hpe.connector.monitoring;
 
-namespace br.ufc.pargo.hpe.connector.run {
+namespace br.ufc.pargo.hpe.connector.run
+{
 
-   //Classe responsável pela execução de uma ação individual da configuração. Assume a execução de cada ramo do autômato.
-   public class BranchInterpreter {
+	//Classe responsável pela execução de uma ação individual da configuração. Assume a execução de cada ramo do autômato.
+	public class BranchInterpreter
+	{
 
-      //Estado a partir de onde o ramo será executado.
-      protected int _state;
+		//Estado a partir de onde o ramo será executado.
+		protected int state;
 
-      //Transição do ramo a ser executado.
-      protected int _transition;
+		//Transição do ramo a ser executado.
+		protected int transition;
 
-      //Controlador de estado que disparou este executor.
-      protected StateControl _sControl;
+		//Controlador de estado que disparou este executor.
+		protected StateControl sControl;
       
-      //Construtor     
-      public BranchInterpreter(int state, int transition, StateControl sControl) {
-         this._state = state;
-         this._transition = transition;
-         this._sControl = sControl;
-      }
+		//Construtor     
+		public BranchInterpreter (int state, int transition, StateControl sControl)
+		{
+			this.state = state;
+			this.transition = transition;
+			this.sControl = sControl;
+		}
       
-      //Método para executar o ramo.
-      public void Go(Object nothing) {
-         int rid = _sControl.Protocol.matrix[_state][_transition*Configuration.BASE];
-         br.ufc.pargo.hpe.connector.config.ExecutionAction action = _sControl.Protocol.actions[rid];
+		//Método para executar o ramo.
+		public void Go (Object nothing)
+		{
+			int rid = sControl.Protocol.Matrix [state] [(transition * Configuration.BASE) + Configuration.RUNNABLE];
+			br.ufc.pargo.hpe.connector.config.ExecutionAction action = sControl.Protocol.Actions [rid];
+			bool result = false;
 
-         if (action.Condition == null || action.Condition.Evaluate()) {
-            //ThreadPool.QueueUserWorkItem(NotifyMonitors, null);
-            _sControl.Protocol.NotifyStarted(_state, _transition, action.MetaAction.Id);
+			if (action.Condition != null) {
+				result = action.Condition.Evaluate ();
+			}
+
+			if (action.Condition == null || result) {
+				//ThreadPool.QueueUserWorkItem(NotifyMonitors, null);
+				sControl.Protocol.NotifyStarted (state, transition, (action.MetaAction == null ? -1 : action.MetaAction.Id));
             
-            //o MetaAction pode ser nulo quando for uma trasição lambda (nos casos de alt ou if).
-            if(action.MetaAction != null) {
-               action.MetaAction.Run();
-            }
+				//o MetaAction pode ser nulo quando for uma trasição lambda. Controle de fluxo.
+				if (action.MetaAction != null) {
+					action.MetaAction.Run ();
+				}
 
-            _sControl.Notify(true);
+				sControl.Notify (true);
 
-            //ThreadPool.QueueUserWorkItem(NotifyMonitors, null);
-            _sControl.Protocol.NotifyFinalized(_state, _transition, action.MetaAction.Id);
-         } else {
-            _sControl.Notify(false);
-         }
+				//ThreadPool.QueueUserWorkItem(NotifyMonitors, null);
+				sControl.Protocol.NotifyFinalized (state, transition, (action.MetaAction == null ? -1 : action.MetaAction.Id));
+			} else {
+				sControl.Notify (false);
+			}
          
-         int targetState = _sControl.Protocol.matrix[_state][(_transition*Configuration.BASE)+Configuration.TARGET_STATE];
-         int counter = _sControl.Protocol.DecArriving(targetState);
+			int targetState = sControl.Protocol.Matrix [state] [(transition * Configuration.BASE) + Configuration.TARGET_STATE];
          
-         if(counter == 0) {
-            new StateControl(_sControl.Protocol, targetState).Go();
-         }
-      }
-   }
+			//essa condiçao quer dizer que essa transicao é de controle de fluxo.
+			if (action.MetaAction == null) {
+				if (result || action.Condition == null) {
+					new StateControl (sControl.Protocol, targetState).Go ();
+				}
+			} else { //Se a transicao nao é de controle de fluxo, entao eu devo iniciar o proximo estado.
+				int counter = sControl.Protocol.DecArriving (targetState);
+
+				if (counter == 0) {
+					new StateControl (sControl.Protocol, targetState).Go ();
+				}
+			}
+		}
+	}
 }
