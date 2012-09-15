@@ -971,9 +971,56 @@ namespace HPE_DGAC_LoadDB
                         }
 
                     }
+					
+					if (ui.protocol != null)
+						readProtocol(i, ui);
                 }
             }
         }
+		
+		private void readProtocol(Interface i, InterfaceType ui)
+		{
+			ProtocolType main_protocol = ui.protocol;			
+			ActionType[] actions  = ui.action;
+			ConditionType[] conditions = ui.condition;
+			
+//			br.ufc.pargo.hpe.backend.DGAC.BackEnd.iadao.insert(
+			
+			readProtocol(i, "main", main_protocol);
+			
+			foreach (ActionType action in actions)
+			{
+				readProtocol(i, action.id, action.protocol);				
+			}
+			
+			foreach (ConditionType condition in conditions)
+			{
+				readCondition(i, condition);
+			}
+			
+		}
+		
+		private void readProtocol(Interface i, string action_id, ProtocolType protocol)
+		{
+			InterfaceAction action_row = new InterfaceAction();
+			action_row.Id_abstract = i.Id_abstract;
+			action_row.Id_interface = i.Id_interface;
+			action_row.PartitionIndex = i.Partition_index;
+			action_row.Id_action = action_id;
+			action_row.IsCondition = false;
+			action_row.Protocol = "";
+		}
+		
+		private void readCondition(Interface i, ConditionType condition)
+		{
+			InterfaceAction action_row = new InterfaceAction();
+			action_row.Id_abstract = i.Id_abstract;
+			action_row.Id_interface = i.Id_interface;
+			action_row.PartitionIndex = i.Partition_index;
+			action_row.Id_action = condition.id;
+			action_row.IsCondition = true;
+			action_row.Protocol = ""; 
+		}
 
         internal void updateSources(ComponentType ct, AbstractComponentFunctor c)
         {

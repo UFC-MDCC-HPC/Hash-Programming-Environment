@@ -1,36 +1,37 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/connector/load/XmlLoadUtil.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/LoaderConcreteComponent.cs">
     <Files>
-      <File FileName="DGAC/connector/component/IConnectorImpl.cs" Line="1" Column="1" />
-      <File FileName="DGAC/connector/wrapper/WrapperGenerator.cs" Line="35" Column="4" />
-      <File FileName="../DGAC/connector/load/XmlLoadUtil.cs" Line="211" Column="22" />
+      <File FileName="../DGAC/connector/wrapper/WrapperGenerator.cs" Line="600" Column="25" />
+      <File FileName="TestWrapperGenerator/Main.cs" Line="20" Column="1" />
+      <File FileName="../DGAC/LoaderConcreteComponent.cs" Line="127" Column="32" />
+      <File FileName="../DGAC/DGAC.cs" Line="115" Column="54" />
+      <File FileName="../DGAC/Constants.cs" Line="95" Column="36" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="276" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="DGAC" expanded="True">
+          <Node name="DGAC" expanded="True" selected="True">
             <Node name="connector" expanded="True">
-              <Node name="component" expanded="True" />
-              <Node name="load" expanded="True">
-                <Node name="XmlLoadUtil.cs" selected="True" />
-              </Node>
+              <Node name="wrapper" expanded="True" />
             </Node>
+            <Node name="deploy" expanded="True" />
+            <Node name="utils" expanded="True" />
+            <Node name="worker" expanded="True" />
           </Node>
-          <Node name="HPERun" expanded="True" />
-          <Node name="ManagerService" expanded="True">
-            <Node name="Properties" expanded="True" />
-          </Node>
-          <Node name="WorkerService" expanded="True">
-            <Node name="Properties" expanded="True" />
-            <Node name="ProjectInstaller.cs" expanded="True" />
-          </Node>
+          <Node name="TestWrapperGenerator" expanded="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/connector/wrapper/WrapperGenerator.cs" line="120" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/connector/wrapper/WrapperGenerator.cs" line="448" />
+      <Breakpoint file="/home/heron/hash-programming-environment/HPE_BackEnd/TestWrapperGenerator/Main.cs" line="12" />
+      <Breakpoint file="/home/heron/hash-programming-environment/HPE_BackEnd/TestWrapperGenerator/Main.cs" line="25" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

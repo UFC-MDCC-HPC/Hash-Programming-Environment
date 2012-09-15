@@ -101,17 +101,29 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const int KIND_SERVICE = 7;
         public const int KIND_DATASTRUCTURE = 8;
         public const int KIND_TOPOLOGY = 8;
+		
+		public const string KIND_APPLICATION_NAME = "Application";
+        public const string KIND_COMPUTATION_NAME = "Computation";
+        public const string KIND_SYNCHRONIZER_NAME = "Synchronizer";
+        public const string KIND_ENVIRONMENT_NAME = "Environment";
+        public const string KIND_PLATFORM_NAME      = "Platform";
+        public const string KIND_ENUMERATOR_NAME    = "Enumerator";
+        public const string KIND_QUALIFIER_NAME = "Qualifier";
+        public const string KIND_SERVICE_NAME = "Service";
+        public const string KIND_DATASTRUCTURE_NAME = "Data";
+        public const string KIND_TOPOLOGY_NAME = "Topology";
 
         public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()
         {
             {"Application", Constants.KIND_APPLICATION},
-            {"Architecture", Constants.KIND_PLATFORM},
+            {"Platform", Constants.KIND_PLATFORM},
             {"Computation", Constants.KIND_COMPUTATION},
             {"Data",Constants.KIND_DATASTRUCTURE},
             {"Enumerator",Constants.KIND_ENUMERATOR},
             {"Environment",Constants.KIND_ENVIRONMENT},
             {"Qualifier",Constants.KIND_QUALIFIER},
             {"Synchronizer", Constants.KIND_SYNCHRONIZER},
+            {"Service", Constants.KIND_SERVICE},
             {"Topology", Constants.KIND_TOPOLOGY}
         };
 

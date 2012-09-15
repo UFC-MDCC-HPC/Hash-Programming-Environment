@@ -109,7 +109,8 @@ public class InterfaceParameterDAO{
            "SELECT id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order " +
            "FROM interfaceparameters "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
-           "id_abstract=" + id_abstract;
+           "id_abstract=" + id_abstract + 
+		   " ORDER BY par_order";
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())

@@ -87,16 +87,13 @@ namespace br.ufc.pargo.hpe.backend
                 ChannelServices.UnregisterChannel(ch);
             }
 
-            //TODO: este metodo ainda deve ser trabalhado para dinamicidade
-            //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
-            //o qual será enviado aos workers		
             public void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
             {
                 try
                 {
                     Connector.openConnection();
                     Connector.beginTransaction();
-                    ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);
+                    //ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);
 
                     bool exists = false;
                     LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
@@ -128,7 +125,8 @@ namespace br.ufc.pargo.hpe.backend
                     Console.Error.Write("Compiling sources ...");
 
                     ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
-
+					sendToCompile(infoCompile, userName, password, curDir, exists);
+					/*
                     foreach (LoaderApp.InfoCompile interfaceToCompile in infoCompile)
                     {
                         int id_abstract = interfaceToCompile.id;
@@ -155,7 +153,7 @@ namespace br.ufc.pargo.hpe.backend
                         if (!exists)
                             idao.setPublicKey(id_abstract, interfaceName, partition_index, publicKey);
                     }
-
+					 */
                     Console.Error.Write("ok ");
 
                     Connector.commitTransaction(); // if it is ok, commit ...
@@ -176,40 +174,10 @@ namespace br.ufc.pargo.hpe.backend
                     Connector.closeConnection();
                 }
             }
-
-            //TODO: este metodo ainda deve ser trabalhado para dinamicidade
-            //Este método deve receber o xml rerente a uma configuração e formar as referencias necessárias a sua compilação
-            //o qual será enviado aos workers		
-            public void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
-            {
-                try
-                {
-                    Connector.openConnection();
-                    Connector.beginTransaction();
-
-                    ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);
-
-                    bool exists = false;
-                    LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
-                    DGAC.database.Component cConc = null;
-                    HashComponent cConc_ = null;
-
-                    concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
-                    if (cConc_ == null)
-                    {
-                        cConc = (DGAC.database.Component)concreteloader.loadComponent(ct);
-                    }
-                    else
-                    {
-                        Console.Error.WriteLine("Concrete component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
-                        cConc = (DGAC.database.Component)cConc_;
-                        concreteloader.updateSources(ct, cConc);
-                        exists = true;
-                    }
-
-                    Console.Error.Write("Compiling sources ...");
-
-                    ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
+			
+			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, bool set_public_key)
+			{
+                    ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);                     
 
                     foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                     {
@@ -232,9 +200,41 @@ namespace br.ufc.pargo.hpe.backend
                                                                            userName,
                                                                            password,
                                                                            curDir);
-                        if (!exists && outputType != Constants.EXE_OUT)
+                        if (!set_public_key)
                             udao.setPublicKey(cuid, unitName, publicKey);
                     }
+			}
+
+            public void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
+            {
+                try
+                {
+                    Connector.openConnection();
+                    Connector.beginTransaction();
+
+
+                    bool exists = false;
+                    LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
+                    DGAC.database.Component cConc = null;
+                    HashComponent cConc_ = null;
+
+                    concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
+                    if (cConc_ == null)
+                    {
+                        cConc = (DGAC.database.Component)concreteloader.loadComponent(ct);
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine("Concrete component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
+                        cConc = (DGAC.database.Component)cConc_;
+                        concreteloader.updateSources(ct, cConc);
+                        exists = true;
+                    }
+
+                    Console.Error.Write("Compiling sources ...");
+					
+					ICollection<LoaderApp.InfoCompile> infoCompile= LoaderApp.getReferences_Concrete(cConc.Id_concrete);
+					sendToCompile(infoCompile, userName, password, curDir, exists);
 
                     Console.Error.Write("ok ");
 

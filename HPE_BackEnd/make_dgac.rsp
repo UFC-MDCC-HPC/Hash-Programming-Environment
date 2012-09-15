@@ -37,6 +37,7 @@ DGAC/connector/config/monitoring/*.cs
 DGAC/connector/load/*.cs
 DGAC/connector/meta/*.cs
 DGAC/connector/run/*.cs
+DGAC/connector/component/*.cs
 
 -target:library
 

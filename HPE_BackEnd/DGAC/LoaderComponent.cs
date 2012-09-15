@@ -132,7 +132,6 @@ namespace HPE_DGAC_LoadDB
 
         protected IList<AbstractComponentFunctorApplication> newAbstractComponentFunctorApplicationForImplements(ComponentInUseType c)
         {
-			Console.WriteLine("----------- 1");
 		    IList<AbstractComponentFunctor> ancestrals = new List<AbstractComponentFunctor>();
 			
 			{
@@ -142,7 +141,6 @@ namespace HPE_DGAC_LoadDB
                     return null;
                 }
 				
-			    Console.WriteLine("----------- 2" + (a.Id_functor_app_supertype));
 			    ancestrals.Add(a);				
 			    while (a.Id_functor_app_supertype >0) 
 			    {

@@ -1118,6 +1118,265 @@ public partial class UnitType {
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ConditionType {
+    
+    private GuardType guardField;
+    
+    private string idField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public GuardType guard {
+        get {
+            return this.guardField;
+        }
+        set {
+            this.guardField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string id {
+        get {
+            return this.idField;
+        }
+        set {
+            this.idField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(GuardConditionType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(GuardNotType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(GuardOrType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(GuardAndType))]
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public abstract partial class GuardType {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class GuardConditionType : GuardType {
+    
+    private string conditionField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string condition {
+        get {
+            return this.conditionField;
+        }
+        set {
+            this.conditionField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class GuardNotType : GuardType {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class GuardOrType : GuardType {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class GuardAndType : GuardType {
+}
+
+/// <remarks/>
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolActivationType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolCompositionType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolAltType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolParType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolSeqType))]
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public abstract partial class ProtocolType {
+    
+    private GuardType guardField;
+    
+    private bool repeatField;
+    
+    private bool repeatFieldSpecified;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public GuardType guard {
+        get {
+            return this.guardField;
+        }
+        set {
+            this.guardField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public bool repeat {
+        get {
+            return this.repeatField;
+        }
+        set {
+            this.repeatField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool repeatSpecified {
+        get {
+            return this.repeatFieldSpecified;
+        }
+        set {
+            this.repeatFieldSpecified = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ProtocolActivationType : ProtocolType {
+    
+    private string action_idField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string action_id {
+        get {
+            return this.action_idField;
+        }
+        set {
+            this.action_idField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolAltType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolParType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(ProtocolSeqType))]
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ProtocolCompositionType : ProtocolType {
+    
+    private ProtocolType[] actionsField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("actions", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public ProtocolType[] actions {
+        get {
+            return this.actionsField;
+        }
+        set {
+            this.actionsField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ProtocolAltType : ProtocolCompositionType {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ProtocolParType : ProtocolCompositionType {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ProtocolSeqType : ProtocolCompositionType {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+public partial class ActionType {
+    
+    private ProtocolType protocolField;
+    
+    private string idField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public ProtocolType protocol {
+        get {
+            return this.protocolField;
+        }
+        set {
+            this.protocolField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string id {
+        get {
+            return this.idField;
+        }
+        set {
+            this.idField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
 public partial class InterfaceParameterType {
     
     private string paridField;
@@ -1444,202 +1703,6 @@ public partial class SourceType {
 }
 
 /// <remarks/>
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionSignalType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionWaitType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionSkipType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionActivateType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorAltType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorParType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorSeqType))]
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionType {
-    
-    private VisualElementAttributes visualDescriptionField;
-    
-    private string labelField;
-    
-    private uint repeatField;
-    
-    private bool repeatFieldSpecified;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public VisualElementAttributes visualDescription {
-        get {
-            return this.visualDescriptionField;
-        }
-        set {
-            this.visualDescriptionField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string label {
-        get {
-            return this.labelField;
-        }
-        set {
-            this.labelField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public uint repeat {
-        get {
-            return this.repeatField;
-        }
-        set {
-            this.repeatField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    public bool repeatSpecified {
-        get {
-            return this.repeatFieldSpecified;
-        }
-        set {
-            this.repeatFieldSpecified = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionSignalType : ActionType {
-    
-    private string semaphoreField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string semaphore {
-        get {
-            return this.semaphoreField;
-        }
-        set {
-            this.semaphoreField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionWaitType : ActionType {
-    
-    private string semaphoreField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string semaphore {
-        get {
-            return this.semaphoreField;
-        }
-        set {
-            this.semaphoreField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionSkipType : ActionType {
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionActivateType : ActionType {
-    
-    private string sliceRefField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string sliceRef {
-        get {
-            return this.sliceRefField;
-        }
-        set {
-            this.sliceRefField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorAltType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorParType))]
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(ActionCombinatorSeqType))]
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionCombinatorType : ActionType {
-    
-    private ActionType[] actionField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("action", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public ActionType[] action {
-        get {
-            return this.actionField;
-        }
-        set {
-            this.actionField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionCombinatorAltType : ActionCombinatorType {
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionCombinatorParType : ActionCombinatorType {
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
-public partial class ActionCombinatorSeqType : ActionCombinatorType {
-}
-
-/// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1732,8 +1795,6 @@ public partial class InterfaceType {
     
     private InterfaceSliceType[] sliceField;
     
-    private ActionType protocolField;
-    
     private SourceType[] sourcesField;
     
     private VisualElementAttributes visualDescriptionField;
@@ -1743,6 +1804,12 @@ public partial class InterfaceType {
     private string[] externalReferencesField;
     
     private InterfaceParameterType[] parameterField;
+    
+    private ActionType[] actionField;
+    
+    private ConditionType[] conditionField;
+    
+    private ProtocolType protocolField;
     
     private string iRefField;
     
@@ -1758,17 +1825,6 @@ public partial class InterfaceType {
         }
         set {
             this.sliceField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public ActionType protocol {
-        get {
-            return this.protocolField;
-        }
-        set {
-            this.protocolField = value;
         }
     }
     
@@ -1824,6 +1880,39 @@ public partial class InterfaceType {
         }
         set {
             this.parameterField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("action", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public ActionType[] action {
+        get {
+            return this.actionField;
+        }
+        set {
+            this.actionField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("condition", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public ConditionType[] condition {
+        get {
+            return this.conditionField;
+        }
+        set {
+            this.conditionField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    public ProtocolType protocol {
+        get {
+            return this.protocolField;
+        }
+        set {
+            this.protocolField = value;
         }
     }
     

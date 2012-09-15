@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using br.ufc.pargo.hpe.backend.DGAC.database;
+using br.ufc.hpe.backend.DGAC;
+using System.CodeDom;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 
 namespace HPE_DGAC_LoadDB
 {
@@ -14,7 +17,6 @@ namespace HPE_DGAC_LoadDB
 
        public override bool componentExists(string hash_component_uid, out HashComponent cRef)
        {
-       //    ComponentDAO cdao = new ComponentDAO();
            Component concC = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve_uid(hash_component_uid);
            if (concC == null)
            {
@@ -37,16 +39,13 @@ namespace HPE_DGAC_LoadDB
         {
             this.xc = c;
             cConc = (Component) base.loadComponent(c);
-            // unfoldEnumerators(cConc); //This is now done dynamically. 
             return cConc;
         }
 
        private AbstractComponentFunctor lookForAbstractComponentFunctorOfConcreteComponent(Component cConc)
        {
-         //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
            AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cConc.Id_functor_app);
            
-         //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
            AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
            return acf;
        }
@@ -94,26 +93,6 @@ namespace HPE_DGAC_LoadDB
 
 
 
-/*       private void loadInners(Component cConc)
-       {
-           AbstractComponentFunctorApplication absCapp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cConc.Id_functor_app);
-
-           int id_abstract = absCapp.Id_abstract;
-
-           IList<InnerComponent> cs = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.list(id_abstract);
-
-           foreach (InnerComponent c in cs)
-           {
-               InnerConcreteComponent icc = new InnerConcreteComponent();
-               icc.Id_concrete = cConc.Id_concrete;
-               icc.Id_inner = c.Id_inner;
-               icc.Id_index = -1;
-
-               br.ufc.pargo.hpe.backend.DGAC.BackEnd.iccdao.insert(icc);
-
-           }
-       }
-		 */
        private IDictionary<string, Unit> loadUnits(Component c)
         {
             IDictionary<string, Unit> units = new Dictionary<string, Unit>();
@@ -152,47 +131,71 @@ namespace HPE_DGAC_LoadDB
                 uu.Order = i.Order;
 
                 units.Add(uu.Id_unit, uu);
-
-                int order = 0;
-                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file) 
-                {
-                     SourceCode ss = new SourceCode();
+				if (ui.sources == null && ui.protocol != null && (c.Kind.Equals(Constants.KIND_COMPUTATION_NAME) 
+				                                               || c.Kind.Equals(Constants.KIND_SYNCHRONIZER_NAME)))
+				{
+					 IWrapperGenerator wg = new WrapperGenerator();
+					 string[] dependencies = null;
+					 CodeCompileUnit compile_unit = wg.create_wrapper(uu.Id_abstract, uu.Id_interface, uu.Partition_index, out dependencies); 
+					 string source_code = wg.generate_source_code(compile_unit);
+					
+				     SourceCode ss = new SourceCode();
                      ss.Type_owner = 'u';
                      ss.Id_owner_container = uu.Id_concrete;
                      ss.Id_owner = uu.Id_unit;
-                     ss.Contents = sft.contents;
-                     ss.File_type= sft.fileType.Equals("exe") ? "exe" : "dll";
-                     ss.File_name = sft.name ;
-                     ss.Order = order++;
+                     ss.Contents = source_code;
+                     ss.File_type= "dll";
+                     ss.File_name = ui.iRef + ".cs" ;
+                     ss.Order = 0;
                      br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert(ss);
-
-                     int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
-                                (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
-                     if (size > 0)
-                     {
-                         string[] allRefs = new string[size];
-                         if (ui.externalReferences != null)
-                             ui.externalReferences.CopyTo(allRefs, 0);
-
-                         if (sft.externalDependency != null)
-                             sft.externalDependency.CopyTo(allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
-
-                         foreach (string extRef in allRefs)
-                         {
-                             SourceCodeReference ssr = new SourceCodeReference();
-                             ssr.Type_owner = ss.Type_owner;
-                             ssr.Id_owner_container = ss.Id_owner_container;
-                             ssr.Id_owner = ss.Id_owner;
-                             ssr.File_name = ss.File_name;
-                             ssr.Reference = extRef;
-                             if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) == null)
-                             {
-                                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
-							 }
-                         }
-                     }
-
-                }
+				}
+				else if (ui.sources != null)
+				{
+	                int order = 0;
+	                foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file) 
+	                {
+	                     SourceCode ss = new SourceCode();
+	                     ss.Type_owner = 'u';
+	                     ss.Id_owner_container = uu.Id_concrete;
+	                     ss.Id_owner = uu.Id_unit;
+	                     ss.Contents = sft.contents;
+	                     ss.File_type= sft.fileType.Equals("exe") ? "exe" : "dll";
+	                     ss.File_name = sft.name ;
+	                     ss.Order = order++;
+	                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.insert(ss);
+	
+	                     int size = (sft.externalDependency == null ? 0 : sft.externalDependency.Length) +
+	                                (ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+	                     if (size > 0)
+	                     {
+	                         string[] allRefs = new string[size];
+	                         if (ui.externalReferences != null)
+	                             ui.externalReferences.CopyTo(allRefs, 0);
+	
+	                         if (sft.externalDependency != null)
+	                             sft.externalDependency.CopyTo(allRefs, ui.externalReferences == null ? 0 : ui.externalReferences.Length);
+	
+	                         foreach (string extRef in allRefs)
+	                         {
+	                             SourceCodeReference ssr = new SourceCodeReference();
+	                             ssr.Type_owner = ss.Type_owner;
+	                             ssr.Id_owner_container = ss.Id_owner_container;
+	                             ssr.Id_owner = ss.Id_owner;
+	                             ssr.File_name = ss.File_name;
+	                             ssr.Reference = extRef;
+	                             if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.retrieve(ssr) == null)
+	                             {
+	                                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.scrdao.insert(ssr);
+								 }
+	                         }
+	                     }
+	
+	                }
+				} 
+				else 
+				{
+					throw new Exception("Unit " + uu.Id_unit + " neither has a source code nor is a connector.");
+				}
 
 				UnitDAO udao = new UnitDAO();
                 udao.insert(uu);
