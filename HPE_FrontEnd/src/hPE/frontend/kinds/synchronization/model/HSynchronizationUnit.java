@@ -40,8 +40,8 @@ public class HSynchronizationUnit extends HActivateUnit implements IHSynchroniza
 
 	public HInterface createInterface(Point location) throws HPEAbortException{
 		HSynchronizationInterface i = (HSynchronizationInterface) super.createInterface(location);
-		if (this.getSlices().size() > 0) 
-			i.buildDefaultProtocol();			
+		//if (this.getSlices().size() > 0) 
+			//i.buildDefaultProtocol();			
         return i;
 	}
 	

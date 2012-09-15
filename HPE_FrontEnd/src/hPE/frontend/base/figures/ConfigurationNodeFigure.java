@@ -67,7 +67,7 @@ public abstract class ConfigurationNodeFigure extends Figure implements INameEdi
 	
 	public void setName(String the_name) {
 		Label aux = new Label(the_name);
-		Font font = name.getFont(); // new Font(null, "Arial", 12, SWT.BOLD);
+		Font font = new Font(null, "Arial", 12, SWT.BOLD);
 		aux.setFont(font); 
 		
 		Rectangle bounds = this.getBounds().getResized(dx, dy);

@@ -2,6 +2,7 @@ package hPE;
 
 import hPE.frontend.backend.HPEPlatform;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.connector.xml.XMLConfigurationGenerator;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 
@@ -73,6 +74,11 @@ public class HPEResourceNavigator extends ResourceNavigator {
 		   } else if (pathIn.getFileExtension().equals("hpe")) {
 			   String fname = pathIn.lastSegment();
 			   IMenuManager mainMenu = menu;//get ref to main menu manager
+			   
+			   
+			   
+			   
+			   
 			   mainMenu.add(
 					   new Action("Deploy " + fname) {
 						   public void run()  {
@@ -123,6 +129,40 @@ public class HPEResourceNavigator extends ResourceNavigator {
 						}
 				);
 			   
+			   mainMenu.add(
+					   new Action("Generate HCL (xml) for " + fname) {
+						   public void run()  {
+							        DataInputStream in = null;
+                                    try{
+								    	IPath pathIn_output = pathIn.removeFileExtension().addFileExtension("xml");
+                                    	
+										java.io.File file = new File(pathIn_output.toOSString());
+										URI uri = URI.createFileURI(pathIn.toOSString());
+										
+									    HComponent c = HComponentFactoryImpl.eInstance.loadComponent(uri,true, false, false, false, false);
+									    
+                                    	XMLConfigurationGenerator.saveComponent(c, file);
+                                    	
+                                    	JOptionPane.showMessageDialog(null, "Finished ! " + file.toString() + " created !");   
+									    }
+                                    catch (Exception e)
+									{//Catch exception if any
+									      //System.err.println("Error: " + e.getMessage());
+									    	JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+									}
+									finally {
+									  	if (in != null) {
+											try {
+												in.close();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+									  	}
+									}
+						   }
+						}
+				);
 		   }
 	   }
 

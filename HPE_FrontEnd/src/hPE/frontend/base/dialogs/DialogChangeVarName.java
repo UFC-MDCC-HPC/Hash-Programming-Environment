@@ -119,9 +119,17 @@ public class DialogChangeVarName extends JDialog {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
 					
-					Pair<String, List<HComponent>> item = (Pair<String,List<HComponent>>) getJComboBoxVarName().getSelectedItem();					
-					HComponent cVar = item.snd().get(0); 
-					String varId = cVar.getVariableName((HComponent) cVar.getConfiguration());
+					Pair<String, List<HComponent>> item = (Pair<String,List<HComponent>>) getJComboBoxVarName().getSelectedItem();
+					String varId;
+					if (item != null) 
+					{
+						HComponent cVar = item.snd().get(0); 
+						varId = cVar.getVariableName((HComponent) cVar.getConfiguration());
+					} 
+					else
+					{
+						varId = "?";
+					}
 					
 					jTextFieldNewVarName.setText(varId);
 					
@@ -260,7 +268,7 @@ public class DialogChangeVarName extends JDialog {
 	        		// innerC.setVariableName(newVarName);
 	        		String oldVarName = innerC.getVariableName((HComponent) innerC.getTopConfiguration());
 	        		HComponent ownerOfinnerC = (HComponent) innerC.getConfiguration();
-	        		ownerOfinnerC.changeVariableName(oldVarName, newVarName);
+	        		ownerOfinnerC.changeVariableName(/*oldVarName*/ varToBeChanged.fst(), newVarName);
 	        		
 		        }
 	        }

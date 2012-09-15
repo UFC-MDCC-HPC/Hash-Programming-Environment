@@ -19,6 +19,7 @@ import hPE.frontend.base.actions.SetParameterAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
 import hPE.frontend.base.actions.ShowInterfaceAction;
+import hPE.frontend.base.actions.SplitEntryAction;
 import hPE.frontend.base.actions.SupplyParameterAction;
 import hPE.frontend.base.actions.UnbindAction;
 import hPE.frontend.base.interfaces.IComponent;
@@ -295,6 +296,11 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 		}
 		
 		action = getAction(SetMultipleAction.SET_MULTIPLE);
+		if (action.isEnabled())	{ 
+			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+		}
+
+		action = getAction(SplitEntryAction.SPLIT_ENTRY);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}

@@ -4,6 +4,7 @@ package hPE.frontend.base.commands;
 
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.IBindingTarget;
 import hPE.frontend.base.model.IHUnit;
 
@@ -33,9 +34,24 @@ public class BindingCreateCommand extends Command {
 		
 	   
 		try {
-
+            boolean fail = false;
 			HComponent configuration = (HComponent) the_unit.getConfiguration();
-			setBindingTarget(configuration.createBinding(the_source,the_unit,where));
+			if (the_source.getBinding() != null && the_source.getBinding().isVisible()) 
+			{
+				SplitEntryCommand c = new SplitEntryCommand((HUnit) the_source);
+				if (c.canExecute()) 
+				{
+				  c.execute();
+				  the_source = c.getReplica();
+				} 
+				else 
+				{
+					fail = true;
+				}
+			}
+			if (!fail)
+		      setBindingTarget(configuration.createBinding(the_source,the_unit,where));
+			
 					
 		} catch (HPEAbortException e) {
 			String msg = e.getMessage();
@@ -43,32 +59,7 @@ public class BindingCreateCommand extends Command {
 		}
 	}
 		   
-/*
-  	   if (the_unit.getInterface() != null && !the_unit.isInterfaceEditable()) {
-		   JOptionPane.showMessageDialog(null, "Non Editable Interface !","Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
-	   } else {
-			try {
-				
-				HComponent configuration = null;
-				
-				if (the_target == null) {			
-					configuration = (HComponent) the_unit.getConfiguration();
-					the_target = the_source.newSlice(the_unit,where);
-					HInterface i = (HInterface) the_source.getInterface();
-					i.setEditable(false);
-				} else {
-					// ERROR !!!!
-				 }
-				
-				new HBinding(configuration,the_target,the_source);
-				
-			} catch (HPEAbortException e) {
-				String msg = e.getMessage();
-				JOptionPane.showMessageDialog(null, msg,"Aborting Operation !", JOptionPane.ERROR_MESSAGE);
-			}
-	}
 
- */
 	
 	
 	
@@ -93,8 +84,8 @@ public class BindingCreateCommand extends Command {
 	public boolean canExecute() {
 		
 		if (the_source != null) {
-		   if (the_source.getBinding() != null && the_source.getBinding().isVisible()) {
-			   JOptionPane.showMessageDialog(null, "The unit is connected !","Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
+		   if (the_source.getBinding() != null && the_source.getBinding().isVisible() && !the_source.isMultiple()) {
+			   JOptionPane.showMessageDialog(null, "The singleton unit is connected !","Aborting Operation !", JOptionPane.ERROR_MESSAGE);			   
 			   return false;
 		   }
 		   HComponent c = (HComponent) the_source.getConfiguration();

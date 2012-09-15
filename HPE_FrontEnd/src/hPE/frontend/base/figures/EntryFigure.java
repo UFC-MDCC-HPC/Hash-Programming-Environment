@@ -20,7 +20,7 @@ public class EntryFigure extends NodeFigure {
 	}
 		
 	public void paintFigure(Graphics g) {
-		if (is_multiple)
+		if (!is_multiple)
 		{
 		   super.paintFigure(g);
 		} 

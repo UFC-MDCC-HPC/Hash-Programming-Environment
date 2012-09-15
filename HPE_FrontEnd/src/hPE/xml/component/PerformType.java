@@ -37,7 +37,7 @@ public interface PerformType extends EObject {
 	 * @return the value of the '<em>Action Id</em>' attribute.
 	 * @see #setActionId(String)
 	 * @see hPE.xml.component.ComponentPackage#getPerformType_ActionId()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='action_id'"
 	 * @generated
 	 */

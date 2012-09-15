@@ -195,6 +195,36 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 		this.getActualUnit().setMultiple(is_multiple);		
 	}
 
+	@Override
+	public IHPrimUnit cloneOf() {
+		// TODO Auto-generated method stub
+		return this.getActualUnit().cloneOf();
+	}
+
+	@Override
+	public int getIndexOfClone(IHPrimUnit u) {
+		// TODO Auto-generated method stub
+		return this.getActualUnit().getIndexOfClone(u);
+	}
+
+	@Override
+	public boolean isClone() {
+		// TODO Auto-generated method stub
+		return this.getActualUnit().isClone();
+	}
+
+	@Override
+	public boolean isCloned() {
+		// TODO Auto-generated method stub
+		return this.getActualUnit().isCloned();
+	}
+
+	@Override
+	public int getIndex() {
+		// TODO Auto-generated method stub
+		return this.getActualUnit().getIndex();
+	}
+
 
 
 

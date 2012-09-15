@@ -272,11 +272,10 @@ public class HInterfaceSig implements Serializable, IHasColor  {
 		
 		this.ports = new ArrayList<HPort>();
 
-
 		for (HUnitSlice usa : u.getSlices()) {
 			
 			HBinding binding = usa.getBinding();
-			HInterfaceSlice s = usa.newInterfaceSlice(binding.getEntry().getName2(),this);
+			HInterfaceSlice s = usa.newInterfaceSlice(binding.getEntry().getConfiguration().getRef(),this);
 			
 			s.resetDefaultName();
 							

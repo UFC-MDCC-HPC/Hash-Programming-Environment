@@ -119,13 +119,13 @@ public interface ProtocolChoiceType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Perform</em>' containment reference.
-	 * @see #setPerform(PerformType)
+	 * @see #setPerform(ProtocolPerformType)
 	 * @see hPE.xml.component.ComponentPackage#getProtocolChoiceType_Perform()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='perform'"
 	 * @generated
 	 */
-	PerformType getPerform();
+	ProtocolPerformType getPerform();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.ProtocolChoiceType#getPerform <em>Perform</em>}' containment reference.
@@ -135,6 +135,6 @@ public interface ProtocolChoiceType extends EObject {
 	 * @see #getPerform()
 	 * @generated
 	 */
-	void setPerform(PerformType value);
+	void setPerform(ProtocolPerformType value);
 
 } // ProtocolChoiceType

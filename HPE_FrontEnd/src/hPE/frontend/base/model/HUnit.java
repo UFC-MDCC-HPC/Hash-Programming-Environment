@@ -1,10 +1,7 @@
 package hPE.frontend.base.model;
 
-import hPE.frontend.base.commands.BindingCreateCommand;
 import hPE.frontend.base.commands.LiftUnitCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
-import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IUnit;
 
 import java.util.ArrayList;
@@ -12,8 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Stack;
 import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
@@ -38,9 +33,22 @@ public abstract class HUnit extends HPrimUnit
 	 * @see hPE.model.IHUnit#getSlices()
 	 */
 	public List<HUnitSlice> getSlices() {
-		if (unitSlices == null) {
-			unitSlices = new ArrayList<HUnitSlice>();
+		
+		//List<HUnitSlice> unitSlices = new ArrayList<HUnitSlice>();		
+		if (this.unitSlices == null) {
+			this.unitSlices = new ArrayList<HUnitSlice>();
 		}
+		
+		//for (HUnitSlice slice : this.unitSlices)
+		//{
+		//	IUnit u = (IUnit) slice.getComponentEntry();
+		//	HComponent c = (HComponent) u.getConfiguration();
+		//	if (c.getConfiguration() == this.getConfiguration()) 
+		//	{
+		//		unitSlices.add(slice);
+		//	}
+		//}
+		
 		return unitSlices;
 	}
 	
@@ -745,33 +753,37 @@ public abstract class HUnit extends HPrimUnit
 	    
 	    public HPrimUnit createReplica(int shift) {
 	    	HUnit u = (HUnit) super.createReplica(shift);
-	    	u.stubs = new ArrayList<HUnitStub>(u.stubs);
+	    	//u.stubs = new ArrayList<HUnitStub>(this.stubs);
 	    	u.unitSlices = new ArrayList<HUnitSlice>();
-	    	for (HUnitSlice s : this.getSlices()) {
-	    		HBinding b = s.getBinding();
-	    		Point where = s.getBounds().getLocation();
-	    		IHUnit src = b.getEntry();
-	    		IHUnit trg = u;
-	    		BindingCreateCommand bcc = new BindingCreateCommand(src);
-	    		bcc.setUnit(trg);
-	    		bcc.setWhere(where);
-	    		bcc.execute();
-	    		HUnitSlice uSlice = (HUnitSlice) bcc.getBindingTarget();
-	    		uSlice.getBinding().setCloneId(shift);
-	    		if (s.getInterfaceSlice() != null) {
-	    			uSlice.setInterfaceSlice(s.getInterfaceSlice());
-	    		}
-	    	}
-	    	List<HBinding> bsR = new ArrayList<HBinding>();
-	    	for (HBinding b : this.getBindings()) {
-	    		if (b.getCloneId() == shift) {
-	    			b.setCloneId(-1);
-	    			bsR.add(b);
-	    			b.setEntry(u);
-	    			u.addBinding(b);
-	    		}
-	    	}
-	    	this.getBindings().removeAll(bsR);
+	    	//for (HUnitSlice s : this.getSlices()) {
+	    	//	HBinding b = s.getBinding();
+	    	//	Point where = s.getBounds().getLocation();
+	    	//	IHUnit src = b.getEntry();
+	    	//	IHUnit trg = u;
+	    	//	BindingCreateCommand bcc = new BindingCreateCommand(src);
+	    	//	bcc.setUnit(trg);
+	    	//	bcc.setWhere(where);
+	    	//	bcc.execute();
+	    	//	HUnitSlice uSlice = (HUnitSlice) bcc.getBindingTarget();
+	    	//	uSlice.getBinding().setCloneId(shift);
+	    	//	if (s.getInterfaceSlice() != null) {
+	    	//		uSlice.setInterfaceSlice(s.getInterfaceSlice());
+	    	//	}
+	    	//}
+	    	//List<HBinding> bsR = new ArrayList<HBinding>();
+	    	//for (HBinding b : this.getBindings()) {
+	    	//	if (b.getCloneId() == shift) {
+	    	//		b.setCloneId(-1);
+	    	//		bsR.add(b);
+	    	//		b.setEntry(u);
+	    	//		u.addBinding(b);
+	    	//	}
+	    	//}
+	    	//this.getBindings().removeAll(bsR);
+	    
+	    	HComponent c = (HComponent)u.getConfiguration();
+	    	if (c.isTopConfiguration())
+	    			c.updateUnits();
 	    	
 	    	return u;	    	
 	    }
@@ -880,6 +892,8 @@ public abstract class HUnit extends HPrimUnit
             	
             	    /* LOOK FOR SUPPLYING IF IT EXISTS ... */
                     IHUnit u = (IHUnit)s.getBinding().getEntry();
+                    if (((HUnit) u).isClone()) 
+                    	u = (IHUnit) ((HUnit) u).cloneOf();
                     HComponent cu = (HComponent) u.getConfiguration();                    
                     HComponent cu_ = (HComponent) (cu.getSupplier() == null ? cu : cu.getSupplier());
                     IHUnit ux = cu_.getUnits().get(cu.getUnits().indexOf(u));

@@ -1047,4 +1047,15 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return this.baseName;
 	}
 
+	public void resetDefaultPortNames() {
+		for (HPort port : this.getPorts())
+		{
+			for (HInterfaceSlice slice : port.getInterfaceSlices())
+			{
+			   slice.resetDefaultName();
+			}
+		}
+		
+	}
+
 }

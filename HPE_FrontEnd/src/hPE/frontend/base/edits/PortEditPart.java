@@ -60,7 +60,8 @@ public abstract class PortEditPart extends AbstractGraphicalEditPart implements 
 		
 		HPort p = (HPort) getModel();
 		for (HInterfaceSlice s : p.getOwners()) {
-  		   r.add("PortOwnership.".concat(s.toString()).concat(p.toString()));
+			if (!s.isInherited())
+  		        r.add("PortOwnership.".concat(s.toString()).concat(p.toString()));
 		}
 		
 		
@@ -91,7 +92,7 @@ public abstract class PortEditPart extends AbstractGraphicalEditPart implements 
             cRef = "?";
         }
   	    
-		Label ff = new Label(" " + visibility + " slice " + rp.getName()+ " : " + cRef + "." + uRef + " ");
+		Label ff = new Label(" " + visibility + " slice " + uRef + " of " + cRef);
 		
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font);

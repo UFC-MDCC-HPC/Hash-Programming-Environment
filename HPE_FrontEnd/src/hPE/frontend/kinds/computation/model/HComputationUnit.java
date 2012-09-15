@@ -30,7 +30,7 @@ public class HComputationUnit extends HActivateUnit implements IHComputationUnit
 
 	public HInterface createInterface(Point location) throws HPEAbortException{
 		HComputationInterface i = (HComputationInterface) super.createInterface(location);
-		i.buildDefaultProtocol();			
+		//i.buildDefaultProtocol();			
         return i;
 	}
 	

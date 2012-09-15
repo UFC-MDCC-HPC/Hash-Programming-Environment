@@ -7,30 +7,29 @@
 package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.PerformType;
+import hPE.xml.component.ProtocolPerformType;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Perform Type</b></em>'.
+ * An implementation of the model object '<em><b>Protocol Perform Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link hPE.xml.component.impl.PerformTypeImpl#getActionId <em>Action Id</em>}</li>
- *   <li>{@link hPE.xml.component.impl.PerformTypeImpl#getSliceId <em>Slice Id</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ProtocolPerformTypeImpl#getActionId <em>Action Id</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ProtocolPerformTypeImpl#getSliceId <em>Slice Id</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PerformTypeImpl extends EObjectImpl implements PerformType {
+public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements ProtocolPerformType {
 	/**
 	 * The default value of the '{@link #getActionId() <em>Action Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -76,7 +75,7 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PerformTypeImpl() {
+	protected ProtocolPerformTypeImpl() {
 		super();
 	}
 
@@ -87,7 +86,7 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ComponentPackage.Literals.PERFORM_TYPE;
+		return ComponentPackage.Literals.PROTOCOL_PERFORM_TYPE;
 	}
 
 	/**
@@ -108,7 +107,7 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 		String oldActionId = actionId;
 		actionId = newActionId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PERFORM_TYPE__ACTION_ID, oldActionId, actionId));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID, oldActionId, actionId));
 	}
 
 	/**
@@ -129,7 +128,7 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 		String oldSliceId = sliceId;
 		sliceId = newSliceId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PERFORM_TYPE__SLICE_ID, oldSliceId, sliceId));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID, oldSliceId, sliceId));
 	}
 
 	/**
@@ -140,9 +139,9 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentPackage.PERFORM_TYPE__ACTION_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
 				return getActionId();
-			case ComponentPackage.PERFORM_TYPE__SLICE_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				return getSliceId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,10 +155,10 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentPackage.PERFORM_TYPE__ACTION_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
 				setActionId((String)newValue);
 				return;
-			case ComponentPackage.PERFORM_TYPE__SLICE_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				setSliceId((String)newValue);
 				return;
 		}
@@ -174,10 +173,10 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.PERFORM_TYPE__ACTION_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
 				setActionId(ACTION_ID_EDEFAULT);
 				return;
-			case ComponentPackage.PERFORM_TYPE__SLICE_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				setSliceId(SLICE_ID_EDEFAULT);
 				return;
 		}
@@ -192,9 +191,9 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.PERFORM_TYPE__ACTION_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
 				return ACTION_ID_EDEFAULT == null ? actionId != null : !ACTION_ID_EDEFAULT.equals(actionId);
-			case ComponentPackage.PERFORM_TYPE__SLICE_ID:
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				return SLICE_ID_EDEFAULT == null ? sliceId != null : !SLICE_ID_EDEFAULT.equals(sliceId);
 		}
 		return super.eIsSet(featureID);
@@ -218,4 +217,4 @@ public class PerformTypeImpl extends EObjectImpl implements PerformType {
 		return result.toString();
 	}
 
-} //PerformTypeImpl
+} //ProtocolPerformTypeImpl

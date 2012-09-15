@@ -64,11 +64,13 @@ public class FuseComponentsAction extends SelectionAction {
       
 		
 		//TODO: CHECK IF THE COMPONENTS CAN BE FUSED ...
-		HComponent c = (HComponent)cs.get(0);		
+		HComponent c0 = (HComponent)cs.get(0);
+		HComponent c = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier()); 
 		for (int i=1;i<cs.size();i++) {
-			HComponent c_ = (HComponent) cs.get(i);
+			HComponent c0_ = (HComponent) cs.get(i);
+			HComponent c_ = (HComponent) (c0_.getSupplier() == null ? c0_ : c0_.getSupplier());
 			if (!c_.isEquivalentTo(c)) return false;
-			if (c.isPublic() != c_.isPublic()) return false;
+			if (c0.isPublic() != c0_.isPublic()) return false;
 			// if (!c.getName2().equals(c_.getName2())) return false;
 	        
 	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c_, c)) return false;

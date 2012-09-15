@@ -24,6 +24,7 @@ public class HTopologyComponent extends HBaseKindComponent {
 	@Override
 	public HUnit createUnit() {
 	     HUnit new_unit = new HTopologyUnit(null, this);
+	     new_unit.setMultiple(true);
 	     return new_unit;
 	}
 	

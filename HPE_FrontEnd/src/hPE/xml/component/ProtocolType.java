@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see hPE.xml.component.ComponentPackage#getProtocolType()
- * @model extendedMetaData="name='ProtocolType' kind='elementOnly'"
+ * @model abstract="true"
+ *        extendedMetaData="name='ProtocolType' kind='elementOnly'"
  * @generated
  */
 public interface ProtocolType extends EObject {

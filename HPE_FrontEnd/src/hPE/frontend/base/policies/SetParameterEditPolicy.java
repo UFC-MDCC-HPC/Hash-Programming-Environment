@@ -49,14 +49,20 @@ public class SetParameterEditPolicy extends ComponentEditPolicy {
 
 		public void execute() {
 
-			dialog = SetParameterDialog.getInstance();
-			dialog.setModel(model);
-			dialog.setVisible(true);
+			//dialog = SetParameterDialog.getInstance();
+			//dialog.setModel(model);
+			//dialog.setVisible(true);
+			
+			String parId = model.getRef();
+			model.setParameter(parId);
+			((HComponent) model.getTopConfiguration()).invalidateInterfaceNames();
 
-			// BEGIN TODO: EXISTENTIAL TYPE
-			// boolean isExistential = this.dialog.isExistential();
-			// boolean isUniversal = this.dialog.isUniversal();
-			// END TODO: EXISTENTIAL TYPE
+		}
+		
+		public boolean canExecute() {
+			
+			return !model.getRef().equals("");
+			
 		}
 
 		public void undo() {
@@ -87,11 +93,9 @@ public class SetParameterEditPolicy extends ComponentEditPolicy {
 
 		public void execute() {
 
-			varName = model.getParameterIdentifier((IComponent) model
-					.getTopConfiguration());
+			varName = model.getParameterIdentifier((IComponent) model.getTopConfiguration());
 			model.setNonAbstract(varName);
-			((HComponent) model.getTopConfiguration())
-					.invalidateInterfaceNames();
+			((HComponent) model.getTopConfiguration()).invalidateInterfaceNames();
 
 		}
 

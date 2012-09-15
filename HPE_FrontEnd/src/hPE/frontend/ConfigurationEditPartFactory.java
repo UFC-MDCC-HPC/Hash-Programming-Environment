@@ -1,5 +1,9 @@
 package hPE.frontend;
 
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import hPE.frontend.base.edits.ActionConnectionEditPart;
 import hPE.frontend.base.edits.ActionEditPart;
 import hPE.frontend.base.edits.AltActionEditPart;
@@ -245,6 +249,7 @@ import hPE.frontend.kinds.topology.model.HTopologyUnit;
 import hPE.frontend.kinds.topology.model.HTopologyUnitSlice;
 import hPE.frontend.kinds.topology.model.IHTopologyUnit;
 
+import org.apache.axis.collections.SequencedHashMap;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -254,13 +259,18 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public static SortedMap<Integer, HComponent> COMPONENTS;
 
 	public EditPart createEditPart(EditPart context, Object model) {
 		
 		EditPart part = null;
 		
-		if (model instanceof HComponent) {
-			if (context == null) {
+		if (model instanceof HComponent) 
+		{
+			
+			if (context == null) 
+			{
 				if (model instanceof HApplicationComponent)
 					part = new ApplicationConfigurationEditPart<HApplicationComponent,ApplicationConfigurationFigure>();
 				else if (model instanceof HTopologyComponent)
@@ -283,11 +293,14 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new DomainConfigurationEditPart<HDomainComponent,DomainConfigurationFigure>();
 				else 
 					part = new ConfigurationEditPart<HComponent,ConfigurationFigure>();
-			} else if (context instanceof ComponentEditPart) {
-				// TODO: Exposed INNER COMPONENTS !!!!
+			} 
+			else if (context instanceof ComponentEditPart) 
+			{// TODO: Exposed INNER COMPONENTS !!!!
 				
 				
-			} else {
+			} 
+			else 
+			{
 				if (model instanceof HApplicationComponent)
 					part = new ApplicationComponentEditPart<HApplicationComponent,ApplicationComponentFigure>();
 				else if (model instanceof HTopologyComponent)
@@ -311,7 +324,14 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				else 
 					part = new ComponentEditPart<HComponent,ComponentFigure>();
 			}
-		} else if (model instanceof IHUnit) {
+			
+			if (COMPONENTS == null)
+				COMPONENTS = new TreeMap<Integer,HComponent>();
+			HComponent component = (HComponent) model;
+			COMPONENTS.put(component.getMyInstanceId(),component);
+
+		} 
+		else if (model instanceof IHUnit) {
 			if (context instanceof ConfigurationEditPart) {
 				if (model instanceof IHApplicationUnit) 
 					part = new ApplicationUnitEditPart<HApplicationUnit,ApplicationUnitFigure>();

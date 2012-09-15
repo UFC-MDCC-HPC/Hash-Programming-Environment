@@ -58,13 +58,14 @@ public class EntryEditPart<ModelType extends IHUnit,
   	    Rectangle u_bounds = ((AbstractGraphicalEditPart) getParent()).getFigure().getBounds();
   	    
         entry_figure.setBounds(entry.getBounds().getTranslated(u_bounds.getLocation()));
+        entry_figure.setMultiple(entry.isMultiple());
         if (entry.getInterface() != null) {
         	entry_figure.setBackgroundColor(((HInterface)entry.getInterface()).getColor());
         } else
             entry_figure.setBackgroundColor(ColorConstants.black);
         
 
-		Label ff = new Label(" unit " + entry.getName2() + " ");
+		Label ff = new Label(" unit " + entry.getName2() + (entry.isClone() || entry.isCloned() ? "." + entry.getIndex() + " " : " "));
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font);
 		

@@ -55,18 +55,21 @@ public class InterfaceSliceEditPart<ModelType extends HInterfaceSlice, FigureTyp
         if (slice_abstraction.getInterface() != null) { 
             slice_abstraction_figure.setBackgroundColor(((HInterface)slice_abstraction.getInterface()).getColor());
         }
-        String uRef;
-        String cRef;
+        String uRef = "?";
+        String cRef = "?";
         try {
-            IHUnit u = (IHUnit) ((HUnitSlice)slice_abstraction.getCompliantUnitSlices().get(0)).getComponentEntry();
-            uRef = u.getName2();
-            cRef = u.getConfiguration().getRef();
+        	HUnitSlice uslice = (HUnitSlice)slice_abstraction.getCompliantUnitSlices().get(0);
+        	if (uslice.getBinding() != null) {
+               IHUnit u = (IHUnit) uslice.getComponentEntry();
+               uRef = u.getName2();
+               cRef = u.getConfiguration().getRef();
+        	}
         } catch (NullPointerException e) {
             uRef = "?";
             cRef = "?";
         }
         
-		Label ff = new Label(" slice " + slice_abstraction.getName() + " : " + cRef + "." + uRef + " ");
+		Label ff = new Label(" slice " + uRef + " of " + /*slice_abstraction.getName() + " : " +*/ cRef + " ");
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font); 
 

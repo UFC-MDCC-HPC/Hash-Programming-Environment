@@ -22,6 +22,7 @@ import hPE.frontend.base.actions.SetParameterAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
 import hPE.frontend.base.actions.ShowInterfaceAction;
+import hPE.frontend.base.actions.SplitEntryAction;
 import hPE.frontend.base.actions.SupplyParameterAction;
 import hPE.frontend.base.actions.UnbindAction;
 import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
@@ -494,6 +495,8 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetMultipleAction.SET_MULTIPLE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
+		id = SplitEntryAction.SPLIT_ENTRY;
+		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = ImplementsAction.IMPLEMENTS;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = NewVersionAction.NEW_VERSION;
@@ -700,6 +703,10 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		getSelectionActions().add(action.getId());
 
 		action = new SetMultipleAction(this);
+		registry.registerAction(action);
+		getSelectionActions().add(action.getId());
+
+		action = new SplitEntryAction(this);
 		registry.registerAction(action);
 		getSelectionActions().add(action.getId());
 

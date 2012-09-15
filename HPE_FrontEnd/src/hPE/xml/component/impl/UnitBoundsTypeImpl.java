@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#isParallel <em>Parallel</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getURef <em>URef</em>}</li>
  * </ul>
@@ -44,6 +45,35 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	 * @ordered
 	 */
 	protected VisualElementAttributes visualDescription;
+
+	/**
+	 * The default value of the '{@link #isParallel() <em>Parallel</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isParallel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean PARALLEL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isParallel() <em>Parallel</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isParallel()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean parallel = PARALLEL_EDEFAULT;
+
+	/**
+	 * This is true if the Parallel attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean parallelESet;
 
 	/**
 	 * The default value of the '{@link #getReplica() <em>Replica</em>}' attribute.
@@ -161,6 +191,52 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isParallel() {
+		return parallel;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParallel(boolean newParallel) {
+		boolean oldParallel = parallel;
+		parallel = newParallel;
+		boolean oldParallelESet = parallelESet;
+		parallelESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL, oldParallel, parallel, !oldParallelESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetParallel() {
+		boolean oldParallel = parallel;
+		boolean oldParallelESet = parallelESet;
+		parallel = PARALLEL_EDEFAULT;
+		parallelESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL, oldParallel, PARALLEL_EDEFAULT, oldParallelESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetParallel() {
+		return parallelESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public long getReplica() {
 		return replica;
 	}
@@ -247,6 +323,8 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION:
 				return getVisualDescription();
+			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
+				return isParallel();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
 				return getReplica();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
@@ -265,6 +343,9 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION:
 				setVisualDescription((VisualElementAttributes)newValue);
+				return;
+			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
+				setParallel((Boolean)newValue);
 				return;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
 				setReplica((Long)newValue);
@@ -287,6 +368,9 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION:
 				setVisualDescription((VisualElementAttributes)null);
 				return;
+			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
+				unsetParallel();
+				return;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
 				unsetReplica();
 				return;
@@ -307,6 +391,8 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION:
 				return visualDescription != null;
+			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
+				return isSetParallel();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
 				return isSetReplica();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
@@ -325,7 +411,9 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (replica: ");
+		result.append(" (parallel: ");
+		if (parallelESet) result.append(parallel); else result.append("<unset>");
+		result.append(", replica: ");
 		if (replicaESet) result.append(replica); else result.append("<unset>");
 		result.append(", uRef: ");
 		result.append(uRef);

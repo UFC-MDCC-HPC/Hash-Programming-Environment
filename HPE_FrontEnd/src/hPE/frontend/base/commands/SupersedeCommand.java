@@ -22,7 +22,7 @@ public class SupersedeCommand extends Command {
 	public void execute() {
 
 			
-	    HComponent.supersede2(target, source, false);
+	    HComponent.supersede3(target, source, false);
 	    try {
 			source.updatePorts();
 		} catch (HPEAbortException e) {
@@ -40,15 +40,19 @@ public class SupersedeCommand extends Command {
 		execute();
 	}
 	
-	public boolean canExecute() {
+	public boolean canExecute() 
+	{
+		HComponent source = (HComponent) (this.source.getSupplier() == null ? this.source : this.source.getSupplier());
+		HComponent target  = (HComponent) (this.target.getSupplier() == null ? this.target : this.target.getSupplier());
+		
         HComponent topC = (HComponent) target.getTopConfiguration();
     	String varSource = source.getVariableName(topC);
     	String varTarget = target.getVariableName(topC);
     	varSource = !varSource.contains("@") ? varSource : varSource.substring(0,varSource.indexOf('@')); 
     	varTarget = !varTarget.contains("@") ? varTarget : varTarget.substring(0,varTarget.indexOf('@'));
 
-        boolean cond1 = source.isSubTypeOf(target) && source.isPublic() == target.isPublic() && topC.isAbstractConfiguration(); 
-        boolean cond2 = cond1 && source.getName2().equals(target.getName2());
+        boolean cond1 = source.isSubTypeOf(target) && this.source.isPublic() == this.target.isPublic() && topC.isAbstractConfiguration(); 
+        boolean cond2 = cond1 && this.source.getName2().equals(this.target.getName2());
         boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !varSource.equals(varTarget));
         boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(target, source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 
         

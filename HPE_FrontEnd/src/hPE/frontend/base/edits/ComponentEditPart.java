@@ -1,6 +1,7 @@
  
 package hPE.frontend.base.edits;
 
+import hPE.frontend.ConfigurationEditPartFactory;
 import hPE.frontend.base.figures.ComponentFigure;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.interfaces.IComponent;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
@@ -67,7 +69,8 @@ public class ComponentEditPart<ModelType extends HComponent,
 
 	}
 	
-	protected void refreshVisuals() {
+	protected void refreshVisuals() 
+	{
 		
 		ModelType component_ = (ModelType) getModel();
 		HComponent component = (HComponent) (component_.getSupplier() == null ? component_ : component_.getSupplier()); 
@@ -77,7 +80,8 @@ public class ComponentEditPart<ModelType extends HComponent,
 		boolean showBounds = true; //component.isDirectSonOfTheTopConfiguration();
 		boolean showParId  = true; //component.isDirectSonOfTheTopConfiguration();
 		
-        if (component.isParameter() && component.getSupplier()==null) {
+        if (component.isParameter() && component.getSupplier	()==null) 
+        {
         	/* CHECK NEW BOUND AT TOP CONFIGURATION */
     	    HComponent topC = (HComponent) component.getTopConfiguration();
     	   // HComponent ownerC = component.getParentConfiguration();
@@ -104,7 +108,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 		Label ff = new Label(" " + name_ + " ");
 		Font font = new Font(null, "Courier New", 8, SWT.BOLD);
 		ff.setFont(font); 
-
+		
 		component_figure.setPort(!component_.isDirectSonOfTheTopConfiguration());
         component_figure.setBounds(calculateBounds(component_));
         component_figure.setName(component_.getRef() + (component.hasFreeVariables() ? " [?]" : ""));
@@ -113,8 +117,13 @@ public class ComponentEditPart<ModelType extends HComponent,
         component_figure.setBackgroundColor(component_.getColor());
         component_figure.setIsSuperType(component_.isSuperType());
         component_figure.setExposed(component_.isPublic());
-        component_figure.setMultiple(component_.isMultiple());
+        
+        boolean isMultiple = component_.isMultiple() || 
+                              (!component_.isDirectSonOfTheTopConfiguration() && component_.getTopParentConfigurations().get(0).isMultiple());
+        
+        component_figure.setMultiple(isMultiple);
 				
+        
 	}
 	
 
@@ -217,11 +226,15 @@ public class ComponentEditPart<ModelType extends HComponent,
 				
 		
 		ModelType c = (ModelType) this.getModel();
+		HComponent cTop = (HComponent) c.getTopConfiguration();
 		if (c.isDirectSonOfTheTopConfiguration()) 
 		{
-			for (HComponent x : c.getExposedComponents()) 
+			for (HComponent x_ : c.getExposedComponents()) 
 			{
-				List<HComponent> cParents = x.getTopParentConfigurations();
+				List<HComponent> fusion_components = cTop.getFusionComponents(x_.getRef());
+				HComponent x = fusion_components == null ? x_ : fusion_components.get(0);
+				
+				List<HComponent> cParents = x_.getTopParentConfigurations();
 				if (cParents.contains(c)) 
 				{
 				   // Nesse caso, o componente x é aninhado público de um componente que está no topo da configuração, portanto pode estar ligado a ele.
@@ -268,9 +281,29 @@ public class ComponentEditPart<ModelType extends HComponent,
 		List l = new ArrayList();
 		
 		ModelType c = (ModelType) this.getModel();
-		if (!c.isDirectSonOfTheTopConfiguration()) {			
-			for (HComponent x : c.getTopParentConfigurations()) {
-			   l.add(x.hashCode() + ".exposed_link." + c.hashCode());
+		HComponent cTop = (HComponent) c.getTopConfiguration();
+		
+		List<HComponent> cList = cTop.getFusionComponents(c.getRef());
+		if (cList == null || cList.get(0) == c)
+		{
+			if (!c.isDirectSonOfTheTopConfiguration()) 
+			{			
+				List<HComponent> csParent= new ArrayList<HComponent>();
+				if (cList != null) 
+				{
+					for (HComponent c_prime : cList)
+					{
+					   csParent.addAll(c_prime.getTopParentConfigurations());
+					}
+				}
+				else {
+				   csParent.addAll(c.getTopParentConfigurations());
+				}
+				
+				for (HComponent x : csParent) 
+				{
+				   l.add(x.hashCode() + ".exposed_link." + c.hashCode());
+				}
 			}
 		}
 

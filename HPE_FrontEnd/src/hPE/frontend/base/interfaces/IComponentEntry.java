@@ -17,5 +17,7 @@ public interface IComponentEntry {
 	public IUnit fetchCorrespondingUnit();
 	
 	public IConfiguration getConfiguration();
+
+	public int getIndex();
 	
 }

@@ -1,24 +1,14 @@
 package hPE.frontend.base.model;
 
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.exceptions.HPEUnmatchingEnumeratorsException;
 import hPE.frontend.base.interfaces.IComponent;
-import hPE.frontend.base.interfaces.IComponentEntry;
 import hPE.frontend.base.interfaces.IConfiguration;
 import hPE.frontend.base.interfaces.IInterface;
-import hPE.frontend.base.interfaces.IInterfaceSlice;
-import hPE.frontend.base.interfaces.IUnit;
-import hPE.frontend.base.interfaces.IUnitSlice;
 import hPE.util.Pair;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.SortedSet;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -125,7 +115,18 @@ public abstract class HPrimUnit extends HVisualElement
 	 * @see hPE.model.IHPrimUnit#setName(java.lang.String)
 	 */
 	public void setName(String name) {
-		this.name = name;
+		if (this.isClone()) {
+			this.cloneOf.setName(name);
+		} 
+		else {
+			this.name = name;
+			for (IHPrimUnit u_ : this.getClones())
+			{
+				HPrimUnit u = (HPrimUnit) u_;
+			    u.name = name;
+			}
+		}
+		
 		listeners.firePropertyChange("labelContents", null, name); //$NON-NLS-2$//$NON-NLS-1$
 	}
 	
@@ -564,15 +565,16 @@ public abstract class HPrimUnit extends HVisualElement
 	 */
 	public List<IHPrimUnit> getClones() {
 		List<IHPrimUnit> ucs = new ArrayList<IHPrimUnit>();
-//		if (isCloned()) {
-//			for (IHPrimUnit u_ : this.myClones) {
-//		        ucs.addAll(u_.getClones());
-//			}
-//		}
+		ucs.add(this);
+		if (isCloned()) {
+			for (IHPrimUnit u_ : this.myClones) {
+		        ucs.addAll(u_.getClones());
+			}
+		}
 //		else 
-		{
-			ucs.add(this);
-		}   
+//		{
+//			ucs.add(this);
+//		}   
 		return ucs;
 	}
 	
@@ -634,6 +636,14 @@ public abstract class HPrimUnit extends HVisualElement
 		return this.cloneOf;
 	}
 	
+	public int getIndex() 
+	{
+		if (this.isClone())
+			return this.cloneOf.getIndexOfClone(this);
+		else 
+			return 0;
+
+	}
 
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#getReplica()
@@ -646,11 +656,11 @@ public abstract class HPrimUnit extends HVisualElement
 			cloneOfThis.isClone = true;
 			cloneOfThis.setClone(this);
 			this.addClone(cloneOfThis,shift);
-			cloneOfThis.setBounds(this.getBounds().getCopy().translate((this.getBounds().width+2)*(shift+1),0));
 //			cloneOfThis.linkToReplicator = new ArrayList<HLinkToReplicator>();
 			cloneOfThis.linkToInterface = this.linkToInterface != null ? this.linkToInterface.replicateMe(cloneOfThis) : null;
 			cloneOfThis.myClones = new ArrayList<IHPrimUnit>();
 			cloneOfThis.bindings = new ArrayList<HBinding>();
+			cloneOfThis.setBounds(this.getBounds().getCopy().translate((this.getBounds().width+2)*(shift+1),0));
 			
 			/* The clone is not returned by getUnits */
 			//((HComponent)this.getConfiguration()).newUnit((IHUnit)cloneOfThis);

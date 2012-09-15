@@ -89,7 +89,7 @@ public class HProtocol extends HVisualElement implements Serializable, IProtocol
 		super();
 		listeners = new PropertyChangeSupport(this);
 		this.which_interface = which_interface;
-		which_interface.setProtocol(this);
+		//which_interface.setProtocol(this);
 		
 		// Default position and dimension
 		Rectangle bounds = which_interface.getBounds().getCopy();

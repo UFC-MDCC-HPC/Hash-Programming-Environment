@@ -1,9 +1,9 @@
 package hPE.frontend.base.interfaces;
 
-import java.util.List;
+import hPE.frontend.connector.xml.component.ProtocolChoiceType;
 
 public interface IComputationInterface extends IInterface {
 
-	public IProtocol getProtocol();
+	public ProtocolChoiceType getProtocol();
 	
 }

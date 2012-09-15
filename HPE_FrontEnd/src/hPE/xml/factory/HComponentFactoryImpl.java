@@ -10,7 +10,6 @@ import hPE.frontend.base.codegen.c_sharp.HBESourceCSharpMainDefinition;
 import hPE.frontend.base.commands.BindingCreateCommand;
 import hPE.frontend.base.commands.SupersedeCommand;
 import hPE.frontend.base.exceptions.HPEAbortException;
-import hPE.frontend.base.interfaces.IInterfaceSlice;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterface;
@@ -30,7 +29,6 @@ import hPE.frontend.kinds.activate.model.protocol.HAltAction;
 import hPE.frontend.kinds.activate.model.protocol.HCombinatorAction;
 import hPE.frontend.kinds.activate.model.protocol.HDoAction;
 import hPE.frontend.kinds.activate.model.protocol.HParAction;
-import hPE.frontend.kinds.activate.model.protocol.HPrimitiveAction;
 import hPE.frontend.kinds.activate.model.protocol.HProtocol;
 import hPE.frontend.kinds.activate.model.protocol.HSemaphore;
 import hPE.frontend.kinds.activate.model.protocol.HSeqAction;
@@ -271,8 +269,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (rs.size() != 1)
 				throw new HPEInvalidComponentResourceException();
 
-			ComponentType component = ((DocumentRootImpl) rs.get(0))
-					.getComponent();
+			ComponentType component = ((DocumentRootImpl) rs.get(0)).getComponent();
 
 			return component;
 
@@ -579,9 +576,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					}
 				}
 
-				HComponent innerC = (new HComponentFactoryImpl())
-						.loadComponent(innerUri, false, false, false,
-								!copyToCache, false);
+				HComponent innerC = (new HComponentFactoryImpl()).loadComponent(innerUri, false, false, false, !copyToCache, false);
 
 				if (locationUri.scheme() != null
 						&& locationUri.scheme().equals("http")) {
@@ -795,17 +790,25 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void loadUnitBounds(ComponentInUseType xInnerC, HComponent innerC) {
 		// Configure unit bounds
 		Map<String, Integer> unitCounts = new HashMap<String, Integer>();
+		Map<String, Map<Integer, Boolean>> checkParallel = new HashMap<String, Map<Integer,Boolean>>();
 		
 		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) {			
 			String uRef = uBound.getURef();
 			long index = uBound.getReplica();
+			boolean is_parallel = uBound.isParallel();
 			unitBounds.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
 			int count = 1;
 			if (unitCounts.containsKey(uRef))
 			{
 				count = unitCounts.get(uRef) + 1;
 				unitCounts.remove(uRef);
-			}
+			} 
+			else
+			{
+				Map<Integer, Boolean> ispar_mapping =  new HashMap<Integer, Boolean>();	
+				checkParallel.put(uRef, ispar_mapping);
+ 			}
+			checkParallel.get(uRef).put((int) index, is_parallel);
 			unitCounts.put(uRef, count);
 		}
 		
@@ -817,6 +820,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		      for (int i=0;i<count-1;i++) {
 			      IHUnit top_unit = innerC.fetchUnit(uRef);
 			      top_unit.createReplica(i);
+			      top_unit.setMultiple(checkParallel.get(uRef).get(i));
 		      }
 		}
 		
@@ -1478,7 +1482,30 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void saveFusions(HComponent c, EList<FusionType> xFs) {
+	
+	private void saveFusions(HComponent c, EList<FusionType> xFs) 
+	{
+		for (Entry<String, List<HComponent>> fusion : c.getFusions().entrySet())
+		{
+		  String cRef = fusion.getKey();
+		  List<HComponent> cList = fusion.getValue();
+		  FusionType f = factory.createFusionType();
+		  xFs.add(f);
+		  f.setPRef(cRef);
+			EList<String> ps = f.getCRefs();
+			List<HComponent> cParentList = new ArrayList<HComponent>();
+			for (HComponent c_ : cList) 
+			{
+				for (HComponent c__ : c_.getTopParentConfigurations())
+				{
+				  ps.add(c__.getName2());
+				}
+			}
+		}
+		
+	}
+	
+	private void saveFusionsOld(HComponent c, EList<FusionType> xFs) {
 
 		Map<HComponent, List<HComponent>> vcs = new HashMap<HComponent, List<HComponent>>();
 
@@ -1584,7 +1611,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 		}
 
-		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet()) {
+		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
+			if (!c.isTransitiveSupplier(p.getKey()))
+		{
 			String cRef = p.getValue().getRef();
 			if (cRefsSupply.contains(cRef)) {
 				throw new DuplicatedRefInnerException(cRef);
@@ -1649,8 +1678,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		String name = ic.getComponentName();
 		String localRef = ic.getRef();
 
-		String location = ic.getRemoteLocation() == null ? ic
-				.getRelativeLocation() : ic.getRemoteLocation();
+		String location = ic.getRemoteLocation() == null ? ic.getRelativeLocation() : ic.getRemoteLocation();
 		String package_ = ic.getPackagePath().toString();
 		boolean exposed = ic.isPublic();
 		boolean isMultiple = ic.isMultiple();
@@ -1721,6 +1749,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				VisualElementAttributes v = factory.createVisualElementAttributes();
 	
 				b.setURef(u.getName2());
+				b.setParallel(((IHUnit)u).isMultiple());
 				if (replica != null)
 					b.setReplica(replica);
 				b.setVisualDescription(v);
@@ -1748,8 +1777,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveParameterRenamings(HComponent c,
 			EList<ParameterRenaming> parameterRenamings) {
 
-		for (Entry<String, List<HComponent>> param : c.getParameters()
-				.entrySet()) {
+		for (Entry<String, List<HComponent>> param : c.getParameters().entrySet()) {
 
 			String formField = null;
 			String varName = null;
@@ -1758,24 +1786,26 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			// parameter in the configuration
 
 			HComponent cc = param.getValue().get(0);
-
-			varName = cc.getVariableName(component);
-			// if (varName.equals("?"))
-			// varName =
-			// cc.getVariableName(c.getTopParentConfigurations().get(0));
-
-			if (varName.indexOf('@') >= 0)
-				varName = varName.substring(0, varName.indexOf('@'));
-			formField = cc.getParameterIdentifier(c);
-
-			// ---------------
-
-			ParameterRenaming r = factory.createParameterRenaming();
-
-			r.setFormFieldId(formField);
-			r.setVarName(varName);
-
-			parameterRenamings.add(r);
+			//if (cc.getSupplier() == null && cc.getWhoISupply().isEmpty())
+			{
+				varName = cc.getVariableName(component);
+				// if (varName.equals("?"))
+				// varName =
+				// cc.getVariableName(c.getTopParentConfigurations().get(0));
+	
+				if (varName.indexOf('@') >= 0)
+					varName = varName.substring(0, varName.indexOf('@'));
+				formField = cc.getParameterIdentifier(c).equals("type ?") ? cc.getParameterIdentifier(cc):cc.getParameterIdentifier(c);
+	
+				// ---------------
+	
+				ParameterRenaming r = factory.createParameterRenaming();
+	
+				r.setFormFieldId(formField);
+				r.setVarName(varName);
+	
+				parameterRenamings.add(r);
+			}
 		}
 
 	}
@@ -1801,8 +1831,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				if (i instanceof HActivateInterface) {
 					HActivateInterface ia = (HActivateInterface) i;
 					if (ia.getProtocol() != null) {
-						a = saveAction((HAction) ia.getProtocol().getAction());
-						// TODO (action): iX.setProtocol(a);
+						//a = saveAction((HAction) ia.getProtocol().getAction());
 					}
 				}
 				// ---------------
@@ -2045,8 +2074,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	
 					// SETUP VARIABLES
 	
-					sRef = slice.getName();
 					cORef = slice.getInterface().getConfiguration().getRef();
+					sRef = cORef; //slice.getName();					
 					iORef = ((HInterface) slice.getInterface()).getPrimName();
 	
 					// ---------------
@@ -2234,11 +2263,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	private void saveSupplyParameters(HComponent c,
-			EList<ParameterSupplyType> xI) {
+	private void saveSupplyParameters(HComponent c, EList<ParameterSupplyType> xI) {
 
-		for (Entry<String, HComponent> pair : c.getSupplierComponents()
-				.entrySet()) {
+		for (Entry<String, HComponent> pair : c.getSupplierComponents().entrySet()) 
+			if (!c.isTransitiveSupplier(pair.getKey()))
+		{
 
 			ParameterSupplyType s = factory.createParameterSupplyType();
 			String cRef = null;

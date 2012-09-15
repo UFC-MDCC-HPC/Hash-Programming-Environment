@@ -101,11 +101,11 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.PARAMETER_RENAMING: return createParameterRenaming();
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE: return createParameterSupplyType();
 			case ComponentPackage.PARAMETER_TYPE: return createParameterType();
-			case ComponentPackage.PERFORM_TYPE: return createPerformType();
 			case ComponentPackage.PORT_SLICE_TYPE: return createPortSliceType();
 			case ComponentPackage.PORT_TYPE: return createPortType();
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE: return createProtocolChoiceType();
 			case ComponentPackage.PROTOCOL_COMBINATOR_TYPE: return createProtocolCombinatorType();
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE: return createProtocolPerformType();
 			case ComponentPackage.RECURSIVE_ENTRY_TYPE: return createRecursiveEntryType();
 			case ComponentPackage.SOURCE_FILE_TYPE: return createSourceFileType();
 			case ComponentPackage.SOURCE_TYPE: return createSourceType();
@@ -570,16 +570,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PerformType createPerformType() {
-		PerformTypeImpl performType = new PerformTypeImpl();
-		return performType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public PortSliceType createPortSliceType() {
 		PortSliceTypeImpl portSliceType = new PortSliceTypeImpl();
 		return portSliceType;
@@ -613,6 +603,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public ProtocolCombinatorType createProtocolCombinatorType() {
 		ProtocolCombinatorTypeImpl protocolCombinatorType = new ProtocolCombinatorTypeImpl();
 		return protocolCombinatorType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProtocolPerformType createProtocolPerformType() {
+		ProtocolPerformTypeImpl protocolPerformType = new ProtocolPerformTypeImpl();
+		return protocolPerformType;
 	}
 
 	/**

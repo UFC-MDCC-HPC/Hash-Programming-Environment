@@ -9,6 +9,7 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HVisualElement;
+import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.policies.BrowseEditPolicy;
 import hPE.frontend.base.policies.ChangeColorEditPolicy;
@@ -22,6 +23,7 @@ import hPE.frontend.kinds.data.model.HDataUnit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.draw2d.BendpointConnectionRouter;
@@ -84,20 +86,31 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 
 	public List getModelChildren() {
 		
+		
+		HComponent model = (ModelType) getModel();
+		
 		List children = new ArrayList();
 		
-		children.addAll((List) ((ModelType) getModel()).getUnits());
+		List<IHUnit> us = model.getUnits();
+		for (IHUnit u: us) {
+		    children.addAll(u.getClones());
+		}
 		
-		for (HComponent c : ((ModelType) getModel()).getComponents()) 
+		for (HComponent c : model.getComponents()) 
 			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 				children.add(c);
 		
-		for (HComponent c : ((ModelType) getModel()).getExposedComponents()) {
-			if (!children.contains(c) && !c.isHiddenInnerComponent()) 
-				children.add(c);
+		Collection<HComponent> exposed_components = model.getExposedComponents();
+		for (HComponent c : exposed_components) {
+			List<HComponent> fusion_components = model.getFusionComponents(c.getRef());
+			if (fusion_components == null || fusion_components.get(0) == c) 
+			{
+				if (!children.contains(c) && !c.isHiddenInnerComponent()) 
+					children.add(c);
+			}
 		}
 
-		for (HInterface an_interface : ((ModelType) getModel()).getInterfaces()) {
+		for (HInterface an_interface : model.getInterfaces()) {
 			if (!(an_interface.getHidden())) { 
 				children.add(an_interface);
 			} 
@@ -228,9 +241,10 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 	public void propertyChange(PropertyChangeEvent ev) {
 		if (ev.getPropertyName().equals(ModelType.UPDATE_NAME)) this.refresh();
 		if (ev.getPropertyName().equals(ModelType.UPDATE_COLOR)) this.refresh();
+		if (ev.getPropertyName().equals(ModelType.PROPERTY_BOUNDS))  this.refresh();
 		if (ev.getPropertyName().equals(ModelType.PROPERTY_INHERITS)) this.refresh();
 		if (ev.getPropertyName().equals(ModelType.PROPERTY_CONCRETE_CONFIGURATION)) this.refresh();
-		if (ev.getPropertyName().equals(ModelType.NEW_UNIT)) this.refreshChildren();
+		if (ev.getPropertyName().equals(ModelType.NEW_UNIT)) this.refresh();
 		if (ev.getPropertyName().equals(ModelType.NEW_REPLICATOR)) this.refreshChildren();
 		if (ev.getPropertyName().equals(ModelType.NEW_INTERFACE)) this.refreshChildren();
 		if (ev.getPropertyName().equals(ModelType.NEW_COMPONENT)) this.refreshChildren();

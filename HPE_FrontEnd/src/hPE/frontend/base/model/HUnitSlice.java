@@ -72,7 +72,7 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 //			if (!unit.isClone()) {
 				HInterface i = (HInterface) unit.getInterface();
 				if (i!=null) {
-					i.addInterfaceSlice(this,unitEntry.getName2());			
+					i.addInterfaceSlice(this,unitEntry.getConfiguration().getRef());			
 				}
 				
 //			}
@@ -337,8 +337,15 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
     }
     
 	public String getName() {		
-		return this.getInterfaceSlice() == null || this.name == null ? 
-				this.getBinding().getEntry().getName2() : this.getInterfaceSlice().getName();
+		if ((this.getInterfaceSlice() == null || this.name == null) && this.getBinding() != null)  
+			//return this.getBinding().getEntry().getName2();
+			return this.getBinding().getEntry().getConfiguration().getRef();
+		else if (this.getInterfaceSlice() != null) 
+			return this.getInterfaceSlice().getName();
+		else {	
+			System.err.print("Slice name not found (" + this.name + ")");
+			return "";
+		}
 					
 	}
 

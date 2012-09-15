@@ -4,7 +4,6 @@ import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComputationInterface;
-import hPE.frontend.base.interfaces.IProtocol;
 import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
@@ -13,15 +12,19 @@ import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.connector.xml.component.ProtocolChoiceType;
+import hPE.frontend.connector.xml.component.GuardType;
 import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HDoAction;
 import hPE.frontend.kinds.activate.model.protocol.HParAction;
-import hPE.frontend.kinds.activate.model.protocol.HProtocol;
+//import hPE.frontend.kinds.activate.model.protocol.ProtocolChoiceType;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -40,7 +43,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 		super(configuration, signature,u, where) ;
 		
 		
-		new HDoAction(null,new HProtocol(this),null);		
+		//new HDoAction(null,new ProtocolChoiceType(this),null);		
 	}
 
 	
@@ -48,47 +51,67 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 		return getName2();
 	}
 	
-	/** 
-	 * @uml.property name="protocol"
-	 * @uml.associationEnd inverse="which_interface:hPE.model.HProtocol"
-	 */
-	private HProtocol protocol;
+	// LIST OF ACTIONS
+	
+	private Map<String, ProtocolChoiceType> actions = null;
+	
+	public void newAction(String action_id, ProtocolChoiceType action)
+	{
+	    if (actions == null) actions = new HashMap<String, ProtocolChoiceType>();
+	    actions.put(action_id, action);
+	}
+	
+	public Map<String, ProtocolChoiceType> getActions()
+	{
+	    if (actions == null) actions = new HashMap<String, ProtocolChoiceType>();
+		return actions;
+	}
+	
+	// LIST OF CONDITIONS
+	
+	private Map<String, GuardType> conditions = null;
+	
+	public void addCondition(String cond_id, GuardType guard)
+	{
+		if (conditions == null) conditions = new HashMap<String,GuardType>();
+		conditions.put(cond_id, guard);
+	}
+	
+	public Map<String,GuardType> getConditions() 
+	{
+		if (conditions == null) conditions = new HashMap<String,GuardType>();
+		return conditions;
+	}
+	
+	
+	
+	private ProtocolChoiceType protocol;
 
-	/** 
-	 * Getter of the property <tt>protocol</tt>
-	 * @return  Returns the protocol.
-	 * @uml.property  name="protocol"
-	 */
-	public IProtocol getProtocol() {
+	public ProtocolChoiceType getProtocol() {
 		return protocol;
 	}
 
 
-	/** 
-	 * Setter of the property <tt>protocol</tt>
-	 * @param protocol  The protocol to set.
-	 * @uml.property  name="protocol"
-	 */
-	public void setProtocol(HProtocol protocol) {
+	public void setProtocol(ProtocolChoiceType protocol) {
 		this.protocol = protocol;
 	}
 	
 	public void unsetProtocol() {
 		this.protocol = null;
 	}
-	
+/*	
 	public void buildDefaultProtocol() {
 
-		HProtocol protocol = new HProtocol(this);
+		ProtocolChoiceType protocol = new ProtocolChoiceType(this);
 		HParAction top_action = new HParAction(null,protocol);
 		
 		Rectangle b = top_action.getBounds(); 
 		
 		boolean hasActivateSlice = false;
 		
-		int x      = 10  ;
-		int y      = 50 ;
-		int width  = 10  ;
+		int x      = 10;
+		int y      = 50;
+		int width  = 10;
 		int height = 0;		
 		
 		Iterator ias = this.getSlices().iterator();
@@ -104,7 +127,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 			    inner_action.setRepeat(ia.getNestingFactor());
 		        inner_action.getBounds().setLocation(x,y);
 		        
-		        HProtocol iP = (HProtocol)((HActivateInterface)i).getProtocol();
+		        ProtocolChoiceType iP = (ProtocolChoiceType)((HActivateInterface)i).getProtocol();
 		        
 		        if (iP != null) {
 				    HAction encapsulated_inner_action = ((HAction)iP.getAction()).getCopy(top_action);
@@ -138,7 +161,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 		// if (((HParAction) protocol.getAction()).getActions().size()==0) this.protocol = null;
 		
 	}
-	
+*/	
 	public final static String SHOW_PROTOCOL = "SHOW_PROTOCOL";
 	
 	boolean show_protocol = false;
@@ -170,11 +193,11 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 			int x      = 10  ;
 			int y      = 50 ;
 			
-			HProtocol protocol = (HProtocol) this.getProtocol();
+			ProtocolChoiceType protocol = (ProtocolChoiceType) this.getProtocol();
 			
 			HInterfaceSlice ia = (HInterfaceSlice)uSlice.getInterfaceSlice();
 	        HHasExternalReferences i = (HHasExternalReferences) ia.getInterface();	        
-	        
+	        /*
 			if (protocol != null && i instanceof HActivateInterface) {
 				
 				HAction oldTopAction = (HAction) protocol.getAction();
@@ -189,7 +212,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 				oldTopAction.getBounds().setLocation(x+inner_action.getBounds().width+x, 
 						                             y);
 				
-		        HProtocol iP = (HProtocol)((HActivateInterface)i).getProtocol();
+		        ProtocolChoiceType iP = (ProtocolChoiceType)((HActivateInterface)i).getProtocol();
 		        
 		        if (iP != null) {
 				    HAction encapsulated_inner_action = ((HAction)iP.getAction()).getCopy(newTopAction);
@@ -206,22 +229,13 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 		        		                            )
 		        		              );	        
 		        
-			}
+			}*/
 
 		
 		
 		return s;
 		
 	}	
-	
-	public void pushoutProtocol(HProtocol innerProtocol) {
-		
-		HProtocol protocol = (HProtocol) this.getProtocol();
-		
-		
-		
-		
-	}
 	
 	public List<HBEAbstractSynthesizer> getSupportedSynthesizers() {
 		List<HBEAbstractSynthesizer> l = super.getSupportedSynthesizers();

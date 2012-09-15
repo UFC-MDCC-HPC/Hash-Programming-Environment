@@ -386,15 +386,6 @@ public interface ComponentFactory extends EFactory {
 	ParameterType createParameterType();
 
 	/**
-	 * Returns a new object of class '<em>Perform Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Perform Type</em>'.
-	 * @generated
-	 */
-	PerformType createPerformType();
-
-	/**
 	 * Returns a new object of class '<em>Port Slice Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -429,6 +420,15 @@ public interface ComponentFactory extends EFactory {
 	 * @generated
 	 */
 	ProtocolCombinatorType createProtocolCombinatorType();
+
+	/**
+	 * Returns a new object of class '<em>Protocol Perform Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Protocol Perform Type</em>'.
+	 * @generated
+	 */
+	ProtocolPerformType createProtocolPerformType();
 
 	/**
 	 * Returns a new object of class '<em>Recursive Entry Type</em>'.

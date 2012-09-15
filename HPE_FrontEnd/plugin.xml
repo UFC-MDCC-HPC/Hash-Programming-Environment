@@ -40,7 +40,7 @@
 	   <perspective
           class="hPE.HPEPerspective"
           fixed="false"
-          id="org.eclipse.HPEPerspective"
+          id="hPE.HPEPerspective"
           name="Hash Programming Environment">
 	   </perspective>
    </extension>

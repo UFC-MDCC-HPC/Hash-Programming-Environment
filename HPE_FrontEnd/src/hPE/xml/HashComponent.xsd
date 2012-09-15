@@ -385,10 +385,13 @@
 	</complexType>
 	<complexType name="UnitBoundsType">
 		<sequence>
-			<element name="visualDescription" type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="1"></element>
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="1">
+			</element>
 		</sequence>
 		<attribute name="uRef" type="string"></attribute>
 		<attribute name="replica" type="unsignedInt" use="optional"></attribute>
+		<attribute name="parallel" type="boolean" use="optional"></attribute>
 	</complexType>
 
 
@@ -570,19 +573,35 @@
   	<attribute name="id" type="string"></attribute>
   </complexType>
 
-
-  <complexType name="ProtocolCombinatorType" abstract="false">
+ <complexType name="ProtocolCombinatorType" abstract="false">
+  	<complexContent>
+  		<extension base="tns:ProtocolType">
   			<sequence>
-                    <element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1">
+  				<element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1">
   				</element>
-                    <element name="guard" type="tns:GuardType" maxOccurs="1" minOccurs="0"></element>
   			</sequence>
-  			<attribute name="repeat" type="boolean"></attribute>
-  			<attribute name="id" type="string"></attribute>
+  		</extension>
+  	</complexContent>
   </complexType>
 
+    <complexType name="ProtocolType" abstract="true">
+    	<sequence>
+    		<element name="guard" type="tns:GuardType" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="repeat" type="boolean"></attribute>
+    	<attribute name="id" type="string"></attribute>
+    </complexType>
+ 
+   <complexType name="ProtocolPerformType">
+    	<complexContent>
+    		<extension base="tns:ProtocolType">
+    			<attribute name="action_id" type="string"></attribute>
 
+    			<attribute name="slice_id" type="string"></attribute>
 
+    		</extension>
+    	</complexContent>
+    </complexType>
 
 
   <complexType name="GuardType" abstract="true">
@@ -616,20 +635,12 @@
 
 
 
-    <complexType name="ProtocolChoiceType">
+ <complexType name="ProtocolChoiceType">
   				<choice maxOccurs="1" minOccurs="1">
   					<element name="par" type="tns:ProtocolCombinatorType"></element>
   					<element name="seq" type="tns:ProtocolCombinatorType"></element>
   					<element name="alt" type="tns:ProtocolCombinatorType"></element>
-  					<element name="perform">
-  						<complexType>
-  							<attribute name="action_id"
-  								type="string">
-  							</attribute>
-  							<attribute name="slice_id"
-  								type="string">
-  							</attribute>
-  						</complexType></element>
+  					<element name="perform" type="tns:ProtocolPerformType"></element>
   				</choice>
     </complexType>
 </schema>

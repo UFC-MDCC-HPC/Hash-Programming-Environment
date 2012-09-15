@@ -10,6 +10,7 @@ import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.PerformType;
 import hPE.xml.component.ProtocolChoiceType;
 import hPE.xml.component.ProtocolCombinatorType;
+import hPE.xml.component.ProtocolPerformType;
 import hPE.xml.component.ProtocolType;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -76,7 +77,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * @generated
 	 * @ordered
 	 */
-	protected PerformType perform;
+	protected ProtocolPerformType perform;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -231,7 +232,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PerformType getPerform() {
+	public ProtocolPerformType getPerform() {
 		return perform;
 	}
 
@@ -240,8 +241,8 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPerform(PerformType newPerform, NotificationChain msgs) {
-		PerformType oldPerform = perform;
+	public NotificationChain basicSetPerform(ProtocolPerformType newPerform, NotificationChain msgs) {
+		ProtocolPerformType oldPerform = perform;
 		perform = newPerform;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_CHOICE_TYPE__PERFORM, oldPerform, newPerform);
@@ -255,7 +256,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPerform(PerformType newPerform) {
+	public void setPerform(ProtocolPerformType newPerform) {
 		if (newPerform != perform) {
 			NotificationChain msgs = null;
 			if (perform != null)
@@ -327,7 +328,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 				setAlt((ProtocolCombinatorType)newValue);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__PERFORM:
-				setPerform((PerformType)newValue);
+				setPerform((ProtocolPerformType)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -351,7 +352,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 				setAlt((ProtocolCombinatorType)null);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__PERFORM:
-				setPerform((PerformType)null);
+				setPerform((ProtocolPerformType)null);
 				return;
 		}
 		super.eUnset(featureID);

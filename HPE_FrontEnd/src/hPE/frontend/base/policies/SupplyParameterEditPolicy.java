@@ -77,10 +77,8 @@ public boolean canExecute() {
 	return true;
 }
 
-public void execute(){
-
-	   List componentsToSupply = new ArrayList();
-	
+public void execute()
+{
 	   dialog.open();
 	   int r = dialog.getReturnCode();
 	   
@@ -89,10 +87,9 @@ public void execute(){
           HComponent topModel = (HComponent) model.getTopConfiguration();
           if (topModel.checkIfVariableWasSupplied(varName)) {
         	  JOptionPane.showMessageDialog(null, 
-        			  "Do not complicate ! The variable " + varName + 
+        			  "Invalid Operation ! The variable " + varName + 
         			  " was already supplied before. \n Try to rename the variable to be supplied.", 
-        			  "Supply Error", 
-        			  JOptionPane.ERROR_MESSAGE);
+        			  "Supply Error", JOptionPane.ERROR_MESSAGE);
           } else {          
         	  topModel.supplyParameter(varName,model);
           }

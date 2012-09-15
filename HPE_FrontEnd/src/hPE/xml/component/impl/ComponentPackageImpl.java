@@ -71,6 +71,7 @@ import hPE.xml.component.PortSliceType;
 import hPE.xml.component.PortType;
 import hPE.xml.component.ProtocolChoiceType;
 import hPE.xml.component.ProtocolCombinatorType;
+import hPE.xml.component.ProtocolPerformType;
 import hPE.xml.component.ProtocolActivationType;
 import hPE.xml.component.ProtocolAltType;
 import hPE.xml.component.ProtocolCompositionType;
@@ -404,13 +405,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass performTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass portSliceTypeEClass = null;
 
 	/**
@@ -433,6 +427,20 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass protocolCombinatorTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass protocolPerformTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass protocolTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2055,33 +2063,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPerformType() {
-		return performTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPerformType_ActionId() {
-		return (EAttribute)performTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPerformType_SliceId() {
-		return (EAttribute)performTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getPortSliceType() {
 		return portSliceTypeEClass;
 	}
@@ -2208,8 +2189,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getProtocolCombinatorType_Guard() {
-		return (EReference)protocolCombinatorTypeEClass.getEStructuralFeatures().get(1);
+	public EClass getProtocolPerformType() {
+		return protocolPerformTypeEClass;
 	}
 
 	/**
@@ -2217,8 +2198,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProtocolCombinatorType_Id() {
-		return (EAttribute)protocolCombinatorTypeEClass.getEStructuralFeatures().get(2);
+	public EAttribute getProtocolPerformType_ActionId() {
+		return (EAttribute)protocolPerformTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2226,8 +2207,44 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProtocolCombinatorType_Repeat() {
-		return (EAttribute)protocolCombinatorTypeEClass.getEStructuralFeatures().get(3);
+	public EAttribute getProtocolPerformType_SliceId() {
+		return (EAttribute)protocolPerformTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProtocolType() {
+		return protocolTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolType_Guard() {
+		return (EReference)protocolTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProtocolType_Id() {
+		return (EAttribute)protocolTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProtocolType_Repeat() {
+		return (EAttribute)protocolTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2496,7 +2513,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_Replica() {
+	public EAttribute getUnitBoundsType_Parallel() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2505,8 +2522,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_URef() {
+	public EAttribute getUnitBoundsType_Replica() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitBoundsType_URef() {
+		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3044,10 +3070,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__FORM_FIELD_ID);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__VAR_NAME);
 
-		performTypeEClass = createEClass(PERFORM_TYPE);
-		createEAttribute(performTypeEClass, PERFORM_TYPE__ACTION_ID);
-		createEAttribute(performTypeEClass, PERFORM_TYPE__SLICE_ID);
-
 		portSliceTypeEClass = createEClass(PORT_SLICE_TYPE);
 		createEAttribute(portSliceTypeEClass, PORT_SLICE_TYPE__PREF);
 		createEAttribute(portSliceTypeEClass, PORT_SLICE_TYPE__SREF);
@@ -3065,9 +3087,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		protocolCombinatorTypeEClass = createEClass(PROTOCOL_COMBINATOR_TYPE);
 		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ACTION);
-		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__GUARD);
-		createEAttribute(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ID);
-		createEAttribute(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__REPEAT);
+
+		protocolPerformTypeEClass = createEClass(PROTOCOL_PERFORM_TYPE);
+		createEAttribute(protocolPerformTypeEClass, PROTOCOL_PERFORM_TYPE__ACTION_ID);
+		createEAttribute(protocolPerformTypeEClass, PROTOCOL_PERFORM_TYPE__SLICE_ID);
+
+		protocolTypeEClass = createEClass(PROTOCOL_TYPE);
+		createEReference(protocolTypeEClass, PROTOCOL_TYPE__GUARD);
+		createEAttribute(protocolTypeEClass, PROTOCOL_TYPE__ID);
+		createEAttribute(protocolTypeEClass, PROTOCOL_TYPE__REPEAT);
 
 		recursiveEntryTypeEClass = createEClass(RECURSIVE_ENTRY_TYPE);
 		createEAttribute(recursiveEntryTypeEClass, RECURSIVE_ENTRY_TYPE__CREF);
@@ -3104,6 +3132,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		unitBoundsTypeEClass = createEClass(UNIT_BOUNDS_TYPE);
 		createEReference(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION);
+		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__PARALLEL);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__REPLICA);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__UREF);
 
@@ -3191,6 +3220,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		guardNotTypeEClass.getESuperTypes().add(this.getGuardType());
 		guardOrTypeEClass.getESuperTypes().add(this.getGuardType());
 		innerComponentTypeEClass.getESuperTypes().add(this.getComponentInUseType());
+		protocolCombinatorTypeEClass.getESuperTypes().add(this.getProtocolType());
+		protocolPerformTypeEClass.getESuperTypes().add(this.getProtocolType());
 		unitSliceTypeEClass.getESuperTypes().add(this.getUnitRefType());
 
 		// Initialize classes and features; add operations and parameters
@@ -3395,10 +3426,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getParameterType_FormFieldId(), theXMLTypePackage.getString(), "formFieldId", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_VarName(), theXMLTypePackage.getString(), "varName", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(performTypeEClass, PerformType.class, "PerformType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPerformType_ActionId(), theXMLTypePackage.getString(), "actionId", null, 0, 1, PerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPerformType_SliceId(), theXMLTypePackage.getString(), "sliceId", null, 0, 1, PerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(portSliceTypeEClass, PortSliceType.class, "PortSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPortSliceType_PRef(), theXMLTypePackage.getString(), "pRef", null, 0, 1, PortSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPortSliceType_SRef(), theXMLTypePackage.getString(), "sRef", null, 0, 1, PortSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3412,13 +3439,19 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getProtocolChoiceType_Par(), this.getProtocolCombinatorType(), null, "par", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProtocolChoiceType_Seq(), this.getProtocolCombinatorType(), null, "seq", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProtocolChoiceType_Alt(), this.getProtocolCombinatorType(), null, "alt", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProtocolChoiceType_Perform(), this.getPerformType(), null, "perform", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Perform(), this.getProtocolPerformType(), null, "perform", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(protocolCombinatorTypeEClass, ProtocolCombinatorType.class, "ProtocolCombinatorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProtocolCombinatorType_Action(), this.getProtocolChoiceType(), null, "action", null, 1, -1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProtocolCombinatorType_Guard(), this.getGuardType(), null, "guard", null, 0, 1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProtocolCombinatorType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProtocolCombinatorType_Repeat(), theXMLTypePackage.getBoolean(), "repeat", null, 0, 1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(protocolPerformTypeEClass, ProtocolPerformType.class, "ProtocolPerformType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getProtocolPerformType_ActionId(), theXMLTypePackage.getString(), "actionId", null, 0, 1, ProtocolPerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolPerformType_SliceId(), theXMLTypePackage.getString(), "sliceId", null, 0, 1, ProtocolPerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(protocolTypeEClass, ProtocolType.class, "ProtocolType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProtocolType_Guard(), this.getGuardType(), null, "guard", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProtocolType_Repeat(), theXMLTypePackage.getBoolean(), "repeat", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recursiveEntryTypeEClass, RecursiveEntryType.class, "RecursiveEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRecursiveEntryType_CRef(), theXMLTypePackage.getString(), "cRef", null, 0, 1, RecursiveEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3455,6 +3488,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(unitBoundsTypeEClass, UnitBoundsType.class, "UnitBoundsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnitBoundsType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitBoundsType_Parallel(), theXMLTypePackage.getBoolean(), "parallel", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_Replica(), theXMLTypePackage.getUnsignedInt(), "replica", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_URef(), theXMLTypePackage.getString(), "uRef", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4666,27 +4700,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "varName"
 		   });		
 		addAnnotation
-		  (performTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "perform_._type",
-			 "kind", "empty"
-		   });		
-		addAnnotation
-		  (getPerformType_ActionId(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "action_id"
-		   });		
-		addAnnotation
-		  (getPerformType_SliceId(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "slice_id"
-		   });		
-		addAnnotation
 		  (portSliceTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4785,21 +4798,49 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "action"
 		   });		
 		addAnnotation
-		  (getProtocolCombinatorType_Guard(), 
+		  (protocolPerformTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolPerformType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolPerformType_ActionId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "action_id"
+		   });		
+		addAnnotation
+		  (getProtocolPerformType_SliceId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "slice_id"
+		   });		
+		addAnnotation
+		  (protocolTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolType_Guard(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "guard"
 		   });		
 		addAnnotation
-		  (getProtocolCombinatorType_Id(), 
+		  (getProtocolType_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
 		   });		
 		addAnnotation
-		  (getProtocolCombinatorType_Repeat(), 
+		  (getProtocolType_Repeat(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
@@ -5033,6 +5074,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
+		   });		
+		addAnnotation
+		  (getUnitBoundsType_Parallel(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "parallel"
 		   });		
 		addAnnotation
 		  (getUnitBoundsType_Replica(), 

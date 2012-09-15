@@ -5,6 +5,7 @@ import hPE.frontend.base.commands.SetMultipleCommand;
 import hPE.frontend.base.interfaces.IElement;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
+import hPE.frontend.kinds.topology.model.HTopologyComponent;
 
 import java.util.List;
 
@@ -62,9 +63,11 @@ public class SetMultipleAction extends SelectionAction {
 		    else if (part.getModel() instanceof HUnit) 
 		    {
 		    	HUnit u = (HUnit) part.getModel();
-		    	HComponent c = (HComponent) u.getConfiguration();		    	
+		    	HComponent c = (HComponent) u.getConfiguration();		
+		    	if (c.kindString().equals(HTopologyComponent.KIND)) return false;
 		    	HComponent cTop = (HComponent) c.getTopConfiguration();
-		    	if (cTop.getSuperType() != null) return false;		    	
+		    	if (cTop.getSuperType() != null) return false;
+		    	if (u.getBinding() != null) return false;
 		    }
 			
 		}

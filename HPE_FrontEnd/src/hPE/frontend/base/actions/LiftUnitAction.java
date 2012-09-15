@@ -45,7 +45,8 @@ public class LiftUnitAction extends SelectionAction {
 		if (getSelectedObjects().isEmpty())
 			return false;
 		List parts = getSelectedObjects();
-		for (int i=0; i<parts.size(); i++){
+		return false;
+		/*for (int i=0; i<parts.size(); i++){
 			Object o = parts.get(i);
 			if (!(o instanceof EditPart)) return false;
 			EditPart part = (EditPart) o;
@@ -57,7 +58,7 @@ public class LiftUnitAction extends SelectionAction {
 			if (u.getBinding() != null) return false;
 		}	
 		
-		return true;
+		return true;*/
 	}
 	
 	private Command getCommand() {

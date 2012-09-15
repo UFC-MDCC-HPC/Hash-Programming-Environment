@@ -1,12 +1,13 @@
 	package hPE.frontend.base.commands;
 
-import org.eclipse.gef.commands.Command;
+import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HInterface;
+import hPE.frontend.base.model.HUnitSlice;
+import hPE.frontend.base.model.IHUnit;
+import hPE.frontend.base.model.IHVisualElement;
 
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.geometry.Point;
-
-import hPE.frontend.base.commands.*;
-import hPE.frontend.base.model.*;
+import org.eclipse.gef.commands.Command;
 
 public class GenericNodeCommand extends Command {
 

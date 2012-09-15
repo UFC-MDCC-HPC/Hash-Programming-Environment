@@ -100,11 +100,11 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		        
 	    unit_figure.setBounds(unit.getBounds());        
 	    
-	    String name = unit.getName2();
+	    String name = unit.isClone() || unit.isCloned()  ? unit.getName2() + "." + unit.getIndex() : unit.getName2();
 	    
-	    List<String> names = new ArrayList<String>(); 
+	   // List<String> names = new ArrayList<String>(); 
 	    
-	    if (names.size() == 0) name = unit.getName2();
+	   // if (names.size() == 0) name = unit.getName2();
 	    
 	    unit_figure.setName(name);
         
