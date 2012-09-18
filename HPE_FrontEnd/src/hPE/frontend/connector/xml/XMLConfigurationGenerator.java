@@ -21,6 +21,7 @@ import hPE.frontend.connector.xml.component.Unittype;
 import hPE.frontend.connector.xml.component.util.ComponentResourceFactoryImpl;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.HActivateUnit;
+import hPE.frontend.kinds.activate.model.protocol.HProtocolChoice;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -266,7 +267,7 @@ public class XMLConfigurationGenerator {
 
 	private static void xmlConfig_saveActions(HActivateInterface i, EList<Hpeaction> uAction, hPE.frontend.connector.xml.component.ComponentFactory factory) 
 	{
-		for (Entry<String, ProtocolChoiceType> action : i.getActions().entrySet())
+		for (Entry<String, HProtocolChoice> action : i.getActions().entrySet())
 		{
 			Hpeaction aX = factory.createHpeaction();
 			

@@ -19,6 +19,7 @@ import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.RegisterComponentAction;
 import hPE.frontend.base.actions.SetMultipleAction;
 import hPE.frontend.base.actions.SetParameterAction;
+import hPE.frontend.base.actions.SetPrivateUnitAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
 import hPE.frontend.base.actions.ShowInterfaceAction;
@@ -29,26 +30,23 @@ import hPE.frontend.base.dialogs.BrowseAndRunBackEndDialog;
 import hPE.frontend.base.dnd.FileTransferDropTargetListener;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
-import hPE.frontend.kinds.activate.actions.AltAbsorbtionAction;
-import hPE.frontend.kinds.activate.actions.CombineActionsAction;
-import hPE.frontend.kinds.activate.actions.CutBranchAction;
+import hPE.frontend.kinds.activate.actions.ChangeOrderSEQProtocolAction;
 import hPE.frontend.kinds.activate.actions.EditProtocolAction;
-import hPE.frontend.kinds.activate.actions.InterleaveActionsAction;
-import hPE.frontend.kinds.activate.actions.LiftActionAction;
-import hPE.frontend.kinds.activate.actions.RepeatFusionAction;
-import hPE.frontend.kinds.activate.actions.SetNestingFactorAction;
-import hPE.frontend.kinds.activate.actions.SetPrivateUnitAction;
-import hPE.frontend.kinds.activate.actions.UnfoldActionAction;
-import hPE.frontend.kinds.activate.actions.UnnestActionAction;
+import hPE.frontend.kinds.activate.actions.NewProtocolBoxAction;
+import hPE.frontend.kinds.activate.actions.NewUnitActionProtocolAction;
+import hPE.frontend.kinds.activate.actions.RemoveActionProtocolAction;
+import hPE.frontend.kinds.activate.actions.SetProtocolTypeAction;
+import hPE.frontend.kinds.activate.actions.ToggleLoopProtocolAction;
 import hPE.frontend.kinds.activate.model.HActivateComponent;
+import hPE.frontend.kinds.activate.model.protocol.IProtocolCombinator;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
-import hPE.xml.factory.HPEInvalidComponentResourceException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
+import hPE.xml.factory.HPEInvalidComponentResourceException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -407,34 +405,27 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		
 		if (configuration instanceof HActivateComponent) {
 			
-//			bars.setGlobalActionHandler(id, registry.getAction(id));		
 			id = EditProtocolAction.SHOW_PROTOCOL;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = EditProtocolAction.HIDE_PROTOCOL;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = SetNestingFactorAction.INCREMENT_NF;
+			id = NewProtocolBoxAction.NEW_PROTOCOL;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = SetNestingFactorAction.DECREMENT_NF;
+			id = NewUnitActionProtocolAction.NEW_UNIT_ACTION;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = UnfoldActionAction.UNFOLD_ACTION;
+			id = RemoveActionProtocolAction.REMOVE_ACTION;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = UnfoldActionAction.FOLD_ACTION;
+			id = ChangeOrderSEQProtocolAction.CHANGE_ORDER_SEQ;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = LiftActionAction.LIFT_ACTION;
+			id = ToggleLoopProtocolAction.TOGGLE_LOOP;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = CombineActionsAction.SEQ_ACTIONS;
+			id = SetProtocolTypeAction.SET_PROTOCOL_TYPE_ALT;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = CombineActionsAction.PAR_ACTIONS;
+			id = SetProtocolTypeAction.SET_PROTOCOL_TYPE_PAR;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = UnnestActionAction.UNNEST_ACTION;
+			id = SetProtocolTypeAction.SET_PROTOCOL_TYPE_SEQ;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = InterleaveActionsAction.INTERLEAVE_ACTIONS;
-			bars.setGlobalActionHandler(id, registry.getAction(id));		
-			id = CutBranchAction.CUT_BRANCH;
-			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = AltAbsorbtionAction.ALT_ABSORPTION;
-			bars.setGlobalActionHandler(id, registry.getAction(id));
-			id = RepeatFusionAction.REPEAT_FUSION;
+			id = SetProtocolTypeAction.SET_PROTOCOL_TYPE_PERFORM;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
 			id = DeployApplicationAction.DEPLOY_APPLICATION;
 			bars.setGlobalActionHandler(id, registry.getAction(id));
@@ -545,55 +536,43 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 			action = new EditProtocolAction(this,false);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
-			action = new SetNestingFactorAction(this,true);
+									
+			action = new NewProtocolBoxAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
 			
-			action = new SetNestingFactorAction(this,false);
+			action = new NewUnitActionProtocolAction(this);
+			registry.registerAction(action);
+			getSelectionActions().add(action.getId());   
+
+			action = new ChangeOrderSEQProtocolAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
 			
-			action = new UnfoldActionAction(this,false);
+			action = new RemoveActionProtocolAction(this);
+			registry.registerAction(action);
+			getSelectionActions().add(action.getId());
+
+			action = new ToggleLoopProtocolAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
 			
-			action = new UnfoldActionAction(this,true);
+			action = new SetProtocolTypeAction(this, IProtocolCombinator.ALT_COMBINATOR);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
-			action = new LiftActionAction(this);
+									
+			action = new SetProtocolTypeAction(this, IProtocolCombinator.PAR_COMBINATOR);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
-			action = new CombineActionsAction(this,CombineActionsAction.PAR_ACTIONS_REQUEST);
+									
+			action = new SetProtocolTypeAction(this, IProtocolCombinator.SEQ_COMBINATOR);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
-			action = new CombineActionsAction(this,CombineActionsAction.SEQ_ACTIONS_REQUEST);
+									
+			action = new SetProtocolTypeAction(this, IProtocolCombinator.NO_COMBINATOR);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());
-			
-			action = new UnnestActionAction(this);
-			registry.registerAction(action);
-			getSelectionActions().add(action.getId());
-			
-			action = new InterleaveActionsAction(this);
-			registry.registerAction(action);
-			getSelectionActions().add(action.getId());
-			
-			action = new CutBranchAction(this);
-			registry.registerAction(action);
-			getSelectionActions().add(action.getId());
-			
-			action = new AltAbsorbtionAction(this);
-			registry.registerAction(action);
-			getSelectionActions().add(action.getId());
-			
-			action = new RepeatFusionAction(this);
-			registry.registerAction(action);
-			getSelectionActions().add(action.getId());
-			
+									
 			action = new DeployApplicationAction(this);
 			registry.registerAction(action);
 			getSelectionActions().add(action.getId());

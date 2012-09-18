@@ -4,32 +4,22 @@ import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
 import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.exceptions.HPENotFusableSlicesException;
 import hPE.frontend.base.interfaces.IComputationInterface;
-import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.frontend.base.model.HInterfaceSig;
 import hPE.frontend.base.model.HInterfaceSlice;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHPrimUnit;
-import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.connector.xml.component.ProtocolChoiceType;
+import hPE.frontend.connector.xml.component.ComponentFactory;
 import hPE.frontend.connector.xml.component.GuardType;
-import hPE.frontend.kinds.activate.model.protocol.HAction;
-import hPE.frontend.kinds.activate.model.protocol.HDoAction;
-import hPE.frontend.kinds.activate.model.protocol.HParAction;
-//import hPE.frontend.kinds.activate.model.protocol.ProtocolChoiceType;
+import hPE.frontend.kinds.activate.model.protocol.HProtocolChoice;
 import hPE.frontend.kinds.base.model.HHasPortsInterface;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.Rectangle;
 
 
 
@@ -40,10 +30,8 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 	
 	public HActivateInterface(HComponent configuration,
 			HInterfaceSig signature,IHPrimUnit u, Point where) throws HPEAbortException {
-		super(configuration, signature,u, where) ;
+		super(configuration, signature,u, where);
 		
-		
-		//new HDoAction(null,new ProtocolChoiceType(this),null);		
 	}
 
 	
@@ -53,17 +41,23 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 	
 	// LIST OF ACTIONS
 	
-	private Map<String, ProtocolChoiceType> actions = null;
+	private Map<String, HProtocolChoice> actions = null;
 	
-	public void newAction(String action_id, ProtocolChoiceType action)
+	public void newAction(String action_id, HProtocolChoice action)
 	{
-	    if (actions == null) actions = new HashMap<String, ProtocolChoiceType>();
+	    if (actions == null) actions = new HashMap<String, HProtocolChoice>();
 	    actions.put(action_id, action);
+	    HComponent c = (HComponent) this.getConfiguration();
+	    c.refresh();
 	}
 	
-	public Map<String, ProtocolChoiceType> getActions()
+	public Map<String, HProtocolChoice> getActions()
 	{
-	    if (actions == null) actions = new HashMap<String, ProtocolChoiceType>();
+	    if (actions == null) actions = new HashMap<String, HProtocolChoice>();
+	    if (actions.isEmpty()) 
+	    {
+	    	newAction("main", new HProtocolChoice("main"));
+	    }
 		return actions;
 	}
 	
@@ -85,20 +79,26 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 	
 	
 	
-	private ProtocolChoiceType protocol;
+//	private ProtocolChoiceType protocol;
 
-	public ProtocolChoiceType getProtocol() {
-		return protocol;
-	}
+//	public ProtocolChoiceType getProtocol() {
+//		if (protocol == null) 
+//		{
+//			
+//		}
+			
+//		return protocol;
+//	}
 
 
-	public void setProtocol(ProtocolChoiceType protocol) {
-		this.protocol = protocol;
-	}
+//	public void setProtocol(ProtocolChoiceType protocol) {
+//		this.protocol = protocol;
+//	}
 	
-	public void unsetProtocol() {
-		this.protocol = null;
-	}
+//	public void unsetProtocol() {
+//		this.protocol = null;
+//	}
+	
 /*	
 	public void buildDefaultProtocol() {
 
@@ -193,7 +193,7 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 			int x      = 10  ;
 			int y      = 50 ;
 			
-			ProtocolChoiceType protocol = (ProtocolChoiceType) this.getProtocol();
+			//ProtocolChoiceType protocol = (ProtocolChoiceType) this.getProtocol();
 			
 			HInterfaceSlice ia = (HInterfaceSlice)uSlice.getInterfaceSlice();
 	        HHasExternalReferences i = (HHasExternalReferences) ia.getInterface();	        
@@ -250,6 +250,8 @@ public abstract class HActivateInterface extends HHasPortsInterface implements
 	
 
 	
-	public abstract String getActivateMethodName(); 
+	public abstract String getActivateMethodName();
+
+
 
 }

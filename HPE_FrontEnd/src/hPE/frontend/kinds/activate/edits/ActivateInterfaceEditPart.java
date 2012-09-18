@@ -3,6 +3,7 @@ package hPE.frontend.kinds.activate.edits;
 import hPE.frontend.kinds.activate.figures.ActivateInterfaceFigure;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.policies.EditProtocolEditPolicy;
+import hPE.frontend.kinds.activate.policies.NewUnitActionProtocolEditPolicy;
 import hPE.frontend.kinds.base.edits.HasPortsInterfaceEditPart;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ActivateInterfaceEditPart<ModelType extends HActivateInterface,
 		
 	   super.createEditPolicies();	   
        this.installEditPolicy("Edit Protocol", new EditProtocolEditPolicy());
+       this.installEditPolicy(NewUnitActionProtocolEditPolicy.NEW_UNIT_ACTION_REQUEST, new NewUnitActionProtocolEditPolicy());
 	
 	}
 	

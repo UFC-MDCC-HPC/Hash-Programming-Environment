@@ -1,4 +1,4 @@
-package hPE.frontend.kinds.activate.actions;
+package hPE.frontend.base.actions;
 
 import java.util.List;
 
@@ -10,44 +10,45 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import hPE.frontend.kinds.activate.model.protocol.HAction;
-import hPE.frontend.kinds.activate.model.protocol.HDoAction;
+import hPE.frontend.base.edits.PortEditPart;
+import hPE.frontend.base.model.HUnitStub;
+import hPE.frontend.base.model.IHUnit;
 import hPE.HPEPlugin;
 
-public class UnfoldActionAction extends SelectionAction {
+public class SetPrivateUnitAction extends SelectionAction {
 
 	private static final String
-		UNFOLD_ACTION_REQUEST = "Unfold Action",
-		FOLD_ACTION_REQUEST = "Fold Action";  //$NON-NLS-1$
+		SET_PUBLIC_UNIT_REQUEST = "Set Public Unit",
+		SET_PRIVATE_UNIT_REQUEST = "Set Private Unit";  //$NON-NLS-1$
 	
 	public static final String
-	    UNFOLD_ACTION = "Unfold Action",
-	    FOLD_ACTION = "Fold Action";  //$NON-NLS-1$
+	    SET_PUBLIC_UNIT = "Set Public Unit",
+	    SET_PRIVATE_UNIT = "Set Private Unit";  //$NON-NLS-1$
 	
 	Request request;
-	boolean unfold;
+	boolean setPrivateUnit;
 	
-	public UnfoldActionAction(IWorkbenchPart part, boolean unfold) {
+	public SetPrivateUnitAction(IWorkbenchPart part, boolean setPrivateUnit) {
 		super(part);
-		if (unfold) {
-			   request = new Request(UNFOLD_ACTION_REQUEST);
-			   setText("Unfold Action");
-			   setId("Unfold Action");
-			   setToolTipText("Unfold Action");
+		if (!setPrivateUnit) {
+			   request = new Request(SET_PUBLIC_UNIT_REQUEST);
+			   setText("Set Public Unit");
+			   setId("Set Public Unit");
+			   setToolTipText("Set Public Unit");
 			   setImageDescriptor(
 			   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
 			   setHoverImageDescriptor(getImageDescriptor());
 		} else {
-			   request = new Request(FOLD_ACTION_REQUEST);
-			   setText("Fold Action");
-			   setId("Fold Action");
-			   setToolTipText("Fold Action");
+			   request = new Request(SET_PRIVATE_UNIT_REQUEST);
+			   setText("Set Private Unit");
+			   setId("Set Private Unit");
+			   setToolTipText("Set Private Unit");
 			   setImageDescriptor(
 			   ImageDescriptor.createFromFile(HPEPlugin.class,"icons/rectangle24.gif")); //$NON-NLS-1$
 			   setHoverImageDescriptor(getImageDescriptor());
 		}
 		
-		this.unfold = unfold;
+		this.setPrivateUnit = setPrivateUnit;
 	}
 	
 	protected boolean calculateEnabled() {
@@ -55,7 +56,8 @@ public class UnfoldActionAction extends SelectionAction {
 	}
 	
 	private boolean canPerformAction() {
-		if (getSelectedObjects().isEmpty())
+		return false;
+/*		if (getSelectedObjects().isEmpty())
 			return false;
 		List parts = getSelectedObjects();
 		for (int i=0; i<parts.size(); i++){
@@ -63,25 +65,21 @@ public class UnfoldActionAction extends SelectionAction {
 			if (!(o instanceof EditPart)) return false;
 			EditPart part = (EditPart)o;
 			
-			if ((part.getModel() instanceof HDoAction)) {
-               HDoAction a = (HDoAction) part.getModel();
-               if (!unfold || a.getEncapsulatedAction() == null) return false;
-               return true;
-			}
-			else if ((part.getModel() instanceof HAction)) {
-	           HAction a = (HAction) part.getModel();
-	           if (unfold || a.getEncapsulatingDoAction() == null) return false;
-	           return true;
-			} else
-			   return false;
-   		}
-		return true;
+			if (!(part.getModel() instanceof IHUnit)) return false;
+            IHUnit x = (IHUnit) part.getModel();
+            if (x.isEntry() && !(x instanceof HUnitStub)) return false;
+            
+            if ((setPrivateUnit) && (x.getHidden() || x.getHiddenBlocked())) return false;
+            else if (!setPrivateUnit && !x.getHidden()) return false;           
+               
+		}
+		return true;*/
 	}
 	
 	private Command getCommand() {
 		List editparts = getSelectedObjects();
 		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Unfold/Fold Action");//$NON-NLS-1$
+		cc.setDebugLabel("Set Public/Private Unit");//$NON-NLS-1$
 		for (int i=0; i < editparts.size(); i++) {
 			EditPart part = (EditPart)editparts.get(i);
 			cc.add(part.getCommand(request));

@@ -1,68 +1,44 @@
 package hPE.frontend.base.edits;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-
-import org.eclipse.draw2d.ConnectionAnchor;
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
-import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.Request;
-import org.eclipse.gef.RequestConstants;
-import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
-import org.eclipse.gef.tools.DirectEditManager;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Collection;
-import java.util.Map;
-
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.*;
-import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.WorkbenchEncoding;
-import org.eclipse.ui.internal.WorkbenchPlugin;
-import org.eclipse.ui.editors.text.*;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.ui.part.MultiPageEditorPart;
-
-import hPE.HPEVersionEditor;
-
-import hPE.frontend.base.exceptions.HPEAbortException;
 import hPE.frontend.base.figures.ConfigurationNodeFigure;
 import hPE.frontend.base.figures.UnitFigure;
 import hPE.frontend.base.model.HBinding;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
-import hPE.frontend.base.model.HPort;
-import hPE.frontend.base.model.HPrimUnitStub;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
-import hPE.frontend.base.model.IHPrimUnit;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.policies.BuildInterfaceEditPolicy;
 import hPE.frontend.base.policies.DetachInterfaceEditPolicy;
 import hPE.frontend.base.policies.HashGraphicalNodeEditPolicy;
 import hPE.frontend.base.policies.NameDirectEditPolicy;
 import hPE.frontend.base.policies.RemoveElementEditPolicy;
+import hPE.frontend.base.policies.SetPrivateUnitEditPolicy;
 import hPE.frontend.base.policies.ShowInterfaceEditPolicy;
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
-import hPE.frontend.kinds.activate.policies.SetPrivateUnitEditPolicy;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
+import org.eclipse.gef.ConnectionEditPart;
+import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.RequestConstants;
+import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.gef.tools.DirectEditManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 
-public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigure> extends AbstractGraphicalEditPart implements PropertyChangeListener, NodeEditPart {
+public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigure> 
+		extends AbstractGraphicalEditPart 
+		implements PropertyChangeListener, NodeEditPart {
 
 	public UnitEditPart() {
 		super();
@@ -80,12 +56,12 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE,new UnitFlowLayoutEditPolicy());		
 		this.installEditPolicy(EditPolicy.COMPONENT_ROLE, new RemoveElementEditPolicy());
+		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		this.installEditPolicy("BuildInterfaceFromSlicesEditPolicy", new BuildInterfaceEditPolicy());
 		this.installEditPolicy("DetachInterfaceEditPolicy", new DetachInterfaceEditPolicy());
 		this.installEditPolicy("ShowInterfaceEditPolicy", new ShowInterfaceEditPolicy());
 		this.installEditPolicy("SetPrivateUnitEditPolicy", new SetPrivateUnitEditPolicy());		
 		// allow the creation of connections and and the reconnection of connections between Shape instances
-		this.installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new HashGraphicalNodeEditPolicy());
 		
 		if (unit.getComponent().isAbstract()) {
 			this.installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new NameDirectEditPolicy());

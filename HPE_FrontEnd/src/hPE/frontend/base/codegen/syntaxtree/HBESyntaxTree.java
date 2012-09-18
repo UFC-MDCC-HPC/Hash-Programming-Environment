@@ -1,26 +1,13 @@
 package hPE.frontend.base.codegen.syntaxtree;
 
 import hPE.frontend.base.model.HInterface;
-import hPE.frontend.base.model.HPort;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
-import hPE.frontend.kinds.activate.model.HActivateInterfaceSlice;
-import hPE.frontend.kinds.activate.model.protocol.HAction;
-import hPE.frontend.kinds.activate.model.protocol.HAltAction;
-import hPE.frontend.kinds.activate.model.protocol.HCombinatorAction;
-import hPE.frontend.kinds.activate.model.protocol.HDoAction;
-import hPE.frontend.kinds.activate.model.protocol.HProtocol;
-import hPE.frontend.kinds.activate.model.protocol.HSignalAction;
-import hPE.frontend.kinds.activate.model.protocol.HSkipAction;
-import hPE.frontend.kinds.activate.model.protocol.HWaitAction;
-import hPE.frontend.kinds.application.model.HApplicationInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.JOptionPane;
 
 
 
@@ -75,7 +62,7 @@ public class HBESyntaxTree {
 	
 	protected void ToProcedure(HActivateInterface i) {
 		
-		// The protocol.
+/*		// The protocol.
 		HProtocol protocol = (HProtocol) i.getProtocol();
 		
 		// The ports.
@@ -135,11 +122,11 @@ public class HBESyntaxTree {
 		}
 		
 		procedure.setMainBlock(mainBlock);
-		
+	*/	
 		// innerProcedures.add(procedure);
 	}
 
-	private HBECommandBlock actionToCommand(HAction action) {
+/*	private HBECommandBlock actionToCommand(HAction action) {
 
         HBECommandBlock block = HBEBlockFactory.newCommandBlock(action);
         
@@ -170,9 +157,9 @@ public class HBESyntaxTree {
 	        		b.setBranch(rtb);
 	        	}
 	        }
-	        
+	*/        
         
-        } else if (action instanceof HDoAction){
+/*        } else if (action instanceof HDoAction){
         	
         	HBEProcedureCall pc = (HBEProcedureCall) block;        	
         	HDoAction doAction = (HDoAction) action;
@@ -226,7 +213,7 @@ public class HBESyntaxTree {
         }
 		
 		return block;
-	}
+	}*/
 	
 	
 }

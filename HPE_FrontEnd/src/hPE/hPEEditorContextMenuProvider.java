@@ -16,6 +16,7 @@ import hPE.frontend.base.actions.OpenSourceAction;
 import hPE.frontend.base.actions.RegisterComponentAction;
 import hPE.frontend.base.actions.SetMultipleAction;
 import hPE.frontend.base.actions.SetParameterAction;
+import hPE.frontend.base.actions.SetPrivateUnitAction;
 import hPE.frontend.base.actions.SetRecursiveAction;
 import hPE.frontend.base.actions.SetSliceNameAction;
 import hPE.frontend.base.actions.ShowInterfaceAction;
@@ -23,17 +24,13 @@ import hPE.frontend.base.actions.SplitEntryAction;
 import hPE.frontend.base.actions.SupplyParameterAction;
 import hPE.frontend.base.actions.UnbindAction;
 import hPE.frontend.base.interfaces.IComponent;
-import hPE.frontend.kinds.activate.actions.AltAbsorbtionAction;
-import hPE.frontend.kinds.activate.actions.CombineActionsAction;
-import hPE.frontend.kinds.activate.actions.CutBranchAction;
+import hPE.frontend.kinds.activate.actions.ChangeOrderSEQProtocolAction;
 import hPE.frontend.kinds.activate.actions.EditProtocolAction;
-import hPE.frontend.kinds.activate.actions.InterleaveActionsAction;
-import hPE.frontend.kinds.activate.actions.LiftActionAction;
-import hPE.frontend.kinds.activate.actions.RepeatFusionAction;
-import hPE.frontend.kinds.activate.actions.SetNestingFactorAction;
-import hPE.frontend.kinds.activate.actions.SetPrivateUnitAction;
-import hPE.frontend.kinds.activate.actions.UnfoldActionAction;
-import hPE.frontend.kinds.activate.actions.UnnestActionAction;
+import hPE.frontend.kinds.activate.actions.NewProtocolBoxAction;
+import hPE.frontend.kinds.activate.actions.NewUnitActionProtocolAction;
+import hPE.frontend.kinds.activate.actions.RemoveActionProtocolAction;
+import hPE.frontend.kinds.activate.actions.SetProtocolTypeAction;
+import hPE.frontend.kinds.activate.actions.ToggleLoopProtocolAction;
 import hPE.frontend.kinds.activate.model.HActivateComponent;
 import hPE.frontend.kinds.application.actions.DeployApplicationAction;
 import hPE.frontend.kinds.data.model.HDataComponent;
@@ -104,68 +101,52 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			if (action.isEnabled())	{ 
 				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 			}
-			
-			action = getAction(SetNestingFactorAction.INCREMENT_NF);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(SetNestingFactorAction.DECREMENT_NF);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(UnfoldActionAction.UNFOLD_ACTION);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(UnfoldActionAction.FOLD_ACTION);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(LiftActionAction.LIFT_ACTION);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(CombineActionsAction.SEQ_ACTIONS);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(CombineActionsAction.PAR_ACTIONS);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(UnnestActionAction.UNNEST_ACTION);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(InterleaveActionsAction.INTERLEAVE_ACTIONS);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(CutBranchAction.CUT_BRANCH);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(AltAbsorbtionAction.ALT_ABSORPTION);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
-			action = getAction(RepeatFusionAction.REPEAT_FUSION);
-			if (action.isEnabled())	{ 
-				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-			}
-			
 						
+			action = getAction(NewProtocolBoxAction.NEW_PROTOCOL);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+
+			action = getAction(NewUnitActionProtocolAction.NEW_UNIT_ACTION);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}			
+			
+			action = getAction(ChangeOrderSEQProtocolAction.CHANGE_ORDER_SEQ);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+			
+			action = getAction(RemoveActionProtocolAction.REMOVE_ACTION);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+			
+			action = getAction(ToggleLoopProtocolAction.TOGGLE_LOOP);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+
+			action = getAction(SetProtocolTypeAction.SET_PROTOCOL_TYPE_ALT);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+			
+			action = getAction(SetProtocolTypeAction.SET_PROTOCOL_TYPE_PAR);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+			
+			action = getAction(SetProtocolTypeAction.SET_PROTOCOL_TYPE_SEQ);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+			
+			action = getAction(SetProtocolTypeAction.SET_PROTOCOL_TYPE_PERFORM);
+			if (action.isEnabled())	{ 
+				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
+			}
+			
 			action = getAction(DeployApplicationAction.DEPLOY_APPLICATION);
 			if (action.isEnabled())	{ 
 				menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
@@ -196,8 +177,7 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 		action = getAction(ExposedAction.EXPOSED);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
-		}
-				
+		}				
 			
 		action = getAction(SetPrivateUnitAction.SET_PRIVATE_UNIT);
 		if (action.isEnabled())	{ 

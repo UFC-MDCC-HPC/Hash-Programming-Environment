@@ -11,27 +11,20 @@ public class HActionExit extends Point {
 	
 	static final long serialVersionUID = 1;	
 	
-	private HCombinatorAction action;
+	private IProtocolCombinator action;
 	
-	public void setActionCombinator(HCombinatorAction action) {
+	public void setActionCombinator(IProtocolCombinator action) {
 		this.action = action;
 		if (!action.isRepeat()) this.setLocation(new Point(action.getBounds().width/2,action.getBounds().height - 11));
 		                   else this.setLocation(new Point(action.getBounds().width/2,action.getBounds().height - 13));
 	}
 	
-	public HActionExit(HCombinatorAction action) {
+	public HActionExit(IProtocolCombinator action) {
 		super();
 		listeners = new PropertyChangeSupport(this);
 		this.setActionCombinator(action);
 	}
 
-	
-	public Object getTargetConnectionID() {
-		  int i = action.getActions().size() ;
-		  HAction a = ((HAction) action.getActions().get(i-1));  
-			
-		  return action.getInnerActionSourceConnectionID(a);	
-		}
 	
     public List getExitConnectionIDs() {
 
@@ -60,6 +53,13 @@ public class HActionExit extends Point {
 	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		listeners.removePropertyChangeListener(listener);
+	}
+
+	public final static String PROPERTY_UPDATE_CONNECTIONS = "exit_property_update_connections";
+	
+	public void updateConnections() 
+	{
+		listeners.firePropertyChange(PROPERTY_UPDATE_CONNECTIONS,null,null);
 	}
 	
 }

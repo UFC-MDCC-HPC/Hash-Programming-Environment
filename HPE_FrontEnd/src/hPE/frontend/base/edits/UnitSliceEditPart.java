@@ -6,23 +6,17 @@ import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HLinkToInterface;
 import hPE.frontend.base.model.HUnitSlice;
-import hPE.frontend.kinds.activate.policies.SetNestingFactorEditPolicy;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.geometry.*;
-import org.eclipse.draw2d.ColorConstants;
-
-
-import org.eclipse.gef.editparts.*;
+import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-
-import java.util.List;
-import java.util.Collection;
-import java.util.ArrayList;
 
 public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends UnitSliceFigure> extends BindingEndsEditPart  {
 
@@ -37,7 +31,7 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
 	
 	protected void createEditPolicies() {
         super.createEditPolicies();
-		this.installEditPolicy("Change Nesting Factor", new SetNestingFactorEditPolicy());
+		//this.installEditPolicy("Change Nesting Factor", new SetNestingFactorEditPolicy());
 	}	
 	
 	

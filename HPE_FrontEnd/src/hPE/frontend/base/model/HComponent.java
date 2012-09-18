@@ -710,7 +710,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public void refresh() {
-
+		listeners.firePropertyChange(UPDATE_CONNECTIONS, null, name);
 	}
 
 	public void updateUnits() {

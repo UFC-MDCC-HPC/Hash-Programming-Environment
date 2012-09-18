@@ -1,4 +1,4 @@
-package hPE.frontend.kinds.activate.policies;
+package hPE.frontend.base.policies;
 
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;

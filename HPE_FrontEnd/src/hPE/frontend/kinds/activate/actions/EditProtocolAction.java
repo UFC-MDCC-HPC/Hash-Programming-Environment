@@ -1,5 +1,10 @@
 package hPE.frontend.kinds.activate.actions;
 
+import hPE.HPEPlugin;
+import hPE.frontend.kinds.activate.model.HActivateInterface;
+import hPE.frontend.kinds.activate.model.protocol.IProtocol;
+import hPE.xml.component.ProtocolType;
+
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
@@ -9,10 +14,6 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
-
-import hPE.frontend.kinds.activate.model.HActivateInterface;
-import hPE.frontend.kinds.activate.model.protocol.HProtocol;
-import hPE.HPEPlugin;
 
 public class EditProtocolAction extends SelectionAction {
 
@@ -63,16 +64,13 @@ public class EditProtocolAction extends SelectionAction {
 			Object o = parts.get(i);
 			if (!(o instanceof EditPart)) return false;
 			EditPart part = (EditPart)o;
-			if (!(part.getModel() instanceof HActivateInterface || part.getModel() instanceof HProtocol)) return false;
+			if (!(part.getModel() instanceof HActivateInterface)) return false;
 			if (part.getModel() instanceof HActivateInterface) {
 			    HActivateInterface f = (HActivateInterface) part.getModel();
 			    // if (f.getSlices().size() == 0) return false;
-			    if (f.getProtocol() == null) return false;
+			    //if (f.getProtocol() == null) return false;
 			    return (show && !f.protocolIsVisible()) || (!show && f.protocolIsVisible());
-			} else if (part.getModel() instanceof HProtocol) {
-				HProtocol p = (HProtocol) part.getModel();
-				if (show) return false;
-			}
+			} 
 		}	
 		return true;
 	}

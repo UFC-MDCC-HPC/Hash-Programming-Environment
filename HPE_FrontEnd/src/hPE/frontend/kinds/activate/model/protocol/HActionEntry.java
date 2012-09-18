@@ -10,16 +10,16 @@ public class HActionEntry extends Point {
 
 	static final long serialVersionUID = 1;
 
-	private HCombinatorAction action;
+	private IProtocolCombinator action;
 	
-	public void setActionCombinator(HCombinatorAction action) {
+	public void setActionCombinator(IProtocolCombinator action) {
 		this.action = action;
 		
 		if (!action.isRepeat()) this.setLocation(new Point(action.getBounds().width/2,1));
 		                   else this.setLocation(new Point(action.getBounds().width/2,3));
 	}
 	
-	public HActionEntry(HCombinatorAction action) {
+	public HActionEntry(IProtocolCombinator action) {
 		super();
 		listeners = new PropertyChangeSupport(this);
 		this.setActionCombinator(action);
@@ -52,6 +52,13 @@ public class HActionEntry extends Point {
 	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		listeners.removePropertyChangeListener(listener);
+	}
+
+	public final static String PROPERTY_UPDATE_CONNECTIONS = "entry_property_update_connections";
+	
+	public void updateConnections() 
+	{
+		listeners.firePropertyChange(PROPERTY_UPDATE_CONNECTIONS,null,null);
 	}
 	
 }

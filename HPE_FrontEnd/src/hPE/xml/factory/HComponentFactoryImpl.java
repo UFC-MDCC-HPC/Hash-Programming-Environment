@@ -24,17 +24,6 @@ import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
-import hPE.frontend.kinds.activate.model.protocol.HAction;
-import hPE.frontend.kinds.activate.model.protocol.HAltAction;
-import hPE.frontend.kinds.activate.model.protocol.HCombinatorAction;
-import hPE.frontend.kinds.activate.model.protocol.HDoAction;
-import hPE.frontend.kinds.activate.model.protocol.HParAction;
-import hPE.frontend.kinds.activate.model.protocol.HProtocol;
-import hPE.frontend.kinds.activate.model.protocol.HSemaphore;
-import hPE.frontend.kinds.activate.model.protocol.HSeqAction;
-import hPE.frontend.kinds.activate.model.protocol.HSignalAction;
-import hPE.frontend.kinds.activate.model.protocol.HSkipAction;
-import hPE.frontend.kinds.activate.model.protocol.HWaitAction;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
@@ -49,15 +38,7 @@ import hPE.ui.preferences.PreferenceConstants;
 import hPE.util.CommandLine;
 import hPE.util.Pair;
 import hPE.util.Triple;
-import hPE.xml.component.ActionActivateType;
-import hPE.xml.component.ActionCombinatorAltType;
-import hPE.xml.component.ActionCombinatorParType;
-import hPE.xml.component.ActionCombinatorSeqType;
-import hPE.xml.component.ActionCombinatorType;
-import hPE.xml.component.ActionSignalType;
-import hPE.xml.component.ActionSkipType;
 import hPE.xml.component.ActionType;
-import hPE.xml.component.ActionWaitType;
 import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ColorComplexType;
 import hPE.xml.component.ComponentBodyType;
@@ -1830,9 +1811,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				iRef = i.getPrimName();
 				if (i instanceof HActivateInterface) {
 					HActivateInterface ia = (HActivateInterface) i;
-					if (ia.getProtocol() != null) {
+					//if (ia.getProtocol() != null) {
 						//a = saveAction((HAction) ia.getProtocol().getAction());
-					}
+					//}
 				}
 				// ---------------
 
@@ -1919,7 +1900,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private ActionType saveAction(HAction action) {
+/*	private ActionType saveAction(HAction action) {
 
 		ActionType actionX = null;
 /* TODO (action):
@@ -1966,15 +1947,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				ActionSkipType actionXX = (ActionSkipType) actionX;
 			}
 		}
-*/
+
 		VisualElementAttributes vX = factory.createVisualElementAttributes();
 		saveVisualDescription(action, vX);
-/*		actionX.setLabel(action.getLabel());
-		actionX.setRepeat(action.getRepeatDepth());
-		actionX.setVisualDescription(vX);*/
 
 		return actionX;
-	}
+	}*/
 
 	private void saveVisualDescription(Object v, VisualElementAttributes vX) {
 
@@ -2485,9 +2463,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			if (i instanceof HActivateInterface) {
 				HActivateInterface ia = (HActivateInterface) i;
-				if (xI.getProtocol() != null) {
-					HProtocol p = new HProtocol(ia);
-					HCombinatorAction aaux = new HParAction("dummy", p);
+//				if (xI.getProtocol() != null) {
+//					HProtocol p = new HProtocol(ia);
+//					HCombinatorAction aaux = new HParAction("dummy", p);
 					/* TODO (action): 
 					HAction action = buildAction(xI.getProtocol(), aaux, i, new HashMap<String, HSemaphore>(), p);
 					action.setProtocol(p);
@@ -2498,7 +2476,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 							* action.getBounds().x;
 					p.setBounds(r);*/
 
-				}
+//				}
 			}
 		} // else {
 		// loadSourceVersions(i,xI);
@@ -2692,7 +2670,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private HAction buildAction(ActionType xP, HCombinatorAction i,
+	/*	private HAction buildAction(ActionType xP, HCombinatorAction i,
 			HInterface ii, Map<String, HSemaphore> semTable, HProtocol p) {
 
 		HAction a = null;
@@ -2729,7 +2707,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			String sliceRef = xA.getSliceRef();
 
-			HInterfaceSlice slice = ii.fetchSlice(sliceRef/* .split(".") */);
+			HInterfaceSlice slice = ii.fetchSlice(sliceRef);
 
 			ac = new HDoAction(label, i, slice);
 			a = ac;
@@ -2764,16 +2742,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		}
 
-		/* TODO: ACTION
-		int x = (int) xP.getVisualDescription().getX();
-		int y = (int) xP.getVisualDescription().getY();
-		int w = (int) xP.getVisualDescription().getW();
-		int h = (int) xP.getVisualDescription().getH();
-
-		a.setBounds(new Rectangle(x, y, w, h));*/
 
 		return a;
-	}
+	}*/
 
 	private HComponent createComponent(SupportedKinds kind, String name, URI uri)
 			throws HPEUnknownKindException {
@@ -2809,14 +2780,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 
 		return c;
-
-	}
-
-	private HSemaphore getSemaphore(String semRef,
-			Map<String, HSemaphore> semTable, HProtocol p) {
-
-		return (semTable.containsKey(semRef)) ? semTable.get(semRef)
-				: new HSemaphore(semRef, p);
 
 	}
 

@@ -136,4 +136,5 @@ public interface ProtocolChoiceType extends EObject {
 	 */
 	void setPerform(ProtocolPerformType value);
 
+
 } // ProtocolChoiceType

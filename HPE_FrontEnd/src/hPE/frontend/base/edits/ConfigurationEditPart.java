@@ -61,7 +61,8 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		
 	}
 
-	protected void createEditPolicies() {
+	protected void createEditPolicies() 
+	{
 		
 		// Create the static router for the connection layer
    	    ConnectionLayer connLayer = (ConnectionLayer)getLayer(LayerConstants.CONNECTION_LAYER);
@@ -146,7 +147,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 	protected Command createChangeConstraintCommand(ChangeBoundsRequest request,
 			EditPart child, Object constraint) {
 		
-		if (child.getModel() instanceof HVisualElement && constraint instanceof Rectangle) {
+		if (child.getModel() instanceof IHVisualElement && constraint instanceof Rectangle) {
 			
 	      	 Rectangle s = new Rectangle();
 	       	 Rectangle r = ((IHVisualElement) child.getModel()).getBounds();

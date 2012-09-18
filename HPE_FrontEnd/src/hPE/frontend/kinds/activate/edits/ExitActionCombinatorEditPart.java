@@ -1,7 +1,6 @@
-package hPE.frontend.base.edits;
+package hPE.frontend.kinds.activate.edits;
 
 import hPE.frontend.base.policies.UnitFlowLayoutEditPolicy;
-import hPE.frontend.kinds.activate.model.protocol.HAction;
 import hPE.frontend.kinds.activate.model.protocol.HActionExit;
 
 import java.beans.PropertyChangeEvent;
@@ -9,8 +8,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.PositionConstants;
+import org.eclipse.draw2d.Triangle;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -24,9 +24,10 @@ public class ExitActionCombinatorEditPart extends AbstractGraphicalEditPart  imp
 	}
 
 	protected IFigure createFigure() {
-		Ellipse e = new Ellipse();
-		e.setBackgroundColor(ColorConstants.black);
-		e.setSize(10,10);		
+		Triangle e = new Triangle();
+		e.setDirection(PositionConstants.SOUTH);
+		e.setBackgroundColor(ColorConstants.red);
+		e.setSize(20,20);		
 		e.setLocation((Point) getModel());
 		return e;
 	}
@@ -48,9 +49,9 @@ public class ExitActionCombinatorEditPart extends AbstractGraphicalEditPart  imp
     public void refreshVisuals() {
     	
   	    Rectangle parent_bounds = ((AbstractGraphicalEditPart) getParent()).getFigure().getBounds();
-    	Ellipse e = (Ellipse) getFigure();
+    	Triangle e = (Triangle) getFigure();
   	    
-    	e.setLocation(parent_bounds.getBottom());
+    	e.setLocation(parent_bounds.getBottom().translate(0, -20));
     	
     }
 
@@ -69,9 +70,13 @@ public class ExitActionCombinatorEditPart extends AbstractGraphicalEditPart  imp
 	
 	public void propertyChange(PropertyChangeEvent ev) {
 		
-		if (ev.getPropertyName().equals(HActionExit.PROPERTY_LOCATION)) { 
+		if (ev.getPropertyName().equals(HActionExit.PROPERTY_LOCATION)) 
+		{ 
 			this.refreshVisuals();
-			// this.refreshChildren();
+		} 
+		else if (ev.getPropertyName().equals(HActionExit.PROPERTY_UPDATE_CONNECTIONS)) 
+		{ 
+			this.refresh();
 		}
 			
 		

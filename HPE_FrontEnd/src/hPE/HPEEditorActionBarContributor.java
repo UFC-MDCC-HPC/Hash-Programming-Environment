@@ -1,8 +1,5 @@
 package hPE;
 
-import hPE.frontend.base.actions.DeployAction;
-import hPE.frontend.kinds.application.actions.DeployApplicationAction;
-
 import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.DeleteRetargetAction;
 import org.eclipse.gef.ui.actions.RedoRetargetAction;

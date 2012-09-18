@@ -1,27 +1,15 @@
 package hPE.frontend;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import hPE.frontend.base.edits.ActionConnectionEditPart;
-import hPE.frontend.base.edits.ActionEditPart;
-import hPE.frontend.base.edits.AltActionEditPart;
 import hPE.frontend.base.edits.BindingEditPart;
 import hPE.frontend.base.edits.ComponentEditPart;
 import hPE.frontend.base.edits.ConfigurationEditPart;
-import hPE.frontend.base.edits.DoActionEditPart;
-import hPE.frontend.base.edits.EntryActionCombinatorEditPart;
 import hPE.frontend.base.edits.EntryEditPart;
-import hPE.frontend.base.edits.ExitActionCombinatorEditPart;
 import hPE.frontend.base.edits.InterfaceEditPart;
 import hPE.frontend.base.edits.InterfaceSliceEditPart;
 import hPE.frontend.base.edits.LinkToInterfaceEditPart;
-import hPE.frontend.base.edits.ParActionEditPart;
 import hPE.frontend.base.edits.PortBindingConnectionEditPart;
-import hPE.frontend.base.edits.ProtocolEditPart;
 import hPE.frontend.base.edits.ProvidesPortEditPart;
-import hPE.frontend.base.edits.SeqActionEditPart;
 import hPE.frontend.base.edits.UnitEditPart;
 import hPE.frontend.base.edits.UnitSliceEditPart;
 import hPE.frontend.base.figures.ComponentFigure;
@@ -40,14 +28,13 @@ import hPE.frontend.base.model.HPort;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHUnit;
-import hPE.frontend.kinds.activate.model.protocol.HAction;
+import hPE.frontend.connector.xml.component.ProtocolChoiceType;
+import hPE.frontend.kinds.activate.edits.EntryActionCombinatorEditPart;
+import hPE.frontend.kinds.activate.edits.ExitActionCombinatorEditPart;
+import hPE.frontend.kinds.activate.edits.ProtocolEditPart;
 import hPE.frontend.kinds.activate.model.protocol.HActionEntry;
 import hPE.frontend.kinds.activate.model.protocol.HActionExit;
-import hPE.frontend.kinds.activate.model.protocol.HAltAction;
-import hPE.frontend.kinds.activate.model.protocol.HDoAction;
-import hPE.frontend.kinds.activate.model.protocol.HParAction;
-import hPE.frontend.kinds.activate.model.protocol.HProtocol;
-import hPE.frontend.kinds.activate.model.protocol.HSeqAction;
+import hPE.frontend.kinds.activate.model.protocol.IProtocol;
 import hPE.frontend.kinds.application.edits.ApplicationComponentEditPart;
 import hPE.frontend.kinds.application.edits.ApplicationConfigurationEditPart;
 import hPE.frontend.kinds.application.edits.ApplicationEntryEditPart;
@@ -249,7 +236,9 @@ import hPE.frontend.kinds.topology.model.HTopologyUnit;
 import hPE.frontend.kinds.topology.model.HTopologyUnitSlice;
 import hPE.frontend.kinds.topology.model.IHTopologyUnit;
 
-import org.apache.axis.collections.SequencedHashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -453,7 +442,11 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				part = new InterfaceEditPart<HInterface,InterfaceFigure>();
 		} else if (model instanceof HLinkToInterface) {
 			part = new LinkToInterfaceEditPart();
-		} else if (model instanceof HSeqAction) {
+		} else if (model instanceof IProtocol) { 
+			   part = new ProtocolEditPart();
+		} else if (model instanceof ProtocolChoiceType) { 
+			   part = new ProtocolEditPart(true);
+		/*} else if (model instanceof HSeqAction) {
 			part = new SeqActionEditPart();
 		} else if (model instanceof HParAction) {
 			part = new ParActionEditPart();
@@ -464,7 +457,7 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 		} else if (model instanceof HAction) {
 			part = new ActionEditPart();
 		} else if (model instanceof HProtocol) {
-			part = new ProtocolEditPart();
+			part = new ProtocolEditPart();*/
 		} else if (model instanceof HActionEntry) {
 			part = new EntryActionCombinatorEditPart();
 		} else if (model instanceof HActionExit) {
