@@ -37,7 +37,8 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
 			ReconfigurationRequest request = null;
          
-			if (validator.IsValid (REQUEST_XSD, xml)) {
+			//TODO resolver os problemas dos validadores xsd.
+			if (true /*validator.IsValid (REQUEST_XSD, xml)*/) {
             
 				clear ();
 				generator.setInitialCode (component.LastIdCode);
@@ -48,13 +49,16 @@ namespace br.ufc.pargo.hpe.connector.load
             
 				document.Load (xml);
 				nodeRequest = document.SelectSingleNode ("reconfigurationRequest");
+
 				data = nodeRequest.SelectSingleNode ("targetComponent");
 				request.TargetComponent = data.InnerText;
 
-				List<MetaParameter> parameterList = uLoader.getParameters (nodeRequest.SelectNodes ("parameter"));            
+				List<MetaParameter> parameterList = uLoader.getParameters (nodeRequest.SelectNodes ("parameter"));
 				if (parameterList != null) {
 					request.StructuralRequest = new StructuralReconfigurationRequest (parameterList);
 				}
+				//TODO se tiver parametros, eu posso ter modificacoes relevantes nos inner componentes que pode impactar
+				//o behavioral?
             
 				BehavioralReconfigurationRequest behavioralRequest = null;
 
@@ -63,11 +67,9 @@ namespace br.ufc.pargo.hpe.connector.load
 					behavioralRequest = new BehavioralReconfigurationRequest ();
 
 					behavioralRequest.NewInnerComponents = innerComponents;
-					//TODO verificar se é preciso desta variável. Se sim, a lista tem que ser diferente.
-					// ou então remover as inserções abaixo.
-
 					foreach (MetaInnerComponent mic in  component.InnerComponents) {
-						innerComponents.Add (mic);
+						innerComponents.Add (mic.Clone());
+						//TODO realmente precisa clonar os componentes.
 					}
 				}
             
@@ -84,40 +86,47 @@ namespace br.ufc.pargo.hpe.connector.load
 					}
 
 					XmlAttribute attr;
-					int intialCode;
+					int initialCode;
 					while (ienum.MoveNext()) {
 						changeNode = (XmlNode)ienum.Current;
                   
 						change = new BehavioralChange ();
-						intialCode = generator.getCurrentCode ();
+						initialCode = generator.getCurrentCode ();
                   
-						attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("type");
-						if (attr.Value.Equals ("remove")) {
-							change.Type = BehavioralChange.BehavioralChangeType.REMOVE;
-						} else {
-							change.Type = BehavioralChange.BehavioralChangeType.INCLUDE;
-						}
-
 						attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("unit");
 						change.Unit = attr.Value;
-                  
-						attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("action");
-						change.Action = attr.Value;
 
-						attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("point");
-						change.Point = attr.Value;
-
-						change.NewSlices = uLoader.getSlices (changeNode.SelectNodes ("slice"));
-                  
 						MetaUnit u = component.getUnit (change.Unit);
 
 						if (u != null) {
-							change.Transitions = uLoader.getTransitions (changeNode.SelectSingleNode ("protocol"), u);
+
+							attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("action");
+							change.Action = attr.Value;
+							MetaAction a = u.getAction(change.Action);
+
+							if(a != null) {
+								attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("type");
+								if (attr.Value.Equals ("remove")) {
+									change.Type = BehavioralChange.BehavioralChangeType.REMOVE;
+								} else {
+									change.Type = BehavioralChange.BehavioralChangeType.INCLUDE;
+								}
+								
+								attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("point");
+								change.Point = attr.Value;
+								
+								change.NewSlices = uLoader.getSlices (changeNode.SelectNodes ("slice"));
+								
+								change.Transitions = uLoader.getTransitions (changeNode.SelectSingleNode ("protocol"), u);
+
+							} else {
+									throw new Exception ("Ação a ser alterada não existe: " + change.Action);   
+							}
 						} else {
 							throw new Exception ("Unidade da ação a ser alterada não existe: " + change.Unit);   
 						}
 
-						change.AditionalStates = generator.getCurrentCode () - intialCode;
+						change.AditionalStates = generator.getCurrentCode () - initialCode;
 						behavioralRequest.AddChange (change);
 					}
 				}
@@ -133,7 +142,7 @@ namespace br.ufc.pargo.hpe.connector.load
          
 			MetaHashComponent component = null;
          
-			//TODO validado da erros que nao consigo identificar a razao.
+			//TODO validador da erros que nao consigo identificar a razao.
 			if (true /*validator.IsValid (COMPONENT_XSD, xml)*/) {
 				clear ();
             

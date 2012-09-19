@@ -10,7 +10,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 {
 
 	//Representação pósfixada.
-	public class Condition : MarshalByRefObject
+	public class Condition : MetaHashEntity
 	{
 
 		public enum Operator
@@ -18,8 +18,8 @@ namespace br.ufc.pargo.hpe.connector.meta
 			NULL,
 			FIXED,
 			AND,
-			OR}
-		;
+			OR
+		};
 
 		//Declaração de um delegate que simboliza as avalições de condições das actions dos componentes nativos (escritos em c#).
 		//As configurações terão referencias à esses métodos a partir de uma instância de DCondition.
@@ -43,9 +43,8 @@ namespace br.ufc.pargo.hpe.connector.meta
 
 		protected List<Condition> conditions = new List<Condition>();
 
-		protected DCondition guard;
 		public DCondition Guard {
-			set { guard = value;}
+			set { entity = value;}
 		}
 
 		public List<Condition> Conditions {
@@ -69,7 +68,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		{
 			this.fixedValue = fixedValue;
 			this.slice = null;
-			this.guard = null;
+			this.entity = null;
 			oper = Operator.FIXED;
 		}
 
@@ -78,10 +77,11 @@ namespace br.ufc.pargo.hpe.connector.meta
 		{
 			bool result;
 
-			if (guard == null && oper == Operator.FIXED) {
+			if (entity == null && oper == Operator.FIXED) {
 				result = fixedValue;
 
-			} else if (guard != null) {
+			} else if (entity != null) {
+				DCondition guard = (DCondition) entity;
 				result = guard();
 
 			} else if (oper == Operator.NULL) {

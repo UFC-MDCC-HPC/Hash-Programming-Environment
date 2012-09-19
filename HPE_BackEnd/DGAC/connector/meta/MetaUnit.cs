@@ -53,9 +53,9 @@ namespace br.ufc.pargo.hpe.connector.meta
 			set { actions = value;}
 		}
       
-		protected List<Condition> conditions;
+		protected Dictionary<string, Condition> conditions;
 
-		public List<Condition> Conditions {
+		public Dictionary<string, Condition> Conditions {
 			get { return conditions;}
 			set { conditions = value;}
 		}
@@ -88,6 +88,20 @@ namespace br.ufc.pargo.hpe.connector.meta
 			a.Father = this;
 			actions.Add (a);
 		}
+
+		public MetaAction getAction (string actionName)
+		{
+		
+			if (actions != null) {
+				foreach (MetaAction a in actions) {
+					if (a.Name.Equals (actionName)) {
+						return a;
+					}
+				}
+			}
+
+			return null;
+		}
       
 		public void AddSlice (MetaSlice slice)
 		{
@@ -101,7 +115,7 @@ namespace br.ufc.pargo.hpe.connector.meta
       
 		public MetaUnit ()
 		{
-			this.conditions = new List<Condition>();
+			this.conditions = new Dictionary<string, Condition> ();
 			this.parallel = true;
 			this.split = 1;
 		}
@@ -139,8 +153,10 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
          
 			if (conditions != null) {
-				foreach (Condition c in conditions) {
-					c.Guard = (Condition.DCondition) Delegate.CreateDelegate(typeof(Condition.DCondition), Entity, c.Cond);
+				foreach (Condition c in conditions.Values) {
+					if (c.Cond != null && !c.Cond.Equals ("")) {
+						c.Guard = (Condition.DCondition)Delegate.CreateDelegate (typeof(Condition.DCondition), Entity, c.Cond);
+					}
 				}
 			}
          

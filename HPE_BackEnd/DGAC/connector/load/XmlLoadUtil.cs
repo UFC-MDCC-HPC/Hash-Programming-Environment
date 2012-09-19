@@ -100,7 +100,11 @@ namespace br.ufc.pargo.hpe.connector.load
 			if (typeNode != null) {
 				component.Name = typeNode.SelectSingleNode ("componentName").InnerText;
 				component.Parameters = getParameters (typeNode.SelectNodes ("parameter"));
-            
+
+				if (typeNode.SelectSingleNode ("package") != null) {
+					component.Package = typeNode.SelectSingleNode ("package").InnerText;
+				}
+
 				XmlNodeList publicInnerNodeList = typeNode.SelectNodes ("publicInnerComponent");
 				IEnumerator ienum = (IEnumerator)publicInnerNodeList.GetEnumerator ();
 				List<MetaInnerComponent> publicInnerList = new List<MetaInnerComponent> ();
@@ -166,7 +170,9 @@ namespace br.ufc.pargo.hpe.connector.load
                
 					unit.Slices = getSlices (unitNode.SelectNodes ("slice"));               
 					unit.Actions = getActions (unitNode.SelectNodes ("action"), unit);
+					unit.Conditions = getConditions (unitNode.SelectNodes ("condition"), unit);
                
+					//TODO nao existe mais um no com esse nome. E uma acao.
 					if (unitNode.SelectSingleNode ("validation") != null) {
 						//TODO resolver a forma de representação do validation protocol.
 					}
@@ -182,6 +188,31 @@ namespace br.ufc.pargo.hpe.connector.load
 			return null;
 		}
       
+		public Dictionary<string, Condition> getConditions (XmlNodeList condNodes)
+		{
+			Dictionary<string, Condition> conditions;
+
+			if (condNodes != null) {
+				conditions = new Dictionary<string, Condition>();
+				XmlNode condNode;
+				Condition condition;
+				string name;
+
+				IEnumerator senum = (IEnumerator)condNodes.GetEnumerator ();
+				while (senum.MoveNext()) {
+					condNode = (XmlNode)senum.Current;
+					condition = getCondition(condNode);
+
+					name = condNode.SelectSingleNode ("identifier").InnerText;
+					condition.Name = name;
+
+					conditions.Add(name, condition);
+				}
+			}
+
+			return conditions;
+		}
+
 		/*
       Procura e retorna a fatia procurada. Ela corresponde a uma unidade de um innerComponent.
       Caso não exista, a unidade será criada, atribuída ao innerComponent e ao final retornada.
