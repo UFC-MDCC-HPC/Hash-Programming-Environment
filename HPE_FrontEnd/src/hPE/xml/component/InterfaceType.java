@@ -178,7 +178,7 @@ public interface InterfaceType extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Action</b></em>' containment reference list.
-	 * The list contents are of type {@link hPE.xml.component.ActionType}.
+	 * The list contents are of type {@link hPE.xml.component.UnitActionType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Action</em>' containment reference list isn't clear,
@@ -191,11 +191,11 @@ public interface InterfaceType extends EObject {
 	 *        extendedMetaData="kind='element' name='action'"
 	 * @generated
 	 */
-	EList<ActionType> getAction();
+	EList<UnitActionType> getAction();
 
 	/**
 	 * Returns the value of the '<em><b>Condition</b></em>' containment reference list.
-	 * The list contents are of type {@link hPE.xml.component.ConditionType}.
+	 * The list contents are of type {@link hPE.xml.component.UnitConditionType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Condition</em>' attribute list isn't clear,
@@ -208,7 +208,7 @@ public interface InterfaceType extends EObject {
 	 *        extendedMetaData="kind='element' name='condition'"
 	 * @generated
 	 */
-	EList<ConditionType> getCondition();
+	EList<UnitConditionType> getCondition();
 
 	/**
 	 * Returns the value of the '<em><b>IRef</b></em>' attribute.

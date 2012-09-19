@@ -26,15 +26,6 @@ public interface ComponentFactory extends EFactory {
 	ComponentFactory eINSTANCE = hPE.xml.component.impl.ComponentFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Action Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action Type</em>'.
-	 * @generated
-	 */
-	ActionType createActionType();
-
-	/**
 	 * Returns a new object of class '<em>Base Type Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -242,15 +233,6 @@ public interface ComponentFactory extends EFactory {
 	FusionType createFusionType();
 
 	/**
-	 * Returns a new object of class '<em>Guard And Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Guard And Type</em>'.
-	 * @generated
-	 */
-	GuardAndType createGuardAndType();
-
-	/**
 	 * Returns a new object of class '<em>Guard Condition Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -260,22 +242,13 @@ public interface ComponentFactory extends EFactory {
 	GuardConditionType createGuardConditionType();
 
 	/**
-	 * Returns a new object of class '<em>Guard Not Type</em>'.
+	 * Returns a new object of class '<em>Guard Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Guard Not Type</em>'.
+	 * @return a new object of class '<em>Guard Type</em>'.
 	 * @generated
 	 */
-	GuardNotType createGuardNotType();
-
-	/**
-	 * Returns a new object of class '<em>Guard Or Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Guard Or Type</em>'.
-	 * @generated
-	 */
-	GuardOrType createGuardOrType();
+	GuardType createGuardType();
 
 	/**
 	 * Returns a new object of class '<em>Implements Type</em>'.
@@ -422,6 +395,15 @@ public interface ComponentFactory extends EFactory {
 	ProtocolCombinatorType createProtocolCombinatorType();
 
 	/**
+	 * Returns a new object of class '<em>Protocol Combinator Visual Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Protocol Combinator Visual Type</em>'.
+	 * @generated
+	 */
+	ProtocolCombinatorVisualType createProtocolCombinatorVisualType();
+
+	/**
 	 * Returns a new object of class '<em>Protocol Perform Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -429,6 +411,15 @@ public interface ComponentFactory extends EFactory {
 	 * @generated
 	 */
 	ProtocolPerformType createProtocolPerformType();
+
+	/**
+	 * Returns a new object of class '<em>Protocol Perform Visual Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Protocol Perform Visual Type</em>'.
+	 * @generated
+	 */
+	ProtocolPerformVisualType createProtocolPerformVisualType();
 
 	/**
 	 * Returns a new object of class '<em>Recursive Entry Type</em>'.
@@ -485,6 +476,15 @@ public interface ComponentFactory extends EFactory {
 	SplitType createSplitType();
 
 	/**
+	 * Returns a new object of class '<em>Unit Action Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Unit Action Type</em>'.
+	 * @generated
+	 */
+	UnitActionType createUnitActionType();
+
+	/**
 	 * Returns a new object of class '<em>Unit Bounds Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -492,6 +492,15 @@ public interface ComponentFactory extends EFactory {
 	 * @generated
 	 */
 	UnitBoundsType createUnitBoundsType();
+
+	/**
+	 * Returns a new object of class '<em>Unit Condition Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Unit Condition Type</em>'.
+	 * @generated
+	 */
+	UnitConditionType createUnitConditionType();
 
 	/**
 	 * Returns a new object of class '<em>Unit Ref Type</em>'.

@@ -71,7 +71,9 @@ import hPE.xml.component.PortSliceType;
 import hPE.xml.component.PortType;
 import hPE.xml.component.ProtocolChoiceType;
 import hPE.xml.component.ProtocolCombinatorType;
+import hPE.xml.component.ProtocolCombinatorVisualType;
 import hPE.xml.component.ProtocolPerformType;
+import hPE.xml.component.ProtocolPerformVisualType;
 import hPE.xml.component.ProtocolActivationType;
 import hPE.xml.component.ProtocolAltType;
 import hPE.xml.component.ProtocolCompositionType;
@@ -89,8 +91,10 @@ import hPE.xml.component.SplitLinkType;
 import hPE.xml.component.SplitType;
 import hPE.xml.component.SplitType2;
 import hPE.xml.component.SupportedKinds;
+import hPE.xml.component.UnitActionType;
 import hPE.xml.component.TypeType;
 import hPE.xml.component.UnitBoundsType;
+import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
@@ -113,13 +117,6 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
  * @generated
  */
 public class ComponentPackageImpl extends EPackageImpl implements ComponentPackage {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass actionTypeEClass = null;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -286,28 +283,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass guardAndTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass guardConditionTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass guardNotTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass guardOrTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -433,7 +409,21 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass protocolCombinatorVisualTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass protocolPerformTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass protocolPerformVisualTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -489,7 +479,21 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass unitActionTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass unitBoundsTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass unitConditionTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -616,33 +620,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ComponentPackage.eNS_URI, theComponentPackage);
 		return theComponentPackage;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getActionType() {
-		return actionTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActionType_Protocol() {
-		return (EReference)actionTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActionType_Id() {
-		return (EAttribute)actionTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1073,8 +1050,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConditionType_Guard() {
-		return (EReference)conditionTypeEClass.getEStructuralFeatures().get(0);
+	public EAttribute getConditionType_CondId() {
+		return (EAttribute)conditionTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1082,7 +1059,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getConditionType_Id() {
+	public EAttribute getConditionType_SliceId() {
 		return (EAttribute)conditionTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1550,15 +1527,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGuardAndType() {
-		return guardAndTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getGuardConditionType() {
 		return guardConditionTypeEClass;
 	}
@@ -1568,26 +1536,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGuardConditionType_Condition() {
+	public EAttribute getGuardConditionType_Condition1() {
 		return (EAttribute)guardConditionTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGuardNotType() {
-		return guardNotTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGuardOrType() {
-		return guardOrTypeEClass;
 	}
 
 	/**
@@ -1597,6 +1547,51 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EClass getGuardType() {
 		return guardTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGuardType_Group() {
+		return (EAttribute)guardTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGuardType_Condition() {
+		return (EReference)guardTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGuardType_And() {
+		return (EReference)guardTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGuardType_Or() {
+		return (EReference)guardTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGuardType_Not() {
+		return (EAttribute)guardTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2189,6 +2184,24 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getProtocolCombinatorVisualType() {
+		return protocolCombinatorVisualTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolCombinatorVisualType_VisualDescription() {
+		return (EReference)protocolCombinatorVisualTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getProtocolPerformType() {
 		return protocolPerformTypeEClass;
 	}
@@ -2209,6 +2222,24 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EAttribute getProtocolPerformType_SliceId() {
 		return (EAttribute)protocolPerformTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProtocolPerformVisualType() {
+		return protocolPerformVisualTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProtocolPerformVisualType_VisualDescription() {
+		return (EReference)protocolPerformVisualTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2495,6 +2526,33 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getUnitActionType() {
+		return unitActionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUnitActionType_Protocol() {
+		return (EReference)unitActionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitActionType_Id() {
+		return (EAttribute)unitActionTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getUnitBoundsType() {
 		return unitBoundsTypeEClass;
 	}
@@ -2533,6 +2591,33 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EAttribute getUnitBoundsType_URef() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getUnitConditionType() {
+		return unitConditionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUnitConditionType_Guard() {
+		return (EReference)unitConditionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitConditionType_Id() {
+		return (EAttribute)unitConditionTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2869,10 +2954,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		isCreated = true;
 
 		// Create classes and their features
-		actionTypeEClass = createEClass(ACTION_TYPE);
-		createEReference(actionTypeEClass, ACTION_TYPE__PROTOCOL);
-		createEAttribute(actionTypeEClass, ACTION_TYPE__ID);
-
 		baseTypeTypeEClass = createEClass(BASE_TYPE_TYPE);
 		createEReference(baseTypeTypeEClass, BASE_TYPE_TYPE__EXTENSION_TYPE);
 		createEReference(baseTypeTypeEClass, BASE_TYPE_TYPE__COMPONENT);
@@ -2926,8 +3007,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(componentTypeEClass, COMPONENT_TYPE__COMPONENT_INFO);
 
 		conditionTypeEClass = createEClass(CONDITION_TYPE);
-		createEReference(conditionTypeEClass, CONDITION_TYPE__GUARD);
-		createEAttribute(conditionTypeEClass, CONDITION_TYPE__ID);
+		createEAttribute(conditionTypeEClass, CONDITION_TYPE__COND_ID);
+		createEAttribute(conditionTypeEClass, CONDITION_TYPE__SLICE_ID);
 
 		documentRootEClass = createEClass(DOCUMENT_ROOT);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
@@ -2996,16 +3077,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(fusionTypeEClass, FUSION_TYPE__CREFS);
 		createEAttribute(fusionTypeEClass, FUSION_TYPE__PREF);
 
-		guardAndTypeEClass = createEClass(GUARD_AND_TYPE);
-
 		guardConditionTypeEClass = createEClass(GUARD_CONDITION_TYPE);
-		createEAttribute(guardConditionTypeEClass, GUARD_CONDITION_TYPE__CONDITION);
-
-		guardNotTypeEClass = createEClass(GUARD_NOT_TYPE);
-
-		guardOrTypeEClass = createEClass(GUARD_OR_TYPE);
+		createEAttribute(guardConditionTypeEClass, GUARD_CONDITION_TYPE__CONDITION1);
 
 		guardTypeEClass = createEClass(GUARD_TYPE);
+		createEAttribute(guardTypeEClass, GUARD_TYPE__GROUP);
+		createEReference(guardTypeEClass, GUARD_TYPE__CONDITION);
+		createEReference(guardTypeEClass, GUARD_TYPE__AND);
+		createEReference(guardTypeEClass, GUARD_TYPE__OR);
+		createEAttribute(guardTypeEClass, GUARD_TYPE__NOT);
 
 		implementsTypeEClass = createEClass(IMPLEMENTS_TYPE);
 		createEAttribute(implementsTypeEClass, IMPLEMENTS_TYPE__CREF);
@@ -3088,9 +3168,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		protocolCombinatorTypeEClass = createEClass(PROTOCOL_COMBINATOR_TYPE);
 		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ACTION);
 
+		protocolCombinatorVisualTypeEClass = createEClass(PROTOCOL_COMBINATOR_VISUAL_TYPE);
+		createEReference(protocolCombinatorVisualTypeEClass, PROTOCOL_COMBINATOR_VISUAL_TYPE__VISUAL_DESCRIPTION);
+
 		protocolPerformTypeEClass = createEClass(PROTOCOL_PERFORM_TYPE);
 		createEAttribute(protocolPerformTypeEClass, PROTOCOL_PERFORM_TYPE__ACTION_ID);
 		createEAttribute(protocolPerformTypeEClass, PROTOCOL_PERFORM_TYPE__SLICE_ID);
+
+		protocolPerformVisualTypeEClass = createEClass(PROTOCOL_PERFORM_VISUAL_TYPE);
+		createEReference(protocolPerformVisualTypeEClass, PROTOCOL_PERFORM_VISUAL_TYPE__VISUAL_DESCRIPTION);
 
 		protocolTypeEClass = createEClass(PROTOCOL_TYPE);
 		createEReference(protocolTypeEClass, PROTOCOL_TYPE__GUARD);
@@ -3130,11 +3216,19 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(splitTypeEClass, SPLIT_TYPE__EREF);
 		createEAttribute(splitTypeEClass, SPLIT_TYPE__N);
 
+		unitActionTypeEClass = createEClass(UNIT_ACTION_TYPE);
+		createEReference(unitActionTypeEClass, UNIT_ACTION_TYPE__PROTOCOL);
+		createEAttribute(unitActionTypeEClass, UNIT_ACTION_TYPE__ID);
+
 		unitBoundsTypeEClass = createEClass(UNIT_BOUNDS_TYPE);
 		createEReference(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__PARALLEL);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__REPLICA);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__UREF);
+
+		unitConditionTypeEClass = createEClass(UNIT_CONDITION_TYPE);
+		createEReference(unitConditionTypeEClass, UNIT_CONDITION_TYPE__GUARD);
+		createEAttribute(unitConditionTypeEClass, UNIT_CONDITION_TYPE__ID);
 
 		unitRefTypeEClass = createEClass(UNIT_REF_TYPE);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__CREF);
@@ -3215,20 +3309,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		enumerableEntryTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableUnitSliceTypeEClass.getESuperTypes().add(this.getEnumerableType());
 		enumerableUnitTypeEClass.getESuperTypes().add(this.getEnumerableType());
-		guardAndTypeEClass.getESuperTypes().add(this.getGuardType());
 		guardConditionTypeEClass.getESuperTypes().add(this.getGuardType());
-		guardNotTypeEClass.getESuperTypes().add(this.getGuardType());
-		guardOrTypeEClass.getESuperTypes().add(this.getGuardType());
 		innerComponentTypeEClass.getESuperTypes().add(this.getComponentInUseType());
 		protocolCombinatorTypeEClass.getESuperTypes().add(this.getProtocolType());
+		protocolCombinatorVisualTypeEClass.getESuperTypes().add(this.getProtocolCombinatorType());
 		protocolPerformTypeEClass.getESuperTypes().add(this.getProtocolType());
+		protocolPerformVisualTypeEClass.getESuperTypes().add(this.getProtocolPerformType());
 		unitSliceTypeEClass.getESuperTypes().add(this.getUnitRefType());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(actionTypeEClass, ActionType.class, "ActionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getActionType_Protocol(), this.getProtocolChoiceType(), null, "protocol", null, 0, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getActionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(baseTypeTypeEClass, BaseTypeType.class, "BaseTypeType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBaseTypeType_ExtensionType(), this.getExtensionTypeType(), null, "extensionType", null, 1, 1, BaseTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBaseTypeType_Component(), this.getComponentInUseType(), null, "component", null, 1, 1, BaseTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3282,8 +3371,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentType_ComponentInfo(), this.getComponentBodyType(), null, "componentInfo", null, 1, 1, ComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(conditionTypeEClass, ConditionType.class, "ConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getConditionType_Guard(), this.getGuardType(), null, "guard", null, 1, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConditionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConditionType_CondId(), theXMLTypePackage.getString(), "condId", null, 1, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConditionType_SliceId(), theXMLTypePackage.getString(), "sliceId", null, 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3352,16 +3441,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getFusionType_CRefs(), theXMLTypePackage.getString(), "cRefs", null, 1, -1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFusionType_PRef(), theXMLTypePackage.getString(), "pRef", null, 1, 1, FusionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(guardAndTypeEClass, GuardAndType.class, "GuardAndType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(guardConditionTypeEClass, GuardConditionType.class, "GuardConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getGuardConditionType_Condition(), theXMLTypePackage.getString(), "condition", null, 0, 1, GuardConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGuardConditionType_Condition1(), theXMLTypePackage.getString(), "condition1", null, 0, 1, GuardConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(guardNotTypeEClass, GuardNotType.class, "GuardNotType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(guardOrTypeEClass, GuardOrType.class, "GuardOrType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(guardTypeEClass, GuardType.class, "GuardType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(guardTypeEClass, GuardType.class, "GuardType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGuardType_Group(), ecorePackage.getEFeatureMapEntry(), "group", null, 0, -1, GuardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGuardType_Condition(), this.getConditionType(), null, "condition", null, 0, -1, GuardType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getGuardType_And(), this.getGuardType(), null, "and", null, 0, -1, GuardType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getGuardType_Or(), this.getGuardType(), null, "or", null, 0, -1, GuardType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGuardType_Not(), theXMLTypePackage.getBoolean(), "not", null, 0, 1, GuardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(implementsTypeEClass, ImplementsType.class, "ImplementsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getImplementsType_CRef(), theXMLTypePackage.getString(), "cRef", null, 1, 1, ImplementsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3407,8 +3495,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getInterfaceType_Port(), this.getInterfacePortType(), null, "port", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_ExternalReferences(), theXMLTypePackage.getString(), "externalReferences", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Parameter(), this.getInterfaceParameterType(), null, "parameter", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInterfaceType_Action(), this.getActionType(), null, "action", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInterfaceType_Condition(), this.getConditionType(), null, "condition", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_Action(), this.getUnitActionType(), null, "action", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_Condition(), this.getUnitConditionType(), null, "condition", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Protocol(), this.getProtocolChoiceType(), null, "protocol", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_NArgs(), theXMLTypePackage.getInt(), "nArgs", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3436,17 +3524,23 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getPortType_PRef(), theXMLTypePackage.getString(), "pRef", null, 0, 1, PortType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(protocolChoiceTypeEClass, ProtocolChoiceType.class, "ProtocolChoiceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getProtocolChoiceType_Par(), this.getProtocolCombinatorType(), null, "par", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProtocolChoiceType_Seq(), this.getProtocolCombinatorType(), null, "seq", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProtocolChoiceType_Alt(), this.getProtocolCombinatorType(), null, "alt", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProtocolChoiceType_Perform(), this.getProtocolPerformType(), null, "perform", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Par(), this.getProtocolCombinatorVisualType(), null, "par", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Seq(), this.getProtocolCombinatorVisualType(), null, "seq", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Alt(), this.getProtocolCombinatorVisualType(), null, "alt", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProtocolChoiceType_Perform(), this.getProtocolPerformVisualType(), null, "perform", null, 0, 1, ProtocolChoiceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(protocolCombinatorTypeEClass, ProtocolCombinatorType.class, "ProtocolCombinatorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProtocolCombinatorType_Action(), this.getProtocolChoiceType(), null, "action", null, 1, -1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(protocolCombinatorVisualTypeEClass, ProtocolCombinatorVisualType.class, "ProtocolCombinatorVisualType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProtocolCombinatorVisualType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, ProtocolCombinatorVisualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(protocolPerformTypeEClass, ProtocolPerformType.class, "ProtocolPerformType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getProtocolPerformType_ActionId(), theXMLTypePackage.getString(), "actionId", null, 0, 1, ProtocolPerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProtocolPerformType_SliceId(), theXMLTypePackage.getString(), "sliceId", null, 0, 1, ProtocolPerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(protocolPerformVisualTypeEClass, ProtocolPerformVisualType.class, "ProtocolPerformVisualType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProtocolPerformVisualType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, ProtocolPerformVisualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(protocolTypeEClass, ProtocolType.class, "ProtocolType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProtocolType_Guard(), this.getGuardType(), null, "guard", null, 0, 1, ProtocolType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3486,11 +3580,19 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getSplitType_ERef(), theXMLTypePackage.getString(), "eRef", null, 1, 1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSplitType_N(), theXMLTypePackage.getInt(), "n", null, 0, 1, SplitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(unitActionTypeEClass, UnitActionType.class, "UnitActionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getUnitActionType_Protocol(), this.getProtocolChoiceType(), null, "protocol", null, 0, 1, UnitActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitActionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, UnitActionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(unitBoundsTypeEClass, UnitBoundsType.class, "UnitBoundsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnitBoundsType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_Parallel(), theXMLTypePackage.getBoolean(), "parallel", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_Replica(), theXMLTypePackage.getUnsignedInt(), "replica", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_URef(), theXMLTypePackage.getString(), "uRef", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(unitConditionTypeEClass, UnitConditionType.class, "UnitConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getUnitConditionType_Guard(), this.getGuardType(), null, "guard", null, 1, 1, UnitConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitConditionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, UnitConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(unitRefTypeEClass, UnitRefType.class, "UnitRefType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUnitRefType_CRef(), theXMLTypePackage.getString(), "cRef", "this", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3566,27 +3668,6 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	protected void createExtendedMetaDataAnnotations() {
 		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
-		addAnnotation
-		  (actionTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "ActionType",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getActionType_Protocol(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "protocol"
-		   });		
-		addAnnotation
-		  (getActionType_Id(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "id"
-		   });		
 		addAnnotation
 		  (baseTypeTypeEClass, 
 		   source, 
@@ -3925,21 +4006,21 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   source, 
 		   new String[] {
 			 "name", "ConditionType",
-			 "kind", "elementOnly"
+			 "kind", "empty"
 		   });		
 		addAnnotation
-		  (getConditionType_Guard(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "guard"
-		   });		
-		addAnnotation
-		  (getConditionType_Id(), 
+		  (getConditionType_CondId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
-			 "name", "id"
+			 "name", "cond_id"
+		   });		
+		addAnnotation
+		  (getConditionType_SliceId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "slice_id"
 		   });		
 		addAnnotation
 		  (documentRootEClass, 
@@ -4301,46 +4382,63 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "pRef"
 		   });		
 		addAnnotation
-		  (guardAndTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "GuardAndType",
-			 "kind", "empty"
-		   });		
-		addAnnotation
 		  (guardConditionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "GuardConditionType",
-			 "kind", "empty"
+			 "kind", "elementOnly"
 		   });		
 		addAnnotation
-		  (getGuardConditionType_Condition(), 
+		  (getGuardConditionType_Condition1(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "condition"
 		   });		
 		addAnnotation
-		  (guardNotTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "GuardNotType",
-			 "kind", "empty"
-		   });		
-		addAnnotation
-		  (guardOrTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "GuardOrType",
-			 "kind", "empty"
-		   });		
-		addAnnotation
 		  (guardTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "GuardType",
-			 "kind", "empty"
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getGuardType_Group(), 
+		   source, 
+		   new String[] {
+			 "kind", "group",
+			 "name", "group:0"
+		   });		
+		addAnnotation
+		  (getGuardType_Condition(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "condition",
+			 "group", "#group:0"
+		   });		
+		addAnnotation
+		  (getGuardType_And(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "and",
+			 "group", "#group:0"
+		   });		
+		addAnnotation
+		  (getGuardType_Or(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "or",
+			 "group", "#group:0"
+		   });		
+		addAnnotation
+		  (getGuardType_Not(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "not"
 		   });		
 		addAnnotation
 		  (implementsTypeEClass, 
@@ -4798,6 +4896,20 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "action"
 		   });		
 		addAnnotation
+		  (protocolCombinatorVisualTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolCombinatorVisualType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolCombinatorVisualType_VisualDescription(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "visualDescription"
+		   });		
+		addAnnotation
 		  (protocolPerformTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4817,6 +4929,20 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "slice_id"
+		   });		
+		addAnnotation
+		  (protocolPerformVisualTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ProtocolPerformVisualType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolPerformVisualType_VisualDescription(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "visualDescription"
 		   });		
 		addAnnotation
 		  (protocolTypeEClass, 
@@ -5062,6 +5188,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "baseType", "SupportedKinds"
 		   });		
 		addAnnotation
+		  (unitActionTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "UnitActionType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getUnitActionType_Protocol(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "protocol"
+		   });		
+		addAnnotation
+		  (getUnitActionType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
+		   });		
+		addAnnotation
 		  (unitBoundsTypeEClass, 
 		   source, 
 		   new String[] {
@@ -5095,6 +5242,27 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
+		   });		
+		addAnnotation
+		  (unitConditionTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "UnitConditionType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getUnitConditionType_Guard(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "guard"
+		   });		
+		addAnnotation
+		  (getUnitConditionType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
 		   });		
 		addAnnotation
 		  (unitRefTypeEClass, 

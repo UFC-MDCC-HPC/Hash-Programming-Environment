@@ -19,6 +19,8 @@ import hPE.xml.component.InterfaceType;
 import hPE.xml.component.ProtocolChoiceType;
 import hPE.xml.component.ProtocolType;
 import hPE.xml.component.SourceType;
+import hPE.xml.component.UnitActionType;
+import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.VisualElementAttributes;
 
 import java.util.Collection;
@@ -130,7 +132,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ActionType> action;
+	protected EList<UnitActionType> action;
 
 	/**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference list.
@@ -140,7 +142,7 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ConditionType> condition;
+	protected EList<UnitConditionType> condition;
 
 	/**
 	 * The cached value of the '{@link #getProtocol() <em>Protocol</em>}' containment reference.
@@ -371,9 +373,9 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ActionType> getAction() {
+	public EList<UnitActionType> getAction() {
 		if (action == null) {
-			action = new EObjectContainmentEList<ActionType>(ActionType.class, this, ComponentPackage.INTERFACE_TYPE__ACTION);
+			action = new EObjectContainmentEList<UnitActionType>(UnitActionType.class, this, ComponentPackage.INTERFACE_TYPE__ACTION);
 		}
 		return action;
 	}
@@ -383,9 +385,9 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ConditionType> getCondition() {
+	public EList<UnitConditionType> getCondition() {
 		if (condition == null) {
-			condition = new EObjectContainmentEList<ConditionType>(ConditionType.class, this, ComponentPackage.INTERFACE_TYPE__CONDITION);
+			condition = new EObjectContainmentEList<UnitConditionType>(UnitConditionType.class, this, ComponentPackage.INTERFACE_TYPE__CONDITION);
 		}
 		return condition;
 	}
@@ -553,11 +555,11 @@ public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
 				return;
 			case ComponentPackage.INTERFACE_TYPE__ACTION:
 				getAction().clear();
-				getAction().addAll((Collection<? extends ActionType>)newValue);
+				getAction().addAll((Collection<? extends UnitActionType>)newValue);
 				return;
 			case ComponentPackage.INTERFACE_TYPE__CONDITION:
 				getCondition().clear();
-				getCondition().addAll((Collection<? extends ConditionType>)newValue);
+				getCondition().addAll((Collection<? extends UnitConditionType>)newValue);
 				return;
 			case ComponentPackage.INTERFACE_TYPE__PROTOCOL:
 				setProtocol((ProtocolChoiceType)newValue);

@@ -785,8 +785,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProtocolPerformType_SliceId() {
+	public EAttribute getProtocolPerformType_ActionId() {
 		return (EAttribute)protocolPerformTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProtocolPerformType_SliceId() {
+		return (EAttribute)protocolPerformTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1024,6 +1033,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(protocolCombinatorTypeEClass, PROTOCOL_COMBINATOR_TYPE__ACTION);
 
 		protocolPerformTypeEClass = createEClass(PROTOCOL_PERFORM_TYPE);
+		createEAttribute(protocolPerformTypeEClass, PROTOCOL_PERFORM_TYPE__ACTION_ID);
 		createEAttribute(protocolPerformTypeEClass, PROTOCOL_PERFORM_TYPE__SLICE_ID);
 
 		protocolTypeEClass = createEClass(PROTOCOL_TYPE);
@@ -1155,6 +1165,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getProtocolCombinatorType_Action(), this.getProtocolChoiceType(), null, "action", null, 1, -1, ProtocolCombinatorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(protocolPerformTypeEClass, ProtocolPerformType.class, "ProtocolPerformType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getProtocolPerformType_ActionId(), theXMLTypePackage.getString(), "actionId", null, 0, 1, ProtocolPerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProtocolPerformType_SliceId(), theXMLTypePackage.getString(), "sliceId", null, 0, 1, ProtocolPerformType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(protocolTypeEClass, ProtocolType.class, "ProtocolType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1651,6 +1662,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "name", "ProtocolPerformType",
 			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProtocolPerformType_ActionId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "action_id"
 		   });		
 		addAnnotation
 		  (getProtocolPerformType_SliceId(), 

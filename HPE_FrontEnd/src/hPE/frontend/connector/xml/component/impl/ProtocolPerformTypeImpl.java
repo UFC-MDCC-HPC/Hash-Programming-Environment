@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link hPE.frontend.connector.xml.component.impl.ProtocolPerformTypeImpl#getActionId <em>Action Id</em>}</li>
  *   <li>{@link hPE.frontend.connector.xml.component.impl.ProtocolPerformTypeImpl#getSliceId <em>Slice Id</em>}</li>
  * </ul>
  * </p>
@@ -29,6 +30,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements ProtocolPerformType {
+	/**
+	 * The default value of the '{@link #getActionId() <em>Action Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getActionId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ACTION_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getActionId() <em>Action Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getActionId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String actionId = ACTION_ID_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getSliceId() <em>Slice Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -73,6 +94,27 @@ public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements Protoco
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getActionId() {
+		return actionId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setActionId(String newActionId) {
+		String oldActionId = actionId;
+		actionId = newActionId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID, oldActionId, actionId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getSliceId() {
 		return sliceId;
 	}
@@ -97,6 +139,8 @@ public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements Protoco
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
+				return getActionId();
 			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				return getSliceId();
 		}
@@ -111,6 +155,9 @@ public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements Protoco
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
+				setActionId((String)newValue);
+				return;
 			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				setSliceId((String)newValue);
 				return;
@@ -126,6 +173,9 @@ public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements Protoco
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
+				setActionId(ACTION_ID_EDEFAULT);
+				return;
 			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				setSliceId(SLICE_ID_EDEFAULT);
 				return;
@@ -141,6 +191,8 @@ public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements Protoco
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ComponentPackage.PROTOCOL_PERFORM_TYPE__ACTION_ID:
+				return ACTION_ID_EDEFAULT == null ? actionId != null : !ACTION_ID_EDEFAULT.equals(actionId);
 			case ComponentPackage.PROTOCOL_PERFORM_TYPE__SLICE_ID:
 				return SLICE_ID_EDEFAULT == null ? sliceId != null : !SLICE_ID_EDEFAULT.equals(sliceId);
 		}
@@ -157,7 +209,9 @@ public class ProtocolPerformTypeImpl extends ProtocolTypeImpl implements Protoco
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (sliceId: ");
+		result.append(" (actionId: ");
+		result.append(actionId);
+		result.append(", sliceId: ");
 		result.append(sliceId);
 		result.append(')');
 		return result.toString();

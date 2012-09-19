@@ -79,7 +79,6 @@ public class ProtocolEditPart extends AbstractGraphicalEditPart
 			else
 			{
 				pf = new ActionFigure();
-				READ_ONLY = true;
 				
 			}
 		} 
@@ -389,11 +388,9 @@ public class ProtocolEditPart extends AbstractGraphicalEditPart
 		manager.show();
 	}
 
-	private boolean READ_ONLY = false;
-	
 	public void performRequest(Request request){
         super.performRequest(request);
-		if (request.getType() == RequestConstants.REQ_DIRECT_EDIT && !READ_ONLY)
+		if (request.getType() == RequestConstants.REQ_DIRECT_EDIT)
 			performDirectEdit();
 		return;
 	}

@@ -61,7 +61,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ComponentPackage.ACTION_TYPE: return createActionType();
 			case ComponentPackage.BASE_TYPE_TYPE: return createBaseTypeType();
 			case ComponentPackage.COLOR_COMPLEX_TYPE: return createColorComplexType();
 			case ComponentPackage.COMPONENT_BODY_TYPE: return createComponentBodyType();
@@ -85,10 +84,8 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.FUSION_OF_REPLICATORS_TYPE: return createFusionOfReplicatorsType();
 			case ComponentPackage.FUSIONS_OF_REPLICATORS_TYPE: return createFusionsOfReplicatorsType();
 			case ComponentPackage.FUSION_TYPE: return createFusionType();
-			case ComponentPackage.GUARD_AND_TYPE: return createGuardAndType();
 			case ComponentPackage.GUARD_CONDITION_TYPE: return createGuardConditionType();
-			case ComponentPackage.GUARD_NOT_TYPE: return createGuardNotType();
-			case ComponentPackage.GUARD_OR_TYPE: return createGuardOrType();
+			case ComponentPackage.GUARD_TYPE: return createGuardType();
 			case ComponentPackage.IMPLEMENTS_TYPE: return createImplementsType();
 			case ComponentPackage.INNER_COMPONENT_TYPE: return createInnerComponentType();
 			case ComponentPackage.INNER_RENAMING_TYPE: return createInnerRenamingType();
@@ -105,14 +102,18 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.PORT_TYPE: return createPortType();
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE: return createProtocolChoiceType();
 			case ComponentPackage.PROTOCOL_COMBINATOR_TYPE: return createProtocolCombinatorType();
+			case ComponentPackage.PROTOCOL_COMBINATOR_VISUAL_TYPE: return createProtocolCombinatorVisualType();
 			case ComponentPackage.PROTOCOL_PERFORM_TYPE: return createProtocolPerformType();
+			case ComponentPackage.PROTOCOL_PERFORM_VISUAL_TYPE: return createProtocolPerformVisualType();
 			case ComponentPackage.RECURSIVE_ENTRY_TYPE: return createRecursiveEntryType();
 			case ComponentPackage.SOURCE_FILE_TYPE: return createSourceFileType();
 			case ComponentPackage.SOURCE_TYPE: return createSourceType();
 			case ComponentPackage.SPLIT_ENUMERATOR_TYPE: return createSplitEnumeratorType();
 			case ComponentPackage.SPLIT_LINK_TYPE: return createSplitLinkType();
 			case ComponentPackage.SPLIT_TYPE: return createSplitType();
+			case ComponentPackage.UNIT_ACTION_TYPE: return createUnitActionType();
 			case ComponentPackage.UNIT_BOUNDS_TYPE: return createUnitBoundsType();
+			case ComponentPackage.UNIT_CONDITION_TYPE: return createUnitConditionType();
 			case ComponentPackage.UNIT_REF_TYPE: return createUnitRefType();
 			case ComponentPackage.UNIT_SLICE_TYPE: return createUnitSliceType();
 			case ComponentPackage.UNIT_TYPE: return createUnitType();
@@ -163,16 +164,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ActionType createActionType() {
-		ActionTypeImpl actionType = new ActionTypeImpl();
-		return actionType;
 	}
 
 	/**
@@ -410,16 +401,6 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GuardAndType createGuardAndType() {
-		GuardAndTypeImpl guardAndType = new GuardAndTypeImpl();
-		return guardAndType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public GuardConditionType createGuardConditionType() {
 		GuardConditionTypeImpl guardConditionType = new GuardConditionTypeImpl();
 		return guardConditionType;
@@ -430,19 +411,9 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GuardNotType createGuardNotType() {
-		GuardNotTypeImpl guardNotType = new GuardNotTypeImpl();
-		return guardNotType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GuardOrType createGuardOrType() {
-		GuardOrTypeImpl guardOrType = new GuardOrTypeImpl();
-		return guardOrType;
+	public GuardType createGuardType() {
+		GuardTypeImpl guardType = new GuardTypeImpl();
+		return guardType;
 	}
 
 	/**
@@ -610,9 +581,29 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ProtocolCombinatorVisualType createProtocolCombinatorVisualType() {
+		ProtocolCombinatorVisualTypeImpl protocolCombinatorVisualType = new ProtocolCombinatorVisualTypeImpl();
+		return protocolCombinatorVisualType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ProtocolPerformType createProtocolPerformType() {
 		ProtocolPerformTypeImpl protocolPerformType = new ProtocolPerformTypeImpl();
 		return protocolPerformType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProtocolPerformVisualType createProtocolPerformVisualType() {
+		ProtocolPerformVisualTypeImpl protocolPerformVisualType = new ProtocolPerformVisualTypeImpl();
+		return protocolPerformVisualType;
 	}
 
 	/**
@@ -680,9 +671,29 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public UnitActionType createUnitActionType() {
+		UnitActionTypeImpl unitActionType = new UnitActionTypeImpl();
+		return unitActionType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public UnitBoundsType createUnitBoundsType() {
 		UnitBoundsTypeImpl unitBoundsType = new UnitBoundsTypeImpl();
 		return unitBoundsType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UnitConditionType createUnitConditionType() {
+		UnitConditionTypeImpl unitConditionType = new UnitConditionTypeImpl();
+		return unitConditionType;
 	}
 
 	/**

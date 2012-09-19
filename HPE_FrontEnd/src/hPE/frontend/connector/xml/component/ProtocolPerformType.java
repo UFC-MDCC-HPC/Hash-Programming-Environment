@@ -15,6 +15,7 @@ package hPE.frontend.connector.xml.component;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link hPE.frontend.connector.xml.component.ProtocolPerformType#getActionId <em>Action Id</em>}</li>
  *   <li>{@link hPE.frontend.connector.xml.component.ProtocolPerformType#getSliceId <em>Slice Id</em>}</li>
  * </ul>
  * </p>
@@ -24,6 +25,33 @@ package hPE.frontend.connector.xml.component;
  * @generated
  */
 public interface ProtocolPerformType extends ProtocolType {
+	/**
+	 * Returns the value of the '<em><b>Action Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Action Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Action Id</em>' attribute.
+	 * @see #setActionId(String)
+	 * @see hPE.frontend.connector.xml.component.ComponentPackage#getProtocolPerformType_ActionId()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='action_id'"
+	 * @generated
+	 */
+	String getActionId();
+
+	/**
+	 * Sets the value of the '{@link hPE.frontend.connector.xml.component.ProtocolPerformType#getActionId <em>Action Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Action Id</em>' attribute.
+	 * @see #getActionId()
+	 * @generated
+	 */
+	void setActionId(String value);
+
 	/**
 	 * Returns the value of the '<em><b>Slice Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

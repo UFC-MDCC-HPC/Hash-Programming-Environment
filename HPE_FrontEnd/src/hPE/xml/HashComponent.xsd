@@ -2,7 +2,7 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.example.org/HashComponent"
 	xmlns:tns="http://www.example.org/HashComponent">
-	<element name="component" type="tns:ComponentType"></element>
+    <element name="component" type="tns:ComponentType"></element>
 
 	<complexType name="ComponentBodyType">
         <annotation>
@@ -91,10 +91,10 @@
 			<element name="parameter" type="tns:InterfaceParameterType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
-			<element name="action" type="tns:ActionType"
+			<element name="action" type="tns:UnitActionType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
-			<element name="condition" type="tns:ConditionType"
+			<element name="condition" type="tns:UnitConditionType"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
 			<element name="protocol" type="tns:ProtocolChoiceType"
@@ -559,14 +559,14 @@
     
     
 
-  <complexType name="ConditionType">
+  <complexType name="UnitConditionType">
   	<sequence>
   		<element name="guard" type="tns:GuardType"></element>
   	</sequence>
   	<attribute name="id" type="string"></attribute>
   </complexType>
 
-  <complexType name="ActionType">
+  <complexType name="UnitActionType">
   	<sequence>
   		<element name="protocol" type="tns:ProtocolChoiceType" maxOccurs="1" minOccurs="0"></element>
   	</sequence>
@@ -603,27 +603,19 @@
     	</complexContent>
     </complexType>
 
-
-  <complexType name="GuardType" abstract="true">
+  <complexType name="ConditionType">
+    	<attribute name="slice_id" type="string"></attribute>
+    	<attribute name="cond_id" type="string" use="required"></attribute>
     </complexType>
-
-    <complexType name="GuardAndType">
-    	<complexContent>
-    		<extension base="tns:GuardType"></extension>
-    	</complexContent>
-    </complexType>
-    
-    <complexType name="GuardOrType">
-    	<complexContent>
-    		<extension base="tns:GuardType"></extension>
-    	</complexContent>
-    </complexType>
-
-    <complexType name="GuardNotType">
-    	<complexContent>
-    		<extension base="tns:GuardType"></extension>
-    	</complexContent>
-    </complexType>
+ 
+   <complexType name="GuardType">
+  	<choice maxOccurs="unbounded">
+  		<element name="condition" type="tns:ConditionType" />
+  		<element name="and" type="tns:GuardType" />
+  		<element name="or" type="tns:GuardType" />
+  	</choice>
+  	<attribute name="not" type="boolean"></attribute>
+  </complexType>
 
     <complexType name="GuardConditionType">
     	<complexContent>
@@ -637,10 +629,29 @@
 
  <complexType name="ProtocolChoiceType">
   				<choice maxOccurs="1" minOccurs="1">
-  					<element name="par" type="tns:ProtocolCombinatorType"></element>
-  					<element name="seq" type="tns:ProtocolCombinatorType"></element>
-  					<element name="alt" type="tns:ProtocolCombinatorType"></element>
-  					<element name="perform" type="tns:ProtocolPerformType"></element>
+  					<element name="par" type="tns:ProtocolCombinatorVisualType"></element>
+  					<element name="seq" type="tns:ProtocolCombinatorVisualType"></element>
+  					<element name="alt" type="tns:ProtocolCombinatorVisualType"></element>
+  					<element name="perform" type="tns:ProtocolPerformVisualType"></element>
   				</choice>
     </complexType>
+
+ <complexType name="ProtocolCombinatorVisualType">
+ 	<complexContent>
+ 		<extension base="tns:ProtocolCombinatorType">
+ 			<sequence>
+ 				<element name="visualDescription" type="tns:VisualElementAttributes"></element>
+ 			</sequence>
+ 		</extension>
+ 	</complexContent>
+ </complexType>
+ <complexType name="ProtocolPerformVisualType">
+ 	<complexContent>
+ 		<extension base="tns:ProtocolPerformType">
+ 			<sequence>
+ 				<element name="visualDescription" type="tns:VisualElementAttributes"></element>
+ 			</sequence>
+ 		</extension>
+ 	</complexContent>
+ </complexType>
 </schema>

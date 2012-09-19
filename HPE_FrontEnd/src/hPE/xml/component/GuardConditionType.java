@@ -15,40 +15,40 @@ package hPE.xml.component;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link hPE.xml.component.GuardConditionType#getCondition <em>Condition</em>}</li>
+ *   <li>{@link hPE.xml.component.GuardConditionType#getCondition1 <em>Condition1</em>}</li>
  * </ul>
  * </p>
  *
  * @see hPE.xml.component.ComponentPackage#getGuardConditionType()
- * @model extendedMetaData="name='GuardConditionType' kind='empty'"
+ * @model extendedMetaData="name='GuardConditionType' kind='elementOnly'"
  * @generated
  */
 public interface GuardConditionType extends GuardType {
 	/**
-	 * Returns the value of the '<em><b>Condition</b></em>' attribute.
+	 * Returns the value of the '<em><b>Condition1</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Condition</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Condition1</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Condition</em>' attribute.
-	 * @see #setCondition(String)
-	 * @see hPE.xml.component.ComponentPackage#getGuardConditionType_Condition()
+	 * @return the value of the '<em>Condition1</em>' attribute.
+	 * @see #setCondition1(String)
+	 * @see hPE.xml.component.ComponentPackage#getGuardConditionType_Condition1()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='condition'"
 	 * @generated
 	 */
-	String getCondition();
+	String getCondition1();
 
 	/**
-	 * Sets the value of the '{@link hPE.xml.component.GuardConditionType#getCondition <em>Condition</em>}' attribute.
+	 * Sets the value of the '{@link hPE.xml.component.GuardConditionType#getCondition1 <em>Condition1</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Condition</em>' attribute.
-	 * @see #getCondition()
+	 * @param value the new value of the '<em>Condition1</em>' attribute.
+	 * @see #getCondition1()
 	 * @generated
 	 */
-	void setCondition(String value);
+	void setCondition1(String value);
 
 } // GuardConditionType

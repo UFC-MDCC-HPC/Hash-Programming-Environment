@@ -24,6 +24,11 @@ import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.model.IHasColor;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
+import hPE.frontend.kinds.activate.model.protocol.HProtocolChoice;
+import hPE.frontend.kinds.activate.model.protocol.HProtocolCombinator;
+import hPE.frontend.kinds.activate.model.protocol.HProtocolPerform;
+import hPE.frontend.kinds.activate.model.protocol.IProtocol;
+import hPE.frontend.kinds.activate.model.protocol.IProtocolCombinator;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
@@ -47,10 +52,12 @@ import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentInUseType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ComponentType;
+import hPE.xml.component.ConditionType;
 import hPE.xml.component.DocumentRoot;
 import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExtensionTypeType;
 import hPE.xml.component.FusionType;
+import hPE.xml.component.GuardType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
 import hPE.xml.component.InterfaceParameterType;
@@ -62,11 +69,18 @@ import hPE.xml.component.ParameterRenaming;
 import hPE.xml.component.ParameterSupplyType;
 import hPE.xml.component.ParameterType;
 import hPE.xml.component.PortSliceType;
+import hPE.xml.component.ProtocolChoiceType;
+import hPE.xml.component.ProtocolCombinatorType;
+import hPE.xml.component.ProtocolCombinatorVisualType;
+import hPE.xml.component.ProtocolPerformType;
+import hPE.xml.component.ProtocolPerformVisualType;
 import hPE.xml.component.RecursiveEntryType;
 import hPE.xml.component.SourceFileType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.SupportedKinds;
+import hPE.xml.component.UnitActionType;
 import hPE.xml.component.UnitBoundsType;
+import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
@@ -1830,6 +1844,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				saveInterfacePorts(i.getPorts(), portsX);
 				saveSources(i.getSourceVersions(), sourcesX);
 				saveParameters(i.getParameters(), parametersX);
+				if (i instanceof HActivateInterface)
+				{
+					HActivateInterface ia = (HActivateInterface) i;
+				    saveActions(ia.getActions(), iX.getAction());
+				    saveConditions(ia.getConditions(), iX.getCondition());
+				}
 
 				saveVisualDescription(i, v);
 
@@ -1841,6 +1861,174 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				xI.add(iX);
 			}
 
+	}
+
+	private void saveConditions(Map<String, hPE.frontend.connector.xml.component.GuardType> conditions, 
+			                     EList<UnitConditionType> condition_list_X) 
+	{
+	    for (Entry<String, hPE.frontend.connector.xml.component.GuardType> condition : conditions.entrySet())
+	    {
+	    	UnitConditionType conditionX = factory.createUnitConditionType();
+	    	conditionX.setId(condition.getKey());
+	    	conditionX.setGuard(saveGuard(condition.getValue()));
+	    	condition_list_X.add(conditionX);
+	    }
+		
+	}
+
+	private void saveActions(Map<String, HProtocolChoice> actions, EList<UnitActionType> action_list) 
+	{
+	    for (Entry<String, HProtocolChoice> action : actions.entrySet())
+	    {
+	    	  
+	    	  hPE.frontend.connector.xml.component.ProtocolChoiceType protocol_choice = action.getValue();
+	    	  ProtocolChoiceType protocol_choice_X = factory.createProtocolChoiceType();
+	    	  
+	          saveProtocolChoice(protocol_choice, protocol_choice_X);
+	    	  
+	    	  UnitActionType actionX = factory.createUnitActionType();
+	    	  actionX.setId(action.getKey());
+	    	  actionX.setProtocol(protocol_choice_X);
+	    	  
+	    	  action_list.add(actionX);
+	    }
+		
+	}
+
+	private void saveProtocolChoice(hPE.frontend.connector.xml.component.ProtocolChoiceType protocol_choice, 
+									                                       ProtocolChoiceType protocol_choice_X) 
+	{
+	     	if (protocol_choice.getPar() != null)
+	     	{
+	     		hPE.frontend.connector.xml.component.ProtocolCombinatorType protocol_combinator = protocol_choice.getPar();
+	     		protocol_choice_X.setPar(saveProtocolCombinator(protocol_combinator));
+	     	}
+	     	else if (protocol_choice.getSeq() != null)
+	     	{
+	     		hPE.frontend.connector.xml.component.ProtocolCombinatorType protocol_combinator = protocol_choice.getSeq();
+	     		protocol_choice_X.setSeq(saveProtocolCombinator(protocol_combinator));
+	     	}
+	     	else if (protocol_choice.getAlt() != null)
+	     	{
+	     		hPE.frontend.connector.xml.component.ProtocolCombinatorType protocol_combinator = protocol_choice.getAlt();
+	     		protocol_choice_X.setAlt(saveProtocolCombinator(protocol_combinator));
+	     	}
+	     	else if (protocol_choice.getPerform() != null)
+	     	{
+	     		hPE.frontend.connector.xml.component.ProtocolPerformType protocol_perform = protocol_choice.getPerform();
+	     		protocol_choice_X.setPerform(saveProtocolPerform(protocol_perform));
+	     	}
+		
+	}
+
+
+	private ProtocolPerformVisualType saveProtocolPerform(
+			hPE.frontend.connector.xml.component.ProtocolPerformType protocol_perform) {
+		
+		ProtocolPerformVisualType protocol_perform_x = factory.createProtocolPerformVisualType();
+		protocol_perform_x.setRepeat(protocol_perform.isRepeat());
+		protocol_perform_x.setSliceId(protocol_perform.getSliceId());
+		protocol_perform_x.setId(protocol_perform.getId());
+		protocol_perform_x.setActionId(protocol_perform.getActionId());
+		if (protocol_perform.getGuard() != null)
+			protocol_perform_x.setGuard(saveGuard(protocol_perform.getGuard()));
+		
+		VisualElementAttributes v = factory.createVisualElementAttributes();
+		saveVisualDescription(protocol_perform, v);
+		protocol_perform_x.setVisualDescription(v );
+
+		return protocol_perform_x;
+	}
+
+	private GuardType saveGuard(hPE.frontend.connector.xml.component.GuardType guard) 
+	{
+		GuardType guardX = factory.createGuardType();
+		guardX.setNot(guard.isSetNot() ? guard.isNot() : false);
+		saveGuardAnd(guardX.getAnd(), guard.getAnd());
+		saveGuardOr(guardX.getOr(),guard.getOr());
+		
+		EList<ConditionType> condition_list_X = guardX.getCondition();
+		EList<hPE.frontend.connector.xml.component.ConditionType> condition_list = guard.getCondition();
+		saveGuardCondition(condition_list_X, condition_list);
+		
+		
+		return guardX;
+	}
+
+	private void saveGuardCondition(
+			EList<ConditionType> condition_list_X,
+			EList<hPE.frontend.connector.xml.component.ConditionType> condition_list) {
+
+		for (hPE.frontend.connector.xml.component.ConditionType condition : condition_list)
+		{
+			ConditionType conditionX = factory.createConditionType();
+			conditionX.setCondId(condition.getCondId());
+			conditionX.setSliceId(condition.getSliceId());		
+			condition_list_X.add(conditionX);
+		}
+		
+	}
+
+	private void saveGuardOr(EList<GuardType> or_guard_list_X,
+			EList<hPE.frontend.connector.xml.component.GuardType> or_guard_list) 
+	{
+		for (hPE.frontend.connector.xml.component.GuardType or_guard : or_guard_list)
+		{
+			GuardType or_guard_X = factory.createGuardType();
+			or_guard_X.setNot(or_guard.isSetNot() ? or_guard.isNot() : false);
+			saveGuardAnd(or_guard_X.getAnd(), or_guard.getAnd());
+			saveGuardOr(or_guard_X.getOr(),or_guard.getOr());
+			or_guard_list_X.add(or_guard_X);
+		}
+		
+	}
+
+	private void saveGuardAnd(EList<GuardType> and_guard_list_X,
+			EList<hPE.frontend.connector.xml.component.GuardType> and_guard_list) {
+		for (hPE.frontend.connector.xml.component.GuardType and_guard : and_guard_list)
+		{
+			GuardType and_guard_X = factory.createGuardType();
+			and_guard_X.setNot(and_guard.isSetNot() ? and_guard.isNot() : false);
+			saveGuardAnd(and_guard_X.getAnd(), and_guard.getAnd());
+			saveGuardOr(and_guard_X.getOr(),and_guard.getOr());
+			and_guard_list_X.add(and_guard_X);
+		}
+		
+	}
+
+	private ProtocolCombinatorVisualType saveProtocolCombinator(
+			hPE.frontend.connector.xml.component.ProtocolCombinatorType protocol_combinator) 
+	{
+		ProtocolCombinatorVisualType protocol_combinator_x = factory.createProtocolCombinatorVisualType();
+		protocol_combinator_x.setId(protocol_combinator.getId());
+		protocol_combinator_x.setRepeat(protocol_combinator.isRepeat());		
+		if (protocol_combinator.getGuard() != null)
+			protocol_combinator_x.setGuard(saveGuard(protocol_combinator.getGuard()));
+		
+		List<hPE.frontend.connector.xml.component.ProtocolChoiceType> protocol_list = protocol_combinator.getAction();
+		hPE.frontend.connector.xml.component.ProtocolChoiceType[] protocols = new hPE.frontend.connector.xml.component.ProtocolChoiceType[protocol_list.size()];
+		for (hPE.frontend.connector.xml.component.ProtocolChoiceType action_protocol_choice : protocol_list)
+		{
+			HProtocolChoice action_protocol_choice_ = (HProtocolChoice) action_protocol_choice;
+			IProtocol action_protocol = action_protocol_choice_.getProtocol();
+			protocols[action_protocol.getOrder()] = action_protocol_choice;
+		}
+		
+		for (int i=0; i<protocols.length; i++)
+		{
+			hPE.frontend.connector.xml.component.ProtocolChoiceType protocol_choice = protocols[i];
+			ProtocolChoiceType protocol_choice_X = factory.createProtocolChoiceType();
+			saveProtocolChoice(protocol_choice, protocol_choice_X);
+			protocol_combinator_x.getAction().add(protocol_choice_X);
+		}
+		
+		
+		VisualElementAttributes v = factory.createVisualElementAttributes();
+		saveVisualDescription(protocol_combinator, v);
+		protocol_combinator_x.setVisualDescription(v );
+		
+		return protocol_combinator_x;
+		
 	}
 
 	private void saveParameters(
@@ -2463,25 +2651,134 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			if (i instanceof HActivateInterface) {
 				HActivateInterface ia = (HActivateInterface) i;
-//				if (xI.getProtocol() != null) {
-//					HProtocol p = new HProtocol(ia);
-//					HCombinatorAction aaux = new HParAction("dummy", p);
-					/* TODO (action): 
-					HAction action = buildAction(xI.getProtocol(), aaux, i, new HashMap<String, HSemaphore>(), p);
-					action.setProtocol(p);
-					Rectangle r = p.getBounds();
-					r.height = action.getBounds().height + 2
-							* action.getBounds().y;
-					r.width = action.getBounds().width + 2
-							* action.getBounds().x;
-					p.setBounds(r);*/
-
-//				}
+				
+			    for (UnitActionType unit_action : xI.getAction()) 
+			    {	HProtocolChoice protocol_choice = loadProtocolChoice(unit_action.getProtocol(), ia, unit_action.getId(), null, -1);
+					ia.newAction(unit_action.getId(), protocol_choice); 
+			    }
+			    
+			    for (UnitConditionType unit_condition: xI.getCondition())
+			    {
+			        hPE.frontend.connector.xml.component.GuardType guard = loadGuard(unit_condition.getGuard());
+					ia.addCondition(unit_condition.getId(), guard );	
+			    }
+				
 			}
-		} // else {
-		// loadSourceVersions(i,xI);
-		// }
+		} 
 
+	}
+	
+
+	private HProtocolChoice loadProtocolChoice(
+			ProtocolChoiceType protocol_choice_source, 
+			HActivateInterface i, 
+			String actionName, 
+			IProtocolCombinator parent_combinator, 
+			int order)
+	{
+		HProtocolChoice protocol_choice_target = new HProtocolChoice();
+		
+		if (protocol_choice_source.getPar() != null)
+		{
+			HProtocolCombinator protocol_combinator_target = loadProtocolCombinator(protocol_choice_source.getPar());
+			protocol_combinator_target.setActionName(actionName);
+			protocol_combinator_target.setInterface(i);
+			protocol_combinator_target.setProtocolChoice(protocol_choice_target);
+			protocol_combinator_target.setParentCombinator(parent_combinator);
+			protocol_combinator_target.setOrder(order);
+			protocol_combinator_target.setCombinator(IProtocolCombinator.PAR_COMBINATOR);
+			protocol_choice_target.setPar(protocol_combinator_target);
+		} 
+		else if (protocol_choice_source.getSeq() != null)
+		{
+			HProtocolCombinator protocol_combinator_target = loadProtocolCombinator(protocol_choice_source.getSeq());
+			protocol_combinator_target.setActionName(actionName);
+			protocol_combinator_target.setInterface(i);
+			protocol_combinator_target.setProtocolChoice(protocol_choice_target);
+			protocol_combinator_target.setParentCombinator(parent_combinator);
+			protocol_combinator_target.setOrder(order);
+			protocol_combinator_target.setCombinator(IProtocolCombinator.SEQ_COMBINATOR);
+			protocol_choice_target.setSeq(protocol_combinator_target);
+		} 
+		else if (protocol_choice_source.getAlt() != null)
+		{
+			HProtocolCombinator protocol_combinator_target = loadProtocolCombinator(protocol_choice_source.getAlt());
+			protocol_combinator_target.setActionName(actionName);
+			protocol_combinator_target.setInterface(i);
+			protocol_combinator_target.setProtocolChoice(protocol_choice_target);
+			protocol_combinator_target.setParentCombinator(parent_combinator);
+			protocol_combinator_target.setOrder(order);
+			protocol_combinator_target.setCombinator(IProtocolCombinator.ALT_COMBINATOR);
+			protocol_choice_target.setAlt(protocol_combinator_target);
+		}  
+		else if (protocol_choice_source.getPerform() != null)
+		{
+			HProtocolPerform protocol_perform_target = loadProtocolPerform(protocol_choice_source.getPerform());
+			protocol_perform_target.setActionName(actionName);
+			protocol_perform_target.setInterface(i);
+			protocol_perform_target.setProtocolChoice(protocol_choice_target);
+			protocol_perform_target.setParentCombinator(parent_combinator);
+			protocol_perform_target.setOrder(order);			
+			protocol_choice_target.setPerform(protocol_perform_target);
+		}
+		
+		if (i != null)
+			protocol_choice_target.setInterface(i);
+		if (actionName != null)
+			protocol_choice_target.setActionName(actionName);
+		
+		return protocol_choice_target;
+	}
+
+	private HProtocolCombinator loadProtocolCombinator(ProtocolCombinatorVisualType protocol_combinator_source) 
+	{
+		HProtocolCombinator protocol_combinator_target = new HProtocolCombinator();
+		
+		protocol_combinator_target.setId(protocol_combinator_source.getId());
+		protocol_combinator_target.setGuard(loadGuard(protocol_combinator_source.getGuard()));
+		protocol_combinator_target.setRepeat(protocol_combinator_source.isRepeat());
+		
+		int order = 0;
+		for (ProtocolChoiceType protocol_choice_source : protocol_combinator_source.getAction())
+		{
+			HProtocolChoice protocol_choice_target = loadProtocolChoice(protocol_choice_source, null, null, protocol_combinator_target, order++);
+			protocol_combinator_target.getAction().add(protocol_choice_target);
+		}
+		
+		int x = (int) protocol_combinator_source.getVisualDescription().getX();
+		int y = (int) protocol_combinator_source.getVisualDescription().getY();
+		int w = (int) protocol_combinator_source.getVisualDescription().getW();
+		int h = (int) protocol_combinator_source.getVisualDescription().getH();
+		Rectangle r = new Rectangle(x,y,w,h);
+		protocol_combinator_target.setBounds(r);
+		
+		return protocol_combinator_target;
+	}
+
+	private HProtocolPerform loadProtocolPerform(ProtocolPerformVisualType protocol_perform_source) {
+		
+		HProtocolPerform protocol_perform_target = new HProtocolPerform();
+		protocol_perform_target.setId(protocol_perform_source.getId());
+		protocol_perform_target.setGuard(loadGuard(protocol_perform_source.getGuard()));
+		protocol_perform_target.setSliceId(protocol_perform_source.getSliceId());
+		protocol_perform_target.setActionId(protocol_perform_source.getActionId());
+		protocol_perform_target.setRepeat(protocol_perform_source.isRepeat());
+		
+		int x = (int) protocol_perform_source.getVisualDescription().getX();
+		int y = (int) protocol_perform_source.getVisualDescription().getY();
+		int w = (int) protocol_perform_source.getVisualDescription().getW();
+		int h = (int) protocol_perform_source.getVisualDescription().getH();
+		Rectangle r = new Rectangle(x,y,w,h);
+		protocol_perform_target.setBounds(r);
+
+		return protocol_perform_target;
+	}
+
+
+	private hPE.frontend.connector.xml.component.GuardType loadGuard(
+			GuardType guard) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private HUnit buildUnit(UnitType xU, HComponent c)

@@ -26,8 +26,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link hPE.xml.component.impl.ConditionTypeImpl#getGuard <em>Guard</em>}</li>
- *   <li>{@link hPE.xml.component.impl.ConditionTypeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ConditionTypeImpl#getCondId <em>Cond Id</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ConditionTypeImpl#getSliceId <em>Slice Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -35,34 +35,44 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	/**
-	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' containment reference.
+	 * The default value of the '{@link #getCondId() <em>Cond Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGuard()
+	 * @see #getCondId()
 	 * @generated
 	 * @ordered
 	 */
-	protected GuardType guard;
+	protected static final String COND_ID_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getCondId() <em>Cond Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getCondId()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected String condId = COND_ID_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getSliceId() <em>Slice Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getSliceId()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected static final String SLICE_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSliceId() <em>Slice Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSliceId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String sliceId = SLICE_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -88,8 +98,8 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GuardType getGuard() {
-		return guard;
+	public String getCondId() {
+		return condId;
 	}
 
 	/**
@@ -97,54 +107,11 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetGuard(GuardType newGuard, NotificationChain msgs) {
-		GuardType oldGuard = guard;
-		guard = newGuard;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.CONDITION_TYPE__GUARD, oldGuard, newGuard);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGuard(GuardType newGuard) {
-		if (newGuard != guard) {
-			NotificationChain msgs = null;
-			if (guard != null)
-				msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ComponentPackage.CONDITION_TYPE__GUARD, null, msgs);
-			if (newGuard != null)
-				msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ComponentPackage.CONDITION_TYPE__GUARD, null, msgs);
-			msgs = basicSetGuard(newGuard, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.CONDITION_TYPE__GUARD, newGuard, newGuard));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setCondId(String newCondId) {
+		String oldCondId = condId;
+		condId = newCondId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.CONDITION_TYPE__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.CONDITION_TYPE__COND_ID, oldCondId, condId));
 	}
 
 	/**
@@ -152,13 +119,20 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ComponentPackage.CONDITION_TYPE__GUARD:
-				return basicSetGuard(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+	public String getSliceId() {
+		return sliceId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSliceId(String newSliceId) {
+		String oldSliceId = sliceId;
+		sliceId = newSliceId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.CONDITION_TYPE__SLICE_ID, oldSliceId, sliceId));
 	}
 
 	/**
@@ -169,10 +143,10 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentPackage.CONDITION_TYPE__GUARD:
-				return getGuard();
-			case ComponentPackage.CONDITION_TYPE__ID:
-				return getId();
+			case ComponentPackage.CONDITION_TYPE__COND_ID:
+				return getCondId();
+			case ComponentPackage.CONDITION_TYPE__SLICE_ID:
+				return getSliceId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -185,11 +159,11 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentPackage.CONDITION_TYPE__GUARD:
-				setGuard((GuardType)newValue);
+			case ComponentPackage.CONDITION_TYPE__COND_ID:
+				setCondId((String)newValue);
 				return;
-			case ComponentPackage.CONDITION_TYPE__ID:
-				setId((String)newValue);
+			case ComponentPackage.CONDITION_TYPE__SLICE_ID:
+				setSliceId((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -203,11 +177,11 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.CONDITION_TYPE__GUARD:
-				setGuard((GuardType)null);
+			case ComponentPackage.CONDITION_TYPE__COND_ID:
+				setCondId(COND_ID_EDEFAULT);
 				return;
-			case ComponentPackage.CONDITION_TYPE__ID:
-				setId(ID_EDEFAULT);
+			case ComponentPackage.CONDITION_TYPE__SLICE_ID:
+				setSliceId(SLICE_ID_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -221,10 +195,10 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.CONDITION_TYPE__GUARD:
-				return guard != null;
-			case ComponentPackage.CONDITION_TYPE__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case ComponentPackage.CONDITION_TYPE__COND_ID:
+				return COND_ID_EDEFAULT == null ? condId != null : !COND_ID_EDEFAULT.equals(condId);
+			case ComponentPackage.CONDITION_TYPE__SLICE_ID:
+				return SLICE_ID_EDEFAULT == null ? sliceId != null : !SLICE_ID_EDEFAULT.equals(sliceId);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -239,8 +213,10 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (condId: ");
+		result.append(condId);
+		result.append(", sliceId: ");
+		result.append(sliceId);
 		result.append(')');
 		return result.toString();
 	}

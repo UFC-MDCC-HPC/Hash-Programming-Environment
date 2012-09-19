@@ -824,13 +824,22 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_PERFORM_TYPE__REPEAT = PROTOCOL_TYPE__REPEAT;
 
 	/**
+	 * The feature id for the '<em><b>Action Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_TYPE__ACTION_ID = PROTOCOL_TYPE_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Slice Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_PERFORM_TYPE__SLICE_ID = PROTOCOL_TYPE_FEATURE_COUNT + 0;
+	int PROTOCOL_PERFORM_TYPE__SLICE_ID = PROTOCOL_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Protocol Perform Type</em>' class.
@@ -839,7 +848,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROTOCOL_PERFORM_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 1;
+	int PROTOCOL_PERFORM_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link hPE.frontend.connector.xml.component.impl.UnittypeImpl <em>Unittype</em>}' class.
@@ -1591,6 +1600,17 @@ public interface ComponentPackage extends EPackage {
 	EClass getProtocolPerformType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.frontend.connector.xml.component.ProtocolPerformType#getActionId <em>Action Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Action Id</em>'.
+	 * @see hPE.frontend.connector.xml.component.ProtocolPerformType#getActionId()
+	 * @see #getProtocolPerformType()
+	 * @generated
+	 */
+	EAttribute getProtocolPerformType_ActionId();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.frontend.connector.xml.component.ProtocolPerformType#getSliceId <em>Slice Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2285,6 +2305,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PROTOCOL_PERFORM_TYPE = eINSTANCE.getProtocolPerformType();
+
+		/**
+		 * The meta object literal for the '<em><b>Action Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PROTOCOL_PERFORM_TYPE__ACTION_ID = eINSTANCE.getProtocolPerformType_ActionId();
 
 		/**
 		 * The meta object literal for the '<em><b>Slice Id</b></em>' attribute feature.

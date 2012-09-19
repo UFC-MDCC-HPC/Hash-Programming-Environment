@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link hPE.xml.component.impl.GuardConditionTypeImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.GuardConditionTypeImpl#getCondition1 <em>Condition1</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,24 +30,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardConditionType {
 	/**
-	 * The default value of the '{@link #getCondition() <em>Condition</em>}' attribute.
+	 * The default value of the '{@link #getCondition1() <em>Condition1</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCondition()
+	 * @see #getCondition1()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String CONDITION_EDEFAULT = null;
+	protected static final String CONDITION1_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' attribute.
+	 * The cached value of the '{@link #getCondition1() <em>Condition1</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCondition()
+	 * @see #getCondition1()
 	 * @generated
 	 * @ordered
 	 */
-	protected String condition = CONDITION_EDEFAULT;
+	protected String condition1 = CONDITION1_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -73,8 +73,8 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getCondition() {
-		return condition;
+	public String getCondition1() {
+		return condition1;
 	}
 
 	/**
@@ -82,11 +82,11 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCondition(String newCondition) {
-		String oldCondition = condition;
-		condition = newCondition;
+	public void setCondition1(String newCondition1) {
+		String oldCondition1 = condition1;
+		condition1 = newCondition1;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.GUARD_CONDITION_TYPE__CONDITION, oldCondition, condition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.GUARD_CONDITION_TYPE__CONDITION1, oldCondition1, condition1));
 	}
 
 	/**
@@ -97,8 +97,8 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION:
-				return getCondition();
+			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION1:
+				return getCondition1();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,8 +111,8 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION:
-				setCondition((String)newValue);
+			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION1:
+				setCondition1((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -126,8 +126,8 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION:
-				setCondition(CONDITION_EDEFAULT);
+			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION1:
+				setCondition1(CONDITION1_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -141,8 +141,8 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION:
-				return CONDITION_EDEFAULT == null ? condition != null : !CONDITION_EDEFAULT.equals(condition);
+			case ComponentPackage.GUARD_CONDITION_TYPE__CONDITION1:
+				return CONDITION1_EDEFAULT == null ? condition1 != null : !CONDITION1_EDEFAULT.equals(condition1);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -157,8 +157,8 @@ public class GuardConditionTypeImpl extends GuardTypeImpl implements GuardCondit
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (condition: ");
-		result.append(condition);
+		result.append(" (condition1: ");
+		result.append(condition1);
 		result.append(')');
 		return result.toString();
 	}

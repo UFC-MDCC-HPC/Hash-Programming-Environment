@@ -38,13 +38,13 @@ public interface ProtocolChoiceType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Par</em>' containment reference.
-	 * @see #setPar(ProtocolCombinatorType)
+	 * @see #setPar(ProtocolCombinatorVisualType)
 	 * @see hPE.xml.component.ComponentPackage#getProtocolChoiceType_Par()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='par'"
 	 * @generated
 	 */
-	ProtocolCombinatorType getPar();
+	ProtocolCombinatorVisualType getPar();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.ProtocolChoiceType#getPar <em>Par</em>}' containment reference.
@@ -54,7 +54,7 @@ public interface ProtocolChoiceType extends EObject {
 	 * @see #getPar()
 	 * @generated
 	 */
-	void setPar(ProtocolCombinatorType value);
+	void setPar(ProtocolCombinatorVisualType value);
 
 	/**
 	 * Returns the value of the '<em><b>Seq</b></em>' containment reference.
@@ -65,13 +65,13 @@ public interface ProtocolChoiceType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Seq</em>' containment reference.
-	 * @see #setSeq(ProtocolCombinatorType)
+	 * @see #setSeq(ProtocolCombinatorVisualType)
 	 * @see hPE.xml.component.ComponentPackage#getProtocolChoiceType_Seq()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='seq'"
 	 * @generated
 	 */
-	ProtocolCombinatorType getSeq();
+	ProtocolCombinatorVisualType getSeq();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.ProtocolChoiceType#getSeq <em>Seq</em>}' containment reference.
@@ -81,7 +81,7 @@ public interface ProtocolChoiceType extends EObject {
 	 * @see #getSeq()
 	 * @generated
 	 */
-	void setSeq(ProtocolCombinatorType value);
+	void setSeq(ProtocolCombinatorVisualType value);
 
 	/**
 	 * Returns the value of the '<em><b>Alt</b></em>' containment reference.
@@ -92,13 +92,13 @@ public interface ProtocolChoiceType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Alt</em>' containment reference.
-	 * @see #setAlt(ProtocolCombinatorType)
+	 * @see #setAlt(ProtocolCombinatorVisualType)
 	 * @see hPE.xml.component.ComponentPackage#getProtocolChoiceType_Alt()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='alt'"
 	 * @generated
 	 */
-	ProtocolCombinatorType getAlt();
+	ProtocolCombinatorVisualType getAlt();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.ProtocolChoiceType#getAlt <em>Alt</em>}' containment reference.
@@ -108,7 +108,7 @@ public interface ProtocolChoiceType extends EObject {
 	 * @see #getAlt()
 	 * @generated
 	 */
-	void setAlt(ProtocolCombinatorType value);
+	void setAlt(ProtocolCombinatorVisualType value);
 
 	/**
 	 * Returns the value of the '<em><b>Perform</b></em>' containment reference.
@@ -119,13 +119,13 @@ public interface ProtocolChoiceType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Perform</em>' containment reference.
-	 * @see #setPerform(ProtocolPerformType)
+	 * @see #setPerform(ProtocolPerformVisualType)
 	 * @see hPE.xml.component.ComponentPackage#getProtocolChoiceType_Perform()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='perform'"
 	 * @generated
 	 */
-	ProtocolPerformType getPerform();
+	ProtocolPerformVisualType getPerform();
 
 	/**
 	 * Sets the value of the '{@link hPE.xml.component.ProtocolChoiceType#getPerform <em>Perform</em>}' containment reference.
@@ -135,6 +135,6 @@ public interface ProtocolChoiceType extends EObject {
 	 * @see #getPerform()
 	 * @generated
 	 */
-	void setPerform(ProtocolPerformType value);
+	void setPerform(ProtocolPerformVisualType value);
 
 } // ProtocolChoiceType

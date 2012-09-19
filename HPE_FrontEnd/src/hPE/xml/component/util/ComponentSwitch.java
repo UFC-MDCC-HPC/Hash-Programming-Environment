@@ -87,12 +87,6 @@ public class ComponentSwitch<T> {
 	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ComponentPackage.ACTION_TYPE: {
-				ActionType actionType = (ActionType)theEObject;
-				T result = caseActionType(actionType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ComponentPackage.BASE_TYPE_TYPE: {
 				BaseTypeType baseTypeType = (BaseTypeType)theEObject;
 				T result = caseBaseTypeType(baseTypeType);
@@ -235,31 +229,10 @@ public class ComponentSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ComponentPackage.GUARD_AND_TYPE: {
-				GuardAndType guardAndType = (GuardAndType)theEObject;
-				T result = caseGuardAndType(guardAndType);
-				if (result == null) result = caseGuardType(guardAndType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ComponentPackage.GUARD_CONDITION_TYPE: {
 				GuardConditionType guardConditionType = (GuardConditionType)theEObject;
 				T result = caseGuardConditionType(guardConditionType);
 				if (result == null) result = caseGuardType(guardConditionType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ComponentPackage.GUARD_NOT_TYPE: {
-				GuardNotType guardNotType = (GuardNotType)theEObject;
-				T result = caseGuardNotType(guardNotType);
-				if (result == null) result = caseGuardType(guardNotType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ComponentPackage.GUARD_OR_TYPE: {
-				GuardOrType guardOrType = (GuardOrType)theEObject;
-				T result = caseGuardOrType(guardOrType);
-				if (result == null) result = caseGuardType(guardOrType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -367,10 +340,26 @@ public class ComponentSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentPackage.PROTOCOL_COMBINATOR_VISUAL_TYPE: {
+				ProtocolCombinatorVisualType protocolCombinatorVisualType = (ProtocolCombinatorVisualType)theEObject;
+				T result = caseProtocolCombinatorVisualType(protocolCombinatorVisualType);
+				if (result == null) result = caseProtocolCombinatorType(protocolCombinatorVisualType);
+				if (result == null) result = caseProtocolType(protocolCombinatorVisualType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ComponentPackage.PROTOCOL_PERFORM_TYPE: {
 				ProtocolPerformType protocolPerformType = (ProtocolPerformType)theEObject;
 				T result = caseProtocolPerformType(protocolPerformType);
 				if (result == null) result = caseProtocolType(protocolPerformType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentPackage.PROTOCOL_PERFORM_VISUAL_TYPE: {
+				ProtocolPerformVisualType protocolPerformVisualType = (ProtocolPerformVisualType)theEObject;
+				T result = caseProtocolPerformVisualType(protocolPerformVisualType);
+				if (result == null) result = caseProtocolPerformType(protocolPerformVisualType);
+				if (result == null) result = caseProtocolType(protocolPerformVisualType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -416,9 +405,21 @@ public class ComponentSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentPackage.UNIT_ACTION_TYPE: {
+				UnitActionType unitActionType = (UnitActionType)theEObject;
+				T result = caseUnitActionType(unitActionType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ComponentPackage.UNIT_BOUNDS_TYPE: {
 				UnitBoundsType unitBoundsType = (UnitBoundsType)theEObject;
 				T result = caseUnitBoundsType(unitBoundsType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentPackage.UNIT_CONDITION_TYPE: {
+				UnitConditionType unitConditionType = (UnitConditionType)theEObject;
+				T result = caseUnitConditionType(unitConditionType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -455,21 +456,6 @@ public class ComponentSwitch<T> {
 			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Action Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Action Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseActionType(ActionType object) {
-		return null;
 	}
 
 	/**
@@ -818,21 +804,6 @@ public class ComponentSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Guard And Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Guard And Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGuardAndType(GuardAndType object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Guard Condition Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -844,36 +815,6 @@ public class ComponentSwitch<T> {
 	 * @generated
 	 */
 	public T caseGuardConditionType(GuardConditionType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Guard Not Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Guard Not Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGuardNotType(GuardNotType object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Guard Or Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Guard Or Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGuardOrType(GuardOrType object) {
 		return null;
 	}
 
@@ -1133,6 +1074,21 @@ public class ComponentSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Protocol Combinator Visual Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Protocol Combinator Visual Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseProtocolCombinatorVisualType(ProtocolCombinatorVisualType object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Protocol Perform Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1144,6 +1100,21 @@ public class ComponentSwitch<T> {
 	 * @generated
 	 */
 	public T caseProtocolPerformType(ProtocolPerformType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Protocol Perform Visual Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Protocol Perform Visual Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseProtocolPerformVisualType(ProtocolPerformVisualType object) {
 		return null;
 	}
 
@@ -1253,6 +1224,21 @@ public class ComponentSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unit Action Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unit Action Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUnitActionType(UnitActionType object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Unit Bounds Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1264,6 +1250,21 @@ public class ComponentSwitch<T> {
 	 * @generated
 	 */
 	public T caseUnitBoundsType(UnitBoundsType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unit Condition Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unit Condition Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUnitConditionType(UnitConditionType object) {
 		return null;
 	}
 

@@ -9,6 +9,8 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.PerformType;
 import hPE.xml.component.ProtocolChoiceType;
+import hPE.xml.component.ProtocolCombinatorVisualType;
+import hPE.xml.component.ProtocolPerformVisualType;
 import hPE.xml.component.ProtocolCombinatorType;
 import hPE.xml.component.ProtocolPerformType;
 import hPE.xml.component.ProtocolType;
@@ -47,7 +49,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * @generated
 	 * @ordered
 	 */
-	protected ProtocolCombinatorType par;
+	protected ProtocolCombinatorVisualType par;
 
 	/**
 	 * The cached value of the '{@link #getSeq() <em>Seq</em>}' containment reference.
@@ -57,7 +59,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * @generated
 	 * @ordered
 	 */
-	protected ProtocolCombinatorType seq;
+	protected ProtocolCombinatorVisualType seq;
 
 	/**
 	 * The cached value of the '{@link #getAlt() <em>Alt</em>}' containment reference.
@@ -67,7 +69,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * @generated
 	 * @ordered
 	 */
-	protected ProtocolCombinatorType alt;
+	protected ProtocolCombinatorVisualType alt;
 
 	/**
 	 * The cached value of the '{@link #getPerform() <em>Perform</em>}' containment reference.
@@ -77,7 +79,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * @generated
 	 * @ordered
 	 */
-	protected ProtocolPerformType perform;
+	protected ProtocolPerformVisualType perform;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,7 +105,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProtocolCombinatorType getPar() {
+	public ProtocolCombinatorVisualType getPar() {
 		return par;
 	}
 
@@ -112,8 +114,8 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPar(ProtocolCombinatorType newPar, NotificationChain msgs) {
-		ProtocolCombinatorType oldPar = par;
+	public NotificationChain basicSetPar(ProtocolCombinatorVisualType newPar, NotificationChain msgs) {
+		ProtocolCombinatorVisualType oldPar = par;
 		par = newPar;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_CHOICE_TYPE__PAR, oldPar, newPar);
@@ -127,7 +129,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPar(ProtocolCombinatorType newPar) {
+	public void setPar(ProtocolCombinatorVisualType newPar) {
 		if (newPar != par) {
 			NotificationChain msgs = null;
 			if (par != null)
@@ -146,7 +148,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProtocolCombinatorType getSeq() {
+	public ProtocolCombinatorVisualType getSeq() {
 		return seq;
 	}
 
@@ -155,8 +157,8 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSeq(ProtocolCombinatorType newSeq, NotificationChain msgs) {
-		ProtocolCombinatorType oldSeq = seq;
+	public NotificationChain basicSetSeq(ProtocolCombinatorVisualType newSeq, NotificationChain msgs) {
+		ProtocolCombinatorVisualType oldSeq = seq;
 		seq = newSeq;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_CHOICE_TYPE__SEQ, oldSeq, newSeq);
@@ -170,7 +172,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSeq(ProtocolCombinatorType newSeq) {
+	public void setSeq(ProtocolCombinatorVisualType newSeq) {
 		if (newSeq != seq) {
 			NotificationChain msgs = null;
 			if (seq != null)
@@ -189,7 +191,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProtocolCombinatorType getAlt() {
+	public ProtocolCombinatorVisualType getAlt() {
 		return alt;
 	}
 
@@ -198,8 +200,8 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetAlt(ProtocolCombinatorType newAlt, NotificationChain msgs) {
-		ProtocolCombinatorType oldAlt = alt;
+	public NotificationChain basicSetAlt(ProtocolCombinatorVisualType newAlt, NotificationChain msgs) {
+		ProtocolCombinatorVisualType oldAlt = alt;
 		alt = newAlt;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_CHOICE_TYPE__ALT, oldAlt, newAlt);
@@ -213,7 +215,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setAlt(ProtocolCombinatorType newAlt) {
+	public void setAlt(ProtocolCombinatorVisualType newAlt) {
 		if (newAlt != alt) {
 			NotificationChain msgs = null;
 			if (alt != null)
@@ -232,7 +234,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProtocolPerformType getPerform() {
+	public ProtocolPerformVisualType getPerform() {
 		return perform;
 	}
 
@@ -241,8 +243,8 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPerform(ProtocolPerformType newPerform, NotificationChain msgs) {
-		ProtocolPerformType oldPerform = perform;
+	public NotificationChain basicSetPerform(ProtocolPerformVisualType newPerform, NotificationChain msgs) {
+		ProtocolPerformVisualType oldPerform = perform;
 		perform = newPerform;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ComponentPackage.PROTOCOL_CHOICE_TYPE__PERFORM, oldPerform, newPerform);
@@ -256,7 +258,7 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPerform(ProtocolPerformType newPerform) {
+	public void setPerform(ProtocolPerformVisualType newPerform) {
 		if (newPerform != perform) {
 			NotificationChain msgs = null;
 			if (perform != null)
@@ -319,16 +321,16 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__PAR:
-				setPar((ProtocolCombinatorType)newValue);
+				setPar((ProtocolCombinatorVisualType)newValue);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__SEQ:
-				setSeq((ProtocolCombinatorType)newValue);
+				setSeq((ProtocolCombinatorVisualType)newValue);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__ALT:
-				setAlt((ProtocolCombinatorType)newValue);
+				setAlt((ProtocolCombinatorVisualType)newValue);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__PERFORM:
-				setPerform((ProtocolPerformType)newValue);
+				setPerform((ProtocolPerformVisualType)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -343,16 +345,16 @@ public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoic
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__PAR:
-				setPar((ProtocolCombinatorType)null);
+				setPar((ProtocolCombinatorVisualType)null);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__SEQ:
-				setSeq((ProtocolCombinatorType)null);
+				setSeq((ProtocolCombinatorVisualType)null);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__ALT:
-				setAlt((ProtocolCombinatorType)null);
+				setAlt((ProtocolCombinatorVisualType)null);
 				return;
 			case ComponentPackage.PROTOCOL_CHOICE_TYPE__PERFORM:
-				setPerform((ProtocolPerformType)null);
+				setPerform((ProtocolPerformVisualType)null);
 				return;
 		}
 		super.eUnset(featureID);

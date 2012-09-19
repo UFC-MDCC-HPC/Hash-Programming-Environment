@@ -62,43 +62,6 @@ public interface ComponentPackage extends EPackage {
 	ComponentPackage eINSTANCE = hPE.xml.component.impl.ComponentPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link hPE.xml.component.impl.ActionTypeImpl <em>Action Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hPE.xml.component.impl.ActionTypeImpl
-	 * @see hPE.xml.component.impl.ComponentPackageImpl#getActionType()
-	 * @generated
-	 */
-	int ACTION_TYPE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Protocol</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION_TYPE__PROTOCOL = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION_TYPE__ID = 1;
-
-	/**
-	 * The number of structural features of the '<em>Action Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION_TYPE_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.BaseTypeTypeImpl <em>Base Type Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -106,7 +69,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getBaseTypeType()
 	 * @generated
 	 */
-	int BASE_TYPE_TYPE = 1;
+	int BASE_TYPE_TYPE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Extension Type</b></em>' containment reference.
@@ -143,7 +106,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getColorComplexType()
 	 * @generated
 	 */
-	int COLOR_COMPLEX_TYPE = 2;
+	int COLOR_COMPLEX_TYPE = 1;
 
 	/**
 	 * The feature id for the '<em><b>B</b></em>' attribute.
@@ -189,7 +152,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getComponentBodyType()
 	 * @generated
 	 */
-	int COMPONENT_BODY_TYPE = 3;
+	int COMPONENT_BODY_TYPE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Group</b></em>' attribute list.
@@ -316,7 +279,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getComponentHeaderType()
 	 * @generated
 	 */
-	int COMPONENT_HEADER_TYPE = 4;
+	int COMPONENT_HEADER_TYPE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Base Type</b></em>' containment reference.
@@ -416,7 +379,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getComponentInUseType()
 	 * @generated
 	 */
-	int COMPONENT_IN_USE_TYPE = 5;
+	int COMPONENT_IN_USE_TYPE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -543,7 +506,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getComponentType()
 	 * @generated
 	 */
-	int COMPONENT_TYPE = 6;
+	int COMPONENT_TYPE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Header</b></em>' containment reference.
@@ -580,25 +543,25 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getConditionType()
 	 * @generated
 	 */
-	int CONDITION_TYPE = 7;
+	int CONDITION_TYPE = 6;
 
 	/**
-	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * The feature id for the '<em><b>Cond Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITION_TYPE__GUARD = 0;
+	int CONDITION_TYPE__COND_ID = 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Slice Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITION_TYPE__ID = 1;
+	int CONDITION_TYPE__SLICE_ID = 1;
 
 	/**
 	 * The number of structural features of the '<em>Condition Type</em>' class.
@@ -617,7 +580,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
-	int DOCUMENT_ROOT = 8;
+	int DOCUMENT_ROOT = 7;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -681,7 +644,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEntryType()
 	 * @generated
 	 */
-	int ENTRY_TYPE = 9;
+	int ENTRY_TYPE = 8;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -709,7 +672,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableType()
 	 * @generated
 	 */
-	int ENUMERABLE_TYPE = 12;
+	int ENUMERABLE_TYPE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -737,7 +700,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableComponentType()
 	 * @generated
 	 */
-	int ENUMERABLE_COMPONENT_TYPE = 10;
+	int ENUMERABLE_COMPONENT_TYPE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -765,7 +728,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableEntryType()
 	 * @generated
 	 */
-	int ENUMERABLE_ENTRY_TYPE = 11;
+	int ENUMERABLE_ENTRY_TYPE = 10;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -820,7 +783,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableUnitSliceType()
 	 * @generated
 	 */
-	int ENUMERABLE_UNIT_SLICE_TYPE = 13;
+	int ENUMERABLE_UNIT_SLICE_TYPE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -884,7 +847,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumerableUnitType()
 	 * @generated
 	 */
-	int ENUMERABLE_UNIT_TYPE = 14;
+	int ENUMERABLE_UNIT_TYPE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Ref</b></em>' attribute.
@@ -912,7 +875,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumeratorFromRecursionType()
 	 * @generated
 	 */
-	int ENUMERATOR_FROM_RECURSION_TYPE = 15;
+	int ENUMERATOR_FROM_RECURSION_TYPE = 14;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -940,7 +903,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumeratorRefType()
 	 * @generated
 	 */
-	int ENUMERATOR_REF_TYPE = 16;
+	int ENUMERATOR_REF_TYPE = 15;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -968,7 +931,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getEnumeratorType()
 	 * @generated
 	 */
-	int ENUMERATOR_TYPE = 17;
+	int ENUMERATOR_TYPE = 16;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' attribute list.
@@ -1059,7 +1022,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExposePortType()
 	 * @generated
 	 */
-	int EXPOSE_PORT_TYPE = 18;
+	int EXPOSE_PORT_TYPE = 17;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1105,7 +1068,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExtendsType()
 	 * @generated
 	 */
-	int EXTENDS_TYPE = 19;
+	int EXTENDS_TYPE = 18;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1133,7 +1096,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExtensionTypeType()
 	 * @generated
 	 */
-	int EXTENSION_TYPE_TYPE = 20;
+	int EXTENSION_TYPE_TYPE = 19;
 
 	/**
 	 * The feature id for the '<em><b>Implements</b></em>' attribute.
@@ -1170,7 +1133,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSION_OF_REPLICATORS_TYPE = 21;
+	int FUSION_OF_REPLICATORS_TYPE = 20;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -1207,7 +1170,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionsOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSIONS_OF_REPLICATORS_TYPE = 22;
+	int FUSIONS_OF_REPLICATORS_TYPE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Fusion Of Replicators</b></em>' containment reference list.
@@ -1235,7 +1198,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionType()
 	 * @generated
 	 */
-	int FUSION_TYPE = 23;
+	int FUSION_TYPE = 22;
 
 	/**
 	 * The feature id for the '<em><b>CRefs</b></em>' attribute list.
@@ -1272,7 +1235,52 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardType()
 	 * @generated
 	 */
-	int GUARD_TYPE = 28;
+	int GUARD_TYPE = 24;
+
+	/**
+	 * The feature id for the '<em><b>Group</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_TYPE__GROUP = 0;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_TYPE__CONDITION = 1;
+
+	/**
+	 * The feature id for the '<em><b>And</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_TYPE__AND = 2;
+
+	/**
+	 * The feature id for the '<em><b>Or</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_TYPE__OR = 3;
+
+	/**
+	 * The feature id for the '<em><b>Not</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_TYPE__NOT = 4;
 
 	/**
 	 * The number of structural features of the '<em>Guard Type</em>' class.
@@ -1281,26 +1289,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GUARD_TYPE_FEATURE_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link hPE.xml.component.impl.GuardAndTypeImpl <em>Guard And Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hPE.xml.component.impl.GuardAndTypeImpl
-	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardAndType()
-	 * @generated
-	 */
-	int GUARD_AND_TYPE = 24;
-
-	/**
-	 * The number of structural features of the '<em>Guard And Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GUARD_AND_TYPE_FEATURE_COUNT = GUARD_TYPE_FEATURE_COUNT + 0;
+	int GUARD_TYPE_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.GuardConditionTypeImpl <em>Guard Condition Type</em>}' class.
@@ -1310,16 +1299,61 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardConditionType()
 	 * @generated
 	 */
-	int GUARD_CONDITION_TYPE = 25;
+	int GUARD_CONDITION_TYPE = 23;
 
 	/**
-	 * The feature id for the '<em><b>Condition</b></em>' attribute.
+	 * The feature id for the '<em><b>Group</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GUARD_CONDITION_TYPE__CONDITION = GUARD_TYPE_FEATURE_COUNT + 0;
+	int GUARD_CONDITION_TYPE__GROUP = GUARD_TYPE__GROUP;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_CONDITION_TYPE__CONDITION = GUARD_TYPE__CONDITION;
+
+	/**
+	 * The feature id for the '<em><b>And</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_CONDITION_TYPE__AND = GUARD_TYPE__AND;
+
+	/**
+	 * The feature id for the '<em><b>Or</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_CONDITION_TYPE__OR = GUARD_TYPE__OR;
+
+	/**
+	 * The feature id for the '<em><b>Not</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_CONDITION_TYPE__NOT = GUARD_TYPE__NOT;
+
+	/**
+	 * The feature id for the '<em><b>Condition1</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_CONDITION_TYPE__CONDITION1 = GUARD_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Guard Condition Type</em>' class.
@@ -1331,44 +1365,6 @@ public interface ComponentPackage extends EPackage {
 	int GUARD_CONDITION_TYPE_FEATURE_COUNT = GUARD_TYPE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link hPE.xml.component.impl.GuardNotTypeImpl <em>Guard Not Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hPE.xml.component.impl.GuardNotTypeImpl
-	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardNotType()
-	 * @generated
-	 */
-	int GUARD_NOT_TYPE = 26;
-
-	/**
-	 * The number of structural features of the '<em>Guard Not Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GUARD_NOT_TYPE_FEATURE_COUNT = GUARD_TYPE_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link hPE.xml.component.impl.GuardOrTypeImpl <em>Guard Or Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hPE.xml.component.impl.GuardOrTypeImpl
-	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardOrType()
-	 * @generated
-	 */
-	int GUARD_OR_TYPE = 27;
-
-	/**
-	 * The number of structural features of the '<em>Guard Or Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GUARD_OR_TYPE_FEATURE_COUNT = GUARD_TYPE_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ImplementsTypeImpl <em>Implements Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1376,7 +1372,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getImplementsType()
 	 * @generated
 	 */
-	int IMPLEMENTS_TYPE = 29;
+	int IMPLEMENTS_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1404,7 +1400,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerComponentType()
 	 * @generated
 	 */
-	int INNER_COMPONENT_TYPE = 30;
+	int INNER_COMPONENT_TYPE = 26;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1540,7 +1536,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerRenamingType()
 	 * @generated
 	 */
-	int INNER_RENAMING_TYPE = 31;
+	int INNER_RENAMING_TYPE = 27;
 
 	/**
 	 * The feature id for the '<em><b>CNew Name</b></em>' attribute.
@@ -1586,7 +1582,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceParameterType()
 	 * @generated
 	 */
-	int INTERFACE_PARAMETER_TYPE = 32;
+	int INTERFACE_PARAMETER_TYPE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Iname</b></em>' attribute.
@@ -1650,7 +1646,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfacePortType()
 	 * @generated
 	 */
-	int INTERFACE_PORT_TYPE = 33;
+	int INTERFACE_PORT_TYPE = 29;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1696,7 +1692,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceRefType()
 	 * @generated
 	 */
-	int INTERFACE_REF_TYPE = 34;
+	int INTERFACE_REF_TYPE = 30;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1733,7 +1729,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceRefType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_REF_TYPE = 35;
+	int INTERFACE_SLICE_REF_TYPE = 31;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -1779,7 +1775,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_TYPE = 36;
+	int INTERFACE_SLICE_TYPE = 32;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' containment reference.
@@ -1825,7 +1821,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceType()
 	 * @generated
 	 */
-	int INTERFACE_TYPE = 37;
+	int INTERFACE_TYPE = 33;
 
 	/**
 	 * The feature id for the '<em><b>Slice</b></em>' containment reference list.
@@ -1943,7 +1939,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterRenaming()
 	 * @generated
 	 */
-	int PARAMETER_RENAMING = 38;
+	int PARAMETER_RENAMING = 34;
 
 	/**
 	 * The feature id for the '<em><b>Form Field Id</b></em>' attribute.
@@ -1980,7 +1976,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterSupplyType()
 	 * @generated
 	 */
-	int PARAMETER_SUPPLY_TYPE = 39;
+	int PARAMETER_SUPPLY_TYPE = 35;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2017,7 +2013,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterType()
 	 * @generated
 	 */
-	int PARAMETER_TYPE = 40;
+	int PARAMETER_TYPE = 36;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2063,7 +2059,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortSliceType()
 	 * @generated
 	 */
-	int PORT_SLICE_TYPE = 41;
+	int PORT_SLICE_TYPE = 37;
 
 	/**
 	 * The feature id for the '<em><b>PRef</b></em>' attribute.
@@ -2100,7 +2096,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortType()
 	 * @generated
 	 */
-	int PORT_TYPE = 42;
+	int PORT_TYPE = 38;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2146,7 +2142,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolChoiceType()
 	 * @generated
 	 */
-	int PROTOCOL_CHOICE_TYPE = 43;
+	int PROTOCOL_CHOICE_TYPE = 39;
 
 	/**
 	 * The feature id for the '<em><b>Par</b></em>' containment reference.
@@ -2201,7 +2197,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolType()
 	 * @generated
 	 */
-	int PROTOCOL_TYPE = 46;
+	int PROTOCOL_TYPE = 44;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2247,7 +2243,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorType()
 	 * @generated
 	 */
-	int PROTOCOL_COMBINATOR_TYPE = 44;
+	int PROTOCOL_COMBINATOR_TYPE = 40;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2295,6 +2291,70 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolCombinatorVisualTypeImpl <em>Protocol Combinator Visual Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.ProtocolCombinatorVisualTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorVisualType()
+	 * @generated
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE = 41;
+
+	/**
+	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE__GUARD = PROTOCOL_COMBINATOR_TYPE__GUARD;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE__ID = PROTOCOL_COMBINATOR_TYPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Repeat</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE__REPEAT = PROTOCOL_COMBINATOR_TYPE__REPEAT;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE__ACTION = PROTOCOL_COMBINATOR_TYPE__ACTION;
+
+	/**
+	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE__VISUAL_DESCRIPTION = PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Protocol Combinator Visual Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE_FEATURE_COUNT = PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolPerformTypeImpl <em>Protocol Perform Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2302,7 +2362,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformType()
 	 * @generated
 	 */
-	int PROTOCOL_PERFORM_TYPE = 45;
+	int PROTOCOL_PERFORM_TYPE = 42;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2359,6 +2419,79 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_PERFORM_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolPerformVisualTypeImpl <em>Protocol Perform Visual Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.ProtocolPerformVisualTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformVisualType()
+	 * @generated
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE = 43;
+
+	/**
+	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE__GUARD = PROTOCOL_PERFORM_TYPE__GUARD;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE__ID = PROTOCOL_PERFORM_TYPE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Repeat</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE__REPEAT = PROTOCOL_PERFORM_TYPE__REPEAT;
+
+	/**
+	 * The feature id for the '<em><b>Action Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE__ACTION_ID = PROTOCOL_PERFORM_TYPE__ACTION_ID;
+
+	/**
+	 * The feature id for the '<em><b>Slice Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE__SLICE_ID = PROTOCOL_PERFORM_TYPE__SLICE_ID;
+
+	/**
+	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE__VISUAL_DESCRIPTION = PROTOCOL_PERFORM_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Protocol Perform Visual Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE_FEATURE_COUNT = PROTOCOL_PERFORM_TYPE_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.RecursiveEntryTypeImpl <em>Recursive Entry Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2366,7 +2499,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getRecursiveEntryType()
 	 * @generated
 	 */
-	int RECURSIVE_ENTRY_TYPE = 47;
+	int RECURSIVE_ENTRY_TYPE = 45;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2394,7 +2527,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceFileType()
 	 * @generated
 	 */
-	int SOURCE_FILE_TYPE = 48;
+	int SOURCE_FILE_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
@@ -2485,7 +2618,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceType()
 	 * @generated
 	 */
-	int SOURCE_TYPE = 49;
+	int SOURCE_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' containment reference list.
@@ -2531,7 +2664,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitEnumeratorType()
 	 * @generated
 	 */
-	int SPLIT_ENUMERATOR_TYPE = 50;
+	int SPLIT_ENUMERATOR_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -2559,7 +2692,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitLinkType()
 	 * @generated
 	 */
-	int SPLIT_LINK_TYPE = 51;
+	int SPLIT_LINK_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2596,7 +2729,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitType()
 	 * @generated
 	 */
-	int SPLIT_TYPE = 52;
+	int SPLIT_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>Split Link</b></em>' containment reference list.
@@ -2662,6 +2795,43 @@ public interface ComponentPackage extends EPackage {
 	int SPLIT_TYPE_FEATURE_COUNT = 6;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.UnitActionTypeImpl <em>Unit Action Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.UnitActionTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitActionType()
+	 * @generated
+	 */
+	int UNIT_ACTION_TYPE = 51;
+
+	/**
+	 * The feature id for the '<em><b>Protocol</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_ACTION_TYPE__PROTOCOL = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_ACTION_TYPE__ID = 1;
+
+	/**
+	 * The number of structural features of the '<em>Unit Action Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_ACTION_TYPE_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitBoundsTypeImpl <em>Unit Bounds Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2669,7 +2839,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitBoundsType()
 	 * @generated
 	 */
-	int UNIT_BOUNDS_TYPE = 53;
+	int UNIT_BOUNDS_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2715,6 +2885,43 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIT_BOUNDS_TYPE_FEATURE_COUNT = 4;
+
+	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.UnitConditionTypeImpl <em>Unit Condition Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.UnitConditionTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitConditionType()
+	 * @generated
+	 */
+	int UNIT_CONDITION_TYPE = 53;
+
+	/**
+	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_CONDITION_TYPE__GUARD = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_CONDITION_TYPE__ID = 1;
+
+	/**
+	 * The number of structural features of the '<em>Unit Condition Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_CONDITION_TYPE_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitRefTypeImpl <em>Unit Ref Type</em>}' class.
@@ -3103,38 +3310,6 @@ public interface ComponentPackage extends EPackage {
 	 */
 	int SUPPORTED_KINDS_OBJECT = 62;
 
-
-	/**
-	 * Returns the meta object for class '{@link hPE.xml.component.ActionType <em>Action Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Action Type</em>'.
-	 * @see hPE.xml.component.ActionType
-	 * @generated
-	 */
-	EClass getActionType();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ActionType#getProtocol <em>Protocol</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Protocol</em>'.
-	 * @see hPE.xml.component.ActionType#getProtocol()
-	 * @see #getActionType()
-	 * @generated
-	 */
-	EReference getActionType_Protocol();
-
-	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.ActionType#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see hPE.xml.component.ActionType#getId()
-	 * @see #getActionType()
-	 * @generated
-	 */
-	EAttribute getActionType_Id();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.BaseTypeType <em>Base Type Type</em>}'.
@@ -3647,26 +3822,26 @@ public interface ComponentPackage extends EPackage {
 	EClass getConditionType();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ConditionType#getGuard <em>Guard</em>}'.
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ConditionType#getCondId <em>Cond Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Guard</em>'.
-	 * @see hPE.xml.component.ConditionType#getGuard()
+	 * @return the meta object for the attribute '<em>Cond Id</em>'.
+	 * @see hPE.xml.component.ConditionType#getCondId()
 	 * @see #getConditionType()
 	 * @generated
 	 */
-	EReference getConditionType_Guard();
+	EAttribute getConditionType_CondId();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.ConditionType#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ConditionType#getSliceId <em>Slice Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see hPE.xml.component.ConditionType#getId()
+	 * @return the meta object for the attribute '<em>Slice Id</em>'.
+	 * @see hPE.xml.component.ConditionType#getSliceId()
 	 * @see #getConditionType()
 	 * @generated
 	 */
-	EAttribute getConditionType_Id();
+	EAttribute getConditionType_SliceId();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.DocumentRoot <em>Document Root</em>}'.
@@ -4214,16 +4389,6 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getFusionType_PRef();
 
 	/**
-	 * Returns the meta object for class '{@link hPE.xml.component.GuardAndType <em>Guard And Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Guard And Type</em>'.
-	 * @see hPE.xml.component.GuardAndType
-	 * @generated
-	 */
-	EClass getGuardAndType();
-
-	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.GuardConditionType <em>Guard Condition Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4234,35 +4399,15 @@ public interface ComponentPackage extends EPackage {
 	EClass getGuardConditionType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hPE.xml.component.GuardConditionType#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.GuardConditionType#getCondition1 <em>Condition1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Condition</em>'.
-	 * @see hPE.xml.component.GuardConditionType#getCondition()
+	 * @return the meta object for the attribute '<em>Condition1</em>'.
+	 * @see hPE.xml.component.GuardConditionType#getCondition1()
 	 * @see #getGuardConditionType()
 	 * @generated
 	 */
-	EAttribute getGuardConditionType_Condition();
-
-	/**
-	 * Returns the meta object for class '{@link hPE.xml.component.GuardNotType <em>Guard Not Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Guard Not Type</em>'.
-	 * @see hPE.xml.component.GuardNotType
-	 * @generated
-	 */
-	EClass getGuardNotType();
-
-	/**
-	 * Returns the meta object for class '{@link hPE.xml.component.GuardOrType <em>Guard Or Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Guard Or Type</em>'.
-	 * @see hPE.xml.component.GuardOrType
-	 * @generated
-	 */
-	EClass getGuardOrType();
+	EAttribute getGuardConditionType_Condition1();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.GuardType <em>Guard Type</em>}'.
@@ -4273,6 +4418,61 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGuardType();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link hPE.xml.component.GuardType#getGroup <em>Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Group</em>'.
+	 * @see hPE.xml.component.GuardType#getGroup()
+	 * @see #getGuardType()
+	 * @generated
+	 */
+	EAttribute getGuardType_Group();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.GuardType#getCondition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Condition</em>'.
+	 * @see hPE.xml.component.GuardType#getCondition()
+	 * @see #getGuardType()
+	 * @generated
+	 */
+	EReference getGuardType_Condition();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.GuardType#getAnd <em>And</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>And</em>'.
+	 * @see hPE.xml.component.GuardType#getAnd()
+	 * @see #getGuardType()
+	 * @generated
+	 */
+	EReference getGuardType_And();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.GuardType#getOr <em>Or</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Or</em>'.
+	 * @see hPE.xml.component.GuardType#getOr()
+	 * @see #getGuardType()
+	 * @generated
+	 */
+	EReference getGuardType_Or();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.GuardType#isNot <em>Not</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Not</em>'.
+	 * @see hPE.xml.component.GuardType#isNot()
+	 * @see #getGuardType()
+	 * @generated
+	 */
+	EAttribute getGuardType_Not();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.ImplementsType <em>Implements Type</em>}'.
@@ -4974,6 +5174,27 @@ public interface ComponentPackage extends EPackage {
 	EReference getProtocolCombinatorType_Action();
 
 	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.ProtocolCombinatorVisualType <em>Protocol Combinator Visual Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Protocol Combinator Visual Type</em>'.
+	 * @see hPE.xml.component.ProtocolCombinatorVisualType
+	 * @generated
+	 */
+	EClass getProtocolCombinatorVisualType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ProtocolCombinatorVisualType#getVisualDescription <em>Visual Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Visual Description</em>'.
+	 * @see hPE.xml.component.ProtocolCombinatorVisualType#getVisualDescription()
+	 * @see #getProtocolCombinatorVisualType()
+	 * @generated
+	 */
+	EReference getProtocolCombinatorVisualType_VisualDescription();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.ProtocolPerformType <em>Protocol Perform Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5004,6 +5225,27 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getProtocolPerformType_SliceId();
+
+	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.ProtocolPerformVisualType <em>Protocol Perform Visual Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Protocol Perform Visual Type</em>'.
+	 * @see hPE.xml.component.ProtocolPerformVisualType
+	 * @generated
+	 */
+	EClass getProtocolPerformVisualType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link hPE.xml.component.ProtocolPerformVisualType#getVisualDescription <em>Visual Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Visual Description</em>'.
+	 * @see hPE.xml.component.ProtocolPerformVisualType#getVisualDescription()
+	 * @see #getProtocolPerformVisualType()
+	 * @generated
+	 */
+	EReference getProtocolPerformVisualType_VisualDescription();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.ProtocolType <em>Protocol Type</em>}'.
@@ -5340,6 +5582,38 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getSplitType_N();
 
 	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.UnitActionType <em>Unit Action Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unit Action Type</em>'.
+	 * @see hPE.xml.component.UnitActionType
+	 * @generated
+	 */
+	EClass getUnitActionType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link hPE.xml.component.UnitActionType#getProtocol <em>Protocol</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Protocol</em>'.
+	 * @see hPE.xml.component.UnitActionType#getProtocol()
+	 * @see #getUnitActionType()
+	 * @generated
+	 */
+	EReference getUnitActionType_Protocol();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitActionType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see hPE.xml.component.UnitActionType#getId()
+	 * @see #getUnitActionType()
+	 * @generated
+	 */
+	EAttribute getUnitActionType_Id();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.UnitBoundsType <em>Unit Bounds Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5392,6 +5666,38 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getUnitBoundsType_URef();
+
+	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.UnitConditionType <em>Unit Condition Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unit Condition Type</em>'.
+	 * @see hPE.xml.component.UnitConditionType
+	 * @generated
+	 */
+	EClass getUnitConditionType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link hPE.xml.component.UnitConditionType#getGuard <em>Guard</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Guard</em>'.
+	 * @see hPE.xml.component.UnitConditionType#getGuard()
+	 * @see #getUnitConditionType()
+	 * @generated
+	 */
+	EReference getUnitConditionType_Guard();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitConditionType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see hPE.xml.component.UnitConditionType#getId()
+	 * @see #getUnitConditionType()
+	 * @generated
+	 */
+	EAttribute getUnitConditionType_Id();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.UnitRefType <em>Unit Ref Type</em>}'.
@@ -5785,32 +6091,6 @@ public interface ComponentPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link hPE.xml.component.impl.ActionTypeImpl <em>Action Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see hPE.xml.component.impl.ActionTypeImpl
-		 * @see hPE.xml.component.impl.ComponentPackageImpl#getActionType()
-		 * @generated
-		 */
-		EClass ACTION_TYPE = eINSTANCE.getActionType();
-
-		/**
-		 * The meta object literal for the '<em><b>Protocol</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ACTION_TYPE__PROTOCOL = eINSTANCE.getActionType_Protocol();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTION_TYPE__ID = eINSTANCE.getActionType_Id();
-
-		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.BaseTypeTypeImpl <em>Base Type Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6201,20 +6481,20 @@ public interface ComponentPackage extends EPackage {
 		EClass CONDITION_TYPE = eINSTANCE.getConditionType();
 
 		/**
-		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Cond Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONDITION_TYPE__GUARD = eINSTANCE.getConditionType_Guard();
+		EAttribute CONDITION_TYPE__COND_ID = eINSTANCE.getConditionType_CondId();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Slice Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CONDITION_TYPE__ID = eINSTANCE.getConditionType_Id();
+		EAttribute CONDITION_TYPE__SLICE_ID = eINSTANCE.getConditionType_SliceId();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.DocumentRootImpl <em>Document Root</em>}' class.
@@ -6657,16 +6937,6 @@ public interface ComponentPackage extends EPackage {
 		EAttribute FUSION_TYPE__PREF = eINSTANCE.getFusionType_PRef();
 
 		/**
-		 * The meta object literal for the '{@link hPE.xml.component.impl.GuardAndTypeImpl <em>Guard And Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see hPE.xml.component.impl.GuardAndTypeImpl
-		 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardAndType()
-		 * @generated
-		 */
-		EClass GUARD_AND_TYPE = eINSTANCE.getGuardAndType();
-
-		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.GuardConditionTypeImpl <em>Guard Condition Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6677,32 +6947,12 @@ public interface ComponentPackage extends EPackage {
 		EClass GUARD_CONDITION_TYPE = eINSTANCE.getGuardConditionType();
 
 		/**
-		 * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Condition1</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute GUARD_CONDITION_TYPE__CONDITION = eINSTANCE.getGuardConditionType_Condition();
-
-		/**
-		 * The meta object literal for the '{@link hPE.xml.component.impl.GuardNotTypeImpl <em>Guard Not Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see hPE.xml.component.impl.GuardNotTypeImpl
-		 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardNotType()
-		 * @generated
-		 */
-		EClass GUARD_NOT_TYPE = eINSTANCE.getGuardNotType();
-
-		/**
-		 * The meta object literal for the '{@link hPE.xml.component.impl.GuardOrTypeImpl <em>Guard Or Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see hPE.xml.component.impl.GuardOrTypeImpl
-		 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardOrType()
-		 * @generated
-		 */
-		EClass GUARD_OR_TYPE = eINSTANCE.getGuardOrType();
+		EAttribute GUARD_CONDITION_TYPE__CONDITION1 = eINSTANCE.getGuardConditionType_Condition1();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.GuardTypeImpl <em>Guard Type</em>}' class.
@@ -6713,6 +6963,46 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EClass GUARD_TYPE = eINSTANCE.getGuardType();
+
+		/**
+		 * The meta object literal for the '<em><b>Group</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GUARD_TYPE__GROUP = eINSTANCE.getGuardType_Group();
+
+		/**
+		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GUARD_TYPE__CONDITION = eINSTANCE.getGuardType_Condition();
+
+		/**
+		 * The meta object literal for the '<em><b>And</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GUARD_TYPE__AND = eINSTANCE.getGuardType_And();
+
+		/**
+		 * The meta object literal for the '<em><b>Or</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GUARD_TYPE__OR = eINSTANCE.getGuardType_Or();
+
+		/**
+		 * The meta object literal for the '<em><b>Not</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GUARD_TYPE__NOT = eINSTANCE.getGuardType_Not();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.ImplementsTypeImpl <em>Implements Type</em>}' class.
@@ -7267,6 +7557,24 @@ public interface ComponentPackage extends EPackage {
 		EReference PROTOCOL_COMBINATOR_TYPE__ACTION = eINSTANCE.getProtocolCombinatorType_Action();
 
 		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.ProtocolCombinatorVisualTypeImpl <em>Protocol Combinator Visual Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.ProtocolCombinatorVisualTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorVisualType()
+		 * @generated
+		 */
+		EClass PROTOCOL_COMBINATOR_VISUAL_TYPE = eINSTANCE.getProtocolCombinatorVisualType();
+
+		/**
+		 * The meta object literal for the '<em><b>Visual Description</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROTOCOL_COMBINATOR_VISUAL_TYPE__VISUAL_DESCRIPTION = eINSTANCE.getProtocolCombinatorVisualType_VisualDescription();
+
+		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.ProtocolPerformTypeImpl <em>Protocol Perform Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7291,6 +7599,24 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PROTOCOL_PERFORM_TYPE__SLICE_ID = eINSTANCE.getProtocolPerformType_SliceId();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.ProtocolPerformVisualTypeImpl <em>Protocol Perform Visual Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.ProtocolPerformVisualTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformVisualType()
+		 * @generated
+		 */
+		EClass PROTOCOL_PERFORM_VISUAL_TYPE = eINSTANCE.getProtocolPerformVisualType();
+
+		/**
+		 * The meta object literal for the '<em><b>Visual Description</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROTOCOL_PERFORM_VISUAL_TYPE__VISUAL_DESCRIPTION = eINSTANCE.getProtocolPerformVisualType_VisualDescription();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.ProtocolTypeImpl <em>Protocol Type</em>}' class.
@@ -7555,6 +7881,32 @@ public interface ComponentPackage extends EPackage {
 		EAttribute SPLIT_TYPE__N = eINSTANCE.getSplitType_N();
 
 		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.UnitActionTypeImpl <em>Unit Action Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.UnitActionTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitActionType()
+		 * @generated
+		 */
+		EClass UNIT_ACTION_TYPE = eINSTANCE.getUnitActionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Protocol</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNIT_ACTION_TYPE__PROTOCOL = eINSTANCE.getUnitActionType_Protocol();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_ACTION_TYPE__ID = eINSTANCE.getUnitActionType_Id();
+
+		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.UnitBoundsTypeImpl <em>Unit Bounds Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7595,6 +7947,32 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIT_BOUNDS_TYPE__UREF = eINSTANCE.getUnitBoundsType_URef();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.UnitConditionTypeImpl <em>Unit Condition Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.UnitConditionTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitConditionType()
+		 * @generated
+		 */
+		EClass UNIT_CONDITION_TYPE = eINSTANCE.getUnitConditionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNIT_CONDITION_TYPE__GUARD = eINSTANCE.getUnitConditionType_Guard();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_CONDITION_TYPE__ID = eINSTANCE.getUnitConditionType_Id();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.UnitRefTypeImpl <em>Unit Ref Type</em>}' class.
