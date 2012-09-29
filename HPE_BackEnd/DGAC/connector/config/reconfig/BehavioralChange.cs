@@ -33,9 +33,9 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 			set{ transitions = value;}
 		}
 
-		protected List<MetaSlice> newSlices;
+		protected Dictionary<string, MetaSlice> newSlices;
 
-		public List<MetaSlice> NewSlices {
+		public Dictionary<string, MetaSlice> NewSlices {
 			get { return newSlices;}
 			set { newSlices = value;}
 		}

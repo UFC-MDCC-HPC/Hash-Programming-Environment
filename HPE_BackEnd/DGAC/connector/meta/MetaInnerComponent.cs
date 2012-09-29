@@ -31,33 +31,21 @@ namespace br.ufc.pargo.hpe.connector.meta
 			set { exportActions = value;}
 		}
 
-		//TODO Concluir a implementaçao.
-		public MetaInnerComponent Clone ()
+		/*public MetaInnerComponent Clone ()
 		{
-			MetaInnerComponent c = new MetaInnerComponent ();
-			c.Id = id;
-			c.Name = name;
-			c.Entity = entity;
-			c.Father = father;
+			MetaInnerComponent c = new MetaInnerComponent();
+			Clone (c);
 
-			c.Package = package;
-			c.Kind = kind;
-
-			if (usingList != null) {
-				c.UsingList = new List<string> ();
-
-				foreach (string u in usingList) {
-					c.UsingList.Add (u);
-				}
-			}
-
-			if (parameters != null) {
-				c.Parameters = new List<MetaParameter> ();
-
-				foreach(MetaParameter p in parameters) {
-					c.Parameters.Add (p.Clone());
-				}
-			}
+			return c;
 		}
+
+		protected void Clone (out MetaInnerComponent c)
+		{
+			base.Clone (c);
+
+			c.Identifier = identifier;
+			c.Access = access;
+			c.ExportActions = exportActions;
+		}*/
 	}
 }

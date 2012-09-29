@@ -67,10 +67,8 @@ namespace br.ufc.pargo.hpe.connector.load
 					behavioralRequest = new BehavioralReconfigurationRequest ();
 
 					behavioralRequest.NewInnerComponents = innerComponents;
-					foreach (MetaInnerComponent mic in  component.InnerComponents) {
-						innerComponents.Add (mic.Clone());
-						//TODO realmente precisa clonar os componentes.
-					}
+					innerComponents.AddRange (component.InnerComponents);
+					//TODO talvez seja preciso clonar os objetos para garantir que nao ficará lixo caso a reconfiguraçao nao funcione.
 				}
             
 				uLoader.InnerComponents = innerComponents;
@@ -96,15 +94,15 @@ namespace br.ufc.pargo.hpe.connector.load
 						attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("unit");
 						change.Unit = attr.Value;
 
-						MetaUnit u = component.getUnit (change.Unit);
+						MetaUnit u = component.Units[change.Unit];
 
 						if (u != null) {
 
 							attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("action");
 							change.Action = attr.Value;
-							MetaAction a = u.getAction(change.Action);
+							MetaAction a = u.Actions[change.Action];
 
-							if(a != null) {
+							if(a != null && !a.IsNative) {
 								attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("type");
 								if (attr.Value.Equals ("remove")) {
 									change.Type = BehavioralChange.BehavioralChangeType.REMOVE;
@@ -114,16 +112,27 @@ namespace br.ufc.pargo.hpe.connector.load
 								
 								attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("point");
 								change.Point = attr.Value;
-								
-								change.NewSlices = uLoader.getSlices (changeNode.SelectNodes ("slice"));
-								
-								change.Transitions = uLoader.getTransitions (changeNode.SelectSingleNode ("protocol"), u);
+
+								Transition t = a.Protocol.getTransition(change.Point);
+
+								if(t != null) {
+									change.NewSlices = uLoader.getSlices (changeNode.SelectNodes ("slice"));
+
+									if(change.Type == BehavioralChange.BehavioralChangeType.INCLUDE) {
+										change.Transitions = uLoader.getTransitions (changeNode.SelectSingleNode ("protocol"), u, t.InitialState, t.FinalState, a.Protocol.NumStates, a.Protocol.LastTransationId);
+									} else {
+										change.Transitions = new List<Transition>();
+										change.Transitions.Add(new Transition(t.InitialState, t.FinalState, Configuration.LAMBDA_TRANSITION, a.Protocol.LastTransationId++));
+									}
+								} else {
+									throw new Exception ("Ponto de reconfiguraçao nao existe: " + change.Point);   
+								}
 
 							} else {
-									throw new Exception ("Ação a ser alterada não existe: " + change.Action);   
+									throw new Exception ("Ação a ser alterada não existe ou nao é uma configuraçao: " + change.Action);   
 							}
 						} else {
-							throw new Exception ("Unidade da ação a ser alterada não existe: " + change.Unit);   
+							throw new Exception ("Unidade da ação a ser alterada não existe: " + change.Unit);
 						}
 
 						change.AditionalStates = generator.getCurrentCode () - initialCode;
@@ -131,6 +140,7 @@ namespace br.ufc.pargo.hpe.connector.load
 					}
 				}
 
+				request.BehavioralRequest = behavioralRequest;
 				component.LastIdCode = generator.getCurrentCode ();
 			}
 
@@ -187,11 +197,9 @@ namespace br.ufc.pargo.hpe.connector.load
 				XmlNodeList unitList = nodeComponent.SelectNodes ("unit");
 				component.Units = uLoader.getUnits (unitList);
 
-				//TODO preciso indexar as unidades por nome.
-				foreach (MetaUnit mu in component.Units) {
-					mu.Father = component;
+				foreach (MetaUnit mu in component.Units.Values) {
 
-					foreach (MetaAction ma in mu.Actions) {
+					foreach (MetaAction ma in mu.Actions.Values) {
 						foreach (Transition t in ma.Protocol.Transitions) {
 
 							if (t.getExecutionAction () != null) {
@@ -206,10 +214,11 @@ namespace br.ufc.pargo.hpe.connector.load
 											queue.Enqueue (e);
 										}
 									}
-									foreach (MetaUnit father in component.Units) {
-										foreach (MetaSlice ms in father.Slices) {
+
+									foreach (MetaUnit father in component.Units.Values) {
+										foreach (MetaSlice ms in father.Slices.Values) {
 											if (c != null && ms.Unit.Name.Equals (c.Slice)) {
-												ms.Unit.Conditions.Add (c);
+												ms.Unit.Conditions.Add ((c.Name == null || c.Name.Equals ("") ? c.Id + "": c.Name), c);
 												break;
 											}
 										}

@@ -46,11 +46,17 @@ namespace br.ufc.pargo.hpe.connector.meta
 		}
       
 		//Lista de metadados das ações vinculadas à unidade.
-		protected List<MetaAction> actions;
+		protected Dictionary<string, MetaAction> actions;
 
-		public List<MetaAction> Actions {
+		public Dictionary<string, MetaAction> Actions {
 			get { return actions;}
-			set { actions = value;}
+			set { actions = value;
+				if (value != null) {
+					foreach (MetaAction a in value.Values) {
+						a.Father = this;
+					}
+				}
+			}
 		}
       
 		protected Dictionary<string, Condition> conditions;
@@ -61,9 +67,9 @@ namespace br.ufc.pargo.hpe.connector.meta
 		}
       
 		//Lista da fatias dos componente aninhados que participam desta unidade.
-		protected List<MetaSlice> slices;
+		protected Dictionary<string, MetaSlice> slices;
 
-		public List<MetaSlice> Slices {
+		public Dictionary<string, MetaSlice> Slices {
 			get { return slices;}
 			set { slices = value;}
 		}
@@ -78,46 +84,31 @@ namespace br.ufc.pargo.hpe.connector.meta
 		//protocolo de valição da unidade.
 		//TODO ALTO definir representação e forma de execução da validação.
 		protected string validationProtocol;
-      
-		public void AddAction (MetaAction a)
-		{
-			if (actions == null) {
-				actions = new List<MetaAction> ();
-			}
-         
-			a.Father = this;
-			actions.Add (a);
-		}
 
-		public MetaAction getAction (string actionName)
-		{
-		
-			if (actions != null) {
-				foreach (MetaAction a in actions) {
-					if (a.Name.Equals (actionName)) {
-						return a;
-					}
-				}
-			}
-
-			return null;
-		}
-      
-		public void AddSlice (MetaSlice slice)
-		{
-			if (slices == null) {
-				slices = new List<MetaSlice> ();
-			}
-         
-			//o Father da fatia deve ser o seu hashcomponent.
-			slices.Add (slice);
-		}
-      
 		public MetaUnit ()
 		{
 			this.conditions = new Dictionary<string, Condition> ();
 			this.parallel = true;
 			this.split = 1;
+		}
+
+		public void AddAction (string name, MetaAction a)
+		{
+			if (actions == null) {
+				actions = new Dictionary<string, MetaAction>();
+			}
+         
+			a.Father = this;
+			actions.Add (name, a);
+		}
+      
+		public void AddSlice (string name, MetaSlice slice)
+		{
+			if (slices == null) {
+				slices = new Dictionary<string, MetaSlice> ();
+			}
+         
+			slices.Add (name, slice);
 		}
       
 		public void linkEntities ()
@@ -129,7 +120,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (slices != null) {
 				IUnit unit = (IUnit)entity;
             
-				foreach (MetaSlice slice in slices) {
+				foreach (MetaSlice slice in slices.Values) {
 					slice.Unit.Entity = unit.Slice [slice.Inner];
 				}
 			}
@@ -144,9 +135,8 @@ namespace br.ufc.pargo.hpe.connector.meta
 		{
          
 			if (actions != null) {
-				foreach (MetaAction a in actions) {
+				foreach (MetaAction a in actions.Values) {
 					if (a.IsNative) {
-
 						a.Entity = (MetaAction.DAction)Delegate.CreateDelegate (typeof(MetaAction.DAction), Entity, a.Name);
 					}
 				}
@@ -161,10 +151,11 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
          
 			if (slices != null && slices.Count > 0) {
-				foreach (MetaSlice s in slices) {
+				foreach (MetaSlice s in slices.Values) {
 					s.Unit.linkEntities ();
 				}
 			}
 		}
+
 	}
 }

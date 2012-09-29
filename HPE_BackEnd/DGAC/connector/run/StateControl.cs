@@ -58,7 +58,9 @@ namespace br.ufc.pargo.hpe.connector.run
 			System.Console.WriteLine ("STATE: " + stateId);
 
 			if (resetEvent != null) {
+				System.Console.WriteLine("DORMIU: estado " + stateId);
 				WaitHandle.WaitAll (new ManualResetEvent[] {resetEvent});
+				System.Console.WriteLine("CORDOU: estado " + stateId);
 			}
 
 			Dictionary<int, int> transitions = protocol.Matrix [stateId];
