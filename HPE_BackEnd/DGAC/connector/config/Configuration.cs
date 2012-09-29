@@ -53,7 +53,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		//Define uma informação vazia. Usado para criar transições de valor null.
 		public static readonly int NOTHING = -2;
 		public static readonly ExecutionAction LAMBDA_TRANSITION = new ExecutionAction (null, null);
-      
+
 		//Matriz que guarda no primeira dimensão os estados do autômato e na segunda as transicões destes.
 		protected Dictionary<int, Dictionary<int, int>> matrix;
 		public Dictionary<int, Dictionary<int, int>> Matrix {
@@ -70,16 +70,22 @@ namespace br.ufc.pargo.hpe.connector.config
 		}
       
 		//Indica, para cada estado, a quantidade de transições que o tem como destino. É utilizado para as operações de join.
-		protected List<int> arriving;
-		protected List<int> arrivingCount;
+		protected Dictionary<int, int> arriving;
+		protected Dictionary<int, int> arrivingCount;
 		//TODO condição de corrida. tratar concorrência de escrita e de leitura nas reconfigurações comportamentais.
-		public List<int> ArrivingCount {
+		public Dictionary<int, int> ArrivingCount {
 			get { return arrivingCount;}
 			set { arrivingCount = value;}
 		}
       
+		protected int lastTransationId;
+		public int LastTransationId {
+			get { return lastTransationId;}
+			set { lastTransationId = value;}
+		}
+
 		//Semáforo utilizado pelo ConfigurationManager para suspender a execução individualmente de cada estado.
-		protected new Dictionary<int, System.Threading.ManualResetEvent> _resetEvents;
+		protected Dictionary<int, System.Threading.ManualResetEvent> _resetEvents;
       
 		//Objeto para controlar a condição de corrida das funções que podem sofrer efeitos colaterais durante
 		//o processo de reconfiguração.
@@ -106,47 +112,69 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		//Numero de estados do autômato.
 		protected int numStates;
-      
+		public int NumStates {
+			get {return numStates;}
+			set {numStates = value;}
+		}
+
 		public System.Threading.ManualResetEvent doneEvent {
 			get { return _resetEvents [numStates];}
 		}
       
 		//Construtor da configuração, o qual deverá indicar o número de estados.
-		public Configuration (int numStates, List<Transition> transitions)
+		public Configuration (int numStates, List<Transition> transitions, int lastTransationId)
 		{
 			this.numStates = numStates;
-			this.transitions = transitions;
+			this.lastTransationId = lastTransationId;
          
 			initialize ();
-			generateAutomaton ();
+			generateAutomaton (transitions);
 		}
       
 		protected void initialize ()
 		{
 			this.matrix = new Dictionary<int, Dictionary<int, int>>();
-			this.arriving = new List<int>();
-			this.arrivingCount = new List<int>();
+			this.arriving = new Dictionary<int, int>();
+			this.arrivingCount = new Dictionary<int, int>();
 			this.actions = new List<ExecutionAction>();
+			this.transitions = new List<Transition>();
 
 			this._resetEvents = new Dictionary<int, System.Threading.ManualResetEvent>();
 			this._resetEvents[numStates] = new System.Threading.ManualResetEvent (false);
 		}
       
-		public void generateAutomaton ()
+		public void generateAutomaton (List<Transition> transToAdd)
 		{
-			bool[] hasElse = new bool[numStates];
-			int[] numTransations = new int[numStates];
+			Dictionary<int, bool> hasElse = new Dictionary<int, bool> ();
+			Dictionary<int, int> numTransations = new Dictionary<int, int> ();
+			List<int> iniStates, finStates;
+			iniStates = new List<int> ();
+			finStates = new List<int> ();
          
-			for (int i=0; i<numStates; i++) {
-				this.arriving.Add (0);
-				this.arrivingCount.Add (0);
-				numTransations [i] = 0;
-				hasElse [i] = false;
-				matrix [i] = new Dictionary<int, int>();
+			foreach (Transition t in transToAdd) {
+
+				transitions.Add (t);
+				if (!finStates.Contains (t.FinalState)) {
+					this.arriving[t.FinalState] = 0;
+					this.arrivingCount[t.FinalState] = 0;
+
+					finStates.Add (t.FinalState);
+				}
+
+				if (!iniStates.Contains (t.InitialState)) {
+					numTransations[t.InitialState] = 0;
+					hasElse[t.InitialState] = false;
+					matrix [t.InitialState] = new Dictionary<int, int> ();
+
+					iniStates.Add (t.InitialState);
+				}
 			}
          
-			actions.Add(LAMBDA_TRANSITION);
-			foreach (Transition t in transitions) {
+			if (!actions.Contains (LAMBDA_TRANSITION)) {
+				actions.Add (LAMBDA_TRANSITION);
+			}
+
+			foreach (Transition t in transToAdd) {
             
 				if (t.Type == Transition.TransitionType.SIMPLE) {
 					System.Console.WriteLine (t);
@@ -164,7 +192,7 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			int index;
 			//formando a matrix e o arriving
-			foreach (Transition tran in transitions) {
+			foreach (Transition tran in transToAdd) {
             
 				if (tran.Type == Transition.TransitionType.SIMPLE) {
                
@@ -190,7 +218,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			}
          
 
-			for (int i = 0; i< numStates; i++) {
+			foreach (int i in iniStates) {
 
 				if (!hasElse [i]) {
 					matrix [i] [(numTransations [i]*BASE) + RUNNABLE] = NOTHING;
@@ -198,6 +226,7 @@ namespace br.ufc.pargo.hpe.connector.config
 				}
 			}
 			//definindo a matrix do estado final.
+			matrix[FINAL_STATE] = new Dictionary<int, int>();
 			matrix [FINAL_STATE] [RUNNABLE] = END;
 
 			//TODO remover! exibir a matrix
@@ -238,7 +267,7 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			lock (thisLock) {      
 				foreach (int s in states) {
-					if (_resetEvents [s] == null) {
+					if (!_resetEvents.ContainsKey(s)) {
 						_resetEvents [s] = new System.Threading.ManualResetEvent (false);
 					}
 				}
@@ -263,9 +292,9 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			lock (thisLock) {            
 				foreach (int s in states) {
-					if (_resetEvents [s] != null) {
+					if (_resetEvents.ContainsKey(s)) {
 						_resetEvents [s].Set ();
-						_resetEvents [s] = null;
+						_resetEvents.Remove(s);
 					}
 				}
 			}
@@ -303,6 +332,18 @@ namespace br.ufc.pargo.hpe.connector.config
 			monitors.Add (monitor);
 		}
       
+
+		public Transition getTransition (string point)
+		{
+			foreach (Transition t in transitions) {
+				if(t.Ids.Contains(point)) {
+					return t;
+				}
+			}
+
+			return null;
+		}
+
 		public string toString ()
 		{
 			string s = "";
