@@ -15,7 +15,7 @@ namespace TestWrapperGenerator
 			
 			string[] dependencies = null;
 			
-			CodeCompileUnit compile_unit = w.create_wrapper(56,"adi",0, out dependencies);
+			CodeCompileUnit compile_unit = w.create_wrapper(116,"solve",0, out dependencies);
 			string source_code = w.generate_source_code(compile_unit);
 			
 		//	string dllFile = sourceFile.Replace(".cs",".dll");

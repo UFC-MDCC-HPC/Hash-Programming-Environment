@@ -114,9 +114,6 @@ namespace br.ufc.hpe.backend.DGAC
 			
 			#region using dependencies
 			
-			//CodeNamespaceImport[] using_dependencies = createUsingDependencies();
-			//ns.Imports.AddRange (using_dependencies);
-			
 			#endregion
 								
 			#region class
@@ -181,6 +178,7 @@ namespace br.ufc.hpe.backend.DGAC
 				                       				  : createConditionMethod(ia.Id_action));
 			}
 			#endregion
+			
 			
 				
 			#endregion
@@ -271,10 +269,33 @@ namespace br.ufc.hpe.backend.DGAC
 			foreach (InterfaceParameter ip in ip_list) 
 			{
 				open_pars.Add(ip.ParId,ip.VarId);
-//				par_order[k++] = ip.ParId;
 			}
 			
 			InterfaceSignature isig = calculateParameters(i, closed_pars, open_pars);
+			
+			IDictionary<string,InterfaceSignature> m = new Dictionary<string,InterfaceSignature>();
+			
+			foreach (KeyValuePair<string,InterfaceSignature> par in isig.parameters)
+			{
+				string par_id = par.Key;
+				InterfaceSignature iPar = par.Value;
+				
+				AbstractComponentFunctorParameter acfp = BackEnd.acfpdao.retrieve(i.Id_abstract, par_id);
+				AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(acfp.Bounds_of);
+				AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
+				Interface i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, iPar.the_interface.Id_interface_super_top, iPar.the_interface.Partition_index_super_top);
+			
+				iPar.package_path = acf.Library_path;
+				iPar.the_interface = i_;
+				m.Add(par_id,iPar);				
+			}
+			
+			foreach (KeyValuePair<string,InterfaceSignature> par in m) 
+			{
+				isig.parameters.Remove(par.Key);
+				isig.parameters.Add(par.Key, par.Value);
+			}
+			
 			
 			return isig;			
 		}
@@ -392,6 +413,7 @@ namespace br.ufc.hpe.backend.DGAC
 		    }
 			return action_method;
 		}
+
 		
 		private CodeMemberMethod createConditionMethod(string condition_method_name)
 		{
@@ -485,7 +507,8 @@ namespace br.ufc.hpe.backend.DGAC
 					if (sp is SupplyParameterComponent) // always false
 					{
 						SupplyParameterComponent spc = (SupplyParameterComponent) sp;
-						closed_pars_.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+						if (!closed_pars_.ContainsKey(spc.Id_parameter))
+							closed_pars_.Add(spc.Id_parameter, spc.Id_functor_app_actual);
 					}
 					else if (sp is SupplyParameterParameter)
 					{
@@ -499,11 +522,13 @@ namespace br.ufc.hpe.backend.DGAC
 						if (closed_pars.ContainsKey(spp.Id_parameter_actual)) // ALWAYS FALSE
 						{
 							id_functor_app_actual_parameter = closed_pars[spp.Id_parameter_actual];
-							closed_pars_.Add(spp.Id_parameter, id_functor_app_actual_parameter);
+							if (!closed_pars_.ContainsKey(spp.Id_parameter))
+								closed_pars_.Add(spp.Id_parameter, id_functor_app_actual_parameter);
 						}
 						else if (open_pars.ContainsKey(spp.Id_parameter_actual))
 						{
-							open_pars_.Add(spp.Id_parameter, open_pars[spp.Id_parameter_actual]);
+							if (!open_pars_.ContainsKey(spp.Id_parameter))
+								open_pars_.Add(spp.Id_parameter, open_pars[spp.Id_parameter_actual]);
 							// 2nd outer loop / 1st inner loop: add 'class' -> 'C'
 							// 2nd outer loop / 2nd inner loop: add 'instance_type' -> 'I'
 						} 
@@ -519,7 +544,10 @@ namespace br.ufc.hpe.backend.DGAC
 				}
 				
 				InterfaceSignature par_ic = calculateParameters(i_, closed_pars_, open_pars_);
-				isig.slice_types.Add (s.PortName, par_ic);
+				if (!isig.slice_types.ContainsKey(s.PortName))
+					isig.slice_types.Add (s.PortName, par_ic);
+				else 
+					Console.WriteLine("EXISTENTE {0}", s.PortName);
 				// 1st loop:
 				// InterfaceSignature [
 				//    the_interface = ('31', 'cells', '0', '', '0', 'common.datapartition.MultiPartitionCells.ICells', '', '0', 'cells', '0', '1')
@@ -556,9 +584,19 @@ namespace br.ufc.hpe.backend.DGAC
 			
 				if (!ic.Parameter_top.Equals("")) // never
 				{
+					if (isig.parameters.ContainsKey(ic.Parameter_top))
+					{
+						isig.parameters.Remove(ic.Parameter_top);						
+					}
 					isig.parameters.Add(ic.Parameter_top, par_ic);
+					
 					if (open_pars.ContainsKey(ic.Parameter_top))
+					{  
+						if (isig.varId.ContainsKey(ic.Parameter_top))
+							isig.varId.Remove(ic.Parameter_top);
 						isig.varId.Add(ic.Parameter_top, open_pars[ic.Parameter_top]);
+					}
+					
 				}
 			}
 			

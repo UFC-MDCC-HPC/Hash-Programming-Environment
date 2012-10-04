@@ -133,7 +133,7 @@ namespace br.ufc.pargo.hpe.basic
         {
             Connector.openConnection();
             // CREATE SLICES !!!
-		//	Console.WriteLine("BEGIN - SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
+			Console.WriteLine("BEGIN - SLICES OF " + id_abstract + " - " + this.getSliceName(owner_unit));
             
 			IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
 			
@@ -187,13 +187,14 @@ namespace br.ufc.pargo.hpe.basic
 	                                                      );
 								
 								
-								//Console.WriteLine ("BEGIN /////////////");
-								//Console.WriteLine(slice.Id_inner);                 // id_inner_original
-								//Console.WriteLine(slice.Id_interface_slice_top);   // id_interface_slice_original
-								//Console.WriteLine(id_abstract_owner);              // id_abstract
-								//Console.WriteLine(i.Id_interface_super_top);       // id_interface_slice_owner
-								//Console.WriteLine(id_inner_owner);                 // id_inner_owner
-								//Console.WriteLine ("END /////////////");
+								Console.WriteLine ("BEGIN /////////////");
+								Console.WriteLine(slice.Id_inner);                 // id_inner_original
+								Console.WriteLine(slice.Id_interface_slice_top);   // id_interface_slice_original
+								Console.WriteLine(id_abstract_owner);              // id_abstract
+								Console.WriteLine(i.Id_interface_super_top);       // id_interface_slice_owner
+								Console.WriteLine(id_inner_owner);                 // id_inner_owner
+								Console.WriteLine ("END /////////////");
+								
 								if (se != null)
 								{
 			                        string container_portName = se.Id_inner;		

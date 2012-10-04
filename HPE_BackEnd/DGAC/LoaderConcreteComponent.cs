@@ -131,13 +131,22 @@ namespace HPE_DGAC_LoadDB
                 uu.Order = i.Order;
 
                 units.Add(uu.Id_unit, uu);
-				if (ui.sources == null && ui.protocol != null && (c.Kind.Equals(Constants.KIND_COMPUTATION_NAME) 
+				
+				Console.WriteLine("ui.sources={0}",ui.sources);
+				Console.WriteLine("ui.protocol={0}",ui.protocol);
+				Console.WriteLine("{0}={1}", c.Kind, Constants.KIND_COMPUTATION_NAME);
+				
+				if (ui.sources == null && (c.Kind.Equals(Constants.KIND_COMPUTATION_NAME) 
 				                                               || c.Kind.Equals(Constants.KIND_SYNCHRONIZER_NAME)))
 				{
+					Console.WriteLine("ENTER WRAPPER GENERATOR");
+					
 					 IWrapperGenerator wg = new WrapperGenerator();
 					 string[] dependencies = null;
 					 CodeCompileUnit compile_unit = wg.create_wrapper(uu.Id_abstract, uu.Id_interface, uu.Partition_index, out dependencies); 
 					 string source_code = wg.generate_source_code(compile_unit);
+					
+					 Console.WriteLine(source_code);
 					
 				     SourceCode ss = new SourceCode();
                      ss.Type_owner = 'u';

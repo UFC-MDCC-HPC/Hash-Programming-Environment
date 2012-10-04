@@ -14,13 +14,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public void insert(SliceExposed ac)
         {
-
             String sql =
                 "INSERT INTO sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner,  partition_index,  partition_index_owner, id_inner_original, id_interface_slice_original)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface_slice + "','" + ac.Id_interface_slice_owner + "','" + ac.Id_inner + "','" + ac.Id_inner_owner + "'," + ac.Partition_index + "," + ac.Partition_index_owner + ",'" + ac.Id_inner_original + "','" + ac.Id_interface_slice_original + "')";
 
+			Console.WriteLine("SliceExposedDAO.cs: TRY INSERT PUBLIC SLICE : " + sql);
+			
             Connector.performSQLUpdate(sql);
-
         }
 
 
@@ -228,7 +228,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return se;
         }
 
-        internal SliceExposed retrieve2(string id_inner, string id_interface_slice, int id_abstract, string id_interface_container)
+        internal SliceExposed retrieve2(string id_inner, string id_interface_slice, int id_abstract, string id_interface_container, string id_inner_container)
         {
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
@@ -239,7 +239,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract + " and " +
-                      "id_interface_slice_owner like '" + id_interface_container + "'";
+                      "id_interface_slice_owner like '" + id_interface_container + "' and " +
+					  "id_inner_owner like '" + id_inner_container + "'";
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())

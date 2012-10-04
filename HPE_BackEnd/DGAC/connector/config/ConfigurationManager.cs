@@ -89,7 +89,7 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		public void Run ()
 		{
-			Run ("go");
+			Run ("main");
 		}
       
 		//Inicia a execução da configuração.

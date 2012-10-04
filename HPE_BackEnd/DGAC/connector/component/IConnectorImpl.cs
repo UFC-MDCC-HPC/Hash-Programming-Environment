@@ -24,7 +24,7 @@ namespace br.ufc.pargo.hpe.ConnectorImpl {
 
 } // end main interface 
 
-public class IConnectorImpl : Activate, IConnector
+public abstract class IConnectorImpl : Activate, IConnector
 {
 
 	public IConnectorImpl() 
@@ -134,10 +134,19 @@ public class IConnectorImpl : Activate, IConnector
 	 
 	 return result;
 	}
-
-		public int go() {
-			return perform_action("go");
-		}
+		
+	public abstract void main();	
+		
+	public int go() 
+	{
+		String hcl_string = null;
+			
+		ConfigurationPort.LoadComponent(hcl_string);	
+			
+		perform_action("main");	
+			
+		return 0;
+	}
 		
 }
 

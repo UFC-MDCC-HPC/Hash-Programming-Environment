@@ -14,14 +14,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public void insert(Slice ac)
         {
-
             String sql =
                 "INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Partition_index + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
-
+			
+			Console.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
+			
             Connector.performSQLUpdate(sql);
-
-        }
+		
+         }
 
 
         // ADDED BY HERON

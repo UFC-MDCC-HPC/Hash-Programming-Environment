@@ -62,6 +62,35 @@ namespace Back_End_WS
         }
 
         [WebMethod]
+        /*
+         * XML é visto como um array de bytes, chamado data.
+         * esse array é salvo em "path" e lido por AppLoader gerando um objeto Component Type,
+         * passado ao DGAC 
+         */
+        public string deployHashConfiguration(byte[] data, byte[] hcl_data, string userName, string password, string curDir)
+        {
+            try
+            {
+                string filename = "newConfig";
+                string path = Constants.PATH_TEMP_WORKER + filename + ".xml";
+                if (data != null)
+                {
+                    FileUtil.saveByteArrayIntoFile(data, path);
+                    ComponentType c = LoaderApp.DeserializeObject(path);
+                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
+                        dgac.registerConcreteComponent(c, userName, password, curDir);
+                    else
+                        dgac.registerAbstractComponent(c, userName, password, curDir);
+                }
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
+            }
+
+            return null;
+        }
+		
+        [WebMethod]
         public byte[] readEnvironment()
         {
             Console.WriteLine("Reading Environment");
@@ -81,7 +110,7 @@ namespace Back_End_WS
             string[] str_output = null;
             try
             {
-                str_output = dgac.runApplication(id_concrete, eIds, eVls, userName, password, curDir);
+                str_output = null; //dgac.runApplication(id_concrete, eIds, eVls, userName, password, curDir);
             }
             catch (Exception e)
             {

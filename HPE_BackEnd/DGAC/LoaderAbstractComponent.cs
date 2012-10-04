@@ -962,17 +962,24 @@ namespace HPE_DGAC_LoadDB
                                     string id_inner_original = lookForRenamingOld(cRefS, usPort.cRef);
                                     se.Id_inner_original = id_inner_original != null ? id_inner_original : usPort.cRef;
                                     se.Id_interface_slice_original = usPort.uRef; // DEVE SER O TOP !!!
-
-                                    br.ufc.pargo.hpe.backend.DGAC.BackEnd.sedao.insert(se);
+									if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.sedao.retrieve2(se.Id_inner,
+									                                                          se.Id_interface_slice,
+									                                                          se.Id_abstract,
+									                                                          se.Id_interface_slice_owner, 
+									                                                          se.Id_inner_owner) == null) 
+                                    	br.ufc.pargo.hpe.backend.DGAC.BackEnd.sedao.insert(se);
                                 }
                             }
-                            //if (sdao.retrieve(s.Id_abstract,s.Id_inner,s.Id_interface_slice,s.Id_split_replica) == null) 
-                            br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.insert(s);
+                            if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.retrieve(s.Id_abstract,
+							                                                        s.Id_inner,
+							                                                        s.Id_interface_slice,
+							                                                        s.Partition_index) == null) 
+                            	br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.insert(s);
                         }
 
                     }
 					
-					if (ui.protocol != null)
+					//if (ui.protocol != null)
 						readProtocol(i, ui);
                 }
             }
@@ -980,27 +987,27 @@ namespace HPE_DGAC_LoadDB
 		
 		private void readProtocol(Interface i, InterfaceType ui)
 		{
-			ProtocolType main_protocol = ui.protocol;			
-			ActionType[] actions  = ui.action;
-			ConditionType[] conditions = ui.condition;
+			//ProtocolChoiceType main_protocol = ui.protocol;			
+			UnitActionType[] actions  = ui.action;
+			UnitConditionType[] conditions = ui.condition;
+						
+			//readProtocol(i, "main", main_protocol);
 			
-//			br.ufc.pargo.hpe.backend.DGAC.BackEnd.iadao.insert(
+			if (actions != null)
+				foreach (UnitActionType action in actions)
+				{
+					readProtocol(i, action.id, action.protocol);				
+				}
 			
-			readProtocol(i, "main", main_protocol);
-			
-			foreach (ActionType action in actions)
-			{
-				readProtocol(i, action.id, action.protocol);				
-			}
-			
-			foreach (ConditionType condition in conditions)
-			{
-				readCondition(i, condition);
-			}
+			if (conditions != null)
+				foreach (UnitConditionType condition in conditions)
+				{
+					readCondition(i, condition);
+				}
 			
 		}
 		
-		private void readProtocol(Interface i, string action_id, ProtocolType protocol)
+		private void readProtocol(Interface i, string action_id, ProtocolChoiceType protocol)
 		{
 			InterfaceAction action_row = new InterfaceAction();
 			action_row.Id_abstract = i.Id_abstract;
@@ -1009,9 +1016,10 @@ namespace HPE_DGAC_LoadDB
 			action_row.Id_action = action_id;
 			action_row.IsCondition = false;
 			action_row.Protocol = "";
+			br.ufc.pargo.hpe.backend.DGAC.BackEnd.iadao.insert(action_row);
 		}
 		
-		private void readCondition(Interface i, ConditionType condition)
+		private void readCondition(Interface i, UnitConditionType condition)
 		{
 			InterfaceAction action_row = new InterfaceAction();
 			action_row.Id_abstract = i.Id_abstract;
@@ -1019,7 +1027,8 @@ namespace HPE_DGAC_LoadDB
 			action_row.PartitionIndex = i.Partition_index;
 			action_row.Id_action = condition.id;
 			action_row.IsCondition = true;
-			action_row.Protocol = ""; 
+			action_row.Protocol = "";
+			br.ufc.pargo.hpe.backend.DGAC.BackEnd.iadao.insert(action_row);
 		}
 
         internal void updateSources(ComponentType ct, AbstractComponentFunctor c)

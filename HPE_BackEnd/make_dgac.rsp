@@ -38,12 +38,15 @@ DGAC/connector/load/*.cs
 DGAC/connector/meta/*.cs
 DGAC/connector/run/*.cs
 DGAC/connector/component/*.cs
+DGAC/connector/wrapper/*.cs
 
 -target:library
 
 -keyfile:DGAC/DGAC.snk
 
 -optimize+
+
+-debug+
 
 -r:System.Data
 -r:/usr/lib/mono/MySql.Data/MySql.Data.dll

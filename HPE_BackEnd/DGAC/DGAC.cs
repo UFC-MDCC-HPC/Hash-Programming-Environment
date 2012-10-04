@@ -95,7 +95,7 @@ namespace br.ufc.pargo.hpe.backend
                     Connector.beginTransaction();
                     //ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);
 
-                    bool exists = false;
+                    int exists = 1;
                     LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
                     AbstractComponentFunctor cAbs = null;
                     HashComponent cAbs_ = null;
@@ -114,7 +114,7 @@ namespace br.ufc.pargo.hpe.backend
                         {
                             Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
                             abstractloader.updateSources(ct, cAbs);
-                            exists = true;
+                            exists = 0;
                         }
                         else
                         {
@@ -163,7 +163,7 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 catch (Exception e)
                 {
-                    Console.Error.Write("Rolling back transaction... " + e.Message);
+                    Console.Error.Write("Rolling back transaction... " +  e.Message + " ----- stack:"+  e.StackTrace);
                     Connector.rollBackTransaction();
                     Console.Error.WriteLine("ok");
                     throw e;
@@ -175,17 +175,18 @@ namespace br.ufc.pargo.hpe.backend
                 }
             }
 			
-			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, bool set_public_key)
+			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
 			{
                     ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);                     
 
                     foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                     {
-                        int id_concrete = unitToCompile.id;
+                        int id = unitToCompile.id;
                         string cuid = unitToCompile.cuid;
                         string library_path = unitToCompile.library_path;
                         string moduleName = unitToCompile.moduleName;
                         string unitName = unitToCompile.unitId;
+						int partition_index = unitToCompile.partition_index;
                         string sourceCode = unitToCompile.sourceCode;
                         int outputType = unitToCompile.output_type;
 
@@ -200,8 +201,12 @@ namespace br.ufc.pargo.hpe.backend
                                                                            userName,
                                                                            password,
                                                                            curDir);
-                        if (!set_public_key)
-                            udao.setPublicKey(cuid, unitName, publicKey);
+						switch(set_public_key)
+						{
+							case 1: idao.setPublicKey(id, unitName, partition_index, publicKey); break;
+							case 2: udao.setPublicKey(cuid, unitName, publicKey); break;
+						}
+						
                     }
 			}
 
@@ -213,7 +218,7 @@ namespace br.ufc.pargo.hpe.backend
                     Connector.beginTransaction();
 
 
-                    bool exists = false;
+                    int exists = 2;
                     LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
                     DGAC.database.Component cConc = null;
                     HashComponent cConc_ = null;
@@ -228,7 +233,7 @@ namespace br.ufc.pargo.hpe.backend
                         Console.Error.WriteLine("Concrete component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
                         cConc = (DGAC.database.Component)cConc_;
                         concreteloader.updateSources(ct, cConc);
-                        exists = true;
+                        exists = 0;
                     }
 
                     Console.Error.Write("Compiling sources ...");

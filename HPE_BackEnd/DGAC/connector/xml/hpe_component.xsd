@@ -156,10 +156,11 @@
 
     			<attribute name="slice_id" type="string"></attribute>
 
+    			<attribute name="action_id" type="string"></attribute>
     		</extension>
     	</complexContent>
     </complexType>
-    
+
     <complexType name="ProtocolType" abstract="true">
     	<sequence>
     		<element name="guard" type="tns:GuardType" minOccurs="0"></element>
