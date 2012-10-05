@@ -15,9 +15,9 @@ namespace br.ufc.hpe.backend.DGAC
 {
 	public interface IWrapperGenerator
 	{
-		CodeCompileUnit create_wrapper(int id_abstract, string id_unit, int partition_index, out string[] dependencies);				
+		CodeCompileUnit create_wrapper(string package_path, string unit_class_name, int id_abstract, string id_unit, int partition_index, out string[] dependencies);				
 		
-		string generate_source_code(CodeCompileUnit compileUnit);
+		string generate_source_code(string source_code_name, CodeCompileUnit compileUnit);
 		
 		CompilerResults compile_wrapper(CodeCompileUnit compile_unit, string dllFile, string[] dependencies);
 		
@@ -37,14 +37,14 @@ namespace br.ufc.hpe.backend.DGAC
 		#region IWrapperGenerator implementation
 		private const string wrapper_source_name_suffix = "WrapperImpl";
 
-		public CodeCompileUnit create_wrapper (int id_abstract, string id_interface, int partition_index, out string[] dependencies)
+		public CodeCompileUnit create_wrapper (string package_path, string unit_class_name, int id_abstract, string id_interface, int partition_index, out string[] dependencies)
 		{			
 			this.id_abstract = id_abstract;
 			this.id_interface = id_interface;
 			this.partition_index = partition_index;
 			
 			// create compile unit
-			CodeCompileUnit compileUnit = createCompileUnit(out dependencies);
+			CodeCompileUnit compileUnit = createCompileUnit(package_path, unit_class_name, out dependencies);
 			
 			return compileUnit;
 			
@@ -95,9 +95,10 @@ namespace br.ufc.hpe.backend.DGAC
 		#endregion
 		
 		
-		private CodeCompileUnit createCompileUnit(out string[] dependencies) 
+		private CodeCompileUnit createCompileUnit(string package_path, string unit_class_name, out string[] dependencies) 
 		{
 			IList<string> dependency_list = new List<string>();
+			IList<string> usings_list = new List<string>();
 			
 			CodeCompileUnit compileUnit = new CodeCompileUnit();
 			
@@ -106,25 +107,24 @@ namespace br.ufc.hpe.backend.DGAC
 			AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(id_abstract);
 			Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);
 			
-			string package_path = acf.Library_path;
+			CodeNamespace globalNamespace = new CodeNamespace();		
+			compileUnit.Namespaces.Add(globalNamespace);
+			
 			CodeNamespace ns = new CodeNamespace(package_path);
 			compileUnit.Namespaces.Add(ns);
 			
 			#endregion
-			
-			#region using dependencies
-			
-			#endregion
-								
+				
 			#region class
-
-			InterfaceSignature interface_type_descriptor = createSliceAccessorType(i);
-			CodeTypeReference type_ref = buildCodeTypeReference(interface_type_descriptor, dependency_list);
+			
+			IDictionary<string,int> par_order;
+			InterfaceSignature interface_type_descriptor = createSliceAccessorType(i, out par_order);
+			CodeTypeReference type_ref = buildCodeTypeReference(interface_type_descriptor, dependency_list, usings_list);
 			
 			string[] ss = i.Class_name.Split(new char[] {'.'});
 			
 			string unit_interface_name = ss[ss.Length-1];
-			string unit_class_name = unit_interface_name + wrapper_source_name_suffix;
+			//string unit_class_name = unit_interface_name + wrapper_source_name_suffix;
 			CodeTypeDeclaration unit_class = new CodeTypeDeclaration(unit_class_name);
 			ns.Types.Add(unit_class);
 			
@@ -141,7 +141,7 @@ namespace br.ufc.hpe.backend.DGAC
 			
 			#region class / type parameters
 			
-			unit_class.TypeParameters.AddRange(createContextParameters(interface_type_descriptor, dependency_list));
+			unit_class.TypeParameters.AddRange(createContextParameters(interface_type_descriptor, par_order, dependency_list, usings_list));
 						
 			#endregion 
 			
@@ -156,7 +156,7 @@ namespace br.ufc.hpe.backend.DGAC
 				    string slice_accessor_name = s.PortName;
 		
 					InterfaceSignature isig_slice = interface_type_descriptor.slice_types[slice_accessor_name];
-					CodeTypeReference slice_accessor_type = buildCodeTypeReference(isig_slice, dependency_list);
+					CodeTypeReference slice_accessor_type = buildCodeTypeReference(isig_slice, dependency_list, usings_list);
 					
 					CodeMemberField slice_accessor_field = createSliceAccessorField(slice_accessor_name.ToLower(), slice_accessor_type);
 					unit_class.Members.Add(slice_accessor_field);
@@ -174,13 +174,24 @@ namespace br.ufc.hpe.backend.DGAC
 			
 			foreach (InterfaceAction ia in action_list)
 			{
-				unit_class.Members.Add(ia.IsCondition ? createActionMethod(ia.Id_action)
-				                       				  : createConditionMethod(ia.Id_action));
+				unit_class.Members.Add(ia.IsCondition ? createConditionMethod(ia.Id_action)
+				                       				  : createActionMethod(ia.Id_action));
 			}
 			#endregion
 			
+							
+			#region using dependencies
 			
-				
+						
+			foreach (string using_reference in usings_list)
+			{				
+				CodeNamespaceImport import = new CodeNamespaceImport();				
+				import.Namespace = using_reference;
+				globalNamespace.Imports.Add(import);
+			}
+			
+			#endregion
+			
 			#endregion
 			
 			dependencies = new string[dependency_list.Count];
@@ -189,22 +200,26 @@ namespace br.ufc.hpe.backend.DGAC
 			return compileUnit;
 		}
 		
-		private CodeTypeParameter[] createContextParameters(InterfaceSignature interface_type_descriptor, 
-		                                                    IList<string> dependency_list)
+		private CodeTypeParameter[] createContextParameters(InterfaceSignature interface_type_descriptor,
+		                                                    IDictionary<string,int> par_order,
+		                                                    IList<string> dependency_list,
+		                                                    IList<string> usings_list)
 		{
-			IList<CodeTypeParameter> context_parameter_list = new List<CodeTypeParameter>();
+			//IList<CodeTypeParameter> context_parameter_list = new List<CodeTypeParameter>();
+			
+			CodeTypeParameter[] context_parameters = new CodeTypeParameter[interface_type_descriptor.parameters.Count];
 			
 			foreach (KeyValuePair<string, InterfaceSignature> ctx_par in interface_type_descriptor.parameters)
 			{
 				string var_id = interface_type_descriptor.varId[ctx_par.Key];
 				CodeTypeParameter context_variable = new CodeTypeParameter(var_id);
-				CodeTypeReference context_type = buildCodeTypeReference(ctx_par.Value, dependency_list);
+				CodeTypeReference context_type = buildCodeTypeReference(ctx_par.Value, dependency_list, usings_list);
 				context_variable.Constraints.Add (context_type);
-				context_parameter_list.Add(context_variable);
+				context_parameters[par_order[ctx_par.Key]] = context_variable;
 			}
 		    
-			CodeTypeParameter[] context_parameters = new CodeTypeParameter[context_parameter_list.Count];
-			context_parameter_list.CopyTo(context_parameters, 0);
+			
+			//context_parameter_list.CopyTo(context_parameters, 0);
 			return context_parameters;
 		}
 		
@@ -259,16 +274,18 @@ namespace br.ufc.hpe.backend.DGAC
 		}
 		
 		
-		private InterfaceSignature createSliceAccessorType(Interface i)
+		private InterfaceSignature createSliceAccessorType(Interface i, out IDictionary<string, int> par_order)
 		{
+			par_order = new Dictionary<string, int>();
 			IDictionary<string,string> open_pars = new Dictionary<string, string>();
 			IDictionary<string,int> closed_pars = new Dictionary<string, int>();
 			IList<InterfaceParameter> ip_list = BackEnd.ipdao.list(i.Id_abstract, i.Id_interface);
 //			string[] par_order = new string[ip_list.Count];
-//			int k = 0;
+			int k = 0;
 			foreach (InterfaceParameter ip in ip_list) 
 			{
 				open_pars.Add(ip.ParId,ip.VarId);
+				par_order.Add(ip.ParId,k++);
 			}
 			
 			InterfaceSignature isig = calculateParameters(i, closed_pars, open_pars);
@@ -301,10 +318,18 @@ namespace br.ufc.hpe.backend.DGAC
 		}
 		
 		private CodeTypeReference buildCodeTypeReference(InterfaceSignature isig, 
-		                                                 IList<string> dependency_list)
+		                                                 IList<string> dependency_list,
+		                                                 IList<string> usings_list)
 		{
-			CodeTypeReference slice_accessor_type = new CodeTypeReference(isig.the_interface.Class_name + (isig.the_interface.Class_nargs == 0 ? "" : "`"+ isig.the_interface.Class_nargs));
+			string[] parts = isig.the_interface.Class_name.Split('.');
+			string class_name = parts[parts.Length-1]; 
+			
+			
+			CodeTypeReference slice_accessor_type = new CodeTypeReference(class_name + (isig.the_interface.Class_nargs == 0 ? "" : "`"+ isig.the_interface.Class_nargs));
 			dependency_list.Add(LoaderApp.buildDllName(isig.package_path, isig.the_interface.Assembly_string) + ".dll");
+			
+			if (!usings_list.Contains(isig.package_path))
+				usings_list.Add(isig.package_path);
 			
 			slice_accessor_type.Options &= CodeTypeReferenceOptions.GenericTypeParameter;
 			
@@ -322,7 +347,7 @@ namespace br.ufc.hpe.backend.DGAC
 				}
 				else
 				{
-					slice_accessor_arg_type = buildCodeTypeReference (isig_.Value, dependency_list);
+					slice_accessor_arg_type = buildCodeTypeReference (isig_.Value, dependency_list, usings_list);
 				}
 				// slice_accessor_type.TypeArguments.Add(slice_accessor_arg_type);
 				type_argument_list.Add(par_id,slice_accessor_arg_type);
@@ -401,7 +426,11 @@ namespace br.ufc.hpe.backend.DGAC
 		private CodeMemberMethod createActionMethod(string action_method_name)
 		{
 			CodeMemberMethod action_method = new CodeMemberMethod();
-			action_method.ReturnType = new CodeTypeReference("void");
+			//action_method.ReturnType = new CodeTypeReference("void");
+			if (action_method_name.Equals("main"))
+				action_method.Attributes =MemberAttributes.Override | MemberAttributes.Public;
+			else
+				action_method.Attributes = MemberAttributes.Public;
 			action_method.Name = action_method_name;
 			{
 				CodeMethodInvokeExpression action_method_invoke = new CodeMethodInvokeExpression();
@@ -420,11 +449,12 @@ namespace br.ufc.hpe.backend.DGAC
 			CodeMemberMethod condition_method = new CodeMemberMethod();
 			condition_method.ReturnType = new CodeTypeReference("bool"); 
 			condition_method.Name = condition_method_name;
+			condition_method.Attributes = MemberAttributes.Public;
 			{
 				CodeMethodInvokeExpression condition_method_invoke = new CodeMethodInvokeExpression();
 				condition_method_invoke.Method = new CodeMethodReferenceExpression();
 				condition_method_invoke.Method.TargetObject = new CodeThisReferenceExpression();
-				condition_method_invoke.Method.MethodName = "perform_codition";
+				condition_method_invoke.Method.MethodName = "get_codition";
 				condition_method_invoke.Parameters.Add(new CodePrimitiveExpression(condition_method_name));
 						
 				CodeMethodReturnStatement condition_method_return = new CodeMethodReturnStatement();
@@ -639,12 +669,12 @@ namespace br.ufc.hpe.backend.DGAC
 		}
 		
 		#region IWrapperGenerator implementation
-		public string generate_source_code (CodeCompileUnit compileUnit)
+		public string generate_source_code (string sourceFileName, CodeCompileUnit compileUnit)
 		{
 			// generate source code
 			
 			Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);
-			string sourceFileName = i.Class_name + wrapper_source_name_suffix;
+			//string sourceFileName = i.Class_name + wrapper_source_name_suffix;
 			
 			string source_code = generateCSharpCode(compileUnit, sourceFileName);
 			

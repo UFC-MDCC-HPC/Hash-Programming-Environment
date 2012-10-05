@@ -53,7 +53,9 @@ namespace Back_End_WS
                     else
                         dgac.registerAbstractComponent(c, userName, password, curDir);
                 }
-            } catch (Exception e) {
+            } 
+			catch (Exception e) 
+			{
                 Console.WriteLine(e.Message);
                 return "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
             }
@@ -69,6 +71,9 @@ namespace Back_End_WS
          */
         public string deployHashConfiguration(byte[] data, byte[] hcl_data, string userName, string password, string curDir)
         {
+			Console.WriteLine ("deployHashConfiguration");
+			Console.WriteLine("hcl_data is null ? {0} ! {1}", hcl_data == null, data == null);
+
             try
             {
                 string filename = "newConfig";
@@ -77,10 +82,8 @@ namespace Back_End_WS
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
-                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
-                        dgac.registerConcreteComponent(c, userName, password, curDir);
-                    else
-                        dgac.registerAbstractComponent(c, userName, password, curDir);
+                    int id_abstract = dgac.registerAbstractComponent(c, userName, password, curDir);
+					dgac.updateConfiguration(id_abstract, hcl_data);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);

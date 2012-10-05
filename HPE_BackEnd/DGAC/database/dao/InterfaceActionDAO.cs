@@ -101,7 +101,7 @@ public class InterfaceActionDAO
            i.Id_abstract = (int)reader["id_abstract"];
            i.Id_action = (string)reader["id_action"];
            i.Protocol = (string)reader["protocol"];
-           i.IsCondition = ((int)reader["is_condition"] == 0 ? false : true);
+           i.IsCondition = ((int)reader["is_condition"])==0 ? false : true;
            iList.Add(i);
         }
 

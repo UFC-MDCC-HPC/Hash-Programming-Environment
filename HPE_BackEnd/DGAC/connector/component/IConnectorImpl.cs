@@ -4,6 +4,8 @@ using br.ufc.pargo.hpe.basic;
 using br.ufc.pargo.hpe.kinds;
 using br.ufc.pargo.hpe.connector.ports;
 using br.ufc.pargo.hpe.connector.config;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
+using System.IO;
 
 namespace br.ufc.pargo.hpe.ConnectorImpl { 
 
@@ -100,10 +102,16 @@ public abstract class IConnectorImpl : Activate, IConnector
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* This method returns the value of a condition of the unit  *
 	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	public bool get_condition(string condition) {
-	 bool result = false;
-	 
-	 return result;
+	public bool get_condition(string condition) 
+	{
+ 		if (configurationManager.Unit != null && configurationManager.Unit.Conditions [condition] != null) 
+		{
+           return configurationManager.Unit.Conditions [condition].Evaluate ();
+        } 
+		else 
+		{
+           return false;
+        }
 	}
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -139,11 +147,28 @@ public abstract class IConnectorImpl : Activate, IConnector
 		
 	public int go() 
 	{
-		String hcl_string = null;
-			
-		ConfigurationPort.LoadComponent(hcl_string);	
-			
-		perform_action("main");	
+		try 
+		{
+			String hcl_string = null;
+				
+			string path = Constants.PATH_TEMP_WORKER + this.QualifiedComponentTypeName + ".hcl";
+				
+			using (StreamReader sr = new StreamReader(path))
+		    {
+		        hcl_string = sr.ReadToEnd();                
+		    }
+		
+			Console.WriteLine(hcl_string);	
+				
+			ConfigurationPort.LoadComponent(hcl_string);	
+				
+			perform_action("main");	
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine("Error reading, loading or execution the configuration file.");
+			throw e;
+		}
 			
 		return 0;
 	}

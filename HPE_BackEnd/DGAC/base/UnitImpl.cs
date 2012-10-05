@@ -352,15 +352,30 @@ namespace br.ufc.pargo.hpe.basic
 		}
 		
         private int id_abstract = 0;
-
-        public int Id_abstract
+		
+		private string qualified_type_name = null;
+		
+		public string QualifiedComponentTypeName
+		{
+			get 
+			{
+				if (qualified_type_name == null)
+				{
+					AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(Id_abstract);
+					qualified_type_name = acf.Library_path;
+				}
+				return qualified_type_name;					
+			}			
+		}
+			
+		public int Id_abstract
         {
             get
             {
                 if (id_abstract == 0 && this.Id_concrete > 0)
                 {
                     br.ufc.pargo.hpe.backend.DGAC.database.Component c = BackEnd.cdao.retrieve(this.Id_concrete);
-                    id_abstract = c.Id_abstract;
+                    id_abstract = c.Id_abstract;					
                 }
                 return id_abstract;
             }

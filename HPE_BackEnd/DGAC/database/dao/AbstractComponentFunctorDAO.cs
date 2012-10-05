@@ -37,7 +37,7 @@ public class AbstractComponentFunctorDAO{
     }
 
     IDictionary<int, AbstractComponentFunctor> cache_acf = new Dictionary<int,AbstractComponentFunctor>();
-
+				
 	public AbstractComponentFunctor retrieve(int id_abstract){
 
         AbstractComponentFunctor acf = null;

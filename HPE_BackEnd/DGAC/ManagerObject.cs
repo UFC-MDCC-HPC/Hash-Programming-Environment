@@ -859,7 +859,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				{
 					WorkerConnectionID wconn = ((ManagerConnectionIDImpl)conn).getWorkerConnectionID(i);
 				    WorkerServices ws_ = ws[nodes[i]];
-					ports[i] = ws_.getPort(wconn.getUserPortName());
+					ports[i] = ws_.getPortNonblocking(wconn.getUserPortName());
 				}		
 			    			
 			    string user_port_name = conn.getUserPortName();

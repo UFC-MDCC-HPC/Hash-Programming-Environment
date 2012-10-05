@@ -31,6 +31,7 @@ namespace br.ufc.pargo.hpe.basic
         int Id_abstract { get; }
         string Id_unit { set; get; }
 		int PartitionIndex {set; get;}
+		string QualifiedComponentTypeName { get; }
         
 		string getSliceName(IUnit container);
 

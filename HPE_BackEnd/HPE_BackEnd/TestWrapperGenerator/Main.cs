@@ -15,8 +15,8 @@ namespace TestWrapperGenerator
 			
 			string[] dependencies = null;
 			
-			CodeCompileUnit compile_unit = w.create_wrapper(116,"solve",0, out dependencies);
-			string source_code = w.generate_source_code(compile_unit);
+			CodeCompileUnit compile_unit = w.create_wrapper("impl.sp.solve.connector.SolverImpl","ISolverImpl",116,"solve",0, out dependencies);
+			string source_code = w.generate_source_code("ISolverImpl", compile_unit);
 			
 		//	string dllFile = sourceFile.Replace(".cs",".dll");
 			

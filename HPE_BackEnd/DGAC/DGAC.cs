@@ -87,8 +87,9 @@ namespace br.ufc.pargo.hpe.backend
                 ChannelServices.UnregisterChannel(ch);
             }
 
-            public void registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
+            public int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
             {
+                AbstractComponentFunctor cAbs = null;
                 try
                 {
                     Connector.openConnection();
@@ -97,7 +98,6 @@ namespace br.ufc.pargo.hpe.backend
 
                     int exists = 1;
                     LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
-                    AbstractComponentFunctor cAbs = null;
                     HashComponent cAbs_ = null;
 
                     abstractloader.componentExists(ct.header.hash_component_UID, out cAbs_);
@@ -107,53 +107,17 @@ namespace br.ufc.pargo.hpe.backend
                     }
                     else
                     {
-
                         cAbs = (AbstractComponentFunctor)cAbs_;
                         IList<DGAC.database.Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
-                        if (true/*cList.Count == 0*/)
-                        {
-                            Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
-                            abstractloader.updateSources(ct, cAbs);
-                            exists = 0;
-                        }
-                        else
-                        {
-                            throw new Exception("DEPLOY ERROR: One or more concrete components already implement this abstract component.\n Updates are not allowed for keeping consistency.");
-                        }
+                        Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
+                        abstractloader.updateSources(ct, cAbs);
+                        exists = 0;
                     }
 
                     Console.Error.Write("Compiling sources ...");
 
                     ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
 					sendToCompile(infoCompile, userName, password, curDir, exists);
-					/*
-                    foreach (LoaderApp.InfoCompile interfaceToCompile in infoCompile)
-                    {
-                        int id_abstract = interfaceToCompile.id;
-                        string moduleName = interfaceToCompile.moduleName;
-                        string interfaceName = interfaceToCompile.unitId;
-						int partition_index = interfaceToCompile.partition_index;
-                        string sourceCode = interfaceToCompile.sourceCode;
-                        string cuid = interfaceToCompile.cuid;
-                        string library_path = interfaceToCompile.library_path;
-                        int outputType = interfaceToCompile.output_type;
-
-                        Console.Error.Write(moduleName + ", ");
-
-                        string publicKey = this.sendCompileCommandToWorker(library_path,
-                                                                           worker,
-                                                                           sourceCode,
-                                                                           moduleName,
-                                                                           interfaceToCompile.references,
-                                                                           outputType,
-                                                                           userName,
-                                                                           password,
-                                                                           curDir);
-
-                        if (!exists)
-                            idao.setPublicKey(id_abstract, interfaceName, partition_index, publicKey);
-                    }
-					 */
                     Console.Error.Write("ok ");
 
                     Connector.commitTransaction(); // if it is ok, commit ...
@@ -173,6 +137,8 @@ namespace br.ufc.pargo.hpe.backend
                     releaseManager(ch);
                     Connector.closeConnection();
                 }
+				
+				return cAbs != null ? cAbs.Id_abstract : -1;
             }
 			
 			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
@@ -209,18 +175,46 @@ namespace br.ufc.pargo.hpe.backend
 						
                     }
 			}
-
-            public void registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
+			
+			public void updateConfiguration(int id_abstract, byte[] hcl_data)
+			{
+                try
+                {
+                    Connector.openConnection();
+                    Connector.beginTransaction();
+					
+					AbstractComponentFunctor acf = acfdao.retrieve(id_abstract);
+					
+					string filename = acf.Library_path;
+					
+			        string path = Constants.PATH_TEMP_WORKER + filename + ".hcl";
+										
+			        FileUtil.saveByteArrayIntoFile(hcl_data, path);
+					
+				}				
+                catch (Exception e)
+                {
+					Console.Error.WriteLine("Rolling back transaction ! Exception: " + e.Message);
+					Console.Error.WriteLine(e.StackTrace);
+                    Connector.rollBackTransaction();
+                    throw e;
+                }
+                finally
+                {
+                    Connector.closeConnection();
+                }
+			}
+			
+            public int registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
             {
+                DGAC.database.Component cConc = null;
                 try
                 {
                     Connector.openConnection();
                     Connector.beginTransaction();
 
-
                     int exists = 2;
                     LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
-                    DGAC.database.Component cConc = null;
                     HashComponent cConc_ = null;
 
                     concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
@@ -261,6 +255,8 @@ namespace br.ufc.pargo.hpe.backend
                     Connector.closeConnection();
                     releaseManager(ch);
                 }
+				
+				return cConc != null ? cConc.Id_concrete : -1;
             }
 
             private string sendCompileCommandToWorker(string library_path, ManagerObject worker, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
@@ -826,11 +822,11 @@ namespace br.ufc.pargo.hpe.backend
                 int class_nargs = u.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 				
-		//		Console.WriteLine("assembly_string = "  + assembly_string);
-		//		Console.WriteLine("class_name = "  + class_name);
-		//		Console.WriteLine("class_nargs = " + class_nargs);
-		//		Console.WriteLine ("strType = " + strType);
-		//		Console.WriteLine ("actualParams.Length = " + actualParams.Length);
+				Console.WriteLine("assembly_string = "  + assembly_string);
+				Console.WriteLine("class_name = "  + class_name);
+				Console.WriteLine("class_nargs = " + class_nargs);
+				Console.WriteLine ("strType = " + strType);
+				Console.WriteLine ("actualParams.Length = " + actualParams.Length);
 				
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
@@ -840,18 +836,25 @@ namespace br.ufc.pargo.hpe.backend
 					System.Type ttt = actualParams[i];
 					if (ttt == null) 
 					{
-		//			   Console.WriteLine("PARAM (actualParams): NULL ---" + t);
+					   Console.WriteLine("PARAM (actualParams): NULL ---" + t);
 					   actualParams[i] = fetchTypeConstraint(u,i);					
 					}
 					else 
 					{
-		//			   Console.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
+					   Console.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
 					}
 				}
 				
-
-                System.Type closedT = actualParams.Length > 0 ? t.MakeGenericType(actualParams) : t;
+				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...1");
+				System.Type closedT = t;
+				if (actualParams.Length > 0)
+				{
+					Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...1.5 {0}",t==null);
+					closedT = t.MakeGenericType(actualParams);
+				}
+				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...2");
                 type = closedT.FullName;
+				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...3");
             }
 			
 			public static System.Type fetchTypeConstraint(br.ufc.pargo.hpe.backend.DGAC.database.Unit u, int i) 
@@ -978,8 +981,10 @@ namespace br.ufc.pargo.hpe.backend
                 Services services = ownerUnit.Services;
                 string instanceName = user_cid.getInstanceName();
 
+				Console.WriteLine("BEFORE GET PORT NONBLOCKING");
                 IUnit the_unit = (IUnit)services.getPortNonblocking(portName);
-
+				Console.WriteLine("AFTER GET PORT NONBLOCKING {0}", the_unit == null);
+				
                 if (the_unit == null)
                 {
                     // APPLY THE RESOLUTION ALGORITHM
@@ -987,7 +992,6 @@ namespace br.ufc.pargo.hpe.backend
                     br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
                     br.ufc.pargo.hpe.backend.DGAC.database.Component c;
                     InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
-				//	Console.WriteLine ("ic is null ?" + (ic==null) + ":" + ownerUnit.Id_abstract + "," + id_inner);
                     updateInnerComponentType(ownerUnit, ic);
                     AbstractComponentFunctorApplication acfaRef = BackEnd.acfadao.retrieve(ic.Id_functor_app);
                     c = resolveUnit(acfaRef, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop);
@@ -996,8 +1000,11 @@ namespace br.ufc.pargo.hpe.backend
                         throw new ConcreteComponentNotFoundException(acfaRef.Id_functor_app);
                     System.Type[] actualParams;
                     calculateActualParams(ownerUnit, acfaRef, id_interface, partition_index, out actualParams);
+					Console.WriteLine("STEP 8");
                     calculateGenericClassName(u, actualParams, out className);
 
+					Console.WriteLine("BEFORE INSTANTIATE");
+					
                     // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
                     HPETypeMap properties2 = new TypeMapImpl();
                     properties2[Constants.COMPONENT_KEY] = c.Library_path; // u.Id_concrete;
@@ -1005,9 +1012,10 @@ namespace br.ufc.pargo.hpe.backend
                     ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
 
                     // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
+					Console.WriteLine("CONNECTING {0}:{1} TO {2}:{3} ", user_cid.getInstanceName(), portName, provider_cid.getInstanceName(), Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
                     framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-			//Console.WriteLine("PROVIDER1: " + provider_cid.getInstanceName() + ":" + Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-			//Console.WriteLine("USER1: " + user_cid.getInstanceName() + ":" + portName);
+					Console.WriteLine("CONNECTED {0}:{1} TO {2}:{3} ", user_cid.getInstanceName(), portName, provider_cid.getInstanceName(), Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+					
 
 					
                 }
