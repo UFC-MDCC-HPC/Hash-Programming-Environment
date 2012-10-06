@@ -163,7 +163,7 @@ namespace br.ufc.pargo.hpe.connector.load
             
 				document.Load (xml);
             
-				XmlNode nodeComponent = document.SelectSingleNode ("hashComponent");
+				XmlNode nodeComponent = document.SelectSingleNode("hashComponent");
 				component.Package = nodeComponent.SelectSingleNode ("package").InnerText;
 				XmlNodeList usingNodeList = nodeComponent.SelectNodes ("using");
             
@@ -257,7 +257,7 @@ namespace br.ufc.pargo.hpe.connector.load
 					component.ExportActions = compNode.SelectSingleNode ("exportActions").InnerText.Equals ("true");
                
 					XmlNode typeNode = compNode.SelectSingleNode ("type");
-					uLoader.supplyTypeInformation (typeNode, component);
+					uLoader.supplyTypeInformation (typeNode, component, false);
                
 					componentList.Add (component);
 				}

@@ -87,7 +87,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
 			MetaHashComponent component = new MetaHashComponent ();
 			component.Id = generator.genId ();
-			supplyTypeInformation (node, component);
+			supplyTypeInformation (node, component, false);
          
 			return component;
 		}
@@ -95,7 +95,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		/*
       Este método é utilizado para preencher informacões adicionais de um componente hash.
       */
-		public void supplyTypeInformation (XmlNode typeNode, MetaHashComponent component)
+		public void supplyTypeInformation (XmlNode typeNode, MetaHashComponent component, bool isInner)
 		{
          
 			if (typeNode != null) {
@@ -106,30 +106,34 @@ namespace br.ufc.pargo.hpe.connector.load
 					component.Package = typeNode.SelectSingleNode ("package").InnerText;
 				}
 
-				XmlNodeList publicInnerNodeList = typeNode.SelectNodes ("publicInnerComponent");
-				IEnumerator ienum = (IEnumerator)publicInnerNodeList.GetEnumerator ();
-				List<MetaInnerComponent> publicInnerList = new List<MetaInnerComponent> ();
-				bool ok;
-            
-				while (ienum.MoveNext()) {   
-					XmlNode innerNode = (XmlNode)ienum.Current;
-					ok = false;
-               
-					foreach (MetaInnerComponent mic in innerComponents) {
-						if (mic.Identifier.Equals (innerNode.InnerText)) {
-							publicInnerList.Add (mic);
-							ok = true;
-							break;
+				if (isInner) {
+					XmlNodeList publicInnerNodeList = typeNode.SelectNodes ("publicInnerComponent");
+					IEnumerator ienum = (IEnumerator)publicInnerNodeList.GetEnumerator ();
+					List<MetaInnerComponent> publicInnerList = new List<MetaInnerComponent> ();
+					bool ok;
+	            
+					while (ienum.MoveNext()) {   
+						XmlNode innerNode = (XmlNode)ienum.Current;
+						ok = false;
+	               
+						if (innerComponents != null) {
+							foreach (MetaInnerComponent mic in innerComponents) {
+								if (mic.Identifier.Equals (innerNode.InnerText)) {
+									publicInnerList.Add (mic);
+									ok = true;
+									break;
+								}
+							}
+						}
+	               
+						if (!ok) {
+							throw new Exception ("a variável " + innerNode.InnerText + " não é um inner component válido.");
 						}
 					}
-               
-					if (!ok) {
-						throw new Exception ("a variável " + innerNode.InnerText + " não é um inner component válido.");
+	            
+					if (publicInnerList.Count > 0) {
+						component.InnerComponents = publicInnerList;
 					}
-				}
-            
-				if (publicInnerList.Count > 0) {
-					component.InnerComponents = publicInnerList;
 				}
 			}
 		}
