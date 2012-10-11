@@ -14,29 +14,44 @@ import java.rmi.RemoteException;
 import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 
 public class HPEPlatform {
 	
-	public static String deploy(String urlWS, HComponent c, String userName, String password, String curDir) throws IOException, ServiceException {
-
+	public static String deploy(String urlWS, HComponent c, String userName, String password, String curDir) throws IOException, ServiceException 
+	{
 		String fileName = c.getLocalLocation();
-	
-		java.io.File file = HComponentFactoryImpl.getFileInWorkspace((new Path(fileName)).setDevice(null));
 		
-		InputStream is = new FileInputStream(file);
-	
-		byte[] t = new byte[is.available()];
-		
+		IPath filePath = new Path(fileName);
+		java.io.File file = HComponentFactoryImpl.getFileInWorkspace(filePath.setDevice(null));
+				
+		InputStream is = new FileInputStream(file);	
+		byte[] t = new byte[is.available()];		
 		is.read(t);
-			
+		
+		IPath filePathHCL = filePath.removeFileExtension().addFileExtension("hcl");
+		java.io.File fileHCL = HComponentFactoryImpl.getFileInWorkspace(filePathHCL.setDevice(null));
+
+		byte[] t_hcl = null;
+		if (fileHCL.exists())
+		{
+			InputStream is_hcl = new FileInputStream(fileHCL);	
+			t_hcl = new byte[is_hcl.available()];		
+			is_hcl.read(t_hcl);
+		}		
+		
 		BackEnd_WSLocator server = new BackEnd_WSLocator();
 		server.setBackEnd_WSSoapEndpointAddress(urlWS);
 		
 		BackEnd_WSSoap backend = server.getBackEnd_WSSoap();
 		
-		String result = backend.deployHashComponent(t,userName, password, curDir);
+		String result = null;
+		if (t_hcl != null)
+			result = backend.deployHashConfiguration(t, t_hcl, userName, password, curDir);
+		else
+			result = backend.deployHashComponent(t, userName, password, curDir);
 
 		return result;
 			

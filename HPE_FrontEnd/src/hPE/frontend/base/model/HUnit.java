@@ -56,52 +56,48 @@ public abstract class HUnit extends HPrimUnit
 	{
 		HUnit this_ = this;
 		
-		List<HUnitSlice> ports = new ArrayList<HUnitSlice>();
+		Map<String, HUnitSlice> ports = new HashMap<String, HUnitSlice>();
 		HComponent c0 = (HComponent) this_.getConfiguration();
 		
-		{
-			HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
-			
-			if (c0x != c0) {
-			   int index = c0.getUnits().indexOf(this);
-			   this_ = (HUnit) c0x.getUnits().get(index);
-			}
-			 
-			 List<HUnit> units = new ArrayList<HUnit>();
-			
-	  	     for (HUnitSlice us : this_.getSlices()) 
-	  	     {  	    	 
-	  	    	 HUnit u = (HUnit) us.getBinding().getEntry();
-	  	    	 
-	  	    	 HComponent c = (HComponent) u.getConfiguration();
-	  	    	 
-	  	    	 HComponent cTop = (HComponent) c.getTopConfiguration();
-	  	    	HComponent c_  = cTop.getInnerComponentByName(c.getRef());
-	  	    	 
-	  	    	 //HComponent c_ = cTop.getExposedComponentByName(c.getRef());
-	  	    	 
-	  	    	 
-	  	    	 // if ()	  	    	 
-	  	    	 {	  	    		
-		  	    	 if (c_ != null && (c.isPublic() || c.IsExposedFalsifiedContextTop())) 
-		  	    	 {
-		  	    		 ports.add(us);
-		  	    		 units.add(u);
-		  	    	 }
-		  	    	 
-		  	    	 for (HUnitSlice us_ : u.getPorts()) 
-		  	    	 {
-		  	    		 HUnit u_ = (HUnit)us_.getBinding().getEntry();
-		  	    		 if (!units.contains(u_)) 
-		  	    		 {
-		  	    			 ports.add(us_);
-		  	    		     units.add(u_);
-		  	    		 }
-		  	    	 }  	    	 
-	  	    	 }
-	  	     }
+		HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
+		
+		if (c0x != c0) {
+		   int index = c0.getUnits().indexOf(this);
+		   this_ = (HUnit) c0x.getUnits().get(index);
 		}
-		return ports; 
+		 
+		 List<HUnit> units = new ArrayList<HUnit>();
+		
+  	     for (HUnitSlice us : this_.getSlices()) 
+  	     {  	    	 
+  	    	 HUnit u = (HUnit) us.getBinding().getEntry();
+  	    	 
+  	    	 HComponent c = (HComponent) u.getConfiguration();
+  	    	 
+  	    	 HComponent cTop = (HComponent) c.getTopConfiguration();
+  	    	 HComponent c_  = cTop.getInnerComponentByName(c.getRef());
+  	    	 
+  	    	 if (c_ != null && (c.isPublic() || c.IsExposedFalsifiedContextTop())) 
+  	    	 {
+  	    		 ports.put(c.getRef(), us);
+  	    		 units.add(u);
+  	    	 }
+  	    	 
+  	    	 for (HUnitSlice us_ : u.getPorts()) 
+  	    	 {
+  	    		 HUnit u_entry = (HUnit) us_.getBinding().getEntry();
+  	    		 HComponent c_entry = (HComponent) u_entry.getConfiguration();
+  	    		 String pRef = c_entry.getRef();
+  	    		 if (!units.contains(u_entry) && !ports.containsKey(pRef)) 
+  	    		 {
+  	    			 ports.put(pRef, us_);
+  	    		     units.add(u_entry);  	    		     
+  	    		 }
+  	    	 }  	    	 
+  	     }
+  	    List<HUnitSlice> unit_list = new ArrayList<HUnitSlice>();
+  	    unit_list.addAll(ports.values());
+		return unit_list; 
     } 
 	
 
@@ -163,7 +159,7 @@ public abstract class HUnit extends HPrimUnit
     }
     
 
-    public Map<HUnitSlice,List<HPort>> calculatePorts() throws HPEAbortException {
+    public Map<HUnitSlice,List<HPort>> calculatePorts_OLD() throws HPEAbortException {
     	
 	    Map<HUnitSlice,List<HPort>> ports = new HashMap<HUnitSlice,List<HPort>>();
 	
@@ -193,6 +189,58 @@ public abstract class HUnit extends HPrimUnit
 	    return ports;
     }
     
+    public Map<HUnitSlice,List<HPort>> calculatePorts() throws HPEAbortException {
+    	
+	    Map<HUnitSlice,List<HPort>> ports = new HashMap<HUnitSlice,List<HPort>>();
+	
+	    Map<HUnitSlice,List<HUnitSlice>> lll = this.getExposedSlices();
+
+	    Map<IHUnit,HPort> ll = new HashMap<IHUnit,HPort>();
+	    
+	    Map<String, IHUnit> memory = new HashMap<String, IHUnit>();
+	    
+	    for (Entry<HUnitSlice,List<HUnitSlice>> e : lll.entrySet()) 
+	    {
+	    	memory.clear();
+	    	
+	    	HUnitSlice k = e.getKey(); 
+	    	List<HUnitSlice> ss = e.getValue();
+	    	List<HPort> ps = new ArrayList<HPort>();
+	    	for (HUnitSlice s : ss) {
+	    		HPort p = null;	 
+	    		//checkFusionConsistency(s);
+	    		IHUnit entry = s.getBinding().getEntry();
+	    		
+	    		HComponent c = (HComponent) entry.getConfiguration();
+	    		HComponent cTop = (HComponent) c.getTopConfiguration();
+	    		String sRef = c.getRef();
+				List<HComponent> fusion_components = cTop.getFusionComponents(sRef);
+				if (fusion_components != null && fusion_components.contains(c)) 
+				{
+					HComponent c_prime = fusion_components.get(0);
+					entry = c_prime.getUnitByName(entry.getName2());
+				}
+	    	
+				
+				if (!memory.containsKey(sRef))
+				{
+					memory.put(c.getRef(), entry);
+		    		if (ll.containsKey(entry)) {
+		    			p = ll.get(entry);
+		    		} else {
+		    			p = new HPort();
+		    			ll.put(entry, p);
+		    		}
+		    		p.addInterfaceSlice(null, (HInterfaceSlice)s.getInterfaceSlice());
+		    		if (!ps.contains(p)) ps.add(p);
+				}
+	    	}
+            ports.put(k, ps);	    	
+	    }
+	    
+	    return ports;
+    }
+
     private void checkFusionConsistency(HUnitSlice s) throws HPEAbortException {
     	HBinding bb = s.getBinding();
     	int k = bb.getCloneId();

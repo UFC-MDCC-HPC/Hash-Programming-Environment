@@ -66,9 +66,9 @@ public class HBESynthesizerCSharpConcrete extends hPE.frontend.base.codegen.c_sh
     		
         	// activate method signature
 			String userActivateMethod = "public override int " + ((HActivateInterface)i).getActivateMethodName() + "() { \n";			
-	        HBEProcedure procedure = p2p.getMainProcedure(); 		
-		    HBECommandBlock block = procedure.getMainBlock();		    
-		    userActivateMethod += translateBlockToC(1,block);
+	        //HBEProcedure procedure = p2p.getMainProcedure(); 		
+		    //HBECommandBlock block = procedure.getMainBlock();		    
+		    //userActivateMethod += translateBlockToC(1,block);
 		    userActivateMethod += "\n\t return 0\n";
 		    userActivateMethod += "}\n"; // end activate method
     		super.addUserDeclaration(userActivateMethod);

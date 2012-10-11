@@ -1,6 +1,5 @@
 package hPE.frontend.base.codegen.c_sharp;
 
-import hPE.frontend.base.codegen.HBEAbstractFile;
 import hPE.frontend.base.model.HHasExternalReferences;
 
 public class HBESourceCSharpMainDefinition extends HBESourceCSharpClassDefinition {

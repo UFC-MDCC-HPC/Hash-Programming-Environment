@@ -196,7 +196,10 @@ public class HPort extends HVisualElement implements IHasInterface, INamed {
 
 	@Override
 	public String getName() {
-		return this.getMainSlice().getName();
+		//return this.getMainSlice().getName();
+		HComponent c = (HComponent) this.getMainSlice().getConfiguration();
+		String sName = c.getRef();
+		return sName;
 	}
 
 	@Override

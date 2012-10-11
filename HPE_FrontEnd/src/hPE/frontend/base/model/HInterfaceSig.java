@@ -172,7 +172,8 @@ public class HInterfaceSig implements Serializable, IHasColor  {
     	
     	Map<HInterfaceSlice,List<HPort>> ports2 = new HashMap<HInterfaceSlice,List<HPort>>();
     	for (Entry<HUnitSlice,List<HPort>> e : ports1.entrySet()) {
-    		ports2.put((HInterfaceSlice)e.getKey().getInterfaceSlice(),e.getValue());
+    		HInterfaceSlice slice = (HInterfaceSlice) e.getKey().getInterfaceSlice();    		
+    		ports2.put(slice,  e.getValue());
     	}
     	
     	return ports2;

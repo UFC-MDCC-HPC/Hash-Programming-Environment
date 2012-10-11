@@ -104,7 +104,7 @@ public class ConfigurationEditPart<ModelType extends HComponent,
 		Collection<HComponent> exposed_components = model.getExposedComponents();
 		for (HComponent c : exposed_components) {
 			List<HComponent> fusion_components = model.getFusionComponents(c.getRef());
-			if (fusion_components == null || fusion_components.get(0) == c) 
+			if (fusion_components == null || !fusion_components.contains(c) || fusion_components.get(0) == c) 
 			{
 				if (!children.contains(c) && !c.isHiddenInnerComponent()) 
 					children.add(c);

@@ -3,6 +3,7 @@ package hPE;
 import hPE.frontend.backend.HPEPlatform;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.connector.xml.XMLConfigurationGenerator;
+import hPE.ui.preferences.PreferenceConstants;
 import hPE.xml.factory.HComponentFactory;
 import hPE.xml.factory.HComponentFactoryImpl;
 
@@ -86,7 +87,8 @@ public class HPEResourceNavigator extends ResourceNavigator {
                                     try{
 									    // Open the file that is the first 
 									    // command line parameter
-									    FileInputStream fstream = new FileInputStream("/home/heron/to_deploy.txt");
+                                    	String path = HPEProperties.get(PreferenceConstants.HPE_HOME) + Path.SEPARATOR + "to_deploy.txt";
+									    FileInputStream fstream = new FileInputStream(path);
 									    // Get the object of DataInputStream
 									    in = new DataInputStream(fstream);
 									    BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -134,7 +136,7 @@ public class HPEResourceNavigator extends ResourceNavigator {
 						   public void run()  {
 							        DataInputStream in = null;
                                     try{
-								    	IPath pathIn_output = pathIn.removeFileExtension().addFileExtension("xml");
+								    	IPath pathIn_output = pathIn.removeFileExtension().addFileExtension("hcl");
                                     	
 										java.io.File file = new File(pathIn_output.toOSString());
 										URI uri = URI.createFileURI(pathIn.toOSString());

@@ -337,15 +337,15 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
     }
     
 	public String getName() {		
-		if ((this.getInterfaceSlice() == null || this.name == null) && this.getBinding() != null)  
+		//if ((this.getInterfaceSlice() == null || this.name == null) && this.getBinding() != null)  
 			//return this.getBinding().getEntry().getName2();
 			return this.getBinding().getEntry().getConfiguration().getRef();
-		else if (this.getInterfaceSlice() != null) 
-			return this.getInterfaceSlice().getName();
-		else {	
-			System.err.print("Slice name not found (" + this.name + ")");
-			return "";
-		}
+		//else if (this.getInterfaceSlice() != null) 
+		//	return this.getInterfaceSlice().getName();
+		//else {	
+		//	System.err.print("Slice name not found (" + this.name + ")");
+		//	return "";
+		//}
 					
 	}
 

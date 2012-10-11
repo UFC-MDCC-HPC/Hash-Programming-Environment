@@ -499,7 +499,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	{
 		Collection<HComponent> cs = new ArrayList<HComponent>();
 
-		for (HComponent c : this.getComponents()) {
+		for (HComponent c : this.getComponents()) 
+		{
 			HComponent cx = (HComponent) (c.getSupplier() == null ? c : c.getSupplier());
 			if (!c.isHiddenInnerComponent()) {
 				
@@ -517,9 +518,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				} else {
 					for (HComponent cx_ : cx.getExposedComponents()) {
 						String n1 = cx_.getSavedName().get(cx);
-						HComponent cx_prime = c.getInnerComponent(n1);
+						HComponent cx_prime = cx.getInnerComponent(n1);
+						cx_prime = cx_prime == null ? cx_ : cx_prime;						
 
-						if (!cs.contains(cx_prime) && (cx_prime == null || cx_prime.isPublic()))
+						if (cx_prime != null && !cs.contains(cx_prime) && cx_prime.isPublic())
 							cs.add(cx_prime);
 					}
 				}
@@ -528,12 +530,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		}
 
 		List<HComponent> cs_ = new ArrayList<HComponent>();
-		for (HComponent c : cs) 
+		if (cs != null) 
 		{
-			List<HComponent> fusion_components = this.getFusionComponents(c.getRef());
-			if (fusion_components == null || fusion_components.get(0) == c) 
+			for (HComponent c : cs) 
 			{
-				cs_.add(c);
+				List<HComponent> fusion_components = this.getFusionComponents(c.getRef());
+				if (fusion_components == null || !fusion_components.contains(c) || fusion_components.get(0) == c ) 
+				{
+					cs_.add(c);
+				}
 			}
 		}
 		
@@ -2426,6 +2431,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			
 			Map<String, List<HComponent>> free_parameter_list = this.getFreeParameters(this, this.BY_VARID);
 			List<HComponent> supplied_list = free_parameter_list.get(varName);
+			if (supplied_list != null)
 			for (HComponent supplied : supplied_list)
 					unify(model,supplied,toSupply);
 			
@@ -3105,10 +3111,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public boolean allSupplied() {
 		boolean b = true;
-		for (Entry<String, List<HComponent>> e : this.getParameters()
-				.entrySet()) {
-			for (HComponent c : e.getValue()) {
-				b = b && c.getSupplier() != null;
+		for (Entry<String, List<HComponent>> e : this.getParameters().entrySet()) 
+		{
+			for (HComponent c : e.getValue()) 
+			{
+				b = b && (c.getSupplier() != null || c.getWhoISupply() != null);
 			}
 		}
 		return b;

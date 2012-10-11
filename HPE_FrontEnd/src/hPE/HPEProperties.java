@@ -47,6 +47,7 @@ public class HPEProperties implements IPropertyChangeListener {
 	}
 
 	private void initialize() {
+		map.put(HPE_HOME, store.getString(HPE_HOME));
 		map.put(MONO_BIN_PATH, store.getString(MONO_BIN_PATH));
 		map.put(CACHE_PATH, store.getString(HPE_HOME) + CACHE_DIR);
 		map.put(LIB_PATH, store.getString(HPE_HOME) + LIB_DIR);

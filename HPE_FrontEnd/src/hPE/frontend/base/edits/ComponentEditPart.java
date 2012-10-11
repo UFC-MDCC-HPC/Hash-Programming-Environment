@@ -232,7 +232,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 			for (HComponent x_ : c.getExposedComponents()) 
 			{
 				List<HComponent> fusion_components = cTop.getFusionComponents(x_.getRef());
-				HComponent x = fusion_components == null ? x_ : fusion_components.get(0);
+				HComponent x = fusion_components == null || !fusion_components.contains(x_) ? x_ : fusion_components.get(0);
 				
 				List<HComponent> cParents = x_.getTopParentConfigurations();
 				if (cParents.contains(c)) 
@@ -284,7 +284,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 		HComponent cTop = (HComponent) c.getTopConfiguration();
 		
 		List<HComponent> cList = cTop.getFusionComponents(c.getRef());
-		if (cList == null || cList.get(0) == c)
+		if (cList == null || !cList.contains(c) || cList.get(0) == c)
 		{
 			if (!c.isDirectSonOfTheTopConfiguration()) 
 			{			

@@ -106,7 +106,7 @@ public class XMLConfigurationGenerator {
 			String cSuperTypeName = cSuper.getComponentName();
 			String cSuperPackage = cSuper.getPackagePath().toPortableString();
 			if (!usingsList.contains(cSuperPackage)) usingsList.add(cSuperPackage);
-			cSuperType.setComponentName(cSuperTypeName);
+			cSuperType.setComponentName(cSuperPackage + "." + cSuperTypeName);
 			//cSuperType.setPackage(cSuperPackage);
 			
 			xmlConfig_saveParameters(cSuper, cSuperType.getParameter(), factory, usingsList);
@@ -133,7 +133,7 @@ public class XMLConfigurationGenerator {
 		allCs.addAll(c.getComponents());
 		
 		for (HComponent ic_ : allCs)
-			if (!ic_.isHiddenInnerComponent())
+			if (!ic_.isHiddenInnerComponent() && ic_ != c.getSuperType())
 		{	
 			HComponent ic = ic_.getSupplier() != null ? ic_.getSupplier() : ic_;	
 				
@@ -203,15 +203,16 @@ public class XMLConfigurationGenerator {
 				pVariable = par_c.getVariableName((HComponent) c.getTopConfiguration());				
 			}
 			
-			if (!(par_c.representsOpenParameter() && cTop.getVars().contains(pVariable)))
-			{
+			//if (!(par_c.representsOpenParameter() && cTop.getVars().contains(pVariable)))
+			//{
 				pConstraint = factory.createHpeparameterType();
-				pConstraint.setComponentConstraint(par_c.getComponentName());
 				String pPackage = par_c.getPackagePath().toPortableString();
+				pConstraint.setComponentConstraint(pPackage + "." + par_c.getComponentName());
+				
 				if (!usingsList.contains(pPackage)) usingsList.add(pPackage);
 				EList<Hpeparameter> inner_parameters = pConstraint.getParameter();
 				xmlConfig_saveParameters(par_c, inner_parameters, factory, usingsList);
-			}			
+			//}			
 			
 			parameter.add(saveParameter(pConstraint, pIdentifier, pVariable, factory));
 		}

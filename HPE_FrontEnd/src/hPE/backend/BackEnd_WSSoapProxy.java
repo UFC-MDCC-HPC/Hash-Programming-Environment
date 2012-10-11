@@ -50,6 +50,12 @@ public class BackEnd_WSSoapProxy implements hPE.backend.BackEnd_WSSoap {
     return backEnd_WSSoap.deployHashComponent(data, userName, password, curDir);
   }
   
+  public java.lang.String deployHashConfiguration(byte[] data, byte[] hcl_data, java.lang.String userName, java.lang.String password, java.lang.String curDir) throws java.rmi.RemoteException{
+	    if (backEnd_WSSoap == null)
+	      _initBackEnd_WSSoapProxy();
+	    return backEnd_WSSoap.deployHashConfiguration(data, hcl_data, userName, password, curDir);
+	  }
+  
   public byte[] readEnvironment() throws java.rmi.RemoteException{
     if (backEnd_WSSoap == null)
       _initBackEnd_WSSoapProxy();
