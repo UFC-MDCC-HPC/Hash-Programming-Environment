@@ -1,6 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/UnitImpl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/LoaderComponent.cs">
     <Files>
       <File FileName="../DGAC/connector/wrapper/WrapperGenerator.cs" Line="150" Column="1" />
       <File FileName="TestWrapperGenerator/Main.cs" Line="22" Column="4" />
@@ -12,19 +12,15 @@
       <File FileName="../DGAC/connector/config/ConfigurationManager.cs" Line="79" Column="20" />
       <File FileName="../DGAC/connector/config/IConfigurationManager.cs" Line="12" Column="21" />
       <File FileName="../DGAC/connector/load/XmlLoader.cs" Line="16" Column="17" />
+      <File FileName="../DGAC/LoaderAbstractComponent.cs" Line="332" Column="77" />
+      <File FileName="../DGAC/LoaderComponent.cs" Line="203" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="DGAC" expanded="True">
-            <Node name="base" expanded="True">
-              <Node name="UnitImpl.cs" selected="True" />
-            </Node>
-            <Node name="connector" expanded="True">
-              <Node name="component" expanded="True" />
-              <Node name="config" expanded="True" />
-              <Node name="load" expanded="True" />
-              <Node name="wrapper" expanded="True" />
+            <Node name="deploy" expanded="True">
+              <Node name="LoaderComponent.cs" selected="True" />
             </Node>
           </Node>
           <Node name="HPERun" expanded="True" />
