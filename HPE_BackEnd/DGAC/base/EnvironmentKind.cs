@@ -15,7 +15,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 	}
 	
-	public abstract class Environment : Unit {
+	public abstract class Environment : Unit, IEnvironmentKind {
 	   
 	}
 		

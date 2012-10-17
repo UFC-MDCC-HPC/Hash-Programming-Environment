@@ -16,7 +16,7 @@ namespace br.ufc.pargo.hpe.kinds
 		
 	}
 	
-	public abstract class Qualifier : Unit {
+	public abstract class Qualifier : Unit, IQualifierKind {
 	   
 	}	
 }

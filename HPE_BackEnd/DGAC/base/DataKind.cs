@@ -15,7 +15,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 	}
 	
-	public abstract class DataStructure : Unit {
+	public abstract class DataStructure : Unit, IDataStructureKind {
 	   
 	}
 	

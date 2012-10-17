@@ -160,10 +160,10 @@ namespace br.ufc.pargo.hpe.connector.load
 				component.Id = generator.genId ();
             
 				XmlDocument document = new XmlDocument ();
-            
+
 				document.Load (xml);
             
-				XmlNode nodeComponent = document.SelectSingleNode("hashComponent");
+				XmlNode nodeComponent = document.SelectSingleNode("component:hashComponent");
 				component.Package = nodeComponent.SelectSingleNode ("package").InnerText;
 				XmlNodeList usingNodeList = nodeComponent.SelectNodes ("using");
             

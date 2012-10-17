@@ -32,10 +32,10 @@ public abstract class IConnectorImpl : Activate, IConnector
 	public IConnectorImpl() 
 	{ 
          //TODO eu preciso que as propriedades rank e id_interface de Unit fiquem protected.
-         int rank = 0;
-         string id_interface = "unica";
+         //int rank = 0;
+         //string id_interface = "unica";
 
-         configurationManager = new ConfigurationManager(ref rank, ref id_interface);
+         configurationManager = new ConfigurationManager(this);
 	} 
 		
 	protected IConfigurationManager configurationManager;
@@ -143,35 +143,32 @@ public abstract class IConnectorImpl : Activate, IConnector
 	 return result;
 	}
 		
-	public abstract void main();	
-		
-	public int go() 
+	public new int go() 
 	{
 		try 
-		{
-			String hcl_string = null;
-				
+		{				
 			string path = Constants.PATH_TEMP_WORKER + this.QualifiedComponentTypeName + ".hcl";
 				
-			using (StreamReader sr = new StreamReader(path))
-		    {
-		        hcl_string = sr.ReadToEnd();                
-		    }
-		
-			Console.WriteLine(hcl_string);	
+			ConfigurationPort.LoadComponent(path);	
 				
-			ConfigurationPort.LoadComponent(hcl_string);	
-				
-			perform_action("main");	
+			base.go ();
+			
 		}
 		catch (Exception e)
 		{
-			Console.WriteLine("Error reading, loading or execution the configuration file.");
+			Console.WriteLine("Error reading, loading or execution the configuration file. ");
+			Console.WriteLine("EXCEPTION : " + e.Message);
+			if (e.InnerException != null) Console.WriteLine("INNER EXCEPTION" + e.InnerException.Message);
 			throw e;
 		}
 			
-		return 0;
+		return 0;	
 	}
+		
+	public override void main ()
+	{
+		 perform_action("main");	
+	}	
 		
 }
 

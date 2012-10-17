@@ -14,11 +14,34 @@ namespace br.ufc.pargo.hpe.kinds
 
     public interface IActivateKind : IUnit, GoPort
 	{	
+		void main();
 	}
 	
+	
 	//[Serializable]
-	public abstract class Activate : Unit {
-	   
+	public abstract class Activate : Unit, IActivateKind
+	{
+	    
+		public int go()
+		{
+			try 
+			{
+				this.main();
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine("Error in execution (go): {0}", e.Message);
+			}
+			finally
+			{
+				
+			}
+			
+			return 0;
+		}		
+		
+		public abstract void main ();
+
 	}	
 	
 }

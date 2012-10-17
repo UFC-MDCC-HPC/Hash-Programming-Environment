@@ -15,7 +15,7 @@ namespace br.ufc.pargo.hpe.kinds
 	{
 	}
 	
-	public abstract class Synchronizer : Unit {
+	public abstract class Synchronizer : Activate, ISynchronizerKind {
 	   
 	}
 	

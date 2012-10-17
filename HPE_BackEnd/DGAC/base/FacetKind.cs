@@ -9,7 +9,7 @@ namespace br.ufc.pargo.hpe.kinds
     {
     }
 
-    public abstract class Facet : Unit
+    public abstract class Facet : Unit, IFacetKind
     {
 
     }

@@ -30,11 +30,7 @@ public class IConnectorImpl : BaseIConnectorImpl, IConnector
 	 get { return null;}
 	}
 	
-	
-	public override int go() {
-	 return perform_action("go");
-	}
-	
+		
 	/*
 	protected void linkEntities() {
 	 if(configurationManager != null && configurationManager.Unit != null && !configurationManager.Unit.IsLinked) {

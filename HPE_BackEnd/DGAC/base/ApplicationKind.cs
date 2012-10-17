@@ -18,7 +18,7 @@ namespace br.ufc.pargo.hpe.kinds
     }
 	
 	//[Serializable]
-    public abstract class Application : Computation
+    public abstract class Application : Computation, IApplicationKind
     {
 /*        private MPI.Intracommunicator local_comm = null;
 

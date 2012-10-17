@@ -17,7 +17,7 @@ namespace br.ufc.pargo.hpe.kinds
 	}
 	
 	//[Serializable]
-	public abstract class Computation : Unit {
+	public abstract class Computation : Activate, IComputationKind {
 	   
 	}	
 	

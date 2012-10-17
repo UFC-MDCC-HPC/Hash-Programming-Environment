@@ -5,11 +5,7 @@ namespace br.ufc.pargo.hpe.kinds
 {
 
 
-    public interface IDomainKind : IUnit
-    {
-    }
-
-    public abstract class Domain : Unit
+    public interface IDomainKind : IUnit 
     {
 
     }

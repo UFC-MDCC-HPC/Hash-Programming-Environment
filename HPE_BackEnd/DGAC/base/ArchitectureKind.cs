@@ -16,7 +16,7 @@ namespace br.ufc.pargo.hpe.kinds
 		 
 	}
 	
-	public abstract class Architecture : Unit {
+	public abstract class Architecture : Unit, IArchitectureKind {
 	   
 	}
 }

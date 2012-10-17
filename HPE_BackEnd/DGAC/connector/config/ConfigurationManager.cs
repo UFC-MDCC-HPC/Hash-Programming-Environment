@@ -15,6 +15,7 @@ using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using br.ufc.pargo.hpe.connector;
+using br.ufc.pargo.hpe.basic;
 
 namespace br.ufc.pargo.hpe.connector.config
 {
@@ -55,11 +56,12 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		protected List<ExecutionStateEvaluation> evaluations = null;
 		protected ReconfigurationRequest request = null;
-      
-		public ConfigurationManager (ref int index, ref string unitName)
+
+		private IUnit the_unit = null;
+		
+		public ConfigurationManager (IUnit the_unit)
 		{
-			this.index = index;
-			this.unitName = unitName;
+			this.the_unit = the_unit;
          
 			this.waiting = this.reconfiguring = false;
 			resetEvent = new System.Threading.ManualResetEvent (false);
@@ -72,9 +74,15 @@ namespace br.ufc.pargo.hpe.connector.config
 		public void LoadComponent (string xml)
 		{
 			this.loader = new XmlLoader ();
+							
 			this.application = loader.loadComponent (xml);
          
-			foreach (MetaUnit u in application.Units.Values) {
+			this.unitName = the_unit.Id_unit;
+			this.index = the_unit.PartitionIndex;
+			
+			foreach (MetaUnit u in application.Units.Values) 
+			{
+				Console.WriteLine("u.Name={0}, this.unitName={1}",u.Name, this.unitName);
 				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
 					u.Index = this.index;

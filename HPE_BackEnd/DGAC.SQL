@@ -1,5 +1,28 @@
-﻿DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctor`;
-CREATE TABLE  `hashmodel`.`abstractcomponentfunctor` (
+-- MySQL dump 10.13  Distrib 5.5.24, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: hashmodel
+-- ------------------------------------------------------
+-- Server version	5.5.24-0ubuntu0.12.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `abstractcomponentfunctor`
+--
+
+DROP TABLE IF EXISTS `abstractcomponentfunctor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `abstractcomponentfunctor` (
   `id_functor_app_supertype` int(11) DEFAULT NULL,
   `library_path` varchar(150) DEFAULT NULL,
   `id_abstract` int(11) NOT NULL,
@@ -8,132 +31,63 @@ CREATE TABLE  `hashmodel`.`abstractcomponentfunctor` (
   PRIMARY KEY (`id_abstract`),
   UNIQUE KEY `UID` (`hash_component_UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctorapplication`;
-CREATE TABLE  `hashmodel`.`abstractcomponentfunctorapplication` (
+--
+-- Table structure for table `abstractcomponentfunctorapplication`
+--
+
+DROP TABLE IF EXISTS `abstractcomponentfunctorapplication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `abstractcomponentfunctorapplication` (
   `id_functor_app` int(11) NOT NULL,
   `id_abstract` int(11) NOT NULL,
+  `id_functor_app_next` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id_functor_app`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`abstractcomponentfunctorparameter`;
-CREATE TABLE  `hashmodel`.`abstractcomponentfunctorparameter` (
+--
+-- Table structure for table `abstractcomponentfunctorparameter`
+--
+
+DROP TABLE IF EXISTS `abstractcomponentfunctorparameter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `abstractcomponentfunctorparameter` (
   `id_parameter` varchar(30) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   `bounds_of` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_parameter`,`id_abstract`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`component`;
-CREATE TABLE  `hashmodel`.`component` (
+--
+-- Table structure for table `component`
+--
+
+DROP TABLE IF EXISTS `component`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `component` (
   `library_path` varchar(150) NOT NULL DEFAULT '' COMMENT 'the package where the component is placed.',
   `id_concrete` int(11) NOT NULL,
   `id_concrete_supertype` int(11) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `hash_component_UID` varchar(320) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id_concrete`),
-  UNIQUE KEY `UID` (`hash_component_UID`)
+  PRIMARY KEY (`id_concrete`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`enumeration_inner`;
-CREATE TABLE  `hashmodel`.`enumeration_inner` (
-  `id_abstract` int(11) NOT NULL DEFAULT '0',
-  `id_enumerator` varchar(255) NOT NULL,
-  `id_inner` varchar(40) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_abstract`,`id_enumerator`,`id_inner`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Table structure for table `innercomponent`
+--
 
-DROP TABLE IF EXISTS `hashmodel`.`enumeration_interface`;
-CREATE TABLE  `hashmodel`.`enumeration_interface` (
-  `id_abstract` int(11) NOT NULL AUTO_INCREMENT,
-  `id_enumerator` varchar(255) NOT NULL,
-  `id_interface` varchar(40) NOT NULL DEFAULT '"',
-  PRIMARY KEY (`id_abstract`,`id_enumerator`,`id_interface`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumeration_item_concrete_inner`;
-CREATE TABLE  `hashmodel`.`enumeration_item_concrete_inner` (
-  `id_concrete` int(11) NOT NULL AUTO_INCREMENT,
-  `id_inner` varchar(20) NOT NULL,
-  `id_enumerator` varchar(255) NOT NULL DEFAULT '',
-  `value` int(11) NOT NULL DEFAULT '0',
-  `id_index` int(11) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`id_concrete`,`id_inner`,`id_index`,`id_enumerator`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumeration_item_unit`;
-CREATE TABLE  `hashmodel`.`enumeration_item_unit` (
-  `id_concrete` int(11) NOT NULL AUTO_INCREMENT,
-  `id_unit` varchar(40) NOT NULL DEFAULT '',
-  `id_enumerator` varchar(255) NOT NULL DEFAULT '',
-  `value` int(11) NOT NULL DEFAULT '0',
-  `id_index` int(11) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`id_concrete`,`id_unit`,`id_index`,`id_enumerator`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumeration_item_unit_slice`;
-CREATE TABLE  `hashmodel`.`enumeration_item_unit_slice` (
-  `id_concrete` int(11) NOT NULL AUTO_INCREMENT,
-  `id_inner` varchar(40) NOT NULL DEFAULT '',
-  `id_index_inner` int(11) NOT NULL DEFAULT '0',
-  `id_interface_slice` varchar(40) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
-  `id_enumerator` varchar(255) NOT NULL DEFAULT '',
-  `value` int(11) NOT NULL DEFAULT '0',
-  `id_index` int(11) NOT NULL DEFAULT '-1',
-  `split_replica` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_concrete`,`id_inner`,`id_index_inner`,`id_interface_slice`,`split_replica`,`id_index`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumeration_slice`;
-CREATE TABLE  `hashmodel`.`enumeration_slice` (
-  `id_abstract` int(11) NOT NULL DEFAULT '0',
-  `id_enumerator` varchar(255) NOT NULL,
-  `id_interface_slice` varchar(40) NOT NULL DEFAULT '"',
-  `id_inner` varchar(40) NOT NULL DEFAULT '"',
-  `id_split_replica` int(11) NOT NULL,
-  PRIMARY KEY (`id_abstract`,`id_inner`,`id_interface_slice`,`id_split_replica`,`id_enumerator`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumerator`;
-CREATE TABLE  `hashmodel`.`enumerator` (
-  `id_abstract` int(11) NOT NULL,
-  `id_enumerator` varchar(255) NOT NULL DEFAULT '',
-  `split_from` int(11) NOT NULL DEFAULT '0',
-  `variable` varchar(10) NOT NULL,
-  `valuation` int(11) NOT NULL,
-  PRIMARY KEY (`id_abstract`,`id_enumerator`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumerator_mapping`;
-CREATE TABLE  `hashmodel`.`enumerator_mapping` (
-  `id_abstract` int(10) NOT NULL AUTO_INCREMENT,
-  `id_inner` varchar(40) NOT NULL,
-  `id_enumerator_inner` varchar(255) NOT NULL DEFAULT '',
-  `id_enumerator_container` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id_abstract`,`id_inner`,`id_enumerator_inner`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumerator_valuation`;
-CREATE TABLE  `hashmodel`.`enumerator_valuation` (
-  `id_concrete` int(11) NOT NULL AUTO_INCREMENT,
-  `id_enumerator` varchar(255) NOT NULL,
-  `range_inf` int(11) NOT NULL,
-  `range_sup` int(11) NOT NULL,
-  PRIMARY KEY (`id_concrete`,`id_enumerator`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`enumeratorsplit`;
-CREATE TABLE  `hashmodel`.`enumeratorsplit` (
-  `id_enumerator` varchar(255) NOT NULL DEFAULT '',
-  `id_enumerator_split` varchar(255) NOT NULL DEFAULT '',
-  `id_abstract` int(11) NOT NULL DEFAULT '0',
-  `id_split` int(11) NOT NULL DEFAULT '0',
-  `id_total_split` int(11) NOT NULL DEFAULT '2',
-  PRIMARY KEY (`id_abstract`,`id_enumerator`,`id_enumerator_split`,`id_split`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `hashmodel`.`innercomponent`;
-CREATE TABLE  `hashmodel`.`innercomponent` (
+DROP TABLE IF EXISTS `innercomponent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `innercomponent` (
   `id_abstract_owner` int(11) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `id_inner` varchar(40) NOT NULL,
@@ -143,41 +97,79 @@ CREATE TABLE  `hashmodel`.`innercomponent` (
   `public` int(11) DEFAULT '0',
   PRIMARY KEY (`id_abstract_owner`,`id_inner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`innercomponentexposed`;
-CREATE TABLE  `hashmodel`.`innercomponentexposed` (
+--
+-- Table structure for table `innercomponentexposed`
+--
+
+DROP TABLE IF EXISTS `innercomponentexposed`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `innercomponentexposed` (
   `id_abstract` int(11) NOT NULL AUTO_INCREMENT,
   `id_inner_rename` varchar(40) NOT NULL DEFAULT '"',
   `id_inner_owner` varchar(40) NOT NULL DEFAULT '"',
   `id_inner` varchar(40) DEFAULT '"',
   PRIMARY KEY (`id_abstract`,`id_inner_rename`,`id_inner_owner`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`innerconcrete`;
-CREATE TABLE  `hashmodel`.`innerconcrete` (
-  `id_concrete` int(11) NOT NULL AUTO_INCREMENT,
-  `id_inner` varchar(40) NOT NULL DEFAULT '"',
-  `id_index` int(11) NOT NULL DEFAULT '-1',
-  `id_concrete_actual` int(11) NOT NULL,
-  PRIMARY KEY (`id_concrete`,`id_inner`,`id_index`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+--
+-- Table structure for table `interface`
+--
 
-DROP TABLE IF EXISTS `hashmodel`.`interface`;
-CREATE TABLE  `hashmodel`.`interface` (
-  `id_interface` varchar(40) NOT NULL,
+DROP TABLE IF EXISTS `interface`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `interface` (
   `id_abstract` int(11) NOT NULL,
+  `id_interface` varchar(40) NOT NULL,
+  `partition_index` int(11) NOT NULL DEFAULT '0',
   `id_interface_super` varchar(40) DEFAULT NULL,
+  `partition_index_super` int(11) DEFAULT '0',
   `assembly_string` varchar(511) DEFAULT NULL COMMENT 'The assembly where the class that implements the interface is placed on.',
   `class_name` varchar(127) NOT NULL COMMENT 'The class that implements the interface.',
   `uri_source` varchar(255) NOT NULL DEFAULT '' COMMENT 'where the source code is',
   `class_nargs` int(11) NOT NULL DEFAULT '0',
   `id_interface_super_top` varchar(40) DEFAULT NULL,
+  `partition_index_super_top` int(11) DEFAULT '0',
   `order` int(11) NOT NULL,
-  PRIMARY KEY (`id_abstract`,`id_interface`)
+  `actions` text COMMENT '"action_1; action_2; ... action_n". Nomes de ações separados por ponto-e-vírgula para evitar outra tabela.',
+  `conditions` text COMMENT '"condition_1; condition_2; ... condition_n". Nomes de condições separados por ponto-e-vírgula para evitar outra tabela.',
+  `protocol` text COMMENT 'string xml',
+  PRIMARY KEY (`id_abstract`,`id_interface`,`partition_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`interfaceparameters`;
-CREATE TABLE  `hashmodel`.`interfaceparameters` (
+--
+-- Table structure for table `interfaceaction`
+--
+
+DROP TABLE IF EXISTS `interfaceaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `interfaceaction` (
+  `id_abstract` int(11) NOT NULL,
+  `id_interface` varchar(45) NOT NULL,
+  `partition_index` int(11) NOT NULL,
+  `id_action` varchar(45) NOT NULL DEFAULT 'main',
+  `protocol` text,
+  `is_condition` int(11) DEFAULT '0',
+  PRIMARY KEY (`id_abstract`,`id_interface`,`partition_index`,`id_action`),
+  KEY `id_abstract` (`id_abstract`),
+  CONSTRAINT `id_abstract` FOREIGN KEY (`id_abstract`) REFERENCES `abstractcomponentfunctor` (`id_abstract`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `interfaceparameters`
+--
+
+DROP TABLE IF EXISTS `interfaceparameters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `interfaceparameters` (
   `id_interface` varchar(40) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   `parid` varchar(40) NOT NULL,
@@ -187,42 +179,56 @@ CREATE TABLE  `hashmodel`.`interfaceparameters` (
   `par_order` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_interface`,`parid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`sessions`;
-CREATE TABLE  `hashmodel`.`sessions` (
-  `session_id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_concrete` int(11) DEFAULT NULL,
-  PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Table structure for table `slice`
+--
 
-DROP TABLE IF EXISTS `hashmodel`.`slice`;
-CREATE TABLE  `hashmodel`.`slice` (
+DROP TABLE IF EXISTS `slice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `slice` (
+  `id_abstract` int(11) NOT NULL DEFAULT '0',
+  `id_inner` varchar(40) NOT NULL DEFAULT '"',
+  `id_interface_slice` varchar(40) NOT NULL,
+  `partition_index` int(11) NOT NULL DEFAULT '0',
   `id_interface` varchar(40) NOT NULL,
-  `id_inner` varchar(40) NOT NULL DEFAULT '"',
-  `id_interface_slice` varchar(40) NOT NULL,
-  `id_abstract` int(11) NOT NULL DEFAULT '0',
-  `id_split_replica` int(11) NOT NULL DEFAULT '-1',
-  `transitive` int(11) NOT NULL DEFAULT '0',
   `property_name` varchar(40) NOT NULL,
-  PRIMARY KEY (`id_inner`,`id_interface_slice`,`id_abstract`,`id_split_replica`,`id_interface`)
+  `transitive` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_abstract`,`id_inner`,`id_interface_slice`,`partition_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`sliceexposed`;
-CREATE TABLE  `hashmodel`.`sliceexposed` (
+--
+-- Table structure for table `sliceexposed`
+--
+
+DROP TABLE IF EXISTS `sliceexposed`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sliceexposed` (
   `id_abstract` int(11) NOT NULL DEFAULT '0',
-  `id_inner_owner` varchar(40) NOT NULL,
-  `id_interface_slice` varchar(40) NOT NULL,
-  `id_interface_slice_owner` varchar(40) NOT NULL,
-  `id_split_replica` int(11) NOT NULL DEFAULT '-1',
   `id_inner` varchar(40) NOT NULL DEFAULT '"',
-  `id_split_replica_owner` int(11) NOT NULL,
-  `id_inner_original` varchar(40) NOT NULL DEFAULT '"',
-  `id_interface_slice_original` varchar(40) NOT NULL DEFAULT '"',
-  PRIMARY KEY (`id_abstract`,`id_inner`,`id_inner_owner`,`id_interface_slice`,`id_interface_slice_owner`,`id_split_replica`,`id_split_replica_owner`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_interface_slice` varchar(40) NOT NULL,
+  `partition_index` int(11) NOT NULL DEFAULT '-1',
+  `id_inner_owner` varchar(40) NOT NULL COMMENT '* id_abstract + id_inner + id_interface_slice + partition_index point to a transitive inner component.\n* Since many transitive inner components may be fused, it is necessary to include id_inner_owner in the primary key to ensure its uniqueness.',
+  `id_interface_slice_owner` varchar(40) NOT NULL,
+  `partition_index_owner` int(11) NOT NULL,
+  `id_inner_original` varchar(40) NOT NULL,
+  `id_interface_slice_original` varchar(40) NOT NULL,
+  PRIMARY KEY (`id_inner_original`,`id_interface_slice_original`,`id_abstract`,`id_interface_slice_owner`,`id_inner_owner`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='* id_abstract + id_inner + id_interface_slice + partition_in';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`sourcecode`;
-CREATE TABLE  `hashmodel`.`sourcecode` (
+--
+-- Table structure for table `sourcecode`
+--
+
+DROP TABLE IF EXISTS `sourcecode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sourcecode` (
   `type_owner` char(1) NOT NULL COMMENT '"u" (unit) or "i" (interface)',
   `id_owner` varchar(40) NOT NULL DEFAULT '',
   `contents` text NOT NULL,
@@ -232,9 +238,16 @@ CREATE TABLE  `hashmodel`.`sourcecode` (
   `file_order` int(11) NOT NULL,
   PRIMARY KEY (`type_owner`,`id_owner_container`,`id_owner`,`file_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`sourcecode_references`;
-CREATE TABLE  `hashmodel`.`sourcecode_references` (
+--
+-- Table structure for table `sourcecode_references`
+--
+
+DROP TABLE IF EXISTS `sourcecode_references`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sourcecode_references` (
   `type_owner` char(1) NOT NULL,
   `id_owner_container` int(11) NOT NULL,
   `id_owner` varchar(40) NOT NULL DEFAULT '"',
@@ -242,57 +255,84 @@ CREATE TABLE  `hashmodel`.`sourcecode_references` (
   `reference` varchar(45) NOT NULL,
   PRIMARY KEY (`type_owner`,`id_owner_container`,`id_owner`,`file_name`,`reference`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`supplyparameter`;
-CREATE TABLE  `hashmodel`.`supplyparameter` (
+--
+-- Table structure for table `supplyparameter`
+--
+
+DROP TABLE IF EXISTS `supplyparameter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplyparameter` (
   `id_parameter` varchar(30) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`supplyparametercomponent`;
-CREATE TABLE  `hashmodel`.`supplyparametercomponent` (
+--
+-- Table structure for table `supplyparametercomponent`
+--
+
+DROP TABLE IF EXISTS `supplyparametercomponent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplyparametercomponent` (
   `id_parameter` varchar(30) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `id_functor_app_actual` int(11) NOT NULL,
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`supplyparameterparameter`;
-CREATE TABLE  `hashmodel`.`supplyparameterparameter` (
+--
+-- Table structure for table `supplyparameterparameter`
+--
+
+DROP TABLE IF EXISTS `supplyparameterparameter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplyparameterparameter` (
   `id_parameter` varchar(30) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `id_parameter_actual` varchar(30) NOT NULL,
   `freeVariable` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `hashmodel`.`unit`;
-CREATE TABLE  `hashmodel`.`unit` (
+--
+-- Table structure for table `unit`
+--
+
+DROP TABLE IF EXISTS `unit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `unit` (
   `id_concrete` int(11) NOT NULL,
   `id_unit` varchar(40) NOT NULL DEFAULT '"',
   `id_interface` varchar(40) NOT NULL,
+  `partition_index` int(11) NOT NULL DEFAULT '0',
   `id_abstract` int(11) NOT NULL DEFAULT '0',
   `id_unit_super` varchar(40) DEFAULT '"',
-  `id_index` int(11) NOT NULL DEFAULT '-1',
   `assembly_string` varchar(511) DEFAULT NULL COMMENT 'The name of the assembly where the unit class is contained.',
   `class_name` varchar(127) NOT NULL COMMENT 'The name of the class that implements the unit.',
   `uri_source` varchar(255) NOT NULL DEFAULT '' COMMENT 'where the source code is',
   `class_nargs` int(11) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_concrete`,`id_unit`,`id_index`)
+  PRIMARY KEY (`id_concrete`,`id_unit`,`partition_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-DROP TABLE IF EXISTS `hashmodel`.`unitslice`;
-CREATE TABLE  `hashmodel`.`unitslice` (
-  `id_concrete` int(11) NOT NULL AUTO_INCREMENT,
-  `id_unit` varchar(40) NOT NULL DEFAULT '"',
-  `id_index_unit` int(11) NOT NULL DEFAULT '0',
-  `id_inner` varchar(40) NOT NULL DEFAULT '"',
-  `id_index_inner` int(11) NOT NULL DEFAULT '0',
-  `id_interface_slice` varchar(40) NOT NULL COMMENT 'id_unit_slice !!!',
-  `id_index` int(11) NOT NULL DEFAULT '-1',
-  `split_replica` int(11) NOT NULL,
-  PRIMARY KEY (`id_concrete`,`id_inner`,`id_index_inner`,`id_interface_slice`,`split_replica`,`id_index`,`id_unit`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-10-11  0:19:06

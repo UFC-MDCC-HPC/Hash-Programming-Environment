@@ -174,8 +174,20 @@ namespace br.ufc.hpe.backend.DGAC
 			
 			foreach (InterfaceAction ia in action_list)
 			{
-				unit_class.Members.Add(ia.IsCondition ? createConditionMethod(ia.Id_action)
-				                       				  : createActionMethod(ia.Id_action));
+				if (ia.IsCondition)
+				{
+					unit_class.Members.Add(createConditionMethod(ia.Id_action));
+				} 
+				else
+				{
+					if (!ia.Id_action.Equals("main"))
+						unit_class.Members.Add(createActionMethod(ia.Id_action));
+					else
+					{
+						// The default method "main" is pre-defined in the IConnectorImpl super class.
+					}
+				}
+				
 			}
 			#endregion
 			
@@ -427,7 +439,7 @@ namespace br.ufc.hpe.backend.DGAC
 		{
 			CodeMemberMethod action_method = new CodeMemberMethod();
 			//action_method.ReturnType = new CodeTypeReference("void");
-			if (action_method_name.Equals("main"))
+			if (!action_method_name.Equals("main"))
 				action_method.Attributes =MemberAttributes.Override | MemberAttributes.Public;
 			else
 				action_method.Attributes = MemberAttributes.Public;
