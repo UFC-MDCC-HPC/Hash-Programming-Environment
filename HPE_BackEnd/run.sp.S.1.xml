@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" library_path="adi.ADI_Solver3D" xmlns="http://www.example.org/Instantiator" >
+	<context_parameter formal_parameter_id="class">
+		<actual_parameter library_path="common.problem_size.Class_S">
+	    </actual_parameter>
+	</context_parameter>
+	<node>0</node>
+	<context_parameter formal_parameter_id="instance_type">
+		<actual_parameter library_path="sp.problem_size.Instance_SP">
+			<context_parameter formal_parameter_id="class">
+				<actual_parameter library_path="common.problem_size.Class_S"></actual_parameter></context_parameter></actual_parameter></context_parameter>
+	<context_parameter formal_parameter_id="method">
+		<actual_parameter library_path="sp.solve.SPMethod"></actual_parameter></context_parameter>
+</application>
+
