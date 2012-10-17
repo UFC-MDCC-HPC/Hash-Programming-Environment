@@ -2305,8 +2305,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 			for (IHPrimUnit u__ : u_.getClones()) {
 				UnitType uX = factory.createUnitType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 
 				HUnit u = (HUnit) u__;
 
@@ -2321,8 +2320,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				iRef = i != null ? i.getPrimName() : null;
 				if (isSubUnit) {
 					HUnitStub stubU = u.getMostRecentStub();
-					cRefSuper = ((HComponent) stubU.getConfiguration())
-							.getRef();
+					cRefSuper = ((HComponent) stubU.getConfiguration()).getRef();
 					uRefSuper = stubU.getOriginalName();
 				}
 

@@ -1,6 +1,7 @@
 package hPE.frontend.connector.xml;
 
 import hPE.frontend.base.model.HComponent;
+import hPE.frontend.base.model.HUnit;
 import hPE.frontend.base.model.HUnitSlice;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.connector.xml.component.AccessType;
@@ -22,10 +23,14 @@ import hPE.frontend.connector.xml.component.util.ComponentResourceFactoryImpl;
 import hPE.frontend.kinds.activate.model.HActivateInterface;
 import hPE.frontend.kinds.activate.model.HActivateUnit;
 import hPE.frontend.kinds.activate.model.protocol.HProtocolChoice;
+import hPE.xml.component.UnitSliceType;
+import hPE.xml.component.VisualElementAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -37,8 +42,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 public class XMLConfigurationGenerator {
 
+	private static HComponent component = null;
+	
 	public static void saveComponent(HComponent c, java.io.File file)  
 	{
+		component = c;
 		saveComponent(c, file, null);
 	}
 
@@ -234,8 +242,10 @@ public class XMLConfigurationGenerator {
 	private static void xmlConfig_saveUnits(HComponent c, EList<Unittype> unit, hPE.frontend.connector.xml.component.ComponentFactory factory) 
 	{
 		
-		for (IHUnit u : c.getUnits())
+		for (IHUnit u_ : c.getUnits())
 		{
+			HUnit u = (HUnit) u_;
+			
 			hPE.frontend.connector.xml.component.Unittype uX = factory.createUnittype(); 
 			
 			String uName = u.getName2();
@@ -254,7 +264,18 @@ public class XMLConfigurationGenerator {
 			EList<HpesliceType> uSlice = uX.getSlice();
 			EList<Hpecondition> uCondition = uX.getCondition();
 			
-			xmlConfig_saveSlice(u.getSlices(), uSlice, factory);
+			List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
+			List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
+			List<HUnitSlice> ports = u.getPorts();
+			List<HUnitSlice> slices = u.getSlices();
+			transitiveSlices.addAll(ports);
+			for (HUnitSlice usx : slices) {
+				if (!transitiveSlices.contains(usx))
+					transitiveSlices.add(usx);
+			}
+			directSlices.addAll(slices);
+			
+			xmlConfig_saveSlice(directSlices, transitiveSlices, uSlice, factory);
 			if (u instanceof HActivateUnit) 
 			{
 			  xmlConfig_saveActions((HActivateInterface) u.getInterface(), uAction, factory);
@@ -282,9 +303,9 @@ public class XMLConfigurationGenerator {
 		
 	}
 
-	private static void xmlConfig_saveSlice(List<HUnitSlice> slices, EList<HpesliceType> uSlice, hPE.frontend.connector.xml.component.ComponentFactory factory) 
+	private static void xmlConfig_saveSlice(List<HUnitSlice> directSlices, List<HUnitSlice> transitiveSlices, EList<HpesliceType> uSlice, hPE.frontend.connector.xml.component.ComponentFactory factory) 
 	{		
-		for (HUnitSlice slice : slices)
+	/*	for (HUnitSlice slice : directSlices)
 		{
 			HpesliceType sX = factory.createHpesliceType();
 			
@@ -299,7 +320,73 @@ public class XMLConfigurationGenerator {
 			sX.setIndex(sIndex);
 			
 			uSlice.add(sX);
+		}*/
+		
+		
+		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
+
+		Map<String, String> portNames = new HashMap<String, String>();
+		for (HUnitSlice slice : transitiveSlices) {
+			if (slice.getBinding().getConfiguration() == component) {
+				HUnit uSource = (HUnit) slice.getComponentEntry();
+				List<HUnitSlice> usPorts = uSource.getPorts();
+				for (HUnitSlice usPort : usPorts) {
+					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
+					String usPortName = usPort.getConfiguration().getRef();
+					portNames.put(usPortName, usPortName);
+				}
+			}
 		}
+
+		for (HUnitSlice slice : transitiveSlices)
+			if (slice.getBinding().getConfiguration() == component
+					|| (/* !directSlices.contains(slice) && */portNames.containsKey(slice.getName()))) {
+
+				if (savedSlices.containsKey(slice.getName())) {
+					// throw new DuplicatedSliceNamesException(slice);
+				}
+
+				// if (!savedSlices.containsKey(slice.getName())) {
+				savedSlices.put(slice.getName(), slice);
+
+				// if (!slice.getHiddenSlice()) {
+				/*
+				 * Essa linha foi acrescentada devido a problema com fatias de
+				 * unidades herdadas de subtyping ...
+				 */
+
+				IHUnit e = slice.getBinding().getEntry();
+
+				HpesliceType sX = factory.createHpesliceType();
+
+				String cRef = null;
+				String uRef = null;
+				int replica = 0;
+
+				HUnit uSource = (HUnit) slice.getComponentEntry();
+
+				cRef = uSource.getConfiguration().getRef();
+				uRef = uSource.getName2();
+				replica = uSource.getIndex();
+
+				sX.setInner(cRef);
+				sX.setUnit(uRef);
+				sX.setIndex(replica);
+
+				uSlice.add(sX);
+				
+				/*				List<HUnitSlice> usPorts = uSource.getPorts();
+				for (HUnitSlice usPort : usPorts) {
+					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
+					String usPortName = usPort.getConfiguration().getRef();
+					portsX.add(usPortName);
+				}
+
+				slicesX.add(sliceX);*/
+				
+			}
+		
+		
 	}
 
 

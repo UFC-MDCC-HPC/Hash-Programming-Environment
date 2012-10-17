@@ -3,7 +3,6 @@
 	<name>HPE_FrontEnd</name>
 	<comment>@key 32303035303731382D31303030204850452F6668636A </comment>
 	<projects>
-		<project>HashComponentXML2</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
