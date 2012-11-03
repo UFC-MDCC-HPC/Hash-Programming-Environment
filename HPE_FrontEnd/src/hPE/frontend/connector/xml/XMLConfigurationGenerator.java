@@ -134,11 +134,33 @@ public class XMLConfigurationGenerator {
 		return cX;
 	}
 
-	private static void xmlConfig_saveInnerComponents(HComponent c, EList<HpeinnerComponent> innerComponent, List<String> usingsList, hPE.frontend.connector.xml.component.ComponentFactory factory) 
+	private static List<HComponent> getInnerComponents(HComponent c)
 	{
 		List<HComponent> allCs = new ArrayList<HComponent>();
-		allCs.addAll(c.getExposedComponents());
-		allCs.addAll(c.getComponents());
+		
+		HComponent c_= c;
+		while (c_ != null)
+		{
+			for (HComponent c_inner : c_.getExposedComponents())
+			{
+				if (!allCs.contains(c_inner))
+					allCs.add(c_inner);
+			}
+			
+			for (HComponent c_inner : c_.getComponents())
+			{
+				if (!allCs.contains(c_inner))
+					allCs.add(c_inner);
+			}
+			c_ = c_.getSuperType();
+		}
+		
+		return allCs;
+	}
+	
+	private static void xmlConfig_saveInnerComponents(HComponent c, EList<HpeinnerComponent> innerComponent, List<String> usingsList, hPE.frontend.connector.xml.component.ComponentFactory factory) 
+	{
+		List<HComponent> allCs = getInnerComponents(c);
 		
 		for (HComponent ic_ : allCs)
 			if (!ic_.isHiddenInnerComponent() && ic_ != c.getSuperType())
@@ -266,8 +288,11 @@ public class XMLConfigurationGenerator {
 			
 			List<HUnitSlice> transitiveSlices = new ArrayList<HUnitSlice>();
 			List<HUnitSlice> directSlices = new ArrayList<HUnitSlice>();
-			List<HUnitSlice> ports = u.getPorts();
-			List<HUnitSlice> slices = u.getSlices();
+			
+			List<HUnitSlice> ports = /* new ArrayList<HUnitSlice>(); */ u.getPorts();
+			List<HUnitSlice> slices = /* new ArrayList<HUnitSlice>(); */ u.getSlices();
+			//calculateSlices(c, u, ports, slices);
+			
 			transitiveSlices.addAll(ports);
 			for (HUnitSlice usx : slices) {
 				if (!transitiveSlices.contains(usx))
@@ -283,6 +308,30 @@ public class XMLConfigurationGenerator {
 			}
 			
 			unit.add(uX);
+		}
+		
+	}
+
+	private static void calculateSlices(HComponent c_, HUnit u_, List<HUnitSlice> ports, List<HUnitSlice> slices) 
+	{
+		HUnit u = u_;
+		HComponent c = c_;
+	   	while (u != null) 
+	   	{
+			for (HUnitSlice uport : u.getPorts())
+			{
+			   if (!ports.contains(uport))
+				   ports.add(uport);
+			}
+			
+			for (HUnitSlice uslice : u.getSlices()) 
+			{
+				if (!slices.contains(uslice))
+					slices.add(uslice);
+			}
+			
+			c = c.getSuperType();
+			u = (HUnit) c.fetchUnit(u.getName2());
 		}
 		
 	}
@@ -327,7 +376,7 @@ public class XMLConfigurationGenerator {
 
 		Map<String, String> portNames = new HashMap<String, String>();
 		for (HUnitSlice slice : transitiveSlices) {
-			if (slice.getBinding().getConfiguration() == component) {
+			//if (slice.getBinding().getConfiguration() == component) {
 				HUnit uSource = (HUnit) slice.getComponentEntry();
 				List<HUnitSlice> usPorts = uSource.getPorts();
 				for (HUnitSlice usPort : usPorts) {
@@ -335,12 +384,12 @@ public class XMLConfigurationGenerator {
 					String usPortName = usPort.getConfiguration().getRef();
 					portNames.put(usPortName, usPortName);
 				}
-			}
+			//}
 		}
 
 		for (HUnitSlice slice : transitiveSlices)
-			if (slice.getBinding().getConfiguration() == component
-					|| (/* !directSlices.contains(slice) && */portNames.containsKey(slice.getName()))) {
+		{
+			//if (/*slice.getBinding().getConfiguration() == component ||*/ (/* !directSlices.contains(slice) && */portNames.containsKey(slice.getName()))) {
 
 				if (savedSlices.containsKey(slice.getName())) {
 					// throw new DuplicatedSliceNamesException(slice);
@@ -384,8 +433,8 @@ public class XMLConfigurationGenerator {
 
 				slicesX.add(sliceX);*/
 				
-			}
-		
+			//}
+		}
 		
 	}
 

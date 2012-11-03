@@ -181,7 +181,7 @@ public class HProtocolPerform extends ProtocolPerformTypeImpl implements IProtoc
 		}
 		else if (name.contains(":")) 
 		{
-			String[] parts = name.split("[.]");
+			String[] parts = name.split("[:]");
 			this.setId(parts[0]);
 			this.setActionId(parts[1]);
 		}
