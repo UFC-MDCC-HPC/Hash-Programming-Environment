@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System;
+using br.ufc.pargo.hpe.basic;
 
 namespace br.ufc.pargo.hpe.connector.load
 {
@@ -22,10 +23,13 @@ namespace br.ufc.pargo.hpe.connector.load
 		protected IdGenerator generator;
 		protected XmlLoadUtil uLoader;
       
-		public XmlLoader ()
+		private IUnit the_unit = null;
+		
+		public XmlLoader (IUnit the_unit)
 		{
+			this.the_unit = the_unit;
 			generator = new IdGenerator ();
-			uLoader = new XmlLoadUtil (generator);
+			uLoader = new XmlLoadUtil (generator, the_unit);
 		}
       
 		protected void clear ()
@@ -163,7 +167,7 @@ namespace br.ufc.pargo.hpe.connector.load
 
 				document.Load (xml);
             
-				XmlNode nodeComponent = document.SelectSingleNode("component:hashComponent");
+				XmlNode nodeComponent = document.SelectSingleNode("hashComponent");
 				component.Package = nodeComponent.SelectSingleNode ("package").InnerText;
 				XmlNodeList usingNodeList = nodeComponent.SelectNodes ("using");
             

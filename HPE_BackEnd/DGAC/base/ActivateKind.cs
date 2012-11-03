@@ -30,7 +30,7 @@ namespace br.ufc.pargo.hpe.kinds
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine("Error in execution (go): {0}", e.Message);
+				Console.WriteLine("Error in execution (go): {0} *** {1}", e.Message, e.StackTrace);
 			}
 			finally
 			{

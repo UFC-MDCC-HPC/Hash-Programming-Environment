@@ -99,7 +99,16 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
          
 			a.Father = this;
-			actions.Add (name, a);
+			
+			if (!actions.ContainsKey(name))
+			{
+				actions.Add (name, a);				
+			}
+			else
+			{
+				Console.WriteLine("{0} is already in actions ...", name);
+			}
+			
 		}
       
 		public void AddSlice (string name, MetaSlice slice)

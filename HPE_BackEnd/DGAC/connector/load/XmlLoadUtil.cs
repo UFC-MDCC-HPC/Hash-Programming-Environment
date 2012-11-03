@@ -10,9 +10,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 using System;
+using br.ufc.pargo.hpe.basic;
 
 namespace br.ufc.pargo.hpe.connector.load
 {
+	
 	public class XmlLoadUtil
 	{
       
@@ -25,10 +27,13 @@ namespace br.ufc.pargo.hpe.connector.load
 		protected IdGenerator generator;
 		protected int numStates;
 		protected int numTransations;
-      
+
+		private IUnit the_unit = null;
+		      
 		//Construtor recebe os innerComponents do component hash que está sendo carregado.
-		public XmlLoadUtil (IdGenerator generator)
+		public XmlLoadUtil (IdGenerator generator, IUnit the_unit)
 		{
+			this.the_unit = the_unit;
 			this.generator = generator;
 		}
       
@@ -483,7 +488,12 @@ namespace br.ufc.pargo.hpe.connector.load
 							unit.AddAction (methodName, selectedAction);
 						}
 					} else {
-				
+
+						foreach (KeyValuePair<String, IUnit> s in the_unit.Slice)
+						{
+							Console.WriteLine ("UNIT SLICE {0}", s.Key);
+						}
+						
 						MetaSlice slice = unit.Slices [sliceName];
 
 						if (slice != null) {

@@ -7,6 +7,7 @@ using br.ufc.pargo.hpe.connector.config;
 
 using System.Collections.Generic;
 using System.Threading;
+using System;
 
 namespace br.ufc.pargo.hpe.connector.meta {
 
@@ -22,7 +23,13 @@ namespace br.ufc.pargo.hpe.connector.meta {
          get {return references;}
          set {references = value;}
       }
-
+		
+		public new string Name {
+			get { return name.Equals("go") ? "main" : name;}
+			set { name = value;}
+		}
+		
+		
       //Representação do autômato de execução da ação. Este protocolo só terá valor quando a ação for
       //descrita em HCL. Caso contrário, quando a ação for descrita em linguagem nativa, o seu valor
       //será nulo.
@@ -39,6 +46,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
       public void Run() {
          if(IsNative) {
             DAction runnable = (DAction) Entity;
+			Console.WriteLine("RUNNING {0}  -  {1}", this.Name, this.Father.Name);
             runnable(); //chamada da função via delegate.   
          } else {
             ((MetaUnit) father).ConfigManager.Run(this);

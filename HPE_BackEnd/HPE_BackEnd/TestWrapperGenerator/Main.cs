@@ -14,11 +14,11 @@ namespace TestWrapperGenerator
 		{
 			int rank = 0;
 			string id_interface = "teste";
-			ConfigurationManager configurationManager = new ConfigurationManager(ref rank, ref id_interface);
+			ConfigurationManager configurationManager = new ConfigurationManager(null);
 			
 			String hcl_string = null;
 				
-			string path = Constants.PATH_TEMP_WORKER + "bt.solve.Solver" + ".hcl";
+			string path = Constants.PATH_TEMP_WORKER + "sp.adi.SP_ADI" + ".hcl";
 				
 			using (StreamReader sr = new StreamReader(path))
 		    {

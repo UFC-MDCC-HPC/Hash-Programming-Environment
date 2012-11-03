@@ -103,10 +103,14 @@ namespace br.ufc.pargo.hpe.connector.config
 			s += " | isElse: " + isElse;
 			if (type == TransitionType.SIMPLE && getExecutionAction ().MetaAction != null) {
 				s += " | action: " + getExecutionAction ().MetaAction.Name;
+				if (getExecutionAction ().MetaAction != null && getExecutionAction ().MetaAction.Name != null)
+					s += " | slice: " + getExecutionAction ().MetaAction.Father.Name;
 			}
 
 			if (type == TransitionType.SIMPLE && getExecutionAction ().Condition != null) {
 				s += " | condition: " + getExecutionAction ().Condition.Slice + "." + getExecutionAction ().Condition.Cond;
+				if (getExecutionAction ().MetaAction != null && getExecutionAction ().MetaAction.Name != null)
+					s += " | slice: " + getExecutionAction ().MetaAction.Father.Name;
 			}         
 			return s;
 		}

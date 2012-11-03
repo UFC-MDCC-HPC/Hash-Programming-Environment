@@ -59,7 +59,7 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		private IUnit the_unit = null;
 		
-		public ConfigurationManager (IUnit the_unit)
+		public ConfigurationManager(IUnit the_unit)
 		{
 			this.the_unit = the_unit;
          
@@ -73,7 +73,7 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		public void LoadComponent (string xml)
 		{
-			this.loader = new XmlLoader ();
+			this.loader = new XmlLoader (the_unit);
 							
 			this.application = loader.loadComponent (xml);
          

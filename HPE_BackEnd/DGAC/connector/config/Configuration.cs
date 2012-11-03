@@ -257,7 +257,13 @@ namespace br.ufc.pargo.hpe.connector.config
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void RestartArriving(int i)
 		{
-			arrivingCount[i] = arriving[i];
+			//foreach (int j in arriving.Keys)
+			//{
+			//	Console.WriteLine("j={0}, i={1}", j, i);	
+			//}
+			
+			if (i!=INITIAL_STATE)
+				arrivingCount[i] = arriving[i];
 		}
 
 		//Método usado na reconfiguração para para a execução dos estados listados.
