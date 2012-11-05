@@ -46,7 +46,7 @@ namespace br.ufc.pargo.hpe.connector.meta {
       public void Run() {
          if(IsNative) {
             DAction runnable = (DAction) Entity;
-			Console.WriteLine("RUNNING {0}  -  {1}", this.Name, this.Father.Name);
+			Console.WriteLine("[MetaAction.Run] RUNNING {0}  -  {1}", this.Name, this.Father.Name);
             runnable(); //chamada da função via delegate.   
          } else {
             ((MetaUnit) father).ConfigManager.Run(this);

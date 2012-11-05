@@ -102,5 +102,17 @@ namespace br.ufc.pargo.hpe.connector.meta
 
 			return (result ^ not);
 		}
+		
+		public override string ToString ()
+		{
+			string s= "[" + slice + "." + cond + "] | ";
+			if(conditions != null && conditions.Count > 0) {
+				foreach(Condition c in conditions) {
+					s += c;
+				}
+			}
+			
+			return s;
+		}
 	}
 }
