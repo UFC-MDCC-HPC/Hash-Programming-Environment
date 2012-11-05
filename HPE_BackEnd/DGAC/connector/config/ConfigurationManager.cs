@@ -86,6 +86,9 @@ namespace br.ufc.pargo.hpe.connector.config
 				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
 					u.Index = this.index;
+					foreach(MetaSlice s in u.Slices.Values) {
+						Console.WriteLine("Slice: " + s.Inner);
+					}
 					break;
 				}
 			}
@@ -104,6 +107,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Run (string actionName)
 		{
+			System.Console.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
 			MetaAction action = null;
          
 			if (unit != null && unit.Entity != null) {

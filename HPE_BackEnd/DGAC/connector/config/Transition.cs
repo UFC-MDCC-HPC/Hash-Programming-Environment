@@ -6,6 +6,8 @@ using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
+using br.ufc.pargo.hpe.connector.meta;
+
 namespace br.ufc.pargo.hpe.connector.config
 {
 	public class Transition : MarshalByRefObject
@@ -96,21 +98,30 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		public override string ToString ()
 		{
+			MetaAction maction = getExecutionAction ().MetaAction;
+			string cname = "";
+			
 			string s = "";
 			s += "type: " + type;
 			s += " | initialState: " + initialState;
 			s += " | finalState: " + finalState;
 			s += " | isElse: " + isElse;
-			if (type == TransitionType.SIMPLE && getExecutionAction ().MetaAction != null) {
-				s += " | action: " + getExecutionAction ().MetaAction.Name;
-				if (getExecutionAction ().MetaAction != null && getExecutionAction ().MetaAction.Name != null)
-					s += " | slice: " + getExecutionAction ().MetaAction.Father.Name;
+			if (type == TransitionType.SIMPLE && maction != null) {
+				s += " | action: " + maction.Name;
+				if (maction.Name != null)
+					if(maction.Father.Father.GetType().Name.Equals("MetaInnerComponent")) {
+						cname = ((MetaInnerComponent) maction.Father.Father).Identifier;
+					} else {
+						cname = maction.Father.Father.Name;
+					}
+					
+					s += " | slice: " + cname + "." + maction.Father.Name;
+					s += "(" + maction.Father.GetType().Name + ")";
 			}
 
 			if (type == TransitionType.SIMPLE && getExecutionAction ().Condition != null) {
-				s += " | condition: " + getExecutionAction ().Condition.Slice + "." + getExecutionAction ().Condition.Cond;
-				if (getExecutionAction ().MetaAction != null && getExecutionAction ().MetaAction.Name != null)
-					s += " | slice: " + getExecutionAction ().MetaAction.Father.Name;
+				s += " | condition: " + getExecutionAction ().Condition;
+				
 			}         
 			return s;
 		}
