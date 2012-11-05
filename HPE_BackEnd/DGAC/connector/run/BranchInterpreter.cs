@@ -37,12 +37,15 @@ namespace br.ufc.pargo.hpe.connector.run
 		//Método para executar o ramo.
 		public void Go (Object nothing)
 		{
+			Console.WriteLine("[BranchInterpreter.Go] state:{0} | transition:{1}", state, transition);
 			int rid = sControl.Protocol.Matrix [state] [(transition * Configuration.BASE) + Configuration.RUNNABLE];
 			br.ufc.pargo.hpe.connector.config.ExecutionAction action = sControl.Protocol.Actions [rid];
+			
 			bool result = false;
 
 			if (action.Condition != null) {
 				result = action.Condition.Evaluate ();
+				System.Console.WriteLine("[BranchInterpreter.Go] Avaliando Condição " + action.Condition.Cond + ": " + result);
 			}
 
 			if (action.Condition == null || result) {
@@ -53,12 +56,14 @@ namespace br.ufc.pargo.hpe.connector.run
 				if (action.MetaAction != null) {
 					action.MetaAction.Run ();
 				}
-
+				
 				sControl.Notify (true);
-
+				
 				//ThreadPool.QueueUserWorkItem(NotifyMonitors, null);
 				sControl.Protocol.NotifyFinalized (state, transition, (action.MetaAction == null ? -1 : action.MetaAction.Id));
+
 			} else {
+
 				sControl.Notify (false);
 			}
          

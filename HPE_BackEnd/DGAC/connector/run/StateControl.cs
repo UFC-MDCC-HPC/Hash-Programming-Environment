@@ -55,12 +55,12 @@ namespace br.ufc.pargo.hpe.connector.run
 
 			//artifício para suspender a execução do estado nos casos de reconfiguração.
 			ManualResetEvent resetEvent = protocol.getResetEvent (stateId);
-			System.Console.WriteLine ("STATE: " + stateId);
+			System.Console.WriteLine ("[StateControl.Go] STATE: " + stateId);
 
 			if (resetEvent != null) {
-				System.Console.WriteLine("DORMIU: estado " + stateId);
+				System.Console.WriteLine("[StateControl.Go] DORMIU: estado " + stateId);
 				WaitHandle.WaitAll (new ManualResetEvent[] {resetEvent});
-				System.Console.WriteLine("CORDOU: estado " + stateId);
+				System.Console.WriteLine("[StateControl.Go] ACORDOU: estado " + stateId);
 			}
 
 			Dictionary<int, int> transitions = protocol.Matrix [stateId];
@@ -79,6 +79,7 @@ namespace br.ufc.pargo.hpe.connector.run
 					ThreadPool.QueueUserWorkItem (branch.Go, null);
 				}
 			} else {
+				//System.Console.WriteLine("[StateControl.Go] Sinaliza Final!");
 				protocol.doneEvent.Set ();
 				//StateControl: Execução finalizada!
 			}
@@ -88,17 +89,17 @@ namespace br.ufc.pargo.hpe.connector.run
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Notify (bool result)
 		{
+			//System.Console.WriteLine("[StateControl.Notify] Finalização notificada- state:{0}]", stateId);
 			BranchInterpreter branch;
          
 			elseResult = elseResult || result;
 			count--;
-         
-			//System.Console.WriteLine("count: " + count);
-			//System.Console.WriteLine("!elseResult: " + !elseResult);
-			if (count == 0 && !elseResult) {
+			int rid = protocol.Matrix [stateId] [((iterations+1) * Configuration.BASE) + Configuration.RUNNABLE];
+			
+			if (count == 0 && !elseResult && rid != Configuration.NOTHING) {
 				//Esse objeto morre. count = iterations + 1; //reinicio a contagem, caso haja uma nova exeucao do estado.
+				System.Console.WriteLine("[StateControl.Notify] Criado BranchInterpreter- state:{0} | iteracao(-1):{1}", stateId, iterations);
 				branch = new BranchInterpreter (stateId, iterations + 1, this);
-				//System.Console.WriteLine("stateId: " + stateId + " | iterations + 1:" + iterations + 1);
 				ThreadPool.QueueUserWorkItem (branch.Go, null);
 			}
 		}
