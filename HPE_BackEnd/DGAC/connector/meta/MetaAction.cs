@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 
+using br.ufc.pargo.hpe.ConnectorImpl;
+
 namespace br.ufc.pargo.hpe.connector.meta {
 
    //Classe que representa os metadados de uma ação (action) de uma unidade de um componente hash.
@@ -40,18 +42,19 @@ namespace br.ufc.pargo.hpe.connector.meta {
       }
 
       public bool IsNative {
-         get {return (protocol == null);}
+         get {return ((father.Entity as IConnectorImpl) == null);}
       }
 
       public void Run() {
          if(IsNative) {
             DAction runnable = (DAction) Entity;
-			Console.WriteLine("[MetaAction.Run] RUNNING {0}  -  {1}", this.Name, this.Father.Name);
+			Console.WriteLine("[MetaAction.Run] RUNNING {0} - {1}", this.Name, this.Father.Name);
             runnable(); //chamada da função via delegate.   
          } else {
-            ((MetaUnit) father).ConfigManager.Run(this);
-            //TODO ALTO ver se isso funciona.
-            WaitHandle.WaitAll(new ManualResetEvent[] {protocol.doneEvent}); 
+			Console.WriteLine("[MetaAction.Run] RUNNING FOR COMPONENT {0} - {1}", this.Name, this.Father.Name);
+            ((IConnectorImpl) father.Entity).perform_action(Name);
+            //TODO Solucao para manter no mesmo ConfigurationManager suspensa.
+            //WaitHandle.WaitAll(new ManualResetEvent[] {protocol.doneEvent}); 
          }
       }
    }   

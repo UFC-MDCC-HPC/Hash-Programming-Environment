@@ -71,13 +71,16 @@ namespace br.ufc.pargo.hpe.connector.run
          
 			//essa condiçao quer dizer que essa transicao é de controle de fluxo.
 			if (action.MetaAction == null) {
+				Console.WriteLine("Controle de Fluxo");
 				if (result || action.Condition == null) {
+					Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
 				}
 			} else { //Se a transicao nao é de controle de fluxo, entao eu devo iniciar o proximo estado.
 				int counter = sControl.Protocol.DecArriving (targetState);
-
+				Console.WriteLine("counter: {0}", counter);
 				if (counter == 0) {
+					Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
 				}
 			}

@@ -170,6 +170,7 @@ namespace br.ufc.pargo.hpe.connector.load
 				document.Load (xml);
             
 				XmlNode nodeComponent = document.SelectSingleNode("hashComponent");
+				
 				component.Package = nodeComponent.SelectSingleNode ("package").InnerText;
 				XmlNodeList usingNodeList = nodeComponent.SelectNodes ("using");
             

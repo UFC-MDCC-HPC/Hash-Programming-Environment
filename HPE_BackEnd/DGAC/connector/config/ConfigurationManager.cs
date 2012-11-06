@@ -74,7 +74,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		public void LoadComponent (string xml)
 		{
 			this.loader = new XmlLoader (the_unit);
-							
+			
 			this.application = loader.loadComponent (xml);
          
 			this.unitName = the_unit.Id_unit;
@@ -82,7 +82,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			
 			foreach (MetaUnit u in application.Units.Values) 
 			{
-				Console.WriteLine("u.Name={0}, this.unitName={1}",u.Name, this.unitName);
+				Console.WriteLine("[ConfigurationManager.LoadComponent] u.Name={0}, this.unitName={1}",u.Name, this.unitName);
 				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
 					u.Index = this.index;

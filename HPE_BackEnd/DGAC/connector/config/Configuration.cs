@@ -246,6 +246,11 @@ namespace br.ufc.pargo.hpe.connector.config
 				}
 				System.Console.WriteLine ("");
 			}
+			
+			System.Console.WriteLine ("Arriving");
+			foreach(int rj in arriving.Keys) {
+				System.Console.WriteLine("arriving[{0}]={1}", rj, arriving[rj]);
+			}
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]

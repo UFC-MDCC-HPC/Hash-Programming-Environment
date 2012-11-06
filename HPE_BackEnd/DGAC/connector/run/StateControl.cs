@@ -89,7 +89,7 @@ namespace br.ufc.pargo.hpe.connector.run
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Notify (bool result)
 		{
-			//System.Console.WriteLine("[StateControl.Notify] Finalização notificada- state:{0}]", stateId);
+			System.Console.WriteLine("[StateControl.Notify] Finalização notificada- state:{0}]", stateId);
 			BranchInterpreter branch;
          
 			elseResult = elseResult || result;
