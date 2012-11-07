@@ -79,10 +79,11 @@ namespace br.ufc.pargo.hpe.connector.run
 			} else { //Se a transicao nao é de controle de fluxo, entao eu devo iniciar o proximo estado.
 				int counter = sControl.Protocol.DecArriving (targetState);
 				Console.WriteLine("counter: {0}", counter);
-				if (counter == 0) {
+				//TODO dar uma solução definitiva.
+				//if (counter == 0) {
 					Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
-				}
+				//}
 			}
 		}
 	}

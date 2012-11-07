@@ -49,9 +49,10 @@ namespace br.ufc.pargo.hpe.connector.meta {
          if(IsNative) {
             DAction runnable = (DAction) Entity;
 			Console.WriteLine("[MetaAction.Run] RUNNING {0} - {1}", this.Name, this.Father.Name);
-            runnable(); //chamada da função via delegate.   
+            runnable(); //chamada da função via delegate.
+				Console.WriteLine("[MetaAction.Run] FINALIZED {0} - {1}", this.Name, this.Father.Name);
          } else {
-			Console.WriteLine("[MetaAction.Run] RUNNING FOR COMPONENT {0} - {1}", this.Name, this.Father.Name);
+			Console.WriteLine("[MetaAction.Run] RUNNING FROM CONNECTOR {0} - {1}", this.Name, this.Father.Name);
             ((IConnectorImpl) father.Entity).perform_action(Name);
             //TODO Solucao para manter no mesmo ConfigurationManager suspensa.
             //WaitHandle.WaitAll(new ManualResetEvent[] {protocol.doneEvent}); 
