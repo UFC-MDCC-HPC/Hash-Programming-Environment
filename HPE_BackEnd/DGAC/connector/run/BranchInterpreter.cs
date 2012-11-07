@@ -37,7 +37,7 @@ namespace br.ufc.pargo.hpe.connector.run
 		//Método para executar o ramo.
 		public void Go (Object nothing)
 		{
-			Console.WriteLine("[BranchInterpreter.Go] state:{0} | transition:{1}", state, transition);
+			//Console.WriteLine("[BranchInterpreter.Go] state:{0} | transition:{1}", state, transition);
 			int rid = sControl.Protocol.Matrix [state] [(transition * Configuration.BASE) + Configuration.RUNNABLE];
 			br.ufc.pargo.hpe.connector.config.ExecutionAction action = sControl.Protocol.Actions [rid];
 			
@@ -45,7 +45,7 @@ namespace br.ufc.pargo.hpe.connector.run
 
 			if (action.Condition != null) {
 				result = action.Condition.Evaluate ();
-				System.Console.WriteLine("[BranchInterpreter.Go] Avaliando Condição " + action.Condition.Cond + ": " + result);
+				//System.Console.WriteLine("[BranchInterpreter.Go] Avaliando Condição " + action.Condition.Cond + ": " + result);
 			}
 
 			if (action.Condition == null || result) {
@@ -71,17 +71,17 @@ namespace br.ufc.pargo.hpe.connector.run
          
 			//essa condiçao quer dizer que essa transicao é de controle de fluxo.
 			if (action.MetaAction == null) {
-				Console.WriteLine("Controle de Fluxo");
+				//Console.WriteLine("Controle de Fluxo");
 				if (result || action.Condition == null) {
-					Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
+					//Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
 				}
 			} else { //Se a transicao nao é de controle de fluxo, entao eu devo iniciar o proximo estado.
 				int counter = sControl.Protocol.DecArriving (targetState);
-				Console.WriteLine("counter: {0}", counter);
+				//Console.WriteLine("counter: {0}", counter);
 				//TODO dar uma solução definitiva.
 				//if (counter == 0) {
-					Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
+					//Console.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
 				//}
 			}

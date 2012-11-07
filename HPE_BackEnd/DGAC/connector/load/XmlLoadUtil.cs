@@ -489,11 +489,6 @@ namespace br.ufc.pargo.hpe.connector.load
 							unit.AddAction (methodName, selectedAction);
 						}
 					} else {
-
-						foreach (KeyValuePair<String, IUnit> s in the_unit.Slice)
-						{
-							Console.WriteLine ("UNIT SLICE {0}", s.Key);
-						}
 						
 						MetaSlice slice = unit.Slices [sliceName];
 
@@ -566,7 +561,9 @@ namespace br.ufc.pargo.hpe.connector.load
 			sliceName = condName = null;
 			System.Console.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
 			XmlAttribute attr = (XmlAttribute)node.Attributes.GetNamedItem ("not");
+
 			if (attr != null) {
+				System.Console.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
 				not = attr.Value.Equals ("true");
 			}
 
@@ -601,10 +598,10 @@ namespace br.ufc.pargo.hpe.connector.load
 						condName = attr.Value;
 
 						if (condName.Equals ("true") || condName.Equals ("false")) {
-							newCond = new Condition (condName.Equals ("true"), not);
+							newCond = new Condition (condName.Equals ("true"), false);
 							System.Console.WriteLine("[XmlLoader.GetCondition] Condition fixa... [" + condName + "]");
 						} else {
-							newCond = new Condition (sliceName, condName, not);
+							newCond = new Condition (sliceName, condName, false);
 							System.Console.WriteLine("[XmlLoaderUtil.GetCondition] Condition: " + sliceName + "." + condName + "-not:" + not);
 						}
 						pivot.Key.Conditions.Add (newCond);

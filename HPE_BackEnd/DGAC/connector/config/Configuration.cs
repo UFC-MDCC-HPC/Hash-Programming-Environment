@@ -140,9 +140,15 @@ namespace br.ufc.pargo.hpe.connector.config
 			this.transitions = new List<Transition>();
 
 			this._resetEvents = new Dictionary<int, System.Threading.ManualResetEvent>();
-			this._resetEvents[numStates] = new System.Threading.ManualResetEvent (false);
+			setResetEvent();
 		}
       
+		public void setResetEvent()
+		{
+			//TODO na reconfiguração, tratar para ser o mesmo event.			
+			this._resetEvents[numStates] = new System.Threading.ManualResetEvent (false);
+		}
+		
 		public void generateAutomaton (List<Transition> transToAdd)
 		{
 			Dictionary<int, bool> hasElse = new Dictionary<int, bool> ();
@@ -247,10 +253,11 @@ namespace br.ufc.pargo.hpe.connector.config
 				System.Console.WriteLine ("");
 			}
 			
-			System.Console.WriteLine ("Arriving");
-			foreach(int rj in arriving.Keys) {
-				System.Console.WriteLine("arriving[{0}]={1}", rj, arriving[rj]);
+			System.Console.WriteLine ("Actions");
+			foreach(ExecutionAction rj in actions) {
+				System.Console.WriteLine("action {0} - {1} ({2})", rj.Id, (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name), (rj.MetaAction == null ? 0 : rj.MetaAction.Id));
 			}
+			
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]

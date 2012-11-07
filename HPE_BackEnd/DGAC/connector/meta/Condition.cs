@@ -99,7 +99,8 @@ namespace br.ufc.pargo.hpe.connector.meta
 					}
 				}
 			}
-
+			
+			//System.Console.WriteLine("Condition {0}: result {1} - not {2}", cond, result, not);
 			return (result ^ not);
 		}
 		

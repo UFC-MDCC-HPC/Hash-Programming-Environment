@@ -26,21 +26,24 @@ namespace br.ufc.pargo.hpe.connector.run {
       //Dispara o início da execução da configuração indicada no construtor.
       public void Go() {
          
-         Console.WriteLine("Execucao iniciada!");
+         Console.WriteLine("Execucao iniciada! {0}", GetHashCode());
          
          if(!_action.IsNative) {
+			_action.Protocol.setResetEvent();
             new StateControl(_action.Protocol).Go();
          }
          else {
+			//Console.WriteLine("Execucao NATIVA! {0}", GetHashCode());
             //Object unitEntity = _action.Father.Entity;
             //TODO chamar o método _action.name sobre o objeto unitEntity.
          }
 
          //TODO corrigir essa referencia ao doneEvent.
          //Verificar como esperar por apenas um evento.
+			//TODO na reconfiguração observar se o doneEvent está correto.
          WaitHandle.WaitAll(new ManualResetEvent[] {_action.Protocol.doneEvent});
          
-         Console.WriteLine("Execucao finalizada!");
+         Console.WriteLine("Execucao finalizada! {0}", GetHashCode());
          
          //A finalização execução será realizada pelo StateControl.
       }

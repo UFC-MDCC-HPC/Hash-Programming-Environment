@@ -146,7 +146,9 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (actions != null) {
 				foreach (MetaAction a in actions.Values) {
 					if (a.IsNative) {
+						System.Console.Write("DAction {0} - {1} ", a.Father.Name, a.Name);
 						a.Entity = (MetaAction.DAction)Delegate.CreateDelegate (typeof(MetaAction.DAction), Entity, a.Name);
+						System.Console.WriteLine("" + (a.Entity == null));
 					}
 				}
 			}

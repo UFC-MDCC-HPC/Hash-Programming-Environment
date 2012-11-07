@@ -118,20 +118,20 @@
 		public int perform_action(string action) {
 		 
 			Console.WriteLine("UNIT :" + Id_unit);
-			Console.WriteLine("[IConnectorImpl.perform_action] iniciando action {0} | configNull {1}", action, (configurationManager == null));
+			//Console.WriteLine("[IConnectorImpl.perform_action] iniciando action {0} | configNull {1}", action, (configurationManager == null));
 		 if(configurationManager != null) {
 			
-			Console.WriteLine("[IConnectorImpl.perform_action] ready:{0}", ready);
+			//Console.WriteLine("[IConnectorImpl.perform_action] ready:{0}", ready);
 			if(!ready) {
 				ConfigureComponent();
 			}
 
-			Console.WriteLine("[IConnectorImpl.perform_action] ConfManager.UnitNull {0}", (configurationManager.Unit == null));
+			//Console.WriteLine("[IConnectorImpl.perform_action] ConfManager.UnitNull {0}", (configurationManager.Unit == null));
 		    if(configurationManager.Unit.Entity == null) {
 		       configurationManager.Unit.Entity = this;
 		    }
 	
-			Console.WriteLine("[IConnectorImpl.perform_action] run action:{0}", action);
+			//Console.WriteLine("[IConnectorImpl.perform_action] run action:{0}", action);
 		    configurationManager.Run(action);
 		
 		    return 0;
@@ -152,7 +152,7 @@
 			
 		public new int go()
 		{	
-			Console.WriteLine("[IConnectorImpl.go] iniciando... ready:{0}", ready);
+			//Console.WriteLine("[IConnectorImpl.go] iniciando... ready:{0}", ready);
 			if(!ready) {
 				ConfigureComponent();
 			}
@@ -163,7 +163,7 @@
 		//public new int go()
 		protected void ConfigureComponent()
 		{
-			Console.WriteLine("[IConnectorImpl.ConfigureComponent] iniciando...");
+			//Console.WriteLine("[IConnectorImpl.ConfigureComponent] iniciando...");
 			try 
 			{				
 				string path = Constants.PATH_TEMP_WORKER + this.QualifiedComponentTypeName + ".hcl";
@@ -188,7 +188,7 @@
 			
 		public override void main ()
 		{ 
-			Console.WriteLine("[IConnectorImpl.main]...");
+			//Console.WriteLine("[IConnectorImpl.main]...");
 			int result = perform_action("main");	
 		}	
 			
