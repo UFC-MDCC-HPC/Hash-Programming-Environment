@@ -130,11 +130,11 @@ namespace br.ufc.pargo.hpe.connector.load
 										change.Transitions.Add(new Transition(t.InitialState, t.FinalState, Configuration.LAMBDA_TRANSITION, a.Protocol.LastTransationId++));
 									}
 								} else {
-									throw new Exception ("Ponto de reconfiguraçao nao existe: " + change.Point);   
+									throw new Exception ("Ponto de reconfiguração não existe: " + change.Point);   
 								}
 
 							} else {
-									throw new Exception ("Ação a ser alterada não existe ou nao é uma configuraçao: " + change.Action);   
+									throw new Exception ("Ação a ser alterada não existe ou nãoo é uma configuração: " + change.Action);   
 							}
 						} else {
 							throw new Exception ("Unidade da ação a ser alterada não existe: " + change.Unit);
@@ -220,14 +220,11 @@ namespace br.ufc.pargo.hpe.connector.load
 										foreach (Condition e in c.Conditions) {
 											queue.Enqueue (e);
 										}
-									}
+										
+										if(c.Slice != null && !c.Slice.Equals(""))
+										{
+											mu.Slices[c.Slice].Unit.Conditions.Add ((c.Name == null || c.Name.Equals ("") ? c.Id + "": c.Name), c);
 
-									foreach (MetaUnit father in component.Units.Values) {
-										foreach (MetaSlice ms in father.Slices.Values) {
-											if (c != null && ms.Unit.Name.Equals (c.Slice)) {
-												ms.Unit.Conditions.Add ((c.Name == null || c.Name.Equals ("") ? c.Id + "": c.Name), c);
-												break;
-											}
 										}
 									}
 								}

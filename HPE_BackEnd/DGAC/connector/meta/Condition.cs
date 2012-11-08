@@ -83,7 +83,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			} else if (entity != null) {
 				DCondition guard = (DCondition) entity;
 				result = guard();
-
+				
 			} else if (oper == Operator.NULL) {
 				result = conditions[0].Evaluate();
 
@@ -100,7 +100,6 @@ namespace br.ufc.pargo.hpe.connector.meta
 				}
 			}
 			
-			//System.Console.WriteLine("Condition {0}: result {1} - not {2}", cond, result, not);
 			return (result ^ not);
 		}
 		
