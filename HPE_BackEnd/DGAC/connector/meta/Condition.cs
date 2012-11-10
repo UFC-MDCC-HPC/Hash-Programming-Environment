@@ -85,6 +85,13 @@ namespace br.ufc.pargo.hpe.connector.meta
 				result = guard();
 				
 			} else if (oper == Operator.NULL) {
+				
+				Console.WriteLine("conditions.Count = {0}", conditions.Count);
+				if (conditions.Count > 0) 
+				{
+					Condition c = conditions[0];
+					Console.WriteLine("Condition is {0}/{1}", c.Slice, c.Name);
+				}
 				result = conditions[0].Evaluate();
 
 			} else {

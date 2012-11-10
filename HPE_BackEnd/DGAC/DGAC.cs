@@ -33,7 +33,7 @@ namespace br.ufc.pargo.hpe.backend
 
             public static WorkerObject framework = null;
 
-            private IpcClientChannel ch = null;
+ //           private IpcClientChannel ch = null;
 
             public BackEnd()
             {
@@ -43,21 +43,20 @@ namespace br.ufc.pargo.hpe.backend
 
             public static gov.cca.AbstractFramework getFrameworkInstance()
             {
-				TcpChannel channel = new TcpChannel(Constants.MANAGER_PORT/*prop, client_provider*/);
-        		ChannelServices.RegisterChannel(channel);
+				//TcpChannel channel = new TcpChannel(Constants.MANAGER_PORT/*prop, client_provider*/);
+        		//ChannelServices.RegisterChannel(channel);
 				
-				RemotingConfiguration.ApplicationName = Constants.MANAGER_SERVICE_NAME;
+				//RemotingConfiguration.ApplicationName = Constants.MANAGER_SERVICE_NAME;
 				ManagerObject obj = new ManagerObject();
                 return (gov.cca.AbstractFramework) obj;
             }
 
-            public static gov.cca.AbstractFramework getFrameworkInstance(out IpcClientChannel ch)
+/*            public static gov.cca.AbstractFramework getFrameworkInstance(out IpcClientChannel ch)
             {
                 IDictionary prop = new Hashtable();
                 prop["portName"] = Constants.MANAGER_PORT_NAME;
 
-            System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
-            //client_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+                System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
 				
 				ch = new IpcClientChannel(prop, client_provider);
                 ChannelServices.RegisterChannel(ch, false);
@@ -66,7 +65,7 @@ namespace br.ufc.pargo.hpe.backend
 				ManagerObject obj = (ManagerObject) Activator.CreateInstance(typeof(ManagerObject), null, activateAttribute);
                 return (gov.cca.AbstractFramework) obj;
             }
-			
+						 */
             public static gov.cca.AbstractFramework getFrameworkWorkerInstance(string node, int port, int rank)
             {
                 WorkerObject wo = null;
@@ -82,10 +81,10 @@ namespace br.ufc.pargo.hpe.backend
 			
             public void deleteComponent(String ID) { }
 
-            public static void releaseManager(IpcClientChannel ch)
+/*            public static void releaseManager(IpcClientChannel ch)
             {
                 ChannelServices.UnregisterChannel(ch);
-            }
+            }*/
 
             public int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
             {
@@ -134,7 +133,7 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 finally
                 {
-                    releaseManager(ch);
+                    //releaseManager(ch);
                     Connector.closeConnection();
                 }
 				
@@ -143,7 +142,7 @@ namespace br.ufc.pargo.hpe.backend
 			
 			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
 			{
-                    ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);                     
+                    ManagerObject worker = (ManagerObject) getFrameworkInstance(/*out ch*/);                     
 
                     foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                     {
@@ -253,7 +252,7 @@ namespace br.ufc.pargo.hpe.backend
                 finally
                 {
                     Connector.closeConnection();
-                    releaseManager(ch);
+                    //releaseManager(ch);
                 }
 				
 				return cConc != null ? cConc.Id_concrete : -1;
