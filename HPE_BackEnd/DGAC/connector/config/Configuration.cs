@@ -348,7 +348,7 @@ namespace br.ufc.pargo.hpe.connector.config
 				monitors = new List<IMonitor> ();
         monitors.Add (monitor);
 			}
-			
+			 monitors.Clear();
 		}
       
 
