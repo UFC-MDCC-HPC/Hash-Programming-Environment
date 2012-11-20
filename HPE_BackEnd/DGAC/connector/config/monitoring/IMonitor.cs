@@ -18,6 +18,8 @@ namespace br.ufc.pargo.hpe.connector.monitoring {
       bool isRunning(List<int> actions);
       
       bool isRunning(int initialState, int finalState);
+      
+      		void ClearEvents();
    }
 
 }
