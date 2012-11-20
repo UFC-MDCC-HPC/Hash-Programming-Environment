@@ -32,6 +32,11 @@ namespace br.ufc.pargo.hpe.connector.monitoring {
          this.running = new Dictionary<int, int>();
       }
       
+      		public 	void ClearEvents ()
+		{
+			events.Clear();
+		}
+      
       public void Started(int state, int transation, int actionId) {
          //System.Console.WriteLine("[Monitor.Started] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
          lock(thisLock) {
