@@ -86,11 +86,11 @@ namespace br.ufc.pargo.hpe.connector.meta
 				
 			} else if (oper == Operator.NULL) {
 				
-				Console.WriteLine("conditions.Count = {0}", conditions.Count);
+				System.Diagnostics.Debug.WriteLine("conditions.Count = " + conditions.Count);
 				if (conditions.Count > 0) 
 				{
 					Condition c = conditions[0];
-					Console.WriteLine("Condition is {0}/{1}", c.Slice, c.Name);
+					System.Diagnostics.Debug.WriteLine("Condition is "+ c.Slice + "/" + c.Name);
 				}
 				result = conditions[0].Evaluate();
 

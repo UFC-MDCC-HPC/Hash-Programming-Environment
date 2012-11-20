@@ -38,13 +38,13 @@ namespace br.ufc.pargo.hpe.connector.load {
       {
          if (e.Severity == XmlSeverityType.Warning)
           {
-            Console.Write("WARNING: ");
-            Console.WriteLine(e.Message);
+            System.Diagnostics.Debug.Write("WARNING: ");
+            System.Diagnostics.Debug.WriteLine(e.Message);
          }
          else if (e.Severity == XmlSeverityType.Error)
           {
-            Console.Write("ERROR: ");
-            Console.WriteLine(e.Message);
+            System.Diagnostics.Debug.Write("ERROR: ");
+            System.Diagnostics.Debug.WriteLine(e.Message);
             ErrorsCount++;
          }
       }

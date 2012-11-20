@@ -40,7 +40,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		public ReconfigurationRequest loadRequest (string xml, MetaHashComponent component)
 		{
 			ReconfigurationRequest request = null;
-			System.Console.WriteLine("Arquivo de configuração: " + xml);
+			System.Diagnostics.Debug.WriteLine("Arquivo de configuração: " + xml);
          
 			//TODO resolver os problemas dos validadores xsd.
 			if (true /*validator.IsValid (REQUEST_XSD, xml)*/) {
@@ -156,7 +156,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
          
 			MetaHashComponent component = null;
-         	System.Console.WriteLine("Arquivo de configuração: " + xml);
+         	System.Diagnostics.Debug.WriteLine("Arquivo de configuração: " + xml);
 			
 			//TODO validador da erros que nao consigo identificar a razao.
 			if (true /*validator.IsValid (COMPONENT_XSD, xml)*/) {

@@ -38,7 +38,7 @@ namespace br.ufc.pargo.hpe.connector.monitoring {
 		}
       
       public void Started(int state, int transation, int actionId) {
-         //System.Console.WriteLine("[Monitor.Started] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
+         //System.Diagnostics.Debug.WriteLine("[Monitor.Started] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
          lock(thisLock) {
             if(!running.ContainsKey(actionId)) {
                running.Add(actionId, 1);
@@ -46,13 +46,13 @@ namespace br.ufc.pargo.hpe.connector.monitoring {
                running[actionId]++;
             }
             
-			//System.Console.WriteLine(actionId == 91 ? ("TOTAL " + running[actionId]) : "");
-            //System.Console.WriteLine("Started: state " + state + " | transation " + transation);
+			//System.Diagnostics.Debug.WriteLine(actionId == 91 ? ("TOTAL " + running[actionId]) : "");
+            //System.Diagnostics.Debug.WriteLine("Started: state " + state + " | transation " + transation);
          }
       }
       
       public void Finalized(int state, int transation, int actionId) {
-         //System.Console.WriteLine("[Monitor.Finalized] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
+         //System.Diagnostics.Debug.WriteLine("[Monitor.Finalized] state:{0} | transation:{1} | actionId:{2}", state, transation, actionId);
          lock(thisLock) {
             if(running[actionId] > 1) {
                running[actionId]--;

@@ -183,7 +183,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			foreach (Transition t in transToAdd) {
             
 				if (t.Type == Transition.TransitionType.SIMPLE) {
-					System.Console.WriteLine (t);
+					System.Diagnostics.Debug.WriteLine (t);
 					if(t.getExecutionAction () != LAMBDA_TRANSITION) {
 						actions.Add (t.getExecutionAction ());
 					}
@@ -194,7 +194,7 @@ namespace br.ufc.pargo.hpe.connector.config
 				}
 			}
 
-			System.Console.WriteLine ("");
+			System.Diagnostics.Debug.WriteLine ("");
          
 			int index;
 			//formando a matrix e o arriving
@@ -202,14 +202,14 @@ namespace br.ufc.pargo.hpe.connector.config
             
 				if (tran.Type == Transition.TransitionType.SIMPLE) {
                
-					System.Console.Write ("tran.InitialState: " + tran.InitialState + " | ");
-					System.Console.Write ("tran.FinalState: " + tran.FinalState + " | ");
+					System.Diagnostics.Debug.Write ("tran.InitialState: " + tran.InitialState + " | ");
+					System.Diagnostics.Debug.Write ("tran.FinalState: " + tran.FinalState + " | ");
                
                
 					if (tran.IsElse) {
 						//Caso seja uma transição ELSE, deverá ocupar a última posição.
 						index = (numTransations [tran.InitialState] - 1);
-						System.Console.WriteLine ("numTransitions: " + numTransations [tran.InitialState] + " | ");
+						System.Diagnostics.Debug.WriteLine ("numTransitions: " + numTransations [tran.InitialState] + " | ");
                   
 					} else {
 						index = (matrix [tran.InitialState].Values.Count/Configuration.BASE);
@@ -236,8 +236,8 @@ namespace br.ufc.pargo.hpe.connector.config
 			matrix [FINAL_STATE] [RUNNABLE] = END;
 
 			//TODO remover! exibir a matrix
-			System.Console.WriteLine ();
-			System.Console.WriteLine ("Exibindo a matrix");
+			System.Diagnostics.Debug.WriteLine ("");
+			System.Diagnostics.Debug.WriteLine ("Exibindo a matrix");
 			string content;
 			for (int b = 0; b < matrix.Count; b++) {
 				content = "linha null";
@@ -247,15 +247,15 @@ namespace br.ufc.pargo.hpe.connector.config
 						if(matrix [b].ContainsKey(l)) {
 							content = "" + matrix [b] [l];
 						}
-						System.Console.Write (content + ", ");
+						System.Diagnostics.Debug.Write (content + ", ");
 					}
 				}
-				System.Console.WriteLine ("");
+				System.Diagnostics.Debug.WriteLine ("");
 			}
 			
-			System.Console.WriteLine ("Actions");
+			System.Diagnostics.Debug.WriteLine ("Actions");
 			foreach(ExecutionAction rj in actions) {
-				System.Console.WriteLine("action {0} - {1} ({2})", rj.Id, (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name), (rj.MetaAction == null ? 0 : rj.MetaAction.Id));
+				System.Diagnostics.Debug.WriteLine("action " + rj.Id + " - " + (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name) + " (" + (rj.MetaAction == null ? 0 : rj.MetaAction.Id) +  ")");
 			}
 			
 		}

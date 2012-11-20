@@ -106,7 +106,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
 			else
 			{
-				Console.WriteLine("[MetaUnit.AddAction] {0} is already in actions ...", name);
+				System.Diagnostics.Debug.WriteLine("[MetaUnit.AddAction] {0} is already in actions ...", name);
 			}
 			
 		}
@@ -123,7 +123,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		public void linkEntities ()
 		{
          
-			System.Console.WriteLine ("[MetaUnit.linkEntities] UNIT: " + Name + "-" + Entity.ToString ());
+			System.Diagnostics.Debug.WriteLine ("[MetaUnit.linkEntities] UNIT: " + Name + "-" + Entity.ToString ());
          
 			if (slices != null) {
 				IUnit unit = (IUnit)entity;
@@ -145,9 +145,9 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (actions != null) {
 				foreach (MetaAction a in actions.Values) {
 					if (a.IsNative) {
-						System.Console.Write("[MetaUnit.GenerateDelegates] DAction {0} - {1} ", a.Father.Name, a.Name);
+						System.Diagnostics.Debug.Write("[MetaUnit.GenerateDelegates] DAction " + a.Father.Name + " - " + a.Name);
 						a.Entity = (MetaAction.DAction)Delegate.CreateDelegate (typeof(MetaAction.DAction), Entity, a.Name);
-						System.Console.WriteLine("" + (a.Entity == null));
+						System.Diagnostics.Debug.WriteLine("" + (a.Entity == null));
 					}
 				}
 			}
@@ -155,7 +155,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (conditions != null) {
 				foreach (Condition c in conditions.Values) {
 					if (c.Cond != null && !c.Cond.Equals ("")) {
-						System.Console.Write("[MetaUnit.GenerateDelegates] DCondition {0} - {1} ", c.Cond, Father.Name);
+						System.Diagnostics.Debug.Write("[MetaUnit.GenerateDelegates] DCondition " + c.Cond + " - " + Father.Name);
 						c.Guard = (Condition.DCondition)Delegate.CreateDelegate (typeof(Condition.DCondition), Entity, c.Cond);
 					}
 				}

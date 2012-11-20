@@ -82,12 +82,12 @@ namespace br.ufc.pargo.hpe.connector.config
 			
 			foreach (MetaUnit u in application.Units.Values) 
 			{
-				Console.WriteLine("[ConfigurationManager.LoadComponent] u.Name={0}, this.unitName={1}",u.Name, this.unitName);
+				System.Diagnostics.Debug.WriteLine("[ConfigurationManager.LoadComponent] u.Name="+ u.Name + ", this.unitName="+ this.unitName);
 				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
 					u.Index = this.index;
 					foreach(MetaSlice s in u.Slices.Values) {
-						Console.WriteLine("Slice: " + s.Inner);
+						System.Diagnostics.Debug.WriteLine("Slice: " + s.Inner);
 					}
 					break;
 				}
@@ -107,7 +107,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Run (string actionName)
 		{
-			System.Console.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
+			System.Diagnostics.Debug.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
 			MetaAction action = null;
          
 			if (unit != null && unit.Entity != null) {
@@ -238,7 +238,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		protected void WaitForSafeState (IMonitor monitor, ExecutionStateEvaluation es)
 		{
          
-			//System.Console.WriteLine(es.ToString());
+			//System.System.Diagnostics.Debug.WriteLine(es.ToString());
 			if (es.CriticalActions != null) {
 				waiting = monitor.isRunning (es.CriticalActions);
 				while (waiting) {

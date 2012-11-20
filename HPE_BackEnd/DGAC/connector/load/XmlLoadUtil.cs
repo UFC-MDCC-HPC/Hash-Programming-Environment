@@ -541,7 +541,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
 
 			//se for uma transiçao else, retorna null.
-			System.Console.WriteLine("[XmlLoader.GetCondition] iniciando...");
+			System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] iniciando...");
 			if (node.FirstChild.Name.Equals ("condition")) {
 				if (node.FirstChild.Attributes.GetNamedItem ("cond_id").Equals ("else")) {
 					return null;
@@ -559,11 +559,11 @@ namespace br.ufc.pargo.hpe.connector.load
 			Condition.Operator oper;
 
 			sliceName = condName = null;
-			System.Console.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
+			System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
 			XmlAttribute attr = (XmlAttribute)node.Attributes.GetNamedItem ("not");
 
 			if (attr != null) {
-				System.Console.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
+				System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
 				not = attr.Value.Equals ("true");
 			}
 
@@ -572,14 +572,14 @@ namespace br.ufc.pargo.hpe.connector.load
 
 			toTreat.Enqueue (new KeyValuePair<Condition, XmlNodeList> (result, children)); 
      
-			System.Console.WriteLine("[XmlLoader.GetCondition] tratamento dos item...");
+			System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] tratamento dos item...");
 			while (toTreat.Count > 0) {
 
 				pivot = toTreat.Dequeue ();
 				cenum = pivot.Value.GetEnumerator ();
 
 				while (cenum.MoveNext()) {
-					System.Console.WriteLine("[XmlLoader.GetCondition] trandando item...");
+					System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] trandando item...");
 					child = (XmlNode)cenum.Current;
 					not = false;
 
@@ -599,10 +599,10 @@ namespace br.ufc.pargo.hpe.connector.load
 
 						if (condName.Equals ("true") || condName.Equals ("false")) {
 							newCond = new Condition (condName.Equals ("true"), false);
-							System.Console.WriteLine("[XmlLoader.GetCondition] Condition fixa... [" + condName + "]");
+							System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] Condition fixa... [" + condName + "]");
 						} else {
 							newCond = new Condition (sliceName, condName, false);
-							System.Console.WriteLine("[XmlLoaderUtil.GetCondition] Condition: " + sliceName + "." + condName + "-not:" + not);
+							System.Diagnostics.Debug.WriteLine("[XmlLoaderUtil.GetCondition] Condition: " + sliceName + "." + condName + "-not:" + not);
 						}
 						pivot.Key.Conditions.Add (newCond);
 					} else {
