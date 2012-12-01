@@ -174,7 +174,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             string id_inner_owner)
         {
 			int id_abstract = id_abstract_start;
-	            SliceExposed se = null;
+	        SliceExposed se = null;
 			
 			while (id_abstract > 0) 
 			{

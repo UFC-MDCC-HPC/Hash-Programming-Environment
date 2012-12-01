@@ -76,6 +76,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         //public static string ID_ABSTRACT_KEY = "id_abstract";
         //public static string ID_INNER_KEY = "id_inner";
         public const string UNIT_KEY = "id_interface";
+        public const string PORT_NAME = "port_name";
        // public static string KIND_KEY = "kind";
 
         public const string DEFAULT_PROVIDES_PORT_IMPLEMENTS = "implements";
@@ -83,8 +84,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string DEFAULT_PROVIDES_PORT_SERVICE = "service_client";
         public const string DEFAULT_USES_PORT_SERVICE = "service_server";
 
-        public static string CREATE_SLICES_PORT_NAME = "automatic_slices";
-        public static string CREATE_SLICES_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";
+        public static string INITIALIZE_PORT_NAME = "initialize_port";
+        public static string INITIALIZE_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";
+        public static string RECONFIGURE_PORT_NAME = "recnfigure_port";
+        public static string RECONFIGURE_PORT_TYPE = "br.ufc.pargo.hpe.ports.ReconfigurationAdvicePort";
         public const string GO_PORT_TYPE = "gov.cca.ports.GoPort";
         public const string GO_PORT_NAME = "go";
         public const string PARAMETER_PORT_TYPE = "gov.cca.ports.ParameterPort";

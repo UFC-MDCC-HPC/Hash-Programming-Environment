@@ -86,9 +86,6 @@
     <Compile Include="..\..\DGAC\base\ArchitectureKind.cs">
       <Link>base\ArchitectureKind.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\base\AutomaticSlicesPort.cs">
-      <Link>base\AutomaticSlicesPort.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\base\ComputationKind.cs">
       <Link>base\ComputationKind.cs</Link>
     </Compile>
@@ -306,9 +303,6 @@
     <Compile Include="..\..\DGAC\GoPortImpl.cs">
       <Link>manager\GoPortImpl.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\AutomaticSlicesPortImpl.cs">
-      <Link>manager\AutomaticSlicesPortImpl.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\base\ActivateKind.cs">
       <Link>base\ActivateKind.cs</Link>
     </Compile>
@@ -440,6 +434,18 @@
     </Compile>
     <Compile Include="..\..\DGAC\database\model\InterfaceAction.cs">
       <Link>database\model\InterfaceAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\InitializePortImpl.cs">
+      <Link>manager\InitializePortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\ReconfigurationAdvicePort.cs">
+      <Link>base\ReconfigurationAdvicePort.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\ReconfigurationAdvicePortImpl.cs">
+      <Link>manager\ReconfigurationAdvicePortImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\InitializePort.cs">
+      <Link>base\InitializePort.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

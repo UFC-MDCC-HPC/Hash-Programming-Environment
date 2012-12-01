@@ -53,7 +53,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		private string mkPortName(string portName)
 		{
-			return InstanceName + "." +  portName;
+			return InstanceName + ":" +  portName;
 		}
 		
 		#region Services implementation

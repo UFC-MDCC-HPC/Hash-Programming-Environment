@@ -139,7 +139,7 @@ public class CommandLineUtil {
     private static void createFile(string contents, string fileName)
     {
         // throw new Exception("The method or operation is not implemented.");
-        FileUtil.writingToFile(fileName, contents);
+        FileUtil.writeToFile(fileName, contents);
     }
   
  

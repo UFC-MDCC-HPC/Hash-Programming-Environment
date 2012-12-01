@@ -40,35 +40,55 @@ namespace br.ufc.pargo.hpe.basic
 		#endregion
 	}
 	
-	public class AutomaticSlicesPortWrapper : MarshalByRefObject, AutomaticSlicesPort
+	public class InitializePortWrapper : MarshalByRefObject, InitializePort
 	{
 		
 		public delegate void MTH();
 		
-		private MTH create_slices_mth;
-		private MTH destroy_slices_mth;
+		private MTH initialize_mth;
+		private MTH after_initialize_mth;
 		
 		
-		public AutomaticSlicesPortWrapper(MTH create_slices_mth, MTH destroy_slices_mth)
+		public InitializePortWrapper(MTH initialize_mth, MTH after_initialize_mth)
 		{
-			this.create_slices_mth = create_slices_mth;
-			this.destroy_slices_mth = destroy_slices_mth;
+			this.initialize_mth = initialize_mth;
+			this.after_initialize_mth = after_initialize_mth;
 		}
 		#region AutomaticSlicesPort implementation
-		public void create_slices ()
+		public void initialize ()
 		{
-			this.create_slices_mth();
+			this.initialize_mth();
 		}
 
-		public void destroy_slices ()
+		public void post_initialize ()
 		{
-			this.destroy_slices_mth();
+			this.after_initialize_mth();
 		}
 		#endregion
 
 
 	}
 	
+	public class ReconfigurationAdvicePortWrapper : MarshalByRefObject, ReconfigurationAdvicePort
+	{
+		
+		public delegate void MTH(string portName);
+		
+		private MTH changePort_mth;
+		
+		public ReconfigurationAdvicePortWrapper(MTH changePort_mth)
+		{
+			this.changePort_mth = changePort_mth;
+		}
+		#region ReconfigurationAdvicePort implementation
+		public void changePort (string portName)
+		{
+			this.changePort_mth(portName);
+		}
+		#endregion
+
+
+	}
 
     //[Serializable]
     public abstract class Unit : MarshalByRefObject, IUnit
@@ -98,19 +118,25 @@ namespace br.ufc.pargo.hpe.basic
 			
             foreach (Slice slice in sList)
             {
-                // The uses port name will be the name of the property
-               services.registerUsesPort(slice.Id_inner/*slice.PortName*/, "", new TypeMapImpl());
-            }
-			
-			
+			   InnerComponent ic = BackEnd.icdao.retrieve(slice.Id_abstract, slice.Id_inner);
+			   AbstractComponentFunctor acf_inner = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
 				
+			   int slice_kind_inner = Constants.kindMapping[acf_inner.Kind];
+                // The uses port name will be the name of the property
+               if (slice_kind_inner != Constants.KIND_QUALIFIER) {		
+			   	   services.registerUsesPort(slice.Id_inner, "", new TypeMapImpl());
+			   }
+            }
 			
             Interface i = BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);  
 			
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, i.Class_name, new TypeMapImpl());
 			
-			AutomaticSlicesPort create_slices_app_port_wrapper = new AutomaticSlicesPortWrapper(((AutomaticSlicesPort)this).create_slices, ((AutomaticSlicesPort)this).destroy_slices);
-            services.addProvidesPort(create_slices_app_port_wrapper, Constants.CREATE_SLICES_PORT_NAME, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
+			InitializePort initialize_port_wrapper = new InitializePortWrapper(((InitializePort)this).initialize, ((InitializePort)this).post_initialize);                        
+            services.addProvidesPort(initialize_port_wrapper, Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
+			
+			ReconfigurationAdvicePort reconfiguration_port_wrapper = new ReconfigurationAdvicePortWrapper(((ReconfigurationAdvicePort)this).changePort);                        
+            services.addProvidesPort(reconfiguration_port_wrapper, Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
 			
 			if (slice_kind == Constants.KIND_APPLICATION) {		
 				gov.cca.ports.GoPort app_port_wrapper = new GoPortWrapper(((gov.cca.ports.GoPort) this).go);
@@ -118,191 +144,6 @@ namespace br.ufc.pargo.hpe.basic
 			}
         }
 
-        #region CreateSlicesPort
-		
-		private IDictionary<string, bool> connected_slice = new Dictionary<string,bool>();
-		
-		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void create_slices()
-		{
-			create_slices(null);
-		}
-		
-		[MethodImpl(MethodImplOptions.Synchronized)]
-        public void create_slices(IUnit owner_unit)
-        {
-            Connector.openConnection();
-            // CREATE SLICES !!!
-			Console.WriteLine("BEGIN - SLICES OF " + id_abstract + " - " + this.getSliceName(owner_unit));
-            
-			IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
-			
-		//	foreach (Slice slice in sList)
-		//	{
-		//		Console.WriteLine("inner = " + slice.Id_inner + ", unit =" + slice.Id_interface_slice);
-		//	}
-		//	Console.WriteLine("END - SLICES OF " + this.get_id_inner(owner_unit));
-			
-			
-            foreach (Slice slice in sList)
-            {
-                InnerComponent ic = BackEnd.icdao.retrieve(slice.Id_abstract, slice.Id_inner);
-                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
-                int slice_kind = Constants.kindMapping[acf.Kind];
-                if (slice_kind != Constants.KIND_QUALIFIER)
-                {
-					if (!this.connected_slice.ContainsKey(slice.Id_inner)) 
-					{
-	                    if (!slice.isPublic())
-	                    {
-	                        /* This method will:
-	                         *   1. instantiate the inner component (local slice) if it is not yet be instantiated and connected
-	                         *   2. connect the uses port to the implements (provides) port of the inner component                     * 
-	                         */
-	                        BackEnd.createSlice(this, slice);														
-							connected_slice.Add(slice.Id_inner, true);
-	                    }
-	                    else
-	                    {
-							IUnit owner_unit_ = owner_unit;
-							while (owner_unit_ != null) 
-							{
-		                        // Look for the port in the enclosing unit.
-		                        ComponentID user_id = this.CID;
-		                        string portName = slice.Id_inner; /*slice.PortName;*/
-		                        ComponentID container_id = owner_unit_.CID;
-		
-		                        Interface i = BackEnd.idao.retrieve(this.Id_abstract, this.id_interface, this.partition_index);
-		
-		                        /* The actual name of the current component */
-		                        string id_inner_owner = this.getSliceName(owner_unit_);
-								int id_abstract_owner = owner_unit_.Id_abstract; // this.ContainerSlice.Id_abstract;
-		
-		                        SliceExposed se = BackEnd.sedao.retrieveContainerByOriginal(
-	                                                      slice.Id_inner,               // id_inner_original
-	                                                      slice.Id_interface_slice_top, // id_interface_slice_original
-	                                                      id_abstract_owner,            // id_abstract
-	                                                      i.Id_interface_super_top,     // id_interface_slice_owner
-	                                                      id_inner_owner                // id_inner_owner
-	                                                      );
-								
-								
-								Console.WriteLine ("BEGIN /////////////");
-								Console.WriteLine(slice.Id_inner);                 // id_inner_original
-								Console.WriteLine(slice.Id_interface_slice_top);   // id_interface_slice_original
-								Console.WriteLine(id_abstract_owner);              // id_abstract
-								Console.WriteLine(i.Id_interface_super_top);       // id_interface_slice_owner
-								Console.WriteLine(id_inner_owner);                 // id_inner_owner
-								Console.WriteLine ("END /////////////");
-								
-								if (se != null)
-								{
-			                        string container_portName = se.Id_inner;		
-									Console.WriteLine("REDIRECT SLICE user_id=" + user_id.getInstanceName() + ", portName=" + portName + ", container_id=" + container_id.getInstanceName() + ", container_portName=" + container_portName);
-			                        BackEnd.redirectSlice(user_id, portName, container_id, container_portName);
-									connected_slice.Add(slice.Id_inner, true);
-									break;
-								} 
-								
-
-								owner_unit_ = owner_unit_.ContainerSlice.Count == 0 ? null : owner_unit_.ContainerSlice[0];
-							}
-							
-							if (owner_unit_ == null)
-							{
-		                        BackEnd.createSlice(this, slice);
-								connected_slice.Add(slice.Id_inner, true);
-							}
-	                    }						
-					}
-					else 
-					{
-//						Console.WriteLine("INNER COMPONENT CONNECTED - " + slice.Id_inner);
-					}
-                }
-            }            
-
-//			Console.WriteLine("STARTING SLICES ... " + this.AllSlices.Count);
-            foreach (IUnit unit_slice in this.AllSlices)
-            {
-			    unit_slice.create_slices(this);
-            }
-			
-			this.initialize_slices();
-			this.post_initialize_slices();
-			
-//			Console.WriteLine("END SLICES OF " + id_abstract + " - " + this.get_id_inner(owner_unit));
-			//Console.WriteLine();
-            Connector.closeConnection();
-        }
-		
-		private bool initialized_flag = false;
-		private bool after_initialized_flag = false;
-       // private static IDictionary<IUnit, bool> initialized = new Dictionary<IUnit, bool>();
-		
-		
-		[MethodImpl(MethodImplOptions.Synchronized)]
-        public void initialize_slices()
-        {
-			if (!initialized_flag)
-			{
-	            foreach (IUnit unit_slice in this.AllSlices)
-	            {
-	               // if (!initialized.ContainsKey(unit_slice))
-	               // {
-	                    unit_slice.initialize_slices();
-	                   // initialized.Add(unit_slice, true);
-	               // }
-	            }
-						
-				initialize();
-				initialized_flag = true;
-
-				Console.WriteLine("initialize " + this.CID.getInstanceName());
-			}
-			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " initialized !!! ");
-        }
-
-		[MethodImpl(MethodImplOptions.Synchronized)]
-        public void post_initialize_slices()
-        {
-			if (initialized_flag && !after_initialized_flag)
-			{
-				post_initialize();
-				after_initialized_flag = true;
-				Console.WriteLine("after initialize " + this.CID.getInstanceName());			
-	
-				foreach (IUnit unit_slice in this.AllSlices)
-	            {
-	                //if (initialized.ContainsKey(unit_slice))
-	                //{
-	                    unit_slice.post_initialize_slices();
-	                   // initialized.Remove(unit_slice);
-	                //}
-	            }
-			}
-			//Console.Error.WriteLine(this.GlobalRank + ": " + cid.getInstanceName() + " post initialized !!! ");
-        }
-		
-        private static IDictionary<IUnit, bool> destroyed = new Dictionary<IUnit, bool>();
-
-		[MethodImpl(MethodImplOptions.Synchronized)]
-        public void destroy_slices()
-        {
-
-            foreach (IUnit unit_slice in this.AllSlices)
-            {
-                if (!destroyed.ContainsKey(unit_slice))
-                {
-                    unit_slice.destroy_slices();
-                    destroyed.Add(unit_slice, true);
-                }
-            }
-
-            destroySlice();
-        }
-
-        #endregion CreateSlicesPort
 
 
 
@@ -397,7 +238,7 @@ namespace br.ufc.pargo.hpe.basic
             set { actual_parameters_top = value; }
         }
 
-       private ICollection<IUnit> AllSlices
+       public ICollection<IUnit> AllSlices
        {
            get { return slice_map == null ? new List<IUnit>() : slice_map.Values; }
        }
@@ -540,6 +381,22 @@ namespace br.ufc.pargo.hpe.basic
 			}
 		}
 		#endregion
+
+
+
+
+		#region ReconfigurationAdvicePort implementation
+		virtual public void changePort (string portName) 
+		{ 
+			Console.WriteLine("CHANGE PORT " + portName + " OF " + CID);
+			Slice[portName] = (IUnit) services.getPort (portName);
+		}
+		#endregion
+
+
+
+
+
 
 
 

@@ -14,11 +14,13 @@ namespace gov
             public abstract int[] WorkerNodes { get; set; }
             public abstract string[] WorkerUnitNames { get; set; }
             public abstract int[] WorkerUnitIndexes { get; set; }
+			public abstract int Version {get; set;}
 
            // public abstract WorkerComponentID WorkerComponentID { get; }
             public abstract WorkerComponentID getWorkerComponentID(int node);
 			public abstract void registerWorkerComponentID(int node, WorkerComponentID wcid);
             public abstract int Id_functor_app { get; }
+			public abstract string PortName {get; set;}
             public abstract int Kind { get; }
         }
 
@@ -32,6 +34,8 @@ namespace gov
             private int[] indexes = null;
             private string instanceNamePrim = null;
             private string classNamePrim = null;
+			private int version;
+			private string portName;
 
             #endregion
 
@@ -51,19 +55,17 @@ namespace gov
             }
 			
 			// For registering a #-component
-            public ManagerComponentIDImpl(string instanceName, int[] nodes, string[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind)
+            public ManagerComponentIDImpl(string instanceName, string className, int[] nodes, string[] unit_ids, int[] indexes, /*WorkerComponentID[] wcids,*/ int id_functor_app, int kind, string portName)
             {
                 this.instanceNamePrim = instanceName;
+				this.classNamePrim = className;
                 this.nodes = nodes;
                 this.unit_ids = unit_ids;
                 this.indexes = indexes;
                 this.id_functor_app = id_functor_app;
                 this.kind = kind;
                 this.wcids = new Dictionary<int, WorkerComponentID>();
-//                for (int i = 0; i < nodes.Length; i++)
-//                {
- //                   this.wcids[i] = wcids[i];
-  //              }
+				this.portName = portName;	
             }
 
             #endregion
@@ -76,10 +78,22 @@ namespace gov
                 set { this.instanceNamePrim = value; }
             }
 
+            public override int Version
+            {
+                get { return version; }
+                set { this.version = value; }
+            }
+			
             public override string ClassName
             {
                 get { return classNamePrim; }
                 set { this.classNamePrim = value; }
+            }
+
+            public override string PortName
+            {
+                get { return portName; }
+                set { this.portName = value; }
             }
 
             public override int[] WorkerNodes

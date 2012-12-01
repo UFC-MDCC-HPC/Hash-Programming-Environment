@@ -31,16 +31,17 @@ namespace br.ufc.pargo.hpe.backend
         public class BackEnd 
         {
 
-            public static WorkerObject framework = null;
+            public static WorkerObject worker_framework = null;
 
- //           private IpcClientChannel ch = null;
+            private IpcClientChannel ch = null;
 
             public BackEnd()
             {
-                Console.WriteLine("DGAC is up and running.");
+                System.Diagnostics.Debug.WriteLine("DGAC is up and running.");
             }
 
-
+			#region FRAMEWORK_INSTANTIATION
+			
             public static gov.cca.AbstractFramework getFrameworkInstance()
             {
 				//TcpChannel channel = new TcpChannel(Constants.MANAGER_PORT/*prop, client_provider*/);
@@ -51,7 +52,7 @@ namespace br.ufc.pargo.hpe.backend
                 return (gov.cca.AbstractFramework) obj;
             }
 
-/*            public static gov.cca.AbstractFramework getFrameworkInstance(out IpcClientChannel ch)
+            public static gov.cca.AbstractFramework getFrameworkInstance(out IpcClientChannel ch)
             {
                 IDictionary prop = new Hashtable();
                 prop["portName"] = Constants.MANAGER_PORT_NAME;
@@ -60,12 +61,11 @@ namespace br.ufc.pargo.hpe.backend
 				
 				ch = new IpcClientChannel(prop, client_provider);
                 ChannelServices.RegisterChannel(ch, false);
-                object[] activateAttribute = 
-			              {new UrlAttribute("ipc://ManagerHost")};
+                object[] activateAttribute = {new UrlAttribute("ipc://ManagerHost")};
 				ManagerObject obj = (ManagerObject) Activator.CreateInstance(typeof(ManagerObject), null, activateAttribute);
                 return (gov.cca.AbstractFramework) obj;
             }
-						 */
+						 
             public static gov.cca.AbstractFramework getFrameworkWorkerInstance(string node, int port, int rank)
             {
                 WorkerObject wo = null;
@@ -73,19 +73,31 @@ namespace br.ufc.pargo.hpe.backend
 				string service_name = Constants.WORKER_SERVICE_NAME + "-" + rank;
 				string uri_str = "tcp://" + node + ":" + port + "/" + service_name;
 				
-				object[] activateAttribute = {new UrlAttribute(uri_str)};				            
-				wo = (WorkerObject) Activator.CreateInstance(typeof(WorkerObject), null, activateAttribute); 			
+// Register the TCP channel.
+//        ChannelServices.RegisterChannel(new TcpChannel(), false);
+
+        // Create a url attribute object.
+        UrlAttribute attribute = new UrlAttribute(uri_str);
+        object[] activationAttributes = new object[] { attribute };
+
+        // Register the client for the remote object.
+        //RemotingConfiguration.RegisterActivatedClientType(typeof(WorkerObject),  uri_str);
+
+			wo = (WorkerObject) Activator.CreateInstance(typeof(WorkerObject), null, activationAttributes); 			
+			wo.sayHi();
 		
                 return wo;
             }
 			
-            public void deleteComponent(String ID) { }
-
-/*            public static void releaseManager(IpcClientChannel ch)
+            public static void releaseManager(IpcClientChannel ch)
             {
                 ChannelServices.UnregisterChannel(ch);
-            }*/
-
+            }
+			
+			#endregion FRAMEWORK_INSTANTIATION
+			
+			#region DEPLOY
+			
             public int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
             {
                 AbstractComponentFunctor cAbs = null;
@@ -133,7 +145,7 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 finally
                 {
-                    //releaseManager(ch);
+                    releaseManager(ch);
                     Connector.closeConnection();
                 }
 				
@@ -142,7 +154,7 @@ namespace br.ufc.pargo.hpe.backend
 			
 			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
 			{
-                    ManagerObject worker = (ManagerObject) getFrameworkInstance(/*out ch*/);                     
+                    ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);                     
 
                     foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                     {
@@ -176,25 +188,25 @@ namespace br.ufc.pargo.hpe.backend
 			}
 			
 			public void updateConfiguration(int id_abstract, byte[] hcl_data)
-			{
+                        {
                 try
                 {
                     Connector.openConnection();
                     Connector.beginTransaction();
-					
-					AbstractComponentFunctor acf = acfdao.retrieve(id_abstract);
-					
-					string filename = acf.Library_path;
-					
-			        string path = Constants.PATH_TEMP_WORKER + filename + ".hcl";
-										
-			        FileUtil.saveByteArrayIntoFile(hcl_data, path);
-					
-				}				
+                                       
+                                        AbstractComponentFunctor acf = acfdao.retrieve(id_abstract);
+                                       
+                                        string filename = acf.Library_path;
+                                       
+                                string path = Constants.PATH_TEMP_WORKER + filename + ".hcl";
+                                                                               
+                                FileUtil.saveByteArrayIntoFile(hcl_data, path);
+                                       
+                                }                              
                 catch (Exception e)
                 {
-					Console.Error.WriteLine("Rolling back transaction ! Exception: " + e.Message);
-					Console.Error.WriteLine(e.StackTrace);
+                                        Console.Error.WriteLine("Rolling back transaction ! Exception: " + e.Message);
+                                        Console.Error.WriteLine(e.StackTrace);
                     Connector.rollBackTransaction();
                     throw e;
                 }
@@ -202,7 +214,7 @@ namespace br.ufc.pargo.hpe.backend
                 {
                     Connector.closeConnection();
                 }
-			}
+                        }
 			
             public int registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
             {
@@ -252,7 +264,7 @@ namespace br.ufc.pargo.hpe.backend
                 finally
                 {
                     Connector.closeConnection();
-                    //releaseManager(ch);
+                    releaseManager(ch);
                 }
 				
 				return cConc != null ? cConc.Id_concrete : -1;
@@ -263,12 +275,10 @@ namespace br.ufc.pargo.hpe.backend
                 return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password, curDir);
             }
 
-            private void sendRunCommandToWorker(ManagerObject worker, IDictionary<string, int> files, IDictionary<string, int> enums, int session_id, string userName, string password, String curDir)
-            {
-                worker.runClass(files, enums, session_id, userName, password, curDir);
-            }
-
-
+			#endregion DEPLOY
+			
+			#region ENVIRONMENT
+			
             public static EnvironmentType readEnvironment()
             {
                 Connector.openConnection();
@@ -374,32 +384,6 @@ namespace br.ufc.pargo.hpe.backend
 
                 return l;
             }
-/*
-            private static string[] readEnvironmentEnumerators(int id_abstract)
-            {
-                IList<string> rList = new List<string>();
-                IList<DGAC.database.Interface> iList = idao.list(id_abstract);
-
-                foreach (DGAC.database.Interface i in iList)
-                {
-                    IList<EnumerationInterface> eiList = exitdao.listByInterface(id_abstract, i.Id_interface);
-                    foreach (EnumerationInterface ei in eiList)
-                    {
-                        Enumerator e = edao.retrieve(ei.Id_abstract, ei.Id_enumerator);
-                        if (e==null) Console.Error.WriteLine("id_abstract=" + ei.Id_abstract + ", id_enumerator=" + ei.Id_enumerator + ", id_interface=" + i.Id_interface);
-                        if (e.Valuation == -1 && !rList.Contains(e.Variable))
-                        {
-                            rList.Add(e.Variable);
-                        }
-                    }
-                }
-
-                string[] r = new string[rList.Count];
-                rList.CopyTo(r, 0);
-
-                return r;
-            }
-*/
            
 			private static DeployedParameterType[] readEnvironmentAbstractParameters(int id_abstract)
             {
@@ -421,8 +405,11 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 return r;
             }
-
-
+			
+			#endregion ENVIRONMENT
+			
+			#region RUN
+			
             public String[] runApplication(string instantiatior_string, string userName, string password, string curDir)
             {
 		    	int id_concrete = 0;
@@ -437,7 +424,6 @@ namespace br.ufc.pargo.hpe.backend
                 string[] str_output = null;
                 try
                 {
-                    /* BEGIN UNDER CONSTRUCTION */
                     TypeMapImpl properties = new TypeMapImpl();					
 					
                     gov.cca.AbstractFramework frw = getFrameworkInstance();
@@ -445,67 +431,56 @@ namespace br.ufc.pargo.hpe.backend
 					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
 				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
 					
-					Console.WriteLine("Connecting to the builder service port");
+					System.Diagnostics.Debug.WriteLine("Connecting to the builder service port");
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					
-					Console.WriteLine("Creating an instance of the application");
-                    ComponentID app_cid = bsPort.createInstance("app", instantiatior_string, properties);
+					System.Diagnostics.Debug.WriteLine("Creating an instance of the application");
+                    //ComponentID app_cid = bsPort.createInstance("app", instantiatior_string, properties);
+					ManagerComponentID app_cid = (ManagerComponentID) createApplicationInstance (instantiatior_string, session_id_string, bsPort, frwServices, (ManagerObject) frw);
 					
-					Console.WriteLine("Connecting to the GoPort of the application");
+					
+					
+					System.Diagnostics.Debug.WriteLine("Connecting to the GoPort of the application");
 					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
 					ConnectionID conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
 					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
 					
-				//	Thread thread_go = new Thread((new GoThread(go_port)).go);
-				//	thread_go.Start();
-					
-					//Console.WriteLine("PRESS TO PROCEED --- CREATE SLICES PORT");
-					//System.Console.ReadKey(true);
-					
-					Console.WriteLine("Connecting to the AutomaticSlices port of the application");
-					frwServices.registerUsesPort(Constants.CREATE_SLICES_PORT_NAME, Constants.CREATE_SLICES_PORT_TYPE, new TypeMapImpl());
-					ConnectionID conn_cs = bsPort.connect(host_cid, Constants.CREATE_SLICES_PORT_NAME, app_cid, Constants.CREATE_SLICES_PORT_NAME);
-					AutomaticSlicesPort create_slices_port = (AutomaticSlicesPort) frwServices.getPort (Constants.CREATE_SLICES_PORT_NAME);
-					create_slices_port.create_slices(); 
-					
-				//	thread_go.Join();
-					
-					Console.WriteLine ("Doing 'round' executions of the application.");
+					System.Diagnostics.Debug.WriteLine ("Doing " + rounds + " executions of the application.");
 					for (int round=0; round < rounds; round++) 
 					{
-						Console.WriteLine("ROUND #" + round);	
+						System.Diagnostics.Debug.WriteLine("ROUND #" + round);	
 						go_port.go(); 
 					}
 					
 					// RECURSIVELY, DISCONNECT ALL COMPONENT CONNECTIONS ...
-					//create_slices_port.destroy_slices();
+				//	create_slices_port.destroy_slices();
 					
-					frwServices.releasePort(Constants.CREATE_SLICES_PORT_NAME);
-					bsPort.disconnect(conn_cs, 0);
-					frwServices.unregisterUsesPort(Constants.CREATE_SLICES_PORT_NAME);
+					//frwServices.releasePort(Constants.CREATE_SLICES_PORT_NAME);
+					//bsPort.disconnect(conn_cs, 0);
+					//frwServices.unregisterUsesPort(Constants.CREATE_SLICES_PORT_NAME);
 					
 					frwServices.releasePort(Constants.GO_PORT_NAME);
 					bsPort.disconnect(conn_go, 0);
-					Console.WriteLine("Test e1");
+					System.Diagnostics.Debug.WriteLine("Test e1");
 					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
-					Console.WriteLine("Test e2");
+					System.Diagnostics.Debug.WriteLine("Test e2");
 					
 					bsPort.destroyInstance(app_cid, 0);
-					Console.WriteLine("Test e3");
+					System.Diagnostics.Debug.WriteLine("Test e3");
 					
 					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
-					Console.WriteLine("Test e4");
+					System.Diagnostics.Debug.WriteLine("Test e4");
 					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
 					
-					Console.WriteLine ("Finishing");
+					System.Diagnostics.Debug.WriteLine ("Finishing");
 					
                 }
                 catch (Exception e)
                 {
-					Console.WriteLine("## Exception: " + e.Message);
-					Console.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
-					Console.WriteLine("## Trace: " + e.StackTrace);
+					System.Diagnostics.Debug.WriteLine("## Exception: " + e.Message);
+					System.Diagnostics.Debug.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					System.Diagnostics.Debug.WriteLine("## Trace: " + e.StackTrace);
                     throw e;
                 }
 
@@ -513,6 +488,70 @@ namespace br.ufc.pargo.hpe.backend
 
             }
 
+            public void testReconfiguration(string instantiatior_string_1,  string instantiatior_string_2, string session_id_string)
+            {	
+                try
+                {
+                    TypeMapImpl properties = new TypeMapImpl();					
+					
+                    gov.cca.AbstractFramework frw = getFrameworkInstance();
+					
+					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
+				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
+					
+					System.Diagnostics.Debug.WriteLine("Connecting to the builder service port");
+					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
+					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
+					
+					ManagerComponentID app_cid_1 = (ManagerComponentID) createApplicationInstance (instantiatior_string_1, session_id_string, bsPort, frwServices, (ManagerObject) frw);
+					
+					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
+					ConnectionID conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid_1, Constants.GO_PORT_NAME);
+					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
+					go_port.go(); 
+															
+					ComponentID[] cids = bsPort.getComponentIDs();
+					
+					ManagerComponentID cid_to_reconfigure = (ManagerComponentID) cids[68];
+					
+					reconfigureComponentContext(cid_to_reconfigure,"axis",instantiatior_string_2, bsPort, frwServices, (ManagerObject) frw);
+					
+					go_port.go(); 
+					
+			//		ManagerComponentID app_cid_2 = (ManagerComponentID) createApplicationInstance (app_cid_1, instantiatior_string_2, session_id_string, bsPort, frwServices, (ManagerObject) frw);
+			//		
+			//		frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
+			//		conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid_2, Constants.GO_PORT_NAME);
+			//		go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
+			//		go_port.go(); 
+					
+					frwServices.releasePort(Constants.GO_PORT_NAME);
+					bsPort.disconnect(conn_go, 0);
+					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
+					
+					bsPort.destroyInstance(app_cid_1, 0);
+			//		bsPort.destroyInstance(app_cid_2, 0);
+					System.Diagnostics.Debug.WriteLine("Test e3");
+					
+					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
+					System.Diagnostics.Debug.WriteLine("Test e4");
+					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
+					
+					System.Diagnostics.Debug.WriteLine ("Finishing");
+					
+                }
+                catch (Exception e)
+                {
+					System.Diagnostics.Debug.WriteLine("## Exception: " + e.Message);
+					System.Diagnostics.Debug.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					System.Diagnostics.Debug.WriteLine("## Trace: " + e.StackTrace);
+                    throw e;
+                }
+
+                
+
+            }
+			
 			private class GoThread
 			{
 				private GoPort go_port = null;
@@ -553,8 +592,12 @@ namespace br.ufc.pargo.hpe.backend
                 dbcmd = null;
                 return session_id;
             }
-
+			
             public static int session_id = -1;
+			
+			#endregion RUN
+			
+			#region DATABASE
 
             private static AbstractComponentFunctorDAO acfdao_ = null;
             private static AbstractComponentFunctorApplicationDAO acfadao_ = null;
@@ -591,7 +634,11 @@ namespace br.ufc.pargo.hpe.backend
             public static SourceCodeDAO scdao { get { if (scdao_ == null) scdao_ = new SourceCodeDAO(); return scdao_; } }
             public static SourceCodeReferenceDAO scrdao { get { if (scrdao_ == null) scrdao_ = new SourceCodeReferenceDAO(); return scrdao_; } }
             public static SliceExposedDAO sedao { get { if (sedao_ == null) sedao_ = new SliceExposedDAO(); return sedao_; } }
-
+			
+			#endregion DATABASE
+			
+			#region RESOLUTION
+			
             public static DGAC.database.Component resolveUnit(
                             AbstractComponentFunctorApplication acfaRef,
                             IDictionary<string, int> actualParameters,
@@ -625,15 +672,19 @@ namespace br.ufc.pargo.hpe.backend
                 return br.ufc.pargo.hpe.backend.DGAC.BackEnd.udao.retrieve(c.Id_concrete, id_unit, 1);
             }
             
+			#endregion RESOLUTION
+			
+			#region CALCULATE_CLASS_PARAMETERS
+			
             public static System.Type[] calculateActualClassParameteres(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
             {
                 IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
                 System.Type[] result = new System.Type[ipars.Count];
 				
-				//Console.WriteLine ("IPARS.LENGTH = " + ipars.Count);
+				//System.Diagnostics.Debug.WriteLine ("IPARS.LENGTH = " + ipars.Count);
                 foreach (InterfaceParameter ipar in ipars)
                 {
-					//Console.WriteLine("parameter ----- " + ipar.ParId);
+					//System.Diagnostics.Debug.WriteLine("parameter ----- " + ipar.ParId);
                     int id_functor_app_parameter;
                     string parid = ipar.ParId;
                     if (actualParameters.TryGetValue(parid, out id_functor_app_parameter) || 
@@ -655,10 +706,10 @@ namespace br.ufc.pargo.hpe.backend
                         int class_nargs = iPar.Class_nargs;
                         string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 
-//				Console.WriteLine("PAR class_name = "  + class_name);
-//				Console.WriteLine("PAR class_nargs = " + class_nargs);
-//				Console.WriteLine ("PAR strType = " + strType);
-//				Console.WriteLine ("PAR parameters.Length = " + parameters.Length);
+//				System.Diagnostics.Debug.WriteLine("PAR class_name = "  + class_name);
+//				System.Diagnostics.Debug.WriteLine("PAR class_nargs = " + class_nargs);
+//				System.Diagnostics.Debug.WriteLine ("PAR strType = " + strType);
+//				System.Diagnostics.Debug.WriteLine ("PAR parameters.Length = " + parameters.Length);
 						
                         Assembly a = Assembly.Load(assembly_string);
                         System.Type t = a.GetType(strType);
@@ -671,101 +722,6 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 return result;
             }
-
-            public static System.Type[] calculateParameterConstraints(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
-            {
-                IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
-                System.Type[] result = new System.Type[ipars.Count];
-				
-				//Console.WriteLine ("IPARS.LENGTH = " + ipars.Count);
-                foreach (InterfaceParameter ipar in ipars)
-                {
-					
-					
-					//Console.WriteLine("parameter ----- " + ipar.ParId);
-                    int id_functor_app_parameter;
-                    string parid = ipar.ParId;
-                    if (actualParameters.TryGetValue(parid, out id_functor_app_parameter) || 
-                        actualParameters.TryGetValue(parid + "#" + id_functor_app, out id_functor_app_parameter))
-                    {
-                        AbstractComponentFunctorApplication acfa_parameter = BackEnd.acfadao.retrieve(id_functor_app_parameter);
-                        AbstractComponentFunctor acf_parameter = BackEnd.acfdao.retrieve(acfa_parameter.Id_abstract);
-                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter, 0);
-
-                        IDictionary<string, int> actualParameters_new;
-                        determineActualParameters(actualParameters, id_functor_app_parameter, out actualParameters_new);
-                        
-                        System.Type[] parameters = calculateActualClassParameteres(iPar, id_functor_app_parameter, actualParameters_new);
-                        
-                        // Build a type from iPar applied to parType.
-
-                        string assembly_string = iPar.Assembly_string;      // where to found the DLL (retrieve from the component).
-                        string class_name = iPar.Class_name;  // the name of the class inside the DLL.
-                        int class_nargs = iPar.Class_nargs;
-                        string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-
-//				Console.WriteLine("PAR class_name = "  + class_name);
-//				Console.WriteLine("PAR class_nargs = " + class_nargs);
-//				Console.WriteLine ("PAR strType = " + strType);
-//				Console.WriteLine ("PAR parameters.Length = " + parameters.Length);
-						
-                        Assembly a = Assembly.Load(assembly_string);
-                        System.Type t = a.GetType(strType);
-
-                        System.Type closedT = parameters.Length > 0 ? t.MakeGenericType(parameters) : t;
-
-                        result[ipar.ParOrder] = closedT;
-
-                    }
-                }
-                return result;
-            }
-
-			private static System.Type setupParameters2(Interface i, int id_functor_app, IDictionary<string, int> actualParameters)
-            {
-                IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract, i.Id_interface);
-                System.Type[] parameters = new System.Type[ipars.Count];
-                foreach (InterfaceParameter ipar in ipars)
-                {
-                    int id_functor_app_parameter;
-                    string parid = ipar.ParId;
-                    if (actualParameters.TryGetValue(parid, out id_functor_app_parameter) ||
-                        actualParameters.TryGetValue(parid + "#" + id_functor_app, out id_functor_app_parameter))
-                    {
-                        AbstractComponentFunctorApplication acfa_parameter = BackEnd.acfadao.retrieve(id_functor_app_parameter);
-                        AbstractComponentFunctor acf_parameter = BackEnd.acfdao.retrieve(acfa_parameter.Id_abstract);
-                        Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter, 0);
-
-                        IDictionary<string, int> actualParameters_new;
-                        determineActualParameters(actualParameters, id_functor_app_parameter, out actualParameters_new);
-
-                        System.Type parameter = setupParameters2(iPar, id_functor_app_parameter, actualParameters_new);
-                        parameters[ipar.ParOrder] = parameter;
-                    }
-                }
-
-                // Build a type from iPar applied to parType.
-
-                string assembly_string = i.Assembly_string;      // where to found the DLL (retrieve from the component).
-                string class_name = i.Class_name;  // the name of the class inside the DLL.
-                int class_nargs = i.Class_nargs;
-                string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
-
-                Assembly a = Assembly.Load(assembly_string);
-                System.Type t = a.GetType(strType);
-
-                System.Type closedT = parameters.Length > 0 ? t.MakeGenericType(parameters) : t;
-
-
-                return closedT;
-            }
-
-            private static void buildParamTable(String propertyName, System.Type myType, out System.Type[] actualParams)
-            {
-                System.Type o = myType.BaseType.GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance).PropertyType;
-                actualParams = o.GetGenericArguments();
-            }
-
 
            
             private static void calculateActualParams_(
@@ -781,6 +737,15 @@ namespace br.ufc.pargo.hpe.backend
                 actualParams = calculateActualClassParameteres(i, acfaRef.Id_functor_app, actualParameters_new);
             }
 
+            public static void calculateActualParams(
+				Dictionary<string, int> actualParameters,
+                AbstractComponentFunctorApplication acfaRef,
+                string id_interface, int partition_index,
+                out System.Type[] actualParams)
+            {
+                calculateActualParams_(actualParameters, acfaRef, id_interface, partition_index, out actualParams);
+            }
+			
             public static void calculateActualParams(
                 AbstractComponentFunctorApplication acfaRef,
                 string id_interface, int partition_index,
@@ -798,19 +763,6 @@ namespace br.ufc.pargo.hpe.backend
                 calculateActualParams_(enclosing_unit.ActualParameters, acfaRef, id_interface, partition_index, out actualParams);
             }
 
-            private static void updateInnerComponentType(IUnit enclosing_unit, InnerComponent ic)
-            {
-                int id_functor_app_inner_actual;
-                if (ic.Parameter_top.Length > 0
-                     && (enclosing_unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual)
-                          || enclosing_unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + enclosing_unit.Id_functor_app, out id_functor_app_inner_actual)))
-                {
-                    ic.Id_functor_app = id_functor_app_inner_actual;
-                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
-                    ic.Id_abstract_inner = acfa.Id_abstract;
-                }
-            }
-
             public static void calculateGenericClassName(
                 br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
                 System.Type[] actualParams,
@@ -821,11 +773,11 @@ namespace br.ufc.pargo.hpe.backend
                 int class_nargs = u.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 				
-				Console.WriteLine("assembly_string = "  + assembly_string);
-				Console.WriteLine("class_name = "  + class_name);
-				Console.WriteLine("class_nargs = " + class_nargs);
-				Console.WriteLine ("strType = " + strType);
-				Console.WriteLine ("actualParams.Length = " + actualParams.Length);
+				System.Diagnostics.Debug.WriteLine("assembly_string = "  + assembly_string);
+				System.Diagnostics.Debug.WriteLine("class_name = "  + class_name);
+				System.Diagnostics.Debug.WriteLine("class_nargs = " + class_nargs);
+				System.Diagnostics.Debug.WriteLine ("strType = " + strType);
+				System.Diagnostics.Debug.WriteLine ("actualParams.Length = " + actualParams.Length);
 				
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
@@ -835,25 +787,25 @@ namespace br.ufc.pargo.hpe.backend
 					System.Type ttt = actualParams[i];
 					if (ttt == null) 
 					{
-					   Console.WriteLine("PARAM (actualParams): NULL ---" + t);
+					   System.Diagnostics.Debug.WriteLine("PARAM (actualParams): NULL ---" + t);
 					   actualParams[i] = fetchTypeConstraint(u,i);					
 					}
 					else 
 					{
-					   Console.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
+					   System.Diagnostics.Debug.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
 					}
 				}
 				
-				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...1");
+				System.Diagnostics.Debug.WriteLine("END CALCULATE GENERIC CLASS NAME ...1");
 				System.Type closedT = t;
 				if (actualParams.Length > 0)
 				{
-					Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...1.5 {0}",t==null);
+					System.Diagnostics.Debug.WriteLine("END CALCULATE GENERIC CLASS NAME ...1.5 " + t==null);
 					closedT = t.MakeGenericType(actualParams);
 				}
-				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...2");
+				System.Diagnostics.Debug.WriteLine("END CALCULATE GENERIC CLASS NAME ...2");
                 type = closedT.FullName;
-				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...3");
+				System.Diagnostics.Debug.WriteLine("END CALCULATE GENERIC CLASS NAME ...3");
             }
 			
 			public static System.Type fetchTypeConstraint(br.ufc.pargo.hpe.backend.DGAC.database.Unit u, int i) 
@@ -877,9 +829,9 @@ namespace br.ufc.pargo.hpe.backend
                 int class_nargs = iPar.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 
-			//	Console.WriteLine("PAR class_name = "  + class_name);
-			//	Console.WriteLine("PAR class_nargs = " + class_nargs);
-			//	Console.WriteLine ("PAR strType = " + strType);
+			//	System.Diagnostics.Debug.WriteLine("PAR class_name = "  + class_name);
+			//	System.Diagnostics.Debug.WriteLine("PAR class_nargs = " + class_nargs);
+			//	System.Diagnostics.Debug.WriteLine ("PAR strType = " + strType);
 						
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
@@ -890,9 +842,89 @@ namespace br.ufc.pargo.hpe.backend
 				
 				
 				return t;
-			}
+	   }
+			
+            public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
+            {
+			//	System.Diagnostics.Debug.WriteLine ("START determineActualParameters " + id_functor_app);
+				
+                actualParameters_new = new Dictionary<string, int>(); ;
 
-            public static AbstractComponentFunctorApplication loadACFAFromInstantiator(ComponentFunctorApplicationType instantiator)
+                foreach (KeyValuePair<string, int> parameter in actualParameters)
+                {
+				//	System.Diagnostics.Debug.WriteLine("traversing actual Parameters : " + parameter.Key);
+                    if (parameter.Key.Contains("#"))
+                    {
+                        actualParameters_new.Add(parameter);
+				//		System.Diagnostics.Debug.WriteLine("adding parameter " + parameter);
+                    }
+                }
+
+                SupplyParameterDAO spdao = new SupplyParameterDAO();
+                IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+
+                foreach (SupplyParameter sp in spcList)
+                {
+                    if (sp is SupplyParameterParameter)
+                    {
+                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                        int id_functor_app_actual;
+                        bool achou = actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+				//		System.Diagnostics.Debug.WriteLine("TESTING " + spp.Id_parameter_actual + " : " + achou + " , " + id_functor_app_actual);
+                        if (achou)
+                        {
+                            actualParameters_new.Add(spp.Id_parameter, id_functor_app_actual);
+					//	    System.Diagnostics.Debug.WriteLine("adding parameter 1 " + spp.Id_parameter);
+                        } 
+						
+                    }
+                    else if (sp is SupplyParameterComponent)
+                    {
+                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                        actualParameters_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+				//		System.Diagnostics.Debug.WriteLine("adding parameter 2 " + spc.Id_parameter);
+						traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
+                    }
+                }
+			//	System.Diagnostics.Debug.WriteLine ("END determineActualParameters " + id_functor_app);
+            }
+
+            private static void traverseParameters(int id_functor_app_top,
+                                            int id_functor_app,
+                                            IDictionary<string, int> actualParametersTop,
+                                            IDictionary<string, int> actualParameters)
+            {
+
+                SupplyParameterDAO spdao = new SupplyParameterDAO();
+                IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+                foreach (SupplyParameter sp in spcList)
+                {
+                    if (sp is SupplyParameterParameter)
+                    {
+                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                        int id_functor_app_actual;
+                        bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
+                        string key = spp.Id_parameter + "#" + id_functor_app_top;
+                        if (!actualParameters.ContainsKey(key)) {
+                            actualParameters.Add(key, id_functor_app_actual);
+				//		    System.Diagnostics.Debug.WriteLine("adding parameter 3 " + key);
+						}
+                    }
+                    else if (sp is SupplyParameterComponent)
+                    {
+                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                        traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParametersTop, actualParameters);
+                    } 
+                }
+
+
+            }
+
+	  #endregion CALCULATE_CLASS_PARAMETERS
+			
+		#region CREATE_ACFA
+		
+        public static AbstractComponentFunctorApplication loadACFAFromInstantiator(ComponentFunctorApplicationType instantiator)
             {
                 AbstractComponentFunctorApplication aAppNew = null;
 
@@ -933,1039 +965,906 @@ namespace br.ufc.pargo.hpe.backend
 
                 return aAppNew;
             }
-
-            public static ComponentFunctorApplicationType buildInstantiator(int id_functor_app_service)
-            {
-                Connector.openConnection();
-                AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_service);
-                AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
-                IList<SupplyParameter> spList = BackEnd.spdao.list(id_functor_app_service);
-
-                ComponentFunctorApplicationType c = new ComponentFunctorApplicationType();
-                c.library_path = acf.Library_path;
-                c.context_parameter = new ContextParameterType[spList.Count];
-                int i = 0;
-                foreach (SupplyParameter sp in spList)
-                {
-                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                    c.context_parameter[i] = new ContextParameterType();
-                    c.context_parameter[i].formal_parameter_id = sp.Id_parameter;
-                    c.context_parameter[i].actual_parameter = buildInstantiator(spc.Id_functor_app_actual);
-                    i++;
-                }
-                Connector.closeConnection();
-
-                return c;
-            }
-
-
-
-            /* TODO !!!!
-             * It is still necessary to defined the meaning of the type parameter of registerUsesPort and addProvidesPort.
-             *  The type will be the component type (instantiation). When connecting two ports, the compatibility of the 
-             *  types will be checked !
-             * 
-             */
-			[MethodImpl(MethodImplOptions.Synchronized)]
-            public static IUnit createSlice(IUnit ownerUnit, Slice slice)                                            
-            {
-                string id_inner = slice.Id_inner;
-                string id_interface = slice.Id_interface_slice;
-				int partition_index = slice.Partition_index;
-                string portName = id_inner; /*slice.PortName;*/
 				
-				Console.WriteLine("CREATE SLICE: id_inner=" + id_inner + ", id_interface=" +  id_interface + ", owner id_inner = " + ownerUnit.getSliceName(ownerUnit) +  ", owner id_interface = " + ownerUnit.Id_unit);
-				
-                ComponentID user_cid = ownerUnit.CID;
-                Services services = ownerUnit.Services;
-                string instanceName = user_cid.getInstanceName();
+			public static AbstractComponentFunctorApplication createACFAByChangingContext (int id_functor_app, string parameter_id, AbstractComponentFunctorApplication acfaRef_par)
+			{
+                AbstractComponentFunctorApplication aAppNew = null;
 
-				Console.WriteLine("BEFORE GET PORT NONBLOCKING");
-                IUnit the_unit = (IUnit)services.getPortNonblocking(portName);
-				Console.WriteLine("AFTER GET PORT NONBLOCKING {0}", the_unit == null);
-				
-                if (the_unit == null)
+                try
                 {
-                    // APPLY THE RESOLUTION ALGORITHM
-                    string className;
-                    br.ufc.pargo.hpe.backend.DGAC.database.Unit u;
-                    br.ufc.pargo.hpe.backend.DGAC.database.Component c;
-                    InnerComponent ic = BackEnd.icdao.retrieve(ownerUnit.Id_abstract, id_inner);
-                    updateInnerComponentType(ownerUnit, ic);
-                    AbstractComponentFunctorApplication acfaRef = BackEnd.acfadao.retrieve(ic.Id_functor_app);
-                    c = resolveUnit(acfaRef, ownerUnit.ActualParameters, ownerUnit.ActualParametersTop);
-                    u = takeUnit(c, id_interface, partition_index);
-                    if (u == null)
-                        throw new ConcreteComponentNotFoundException(acfaRef.Id_functor_app);
-                    System.Type[] actualParams;
-                    calculateActualParams(ownerUnit, acfaRef, id_interface, partition_index, out actualParams);
-					Console.WriteLine("STEP 8");
-                    calculateGenericClassName(u, actualParams, out className);
-
-					Console.WriteLine("BEFORE INSTANTIATE");
+                    Connector.openConnection();
+										
 					
-                    // INSTANTIATE THE PROVIDER COMPONENT (TODO: retirar do createInstance a tarefa de instanciar - IS_COMPONENT_INSTANCE_KEY)
-                    HPETypeMap properties2 = new TypeMapImpl();
-                    properties2[Constants.COMPONENT_KEY] = c.Library_path; // u.Id_concrete;
-                    properties2[Constants.UNIT_KEY] = u.Id_unit;
-                    ComponentID provider_cid = framework.createInstance(instanceName + "-" + id_inner, className, properties2);
-
-                    // CONNECT THE USER (enclosing component) AND THE PROVIDER (inner component) -- setupSlices is called in the connection ...
-					Console.WriteLine("CONNECTING {0}:{1} TO {2}:{3} ", user_cid.getInstanceName(), portName, provider_cid.getInstanceName(), Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-                    framework.connect(user_cid, portName, provider_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-					Console.WriteLine("CONNECTED {0}:{1} TO {2}:{3} ", user_cid.getInstanceName(), portName, provider_cid.getInstanceName(), Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
 					
+                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app);
 
+                    aAppNew = new AbstractComponentFunctorApplication();
+                    aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+                    aAppNew.Id_abstract = acfa.Id_abstract;
+                    DGAC.BackEnd.acfadao.insert(aAppNew);
 					
-                }
-                
-                return the_unit;
-            }
-
-
-			public static void setupSlice(br.ufc.pargo.hpe.basic.IUnit unit, br.ufc.pargo.hpe.basic.IUnit unit_slice, string id_inner)
-            {
-                int id_abstract = unit.Id_abstract;
-                
-//                string id_interface = unit_slice.Id_unit;
-                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
-
-                int id_functor_app_inner_actual = ic.Id_functor_app;
-                if (ic.Parameter_top.Length > 0)
-                {
-                    bool achei = unit.ActualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
-                    if (!achei)
-                    {
-                        achei = unit.ActualParameters.TryGetValue(ic.Parameter_top + "#" + unit.Id_functor_app, out id_functor_app_inner_actual);
-                    }
-                    ic.Id_functor_app = id_functor_app_inner_actual;
-                    AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
-                    ic.Id_abstract_inner = acfa.Id_abstract;
-                }
-
-                IDictionary<string, int> actualParameters_new;
-                determineActualParameters(unit.ActualParameters, id_functor_app_inner_actual, out actualParameters_new);
-
-                unit_slice.Id_functor_app = ic.Id_functor_app;
-                unit_slice.setActualParameters(actualParameters_new);
-                unit_slice.ActualParametersTop = unit.ActualParametersTop;
-				//unit_slice.addContainerSlice(unit);
-                unit_slice.GlobalRank = unit.GlobalRank;
-                unit_slice.WorldComm = unit.WorldComm;
-				
-				/* --- TODO: NOT VALID FOR MPMD */
-				unit_slice.Rank = unit_slice.GlobalRank;
-				unit_slice.Size = unit_slice.WorldComm.Size;
-				/* --- */
-
-                //calculateTopology(unit, unit_slice, id_inner);
-
-            }
-			
-			/*
-            public static void calculateInitialTopology(ComponentID cid, string library_path, string my_id_unit, int id_functor_app_startup, IUnit pmain)
-            {
-                Connector.openConnection();
-
-                TypeMap properties = framework.getComponentProperties(cid);
-
-                DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(library_path);
-
-                int id_abstract = c.Id_abstract;
-                int id_concrete = c.Id_concrete;
-
-                pmain.Id_functor_app = c.Id_functor_app;
-                pmain.Id_concrete = id_concrete;
-                pmain.Id_unit = my_id_unit;
-
-                IDictionary<string, int> eInf = new Dictionary<string, int>();
-                IDictionary<string, int> eSup = new Dictionary<string, int>();
-
-                pmain.EnumeratorCardinality = new Dictionary<string, int>();
-
-                IList<Enumerator> eList = BackEnd.edao.list(id_abstract);
-                foreach (Enumerator e in eList)
-                {
-                    int rangeInf_ = 0;
-                    int rangeSup_ = enumeratorCardinality(properties.getStringArray(Constants.ENUMS_KEY, new string[0]), e.Variable);
-
-                    eInf.Add(e.Id_enumerator, rangeInf_);
-                    eSup.Add(e.Id_enumerator, rangeSup_);
-                    if (rangeSup_ > 0)
-                        pmain.EnumeratorCardinality.Add(e.Id_enumerator, rangeSup_);
-                }
-
-                int rangeInf, rangeSup;
-
-                int num_procs = 0;
-                int rank = 0;
-
-                pmain.Units = new Dictionary<string, int[]>();
-                IList<IDictionary<string, int>> pmain_EnumRanks = new List<IDictionary<string, int>>();
-                IList<int> pmain_Ranks = new List<int>();
-
-                IList<string> id_units_ordered = BackEnd.acfdao.getIdUnitsOrdered(id_abstract);
-
-                foreach (string id_unit in id_units_ordered)
-                {
-                    if (id_unit.Equals(my_id_unit) && pmain.GlobalRank < 0)
-                        pmain.GlobalRank = rank;
-
-                    IList<EnumerationInterface> eiList = BackEnd.exitdao.listByInterfaceWithFusions(id_abstract, id_unit);
-
-                    if (eiList.Count > 0)
-                    {
-                        IList<IList<int>> x = new List<IList<int>>();
-                        x.Add(new List<int>());
-                        int j = 0;
-                        string[] enumerator = new string[eiList.Count];
-                        foreach (EnumerationInterface ei in eiList)
-                        {
-                            enumerator[j++] = ei.Id_enumerator;
-                            eInf.TryGetValue(ei.Id_enumerator, out rangeInf);
-                            eSup.TryGetValue(ei.Id_enumerator, out rangeSup);
-                            IList<IList<int>> y = new List<IList<int>>();
-                            foreach (IList<int> xx in x)
-                            {
-                                for (int yyy = rangeInf; yyy < rangeSup; yyy++)
-                                {
-                                    IList<int> yy = new List<int>();
-                                    foreach (int xxx in xx)
-                                    {
-                                        yy.Add(xxx);
-                                    }
-                                    yy.Add(yyy);
-                                    y.Add(yy);
-                                }
-                            }
-                            x = y;
-                        }
-
-                        num_procs += x.Count;
-
-                        IList<int> ranks = new List<int>();
-
-                        foreach (IList<int> eIXs in x)
-                        {
-                            j = 0;
-                            pmain_EnumRanks.Add(new Dictionary<string, int>());
-                            foreach (int eVal in eIXs)
-                            {
-                                pmain_EnumRanks[rank].Add(enumerator[j++], eVal);
-                            }
-                            pmain_Ranks.Add(rank);
-                            ranks.Add(rank);
-                            rank++;
-                        }
-                        int[] ranksArr = new int[ranks.Count];
-                        ranks.CopyTo(ranksArr, 0);
-                        pmain.Units.Add(id_unit, ranksArr);
-                    }
-                    else // Unitary unit ...
-                    {
-                        num_procs++;
-                        pmain_Ranks.Add(rank);
-                        pmain_EnumRanks.Add(new Dictionary<string, int>());
-                        int[] ranksArr = new int[1];
-                        ranksArr[0] = rank++;
-                        pmain.Units.Add(id_unit, ranksArr);
-                    }
-                }
-
-                pmain.EnumRanks = new IDictionary<string, int>[num_procs];
-                pmain.Ranks = new int[num_procs];
-
-                for (int i = 0; i < num_procs; i++)
-                {
-                    pmain.EnumRanks[i] = pmain_EnumRanks[i];
-                    pmain.Ranks[i] = pmain_Ranks[i];
-                }
-
-                pmain.setUpParameters(id_functor_app_startup);
-                pmain.ActualParametersTop = pmain.ActualParameters;
-
-                Connector.closeConnection();
-            }
-			*/
-			
-            /*
-			private static void calculateTopology(IUnit unit, IUnit unit_slice, string id_inner)
-            {
-                int id_abstract = unit.Id_abstract;
-                string id_interface = unit_slice.Id_unit;
-
-                // Configure the knowledge of the slices about the topology.
-                IDictionary<string, int> eix_inner = new Dictionary<string, int>();
-                IDictionary<string, IDictionary<string, int>> enumsByVars = new Dictionary<string, IDictionary<string, int>>();
-
-                foreach (KeyValuePair<string, int> index in unit.EnumRank)
-                {
-                    Enumerator e = BackEnd.edao.retrieve(id_abstract, index.Key);
-                    if (enumsByVars.ContainsKey(e.Variable))
-                    {
-                        IDictionary<string, int> l;
-                        enumsByVars.TryGetValue(e.Variable, out l);
-                        l.Add(index);
-                    }
-                    else
-                    {
-                        IDictionary<string, int> l = new Dictionary<string, int>();
-                        l.Add(index);
-                        enumsByVars.Add(e.Variable, l);
-                    }
-                }
-
-                // THIS LOOP CALCULATES WHICH ENUMERATORS OF THE Unit ENUMERATES THE INNER COMPONENT OF THE SLICE (eix_inner), and not the slice itself  -------------------------------
-                foreach (KeyValuePair<string, IDictionary<string, int>> k in enumsByVars)
-                {
-                    int found = 0;
-                    foreach (KeyValuePair<string, int> index in k.Value)
-                    {
-                        string eix = index.Key;
-                        int val = index.Value;
-
-                        // Check if the slice is enumerated by eix.
-                        EnumerationSlice es = BackEnd.exsdao.retrieve(id_abstract, id_inner, id_interface, eix);
-                        if (es == null)      // If not, the inner component must be. Otherwise, this is stuck configuration.
-                        // REMARK: With enumerators, this is possible now.
-                        {
-                            EnumerationInner ei = BackEnd.exindao.retrieve(id_abstract, id_inner, eix);
-                            if (ei != null)
-                            {
-                                eix_inner.Add(eix, val);
-                                found++;
-                            }
-                        }
-                        else
-                        {
-                            found++;
-                        }
-                    }
-                }
-
-                InnerComponent ic = BackEnd.icdao.retrieve(id_abstract, id_inner);
-
-                int id_abstract_inner_original = ic.Id_abstract_inner; 
-                int id_functor_app_inner_actual = unit_slice.Id_functor_app;
-                int id_abstract_inner_actual = unit_slice.Id_abstract;
-
-                // Map id_unit's of the original inner component type to the id_unit's of the actual inner component type 
-
-                IDictionary<string, string> unitsMapping = new Dictionary<string, string>();
-                IList<string> id_units_ordered = BackEnd.acfdao.getIdUnitsOrdered(id_abstract_inner_original);
-                IList<string> id_units_ordered_actual = BackEnd.acfdao.getIdUnitsOrdered(id_abstract_inner_actual);
-                for (int k = 0; k < id_units_ordered.Count; k++)
-                {
-                    unitsMapping.Add(id_units_ordered_actual[k], id_units_ordered[k]);
-                }
-
-                // ?????  -------------------------------
-
-                IDictionary<string, IList<int>> ranksAll = new Dictionary<string, IList<int>>();
-                Dictionary<string, int> countUnits = new Dictionary<string, int>();
-                IDictionary<string, IList<IDictionary<string, int>>> enumRanksL = new Dictionary<string, IList<IDictionary<string, int>>>();
-
-                IList<Slice> slices_of_the_inner = BackEnd.sdao.listByInner(id_abstract, id_inner);
-
-                foreach (Slice s in slices_of_the_inner)  // for different split_replica's. 
-                {
-                    string id_interface_slice = s.Id_interface_slice;
-                    string id_interface_of_slice = s.Id_interface;
-
-                    // Ache todas as unidades que são id_interface.
-                    int[] ranks;
-                    unit.Units.TryGetValue(id_interface_of_slice, out ranks);
-
-                    // Percorra todas estas unidades e adicione somente aquelas cujos índice para algum enumerador em
-                    // eix_inner seja o mesmo.
-                    foreach (int r_ in ranks)
-                    {
-                        int r = unit.RanksInv[r_]; // r is the local rank... r_ is the global rank.
-                        IDictionary<string, int> rE = new Dictionary<string, int>();
-                        foreach (KeyValuePair<string, int> re in unit.EnumRanks[r])
-                            rE.Add(re);
-
-                        bool flag = true;
-                        foreach (KeyValuePair<string, int> e in eix_inner)
-                        {
-                            int index = e.Value;
-                            int index_;
-                            rE.TryGetValue(e.Key, out index_);
-                            flag = flag && index == index_;
-                        }
-
-                        if (flag)
-                        {
-                            int count = 0;
-                            if (countUnits.ContainsKey(id_interface_slice))
-                            {
-                                countUnits.TryGetValue(id_interface_slice, out count);
-                                countUnits.Remove(id_interface_slice);
-                                countUnits.Add(id_interface_slice, ++count);
-                            }
-                            else
-                                countUnits.Add(id_interface_slice, ++count);
-
-                            IList<int> _ranks;
-                            if (ranksAll.ContainsKey(id_interface_slice))
-                            {
-                                ranksAll.TryGetValue(id_interface_slice, out _ranks);
-                            }
-                            else
-                            {
-                                _ranks = new List<int>();
-                                ranksAll.Add(id_interface_slice, _ranks);
-                            }
-                            _ranks.Add(unit.Ranks[r]);
-
-                            enumsByVars.Clear();
-                            // Group by variable
-                            foreach (KeyValuePair<string, int> index in rE)
-                            {
-                                Enumerator e = BackEnd.edao.retrieve(id_abstract, index.Key);
-                                if (enumsByVars.ContainsKey(e.Variable))
-                                {
-                                    IDictionary<string, int> list;
-                                    enumsByVars.TryGetValue(e.Variable, out list);
-                                    list.Add(index);
-                                }
-                                else
-                                {
-                                    IDictionary<string, int> list = new Dictionary<string, int>();
-                                    list.Add(index);
-                                    enumsByVars.Add(e.Variable, list);
-                                }
-                            }
-
-                            foreach (KeyValuePair<string, int> e in eix_inner)
-                            {
-                                Enumerator enumerator = BackEnd.edao.retrieve(id_abstract, e.Key);
-                                enumsByVars.Remove(enumerator.Variable);
-                            }
-
-                            // point to the replicator identifiers of the inner component ....
-                            IDictionary<string, int> rE_ = new Dictionary<string, int>();
-
-                            foreach (KeyValuePair<string, IDictionary<string, int>> k in enumsByVars)
-                            {
-                                // Console.WriteLine(unit.Id_interface + "." + unit.LocalRank + "##################################### " + s.Id_inner);
-                                IDictionary<string, int> rElist = k.Value;
-
-                                int occurrences = 0;
-                                foreach (KeyValuePair<string, int> re in rElist)
-                                {
-                                    IDictionary<string, int> enumeratorCardinalityNew;
-                                    KeyValuePair<string, int> replicator;
-                                    bool found = findReplicator(unit, re, s, ic, unit.EnumeratorCardinality, out enumeratorCardinalityNew, out replicator);
-                                    if (found)
-                                    {
-                                        if (!rE_.ContainsKey(replicator.Key))
-                                        {
-                                            rE_.Add(replicator);
-                                            unit_slice.EnumeratorCardinality = enumeratorCardinalityNew;
-                                            occurrences++;
-                                        }
-                                    }
-                                }
-                            }
-
-
-                            IList<IDictionary<string, int>> l;
-                            if (!enumRanksL.TryGetValue(id_interface_slice, out l))
-                            {
-                                l = new List<IDictionary<string, int>>();
-                                enumRanksL.Add(id_interface_slice, l);
-                            }
-                            l.Add(rE_);
-                        }
-                    }
-                }
-
-                // The slice units of id_inner are contained in the processes of ranks in ranksAll.
-                IList<int> ranksAllList = new List<int>();
-                IList<IDictionary<string, int>> enumRanksList = new List<IDictionary<string, int>>();
-
-                IDictionary<string, int[]> unitsRanks = new Dictionary<string, int[]>();
-
-                //ranksAll.CopyTo(ranksAllArr, 0);
-
-                int pos1 = 0;
-                int pos2 = 0;
-                foreach (string id_unit_slice_ in id_units_ordered_actual)
-                {
-                    string id_unit_slice;
-                    unitsMapping.TryGetValue(id_unit_slice_, out id_unit_slice);
-
-                    IList<int> ranks;
-                    if (!ranksAll.TryGetValue(id_unit_slice, out ranks))
-                        ranks = new List<int>();
-
-                    foreach (int r in ranks)
-                        ranksAllList.Insert(pos2++, r);
-
-                    IList<IDictionary<string, int>> enumRanks;
-                    if (!enumRanksL.TryGetValue(id_unit_slice, out enumRanks))
-                        enumRanks = new List<IDictionary<string, int>>();
-                    else
-                        insertEnumeratorFusions(unit_slice, id_unit_slice, enumRanks);
-
-                    foreach (IDictionary<string, int> d in enumRanks)
-                        enumRanksList.Insert(pos1++, d );
-
-                    // Calculate o.Units ...
-                    int count;
-                    countUnits.TryGetValue(id_unit_slice, out count);
-
-                    int[] _ranks = new int[count]; 
-                    ranks.CopyTo(_ranks, 0);
-                    unitsRanks.Add(id_unit_slice_, _ranks);
-                }
-
-                int[] ranksAllArr = new int[ranksAllList.Count];
-                IDictionary<string, int>[] enumRanksArr = new IDictionary<string, int>[enumRanksList.Count];
-
-                ranksAllList.CopyTo(ranksAllArr, 0);
-                enumRanksList.CopyTo(enumRanksArr, 0);
-
-                unit_slice.Ranks = ranksAllArr;
-                unit_slice.EnumRanks = enumRanksArr;
-                unit_slice.Units = unitsRanks;
-            }
-			*/
-			
-			/*
-            private static int enumeratorCardinality(string[] enums, string var)
-            {
-                int step = 0;
-                foreach (string a in enums)
-                {
-                    if (step == 0 && a.Equals(var))
-                    {
-                        step = 1;
-                    }
-                    else if (step == 1)
-                    {
-                        return int.Parse(a);
-                    }
-                }
-
-                return 0;
-            }
-			*/
-			
-			/*
-
-            private static bool findReplicator(IUnit unit, KeyValuePair<string, int> re,
-                                               Slice s,
-                                               InnerComponent ic,
-                                               IDictionary<string, int> enumeratorCardinality,
-                                               out IDictionary<string, int> enumeratorCardinality_return,
-                                               out KeyValuePair<string, int> replicator)
-            {
-                int id_abstract = ic.Id_abstract_owner;
-                string id_inner = ic.Id_inner;
-                string id_unit = s.Id_interface_slice;
-                IDictionary<string, int> enumeratorCardinality_prime = new Dictionary<string, int>();
-
-                // LOOK FOR THE ORIGINAL REPLICATOR FROM THE INNER COMPONENT THAT HAS BEEN SPLITTED...
-                string re_Key;
-                int re_Value;
-
-                EnumeratorSplitDAO esplitdao = new EnumeratorSplitDAO();
-                EnumeratorSplit es = esplitdao.retrieve1(id_abstract, re.Key);
-                if (es != null && s.Id_split_replica > 0)
-                {
-                    re_Key = es.Id_enumerator;
-                    re_Value = es.mapSplitEnumerationValue(unit, re_Key, re, s, enumeratorCardinality, enumeratorCardinality_prime);
-                }
-                else
-                {
-                    re_Key = re.Key;
-                    re_Value = re.Value;
-                }
-
-
-                foreach (KeyValuePair<string, int> ke in enumeratorCardinality)
-                    dictReplaceKey(enumeratorCardinality_prime, ke.Key, ke.Value);
-
-                string id_inner_container = id_inner;
-                IList<string> id_inner_container_list = new List<string>();
-                IList<SliceExposed> seMap = new List<SliceExposed>();
-
-                // FIND THE ORIGINAL REPLICATOR OF THE INNER COMPONENT THAT HAS BEEN FUSED.
-
-                IList<SliceExposed> lse = null;
-                if (ic.Transitive)
-                {
-                    lse = BackEnd.sedao.listContainers(s.Id_abstract, s.Id_inner, s.Id_interface_slice, s.Id_split_replica);
-
-                    foreach (SliceExposed se_ in lse)
-                    {
-                        id_inner_container = se_.Id_inner_owner;
-                        id_inner_container_list.Add(id_inner_container);
-                        seMap.Add(se_);
-                    }
-                }
-
-                if (id_inner_container_list.Count == 0)
-                {
-                    id_inner_container_list.Add(id_inner_container);
-                }
-
-                string re_Key_before = re_Key;
-
-                int cc = -1;
-                foreach (string id_inner_container_ in id_inner_container_list)
-                {
-                    cc = re_Key.IndexOf(id_inner_container_ + ".");
-                    //      Console.WriteLine(" >>>> " + re_Key + " , " +  id_inner_container_);
-                    if (cc >= 0)
-                    {
-                        id_inner_container = id_inner_container_;
-                        re_Key = re_Key.Substring(cc + (id_inner_container + ".").Length);
-                        //         Console.WriteLine(" *>>>> " + re_Key + " , " + id_inner_container_);
-                        break;
-                    }
-                }
-                if (cc < 0)
-                {
-                    replicator = new KeyValuePair<string, int>();
-                    enumeratorCardinality_return = enumeratorCardinality;
-                    return false;
-                }
-
-				IDictionary<string, int> enumeratorCardinalityTemp = new Dictionary<string, int>();
-
-                // UPDATE CARDINALITY
-                foreach (KeyValuePair<string, int> ke in enumeratorCardinality_prime)
-                {
-                    if (ke.Key.Equals(re_Key_before))
-                    {
-                        dictReplaceKey(enumeratorCardinalityTemp, re_Key, ke.Value);
-                    }
-                    else
-                    {
-                        string re_Key_ = ke.Key;
-                        int re_Value_ = ke.Value;
-
-                        int cc_ = re_Key_.IndexOf(id_inner_container + ".");
-                        if (cc_ >= 0)
-                        {
-                            re_Key_ = re_Key_.Substring(cc_ + (id_inner_container + ".").Length);
-                            re_Value_ = ke.Value;
-                            dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
-                        }
-                        else
-                        {
-                            dictReplaceKey(enumeratorCardinalityTemp, re_Key_, re_Value_);
-                        }
-                    }
-                }
-
-
-				enumeratorCardinality_prime = enumeratorCardinalityTemp;
-
-                KeyValuePair<string, int> ke_prime = new KeyValuePair<string, int>(re_Key, re_Value);
-				
-                if (ic.Transitive && seMap.Count > 0)     // in fact, ic.Transitive <=> se != null
-                {
-//				Console.WriteLine("find Replicator 10 " + "id_abstract=" + id_abstract + " id_inner_container=" + id_inner_container +" id_inner=" + id_inner);
-                    InnerComponentExposed ice = BackEnd.icedao.retrieve(id_abstract, id_inner_container, id_inner);
-
-//				Console.WriteLine("find Replicator 11 " + "ic.Id_abstract_owner=" + ic.Id_abstract_owner + " ice.Id_inner_owner=" + ice.Id_inner_owner);
-                    InnerComponent ic_owner = BackEnd.icdao.retrieve(ic.Id_abstract_owner, ice.Id_inner_owner);
-//				Console.WriteLine("find Replicator 12 " + "ic_owner.Id_abstract_inner=" + ic_owner.Id_abstract_inner + " ice.Id_inner=" + ice.Id_inner);
-                    InnerComponent ic_prime = BackEnd.icdao.retrieve(ic_owner.Id_abstract_inner, ice.Id_inner);
-
-                    Slice s_prime = null;
-
-					
-//				Console.WriteLine("find Replicator 2 - " + ic_owner.Id_abstract_inner + "," + (ice.Id_inner) + " - "+  (ic_prime==null));
-					
-                    foreach (SliceExposed se in seMap)
-                    {						
-                        s_prime = BackEnd.sdao.retrieve2(ic_prime.Id_abstract_owner, ice.Id_inner, se.Id_interface_slice_original, se.Id_interface_slice_owner);
-                        if (s_prime != null)
-                            break;
-                    }
-
-//				Console.WriteLine("find Replicator 3 - " + (s_prime==null));
-					
-                    IList<EnumeratorMapping> emList = BackEnd.exmdao.list(ic_prime.Id_abstract_owner, ke_prime.Key);
-
-                    int kkk;
-                    enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
-
-
-                    foreach (EnumeratorMapping em in emList)
-                    {
-                        dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
-                    }
-
-					
-//				Console.WriteLine("find Replicator 4");
-
-					if (emList.Count > 0)
-                    {
-                        foreach (EnumeratorMapping em in emList)
-                        {
-                            KeyValuePair<string, int> ke_prime_ = new KeyValuePair<string, int>(em.Id_enumerator_inner, ke_prime.Value);
-							
-							bool found = findReplicator(unit, ke_prime_, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator);
-                            if (found)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (findReplicator(unit, ke_prime, s_prime, ic_prime, enumeratorCardinality_prime, out enumeratorCardinality_return, out replicator))
-                        {
-                            return true;
-                        }
-                    }
-
-//				Console.WriteLine("find Replicator 5");
-
-					replicator = new KeyValuePair<string, int>(); ;
-
-                    enumeratorCardinality_return = new Dictionary<string, int>();
-					
-                    return false;
-                }
-                else
-                {
-                    replicator = ke_prime;
-
-                    IList<EnumeratorMapping> emList = BackEnd.exmdao.list(ic.Id_abstract_inner, ke_prime.Key);
-
-                    int kkk;
-                    enumeratorCardinality_prime.TryGetValue(ke_prime.Key, out kkk);
-
-                    foreach (EnumeratorMapping em in emList)
-                    {
-                        dictReplaceKey(enumeratorCardinality_prime, em.Id_enumerator_inner, kkk);
-                    }
-
-                    enumeratorCardinality_return = enumeratorCardinality_prime;
-
-                    return true;
-                }
-//				Console.WriteLine("find Replicator 6");
-
-
-            }
-            */
-
-            public static void determineActualParameters(IDictionary<string, int> actualParameters, int id_functor_app, out IDictionary<string, int> actualParameters_new)
-            {
-			//	Console.WriteLine ("START determineActualParameters " + id_functor_app);
-				
-                actualParameters_new = new Dictionary<string, int>(); ;
-
-                foreach (KeyValuePair<string, int> parameter in actualParameters)
-                {
-				//	Console.WriteLine("traversing actual Parameters : " + parameter.Key);
-                    if (parameter.Key.Contains("#"))
-                    {
-                        actualParameters_new.Add(parameter);
-				//		Console.WriteLine("adding parameter " + parameter);
-                    }
-                }
-
-                SupplyParameterDAO spdao = new SupplyParameterDAO();
-                IList<SupplyParameter> spcList = spdao.list(id_functor_app);
-
-                foreach (SupplyParameter sp in spcList)
-                {
-                    if (sp is SupplyParameterParameter)
-                    {
-                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
-                        int id_functor_app_actual;
-                        bool achou = actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
-				//		Console.WriteLine("TESTING " + spp.Id_parameter_actual + " : " + achou + " , " + id_functor_app_actual);
-                        if (achou)
-                        {
-                            actualParameters_new.Add(spp.Id_parameter, id_functor_app_actual);
-					//	    Console.WriteLine("adding parameter 1 " + spp.Id_parameter);
-                        } 
-						
-                    }
-                    else if (sp is SupplyParameterComponent)
-                    {
-                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                        actualParameters_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
-				//		Console.WriteLine("adding parameter 2 " + spc.Id_parameter);
-						traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParameters, actualParameters_new);
-                    }
-                }
-			//	Console.WriteLine ("END determineActualParameters " + id_functor_app);
-            }
-
-            private static void traverseParameters(int id_functor_app_top,
-                                            int id_functor_app,
-                                            IDictionary<string, int> actualParametersTop,
-                                            IDictionary<string, int> actualParameters)
-            {
-
-                SupplyParameterDAO spdao = new SupplyParameterDAO();
-                IList<SupplyParameter> spcList = spdao.list(id_functor_app);
-                foreach (SupplyParameter sp in spcList)
-                {
-                    if (sp is SupplyParameterParameter)
-                    {
-                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
-                        int id_functor_app_actual;
-                        bool achou = actualParametersTop.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual);
-                        string key = spp.Id_parameter + "#" + id_functor_app_top;
-                        if (!actualParameters.ContainsKey(key)) {
-                            actualParameters.Add(key, id_functor_app_actual);
-				//		    Console.WriteLine("adding parameter 3 " + key);
+					IList<SupplyParameter> spList = spdao.list(id_functor_app);
+					foreach (SupplyParameter par0 in spList) 
+					{
+						if (par0 is SupplyParameterComponent) 
+						{
+							SupplyParameterComponent par2 = new SupplyParameterComponent();
+							SupplyParameterComponent par1 = (SupplyParameterComponent) par0;
+                            par2.Id_functor_app = aAppNew.Id_functor_app;
+                            par2.Id_abstract = par1.Id_abstract;
+							par2.Id_parameter = par1.Id_parameter;
+							if (par1.Id_parameter.Equals(parameter_id))
+                            	par2.Id_functor_app_actual = acfaRef_par.Id_functor_app;
+							else
+								par2.Id_functor_app_actual = par1.Id_functor_app_actual;
+                        	DGAC.BackEnd.spdao.insert(par2);
 						}
-                    }
-                    else if (sp is SupplyParameterComponent)
-                    {
-                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                        traverseParameters(spc.Id_functor_app_actual, spc.Id_functor_app_actual, actualParametersTop, actualParameters);
-                    } 
-                }
+						else
+						{
+							/*SupplyParameterParameter par1 = (SupplyParameterParameter) par0;
+							if (par1.Id_parameter.Equals(parameter_id))
+							{
+						    	// CLOSE FREE PARAMETER
+								SupplyParameterComponent par2 = new SupplyParameterComponent();
+	                            par2.Id_functor_app = aAppNew.Id_functor_app;
+	                            par2.Id_abstract = par1.Id_abstract;
+								par2.Id_parameter = par1.Id_parameter;
+								par2.Id_functor_app_actual = acfaRef_par.Id_functor_app;
+                        		DGAC.BackEnd.spdao.insert(par2);
+							}
+							else
+							{
+								// FREE PARAMETER
+								SupplyParameterParameter par2 = new SupplyParameterParameter();
+								par2.Id_abstract = par1.Id_abstract;
+								par2.Id_functor_app = par1.Id_functor_app;
+								par2.Id_parameter = par1.Id_parameter;
+								par2.Id_parameter_actual = par1.Id_parameter_actual;
+                        		DGAC.BackEnd.spdao.insert(par2);
+							}*/
+						}
+					}
+					
 
-
-            }
-
-
-            private static void dictReplaceKey(IDictionary<string, int> dict, string key, int value)
-            {
-                if (dict.ContainsKey(key))
+                 }
+                catch (Exception e)
                 {
-                    dict.Remove(key);
+					Console.Error.WriteLine(e.Message);
                 }
-                dict.Add(key, value);
-            }
-
-			/*
-            private static void insertEnumeratorFusions(IUnit o, string id_unit_slice, IList<IDictionary<string, int>> enumRanks)
-            {
-                int id_abstract = o.Id_abstract;
-                IDictionary<string, IList<string>> mapping = new Dictionary<string, IList<string>>();
-
-                IDictionary<string, int> d0 = enumRanks[0];
-                foreach (KeyValuePair<string, int> k in d0)
+                finally
                 {
-                    IList<EnumeratorMapping> emList = BackEnd.exmdao.list(id_abstract, k.Key);
-                    if (emList.Count > 0)
-                    {
-                        IList<string> l = new List<string>();
-                        foreach (EnumeratorMapping em in emList)
-                        {
-                            if (!k.Key.Equals(em.Id_enumerator_inner))
-                            {
-                                l.Add(em.Id_enumerator_inner);
-
-                                hpe.kinds.IEnumeratorKind ec;
-                                if (o.getPermutation(k.Key, out ec))
-                                {
-                                    o.addPermutation(em.Id_enumerator_inner, ec);
-                                }
-                            }
-                        }
-                        mapping.Add(k.Key, l);
-                    }
+                    Connector.closeConnection();
                 }
 
-                IDictionary<IDictionary<string, int>,
-                            IDictionary<string, int>> ttt = new Dictionary<IDictionary<string, int>,
-                                                                           IDictionary<string, int>>();
-
-                foreach (IDictionary<string, int> d in enumRanks)
-                {
-                    IDictionary<string, int> aux = new Dictionary<string, int>();
-                    foreach (KeyValuePair<string, int> k in d)
-                    {
-                        IList<string> l;
-                        if (mapping.TryGetValue(k.Key, out l))
-                        {
-                            foreach (string ee in l)
-                            {
-                                aux.Add(ee, k.Value);
-                            }
-                        }
-                    }
-                    ttt.Add(d, aux);
-                }
-
-                foreach (KeyValuePair<IDictionary<string, int>, IDictionary<string, int>> aux in ttt)
-                {
-                    IDictionary<string, int> d = aux.Key;
-                    foreach (KeyValuePair<string, int> a in aux.Value)
-                    {
-                        d.Add(a);
-                    }
-                }
-            }
-			*/
-			
-            internal static void redirectSlice(ComponentID user_id, string portName, ComponentID container_id, string container_portName)
-            {
-                framework.redirectSlice(user_id, portName, container_id, container_portName);                
-            }
-        }//DGAC
-		
-		public class PortUsageManager 
-		{
-			private IDictionary<string,int> portFetches = new Dictionary<string, int>();
-			private IDictionary<string,int> portReleases = new Dictionary<string,int>();
-			
-			public bool isFetched(string portname)
-			{
-				int count = 0;
-				return portFetches.TryGetValue(portname, out count) && count > 0;
+                return aAppNew;
 			}
 			
-			public bool isReleased(string portname)
+			public static int generateACFAforContext (int id_abstract,
+				                                      int id_functor_app, 
+				                                      IDictionary<string, int> actualParameters, 
+				                                      IDictionary<string, int> actualParametersTop)
 			{
-				int count = 0;
-				return portReleases.TryGetValue(portname, out count) && count > 0;
-			}
-			
-			public void addPortFetch(string portName)
-			{				
-				int count_fetch = 0;
-				if (portFetches.TryGetValue(portName, out count_fetch))
-					portFetches.Remove(portName);
+			   /* TODO: ESSA FUNÇÃO PRECISA SER MELHORADA PARA CASAR NUMEROS DE ARGUMENTOS DIFERENTES ENTRE  O TIPO DO 
+				        COMPONENTE retornado pela resolução e o tipo do componente aninhado, conforme as regras do HTS.
+				        DO jeito que está, ambos tem que ter os mesmos argumentos */
+					
+				AbstractComponentFunctorApplication acfa = new AbstractComponentFunctorApplication(); 
+					
+				acfa.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");				
+				acfa.Id_abstract = id_abstract;
+				//acfa.Id_functor_app_next;
+				acfadao.insert(acfa);
 				
-				int count_release = 0;
-				if (portReleases.TryGetValue(portName, out count_release))
-					portReleases.Remove(portName);
-
-				if (count_release > 0)
+				IList<SupplyParameter> spList = spdao.list(id_functor_app);
+					
+				foreach (SupplyParameter sp in spList) 
 				{
-					Console.Error.WriteLine("Port " + portName + " was released (release count=" + count_release + ")");
-					throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);					
+				    SupplyParameterComponent spc_new = new SupplyParameterComponent();		
+					spc_new.Id_functor_app = acfa.Id_functor_app;
+					spc_new.Id_abstract = sp.Id_abstract;
+					spc_new.Id_parameter = sp.Id_parameter;
+					if (sp is SupplyParameterComponent)	
+					{
+						SupplyParameterComponent spc = (SupplyParameterComponent) sp;	
+						spc_new.Id_functor_app_actual = spc.Id_functor_app_actual;
+					}	
+					else // SupplyParameterParameter
+					{
+						SupplyParameterParameter spp = (SupplyParameterParameter) sp;	
+						int id_functor_app_actual;
+					    if (actualParameters.TryGetValue(spp.Id_parameter_actual, out id_functor_app_actual))
+						{
+							spc_new.Id_functor_app_actual = id_functor_app_actual;
+						}
+						else
+						{
+							System.Diagnostics.Debug.WriteLine("generateACFAforContext (DGAC.cs): Free parameter ? " + spp.Id_parameter_actual);		
+						}	
+					}
+					spdao.insert(spc_new);
 				}
+					
+					
+					
+				return acfa.Id_functor_app;	
+			}
+			
+			#endregion CREATE_ACFA
+				
+			#region INITIALIZE_APPLICATION
+				
+			private static IDictionary<ComponentID, bool> initialized = new Dictionary<ComponentID, bool>();
+			private static IDictionary<ComponentID, bool> after_initialized = new Dictionary<ComponentID, bool>();
+					
+			private static void initializeApplication(ManagerComponentID cid, 
+				                                     gov.cca.ports.BuilderService bsPort, 
+				                                     gov.cca.Services frwServices)
+			{
+				onInitializeApplication(cid, bsPort, frwServices);
+				afterInitializeApplication(cid, bsPort, frwServices);
+			}
+				
+			private static void onInitializeApplication(ManagerComponentID cid, 
+				                                     gov.cca.ports.BuilderService bsPort, 
+				                                     gov.cca.Services frwServices)
+			{
+				Dictionary<string,ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();		
+				fetchConnectionsAsUser(cid, inner_conn_list, bsPort, frwServices);
 								
-/*				if (count_fetch > 0)
-				{
-					Console.Error.WriteLine("Port " + portName + " was fetched before (fetch count=" + count_fetch + ")");
-					throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);					
+				foreach (KeyValuePair<string, ConnectionID> inner in inner_conn_list /*InnerComponent ic in icList*/)				
+				{					
+					ComponentID inner_cid = inner.Value.getProvider();	
+					if (!initialized.ContainsKey(inner_cid))
+					{
+						initializeApplication((ManagerComponentID)inner_cid, bsPort, frwServices);	
+						initialized.Add(inner_cid,true);
+					}
 				}
-*/				
+					
+				System.Diagnostics.Debug.WriteLine("Connecting to the AutomaticSlices port of the application");
+				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
+				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
+				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
+					
+				Console.WriteLine("INITIALIZING " + cid);
 				
-				portFetches.Add (portName, count_fetch+1);
+				initialize_port.initialize(); 
 				
+				//initialized.Add(cid,true);
+					
+				frwServices.releasePort(Constants.INITIALIZE_PORT_NAME);
+				bsPort.disconnect(conn_cs,0);	
+				frwServices.unregisterUsesPort(Constants.INITIALIZE_PORT_NAME);
+					
 			}
-									
-			public void addPortRelease(string portName)
+				
+			private static void afterInitializeApplication(ManagerComponentID cid, 
+				                                     gov.cca.ports.BuilderService bsPort, 
+				                                     gov.cca.Services frwServices)
 			{
-				int count_release = 0;
-				if (portReleases.TryGetValue(portName, out count_release))
-					portReleases.Remove(portName);
+									
+			    System.Diagnostics.Debug.WriteLine("Connecting to the AutomaticSlices port of the application");
+				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
+				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
+				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
+					
+				Console.WriteLine("AFTER INITIALIZING " + cid);
+				//after_initialized.Add(cid,true);
+				initialize_port.post_initialize();
 				
-				if (count_release > 0)
-				{
-					Console.Error.WriteLine("Port " + portName + " still in use (release count=" + count_release + ")");
-					throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);
+				frwServices.releasePort(Constants.INITIALIZE_PORT_NAME);
+				bsPort.disconnect(conn_cs,0);	
+				frwServices.unregisterUsesPort(Constants.INITIALIZE_PORT_NAME);
+					
+				Dictionary<string,ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();		
+				fetchConnectionsAsUser(cid, inner_conn_list, bsPort, frwServices);
+				
+				foreach (KeyValuePair<string, ConnectionID> inner in inner_conn_list /*InnerComponent ic in icList*/)				
+				{					
+					ComponentID inner_cid = inner.Value.getProvider();	
+						
+					if (!after_initialized.ContainsKey(inner_cid))
+					{
+						after_initialized.Add(inner_cid,true);
+						afterInitializeApplication((ManagerComponentID)inner_cid, bsPort, frwServices);	
+					}
+										
 				}
+					
+			}
 				
-				portReleases.Add (portName, count_release+1);				
+			#endregion INITIALIZE_APPLICATION			
+								
+			#region RESOLUTION_AT_MANAGER
+			
+			public static ComponentID reconfigureComponentContext
+													   (ManagerComponentID cid,
+				 										string parameter_id,
+														string actual_perameter, 
+				                                        gov.cca.ports.BuilderService bsPort, 
+				                                        gov.cca.Services frwServices,
+			                                            ManagerObject frw
+				 										/*xml*/)
+			{
+	            try
+	            {
+	                Connector.openConnection();
+					
+					string session_id_string = cid.getInstanceName() + "-" + parameter_id;
+	                FileInfo file = FileUtil.writeToFile(session_id_string + ".xml", actual_perameter);
+	                ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
+	                DGAC.database.AbstractComponentFunctorApplication acfaRef_par = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
+								
+					// Fetching the enclosing component, if it exists.
+					#region TRY_FETCH_ENCLOSING_COMPONENT
+					Dictionary<string, ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();					
+					fetchConnectionsAsProvider(cid, inner_conn_list, bsPort, frwServices);
+					ConnectionID owner_connid;
+					inner_conn_list.TryGetValue(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, out owner_connid);
+					ManagerComponentID owner_cid = owner_connid != null ? (ManagerComponentID) owner_connid.getUser(): null;
+					
+					InnerComponent ic = null;
+					if (owner_cid != null)
+					{
+					   AbstractComponentFunctorApplication acfa = acfadao.retrieve(owner_cid.Id_functor_app);
+					   ic = icdao.retrieve(acfa.Id_abstract, cid.PortName);
+					}
+					#endregion				
+					
+					// Check whether the parameter is properly defined by the inner component.
+					bool is_free_parameter;
+					checkParameterInReconfiguration(ic, parameter_id, out is_free_parameter);			
+					
+					/* It is assumed that parameter_id is a free parameter (so, it will be closed) 
+					 * or properly defined by the inner component (so, it will be changed) */				
+					DGAC.database.AbstractComponentFunctorApplication acfaRef = createACFAByChangingContext(cid.Id_functor_app, parameter_id, acfaRef_par);
+					
+					// Fetch the #-component for the new contexy.
+					DGAC.database.Component c = resolveUnit(acfaRef);	
+					
+					IDictionary<string,int> actualParameters = new Dictionary<string,int>();
+					IDictionary<string,int> actualParametersTop = new Dictionary<string,int>();
+					
+					/* Check if the #-component was changed. 
+					 * if so, nothing to do. Otherwise, create the new inner component instance. */
+					ManagerComponentID new_cid;
+					if (!c.Library_path.Equals(cid.ClassName))
+					{					
+		                TypeMapImpl properties = new TypeMapImpl();					
+						properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
+						properties[Constants.NODES_KEY] = cid.WorkerNodes;
+						properties[Constants.PORT_NAME] = cid.PortName;
+						
+					    new_cid = createInnerComponent(owner_cid, ic, cid, bsPort, frwServices, actualParameters, actualParametersTop);
+	
+						string uses_port_name = owner_connid.getUserPortName();
+						disconnectInnerComponent(owner_connid, bsPort, frw);
+						connectInnerComponent(owner_cid, uses_port_name, new_cid, bsPort);
+					}
+					else
+						new_cid = cid;
+					
+					setUpParameters(acfaRef.Id_functor_app, actualParameters);	
+					actualParametersTop = new Dictionary<string,int>(actualParameters);
+						
+					// APPLY THE CONTEXT CHANGE TO THE INNER COMPONENTS !
+					createInnerComponentsOf(new List<ManagerComponentID>(), 
+					                        (ManagerComponentID) cid,
+						                    (ManagerComponentID) new_cid,
+						                    bsPort, 
+						                    frwServices, 
+					                        frw,
+						                    actualParameters, 
+						                    actualParametersTop);
+//	
+					return new_cid;
+	            }
+	            catch (Exception e)
+	            {
+					System.Diagnostics.Debug.WriteLine("## Exception: " + e.Message);
+					System.Diagnostics.Debug.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					System.Diagnostics.Debug.WriteLine("## Trace: " + e.StackTrace);
+	                throw e;
+	            }
+	            finally
+	            {
+	                Connector.closeConnection();
+	            }
+			}
+
+			public static void checkParameterInReconfiguration (InnerComponent ic, string parameter_id, out bool is_free_parameter)
+			{
+				is_free_parameter = false;
+				
+				IList<SupplyParameter> spList = spdao.list(ic.Id_functor_app);
+				foreach (SupplyParameter par0_inner in spList) 
+				{
+					if (par0_inner is SupplyParameterParameter && par0_inner.Id_parameter.Equals(parameter_id))
+					{
+						SupplyParameterParameter par0_inner_p = (SupplyParameterParameter) par0_inner;
+						if (par0_inner_p.FreeVariable)
+							throw new Exception("It is not possible to reconfigure parameter " + parameter_id + " in " + ic);
+						else 
+							is_free_parameter = true;
+					}
+				}
+			}
+
+			
+	        public static ComponentID createApplicationInstance
+													   (string instantiator_string, 
+				                                        string session_id_string, 
+				                                        gov.cca.ports.BuilderService bsPort, 
+				                                        gov.cca.Services frwServices,
+			                                            ManagerObject frw)
+			{
+				return createApplicationInstance(null, instantiator_string, session_id_string,bsPort,frwServices, frw);
 			}
 			
-			public void resetPort(string portName)
+	        public static ComponentID createApplicationInstance
+				                                       (ManagerComponentID curr_app_cid,
+														string instantiator_string, 
+				                                        string session_id_string, 
+				                                        gov.cca.ports.BuilderService bsPort, 
+				                                        gov.cca.Services frwServices,
+			                                            ManagerObject frw)
+	        {	
+	            try
+	            {
+	                Connector.openConnection();
+					
+					System.Diagnostics.Debug.WriteLine("Creating an instance of the application");
+						
+	                FileInfo file = FileUtil.writeToFile(session_id_string + ".xml", instantiator_string);
+	                ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
+	                DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
+	                	
+					DGAC.database.Component c = resolveUnit(acfaRef);	
+						
+	                TypeMapImpl properties = new TypeMapImpl();					
+					properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
+					properties[Constants.NODES_KEY] = instantiator.node;
+					properties[Constants.PORT_NAME] = null;
+					
+					// Check whether the application is changed
+					ManagerComponentID app_cid;
+					if (curr_app_cid == null || !c.Library_path.Equals(curr_app_cid.ClassName))
+	                	app_cid = (ManagerComponentID) bsPort.createInstance("app", c.Library_path, properties);
+					else
+						app_cid = curr_app_cid;
+						
+					IDictionary<string, int> actualParameters = new Dictionary<string,int>();
+					setUpParameters(acfaRef.Id_functor_app, actualParameters);	
+						
+					IDictionary<string, int> actualParametersTop = new Dictionary<string,int>(actualParameters);
+					
+					createInnerComponentsOf(new List<ManagerComponentID>(), 
+					                        (ManagerComponentID) curr_app_cid,
+						                    (ManagerComponentID) app_cid,
+						                    bsPort, 
+						                    frwServices, 
+					                        frw,
+						                    actualParameters, 
+						                    actualParametersTop);
+					
+					initializeApplication((ManagerComponentID)app_cid, bsPort, frwServices);					
+					return app_cid;
+					
+	            }
+	            catch (Exception e)
+	            {
+					System.Diagnostics.Debug.WriteLine("## Exception: " + e.Message);
+					System.Diagnostics.Debug.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					System.Diagnostics.Debug.WriteLine("## Trace: " + e.StackTrace);
+	                throw e;
+	            }
+	            finally
+	            {
+	                Connector.closeConnection();
+	            }
+	
+	        }
+				
+	        public static void setUpParameters(int id_functor_app, IDictionary<string, int> actualParameters)
+	        {
+					
+	            SupplyParameterDAO spdao = new SupplyParameterDAO();
+	            IList<SupplyParameter> spcList = spdao.list(id_functor_app);
+	            foreach (SupplyParameterComponent spc in spcList)
+	            {
+	                actualParameters.Add(spc.Id_parameter, spc.Id_functor_app_actual);
+	            }
+	        }
+				
+	        public static void createInnerComponentsOf(IList<ManagerComponentID> cid_chain, 
+			                                           ManagerComponentID curr_cid, 
+				                                       ManagerComponentID cid, 
+				                                       gov.cca.ports.BuilderService bsPort, 
+				                                       gov.cca.Services frwServices, 
+			                                           ManagerObject frw,
+				                                       IDictionary<string, int> actualParameters,
+	                            					   IDictionary<string, int> actualParametersTop)
 			{
-				portReleases.Remove(portName);
-				portFetches.Remove(portName);
+				createInnerComponentsOf(cid_chain, curr_cid, cid, new List<int>(), new List<string>(), bsPort, frwServices, frw, actualParameters, actualParametersTop);
 			}
+
+			
+	        public static void createInnerComponentsOf(IList<ManagerComponentID> cid_chain, 
+			                                           ManagerComponentID curr_cid, 
+													   ManagerComponentID cid, 
+				                                       IList<int> id_abstract_owner,
+				                                       IList<string> id_inner_at_owner, 
+				                                       gov.cca.ports.BuilderService bsPort, 
+				                                       gov.cca.Services frwServices, 
+			                                           ManagerObject frw,
+				                                       IDictionary<string, int> actualParameters,
+	                            					   IDictionary<string, int> actualParametersTop)
+	        {	
+				frwServices.registerUsesPort(Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
+				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.RECONFIGURE_PORT_NAME, cid, Constants.RECONFIGURE_PORT_NAME);  
+				ReconfigurationAdvicePort reconfiguration_advice = (ReconfigurationAdvicePort) frwServices.getPort (Constants.RECONFIGURE_PORT_NAME);
+				
+				AbstractComponentFunctorApplication acfa = acfadao.retrieve(cid.Id_functor_app);	
+				int id_abstract = acfa.Id_abstract;
+					
+				IDictionary<string,ManagerComponentID> inner_cids = new Dictionary<string,ManagerComponentID>();
+				
+				IList<InnerComponent> icList2 = new List<InnerComponent>();
+			
+				Dictionary<string, ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();					
+				if  (curr_cid != null)
+					fetchConnectionsAsUser(curr_cid, inner_conn_list, bsPort, frwServices);
+				
+				IList<InnerComponent> icList = BackEnd.icdao.list(id_abstract);
+									
+				foreach (InnerComponent ic in icList)
+				{
+					string portName = ic.Id_inner;
+					if (portName.Equals("read_buffer_forward"))
+					{
+						Console.WriteLine();
+					}
+					
+					AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
+					int slice_kind = Constants.kindMapping[acf.Kind];
+	                if (slice_kind != Constants.KIND_QUALIFIER)
+	                {						
+						if (!inner_cids.ContainsKey(portName)) 
+						{
+							ManagerComponentID inner_cid = null;
+							
+							// Take the inner component currently bound to the inner component
+							ConnectionID curr_inner_connid;
+							ManagerComponentID curr_inner_cid;								
+							inner_conn_list.TryGetValue(portName, out curr_inner_connid);
+							curr_inner_cid = curr_inner_connid != null ? (ManagerComponentID) curr_inner_connid.getProvider() : null;
+							
+		                    if (!ic.IsPublic)
+							{									
+								inner_cid = createInnerComponent(cid, ic, curr_inner_cid, bsPort, frwServices, actualParameters, actualParametersTop);
+							    icList2.Add (ic);
+							}
+							else 
+							{
+								/* Look for the inner component in the transitively enclosing 
+								 * component where it is private.
+								 */
+								int i = 0;
+								foreach (ManagerComponentID cid_owner in cid_chain) 
+								{
+									// find the inner componetn in the current parent 
+									inner_cid = findInnerComponent(cid_owner, cid, ic, id_abstract_owner[i], id_inner_at_owner[i], bsPort);										
+										
+									/* if not found, look at the the next parent in
+									 * the next iteration. Otherwise, finish the loop.
+									 */
+									if (inner_cid != null)
+										break;
+										
+									i++;
+								}
+									
+								/* If the inner component is not found in the parents,
+									 * create it.
+								 */
+								if (inner_cid == null) 
+								{
+									inner_cid = createInnerComponent(cid, ic, curr_inner_cid, bsPort, frwServices, actualParameters, actualParametersTop);
+									icList2.Add (ic);
+								}
+									
+							}							
+				
+							
+							if (inner_cid == curr_inner_cid && curr_cid == cid)
+							{
+							}
+							else 
+							{
+								
+								// disconnect the old #-component, if it exists
+								if (curr_inner_cid != null)
+								{
+									disconnectInnerComponent(curr_inner_connid, bsPort, frw);
+									if (curr_cid != cid)
+									{
+										string usesPortName = curr_inner_connid.getUserPortName();
+										Services services = frw.getComponentServices(curr_cid);				
+										services.unregisterUsesPort(usesPortName);										
+									}
+								}
+								
+								// connect to the new #-component
+								connectInnerComponent(cid, portName, inner_cid, bsPort);	
+								
+								if (curr_inner_cid != null && curr_cid == cid)
+								{
+									/* Advice the unchanged container component that the
+									 * inner component <usesPortName> has changed */
+									string usesPortName = curr_inner_connid.getUserPortName();
+									reconfiguration_advice.changePort(usesPortName);
+								}
+							}
+							
+							inner_cids.Add(portName, inner_cid);
+						}
+					}
+						
+				}
+				
+				frwServices.releasePort(Constants.RECONFIGURE_PORT_NAME);
+				bsPort.disconnect(conn_cs,0);	
+				frwServices.unregisterUsesPort(Constants.RECONFIGURE_PORT_NAME);
+				
+				foreach (InnerComponent ic in icList2)
+				{
+					string portName = ic.Id_inner;
+					if (portName.Equals("read_buffer_forward"))
+					{
+						Console.WriteLine();
+					}
+						
+					int id_functor_app_inner_actual = ic.Id_functor_app;
+	                if (ic.Parameter_top.Length > 0)
+	                {
+	                    bool achei = actualParameters.TryGetValue(ic.Parameter_top, out id_functor_app_inner_actual);
+	                    if (!achei)
+	                        achei = actualParameters.TryGetValue(ic.Parameter_top + "#" + cid.Id_functor_app, out id_functor_app_inner_actual);
+	                    ic.Id_functor_app = id_functor_app_inner_actual;
+	                    acfa = BackEnd.acfadao.retrieve(id_functor_app_inner_actual);
+	                    ic.Id_abstract_inner = acfa.Id_abstract;
+	                }
+						
+					IDictionary<string, int> actualParameters_new;
+	                determineActualParameters(actualParameters, id_functor_app_inner_actual, out actualParameters_new);
+						
+					ManagerComponentID inner_cid;
+					if (inner_cids.TryGetValue(portName, out inner_cid)) 
+					{
+						IList<ManagerComponentID> cid_chain_inner = new List<ManagerComponentID>(cid_chain);					
+						cid_chain_inner.Insert(0, cid);
+							
+						List<int> id_abstract_owner_inner = new List<int>(id_abstract_owner);
+						id_abstract_owner_inner.Insert(0, id_abstract);
+							
+						List<string> id_inner_at_owner_inner = new List<string>(id_inner_at_owner);
+						id_inner_at_owner_inner.Insert(0, portName);
+							
+						ConnectionID curr_inner_connid;
+						ManagerComponentID curr_inner_cid;
+						inner_conn_list.TryGetValue(portName, out curr_inner_connid);
+						curr_inner_cid =  curr_inner_connid != null ? (ManagerComponentID) curr_inner_connid.getProvider() : null;
+						
+						createInnerComponentsOf(cid_chain_inner,
+												curr_inner_cid,
+						                        inner_cid,
+							                    id_abstract_owner_inner,
+							                    id_inner_at_owner_inner,
+							                    bsPort,
+							                    frwServices,
+						                        frw,
+							                    actualParameters_new,
+							                    actualParametersTop);
+					}
+					else 
+					{
+							System.Diagnostics.Debug.WriteLine("createInnerComponentsOf (DGAC.cs): inner_cid == null for " + portName);
+					}
+				}
+				
+				if (curr_cid != null && curr_cid != cid)
+				{
+					Services services = frw.getComponentServices(curr_cid);
+					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
+					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
+					if (curr_cid.Kind == Constants.KIND_APPLICATION)
+						services.removeProvidesPort(Constants.GO_PORT_NAME);
+					Console.WriteLine("DESTROY INSTANCE " + curr_cid);
+					bsPort.destroyInstance(curr_cid, 0);
+				}
+									
+			}
+	
+			public static void connectInnerComponent (ManagerComponentID cid, 
+				                                        string uses_port_name,
+				                                        ManagerComponentID inner_cid, 
+							                            gov.cca.ports.BuilderService bsPort)
+			{
+				bsPort.connect(cid, uses_port_name, inner_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+			}
+
+			public static void disconnectInnerComponent (ConnectionID conn_id, 
+							                             gov.cca.ports.BuilderService bsPort,
+			                                             ManagerObject frw)
+			{
+				ManagerComponentID cid = (ManagerComponentID) conn_id.getUser();
+				string usesPortName = conn_id.getUserPortName();
+				
+				Services services = frw.getComponentServices(cid);
+				services.releasePort(usesPortName);
+				
+				bsPort.disconnect(conn_id, 0);				
+			}
+	
+			public static ManagerComponentID createInnerComponent (ManagerComponentID cid, 
+				                                                   InnerComponent ic, 
+			                                                       ManagerComponentID current_inner_cid, 
+							                                       gov.cca.ports.BuilderService bsPort, 
+							                                       gov.cca.Services frwServices,
+				                                       			   IDictionary<string, int> actualParameters,
+	                            					   			   IDictionary<string, int> actualParametersTop)
+			{
+				 
+					
+				AbstractComponentFunctorApplication acfa = acfadao.retrieve(ic.Id_functor_app);	
+					
+				DGAC.database.Component c = resolveUnit(acfa, actualParameters, actualParametersTop);	
+					
+				if (current_inner_cid != null && current_inner_cid.ClassName.Equals(c.Library_path))
+				{
+					// The chosen #-component is the same.
+					return current_inner_cid;
+				}
+				
+				/* generate instantiatior string or modify createInstance ? the instantiator
+				 * string passes the abstract component + context, requiring a call to resolveUnit
+				 * in the worker.
+				 * Suggestion: 
+				 * 		1. class_name is the name of the component (c.Library_path);
+				 * 		2. context parameters are passed in properties argument through an id_functor_app 
+				 *         generated from c, actualParameters and actualParametersTop;
+				 * 		3. Pass an array of int property for nodes Constants.NODES_KEY 
+				 */			
+					
+				int id_functor_app = generateACFAforContext(c.Id_abstract, ic.Id_functor_app, actualParameters, actualParametersTop);
+				int[] nodes	= cid.WorkerNodes; // SPMD topology !!! Does not work for MPMD ...
+				
+				int version = current_inner_cid == null ? 0 : current_inner_cid.Version + 1;
+				
+				// Instantiate the inner component.
+	            TypeMapImpl properties = new TypeMapImpl();					
+				properties[Constants.ID_FUNCTOR_APP] = id_functor_app;
+				properties[Constants.NODES_KEY] = nodes;
+				properties[Constants.PORT_NAME] = ic.Id_inner;
+				string inner_instance_name = cid.getInstanceName() + "-" + ic.Id_inner + "#" + version;
+				ManagerComponentID inner_cid = (ManagerComponentID) bsPort.createInstance(inner_instance_name, c.Library_path, properties);				
+				
+			    inner_cid.Version = version;
+					
+				return inner_cid;
+			}
+	
+	
+			public static ManagerComponentID findInnerComponent (ManagerComponentID cid_owner, 
+				                                                 ManagerComponentID cid, 
+				                                                 InnerComponent ic, 
+				                                                 int id_abstract_owner,
+				                                                 string id_inner_at_owner, 
+				                                       			 gov.cca.ports.BuilderService bsPort)
+			{
+				
+			 InnerComponentExposed ice = icedao.retrieveContainer(id_abstract_owner, id_inner_at_owner, ic.Id_inner);
+			 if (ice == null)
+			 {
+				Console.WriteLine("findInnerComponent (DGAC.cs): " +  ic.Id_inner + " not found in " + id_abstract_owner + "." + id_inner_at_owner);
+				return null;
+			 }
+			 
+			 ManagerComponentID cid_inner = null;
+			
+			 // Get all connections where cid_owner participates, as user and provider.
+			 ConnectionID[] conn_list = bsPort.getConnectionIDs(new ComponentID[] {cid_owner});
+				
+			 // Among them, find the connection wherer it is user and the provider port is ice.Id_inner.
+			 foreach (ConnectionID conn_id in conn_list)
+			 {
+				if (conn_id.getUser() == cid_owner && conn_id.getUserPortName().Equals(ice.Id_inner_rename) ) 
+				{
+					    cid_inner = (ManagerComponentID) conn_id.getProvider();
+						break;
+				}
+			 }
+									
+			 if (cid_inner == null)
+			 {
+				Console.WriteLine("findInnerComponent (DGAC.cs): connection for " +  ice.Id_inner_rename + " not found in " + cid_owner);
+				return null;
+			 }
+			 		
+					
+			 return cid_inner;
+			}
+				
+			public static void fetchConnectionsAsUser (ManagerComponentID cid, 
+					                                   Dictionary<string, ConnectionID> inner_conn_list, 
+						                               gov.cca.ports.BuilderService bsPort, 
+						                               gov.cca.Services frwServices)
+			{
+				ConnectionID[] conn_id_list = bsPort.getConnectionIDs(new ComponentID[] {cid});	
+				foreach (ConnectionID conn_id in conn_id_list)
+					if (conn_id.getUser().getInstanceName().Equals(cid.getInstanceName()))
+						inner_conn_list.Add(conn_id.getUserPortName(), conn_id);
+			}
+				
+			public static void fetchConnectionsAsProvider (ManagerComponentID cid, 
+						                                   Dictionary<string, ConnectionID> inner_conn_list, 
+							                               gov.cca.ports.BuilderService bsPort, 
+							                               gov.cca.Services frwServices)
+			{
+				ConnectionID[] conn_id_list = bsPort.getConnectionIDs(new ComponentID[] {cid});	
+				foreach (ConnectionID conn_id in conn_id_list)
+					if (conn_id.getProvider().getInstanceName().Equals(cid.getInstanceName()))
+						inner_conn_list.Add(conn_id.getProviderPortName(), conn_id);
+			}
+			
+			#endregion RESOLUTION_AT_MANAGER	
+			
+    } //BackEnd
+		
+	public class PortUsageManager 
+	{
+		private IDictionary<string,int> portFetches = new Dictionary<string, int>();
+		private IDictionary<string,int> portReleases = new Dictionary<string,int>();
+		
+		public bool isFetched(string portname)
+		{
+			int count = 0;
+			return portFetches.TryGetValue(portname, out count) && count > 0;
+		}
+		
+		public bool isReleased(string portname)
+		{
+			int count = 0;
+			return portReleases.TryGetValue(portname, out count) && count > 0;
+		}
+		
+		public void addPortFetch(string portName)
+		{				
+			int count_fetch = 0;
+			if (portFetches.TryGetValue(portName, out count_fetch))
+				portFetches.Remove(portName);
+			
+			int count_release = 0;
+			if (portReleases.TryGetValue(portName, out count_release))
+				portReleases.Remove(portName);
+
+			if (count_release > 0)
+			{
+				Console.Error.WriteLine("Port " + portName + " was released (release count=" + count_release + ")");
+				throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);					
+			}
+							
+			portFetches.Add (portName, count_fetch+1);
 			
 		}
+								
+		public void addPortRelease(string portName)
+		{
+			int count_release = 0;
+			if (portReleases.TryGetValue(portName, out count_release))
+				portReleases.Remove(portName);
+			
+			if (count_release > 0)
+			{
+				Console.Error.WriteLine("Port " + portName + " still in use (release count=" + count_release + ")");
+				throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
+			}
+			
+			portReleases.Add (portName, count_release+1);				
+		}
+		
+		public void resetPort(string portName)
+		{
+			portReleases.Remove(portName);
+			portFetches.Remove(portName);
+		}
+		
+	}
 
 
-		public class ConcreteComponentNotFoundException : Exception
+	public class ConcreteComponentNotFoundException : Exception
+    {
+        private int id_abstract;
+        private string id_inner;
+        private int id_functor_app_implements;
+
+        IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
+
+        public ConcreteComponentNotFoundException(int id_functor_app_implements)
+            : base()
         {
-            private int id_abstract;
-            private string id_inner;
-            private int id_functor_app_implements;
+            this.id_functor_app_implements = id_functor_app_implements;
 
-            IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
+            AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app_implements);
 
-            public ConcreteComponentNotFoundException(int id_functor_app_implements)
-                : base()
-            {
-                this.id_functor_app_implements = id_functor_app_implements;
-
-                AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app_implements);
-
-                // It is a parameter in the subtype. Check if it is supplied in the type.
-                IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
-                foreach (SupplyParameter sp in spList)
-                    parsSuper.Add(sp.Id_parameter, sp);
-
-
-            }
-
-            public override string Message
-            {
-                get
-                {
-                    return setupMessage(id_abstract, id_inner);
-                }
-            }
-
-            private String setupMessage(int id_abstract, string id_inner)
-            {
-                InnerComponent ic = DGAC.BackEnd.icdao.retrieve(id_abstract, id_inner);
-
-                string cname = buildName(ic.Id_functor_app);
-
-                return "No implementation for " + cname + " was found !";
-            }
-
-            private string buildName(int id_functor_app)
-            {
-                string cname = "";
-
-                //  AbstractComponentFunctorDAO acfdao = new AbstractComponentFunctorDAO();
-                //  SupplyParameterDAO spdao = new SupplyParameterDAO();
-                //  AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-
-                AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app);
-                AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
-
-                cname += acf.Library_path + "[";
-
-                IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(id_functor_app);
-                foreach (SupplyParameter sp in spList)
-                {
-                    if (sp is SupplyParameterComponent)
-                    {
-                        SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-                        cname += spc.Id_parameter + "=" + buildName(spc.Id_functor_app_actual) + ",";
-                    }
-                    else if (sp is SupplyParameterParameter)
-                    {
-                        SupplyParameterParameter spp = (SupplyParameterParameter)sp;
-                        SupplyParameter sp_actual = null;
-                        parsSuper.TryGetValue(spp.Id_parameter_actual, out sp_actual);
-                        SupplyParameterComponent spc_actual = (SupplyParameterComponent)sp_actual;
-
-                        cname += spp.Id_parameter_actual + "=" + buildName(spc_actual.Id_functor_app_actual) + ",";
-                    }
-                }
-
-                cname += "]";
-
-                return cname;
-            }
-
-            private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-            public static long currentTimeMillis()
-            {
-                return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
-            }
+            // It is a parameter in the subtype. Check if it is supplied in the type.
+            IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(acfa.Id_functor_app);
+            foreach (SupplyParameter sp in spList)
+                parsSuper.Add(sp.Id_parameter, sp);
 
 
         }
+
+        public override string Message
+        {
+            get
+            {
+                return setupMessage(id_abstract, id_inner);
+            }
+        }
+
+        private String setupMessage(int id_abstract, string id_inner)
+        {
+            InnerComponent ic = DGAC.BackEnd.icdao.retrieve(id_abstract, id_inner);
+
+            string cname = buildName(ic.Id_functor_app);
+
+            return "No implementation for " + cname + " was found !";
+        }
+
+        private string buildName(int id_functor_app)
+        {
+            string cname = "";
+
+            AbstractComponentFunctorApplication acfa = DGAC.BackEnd.acfadao.retrieve(id_functor_app);
+            AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
+
+            cname += acf.Library_path + "[";
+
+            IList<SupplyParameter> spList = DGAC.BackEnd.spdao.list(id_functor_app);
+            foreach (SupplyParameter sp in spList)
+            {
+                if (sp is SupplyParameterComponent)
+                {
+                    SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+                    cname += spc.Id_parameter + "=" + buildName(spc.Id_functor_app_actual) + ",";
+                }
+                else if (sp is SupplyParameterParameter)
+                {
+                    SupplyParameterParameter spp = (SupplyParameterParameter)sp;
+                    SupplyParameter sp_actual = null;
+                    parsSuper.TryGetValue(spp.Id_parameter_actual, out sp_actual);
+                    SupplyParameterComponent spc_actual = (SupplyParameterComponent)sp_actual;
+
+                    cname += spp.Id_parameter_actual + "=" + buildName(spc_actual.Id_functor_app_actual) + ",";
+                }
+            }
+
+            cname += "]";
+
+            return cname;
+        }
+
+        private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static long currentTimeMillis()
+        {
+            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+        }
+
+
+    }
 
 
 

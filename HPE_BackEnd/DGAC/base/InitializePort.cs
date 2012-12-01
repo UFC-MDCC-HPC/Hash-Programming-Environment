@@ -11,7 +11,10 @@ namespace br.ufc.pargo.hpe.ports
 
     public interface InitializePort : Port
     {
-        void perform_initialize();
+        void initialize();
+      //  void initialize_slices();
+      //  void post_initialize_slices();
+        void post_initialize();
     }
 
 }

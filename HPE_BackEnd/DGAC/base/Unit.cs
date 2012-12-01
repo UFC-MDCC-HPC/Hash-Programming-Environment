@@ -14,7 +14,7 @@ using br.ufc.pargo.hpe.ports;
 
 namespace br.ufc.pargo.hpe.basic
 {
-    public interface IUnit : Component, AutomaticSlicesPort
+    public interface IUnit : Component, InitializePort, ReconfigurationAdvicePort
     {
 		int Rank {get; set;}      // Rank of the parallel unit.
 		int Size {get; set;}      // Number of the parallel units.
@@ -38,29 +38,19 @@ namespace br.ufc.pargo.hpe.basic
         IList<IUnit> ContainerSlice { get;}
 		void addContainerSlice(IUnit u, string portName);
 		
-        void initialize();
-        void post_initialize();
+        new void initialize();
+        new void post_initialize();
         void destroySlice();
-
-        #region CreateSlicesPort
-
-        new void create_slices();
-        new void initialize_slices();
-        new void post_initialize_slices();
-        new void destroy_slices();
-
-        #endregion CreateSlicesPort
-
-		void create_slices(IUnit owner_unit);
+		
+		new void changePort(string portName);
+		
+		ICollection<IUnit> AllSlices {get; }
+		
 
         IDictionary<string, int> ActualParameters { get; set; }
         IDictionary<string, int> ActualParametersTop { get; set; }
         void setActualParameters(IDictionary<string, int> actualParameters_new);
         void setUpParameters(int id_functor_app);
-
-//        bool getPermutation(string varid, out br.ufc.pargo.hpe.kinds.IEnumeratorKind permutation);
-//        void addPermutation(string varid, br.ufc.pargo.hpe.kinds.IEnumeratorKind u);
-
 
         ComponentID CID { get; set; }
     }

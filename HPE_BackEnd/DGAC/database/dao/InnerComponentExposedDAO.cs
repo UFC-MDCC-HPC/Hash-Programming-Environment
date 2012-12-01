@@ -118,6 +118,55 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             return ice;
         }
+		
+        internal InnerComponentExposed retrieveContainer(int id_abstract_start, string id_inner_owner, string id_inner)
+        {
+			int id_abstract = id_abstract_start;
+	        InnerComponentExposed ice = null;
+			
+			while (id_abstract > 0) 
+			{
+	            IDbConnection dbcon = Connector.DBcon;
+	            IDbCommand dbcmd = dbcon.CreateCommand();
+	            string sql =
+	                "SELECT id_abstract, id_inner_rename, id_inner_owner, id_inner " +
+	                "FROM innercomponentexposed " +
+	                "WHERE id_abstract=" + id_abstract + " AND " +
+	                      "id_inner like '" + id_inner + "' AND " +
+	                      "id_inner_owner like '" + id_inner_owner + "'";
+	            dbcmd.CommandText = sql;
+	            IDataReader reader = dbcmd.ExecuteReader();
+	            if (reader.Read())
+	            {
+	                ice = new InnerComponentExposed();
+	                ice.Id_abstract = (int)reader["id_abstract"];
+	                ice.Id_inner_rename = (string)reader["id_inner_rename"];
+	                ice.Id_inner_owner = (string)reader["id_inner_owner"];
+	                ice.Id_inner = (string)reader["id_inner"];
+	            }//while
+	            // clean up
+	            reader.Close();
+	            reader = null;
+	            dbcmd.Dispose();
+	            dbcmd = null;
+				
+				if (ice == null) 
+				{
+	                AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+					if (acf.Id_functor_app_supertype > 0)
+					{
+					   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
+					   id_abstract = acfa.Id_abstract;
+					}
+					else 
+						id_abstract = -1;
+				}
+				else 
+				   id_abstract = -1;
+			}
+
+            return ice;
+        }		
     }//class
 
 }//namespace

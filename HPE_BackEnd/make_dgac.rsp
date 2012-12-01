@@ -29,7 +29,9 @@ DGAC/externalreferences.cs
 DGAC/CCAExceptionImpl.cs
 DGAC/ManagerServicesImpl.cs
 DGAC/GoPortImpl.cs
-DGAC/AutomaticSlicesPortImpl.cs
+DGAC/InitializePortImpl.cs
+DGAC/InitializePortImpl.cs
+DGAC/ReconfigurationAdvicePortImpl.cs
 DGAC/connector/*.cs
 DGAC/connector/config/*.cs
 DGAC/connector/config/reconfig/*.cs
