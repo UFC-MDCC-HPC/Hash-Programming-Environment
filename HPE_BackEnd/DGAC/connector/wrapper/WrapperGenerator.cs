@@ -390,12 +390,12 @@ namespace br.ufc.hpe.backend.DGAC
 		  slice_accessor_property.Name = slice_accessor_name;
 		  slice_accessor_property.Attributes = MemberAttributes.Public;
 		  slice_accessor_property.HasGet = true;
-		  slice_accessor_property.HasSet = true;
+		  slice_accessor_property.HasSet = false;
 		
 		  // public slice accessor - property - get
 		  {
 		    // if (<slice_accessor_name> == null) <slice_accessor_name> = connector.Slice["<slice_accessor_name"];
-		    {
+		/*    {
 		      CodeConditionStatement get_statement_test = new CodeConditionStatement();
 		      {
 		        // <slice_accessor_name> == null
@@ -415,23 +415,27 @@ namespace br.ufc.hpe.backend.DGAC
 				get_statement_test.TrueStatements.Add(init_slice_stmt);			
 		      }
 		      slice_accessor_property.GetStatements.Add(get_statement_test);
-		    }
+		    } */
 		    // return <slice_accessor_name>;
 		    {		
  		      CodeMethodReturnStatement get_statement_return = new CodeMethodReturnStatement();
-		      get_statement_return.Expression = new CodeVariableReferenceExpression(slice_accessor_name.ToLower());
+					
+		      get_statement_return.Expression = //new CodeVariableReferenceExpression(slice_accessor_name.ToLower());
+						                               new CodeCastExpression(slice_accessor_type,
+						                                       new CodeIndexerExpression(new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "Slice"), 
+		                                                          new CodeExpression[] {new CodePrimitiveExpression(slice_accessor_name.ToLower())}));
               slice_accessor_property.GetStatements.Add(get_statement_return);
 		    }
 		  }
 		
-		  {
+	/*	  {
 		    // public slice accessor - property - set
 		    // <slice_accessor_name> = value;
 		    CodeAssignStatement set_statement = new CodeAssignStatement();
 		    set_statement.Left = new CodeVariableReferenceExpression(slice_accessor_name.ToLower());
 		    set_statement.Right = new CodeArgumentReferenceExpression("value");
 		    slice_accessor_property.SetStatements.Add (set_statement);
-		  }
+		  } */
 		  return slice_accessor_property;		  
 	    }
 		

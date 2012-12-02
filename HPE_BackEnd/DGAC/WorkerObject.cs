@@ -246,11 +246,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             Connector.openConnection();
 
-            string library_path = properties.getString(Constants.COMPONENT_KEY, "not found");
-            br.ufc.pargo.hpe.backend.DGAC.database.Component c = DGAC.BackEnd.cdao.retrieve_libraryPath(library_path);
-            
-            int kind = Constants.kindMapping[c.Kind];
-            
+   			int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
+
             switch (kind)
             {
                 case Constants.KIND_APPLICATION: cid = createInstanceForApplications(instanceName, className, properties); break;

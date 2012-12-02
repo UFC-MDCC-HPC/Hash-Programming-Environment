@@ -203,7 +203,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 catch (Exception e)
                 {
                     System.Diagnostics.Debug.WriteLine("Exception: " + e.Message);
-                    System.Diagnostics.Debug.WriteLine("Inner Exception: " + e.InnerException.Message);
+                    System.Diagnostics.Debug.WriteLine("Inner Exception: " + (e.InnerException != null ? e.InnerException.Message : ""));
                     System.Diagnostics.Debug.WriteLine("Stack Trace: " + e.StackTrace);
                 }
 
@@ -1148,12 +1148,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					    int partition_index = partition_indexes[k];
 
 					    DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, id_interface, partition_index);
-						Interface i = DGAC.BackEnd.idao.retrieve(c.Id_abstract, id_interface, partition_index);
+						AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(c.Id_abstract);
 					
 				        // SETUP PROPERTIES
                         TypeMapImpl worker_properties = new TypeMapImpl(properties);
                         worker_properties[Constants.KEY_KEY] = k;
-                        worker_properties[Constants.COMPONENT_KEY] = c.Library_path;
+                        worker_properties[Constants.COMPONENT_KEY] = acf.Library_path;
                         worker_properties[Constants.UNIT_KEY] = id_interface ;
  					    worker_properties[Constants.ASSEMBLY_STRING_KEY] = u.Assembly_string;
 					    worker_properties[Constants.PORT_NAMES_KEY] = calculatePortNames(c.Id_abstract, id_interface, partition_index);
