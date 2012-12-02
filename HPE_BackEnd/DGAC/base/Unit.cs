@@ -16,6 +16,12 @@ namespace br.ufc.pargo.hpe.basic
 {
     public interface IUnit : Component, InitializePort, ReconfigurationAdvicePort
     {
+		string ClassName {get; set;}
+    	
+		int Kind {get; set;}
+    	
+		string[] PortNames { get; set;}
+    	
 		int Rank {get; set;}      // Rank of the parallel unit.
 		int Size {get; set;}      // Number of the parallel units.
 		int[] Ranks {get; set;}   // Global ranks of the parallel units.
@@ -26,17 +32,10 @@ namespace br.ufc.pargo.hpe.basic
        
         gov.cca.Services Services { get; }
 
-        int Id_concrete { set; get; }
-        int Id_functor_app { set; get; }
-        int Id_abstract { get; }
         string Id_unit { set; get; }
-		int PartitionIndex {set; get;}
-		string QualifiedComponentTypeName { get; }
+		string QualifiedComponentTypeName { get; set; }
         
-		string getSliceName(IUnit container);
-
-        IList<IUnit> ContainerSlice { get;}
-		void addContainerSlice(IUnit u, string portName);
+		void addSlice(IUnit slice, string portName);
 		
         new void initialize();
         new void post_initialize();
@@ -44,14 +43,6 @@ namespace br.ufc.pargo.hpe.basic
 		
 		new void changePort(string portName);
 		
-		ICollection<IUnit> AllSlices {get; }
-		
-
-        IDictionary<string, int> ActualParameters { get; set; }
-        IDictionary<string, int> ActualParametersTop { get; set; }
-        void setActualParameters(IDictionary<string, int> actualParameters_new);
-        void setUpParameters(int id_functor_app);
-
         ComponentID CID { get; set; }
     }
 }

@@ -118,7 +118,7 @@
 		* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		public int perform_action(string action) {
 		 
-			Debug.WriteLine("UNIT :" + Id_unit);
+			//Debug.WriteLine("UNIT :" + Id_unit);
 			//Debug.WriteLine("[IConnectorImpl.perform_action] iniciando action {0} | configNull {1}", action, (configurationManager == null));
 		 if(configurationManager != null) {
 			

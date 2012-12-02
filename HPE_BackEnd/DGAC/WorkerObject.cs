@@ -278,10 +278,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             try
             {
-                int key = properties.getInt(Constants.KEY_KEY, my_rank);                
+              //  int key = properties.getInt(Constants.KEY_KEY, my_rank);                
              //   string id_unit = properties.getString(Constants.UNIT_KEY, "");
               //  string library_path = properties.getString(Constants.COMPONENT_KEY, "");
-                int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
+             //   int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
 
                 ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
@@ -293,8 +293,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 //                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
 
 				
-				pmain.setUpParameters(id_functor_app);
-                pmain.ActualParametersTop = pmain.ActualParameters;
+				//pmain.setUpParameters(id_functor_app);
+                //pmain.ActualParametersTop = pmain.ActualParameters;
 
 				//System.Diagnostics.Debug.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
                 //pmain.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
@@ -323,18 +323,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
             unitProperties.Add(cid, properties);
-
+			
             string id_unit = properties.getString(Constants.UNIT_KEY, "");
             string library_path = properties.getString(Constants.COMPONENT_KEY, "");
-            br.ufc.pargo.hpe.backend.DGAC.database.Component c = DGAC.BackEnd.cdao.retrieve_libraryPath(library_path);
-            br.ufc.pargo.hpe.backend.DGAC.database.Unit u = DGAC.BackEnd.udao.retrieve(c.Id_concrete, id_unit, -1);
-
-            string assembly_string = u.Assembly_string;      // where to found the DLL (retrieve from the component).
-
+			string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
+			string[] portNames = properties.getStringArray(Constants.PORT_NAMES_KEY, new string[0]);
+			int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
+			
             ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
             hpe.basic.IUnit unit_slice = (hpe.basic.IUnit) obj.Unwrap();
-            unit_slice.Id_unit = id_unit;
-            unit_slice.Id_concrete = c.Id_concrete;
+			unit_slice.Id_unit = id_unit;
+			unit_slice.PortNames = portNames;
+			unit_slice.Kind = kind;
+			unit_slice.ClassName = class_name;
+			unit_slice.QualifiedComponentTypeName = library_path;
 
             Services services = new WorkerServicesImpl(this, cid, unit_slice);
             unit_slice.setServices(services);
@@ -579,7 +581,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				provider_unit.Rank = provider_unit.GlobalRank;
 				provider_unit.Size = provider_unit.WorldComm.Size;
 			
-				provider_unit.addContainerSlice(user_unit, usingPortName);
+				//provider_unit.addContainerSlice(user_unit, usingPortName);
+				user_unit.addSlice(provider_unit,usingPortName);
             }
 
             return connection;

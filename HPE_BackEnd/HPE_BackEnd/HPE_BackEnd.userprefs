@@ -2,17 +2,26 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/DGAC.cs">
     <Files>
-      <File FileName="../DGAC/DGAC.cs" Line="1539" Column="57" />
-      <File FileName="../DGAC/WorkerObject.cs" Line="475" Column="21" />
-      <File FileName="../DGAC/ManagerObject.cs" Line="237" Column="1" />
+      <File FileName="../DGAC/DGAC.cs" Line="1196" Column="119" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="566" Column="22" />
+      <File FileName="../DGAC/ManagerObject.cs" Line="499" Column="4" />
       <File FileName="../reconfigure_test.xml" Line="5" Column="30" />
-      <File FileName="../run_app/Program.cs" Line="25" Column="5" />
+      <File FileName="../run_app/Program.cs" Line="22" Column="18" />
       <File FileName="../DGAC/ManagerServicesImpl.cs" Line="135" Column="17" />
       <File FileName="../DGAC/WorkerServicesImpl.cs" Line="80" Column="34" />
       <File FileName="../DGAC/ManagerComponentIDImpl.cs" Line="123" Column="1" />
       <File FileName="../DGAC/CCAExceptionImpl.cs" Line="18" Column="1" />
-      <File FileName="../connector/br.ufc.pargo.hpe.ConnectorImpl/src/1.0.0.0/IConnectorImpl.cs" Line="20" Column="33" />
-      <File FileName="../DGAC/CCA.cs" Line="936" Column="26" />
+      <File FileName="../connector/br.ufc.pargo.hpe.ConnectorImpl/src/1.0.0.0/IConnectorImpl.cs" Line="11" Column="1" />
+      <File FileName="../DGAC/GoPortImpl.cs" Line="61" Column="13" />
+      <File FileName="../DGAC/base/ReconfigurationAdvicePort.cs" Line="14" Column="40" />
+      <File FileName="../DGAC/base/Unit.cs" Line="18" Column="1" />
+      <File FileName="../DGAC/Constants.cs" Line="90" Column="99" />
+      <File FileName="../DGAC/base/UnitImpl.cs" Line="389" Column="52" />
+      <File FileName="../DGAC/ReconfigurationAdvicePortImpl.cs" Line="70" Column="1" />
+      <File FileName="../DGAC/base/TopologyKind.cs" Line="12" Column="20" />
+      <File FileName="../DGAC/base/QualifierKind.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/base/InitializePort.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/InitializePortImpl.cs" Line="12" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,9 +30,9 @@
             <Node name="br.ufc.pargo.hpe.ConnectorImpl" expanded="True" />
           </Node>
           <Node name="DGAC" expanded="True">
-            <Node name="manager" expanded="True" />
+            <Node name="DGAC.cs" selected="True" />
           </Node>
-          <Node name="HPERun" expanded="True" selected="True" />
+          <Node name="HPERun" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -48,19 +57,17 @@
       <Breakpoint file="/home/heron/hash-programming-environment/HPE_BackEnd/TestWrapperGenerator/Main.cs" line="25" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/connector/wrapper/WrapperGenerator.cs" line="226" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/connector/wrapper/WrapperGenerator.cs" line="304" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="411" />
       <Breakpoint file="/home/heron/hash-programming-environment/run_app/Program.cs" line="26" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="484" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="492" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/WorkerServicesImpl.cs" line="80" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2128" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2129" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2959" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2869" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2873" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="1535" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="301" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/WorkerObject.cs" line="473" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2133" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2134" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2964" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2874" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2878" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="440" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="513" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="521" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>

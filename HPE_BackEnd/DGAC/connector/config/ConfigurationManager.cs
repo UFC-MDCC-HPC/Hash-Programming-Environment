@@ -28,7 +28,7 @@ namespace br.ufc.pargo.hpe.connector.config
 	{
       
 		protected XmlLoader loader;
-		protected int index;
+		//protected int index;
 		protected string unitName;
 		protected MetaHashComponent application;
 
@@ -78,14 +78,14 @@ namespace br.ufc.pargo.hpe.connector.config
 			this.application = loader.loadComponent (xml);
          
 			this.unitName = the_unit.Id_unit;
-			this.index = the_unit.PartitionIndex;
+//			this.index = the_unit.PartitionIndex;
 			
 			foreach (MetaUnit u in application.Units.Values) 
 			{
 				System.Diagnostics.Debug.WriteLine("[ConfigurationManager.LoadComponent] u.Name="+ u.Name + ", this.unitName="+ this.unitName);
 				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
-					u.Index = this.index;
+//					u.Index = this.index;
 					foreach(MetaSlice s in u.Slices.Values) {
 						System.Diagnostics.Debug.WriteLine("Slice: " + s.Inner);
 					}
@@ -94,7 +94,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			}
          
 			if (this.unit == null) {
-				throw new Exception ("Unit not found. Name: " + unitName + " | Index: " + index);
+				throw new Exception ("Unit not found. Name: " + unitName /*+ " | Index: " + index*/);
 			}
 		}
       

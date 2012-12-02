@@ -77,7 +77,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         //public static string ID_INNER_KEY = "id_inner";
         public const string UNIT_KEY = "id_interface";
         public const string PORT_NAME = "port_name";
-       // public static string KIND_KEY = "kind";
+		public const string ASSEMBLY_STRING_KEY = "assembly_string";
+		public const string PORT_NAMES_KEY = "port_name";
+	//	public const string CLASS_NAME_KEY = "class_name";
+        public static string KIND_KEY = "kind";
+        public static string PARTITION_INDEX_KEY = "partition_index";
 
         public const string DEFAULT_PROVIDES_PORT_IMPLEMENTS = "implements";
         //public const string DEFAULT_CREATESLICES_PORT_IMPLEMENTS = "create_slices";

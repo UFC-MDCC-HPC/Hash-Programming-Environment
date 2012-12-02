@@ -42,12 +42,12 @@ namespace Back_End_Test
 					dgac.testReconfiguration(instantiator_string_1, instantiator_string_2, prefix);
 				}
 
-                int i = 0;
-                foreach (string o in output) 
-                {
-                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
-                    Console.WriteLine(o);
-                }
+                //int i = 0;
+                //foreach (string o in output) 
+                //{
+                 //   Console.WriteLine("--- Process " + (i++) + " ----------- ");
+                  //  Console.WriteLine(o);
+               // }
 
 
 			} 

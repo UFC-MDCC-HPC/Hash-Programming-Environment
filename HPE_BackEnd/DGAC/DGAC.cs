@@ -529,6 +529,8 @@ namespace br.ufc.pargo.hpe.backend
 					bsPort.disconnect(conn_go, 0);
 					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
 					
+					destroyApplicationInstance(app_cid_1, bsPort, frwServices, (ManagerObject) frw);
+					
 					bsPort.destroyInstance(app_cid_1, 0);
 			//		bsPort.destroyInstance(app_cid_2, 0);
 					System.Diagnostics.Debug.WriteLine("Test e3");
@@ -754,14 +756,14 @@ namespace br.ufc.pargo.hpe.backend
                 calculateActualParams_(new Dictionary<string, int>(), acfaRef, id_interface, partition_index, out actualParams);
             }
             
-            public static void calculateActualParams(
+     /*       public static void calculateActualParams(
                 IUnit enclosing_unit, 
                 AbstractComponentFunctorApplication acfaRef,
                 string id_interface, int partition_index, 
                 out System.Type[] actualParams)
             {
                 calculateActualParams_(enclosing_unit.ActualParameters, acfaRef, id_interface, partition_index, out actualParams);
-            }
+            }*/
 
             public static void calculateGenericClassName(
                 br.ufc.pargo.hpe.backend.DGAC.database.Unit u,
@@ -1197,10 +1199,16 @@ namespace br.ufc.pargo.hpe.backend
 								
 					// Fetching the enclosing component, if it exists.
 					#region TRY_FETCH_ENCLOSING_COMPONENT
-					Dictionary<string, ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();					
+					IList<ConnectionID> inner_conn_list = new List<ConnectionID>();					
 					fetchConnectionsAsProvider(cid, inner_conn_list, bsPort, frwServices);
-					ConnectionID owner_connid;
-					inner_conn_list.TryGetValue(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, out owner_connid);
+					ConnectionID owner_connid = null;
+					foreach (ConnectionID conn in inner_conn_list)
+						if (conn.getProviderPortName().Equals(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS))
+						{
+							owner_connid = conn;
+							break;
+						}
+					//inner_conn_list.TryGetValue(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, out owner_connid);
 					ManagerComponentID owner_cid = owner_connid != null ? (ManagerComponentID) owner_connid.getUser(): null;
 					
 					InnerComponent ic = null;
@@ -1290,6 +1298,56 @@ namespace br.ufc.pargo.hpe.backend
 				}
 			}
 
+			
+	        public static void destroyApplicationInstance
+				                                       (ManagerComponentID app_cid, 
+				                                        gov.cca.ports.BuilderService bsPort, 
+				                                        gov.cca.Services frwServices,
+			                                            ManagerObject frw)
+			{
+				Services services = frw.getComponentServices(app_cid);
+				IList<ComponentID> cidInnerList = new List<ComponentID>();
+				
+				Dictionary<string, ConnectionID> inner_conn_list = null;
+								
+				inner_conn_list = new Dictionary<string, ConnectionID>();					
+				fetchConnectionsAsUser(app_cid, inner_conn_list, bsPort, frwServices);
+				
+				foreach (KeyValuePair<string,ConnectionID> conn_pair in inner_conn_list)
+				{
+					string usesPortName = conn_pair.Key;
+					ConnectionID conn = conn_pair.Value;
+					cidInnerList.Add(conn.getProvider());
+					
+					services.releasePort(usesPortName);
+					bsPort.disconnect(conn, 0);
+					services.unregisterUsesPort(usesPortName);					
+				}
+				
+				foreach (ComponentID cid_inner in cidInnerList) 
+				{
+					destroyApplicationInstance((ManagerComponentID) cid_inner, 
+					                          bsPort, 
+					                          frwServices, 
+					                          frw);
+				}
+				
+				IList<ConnectionID> provides_conn_list = new List<ConnectionID>();					
+				fetchConnectionsAsProvider(app_cid, provides_conn_list, bsPort, frwServices);
+				
+				if (provides_conn_list.Count == 0)
+				{
+					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
+					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
+					if (app_cid.Kind == Constants.KIND_APPLICATION)
+						services.removeProvidesPort(Constants.GO_PORT_NAME);
+				}
+								
+				
+			}
+			
+			
 			
 	        public static ComponentID createApplicationInstance
 													   (string instantiator_string, 
@@ -1708,14 +1766,19 @@ namespace br.ufc.pargo.hpe.backend
 			}
 				
 			public static void fetchConnectionsAsProvider (ManagerComponentID cid, 
-						                                   Dictionary<string, ConnectionID> inner_conn_list, 
+						                                   IList<ConnectionID> provides_conn_list, 
 							                               gov.cca.ports.BuilderService bsPort, 
 							                               gov.cca.Services frwServices)
 			{
 				ConnectionID[] conn_id_list = bsPort.getConnectionIDs(new ComponentID[] {cid});	
 				foreach (ConnectionID conn_id in conn_id_list)
+				{
 					if (conn_id.getProvider().getInstanceName().Equals(cid.getInstanceName()))
-						inner_conn_list.Add(conn_id.getProviderPortName(), conn_id);
+					{
+						string providesPortName = conn_id.getProviderPortName();
+						provides_conn_list.Add(conn_id);
+					}
+				}
 			}
 			
 			#endregion RESOLUTION_AT_MANAGER	

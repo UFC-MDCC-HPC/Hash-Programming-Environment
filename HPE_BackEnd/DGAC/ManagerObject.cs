@@ -1039,7 +1039,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		    
 		    ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
             hpe.kinds.ITopologyKind unit_topology = (hpe.kinds.ITopologyKind) obj.Unwrap();
-		    unit_topology.Id_unit = u_topology.Id_unit;
+		   // unit_topology.Id_unit = u_topology.Id_unit;
 		    
 		    unit_topology.PartitionCount = acf_topology.getPartitionCount(id_interface);
 					
@@ -1056,6 +1056,28 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			
 			throw new NotImplementedException ();
+		}
+
+		public string[] calculatePortNames (int id_abstract, string id_interface, int partition_index)
+		{
+            IList<Slice> sList = BackEnd.sdao.listByInterface(id_abstract, id_interface, partition_index);
+			IList<string> portNameList = new List<string>();
+            foreach (Slice slice in sList)
+            {
+			   InnerComponent ic = BackEnd.icdao.retrieve(slice.Id_abstract, slice.Id_inner);
+			   AbstractComponentFunctor acf_inner = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
+				
+			   int slice_kind_inner = Constants.kindMapping[acf_inner.Kind];
+               
+               if (slice_kind_inner != Constants.KIND_QUALIFIER) {		
+			   	   portNameList.Add(slice.Id_inner);
+			   }
+            }
+			
+			string[] portNameArray = new string[portNameList.Count];
+			portNameList.CopyTo(portNameArray,0);
+			
+			return portNameArray;
 		}
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -1126,13 +1148,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					    int partition_index = partition_indexes[k];
 
 					    DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, id_interface, partition_index);
+						Interface i = DGAC.BackEnd.idao.retrieve(c.Id_abstract, id_interface, partition_index);
 					
 				        // SETUP PROPERTIES
                         TypeMapImpl worker_properties = new TypeMapImpl(properties);
                         worker_properties[Constants.KEY_KEY] = k;
                         worker_properties[Constants.COMPONENT_KEY] = c.Library_path;
                         worker_properties[Constants.UNIT_KEY] = id_interface ;
-                        worker_properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
+ 					    worker_properties[Constants.ASSEMBLY_STRING_KEY] = u.Assembly_string;
+					    worker_properties[Constants.PORT_NAMES_KEY] = calculatePortNames(c.Id_abstract, id_interface, partition_index);
+						worker_properties[Constants.KIND_KEY] = c.Kind;
 					
                         string class_name_worker;
                         
