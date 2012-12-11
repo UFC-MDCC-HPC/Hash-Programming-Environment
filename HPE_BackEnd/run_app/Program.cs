@@ -27,27 +27,27 @@ namespace Back_End_Test
 										
 	            dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
 				
-                //string instantiator_string = File.ReadAllText(instantiator_string_file);
-				string instantiator_string_1 = File.ReadAllText("/home/heron/hash-programming-environment/run.sp.S.1.xml");
-				string instantiator_string_2 = File.ReadAllText("/home/heron/hash-programming-environment/reconfigure_test.xml");
+                string instantiator_string = File.ReadAllText(instantiator_string_file);
+				//string instantiator_string_1 = File.ReadAllText("/home/heron/hash-programming-environment/run.sp.S.1.xml");
+				//string instantiator_string_2 = File.ReadAllText("/home/heron/hash-programming-environment/reconfigure_test.xml");
 				
 				string[] output = null;
 				if (prefix == null) 
 				{					
-//				  output = dgac.runApplication(instantiator_string, user, password, curDir);
+				  output = dgac.runApplication(instantiator_string, user, password, curDir);
 				} 
 				else 
 				{
-				//  output = dgac.runApplicationNTimes(instantiator_string, user, password, curDir, rounds, prefix);
-					dgac.testReconfiguration(instantiator_string_1, instantiator_string_2, prefix);
+				  output = dgac.runApplicationNTimes(instantiator_string, user, password, curDir, rounds, prefix);
+//					dgac.testReconfiguration(instantiator_string_1, instantiator_string_2, prefix);
 				}
 
-                //int i = 0;
-                //foreach (string o in output) 
-                //{
-                 //   Console.WriteLine("--- Process " + (i++) + " ----------- ");
-                  //  Console.WriteLine(o);
-               // }
+                int i = 0;
+                foreach (string o in output) 
+                {
+                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
+                    Console.WriteLine(o);
+                }
 
 
 			} 
