@@ -37,7 +37,6 @@ namespace br.ufc.pargo.hpe.connector.run
 		//Método para executar o ramo.
 		public void Go (Object nothing)
 		{
-			//System.Diagnostics.Debug.WriteLine("[BranchInterpreter.Go] state:{0} | transition:{1}", state, transition);
 			int rid = sControl.Protocol.Matrix [state] [(transition * Configuration.BASE) + Configuration.RUNNABLE];
 			br.ufc.pargo.hpe.connector.config.ExecutionAction action = sControl.Protocol.Actions [rid];
 			
@@ -45,7 +44,6 @@ namespace br.ufc.pargo.hpe.connector.run
 
 			if (action.Condition != null) {
 				result = action.Condition.Evaluate ();
-				//System.System.Diagnostics.Debug.WriteLine("[BranchInterpreter.Go] Avaliando Condição " + action.Condition.Cond + ": " + result);
 			}
 
 			if (action.Condition == null || result) {
@@ -54,6 +52,7 @@ namespace br.ufc.pargo.hpe.connector.run
             
 				//o MetaAction pode ser nulo quando for uma trasição lambda. Controle de fluxo.
 				if (action.MetaAction != null) {
+					//System.Diagnostics.Debug.WriteLine("[BrachInterpreter.Go] state- {0} transition- {1}", state, transition);
 					action.MetaAction.Run ();
 				}
 				
@@ -69,19 +68,16 @@ namespace br.ufc.pargo.hpe.connector.run
          
 			int targetState = sControl.Protocol.Matrix [state] [(transition * Configuration.BASE) + Configuration.TARGET_STATE];
          
-			//essa condiçao quer dizer que essa transicao é de controle de fluxo.
+			//essa condição quer dizer que essa transicao é de controle de fluxo.
 			if (action.MetaAction == null) {
-				//System.Diagnostics.Debug.WriteLine("Controle de Fluxo");
 				if (result || action.Condition == null) {
-					//System.Diagnostics.Debug.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
 				}
 			} else { //Se a transicao nao é de controle de fluxo, entao eu devo iniciar o proximo estado.
 				int counter = sControl.Protocol.DecArriving (targetState);
-				//System.Diagnostics.Debug.WriteLine("counter: {0}", counter);
+
 				//TODO dar uma solução definitiva.
 				//if (counter == 0) {
-					//System.Diagnostics.Debug.WriteLine("Iniciado novo StateControl: {0}", targetState);
 					new StateControl (sControl.Protocol, targetState).Go ();
 				//}
 			}

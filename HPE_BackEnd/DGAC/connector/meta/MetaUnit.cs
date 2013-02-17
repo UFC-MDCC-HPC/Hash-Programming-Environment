@@ -106,7 +106,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
 			else
 			{
-				System.Diagnostics.Debug.WriteLine("[MetaUnit.AddAction] {0} is already in actions ...", name);
+				//System.Diagnostics.Debug.WriteLine("[MetaUnit.AddAction] {0} is already in actions ...", name);
 			}
 			
 		}
@@ -123,7 +123,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 		public void linkEntities ()
 		{
          
-			System.Diagnostics.Debug.WriteLine ("[MetaUnit.linkEntities] UNIT: " + Name + "-" + Entity.ToString ());
+			//System.Diagnostics.Debug.WriteLine ("[MetaUnit.linkEntities] UNIT: " + Name + "-" + Entity.ToString ());
          
 			if (slices != null) {
 				IUnit unit = (IUnit)entity;
@@ -145,9 +145,8 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (actions != null) {
 				foreach (MetaAction a in actions.Values) {
 					if (a.IsNative) {
-						System.Diagnostics.Debug.Write("[MetaUnit.GenerateDelegates] DAction " + a.Father.Name + " - " + a.Name);
+						//System.Diagnostics.Debug.Write("[MetaUnit.GenerateDelegates] DAction {0} - {1} ", a.Father.Name, a.Name);
 						a.Entity = (MetaAction.DAction)Delegate.CreateDelegate (typeof(MetaAction.DAction), Entity, a.Name);
-						System.Diagnostics.Debug.WriteLine("" + (a.Entity == null));
 					}
 				}
 			}
@@ -155,7 +154,7 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (conditions != null) {
 				foreach (Condition c in conditions.Values) {
 					if (c.Cond != null && !c.Cond.Equals ("")) {
-						System.Diagnostics.Debug.Write("[MetaUnit.GenerateDelegates] DCondition " + c.Cond + " - " + Father.Name);
+						//System.Diagnostics.Debug.Write("[MetaUnit.GenerateDelegates] DCondition {0} - {1} ", c.Cond, Father.Name);
 						c.Guard = (Condition.DCondition)Delegate.CreateDelegate (typeof(Condition.DCondition), Entity, c.Cond);
 					}
 				}
@@ -167,6 +166,51 @@ namespace br.ufc.pargo.hpe.connector.meta
 				}
 			}
 		}
+	
+		public MetaUnit Clone() {
+			//Console.WriteLine ("[MetaUnit.Clone] Clonando unit {0}...", this.Name);
+			
+			MetaUnit unit = new MetaUnit();
+		
+			Clone (unit);
+			
+			return unit;
+		}
+		
+		public void Clone(MetaUnit unit) {
+		
+			//Console.WriteLine ("[MetaUnit.Clone] Base MetaUnit...");
+			base.Clone ((MetaHashEntity) unit);
+			
+			unit.index = index;
+			unit.split = split;
+			unit.parallel = parallel;
+			
+			if(actions != null) {
+				MetaAction cma;
+				foreach(MetaAction action in actions.Values) {
+					cma = action.Clone();
+					cma.Father = unit;
+					unit.AddAction(action.Name, cma);
+				}
+			}
 
+			if(conditions != null) {
+				Condition cc;
+				foreach(Condition cond in conditions.Values) {
+					cc = cond.Clone();
+					cc.Father = unit;
+					unit.conditions.Add(cond.Name, cc);
+				}
+			}
+
+			if (slices != null) {
+				foreach(MetaSlice slice in slices.Values) {
+					unit.AddSlice(slice.Inner, slice.Clone());
+				}
+			}
+			
+			unit.validationProtocol = validationProtocol;
+		}
 	}
 }

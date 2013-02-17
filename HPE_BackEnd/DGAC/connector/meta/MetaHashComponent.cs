@@ -3,6 +3,7 @@
 www.mdcc.ufc.br
 ================================================================*/
 using System.Collections.Generic;
+using System;
 
 namespace br.ufc.pargo.hpe.connector.meta
 {
@@ -96,18 +97,19 @@ namespace br.ufc.pargo.hpe.connector.meta
 			units.Add (unitName, u);
 		}
 
-		/*public MetaHashComponent Clone ()
+		public MetaHashComponent Clone ()
 		{
 			MetaHashComponent c = new MetaHashComponent ();
-			this.Clone (out c);
+			this.Clone (c);
 
 			return c;
 		}
 
-		protected void Clone (out MetaHashComponent c)
+		protected void Clone (MetaHashComponent c)
 		{
 
-			base.Clone (out c);
+			//Console.WriteLine ("[MetaHashComponent.Clone] Base MetaHashComponent...");
+			base.Clone ((MetaHashEntity) c);
 			
 			c.Package = package;
 			c.Kind = kind;
@@ -123,32 +125,40 @@ namespace br.ufc.pargo.hpe.connector.meta
 			if (parameters != null) {
 				c.Parameters = new List<MetaParameter> ();
 				
+				//Para os nossos propósitos, não se deve clonar os parameters.
 				foreach (MetaParameter p in parameters) {
-					//c.Parameters.Add (p.Clone ());
+					c.Parameters.Add (p);
 				}
 			}
 			
 			if (innerComponents != null) {
 				c.InnerComponents = new List<MetaInnerComponent> ();
 				
+				MetaInnerComponent clone;
 				foreach (MetaInnerComponent mic in innerComponents) {
-					c.InnerComponents.Add (mic.Clone ());
+					clone = mic.Clone ();
+					clone.Father = c;
+					c.InnerComponents.Add (clone);
 				}
 			}
 			
 			if (superComponent != null) {
 				c.SuperComponent = superComponent.Clone ();
+				c.SuperComponent.Father = c;
 			}
 
 			if (units != null) {
+				MetaUnit clone;
 				c.Units = new Dictionary<string, MetaUnit>();
 				foreach(string key in units.Keys) {
-					//c.Units.Add (key, units[key].Clone());
+					clone = units[key].Clone();
+					clone.Father = c;
+					c.Units.Add (key, clone);
 				}
 			}
 
 			c.LastIdCode = lastIdCode;
 
-		}*/
+		}
 	}
 }

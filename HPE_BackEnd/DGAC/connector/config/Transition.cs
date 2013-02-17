@@ -98,7 +98,7 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		public override string ToString ()
 		{
-			MetaAction maction = getExecutionAction ().MetaAction;
+			
 			string cname = "";
 			
 			string s = "";
@@ -106,7 +106,8 @@ namespace br.ufc.pargo.hpe.connector.config
 			s += " | initialState: " + initialState;
 			s += " | finalState: " + finalState;
 			s += " | isElse: " + isElse;
-			if (type == TransitionType.SIMPLE && maction != null) {
+			if (type == TransitionType.SIMPLE && getExecutionAction ()!= null && getExecutionAction ().MetaAction != null) {
+			 	MetaAction maction = getExecutionAction ().MetaAction;
 				s += " | action: " + maction.Name;
 				if (maction.Name != null)
 					if(maction.Father.Father.GetType().Name.Equals("MetaInnerComponent")) {
@@ -122,7 +123,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			if (type == TransitionType.SIMPLE && getExecutionAction ().Condition != null) {
 				s += " | condition: " + getExecutionAction ().Condition;
 				
-			}         
+			}      
 			return s;
 		}
 	}

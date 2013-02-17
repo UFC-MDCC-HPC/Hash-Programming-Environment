@@ -1451,7 +1451,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 /* The Worker Object of each computing node */
                 private gov.cca.AbstractFramework[] worker_framework = null;
 		
-		        private gov.cca.AbstractFramework[] WorkerFramework 
+		        public gov.cca.AbstractFramework[] WorkerFramework 
 		        {
 			       get {   
 				           if (worker_framework == null) 

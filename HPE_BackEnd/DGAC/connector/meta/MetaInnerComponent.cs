@@ -4,6 +4,7 @@ www.mdcc.ufc.br
 ================================================================*/
 
 using System.Collections.Generic;
+using System;
 
 namespace br.ufc.pargo.hpe.connector.meta
 {
@@ -31,21 +32,22 @@ namespace br.ufc.pargo.hpe.connector.meta
 			set { exportActions = value;}
 		}
 
-		/*public MetaInnerComponent Clone ()
+		public MetaInnerComponent Clone ()
 		{
+			//Console.WriteLine ("[MetaInnerComponent.Clone] clonando o InnerComponent {0}...", identifier);
 			MetaInnerComponent c = new MetaInnerComponent();
 			Clone (c);
 
 			return c;
 		}
 
-		protected void Clone (out MetaInnerComponent c)
+		protected void Clone (MetaInnerComponent c)
 		{
-			base.Clone (c);
+			base.Clone ((MetaHashComponent) c);
 
 			c.Identifier = identifier;
 			c.Access = access;
 			c.ExportActions = exportActions;
-		}*/
+		}
 	}
 }

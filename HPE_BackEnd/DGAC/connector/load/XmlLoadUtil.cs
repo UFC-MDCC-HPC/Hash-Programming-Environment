@@ -23,14 +23,32 @@ namespace br.ufc.pargo.hpe.connector.load
 		public List<MetaInnerComponent> InnerComponents {
 			set { innerComponents = value;}
 		}
-      
+
+		protected List<MetaInnerComponent> candidateInnerComponents;
+
+		public List<MetaInnerComponent> CandidateInnerComponents {
+			set { candidateInnerComponents = value;}
+		}
+		
+		protected Dictionary<string, MetaSlice> candidateSlices;
+		
+		public Dictionary<string, MetaSlice> CandidateSlices {
+			set {candidateSlices = value;}
+		}
+		
 		protected IdGenerator generator;
 		protected int numStates;
+		public int NumStates {
+			get{return numStates;}
+		}
+		
 		protected int numTransations;
+		public int NumTransations {
+			get {return numTransations;}
+		}
+		
+		protected IUnit the_unit = null;
 
-		private IUnit the_unit = null;
-		      
-		//Construtor recebe os innerComponents do component hash que está sendo carregado.
 		public XmlLoadUtil (IdGenerator generator, IUnit the_unit)
 		{
 			this.the_unit = the_unit;
@@ -123,6 +141,16 @@ namespace br.ufc.pargo.hpe.connector.load
 	               
 						if (innerComponents != null) {
 							foreach (MetaInnerComponent mic in innerComponents) {
+								if (mic.Identifier.Equals (innerNode.InnerText)) {
+									publicInnerList.Add (mic);
+									ok = true;
+									break;
+								}
+							}
+						}
+						
+						if (!ok && candidateInnerComponents != null) {
+							foreach (MetaInnerComponent mic in candidateInnerComponents) {
 								if (mic.Identifier.Equals (innerNode.InnerText)) {
 									publicInnerList.Add (mic);
 									ok = true;
@@ -232,7 +260,13 @@ namespace br.ufc.pargo.hpe.connector.load
 		public Dictionary<string, MetaSlice> getSlices (XmlNodeList sliceNodes)
 		{
 			Dictionary<string, MetaSlice> slices = new Dictionary<string, MetaSlice> ();
-         
+			
+			List<MetaInnerComponent> innerList = new List<MetaInnerComponent>();
+			innerList.AddRange(innerComponents);
+			if(candidateInnerComponents != null) {
+				innerList.AddRange(candidateInnerComponents);
+			}
+
 			if (sliceNodes != null) {
             
 				MetaUnit unit = null;
@@ -260,13 +294,13 @@ namespace br.ufc.pargo.hpe.connector.load
 						index = 0;
 					}
 
-					foreach (MetaInnerComponent comp in innerComponents) {
+					foreach (MetaInnerComponent comp in innerList) {
 						if (comp.Identifier.Equals (innerName)) {
                      
 							if (comp.Units != null) {
 								//TODO deveria usar a indexacao do dictionary. O index pode trazer problemas.
 								foreach (MetaUnit u in comp.Units.Values) {
-									if (u.Name.Equals (unitName) && u.Index.Equals (index)) {
+									if (u.Name.Equals (unitName)/* && u.Index.Equals (index)*/) {
 										unit = u;
 										break;
 									}
@@ -297,7 +331,7 @@ namespace br.ufc.pargo.hpe.connector.load
 					if (slice != null) {
 						slices.Add (innerName, slice);
 					} else {
-						throw new Exception ("Erro ao carregar fatia: Inner component inexistente.");
+						throw new Exception ("Erro ao carregar fatia: Inner component inexistente: " + innerName);
 					}
 				}
 			}
@@ -349,6 +383,7 @@ namespace br.ufc.pargo.hpe.connector.load
 			List<Transition> transitions = new List<Transition> ();
 			Queue<Transition> treat = new Queue<Transition> ();
          
+			//Console.WriteLine("Initial {0} | Final {1} | numStates {2} | numTrans {3}", initial, final, numStates, numTransations);
 			treat.Enqueue (new Transition (initial, final, node, numTransations++));
          
 			Transition t;
@@ -381,7 +416,8 @@ namespace br.ufc.pargo.hpe.connector.load
 
 				guardNode = pivotNode.SelectSingleNode ("guard");
 				condition = null;
-
+				
+				//Console.WriteLine("[XmlLoaderUtil.getTransitions] Ação a avaliar... {0}", pivotNode.Name);
 				if (pivotNode.Name.Equals ("seq") || pivotNode.Name.Equals ("par")) {
 					if (guardNode != null) {
 						condition = getCondition (guardNode);
@@ -470,17 +506,22 @@ namespace br.ufc.pargo.hpe.connector.load
 						}
 					}
 					attr = (XmlAttribute)child.Attributes.GetNamedItem ("slice_id");
+					//Console.WriteLine("[XmlLoaderUtil.getTransitions] Avaliando ação sobre a fatia {0}", attr.Value);
 					string sliceName = "";
 					if (attr != null) {
 						sliceName = attr.Value;
 					}
 
 					string methodName = child.Attributes.GetNamedItem ("action_id").Value;
+					//Console.WriteLine("[XmlLoaderUtil.getTransitions] Avaliando ação {0}", methodName);
 					MetaAction selectedAction = null;
                
 					if (sliceName.Equals ("")) {
-						selectedAction = unit.Actions [methodName];
-
+						//Console.WriteLine("[XmlLoaderUtil.getTransitions] unit {0} | action {1}", unit.Name, methodName);
+						unit.Actions.TryGetValue(methodName, out selectedAction);
+						
+						//Console.WriteLine("[XmlLoaderUtil.getTransitions] Action {0} encontrada? {1}",methodName, selectedAction != null);
+						
 						if (selectedAction == null) {
 							selectedAction = new MetaAction ();
 							selectedAction.Id = generator.genId ();
@@ -489,11 +530,18 @@ namespace br.ufc.pargo.hpe.connector.load
 							unit.AddAction (methodName, selectedAction);
 						}
 					} else {
+						MetaSlice slice = null;
+						//Console.WriteLine("[XmlLoaderUtil.getTransitions] slice {0}", sliceName);
 						
-						MetaSlice slice = unit.Slices [sliceName];
+						unit.Slices.TryGetValue(sliceName, out slice);
+						
+						if(slice == null && candidateSlices != null) {
+							candidateSlices.TryGetValue(sliceName, out slice);
+						}
 
 						if (slice != null) {
-                     
+                     		//Console.WriteLine("[XmlLoaderUtil.getTransitions] slice {0} encontrada", sliceName);
+							
 							if (slice.Unit.Actions != null) {
 								foreach (MetaAction mact in slice.Unit.Actions.Values) {
 									if (mact.Name.Equals (methodName)) {
@@ -523,7 +571,7 @@ namespace br.ufc.pargo.hpe.connector.load
                
 					break;
 				default :
-					throw new Exception ("invalid action. " + pivotNode.Name);
+					throw new Exception ("invalid action: " + pivotNode.Name);
                
 				}
 			}
@@ -541,7 +589,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
 
 			//se for uma transiçao else, retorna null.
-			System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] iniciando...");
+			//System.Console.WriteLine("[XmlLoader.GetCondition] iniciando...");
 			if (node.FirstChild.Name.Equals ("condition")) {
 				if (node.FirstChild.Attributes.GetNamedItem ("cond_id").Equals ("else")) {
 					return null;
@@ -559,11 +607,11 @@ namespace br.ufc.pargo.hpe.connector.load
 			Condition.Operator oper;
 
 			sliceName = condName = null;
-			System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
+			//System.Console.WriteLine("[XmlLoader.GetCondition] avaliando os atributos...");
 			XmlAttribute attr = (XmlAttribute)node.Attributes.GetNamedItem ("not");
 
 			if (attr != null) {
-				System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
+				//System.Console.WriteLine("[XmlLoader.GetCondition] tem not:{0}...", attr.Value);
 				not = attr.Value.Equals ("true");
 			}
 
@@ -572,14 +620,14 @@ namespace br.ufc.pargo.hpe.connector.load
 
 			toTreat.Enqueue (new KeyValuePair<Condition, XmlNodeList> (result, children)); 
      
-			System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] tratamento dos item...");
+			//System.Console.WriteLine("[XmlLoader.GetCondition] tratamento dos item...");
 			while (toTreat.Count > 0) {
 
 				pivot = toTreat.Dequeue ();
 				cenum = pivot.Value.GetEnumerator ();
 
 				while (cenum.MoveNext()) {
-					System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] trandando item...");
+					//System.Console.WriteLine("[XmlLoader.GetCondition] trandando item...");
 					child = (XmlNode)cenum.Current;
 					not = false;
 
@@ -599,10 +647,10 @@ namespace br.ufc.pargo.hpe.connector.load
 
 						if (condName.Equals ("true") || condName.Equals ("false")) {
 							newCond = new Condition (condName.Equals ("true"), false);
-							System.Diagnostics.Debug.WriteLine("[XmlLoader.GetCondition] Condition fixa... [" + condName + "]");
+
 						} else {
 							newCond = new Condition (sliceName, condName, false);
-							System.Diagnostics.Debug.WriteLine("[XmlLoaderUtil.GetCondition] Condition: " + sliceName + "." + condName + "-not:" + not);
+
 						}
 						pivot.Key.Conditions.Add (newCond);
 					} else {

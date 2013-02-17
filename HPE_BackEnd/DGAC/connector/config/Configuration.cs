@@ -56,6 +56,7 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		//Matriz que guarda no primeira dimensão os estados do autômato e na segunda as transicões destes.
 		protected Dictionary<int, Dictionary<int, int>> matrix;
+
 		public Dictionary<int, Dictionary<int, int>> Matrix {
 			get { return matrix;}
 			set { matrix = value;}
@@ -64,6 +65,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		//Array contendo os metadados das ações a ser orquestradas na configuração. Através dessa classe, o Interpretador
 		//conseguirá executar os métodos das ações ou sua configuração.
 		protected List<ExecutionAction> actions;
+
 		public List<ExecutionAction> Actions {
 			get { return actions;}
 			set { actions = value;}
@@ -79,6 +81,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		}
       
 		protected int lastTransationId;
+
 		public int LastTransationId {
 			get { return lastTransationId;}
 			set { lastTransationId = value;}
@@ -86,6 +89,7 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		//Semáforo utilizado pelo ConfigurationManager para suspender a execução individualmente de cada estado.
 		protected Dictionary<int, System.Threading.ManualResetEvent> _resetEvents;
+		public readonly static int MAJOR_RESET_EVENT = -7;
       
 		//Objeto para controlar a condição de corrida das funções que podem sofrer efeitos colaterais durante
 		//o processo de reconfiguração.
@@ -93,6 +97,10 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		//Lista de objetos que monitoram a execução desta configuração.
 		protected List<IMonitor> monitors;
+		public List<IMonitor> Monitors {
+			get {return monitors;}
+		}
+		
 		public IMonitor ReconfigMonitor {
 			get {
 				if (monitors != null) {
@@ -105,6 +113,7 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		//Lista das transições realizadas por esta configuração.
 		protected List<Transition> transitions;
+
 		public List<Transition> Transitions {
 			get { return transitions;}
 			set { transitions = value;}
@@ -112,13 +121,14 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		//Numero de estados do autômato.
 		protected int numStates;
+
 		public int NumStates {
-			get {return numStates;}
-			set {numStates = value;}
+			get { return numStates;}
+			set { numStates = value;}
 		}
 
 		public System.Threading.ManualResetEvent doneEvent {
-			get { return _resetEvents [numStates];}
+			get { return _resetEvents [MAJOR_RESET_EVENT];}
 		}
       
 		//Construtor da configuração, o qual deverá indicar o número de estados.
@@ -133,20 +143,20 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		protected void initialize ()
 		{
-			this.matrix = new Dictionary<int, Dictionary<int, int>>();
-			this.arriving = new Dictionary<int, int>();
-			this.arrivingCount = new Dictionary<int, int>();
-			this.actions = new List<ExecutionAction>();
-			this.transitions = new List<Transition>();
+			this.matrix = new Dictionary<int, Dictionary<int, int>> ();
+			this.arriving = new Dictionary<int, int> ();
+			this.arrivingCount = new Dictionary<int, int> ();
+			this.actions = new List<ExecutionAction> ();
+			this.transitions = new List<Transition> ();
 
-			this._resetEvents = new Dictionary<int, System.Threading.ManualResetEvent>();
-			setResetEvent();
+			this._resetEvents = new Dictionary<int, System.Threading.ManualResetEvent> ();
+			setResetEvent ();
 		}
       
-		public void setResetEvent()
+		public void setResetEvent ()
 		{
 			//TODO na reconfiguração, tratar para ser o mesmo event.			
-			this._resetEvents[numStates] = new System.Threading.ManualResetEvent (false);
+			this._resetEvents [MAJOR_RESET_EVENT] = new System.Threading.ManualResetEvent (false);
 		}
 		
 		public void generateAutomaton (List<Transition> transToAdd)
@@ -161,15 +171,15 @@ namespace br.ufc.pargo.hpe.connector.config
 
 				transitions.Add (t);
 				if (!finStates.Contains (t.FinalState)) {
-					this.arriving[t.FinalState] = 0;
-					this.arrivingCount[t.FinalState] = 0;
+					this.arriving [t.FinalState] = 0;
+					this.arrivingCount [t.FinalState] = 0;
 
 					finStates.Add (t.FinalState);
 				}
 
 				if (!iniStates.Contains (t.InitialState)) {
-					numTransations[t.InitialState] = 0;
-					hasElse[t.InitialState] = false;
+					numTransations [t.InitialState] = 0;
+					hasElse [t.InitialState] = false;
 					matrix [t.InitialState] = new Dictionary<int, int> ();
 
 					iniStates.Add (t.InitialState);
@@ -183,8 +193,8 @@ namespace br.ufc.pargo.hpe.connector.config
 			foreach (Transition t in transToAdd) {
             
 				if (t.Type == Transition.TransitionType.SIMPLE) {
-					System.Diagnostics.Debug.WriteLine (t);
-					if(t.getExecutionAction () != LAMBDA_TRANSITION) {
+					//System.Diagnostics.Debug.WriteLine (t);
+					if (t.getExecutionAction () != LAMBDA_TRANSITION) {
 						actions.Add (t.getExecutionAction ());
 					}
 					numTransations [t.InitialState]++; //usado temporariamente para determinar o número de transições.
@@ -202,17 +212,17 @@ namespace br.ufc.pargo.hpe.connector.config
             
 				if (tran.Type == Transition.TransitionType.SIMPLE) {
                
-					System.Diagnostics.Debug.Write ("tran.InitialState: " + tran.InitialState + " | ");
-					System.Diagnostics.Debug.Write ("tran.FinalState: " + tran.FinalState + " | ");
+					//System.Console.Write ("tran.InitialState: " + tran.InitialState + " | ");
+					//System.Console.Write ("tran.FinalState: " + tran.FinalState + " | ");
                
                
 					if (tran.IsElse) {
 						//Caso seja uma transição ELSE, deverá ocupar a última posição.
 						index = (numTransations [tran.InitialState] - 1);
-						System.Diagnostics.Debug.WriteLine ("numTransitions: " + numTransations [tran.InitialState] + " | ");
+						//System.Console.WriteLine ("numTransitions: " + numTransations [tran.InitialState] + " | ");
                   
 					} else {
-						index = (matrix [tran.InitialState].Values.Count/Configuration.BASE);
+						index = (matrix [tran.InitialState].Values.Count / Configuration.BASE);
 					}
 
 					arriving [tran.FinalState]++;
@@ -227,35 +237,38 @@ namespace br.ufc.pargo.hpe.connector.config
 			foreach (int i in iniStates) {
 
 				if (!hasElse [i]) {
-					matrix [i] [(numTransations [i]*BASE) + RUNNABLE] = NOTHING;
-					matrix [i] [(numTransations [i]*BASE) + TARGET_STATE] = NOTHING;
+					matrix [i] [(numTransations [i] * BASE) + RUNNABLE] = NOTHING;
+					matrix [i] [(numTransations [i] * BASE) + TARGET_STATE] = NOTHING;
 				}
 			}
 			//definindo a matrix do estado final.
-			matrix[FINAL_STATE] = new Dictionary<int, int>();
+			matrix [FINAL_STATE] = new Dictionary<int, int> ();
 			matrix [FINAL_STATE] [RUNNABLE] = END;
 
 			//TODO remover! exibir a matrix
-			System.Diagnostics.Debug.WriteLine ("");
-			System.Diagnostics.Debug.WriteLine ("Exibindo a matrix");
-			string content;
-			for (int b = 0; b < matrix.Count; b++) {
-				content = "linha null";
-				if(matrix.ContainsKey(b)) {
-					for (int l = 0; l < matrix[b].Count; l++) {
-						content = "null";
-						if(matrix [b].ContainsKey(l)) {
-							content = "" + matrix [b] [l];
-						}
-						System.Diagnostics.Debug.Write (content + ", ");
-					}
-				}
-				System.Diagnostics.Debug.WriteLine ("");
-			}
 			
-			System.Diagnostics.Debug.WriteLine ("Actions");
-			foreach(ExecutionAction rj in actions) {
-				System.Diagnostics.Debug.WriteLine("action " + rj.Id + " - " + (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name) + " (" + (rj.MetaAction == null ? 0 : rj.MetaAction.Id) +  ")");
+			if (ConfigurationManager.N) {
+				System.Console.WriteLine ();
+				System.Console.WriteLine ("Exibindo a matrix");
+				string content;
+				for (int b = 0; b < matrix.Count; b++) {
+					content = "linha null";
+					if (matrix.ContainsKey (b)) {
+						for (int l = 0; l < matrix[b].Count; l++) {
+							content = "null";
+							if (matrix [b].ContainsKey (l)) {
+								content = "" + matrix [b] [l];
+							}
+							System.Console.Write (content + ", ");
+						}
+					}
+					System.Console.WriteLine ("");
+				}
+			
+				System.Console.WriteLine ("Actions");
+				foreach (ExecutionAction rj in actions) {
+					System.Console.WriteLine ("action {0} - {1} ({2})", rj.Id, (rj.MetaAction == null ? "null" : rj.MetaAction.Father.Name), (rj.MetaAction == null ? 0 : rj.MetaAction.Id));
+				}
 			}
 			
 		}
@@ -263,19 +276,19 @@ namespace br.ufc.pargo.hpe.connector.config
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public int DecArriving (int i)
 		{
-			return --arrivingCount[i];
+			return --arrivingCount [i];
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void RestartArriving(int i)
+		public void RestartArriving (int i)
 		{
 			//foreach (int j in arriving.Keys)
 			//{
 			//	Console.WriteLine("j={0}, i={1}", j, i);	
 			//}
 			
-			if (i!=INITIAL_STATE)
-				arrivingCount[i] = arriving[i];
+			if (i != INITIAL_STATE)
+				arrivingCount [i] = arriving [i];
 		}
 
 		//Método usado na reconfiguração para para a execução dos estados listados.
@@ -285,7 +298,9 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			lock (thisLock) {      
 				foreach (int s in states) {
-					if (!_resetEvents.ContainsKey(s)) {
+					//TODO cambi pontual.
+					if (s == 4 && !_resetEvents.ContainsKey (s)) {
+						Console.WriteLine ("[Configuration.stopStates] Suspendendo a execução do estado {0}...", s);
 						_resetEvents [s] = new System.Threading.ManualResetEvent (false);
 					}
 				}
@@ -298,7 +313,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			System.Threading.ManualResetEvent result = null;
 
 			lock (thisLock) {
-				_resetEvents.TryGetValue(stateId, out result);
+				_resetEvents.TryGetValue (stateId, out result);
 
 				return result;
 			}
@@ -310,9 +325,11 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			lock (thisLock) {            
 				foreach (int s in states) {
-					if (_resetEvents.ContainsKey(s)) {
+					Console.WriteLine ("[Configuration.runStates] Reiniciando a execução do estado {0}...", s);
+					if (_resetEvents.ContainsKey (s)) {
 						_resetEvents [s].Set ();
-						_resetEvents.Remove(s);
+						_resetEvents.Remove (s);
+						//Console.WriteLine("[Configuration.runStates] Estado {0} reiniciado!", s);
 					}
 				}
 			}
@@ -346,17 +363,14 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			if (monitors == null) {
 				monitors = new List<IMonitor> ();
-        monitors.Add (monitor);
-        } else {
-			 monitors[0].ClearEvents();
-        }
+			}
+			monitors.Add (monitor);
 		}
-      
 
 		public Transition getTransition (string point)
 		{
 			foreach (Transition t in transitions) {
-				if(t.Ids.Contains(point)) {
+				if (t.Ids.Contains (point)) {
 					return t;
 				}
 			}

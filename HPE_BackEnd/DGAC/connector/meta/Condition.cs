@@ -50,7 +50,11 @@ namespace br.ufc.pargo.hpe.connector.meta
 		public List<Condition> Conditions {
 			get{ return conditions;}
 		}
-
+		
+		protected Condition() {
+		
+		}
+		
 		public Condition (string slice, string cond, bool not)
 		{
 			this.slice = slice;
@@ -120,6 +124,32 @@ namespace br.ufc.pargo.hpe.connector.meta
 			}
 			
 			return s;
+		}
+		
+		public Condition Clone() {
+			//Console.WriteLine ("[Condition.Clone] clonando o condition {0}...", cond);
+			Condition clone = new Condition();
+			
+			Clone (clone);
+			
+			return clone;
+		}
+		
+		public void Clone(Condition clone) {
+			
+			//Console.WriteLine ("[Condition.Clone] Base Condition...");
+			clone.slice = slice;
+			clone.cond = cond;
+			clone.oper = oper;
+			clone.not = not;
+			clone.fixedValue = fixedValue;
+			
+			if(conditions != null) {
+				clone.conditions = new List<Condition>();	
+				foreach(Condition c in conditions) {
+					clone.conditions.Add (c.Clone());
+				}
+			}
 		}
 	}
 }

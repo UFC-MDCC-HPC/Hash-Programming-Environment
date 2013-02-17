@@ -55,7 +55,8 @@ namespace br.ufc.pargo.hpe.connector.run
 
 			//artifício para suspender a execução do estado nos casos de reconfiguração.
 			ManualResetEvent resetEvent = protocol.getResetEvent (stateId);
-			//System.Diagnostics.Debug.WriteLine ("[StateControl.Go] STATE: " + stateId);
+			if(ConfigurationManager.N)
+				//System.Diagnostics.Debug.WriteLine ("[StateControl.Go] STATE: " + stateId);
 
 			if (resetEvent != null) {
 				System.Diagnostics.Debug.WriteLine("[StateControl.Go] DORMIU: estado " + stateId);

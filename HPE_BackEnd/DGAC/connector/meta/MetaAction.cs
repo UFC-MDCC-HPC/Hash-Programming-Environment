@@ -52,15 +52,40 @@ namespace br.ufc.pargo.hpe.connector.meta {
 				if(runnable == null)
 					runnable = (MetaAction.DAction)Delegate.CreateDelegate (typeof(MetaAction.DAction), Father.Entity, Name);
 				
-			//System.Diagnostics.Debug.WriteLine("[MetaAction.Run] RUNNING {0} - {1} - Runnable is Null: {2}", this.Name, this.Father.Name, (runnable == null));
+			//Console.WriteLine("[MetaAction.Run] RUNNING {0}.{1}", this.Father.Name, this.Name);
             runnable(); //chamada da função via delegate.
-			//System.Diagnostics.Debug.WriteLine("[MetaAction.Run] FINALIZED {0} - {1}", this.Name, this.Father.Name);
          } else {
-			//System.Diagnostics.Debug.WriteLine("[MetaAction.Run] RUNNING FROM CONNECTOR {0} - {1}", this.Name, this.Father.Name);
             ((IConnectorImpl) father.Entity).perform_action(Name);
-            //TODO Solucao para manter no mesmo ConfigurationManager suspensa.
+            
+			//TODO Solucao para manter no mesmo ConfigurationManager suspensa.
             //WaitHandle.WaitAll(new ManualResetEvent[] {protocol.doneEvent}); 
          }
       }
+		
+		public MetaAction Clone() {
+			MetaAction action = new MetaAction();
+			//Console.WriteLine ("[MetaAction.Clone] clonando a MetaAction {0}...", Name);
+			Clone (action);
+			
+			return action;
+		}
+		
+		public void Clone(MetaAction action) {
+			
+			//Console.WriteLine ("[MetaAction.Clone] Base MetaAction... {0}", action == null);
+			//base.Clone(action);
+			
+			if(references != null) {
+				action.references = new List<string>();
+				
+				foreach(string s in references) {
+					action.references.Add(s);
+				}
+			}
+				
+			action.Name = Name;
+			action.Protocol = Protocol;
+			//Console.WriteLine ("[MetaAction.Clone] Fim Base MetaAction...");
+		}
    }   
 }

@@ -3,7 +3,6 @@
 www.mdcc.ufc.br
 ================================================================*/
 
-//using HPE.Port;
 using br.ufc.pargo.hpe.connector.meta;
 using br.ufc.pargo.hpe.connector.load;
 using br.ufc.pargo.hpe.connector.run;
@@ -14,8 +13,15 @@ using System;
 using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+
 using br.ufc.pargo.hpe.connector;
 using br.ufc.pargo.hpe.basic;
+
+using gov.cca;
+using gov.cca.ports;
+
+using br.ufc.pargo.hpe.backend.DGAC;
 
 namespace br.ufc.pargo.hpe.connector.config
 {
@@ -24,15 +30,22 @@ namespace br.ufc.pargo.hpe.connector.config
    e aplicação de reconfigurações dinâmicas.
    
    Tem o seu funcinamento vinculado a um WorkObject.*/
-	public class ConfigurationManager : IConfigurationManager, IObserver
+	public class ConfigurationManager : MarshalByRefObject, IConfigurationManager, IObserver
 	{
       
 		protected XmlLoader loader;
 		//protected int index;
+		protected string unitName;
 		protected MetaHashComponent application;
 
 		//Unit principal a ser executada no nó.
 		protected MetaUnit unit = null;
+		
+		//teste reconfiguration
+		protected bool ready = false;
+		public bool Ready {
+			get {return ready;}
+		}
 
 		public MetaUnit Unit {
 			get { return unit;}
@@ -46,6 +59,7 @@ namespace br.ufc.pargo.hpe.connector.config
       
 		//Semaforo para realizar a espera de um estado viável para a reconfiguração.
 		protected System.Threading.ManualResetEvent resetEvent;
+	
 		private Object thisLock = new Object ();
 		protected bool reconfiguring;
 
@@ -58,6 +72,9 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		private IUnit the_unit = null;
 		
+		public readonly static float DEFAULT_TIME_OUT = 5000;
+		
+		public static bool N; 
 		public ConfigurationManager(IUnit the_unit)
 		{
 			this.the_unit = the_unit;
@@ -67,6 +84,8 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			//TODO depois de finalizar a execução, tirar dessa lista.
 			interpreters = new List<IInterpreter> ();
+			
+			ThreadPool.SetMinThreads(6, 6);
          
 		}
       
@@ -75,24 +94,28 @@ namespace br.ufc.pargo.hpe.connector.config
 			this.loader = new XmlLoader (the_unit);
 			
 			this.application = loader.loadComponent (xml);
-
-			string unitName = the_unit.Id_unit;
+         
+			this.unitName = the_unit.Id_unit;
+			//this.index = the_unit.PartitionIndex;
 			
 			foreach (MetaUnit u in application.Units.Values) 
 			{
-				Console.WriteLine("[ConfigurationManager.LoadComponent] u.Name="+ u.Name + ", this.unitName="+ unitName);
-				if (u.Name.Equals (unitName)) {
+				//Console.WriteLine("[ConfigurationManager.LoadComponent] Unit {0}", the_unit.CID.getInstanceName);
+				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
-					foreach(MetaSlice s in u.Slices.Values) {
-						Console.WriteLine("Slice: " + s.Inner);
-					}
+					//u.Index = this.index;
 					break;
 				}
 			}
          
 			if (this.unit == null) {
-				throw new Exception ("Unit not found. Name: " + unitName /*+ " | Index: " + index*/);
+				throw new Exception ("Unit not found. Name: " + unitName);
 			}
+			
+			ready = true;
+			Console.WriteLine("[ConfigurationManager.LoadComponent] Unidade {0} carregada e apta para execução.", the_unit.CID.getInstanceName());
+			N = the_unit.CID.getInstanceName().Equals ("app.adi_solver3D-adi");
+			
 		}
       
 		public void Run ()
@@ -104,7 +127,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Run (string actionName)
 		{
-			System.Diagnostics.Debug.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
+			//System.Diagnostics.Debug.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
 			MetaAction action = null;
          
 			if (unit != null && unit.Entity != null) {
@@ -125,22 +148,40 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		public void Run (MetaAction action)
 		{
-			action.Protocol.AddMonitor (new br.ufc.pargo.hpe.connector.monitoring.Monitor ());
-         
+         	if(action.Protocol.Monitors == null || action.Protocol.Monitors.Count == 0) {
+				br.ufc.pargo.hpe.connector.monitoring.Monitor monitor = new br.ufc.pargo.hpe.connector.monitoring.Monitor ();
+				monitor.Add(this);
+				
+				action.Protocol.AddMonitor (monitor);
+			}
+			
 			Interpreter interpreter = new Interpreter (action);
 			interpreters.Add (interpreter);
+			
 			interpreter.Go ();
 		}
 
 		public bool EvaluateReconfiguration (string xmlRequest)
 		{
+			Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Iniciando avaliação da reconfiguração...");
 			ReconfigurationRequest r = loader.loadRequest (xmlRequest, application);
+			
+			if(r.StructuralRequest != null) {
+				Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Identificando os componentes impactos...");	
+				r.StructuralRequest.GenerateChanges(application);
+			}
 
-			return EvaluateReconfiguration (r);
+			//Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Requisição construída a partir do arquivo: " + xmlRequest);
+			bool result = EvaluateReconfiguration(r); 
+			
+			Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliação Concluída!");
+			Console.WriteLine("");
+			return result;
 		}
 
 		public bool EvaluateReconfiguration (ReconfigurationRequest request)
 		{
+			//Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliando a reconfiguração");
 			lock (thisLock) {
 				if (!reconfiguring) {
                
@@ -162,13 +203,23 @@ namespace br.ufc.pargo.hpe.connector.config
 						" Esta deverá ser confirmada ou cancelada antes de nova submissão.");
 				}
 			}
+			//Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliação Finalizada");
 		}
-      
-		//TODO MEDIO indexar as actions pelo nome;
+		
+		/*public bool CommitReconfiguration ()
+		{
+			Thread commit = new Thread(new ThreadStart(Commit));
+			commit.Priority = ThreadPriority.Highest;
+			commit.Start();
+			
+			return true;
+		}*/
+	
 		public bool CommitReconfiguration ()
 		{
 			Configuration protocol;
          
+			Console.WriteLine("[ConfigurationManager.Commit] Aplicando a reconfiguração...");
 			lock (thisLock) {
 				if (reconfiguring) {
                
@@ -177,10 +228,16 @@ namespace br.ufc.pargo.hpe.connector.config
 						protocol = unit.Actions [es.ActionName].Protocol;
 						protocol.stopStates (es.StatesToStop);
 						WaitForSafeState (protocol.ReconfigMonitor, es);
-
+						Console.WriteLine("[ConfigurationManager.Commit] Estado seguro para reconfiguração!");
+						
 						if (request.StructuralRequest != null && request.StructuralRequest.Changes != null) {
+							Console.WriteLine("[ConfigurationManager.Commit] Aplicando reconfigurações estruturais...");
 							foreach (StructuralChange sc in request.StructuralRequest.Changes) {
-								//TODO reconManager.SubstituteUnit(sc.Old, sc.New);
+								if(SecurityAnalyzer.isChangeConcrete(sc)) {
+									Console.WriteLine("[ConfigurationManager.Commit] Reconfigurando a unidade {0}", sc.Old.Name);
+									createConcreteUnit(sc.New, ((IUnit)sc.Old.Entity).CID.getInstanceName() /*+ "(new)"*/);
+									SubstituteUnit(sc.Old, sc.New);
+								}
 							}
 						}
 						BehavioralReconfigurationRequest behavioralRequest = request.BehavioralRequest;
@@ -190,8 +247,11 @@ namespace br.ufc.pargo.hpe.connector.config
 							foreach (BehavioralChange bc in behavioralRequest.Changes) {
 											
 								if (bc.NewSlices != null) {
+									//Console.WriteLine("[ConfigurationManager.Commit] Adicionando novas fatias");
 									foreach (MetaSlice slice in bc.NewSlices.Values) {
-										if (unit.Slices [slice.Inner] == null) {
+										if (!unit.Slices.ContainsKey(slice.Inner)) {
+											Console.WriteLine("[ConfigurationManager.Commit] Adicionando fatia '{0}'...", slice.Inner);
+											createConcreteUnit(slice.Unit, slice.Inner /*+ "(new)"*/);
 											unit.AddSlice (slice.Inner, slice);
 										}
 									}
@@ -215,13 +275,15 @@ namespace br.ufc.pargo.hpe.connector.config
 					this.reconfiguring = false;
 					this.evaluations = null;
 					this.request = null;
+					
+					Console.WriteLine("[ConfigurationManager.Commit] Reconfiguração aplicada!");
+					
 					return true;
 				}
 			}
 			return false;
 		}
       
-		//TODO usar um locker para os três métodos. Cancel, Commit, Evaluate.
 		public void CancelReconfiguration ()
 		{
 			lock (thisLock) {         
@@ -237,21 +299,24 @@ namespace br.ufc.pargo.hpe.connector.config
          
 			//System.System.Diagnostics.Debug.WriteLine(es.ToString());
 			if (es.CriticalActions != null) {
+				Console.WriteLine("[ConfigurationManager.WaitForSafeState] Aguardando estado seguro...");
 				waiting = monitor.isRunning (es.CriticalActions);
 				while (waiting) {
                
-					//TODO BAIXO: resolver essa marmota de ter que criar um array.
+					Console.WriteLine("[ConfigurationManager.WaitForSafeState] esperando...");
 					System.Threading.WaitHandle.WaitAll (new System.Threading.ManualResetEvent[] {resetEvent});
 					waiting = monitor.isRunning (es.CriticalActions); 
 				}
 			}
-         
+			Console.WriteLine("[ConfigurationManager.WaitForSafeState] Estados críticos OK...");
+			
 			if (es.CriticalIntervals != null) {
+				//Console.WriteLine("[ConfigurationManager.WaitForSafeState] Esperando intervalos críticos...");
 				foreach (Interval interval in es.CriticalIntervals) {
                
 					waiting = monitor.isRunning (interval.InitialState, interval.FinalState);
 					while (waiting) {
-                  
+                  		Console.WriteLine("[ConfigurationManager.WaitForSafeState] Esperando intervalos {0} - {1}", interval.InitialState, interval.FinalState);
 						System.Threading.WaitHandle.WaitAll (new System.Threading.ManualResetEvent[] {resetEvent});
 						waiting = monitor.isRunning (interval.InitialState, interval.FinalState);
 					}
@@ -264,13 +329,26 @@ namespace br.ufc.pargo.hpe.connector.config
 		public void Notify ()
 		{
 			if (waiting) {
-				resetEvent.Set ();
+				System.Threading.ManualResetEvent temp = resetEvent;
+				resetEvent = new System.Threading.ManualResetEvent (false);
+				
+				temp.Set ();
 			}
 		}
 
 		public void PersistConfiguration ()
 		{
          
+		}
+		
+		protected void SubstituteUnit(MetaUnit uOld, MetaUnit uNew)
+		{
+
+		}
+
+		protected void createConcreteUnit(MetaUnit metaUnit, string instanceName)
+		{
+
 		}
 	}
 }

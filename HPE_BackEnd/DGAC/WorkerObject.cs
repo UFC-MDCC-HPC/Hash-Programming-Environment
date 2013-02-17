@@ -31,7 +31,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		#region Tables
 		
 		private IDictionary<string, br.ufc.pargo.hpe.basic.IUnit> unitInstances = new Dictionary<string, br.ufc.pargo.hpe.basic.IUnit>();
+		public IDictionary<string, br.ufc.pargo.hpe.basic.IUnit> UnitInstances {
+			get {return unitInstances;}
+		}
+		
 		private IDictionary<string, ComponentID> componentIDs = new Dictionary<string, ComponentID>();
+		public IDictionary<string, ComponentID> ComponentIDs {
+			get {return componentIDs;}
+		}
+		
 		private IDictionary<ComponentID, TypeMap> unitProperties = new Dictionary<ComponentID, TypeMap>();
 
         private IDictionary<string, IList<string>> providesPortNames = new Dictionary<string, IList<string>>();
@@ -845,6 +853,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void releasePort(string portName)
         {
+
             if (!usesPortNamesInv.ContainsKey(portName))
             {
 				System.Diagnostics.Debug.WriteLine("Port {0} not defined. It cannot be released.", portName);
@@ -856,6 +865,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
 
             port_manager.addPortRelease(portName);
+
         }
 
 

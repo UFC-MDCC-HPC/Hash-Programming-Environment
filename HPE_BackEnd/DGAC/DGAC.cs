@@ -22,6 +22,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Threading;
 using System.Runtime.CompilerServices;
 
+using br.ufc.pargo.hpe.connector.load;
 namespace br.ufc.pargo.hpe.backend
 {
 
@@ -32,6 +33,11 @@ namespace br.ufc.pargo.hpe.backend
         {
 
             public static WorkerObject worker_framework = null;
+			
+			private ManagerObject manager;
+			public ManagerObject Manager {
+				get {return manager;}
+			}
 
             private IpcClientChannel ch = null;
 
@@ -427,6 +433,7 @@ namespace br.ufc.pargo.hpe.backend
                     TypeMapImpl properties = new TypeMapImpl();					
 					
                     gov.cca.AbstractFramework frw = getFrameworkInstance();
+					manager = (ManagerObject) frw;
 					
 					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
 				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
@@ -440,6 +447,7 @@ namespace br.ufc.pargo.hpe.backend
 					ManagerComponentID app_cid = (ManagerComponentID) createApplicationInstance (instantiatior_string, session_id_string, bsPort, frwServices, (ManagerObject) frw);
 					
 					
+					System.Console.WriteLine("INSTANTIATIOR STRING: " + instantiatior_string);
 					
 					System.Diagnostics.Debug.WriteLine("Connecting to the GoPort of the application");
 					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
@@ -1179,6 +1187,11 @@ namespace br.ufc.pargo.hpe.backend
 								
 			#region RESOLUTION_AT_MANAGER
 			
+			public static ComponentID reconfigureComponentContext(string xml)
+			{
+				//TODO
+				return null;
+			}
 			public static ComponentID reconfigureComponentContext
 													   (ManagerComponentID cid,
 				 										string parameter_id,

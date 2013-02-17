@@ -6,6 +6,7 @@ using br.ufc.pargo.hpe.connector.meta;
 using br.ufc.pargo.hpe.connector.config;
 
 using System.Collections.Generic;
+using System;
 
 namespace br.ufc.pargo.hpe.connector.reconfig
 {
@@ -24,7 +25,6 @@ namespace br.ufc.pargo.hpe.connector.reconfig
       
       */
 
-		//TODO restringir a avaliação das unidades que NÃO são nativas. 
 		public static List<ExecutionStateEvaluation> Evaluate (ReconfigurationRequest request, MetaUnit unit)
 		{
 			List<ExecutionStateEvaluation> result = new List<ExecutionStateEvaluation> ();
@@ -40,73 +40,96 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 			bool find;
          
 			foreach (MetaAction action in unit.Actions.Values) {
+				System.Console.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando a ação: " + action.Father.Name + "." + action.Name);
 				criticalActions = new List<int> ();
 				statesToStop = new List<int> ();
             
 				protocol = action.Protocol;
+				if (protocol == null) {
+					System.Console.WriteLine ("[SecurityAnalyzer.Evaluate] Protocolo nulo");
+					continue;
+				}
 				find = false;
             
 				if (request.StructuralRequest != null) {
 					foreach (StructuralChange change in request.StructuralRequest.Changes) {
+						
 						oldUnit = change.Old;
-               
-						/*Verifica:
+						//System.Console.WriteLine ("[SecurityAnalyzer.Evaluate] Mudança estrutural: " + oldUnit.Name);
+						if (isChangeConcrete (change)) {
+						
+							/*Verifica:
                 	1- se a ação faz parte da unidade a ser removida;
                		2- se a ação faz parte da unidade que possúi uma fatia (em qualquer nível) a ser removida;
                		*/
-						for (int i=0; i< protocol.Actions.Count; i++) {
-							usingAction = protocol.Actions [i].MetaAction;
-							usingSlices.Enqueue ((MetaUnit)usingAction.Father);
+							for (int i=0; i< protocol.Actions.Count; i++) {
+								usingAction = protocol.Actions [i].MetaAction;
+								//Console.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando a ação de indice {0}", i);
+								
+								if (usingAction != null && usingAction.Father != null) {
+									usingSlices.Enqueue ((MetaUnit)usingAction.Father);
                   
-							while (!find && usingSlices.Count > 0) {
-								usingUnit = usingSlices.Dequeue ();
+									while (!find && usingSlices.Count > 0) {
+										usingUnit = usingSlices.Dequeue ();
                      
-								if (usingUnit.Id == oldUnit.Id) {
-									find = true;
-								} else {
-									if (usingUnit.Slices != null && usingUnit.Slices.Count > 0) {
-										foreach (MetaSlice ms in usingUnit.Slices.Values) {
-											usingSlices.Enqueue (ms.Unit);
+										if (usingUnit.Id == oldUnit.Id) {
+											find = true;
+										} else {
+											if (usingUnit.Slices != null && usingUnit.Slices.Count > 0) {
+												foreach (MetaSlice ms in usingUnit.Slices.Values) {
+													//Console.WriteLine ("Using Slice {0}", ms.Unit.Name);
+													usingSlices.Enqueue (ms.Unit);
+												}
+											}
 										}
 									}
 								}
-							}
-							usingSlices.Clear ();
-                  
-							//Se esta ação pertence ou tem com fatia a unidade a ser removida, lista quais as transições onde ela está presente.
-							if (find) {
-                     
-								criticalActions.Add (usingAction.Id);
-                     
-								for (int j = 0; j < protocol.Matrix.Count; j++) {
-									for (int k = 0; k < protocol.Matrix[j].Count/Configuration.BASE; k++) {
-										if (protocol.Matrix [j] [k * Configuration.BASE] == i) {
-											statesToStop.Add (j);
+								usingSlices.Clear ();
+                  				
+								//Se esta ação pertence ou tem com fatia a unidade a ser removida, lista quais as transições onde ela está presente.
+								if (find) {
+
+									criticalActions.Add (usingAction.Id);
+                     				
+									for (int j = 0; j < protocol.Matrix.Count; j++) {
+										for (int k = 0; k < protocol.Matrix[j].Count/Configuration.BASE; k++) {
+											if (protocol.Matrix [j] [k * Configuration.BASE] == i) {
+												statesToStop.Add (j);
+											}
 										}
 									}
 								}
+								
+								find = false;
 							}
 						}
+						
 					}
 				}
+
 				intervals = new List<Interval> ();
             
 				BehavioralReconfigurationRequest behavioralRequest = request.BehavioralRequest;
-
-				foreach (BehavioralChange change in behavioralRequest.Changes) {
+				
+				if (behavioralRequest != null && behavioralRequest.Changes != null) {
+					System.Console.WriteLine ("[SecurityAnalyzer.Evaluate] Avaliando as reconfigurações comportamentais...");
+					foreach (BehavioralChange change in behavioralRequest.Changes) {
                   
-					if (unit.Name.Equals (change.Unit) && action.Name.Equals (change.Action)) {
-						foreach (Transition transition in protocol.Transitions) {
-							if (transition.Ids.Contains (change.Point)) {
-								statesToStop.Add (transition.InitialState);
-								intervals.Add (new Interval (transition.InitialState, transition.FinalState));
+						if (unit.Name.Equals (change.Unit) && action.Name.Equals (change.Action)) {
+							foreach (Transition transition in protocol.Transitions) {
+								if (transition.Ids.Contains (change.Point)) {
+									statesToStop.Add (transition.InitialState);
+									//Rever as paradas de intervalos. Ações simples não funciona.
+									//intervals.Add (new Interval (transition.InitialState, transition.FinalState));
                            
-								break;
+									break;
+								}
 							}
 						}
 					}
 				}
             
+				System.Console.WriteLine ("[SecurityAnalyzer.Evaluate] Definindo os estados críticos...");
 				if (statesToStop.Count > 0) {
 					result.Add (new ExecutionStateEvaluation (action.Name, criticalActions, statesToStop, intervals));
 				}
@@ -129,6 +152,22 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 			}
          
 			return true;
+		}
+		
+		public static void condenseEvaluation() {
+			//List<ExecutionStateEvaluation> evaluations, MetaUnit unit
+		}
+
+		public static bool isChangeConcrete (StructuralChange change)
+		{
+			if (change.Old.Name.Equals ("solve")) {
+				return true;
+			} else {
+				System.Console.WriteLine ("[SecurityAnalyzer.IsChangeConcrete] Parametros" +
+				                          " não definem novo componente concreto para '{0}'!",
+				                          ((MetaInnerComponent)change.Old.Father).Identifier);
+				return false;
+			}
 		}
 	}
 }

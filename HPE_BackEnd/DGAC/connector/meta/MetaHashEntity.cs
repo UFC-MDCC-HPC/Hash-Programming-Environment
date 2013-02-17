@@ -48,13 +48,14 @@ namespace br.ufc.pargo.hpe.connector.meta
 			set { father = value;}
 		}
 
-		/*protected void Clone(out MetaHashEntity entity)
+		protected void Clone(MetaHashEntity entity)
 		{
-			entity.Id = id;
+			//Console.WriteLine ("[MetaHashEntity.Clone] Base MetaHashEntity...");
+			//entity.Id = id;
 			entity.Name = name;
-			entity.Entity = this.entity;
-			entity.Father = father;
+			//entity.Entity = this.entity;
+			//entity.Father = father;
 			//TODO listar este objecto como um filho.
-		}*/
+		}
 	}
 }
