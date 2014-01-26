@@ -73,7 +73,7 @@ public class FuseComponentsAction extends SelectionAction {
 			if (c0.isPublic() != c0_.isPublic()) return false;
 			// if (!c.getName2().equals(c_.getName2())) return false;
 	        
-	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c_, c)) return false;
+	        if (!HComponent.checkConsistencyOfUnitsInSuperseding(c0_, c0)) return false;
 	        
 	        if (!HComponent.checkConsistencyOfCardinalityInSuperseding(c_,c)) return false;
 			
