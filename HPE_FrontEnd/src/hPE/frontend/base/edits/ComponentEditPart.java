@@ -70,8 +70,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 	}
 	
 	protected void refreshVisuals() 
-	{
-		
+	{		
 		ModelType component_ = (ModelType) getModel();
 		HComponent component = (HComponent) (component_.getSupplier() == null ? component_ : component_.getSupplier()); 
 		FigureType component_figure = (FigureType) getFigure();
@@ -111,7 +110,11 @@ public class ComponentEditPart<ModelType extends HComponent,
 		
 		component_figure.setPort(!component_.isDirectSonOfTheTopConfiguration());
         component_figure.setBounds(calculateBounds(component_));
-        component_figure.setName(component_.getRef() + (component.hasFreeVariables() ? " [?]" : ""));
+        
+//        List<HComponent> cInnerTop = component_.getTopParentConfigurations();
+//        String originRef = cInnerTop.size() > 0 ? cInnerTop.get(0).getRef() + "$" + component_.getSavedName(): "";
+        
+        component_figure.setName(component_.getRef() + (component.hasFreeVariables() ? " [?]" : "") /*+ "+++" + originRef*/);
 		component_figure.setToolTip(ff);
         component_figure.setRecursive(component_.isRecursive());
         component_figure.setBackgroundColor(component_.getColor());

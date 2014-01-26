@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/HashComponent"
+	xmlns:tns="http://www.example.org/HashComponent">
+	<element name="component" type="tns:ComponentType"></element>
+
+	<complexType name="ComponentBodyType">
+        <annotation>
+        	<documentation>
+        		The elements are in the "workflow order" ...
+        	</documentation>
+        </annotation>
+        <choice maxOccurs="unbounded" minOccurs="0">
+        	<element name="innerComponent"
+        		type="tns:InnerComponentType">
+        	</element>
+        	<element name="parameter" type="tns:ParameterType"></element>
+        	<element name="supplyParameter"
+        		type="tns:ParameterSupplyType">
+        	</element>
+
+
+        	<element name="innerRenaming"
+        		type="tns:InnerRenamingType">
+        	</element>
+        	<element name="fusion" type="tns:FusionType"></element>
+        	<element name="split" type="tns:SplitType"></element>
+        	<element name="recursiveEntry"
+        		type="tns:RecursiveEntryType">
+        	</element>
+
+        	<element name="interface" type="tns:InterfaceType"></element>
+        	<element name="unit" type="tns:UnitType"></element>
+
+
+
+
+        	<element name="enumerator" type="tns:EnumeratorType">
+        	</element>
+
+
+
+
+        	<element name="fusionsOfReplicators"
+        		type="tns:FusionsOfReplicatorsType">
+        	</element>
+
+        </choice>
+	</complexType>
+
+	<complexType name="UnitType">
+		<sequence>
+			<element name="super" type="tns:UnitRefType" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="slices" maxOccurs="unbounded" minOccurs="0"
+				type="tns:UnitSliceType">
+			</element>
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes">
+			</element>
+		</sequence>
+		<attribute name="uRef" type="string" use="required"></attribute>
+		<attribute name="iRef" type="string" use="required"></attribute>
+		<attribute name="private" type="boolean"></attribute>
+		<attribute name="visibleInterface" type="boolean" use="optional"
+			default="true">
+		</attribute>
+		<attribute name="multiple" type="boolean" use="optional"></attribute>
+		<attribute name="replica" type="int" use="optional"></attribute>
+	</complexType>
+
+	<complexType name="InterfaceType">
+		<sequence>
+			<element name="slice" maxOccurs="unbounded" minOccurs="0"
+				type="tns:InterfaceSliceType">
+			</element>
+			<element name="protocol" type="tns:ActionType" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="sources" maxOccurs="unbounded" minOccurs="0"
+				type="tns:SourceType">
+			</element>
+
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes">
+			</element>
+			<element name="port" type="tns:InterfacePortType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="externalReferences" type="string"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="parameter" type="tns:InterfaceParameterType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="action" type="tns:ActionType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="condition" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+		<attribute name="iRef" type="string" use="required"></attribute>
+		<attribute name="nArgs" type="int"></attribute>
+	</complexType>
+	<complexType name="SourceType">
+		<sequence>
+			<element name="file" type="tns:SourceFileType" maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+		<attribute name="versionId" type="ID" use="optional"></attribute>
+		<attribute name="sourceType" type="string" use="optional"></attribute>
+	</complexType>
+
+	<complexType name="ComponentInUseType">
+		<sequence>
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes">
+			</element>
+			<element name="parameter" type="tns:ParameterRenaming"
+				maxOccurs="unbounded" minOccurs="0">
+
+			</element>
+
+
+			<element name="port" type="tns:InnerComponentType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+
+			<element name="unitBounds" type="tns:UnitBoundsType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="version" type="ID" use="optional"></attribute>
+		<attribute name="location" type="anyURI" use="required"></attribute>
+		<attribute name="localRef" type="string"></attribute>
+
+		<attribute name="hash_component_UID" type="string"></attribute>
+		<attribute name="parameter_id" type="string"></attribute>
+		<attribute name="package" type="string"></attribute>
+		<attribute name="multiple" type="boolean" use="optional"></attribute>
+	</complexType>
+
+	<simpleType name="SupportedKinds">
+		<restriction base="string">
+			<enumeration value="Data"></enumeration>
+			<enumeration value="Computation"></enumeration>
+			<enumeration value="Synchronizer"></enumeration>
+			<enumeration value="Platform"></enumeration>
+			<enumeration value="Environment"></enumeration>
+			<enumeration value="Qualifier"></enumeration>
+			<enumeration value="Application"></enumeration>
+			<enumeration value="Enumerator"></enumeration>
+			<enumeration value="Facet"></enumeration>
+			<enumeration value="Domain"></enumeration>
+			<enumeration value="Topology"></enumeration>
+			<enumeration value="value"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<complexType name="VisualElementAttributes">
+		<sequence>
+			<element name="color" type="tns:ColorComplexType" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+		<attribute name="x" type="unsignedInt" use="required"></attribute>
+		<attribute name="y" type="unsignedInt" use="required"></attribute>
+		<attribute name="w" type="unsignedInt" use="required"></attribute>
+		<attribute name="h" type="unsignedInt" use="required"></attribute>
+	</complexType>
+
+	<complexType name="ParameterType">
+		<sequence>
+		</sequence>
+		<attribute name="formFieldId" type="string" use="required"></attribute>
+		<attribute name="componentRef" type="string" use="required"></attribute>
+		<attribute name="varName" type="string"></attribute>
+	</complexType>
+	<complexType name="ComponentType">
+		<sequence>
+			<element name="header" type="tns:ComponentHeaderType">
+			</element>
+			<element name="componentInfo"
+				type="tns:ComponentBodyType">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="RecursiveEntryType">
+		<sequence>
+			</sequence>
+		<attribute name="cRef" type="string" use="optional"></attribute>
+	</complexType>
+	<complexType name="EnumeratorType">
+		<sequence>
+			<element name="originRef" maxOccurs="unbounded"
+				minOccurs="0" type="string">
+			</element>
+			<element name="links" type="tns:EnumerableType"
+				maxOccurs="unbounded" minOccurs="1">
+			</element>
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes">
+			</element>
+
+			<element name="fromRecursion"
+				type="tns:EnumeratorFromRecursionType" maxOccurs="1"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="ref" type="string" use="required"></attribute>
+		<attribute name="varId" type="string" use="optional"
+			default="*">
+		</attribute>
+		<attribute name="cardinality" type="int" use="optional"></attribute>
+		<attribute name="fromSplit" type="boolean" use="required"></attribute>
+
+	</complexType>
+	<complexType name="UnitRefType">
+		<sequence>
+			</sequence>
+		<attribute name="cRef" type="string" use="optional" default="this"></attribute>
+		<attribute name="uRef" type="string" use="required"></attribute>
+		<attribute name="replica" type="int" use="optional" default="0"></attribute>
+	</complexType>
+	<complexType name="InterfaceSliceRefType">
+		<sequence>
+			</sequence>
+		<attribute name="componentRef" type="string" use="optional" default="this"></attribute>
+		<attribute name="interfaceRef" type="string" use="required"></attribute>
+		<attribute name="sliceRef" type="string" use="optional"></attribute>
+	</complexType>
+	<complexType name="ParameterSupplyType">
+		<sequence minOccurs="1" maxOccurs="1">
+			</sequence>
+		<attribute name="varName" type="string" use="required"></attribute>
+		<attribute name="cRef" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="EnumeratorRefType">
+		<sequence>
+			</sequence>
+		<attribute name="cRef" type="string" use="required">
+		</attribute>
+	</complexType>
+	<complexType name="ComponentHeaderType">
+		<sequence minOccurs="1" maxOccurs="1">
+			<element name="baseType" type="tns:BaseTypeType"
+				maxOccurs="1" minOccurs="0">
+			</element>
+
+			<element name="versions" type="tns:VersionType"
+				maxOccurs="unbounded" minOccurs="1">
+			</element>
+			<element name="visualAttributes" type="tns:VisualElementAttributes"></element>
+		</sequence>
+		<attribute name="kind" type="tns:SupportedKinds"></attribute>
+		<attribute name="name" type="string"></attribute>
+
+		<attribute name="packagePath" type="anyURI"></attribute>
+		<attribute name="hash_component_UID" type="string"></attribute>
+		<attribute name="isAbstract" type="boolean"></attribute>
+		<attribute name="locationURI" type="anyURI" use="optional"></attribute>
+	</complexType>
+	<complexType name="InterfaceSliceType">
+		<sequence>
+			<element name="originRef" type="tns:InterfaceRefType">
+			</element>
+			<element name="visualDescription" type="tns:VisualElementAttributes"></element>
+		</sequence>
+		<attribute name="isRef" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="ActionType">
+		<sequence>
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes">
+			</element>
+		</sequence>
+		<attribute name="label" type="string" use="optional"></attribute>
+		<attribute name="repeat" type="unsignedInt" use="optional"></attribute>
+	</complexType>
+	<complexType name="ActionCombinatorType">
+		<complexContent>
+			<extension base="tns:ActionType">
+				<sequence maxOccurs="unbounded" minOccurs="1">
+					<element name="action" type="tns:ActionType"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionCombinatorSeqType">
+		<complexContent>
+			<extension base="tns:ActionCombinatorType">
+				<sequence></sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionCombinatorParType">
+		<complexContent>
+			<extension base="tns:ActionCombinatorType">
+				<sequence></sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionCombinatorAltType">
+		<complexContent>
+			<extension base="tns:ActionCombinatorType">
+				<sequence></sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionActivateType">
+		<complexContent>
+			<extension base="tns:ActionType">
+				<attribute name="sliceRef" type="string"
+					use="required">
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="QuantificationVarType">
+		<choice>
+			</choice>
+		<attribute name="qType" type="tns:QuantificationType" use="optional" default="Universal"></attribute>
+		<attribute name="varName" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="ColorComplexType">
+		<sequence>
+			</sequence>
+		<attribute name="r" type="unsignedByte" use="required"></attribute>
+		<attribute name="g" type="unsignedByte" use="required"></attribute>
+		<attribute name="b" type="unsignedByte" use="required"></attribute>
+	</complexType>
+	<complexType name="UnitSliceType">
+		<complexContent>
+			<extension base="tns:UnitRefType">
+				<sequence>
+					<element name="visualDescription"
+						type="tns:VisualElementAttributes">
+					</element>
+					<element name="port" type="string"
+						maxOccurs="unbounded" minOccurs="0">
+					</element>
+				</sequence>
+				<attribute name="sliceName" type="string"></attribute>
+
+				<attribute name="transitive" type="boolean"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionSkipType">
+		<complexContent>
+			<extension base="tns:ActionType">
+				<sequence></sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionWaitType">
+		<complexContent>
+			<extension base="tns:ActionType">
+				<sequence>
+					</sequence>
+				<attribute name="semaphore" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ActionSignalType">
+		<complexContent>
+			<extension base="tns:ActionType">
+				<sequence>
+					</sequence>
+				<attribute name="semaphore" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="EnumerableType">
+		<sequence></sequence>
+		<attribute name="ref" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="EnumerableUnitType">
+		<complexContent>
+			<extension base="tns:EnumerableType">
+				<sequence></sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="EnumerableComponentType">
+		<complexContent>
+			<extension base="tns:EnumerableType">
+				<sequence></sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="EnumerableUnitSliceType">
+		<complexContent>
+			<extension base="tns:EnumerableType">
+				<sequence></sequence>
+				<attribute name="uRef" type="string" use="required"></attribute>
+				<attribute name="cRef" type="string"></attribute>
+				<attribute name="sRef" type="string"></attribute>
+				<attribute name="splitReplica" type="int"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ParameterRenaming">
+		<attribute name="formFieldId" type="string" use="required"></attribute>
+		<attribute name="varName" type="string" use="required"></attribute>
+	</complexType>
+	<simpleType name="QuantificationType">
+		<restriction base="string">
+			<enumeration value="Universal"></enumeration>
+			<enumeration value="Existential"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<complexType name="InnerComponentType">
+		<complexContent>
+			<extension base="tns:ComponentInUseType">
+				<attribute name="exposed" type="boolean"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="InterfaceRefType">
+		<sequence></sequence>
+		<attribute name="cRef" type="string" use="required"></attribute>
+		<attribute name="iRef" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="SplitType">
+		<sequence>
+			<element name="splitLink" type="tns:SplitLinkType"
+				maxOccurs="unbounded" minOccurs="1">
+			</element>
+			<element name="splitEnumerator" type="string"
+				maxOccurs="unbounded" minOccurs="1">
+			</element>
+			<element name="originRef" type="string"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="eRef" type="string" use="required"></attribute>
+		<attribute name="n" type="int"></attribute>
+
+		<attribute name="cRefPermutation" type="string" use="optional"></attribute>
+	</complexType>
+	<complexType name="SplitLinkType">
+		<sequence></sequence>
+		<attribute name="cRef" type="string" use="required"></attribute>
+		<attribute name="uRef" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="SplitEnumeratorType">
+		<sequence></sequence>
+		<attribute name="eRef" type="string" use="required"></attribute>
+	</complexType>
+	<complexType name="UnitBoundsType">
+		<sequence>
+			<element name="visualDescription" type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+		<attribute name="uRef" type="string"></attribute>
+		<attribute name="replica" type="unsignedInt" use="optional"></attribute>
+	</complexType>
+
+
+
+	<complexType name="InnerRenamingType">
+		<sequence>
+
+
+
+		</sequence>
+		<attribute name="cRef" type="string"></attribute>
+		<attribute name="cOldName" type="string"></attribute>
+		<attribute name="cNewName" type="string"></attribute>
+	</complexType>
+
+	<complexType name="ImplementsType">
+		<sequence>
+			<element name="cRef" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ExtendsType">
+		<sequence>
+			<element name="cRef" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="BaseTypeType">
+		<sequence>
+			<element name="extensionType"
+				type="tns:ExtensionTypeType">
+			</element>
+			<element name="component" type="tns:ComponentInUseType"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ExtensionTypeType">
+		<choice>
+			<element name="implements" type="boolean"></element>
+			<element name="extends" type="boolean"></element>
+		</choice>
+		
+    </complexType>
+    <attributeGroup name="NewAttributeGroup"></attributeGroup>
+
+    <complexType name="FusionType">
+    	<sequence>
+    		<element name="cRefs" type="string" maxOccurs="unbounded"
+    			minOccurs="1">
+    		</element>
+    		<element name="pRef" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="FusionsOfReplicatorsType">
+    	<sequence>
+
+    		<element name="fusionOfReplicators" type="tns:FusionOfReplicatorsType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="FusionOfReplicatorsType">
+    	<sequence>
+    		<element name="eRef" type="string"></element>
+    		<element name="originRef" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="ExposePortType">
+    	<attribute name="cRef" type="string"></attribute>
+    	<attribute name="pRef" type="string"></attribute>
+    	<attribute name="exposed" type="string"></attribute>
+    </complexType>
+
+    <complexType name="PortType">
+    	<sequence>
+    		<element name="visualDescription"
+    			type="tns:VisualElementAttributes">
+    		</element>
+    	</sequence>
+    	<attribute name="pRef" type="string"></attribute>
+    	<attribute name="exposed" type="boolean"></attribute>
+    </complexType>
+
+    <complexType name="EntryType">
+    	<sequence>
+    		<element name="visualDescription" type="tns:VisualElementAttributes"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="SourceFileType">
+    	<sequence>
+    		<element name="dependency" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="externalDependency" type="string"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    	<attribute name="uri" type="string"></attribute>
+        <attribute name="srcType" type="string"></attribute>
+        <attribute name="fileType" type="string"></attribute>
+    	<attribute name="versionId" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="contents" type="string" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="InterfacePortType">
+    	<sequence>
+    		<element name="visualDescription"
+    			type="tns:VisualElementAttributes">
+    		</element>
+
+    		<element name="slice" type="tns:PortSliceType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="name" type="string"></attribute>
+    </complexType>
+    
+    <complexType name="PortSliceType">
+    	<attribute name="sRef" type="string"></attribute>
+    	<attribute name="pRef" type="string"></attribute>
+    </complexType>
+
+    <complexType name="EnumeratorFromRecursionType">
+    	<attribute name="cRef" type="string"></attribute>
+    </complexType>
+
+    <complexType name="VersionType">
+    	<attribute name="field1" type="int"></attribute>
+    	<attribute name="field2" type="int"></attribute>
+    	<attribute name="field3" type="int"></attribute>
+    	<attribute name="field4" type="int"></attribute>
+    </complexType>
+
+    <attribute name="NewAttribute" type="string"></attribute>
+
+
+    <complexType name="EnumerableEntryType">
+    	<complexContent>
+    		<extension base="tns:EnumerableType">
+    			<attribute name="cRef" type="string"></attribute>
+    			<attribute name="uRef" type="string"></attribute>
+    			<attribute name="index" type="int" use="optional"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="InterfaceParameterType">
+    	<sequence></sequence>
+    	<attribute name="parid" type="string"></attribute>
+    	<attribute name="varid" type="string"></attribute>
+    	<attribute name="iname" type="string"></attribute>
+        <attribute name="uname" type="string"></attribute>
+        <attribute name="order" type="int"></attribute>
+    </complexType>
+</schema>

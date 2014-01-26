@@ -69,7 +69,11 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 	public String getName2() {
 		return unit.getName2();
 	}
-	
+
+	public String getBaseName() {
+		return unit.getBaseName();
+	}
+
 	private String originalName = null;
 	
 	public String getOriginalName() {

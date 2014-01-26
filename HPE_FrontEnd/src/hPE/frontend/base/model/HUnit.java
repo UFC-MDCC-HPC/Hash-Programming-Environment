@@ -62,12 +62,13 @@ public abstract class HUnit extends HPrimUnit
 		HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
 		
 		if (c0x != c0) {
-		   int index = c0.getUnits().indexOf(this);
-		   this_ = (HUnit) c0x.getUnits().get(index);
+		   //int index = c0.getUnits().indexOf(this);
+		   this_ = (HUnit) c0x.fetchUnitByBaseName(this.getName2()); //.getUnits().get(index);
 		}
 		 
 		 List<HUnit> units = new ArrayList<HUnit>();
 		
+		 //if (this_!=null)
   	     for (HUnitSlice us : this_.getSlices()) 
   	     {  	    	 
   	    	 HUnit u = (HUnit) us.getBinding().getEntry();
@@ -944,13 +945,13 @@ public abstract class HUnit extends HPrimUnit
                     	u = (IHUnit) ((HUnit) u).cloneOf();
                     HComponent cu = (HComponent) u.getConfiguration();                    
                     HComponent cu_ = (HComponent) (cu.getSupplier() == null ? cu : cu.getSupplier());
-                    IHUnit ux = cu_.getUnits().get(cu.getUnits().indexOf(u));
+                    IHUnit ux = cu_.getUnits().get(cu.getUnits().indexOf(u)); //TODO: usar fetchUnitByBaseName
                     if (ux==null) {
                        System.err.print("unexpected behavior inside HUnit (getExposedSlices) - CHECK !");
                        ux = u;
                     }
                     
-                    if (ux.isExposed()) 
+                    if (u.isExposed()) // TODO: modificado de ux (o que supre) para u (o que foi suprido) 
                     {
                             if (l.containsKey(s)) {
                                     List<HUnitSlice> _l = l.get(s);
@@ -981,9 +982,14 @@ public abstract class HUnit extends HPrimUnit
                     } 
                     else 
                     {
-                    	HComponent c = (HComponent) u.getConfiguration();
-                    	HComponent cx = (HComponent) ux.getConfiguration();
-	                    for (Entry<HUnitSlice,List<HUnitSlice>> e : ux.getExposedSlices().entrySet()) 
+                    	HComponent c = cu;
+                    	HComponent cx = cu_;
+	                    for (Entry<HUnitSlice,List<HUnitSlice>> e : u.getExposedSlices().entrySet()) 
+	                    	//TODO: de ux.getExposedSlices() para u.getExposedSlices() em 24 de Janeiro de 2014 
+	                    	// para resolve um bug com o componente MapReduce, que não mostrava os nomes das fatias
+	                    	// input_data, partition_info e output_data corretamente na interface IManagerMapReduce. Com "ux",
+	                    	// ele ia buscar as fatias da unidade do "scatter" que é "base" do splitter, ao invés do scatter
+	                    	// do farm que ele sobrepõe ... 
 	                    {
                             List<HUnitSlice> _l = e.getValue();
                             if (l.containsKey(s)) 
@@ -992,8 +998,10 @@ public abstract class HUnit extends HPrimUnit
                                 for (HUnitSlice item  : _l) 
                                 {
                                 	HComponent cx_ = (HComponent) item.getBinding().getEntry().getConfiguration();
-            						String n1 = cx_.getSavedName().get(cx);
+            						String n1 = cx_.getSavedName().containsKey(cx) ? cx_.getSavedName().get(cx) : cx_.getName2() ;            						
             						HComponent cx_prime = c.getInnerComponent(n1);
+//            						String n1 = cx_.getSavedName().get(cx);
+  //          						HComponent cx_prime = c.getInnerComponent(n1);
             						if (cx_prime == null || cx_prime.isPublic())
             							_ll.add(item);
                                 }
@@ -1003,7 +1011,7 @@ public abstract class HUnit extends HPrimUnit
                                 for (HUnitSlice item  : _l) 
                                 {
                                 	HComponent cx_ = (HComponent) item.getBinding().getEntry().getConfiguration();
-            						String n1 = cx_.getSavedName().get(cx);
+            						String n1 = cx_.getSavedName().containsKey(cx) ? cx_.getSavedName().get(cx) : cx_.getName2() ;            						
             						HComponent cx_prime = c.getInnerComponent(n1);
             						if (cx_prime == null || cx_prime.isPublic())
             							_ll.add(item);

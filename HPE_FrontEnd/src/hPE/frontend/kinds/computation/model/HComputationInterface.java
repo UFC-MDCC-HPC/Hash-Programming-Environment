@@ -33,6 +33,6 @@ public class HComputationInterface extends HActivateInterface {
 	}
 	
 	public String getActivateMethodName() {
-		return "go";
+		return "main";
 	}	
 }

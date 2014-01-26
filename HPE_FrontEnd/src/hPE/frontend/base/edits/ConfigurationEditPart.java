@@ -8,7 +8,6 @@ import hPE.frontend.base.figures.INameEditableFigure;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HInterface;
 import hPE.frontend.base.model.HUnit;
-import hPE.frontend.base.model.HVisualElement;
 import hPE.frontend.base.model.IHUnit;
 import hPE.frontend.base.model.IHVisualElement;
 import hPE.frontend.base.policies.BrowseEditPolicy;

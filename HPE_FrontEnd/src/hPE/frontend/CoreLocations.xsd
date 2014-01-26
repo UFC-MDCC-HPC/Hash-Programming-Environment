@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/CoreLocations" xmlns:tns="http://www.example.org/CoreLocations" elementFormDefault="qualified">
+
+    <element name="core" type="tns:CoreType"></element>
+    
+    <complexType name="CoreType">
+    	<sequence>
+    		<element name="location" type="tns:LocationType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="LocationType">
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="uri" type="string"></attribute>
+    </complexType>
+</schema>

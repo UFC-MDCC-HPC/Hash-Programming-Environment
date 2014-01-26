@@ -223,12 +223,12 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 * return the list of units and clones of units. The cloned unit is not
 	 * returned with its clones.
 	 */
-	public List<IHUnit> getAllUnits() {
+	public List<IHUnit> getAllUnits() 
+	{
 		List<IHUnit> ls = new ArrayList<IHUnit>();
-		for (IHUnit u : this.getUnits()) {
-//			for (IHPrimUnit u_ : u.getClones()) {
-				ls.add((IHUnit) u);
-//			}
+		for (IHUnit u : this.getUnits()) 
+		{
+			ls.add((IHUnit) u);
 		}
 		return ls;
 	}
@@ -355,6 +355,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return null;
 	}
 
+	public IHUnit fetchUnitByBaseName(String uName) {
+
+		for (IHUnit u : this.getUnits())
+			if (u.getBaseName().equals(uName))
+				return u;
+
+		return null;
+	}
+	
 	public IHUnit fetchUnit(String uName, int iReplica) {
 
 		for (IHUnit u : this.getUnits())
@@ -507,7 +516,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				if (!c.isSuperType() && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop()))) 
 				{
 					if (!cs.contains(c))
+					{
 						cs.add(c);
+					}
 				}
 
 				if (cx == c) {
@@ -516,12 +527,15 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 							cs.add(c_);
 					}
 				} else {
-					for (HComponent cx_ : cx.getExposedComponents()) {
+					for (HComponent cx_ : c.getExposedComponents()) {
+						//HComponent cx__ = (HComponent) (cx_.getSupplier() == null ? cx_ : cx_.getSupplier());
 						String n1 = cx_.getSavedName().get(cx);
+						
+						
 						HComponent cx_prime = cx.getInnerComponent(n1);
-						cx_prime = cx_prime == null ? cx_ : cx_prime;						
+						cx_prime = cx_prime == null ? cx_ : cx_prime /*(cx_prime.getSupplier() == null ? cx_prime : cx_prime.getSupplier())*/;
 
-						if (cx_prime != null && !cs.contains(cx_prime) && cx_prime.isPublic())
+						if (cx_prime != null && !cs.contains(cx_prime) && cx_.isPublic())
 							cs.add(cx_prime);
 					}
 				}
@@ -545,17 +559,25 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		return cs_;
 	}
 
-	public HComponent getInnerComponent(String ref) {
-		for (HComponent c : this.getInnerComponents()) {
-			// if (c.getRef().equals(ref)) return c;
-			if (!c.getSavedName().isEmpty()) {
-				if (c.getSavedName().get(this).equals(ref))
-					return c;
-			} else {
-				if (c.getRef().equals(ref))
-					return c;
+	public HComponent getInnerComponent(String ref) 
+	{
+		for (HComponent c : this.getInnerComponents()) 
+		{
+			try 
+			{
+				// if (c.getRef().equals(ref)) return c;
+				if (!c.getSavedName().isEmpty()) {
+					if (/*c.getSavedName().containsKey(this) && */ c.getSavedName().get(this).equals(ref))
+						return c;
+				} else {
+					if (c.getRef().equals(ref))
+						return c;
+				}
 			}
-
+			catch (NullPointerException e)
+			{
+				System.out.print(true);
+			}
 		}
 		return null;
 	}
@@ -1065,13 +1087,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		for (IHUnit u : this.getAllUnits()) 
 		{
 			if (!u.getHidden()) 
-			{   //ls.add(u);
+			{   
 				ls.addAll(u.getClones());
-			    //for (IHPrimUnit uc : ((HPrimUnit) u).getClones()) 
-				//{
-				//	ls.add(uc);
-				//}
-				
 			} 
 			else if (u.getBinding() != null) 
 			{
@@ -1081,6 +1098,21 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}			
 			
 		}
+		
+		//for (HComponent c : this.getInnerComponents())
+		//{
+		//	if (!c.isParameter()) 
+		//	{
+		//		for (IHUnit u : c.getUnits())
+		//		{
+		//			if (u.getBinding() == null)
+		//			{
+		//				ls.add(u);
+		//			}
+		//		}
+		//	}
+		//}
+		
 		return ls;
 	}
 
@@ -1236,15 +1268,16 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public final static String PROPERTY_IS_PARAMETER = "PROPERTY_IS_PARAMETER";
 
 	private boolean isParameter = false;
-	private Map<String, String> parameterIdentifier = new HashMap<String, String>();
+	private Map<HComponent, String> parameterIdentifier = new HashMap<HComponent, String>();
 
 	public void setParameter(String parId) {
 
-		String s = this.getTopConfiguration().getLocalLocation();
+		HComponent c = (HComponent) this.getTopConfiguration();
+		String s = c.getLocalLocation();
 
 		this.isParameter = true;
 		if (!this.parameterIdentifier.containsKey(s))
-			this.parameterIdentifier.put(s, parId);
+			this.parameterIdentifier.put(c, parId);
 
 		if (!this.isConnected()) {
 			this.setHiddenInnerComponent(true);
@@ -1411,13 +1444,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public void removeParameterIdentifierByName(String varName) {
 
-		List<String> trash = new ArrayList<String>();
+		List<HComponent> trash = new ArrayList<HComponent>();
 
-		for (Entry<String, String> p : this.parameterIdentifier.entrySet())
+		for (Entry<HComponent, String> p : this.parameterIdentifier.entrySet())
 			if (p.getValue().equals(varName))
 				trash.add(p.getKey());
 
-		for (String key : trash)
+		for (HComponent key : trash)
 			this.parameterIdentifier.remove(key);
 	}
 
@@ -1437,8 +1470,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public String getParameterIdentifier(IComponent c) {
 
-		if (this.parameterIdentifier.containsKey(c.getLocalLocation()))
-			return this.parameterIdentifier.get(c.getLocalLocation());
+		if (this.parameterIdentifier.containsKey(c/*.getLocalLocation()*/))
+			return this.parameterIdentifier.get(c/*.getLocalLocation()*/);
 		else {
 			HComponent superType = getSuperType();
 			return superType != null ? superType.getParameterIdentifier(c)
@@ -1856,7 +1889,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		if (this instanceof HComputationComponent
 				&& this.getDirectParentConfigurations().contains(topC)
 				&& !topC.getComponents().contains(this)) {
-			System.out.print(true);
+			//System.out.print(true);
 		}
 
 		return this.getDirectParentConfigurations().contains(topC)
@@ -2296,6 +2329,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public void unify(HComponent model, HComponent supplied, Map<String, Pair<HComponent,Boolean>> toSupply) 
 								throws UnifySignaturesException 
 	{
+	//	model.setExposed(supplied.isPublic());
+	//	model.setBounds(supplied.getBounds());
+	//	model.setName(supplied.getRef());
+		
 		Map<String, List<HComponent>> model_parameters = model.getParameters(this);
 		
 		Map<String, List<HComponent>> free_parameters_supplied_1 = supplied.getParameters(supplied);
@@ -2484,8 +2521,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 							c.setSupplied(model, varName_);
 							String parId = c_.getParameterIdentifier();
 							String s = c.getLocalLocation();
-							if (!model.parameterIdentifier.containsKey(s))
-								model.parameterIdentifier.put(s, parId);
+							if (!model.parameterIdentifier.containsKey(c))
+								model.parameterIdentifier.put(c, parId);
 							
 							//model.setVariableName(c, varName_);
 						}
@@ -3198,15 +3235,13 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public boolean IsExposedFalsifiedContextTop() {
-		HComponent me = this.isSuperType() ? (HComponent) this
-				.getConfiguration() : this;
+		HComponent me = this.isSuperType() ? (HComponent) this.getConfiguration() : this;
 		return !me.isDirectSonOfTheTopConfiguration()
 				&& me.exposedFalsifiedContext == me.getTopConfiguration();
 	}
 
 	public boolean IsExposedFalsifiedContext(HComponent c) {
-		HComponent me = this.isSuperType() ? (HComponent) this
-				.getConfiguration() : this;
+		HComponent me = this.isSuperType() ? (HComponent) this.getConfiguration() : this;
 		return me.exposedFalsifiedContext == c;
 	}
 
@@ -3335,34 +3370,30 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 
-	static public boolean checkConsistencyOfUnitsInSuperseding(HComponent c1,
-			HComponent c2) {
+	static public boolean checkConsistencyOfUnitsInSuperseding(HComponent c1, HComponent c2) {
 
-		IComponent im_c1inc2 = c2.getSubTypeImageOf(c1);
+		//HComponent c1 = c1_.getSupplier() == null ? c1_ : c1_.getSupplier(); 
+		//HComponent c2 = c2_.getSupplier() == null ? c2_ : c2_.getSupplier();
+		
+		IComponent im_c1inc2 = c2; //c2_.getSubTypeImageOf(c1_);
 		HComponent topC = (HComponent) c1.getTopConfiguration();
-		Iterator<IHUnit> us2 = ((ArrayList<IHUnit>) ((ArrayList<IHUnit>) im_c1inc2
-				.getEntries()).clone()).iterator();
-		Iterator us1 = ((ArrayList) ((ArrayList) c1.getEntries()).clone())
-				.iterator();
+		Iterator<IHUnit> us2 = ((ArrayList<IHUnit>) ((ArrayList<IHUnit>) im_c1inc2.getEntries()).clone()).iterator();
+		Iterator us1 = ((ArrayList) ((ArrayList) c1.getEntries()).clone()).iterator();
 		while (us1.hasNext() && us2.hasNext()) {
 			IHUnit u2 = us2.next();
 			IHUnit u1 = (IHUnit) us1.next();
 
 			// ALinhar unidades...
-			Pair<IHPrimUnit, IHPrimUnit> pair = alignUnits(u1, u2);
-			u1 = (IHUnit) pair.fst();
-			u2 = (IHUnit) pair.snd();
+			//Pair<IHPrimUnit, IHPrimUnit> pair = alignUnits(u1, u2);
+			//u1 = (IHUnit) pair.fst();
+			//u2 = (IHUnit) pair.snd();
 
 			IHUnit topU2 = (IHUnit) u2.getTopUnit(null);
 			IHUnit topU1 = (IHUnit) u1.getTopUnit(null);
 			HComponent topC1 = (HComponent) topU1.getConfiguration();
 			HComponent topC2 = (HComponent) topU2.getConfiguration();
 
-			if (!((topU1 == topU2 && topC1 == topC2 && topC2 == topC /*
-																	 * &&topU1.
-																	 * getInterface
-																	 * ()==null
-																	 */) || (topU1 != topU2 && topC1 != topC2)))
+			if (!((topU1 == topU2 && topC1 == topC2 && topC2 == topC) || (topU1 != topU2 && topC1 != topC2)))
 				return false;
 
 		}

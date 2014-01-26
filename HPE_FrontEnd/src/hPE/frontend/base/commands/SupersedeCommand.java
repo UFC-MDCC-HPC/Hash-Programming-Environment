@@ -42,6 +42,7 @@ public class SupersedeCommand extends Command {
 	
 	public boolean canExecute() 
 	{
+		
 		HComponent source = (HComponent) (this.source.getSupplier() == null ? this.source : this.source.getSupplier());
 		HComponent target  = (HComponent) (this.target.getSupplier() == null ? this.target : this.target.getSupplier());
 		
@@ -54,7 +55,7 @@ public class SupersedeCommand extends Command {
         boolean cond1 = source.isSubTypeOf(target) && this.source.isPublic() == this.target.isPublic() && topC.isAbstractConfiguration(); 
         boolean cond2 = cond1 && this.source.getName2().equals(this.target.getName2());
         boolean cond3 = cond2 && !(source.isParameter() && target.isParameter() && !varSource.equals(varTarget));
-        boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(target, source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 
+        boolean cond4 = cond3 && HComponent.checkConsistencyOfUnitsInSuperseding(this.target, this.source) && HComponent.checkConsistencyOfCardinalityInSuperseding(target,source); 
         
         if (!cond2) {
         	

@@ -2,6 +2,7 @@ package hPE.frontend.base.dialogs;
 
 import hPE.frontend.base.model.HComponent;
 import hPE.util.Pair;
+import hPE.util.Triple;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -119,12 +120,12 @@ public class DialogChangeVarName extends JDialog {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
 					
-					Pair<String, List<HComponent>> item = (Pair<String,List<HComponent>>) getJComboBoxVarName().getSelectedItem();
+					Triple<String, List<HComponent>, HComponent> item = (Triple<String,List<HComponent>, HComponent>) getJComboBoxVarName().getSelectedItem();
 					String varId;
 					if (item != null) 
 					{
-						HComponent cVar = item.snd().get(0); 
-						varId = cVar.getVariableName((HComponent) cVar.getConfiguration());
+						HComponent cVar = item.trd(); 
+						varId = cVar.getVariableName((HComponent) cVar.getTopConfiguration());
 					} 
 					else
 					{
@@ -192,7 +193,7 @@ public class DialogChangeVarName extends JDialog {
 					                               {
 					    								public void run()
 					    								{
-					    					       	        Pair<String, List<HComponent>> varToBeChanged = (Pair<String, List<HComponent>>) getOldVarName();
+					    					       	        Triple<String, List<HComponent>, HComponent> varToBeChanged = (Triple<String, List<HComponent>, HComponent>) getOldVarName();
 					    					    	        String newVarName = getNewVarName();
 					    				                    changeVarName(varToBeChanged, newVarName);
 					    				                    for (HComponent c : cupdate) {
@@ -245,7 +246,7 @@ public class DialogChangeVarName extends JDialog {
 		return jButtonClose;
 	}
 	
-    private void changeVarName(Pair<String, List<HComponent>> varToBeChanged, String newVarName) {
+    private void changeVarName(Triple<String, List<HComponent>, HComponent> varToBeChanged, String newVarName) {
         HComponent topC = (HComponent) c.getTopConfiguration();
         
         if (newVarName != null && !newVarName.equals("")) 

@@ -41,6 +41,7 @@ public abstract class HPrimUnit extends HVisualElement
 	 * @uml.property   name="name"
 	 */
 	private String name = "";
+	private String baseName = null;
 
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#getName()
@@ -120,11 +121,14 @@ public abstract class HPrimUnit extends HVisualElement
 		} 
 		else {
 			this.name = name;
+			if (this.baseName == null) this.baseName = name;
 			for (IHPrimUnit u_ : this.getClones())
 			{
 				HPrimUnit u = (HPrimUnit) u_;
 			    u.name = name;
+			    u.baseName = this.baseName;
 			}
+			
 		}
 		
 		listeners.firePropertyChange("labelContents", null, name); //$NON-NLS-2$//$NON-NLS-1$
@@ -831,5 +835,9 @@ public abstract class HPrimUnit extends HVisualElement
     public void setSupersededName(String name) {
     	this.supersededName = name;
     }
+
+	public String getBaseName() {
+		return baseName;
+	}
 
 }

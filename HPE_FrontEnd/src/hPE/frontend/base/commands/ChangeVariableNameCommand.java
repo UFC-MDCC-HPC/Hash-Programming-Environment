@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import hPE.util.Pair;
-import java.util.Map;
+import hPE.util.Triple;
+
+ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -26,7 +28,8 @@ public class ChangeVariableNameCommand extends Command {
 	DialogChangeVarName newVarNameDialog = null;
 	
 	
-	public void execute() {
+	public void execute() 
+	{
 		this.newVarNameDialog = DialogChangeVarName.getInstance();
 		this.newVarNameDialog.setModel(c);
         
@@ -36,12 +39,24 @@ public class ChangeVariableNameCommand extends Command {
 		 
         List<HComponent> cupdate = new ArrayList<HComponent>();
         
-        for (String var : m.keySet()) {
+        for (String var : m.keySet()) 
+        {
         	 List<HComponent> innerCs = m.get(var);
         	 cupdate.addAll(innerCs);
-        	 HComponent cVar = ((List<HComponent>)innerCs).get(0) ;
-        	 if (cVar.getSupplier()==null) // Só pode alterar se for filho direto da configuração ...
-        		 this.newVarNameDialog.addVarName(new Pair<String,List<HComponent>>(var,innerCs));
+        	 HComponent cVar = ((List<HComponent>)innerCs).get(0);
+        	 for (HComponent innerC : innerCs)
+        	 {
+        		 List<HComponent> cList = innerC.getDirectParentConfigurations();
+        		 if (cList.contains(c))
+        		 {
+        		    cVar = innerC;
+        		 }
+        	 }
+        	 
+        	 
+        	 
+        	// if (cVar.getSupplier()==null) // Só pode alterar se for filho direto da configuração ...
+        		 this.newVarNameDialog.addVarName(new Triple<String,List<HComponent>, HComponent>(var,innerCs, cVar));
         }
         
         this.newVarNameDialog.setUpdates(cupdate);

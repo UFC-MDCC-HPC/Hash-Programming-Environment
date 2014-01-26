@@ -25,6 +25,8 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 	 * @uml.property  name="name"
 	 */
 	public abstract String getName2();
+	
+	public abstract String getBaseName();
 
 	/**
 	 */
