@@ -71,7 +71,18 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 					slices = new ArrayList<HInterfaceSlice>(); 
 					theSlices.put(sliceTypeName, slices);
 				}
-				slices.add(slice);
+				
+				boolean found = false;
+				for (HInterfaceSlice s : slices) 
+				{
+					if (s.getName().equals(slice.getName())) 
+					{
+						found = true;
+					}
+				}
+				
+				if (!found)
+					slices.add(slice);
 			}
 			
 		}
