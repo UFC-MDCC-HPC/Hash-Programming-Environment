@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tns:services xmlns:tns="http://www.example.org/BackEndLocations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/BackEndLocations BackEndLocations.xsd ">
-	<tns:backend name="Castanhão" uri="http://localhost:3494/teste/BackEndWS.asmx" login="hpe.backend" password="Hpe.BacKenD" /><tns:backend
-		name="localhost" uri="http://localhost:3494/teste/BackEndWS.asmx" ></tns:backend>
-</tns:services>
