@@ -817,14 +817,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			unitCounts.put(uRef, count);
 		}
 
+		
 		for (Entry<String, Integer> u : unitCounts.entrySet()) {
 			String uRef = u.getKey();
+			IHUnit top_unit = innerC.fetchUnit(uRef);
+			if (top_unit != null) /* TODO: BUG HERE: returning null in some cases ...*/
+				top_unit.setMultiple(checkParallel.get(uRef).get(0));
 			Integer count = u.getValue();
 			if (count > 1)
-				for (int i = 0; i < count - 1; i++) {
-					IHUnit top_unit = innerC.fetchUnit(uRef);
-					top_unit.createReplica(i);
-					top_unit.setMultiple(checkParallel.get(uRef).get(i));
+				for (int i = 0; i < count-1; i++) {					
+					IHUnit unit_replica = (IHUnit) top_unit.createReplica(i);
+					unit_replica.setMultiple(checkParallel.get(uRef).get(i+1));
 				}
 		}
 
