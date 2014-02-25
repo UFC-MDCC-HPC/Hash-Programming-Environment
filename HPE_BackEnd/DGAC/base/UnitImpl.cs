@@ -164,7 +164,7 @@ namespace br.ufc.pargo.hpe.basic
 		
         public int Rank {get {return rank;} set {rank = value;}}   // Rank of the parallel unit.
 		public int Size {get {return size;} set {size = value;}}   // Number of the parallel units.		
-		public int[] Ranks {get {return ranks;} set {ranks = value;}}   // Number of the parallel units.		
+		public int[] GlobalRanks {get {return ranks;} set {ranks = value;}}   // Number of the parallel units.		
 		public int GlobalRank {get {return global_rank;} set {global_rank = value;}}   // Number of the parallel units.		
 		
         private ComponentID cid = null;
@@ -183,6 +183,15 @@ namespace br.ufc.pargo.hpe.basic
             set { id_interface = value; }
         }
 
+		public IDictionary<string, int> SingletonUnitRank {
+			get {
+				throw new NotImplementedException ();
+			}
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
    /*     private int partition_index;
 
         public int PartitionIndex
@@ -190,6 +199,24 @@ namespace br.ufc.pargo.hpe.basic
             get { return partition_index; }
             set { partition_index = value; }
         }*/
+
+		public IDictionary<string, int[]> ParallelUnitRanks {
+			get {
+				throw new NotImplementedException ();
+			}
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public IDictionary<string, int> UnitSize {
+			get {
+				throw new NotImplementedException ();
+			}
+			set {
+				throw new NotImplementedException ();
+			}
+		}
 		
 		private string qualified_type_name = null;
 		

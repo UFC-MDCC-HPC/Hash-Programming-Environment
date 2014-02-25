@@ -44,8 +44,8 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="true" pauseExternalConsole="true" />
-        <Command type="AfterBuild" command="sudo /usr/local/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="true" pauseExternalConsole="true" />
+        <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" />
+        <Command type="AfterBuild" command="sudo /usr/local/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

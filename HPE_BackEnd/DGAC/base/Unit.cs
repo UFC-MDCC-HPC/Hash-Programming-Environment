@@ -24,9 +24,12 @@ namespace br.ufc.pargo.hpe.basic
     	
 		int Rank {get; set;}      // Rank of the parallel unit.
 		int Size {get; set;}      // Number of the parallel units.
-		int[] Ranks {get; set;}   // Global ranks of the parallel units.
+		IDictionary<string, int[]> ParallelUnitRanks { get; set;}  // Ranks of the units (if singleton, ther result has only one element)
+		IDictionary<string, int> UnitSize { get; set;}     // Number of units (it returns 1 for singleton units)
+		IDictionary<string, int> SingletonUnitRank { get; set;}
 		int GlobalRank {get; set;} // Global rank of the unit.
 		IDictionary<string, IUnit> Slice {get;}
+
 		
         Intracommunicator WorldComm {get; set;}
        
