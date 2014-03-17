@@ -27,10 +27,6 @@
     </genEnums>
     <genDataTypes ecoreDataType="component.ecore#//QuantificationTypeObject"/>
     <genDataTypes ecoreDataType="component.ecore#//SupportedKindsObject"/>
-    <genClasses ecoreClass="component.ecore#//ActionType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ActionType/protocol"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ActionType/id"/>
-    </genClasses>
     <genClasses ecoreClass="component.ecore#//BaseTypeType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//BaseTypeType/extensionType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//BaseTypeType/component"/>
@@ -84,8 +80,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentType/componentInfo"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ConditionType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ConditionType/guard"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ConditionType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ConditionType/condId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ConditionType/sliceId"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//DocumentRoot">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//DocumentRoot/mixed"/>
@@ -152,13 +148,16 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionType/cRefs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionType/pRef"/>
     </genClasses>
-    <genClasses ecoreClass="component.ecore#//GuardAndType"/>
     <genClasses ecoreClass="component.ecore#//GuardConditionType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//GuardConditionType/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//GuardConditionType/condition1"/>
     </genClasses>
-    <genClasses ecoreClass="component.ecore#//GuardNotType"/>
-    <genClasses ecoreClass="component.ecore#//GuardOrType"/>
-    <genClasses image="false" ecoreClass="component.ecore#//GuardType"/>
+    <genClasses ecoreClass="component.ecore#//GuardType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute component.ecore#//GuardType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//GuardType/condition"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//GuardType/and"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//GuardType/or"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//GuardType/not"/>
+    </genClasses>
     <genClasses ecoreClass="component.ecore#//ImplementsType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ImplementsType/cRef"/>
     </genClasses>
@@ -211,6 +210,7 @@
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ParameterRenaming">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterRenaming/formFieldId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterRenaming/order"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterRenaming/varName"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ParameterSupplyType">
@@ -220,11 +220,8 @@
     <genClasses ecoreClass="component.ecore#//ParameterType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/componentRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/formFieldId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/order"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/varName"/>
-    </genClasses>
-    <genClasses ecoreClass="component.ecore#//PerformType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//PerformType/actionId"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//PerformType/sliceId"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//PortSliceType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//PortSliceType/pRef"/>
@@ -243,9 +240,21 @@
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ProtocolCombinatorType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ProtocolCombinatorType/action"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ProtocolCombinatorType/guard"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ProtocolCombinatorType/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ProtocolCombinatorType/repeat"/>
+    </genClasses>
+    <genClasses ecoreClass="component.ecore#//ProtocolCombinatorVisualType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ProtocolCombinatorVisualType/visualDescription"/>
+    </genClasses>
+    <genClasses ecoreClass="component.ecore#//ProtocolPerformType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ProtocolPerformType/actionId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ProtocolPerformType/sliceId"/>
+    </genClasses>
+    <genClasses ecoreClass="component.ecore#//ProtocolPerformVisualType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ProtocolPerformVisualType/visualDescription"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="component.ecore#//ProtocolType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ProtocolType/guard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ProtocolType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ProtocolType/repeat"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//RecursiveEntryType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//RecursiveEntryType/cRef"/>
@@ -280,11 +289,19 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SplitType/eRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//SplitType/n"/>
     </genClasses>
+    <genClasses ecoreClass="component.ecore#//UnitActionType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitActionType/protocol"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitActionType/id"/>
+    </genClasses>
     <genClasses ecoreClass="component.ecore#//UnitBoundsType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitBoundsType/visualDescription"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/parallel"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/replica"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/uRef"/>
+    </genClasses>
+    <genClasses ecoreClass="component.ecore#//UnitConditionType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitConditionType/guard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitConditionType/id"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//UnitRefType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitRefType/cRef"/>

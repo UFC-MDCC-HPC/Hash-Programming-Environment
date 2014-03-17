@@ -170,11 +170,11 @@
 	</complexType>
 
 	<complexType name="ParameterType">
-		<sequence>
-		</sequence>
+		<sequence></sequence>
 		<attribute name="formFieldId" type="string" use="required"></attribute>
 		<attribute name="componentRef" type="string" use="required"></attribute>
 		<attribute name="varName" type="string"></attribute>
+		<attribute name="order" type="int" use="optional"></attribute>
 	</complexType>
 	<complexType name="ComponentType">
 		<sequence>
@@ -337,6 +337,7 @@
 	<complexType name="ParameterRenaming">
 		<attribute name="formFieldId" type="string" use="required"></attribute>
 		<attribute name="varName" type="string" use="required"></attribute>
+		<attribute name="order" type="int" use="optional"></attribute>
 	</complexType>
 	<simpleType name="QuantificationType">
 		<restriction base="string">

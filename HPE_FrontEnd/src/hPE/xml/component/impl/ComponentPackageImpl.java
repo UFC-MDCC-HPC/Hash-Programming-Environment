@@ -1986,8 +1986,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterRenaming_VarName() {
+	public EAttribute getParameterRenaming_Order() {
 		return (EAttribute)parameterRenamingEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterRenaming_VarName() {
+		return (EAttribute)parameterRenamingEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2049,8 +2058,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterType_VarName() {
+	public EAttribute getParameterType_Order() {
 		return (EAttribute)parameterTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterType_VarName() {
+		return (EAttribute)parameterTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3139,6 +3157,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		parameterRenamingEClass = createEClass(PARAMETER_RENAMING);
 		createEAttribute(parameterRenamingEClass, PARAMETER_RENAMING__FORM_FIELD_ID);
+		createEAttribute(parameterRenamingEClass, PARAMETER_RENAMING__ORDER);
 		createEAttribute(parameterRenamingEClass, PARAMETER_RENAMING__VAR_NAME);
 
 		parameterSupplyTypeEClass = createEClass(PARAMETER_SUPPLY_TYPE);
@@ -3148,6 +3167,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		parameterTypeEClass = createEClass(PARAMETER_TYPE);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__COMPONENT_REF);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__FORM_FIELD_ID);
+		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__ORDER);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__VAR_NAME);
 
 		portSliceTypeEClass = createEClass(PORT_SLICE_TYPE);
@@ -3503,6 +3523,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(parameterRenamingEClass, ParameterRenaming.class, "ParameterRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterRenaming_FormFieldId(), theXMLTypePackage.getString(), "formFieldId", null, 1, 1, ParameterRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterRenaming_Order(), theXMLTypePackage.getInt(), "order", null, 0, 1, ParameterRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterRenaming_VarName(), theXMLTypePackage.getString(), "varName", null, 1, 1, ParameterRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterSupplyTypeEClass, ParameterSupplyType.class, "ParameterSupplyType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3512,6 +3533,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(parameterTypeEClass, ParameterType.class, "ParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterType_ComponentRef(), theXMLTypePackage.getString(), "componentRef", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_FormFieldId(), theXMLTypePackage.getString(), "formFieldId", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterType_Order(), theXMLTypePackage.getInt(), "order", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_VarName(), theXMLTypePackage.getString(), "varName", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(portSliceTypeEClass, PortSliceType.class, "PortSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4742,6 +4764,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "formFieldId"
 		   });		
 		addAnnotation
+		  (getParameterRenaming_Order(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "order"
+		   });		
+		addAnnotation
 		  (getParameterRenaming_VarName(), 
 		   source, 
 		   new String[] {
@@ -4789,6 +4818,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "formFieldId"
+		   });		
+		addAnnotation
+		  (getParameterType_Order(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "order"
 		   });		
 		addAnnotation
 		  (getParameterType_VarName(), 

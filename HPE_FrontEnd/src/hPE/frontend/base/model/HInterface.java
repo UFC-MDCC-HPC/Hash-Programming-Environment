@@ -154,7 +154,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return ls;
 	}
 
-	public List<Triple<String, HInterface, String>> getParameters() {
+	public List<Triple<String, HInterface, String>> getParameters() 
+	{
 		HComponent cThis = (HComponent) this.getConfiguration();
 		HComponent cThisI = cThis.getWhoItImplements();
 		return getParameters(cThisI == null ? cThis : cThisI);

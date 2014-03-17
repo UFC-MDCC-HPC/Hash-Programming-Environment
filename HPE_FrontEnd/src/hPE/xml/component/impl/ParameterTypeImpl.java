@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getComponentRef <em>Component Ref</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getFormFieldId <em>Form Field Id</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getOrder <em>Order</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
@@ -71,6 +72,35 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 	 * @ordered
 	 */
 	protected String formFieldId = FORM_FIELD_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getOrder() <em>Order</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOrder()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int ORDER_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getOrder() <em>Order</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOrder()
+	 * @generated
+	 * @ordered
+	 */
+	protected int order = ORDER_EDEFAULT;
+
+	/**
+	 * This is true if the Order attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean orderESet;
 
 	/**
 	 * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
@@ -158,6 +188,52 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getOrder() {
+		return order;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOrder(int newOrder) {
+		int oldOrder = order;
+		order = newOrder;
+		boolean oldOrderESet = orderESet;
+		orderESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PARAMETER_TYPE__ORDER, oldOrder, order, !oldOrderESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetOrder() {
+		int oldOrder = order;
+		boolean oldOrderESet = orderESet;
+		order = ORDER_EDEFAULT;
+		orderESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.PARAMETER_TYPE__ORDER, oldOrder, ORDER_EDEFAULT, oldOrderESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetOrder() {
+		return orderESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getVarName() {
 		return varName;
 	}
@@ -186,6 +262,8 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 				return getComponentRef();
 			case ComponentPackage.PARAMETER_TYPE__FORM_FIELD_ID:
 				return getFormFieldId();
+			case ComponentPackage.PARAMETER_TYPE__ORDER:
+				return getOrder();
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				return getVarName();
 		}
@@ -205,6 +283,9 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 				return;
 			case ComponentPackage.PARAMETER_TYPE__FORM_FIELD_ID:
 				setFormFieldId((String)newValue);
+				return;
+			case ComponentPackage.PARAMETER_TYPE__ORDER:
+				setOrder((Integer)newValue);
 				return;
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				setVarName((String)newValue);
@@ -227,6 +308,9 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 			case ComponentPackage.PARAMETER_TYPE__FORM_FIELD_ID:
 				setFormFieldId(FORM_FIELD_ID_EDEFAULT);
 				return;
+			case ComponentPackage.PARAMETER_TYPE__ORDER:
+				unsetOrder();
+				return;
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				setVarName(VAR_NAME_EDEFAULT);
 				return;
@@ -246,6 +330,8 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 				return COMPONENT_REF_EDEFAULT == null ? componentRef != null : !COMPONENT_REF_EDEFAULT.equals(componentRef);
 			case ComponentPackage.PARAMETER_TYPE__FORM_FIELD_ID:
 				return FORM_FIELD_ID_EDEFAULT == null ? formFieldId != null : !FORM_FIELD_ID_EDEFAULT.equals(formFieldId);
+			case ComponentPackage.PARAMETER_TYPE__ORDER:
+				return isSetOrder();
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
 		}
@@ -266,6 +352,8 @@ public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
 		result.append(componentRef);
 		result.append(", formFieldId: ");
 		result.append(formFieldId);
+		result.append(", order: ");
+		if (orderESet) result.append(order); else result.append("<unset>");
 		result.append(", varName: ");
 		result.append(varName);
 		result.append(')');

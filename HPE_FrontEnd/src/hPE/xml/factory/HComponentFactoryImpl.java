@@ -120,6 +120,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.graphics.Color;
 
 //TODO tirar essa referencia ao LOCAL_LOCATION.
@@ -982,15 +983,19 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	 * 
 	 * }
 	 */
-	private void setupParameters(ComponentBodyType xCinfo) {
+	private void setupParameters(ComponentBodyType xCinfo) 
+	{
 
 		EList<ParameterType> parametersX = xCinfo.getParameter();
 
 		for (ParameterType param : parametersX) {
 			String formFieldId = param.getFormFieldId();
 			String sBaseC = param.getComponentRef();
+			int order = param.getOrder();
 			HComponent baseC = mC2.get(mC1.get(sBaseC));
 			baseC.setParameter(formFieldId);
+			if (param.isSetOrder())
+				component.setParameterOrder(formFieldId, order);
 		}
 
 	}
@@ -1003,7 +1008,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String varName = param.getVarName();
 			if (baseC.isDirectSonOfTheTopConfiguration()) {
 				baseC.setVariableName(varName);
-			}
+			} 
 		}
 
 	}
@@ -1247,15 +1252,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void applyRenaming(ComponentBodyType xI) {
 
-		for (InnerRenamingType ir : xI.getInnerRenaming()) {
+		for (InnerRenamingType ir : xI.getInnerRenaming()) 
+		{
 			String cRef = ir.getCRef();
 			String oldName = ir.getCOldName();
 			String newName = ir.getCNewName();
 
 			if (cRef != null) {
 				if (mC1.containsKey(cRef)) {
-					HComponent cc = mC2.get(mC1.get(cRef))
-							.getExposedComponentByName(oldName);
+					HComponent cc = mC2.get(mC1.get(cRef)).getExposedComponentByName(oldName);
 					if (cc != null)
 						cc.setName(newName);
 				} else {
@@ -1585,6 +1590,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
 			cs.add(p.getValue());
 
+		int max_order = 0;
+		
+		List<Pair<String,ParameterType>> unordered_parameters = new ArrayList<Pair<String,ParameterType>>();
 		for (HComponent ic : cs) {
 
 			if (ic.isParameter() && ic.getSupplier() == null) {
@@ -1604,9 +1612,28 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				p.setFormFieldId(formFieldId);
 				p.setComponentRef(cRef);
 				p.setVarName(varName);
+				
+				// parameters must be saved with an order.
+				int order = component.getParameterOrder(formFieldId);
+				if (order < 0)
+					unordered_parameters.add(new Pair<String,ParameterType>(formFieldId,p));
+				else
+				{
+					p.setOrder(order);
+					max_order = order > max_order ? order : max_order;
+				}
 
 				xI.add(p);
 			}
+		}
+		
+		
+		// if ordered parameters are 0,1,2,..., N, the unordered are N+1,N+2, and so on.
+		for (Pair<String,ParameterType> p : unordered_parameters)
+		{			
+			int order = max_order++;
+			component.setParameterOrder(p.fst(), order);
+		    p.snd().setOrder(order);		
 		}
 
 	}
@@ -2067,28 +2094,50 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	private void saveParameters(
-			List<Triple<String, HInterface, String>> parameters,
-			EList<InterfaceParameterType> parametersX) {
+	private void saveParameters(List<Triple<String, HInterface, String>> parameters,
+								  EList<InterfaceParameterType> parametersX) {
 
 		Map<String, Integer> m = new HashMap<String, Integer>();
 
-		int order = 0;
-		for (Triple<String, HInterface, String> parameter : parameters) {
-			InterfaceParameterType parX = factory
-					.createInterfaceParameterType();
-			parX.setParid(parameter.trd());
-			if (!m.containsKey(parX.getParid())) {
+		Map<Integer,InterfaceParameterType> parameter_order = new HashMap<Integer,InterfaceParameterType>();
+		int max_order=0;
+		
+		for (Triple<String, HInterface, String> parameter : parameters) 
+		{
+			String par_id = parameter.trd();
+			InterfaceParameterType parX = factory.createInterfaceParameterType();
+			parX.setParid(par_id);
+			if (!m.containsKey(par_id)) 
+			{
 				parX.setVarid(parameter.fst());
 				parX.setIname(parameter.snd().getPrimName());
-				parX.setUname(parameter.snd().getCompliantUnits().get(0)
-						.getName2());
-				parX.setOrder(order++);
+				parX.setUname(parameter.snd().getCompliantUnits().get(0).getName2());
+				int order = component.getParameterOrder(par_id); 
+				if (order >= 0) 
+				{ 
+					parameter_order.put(order,parX); // record parameter global orders 
+					max_order = order > max_order ? order : max_order;
+				}
+				else
+					Assert.isTrue(order >= 0);
 				parametersX.add(parX);
 				m.put(parX.getParid(), parX.getOrder());
 			}
 		}
 
+		// Calculate parameter order in interface.
+		
+		int size = max_order + 1;
+		InterfaceParameterType[] pars = new InterfaceParameterType[size];
+	    for (Entry<Integer,InterfaceParameterType> p_order : parameter_order.entrySet())
+	    	pars[p_order.getKey()] = p_order.getValue();
+	    
+	    int count = 0;
+	    for (int i=0; i < size; i++)
+	    {
+	    	if (pars[i] != null) 
+	    	   pars[i].setOrder(count++);
+	    }
 	}
 
 	private void saveInterfacePorts(List<HPort> ports,

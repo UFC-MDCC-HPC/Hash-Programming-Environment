@@ -1951,13 +1951,22 @@ public interface ComponentPackage extends EPackage {
 	int PARAMETER_RENAMING__FORM_FIELD_ID = 0;
 
 	/**
+	 * The feature id for the '<em><b>Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_RENAMING__ORDER = 1;
+
+	/**
 	 * The feature id for the '<em><b>Var Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_RENAMING__VAR_NAME = 1;
+	int PARAMETER_RENAMING__VAR_NAME = 2;
 
 	/**
 	 * The number of structural features of the '<em>Parameter Renaming</em>' class.
@@ -1966,7 +1975,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_RENAMING_FEATURE_COUNT = 2;
+	int PARAMETER_RENAMING_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterSupplyTypeImpl <em>Parameter Supply Type</em>}' class.
@@ -2034,13 +2043,22 @@ public interface ComponentPackage extends EPackage {
 	int PARAMETER_TYPE__FORM_FIELD_ID = 1;
 
 	/**
+	 * The feature id for the '<em><b>Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_TYPE__ORDER = 2;
+
+	/**
 	 * The feature id for the '<em><b>Var Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_TYPE__VAR_NAME = 2;
+	int PARAMETER_TYPE__VAR_NAME = 3;
 
 	/**
 	 * The number of structural features of the '<em>Parameter Type</em>' class.
@@ -2049,7 +2067,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_TYPE_FEATURE_COUNT = 3;
+	int PARAMETER_TYPE_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.PortSliceTypeImpl <em>Port Slice Type</em>}' class.
@@ -4938,6 +4956,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getParameterRenaming_FormFieldId();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterRenaming#getOrder <em>Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Order</em>'.
+	 * @see hPE.xml.component.ParameterRenaming#getOrder()
+	 * @see #getParameterRenaming()
+	 * @generated
+	 */
+	EAttribute getParameterRenaming_Order();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterRenaming#getVarName <em>Var Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5011,6 +5040,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameterType_FormFieldId();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterType#getOrder <em>Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Order</em>'.
+	 * @see hPE.xml.component.ParameterType#getOrder()
+	 * @see #getParameterType()
+	 * @generated
+	 */
+	EAttribute getParameterType_Order();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterType#getVarName <em>Var Name</em>}'.
@@ -7369,6 +7409,14 @@ public interface ComponentPackage extends EPackage {
 		EAttribute PARAMETER_RENAMING__FORM_FIELD_ID = eINSTANCE.getParameterRenaming_FormFieldId();
 
 		/**
+		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER_RENAMING__ORDER = eINSTANCE.getParameterRenaming_Order();
+
+		/**
 		 * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7427,6 +7475,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER_TYPE__FORM_FIELD_ID = eINSTANCE.getParameterType_FormFieldId();
+
+		/**
+		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER_TYPE__ORDER = eINSTANCE.getParameterType_Order();
 
 		/**
 		 * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
