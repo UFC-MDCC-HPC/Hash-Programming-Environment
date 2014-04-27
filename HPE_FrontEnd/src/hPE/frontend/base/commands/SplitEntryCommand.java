@@ -32,11 +32,11 @@ public class SplitEntryCommand extends Command {
 	
 	public void execute() 
 	{
-		HUnit u = this.u;
-		while (u.isClone()) 
-			u = (HUnit) u.cloneOf();
+		HUnit top_unit = this.u;
+		while (top_unit.isClone()) 
+			top_unit = (HUnit) top_unit.cloneOf();
 		
-	    u_clone = (HUnit) u.createReplica(u.getClones().size()-1);
+	    u_clone = (HUnit) top_unit.createReplica(this.u, top_unit.getClones().size()-1);
 	    //u_clone.setBounds(u.getBounds().translate(10,10));
 	    //HComponent c = (HComponent) u.getConfiguration();
 	    

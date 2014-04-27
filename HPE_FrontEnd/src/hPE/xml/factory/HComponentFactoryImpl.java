@@ -489,7 +489,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void loadInnerComponents(ComponentBodyType xCinfo) 
 	{
 		for (InnerComponentType xInnerC : xCinfo.getInnerComponent())
-			if (!xInnerC.getLocalRef().startsWith("C###"))
+			if (!xInnerC.getLocalRef().startsWith("C###") && !xInnerC.getLocalRef().startsWith("T###"))
 		{	
 			try {
 
@@ -793,49 +793,106 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		return getCachePath(locationURI);
 	}
 
-	private Map<HComponent, Map<String, Integer>> unitSplits = new HashMap<HComponent, Map<String, Integer>>();
+	// private Map<HComponent, Map<String, Integer>> unitSplits = new HashMap<HComponent, Map<String, Integer>>();
 
-	private void loadUnitBounds(ComponentInUseType xInnerC, HComponent innerC) {
+	// Key: f("<cref>.<uref>.<index>") = "<unit_index>"
+	private Map<String,Integer> unitSliceIndexMapping = null;
+	
+	private void loadUnitBounds(ComponentInUseType xInnerC, HComponent innerC) 
+	{
+		String cRef = xInnerC.getLocalRef();
+		
 		// Configure unit bounds
-		Map<String, Integer> unitCounts = new HashMap<String, Integer>();
+		Map<String, Map<Integer,Integer>> unitCounts = new HashMap<String, Map<Integer,Integer>>();
 		Map<String, Map<Integer, Boolean>> checkParallel = new HashMap<String, Map<Integer, Boolean>>();
+		unitSliceIndexMapping = new HashMap<String,Integer>();
+		
+		if (xInnerC.getUnitBounds().isEmpty())
+		{
+		   loadDefaultSliceIndexMapping(innerC);
+		}
 
-		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) {
+		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) 
+		{
 			String uRef = uBound.getURef();
-			long index = uBound.getReplica();
+			int index = uBound.getSliceReplica();
 			boolean is_parallel = uBound.isParallel();
-			unitBounds
-					.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
+			int index_slice = uBound.isSetUnitReplica() ? uBound.getUnitReplica() : index;
+			unitBounds.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
 			int count = 1;
-			if (unitCounts.containsKey(uRef)) {
-				count = unitCounts.get(uRef) + 1;
-				unitCounts.remove(uRef);
-			} else {
+			Map<Integer, Integer> unitCountsReplica;
+			if (unitCounts.containsKey(uRef)) 
+			{
+				unitCountsReplica = unitCounts.get(uRef);  
+				if (unitCountsReplica.containsKey(index_slice))
+				{
+					count = unitCountsReplica.get(index_slice) + 1;
+					unitCountsReplica.remove(index_slice);
+				}
+				unitCountsReplica.put(index_slice, count);					
+			} 
+			else 
+			{
+				unitCountsReplica = new HashMap<Integer,Integer>();
+				unitCountsReplica.put(index_slice, count);
+				unitCounts.put(uRef, unitCountsReplica);
+				
 				Map<Integer, Boolean> ispar_mapping = new HashMap<Integer, Boolean>();
 				checkParallel.put(uRef, ispar_mapping);
 			}
+			
+			unitSliceIndexMapping.put(mkUnitSliceRef(cRef, uRef, index), index_slice);
+			
 			checkParallel.get(uRef).put((int) index, is_parallel);
-			unitCounts.put(uRef, count);
 		}
-
 		
-		for (Entry<String, Integer> u : unitCounts.entrySet()) {
-			String uRef = u.getKey();
-			IHUnit top_unit = innerC.fetchUnit(uRef);
-			if (top_unit != null) /* TODO: BUG HERE: returning null in some cases ...*/
-				top_unit.setMultiple(checkParallel.get(uRef).get(0));
-			Integer count = u.getValue();
-			if (count > 1)
-				for (int i = 0; i < count-1; i++) {					
-					IHUnit unit_replica = (IHUnit) top_unit.createReplica(i);
-					unit_replica.setMultiple(checkParallel.get(uRef).get(i+1));
-				}
+		
+		for (Entry<String, Map<Integer,Integer>> u : unitCounts.entrySet()) 
+		{
+			for (Entry<Integer,Integer> u_replica : u.getValue().entrySet())
+			{			
+				String uRef = u.getKey();
+				IHUnit cloned_unit = innerC.fetchUnit(uRef, u_replica.getKey());
+				IHUnit top_unit = cloned_unit; while (top_unit.cloneOf() != null ) top_unit = (IHUnit) top_unit.cloneOf();
+				
+				if (cloned_unit != null) /* TODO: BUG HERE: returning null in some cases ...*/
+					cloned_unit.setMultiple(checkParallel.get(uRef).get(0));
+				Integer count = u_replica.getValue();
+				if (count > 1)
+					for (int i = 0; i < count-1; i++) {					
+						IHUnit unit_replica = (IHUnit) top_unit.createReplica(cloned_unit,top_unit.getClones().size()-1);
+						unit_replica.setMultiple(checkParallel.get(uRef).get(i+1));
+					}
+			}
 		}
 
-		unitSplits.put(innerC, unitCounts);
+		//unitSplits.put(innerC, unitCounts);
 
 	}
 
+
+
+
+	private void loadDefaultSliceIndexMapping(HComponent innerC) 
+	{
+		String cRef = innerC.getRef();
+        for (IHUnit unit : innerC.getUnits())
+        {
+        	String uRef = unit.getName2();
+        	int index_slice = unit.getUnitReplicaIndex();
+        	int index = unit.getSliceReplicaIndex();
+        	this.unitSliceIndexMapping.put(this.mkUnitSliceRef(cRef, uRef, index_slice), index);
+        }
+ 
+		
+	}
+
+	private String mkUnitSliceRef(String cRef, String uRef, int index_slice)
+	{
+		return cRef + "." + uRef + "[" + index_slice + "]";
+	}
+	
+	
 	private void loadParameterRenamings(ComponentInUseType xInnerC,
 			HComponent innerC) {
 		// Apply Parameter Renaming
@@ -911,9 +968,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			int w1 = (int) ve.getW();
 			Rectangle bounds = new Rectangle(x1, y1, w1, h1);
 			IHUnit u = null;
-			if (uBound.isSetReplica()) {
+			if (uBound.isSetSliceReplica()) {
 				u = innerC.fetchUnit(uBound.getURef(),
-						(int) uBound.getReplica());
+						(int) uBound.getSliceReplica());
 				if (u == null)
 					System.err.println("Replicated unit " + uBound.getURef()
 							+ " not found when loading inner component "
@@ -1016,23 +1073,24 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void supplyParameters(ComponentBodyType xCinfo) {
 
 		for (ParameterSupplyType xSupply : xCinfo.getSupplyParameter()) 
-		{
-			String varName = xSupply.getVarName();
-			if (!varName.startsWith("X###")) 
+			if (xSupply.isDirect())
 			{
-				String cRef = xSupply.getCRef();
-				ComponentInUseType c1 = mC1.get(cRef);
-				if (c1 != null) {
-					HComponent cSupply = mC2.get(mC1.get(cRef));
-					if (cSupply != null)
-						component.supplyParameter(varName, cSupply);
-				} else {
-					System.err
-							.print(cRef
-									+ " not found in suppyParameters (HComponentFactoryImpl)");
+				String varName = xSupply.getVarName();
+				if (!varName.startsWith("X###")) 
+				{
+					String cRef = xSupply.getCRef();
+					ComponentInUseType c1 = mC1.get(cRef);
+					if (c1 != null) {
+						HComponent cSupply = mC2.get(mC1.get(cRef));
+						if (cSupply != null)
+							component.supplyParameter(varName, cSupply);
+					} else {
+						System.err
+								.print(cRef
+										+ " not found in suppyParameters (HComponentFactoryImpl)");
+					}
 				}
 			}
-		}
 
 	}
 
@@ -1453,6 +1511,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		hidden_supplies.clear();
 
+		saveParameters(c, xI.getParameter()); // OK !
 		saveInnerComponents(c, xI.getInnerComponent()); // OK !
 		saveSupplyParameters(c, xI.getSupplyParameter()); // OK !
 		
@@ -1464,7 +1523,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		
 		hidden_supplies.clear();
 		
-		saveParameters(c, xI.getParameter()); // OK !
 		saveInnerRenamings(c, xI.getInnerRenaming());
 		saveFusions(c, xI.getFusion());
 		// saveSplits(c, xI.getSplit());
@@ -1582,6 +1640,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
+	private Map<String, String> cparameters = new HashMap<String, String>();
+	
 	private void saveParameters(HComponent c, EList<ParameterType> xI) {
 
 		List<HComponent> cs = new ArrayList<HComponent>();
@@ -1612,6 +1672,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				p.setFormFieldId(formFieldId);
 				p.setComponentRef(cRef);
 				p.setVarName(varName);
+				
+				cparameters.put(varName, cRef);
 				
 				// parameters must be saved with an order.
 				int order = component.getParameterOrder(formFieldId);
@@ -1646,9 +1708,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		List<String> cRefs = new ArrayList<String>();
 		List<String> cRefsSupply = new ArrayList<String>();
+		Map<HComponent,String> newRefMap = new HashMap<HComponent,String>();
 
 		for (HComponent cInner : c.getComponents()) {
 			cs.add(cInner);
+			newRefMap.put(cInner, cInner.getRef());
 			String cRef = cInner.getRef();
 			if (cRefs.contains(cRef)) {
 				throw new DuplicatedRefInnerException(cRef);
@@ -1658,15 +1722,21 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 
 		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
-			if (!c.isTransitiveSupplier(p.getKey())) {
+			/*if (!c.isTransitiveSupplier(p.getKey()))*/ 
+		{
 				String cRef = p.getValue().getRef();
-				if (cRefsSupply.contains(cRef)) {
-					throw new DuplicatedRefInnerException(cRef);
-				} else {
-					if (!cRefs.contains(cRef)) {
-						cs.add(i++, p.getValue());
-						cRefs.add(cRef);
-						cRefsSupply.add(cRef);
+				cRef = c.isTransitiveSupplier(p.getKey()) ? "T###" + cRef + p.getValue().hashCode() : cRef;
+				if (!(cRefsSupply.contains(cRef) && cRef.startsWith("T###")))
+				{
+					if (cRefsSupply.contains(cRef)) {
+						throw new DuplicatedRefInnerException(cRef);
+					} else {
+						if (!cRefs.contains(cRef)) {
+							cs.add(i++, p.getValue());
+							newRefMap.put(p.getValue(), cRef);
+							cRefs.add(cRef);
+							cRefsSupply.add(cRef);
+						}
 					}
 				}
 			}
@@ -1686,7 +1756,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				InnerComponentType d = factory.createInnerComponentType();
 
+				String oldRef = ic.getRef();
+				String newRef = newRefMap.get(ic);
+				ic.setName(newRef);
 				saveInnerComponent(ic, d);
+				ic.setName(oldRef);
 
 				xI.add(d);
 			}
@@ -1758,8 +1832,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (HComponent c : ic.getExposedComponents()) 
 		{
 			InnerComponentType port = factory.createInnerComponentType();
+			HComponent c_ = c.getSupplier() != null ? c.getSupplier() : c;
+			c_.setExposed(c.isPublic());
 
-			saveInnerComponent(c, port);
+			saveInnerComponent(c_, port);
 
 			String pRef = c.getSavedName().get(ic);
 			port.setLocalRef(pRef != null ? pRef : c.getRef());
@@ -1772,27 +1848,33 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveUnitBounds(List<IHUnit> units,
 			EList<UnitBoundsType> unitBounds) {
 
-		Integer replica = null;
 
-		for (IHUnit u_ : units) {
-
-			for (IHPrimUnit u : u_.getClones()) {
+		for (IHUnit u_ : units) 
+		{
+			for (IHPrimUnit u : u_.getClones()) 
+			{
+				Integer slice_replica = null;
+				
 				if (u.isClone()) {
-					replica = u.cloneOf().getIndexOfClone(u);
+					slice_replica = u.cloneOf().getIndexOfClone(u);
 				} else if (u.isCloned()) {
-					replica = 0;
+					slice_replica = 0;
 				}
 
 				UnitBoundsType b = factory.createUnitBoundsType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 
-				b.setURef(u.getName2());
+				b.setURef(u instanceof HUnitStub ? ((HUnitStub) u).getOriginalName() : u.getName2());
 				b.setParallel(((IHUnit) u).isMultiple());
-				if (replica != null)
-					b.setReplica(replica);
+				
+				if (slice_replica != null)
+				{
+					int unit_replica = u.getUnitReplicaIndex();
+					b.setSliceReplica(slice_replica); 
+					b.setUnitReplica(unit_replica); 
+				}
+				
 				b.setVisualDescription(v);
-
 				saveVisualDescription(u, v);
 
 				unitBounds.add(b);
@@ -1816,10 +1898,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private List<Pair<InnerComponentType, ParameterSupplyType>> hidden_supplies = new ArrayList<Pair<InnerComponentType, ParameterSupplyType>>(); 
 	
 	private void saveParameterRenamings(HComponent c,
-			EList<ParameterRenaming> parameterRenamings) throws UndefinedRefInnerException {
+			EList<ParameterRenaming> parameterRenamings) throws UndefinedRefInnerException 
+	{
 
-		for (Entry<String, List<HComponent>> param : c.getParameters().entrySet()) {
-
+		for (Entry<String, List<HComponent>> param : c.getParameters().entrySet()) 
+		{
 			String formField = null;
 			String varName = null;
 
@@ -1834,18 +1917,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				{
 					InnerComponentType par_port  = factory.createInnerComponentType();
 					String cRefSave = cc.getRef();
-					String cRefNew = "C###" + System.currentTimeMillis();
+					String cRefNew = "C###" + par_port.hashCode();
 					cc.setName(cRefNew);
 					saveInnerComponent(cc, par_port);
 					cc.setName(cRefSave);
-					varName = "X###" + System.currentTimeMillis();
+					varName = varName.equals("?") ? "X###" + par_port.hashCode() : varName;
 										
 					ParameterSupplyType s = factory.createParameterSupplyType();
 					s.setCRef(cRefNew);
 					s.setVarName(varName);
 					
-					hidden_supplies.add(new Pair<InnerComponentType, ParameterSupplyType>(par_port,s));
-					
+					hidden_supplies.add(new Pair<InnerComponentType, ParameterSupplyType>(par_port,s));					
 				}
 				// varName =
 				// cc.getVariableName(c.getTopParentConfigurations().get(0));
@@ -1858,12 +1940,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				// ---------------
 
-				ParameterRenaming r = factory.createParameterRenaming();
-
-				r.setFormFieldId(formField);
-				r.setVarName(varName);
-
-				parameterRenamings.add(r);
+				if (!formField.equals("type ?"))
+				{
+					ParameterRenaming r = factory.createParameterRenaming();
+	
+					r.setFormFieldId(formField);
+					r.setVarName(varName);
+	
+					parameterRenamings.add(r);
+				}
 			}
 		}
 
@@ -2112,14 +2197,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				parX.setVarid(parameter.fst());
 				parX.setIname(parameter.snd().getPrimName());
 				parX.setUname(parameter.snd().getCompliantUnits().get(0).getName2());
+								
 				int order = component.getParameterOrder(par_id); 
 				if (order >= 0) 
 				{ 
 					parameter_order.put(order,parX); // record parameter global orders 
 					max_order = order > max_order ? order : max_order;
 				}
-				else
-					Assert.isTrue(order >= 0);
+				//else
+				//	Assert.isTrue(order >= 0);
 				parametersX.add(parX);
 				m.put(parX.getParid(), parX.getOrder());
 			}
@@ -2364,7 +2450,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				isSubUnit = u.hasStubs();
 				isPrivate = u.getHidden();
 				isMultiple = u.isMultiple();
-				index = u.getIndex();
+				index = u.getSliceReplicaIndex();
 				visibleInterface = u.visibleInterface();
 				uRef = u.getName2();
 				HInterface i = (HInterface) u.getInterface();
@@ -2391,7 +2477,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					superUnit.setCRef(cRefSuper);
 					superUnit.setURef(uRefSuper);
 					if (replica != null)
-						superUnit.setReplica(replica);
+						superUnit.setSliceReplica(replica);
 					uX.setSuper(superUnit);
 				}
 				saveVisualDescription(u, v);
@@ -2459,24 +2545,25 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				IHUnit e = slice.getBinding().getEntry();
 
 				UnitSliceType sliceX = factory.createUnitSliceType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 				List<String> portsX = sliceX.getPort();
 
 				String cRef = null;
 				String uRef = null;
 				int replica = 0;
+//				int replica_slice = 0;
 				String sName = null;
 
 				HUnit uSource = (HUnit) slice.getComponentEntry();
 
 				cRef = uSource.getConfiguration().getRef();
 				uRef = uSource.getName2();
-				replica = uSource.getIndex();
+				replica = uSource.getSliceReplicaIndex();
+//				replica_slice = uSource.getIndexSlice();
 
 				sName = slice.getName();
 
-				sliceX.setReplica(replica);
+				sliceX.setSliceReplica(replica);
 
 				// ---------------
 
@@ -2506,28 +2593,28 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveSupplyParameters(HComponent c,
 			EList<ParameterSupplyType> xI) {
 
-		for (Entry<String, HComponent> pair : c.getSupplierComponents()
-				.entrySet())
-			if (!c.isTransitiveSupplier(pair.getKey())) {
+		for (Entry<String, HComponent> pair : c.getSupplierComponents().entrySet())
+		{
+			ParameterSupplyType s = factory.createParameterSupplyType();
+			String cRef = null;
+			String varName = null;
 
-				ParameterSupplyType s = factory.createParameterSupplyType();
-				String cRef = null;
-				String varName = null;
+			// SETUP VARIABLES
 
-				// SETUP VARIABLES
+			HComponent supplier = pair.getValue();
 
-				HComponent supplier = pair.getValue();
+			varName = pair.getKey();
+			cRef = supplier.getRef();
 
-				varName = pair.getKey();
-				cRef = supplier.getRef();
+			// ---------------
 
-				// ---------------
+			cRef = c.isTransitiveSupplier(pair.getKey()) ? "T###" + cRef + supplier.hashCode() : cRef; 
+			s.setCRef(cRef);
+			s.setVarName(varName);
+			s.setDirect(!c.isTransitiveSupplier(pair.getKey()));
 
-				s.setCRef(cRef);
-				s.setVarName(varName);
-
-				xI.add(s);
-			}
+			xI.add(s);
+		} 
 
 	}
 
@@ -2609,32 +2696,36 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						HComponent c1 = mC2.get(mC1.get(cRef));
 						// if (!(c1 instanceof HEnumeratorComponent)) {
 						IHUnit u1 = null;
-						if (uSliceX.isSetReplica() && uSliceX.getReplica() > 0) {
-							Integer replica = uSliceX.getReplica();
-							int iReplica = replica.intValue();
-							u1 = c1.fetchUnit(uRef, iReplica);
+//						if (uSliceX.isSetSliceReplica() && uSliceX.getSliceReplica() > 0) {
+//							Integer replica = uSliceX.getSliceReplica();
+//							int iReplica = replica.intValue();
+//							u1 = c1.fetchUnit(uRef, iReplica);
+//						} else {
+//							u1 = c1.fetchUnit(uRef);
+//						}
+						if (uSliceX.isSetSliceReplica()) 
+						{
+							Integer slice_replica_index = uSliceX.getSliceReplica();
+						    //String unit_slice_ref = this.mkUnitSliceRef(cRef, uRef, slice_replica_index);
+						    //int unit_replica_index = this.unitSliceIndexMapping.containsKey(unit_slice_ref) ? this.unitSliceIndexMapping.get(unit_slice_ref) : slice_replica_index;
+							u1 = c1.fetchUnit(uRef, slice_replica_index);
 						} else {
 							u1 = c1.fetchUnit(uRef);
 						}
 
-						if (u1 == null) {
-							System.err
-									.println("HComponentFactoryImpl.loadSlices(): IHUnit "
-											+ uRef + " not found in " + cRef);
-							JOptionPane.showMessageDialog(null,
-									"HComponentFactoryImpl.loadSlices(): IHUnit "
-											+ uRef + " not found in " + cRef,
-									"Loading Component Error",
-									JOptionPane.ERROR_MESSAGE);
-						} else {
+						if (u1 == null) 
+						{
+							System.err.println("HComponentFactoryImpl.loadSlices(): IHUnit "+ uRef + " not found in " + cRef);
+							JOptionPane.showMessageDialog(null,"HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
+						} 
+						else 
+						{
 							// try {
-							BindingCreateCommand comm = new BindingCreateCommand(
-									u1);
+							BindingCreateCommand comm = new BindingCreateCommand(u1);
 							comm.setUnit(u);
 							comm.setWhere(new Point(x, y));
 							comm.execute();
-							HUnitSlice uSlice = (HUnitSlice) comm
-									.getBindingTarget();
+							HUnitSlice uSlice = (HUnitSlice) comm.getBindingTarget();
 							// HUnitSlice uSlice = (HUnitSlice)
 							// component.createBinding(u1, u, new Point(x,y));
 							uSlice.setBounds(new Rectangle(x, y, w, h));
@@ -2886,14 +2977,16 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				u = c.createUnit();
 			}
 		} else {
-			if (component.getSuperType() != null) {
-				u = (HUnit) (xUsuper != null ? lookForSuperUnit(xUsuper) : c
-						.getUnitByName(uName, 0).createReplica(index));
+			if (component.getSuperType() != null) 
+			{
+				IHPrimUnit u_ = c.getUnitByName(uName, 0);
+				u = (HUnit) (xUsuper != null ? lookForSuperUnit(xUsuper) : u_.createReplica(u_,index));
 			} else if (!component.isAbstractConfiguration()) {
-				u = (HUnit) (xUsuper != null ? lookForImplementingUnit(xUsuper)
-						: c.getUnitByName(uName, 0).createReplica(index));
+				IHPrimUnit u_ = c.getUnitByName(uName, 0);
+				u = (HUnit) (xUsuper != null ? lookForImplementingUnit(xUsuper) : u_.createReplica(u_,index));
 			} else {
-				u = (HUnit) c.getUnitByName(uName, 0).createReplica(index - 1);
+				IHPrimUnit u_ = c.getUnitByName(uName, 0);
+				u = (HUnit) u_.createReplica(u_,index - 1);
 			}
 		}
 

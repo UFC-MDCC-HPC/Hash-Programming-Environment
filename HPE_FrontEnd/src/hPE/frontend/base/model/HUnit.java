@@ -800,8 +800,9 @@ public abstract class HUnit extends HPrimUnit
 	    }
 	    
 	    
-	    public HPrimUnit createReplica(int shift) {
-	    	HUnit u = (HUnit) super.createReplica(shift);
+	    public HPrimUnit createReplica(IHPrimUnit cloned_unit, int shift) 
+	    {
+	    	HUnit u = (HUnit) super.createReplica(cloned_unit, shift);
 	    	//u.stubs = new ArrayList<HUnitStub>(this.stubs);
 	    	u.unitSlices = new ArrayList<HUnitSlice>();
 	    	//for (HUnitSlice s : this.getSlices()) {

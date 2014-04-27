@@ -28,7 +28,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#isParallel <em>Parallel</em>}</li>
- *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getReplica <em>Replica</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getSliceReplica <em>Slice Replica</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getUnitReplica <em>Unit Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitBoundsTypeImpl#getURef <em>URef</em>}</li>
  * </ul>
  * </p>
@@ -76,33 +77,62 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	protected boolean parallelESet;
 
 	/**
-	 * The default value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * The default value of the '{@link #getSliceReplica() <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReplica()
+	 * @see #getSliceReplica()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final long REPLICA_EDEFAULT = 0L;
+	protected static final int SLICE_REPLICA_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * The cached value of the '{@link #getSliceReplica() <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReplica()
+	 * @see #getSliceReplica()
 	 * @generated
 	 * @ordered
 	 */
-	protected long replica = REPLICA_EDEFAULT;
+	protected int sliceReplica = SLICE_REPLICA_EDEFAULT;
 
 	/**
-	 * This is true if the Replica attribute has been set.
+	 * This is true if the Slice Replica attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean replicaESet;
+	protected boolean sliceReplicaESet;
+
+	/**
+	 * The default value of the '{@link #getUnitReplica() <em>Unit Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnitReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int UNIT_REPLICA_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getUnitReplica() <em>Unit Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnitReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected int unitReplica = UNIT_REPLICA_EDEFAULT;
+
+	/**
+	 * This is true if the Unit Replica attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean unitReplicaESet;
 
 	/**
 	 * The default value of the '{@link #getURef() <em>URef</em>}' attribute.
@@ -237,8 +267,8 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public long getReplica() {
-		return replica;
+	public int getSliceReplica() {
+		return sliceReplica;
 	}
 
 	/**
@@ -246,13 +276,13 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReplica(long newReplica) {
-		long oldReplica = replica;
-		replica = newReplica;
-		boolean oldReplicaESet = replicaESet;
-		replicaESet = true;
+	public void setSliceReplica(int newSliceReplica) {
+		int oldSliceReplica = sliceReplica;
+		sliceReplica = newSliceReplica;
+		boolean oldSliceReplicaESet = sliceReplicaESet;
+		sliceReplicaESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA, oldReplica, replica, !oldReplicaESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_BOUNDS_TYPE__SLICE_REPLICA, oldSliceReplica, sliceReplica, !oldSliceReplicaESet));
 	}
 
 	/**
@@ -260,13 +290,13 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void unsetReplica() {
-		long oldReplica = replica;
-		boolean oldReplicaESet = replicaESet;
-		replica = REPLICA_EDEFAULT;
-		replicaESet = false;
+	public void unsetSliceReplica() {
+		int oldSliceReplica = sliceReplica;
+		boolean oldSliceReplicaESet = sliceReplicaESet;
+		sliceReplica = SLICE_REPLICA_EDEFAULT;
+		sliceReplicaESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA, oldReplica, REPLICA_EDEFAULT, oldReplicaESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_BOUNDS_TYPE__SLICE_REPLICA, oldSliceReplica, SLICE_REPLICA_EDEFAULT, oldSliceReplicaESet));
 	}
 
 	/**
@@ -274,8 +304,54 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isSetReplica() {
-		return replicaESet;
+	public boolean isSetSliceReplica() {
+		return sliceReplicaESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getUnitReplica() {
+		return unitReplica;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUnitReplica(int newUnitReplica) {
+		int oldUnitReplica = unitReplica;
+		unitReplica = newUnitReplica;
+		boolean oldUnitReplicaESet = unitReplicaESet;
+		unitReplicaESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_BOUNDS_TYPE__UNIT_REPLICA, oldUnitReplica, unitReplica, !oldUnitReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetUnitReplica() {
+		int oldUnitReplica = unitReplica;
+		boolean oldUnitReplicaESet = unitReplicaESet;
+		unitReplica = UNIT_REPLICA_EDEFAULT;
+		unitReplicaESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_BOUNDS_TYPE__UNIT_REPLICA, oldUnitReplica, UNIT_REPLICA_EDEFAULT, oldUnitReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUnitReplica() {
+		return unitReplicaESet;
 	}
 
 	/**
@@ -325,8 +401,10 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 				return getVisualDescription();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
 				return isParallel();
-			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
-				return getReplica();
+			case ComponentPackage.UNIT_BOUNDS_TYPE__SLICE_REPLICA:
+				return getSliceReplica();
+			case ComponentPackage.UNIT_BOUNDS_TYPE__UNIT_REPLICA:
+				return getUnitReplica();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
 				return getURef();
 		}
@@ -347,8 +425,11 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
 				setParallel((Boolean)newValue);
 				return;
-			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
-				setReplica((Long)newValue);
+			case ComponentPackage.UNIT_BOUNDS_TYPE__SLICE_REPLICA:
+				setSliceReplica((Integer)newValue);
+				return;
+			case ComponentPackage.UNIT_BOUNDS_TYPE__UNIT_REPLICA:
+				setUnitReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
 				setURef((String)newValue);
@@ -371,8 +452,11 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
 				unsetParallel();
 				return;
-			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
-				unsetReplica();
+			case ComponentPackage.UNIT_BOUNDS_TYPE__SLICE_REPLICA:
+				unsetSliceReplica();
+				return;
+			case ComponentPackage.UNIT_BOUNDS_TYPE__UNIT_REPLICA:
+				unsetUnitReplica();
 				return;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
 				setURef(UREF_EDEFAULT);
@@ -393,8 +477,10 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 				return visualDescription != null;
 			case ComponentPackage.UNIT_BOUNDS_TYPE__PARALLEL:
 				return isSetParallel();
-			case ComponentPackage.UNIT_BOUNDS_TYPE__REPLICA:
-				return isSetReplica();
+			case ComponentPackage.UNIT_BOUNDS_TYPE__SLICE_REPLICA:
+				return isSetSliceReplica();
+			case ComponentPackage.UNIT_BOUNDS_TYPE__UNIT_REPLICA:
+				return isSetUnitReplica();
 			case ComponentPackage.UNIT_BOUNDS_TYPE__UREF:
 				return UREF_EDEFAULT == null ? uRef != null : !UREF_EDEFAULT.equals(uRef);
 		}
@@ -413,8 +499,10 @@ public class UnitBoundsTypeImpl extends EObjectImpl implements UnitBoundsType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (parallel: ");
 		if (parallelESet) result.append(parallel); else result.append("<unset>");
-		result.append(", replica: ");
-		if (replicaESet) result.append(replica); else result.append("<unset>");
+		result.append(", sliceReplica: ");
+		if (sliceReplicaESet) result.append(sliceReplica); else result.append("<unset>");
+		result.append(", unitReplica: ");
+		if (unitReplicaESet) result.append(unitReplica); else result.append("<unset>");
 		result.append(", uRef: ");
 		result.append(uRef);
 		result.append(')');

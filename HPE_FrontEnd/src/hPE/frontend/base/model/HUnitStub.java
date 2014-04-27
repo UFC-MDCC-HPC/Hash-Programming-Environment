@@ -220,9 +220,15 @@ public class HUnitStub extends HPrimUnitStub implements IHUnit {
 	}
 
 	@Override
-	public int getIndex() {
+	public int getSliceReplicaIndex() {
 		// TODO Auto-generated method stub
-		return this.getActualUnit().getIndex();
+		return this.getActualUnit().getSliceReplicaIndex();
+	}
+
+	@Override
+	public int getUnitReplicaIndex() {
+		// TODO Auto-generated method stub
+		return this.getActualUnit().getUnitReplicaIndex();
 	}
 
 

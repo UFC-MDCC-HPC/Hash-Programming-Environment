@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.ParameterSupplyTypeImpl#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ParameterSupplyTypeImpl#isDirect <em>Direct</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterSupplyTypeImpl#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
@@ -50,6 +51,35 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 	 * @ordered
 	 */
 	protected String cRef = CREF_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isDirect() <em>Direct</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDirect()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DIRECT_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isDirect() <em>Direct</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDirect()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean direct = DIRECT_EDEFAULT;
+
+	/**
+	 * This is true if the Direct attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean directESet;
 
 	/**
 	 * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
@@ -116,6 +146,52 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDirect() {
+		return direct;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDirect(boolean newDirect) {
+		boolean oldDirect = direct;
+		direct = newDirect;
+		boolean oldDirectESet = directESet;
+		directESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PARAMETER_SUPPLY_TYPE__DIRECT, oldDirect, direct, !oldDirectESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetDirect() {
+		boolean oldDirect = direct;
+		boolean oldDirectESet = directESet;
+		direct = DIRECT_EDEFAULT;
+		directESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.PARAMETER_SUPPLY_TYPE__DIRECT, oldDirect, DIRECT_EDEFAULT, oldDirectESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetDirect() {
+		return directESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getVarName() {
 		return varName;
 	}
@@ -142,6 +218,8 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 		switch (featureID) {
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__CREF:
 				return getCRef();
+			case ComponentPackage.PARAMETER_SUPPLY_TYPE__DIRECT:
+				return isDirect();
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__VAR_NAME:
 				return getVarName();
 		}
@@ -158,6 +236,9 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 		switch (featureID) {
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__CREF:
 				setCRef((String)newValue);
+				return;
+			case ComponentPackage.PARAMETER_SUPPLY_TYPE__DIRECT:
+				setDirect((Boolean)newValue);
 				return;
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__VAR_NAME:
 				setVarName((String)newValue);
@@ -177,6 +258,9 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__CREF:
 				setCRef(CREF_EDEFAULT);
 				return;
+			case ComponentPackage.PARAMETER_SUPPLY_TYPE__DIRECT:
+				unsetDirect();
+				return;
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__VAR_NAME:
 				setVarName(VAR_NAME_EDEFAULT);
 				return;
@@ -194,6 +278,8 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 		switch (featureID) {
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__CREF:
 				return CREF_EDEFAULT == null ? cRef != null : !CREF_EDEFAULT.equals(cRef);
+			case ComponentPackage.PARAMETER_SUPPLY_TYPE__DIRECT:
+				return isSetDirect();
 			case ComponentPackage.PARAMETER_SUPPLY_TYPE__VAR_NAME:
 				return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
 		}
@@ -212,6 +298,8 @@ public class ParameterSupplyTypeImpl extends EObjectImpl implements ParameterSup
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (cRef: ");
 		result.append(cRef);
+		result.append(", direct: ");
+		if (directESet) result.append(direct); else result.append("<unset>");
 		result.append(", varName: ");
 		result.append(varName);
 		result.append(')');

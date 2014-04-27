@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.UnitRefType#getCRef <em>CRef</em>}</li>
- *   <li>{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitRefType#getURef <em>URef</em>}</li>
  * </ul>
  * </p>
@@ -83,59 +83,59 @@ public interface UnitRefType extends EObject {
 	boolean isSetCRef();
 
 	/**
-	 * Returns the value of the '<em><b>Replica</b></em>' attribute.
+	 * Returns the value of the '<em><b>Slice Replica</b></em>' attribute.
 	 * The default value is <code>"0"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Replica</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Slice Replica</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Replica</em>' attribute.
-	 * @see #isSetReplica()
-	 * @see #unsetReplica()
-	 * @see #setReplica(int)
-	 * @see hPE.xml.component.ComponentPackage#getUnitRefType_Replica()
+	 * @return the value of the '<em>Slice Replica</em>' attribute.
+	 * @see #isSetSliceReplica()
+	 * @see #unsetSliceReplica()
+	 * @see #setSliceReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitRefType_SliceReplica()
 	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
-	 *        extendedMetaData="kind='attribute' name='replica'"
+	 *        extendedMetaData="kind='attribute' name='slice_replica'"
 	 * @generated
 	 */
-	int getReplica();
+	int getSliceReplica();
 
 	/**
-	 * Sets the value of the '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}' attribute.
+	 * Sets the value of the '{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Replica</em>' attribute.
-	 * @see #isSetReplica()
-	 * @see #unsetReplica()
-	 * @see #getReplica()
+	 * @param value the new value of the '<em>Slice Replica</em>' attribute.
+	 * @see #isSetSliceReplica()
+	 * @see #unsetSliceReplica()
+	 * @see #getSliceReplica()
 	 * @generated
 	 */
-	void setReplica(int value);
+	void setSliceReplica(int value);
 
 	/**
-	 * Unsets the value of the '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}' attribute.
+	 * Unsets the value of the '{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isSetReplica()
-	 * @see #getReplica()
-	 * @see #setReplica(int)
+	 * @see #isSetSliceReplica()
+	 * @see #getSliceReplica()
+	 * @see #setSliceReplica(int)
 	 * @generated
 	 */
-	void unsetReplica();
+	void unsetSliceReplica();
 
 	/**
-	 * Returns whether the value of the '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}' attribute is set.
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Replica</em>' attribute is set.
-	 * @see #unsetReplica()
-	 * @see #getReplica()
-	 * @see #setReplica(int)
+	 * @return whether the value of the '<em>Slice Replica</em>' attribute is set.
+	 * @see #unsetSliceReplica()
+	 * @see #getSliceReplica()
+	 * @see #setSliceReplica(int)
 	 * @generated
 	 */
-	boolean isSetReplica();
+	boolean isSetSliceReplica();
 
 	/**
 	 * Returns the value of the '<em><b>URef</b></em>' attribute.

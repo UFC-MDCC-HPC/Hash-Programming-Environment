@@ -217,11 +217,14 @@
 
 	</complexType>
 	<complexType name="UnitRefType">
-		<sequence>
-			</sequence>
-		<attribute name="cRef" type="string" use="optional" default="this"></attribute>
+		<sequence></sequence>
+		<attribute name="cRef" type="string" use="optional"
+			default="this">
+		</attribute>
 		<attribute name="uRef" type="string" use="required"></attribute>
-		<attribute name="replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="slice_replica" type="int" use="optional"
+			default="0">
+		</attribute>
 	</complexType>
 	<complexType name="InterfaceSliceRefType">
 		<sequence>
@@ -231,10 +234,10 @@
 		<attribute name="sliceRef" type="string" use="optional"></attribute>
 	</complexType>
 	<complexType name="ParameterSupplyType">
-		<sequence minOccurs="1" maxOccurs="1">
-			</sequence>
+		<sequence minOccurs="1" maxOccurs="1"></sequence>
 		<attribute name="varName" type="string" use="required"></attribute>
 		<attribute name="cRef" type="string" use="required"></attribute>
+		<attribute name="direct" type="boolean" use="optional" default="true"></attribute>
 	</complexType>
 	<complexType name="EnumeratorRefType">
 		<sequence>
@@ -391,8 +394,9 @@
 			</element>
 		</sequence>
 		<attribute name="uRef" type="string"></attribute>
-		<attribute name="replica" type="unsignedInt" use="optional"></attribute>
 		<attribute name="parallel" type="boolean" use="optional"></attribute>
+		<attribute name="slice_replica" type="int" use="optional"></attribute>
+		<attribute name="unit_replica" type="int" use="optional"></attribute>
 	</complexType>
 
 

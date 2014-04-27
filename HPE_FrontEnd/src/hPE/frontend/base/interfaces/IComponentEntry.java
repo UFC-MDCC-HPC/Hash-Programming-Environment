@@ -18,6 +18,6 @@ public interface IComponentEntry {
 	
 	public IConfiguration getConfiguration();
 
-	public int getIndex();
+	public int getSliceReplicaIndex();
 	
 }

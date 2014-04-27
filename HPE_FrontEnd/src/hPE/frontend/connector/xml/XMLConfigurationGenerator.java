@@ -271,7 +271,7 @@ public class XMLConfigurationGenerator {
 			hPE.frontend.connector.xml.component.Unittype uX = factory.createUnittype(); 
 			
 			String uName = u.getName2();
-			int uIndex = u.getIndex();
+			int uIndex = u.getSliceReplicaIndex();
 			boolean uParallel = u.isMultiple();
 			ProtocolChoiceType uProtocol = factory.createProtocolChoiceType();
 			
@@ -416,7 +416,7 @@ public class XMLConfigurationGenerator {
 
 				cRef = uSource.getConfiguration().getRef();
 				uRef = uSource.getName2();
-				replica = uSource.getIndex();
+				replica = uSource.getSliceReplicaIndex();
 
 				sX.setInner(cRef);
 				sX.setUnit(uRef);

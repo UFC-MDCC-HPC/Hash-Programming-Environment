@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getCRef <em>CRef</em>}</li>
- *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getReplica <em>Replica</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getURef <em>URef</em>}</li>
  * </ul>
  * </p>
@@ -62,33 +62,33 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	protected boolean cRefESet;
 
 	/**
-	 * The default value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * The default value of the '{@link #getSliceReplica() <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReplica()
+	 * @see #getSliceReplica()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int REPLICA_EDEFAULT = 0;
+	protected static final int SLICE_REPLICA_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * The cached value of the '{@link #getSliceReplica() <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReplica()
+	 * @see #getSliceReplica()
 	 * @generated
 	 * @ordered
 	 */
-	protected int replica = REPLICA_EDEFAULT;
+	protected int sliceReplica = SLICE_REPLICA_EDEFAULT;
 
 	/**
-	 * This is true if the Replica attribute has been set.
+	 * This is true if the Slice Replica attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean replicaESet;
+	protected boolean sliceReplicaESet;
 
 	/**
 	 * The default value of the '{@link #getURef() <em>URef</em>}' attribute.
@@ -180,8 +180,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getReplica() {
-		return replica;
+	public int getSliceReplica() {
+		return sliceReplica;
 	}
 
 	/**
@@ -189,13 +189,13 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReplica(int newReplica) {
-		int oldReplica = replica;
-		replica = newReplica;
-		boolean oldReplicaESet = replicaESet;
-		replicaESet = true;
+	public void setSliceReplica(int newSliceReplica) {
+		int oldSliceReplica = sliceReplica;
+		sliceReplica = newSliceReplica;
+		boolean oldSliceReplicaESet = sliceReplicaESet;
+		sliceReplicaESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_REF_TYPE__REPLICA, oldReplica, replica, !oldReplicaESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA, oldSliceReplica, sliceReplica, !oldSliceReplicaESet));
 	}
 
 	/**
@@ -203,13 +203,13 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void unsetReplica() {
-		int oldReplica = replica;
-		boolean oldReplicaESet = replicaESet;
-		replica = REPLICA_EDEFAULT;
-		replicaESet = false;
+	public void unsetSliceReplica() {
+		int oldSliceReplica = sliceReplica;
+		boolean oldSliceReplicaESet = sliceReplicaESet;
+		sliceReplica = SLICE_REPLICA_EDEFAULT;
+		sliceReplicaESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_REF_TYPE__REPLICA, oldReplica, REPLICA_EDEFAULT, oldReplicaESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA, oldSliceReplica, SLICE_REPLICA_EDEFAULT, oldSliceReplicaESet));
 	}
 
 	/**
@@ -217,8 +217,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isSetReplica() {
-		return replicaESet;
+	public boolean isSetSliceReplica() {
+		return sliceReplicaESet;
 	}
 
 	/**
@@ -252,8 +252,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return getCRef();
-			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				return getReplica();
+			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
+				return getSliceReplica();
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				return getURef();
 		}
@@ -271,8 +271,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				setCRef((String)newValue);
 				return;
-			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				setReplica((Integer)newValue);
+			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
+				setSliceReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				setURef((String)newValue);
@@ -292,8 +292,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				unsetCRef();
 				return;
-			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				unsetReplica();
+			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
+				unsetSliceReplica();
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				setURef(UREF_EDEFAULT);
@@ -312,8 +312,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return isSetCRef();
-			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
-				return isSetReplica();
+			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
+				return isSetSliceReplica();
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
 				return UREF_EDEFAULT == null ? uRef != null : !UREF_EDEFAULT.equals(uRef);
 		}
@@ -332,8 +332,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (cRef: ");
 		if (cRefESet) result.append(cRef); else result.append("<unset>");
-		result.append(", replica: ");
-		if (replicaESet) result.append(replica); else result.append("<unset>");
+		result.append(", sliceReplica: ");
+		if (sliceReplicaESet) result.append(sliceReplica); else result.append("<unset>");
 		result.append(", uRef: ");
 		result.append(uRef);
 		result.append(')');

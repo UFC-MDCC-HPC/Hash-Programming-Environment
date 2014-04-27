@@ -177,7 +177,7 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 	 } */
 
 
-	public abstract HPrimUnit createReplica(int i);
+	public abstract HPrimUnit createReplica(IHPrimUnit cloned_unit, int i);
 
 //	public abstract IHPrimUnit getCopy(HComponent newConfiguration,
 	//		Rectangle bounds);
@@ -226,5 +226,6 @@ public interface IHPrimUnit extends IHasInterface, IPropertyChangeListener, HNam
 
 	public abstract int getIndexOfClone(IHPrimUnit u);
 	
-	public int getIndex();
+	public int getSliceReplicaIndex();
+	public int getUnitReplicaIndex();
 }

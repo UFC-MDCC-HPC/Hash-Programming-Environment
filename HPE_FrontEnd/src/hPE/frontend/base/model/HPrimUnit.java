@@ -628,6 +628,19 @@ public abstract class HPrimUnit extends HVisualElement
 		else return this.myClones.indexOf(u)+1;
 	}
 
+	
+	private int index_slice = 0;
+	
+	public int getUnitReplicaIndex() {
+		
+		return index_slice;
+	}
+	
+	public int setIndexSlice(int index_slice) {
+		
+		return this.index_slice = index_slice;
+	}
+	
 	private void addClone(IHPrimUnit unit,int shift) {
 		myClones.add(shift,unit);
 	}
@@ -640,7 +653,7 @@ public abstract class HPrimUnit extends HVisualElement
 		return this.cloneOf;
 	}
 	
-	public int getIndex() 
+	public int getSliceReplicaIndex() 
 	{
 		if (this.isClone())
 			return this.cloneOf.getIndexOfClone(this);
@@ -648,24 +661,30 @@ public abstract class HPrimUnit extends HVisualElement
 			return 0;
 
 	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see hPE.model.IHPrimUnit#getReplica()
 	 */
-	public HPrimUnit createReplica(int shift) {
+	public HPrimUnit createReplica(IHPrimUnit cloned_unit, int shift) {
 		try {
-			HPrimUnit cloneOfThis = (HPrimUnit) this.clone();
+			
+			HPrimUnit cloned_unit_ = (HPrimUnit) cloned_unit;
+			
+			HPrimUnit cloneOfThis = (HPrimUnit) cloned_unit_.clone();
 			cloneOfThis.myClones = null;
 //	    	cloneOfThis.cloneBySplit = null;
 			cloneOfThis.isClone = true;
 			cloneOfThis.setClone(this);
 			this.addClone(cloneOfThis,shift);
 //			cloneOfThis.linkToReplicator = new ArrayList<HLinkToReplicator>();
-			cloneOfThis.linkToInterface = this.linkToInterface != null ? this.linkToInterface.replicateMe(cloneOfThis) : null;
+			cloneOfThis.linkToInterface = cloned_unit_.linkToInterface != null ? cloned_unit_.linkToInterface.replicateMe(cloneOfThis) : null;
 			cloneOfThis.myClones = new ArrayList<IHPrimUnit>();
 			cloneOfThis.bindings = new ArrayList<HBinding>();
 			cloneOfThis.setBounds(this.getBounds().getCopy().translate((this.getBounds().width+2)*(shift+1),0));
-			
+
+			cloneOfThis.setIndexSlice(cloned_unit_.isEntry() ? cloned_unit.getUnitReplicaIndex() : cloneOfThis.getSliceReplicaIndex());
+						
 			/* The clone is not returned by getUnits */
 			//((HComponent)this.getConfiguration()).newUnit((IHUnit)cloneOfThis);
 			return cloneOfThis;

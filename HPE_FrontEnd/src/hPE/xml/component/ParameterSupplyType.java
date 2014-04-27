@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.ParameterSupplyType#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.ParameterSupplyType#isDirect <em>Direct</em>}</li>
  *   <li>{@link hPE.xml.component.ParameterSupplyType#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
@@ -52,6 +53,61 @@ public interface ParameterSupplyType extends EObject {
 	 * @generated
 	 */
 	void setCRef(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Direct</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Direct</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Direct</em>' attribute.
+	 * @see #isSetDirect()
+	 * @see #unsetDirect()
+	 * @see #setDirect(boolean)
+	 * @see hPE.xml.component.ComponentPackage#getParameterSupplyType_Direct()
+	 * @model default="true" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='direct'"
+	 * @generated
+	 */
+	boolean isDirect();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ParameterSupplyType#isDirect <em>Direct</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Direct</em>' attribute.
+	 * @see #isSetDirect()
+	 * @see #unsetDirect()
+	 * @see #isDirect()
+	 * @generated
+	 */
+	void setDirect(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.ParameterSupplyType#isDirect <em>Direct</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetDirect()
+	 * @see #isDirect()
+	 * @see #setDirect(boolean)
+	 * @generated
+	 */
+	void unsetDirect();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.ParameterSupplyType#isDirect <em>Direct</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Direct</em>' attribute is set.
+	 * @see #unsetDirect()
+	 * @see #isDirect()
+	 * @see #setDirect(boolean)
+	 * @generated
+	 */
+	boolean isSetDirect();
 
 	/**
 	 * Returns the value of the '<em><b>Var Name</b></em>' attribute.

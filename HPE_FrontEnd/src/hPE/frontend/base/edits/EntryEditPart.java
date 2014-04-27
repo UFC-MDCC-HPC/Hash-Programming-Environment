@@ -65,7 +65,7 @@ public class EntryEditPart<ModelType extends IHUnit,
             entry_figure.setBackgroundColor(ColorConstants.black);
         
 
-		Label ff = new Label(" unit " + entry.getName2() + (entry.isClone() || entry.isCloned() ? "." + entry.getIndex() + " " : " "));
+		Label ff = new Label(" unit " + entry.getName2() + (entry.isClone() || entry.isCloned() ? "." + entry.getSliceReplicaIndex() + " " : " "));
 		Font font = new Font(null, "Arial", 10, SWT.ITALIC);
 		ff.setFont(font);
 		

@@ -227,8 +227,8 @@ public abstract class HPrimUnitStub extends HVisualElement implements IBindingTa
 	}
 	
 	
-	public HPrimUnit createReplica(int i) {
-		return unit.createReplica(i);
+	public HPrimUnit createReplica(IHPrimUnit cloned_unit, int i) {
+		return unit.createReplica(cloned_unit, i);
 	}
 
 

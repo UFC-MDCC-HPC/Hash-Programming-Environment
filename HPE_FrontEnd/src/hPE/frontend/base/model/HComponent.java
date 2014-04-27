@@ -369,7 +369,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			{
 				for (IHPrimUnit uu : u.getClones()) 
 				{
-					if (uu.getIndex() == iReplica) 
+					if (uu.getSliceReplicaIndex() == iReplica) 
 						return (IHUnit) uu;
 				}
 			}
@@ -3960,8 +3960,10 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	
 	public int getParameterOrder(String par_id)
 	{
-		if (parameter_order.containsKey(par_id))
-			return parameter_order.get(par_id);
+		HComponent c = this.isAbstract() ? this : this.getWhoItImplements();
+		
+		if (c.parameter_order.containsKey(par_id))
+			return c.parameter_order.get(par_id);
 		else
 			return -1;
 	}

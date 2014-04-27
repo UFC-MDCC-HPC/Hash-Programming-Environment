@@ -18,7 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#isParallel <em>Parallel</em>}</li>
- *   <li>{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitBoundsType#getUnitReplica <em>Unit Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getURef <em>URef</em>}</li>
  * </ul>
  * </p>
@@ -110,58 +111,112 @@ public interface UnitBoundsType extends EObject {
 	boolean isSetParallel();
 
 	/**
-	 * Returns the value of the '<em><b>Replica</b></em>' attribute.
+	 * Returns the value of the '<em><b>Slice Replica</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Replica</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Slice Replica</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Replica</em>' attribute.
-	 * @see #isSetReplica()
-	 * @see #unsetReplica()
-	 * @see #setReplica(long)
-	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_Replica()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.UnsignedInt"
-	 *        extendedMetaData="kind='attribute' name='replica'"
+	 * @return the value of the '<em>Slice Replica</em>' attribute.
+	 * @see #isSetSliceReplica()
+	 * @see #unsetSliceReplica()
+	 * @see #setSliceReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_SliceReplica()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='slice_replica'"
 	 * @generated
 	 */
-	long getReplica();
+	int getSliceReplica();
 
 	/**
-	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}' attribute.
+	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Replica</em>' attribute.
-	 * @see #isSetReplica()
-	 * @see #unsetReplica()
-	 * @see #getReplica()
+	 * @param value the new value of the '<em>Slice Replica</em>' attribute.
+	 * @see #isSetSliceReplica()
+	 * @see #unsetSliceReplica()
+	 * @see #getSliceReplica()
 	 * @generated
 	 */
-	void setReplica(long value);
+	void setSliceReplica(int value);
 
 	/**
-	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}' attribute.
+	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isSetReplica()
-	 * @see #getReplica()
-	 * @see #setReplica(long)
+	 * @see #isSetSliceReplica()
+	 * @see #getSliceReplica()
+	 * @see #setSliceReplica(int)
 	 * @generated
 	 */
-	void unsetReplica();
+	void unsetSliceReplica();
 
 	/**
-	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}' attribute is set.
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Replica</em>' attribute is set.
-	 * @see #unsetReplica()
-	 * @see #getReplica()
-	 * @see #setReplica(long)
+	 * @return whether the value of the '<em>Slice Replica</em>' attribute is set.
+	 * @see #unsetSliceReplica()
+	 * @see #getSliceReplica()
+	 * @see #setSliceReplica(int)
 	 * @generated
 	 */
-	boolean isSetReplica();
+	boolean isSetSliceReplica();
+
+	/**
+	 * Returns the value of the '<em><b>Unit Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Unit Replica</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Unit Replica</em>' attribute.
+	 * @see #isSetUnitReplica()
+	 * @see #unsetUnitReplica()
+	 * @see #setUnitReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_UnitReplica()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='unit_replica'"
+	 * @generated
+	 */
+	int getUnitReplica();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getUnitReplica <em>Unit Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Unit Replica</em>' attribute.
+	 * @see #isSetUnitReplica()
+	 * @see #unsetUnitReplica()
+	 * @see #getUnitReplica()
+	 * @generated
+	 */
+	void setUnitReplica(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getUnitReplica <em>Unit Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetUnitReplica()
+	 * @see #getUnitReplica()
+	 * @see #setUnitReplica(int)
+	 * @generated
+	 */
+	void unsetUnitReplica();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getUnitReplica <em>Unit Replica</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Unit Replica</em>' attribute is set.
+	 * @see #unsetUnitReplica()
+	 * @see #getUnitReplica()
+	 * @see #setUnitReplica(int)
+	 * @generated
+	 */
+	boolean isSetUnitReplica();
 
 	/**
 	 * Returns the value of the '<em><b>URef</b></em>' attribute.

@@ -76,7 +76,7 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
 		        
 	    unit_figure.setBounds(unit.getBounds());        
 	    
-	    String name = unit.isClone() || unit.isCloned()  ? unit.getName2() + "." + unit.getIndex() : unit.getName2();
+	    String name = unit.isClone() || unit.isCloned()  ? unit.getName2() + "." + unit.getSliceReplicaIndex() : unit.getName2();
 	    
 	   // List<String> names = new ArrayList<String>(); 
 	    
@@ -95,7 +95,7 @@ public class UnitEditPart<ModelType extends IHUnit, FigureType extends UnitFigur
     
         Label ff = null;
         try {
-        	 ff = new Label(" unit " + unit.getName2() + (unit.getInterface() != null ? " :: " + this.breakLines(unit.getInterface().getName(true,true)) : "") + " ");
+        	 ff = new Label(" unit " + name + (unit.getInterface() != null ? " :: " + this.breakLines(unit.getInterface().getName(true,true)) : "") + " ");
         	 Font font = new Font(null, "Arial", 10, SWT.BOLD);
         	 ff.setFont(font); 
         } 

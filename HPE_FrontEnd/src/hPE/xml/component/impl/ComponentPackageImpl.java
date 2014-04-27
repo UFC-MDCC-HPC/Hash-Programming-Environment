@@ -2022,8 +2022,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterSupplyType_VarName() {
+	public EAttribute getParameterSupplyType_Direct() {
 		return (EAttribute)parameterSupplyTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterSupplyType_VarName() {
+		return (EAttribute)parameterSupplyTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2598,7 +2607,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_Replica() {
+	public EAttribute getUnitBoundsType_SliceReplica() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2607,8 +2616,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitBoundsType_URef() {
+	public EAttribute getUnitBoundsType_UnitReplica() {
 		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitBoundsType_URef() {
+		return (EAttribute)unitBoundsTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2661,7 +2679,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitRefType_Replica() {
+	public EAttribute getUnitRefType_SliceReplica() {
 		return (EAttribute)unitRefTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -3162,6 +3180,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		parameterSupplyTypeEClass = createEClass(PARAMETER_SUPPLY_TYPE);
 		createEAttribute(parameterSupplyTypeEClass, PARAMETER_SUPPLY_TYPE__CREF);
+		createEAttribute(parameterSupplyTypeEClass, PARAMETER_SUPPLY_TYPE__DIRECT);
 		createEAttribute(parameterSupplyTypeEClass, PARAMETER_SUPPLY_TYPE__VAR_NAME);
 
 		parameterTypeEClass = createEClass(PARAMETER_TYPE);
@@ -3243,7 +3262,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		unitBoundsTypeEClass = createEClass(UNIT_BOUNDS_TYPE);
 		createEReference(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__VISUAL_DESCRIPTION);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__PARALLEL);
-		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__REPLICA);
+		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__SLICE_REPLICA);
+		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__UNIT_REPLICA);
 		createEAttribute(unitBoundsTypeEClass, UNIT_BOUNDS_TYPE__UREF);
 
 		unitConditionTypeEClass = createEClass(UNIT_CONDITION_TYPE);
@@ -3252,7 +3272,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		unitRefTypeEClass = createEClass(UNIT_REF_TYPE);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__CREF);
-		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__REPLICA);
+		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__SLICE_REPLICA);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__UREF);
 
 		unitSliceTypeEClass = createEClass(UNIT_SLICE_TYPE);
@@ -3528,6 +3548,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(parameterSupplyTypeEClass, ParameterSupplyType.class, "ParameterSupplyType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterSupplyType_CRef(), theXMLTypePackage.getString(), "cRef", null, 1, 1, ParameterSupplyType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterSupplyType_Direct(), theXMLTypePackage.getBoolean(), "direct", "true", 0, 1, ParameterSupplyType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterSupplyType_VarName(), theXMLTypePackage.getString(), "varName", null, 1, 1, ParameterSupplyType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterTypeEClass, ParameterType.class, "ParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3609,7 +3630,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(unitBoundsTypeEClass, UnitBoundsType.class, "UnitBoundsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnitBoundsType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_Parallel(), theXMLTypePackage.getBoolean(), "parallel", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUnitBoundsType_Replica(), theXMLTypePackage.getUnsignedInt(), "replica", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitBoundsType_SliceReplica(), theXMLTypePackage.getInt(), "sliceReplica", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitBoundsType_UnitReplica(), theXMLTypePackage.getInt(), "unitReplica", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitBoundsType_URef(), theXMLTypePackage.getString(), "uRef", null, 0, 1, UnitBoundsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(unitConditionTypeEClass, UnitConditionType.class, "UnitConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3618,7 +3640,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(unitRefTypeEClass, UnitRefType.class, "UnitRefType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUnitRefType_CRef(), theXMLTypePackage.getString(), "cRef", "this", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUnitRefType_Replica(), theXMLTypePackage.getInt(), "replica", "0", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitRefType_SliceReplica(), theXMLTypePackage.getInt(), "sliceReplica", "0", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitRefType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(unitSliceTypeEClass, UnitSliceType.class, "UnitSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4792,6 +4814,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "cRef"
 		   });		
 		addAnnotation
+		  (getParameterSupplyType_Direct(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "direct"
+		   });		
+		addAnnotation
 		  (getParameterSupplyType_VarName(), 
 		   source, 
 		   new String[] {
@@ -5266,11 +5295,18 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "parallel"
 		   });		
 		addAnnotation
-		  (getUnitBoundsType_Replica(), 
+		  (getUnitBoundsType_SliceReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
-			 "name", "replica"
+			 "name", "slice_replica"
+		   });		
+		addAnnotation
+		  (getUnitBoundsType_UnitReplica(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "unit_replica"
 		   });		
 		addAnnotation
 		  (getUnitBoundsType_URef(), 
@@ -5315,11 +5351,11 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "cRef"
 		   });		
 		addAnnotation
-		  (getUnitRefType_Replica(), 
+		  (getUnitRefType_SliceReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
-			 "name", "replica"
+			 "name", "slice_replica"
 		   });		
 		addAnnotation
 		  (getUnitRefType_URef(), 

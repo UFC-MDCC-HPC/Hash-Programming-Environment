@@ -1043,6 +1043,13 @@
         <details key="name" value="cRef"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direct" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        defaultValueLiteral="true" unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="direct"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -1489,11 +1496,18 @@
         <details key="name" value="parallel"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="replica" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedInt"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sliceReplica" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
         unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
-        <details key="name" value="replica"/>
+        <details key="name" value="slice_replica"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unitReplica" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="unit_replica"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRef" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1534,11 +1548,11 @@
         <details key="name" value="cRef"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="replica" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sliceReplica" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
         defaultValueLiteral="0" unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
-        <details key="name" value="replica"/>
+        <details key="name" value="slice_replica"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRef" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">

@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,16 +133,26 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 					+ System.getProperty("file.separator") + "lib"+ System.getProperty("file.separator") + "mono");
 
 			File[] files = monoLibPath.listFiles();
-			for (File f : files) {
-				if (f.isFile()) {
+			for (File f : files) 
+			{				
+				if (f.isDirectory()) 
+				{
 					String fname = f.getName();
-					if (fname.endsWith(".dll")) {
-						int i = fname.lastIndexOf('.');
-						fname = fname.substring(0, i);
-						String description = "System library";
-						Reference ref = new Reference(fname, f, description,
-								false);
-						references.put(fname, ref);
+					for (File fsub : f.listFiles()) 
+					{
+						if (fsub.isFile())
+						{
+							String fsubname = fsub.getName();
+							int index = fsubname.lastIndexOf(".");							
+							String ext = fsubname.substring(index,fsubname.length());
+							if (ext.equals(".dll"))
+							{
+								String description = "System library";
+								String key = fname + Path.SEPARATOR + fsubname;
+								Reference ref = new Reference(key, fsub, description, false);
+								references.put(key, ref);
+							}
+						}
 					}
 				}
 			}
@@ -151,6 +162,7 @@ public class AddReferencesDialog extends JDialog implements ActionListener {
 					"Variable MONO_PATH not set in hpe.frontend.properties.",
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
+		return;
 	}
 
 	public static void loadExternalReferences(Map<String, Reference> references) {
