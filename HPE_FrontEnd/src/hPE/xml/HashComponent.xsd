@@ -225,6 +225,7 @@
 		<attribute name="slice_replica" type="int" use="optional"
 			default="0">
 		</attribute>
+		<attribute name="replica" type="int" use="optional" fixed="0"></attribute>
 	</complexType>
 	<complexType name="InterfaceSliceRefType">
 		<sequence>
@@ -395,8 +396,9 @@
 		</sequence>
 		<attribute name="uRef" type="string"></attribute>
 		<attribute name="parallel" type="boolean" use="optional"></attribute>
-		<attribute name="slice_replica" type="int" use="optional"></attribute>
-		<attribute name="unit_replica" type="int" use="optional"></attribute>
+		<attribute name="slice_replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="unit_replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="replica" type="unsignedInt" use="optional" default="0"></attribute>
 	</complexType>
 
 

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getVisualDescription <em>Visual Description</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#isParallel <em>Parallel</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getUnitReplica <em>Unit Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitBoundsType#getURef <em>URef</em>}</li>
@@ -111,7 +112,63 @@ public interface UnitBoundsType extends EObject {
 	boolean isSetParallel();
 
 	/**
+	 * Returns the value of the '<em><b>Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Replica</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Replica</em>' attribute.
+	 * @see #isSetReplica()
+	 * @see #unsetReplica()
+	 * @see #setReplica(long)
+	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_Replica()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.UnsignedInt"
+	 *        extendedMetaData="kind='attribute' name='replica'"
+	 * @generated
+	 */
+	long getReplica();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Replica</em>' attribute.
+	 * @see #isSetReplica()
+	 * @see #unsetReplica()
+	 * @see #getReplica()
+	 * @generated
+	 */
+	void setReplica(long value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetReplica()
+	 * @see #getReplica()
+	 * @see #setReplica(long)
+	 * @generated
+	 */
+	void unsetReplica();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Replica</em>' attribute is set.
+	 * @see #unsetReplica()
+	 * @see #getReplica()
+	 * @see #setReplica(long)
+	 * @generated
+	 */
+	boolean isSetReplica();
+
+	/**
 	 * Returns the value of the '<em><b>Slice Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Slice Replica</em>' attribute isn't clear,
@@ -123,7 +180,7 @@ public interface UnitBoundsType extends EObject {
 	 * @see #unsetSliceReplica()
 	 * @see #setSliceReplica(int)
 	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_SliceReplica()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
 	 *        extendedMetaData="kind='attribute' name='slice_replica'"
 	 * @generated
 	 */
@@ -166,6 +223,7 @@ public interface UnitBoundsType extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Unit Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Unit Replica</em>' attribute isn't clear,
@@ -177,7 +235,7 @@ public interface UnitBoundsType extends EObject {
 	 * @see #unsetUnitReplica()
 	 * @see #setUnitReplica(int)
 	 * @see hPE.xml.component.ComponentPackage#getUnitBoundsType_UnitReplica()
-	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
 	 *        extendedMetaData="kind='attribute' name='unit_replica'"
 	 * @generated
 	 */

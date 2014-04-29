@@ -815,7 +815,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (UnitBoundsType uBound : xInnerC.getUnitBounds()) 
 		{
 			String uRef = uBound.getURef();
-			int index = uBound.getSliceReplica();
+			int index = (int) (!uBound.isSetReplica() ? uBound.getSliceReplica() : uBound.getReplica());
 			boolean is_parallel = uBound.isParallel();
 			int index_slice = uBound.isSetUnitReplica() ? uBound.getUnitReplica() : index;
 			unitBounds.add(new Pair<HComponent, UnitBoundsType>(innerC, uBound));
@@ -968,9 +968,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			int w1 = (int) ve.getW();
 			Rectangle bounds = new Rectangle(x1, y1, w1, h1);
 			IHUnit u = null;
-			if (uBound.isSetSliceReplica()) {
-				u = innerC.fetchUnit(uBound.getURef(),
-						(int) uBound.getSliceReplica());
+			if (uBound.isSetSliceReplica() || uBound.isSetReplica()) {
+				int slice_replica = (int) (!uBound.isSetReplica() ? uBound.getSliceReplica() : uBound.getReplica());
+				u = innerC.fetchUnit(uBound.getURef(), slice_replica);
 				if (u == null)
 					System.err.println("Replicated unit " + uBound.getURef()
 							+ " not found when loading inner component "
@@ -2705,7 +2705,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 //						}
 						if (uSliceX.isSetSliceReplica()) 
 						{
-							Integer slice_replica_index = uSliceX.getSliceReplica();
+							Integer slice_replica_index = !uSliceX.isSetReplica() ? uSliceX.getSliceReplica() : uSliceX.getReplica();
 						    //String unit_slice_ref = this.mkUnitSliceRef(cRef, uRef, slice_replica_index);
 						    //int unit_replica_index = this.unitSliceIndexMapping.containsKey(unit_slice_ref) ? this.unitSliceIndexMapping.get(unit_slice_ref) : slice_replica_index;
 							u1 = c1.fetchUnit(uRef, slice_replica_index);

@@ -2887,13 +2887,22 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_BOUNDS_TYPE__PARALLEL = 1;
 
 	/**
+	 * The feature id for the '<em><b>Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_BOUNDS_TYPE__REPLICA = 2;
+
+	/**
 	 * The feature id for the '<em><b>Slice Replica</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__SLICE_REPLICA = 2;
+	int UNIT_BOUNDS_TYPE__SLICE_REPLICA = 3;
 
 	/**
 	 * The feature id for the '<em><b>Unit Replica</b></em>' attribute.
@@ -2902,7 +2911,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__UNIT_REPLICA = 3;
+	int UNIT_BOUNDS_TYPE__UNIT_REPLICA = 4;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -2911,7 +2920,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE__UREF = 4;
+	int UNIT_BOUNDS_TYPE__UREF = 5;
 
 	/**
 	 * The number of structural features of the '<em>Unit Bounds Type</em>' class.
@@ -2920,7 +2929,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_BOUNDS_TYPE_FEATURE_COUNT = 5;
+	int UNIT_BOUNDS_TYPE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitConditionTypeImpl <em>Unit Condition Type</em>}' class.
@@ -2979,13 +2988,22 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_REF_TYPE__CREF = 0;
 
 	/**
+	 * The feature id for the '<em><b>Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_REF_TYPE__REPLICA = 1;
+
+	/**
 	 * The feature id for the '<em><b>Slice Replica</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE__SLICE_REPLICA = 1;
+	int UNIT_REF_TYPE__SLICE_REPLICA = 2;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -2994,7 +3012,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE__UREF = 2;
+	int UNIT_REF_TYPE__UREF = 3;
 
 	/**
 	 * The number of structural features of the '<em>Unit Ref Type</em>' class.
@@ -3003,7 +3021,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE_FEATURE_COUNT = 3;
+	int UNIT_REF_TYPE_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitSliceTypeImpl <em>Unit Slice Type</em>}' class.
@@ -3023,6 +3041,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIT_SLICE_TYPE__CREF = UNIT_REF_TYPE__CREF;
+
+	/**
+	 * The feature id for the '<em><b>Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_SLICE_TYPE__REPLICA = UNIT_REF_TYPE__REPLICA;
 
 	/**
 	 * The feature id for the '<em><b>Slice Replica</b></em>' attribute.
@@ -5715,6 +5742,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getUnitBoundsType_Parallel();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitBoundsType#getReplica <em>Replica</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Replica</em>'.
+	 * @see hPE.xml.component.UnitBoundsType#getReplica()
+	 * @see #getUnitBoundsType()
+	 * @generated
+	 */
+	EAttribute getUnitBoundsType_Replica();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitBoundsType#getSliceReplica <em>Slice Replica</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5799,6 +5837,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getUnitRefType_CRef();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Replica</em>'.
+	 * @see hPE.xml.component.UnitRefType#getReplica()
+	 * @see #getUnitRefType()
+	 * @generated
+	 */
+	EAttribute getUnitRefType_Replica();
 
 	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}'.
@@ -8037,6 +8086,14 @@ public interface ComponentPackage extends EPackage {
 		EAttribute UNIT_BOUNDS_TYPE__PARALLEL = eINSTANCE.getUnitBoundsType_Parallel();
 
 		/**
+		 * The meta object literal for the '<em><b>Replica</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_BOUNDS_TYPE__REPLICA = eINSTANCE.getUnitBoundsType_Replica();
+
+		/**
 		 * The meta object literal for the '<em><b>Slice Replica</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8103,6 +8160,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIT_REF_TYPE__CREF = eINSTANCE.getUnitRefType_CRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Replica</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_REF_TYPE__REPLICA = eINSTANCE.getUnitRefType_Replica();
 
 		/**
 		 * The meta object literal for the '<em><b>Slice Replica</b></em>' attribute feature.

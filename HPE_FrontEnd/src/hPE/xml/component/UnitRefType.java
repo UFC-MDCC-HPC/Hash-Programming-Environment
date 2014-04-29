@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.UnitRefType#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitRefType#getURef <em>URef</em>}</li>
  * </ul>
@@ -81,6 +82,61 @@ public interface UnitRefType extends EObject {
 	 * @generated
 	 */
 	boolean isSetCRef();
+
+	/**
+	 * Returns the value of the '<em><b>Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Replica</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Replica</em>' attribute.
+	 * @see #isSetReplica()
+	 * @see #unsetReplica()
+	 * @see #setReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitRefType_Replica()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='replica'"
+	 * @generated
+	 */
+	int getReplica();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Replica</em>' attribute.
+	 * @see #isSetReplica()
+	 * @see #unsetReplica()
+	 * @see #getReplica()
+	 * @generated
+	 */
+	void setReplica(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetReplica()
+	 * @see #getReplica()
+	 * @see #setReplica(int)
+	 * @generated
+	 */
+	void unsetReplica();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Replica</em>' attribute is set.
+	 * @see #unsetReplica()
+	 * @see #getReplica()
+	 * @see #setReplica(int)
+	 * @generated
+	 */
+	boolean isSetReplica();
 
 	/**
 	 * Returns the value of the '<em><b>Slice Replica</b></em>' attribute.

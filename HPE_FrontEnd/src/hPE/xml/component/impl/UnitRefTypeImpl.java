@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getURef <em>URef</em>}</li>
  * </ul>
@@ -60,6 +61,35 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * @ordered
 	 */
 	protected boolean cRefESet;
+
+	/**
+	 * The default value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int REPLICA_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getReplica() <em>Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected int replica = REPLICA_EDEFAULT;
+
+	/**
+	 * This is true if the Replica attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean replicaESet;
 
 	/**
 	 * The default value of the '{@link #getSliceReplica() <em>Slice Replica</em>}' attribute.
@@ -180,6 +210,52 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getReplica() {
+		return replica;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReplica(int newReplica) {
+		int oldReplica = replica;
+		replica = newReplica;
+		boolean oldReplicaESet = replicaESet;
+		replicaESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_REF_TYPE__REPLICA, oldReplica, replica, !oldReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetReplica() {
+		int oldReplica = replica;
+		boolean oldReplicaESet = replicaESet;
+		replica = REPLICA_EDEFAULT;
+		replicaESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_REF_TYPE__REPLICA, oldReplica, REPLICA_EDEFAULT, oldReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetReplica() {
+		return replicaESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public int getSliceReplica() {
 		return sliceReplica;
 	}
@@ -252,6 +328,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return getCRef();
+			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
+				return getReplica();
 			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
 				return getSliceReplica();
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
@@ -270,6 +348,9 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				setCRef((String)newValue);
+				return;
+			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
+				setReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
 				setSliceReplica((Integer)newValue);
@@ -292,6 +373,9 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				unsetCRef();
 				return;
+			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
+				unsetReplica();
+				return;
 			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
 				unsetSliceReplica();
 				return;
@@ -312,6 +396,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return isSetCRef();
+			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
+				return isSetReplica();
 			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
 				return isSetSliceReplica();
 			case ComponentPackage.UNIT_REF_TYPE__UREF:
@@ -332,6 +418,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (cRef: ");
 		if (cRefESet) result.append(cRef); else result.append("<unset>");
+		result.append(", replica: ");
+		if (replicaESet) result.append(replica); else result.append("<unset>");
 		result.append(", sliceReplica: ");
 		if (sliceReplicaESet) result.append(sliceReplica); else result.append("<unset>");
 		result.append(", uRef: ");

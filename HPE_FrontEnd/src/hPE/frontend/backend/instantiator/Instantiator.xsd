@@ -9,7 +9,10 @@
     			type="tns:ContextParameterType" maxOccurs="unbounded"
     			minOccurs="0">
     		</element>
-    		<element name="node" type="int" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="node" type="int" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="unit_mapping" type="tns:UnitMappingType" maxOccurs="unbounded" minOccurs="1"></element>
     	</sequence>
     	<attribute name="library_path" type="string"></attribute>
     </complexType>
@@ -21,4 +24,25 @@
     	</sequence>
     	<attribute name="formal_parameter_id" type="string"></attribute>
     </complexType>
+
+    <complexType name="NodeMappingType">
+    	<attribute name="unit_id" type="string" use="required"></attribute>
+    	<attribute name="unit_index" type="int"></attribute>
+    	<attribute name="node" type="int"></attribute>
+    </complexType>
+
+    <complexType name="UnitMappingType">
+    	<sequence>
+    		<element name="node" type="int" maxOccurs="unbounded"
+    			minOccurs="1">
+    		</element>
+    	</sequence>
+    	<attribute name="unit_id" type="string" use="required"></attribute>
+    	<attribute name="unit_index" type="int" use="optional"
+    		default="0">
+    	</attribute>
+    </complexType>
+
+    <attribute name="NewAttribute" type="string"></attribute>
+
 </schema>
