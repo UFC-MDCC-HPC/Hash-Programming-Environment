@@ -54,31 +54,42 @@ public abstract class HUnit extends HPrimUnit
 	
 	public List<HUnitSlice> getPorts() 
 	{
-		HUnit this_ = this;
+		 
+		 Map<String, HUnitSlice> ports = new HashMap<String, HUnitSlice>();
+		 HComponent c0 = (HComponent) this.getConfiguration();
 		
-		Map<String, HUnitSlice> ports = new HashMap<String, HUnitSlice>();
-		HComponent c0 = (HComponent) this_.getConfiguration();
+		 HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
 		
-		HComponent c0x = (HComponent) (c0.getSupplier() == null ? c0 : c0.getSupplier());
-		
-		if (c0x != c0) {
-		   //int index = c0.getUnits().indexOf(this);
-		   this_ = (HUnit) c0x.fetchUnitByBaseName(this.getName2()); //.getUnits().get(index);
-		}
+		 HUnit this_ = c0x != c0 ? (HUnit) c0x.fetchUnitByBaseName(this.getName2()) : this;
 		 
 		 List<HUnit> units = new ArrayList<HUnit>();
 		
+		 List<HUnitSlice> us2 = this.getSlices();
+		 Map<String,HUnitSlice> us2_map = new HashMap<String,HUnitSlice>();
+		 for (HUnitSlice u2 : us2) 
+		 {
+			 HComponent cu2 = ((HComponent)u2.getBinding().getEntry().getConfiguration());
+			 String slice_name = cu2.getSavedName().get(c0);
+			 slice_name = slice_name == null ? cu2.getRef() : slice_name;
+			 us2_map.put(slice_name, u2);
+		 }
+		 
 		 //if (this_!=null)
-  	     for (HUnitSlice us : this_.getSlices()) 
-  	     {  	    	 
-  	    	 HUnit u = (HUnit) us.getBinding().getEntry();
+  	     for (HUnitSlice us__ : this_.getSlices()) 
+  	     {  	
+  	    	 HComponent cus = ((HComponent)us__.getBinding().getEntry().getConfiguration());
+  	    	 String slice_name = cus.getSavedName().get(c0x);
+  	    	 slice_name = slice_name != null ? slice_name : cus.getRef();
   	    	 
+  	    	 HUnitSlice us_prime = us__;
+  	    	 HUnit u_prime = (HUnit) us_prime.getBinding().getEntry();
+  	    	 HComponent c_prime = (HComponent) u_prime.getConfiguration();
+  	    	 
+  	    	 HUnitSlice us = /*us__; */ us2_map.containsKey(slice_name) ? us2_map.get(slice_name) : us__;
+  	    	 HUnit u = (HUnit) us.getBinding().getEntry();
   	    	 HComponent c = (HComponent) u.getConfiguration();
   	    	 
-  	    	 HComponent cTop = (HComponent) c.getTopConfiguration();
-  	    	 HComponent c_  = cTop.getInnerComponentByName(c.getRef());
-  	    	 
-  	    	 if (c_ != null && (c.isPublic() || c.IsExposedFalsifiedContextTop())) 
+  	    	 if ((c.isPublic() || c.IsExposedFalsifiedContextTop())) 
   	    	 {
   	    		 ports.put(c.getRef(), us);
   	    		 units.add(u);
@@ -878,7 +889,8 @@ public abstract class HUnit extends HPrimUnit
 		    c = (HComponent)this.getConfiguration();
 		    HComponent cc = (HComponent) c.getTopConfiguration();
 		    
-		    HComponent ccc = !c.getTopParentConfigurations().isEmpty() ? c.getTopParentConfigurations().get(0) : null;
+		    List<HComponent> top_parent_configurations = c.getTopParentConfigurations();
+		    HComponent ccc = !top_parent_configurations.isEmpty() ? top_parent_configurations.get(0) : null;
 			return ccc != null && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop()) || (!c.isPublic() && c.IsExposedFalsifiedContext(ccc) && ccc.isAbstractConfiguration() && cc.getWhoItImplements() == ccc));
 			
 			// (!c.isSuperType() && (c.isPublic() || (!c.isPublic() && c.IsExposedFalsifiedContextTop())))

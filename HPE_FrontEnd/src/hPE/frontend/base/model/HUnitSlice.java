@@ -330,11 +330,11 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 	public abstract HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s); 
 
 
-    private String name = null;
+  //  private String name = null;
 
-    public void setName(String name) {
-    	this.name = name;
-    }
+   // public void setName(String name) {
+   // 	this.name = name;
+    //}
     
 	public String getName() {		
 		//if ((this.getInterfaceSlice() == null || this.name == null) && this.getBinding() != null)  

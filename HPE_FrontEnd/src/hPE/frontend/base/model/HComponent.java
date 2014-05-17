@@ -163,6 +163,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		// this.lOriginalInnerCRef.put(n.getKey(),n.getValue());
 	}
 
+	public String getOriginalName()
+	{
+		return this.getSavedName().get(this.getConfiguration());
+	}
+	
 	public Map<HComponent, String> getSavedName() {
 		if (this.lOriginalInnerCRef == null)
 			lOriginalInnerCRef = new HashMap<HComponent, String>();
@@ -179,6 +184,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		HComponent parentC = (HComponent) this.getTopConfiguration();
 		if (parentC == null || parentC.checkLegalRef(innerCRef)) {
 			this.innerCRef = innerCRef;
+			for (HComponent c : this.fusedWith)
+				c.innerCRef = innerCRef;
 			listeners.firePropertyChange(UPDATE_NAME, null, name); //$NON-NLS-2$//$NON-NLS-1$
 		}
 	}
@@ -238,13 +245,12 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public void setExtends(HComponent inheritedFrom) {
 
 		List<IHUnit> us = ((List<IHUnit>) ((ArrayList<IHUnit>) inheritedFrom.getAllUnits()).clone());
-
+		
 		for (IHUnit the_source : us) {
 			HComponent c = (HComponent) the_source.getConfiguration();
 
 			if (!the_source.getHidden()) {
-				IBindingTarget the_target = c.newStubFor((HUnit) the_source,
-						true, false, (HComponent) c.getConfiguration());
+				IBindingTarget the_target = c.newStubFor((HUnit) the_source, true, false, (HComponent) c.getConfiguration());
 				new HBinding(c, the_target, the_source); // TODO: setBinding ...
 															// antes estava
 															// HBinding(c,the_source,the_target)
@@ -266,6 +272,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 		inheritedFrom.setSuperType(true);
 		inheritedFrom.setExposed(false);
+		
+		for (HComponent c : this.getExposedComponents())
+		{
+			String name = c.getSavedName().get(inheritedFrom);
+			if (name != null)
+				c.getSavedName().put(this, name);
+		}
+		
 
 		listeners.firePropertyChange(PROPERTY_INHERITS, null, name); //$NON-NLS-2$//$NON-NLS-1$		
 	}
@@ -525,12 +539,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 							cs.add(c_);
 					}
 				} else {
-					for (HComponent cx_ : c.getExposedComponents()) {
+					for (HComponent cx_ : cx.getExposedComponents()) {
 						//HComponent cx__ = (HComponent) (cx_.getSupplier() == null ? cx_ : cx_.getSupplier());
 						String n1 = cx_.getSavedName().get(cx);
 						
-						
-						HComponent cx_prime = cx.getInnerComponent(n1);
+						HComponent cx_prime = n1 != null ? cx.getInnerComponent(n1) : null;
 						cx_prime = cx_prime == null ? cx_ : cx_prime /*(cx_prime.getSupplier() == null ? cx_prime : cx_prime.getSupplier())*/;
 
 						if (cx_prime != null && !cs.contains(cx_prime) && (cx_.isPublic() || (!cx_.isPublic() && cx_.IsExposedFalsifiedContextTop())))
@@ -546,7 +559,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		{
 			for (HComponent c : cs) 
 			{
-				List<HComponent> fusion_components = this.getFusionComponents(c.getRef());
+				String ref = c.getSavedName().get(this);
+				ref = ref == null ? c.getRef() : ref;
+				List<HComponent> fusion_components = this.getFusionComponents(ref);
 				if (fusion_components == null || !fusion_components.contains(c) || fusion_components.get(0) == c ) 
 				{
 					cs_.add(c);
@@ -564,8 +579,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			try 
 			{
 				// if (c.getRef().equals(ref)) return c;
-				if (!c.getSavedName().isEmpty()) {
-					if (/*c.getSavedName().containsKey(this) && */ c.getSavedName().get(this).equals(ref))
+				if (!c.getSavedName().isEmpty()) 
+				{
+					String originalName = c.getSavedName().get(this);
+					
+					if (c.getSavedName().get(this).equals(ref))
 						return c;
 				} else {
 					if (c.getRef().equals(ref))
@@ -592,8 +610,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			if (!c.isSuperType()
 					&& this.getWhoItImplements() != c
 					&& (c.isPublic() || (!c.isPublic()
-							&& (c.IsExposedFalsifiedContext(context)) || context
-							.getComponents().contains(c)))) {
+					&& (c.IsExposedFalsifiedContext(context)) || context.getComponents().contains(c)))) {
 				if (!cs.contains(c))
 					cs.add(c);
 				for (HComponent c_ : c.getInnerComponents(context)) {
@@ -1129,7 +1146,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 * @return Returns the configuration.
 	 * @uml.property name="configuration"
 	 */
-	public IConfiguration getConfiguration() {
+	public IConfiguration getConfiguration() 
+	{
 		if (configurations == null)
 			configurations = new ArrayList<HComponent>();
 		if (configuration != null) {
@@ -1142,7 +1160,8 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			return null;
 	}
 
-	public IConfiguration getTopConfiguration() {
+	public IConfiguration getTopConfiguration() 
+	{
 		if (configurations == null)
 			configurations = new ArrayList<HComponent>();
 		if (configuration != null) {
@@ -2385,86 +2404,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public void supplyParameter(String varName, HComponent model) 
 	{
-	    /*boolean fail = false;
-		
-		if (!model.isParameter()) 
-		{	
-			Map<String, Pair<HComponent,Boolean>> toSupply = new HashMap<String,Pair<HComponent,Boolean>>();
-			Pair<HComponent,Boolean> pair_model = new Pair<HComponent,Boolean>(model,false);
-			toSupply.put(varName, pair_model);
-			
-			Map<String, List<HComponent>> free_parameter_list = this.getFreeParameters(this, this.BY_VARID);
-			List<HComponent> supplied_list = free_parameter_list.get(varName);
-			if (supplied_list == null)
-			{
-				JOptionPane.showMessageDialog(null, 
-            			  "There is no context variable named " + varName, "Supplying context variable " + varName,
-            			  JOptionPane.ERROR_MESSAGE);	
-      			
-      			fail = true;
-      			return;
-			}
-			
-			Map<String, List<HComponent>> model_actual_parameters = model.getClosedParameters(this, this.BY_PARID);
-			Map<String, List<HComponent>> model_free_parameters = model.getFreeParameters(this, this.BY_PARID);
-			
-			for (HComponent supplied : supplied_list)
-			{
-				Map<String, List<HComponent>> free_parameters_supplied_0 = supplied.getFreeParameters(this, this.BY_VARID);
-				Map<HComponent, String> vars_mapping = new HashMap<HComponent, String>();
-				for (Entry<String, List<HComponent>> par : free_parameters_supplied_0.entrySet())
-				{
-					for (HComponent c : par.getValue())
-					{
-						vars_mapping.put(c, par.getKey());
-					}					
-				}
-				
-				// Tentativa de parear os parâmetros
-				Map<String, List<HComponent>> free_parameters_supplied_1 = supplied.getFreeParameters(supplied, this.BY_PARID);
-                for (Entry<String, List<HComponent>> par : free_parameters_supplied_1.entrySet())
-                {
-                	String parId = par.getKey();
-                	if (model_actual_parameters.containsKey(parId)) 
-                	{
-	                	HComponent supplier = model_actual_parameters.get(parId).get(0);
-	                	String supplyingVarId = vars_mapping.get(par.getValue().get(0));
-	                	Pair<HComponent,Boolean> pair_supplier = new Pair<HComponent,Boolean>(supplier,true);
-	                	toSupply.put(supplyingVarId, pair_supplier);
-                	}
-                	else 
-                	{	
-                		if (!model_free_parameters.containsKey(parId))
-                		{
-                			JOptionPane.showMessageDialog(null, 
-                      			  "Invalid Operation when binding context parameter " + parId + " !", 
-                      			  "Supplying context variable " + varName,
-                      			  JOptionPane.ERROR_MESSAGE);		
-                			
-                			fail = true;
-                		}
-                		//if (model_free_parameters.containsKey(varId)) 
-                		//{
-    	                //	HComponent supplier = model_free_parameters.get(varId).get(0);
-    	                //	String supplyingVarId = vars_mapping.get(par.getValue().get(0));
-    	                //	supplier.setVariableName(this, supplyingVarId);
-                		//}
-                	}
-                }
-			}
-			
-			if (!fail) 
-			{
-			  supplyParameter(toSupply);
-
-			 ((HComponent) model.getTopConfiguration()).listeners.firePropertyChange(UPDATE_CONFIGURATION, null, name);
-			}
-		} else {
-			System.err.print(varName + " is already a parameter. Maybe obsolete configuration. Cancelling supplyParameter.");
-		}
-		*/
 		
 		try {
+			if (varName.equals("SMAP"))
+			 System.out.println();
+			
 			Map<String, Pair<HComponent,Boolean>> toSupply = new HashMap<String,Pair<HComponent,Boolean>>();
 			Pair<HComponent,Boolean> pair_model = new Pair<HComponent,Boolean>(model,false);
 			toSupply.put(varName, pair_model);
@@ -2472,8 +2416,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			Map<String, List<HComponent>> free_parameter_list = this.getFreeParameters(this, this.BY_VARID);
 			List<HComponent> supplied_list = free_parameter_list.get(varName);
 			if (supplied_list != null)
-			for (HComponent supplied : supplied_list)
-					unify(model,supplied,toSupply);
+			for (HComponent supplied : supplied_list) 
+			{
+				unify(model,supplied,toSupply);
+				alignPublicInnerComponents(model,supplied);
+			}
 			
 			supplyParameter(toSupply);
 		
@@ -2484,6 +2431,31 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	}
 	
+	private void alignPublicInnerComponents(HComponent model, HComponent supplied) 
+	{
+		for (HComponent c : supplied.getInnerComponents())
+		{
+			String originalName = c.getOriginalName();
+			HComponent c_prime = model.getInnerComponent(originalName);
+			if(c_prime != null) 
+			{
+				c_prime.setExposed(c.isPublic(),c.exposedFalsifiedContext);
+				//c_prime.exposedFalsifiedContext = c.exposedFalsifiedContext;
+				c_prime.setName(c.getRef());
+				c_prime.lOriginalInnerCRef.putAll(c.lOriginalInnerCRef);
+				for (HComponent cc : c_prime.fusedWith)
+				{
+				//	cc.exposedFalsifiedContext = c_prime.exposedFalsifiedContext;
+				//	cc.setName(c.getRef());
+					cc.lOriginalInnerCRef.putAll(c.lOriginalInnerCRef);
+				}
+				c_prime.fusedWith.add(c);
+				c.fusedWith.add(c_prime);
+			}
+			
+		}
+	}
+
 	public void supplyParameter(Map<String, Pair<HComponent,Boolean>> toSupply) 
 	{
 		for (Entry<String, Pair<HComponent,Boolean>> supply_item : toSupply.entrySet())
@@ -3187,15 +3159,22 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	}
 
 	public void setExposed(boolean isExposed) 
+	{	
+		setExposed(isExposed, (HComponent) this.getTopConfiguration());		
+	}
+	
+	
+	public void setExposed(boolean isExposed, HComponent context) 
 	{
 		if (this.isExposed != isExposed) 
 		{
+			
 			boolean exposedBefore = this.isExposed;
 			this.isExposed = isExposed;
-			if (exposedBefore && !isExposed
-					&& !this.isDirectSonOfTheTopConfiguration())
-				this.exposedFalsifiedContext = (HComponent) this
-						.getTopConfiguration();
+			if (exposedBefore && !isExposed && !this.isDirectSonOfTheTopConfiguration())
+			{
+				this.exposedFalsifiedContext = context;
+			}
 			else
 				this.exposedFalsifiedContext = null;
 
@@ -3206,20 +3185,24 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				e.printStackTrace();
 			}
 			
-			HComponent cTop = (HComponent) this.getTopConfiguration();			
-			List<HComponent> component_fusions = cTop.getFusionComponents(this.getRef());
-			if (component_fusions != null)
-				for (HComponent cf : component_fusions)
-				{
-					cf.setExposed(isExposed);
-				}
+			List<HComponent> fusedWithMe = this.getFusedWith();
+			for (HComponent cf : fusedWithMe)
+			{
+				cf.isExposed = this.isExposed;
+				cf.exposedFalsifiedContext = this.exposedFalsifiedContext;
+			}
+			
 
 			listeners.firePropertyChange(this.PROPERTY_COLOR, null, name); //$NON-NLS-2$//$NON-NLS-1$
 
-			((HComponent) this.getTopConfiguration()).updateConnections();
-
-			for (HComponent c : this.getInnerTopConfigurations()) {
-				c.updateConnections();
+			HComponent topConfiguration = (HComponent) this.getTopConfiguration();
+			if (context == topConfiguration) 
+			{
+				topConfiguration.updateConnections();
+	
+				for (HComponent c : this.getInnerTopConfigurations()) {
+					c.updateConnections();				
+				}
 			}
 		}
 
@@ -3256,6 +3239,14 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		cList.add(c1);
 		cList.add(c2);
 		cTop.addFusion(cRef,cList);
+		
+		c1.getSavedName().putAll(c2.getSavedName());
+		for (HComponent c1f: c1.getFusedWith())
+			c1f.getSavedName().putAll(c2.getSavedName());
+		
+		c2.getSavedName().putAll(c1.getSavedName());
+		for (HComponent c2f: c2.getFusedWith())
+			c2f.getSavedName().putAll(c1.getSavedName());
 		
 		for (HComponent c : c2.getTopParentConfigurations()) {
 			c.updateConnections();
@@ -3926,9 +3917,9 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	{
 		if (fusions.containsKey(cRef)) 
 		{
+		   List<HComponent> cList = fusions.get(cRef);
 		   for (HComponent c : cs)
 		   {
-			   List<HComponent> cList = fusions.get(cRef);
 			   if (!cList.contains(c))
 				   cList.add(c);
 		   }
@@ -3937,7 +3928,31 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		{
 			fusions.put(cRef, cs);
 		}
+		
+		for (HComponent c : cs)
+			for (HComponent c_other : cs)
+				if (c != c_other)
+					c.addFusedWith(c_other);	
 	}
+	
+	private List<HComponent> fusedWith = new ArrayList<HComponent>();
+	
+	public void addFusedWith(HComponent c) 
+	{
+		 
+		fusedWith.add(c);
+	}
+	
+	public List<HComponent> getFusedWith()
+	{
+		return fusedWith;
+	}
+	
+	
+	
+	
+	
+	
 	
 	public List<HComponent> getFusionComponents(String cRef)
 	{

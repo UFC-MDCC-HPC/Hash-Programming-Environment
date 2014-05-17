@@ -76,6 +76,9 @@ public class ComponentEditPart<ModelType extends HComponent,
 		FigureType component_figure = (FigureType) getFigure();
 		String name = ""; // component.getName2() + ": ";
 				
+		
+		List<HComponent> test  = (List<HComponent>) component.getExposedComponents();
+		
 		boolean showBounds = true; //component.isDirectSonOfTheTopConfiguration();
 		boolean showParId  = true; //component.isDirectSonOfTheTopConfiguration();
 		
