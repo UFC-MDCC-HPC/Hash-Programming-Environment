@@ -124,7 +124,7 @@ namespace HPE_DGAC_LoadDB
                 uu.Id_abstract = id_abstract;
                 uu.Id_interface = uref;
                 uu.Id_unit_super = urefSuper;
-                uu.Partition_index = partition_index;
+                uu.Unit_replica = partition_index;
                 uu.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                 uu.Class_nargs = i.Class_nargs;
                 uu.Assembly_string = uu.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
@@ -143,7 +143,7 @@ namespace HPE_DGAC_LoadDB
 					
 					 IWrapperGenerator wg = new WrapperGenerator();
 					 string[] dependencies = null;
-					 CodeCompileUnit compile_unit = wg.create_wrapper(c.Library_path, ui.iRef, uu.Id_abstract, uu.Id_interface, uu.Partition_index, out dependencies); 
+					 CodeCompileUnit compile_unit = wg.create_wrapper(c.Library_path, ui.iRef, uu.Id_abstract, uu.Id_interface, uu.Unit_replica, out dependencies); 
 					 string source_code = wg.generate_source_code(ui.iRef, compile_unit);
 					
 					 Console.WriteLine(source_code);

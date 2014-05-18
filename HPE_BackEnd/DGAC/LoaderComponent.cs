@@ -20,7 +20,7 @@ namespace HPE_DGAC_LoadDB
         protected IList<InterfaceType> anInterface = null;
         protected IList<UnitType> unit = null;
         protected IList<EnumeratorType> enumerator = null;
-        protected IList<FusionsOfReplicatorsType> fusionOfReplicators = null;
+		//protected IList<FusionsOfReplicatorsType> fusionOfReplicators = null;
 
         public HashComponent loadComponent(ComponentType c)
         {
@@ -57,7 +57,9 @@ namespace HPE_DGAC_LoadDB
                 else if (o is ParameterSupplyType)
                 {
                     if (parameterSupply == null) parameterSupply = new List<ParameterSupplyType>();
-                    parameterSupply.Add((ParameterSupplyType)o);
+					//ParameterSupplyType o_ = (ParameterSupplyType)o;
+					//if (o_.direct)
+                    	parameterSupply.Add((ParameterSupplyType)o);
                 }
                 else if (o is InnerRenamingType)
                 {
@@ -94,11 +96,11 @@ namespace HPE_DGAC_LoadDB
                     if (enumerator == null) enumerator = new List<EnumeratorType>();
                     enumerator.Add((EnumeratorType)o);
                 }   
-                else if (o is FusionsOfReplicatorsType)
-                {
-                    if (fusionOfReplicators == null) fusionOfReplicators = new List<FusionsOfReplicatorsType>();
-                    fusionOfReplicators.Add((FusionsOfReplicatorsType)o);
-                }
+				//else if (o is FusionsOfReplicatorsType)
+				//{
+				//    if (fusionOfReplicators == null) fusionOfReplicators = new List<FusionsOfReplicatorsType>();
+				//    fusionOfReplicators.Add((FusionsOfReplicatorsType)o);
+				//}
                 else
                 {
                     // Tipos inesperado ....
@@ -186,6 +188,7 @@ namespace HPE_DGAC_LoadDB
                 {
                     String formFieldId = p.formFieldId;
                     String varName = p.varName;
+					Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters -1 " + varName + "," + formFieldId);
 
                     SupplyParameter p_ = null;
 
@@ -194,13 +197,15 @@ namespace HPE_DGAC_LoadDB
                     
                     if (topParameter != null)
                     {
+						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 0 " + topParameter.formFieldId + ", " + varName);
                         p_ = new SupplyParameterParameter();
-                        ((SupplyParameterParameter)p_).Id_parameter_actual = topParameter.formFieldId;
+                        ((SupplyParameterParameter)p_).Id_argument = topParameter.formFieldId;
                         ((SupplyParameterParameter)p_).FreeVariable = false;
 
                     }
                     else if (s != null)
                     {
+						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 1 " + s.cRef + ", " + varName);
                         String cRef = s.cRef;
 
                         p_ = new SupplyParameterComponent();
@@ -216,8 +221,9 @@ namespace HPE_DGAC_LoadDB
                     }
                     else
                     {
+						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 2 " + varName);
                         p_ = new SupplyParameterParameter();
-                        ((SupplyParameterParameter)p_).Id_parameter_actual = null;
+                        ((SupplyParameterParameter)p_).Id_argument = null;
                         ((SupplyParameterParameter)p_).FreeVariable = true;
                     }
 

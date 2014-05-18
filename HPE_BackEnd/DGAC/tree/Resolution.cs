@@ -125,13 +125,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         {
             lastMarked = null;
             while (!root.Closed)
-               sort_(root);
+				sort_(root, new List<TreeNode>());
         }
 
 
         private static TreeNode lastMarked = null;
 
-        private static void sort_(TreeNode root)
+        private static void sort_(TreeNode root, IList<TreeNode> ddd)
         {			
 			IList<TreeNode> parameters = root.Children;
 			//has umarked parameters
@@ -144,7 +144,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     {
                         root.Closed = false;
                         parameter.Parent = root; // not really necessary.
-                        sort_(parameter);
+						if (ddd.Contains(parameter))
+						{
+							foreach (TreeNode ttt in ddd)
+							{
+								Console.WriteLine("CYCLE PATH: argument=" + ttt.Parameter_id + "; value=" + ttt.Functor_app.Id_functor_app);
+							}
+							throw new Exception("CYCLE DETECTED " + parameter.Parameter_id + ", " + parameter.Functor_app.Id_functor_app);
+						}
+						ddd.Add(parameter);
+                        sort_(parameter,ddd);
+						ddd.Remove(parameter);
                         parameter.Parent = null;
                     }
                 }
@@ -177,6 +187,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
 
             TreeNode root = GenerateTree.generate(actualParametersTop, acfaRef);
+
+			//writeTreeNode(root);
 
             Resolution.sort(root);
 

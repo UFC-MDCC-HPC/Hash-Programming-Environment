@@ -171,8 +171,10 @@ public class FileUtil{
               // Use the Deserialize method to restore the object's state.
               i = (ReferenceListType)serializer.Deserialize(reader);
 
+				Console.WriteLine("EXTERNAL REFERENCES:");
               foreach (ReferenceType extRef in i.reference)
               {
+					Console.WriteLine("KEY:" + extRef.destailedName + " VALUE:" + extRef.path);
                   d.Add(extRef.destailedName, extRef);
               }
 

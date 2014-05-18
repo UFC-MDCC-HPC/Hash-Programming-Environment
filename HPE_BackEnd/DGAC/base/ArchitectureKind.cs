@@ -11,12 +11,12 @@ namespace br.ufc.pargo.hpe.kinds
 {
 
 
-    public interface IArchitectureKind : IUnit
+	public interface IPlatformKind : IUnit
 	{
 		 
 	}
 	
-	public abstract class Architecture : Unit, IArchitectureKind {
+	public abstract class Platform : Unit, IPlatformKind {
 	   
 	}
 }

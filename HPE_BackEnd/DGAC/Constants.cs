@@ -77,6 +77,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         //public static string ID_INNER_KEY = "id_inner";
         public const string UNIT_KEY = "id_interface";
         public const string PORT_NAME = "port_name";
+        public const string ENCLOSING_ARGUMENTS = "arguments";
 		public const string ASSEMBLY_STRING_KEY = "assembly_string";
 		public const string PORT_NAMES_KEY = "port_name";
 	//	public const string CLASS_NAME_KEY = "class_name";
@@ -98,12 +99,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string PARAMETER_PORT_NAME = "parameter";
 
         public const int KIND_UNRECOGNIZED = -1;
-        public const int KIND_APPLICATION   = 0;
+        public const int KIND_APPLICATION = 0;
         public const int KIND_COMPUTATION = 1;
         public const int KIND_SYNCHRONIZER = 2;
         public const int KIND_ENVIRONMENT = 3;
-        public const int KIND_PLATFORM      = 4;
-        public const int KIND_ENUMERATOR    = 5;
+        public const int KIND_PLATFORM = 4;
+        public const int KIND_ENUMERATOR = 5;
         public const int KIND_QUALIFIER = 6;
         public const int KIND_SERVICE = 7;
         public const int KIND_DATASTRUCTURE = 8;

@@ -14,7 +14,7 @@ public class Unit {
 	private string assembly_string;
     private int id_abstract;
     private string id_interface;
-    private int partition_index;
+    private int unit_replica;
     private int order;
 
     public int Order
@@ -96,10 +96,10 @@ public class Unit {
         set {id_interface = value;}
 	}
 		
-	public int Partition_index
+	public int Unit_replica
     {
-		get {return partition_index;}
-        set {partition_index = value;}
+		get {return unit_replica;}
+        set {unit_replica = value;}
 	}
 
     public int Id_abstract

@@ -72,14 +72,12 @@ public class Component : HashComponent {
         }
     }
 
-    public IDictionary<string, AbstractComponentFunctorApplication> Parameters
+    public IDictionary<string, AbstractComponentFunctorApplication> Arguments
     {
         get
         {
 				Console.Error.WriteLine("get_Parameter enter");
             IDictionary<string, AbstractComponentFunctorApplication> pars = new Dictionary<string, AbstractComponentFunctorApplication>();
-           // SupplyParameterDAO spdao = new SupplyParameterDAO();
-            //AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
             IList<SupplyParameter> sps = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list(this.Id_functor_app);
             foreach (SupplyParameter sp in sps)
             {
@@ -93,7 +91,7 @@ public class Component : HashComponent {
 				{
 					SupplyParameterParameter sp_ = (SupplyParameterParameter) sp;					
 					Console.Error.WriteLine("sp_.Id_parameter = " + sp_.Id_parameter);
-					Console.Error.WriteLine("sp_.Id_parameter_actual = " + sp_.Id_parameter_actual);
+					Console.Error.WriteLine("sp_.Id_parameter_actual = " + sp_.Id_argument);
 					Console.Error.WriteLine("sp_.FreeVariable = " + sp_.FreeVariable);	
 					throw new InvalidCastException();							
 				}

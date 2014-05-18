@@ -15,8 +15,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         public void insert(SliceExposed ac)
         {
             String sql =
-                "INSERT INTO sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner,  partition_index,  partition_index_owner, id_inner_original, id_interface_slice_original)" +
-                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface_slice + "','" + ac.Id_interface_slice_owner + "','" + ac.Id_inner + "','" + ac.Id_inner_owner + "'," + ac.Partition_index + "," + ac.Partition_index_owner + ",'" + ac.Id_inner_original + "','" + ac.Id_interface_slice_original + "')";
+                "INSERT INTO sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner,  slice_replica,  slice_replica_owner, id_inner_original, id_interface_slice_original)" +
+                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface_slice + "','" + ac.Id_interface_slice_owner + "','" + ac.Id_inner + "','" + ac.Id_inner_owner + "'," + ac.Slice_replica + "," + ac.Slice_replica_owner + ",'" + ac.Id_inner_original + "','" + ac.Id_interface_slice_original + "')";
 
 			Console.WriteLine("SliceExposedDAO.cs: TRY INSERT PUBLIC SLICE : " + sql);
 			
@@ -24,19 +24,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         }
 
 
-        internal IList<SliceExposed> listExposedSlicesByContainer(int id_abstract, string id_inner_owner, string id_interface_slice_owner, int partition_index_owner)
+        internal IList<SliceExposed> listExposedSlicesByContainer(int id_abstract, string id_inner_owner, string id_interface_slice_owner, int slice_replica_owner)
         {
 
             IList<SliceExposed> list = new List<SliceExposed>();
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_inner_owner, id_interface_slice, id_interface_slice_owner, partition_index, partition_index_owner, id_inner_original, id_interface_slice_original " +
+                "SELECT id_abstract, id_inner, id_inner_owner, id_interface_slice, id_interface_slice_owner, slice_replica, slice_replica_owner, id_inner_original, id_interface_slice_original " +
                 "FROM sliceexposed " +
                 "WHERE id_abstract=" + id_abstract + " and " + 
                       "id_inner_owner like '" + id_inner_owner + "' and " +
                       "id_interface_slice_owner like '" + id_interface_slice_owner + "' and " + 
-                      "partition_index_owner = " + partition_index_owner;
+                      "slice_replica_owner = " + slice_replica_owner;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
@@ -47,8 +47,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner_owner = (string)reader["id_inner_owner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
-                s.Partition_index = (int)reader["partition_index"];
-                s.Partition_index_owner = (int)reader["partition_index_owner"];
+                s.Slice_replica = (int)reader["slice_replica"];
+                s.Slice_replica_owner = (int)reader["slice_replica_owner"];
                 s.Id_inner_original = (string)reader["id_inner_original"];
                 s.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
                 list.Add(s);
@@ -87,19 +87,19 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return id_inner_owner;
         }
 
-        internal IList<SliceExposed> listContainers(int id_abstract, string id_inner, string id_interface_slice, int partition_index) 
+        internal IList<SliceExposed> listContainers(int id_abstract, string id_inner, string id_interface_slice, int slice_replica) 
         {
             IList<SliceExposed> ll = new List<SliceExposed>();
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             SliceExposed se = null;
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, partition_index, partition_index_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
+                "SELECT id_abstract, id_inner, id_interface_slice, slice_replica, slice_replica_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
                 "FROM sliceexposed " +
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract + " and " +
-                      "partition_index = " + partition_index;
+                      "slice_replica = " + slice_replica;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
@@ -108,10 +108,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 se.Id_inner = (string)reader["id_inner"];
                 se.Id_abstract = (int)reader["id_abstract"];
                 se.Id_interface_slice = (string)reader["id_interface_slice"];
-                se.Partition_index = (int)reader["partition_index"];
+                se.Slice_replica = (int)reader["slice_replica"];
                 se.Id_inner_owner = (string)reader["id_inner_owner"];
                 se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
-                se.Partition_index_owner = (int)reader["partition_index_owner"];
+                se.Slice_replica_owner = (int)reader["slice_replica_owner"];
                 se.Id_inner_original = (string)reader["id_inner_original"];
                 se.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
                 ll.Add(se);
@@ -128,18 +128,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         
 
-        internal SliceExposed retrieveContainer(string id_inner, string id_interface_slice, int id_abstract, int partition_index, string id_inner_owner)
+        internal SliceExposed retrieveContainer(string id_inner, string id_interface_slice, int id_abstract, int slice_replica, string id_inner_owner)
         {
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             SliceExposed se = null;
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, partition_index, partition_index_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
+                "SELECT id_abstract, id_inner, id_interface_slice, slice_replica, slice_replica_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
                 "FROM sliceexposed " +
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
                       "id_abstract = " + id_abstract + " and " +
-                      "partition_index = " + partition_index + " and " +
+                      "slice_replica = " + slice_replica + " and " +
                       "id_inner_owner = " + id_inner_owner;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
@@ -149,10 +149,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 se.Id_inner = (string)reader["id_inner"];
                 se.Id_abstract = (int)reader["id_abstract"];
                 se.Id_interface_slice = (string)reader["id_interface_slice"];
-                se.Partition_index = (int)reader["partition_index"];
+                se.Slice_replica = (int)reader["slice_replica"];
                 se.Id_inner_owner = (string)reader["id_inner_owner"];
                 se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
-                se.Partition_index_owner = (int)reader["partition_index_owner"];
+                se.Slice_replica_owner = (int)reader["slice_replica_owner"];
                 se.Id_inner_original = (string)reader["id_inner_original"];
                 se.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
             }
@@ -181,7 +181,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	            IDbConnection dbcon = Connector.DBcon;
 	            IDbCommand dbcmd = dbcon.CreateCommand();
 	            string sql =
-	                "SELECT id_abstract, id_inner, id_interface_slice, partition_index, partition_index_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
+	                "SELECT id_abstract, id_inner, id_interface_slice, slice_replica, slice_replica_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
 	                "FROM sliceexposed " +
 	                "WHERE id_inner_original like '" + id_inner_original + "' and " +
 	                      "id_interface_slice_original like '" + id_interface_slice_original + "' and " +
@@ -196,10 +196,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                se.Id_inner = (string)reader["id_inner"];
 	                se.Id_abstract = (int)reader["id_abstract"];
 	                se.Id_interface_slice = (string)reader["id_interface_slice"];
-	                se.Partition_index = (int)reader["partition_index"];
+	                se.Slice_replica = (int)reader["slice_replica"];
 	                se.Id_inner_owner = (string)reader["id_inner_owner"];
 	                se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
-	                se.Partition_index_owner = (int)reader["partition_index_owner"];
+	                se.Slice_replica_owner = (int)reader["slice_replica_owner"];
 	                se.Id_inner_original = (string)reader["id_inner_original"];
 	                se.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
 	            }
@@ -234,7 +234,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             IDbCommand dbcmd = dbcon.CreateCommand();
             SliceExposed se = null;
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, partition_index, partition_index_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
+                "SELECT id_abstract, id_inner, id_interface_slice, slice_replica, slice_replica_owner, id_inner_owner, id_interface_slice_owner, id_inner_original, id_interface_slice_original " +
                 "FROM sliceexposed " +
                 "WHERE id_inner like '" + id_inner + "' and " +
                       "id_interface_slice like '" + id_interface_slice + "' and " +
@@ -249,10 +249,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 se.Id_inner = (string)reader["id_inner"];
                 se.Id_abstract = (int)reader["id_abstract"];
                 se.Id_interface_slice = (string)reader["id_interface_slice"];
-                se.Partition_index = (int)reader["partition_index"];
+                se.Slice_replica = (int)reader["slice_replica"];
                 se.Id_inner_owner = (string)reader["id_inner_owner"];
                 se.Id_interface_slice_owner = (string)reader["id_interface_slice_owner"];
-                se.Partition_index_owner = (int)reader["partition_index_owner"];
+                se.Slice_replica_owner = (int)reader["slice_replica_owner"];
                 se.Id_inner_original = (string)reader["id_inner_original"];
                 se.Id_interface_slice_original = (string)reader["id_interface_slice_original"];
 

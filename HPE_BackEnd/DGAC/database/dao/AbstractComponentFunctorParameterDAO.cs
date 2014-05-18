@@ -19,6 +19,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of)" +
                 " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + ")";
 
+     		Console.WriteLine("AbstractComponentFunctorParameter.cs: TRY INSERT: " + sql);
+
             Connector.performSQLUpdate(sql);
 
         }

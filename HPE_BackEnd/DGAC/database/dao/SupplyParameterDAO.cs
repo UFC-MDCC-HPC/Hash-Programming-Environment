@@ -13,14 +13,18 @@ public class SupplyParameterDAO{
 
     public void insert(SupplyParameter ac)
     {
+			Console.WriteLine("SupplyParameter.cs: TRY INSERT 1: " + (ac==null));
+
         String sql1 =
             "INSERT INTO supplyparameter (id_parameter, id_functor_app, id_abstract)" +
             "VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + "," + ac.Id_abstract + ")";
 
         String sql2 = null;
 
+
         if (ac is SupplyParameterComponent)
         {
+   			Console.WriteLine("SupplyParameter.cs: TRY INSERT 2: ");
             SupplyParameterComponent acc = (SupplyParameterComponent)ac;
             sql2 =
             "INSERT INTO supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
@@ -28,12 +32,15 @@ public class SupplyParameterDAO{
         }
         else if (ac is SupplyParameterParameter)
         {
+   			Console.WriteLine("SupplyParameter.cs: TRY INSERT 3: ");
             SupplyParameterParameter acp = (SupplyParameterParameter) ac;
             sql2 =
             "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
-            " VALUES ('" + acp.Id_parameter + "'," + acp.Id_functor_app + ",'" + acp.Id_parameter_actual + "'," + (acp.FreeVariable ? 1 : 0) + ")";
-
+            " VALUES ('" + acp.Id_parameter + "'," + acp.Id_functor_app + ",'" + acp.Id_argument + "'," + (acp.FreeVariable ? 1 : 0) + ")";
         }
+
+   		Console.WriteLine("SupplyParameter.cs: TRY INSERT 4: " + sql1);
+   		Console.WriteLine("SupplyParameter.cs: TRY INSERT 5: " + sql2);
 
         Connector.performSQLUpdate(sql1);
         Connector.performSQLUpdate(sql2);
@@ -92,7 +99,7 @@ public class SupplyParameterDAO{
                SupplyParameterParameter spc_ = new SupplyParameterParameter();
                spc_.Id_parameter = (string)reader["id_parameter"];
                spc_.Id_functor_app = (int)reader["id_functor_app"];
-               spc_.Id_parameter_actual = (string)reader["id_parameter_actual"];
+               spc_.Id_argument = (string)reader["id_parameter_actual"];
                spc_.FreeVariable= ((int)reader["freeVariable"])==0 ? false : true;
                spc = spc_;
                cache_c_pars_2.Add(key, spc_);

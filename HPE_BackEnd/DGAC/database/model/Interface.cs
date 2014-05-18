@@ -54,25 +54,25 @@ public class Interface {
 
                 if (id_interface_super.Equals("")) {
                     id_interface_super_top = id_interface;
-					partition_index_super_top = partition_index;
+					unit_replica_super_top = unit_replica;
                 } else {
                     string id_interface_super_ = Id_interface_super;
-					int partition_index_super_ = Partition_index_super;
+					int partition_index_super_ = Unit_replica_super;
                     AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                     if (acf.Id_functor_app_supertype != 0)
                     {
                         AbstractComponentFunctorApplication acfaSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
                         Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, id_interface_super_, partition_index_super_);
                         id_interface_super_top = iSuper.Id_interface_super_top;
-						partition_index_super_top = iSuper.Partition_index_super_top;
+						unit_replica_super_top = iSuper.Unit_replica_super_top;
                     }
                     else
                     {
                         id_interface_super_top = id_interface;
-						partition_index_super_top = partition_index;
+						unit_replica_super_top = unit_replica;
                     }
                 }
-                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, partition_index, id_interface_super_top, partition_index_super_top);
+                br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.setInterfaceSuperTop(id_abstract, id_interface, unit_replica, id_interface_super_top, unit_replica_super_top);
                 return id_interface_super_top;
             } else {
                 return id_interface_super_top;
@@ -85,9 +85,9 @@ public class Interface {
     }
     
     private int id_abstract;
-    private int partition_index;
-	private int partition_index_super;
-	private int partition_index_super_top;
+    private int unit_replica;
+	private int unit_replica_super;
+	private int unit_replica_super_top;
 	private string assembly_string;
 
     private string class_name; // Nome da interface no Front-End.
@@ -125,16 +125,16 @@ public class Interface {
         set { id_interface_super = value; }
     }
 		
-    public int Partition_index_super
+    public int Unit_replica_super
     {
-        get {return partition_index_super;}
-        set {partition_index_super = value;}
+        get {return unit_replica_super;}
+        set {unit_replica_super = value;}
     }
 		
-    public int Partition_index_super_top
+    public int Unit_replica_super_top
     {
-        get {return partition_index_super_top;}
-        set {partition_index_super_top = value;}
+        get {return unit_replica_super_top;}
+        set {unit_replica_super_top = value;}
     }
 
     public int Id_abstract
@@ -143,10 +143,10 @@ public class Interface {
         set {id_abstract = value;}
     }
     
-    public int Partition_index
+    public int Unit_replica
     {
-        get {return partition_index;}
-        set {partition_index = value;}
+        get {return unit_replica;}
+        set {unit_replica = value;}
     }
 		
     public string Assembly_string{
@@ -169,11 +169,24 @@ public class Interface {
     {
         get
         {
-            return fetchReferences(new Dictionary<string, AbstractComponentFunctorApplication>());
+			AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(Id_abstract);	
+			return fetchReferences(acf.ParameterBounds);
         }
     }
 
-    public IList<string> fetchReferences(IDictionary <string, AbstractComponentFunctorApplication> pars) {
+
+    public IList<string> fetchReferences(IDictionary <string, AbstractComponentFunctorApplication> pars) 
+    {
+			Console.WriteLine("ENTER fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
+
+							foreach (KeyValuePair<string, AbstractComponentFunctorApplication> y in pars )
+							{
+								if (y.Key != null && y.Value != null)
+									Console.WriteLine("key=" + y.Key + ", value=" + y.Value.Id_abstract);
+								else {
+										Console.WriteLine("somthing strange : " + (y.Key==null ? "null" : y.Key.ToString()) + " , " + (y.Value==null ? "null" : y.Value.ToString()));
+								}
+							}
 
         IList<string> refs = new List<string>();
 			
@@ -184,7 +197,7 @@ public class Interface {
             AbstractComponentFunctor acfsuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(cSuperApp.Id_abstract);
             IDictionary<string, AbstractComponentFunctorApplication> parsSuper = null;
             collectParameters(pars, cSuperApp, out parsSuper);
-            Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super, this.Partition_index_super);
+            Interface iSuper = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(cSuperApp.Id_abstract, this.Id_interface_super, this.Unit_replica_super);
             refs = iSuper.fetchReferences(parsSuper);
             string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
             if (!refs.Contains(refname))
@@ -195,12 +208,14 @@ public class Interface {
         }
 
         // Traverse slices.
-        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface, Partition_index);
+        IList<Slice> slices = br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.listByInterface(Id_abstract, Id_interface, Unit_replica);
 
         foreach (Slice s in slices)
         {
-            InnerComponent ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); // findInnerComponentOwnerOfSlice(Id_abstract, s.Id_inner); 
-            if (ic != null)
+			Console.WriteLine("SLICE (fetchReference): " + Id_abstract + ":" + Id_interface + ":" + s.Id_inner + " - " + s.PortName + " -- " + s.Slice_replica);
+
+            InnerComponent ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); 
+			if (ic != null)
             {
                 AbstractComponentFunctorApplication acfa = null;
                 IDictionary<string, AbstractComponentFunctorApplication> parsSlice = null;
@@ -208,17 +223,25 @@ public class Interface {
                 // ---------------------------------------------------------------------------------------
                 if (!ic.Parameter_top.Equals(""))
                 {
-                    pars.TryGetValue(ic.Parameter_top, out acfa);
-                    acfa = acfa == null ? br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app) : acfa;                    
+                    if (!pars.TryGetValue(ic.Parameter_top, out acfa)) {
+                    	acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);                    
+						Console.WriteLine("fetchReferences - TRACE 1.1 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract);
+					}
+					else
+					{
+							Console.WriteLine("fetchReferences - TRACE 1.2 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract + ", ic.id_inner=" + ic.Id_inner);
+					}
                 }
                 else
                 {
                     acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);
+					Console.WriteLine("fetchReferences - TRACE 2 - acfa.Id_abstract=" + acfa.Id_abstract);
                 }
 
                 collectParameters(pars, acfa, out parsSlice);
 
-                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice, s.Partition_index);
+				Console.WriteLine("RETRIEVE BY MATCHING: " + acfa.Id_abstract + "," +  ic.Id_abstract_inner + "," + s.Id_interface_slice + "," + s.Slice_replica);
+                Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice, s.Slice_replica);
                 if (i == null) {
                    Console.WriteLine("i is null : " + acfa.Id_abstract + "," + ic.Id_abstract_inner + "," + s.Id_interface_slice);
                 }
@@ -241,6 +264,7 @@ public class Interface {
             }
         }
 
+			Console.WriteLine("EXIT fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
         return refs; 
     }
 
@@ -277,32 +301,37 @@ public class Interface {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;
                 acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 parsSlice.Add(sp_.Id_parameter, acfaPar);
+				Console.WriteLine("collectParameter -TRACE 1 " + sp_.Id_parameter + ":" + acfaPar.Id_abstract);
             }
             else if (sp is SupplyParameterParameter)
             {
                 SupplyParameterParameter sp_ = (SupplyParameterParameter) sp;
                 acfaPar = null;
-                pars.TryGetValue("#" + sp_.Id_functor_app + sp_.Id_parameter, out acfaPar);
+				Console.WriteLine("collectParameter -TRACE 2 " + "#" + sp_.Id_functor_app + sp_.Id_parameter);
+                
+				pars.TryGetValue("#" + sp_.Id_functor_app + sp_.Id_parameter, out acfaPar);
                 if (acfaPar == null)
                 {
-                    pars.TryGetValue(sp_.Id_parameter_actual, out acfaPar);
-                    if (acfaPar != null)
+					Console.WriteLine("collectParameter -TRACE 3 " + sp_.Id_argument);
+                    
+                    if (pars.TryGetValue(sp_.Id_argument, out acfaPar))
                     {
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
+						Console.WriteLine("collectParameter -TRACE 4 " + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
                     }
-                    else // if (sp_.FreeVariable)
+                    else 
                     {
-                        // find bound ...
-                     //   AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-                        AbstractComponentFunctorParameter acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(/*sp_.Id_abstract,*/ Id_abstract, sp_.Id_parameter_actual/* sp_.Id_parameter */);
+                        AbstractComponentFunctorParameter acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(Id_abstract, sp_.Id_argument);
                         if (acfp == null)
 								acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract,sp_.Id_parameter);
 						acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
+						Console.WriteLine("collectParameter -TRACE 5 " + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
                     }
                 }
                 else
                 {
+					Console.WriteLine("collectParameter -TRACE 6 " + "#" + sp_.Id_functor_app + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
                     parsSlice.Add(sp_.Id_parameter, acfaPar);
                 }
 
@@ -336,15 +365,16 @@ public class Interface {
                 AbstractComponentFunctorApplication acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 collectFV(acfaPar, pars, apars);
             }
-            else if (sp is SupplyParameterParameter)
+            else if (sp is SupplyParameterParameter) 
             {
                 SupplyParameterParameter sp_ = (SupplyParameterParameter)sp;
                 AbstractComponentFunctorApplication acfaPar = null;
                 pars.TryGetValue("#" + sp_.Id_functor_app + sp_.Id_parameter, out acfaPar);
                 if (acfaPar == null)
                 {
-                    pars.TryGetValue(sp_.Id_parameter_actual, out acfaPar);
+                    pars.TryGetValue(sp_.Id_argument, out acfaPar);
                 }
+					Console.WriteLine("collectFV : id_functor_app=" + acfa.Id_functor_app + ", id_abstract=" + acfa.Id_abstract + ", " + "#" + sp_.Id_functor_app + sp_.Id_parameter + ", " + ", " + sp_.Id_argument + (acfaPar==null));
                 apars.Add("#" + sp_.Id_functor_app + sp_.Id_parameter, acfaPar);
             }
 

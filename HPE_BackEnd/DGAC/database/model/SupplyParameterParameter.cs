@@ -10,7 +10,7 @@ public class SupplyParameterParameter : SupplyParameter{
  
 	//private string id_parameter;
 	//private int id_functor_app;
-	private string id_parameter_actual;
+	private string id_argument;
 
     private bool freeVariable;
 
@@ -30,9 +30,9 @@ public class SupplyParameterParameter : SupplyParameter{
         set {id_functor_app = value;}
 	}*/
 	
-	public string Id_parameter_actual{
-		get {return id_parameter_actual;}
-        set {id_parameter_actual = value;}
+	public string Id_argument{
+		get {return id_argument;}
+        set {id_argument = value;}
 	}
 	
 	 

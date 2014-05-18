@@ -22,16 +22,31 @@ namespace br.ufc.pargo.hpe.basic
     	
 		string[] PortNames { get; set;}
     	
-		int Rank {get; set;}      // Rank of the parallel unit.
-		int Size {get; set;}      // Number of the parallel units.
-		IDictionary<string, int[]> ParallelUnitRanks { get; set;}  // Ranks of the units (if singleton, ther result has only one element)
-		IDictionary<string, int> UnitSize { get; set;}     // Number of units (it returns 1 for singleton units)
-		IDictionary<string, int> SingletonUnitRank { get; set;}
-		int GlobalRank {get; set;} // Global rank of the unit.
+		// GLOBAL COMMUNICATOR 
+		Intracommunicator WorldComm {get; set;}
+		int GlobalRank {get;} // Global rank of the unit.
+		int GlobalSize {get;} // Global rank of the unit.
+
+		// COMPONENT COMUNICATOR (inter-units)
+		Intracommunicator Communicator {get; set;}
+		int Rank {get;}      // Rank of the unit in the component.
+		int Size {get;}      // Number of units in the component.
+
+		// PARALLEL UNIT COMMUNICATOR 
+        Intracommunicator PeerComm {get; set;}
+		int PeerRank {get;}      // Rank of the unit in the component.
+		int PeerSize {get;}      // = UnitSize[<unit_name>]
+
+		IDictionary<string, int[]> UnitRanks { get; }  // Ranks of the units (if singleton, the result has only one element)
+		IDictionary<string, int> UnitSize { get; }     // Number of units (it returns 1 for singleton units)
+		bool IsParallelUnit {get;}
+		bool IsSingletonUnit {get;}
+
+		void calculate_topology ();        
+
 		IDictionary<string, IUnit> Slice {get;}
 
 		
-        Intracommunicator WorldComm {get; set;}
        
         gov.cca.Services Services { get; }
 

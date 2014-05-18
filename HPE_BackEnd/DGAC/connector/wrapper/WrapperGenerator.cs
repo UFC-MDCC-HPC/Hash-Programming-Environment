@@ -312,7 +312,7 @@ namespace br.ufc.hpe.backend.DGAC
 				AbstractComponentFunctorParameter acfp = BackEnd.acfpdao.retrieve(i.Id_abstract, par_id);
 				AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(acfp.Bounds_of);
 				AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
-				Interface i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, iPar.the_interface.Id_interface_super_top, iPar.the_interface.Partition_index_super_top);
+				Interface i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, iPar.the_interface.Id_interface_super_top, iPar.the_interface.Unit_replica_super_top);
 			
 				iPar.package_path = acf.Library_path;
 				iPar.the_interface = i_;
@@ -505,7 +505,7 @@ namespace br.ufc.hpe.backend.DGAC
 			isig.varId = new Dictionary<string,string>();
 			isig.slice_types = new Dictionary<string, InterfaceSignature>();
 			
-			IList<Slice> slice_list = BackEnd.sdao.listByInterface(i.Id_abstract, i.Id_interface, i.Partition_index);
+			IList<Slice> slice_list = BackEnd.sdao.listByInterface(i.Id_abstract, i.Id_interface, i.Unit_replica);
 			// id_abstract, id_inner, id_interface_slice, partition_index, id_interface, property_name, transitive
 			// '43', 'cells_info', 'cells', '0', 'compute_rhs', 'Cells', '0'
 			// '43', 'problem_data', 'problem', '0', 'compute_rhs', 'Problem', '0'
@@ -523,7 +523,7 @@ namespace br.ufc.hpe.backend.DGAC
 				// 1st loop: id_functor_app_actual = 131 
 				// 2nd loop: id_functor_app_actual = 132
                 					
-				Interface i_ = BackEnd.idao.retrieve(ic.Id_abstract_inner, s.Id_interface_slice, s.Partition_index);
+				Interface i_ = BackEnd.idao.retrieve(ic.Id_abstract_inner, s.Id_interface_slice, s.Slice_replica);
 				// id_abstract, id_interface, partition_index, id_interface_super, partition_index_super, uri_source, class_nargs, id_interface_super_top, partition_index_super_top, order
 				// 1st loop:
 				// '31', 'cells', '0', '', '0', 'common.datapartition.MultiPartitionCells.ICells', '', '0', 'cells', '0', '1', NULL, NULL, NULL
@@ -536,7 +536,7 @@ namespace br.ufc.hpe.backend.DGAC
 						id_functor_app_actual = closed_pars[ic.Parameter_top];
 					InterfaceParameter ip = BackEnd.ipdao.retrieve(i.Id_abstract, i.Id_interface, ic.Parameter_top);
 					AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(id_functor_app_actual);
-					i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, ip.Id_unit_parameter, i.Partition_index);
+					i_ = BackEnd.idao.retrieveTop(acfa.Id_abstract, ip.Id_unit_parameter, i.Unit_replica);
 				}
 				
 				IList<string> parameters = new List<string>();
@@ -565,16 +565,16 @@ namespace br.ufc.hpe.backend.DGAC
 						// 2nd outer loop / 2nd inner loop
                         // 'instance_type', '132', 'instance_type', '0'
 						int id_functor_app_actual_parameter;
-						if (closed_pars.ContainsKey(spp.Id_parameter_actual)) // ALWAYS FALSE
+						if (closed_pars.ContainsKey(spp.Id_argument)) // ALWAYS FALSE
 						{
-							id_functor_app_actual_parameter = closed_pars[spp.Id_parameter_actual];
+							id_functor_app_actual_parameter = closed_pars[spp.Id_argument];
 							if (!closed_pars_.ContainsKey(spp.Id_parameter))
 								closed_pars_.Add(spp.Id_parameter, id_functor_app_actual_parameter);
 						}
-						else if (open_pars.ContainsKey(spp.Id_parameter_actual))
+						else if (open_pars.ContainsKey(spp.Id_argument))
 						{
 							if (!open_pars_.ContainsKey(spp.Id_parameter))
-								open_pars_.Add(spp.Id_parameter, open_pars[spp.Id_parameter_actual]);
+								open_pars_.Add(spp.Id_parameter, open_pars[spp.Id_argument]);
 							// 2nd outer loop / 1st inner loop: add 'class' -> 'C'
 							// 2nd outer loop / 2nd inner loop: add 'instance_type' -> 'I'
 						} 

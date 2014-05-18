@@ -111,7 +111,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				portList = new List<string>();				
 				usesPortNames.Add(cid.getInstanceName(),portList);
 			}
-		//	System.Diagnostics.Debug.WriteLine("registerUsesPortInfo -- " + portName);
+		//	Console.WriteLine("registerUsesPortInfo -- " + portName);
 			usesPortTypes.Add (portName, type);
             usesPortNamesInv.Add(portName, cid);
 			portList.Add(portName);
@@ -250,6 +250,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                                           string className,    // unit name (data)
                                           TypeMap properties)
         {
+			Console.WriteLine(my_rank + ": createInstance --- " + properties.getString(Constants.KIND_KEY, "") + " " + instanceName + " --- " + className);
             ComponentID cid = null;
 
             Connector.openConnection();
@@ -267,7 +268,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 case Constants.KIND_QUALIFIER:
                 case Constants.KIND_SERVICE:
                 case Constants.KIND_SYNCHRONIZER: cid = createInstanceBaseForAllKinds(instanceName, className, properties); break;
-                case Constants.KIND_UNRECOGNIZED: throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
+                default: throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
             }
 
             // REGISTER CREATESLICES PORT
@@ -283,42 +284,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             try
             {
-              //  int key = properties.getInt(Constants.KEY_KEY, my_rank);                
-             //   string id_unit = properties.getString(Constants.UNIT_KEY, "");
-              //  string library_path = properties.getString(Constants.COMPONENT_KEY, "");
-             //   int id_functor_app = properties.getInt(Constants.ID_FUNCTOR_APP, -1);
-
                 ComponentID cid_app = createInstanceBaseForAllKinds(instanceName, class_name, properties);
 
                 IUnit unit_slice;
                 unitInstances.TryGetValue(cid_app.getInstanceName(), out unit_slice);
                 br.ufc.pargo.hpe.kinds.IApplicationKind pmain = (br.ufc.pargo.hpe.kinds.IApplicationKind)unit_slice;
 
-                // This part is only performed by applications.
-//                DGAC.BackEnd.calculateInitialTopology(cid_app, library_path, id_unit, id_functor_app, pmain);
-
-				
-				//pmain.setUpParameters(id_functor_app);
-                //pmain.ActualParametersTop = pmain.ActualParameters;
-
-				//System.Diagnostics.Debug.WriteLine("BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
-                //pmain.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-                //System.Diagnostics.Debug.WriteLine("END - Worker " + my_rank + ": Split " + key + " !!!");
-                //pmain.GlobalRank = pmain.WorldComm.Rank;
-				
-                //pmain.createSlices();
-                
-                // --------------------------------------------
-
-                //pmain.perform_initialize();
-
                 return cid_app;
-
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
-                System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
                 throw e;
             }
 
@@ -327,33 +304,64 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         private ComponentID createInstanceBaseForAllKinds(string instanceName, string class_name, TypeMap properties)
         {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
-            unitProperties.Add(cid, properties);
-			
-            string id_unit = properties.getString(Constants.UNIT_KEY, "");
-            string library_path = properties.getString(Constants.COMPONENT_KEY, "");
-			string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
-			string[] portNames = properties.getStringArray(Constants.PORT_NAMES_KEY, new string[0]);
-			int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
-			
-            ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
-            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit) obj.Unwrap();
-			unit_slice.Id_unit = id_unit;
-			unit_slice.PortNames = portNames;
-			unit_slice.Kind = kind;
-			unit_slice.ClassName = class_name;
-			unit_slice.QualifiedComponentTypeName = library_path;
+			try {
+				Console.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 1");
+	            unitProperties.Add(cid, properties);
+				
+				Console.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 2");
+	            string id_unit = properties.getString(Constants.UNIT_KEY, "");
+	            string library_path = properties.getString(Constants.COMPONENT_KEY, "");
+				string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
+				string[] portNames = properties.getStringArray(Constants.PORT_NAMES_KEY, new string[0]);
+				int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
+				
+				Console.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 3 ; assembly_string = " + assembly_string + "; class name = "+  class_name);
+	
+	            ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
+	            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit) obj.Unwrap();
+				unit_slice.Id_unit = id_unit;
+				unit_slice.PortNames = portNames;
+				unit_slice.Kind = kind;
+				unit_slice.ClassName = class_name;
+				unit_slice.QualifiedComponentTypeName = library_path;
+	
+	            Services services = new WorkerServicesImpl(this, cid, unit_slice);
+	            unit_slice.setServices(services);
+	
+	            if (properties.hasKey(Constants.KEY_KEY)) {
+	                int key = properties.getInt(Constants.KEY_KEY, my_rank);
+					Console.WriteLine(my_rank +  ": --- BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
 
-            Services services = new WorkerServicesImpl(this, cid, unit_slice);
-            unit_slice.setServices(services);
-                        
-            if (properties.hasKey(Constants.KEY_KEY)) {
-                int key = properties.getInt(Constants.KEY_KEY, my_rank);
-				System.Diagnostics.Debug.WriteLine("--- BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
-	            unit_slice.WorldComm = (MPI.Intracommunicator)this.global_communicator.Split(1, key);
-	            System.Diagnostics.Debug.WriteLine("--- END - Worker " + my_rank + ": Split " + key + " !!!");
-	            unit_slice.GlobalRank = unit_slice.WorldComm.Rank;
-            }
+					unit_slice.WorldComm = this.global_communicator;
+		            unit_slice.Communicator = (MPI.Intracommunicator) this.global_communicator.Split(1, key);
+					unit_slice.PeerComm =  (MPI.Intracommunicator) unit_slice.Communicator.Split(Math.Abs(id_unit.GetHashCode()), unit_slice.Rank);
 
+					unit_slice.calculate_topology();
+					Console.WriteLine(this.my_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - SIZE");
+					foreach (KeyValuePair<string, int> unit_size in unit_slice.UnitSize)
+						Console.WriteLine(this.my_rank + ": createInstanceForAllKinds:" + unit_size.Key + "=" + unit_size.Value);
+
+					Console.WriteLine(this.my_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - RANK");
+					foreach (KeyValuePair<string, int[]> unit_ranks in unit_slice.UnitRanks)
+						foreach (int r in unit_ranks.Value)
+							Console.WriteLine(this.my_rank + ": createInstanceForAllKinds: " + unit_ranks.Key + "[" + r + "]");
+
+					Console.WriteLine(this.my_rank + ": createInstanceForAllKinds: END TOPOLOGY");
+
+
+		            Console.WriteLine(my_rank +  ": --- END - Worker " + my_rank + ": Split " + key + " !!!");
+	            } else {
+					Console.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - NO SPLIT");
+				}
+	
+			}
+			catch (Exception e) 
+			{
+				Console.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - EXCEPTION");
+				Console.WriteLine(my_rank +  ": EXCEPTION MESSAGE -" + e.Message);
+				Console.WriteLine(my_rank +  ": INNER EXCEPTION MESSAGE -" + e.InnerException.Message);
+				throw e;
+			}
             return cid;
         }
 
@@ -439,7 +447,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			if (usesPorts.Length > 0 || providesPorts.Length > 0)
 			{
-				System.Diagnostics.Debug.WriteLine("The component must unregister its uses ports " +
+				Console.WriteLine("The component must unregister its uses ports " +
 												   "and remove provides ports before destruction.");
 				throw new CCAExceptionImpl(CCAExceptionType.Unexpected);				
 			}
@@ -544,7 +552,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {				
 				foreach (string p in usesPortNamesInv.Keys)
 				{
-					System.Diagnostics.Debug.WriteLine("U KEY = " + p);
+					Console.WriteLine("U KEY = " + p);
 				}
 			   throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
 			}
@@ -553,42 +561,52 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			{
 				foreach (string p in providesPortNamesInv.Keys)
 				{
-					System.Diagnostics.Debug.WriteLine("P KEY = " + p);
+					Console.WriteLine("P KEY = " + p);
 				}
 				throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
 			}						
 			
-			//if (port_manager.isReleased(user_port_name))
-			//{
-			//	throw new CCAExceptionImpl(CCAExceptionType.PortNotInUse);
-			//}
-			
-			Console.WriteLine("connect " + user_port_name + " to " + provider_port_name);
-			
+			Console.WriteLine(my_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
+
+//			Console.WriteLine(my_rank + ": connect 1");			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
+//			Console.WriteLine(my_rank + ": connect 2");
             connectionList.Add(connection.ToString(), connection);
+//			Console.WriteLine(my_rank + ": connect 3");
             bool first_connection = addConnByProviderPort(provider_port_name, connection);
-          //  System.Diagnostics.Debug.WriteLine(my_rank + ": CONNECT !" + user.getInstanceName() + ":" + usingPortName);
+//			Console.WriteLine(my_rank + ": connect 4");
             connByUserPort.Add(user_port_name, connection);			
+//			Console.WriteLine(my_rank + ": connect 5");
 			port_manager.resetPort(user_port_name);
+//			Console.WriteLine(my_rank + ": connect 6");
             this.tryAwakeConnectingUserPort(user_port_name);
+//			Console.WriteLine(my_rank + ": connect 7");
 
             IUnit user_unit, provider_unit;
             this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
+//			Console.WriteLine(my_rank + ": connect 8");
             this.unitInstances.TryGetValue(provider.getInstanceName(), out provider_unit);
+//			Console.WriteLine(my_rank + ": connect 9");
 
             if (user_unit != null)
             {
-                provider_unit.GlobalRank = user_unit.GlobalRank;
-                provider_unit.WorldComm = user_unit.WorldComm;
+//                provider_unit.GlobalRank = user_unit.GlobalRank;
+//				Console.WriteLine(my_rank + ": connect 10");
+//                provider_unit.WorldComm = user_unit.WorldComm;
+//				Console.WriteLine(my_rank + ": connect 11");
 				
 				/* --- TODO: NOT VALID FOR MPMD */
-				provider_unit.Rank = provider_unit.GlobalRank;
-				provider_unit.Size = provider_unit.WorldComm.Size;
-			
+//				provider_unit.Rank = provider_unit.GlobalRank;
+//				Console.WriteLine(my_rank + ": connect 12");
+//				provider_unit.Size = provider_unit.WorldComm.Size;
+//				Console.WriteLine(my_rank + ": connect 13");
+
 				//provider_unit.addContainerSlice(user_unit, usingPortName);
 				user_unit.addSlice(provider_unit,usingPortName);
             }
+//			Console.WriteLine(my_rank + ": connect 14 " + (connection==null));
+
+//			Console.WriteLine(my_rank + ": end connect " + user_port_name + " to " + provider_port_name + " (" + (connection==null) + ")");
 
             return connection;
         }
@@ -616,13 +634,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             AutoResetEvent wait_handle = null;
             if (waitingUserPorts.TryGetValue(usingPortName, out wait_handle))
             {
-//				System.Diagnostics.Debug.WriteLine ("AWAKENING " + usingPortName);   
+//				Console.WriteLine ("AWAKENING " + usingPortName);   
                 wait_handle.Set();
                 waitingUserPorts.Remove(usingPortName);
             }
 			else
 			{
-//				System.Diagnostics.Debug.WriteLine ("NOTHING TO AWAKE - " + usingPortName);
+//				Console.WriteLine ("NOTHING TO AWAKE - " + usingPortName);
 			}
 				
         }
@@ -760,7 +778,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             Port providesPort;
             providesPorts.TryGetValue(providesPortName, out providesPort);
             
-			//System.Diagnostics.Debug.WriteLine("PORT TYPE of " + providesPortName + " = " + providesPort.GetType());
+			//Console.WriteLine("PORT TYPE of " + providesPortName + " = " + providesPort.GetType());
 			
 			port_manager.addPortFetch(portName);
 			
@@ -771,11 +789,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         	public Port getServicePort(ComponentID user, string usedPortName)
 			{
-				//System.Diagnostics.Debug.WriteLine("checking service port " + usedPortName);
+				//Console.WriteLine("checking service port " + usedPortName);
 				string portType;
 				if (usesPortTypes.TryGetValue(usedPortName, out portType))
 				{
-				  //  System.Diagnostics.Debug.WriteLine("port type is " + portType);
+				  //  Console.WriteLine("port type is " + portType);
 					Port singleton_service_port = null;
 					ServiceProvider service_provider = null;
 					if (usedPortName.EndsWith(Constants.REGISTRY_PORT_NAME)) 
@@ -800,7 +818,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 //		[MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPort(string portName)
         {
-            Console.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
+           // Console.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
             if (!usesPortNamesInv.ContainsKey(portName))
             {
 				Console.WriteLine("PORT NOT FOUND is " + portName);
@@ -856,7 +874,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             if (!usesPortNamesInv.ContainsKey(portName))
             {
-				System.Diagnostics.Debug.WriteLine("Port {0} not defined. It cannot be released.", portName);
+				Console.WriteLine("Port {0} not defined. It cannot be released.", portName);
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
@@ -1096,9 +1114,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public void createInstance()
         {
             my_rank = this.global_communicator.Rank;
-				System.Diagnostics.Debug.WriteLine("BEGIN - NULL Worker " + my_rank + ": Split " + " !!!");
+				Console.WriteLine("BEGIN - NULL Worker " + my_rank + ": Split " + " !!!");
             this.global_communicator.Split(0, my_rank);
-			System.Diagnostics.Debug.WriteLine("END - NULL Worker " + my_rank + ": Split " +  " !!!");
+			Console.WriteLine("END - NULL Worker " + my_rank + ": Split " +  " !!!");
         }
 
 
@@ -1106,7 +1124,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		//just for test
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void sayHi(){
-			System.Diagnostics.Debug.WriteLine("Hi, Manager ! :-)");
+			Console.WriteLine("Hi, Manager ! :-)");
 		}
 	
 

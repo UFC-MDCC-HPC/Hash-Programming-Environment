@@ -14,13 +14,15 @@ public class AbstractComponentFunctorApplicationDAO{
 
     public int insert(AbstractComponentFunctorApplication ac)
     {
-        int nextKey = ac.Id_functor_app;
-        if (nextKey >= 0)
-            nextKey = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+        if (ac.Id_functor_app <= 0) {
+            ac.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
+		}
 
         String sql =
             "INSERT INTO abstractcomponentfunctorapplication (id_functor_app, id_abstract, id_functor_app_next)" +
-            "VALUES (" + nextKey + "," + ac.Id_abstract + "," +  ac.Id_functor_app_next + ")";
+            "VALUES (" + ac.Id_functor_app + "," + ac.Id_abstract + "," +  ac.Id_functor_app_next + ")";
+
+     Console.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 
@@ -30,7 +32,7 @@ public class AbstractComponentFunctorApplicationDAO{
             cache_acfa.Add(ac.Id_functor_app, ac);
         }
 
-        return nextKey;
+        return ac.Id_functor_app;
     }
 
     IDictionary<int, AbstractComponentFunctorApplication> cache_acfa = new Dictionary<int, AbstractComponentFunctorApplication>();

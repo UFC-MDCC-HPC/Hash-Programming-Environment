@@ -181,7 +181,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 					if (!actualParameters_old.ContainsKey(pair.Key)) actualParameters_old.Add(pair);
 				}				
 				
-				DGAC.BackEnd.determineActualParameters(actualParameters_old, acfaRef.Id_functor_app, out actualParameters_new);
+				DGAC.BackEnd.determineArguments(actualParameters_old, acfaRef.Id_functor_app, out actualParameters_new);
 				
 				foreach (KeyValuePair<string,int> pair in actualParameters_new)
 				{
@@ -193,6 +193,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             //    HAVE BEEN DISCOVERED. Now, it is necessary to apply the procedure findHashComponent
             //    descrito no artigo.				
 
+			Console.WriteLine("resolveImpl ENTER findHashComponent ! " + acfaRef.Id_functor_app);
+
             Component componentRef = Resolution.findHashComponent(actualParametersTop, acfaRef);
 
             if (componentRef == null)
@@ -202,6 +204,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
             else
             {
+				Console.WriteLine("resolveImpl OK ! " + componentRef.Library_path);
                 return componentRef;
             }
 
@@ -218,13 +221,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             foreach (br.ufc.pargo.hpe.backend.DGAC.database.Unit unit in unitList)
             {
-                Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_abstract, unit.Id_interface, unit.Partition_index);
+                Interface interfaceUnit = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(unit.Id_abstract, unit.Id_interface, unit.Unit_replica);
 
 				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
                 IList<string> stringCompilationSet = new List<string>();
 
-                IDictionary<string, AbstractComponentFunctorApplication> pars = component.Parameters;
+                IDictionary<string, AbstractComponentFunctorApplication> pars = component.Arguments;
 				
 				Console.WriteLine ("BEGIN TAKING REFERENCES OF " + (unit.Id_abstract) + ", " + id_concrete);
                 foreach (string reference in interfaceUnit.fetchReferences(pars))
@@ -298,6 +301,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
                 foreach (string reference in i.References)
                 {
+					Console.WriteLine("REFERENCE: " + id_abstract + " - " + i.Class_name + " -- " + reference);
                     stringCompilationSet.Add(reference);
                 }
 
@@ -323,7 +327,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                     AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                     info.moduleName = sc.File_name.Split('.')[0];//  buildDllName(i.Assembly_string);
                     info.unitId = i.Id_interface;
-					info.partition_index = i.Partition_index;
+					info.partition_index = i.Unit_replica;
                     info.sourceCode = sc.Contents;
                     info.cuid = acf1.Hash_component_UID;
                     info.library_path = acf1.Library_path;

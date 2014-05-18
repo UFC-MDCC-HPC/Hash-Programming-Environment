@@ -153,19 +153,62 @@ namespace br.ufc.pargo.hpe.basic
         {
         }
 		
-        private Intracommunicator comm = null;
-        
-        public Intracommunicator WorldComm {get { return comm; } set { this.comm = value; }}
+        private Intracommunicator global_comm = null;        
+        public Intracommunicator WorldComm {get { return global_comm; } set { this.global_comm = value; }}
+		public int GlobalRank {get {return WorldComm.Rank;}}   // Number of the parallel units.		
+		public int GlobalSize {get {return WorldComm.Size;}}   // Number of the parallel units.		
 
-		protected int rank = -1;
-		private int size = -1;
-		private int[] ranks = null;
-		private int global_rank = -1;
+        private Intracommunicator local_comm = null;
+        public Intracommunicator Communicator {get { return local_comm; } set { this.local_comm = value; }}
+		public int Rank {get {return Communicator.Rank;}}   
+		public int Size {get {return Communicator.Size;}}  		
+
+        private Intracommunicator peer_comm = null;
+        public Intracommunicator PeerComm {get { return peer_comm; } set { this.peer_comm = value; }}
+        public int PeerRank {get {return PeerComm.Rank; }}   
+		public int PeerSize { get { return PeerComm.Size; }}
+
+		IDictionary<string, int[]> unit_ranks = new Dictionary<string, int[]>();
+ 		public IDictionary<string, int[]> UnitRanks { get { return unit_ranks; } }
+
+		IDictionary<string, int> unit_size = new Dictionary<string, int>();
+		public IDictionary<string, int> UnitSize { get { return unit_size; } }
+
+		public bool IsParallelUnit {get { return PeerSize > 1; }}
+		public bool IsSingletonUnit {get { return !IsParallelUnit; }}
+
+		public void calculate_topology ()
+		{
+			string[] rank_units = this.Communicator.Allgather<string>(this.Id_unit);
+			
+			IDictionary<string, IList<int>> unit_rank_list = new Dictionary<string, IList<int>>();
+
+			for (int rank=0; rank < rank_units.Length; rank++)
+			{
+				string id_unit = rank_units[rank];
+				IList<int> ranks;
+				if (!unit_rank_list.TryGetValue(id_unit, out ranks)) 
+				{
+					ranks = new List<int>();
+					unit_rank_list.Add(id_unit, ranks);
+					unit_size.Add(id_unit, 0);
+				} 
+				ranks.Add(rank);
+				int count = unit_size[id_unit];
+				unit_size.Remove(id_unit);
+				unit_size.Add(id_unit, count + 1);
+			}
+			
+			foreach (KeyValuePair<string, IList<int>> unit_rank_item in unit_rank_list)
+			{
+				string id_unit = unit_rank_item.Key;
+				IList<int> ranks = unit_rank_item.Value;
+				int[] ranks_array = new int[ranks.Count];
+				ranks.CopyTo(ranks_array,0);
+				this.unit_ranks.Add(id_unit,ranks_array);
+			}
 		
-        public int Rank {get {return rank;} set {rank = value;}}   // Rank of the parallel unit.
-		public int Size {get {return size;} set {size = value;}}   // Number of the parallel units.		
-		public int[] GlobalRanks {get {return ranks;} set {ranks = value;}}   // Number of the parallel units.		
-		public int GlobalRank {get {return global_rank;} set {global_rank = value;}}   // Number of the parallel units.		
+		}
 		
         private ComponentID cid = null;
 
@@ -182,42 +225,6 @@ namespace br.ufc.pargo.hpe.basic
             get { return id_interface; }
             set { id_interface = value; }
         }
-
-		public IDictionary<string, int> SingletonUnitRank {
-			get {
-				throw new NotImplementedException ();
-			}
-			set {
-				throw new NotImplementedException ();
-			}
-		}
-
-   /*     private int partition_index;
-
-        public int PartitionIndex
-        {
-            get { return partition_index; }
-            set { partition_index = value; }
-        }*/
-
-		public IDictionary<string, int[]> ParallelUnitRanks {
-			get {
-				throw new NotImplementedException ();
-			}
-			set {
-				throw new NotImplementedException ();
-			}
-		}
-
-		public IDictionary<string, int> UnitSize {
-			get {
-				throw new NotImplementedException ();
-			}
-			set {
-				throw new NotImplementedException ();
-			}
-		}
-		
 		private string qualified_type_name = null;
 		
 		public string QualifiedComponentTypeName

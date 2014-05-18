@@ -65,7 +65,10 @@ public class InnerComponentDAO{
 			{				
                 AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
                 //Console.WriteLine("acf is null ? " + (acf==null) + ", " + id_abstract);					
-				if (acf != null && acf.Id_functor_app_supertype > 0)
+				if (acf == null)
+						throw new Exception("ERROR: InnerComponentDAO.cs (retrieve) : id_abstract = " + id_abstract + "NOT FOUND when loonking for supertype ..." );
+
+				if (acf.Id_functor_app_supertype > 0)
 				{
 				   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
 				   
@@ -73,6 +76,7 @@ public class InnerComponentDAO{
 				}
 				else 
 				   id_abstract = -1;
+				Console.WriteLine("InnerComponentDAO.cs - GOING TO SUPERTYPE " + id_abstract + " - ACF was null ?" + (acf == null));
 			} else
 				   id_abstract = -1;
 			

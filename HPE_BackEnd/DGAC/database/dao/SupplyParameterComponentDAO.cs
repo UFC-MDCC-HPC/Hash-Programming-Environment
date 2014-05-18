@@ -18,6 +18,8 @@ public class SupplyParameterComponentDAO{
         "INSERT INTO supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
         " VALUES ('" + acc.Id_parameter + "'," + acc.Id_functor_app + "," + acc.Id_functor_app_actual + ")";
 
+   		Console.WriteLine("SupplyParameterComponent.cs: TRY INSERT: " + sql);
+
         Connector.performSQLUpdate(sql);
     }
 

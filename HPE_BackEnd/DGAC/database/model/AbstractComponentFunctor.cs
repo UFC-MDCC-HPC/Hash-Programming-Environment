@@ -49,7 +49,21 @@ public class AbstractComponentFunctor : HashComponent {
 		return iList.Count;
 	}
 		
-	
+	public IDictionary<string, AbstractComponentFunctorApplication> ParameterBounds	
+	{
+		get {
+				IDictionary<string, AbstractComponentFunctorApplication> r = new Dictionary<string, AbstractComponentFunctorApplication>();
+				IList<AbstractComponentFunctorParameter> acfpList = BackEnd.acfpdao.list(Id_abstract);
+				foreach (AbstractComponentFunctorParameter acfp in acfpList)
+				{
+					AbstractComponentFunctorApplication acfa_bounds = BackEnd.acfadao.retrieve(acfp.Bounds_of);
+					r.Add(acfp.Id_parameter,acfa_bounds);	
+				}	
+				return r;
+			}
+	}
 }//class
 
 }//namespace
+
+

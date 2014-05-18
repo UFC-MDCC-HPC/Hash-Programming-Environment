@@ -17,65 +17,72 @@ public class InterfaceDAO{
     {
         String sql =
             "INSERT INTO interface (id_interface, " +
-                                   "partition_index, " +
+                                   "unit_replica, " +
                                    "id_abstract, " +
                                    "assembly_string, " +
                                    "id_interface_super, " /*+
-                                   "partition_index_super, " +
+                                   "unit_replica_super, " +
                                    "id_interface_super_top, " */+
-                                   "partition_index_super_top, " +
+                                   "unit_replica_super_top, " +
                                    "class_name, " +
                                    "class_nargs, " +
                                    "uri_source, " +
                                    "`order`)" +
             " VALUES ('" + ac.Id_interface + "'," 
-					     + ac.Partition_index + ", " 
+					     + ac.Unit_replica + ", " 
 					     + ac.Id_abstract + ",'" 
 					     + ac.Assembly_string + "','" 
 					     + ac.Id_interface_super + "'," 
-					     + ac.Partition_index_super + ",'" /*
+					     + ac.Unit_replica_super + ",'" /*
 					     + ac.Id_interface_super_top + "'," 
-					     + ac.Partition_index_super_top + ",'" */
+					     + ac.unit_replica_super_top + ",'" */
 					     + ac.Class_name + "'," 
 					     + ac.Class_nargs + ",'" 
 					     + ac.URI_Source + "'," 
 					     + ac.Order + ")";
+
+   		Console.WriteLine("Interface.cs: TRY INSERT: " + sql);
+
+
 
         Connector.performSQLUpdate(sql);
     }
 
 	
     // UPDATED BY HERON (id_abstract is now a key)
-	public Interface retrieve(int id_abstract, string id_interface, int partition_index){
+	public Interface retrieve(int id_abstract, string id_interface, int unit_replica){
 	   
 	   Interface i = null;
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_interface, partition_index, id_abstract, assembly_string, id_interface_super, partition_index_super, id_interface_super_top, partition_index_super_top, class_name, class_nargs, uri_source, `order` " +
+           "SELECT id_interface, unit_replica, id_abstract, assembly_string, id_interface_super, unit_replica_super, id_interface_super_top, unit_replica_super_top, class_name, class_nargs, uri_source, `order` " +
            "FROM interface "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
-           "id_abstract=" + id_abstract + " AND partition_index = " + partition_index;
+				"id_abstract=" + id_abstract 
+				/*+ " AND unit_replica = " + unit_replica*/  
+				// TODO: it is not yet supported splitting of units (only slices), i.e. unit_replica of units is always 0s.
+				;
        dbcmd.CommandText = sql;
        IDataReader reader = dbcmd.ExecuteReader();
        if (reader.Read())
        {
            i = new Interface();
            i.Id_interface = (string)reader["id_interface"];
-	       i.Partition_index = (int)reader["partition_index"];
+	       i.Unit_replica = (int)reader["unit_replica"];
            i.Id_abstract = (int)reader["id_abstract"];
            i.Assembly_string = (string)reader["assembly_string"];
            i.Id_interface_super = (string)reader["id_interface_super"];
-	       i.Partition_index_super = (int)reader["partition_index_super"];
+	       i.Unit_replica_super = (int)reader["unit_replica_super"];
            if (reader["id_interface_super_top"].ToString().Equals(""))
            {
                i.Id_interface_super_top = null;
-			   i.Partition_index_super_top = -1;
+			   i.Unit_replica_super_top = -1;
            }
            else
            {
                i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-	           i.Partition_index_super_top = (int)reader["partition_index"];					
+	           i.Unit_replica_super_top = (int)reader["unit_replica"];					
            }
            i.Class_name = (string)reader["class_name"];
            i.Class_nargs = (int)reader["class_nargs"];
@@ -107,7 +114,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, partition_index, partition_index_super, partition_index_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
+            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " ORDER BY `order`";
         dbcmd.CommandText = sql;
@@ -116,22 +123,22 @@ public class InterfaceDAO{
         {
             Interface i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
-			i.Partition_index = (int)reader["partition_index"];
+			i.Unit_replica = (int)reader["unit_replica"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
-				i.Partition_index_super_top = -1;
+				i.Unit_replica_super_top = -1;
             } 
 			else 
 			{
                 i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-			    i.Partition_index_super_top = (int)reader["partition_index_super_top"];
+			    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
             }
 
             i.Id_interface_super = (string)reader["id_interface_super"];
-			i.Partition_index_super = (int)reader["partition_index_super"];
+			i.Unit_replica_super = (int)reader["unit_replica_super"];
             
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
@@ -155,7 +162,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, partition_index, partition_index_super, partition_index_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
+            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " and id_interface ='" + id_interface + "' ORDER BY `order`";
         dbcmd.CommandText = sql;
@@ -164,21 +171,21 @@ public class InterfaceDAO{
         {
             Interface i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
-			i.Partition_index = (int)reader["partition_index"];
+			i.Unit_replica = (int)reader["unit_replica"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
-				i.Partition_index_super_top = -1;
+				i.Unit_replica_super_top = -1;
             } 
 			else {
                 i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-			    i.Partition_index_super_top = (int)reader["partition_index_super_top"];
+			    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
             }
 
             i.Id_interface_super = (string)reader["id_interface_super"];
-			i.Partition_index_super = (int)reader["partition_index_super"];
+			i.Unit_replica_super = (int)reader["unit_replica_super"];
             
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
@@ -195,28 +202,28 @@ public class InterfaceDAO{
         return iList;
     }
 
-    internal void setInterfaceSuperTop(int id_abstract, string id_interface, int partition_index, string id_interface_super_top, int partition_index_super_top)
+    internal void setInterfaceSuperTop(int id_abstract, string id_interface, int unit_replica, string id_interface_super_top, int unit_replica_super_top)
     {
         String sql =
-            "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "', partition_index_super_top = " + partition_index_super_top +
-            " WHERE id_abstract=" + id_abstract + " AND id_interface like '" + id_interface + "' AND partition_index = " + partition_index;
+            "UPDATE interface SET id_interface_super_top = '" + id_interface_super_top + "', unit_replica_super_top = " + unit_replica_super_top +
+            " WHERE id_abstract=" + id_abstract + " AND id_interface like '" + id_interface + "' AND unit_replica = " + unit_replica;
 
         Connector.performSQLUpdate(sql);
     }
 
-    internal Interface retrieveByMatching(int id_abstract_1, int id_abstract_2, string id_interface, int partition_index)
+    internal Interface retrieveByMatching(int id_abstract_1, int id_abstract_2, string id_interface, int unit_replica)
     {
-        Interface i = retrieve(id_abstract_2,id_interface, partition_index);
+        Interface i = retrieve(id_abstract_2,id_interface, unit_replica);
         string id_interface_super_top_2 = i.Id_interface_super_top;
-		int partition_index_super_top_2 = i.Partition_index_super_top;
+		int unit_replica_super_top_2 = i.Unit_replica_super_top;
 
         IList<Interface> iList = list(id_abstract_1);
         foreach (Interface iSuperCandidate in iList)
         {
             string id_interface_super_top_1 = iSuperCandidate.Id_interface_super_top;
-			int partition_index_super_top_1 = iSuperCandidate.Partition_index_super_top;
+			int unit_replica_super_top_1 = iSuperCandidate.Unit_replica_super_top;
             if (id_interface_super_top_1.Equals(id_interface_super_top_2) &&
-				    partition_index_super_top_1 == partition_index_super_top_2)
+				    unit_replica_super_top_1 == unit_replica_super_top_2)
             {
                 return iSuperCandidate;
             }
@@ -225,9 +232,9 @@ public class InterfaceDAO{
         return null;
     }
 
-    internal void setPublicKey(int id_abstract, string id_interface, int partition_index, string publicKey)
+    internal void setPublicKey(int id_abstract, string id_interface, int unit_replica, string publicKey)
     {
-        Interface i = this.retrieve(id_abstract, id_interface, partition_index);
+        Interface i = this.retrieve(id_abstract, id_interface, unit_replica);
 
         String s = ", PublicKey=";
 
@@ -263,7 +270,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, partition_index, partition_index_super, partition_index_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
+            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
             "FROM interface " +
             "WHERE class_name like '" + library_path + "'";
         dbcmd.CommandText = sql;
@@ -272,20 +279,20 @@ public class InterfaceDAO{
         {
             i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
-			i.Partition_index = (int)reader["partition_index"];
+			i.Unit_replica = (int)reader["unit_replica"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
             i.Id_interface_super = (string)reader["id_interface_super"];
-			i.Partition_index_super = (int)reader["partition_index_super"];
+			i.Unit_replica_super = (int)reader["unit_replica_super"];
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
-				i.Partition_index_super_top = -1;
+				i.Unit_replica_super_top = -1;
             }
             else
             {
                 i.Id_interface_super_top = (string)reader["id_interface_super_top"];
-			    i.Partition_index_super_top = (int)reader["partition_index_super_top"];
+			    i.Unit_replica_super_top = (int)reader["unit_replica_super_top"];
             }
             i.Class_name = (string)reader["class_name"];
             i.Class_nargs = (int)reader["class_nargs"];
@@ -304,12 +311,12 @@ public class InterfaceDAO{
         return i;
     }
 
-    internal Interface retrieveTop(int id_abstract, string id_interface, int partition_index)
+    internal Interface retrieveTop(int id_abstract, string id_interface, int unit_replica)
     {
         IList<Interface> iList = BackEnd.idao.list(id_abstract);
         foreach (Interface i in iList)
         {
-            if (i.Id_interface_super_top.Equals(id_interface) && i.Partition_index == partition_index)
+            if (i.Id_interface_super_top.Equals(id_interface) && i.Unit_replica == unit_replica)
             {
                 return i;
             }
@@ -318,7 +325,7 @@ public class InterfaceDAO{
         return null;
     }
 
-    internal Interface retrieveSuper(int id_abstract, string id_interface, int partition_index)
+    internal Interface retrieveSuper(int id_abstract, string id_interface, int unit_replica)
     {
         bool loop;
         AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(id_abstract);
@@ -330,7 +337,7 @@ public class InterfaceDAO{
             AbstractComponentFunctor acfCurr = acf;
             do
             {
-                if (iCurr.Id_interface.Equals(id_interface) && iCurr.Partition_index == partition_index)
+                if (iCurr.Id_interface.Equals(id_interface) && iCurr.Unit_replica == unit_replica)
                 {
                     return i;
                 }
@@ -338,7 +345,7 @@ public class InterfaceDAO{
                 {
                     AbstractComponentFunctorApplication acfaSuper = DGAC.BackEnd.acfadao.retrieve(acfCurr.Id_functor_app_supertype);
                     acfCurr = DGAC.BackEnd.acfdao.retrieve(acfaSuper.Id_abstract);
-                    iCurr = DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, iCurr.Id_interface_super, iCurr.Partition_index_super);
+                    iCurr = DGAC.BackEnd.idao.retrieve(acfaSuper.Id_abstract, iCurr.Id_interface_super, iCurr.Unit_replica_super);
                 }
             }
             while (loop);

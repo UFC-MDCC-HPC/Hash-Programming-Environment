@@ -15,8 +15,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         public void insert(Slice ac)
         {
             String sql =
-                "INSERT INTO slice (id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name)" +
-                " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "','" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Partition_index + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
+				"INSERT INTO slice (id_abstract, id_interface, unit_replica_host, id_interface_slice, id_inner, slice_replica, unit_replica, transitive, property_name)" +
+				" VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Unit_replica_host + ",'" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Slice_replica + "," + ac.Unit_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
 			
 			Console.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
 			
@@ -26,18 +26,26 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 
         // ADDED BY HERON
-        public Slice retrieve(int id_abstract, string id_inner, string id_interface_slice, int partition_index)
+        public Slice retrieve(int id_abstract, string id_inner, string id_interface_slice, int slice_replica)
         {
             Slice s = null;
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
+				"SELECT id_abstract, " +
+				       "id_interface, " +
+				       "unit_replica_host, " +
+				       "id_interface_slice, " +
+				       "id_inner, " +
+				       "slice_replica, " +
+				       "unit_replica, " +
+				       "transitive, " +
+				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " + 
                 "id_interface_slice like '" + id_interface_slice + "' AND " + 
-                "partition_index = " + partition_index;
+                "slice_replica = " + slice_replica;
             dbcmd.CommandText = sql;
             IDataReader reader = dbcmd.ExecuteReader();
             if (reader.Read())
@@ -45,9 +53,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s = new Slice();
                 s.Id_abstract = (int)reader["id_abstract"];
                 s.Id_interface = (string)reader["id_interface"];
+				s.Unit_replica_host = (int)reader["unit_replica_host"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
-                s.Partition_index = (int)reader["partition_index"];
+                s.Slice_replica = (int)reader["slice_replica"];
+				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
             }
@@ -55,8 +65,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             {
                 // UNIT NOT FOUND
             }
-
-
 
             // clean up
             reader.Close();
@@ -66,7 +74,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
 		    if (s==null) 
 		    {
-		  	   Console.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice + ", partition_index=" + partition_index);
+		  	   Console.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice + ", slice_replica=" + slice_replica);
 		    }
 				
             return s;
@@ -80,7 +88,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             IDbConnection dbcon = Connector.DBcon;
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
+				"SELECT id_abstract, " +
+				       "id_interface, " +
+				       "unit_replica_host, " +
+				       "id_interface_slice, " +
+				       "id_inner, " +
+				       "slice_replica, " +
+				       "unit_replica, " +
+				       "transitive, " +
+				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
@@ -95,7 +111,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
-                s.Partition_index = (int)reader["partition_index"];
+                s.Slice_replica = (int)reader["slice_replica"];
+				s.Unit_replica = (int)reader["unit_replica"];
+				s.Unit_replica_host = (int)reader["unit_replica_host"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
             }
@@ -103,8 +121,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             {
                 // UNIT NOT FOUND
             }
-
-
 
             // clean up
             reader.Close();
@@ -126,7 +142,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcon.Open();
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, partition_index, transitive, property_name " +
+				"SELECT id_abstract, " +
+				       "id_inner, " +
+				       "id_interface_slice, " +
+				       "id_interface, " +
+				       "unit_replica_host, " +
+				       "slice_replica, " +
+				       "unit_replica, " +
+				       "transitive, " +
+				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'";
             dbcmd.CommandText = sql;
@@ -138,7 +162,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface = (string)reader["id_interface"];
-                s.Partition_index = (int)reader["partition_index"];
+				s.Unit_replica_host = (int)reader["unit_replica_host"];
+                s.Slice_replica = (int)reader["slice_replica"];
+				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);
@@ -154,7 +180,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         }//list2
 
-        public IList<Slice> listByInterface(int id_abstract_start, string id_interface, int partition_index)
+        public IList<Slice> listByInterface(int id_abstract_start, string id_interface, int slice_replica)
         {
 			IDictionary<string,string> mem = new Dictionary<string,string>();
             IList<Slice> list = new List<Slice>();
@@ -166,9 +192,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	            IDbConnection dbcon = Connector.DBcon;
 	            IDbCommand dbcmd = dbcon.CreateCommand();
 	            string sql =
-	                "SELECT id_abstract, id_interface, id_interface_slice, id_inner, partition_index, transitive, property_name " +
+					"SELECT id_abstract, " +
+					       "id_interface, " +
+					       "unit_replica_host, " +
+					       "id_interface_slice, " +
+					       "id_inner, " +
+					       "slice_replica, " +
+					       "unit_replica, " +
+					       "transitive, " +
+					       "property_name " +
 	                "FROM slice " +
-	                "WHERE id_abstract=" + id_abstract + " and id_interface like '" + id_interface + "' and partition_index = " + partition_index;
+					"WHERE id_abstract=" + id_abstract + " and id_interface like '" + id_interface + "'"/*+ "' and slice_replica = " + slice_replica*/;
 	            dbcmd.CommandText = sql;
 	            IDataReader reader = dbcmd.ExecuteReader();
 	            while (reader.Read())
@@ -176,9 +210,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                Slice s = new Slice();
 	                s.Id_abstract = (int)reader["id_abstract"];
 	                s.Id_interface = (string)reader["id_interface"];
+					s.Unit_replica_host = (int)reader["unit_replica_host"];
 	                s.Id_interface_slice = (string)reader["id_interface_slice"];
 	                s.Id_inner = (string)reader["id_inner"];
-	                s.Partition_index = (int)reader["partition_index"];
+	                s.Slice_replica = (int)reader["slice_replica"];
+					s.Unit_replica = (int)reader["unit_replica"];
 	                s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
 	                s.PortName = (string)reader["property_name"];
 					if (!mem.ContainsKey(s.Id_inner))
@@ -198,10 +234,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				if (acf.Id_functor_app_supertype > 0)
 				{
 				   AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acf.Id_functor_app_supertype);
-				   Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, id_interface, partition_index);					
+				   Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieve(id_abstract, id_interface, slice_replica);					
 				   id_abstract = acfa.Id_abstract;
 				   id_interface = i.Id_interface_super;
-				   partition_index = i.Partition_index_super;
+				   slice_replica = i.Unit_replica_super;
 				}
 				else 
 					id_abstract = -1;
@@ -220,7 +256,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcon.Open();
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, partition_index, transitive, property_name " +
+				"SELECT id_abstract, " +
+				       "id_inner, " +
+				       "id_interface_slice, " +
+				       "id_interface, " +
+				       "unit_replica_host, " +
+				       "slice_replica, " +
+				       "unit_replica, " +
+				       "transitive, " +
+				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + 
                  " and id_inner like '" + id_inner + "'" +
@@ -234,7 +278,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface = (string)reader["id_interface"];
-                s.Partition_index = (int)reader["partition_index"];
+				s.Unit_replica_host = (int)reader["unit_replica_host"];
+                s.Slice_replica = (int)reader["slice_replica"];
+				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);
@@ -257,7 +303,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             dbcon.Open();
             IDbCommand dbcmd = dbcon.CreateCommand();
             string sql =
-                "SELECT id_abstract, id_inner, id_interface_slice, id_interface, partition_index, transitive, property_name " +
+				"SELECT id_abstract, " +
+				       "id_inner, " +
+				       "id_interface_slice, " +
+				       "id_interface, " +
+				       "unit_replica_host, " +
+				       "slice_replica, " +
+				       "unit_replica, " +
+				       "transitive, " +
+				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " and id_inner like '" + id_inner + "'" + " and id_interface_slice like '" + id_interface_slice + "'";
             dbcmd.CommandText = sql;
@@ -269,7 +323,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_inner = (string)reader["id_inner"];
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_interface = (string)reader["id_interface"];
-                s.Partition_index = (int)reader["partition_index"];
+				s.Unit_replica_host = (int)reader["unit_replica_host"];
+                s.Slice_replica = (int)reader["slice_replica"];
+				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
                 list.Add(s);

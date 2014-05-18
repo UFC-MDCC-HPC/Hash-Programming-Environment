@@ -16,7 +16,9 @@ public class SupplyParameterParameterDAO{
     {
         String sql =
             "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
-            " VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + ",'" + ac.Id_parameter_actual + "'," + ac.FreeVariable + ")";
+            " VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + ",'" + ac.Id_argument + "'," + ac.FreeVariable + ")";
+
+   		Console.WriteLine("SupplyParameterParameter.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
     }
@@ -36,7 +38,7 @@ public class SupplyParameterParameterDAO{
        		spc = new SupplyParameterParameter();
        	    spc.Id_parameter = (string)reader["id_parameter"];
        	    spc.Id_functor_app = (int)reader["id_functor_app"];
-       	    spc.Id_parameter_actual = (string)reader["id_parameter_actual"];
+       	    spc.Id_argument = (string)reader["id_parameter_actual"];
             spc.FreeVariable = ((int)reader["freeVariable"])==0 ? false : true;
              
              
@@ -88,7 +90,7 @@ public class SupplyParameterParameterDAO{
             spc.Id_abstract = (int)reader["id_abstract"];
             spc.Id_parameter = (string)reader["id_parameter"];
             spc.Id_functor_app = (int)reader["id_functor_app"];
-            spc.Id_parameter_actual = (string)reader["id_parameter_actual"];
+            spc.Id_argument = (string)reader["id_parameter_actual"];
             spc.FreeVariable = ((int)reader["freeVariable"]) == 0 ? false : true;
             spp_List.Add(spc);
 

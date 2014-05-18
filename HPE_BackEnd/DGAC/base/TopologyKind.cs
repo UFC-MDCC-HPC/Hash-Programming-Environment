@@ -8,8 +8,8 @@ namespace br.ufc.pargo.hpe.kinds
     public interface ITopologyKind : IUnit
     {
 		int Rank {set; get;}
-		int PartitionCount{set;}
-		int PartitionIndex{get;}
+		int PartitionCount {set;}
+		int PartitionIndex {get;}
     }
 
     public abstract class Topology : Unit

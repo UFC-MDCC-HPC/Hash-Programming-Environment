@@ -140,6 +140,8 @@ namespace gov
             public override WorkerComponentID getWorkerComponentID(int node)
             {
                 WorkerComponentID wcid;
+				foreach (KeyValuePair<int,WorkerComponentID> uuu in wcids)
+					Console.WriteLine("node = " + uuu.Key + "; " + "wcid = " + uuu.Value.getInstanceName());
                 wcids.TryGetValue(node, out wcid);
                 return wcid;
             }

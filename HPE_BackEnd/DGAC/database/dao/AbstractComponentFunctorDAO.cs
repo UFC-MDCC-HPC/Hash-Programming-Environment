@@ -15,7 +15,7 @@ public class AbstractComponentFunctorDAO{
     {
 
         int nextKey = ac.Id_abstract;
-        if (nextKey >= 0)
+        if (nextKey <= 0)
             nextKey = Connector.nextKey("id_abstract", "abstractcomponentfunctor");
 
         String sql =
@@ -24,6 +24,8 @@ public class AbstractComponentFunctorDAO{
             + ac.Id_functor_app_supertype + "," 
             + (ac.Library_path == null ? "null" : ("'" + ac.Library_path + "'")) + "," 
             + (ac.Hash_component_UID == null ? "null" : ("'" + ac.Hash_component_UID + "'")) + ",'" + ac.Kind + "')";
+
+     	Console.WriteLine("AbstractComponentFunctor.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 
