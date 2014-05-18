@@ -48,7 +48,7 @@ namespace Back_End_WS
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
-                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType.implements)
+                    if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType1.implements)
                         dgac.registerConcreteComponent(c, userName, password, curDir);
                     else
                         dgac.registerAbstractComponent(c, userName, password, curDir);
