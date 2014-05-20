@@ -44,8 +44,8 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" />
-        <Command type="AfterBuild" command="sudo /usr/local/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" />
+        <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" pauseExternalConsole="True" />
+        <Command type="AfterBuild" command="sudo /usr/local/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -84,7 +84,7 @@
       <Link>base\ApplicationKind.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\base\ArchitectureKind.cs">
-      <Link>base\ArchitectureKind.cs</Link>
+      <Link>base\PlatformKind.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\base\ComputationKind.cs">
       <Link>base\ComputationKind.cs</Link>

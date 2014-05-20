@@ -7,8 +7,8 @@
 
 worker/RemotingServerWorker.cs 
 
--r:/usr/lib/mono/DGAC/DGAC.dll
--r:/usr/lib/mono/MPI.NET/MPI.dll
+-r:/opt/mono-3.2.5/lib/mono/DGAC/DGAC.dll
+-r:/opt/mono-3.2.5/lib/mono/MPI/MPI.dll
  
 -target:exe
  
