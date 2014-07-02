@@ -11,7 +11,8 @@ DGAC/CommandLineUtil.cs
 DGAC/Constants.cs
 DGAC/FileUtil.cs
 DGAC/DGAC.cs
-DGAC/Instantiator.cs
+DGAC/instantiator.cs
+DGAC/catalog.cs
 DGAC/CCA.cs
 DGAC/WorkerComponentIDImpl.cs
 DGAC/ManagerComponentIDImpl.cs

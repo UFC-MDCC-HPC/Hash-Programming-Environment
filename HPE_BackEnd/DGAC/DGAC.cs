@@ -22,6 +22,9 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Threading;
 using System.Runtime.CompilerServices;
 
+using Catalog;
+using Instantiator;
+
 namespace br.ufc.pargo.hpe.backend
 {
 
@@ -277,6 +280,158 @@ namespace br.ufc.pargo.hpe.backend
 
 			#endregion DEPLOY
 			
+			#region CATALOG
+
+            public static Catalog.CatalogType readCatalog()
+            {
+                Connector.openConnection();
+
+                Catalog.CatalogType env = new Catalog.CatalogType();
+
+				env.component = readAbstractComponentsInCatalog();
+
+                Connector.closeConnection();
+
+                return env;
+            }
+
+			static Catalog.ComponentType[] readAbstractComponentsInCatalog ()
+			{
+
+                IList<AbstractComponentFunctor> acfList = acfdao.list();
+
+				Catalog.ComponentType[] cs =  new Catalog.ComponentType[acfList.Count];
+
+				int i= 0;
+                foreach (AbstractComponentFunctor acf in acfList)
+                {
+                    Catalog.ComponentType deployed = new Catalog.ComponentType();
+
+					deployed.component_ref = acf.Library_path;
+					deployed.kind = acf.Kind;
+					deployed.unit = readUnits_catalog(acf);
+					deployed.uses_port = readUsesPorts_catalog(acf);
+				 	deployed.provides_port = readProvidesPorts_catalog(acf);
+					deployed.parameter = readParameters_catalog(acf);
+			
+					if (acf.Id_functor_app_supertype > 0)
+					{
+						AbstractComponentFunctorApplication acfaSuper = acfadao.retrieve(acf.Id_functor_app_supertype);
+						AbstractComponentFunctor acfSuper = acfdao.retrieve(acfaSuper.Id_abstract);
+						deployed.component_ref_super = acfSuper.Library_path;
+					}
+
+					cs[i++] = deployed;
+                }
+
+				return cs;
+			}
+
+			static Catalog.UnitType[] readUnits_catalog (AbstractComponentFunctor acf)
+			{				
+				IList<Interface> unit_list = BackEnd.idao.list(acf.Id_abstract);
+				Catalog.UnitType[] result = new Catalog.UnitType[unit_list.Count];
+				int i = 0;
+				foreach (Interface unit in unit_list)
+				{
+					Catalog.UnitType unit_info = new Catalog.UnitType();
+					unit_info.unit_ref = unit.Id_interface;
+					unit_info.is_parallel = unit.Is_parallel;
+					result[i++] = unit_info;
+				}
+				return result;
+			}
+
+			static Catalog.UsesPortType[] readUsesPorts_catalog (AbstractComponentFunctor acf)
+			{
+				IList<InnerComponent> ic_list = BackEnd.icdao.list(acf.Id_abstract);
+				Catalog.UsesPortType[] result = new Catalog.UsesPortType[ic_list.Count];
+				int i = 0;
+				foreach (InnerComponent ic in ic_list)
+				{
+					//if (ic.IsPublic)
+					{
+						Catalog.UsesPortType inner_info = new Catalog.UsesPortType();
+						inner_info.port_ref = ic.Id_inner;
+						inner_info.type = readInstantiationType(ic.Id_functor_app);
+						result[i++] = inner_info;
+					}
+				}
+				return result;
+			}	
+			static Catalog.ProvidesPortType[] readProvidesPorts_catalog (AbstractComponentFunctor acf)
+			{
+				Catalog.ProvidesPortType[] result = new Catalog.ProvidesPortType[1];
+				result[0] = new Catalog.ProvidesPortType();
+				result[0].port_ref = "implements";
+				return result;
+			}
+
+			static Catalog.ParameterType[] readParameters_catalog (AbstractComponentFunctor acf)
+			{
+				IList<AbstractComponentFunctorParameter> par_list = BackEnd.acfpdao.list(acf.Id_abstract);
+				Catalog.ParameterType[] result = new Catalog.ParameterType[par_list.Count];
+				int i = 0;
+				foreach (AbstractComponentFunctorParameter par in par_list)
+				{
+					Catalog.ParameterType parameter_info = new Catalog.ParameterType();
+					parameter_info.parameter_id = par.Id_parameter;
+					parameter_info.variable_id  = par.Id_parameter; //TODO: ...
+					parameter_info.bounds_type = readInstantiationType(par.Bounds_of);
+					result[i++] = parameter_info;
+				}
+				return result;
+			}
+
+			static Catalog.ComponentFunctorApplicationType readInstantiationType (int bounds_of)
+			{
+				AbstractComponentFunctorApplication acfa = BackEnd.acfadao.retrieve(bounds_of);				
+				return readInstantationType(acfa);
+			}	
+
+			static Catalog.ComponentFunctorApplicationType readInstantationType (AbstractComponentFunctorApplication acfa)
+			{
+				Catalog.ComponentFunctorApplicationType result = new Catalog.ComponentFunctorApplicationType();
+				AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(acfa.Id_abstract);
+				result.component_ref = acf.Library_path;
+				result.argument = readInstantiationTypeParameters(acfa);
+				return result;
+			}
+
+			static Catalog.ContextArgumentType[] readInstantiationTypeParameters (AbstractComponentFunctorApplication acfa)
+			{
+				IList<SupplyParameter> sp_list = BackEnd.spdao.list(acfa.Id_functor_app);
+				IList<Catalog.ContextArgumentType> result = new List<Catalog.ContextArgumentType>();				
+				foreach (SupplyParameter sp in sp_list) 
+				{
+					Catalog.ContextArgumentType arg = new Catalog.ContextArgumentType();
+					arg.parameter_id = sp.Id_parameter;
+					if (sp is SupplyParameterComponent)
+					{
+						SupplyParameterComponent spc = (SupplyParameterComponent) sp;
+						arg.Item = (Catalog.ComponentFunctorApplicationType) readInstantiationType(spc.Id_functor_app_actual);
+						result.Add(arg);
+					}		
+					else if (sp is SupplyParameterParameter)
+					{
+						SupplyParameterParameter spp = (SupplyParameterParameter) sp;						
+						if (!spp.FreeVariable)
+						{							
+							arg.Item = spp.Id_argument;
+							result.Add(arg);
+						}
+					}
+				}
+
+				Catalog.ContextArgumentType[] result_array = new Catalog.ContextArgumentType[result.Count];
+				result.CopyTo(result_array, 0);
+				
+				return result_array;
+			}
+	
+
+			#endregion CATALOG
+
 			#region ENVIRONMENT
 			
             public static EnvironmentType readEnvironment()
@@ -941,7 +1096,7 @@ namespace br.ufc.pargo.hpe.backend
 			
 		#region CREATE_ACFA
 		
-        public static AbstractComponentFunctorApplication loadACFAFromInstantiator(ComponentFunctorApplicationType instantiator)
+        public static AbstractComponentFunctorApplication loadACFAFromInstantiator(Instantiator.ComponentFunctorApplicationType instantiator)
             {
                 AbstractComponentFunctorApplication aAppNew = null;
 
@@ -949,22 +1104,22 @@ namespace br.ufc.pargo.hpe.backend
                 {
                     Connector.openConnection();
 
-                    AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath(instantiator.library_path);
+                    AbstractComponentFunctor acf = BackEnd.acfdao.retrieve_libraryPath(instantiator.component_ref);
 
                     aAppNew = new AbstractComponentFunctorApplication();
                     aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
                     aAppNew.Id_abstract = acf.Id_abstract;
                     DGAC.BackEnd.acfadao.insert(aAppNew);
 
-                    if (instantiator.context_parameter != null)
-                        foreach (ContextParameterType ctx in instantiator.context_parameter)
+                    if (instantiator.argument != null)
+                        foreach (Instantiator.ContextArgumentType ctx in instantiator.argument)
                         {
-                            AbstractComponentFunctorApplication acfa_par = loadACFAFromInstantiator(ctx.actual_parameter);
+							AbstractComponentFunctorApplication acfa_par = loadACFAFromInstantiator((Instantiator.ComponentFunctorApplicationType) ctx.Item);
 
                             SupplyParameterComponent par = new SupplyParameterComponent();
                             par.Id_abstract = acfa_par.Id_abstract;
                             par.Id_functor_app = aAppNew.Id_functor_app;
-                            par.Id_parameter = ctx.formal_parameter_id;
+                            par.Id_parameter = ctx.parameter_id;
                             par.Id_functor_app_actual = acfa_par.Id_functor_app;
 
                             DGAC.BackEnd.spdao.insert(par);
@@ -1210,8 +1365,8 @@ namespace br.ufc.pargo.hpe.backend
 					
 					string session_id_string = cid.getInstanceName() + "-" + parameter_id;
 	                FileInfo file = FileUtil.writeToFile(session_id_string + ".xml", actual_parameter);
-	                ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
-	                DGAC.database.AbstractComponentFunctorApplication acfaRef_par = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
+	                Instantiator.InstanceType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
+	                DGAC.database.AbstractComponentFunctorApplication acfaRef_par = DGAC.BackEnd.loadACFAFromInstantiator(instantiator.contextual_type);
 								
 					// Fetching the enclosing component, if it exists.
 					#region TRY_FETCH_ENCLOSING_COMPONENT
@@ -1259,7 +1414,7 @@ namespace br.ufc.pargo.hpe.backend
 						properties[Constants.NODES_KEY] = cid.WorkerNodes;
 						properties[Constants.PORT_NAME] = cid.PortName;
 						
-					 	UnitMappingType[] unit_mapping_inner;
+					 	Instantiator.UnitMappingType[] unit_mapping_inner;
 					    new_cid = createInnerComponent(owner_cid, ic, cid, bsPort, frwServices, arguments, argumentsTop, null, out unit_mapping_inner);
 	
 						string uses_port_name = owner_connid.getUserPortName();
@@ -1391,8 +1546,8 @@ namespace br.ufc.pargo.hpe.backend
 					Console.WriteLine("Creating an instance of the application");
 						
 	                FileInfo file = FileUtil.writeToFile(session_id_string + ".xml", instantiator_string);
-	                ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
-	                DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
+	                Instantiator.InstanceType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
+	                DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator.contextual_type);
 
 					DGAC.database.Component c = resolveUnit(acfaRef);	
 
@@ -1401,9 +1556,9 @@ namespace br.ufc.pargo.hpe.backend
 					properties[Constants.PORT_NAME] = null;
 
 					// CONFIGURE HOW UNITS ARE MAPPED ACCROSS NODES ...
-					if (instantiator.node != null && instantiator.node.Length > 0) 
+					/*if (instantiator.node != null && instantiator.node.Length > 0) 
 						properties[Constants.NODES_KEY] = instantiator.node; //obsolete
-					else if (instantiator.unit_mapping != null && instantiator.unit_mapping.Length > 0) 
+					else */if (instantiator.unit_mapping != null && instantiator.unit_mapping.Length > 0) 
 						properties[Constants.NODES_KEY] = instantiator.unit_mapping;
 					else {
 						throw new Exception("DGAC.createApplicationInstance - UNEXPECTED ERROR ...");
@@ -1472,7 +1627,7 @@ namespace br.ufc.pargo.hpe.backend
 			                                           ManagerObject frw,
 				                                       IDictionary<string, int> arguments,
 	                            					   IDictionary<string, int> argumentsTop,
-													   UnitMappingType[] unit_mapping_enclosing)
+													   Instantiator.UnitMappingType[] unit_mapping_enclosing)
 			{
 				createInnerComponentsOf(cid_chain, curr_cid, cid, new List<int>(), new List<string>(), bsPort, frwServices, frw, arguments, argumentsTop, unit_mapping_enclosing);
 			}
@@ -1488,7 +1643,7 @@ namespace br.ufc.pargo.hpe.backend
 			                                           ManagerObject frw,
 				                                       IDictionary<string, int> arguments,
 	                            					   IDictionary<string, int> argumentsTop,
-													   UnitMappingType[] unit_mapping_enclosing)
+													   Instantiator.UnitMappingType[] unit_mapping_enclosing)
 			{	
 				Console.WriteLine("**********************************");
 				Console.WriteLine("BEGIN CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
@@ -1502,7 +1657,7 @@ namespace br.ufc.pargo.hpe.backend
 					
 				IDictionary<string,ManagerComponentID> inner_cids = new Dictionary<string,ManagerComponentID>();
 				
-				IDictionary<InnerComponent, UnitMappingType[]> icList2 = new Dictionary<InnerComponent,UnitMappingType[]>();
+				IDictionary<InnerComponent, Instantiator.UnitMappingType[]> icList2 = new Dictionary<InnerComponent,Instantiator.UnitMappingType[]>();
 			
 				IDictionary<string, ConnectionID> inner_conn_list = new Dictionary<string, ConnectionID>();					
 				if  (curr_cid != null)
@@ -1540,7 +1695,7 @@ namespace br.ufc.pargo.hpe.backend
 								int i = 0;
 								foreach (ManagerComponentID cid_owner in cid_chain) 
 								{
-									UnitMappingType[] unit_mapping_inner;
+									Instantiator.UnitMappingType[] unit_mapping_inner;
 									// find the inner componetn in the current parent 
 									inner_cid = findInnerComponent(cid_owner, cid, ic, id_abstract_owner[i], id_inner_at_owner[i], bsPort, out unit_mapping_inner);
 										
@@ -1560,7 +1715,7 @@ namespace br.ufc.pargo.hpe.backend
 							} 
 							else  /* If the inner component private, create it. */
 							{	
-								UnitMappingType[] unit_mapping_inner;
+								Instantiator.UnitMappingType[] unit_mapping_inner;
 								inner_cid = createInnerComponent(cid, ic, curr_inner_cid, bsPort, frwServices, arguments, argumentsTop, unit_mapping_enclosing, out unit_mapping_inner);
 								if (inner_cid == null)
 									continue;
@@ -1618,11 +1773,11 @@ namespace br.ufc.pargo.hpe.backend
 				bsPort.disconnect(conn_cs,0);	
 				frwServices.unregisterUsesPort(Constants.RECONFIGURE_PORT_NAME);
 				
-				foreach (KeyValuePair<InnerComponent,UnitMappingType[]> ic_ in icList2)
+				foreach (KeyValuePair<InnerComponent,Instantiator.UnitMappingType[]> ic_ in icList2)
 				{
 					Console.WriteLine("createInnerComponentsOf: LOOP " + ic_.Key.Id_inner  + "," + ic_.Value.Length);
 					InnerComponent ic = ic_.Key;
-					UnitMappingType[] unit_mapping_inner = ic_.Value;
+					Instantiator.UnitMappingType[] unit_mapping_inner = ic_.Value;
 
 					if (ggg.ContainsKey(ic))
 					{
@@ -1707,11 +1862,11 @@ namespace br.ufc.pargo.hpe.backend
 				bsPort.disconnect(conn_id, 0);				
 			}
 
-			public static void copy_unit_mapping_to_dictionary (UnitMappingType[] unit_mapping, out IDictionary<string, int[]> unit_mapping_dict, out int count_nodes)
+			public static void copy_unit_mapping_to_dictionary (Instantiator.UnitMappingType[] unit_mapping, out IDictionary<string, int[]> unit_mapping_dict, out int count_nodes)
 			{
 					count_nodes = 0;
 					unit_mapping_dict = new Dictionary<string, int[]>();
-					foreach (UnitMappingType unit_node in unit_mapping)
+					foreach (Instantiator.UnitMappingType unit_node in unit_mapping)
 					{
 						Console.WriteLine("copy_unit_mapping_to_dictionary - adding " + unit_node.unit_id + unit_node.unit_index);
 						count_nodes += unit_node.node.Length;
@@ -1720,8 +1875,8 @@ namespace br.ufc.pargo.hpe.backend
 			}
 
 			private static void build_unit_mapping_of_inner (InnerComponent ic, 
-															 UnitMappingType[] unit_mapping_enclosing, 
-														 out UnitMappingType[] unit_mapping_inner)
+															 Instantiator.UnitMappingType[] unit_mapping_enclosing, 
+														 out Instantiator.UnitMappingType[] unit_mapping_inner)
 			{
 				int count_nodes;
 				IDictionary<string,int[]> unit_mapping_dict;
@@ -1731,7 +1886,7 @@ namespace br.ufc.pargo.hpe.backend
 				IList<Slice> slice_list = BackEnd.sdao.listByInner(ic.Id_abstract_owner, ic.Id_inner);
 				
 
-				IDictionary<string,UnitMappingType> unit_mapping_save = new Dictionary<string,UnitMappingType>();
+				IDictionary<string,Instantiator.UnitMappingType> unit_mapping_save = new Dictionary<string,Instantiator.UnitMappingType>();
 
 				
 				foreach (Slice slice in slice_list)
@@ -1741,7 +1896,7 @@ namespace br.ufc.pargo.hpe.backend
 					Console.WriteLine("build_unit_mapping_of_inner 0 - " + i_host.Id_interface_super_top + i_host.Unit_replica_super_top + "," + ic.Id_abstract_owner + ","+ ic.Id_inner);
 					unit_mapping_dict.TryGetValue(i_host.Id_interface_super_top + i_host.Unit_replica_super_top, out nodes);
 
-					UnitMappingType unit_mapping_slice;
+					Instantiator.UnitMappingType unit_mapping_slice;
 					Interface i = BackEnd.idao.retrieve(ic.Id_abstract_inner, slice.Id_interface_slice,slice.Unit_replica);
 					Console.WriteLine("build_unit_mapping_of_inner: " + ic.Id_abstract_inner + "," + slice.Id_interface_slice);
 
@@ -1755,7 +1910,7 @@ namespace br.ufc.pargo.hpe.backend
 					} 
 					else 
 					{
-						unit_mapping_slice = new UnitMappingType();
+						unit_mapping_slice = new Instantiator.UnitMappingType();
 						unit_mapping_slice.unit_id = i.Id_interface_super_top; //slice.Id_interface_slice;
 						unit_mapping_slice.unit_index = i.Unit_replica_super_top; ///slice.Unit_replica;
 						unit_mapping_slice.node = nodes;									
@@ -1767,7 +1922,7 @@ namespace br.ufc.pargo.hpe.backend
 					}
 				}
 
-				unit_mapping_inner = new UnitMappingType[unit_mapping_save.Count];
+				unit_mapping_inner = new Instantiator.UnitMappingType[unit_mapping_save.Count];
 				unit_mapping_save.Values.CopyTo(unit_mapping_inner,0);
 			}
 	
@@ -1778,8 +1933,8 @@ namespace br.ufc.pargo.hpe.backend
 							                                       gov.cca.Services frwServices,
 				                                       			   IDictionary<string, int> arguments,
 	                            					   			   IDictionary<string, int> argumentsTop,
-													   			   UnitMappingType[] unit_mapping_enclosing,
-																   out UnitMappingType[] unit_mapping_inner)
+													   			   Instantiator.UnitMappingType[] unit_mapping_enclosing,
+																   out Instantiator.UnitMappingType[] unit_mapping_inner)
 			{
 				unit_mapping_inner = null;
 				build_unit_mapping_of_inner(ic, unit_mapping_enclosing, out unit_mapping_inner);
@@ -1847,7 +2002,7 @@ namespace br.ufc.pargo.hpe.backend
 
 				Console.WriteLine();
 				Console.WriteLine("START CREATING INNER COMPONENT name=" + inner_instance_name + "...");
-				foreach (UnitMappingType uuu in unit_mapping_inner)
+				foreach (Instantiator.UnitMappingType uuu in unit_mapping_inner)
 					foreach (int nnn in uuu.node)
 						Console.WriteLine("unit " +  uuu.unit_id + uuu.unit_index  + " at node " + nnn);
 
@@ -1867,7 +2022,7 @@ namespace br.ufc.pargo.hpe.backend
 				                                                 int id_abstract_owner,
 				                                                 string id_inner_at_owner, 
 				                                       			 gov.cca.ports.BuilderService bsPort,
-																 out UnitMappingType[] unit_mapping_inner)
+																 out Instantiator.UnitMappingType[] unit_mapping_inner)
 			{
 			 unit_mapping_inner = null;
 
@@ -1900,7 +2055,7 @@ namespace br.ufc.pargo.hpe.backend
 			 }
 			 		
 			 TypeMapImpl properties = (TypeMapImpl) bsPort.getComponentProperties(cid_inner);
-			 unit_mapping_inner = (UnitMappingType[]) properties[Constants.NODES_KEY];
+			 unit_mapping_inner = (Instantiator.UnitMappingType[]) properties[Constants.NODES_KEY];
 
 					
 			 return cid_inner;

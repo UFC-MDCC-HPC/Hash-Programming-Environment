@@ -27,6 +27,7 @@ public class InterfaceDAO{
                                    "class_name, " +
                                    "class_nargs, " +
                                    "uri_source, " +
+                                   "is_parallel, " +
                                    "`order`)" +
             " VALUES ('" + ac.Id_interface + "'," 
 					     + ac.Unit_replica + ", " 
@@ -39,6 +40,7 @@ public class InterfaceDAO{
 					     + ac.Class_name + "'," 
 					     + ac.Class_nargs + ",'" 
 					     + ac.URI_Source + "'," 
+					     + (ac.Is_parallel ? "1" : "0") + "'," 
 					     + ac.Order + ")";
 
    		Console.WriteLine("Interface.cs: TRY INSERT: " + sql);
@@ -56,7 +58,7 @@ public class InterfaceDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_interface, unit_replica, id_abstract, assembly_string, id_interface_super, unit_replica_super, id_interface_super_top, unit_replica_super_top, class_name, class_nargs, uri_source, `order` " +
+           "SELECT id_interface, unit_replica, id_abstract, assembly_string, id_interface_super, unit_replica_super, id_interface_super_top, unit_replica_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
            "FROM interface "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
 				"id_abstract=" + id_abstract 
@@ -74,6 +76,7 @@ public class InterfaceDAO{
            i.Assembly_string = (string)reader["assembly_string"];
            i.Id_interface_super = (string)reader["id_interface_super"];
 	       i.Unit_replica_super = (int)reader["unit_replica_super"];
+	       i.Is_parallel = ((int)reader["is_parallel"]) != 0;
            if (reader["id_interface_super_top"].ToString().Equals(""))
            {
                i.Id_interface_super_top = null;
@@ -114,7 +117,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
+            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " ORDER BY `order`";
         dbcmd.CommandText = sql;
@@ -126,6 +129,7 @@ public class InterfaceDAO{
 			i.Unit_replica = (int)reader["unit_replica"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
+	        i.Is_parallel = ((int)reader["is_parallel"]) != 0;
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
@@ -162,7 +166,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
+            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " and id_interface ='" + id_interface + "' ORDER BY `order`";
         dbcmd.CommandText = sql;
@@ -174,6 +178,7 @@ public class InterfaceDAO{
 			i.Unit_replica = (int)reader["unit_replica"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
+	        i.Is_parallel = ((int)reader["is_parallel"]) != 0;
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;
@@ -270,7 +275,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order` " +
+            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE class_name like '" + library_path + "'";
         dbcmd.CommandText = sql;
@@ -284,6 +289,7 @@ public class InterfaceDAO{
             i.Assembly_string = (string)reader["assembly_string"];
             i.Id_interface_super = (string)reader["id_interface_super"];
 			i.Unit_replica_super = (int)reader["unit_replica_super"];
+	        i.Is_parallel = ((int)reader["is_parallel"]) != 0;
             if (reader["id_interface_super_top"].ToString().Equals(""))
             {
                 i.Id_interface_super_top = null;

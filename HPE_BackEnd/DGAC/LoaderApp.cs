@@ -49,17 +49,17 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         }
 
-        public static ComponentFunctorApplicationType DeserializeInstantiator(string filename)
+        public static Instantiator.InstanceType DeserializeInstantiator(string filename)
         {
             // Declare an object variable of the type to be deserialized.
-            ComponentFunctorApplicationType i = null;
+            Instantiator.InstanceType i = null;
             FileStream fs = null;
             try
             {
                 Console.WriteLine("Reading with XmlReader");
 
                 // Create an instance of the XmlSerializer specifying type and namespace.
-                XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));
+                XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
 
                 // A FileStream is needed to read the XML document.
                 fs = new FileStream(filename, FileMode.Open);
@@ -67,7 +67,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 XmlReader reader = new XmlTextReader(fs);
 
                 // Use the Deserialize method to restore the object's state.
-                i = (ComponentFunctorApplicationType)serializer.Deserialize(reader);
+                i = (Instantiator.InstanceType)serializer.Deserialize(reader);
             }
             catch (Exception e)
             {
@@ -104,6 +104,31 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return data;
         }
 		
+        public static string SerializeCatalog(string filename, Catalog.CatalogType env)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Catalog.CatalogType));
+
+            FileStream fs = new FileStream(filename, FileMode.Create);
+
+            XmlWriter writer = new XmlTextWriter(fs, null);
+
+            serializer.Serialize(writer, env);
+
+			fs.Close();
+
+        //    BinaryReader br = new BinaryReader(fs);
+        //    int count = (int)fs.Length;
+        //    fs.Position = 0;
+
+        //    byte[] data = br.ReadBytes(count);
+        //    br.Close();
+        //    fs.Close();
+
+ 			string result = System.IO.File.ReadAllText(filename);
+
+            return result;
+        }
+
         public static string SerializeDeployedComponentInfoType(string filename, DeployedComponentInfoType env)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(DeployedComponentInfoType));
@@ -120,9 +145,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
         }
 		
-        public static byte[] serializeInstantiator(string filename, ComponentFunctorApplicationType inst)
+        public static byte[] serializeInstantiator(string filename, Instantiator.InstanceType inst)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));
+            XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
 
             FileStream fs = new FileStream(filename, FileMode.Create);
 
@@ -141,11 +166,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return data;
         }
 
-        public static string serializeInstantiatorToString(ComponentFunctorApplicationType inst)
+        public static string serializeInstantiatorToString(Instantiator.ComponentFunctorApplicationType inst)
         {
             string filename = Constants.PATH_TEMP_WORKER + "service.xml";
 
-            XmlSerializer serializer = new XmlSerializer(typeof(ComponentFunctorApplicationType));
+            XmlSerializer serializer = new XmlSerializer(typeof(Instantiator.InstanceType));
 
             FileStream fs = new FileStream(filename, FileMode.Create);
 

@@ -10,6 +10,7 @@ using br.ufc.pargo.hpe.backend.DGAC.database;
 using HPE_DGAC_LoadDB;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.IO;
+using Catalog;
 
 namespace Back_End_WS
 {
@@ -104,6 +105,19 @@ namespace Back_End_WS
 
             return xmlEnv;
         }
+
+ 		[WebMethod]
+        public /*byte[]*/ string readCatalog()
+        {
+            Console.WriteLine("Reading Component Catalog");
+
+            CatalogType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readCatalog();
+
+           string xmlEnv = LoaderApp.SerializeCatalog(Constants.PATH_TEMP_WORKER + "catalog.xml", env);
+
+            return xmlEnv;
+        }
+
 
         [WebMethod]
         public string[] runApplication(int id_concrete, string[] eIds, int[] eVls, string userName, string password, string curDir)

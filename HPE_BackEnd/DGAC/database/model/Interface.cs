@@ -15,6 +15,18 @@ public class Interface {
     private string id_interface_super;
     private string id_interface_super_top;
 
+	private bool is_parallel;
+		
+
+	public bool Is_parallel {
+		get {
+			return is_parallel;
+		}
+		set {
+			this.is_parallel = value;
+		}
+	}
+
     private int order;
 
     public int Order

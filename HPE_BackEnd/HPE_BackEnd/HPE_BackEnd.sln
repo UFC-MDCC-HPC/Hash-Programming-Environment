@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGAC", "DGAC\DGAC.csproj", "{7AC86AB9-255A-480C-B891-C64179B48A83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerService", "ManagerService\ManagerService.csproj", "{DF1139F4-9C2E-460B-B1D2-DC0952D98764}"

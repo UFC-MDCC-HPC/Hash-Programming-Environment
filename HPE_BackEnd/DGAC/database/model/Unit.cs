@@ -16,6 +16,7 @@ public class Unit {
     private string id_interface;
     private int unit_replica;
     private int order;
+	private bool is_parallel;
 
     public int Order
     {

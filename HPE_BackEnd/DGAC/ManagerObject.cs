@@ -1055,7 +1055,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 
 			public void resolve_topology (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
-									  UnitMappingType[] unit_mapping,
+									  Instantiator.UnitMappingType[] unit_mapping,
 		                              out string[] interface_ids, 
 									  out int[] unit_indexes,
 		                              out IList<Interface> iList, 
@@ -1239,7 +1239,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					{
 						// MPMD case, also covering SPMD.
 						resolve_topology(acfaRef,  
-										 (UnitMappingType[]) unit_mapping,
+										 (Instantiator.UnitMappingType[]) unit_mapping,
 										 out interface_ids, 
 										 out unit_indexes, 
 										 out iList, 
