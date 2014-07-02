@@ -105,6 +105,7 @@ CREATE TABLE `interface` (
   `actions` text COMMENT '"action_1; action_2; ... action_n". Nomes de ações separados por ponto-e-vírgula para evitar outra tabela.',
   `conditions` text COMMENT '"condition_1; condition_2; ... condition_n". Nomes de condições separados por ponto-e-vírgula para evitar outra tabela.',
   `protocol` text COMMENT 'string xml',
+  `is_parallel` int(11) DEFAULT '0',
   PRIMARY KEY (`id_abstract`,`id_interface`,`unit_replica`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 

@@ -40,7 +40,7 @@ public class InterfaceDAO{
 					     + ac.Class_name + "'," 
 					     + ac.Class_nargs + ",'" 
 					     + ac.URI_Source + "'," 
-					     + (ac.Is_parallel ? "1" : "0") + "'," 
+					     + (ac.Is_parallel ? "1" : "0") + "," 
 					     + ac.Order + ")";
 
    		Console.WriteLine("Interface.cs: TRY INSERT: " + sql);

@@ -1,11 +1,22 @@
-<?xml version="1.0"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" library_path="br.ufc.mdcc.mapreduce.example.CountWordsApp" xmlns="http://www.example.org/Instantiator" >
-	<context_parameter formal_parameter_id="platform">
-		<actual_parameter library_path="br.ufc.mdcc.common.Platform">
-	    </actual_parameter>
-	</context_parameter>
-    <unit_mapping unit_id="master_process" unit_index="0"> <node>0</node></unit_mapping>
-    <unit_mapping unit_id="word_counter_process" unit_index="0"> <node>1</node><node>3</node><node>5</node><node>6</node></unit_mapping>
-    <unit_mapping unit_id="tallier_process" unit_index="0"> <node>2</node><node>4</node></unit_mapping>
-</application>
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:application xmlns:tns="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/instantiator instantiator.xsd ">
+  <tns:contextual_type component_ref="br.ufc.mdcc.mapreduce.example.CountWordsApp">
+    <tns:argument parameter_id="platform">
+      <tns:type component_ref="br.ufc.mdcc.common.Platform"/>
+    </tns:argument>
+  </tns:contextual_type>
+  <tns:unit_mapping unit_id="master_process" unit_index="0">
+    <tns:node>0</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping unit_id="word_counter_process" unit_index="0">
+    <tns:node>1</tns:node>
+    <tns:node>3</tns:node>
+    <tns:node>5</tns:node>
+    <tns:node>6</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping unit_id="tallier_process" unit_index="0">
+    <tns:node>2</tns:node>
+    <tns:node>4</tns:node>
+  </tns:unit_mapping>
+</tns:application>
 

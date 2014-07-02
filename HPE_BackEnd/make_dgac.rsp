@@ -51,8 +51,8 @@ DGAC/connector/wrapper/*.cs
 -debug+
 
 -r:System.Data
--r:/opt/mono-3.2.5/lib/mono/MySql.Data/MySql.Data.dll
+-r:/usr/lib/mono/MySql.Data/MySql.Data.dll
 -r:System.Runtime.Remoting
 -r:System.Xml
--r:/opt/mono-3.2.5/lib/mono/MPI/MPI.dll
+-r:/usr/lib/mono/MPI/MPI.dll
 -out:bin/DGAC.dll
