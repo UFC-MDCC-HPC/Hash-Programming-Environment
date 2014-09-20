@@ -129,6 +129,7 @@ namespace HPE_DGAC_LoadDB
                         iNewPort.Parameter_top = port.parameter_id;
                         iNewPort.Transitive = true;
                         iNewPort.IsPublic = true;
+						iNewPort.Multiple = port.multipleSpecified ? port.multiple : false;
 
                         AbstractComponentFunctorApplication appPort = newAbstractComponentFunctorApplication(port);
                         if (appPort == null)
@@ -181,8 +182,8 @@ namespace HPE_DGAC_LoadDB
 					string cRef = c.localRef;
 					string uRef = u.uRef;
 					
-					int slice_replica = u.slice_replicaSpecified ? u.slice_replica : 0;
-					int unit_replica = u.unit_replicaSpecified ? u.unit_replica : slice_replica;
+					int slice_replica = /*u.slice_replicaSpecified ? */ u.slice_replica /*: 0*/;
+					int unit_replica = /*u.unit_replicaSpecified ? */ u.unit_replica /*: slice_replica*/;
 
 					string sRef = mkSliceRef(cRef, uRef, slice_replica);
 					Console.WriteLine("loadSliceReplicaToUnitReplicaMapping sRef=" + sRef + ","+unit_replica);
@@ -249,6 +250,7 @@ namespace HPE_DGAC_LoadDB
 
                         iNew.Transitive = false;
                         iNew.IsPublic = c.exposed;
+						iNew.Multiple = c.multipleSpecified ? c.multiple : false;
 						
                         // LOAD EXPOSED INNER COMPONENTS
                         if (c.port != null)
@@ -313,7 +315,7 @@ namespace HPE_DGAC_LoadDB
 								Console.WriteLine("loadInnerComponent - STEP 3.7");
                                 iNewPort.IsPublic = port.exposed;
 								Console.WriteLine("loadInnerComponent - STEP 3.7");
-
+								iNewPort.Multiple = port.multipleSpecified ? port.multiple : false;
 								Console.WriteLine("loadInnerComponent - STEP 3.9");
 
                                 AbstractComponentFunctorApplication appPort = newAbstractComponentFunctorApplication(port_replace);
@@ -465,6 +467,7 @@ namespace HPE_DGAC_LoadDB
                                     InnerComponentType cReplace = lookForInnerComponent(parameter.componentRef);
                                     cReplace.localRef = i.Id_inner;
                                     cReplace.exposed = i.IsPublic;
+									cReplace.multiple = i.Multiple;
                                     includeAsInner.Add(cReplace);
 
                                 }
@@ -700,6 +703,7 @@ namespace HPE_DGAC_LoadDB
                     i.Class_nargs = nargs; // TODO
                     i.Assembly_string = i.Class_name + ", Culture=neutral, Version=0.0.0.0"; // In the current implementation, the name of the dll is the name of the class of the unit.
 					i.Order 	= ++count;
+					i.Is_parallel = u.multiple;
 					
 					Console.Error.WriteLine("STEP 5.4");
 					
@@ -829,6 +833,7 @@ namespace HPE_DGAC_LoadDB
 							s.Unit_replica_host = unit_replica;
                             s.Id_interface_slice = iii == null ? uRefS : iii.Id_interface;
                             s.Id_inner = innerC.localRef;
+							s.Inner_replica = uS.inner_replica;
 							s.Slice_replica = uS.slice_replica; 
 							s.Unit_replica = unit_replica_slice; 
                             s.Transitive = mP.Contains(sname);
@@ -885,6 +890,7 @@ namespace HPE_DGAC_LoadDB
                             }
                             if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.retrieve(s.Id_abstract,
 							                                                        s.Id_inner,
+							                                                        s.Inner_replica,
 							                                                        s.Id_interface_slice,
 							                                                        s.Slice_replica) == null) 
                             	br.ufc.pargo.hpe.backend.DGAC.BackEnd.sdao.insert(s);

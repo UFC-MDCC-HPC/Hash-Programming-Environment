@@ -12,7 +12,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 {
 	public interface ManagerServices : gov.cca.Services 
 	{
-		WorkerServices[] WorkerServices {get;}
+		IDictionary<int, WorkerServices> WorkerServices {get;}
 		void registerWorkerService(int i, WorkerServices worker_service);
 	}
 	
@@ -39,15 +39,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			this.cid.registerWorkerComponentID(i, (WorkerComponentID) worker_services.getComponentID());
         }
 
-        public WorkerServices[] WorkerServices {
+		public IDictionary<int, WorkerServices> WorkerServices {
 			get 
 			{
-				WorkerServices[] worker_services_array = new WorkerServices[worker_services_list.Count];
-				foreach (KeyValuePair<int, WorkerServices> ws in worker_services_list)
-				{
-				    worker_services_array[ws.Key] = ws.Value;
-				}
-				return worker_services_array;
+				//WorkerServices[] worker_services_array = new WorkerServices[worker_services_list.Count];
+				//foreach (KeyValuePair<int, WorkerServices> ws in worker_services_list)
+				//{   
+				//    worker_services_array[ws.Key] = ws.Value;
+				//}
+				return worker_services_list;
 			}
 		}
 
@@ -72,13 +72,26 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void Services.releasePort (string portName)
 		{
+			Console.WriteLine ("RELEASE PORT 1 " + portName);
+
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
-				gov.cca.Services ws = WorkerServices[i];
-				ws.releasePort(portName);
+				Console.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
+				gov.cca.Services ws = WorkerServices[nodes[i]];
+				try {
+					ws.releasePort(portName);
+				}
+				catch (CCAExceptionImpl e)
+			    {
+					Console.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
+					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
+					//	throw e;
+				}
 			}
+			Console.WriteLine ("RELEASE PORT 4 " + portName);
 			frw.releasePort(mkPortName(portName));
+			Console.WriteLine ("RELEASE PORT 5 " + portName);
 		}
 
 		gov.cca.TypeMap Services.createTypeMap ()
@@ -91,7 +104,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
-				gov.cca.Services ws = WorkerServices[i];
+				gov.cca.Services ws = WorkerServices[nodes[i]];
 				ws.registerUsesPort(portName, type, properties);
 			}
 			frw.registerUsesPort(mkPortName(portName), type, properties);
@@ -102,8 +115,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
-				gov.cca.Services ws = WorkerServices[i];
-				ws.unregisterUsesPort(portName);
+				gov.cca.Services ws = WorkerServices[nodes[i]];
+				try
+				{
+					ws.unregisterUsesPort(portName);
+				}
+				catch (CCAExceptionImpl e)
+				{
+					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
+					//	throw e;
+				}
 			}
 			frw.unregisterUsesPort(mkPortName(portName));
 		}
@@ -113,7 +134,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
-				gov.cca.Services ws = WorkerServices[i];				
+				gov.cca.Services ws = WorkerServices[nodes[i]];				
 				ws.addProvidesPort(inPort, portName, type, properties);
 			}
 			frw.addProvidesPort(inPort, mkPortName(portName), type, properties);
@@ -129,8 +150,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
-				gov.cca.Services ws = WorkerServices[i];
-				ws.removeProvidesPort(portName);
+				gov.cca.Services ws = WorkerServices[nodes[i]];
+				try 
+				{
+					ws.removeProvidesPort(portName);
+				}
+				catch (CCAExceptionImpl e)
+				{
+					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
+					//	throw e;
+				}
 			}
 			frw.removeProvidesPort(mkPortName(portName));
 		}

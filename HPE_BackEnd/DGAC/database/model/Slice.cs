@@ -13,6 +13,7 @@ public class Slice {
     private string id_interface;
     private string id_interface_slice;
     private string property_name;
+	private int inner_replica;
     private int slice_replica;
 	private int unit_replica;
 	private int unit_replica_host;
@@ -71,6 +72,12 @@ public class Slice {
 		get { return slice_replica; }
         set { slice_replica = value; }
     }
+
+	public int Inner_replica
+	{
+		get { return inner_replica; }
+		set { inner_replica = value; }
+	}
 
 	public int Unit_replica
 	{

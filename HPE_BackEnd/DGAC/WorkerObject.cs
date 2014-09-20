@@ -696,6 +696,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			if (!port_manager.isReleased(user_port_name))
 			{
+				Console.WriteLine ("DISCONNECT - EXCEPTION RELEASE PORT - " + user_port_name);
 				throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
 			}
 						

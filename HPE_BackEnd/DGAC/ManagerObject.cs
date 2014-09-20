@@ -661,38 +661,65 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             [MethodImpl(MethodImplOptions.Synchronized)]
             public void disconnect(ConnectionID connID, float timeout)
             {
-	            ManagerConnectionID hpeconnID = (ManagerConnectionID) connID;
-	
+
 				string userInstanceName = connID.getUser().getInstanceName();
 			 	string usesPortName = userInstanceName + ":" +  connID.getUserPortName();
 			
 				string providerInstanceName = connID.getProvider().getInstanceName();
 			 	string providesPortName = providerInstanceName + ":" +  connID.getProviderPortName();
 			
-			
+				Console.WriteLine ("DISCONNECTING 1 " + usesPortName + " <- " + providesPortName);
+		
 				if (!port_manager.isReleased(usesPortName))
 				{
 					throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
 				}
 			
+				Console.WriteLine ("DISCONNECTING 2 " + usesPortName + " <- " + providesPortName);
+
 				if (!connectionList.Contains(connID))
 				{
 					throw new CCAExceptionImpl(CCAExceptionType.PortNotConnected);
 				}
+
 			
-				
+				Console.WriteLine ("DISCONNECTING 3 " + usesPortName + " <- " + providesPortName);
+
 				ManagerComponentID cid_provider = (ManagerComponentID) connID.getProvider();
 				
 				int[] nodes = cid_provider.WorkerNodes;
-				for (int i=0; i < nodes.Length; i++)
-					this.WorkerBuilder[nodes[i]].disconnect(((ManagerConnectionID)connID).getWorkerConnectionID(i), timeout);     
+				for (int i=0; i < nodes.Length; i++) 
+				{
+					WorkerConnectionID conn_id = ((ManagerConnectionID)connID).getWorkerConnectionID (i);
+					Console.WriteLine ("DISCONNECTING 3.1 i=" + i + " - nodes[i]=" + nodes[i] + " conn_id is null ? " + (conn_id == null));
+
+					if (conn_id != null)
+					try 
+					{
+						this.WorkerBuilder[nodes[i]].disconnect(conn_id, timeout);     
+					}
+					catch (CCAExceptionImpl e) 
+					{
+						Console.WriteLine ("DISCONNECTING 3.2 - EXCEPTION: " + e.getCCAExceptionType());
+					}
+				}
 	
+			
+			Console.WriteLine ("DISCONNECTING 4 " + usesPortName + " <- " + providesPortName);
+
 	            connectionList.Remove(connID);
 	            connByUserPortName.Remove(usesPortName);
 	            connByProviderPortName.Remove(providesPortName);
-	
+
+			
+			Console.WriteLine ("DISCONNECTING 5 " + usesPortName + " <- " + providesPortName);
+
+
 	            if (connectionProperties.ContainsKey(connID))
 	                connectionProperties.Remove(connID);
+			
+			Console.WriteLine ("DISCONNECTING 6 " + usesPortName + " <- " + providesPortName);
+
             }
 		
 			// OK
@@ -844,7 +871,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				ManagerServices ms = null;
 				this.host_services.TryGetValue(mcid.getInstanceName(), out ms);
 			
-			    WorkerServices[] ws = ms.WorkerServices; 
+			    IDictionary<int, WorkerServices> ws = ms.WorkerServices; 
 				int[] nodes = wcid.WorkerNodes;			
 				gov.cca.Port[] ports = new gov.cca.Port[nodes.Length];
 			    
@@ -889,11 +916,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	
 			public void releasePort (string portName)
 			{
-			//	if (!usesPortTypes.ContainsKey(portName))
-			//	{
-			//		throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
-			//	}
-						
 			    port_manager.addPortRelease(portName);
 				
 			}
@@ -1153,7 +1175,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			{
 				unit_topology.Rank = node;
 				int partition_index = unit_topology.PartitionIndex;
-				Slice s_topology = DGAC.BackEnd.sdao.retrieve(acf_topology.Id_abstract,"topology","topology",partition_index);
+				Slice s_topology = DGAC.BackEnd.sdao.retrieve(acf_topology.Id_abstract,"topology",0,"topology",partition_index);
 				unit_ids[k] = s_topology.Id_interface;
 				partition_indexes[k] = partition_index;				
 				k++;

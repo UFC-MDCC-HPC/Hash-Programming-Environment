@@ -16,6 +16,7 @@ public class InnerComponent{
 	private int id_abstract_owner;
     private string parameter_top;
     private bool transitive;
+	private bool multiple;
 
     public bool Transitive
     {
@@ -23,7 +24,13 @@ public class InnerComponent{
         set { transitive = value; }
     }
 
-    public bool IsPublic
+	public bool Multiple
+	{
+		get { return multiple; }
+		set { multiple = value; }
+	}
+
+	public bool IsPublic
     {
         get { return is_public; }
         set { is_public = value; }

@@ -33,10 +33,7 @@ namespace br.ufc.pargo.hpe.backend
 
         public class BackEnd 
         {
-
-            public static WorkerObject worker_framework = null;
-
-            private IpcClientChannel ch = null;
+            public static WorkerObject worker_framework = null;            
 
             public BackEnd()
             {
@@ -98,10 +95,15 @@ namespace br.ufc.pargo.hpe.backend
             }
 			
 			#endregion FRAMEWORK_INSTANTIATION
-			
+
+			public static string getSiteName()
+			{
+				return Constants.SITE_NAME;
+			}
+
 			#region DEPLOY
 			
-            public int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
+            public static int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
             {
                 AbstractComponentFunctor cAbs = null;
                 try
@@ -148,15 +150,17 @@ namespace br.ufc.pargo.hpe.backend
                 }
                 finally
                 {
-                    releaseManager(ch);
+                   // releaseManager(ch);
                     Connector.closeConnection();
                 }
 				
 				return cAbs != null ? cAbs.Id_abstract : -1;
             }
 			
-			public void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
+			public static void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
 			{
+				    IpcClientChannel ch = null;
+
                     ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);                     
 
                     foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
@@ -172,7 +176,7 @@ namespace br.ufc.pargo.hpe.backend
 
                         Console.Error.Write(moduleName + ", ");
 
-                        string publicKey = this.sendCompileCommandToWorker(library_path,
+                        string publicKey = sendCompileCommandToWorker(library_path,
                                                                            worker,
                                                                            sourceCode,
                                                                            moduleName,
@@ -188,9 +192,11 @@ namespace br.ufc.pargo.hpe.backend
 						}
 						
                     }
+
+				releaseManager (ch);
 			}
 			
-			public void updateConfiguration(int id_abstract, byte[] hcl_data)
+			public static void updateConfiguration(int id_abstract, byte[] hcl_data)
                         {
                 try
                 {
@@ -219,7 +225,7 @@ namespace br.ufc.pargo.hpe.backend
                 }
                         }
 			
-            public int registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
+            public static int registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
             {
                 DGAC.database.Component cConc = null;
                 try
@@ -267,13 +273,13 @@ namespace br.ufc.pargo.hpe.backend
                 finally
                 {
                     Connector.closeConnection();
-                    releaseManager(ch);
+                    //releaseManager(ch);
                 }
 				
 				return cConc != null ? cConc.Id_concrete : -1;
             }
 
-            private string sendCompileCommandToWorker(string library_path, ManagerObject worker, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
+            private static string sendCompileCommandToWorker(string library_path, ManagerObject worker, string contents, string moduleName, string[] refs, int outFile, string userName, string password, String curDir)
             {
                 return worker.compileClass(library_path, contents, moduleName, refs, outFile, userName, password, curDir);
             }
@@ -288,6 +294,8 @@ namespace br.ufc.pargo.hpe.backend
 
                 Catalog.CatalogType env = new Catalog.CatalogType();
 
+				env.backend_url = Constants.SITE_URL;
+				env.site_name = Constants.SITE_NAME;
 				env.component = readAbstractComponentsInCatalog();
 
                 Connector.closeConnection();
@@ -342,6 +350,21 @@ namespace br.ufc.pargo.hpe.backend
 				return result;
 			}
 
+			static SliceType[] readSliceType (InnerComponent ic)
+			{
+				IList<Slice> s_list = BackEnd.sdao.listByInner (ic.Id_abstract_owner, ic.Id_inner);
+				Catalog.SliceType[] result = new Catalog.SliceType[s_list.Count];
+				int i = 0;
+				foreach (Slice s in s_list)
+				{
+					Catalog.SliceType slice_info = new Catalog.SliceType ();
+					slice_info.host_unit = s.Id_interface;
+					slice_info.slice_unit = s.Id_interface_slice;
+					result [i++] = slice_info;
+				}
+				return result;
+			}
+
 			static Catalog.UsesPortType[] readUsesPorts_catalog (AbstractComponentFunctor acf)
 			{
 				IList<InnerComponent> ic_list = BackEnd.icdao.list(acf.Id_abstract);
@@ -354,6 +377,7 @@ namespace br.ufc.pargo.hpe.backend
 						Catalog.UsesPortType inner_info = new Catalog.UsesPortType();
 						inner_info.port_ref = ic.Id_inner;
 						inner_info.type = readInstantiationType(ic.Id_functor_app);
+						inner_info.slice = readSliceType (ic);
 						result[i++] = inner_info;
 					}
 				}
@@ -605,25 +629,17 @@ namespace br.ufc.pargo.hpe.backend
 						Console.WriteLine("ROUND #" + round);	
 						go_port.go(); 
 					}
-					
-					// RECURSIVELY, DISCONNECT ALL COMPONENT CONNECTIONS ...
-				//	create_slices_port.destroy_slices();
-					
-					//frwServices.releasePort(Constants.CREATE_SLICES_PORT_NAME);
-					//bsPort.disconnect(conn_cs, 0);
-					//frwServices.unregisterUsesPort(Constants.CREATE_SLICES_PORT_NAME);
-					
+
+
+					destroyApplicationInstance(app_cid, bsPort, frwServices, (ManagerObject) frw);
+
 					frwServices.releasePort(Constants.GO_PORT_NAME);
 					bsPort.disconnect(conn_go, 0);
-					Console.WriteLine("Test e1");
+
 					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
-					Console.WriteLine("Test e2");
-					
-					bsPort.destroyInstance(app_cid, 0);
-					Console.WriteLine("Test e3");
-					
+
 					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
-					Console.WriteLine("Test e4");
+
 					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
 					
 					Console.WriteLine ("Finishing");
@@ -1484,38 +1500,56 @@ namespace br.ufc.pargo.hpe.backend
 								
 				inner_conn_list = new Dictionary<string, ConnectionID>();					
 				fetchConnectionsAsUser(app_cid, inner_conn_list, bsPort, frwServices);
-				
+
+				Console.WriteLine ("DETROY APPLICATION INSTANCE 1");
+
 				foreach (KeyValuePair<string,ConnectionID> conn_pair in inner_conn_list)
 				{
 					string usesPortName = conn_pair.Key;
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 2 - " + usesPortName);
 					ConnectionID conn = conn_pair.Value;
 					cidInnerList.Add(conn.getProvider());
 					
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.1 - " + usesPortName);
 					services.releasePort(usesPortName);
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.2 - " + usesPortName);
 					bsPort.disconnect(conn, 0);
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.3 - " + usesPortName);
 					services.unregisterUsesPort(usesPortName);					
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.4 - " + usesPortName);
 				}
 				
 				foreach (ComponentID cid_inner in cidInnerList) 
 				{
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 3 - " + cid_inner.getInstanceName());
 					destroyApplicationInstance((ManagerComponentID) cid_inner, 
 					                          bsPort, 
 					                          frwServices, 
 					                          frw);
 				}
 				
+				Console.WriteLine ("DETROY APPLICATION INSTANCE 4");
+
 				IList<ConnectionID> provides_conn_list = new List<ConnectionID>();					
 				fetchConnectionsAsProvider(app_cid, provides_conn_list, bsPort, frwServices);
 				
+				Console.WriteLine ("DETROY APPLICATION INSTANCE 5");
+
 				if (provides_conn_list.Count == 0)
 				{
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.1");
 					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.2");
 					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.3");
 					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.4");
 					if (app_cid.Kind == Constants.KIND_APPLICATION)
 						services.removeProvidesPort(Constants.GO_PORT_NAME);
+					Console.WriteLine ("DETROY APPLICATION INSTANCE 7");
 				}
-								
+				Console.WriteLine ("DETROY APPLICATION INSTANCE 8");
+							
 				
 			}
 			
@@ -1993,12 +2027,13 @@ namespace br.ufc.pargo.hpe.backend
 				Console.WriteLine("BEFORE START CREATING INNER COMPONENT name=" + inner_instance_name + " !");
 
 
+	
 				// Instantiate the inner component.
-	            TypeMapImpl properties = new TypeMapImpl();					
+				TypeMapImpl properties = new TypeMapImpl();					
 				properties[Constants.ID_FUNCTOR_APP] = id_functor_app;
-				properties[Constants.NODES_KEY] = unit_mapping_inner;
 				properties[Constants.PORT_NAME] = ic.Id_inner;
 				properties[Constants.ENCLOSING_ARGUMENTS] = arguments;
+				properties[Constants.NODES_KEY] = unit_mapping_inner;
 
 				Console.WriteLine();
 				Console.WriteLine("START CREATING INNER COMPONENT name=" + inner_instance_name + "...");
@@ -2137,11 +2172,11 @@ namespace br.ufc.pargo.hpe.backend
 			
 			if (count_release > 0)
 			{
-				Console.Error.WriteLine("Port " + portName + " still in use (release count=" + count_release + ")");
+				Console.Error.WriteLine("Port " + portName + " still in use (release count = " + count_release + ")");
 				throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
 			}
 			
-			portReleases.Add (portName, count_release+1);				
+			portReleases.Add (portName, count_release + 1);				
 		}
 		
 		public void resetPort(string portName)

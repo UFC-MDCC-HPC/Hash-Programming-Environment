@@ -755,11 +755,9 @@
         
         private int slice_replicaField;
         
-        private bool slice_replicaSpecifiedField;
-        
         private int unit_replicaField;
         
-        private bool unit_replicaSpecifiedField;
+        private uint replicaField;
         
         private VisualElementAttributes visualDescriptionField1;
         
@@ -797,6 +795,7 @@
         }
         
         /// <remarks/>
+        [System.ComponentModel.DefaultValue(0)]
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public int slice_replica {
             get {
@@ -808,17 +807,7 @@
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore()]
-        public virtual bool slice_replicaSpecified {
-            get {
-                return this.slice_replicaSpecifiedField;
-            }
-            set {
-                this.slice_replicaSpecifiedField = value;
-            }
-        }
-        
-        /// <remarks/>
+        [System.ComponentModel.DefaultValue(0)]
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public int unit_replica {
             get {
@@ -830,13 +819,14 @@
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore()]
-        public virtual bool unit_replicaSpecified {
+        [System.ComponentModel.DefaultValue(0u)]
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public uint replica {
             get {
-                return this.unit_replicaSpecifiedField;
+                return this.replicaField;
             }
             set {
-                this.unit_replicaSpecifiedField = value;
+                this.replicaField = value;
             }
         }
         
@@ -2365,7 +2355,7 @@
         
         private bool multipleSpecifiedField1;
         
-        private int replicaField;
+        private int replicaField1;
         
         private bool replicaSpecifiedField;
         
@@ -2457,10 +2447,10 @@
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public int replica {
             get {
-                return this.replicaField;
+                return this.replicaField1;
             }
             set {
-                this.replicaField = value;
+                this.replicaField1 = value;
             }
         }
         
@@ -2524,6 +2514,12 @@
         
         private int slice_replicaField1;
         
+        private int replicaField2;
+        
+        private bool replicaSpecifiedField1;
+        
+        private int inner_replicaField;
+        
         /// <remarks/>
         [System.ComponentModel.DefaultValue("this")]
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
@@ -2556,6 +2552,40 @@
             }
             set {
                 this.slice_replicaField1 = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public int replica {
+            get {
+                return this.replicaField2;
+            }
+            set {
+                this.replicaField2 = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore()]
+        public virtual bool replicaSpecified {
+            get {
+                return this.replicaSpecifiedField1;
+            }
+            set {
+                this.replicaSpecifiedField1 = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.ComponentModel.DefaultValue(0)]
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public int inner_replica {
+            get {
+                return this.inner_replicaField;
+            }
+            set {
+                this.inner_replicaField = value;
             }
         }
     }

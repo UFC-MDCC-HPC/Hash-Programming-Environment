@@ -23,7 +23,33 @@ namespace Catalog {
     [System.Xml.Serialization.XmlRootAttribute("catalog", Namespace="http://www.example.org/catalog", IsNullable=false)]
     public partial class CatalogType {
         
+        private string site_nameField;
+        
+        private string backend_urlField;
+        
         private ComponentType[] componentField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string site_name {
+            get {
+                return this.site_nameField;
+            }
+            set {
+                this.site_nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="", DataType="anyURI")]
+        public string backend_url {
+            get {
+                return this.backend_urlField;
+            }
+            set {
+                this.backend_urlField = value;
+            }
+        }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("component")]
@@ -180,6 +206,54 @@ namespace Catalog {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/catalog")]
     public partial class UsesPortType : PortType {
+        
+        private SliceType[] sliceField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("slice")]
+        public SliceType[] slice {
+            get {
+                return this.sliceField;
+            }
+            set {
+                this.sliceField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/catalog")]
+    public partial class SliceType {
+        
+        private string host_unitField;
+        
+        private string slice_unitField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string host_unit {
+            get {
+                return this.host_unitField;
+            }
+            set {
+                this.host_unitField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string slice_unit {
+            get {
+                return this.slice_unitField;
+            }
+            set {
+                this.slice_unitField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -354,9 +428,22 @@ namespace Catalog {
     [System.Xml.Serialization.XmlRootAttribute("application", Namespace="http://www.example.org/instantiator", IsNullable=false)]
     public partial class InstanceType {
         
+        private string instance_refField;
+        
         private ComponentFunctorApplicationType contextual_typeField;
         
         private UnitMappingType[] unit_mappingField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string instance_ref {
+            get {
+                return this.instance_refField;
+            }
+            set {
+                this.instance_refField = value;
+            }
+        }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]

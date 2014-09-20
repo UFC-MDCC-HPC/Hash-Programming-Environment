@@ -15,8 +15,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         public void insert(Slice ac)
         {
             String sql =
-				"INSERT INTO slice (id_abstract, id_interface, unit_replica_host, id_interface_slice, id_inner, slice_replica, unit_replica, transitive, property_name)" +
-				" VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Unit_replica_host + ",'" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Slice_replica + "," + ac.Unit_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
+				"INSERT INTO slice (id_abstract, id_interface, unit_replica_host, id_interface_slice, id_inner, slice_replica, inner_replica, unit_replica, transitive, property_name)" +
+				" VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Unit_replica_host + ",'" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Slice_replica + "," + ac.Inner_replica + "," + ac.Unit_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
 			
 			Console.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
 			
@@ -26,7 +26,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 
         // ADDED BY HERON
-        public Slice retrieve(int id_abstract, string id_inner, string id_interface_slice, int slice_replica)
+        public Slice retrieve(int id_abstract, string id_inner, int inner_replica, string id_interface_slice, int slice_replica)
         {
             Slice s = null;
             IDbConnection dbcon = Connector.DBcon;
@@ -38,12 +38,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				       "id_interface_slice, " +
 				       "id_inner, " +
 				       "slice_replica, " +
+						"inner_replica, " +
 				       "unit_replica, " +
 				       "transitive, " +
 				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " + 
+				"inner_replica = " + inner_replica + " AND " + 
                 "id_interface_slice like '" + id_interface_slice + "' AND " + 
                 "slice_replica = " + slice_replica;
             dbcmd.CommandText = sql;
@@ -57,6 +59,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
                 s.Slice_replica = (int)reader["slice_replica"];
+				s.Inner_replica = (int)reader["inner_replica"];
 				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
@@ -82,7 +85,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         }//list
 
         // ADDED BY HERON
-        public Slice retrieve2(int id_abstract, string id_inner, string id_interface_slice, string id_interface)
+        public Slice retrieve2(int id_abstract, string id_inner, int inner_replica, string id_interface_slice, string id_interface)
         {
             Slice s = null;
             IDbConnection dbcon = Connector.DBcon;
@@ -94,12 +97,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				       "id_interface_slice, " +
 				       "id_inner, " +
 				       "slice_replica, " +
+					   "inner_replica, " +
 				       "unit_replica, " +
 				       "transitive, " +
 				       "property_name " +
                 "FROM slice " +
                 "WHERE id_abstract=" + id_abstract + " AND " +
                 "id_inner like '" + id_inner + "' AND " +
+				"inner_replica = " + inner_replica + " AND " + 
                 "id_interface_slice like '" + id_interface_slice + "' AND " +
                 "id_interface like '" + id_interface + "'";
             dbcmd.CommandText = sql;
@@ -112,6 +117,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface_slice = (string)reader["id_interface_slice"];
                 s.Id_inner = (string)reader["id_inner"];
                 s.Slice_replica = (int)reader["slice_replica"];
+				s.Slice_replica = (int)reader["inner_replica"];
 				s.Unit_replica = (int)reader["unit_replica"];
 				s.Unit_replica_host = (int)reader["unit_replica_host"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
@@ -148,6 +154,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				       "id_interface, " +
 				       "unit_replica_host, " +
 				       "slice_replica, " +
+					   "inner_replica, " +
 				       "unit_replica, " +
 				       "transitive, " +
 				       "property_name " +
@@ -164,6 +171,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
 				s.Unit_replica_host = (int)reader["unit_replica_host"];
                 s.Slice_replica = (int)reader["slice_replica"];
+				s.Inner_replica = (int)reader["inner_replica"];
 				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
@@ -198,6 +206,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 					       "id_interface_slice, " +
 					       "id_inner, " +
 					       "slice_replica, " +
+							"inner_replica, " +
 					       "unit_replica, " +
 					       "transitive, " +
 					       "property_name " +
@@ -214,6 +223,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                s.Id_interface_slice = (string)reader["id_interface_slice"];
 	                s.Id_inner = (string)reader["id_inner"];
 	                s.Slice_replica = (int)reader["slice_replica"];
+					s.Inner_replica = (int)reader["inner_replica"];
 					s.Unit_replica = (int)reader["unit_replica"];
 	                s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
 	                s.PortName = (string)reader["property_name"];
@@ -262,6 +272,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				       "id_interface, " +
 				       "unit_replica_host, " +
 				       "slice_replica, " +
+					"inner_replica, " +
 				       "unit_replica, " +
 				       "transitive, " +
 				       "property_name " +
@@ -280,6 +291,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
 				s.Unit_replica_host = (int)reader["unit_replica_host"];
                 s.Slice_replica = (int)reader["slice_replica"];
+				s.Inner_replica = (int)reader["inner_replica"];
 				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];
@@ -309,6 +321,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				       "id_interface, " +
 				       "unit_replica_host, " +
 				       "slice_replica, " +
+					"inner_replica, " +
 				       "unit_replica, " +
 				       "transitive, " +
 				       "property_name " +
@@ -325,6 +338,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 s.Id_interface = (string)reader["id_interface"];
 				s.Unit_replica_host = (int)reader["unit_replica_host"];
                 s.Slice_replica = (int)reader["slice_replica"];
+				s.Inner_replica = (int)reader["inner_replica"];
 				s.Unit_replica = (int)reader["unit_replica"];
                 s.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
                 s.PortName = (string)reader["property_name"];

@@ -89,7 +89,10 @@ namespace gov
                     //WorkerComponentID wProvider = ((ManagerComponentID)Provider).getWorkerComponentID(node);
                     //WorkerComponentID wUser = ((ManagerComponentID)User).getWorkerComponentID(node);
                     //return new WorkerConnectionIDImpl(wProvider, providesPortName, wUser, usesPortName);
-					return worker_connections[i];
+				if (i >= worker_connections.Length)
+					return null;
+				Console.WriteLine ("getWorkerConnectionID " + i + " *** " + worker_connections.Length);	
+				return worker_connections[i];
             }
         }
 

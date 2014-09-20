@@ -16,8 +16,8 @@ public class InnerComponentDAO{
     {
 			
         String sql =
-            "INSERT INTO innercomponent (id_abstract_owner, id_functor_app, id_inner, id_abstract_inner, parameter_top, transitive, public)" +
-            " VALUES (" + ac.Id_abstract_owner + "," + ac.Id_functor_app + ",'" + ac.Id_inner + "'," + ac.Id_abstract_inner + ",'"+ ac.Parameter_top + "'," + (ac.Transitive ? -1 : 0) + "," + (ac.IsPublic ? -1 : 0) + ")";
+            "INSERT INTO innercomponent (id_abstract_owner, id_functor_app, id_inner, id_abstract_inner, parameter_top, transitive, public, multiple)" +
+					" VALUES (" + ac.Id_abstract_owner + "," + ac.Id_functor_app + ",'" + ac.Id_inner + "'," + ac.Id_abstract_inner + ",'"+ ac.Parameter_top + "'," + (ac.Transitive ? -1 : 0) + "," + (ac.IsPublic ? -1 : 0) + "," + (ac.Multiple ? -1 : 0) + ")";
 
 		Console.WriteLine("InnerComponentDAO.cs: TRY INSERT INNER COMPONENT :" + sql);
 			
@@ -36,7 +36,7 @@ public class InnerComponentDAO{
 	        IDbConnection dbcon = Connector.DBcon;
 	        IDbCommand dbcmd = dbcon.CreateCommand();
 	        string sql =
-	            "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public " +
+	            "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public, multiple " +
 	            "FROM innercomponent " +
 	            "WHERE id_abstract_owner=" + id_abstract + " AND " +
 	                  "id_inner like '" + id_inner + "'";
@@ -53,7 +53,7 @@ public class InnerComponentDAO{
 	            ic.Parameter_top = (string)reader["parameter_top"];
 	            ic.Transitive = ((int)reader["transitive"])==0 ? false : true;
 	            ic.IsPublic = ((int)reader["public"]) == 0 ? false : true;
-	            
+				ic.Multiple = ((int)reader["multiple"]) == 0 ? false : true;
 	        }//if
 	        // clean up
 	        reader.Close();
@@ -105,7 +105,7 @@ public class InnerComponentDAO{
 		   IDbConnection dbcon = Connector.DBcon;
 	       IDbCommand dbcmd = dbcon.CreateCommand();
 	       string sql =
-	           "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public " +
+	           "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public, multiple " +
 	           "FROM innercomponent " +
 	           "WHERE id_abstract_owner="+id_abstract + " " +
 			   "ORDER BY transitive";
@@ -120,6 +120,7 @@ public class InnerComponentDAO{
 	            ic.Parameter_top = (string)reader["parameter_top"];
 	            ic.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
 	            ic.IsPublic = ((int)reader["public"]) == 0 ? false : true;
+				ic.Multiple = ((int)reader["multiple"]) == 0 ? false : true;
 	            list.Add(ic);
 	       }//while
 	       // clean up
@@ -175,7 +176,7 @@ public class InnerComponentDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public " +
+            "SELECT id_abstract_owner, id_inner, id_functor_app, id_abstract_inner, parameter_top, transitive, public, multiple " +
             "FROM innercomponent " +
             "WHERE id_abstract_owner=" + id_abstract + " AND " +
                   "id_functor_app like '" + id_functor_app + "'";
@@ -192,7 +193,7 @@ public class InnerComponentDAO{
             ic.Parameter_top = (string)reader["parameter_top"];
             ic.Transitive = ((int)reader["transitive"]) == 0 ? false : true;
             ic.IsPublic = ((int)reader["public"]) == 0 ? false : true;
-
+			ic.Multiple = ((int)reader["multiple"]) == 0 ? false : true;
         }//if
         // clean up
         reader.Close();

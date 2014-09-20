@@ -2,7 +2,7 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.example.org/HashComponent"
 	xmlns:tns="http://www.example.org/HashComponent">
-	<element name="component" type="tns:ComponentType"></element>
+    <element name="component" type="tns:ComponentType"></element>
 
 	<complexType name="ComponentBodyType">
         <annotation>
@@ -75,9 +75,6 @@
 			<element name="slice" maxOccurs="unbounded" minOccurs="0"
 				type="tns:InterfaceSliceType">
 			</element>
-			<element name="protocol" type="tns:ActionType" maxOccurs="1"
-				minOccurs="0">
-			</element>
 			<element name="sources" maxOccurs="unbounded" minOccurs="0"
 				type="tns:SourceType">
 			</element>
@@ -91,7 +88,18 @@
 			<element name="externalReferences" type="string"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
-			<element name="parameter" type="tns:InterfaceParameterType" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="parameter" type="tns:InterfaceParameterType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="action" type="tns:UnitActionType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="condition" type="tns:UnitConditionType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="protocol" type="tns:ProtocolChoiceType"
+				maxOccurs="1" minOccurs="0">
+			</element>
 		</sequence>
 		<attribute name="iRef" type="string" use="required"></attribute>
 		<attribute name="nArgs" type="int"></attribute>
@@ -162,11 +170,11 @@
 	</complexType>
 
 	<complexType name="ParameterType">
-		<sequence>
-		</sequence>
+		<sequence></sequence>
 		<attribute name="formFieldId" type="string" use="required"></attribute>
 		<attribute name="componentRef" type="string" use="required"></attribute>
 		<attribute name="varName" type="string"></attribute>
+		<attribute name="order" type="int" use="optional"></attribute>
 	</complexType>
 	<complexType name="ComponentType">
 		<sequence>
@@ -209,11 +217,16 @@
 
 	</complexType>
 	<complexType name="UnitRefType">
-		<sequence>
-			</sequence>
-		<attribute name="cRef" type="string" use="optional" default="this"></attribute>
+		<sequence></sequence>
+		<attribute name="cRef" type="string" use="optional"
+			default="this">
+		</attribute>
 		<attribute name="uRef" type="string" use="required"></attribute>
-		<attribute name="replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="slice_replica" type="int" use="optional"
+			default="0">
+		</attribute>
+		<attribute name="replica" type="int" use="optional" fixed="0"></attribute>
+		<attribute name="inner_replica" type="int" use="optional" default="0"></attribute>
 	</complexType>
 	<complexType name="InterfaceSliceRefType">
 		<sequence>
@@ -223,10 +236,10 @@
 		<attribute name="sliceRef" type="string" use="optional"></attribute>
 	</complexType>
 	<complexType name="ParameterSupplyType">
-		<sequence minOccurs="1" maxOccurs="1">
-			</sequence>
+		<sequence minOccurs="1" maxOccurs="1"></sequence>
 		<attribute name="varName" type="string" use="required"></attribute>
 		<attribute name="cRef" type="string" use="required"></attribute>
+		<attribute name="direct" type="boolean" use="optional" default="true"></attribute>
 	</complexType>
 	<complexType name="EnumeratorRefType">
 		<sequence>
@@ -261,65 +274,11 @@
 		</sequence>
 		<attribute name="isRef" type="string" use="required"></attribute>
 	</complexType>
-	<complexType name="ActionType">
-		<sequence>
-			<element name="visualDescription"
-				type="tns:VisualElementAttributes">
-			</element>
-		</sequence>
-		<attribute name="label" type="string" use="optional"></attribute>
-		<attribute name="repeat" type="unsignedInt" use="optional"></attribute>
-	</complexType>
-	<complexType name="ActionCombinatorType">
-		<complexContent>
-			<extension base="tns:ActionType">
-				<sequence maxOccurs="unbounded" minOccurs="1">
-					<element name="action" type="tns:ActionType"></element>
-				</sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="ActionCombinatorSeqType">
-		<complexContent>
-			<extension base="tns:ActionCombinatorType">
-				<sequence></sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="ActionCombinatorParType">
-		<complexContent>
-			<extension base="tns:ActionCombinatorType">
-				<sequence></sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="ActionCombinatorAltType">
-		<complexContent>
-			<extension base="tns:ActionCombinatorType">
-				<sequence></sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="ActionActivateType">
-		<complexContent>
-			<extension base="tns:ActionType">
-				<attribute name="sliceRef" type="string"
-					use="required">
-				</attribute>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="QuantificationVarType">
-		<choice>
-			</choice>
-		<attribute name="qType" type="tns:QuantificationType" use="optional" default="Universal"></attribute>
-		<attribute name="varName" type="string" use="required"></attribute>
-	</complexType>
 	<complexType name="ColorComplexType">
 		<sequence>
 			</sequence>
@@ -345,33 +304,8 @@
 		</complexContent>
 	</complexType>
 
-	<complexType name="ActionSkipType">
-		<complexContent>
-			<extension base="tns:ActionType">
-				<sequence></sequence>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="ActionWaitType">
-		<complexContent>
-			<extension base="tns:ActionType">
-				<sequence>
-					</sequence>
-				<attribute name="semaphore" type="string" use="required"></attribute>
-			</extension>
-		</complexContent>
-	</complexType>
 
-	<complexType name="ActionSignalType">
-		<complexContent>
-			<extension base="tns:ActionType">
-				<sequence>
-					</sequence>
-				<attribute name="semaphore" type="string" use="required"></attribute>
-			</extension>
-		</complexContent>
-	</complexType>
 
 	<complexType name="EnumerableType">
 		<sequence></sequence>
@@ -408,6 +342,7 @@
 	<complexType name="ParameterRenaming">
 		<attribute name="formFieldId" type="string" use="required"></attribute>
 		<attribute name="varName" type="string" use="required"></attribute>
+		<attribute name="order" type="int" use="optional"></attribute>
 	</complexType>
 	<simpleType name="QuantificationType">
 		<restriction base="string">
@@ -456,10 +391,15 @@
 	</complexType>
 	<complexType name="UnitBoundsType">
 		<sequence>
-			<element name="visualDescription" type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="1"></element>
+			<element name="visualDescription"
+				type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="1">
+			</element>
 		</sequence>
 		<attribute name="uRef" type="string"></attribute>
-		<attribute name="replica" type="unsignedInt" use="optional"></attribute>
+		<attribute name="parallel" type="boolean" use="optional"></attribute>
+		<attribute name="slice_replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="unit_replica" type="int" use="optional" default="0"></attribute>
+		<attribute name="replica" type="unsignedInt" use="optional" default="0"></attribute>
 	</complexType>
 
 
@@ -608,11 +548,118 @@
     </complexType>
 
     <complexType name="InterfaceParameterType">
-    	<sequence></sequence>
     	<attribute name="parid" type="string"></attribute>
     	<attribute name="varid" type="string"></attribute>
     	<attribute name="iname" type="string"></attribute>
         <attribute name="uname" type="string"></attribute>
         <attribute name="order" type="int"></attribute>
     </complexType>
+    
+
+  <group name="guardAction">
+    <sequence>
+      <element name="guard" type="string"/>
+      <element name="protocol" type="string"/>
+    </sequence>
+  </group>
+  
+  
+    
+    
+
+  <complexType name="UnitConditionType">
+  	<sequence>
+  		<element name="guard" type="tns:GuardType"></element>
+  	</sequence>
+  	<attribute name="id" type="string"></attribute>
+  </complexType>
+
+  <complexType name="UnitActionType">
+  	<sequence>
+  		<element name="protocol" type="tns:ProtocolChoiceType" maxOccurs="1" minOccurs="0"></element>
+  	</sequence>
+  	<attribute name="id" type="string"></attribute>
+  </complexType>
+
+ <complexType name="ProtocolCombinatorType" abstract="false">
+  	<complexContent>
+  		<extension base="tns:ProtocolType">
+  			<sequence>
+  				<element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1">
+  				</element>
+  			</sequence>
+  		</extension>
+  	</complexContent>
+  </complexType>
+
+    <complexType name="ProtocolType" abstract="true">
+    	<sequence>
+    		<element name="guard" type="tns:GuardType" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="repeat" type="boolean"></attribute>
+    	<attribute name="id" type="string"></attribute>
+    </complexType>
+ 
+   <complexType name="ProtocolPerformType">
+    	<complexContent>
+    		<extension base="tns:ProtocolType">
+    			<attribute name="action_id" type="string"></attribute>
+
+    			<attribute name="slice_id" type="string"></attribute>
+
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+  <complexType name="ConditionType">
+    	<attribute name="slice_id" type="string"></attribute>
+    	<attribute name="cond_id" type="string" use="required"></attribute>
+    </complexType>
+ 
+   <complexType name="GuardType">
+  	<choice maxOccurs="unbounded">
+  		<element name="condition" type="tns:ConditionType" />
+  		<element name="and" type="tns:GuardType" />
+  		<element name="or" type="tns:GuardType" />
+  	</choice>
+  	<attribute name="not" type="boolean"></attribute>
+  </complexType>
+
+    <complexType name="GuardConditionType">
+    	<complexContent>
+    		<extension base="tns:GuardType">
+    			<attribute name="condition" type="string"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+
+
+ <complexType name="ProtocolChoiceType">
+  				<choice maxOccurs="1" minOccurs="1">
+  					<element name="par" type="tns:ProtocolCombinatorVisualType"></element>
+  					<element name="seq" type="tns:ProtocolCombinatorVisualType"></element>
+  					<element name="alt" type="tns:ProtocolCombinatorVisualType"></element>
+  					<element name="perform" type="tns:ProtocolPerformVisualType"></element>
+  				</choice>
+    </complexType>
+
+ <complexType name="ProtocolCombinatorVisualType">
+ 	<complexContent>
+ 		<extension base="tns:ProtocolCombinatorType">
+ 			<sequence>
+ 				<element name="visualDescription" type="tns:VisualElementAttributes"></element>
+ 			</sequence>
+ 		</extension>
+ 	</complexContent>
+ </complexType>
+ <complexType name="ProtocolPerformVisualType">
+ 	<complexContent>
+ 		<extension base="tns:ProtocolPerformType">
+ 			<sequence>
+ 				<element name="visualDescription" type="tns:VisualElementAttributes"></element>
+ 			</sequence>
+ 		</extension>
+ 	</complexContent>
+ </complexType>
 </schema>

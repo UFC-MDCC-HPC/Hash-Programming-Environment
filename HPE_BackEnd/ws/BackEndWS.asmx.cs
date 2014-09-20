@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using System.Collections;
@@ -11,6 +12,7 @@ using HPE_DGAC_LoadDB;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.IO;
 using Catalog;
+using br.ufc.pargo.hpe.backend.DGAC;
 
 namespace Back_End_WS
 {
@@ -22,17 +24,21 @@ namespace Back_End_WS
     [ToolboxItem(false)]
     public class BackEnd_WS : System.Web.Services.WebService
     {
+		  	
+	    public BackEnd_WS()
+		{
 
-	    static br.ufc.pargo.hpe.backend.DGAC.BackEnd dgac = null;
-    	
-	    public BackEnd_WS(){
+		}
 
-              dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
-    	
-	    }
+		[WebMethod]
+		public string getSiteName()
+		{
+			return br.ufc.pargo.hpe.backend.DGAC.BackEnd.getSiteName();
+		}
 
-        #region BackEndFacade Members
+     	#region Deploy
 
+	
         [WebMethod]
         /*
          * XML é visto como um array de bytes, chamado data.
@@ -43,16 +49,16 @@ namespace Back_End_WS
         {
             try
             {
-                string filename = "newConfig";
+			    string filename = "newConfig";
                 string path = Constants.PATH_TEMP_WORKER + filename + ".xml";
                 if (data != null)
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
                     if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType1.implements)
-                        dgac.registerConcreteComponent(c, userName, password, curDir);
+                        BackEnd.registerConcreteComponent(c, userName, password, curDir);
                     else
-                        dgac.registerAbstractComponent(c, userName, password, curDir);
+                        BackEnd.registerAbstractComponent(c, userName, password, curDir);
                 }
             } 
 			catch (Exception e) 
@@ -77,14 +83,14 @@ namespace Back_End_WS
 
             try
             {
-                string filename = "newConfig";
+				string filename = "newConfig";
                 string path = Constants.PATH_TEMP_WORKER + filename + ".xml";
                 if (data != null)
                 {
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
-                    int id_abstract = dgac.registerAbstractComponent(c, userName, password, curDir);
-					dgac.updateConfiguration(id_abstract, hcl_data);
+                    int id_abstract = BackEnd.registerAbstractComponent(c, userName, password, curDir);
+					BackEnd.updateConfiguration(id_abstract, hcl_data);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -149,6 +155,42 @@ namespace Back_End_WS
         }
 
         #endregion
+
+
+		#region Sessions
+
+		private IDictionary<SessionID, BackEnd> dgac_sessions = null;
+
+		[WebMethod]
+		public SessionID openSession()
+		{
+			if (dgac_sessions == null)
+				dgac_sessions = new Dictionary<SessionID, BackEnd> ();
+
+			BackEnd dgac = new BackEnd();
+
+			SessionID session_id = new SessionID();
+			dgac_sessions.Add (session_id, dgac);
+
+			return session_id;
+		}
+
+		[Serializable]
+		public class SessionID
+		{
+		}
+
+		// criar instância de componente
+
+		// ligar portas
+
+		// executar
+
+
+
+		#endregion Sessions
+
+
 
     }
 }

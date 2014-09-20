@@ -72,6 +72,7 @@ CREATE TABLE `innercomponent` (
   `parameter_top` varchar(45) DEFAULT NULL,
   `transitive` int(11) DEFAULT '0',
   `public` int(11) DEFAULT '0',
+  `multiple` int(11) DEFAULT '0' NOT NULL,
   PRIMARY KEY (`id_abstract_owner`,`id_inner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
@@ -152,6 +153,7 @@ delimiter $$
 CREATE TABLE `slice` (
   `id_abstract` int(11) NOT NULL DEFAULT '0',
   `id_inner` varchar(40) NOT NULL DEFAULT '"',
+  `inner_replica` int(11) NOT NULL DEFAULT '0',
   `id_interface_slice` varchar(40) NOT NULL,
   `slice_replica` int(11) NOT NULL DEFAULT '0',
   `unit_replica` int(11) NOT NULL,
@@ -159,7 +161,7 @@ CREATE TABLE `slice` (
   `unit_replica_host` int(11) NOT NULL,
   `property_name` varchar(40) NOT NULL,
   `transitive` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_abstract`,`id_inner`,`id_interface_slice`,`slice_replica`)
+  PRIMARY KEY (`id_abstract`,`id_inner`,`inner_replica`,`id_interface_slice`,`slice_replica`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
 
