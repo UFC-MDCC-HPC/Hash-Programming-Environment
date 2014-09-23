@@ -21,6 +21,6 @@ public class HApplicationUnitSlice extends HComputationUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HApplicationInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HApplicationInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

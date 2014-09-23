@@ -308,7 +308,6 @@ public class BackEndLocationList {
 	}
 
 	private static EnvironmentType loadEnvironment(byte[] data) {
-		// TODO Auto-generated method stub
 		try {
 
 			java.io.File fileTemp = java.io.File.createTempFile("env", "xml");

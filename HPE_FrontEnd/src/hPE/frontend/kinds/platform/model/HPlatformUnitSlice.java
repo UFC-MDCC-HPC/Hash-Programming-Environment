@@ -17,7 +17,7 @@ public class HPlatformUnitSlice extends HQualifierUnitSlice {
 	}
 	
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HPlatformInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HPlatformInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 	
 

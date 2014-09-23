@@ -65,8 +65,7 @@ public class HPELocationEntry {
 
 			HPE_Location_ServerService locationServerService = new HPE_Location_ServerServiceLocator();
 
-			HPE_Location_Server server = locationServerService
-					.getHPE_Location_Server(url);
+			HPE_Location_Server server = locationServerService.getHPE_Location_Server(url);
 
 			String str = server.fetchPackages(showObsolete);
 
@@ -251,7 +250,7 @@ public class HPELocationEntry {
 							+ gacutil_path);
 
 					// TODO refatorar de forma a criar um executor de comandos e
-					// evitar esse tipo de c—digo espalhado.
+					// evitar esse tipo de cï¿½digo espalhado.
 					CommandLine.runCommand(new String[] { gacutil_path, "-i",
 							fileName }, folder);
 				} catch (Exception e) {

@@ -1047,6 +1047,11 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 				   cf.setBounds(bounds);
 			}
 		
+		if (this.getSupplier() != null)
+			this.getSupplier().setBounds(bounds);
+		
+
+		
 		listeners.firePropertyChange(PROPERTY_BOUNDS, null, name); //$NON-NLS-2$//$NON-NLS-1$		
 	}
 

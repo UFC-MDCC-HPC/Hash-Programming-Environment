@@ -19,9 +19,9 @@ public class ActivateInterfaceSliceEditPart<ModelType extends HActivateInterface
   	    ModelType slice_abstraction = (ModelType) getModel();
   	    FigureType slice_abstraction_figure = (FigureType) getFigure();
   	    
-        if (slice_abstraction.getNestingFactor() > 0)
-            slice_abstraction_figure.setLabelText((new Integer(slice_abstraction.getNestingFactor())).toString());
-        else
+       // if (slice_abstraction.getNestingFactor() > 0)
+        //    slice_abstraction_figure.setLabelText((new Integer(slice_abstraction.getNestingFactor())).toString());
+        //else
         	slice_abstraction_figure.setLabelText("");
 		
 	}

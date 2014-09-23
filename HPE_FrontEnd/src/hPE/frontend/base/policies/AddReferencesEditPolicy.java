@@ -1,43 +1,11 @@
 package hPE.frontend.base.policies;
 
-import hPE.HPEVersionEditor;
-import hPE.frontend.NAntBuilder;
-import hPE.frontend.base.codegen.HBEAbstractFile;
-import hPE.frontend.base.codegen.HBEAbstractSynthesizer;
-import hPE.frontend.base.codegen.HBESourceVersion;
 import hPE.frontend.base.dialogs.AddReferencesDialog;
-import hPE.frontend.base.dialogs.HBEVersionControlDialog;
-import hPE.frontend.base.edits.InterfaceEditPart;
-import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HHasExternalReferences;
-import hPE.frontend.base.model.HInterface;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import javax.swing.JOptionPane;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.EditorManager;
-import org.eclipse.ui.internal.WorkbenchPage;
-import org.eclipse.ui.internal.registry.EditorDescriptor;
-import org.eclipse.ui.part.FileEditorInput;
 
 
 public class AddReferencesEditPolicy extends ComponentEditPolicy {

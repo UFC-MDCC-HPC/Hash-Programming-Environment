@@ -89,14 +89,13 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 	
 	/**
 	 */
-	public HInterfaceSlice(String name, HInterface which_interface, HInterfaceSig interface_sig, int nestingFactor) {
+	public HInterfaceSlice(String name, HInterface which_interface, HInterfaceSig interface_sig) {
 		super();
 		listeners = new PropertyChangeSupport(this);
 		this.setInterface(which_interface);
 		this.interface_sig = interface_sig;
 		interface_sig.addSlice(this);
 		this.name = name;
-		this.nestingFactor = nestingFactor;
 		Rectangle r = new Rectangle(); // unit.getBounds().getCopy();
 		r.setSize(diameter,diameter);
 		r.setLocation(new Point(0,0));
@@ -166,13 +165,6 @@ public abstract class HInterfaceSlice extends hPE.frontend.base.model.HVisualEle
 		listeners.firePropertyChange(INTERFACE_HIDE,null,name);
 	}
 	
-	private int nestingFactor = 0;
-		
-	public int getNestingFactor() {
-		return nestingFactor;
-	}
-
-
 	/**
 	 * @uml.property   name="interface_sig"
 	 * @uml.associationEnd   multiplicity="(1 1)" inverse="slices:hPE.base.model.HInterfaceSig"

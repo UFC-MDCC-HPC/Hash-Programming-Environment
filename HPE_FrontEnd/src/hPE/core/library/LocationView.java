@@ -335,21 +335,15 @@ public class LocationView extends ViewPart {
 	protected void connect(boolean connect, int index) {
 		String key = table.getItem(index).getText(KEY);
 
-		if (connect
-				&& !table.getItem(index).getText(STATUS)
-						.equals(CONNECTED_STATUS)) {
+		if (connect && !table.getItem(index).getText(STATUS).equals(CONNECTED_STATUS)) {
 			try {
-				table.getItem(index).setText(SERVER_NAME,
-						manager.testConnection(key));
+				table.getItem(index).setText(SERVER_NAME, manager.testConnection(key));
 				table.getItem(index).setText(STATUS, CONNECTED_STATUS);
-				HPEComponentLibraryView.getLast().showLocation(
-						manager.addConnectedLocation(key));
+				HPEComponentLibraryView.getLast().showLocation(manager.addConnectedLocation(key));
 			} catch (Exception e) {
 				table.getItem(index).setText(STATUS, INVALID_STATUS);
 			}
-		} else if (!connect
-				&& table.getItem(index).getText(STATUS)
-						.equals(CONNECTED_STATUS)) {
+		} else if (!connect && table.getItem(index).getText(STATUS).equals(CONNECTED_STATUS)) {
 			table.getItem(index).setText(STATUS, IDLE_STATUS);
 			manager.removeConnectedLocation(key);
 		}

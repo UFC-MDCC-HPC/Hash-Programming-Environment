@@ -9,5 +9,5 @@ public interface IInterfaceSlice {
 	
 	public IInterface getInterface();
 	
-	public int getNestingFactor();
+	// public int getNestingFactor();
 }

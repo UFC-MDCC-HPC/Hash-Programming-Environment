@@ -40,13 +40,13 @@ public class LPackage extends HPEComponentLibraryItem implements ILPackage {
 	}
 
 	private void readFromPackageLocation(URI locationSite) {
-		List<String> components = HPELocationEntry.fetchComponents(
-				locationSite, packagePath);
+		List<String> components = HPELocationEntry.fetchComponents(locationSite, packagePath);
 
 		addComponent(locationSite, components);
 	}
 
-	protected void addComponent(URI locationSite, List<String> components) {
+	protected void addComponent(URI locationSite, List<String> components) 
+	{
 		boolean obsolete = false;
 
 		for (String componentNameAndVersion : components) {
@@ -60,8 +60,7 @@ public class LPackage extends HPEComponentLibraryItem implements ILPackage {
 				obsolete = a[2].equals("obsolete") ? true : false;
 			}
 
-			ILComponentView componentView = new LComponentView(this,
-					componentName, version, locationSite, obsolete);
+			ILComponentView componentView = new LComponentView(this, componentName, version, locationSite, obsolete);
 
 			this.addChild(componentView);
 		}

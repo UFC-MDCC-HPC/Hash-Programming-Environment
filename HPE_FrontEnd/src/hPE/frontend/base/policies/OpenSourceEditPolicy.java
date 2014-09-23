@@ -17,9 +17,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -33,7 +31,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.EditorManager;
 import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.internal.registry.EditorDescriptor;
 import org.eclipse.ui.part.FileEditorInput;
@@ -171,7 +168,7 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 			
 			 String programName = srcFile.getVersionID().concat(":").concat(path.lastSegment());
 			
-			 // Nesso caso particular, é necessário acessar pela workspace.
+			 // Nesso caso particular, ï¿½ necessï¿½rio acessar pela workspace.
 	    	 IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 	    	 FileEditorInput fei = new FileEditorInput(file); 
 	    	
@@ -180,11 +177,13 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 	    	    	
 	    	
 	    	 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-	    	 EditorManager em = ((WorkbenchPage) page).getEditorManager();
-	  		 IEditorReference editorRef = em.openEditor(er.getId(),fei,true,null);
+	    	 //EditorManager em = ((WorkbenchPage) page).getEditorManager();
+	    	 
+	    	 
+	  		 IEditorReference editorRef = ((WorkbenchPage) page).getEditorReferences()[0];// em.openEditor(er.getId(),fei,true,null);
 	    	 IEditorPart te = editorRef.getEditor(true);
 	    	 IEditorPart te2 = te.getClass().newInstance();
-	    	 page.closeEditor(te,false);
+	    	 //page.closeEditor(te,false);
 	    	 
 			 editor.newPage(te2,fei,programName);
 		}
@@ -199,10 +198,10 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 	} catch (ClassNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	} */catch (PartInitException e) {
+	} catch (PartInitException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	} catch (InstantiationException e) {
+	} */catch (InstantiationException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (IllegalAccessException e) {

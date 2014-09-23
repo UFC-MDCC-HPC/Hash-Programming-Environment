@@ -70,9 +70,7 @@ import hPE.xml.component.ParameterSupplyType;
 import hPE.xml.component.ParameterType;
 import hPE.xml.component.PortSliceType;
 import hPE.xml.component.ProtocolChoiceType;
-import hPE.xml.component.ProtocolCombinatorType;
 import hPE.xml.component.ProtocolCombinatorVisualType;
-import hPE.xml.component.ProtocolPerformType;
 import hPE.xml.component.ProtocolPerformVisualType;
 import hPE.xml.component.RecursiveEntryType;
 import hPE.xml.component.SourceFileType;
@@ -120,7 +118,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.graphics.Color;
 
 //TODO tirar essa referencia ao LOCAL_LOCATION.
@@ -157,8 +154,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	public static class UndefinedRefInnerException extends Exception {
 
 		public UndefinedRefInnerException(HComponent ic) {
-			super("Undefined ID for an inner component of type "
-					+ ic.getComponentName());
+			super("Undefined ID for an inner component of type " + ic.getComponentName());
 		}
 	}
 
@@ -2430,6 +2426,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveUnits(HComponent c, EList<UnitType> xI)
 			throws DuplicatedSliceNamesException {
 
+		Map<String, List<HUnitSlice>> slice_replica = new HashMap<String, List<HUnitSlice>>();
+		
 		for (IHUnit u_ : c.getUnits()) {
 			String uRef = null;
 			String iRef = null;
@@ -2496,7 +2494,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						transitiveSlices.add(usx);
 				}
 				directSlices.addAll(slices);
-				saveUnitSlices(directSlices, transitiveSlices, slicesX);
+				saveUnitSlices(directSlices, transitiveSlices, slicesX, slice_replica);
 
 				xI.add(uX);
 			}
@@ -2506,8 +2504,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	private void saveUnitSlices(List<HUnitSlice> directSlices,
-			List<HUnitSlice> transitiveSlices, EList<UnitSliceType> slicesX)
-			throws DuplicatedSliceNamesException {
+			List<HUnitSlice> transitiveSlices, EList<UnitSliceType> slicesX, Map<String, List<HUnitSlice>> slice_replica)
+			throws DuplicatedSliceNamesException 
+	{
 
 		Map<String, HUnitSlice> savedSlices = new HashMap<String, HUnitSlice>();
 
@@ -2519,9 +2518,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				for (HUnitSlice usPort : usPorts) {
 					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
 					String usPortName = usPort.getConfiguration().getRef();
-					// usPort.getInterfaceSlice() != null ? usPort
-					// .getInterfaceSlice().getName() : usPortSource
-					// .getName2();
 					portNames.put(usPortName, usPortName);
 				}
 			}
@@ -2548,14 +2544,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				IHUnit e = slice.getBinding().getEntry();
 
 				UnitSliceType sliceX = factory.createUnitSliceType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 				List<String> portsX = sliceX.getPort();
 
 				String cRef = null;
 				String uRef = null;
 				int replica = 0;
-				// int replica_slice = 0;
 				String sName = null;
 
 				HUnit uSource = (HUnit) slice.getComponentEntry();
@@ -2563,7 +2557,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				cRef = uSource.getConfiguration().getRef();
 				uRef = uSource.getName2();
 				replica = uSource.getSliceReplicaIndex();
-				// replica_slice = uSource.getIndexSlice();
 
 				sName = slice.getName();
 
@@ -2576,14 +2569,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				sliceX.setSliceName(sName);
 				sliceX.setVisualDescription(v);
 				sliceX.setTransitive(!directSlices.contains(slice));
-
+				
+				
+				
+				int inner_replica = fetch_inner_replica(sliceX, slice, slice_replica);
+				sliceX.setInnerReplica(inner_replica);
+			
+				
+				
 				List<HUnitSlice> usPorts = uSource.getPorts();
-				for (HUnitSlice usPort : usPorts) {
-					HUnit usPortSource = (HUnit) usPort.getComponentEntry();
-					// String usPortName = usPort.getInterfaceSlice() != null ?
-					// usPort
-					// .getInterfaceSlice().getName() : usPortSource
-					// .getName2();
+				for (HUnitSlice usPort : usPorts) 
+				{
 					String usPortName = usPort.getConfiguration().getRef();
 					portsX.add(usPortName);
 				}
@@ -2592,6 +2588,31 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				slicesX.add(sliceX);
 			}
+	}
+
+	private int fetch_inner_replica(UnitSliceType sliceX, HUnitSlice slice,	Map<String, List<HUnitSlice>> slice_info) 
+	{
+		String cRef = sliceX.getCRef();
+		String uRef = sliceX.getURef();
+		int slice_replica = sliceX.getSliceReplica();
+		
+		String key = cRef + "." + uRef + "[" + slice_replica + "]";
+		
+		List<HUnitSlice> unit_slice_list = null;
+		if (slice_info.containsKey(key))
+		{
+		   unit_slice_list = slice_info.get(key);
+		}
+		else
+		{
+		   unit_slice_list = new ArrayList<HUnitSlice>();
+		   slice_info.put(key, unit_slice_list);
+		}
+		
+		unit_slice_list.add(slice);
+	
+		
+		return unit_slice_list.size() - 1;
 	}
 
 	private void saveSupplyParameters(HComponent c,

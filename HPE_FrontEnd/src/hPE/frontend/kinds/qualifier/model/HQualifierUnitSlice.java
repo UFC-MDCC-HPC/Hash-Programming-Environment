@@ -19,6 +19,6 @@ public class HQualifierUnitSlice extends HUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HQualifierInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HQualifierInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

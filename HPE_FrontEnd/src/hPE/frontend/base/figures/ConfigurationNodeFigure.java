@@ -18,7 +18,7 @@ import org.eclipse.swt.graphics.Font;
 
 public abstract class ConfigurationNodeFigure extends Figure implements INameEditableFigure {
 
-    private TextFlow name = new TextFlow();
+	    private TextFlow name = new TextFlow();
 	
     private FlowPage flowPage;
     
@@ -52,6 +52,8 @@ public abstract class ConfigurationNodeFigure extends Figure implements INameEdi
 		return name;
 	}
 	
+	
+	 @Override
 	 protected void paintFigure(Graphics g) {
 		Rectangle r = getBounds().getCopy();
 		r.shrink(1,1);
@@ -64,6 +66,7 @@ public abstract class ConfigurationNodeFigure extends Figure implements INameEdi
 	 
 	protected int dx = 0;
 	protected int dy = 0;
+	
 	
 	public void setName(String the_name) {
 		Label aux = new Label(the_name);

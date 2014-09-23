@@ -83,15 +83,16 @@ public class HPEPage extends WizardNewFileCreationPage implements
 
 	private SetVersionDialog composite2 = null;
 	
-	public void createControl(Composite parent) {
+	public void createControl(Composite parent) 
+	{
 		super.createControl(parent);
 		this.setFileName("xxx");  //$NON-NLS-2$//$NON-NLS-1$
 		Composite composite1 = (Composite)getControl();
 		Control[] cs = composite1.getChildren();
 		Control[] cs1 = ((Composite)cs[0]).getChildren();
-		Control[] cs2 = ((Composite)cs[1]).getChildren();
+		//Control[] cs2 = ((Composite)cs[1]).getChildren();
 		
-		ContainerSelectionGroup ssss = (ContainerSelectionGroup) cs1[0];
+		//ContainerSelectionGroup ssss = (ContainerSelectionGroup) cs1[0];
 		
 	    Control[] cs11 = ((Composite)cs1[1]).getChildren();
 	    
@@ -112,13 +113,10 @@ public class HPEPage extends WizardNewFileCreationPage implements
 
 		try {
 
-			String ss = this.getContainerFullPath().toString();
-		
-			
 			IPath containerRelativePath = this.getContainerFullPath();
 			IPath containerAbsolutePath = HComponentFactoryImpl.buildWPath(containerRelativePath);
 			
-			//URI uri = URI.createFileURI(path.makeAbsolute().toOSString());
+			String ss = containerRelativePath.toString();
 			
 			if (!ss.contains(".")) {
 				JOptionPane.showMessageDialog(null, "Unrecognized component package. Use <package>.<name>", "Creation Error", JOptionPane.ERROR_MESSAGE);

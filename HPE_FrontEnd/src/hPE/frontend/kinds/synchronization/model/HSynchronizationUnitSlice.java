@@ -19,6 +19,6 @@ public class HSynchronizationUnitSlice extends HUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HSynchronizationInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HSynchronizationInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

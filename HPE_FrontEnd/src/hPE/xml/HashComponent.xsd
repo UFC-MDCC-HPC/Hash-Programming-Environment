@@ -226,6 +226,7 @@
 			default="0">
 		</attribute>
 		<attribute name="replica" type="int" use="optional" fixed="0"></attribute>
+		<attribute name="inner_replica" type="int" use="optional" default="0"></attribute>
 	</complexType>
 	<complexType name="InterfaceSliceRefType">
 		<sequence>

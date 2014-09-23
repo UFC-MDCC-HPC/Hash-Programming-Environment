@@ -19,6 +19,6 @@ public class HFacetUnitSlice extends HUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HFacetInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HFacetInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

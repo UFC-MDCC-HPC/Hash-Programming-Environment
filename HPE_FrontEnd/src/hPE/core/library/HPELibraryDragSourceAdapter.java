@@ -2,53 +2,22 @@ package hPE.core.library;
 
 
 
-import org.eclipse.emf.common.util.URI;
-import java.util.ArrayList;
+import hPE.core.library.model.interfaces.ILComponentView;
+
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/* import java.io.FileInputStream;
-import java.io.File;
-import java.io.FileNotFoundException; */
-
-import org.eclipse.core.internal.resources.File;
-import org.eclipse.core.internal.resources.Workspace;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.IPath;
-
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.FileTransfer;
-import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.ReadOnlyStateChecker;
-import org.eclipse.ui.internal.views.navigator.ResourceNavigatorMessages;
-import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
-
-import hPE.ComponentFile;
-import hPE.hPEEditor;
-import hPE.core.library.model.interfaces.ILComponentView;
-import hPE.core.library.model.interfaces.ILPackage;
-import hPE.frontend.base.model.HComponent;
-import hPE.xml.factory.HComponentFactoryImpl;
 
 public class HPELibraryDragSourceAdapter extends DragSourceAdapter {
     

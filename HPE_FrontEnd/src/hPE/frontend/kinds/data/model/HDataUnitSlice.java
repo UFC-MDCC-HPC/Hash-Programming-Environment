@@ -19,7 +19,7 @@ public class HDataUnitSlice extends HUnitSlice {
 		// TODO Auto-generated constructor stub
 	}
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HDataInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HDataInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 
 }

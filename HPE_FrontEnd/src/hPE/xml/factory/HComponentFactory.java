@@ -1,14 +1,13 @@
 package hPE.xml.factory;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.URI;
-
 import hPE.frontend.base.model.HComponent;
 import hPE.xml.component.ComponentType;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedRefInnerException;
 import hPE.xml.factory.HComponentFactoryImpl.DuplicatedSliceNamesException;
 import hPE.xml.factory.HComponentFactoryImpl.UndefinedRefInnerException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.URI;
 
 
 public interface HComponentFactory {

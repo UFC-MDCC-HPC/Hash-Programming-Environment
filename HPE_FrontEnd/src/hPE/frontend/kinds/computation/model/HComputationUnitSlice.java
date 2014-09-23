@@ -18,6 +18,6 @@ public class HComputationUnitSlice extends HUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HComputationInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HComputationInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

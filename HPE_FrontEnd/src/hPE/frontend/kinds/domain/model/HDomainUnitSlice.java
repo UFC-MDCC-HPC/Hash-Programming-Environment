@@ -19,6 +19,6 @@ public class HDomainUnitSlice extends HUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HDomainInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HDomainInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

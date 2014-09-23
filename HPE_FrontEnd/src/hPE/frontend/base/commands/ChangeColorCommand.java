@@ -7,6 +7,7 @@ import hPE.frontend.base.model.IHasColor;
 
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 
 public class ChangeColorCommand extends Command {
 
@@ -20,14 +21,15 @@ public class ChangeColorCommand extends Command {
 	}
 
 
-	ColorDialog colorDialog;
+	private ColorDialog colorDialog;
 	
 	public void setDialog(ColorDialog colorDialog) {
 		this.colorDialog = colorDialog;
 	}
 	
 	public void execute() {
-	    this.new_color = new Color(null,colorDialog.open()); 
+		RGB color = colorDialog.open();
+	    this.new_color = new Color(null,color); 
 		the.setColor(new_color);
 		
 		return;

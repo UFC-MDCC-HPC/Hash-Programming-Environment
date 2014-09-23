@@ -48,9 +48,9 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
             // slice_abstraction_figure.setForegroundColor(ColorConstants.black);
         }
 
-        if (slice_abstraction.getNestingFactor() > 0)
-            slice_abstraction_figure.setLabelText((new Integer(slice_abstraction.getNestingFactor())).toString());
-        else
+//        if (slice_abstraction.getNestingFactor() > 0)
+//            slice_abstraction_figure.setLabelText((new Integer(slice_abstraction.getNestingFactor())).toString());
+//        else
         	slice_abstraction_figure.setLabelText("");
 
         try{
@@ -81,9 +81,9 @@ public class UnitSliceEditPart<ModelType extends HUnitSlice, FigureType extends 
 		if (ev.getPropertyName().equals(ModelType.PROPERTY_COLOR)) {
 			this.refreshVisuals();
 		}
-		if (ev.getPropertyName().equals(ModelType.NESTING_FACTOR_PROPERTY)) {
-			this.refreshVisuals();
-		}
+//		if (ev.getPropertyName().equals(ModelType.NESTING_FACTOR_PROPERTY)) {
+//			this.refreshVisuals();
+//		}
 		if (ev.getPropertyName().equals(ModelType.BINDING_CREATE_TARGET)) this.refreshTargetConnections();
 		if (ev.getPropertyName().equals(ModelType.INTERFACE_SHOW)) {
 			this.refreshSourceConnections();

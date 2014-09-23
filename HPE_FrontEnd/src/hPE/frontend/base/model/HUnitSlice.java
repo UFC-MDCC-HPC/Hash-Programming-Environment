@@ -85,8 +85,6 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 	}
 	
 	
-
-	
 	/**
 	 */
 	public HUnitSlice(IHUnit unit, IHUnit unitEntry, Point where) throws HPEAbortException {
@@ -255,24 +253,8 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 		listeners.firePropertyChange(INTERFACE_HIDE,false,true);
 	}
 
-   
-	private int nestingFactor = 0;
-	
-	public final static String NESTING_FACTOR_PROPERTY = "nesting_factor_property";
-	
-	public int getNestingFactor() {
-		return nestingFactor;
-	}
-	
-	public void setNestingFactor(int nestingFactor) {
-		this.nestingFactor = nestingFactor;
-		listeners.firePropertyChange(NESTING_FACTOR_PROPERTY,null,getBounds());
-	}
-
-
-	public IComponentEntry getComponentEntry() {
-		
-		
+	public IComponentEntry getComponentEntry() 
+	{
 		return binding != null ? (IComponentEntry) binding.getEntry() : null;
 	} 
 
@@ -324,34 +306,28 @@ public abstract class HUnitSlice extends hPE.frontend.base.model.HVisualElement
 	}
 	
 	public boolean matchesTo(HInterfaceSlice islice) {
-		return this.getInterface().getName2().equals(islice.getInterface().getName2()) && this.getNestingFactor() == islice.getNestingFactor();
+		return this.getInterface().getName2().equals(islice.getInterface().getName2()) /*&& this.getNestingFactor() == islice.getNestingFactor()*/;
 	}
 	
 	public abstract HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s); 
 
 
-  //  private String name = null;
-
-   // public void setName(String name) {
-   // 	this.name = name;
-    //}
-    
 	public String getName() {		
-		//if ((this.getInterfaceSlice() == null || this.name == null) && this.getBinding() != null)  
-			//return this.getBinding().getEntry().getName2();
 			return this.getBinding().getEntry().getConfiguration().getRef();
-		//else if (this.getInterfaceSlice() != null) 
-		//	return this.getInterfaceSlice().getName();
-		//else {	
-		//	System.err.print("Slice name not found (" + this.name + ")");
-		//	return "";
-		//}
 					
 	}
 
-
-
-
+	public HUnitSlice createReplica()
+	{
+		HUnitSlice unit_slice = null;
+		try {
+			unit_slice = (HUnitSlice) this.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return unit_slice;
+	}
 	
-
 }

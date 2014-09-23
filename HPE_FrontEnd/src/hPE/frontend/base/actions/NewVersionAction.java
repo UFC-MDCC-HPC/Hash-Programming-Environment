@@ -45,7 +45,10 @@ public class NewVersionAction extends SelectionAction {
 		
 		if (getSelectedObjects().size() !=1 )
 			return false;
-		EditPart part = (EditPart) getSelectedObjects().get(0);
+		Object ooo = getSelectedObjects().get(0);
+		if (!(ooo instanceof EditPart)) 
+			return false;
+		EditPart part = (EditPart) ooo;
 		if (!(part.getModel() instanceof HComponent)) {
 			return false;
 		}

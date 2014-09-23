@@ -19,6 +19,6 @@ public class HTopologyUnitSlice extends HUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HTopologyInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HTopologyInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

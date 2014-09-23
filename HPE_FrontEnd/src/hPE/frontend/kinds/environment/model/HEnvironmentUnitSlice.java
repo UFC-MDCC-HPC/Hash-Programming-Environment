@@ -20,6 +20,6 @@ public class HEnvironmentUnitSlice extends HQualifierUnitSlice {
 	}
 
 	public HInterfaceSlice newInterfaceSlice(String name, HInterfaceSig s) {
-		return new HEnvironmentInterfaceSlice(name,(HInterface)this.getInterface(),s,this.getNestingFactor());
+		return new HEnvironmentInterfaceSlice(name,(HInterface)this.getInterface(),s);
 	}
 }

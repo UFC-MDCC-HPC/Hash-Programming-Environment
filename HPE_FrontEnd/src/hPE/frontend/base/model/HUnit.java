@@ -816,6 +816,13 @@ public abstract class HUnit extends HPrimUnit
 	    	HUnit u = (HUnit) super.createReplica(cloned_unit, shift);
 	    	//u.stubs = new ArrayList<HUnitStub>(this.stubs);
 	    	u.unitSlices = new ArrayList<HUnitSlice>();
+	    	
+	    	for (HUnitSlice s : this.getSlices()) 
+	    	{
+	    		HUnitSlice s_clone = s.createReplica();
+	    		u.unitSlices.add(s_clone);
+	    	}
+	    	
 	    	//for (HUnitSlice s : this.getSlices()) {
 	    	//	HBinding b = s.getBinding();
 	    	//	Point where = s.getBounds().getLocation();
