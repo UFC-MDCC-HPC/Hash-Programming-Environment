@@ -35,9 +35,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/hPE/frontend/connector/xml/hpe_component.xsd</name>
+			<name>../src/hPE/frontend/connector/xml/hpe_component.xsd</name>
 			<type>1</type>
-			<location>/home/heron/hash-programming-environment/DGAC/connector/xml/hpe_component.xsd</location>
+			<location>../src/hPE/frontend/connector/xml/hpe_component.xsd</location>
 		</link>
 	</linkedResources>
 </projectDescription>
