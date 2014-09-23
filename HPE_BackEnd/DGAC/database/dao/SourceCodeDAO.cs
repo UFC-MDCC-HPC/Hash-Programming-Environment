@@ -11,9 +11,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
     {
         public void insert(SourceCode ac)
         {
+			String contents = ac.Contents.Replace ("'", "\'");
+
             String sql =
                 "INSERT INTO sourcecode (type_owner, id_owner_container, id_owner, contents, file_type, file_name, file_order)" +
-                " VALUES ('" + ac.Type_owner + "'," + ac.Id_owner_container + ",'" + ac.Id_owner + "','" + ac.Contents + "','" + ac.File_type + "','" + ac.File_name +"'," + ac.Order + ")";
+                " VALUES ('" + ac.Type_owner + "'," + ac.Id_owner_container + ",'" + ac.Id_owner + "','" +  contents + "','" + ac.File_type + "','" + ac.File_name +"'," + ac.Order + ")";
 
             Connector.performSQLUpdate(sql);
         }
@@ -37,7 +39,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 sc.Type_owner = ((string)reader["type_owner"])[0];
                 sc.Id_owner_container = (int)reader["id_owner_container"];
                 sc.Id_owner = (string)reader["id_owner"];
-                sc.Contents = (string)reader["contents"];
+                sc.Contents = ((string)reader["contents"]).Replace("\'","'");
                 sc.File_name = (string)reader["file_name"];
                 sc.File_type = (string)reader["file_type"];               
                 sc.Order = (int)reader["file_order"];
@@ -56,8 +58,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         internal void update(SourceCode ss)
         {
-            String sql =
-                "UPDATE sourcecode SET contents='" + ss.Contents + "' WHERE type_owner like '" + ss.Type_owner + "'"
+			String contents = ss.Contents.Replace ("'", "\\'");
+			Console.WriteLine (contents);
+
+           String sql =
+                "UPDATE sourcecode SET contents='" + contents + "' WHERE type_owner like '" + ss.Type_owner + "'"
                                                      +    " and id_owner like '" + ss.Id_owner + "'" 
                                                      +    " and file_name like '" + ss.File_name + "'" 
                                                      +    " and id_owner_container = " + ss.Id_owner_container;

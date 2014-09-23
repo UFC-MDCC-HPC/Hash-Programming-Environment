@@ -1,35 +1,39 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/ManagerObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/database/dao/SourceCodeDAO.cs">
     <Files>
-      <File FileName="../DGAC/DGAC.cs" Line="643" Column="6" />
+      <File FileName="../DGAC/DGAC.cs" Line="174" Column="59" />
       <File FileName="../DGAC/ManagerObject.cs" Line="665" Column="1" />
       <File FileName="../DGAC/base/Unit.cs" Line="1" Column="1" />
       <File FileName="../DGAC/tree/Resolution.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/ManagerComponentIDImpl.cs" Line="144" Column="36" />
+      <File FileName="../DGAC/ManagerComponentIDImpl.cs" Line="1" Column="1" />
       <File FileName="../DGAC/database/model/Slice.cs" Line="1" Column="1" />
       <File FileName="../DGAC/database/dao/SliceDAO.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/LoaderAbstractComponent.cs" Line="860" Column="12" />
+      <File FileName="../DGAC/LoaderAbstractComponent.cs" Line="1" Column="1" />
       <File FileName="../DGAC/database/dao/InnerComponentDAO.cs" Line="1" Column="1" />
       <File FileName="../DGAC/database/model/InnerComponent.cs" Line="1" Column="1" />
       <File FileName="../DGAC/HashComponent.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/ManagerServicesImpl.cs" Line="67" Column="53" />
-      <File FileName="../DGAC/WorkerObject.cs" Line="699" Column="67" />
-      <File FileName="../DGAC/CCAExceptionImpl.cs" Line="20" Column="13" />
-      <File FileName="../DGAC/ManagerConnectionIDImpl.cs" Line="130" Column="31" />
-      <File FileName="../DGAC/Constants.cs" Line="89" Column="9" />
+      <File FileName="../DGAC/ManagerServicesImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/CCAExceptionImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/ManagerConnectionIDImpl.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/Constants.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/database/dao/SourceCodeDAO.cs" Line="56" Column="16" />
+      <File FileName="../DGAC/database/model/SourceCode.cs" Line="34" Column="27" />
+      <File FileName="../DGAC/LoaderConcreteComponent.cs" Line="246" Column="23" />
+      <File FileName="../DGAC/LoaderApp.cs" Line="408" Column="27" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="DGAC" expanded="True">
-            <Node name="cca" expanded="True" />
-            <Node name="deploy" expanded="True" />
-            <Node name="manager" expanded="True">
-              <Node name="ManagerObject.cs" selected="True" />
+            <Node name="database" expanded="True">
+              <Node name="dao" expanded="True">
+                <Node name="SourceCodeDAO.cs" selected="True" />
+              </Node>
+              <Node name="model" expanded="True" />
             </Node>
-            <Node name="tree" expanded="True" />
-            <Node name="utils" expanded="True" />
+            <Node name="deploy" expanded="True" />
             <Node name="worker" expanded="True" />
           </Node>
         </State>
