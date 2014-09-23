@@ -178,12 +178,12 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 	    	
 	    	 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 	    	 //EditorManager em = ((WorkbenchPage) page).getEditorManager();
+	    	 IEditorPart te = page.openEditor(fei,er.getId()); // (input, editorId);
 	    	 
-	    	 
-	  		 IEditorReference editorRef = ((WorkbenchPage) page).getEditorReferences()[0];// em.openEditor(er.getId(),fei,true,null);
-	    	 IEditorPart te = editorRef.getEditor(true);
+	  		// IEditorReference editorRef = ((WorkbenchPage) page).getEditorReferences()[0];// em.openEditor(er.getId(),fei,true,null);
+	    	// IEditorPart te = editorRef.getEditor(true);
 	    	 IEditorPart te2 = te.getClass().newInstance();
-	    	 //page.closeEditor(te,false);
+	    	 page.closeEditor(te,false);
 	    	 
 			 editor.newPage(te2,fei,programName);
 		}
@@ -205,6 +205,9 @@ public void openExistingSourceCodeFile(HBESourceVersion<HBEAbstractFile> sourceV
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (IllegalAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (PartInitException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} 
