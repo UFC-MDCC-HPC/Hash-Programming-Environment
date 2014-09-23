@@ -9,18 +9,12 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionsOfReplicatorsType;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -37,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class FusionsOfReplicatorsTypeImpl extends EObjectImpl implements FusionsOfReplicatorsType {
+public class FusionsOfReplicatorsTypeImpl extends MinimalEObjectImpl.Container implements FusionsOfReplicatorsType {
 	/**
 	 * The cached value of the '{@link #getFusionOfReplicators() <em>Fusion Of Replicators</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

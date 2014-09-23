@@ -8,13 +8,10 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ParameterType;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +29,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class ParameterTypeImpl extends EObjectImpl implements ParameterType {
+public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements ParameterType {
 	/**
 	 * The default value of the '{@link #getComponentRef() <em>Component Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->

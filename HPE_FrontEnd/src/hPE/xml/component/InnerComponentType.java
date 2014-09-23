@@ -6,7 +6,6 @@
  */
 package hPE.xml.component;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->

@@ -8,13 +8,10 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.InterfaceSliceRefType;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class InterfaceSliceRefTypeImpl extends EObjectImpl implements InterfaceSliceRefType {
+public class InterfaceSliceRefTypeImpl extends MinimalEObjectImpl.Container implements InterfaceSliceRefType {
 	/**
 	 * The default value of the '{@link #getComponentRef() <em>Component Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->

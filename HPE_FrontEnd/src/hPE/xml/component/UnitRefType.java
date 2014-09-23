@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hPE.xml.component.UnitRefType#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitRefType#getInnerReplica <em>Inner Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitRefType#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.UnitRefType#getURef <em>URef</em>}</li>
@@ -82,6 +83,61 @@ public interface UnitRefType extends EObject {
 	 * @generated
 	 */
 	boolean isSetCRef();
+
+	/**
+	 * Returns the value of the '<em><b>Inner Replica</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inner Replica</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inner Replica</em>' attribute.
+	 * @see #isSetInnerReplica()
+	 * @see #unsetInnerReplica()
+	 * @see #setInnerReplica(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitRefType_InnerReplica()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='inner_replica'"
+	 * @generated
+	 */
+	int getInnerReplica();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitRefType#getInnerReplica <em>Inner Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Inner Replica</em>' attribute.
+	 * @see #isSetInnerReplica()
+	 * @see #unsetInnerReplica()
+	 * @see #getInnerReplica()
+	 * @generated
+	 */
+	void setInnerReplica(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitRefType#getInnerReplica <em>Inner Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetInnerReplica()
+	 * @see #getInnerReplica()
+	 * @see #setInnerReplica(int)
+	 * @generated
+	 */
+	void unsetInnerReplica();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitRefType#getInnerReplica <em>Inner Replica</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Inner Replica</em>' attribute is set.
+	 * @see #unsetInnerReplica()
+	 * @see #getInnerReplica()
+	 * @see #setInnerReplica(int)
+	 * @generated
+	 */
+	boolean isSetInnerReplica();
 
 	/**
 	 * Returns the value of the '<em><b>Replica</b></em>' attribute.

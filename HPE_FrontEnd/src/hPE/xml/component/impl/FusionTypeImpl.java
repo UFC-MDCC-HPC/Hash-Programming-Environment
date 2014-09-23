@@ -8,14 +8,12 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.FusionType;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
@@ -32,7 +30,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  *
  * @generated
  */
-public class FusionTypeImpl extends EObjectImpl implements FusionType {
+public class FusionTypeImpl extends MinimalEObjectImpl.Container implements FusionType {
 	/**
 	 * The cached value of the '{@link #getCRefs() <em>CRefs</em>}' attribute list.
 	 * <!-- begin-user-doc -->

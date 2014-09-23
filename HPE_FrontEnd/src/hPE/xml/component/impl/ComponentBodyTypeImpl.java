@@ -9,7 +9,6 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentBodyType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.EnumeratorType;
-import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
@@ -19,20 +18,13 @@ import hPE.xml.component.ParameterSupplyType;
 import hPE.xml.component.ParameterType;
 import hPE.xml.component.RecursiveEntryType;
 import hPE.xml.component.SplitType;
-import hPE.xml.component.SplitType2;
 import hPE.xml.component.UnitType;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -61,7 +53,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ComponentBodyTypeImpl extends EObjectImpl implements ComponentBodyType {
+public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implements ComponentBodyType {
 	/**
 	 * The cached value of the '{@link #getGroup() <em>Group</em>}' attribute list.
 	 * <!-- begin-user-doc -->

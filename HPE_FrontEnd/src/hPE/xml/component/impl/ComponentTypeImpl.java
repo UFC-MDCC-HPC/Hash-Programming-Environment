@@ -10,15 +10,12 @@ import hPE.xml.component.ComponentBodyType;
 import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ComponentType;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class ComponentTypeImpl extends EObjectImpl implements ComponentType {
+public class ComponentTypeImpl extends MinimalEObjectImpl.Container implements ComponentType {
 	/**
 	 * The cached value of the '{@link #getHeader() <em>Header</em>}' containment reference.
 	 * <!-- begin-user-doc -->

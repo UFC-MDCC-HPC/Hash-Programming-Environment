@@ -7,22 +7,15 @@
 package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.PerformType;
 import hPE.xml.component.ProtocolChoiceType;
 import hPE.xml.component.ProtocolCombinatorVisualType;
 import hPE.xml.component.ProtocolPerformVisualType;
-import hPE.xml.component.ProtocolCombinatorType;
-import hPE.xml.component.ProtocolPerformType;
-import hPE.xml.component.ProtocolType;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,7 +33,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class ProtocolChoiceTypeImpl extends EObjectImpl implements ProtocolChoiceType {
+public class ProtocolChoiceTypeImpl extends MinimalEObjectImpl.Container implements ProtocolChoiceType {
 	/**
 	 * The cached value of the '{@link #getPar() <em>Par</em>}' containment reference.
 	 * <!-- begin-user-doc -->

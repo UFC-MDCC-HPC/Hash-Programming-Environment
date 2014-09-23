@@ -8,15 +8,12 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.SourceFileType;
-
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
@@ -39,7 +36,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  *
  * @generated
  */
-public class SourceFileTypeImpl extends EObjectImpl implements SourceFileType {
+public class SourceFileTypeImpl extends MinimalEObjectImpl.Container implements SourceFileType {
 	/**
 	 * The cached value of the '{@link #getDependency() <em>Dependency</em>}' attribute list.
 	 * <!-- begin-user-doc -->

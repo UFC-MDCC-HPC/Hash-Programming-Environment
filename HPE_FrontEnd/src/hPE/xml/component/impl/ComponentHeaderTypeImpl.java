@@ -10,19 +10,16 @@ import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ComponentHeaderType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.SupportedKinds;
-
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -47,7 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ComponentHeaderTypeImpl extends EObjectImpl implements ComponentHeaderType {
+public class ComponentHeaderTypeImpl extends MinimalEObjectImpl.Container implements ComponentHeaderType {
 	/**
 	 * The cached value of the '{@link #getBaseType() <em>Base Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->

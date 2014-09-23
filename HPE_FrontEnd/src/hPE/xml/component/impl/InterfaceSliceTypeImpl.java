@@ -10,15 +10,12 @@ import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.InterfaceRefType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.VisualElementAttributes;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +32,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class InterfaceSliceTypeImpl extends EObjectImpl implements InterfaceSliceType {
+public class InterfaceSliceTypeImpl extends MinimalEObjectImpl.Container implements InterfaceSliceType {
 	/**
 	 * The cached value of the '{@link #getOriginRef() <em>Origin Ref</em>}' containment reference.
 	 * <!-- begin-user-doc -->

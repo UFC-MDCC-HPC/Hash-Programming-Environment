@@ -8,15 +8,12 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.FusionOfReplicatorsType;
-
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
@@ -33,7 +30,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  *
  * @generated
  */
-public class FusionOfReplicatorsTypeImpl extends EObjectImpl implements FusionOfReplicatorsType {
+public class FusionOfReplicatorsTypeImpl extends MinimalEObjectImpl.Container implements FusionOfReplicatorsType {
 	/**
 	 * The default value of the '{@link #getERef() <em>ERef</em>}' attribute.
 	 * <!-- begin-user-doc -->

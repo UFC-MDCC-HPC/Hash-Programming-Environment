@@ -8,13 +8,10 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.UnitRefType;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,6 +21,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getCRef <em>CRef</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getInnerReplica <em>Inner Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getReplica <em>Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getSliceReplica <em>Slice Replica</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitRefTypeImpl#getURef <em>URef</em>}</li>
@@ -32,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
+public class UnitRefTypeImpl extends MinimalEObjectImpl.Container implements UnitRefType {
 	/**
 	 * The default value of the '{@link #getCRef() <em>CRef</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -61,6 +59,35 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * @ordered
 	 */
 	protected boolean cRefESet;
+
+	/**
+	 * The default value of the '{@link #getInnerReplica() <em>Inner Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInnerReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int INNER_REPLICA_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getInnerReplica() <em>Inner Replica</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInnerReplica()
+	 * @generated
+	 * @ordered
+	 */
+	protected int innerReplica = INNER_REPLICA_EDEFAULT;
+
+	/**
+	 * This is true if the Inner Replica attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean innerReplicaESet;
 
 	/**
 	 * The default value of the '{@link #getReplica() <em>Replica</em>}' attribute.
@@ -210,6 +237,52 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getInnerReplica() {
+		return innerReplica;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInnerReplica(int newInnerReplica) {
+		int oldInnerReplica = innerReplica;
+		innerReplica = newInnerReplica;
+		boolean oldInnerReplicaESet = innerReplicaESet;
+		innerReplicaESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_REF_TYPE__INNER_REPLICA, oldInnerReplica, innerReplica, !oldInnerReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetInnerReplica() {
+		int oldInnerReplica = innerReplica;
+		boolean oldInnerReplicaESet = innerReplicaESet;
+		innerReplica = INNER_REPLICA_EDEFAULT;
+		innerReplicaESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_REF_TYPE__INNER_REPLICA, oldInnerReplica, INNER_REPLICA_EDEFAULT, oldInnerReplicaESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetInnerReplica() {
+		return innerReplicaESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public int getReplica() {
 		return replica;
 	}
@@ -328,6 +401,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return getCRef();
+			case ComponentPackage.UNIT_REF_TYPE__INNER_REPLICA:
+				return getInnerReplica();
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
 				return getReplica();
 			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
@@ -348,6 +423,9 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				setCRef((String)newValue);
+				return;
+			case ComponentPackage.UNIT_REF_TYPE__INNER_REPLICA:
+				setInnerReplica((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
 				setReplica((Integer)newValue);
@@ -373,6 +451,9 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				unsetCRef();
 				return;
+			case ComponentPackage.UNIT_REF_TYPE__INNER_REPLICA:
+				unsetInnerReplica();
+				return;
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
 				unsetReplica();
 				return;
@@ -396,6 +477,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		switch (featureID) {
 			case ComponentPackage.UNIT_REF_TYPE__CREF:
 				return isSetCRef();
+			case ComponentPackage.UNIT_REF_TYPE__INNER_REPLICA:
+				return isSetInnerReplica();
 			case ComponentPackage.UNIT_REF_TYPE__REPLICA:
 				return isSetReplica();
 			case ComponentPackage.UNIT_REF_TYPE__SLICE_REPLICA:
@@ -418,6 +501,8 @@ public class UnitRefTypeImpl extends EObjectImpl implements UnitRefType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (cRef: ");
 		if (cRefESet) result.append(cRef); else result.append("<unset>");
+		result.append(", innerReplica: ");
+		if (innerReplicaESet) result.append(innerReplica); else result.append("<unset>");
 		result.append(", replica: ");
 		if (replicaESet) result.append(replica); else result.append("<unset>");
 		result.append(", sliceReplica: ");

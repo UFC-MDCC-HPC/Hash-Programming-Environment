@@ -6,36 +6,24 @@
  */
 package hPE.xml.component.impl;
 
-import hPE.xml.component.ActionType;
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.ConditionType;
-import hPE.xml.component.Hpeaction;
-import hPE.xml.component.Hpeprotocol;
 import hPE.xml.component.InterfaceParameterType;
-import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.InterfaceType;
 import hPE.xml.component.ProtocolChoiceType;
-import hPE.xml.component.ProtocolType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.UnitActionType;
 import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.VisualElementAttributes;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -63,7 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class InterfaceTypeImpl extends EObjectImpl implements InterfaceType {
+public class InterfaceTypeImpl extends MinimalEObjectImpl.Container implements InterfaceType {
 	/**
 	 * The cached value of the '{@link #getSlice() <em>Slice</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

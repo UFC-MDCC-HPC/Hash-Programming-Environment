@@ -8,13 +8,10 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.PortSliceType;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +27,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class PortSliceTypeImpl extends EObjectImpl implements PortSliceType {
+public class PortSliceTypeImpl extends MinimalEObjectImpl.Container implements PortSliceType {
 	/**
 	 * The default value of the '{@link #getPRef() <em>PRef</em>}' attribute.
 	 * <!-- begin-user-doc -->

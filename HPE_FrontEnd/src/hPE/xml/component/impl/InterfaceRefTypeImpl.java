@@ -8,13 +8,10 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.InterfaceRefType;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +27,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class InterfaceRefTypeImpl extends EObjectImpl implements InterfaceRefType {
+public class InterfaceRefTypeImpl extends MinimalEObjectImpl.Container implements InterfaceRefType {
 	/**
 	 * The default value of the '{@link #getCRef() <em>CRef</em>}' attribute.
 	 * <!-- begin-user-doc -->

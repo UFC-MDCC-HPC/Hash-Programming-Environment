@@ -6,16 +6,6 @@
  */
 package hPE.xml.component.impl;
 
-import hPE.xml.component.ActionActivateType;
-import hPE.xml.component.ActionCombinatorAltType;
-import hPE.xml.component.ActionCombinatorParType;
-import hPE.xml.component.ActionCombinatorSeqType;
-import hPE.xml.component.ActionCombinatorType;
-import hPE.xml.component.ActionSignalType;
-import hPE.xml.component.ActionSkipType;
-import hPE.xml.component.ActionType;
-import hPE.xml.component.AltType;
-import hPE.xml.component.ActionWaitType;
 import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ColorComplexType;
 import hPE.xml.component.ComponentBodyType;
@@ -38,35 +28,23 @@ import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExposePortType;
 import hPE.xml.component.ExtendsType;
 import hPE.xml.component.ExtensionTypeType;
-import hPE.xml.component.FielType;
 import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
-import hPE.xml.component.GuardAndType;
 import hPE.xml.component.GuardConditionType;
-import hPE.xml.component.GuardNotType;
-import hPE.xml.component.GuardOrType;
 import hPE.xml.component.GuardType;
-import hPE.xml.component.Hpeaction;
-import hPE.xml.component.Hpeguard;
-import hPE.xml.component.Hpeprotocol;
-import hPE.xml.component.IfType;
 import hPE.xml.component.ImplementsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
 import hPE.xml.component.InterfaceParameterType;
-import hPE.xml.component.InterfaceParameter;
 import hPE.xml.component.InterfacePortType;
 import hPE.xml.component.InterfaceRefType;
 import hPE.xml.component.InterfaceSliceRefType;
 import hPE.xml.component.InterfaceSliceType;
 import hPE.xml.component.InterfaceType;
-import hPE.xml.component.LoopType;
-import hPE.xml.component.ParType;
 import hPE.xml.component.ParameterRenaming;
 import hPE.xml.component.ParameterSupplyType;
 import hPE.xml.component.ParameterType;
-import hPE.xml.component.PerformType;
 import hPE.xml.component.PortSliceType;
 import hPE.xml.component.PortType;
 import hPE.xml.component.ProtocolChoiceType;
@@ -74,25 +52,16 @@ import hPE.xml.component.ProtocolCombinatorType;
 import hPE.xml.component.ProtocolCombinatorVisualType;
 import hPE.xml.component.ProtocolPerformType;
 import hPE.xml.component.ProtocolPerformVisualType;
-import hPE.xml.component.ProtocolActivationType;
-import hPE.xml.component.ProtocolAltType;
-import hPE.xml.component.ProtocolCompositionType;
-import hPE.xml.component.ProtocolParType;
-import hPE.xml.component.ProtocolSeqType;
 import hPE.xml.component.ProtocolType;
 import hPE.xml.component.QuantificationType;
-import hPE.xml.component.QuantificationVarType;
 import hPE.xml.component.RecursiveEntryType;
-import hPE.xml.component.SeqType;
 import hPE.xml.component.SourceFileType;
 import hPE.xml.component.SourceType;
 import hPE.xml.component.SplitEnumeratorType;
 import hPE.xml.component.SplitLinkType;
 import hPE.xml.component.SplitType;
-import hPE.xml.component.SplitType2;
 import hPE.xml.component.SupportedKinds;
 import hPE.xml.component.UnitActionType;
-import hPE.xml.component.TypeType;
 import hPE.xml.component.UnitBoundsType;
 import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.UnitRefType;
@@ -100,7 +69,6 @@ import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -2688,7 +2656,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitRefType_Replica() {
+	public EAttribute getUnitRefType_InnerReplica() {
 		return (EAttribute)unitRefTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2697,7 +2665,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitRefType_SliceReplica() {
+	public EAttribute getUnitRefType_Replica() {
 		return (EAttribute)unitRefTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2706,8 +2674,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitRefType_URef() {
+	public EAttribute getUnitRefType_SliceReplica() {
 		return (EAttribute)unitRefTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitRefType_URef() {
+		return (EAttribute)unitRefTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -3291,6 +3268,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		unitRefTypeEClass = createEClass(UNIT_REF_TYPE);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__CREF);
+		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__INNER_REPLICA);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__REPLICA);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__SLICE_REPLICA);
 		createEAttribute(unitRefTypeEClass, UNIT_REF_TYPE__UREF);
@@ -3377,7 +3355,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		protocolPerformVisualTypeEClass.getESuperTypes().add(this.getProtocolPerformType());
 		unitSliceTypeEClass.getESuperTypes().add(this.getUnitRefType());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(baseTypeTypeEClass, BaseTypeType.class, "BaseTypeType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBaseTypeType_ExtensionType(), this.getExtensionTypeType(), null, "extensionType", null, 1, 1, BaseTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBaseTypeType_Component(), this.getComponentInUseType(), null, "component", null, 1, 1, BaseTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3661,6 +3639,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 
 		initEClass(unitRefTypeEClass, UnitRefType.class, "UnitRefType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUnitRefType_CRef(), theXMLTypePackage.getString(), "cRef", "this", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitRefType_InnerReplica(), theXMLTypePackage.getInt(), "innerReplica", "0", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitRefType_Replica(), theXMLTypePackage.getInt(), "replica", "0", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitRefType_SliceReplica(), theXMLTypePackage.getInt(), "sliceReplica", "0", 0, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitRefType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5378,6 +5357,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
+		   });		
+		addAnnotation
+		  (getUnitRefType_InnerReplica(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "inner_replica"
 		   });		
 		addAnnotation
 		  (getUnitRefType_Replica(), 

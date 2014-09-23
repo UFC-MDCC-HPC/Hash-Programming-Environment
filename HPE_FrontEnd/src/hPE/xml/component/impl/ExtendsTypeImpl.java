@@ -8,13 +8,10 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ExtendsType;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +26,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class ExtendsTypeImpl extends EObjectImpl implements ExtendsType {
+public class ExtendsTypeImpl extends MinimalEObjectImpl.Container implements ExtendsType {
 	/**
 	 * The default value of the '{@link #getCRef() <em>CRef</em>}' attribute.
 	 * <!-- begin-user-doc -->

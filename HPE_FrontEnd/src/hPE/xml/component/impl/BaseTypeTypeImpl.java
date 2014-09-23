@@ -10,15 +10,12 @@ import hPE.xml.component.BaseTypeType;
 import hPE.xml.component.ComponentInUseType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ExtensionTypeType;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class BaseTypeTypeImpl extends EObjectImpl implements BaseTypeType {
+public class BaseTypeTypeImpl extends MinimalEObjectImpl.Container implements BaseTypeType {
 	/**
 	 * The cached value of the '{@link #getExtensionType() <em>Extension Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->

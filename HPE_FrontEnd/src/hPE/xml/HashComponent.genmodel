@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/HPE_FrontEnd/src"
-    modelPluginID="HPE_FrontEnd" modelName="HashComponent" importerID="org.eclipse.xsd.ecore.importer"
-    complianceLevel="6.0" copyrightFields="false">
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/HPE_FrontEnd/src" modelPluginID="HPE_FrontEnd"
+    modelName="HashComponent" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="6.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/importer/org.eclipse.xsd.ecore.importer">
+    <details key="createMap" value="true"/>
+  </genAnnotations>
   <foreignModel>HashComponent.xsd</foreignModel>
   <genPackages prefix="Component" basePackage="hPE.xml" resource="XML" disposableProviderFactory="true"
       ecorePackage="component.ecore#/">
@@ -215,6 +218,7 @@
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ParameterSupplyType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterSupplyType/cRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterSupplyType/direct"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterSupplyType/varName"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ParameterType">
@@ -297,6 +301,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitBoundsType/visualDescription"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/parallel"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/replica"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/sliceReplica"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/unitReplica"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitBoundsType/uRef"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//UnitConditionType">
@@ -305,7 +311,9 @@
     </genClasses>
     <genClasses ecoreClass="component.ecore#//UnitRefType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitRefType/cRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitRefType/innerReplica"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitRefType/replica"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitRefType/sliceReplica"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitRefType/uRef"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//UnitSliceType">

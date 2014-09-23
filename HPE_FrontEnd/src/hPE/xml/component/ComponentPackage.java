@@ -99,6 +99,15 @@ public interface ComponentPackage extends EPackage {
 	int BASE_TYPE_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Base Type Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_TYPE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ColorComplexTypeImpl <em>Color Complex Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -143,6 +152,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLOR_COMPLEX_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Color Complex Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLOR_COMPLEX_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentBodyTypeImpl <em>Body Type</em>}' class.
@@ -272,6 +290,15 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_BODY_TYPE_FEATURE_COUNT = 12;
 
 	/**
+	 * The number of operations of the '<em>Body Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BODY_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentHeaderTypeImpl <em>Header Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -370,6 +397,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPONENT_HEADER_TYPE_FEATURE_COUNT = 9;
+
+	/**
+	 * The number of operations of the '<em>Header Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_HEADER_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentInUseTypeImpl <em>In Use Type</em>}' class.
@@ -499,6 +535,15 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_IN_USE_TYPE_FEATURE_COUNT = 12;
 
 	/**
+	 * The number of operations of the '<em>In Use Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IN_USE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ComponentTypeImpl <em>Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -536,6 +581,15 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ConditionTypeImpl <em>Condition Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -571,6 +625,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONDITION_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Condition Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.DocumentRootImpl <em>Document Root</em>}' class.
@@ -637,6 +700,15 @@ public interface ComponentPackage extends EPackage {
 	int DOCUMENT_ROOT_FEATURE_COUNT = 5;
 
 	/**
+	 * The number of operations of the '<em>Document Root</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EntryTypeImpl <em>Entry Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -663,6 +735,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENTRY_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Entry Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableTypeImpl <em>Enumerable Type</em>}' class.
@@ -693,6 +774,15 @@ public interface ComponentPackage extends EPackage {
 	int ENUMERABLE_TYPE_FEATURE_COUNT = 1;
 
 	/**
+	 * The number of operations of the '<em>Enumerable Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableComponentTypeImpl <em>Enumerable Component Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -719,6 +809,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENUMERABLE_COMPONENT_TYPE_FEATURE_COUNT = ENUMERABLE_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Enumerable Component Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_COMPONENT_TYPE_OPERATION_COUNT = ENUMERABLE_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableEntryTypeImpl <em>Enumerable Entry Type</em>}' class.
@@ -774,6 +873,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENUMERABLE_ENTRY_TYPE_FEATURE_COUNT = ENUMERABLE_TYPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Enumerable Entry Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_ENTRY_TYPE_OPERATION_COUNT = ENUMERABLE_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableUnitSliceTypeImpl <em>Enumerable Unit Slice Type</em>}' class.
@@ -840,6 +948,15 @@ public interface ComponentPackage extends EPackage {
 	int ENUMERABLE_UNIT_SLICE_TYPE_FEATURE_COUNT = ENUMERABLE_TYPE_FEATURE_COUNT + 4;
 
 	/**
+	 * The number of operations of the '<em>Enumerable Unit Slice Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_UNIT_SLICE_TYPE_OPERATION_COUNT = ENUMERABLE_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumerableUnitTypeImpl <em>Enumerable Unit Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -866,6 +983,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENUMERABLE_UNIT_TYPE_FEATURE_COUNT = ENUMERABLE_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Enumerable Unit Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERABLE_UNIT_TYPE_OPERATION_COUNT = ENUMERABLE_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumeratorFromRecursionTypeImpl <em>Enumerator From Recursion Type</em>}' class.
@@ -896,6 +1022,15 @@ public interface ComponentPackage extends EPackage {
 	int ENUMERATOR_FROM_RECURSION_TYPE_FEATURE_COUNT = 1;
 
 	/**
+	 * The number of operations of the '<em>Enumerator From Recursion Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATOR_FROM_RECURSION_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumeratorRefTypeImpl <em>Enumerator Ref Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -922,6 +1057,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENUMERATOR_REF_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Enumerator Ref Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATOR_REF_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.EnumeratorTypeImpl <em>Enumerator Type</em>}' class.
@@ -1015,6 +1159,15 @@ public interface ComponentPackage extends EPackage {
 	int ENUMERATOR_TYPE_FEATURE_COUNT = 8;
 
 	/**
+	 * The number of operations of the '<em>Enumerator Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATOR_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ExposePortTypeImpl <em>Expose Port Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1061,6 +1214,15 @@ public interface ComponentPackage extends EPackage {
 	int EXPOSE_PORT_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Expose Port Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPOSE_PORT_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ExtendsTypeImpl <em>Extends Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1087,6 +1249,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXTENDS_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Extends Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENDS_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ExtensionTypeTypeImpl <em>Extension Type Type</em>}' class.
@@ -1126,6 +1297,15 @@ public interface ComponentPackage extends EPackage {
 	int EXTENSION_TYPE_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Extension Type Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION_TYPE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.FusionOfReplicatorsTypeImpl <em>Fusion Of Replicators Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1163,6 +1343,15 @@ public interface ComponentPackage extends EPackage {
 	int FUSION_OF_REPLICATORS_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Fusion Of Replicators Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUSION_OF_REPLICATORS_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.FusionsOfReplicatorsTypeImpl <em>Fusions Of Replicators Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1189,6 +1378,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUSIONS_OF_REPLICATORS_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Fusions Of Replicators Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUSIONS_OF_REPLICATORS_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.FusionTypeImpl <em>Fusion Type</em>}' class.
@@ -1226,6 +1424,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUSION_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Fusion Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUSION_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.GuardTypeImpl <em>Guard Type</em>}' class.
@@ -1290,6 +1497,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int GUARD_TYPE_FEATURE_COUNT = 5;
+
+	/**
+	 * The number of operations of the '<em>Guard Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.GuardConditionTypeImpl <em>Guard Condition Type</em>}' class.
@@ -1365,6 +1581,15 @@ public interface ComponentPackage extends EPackage {
 	int GUARD_CONDITION_TYPE_FEATURE_COUNT = GUARD_TYPE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Guard Condition Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD_CONDITION_TYPE_OPERATION_COUNT = GUARD_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ImplementsTypeImpl <em>Implements Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1391,6 +1616,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPLEMENTS_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Implements Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPLEMENTS_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InnerComponentTypeImpl <em>Inner Component Type</em>}' class.
@@ -1529,6 +1763,15 @@ public interface ComponentPackage extends EPackage {
 	int INNER_COMPONENT_TYPE_FEATURE_COUNT = COMPONENT_IN_USE_TYPE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Inner Component Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_COMPONENT_TYPE_OPERATION_COUNT = COMPONENT_IN_USE_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InnerRenamingTypeImpl <em>Inner Renaming Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1573,6 +1816,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int INNER_RENAMING_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Inner Renaming Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_RENAMING_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfaceParameterTypeImpl <em>Interface Parameter Type</em>}' class.
@@ -1639,6 +1891,15 @@ public interface ComponentPackage extends EPackage {
 	int INTERFACE_PARAMETER_TYPE_FEATURE_COUNT = 5;
 
 	/**
+	 * The number of operations of the '<em>Interface Parameter Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PARAMETER_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfacePortTypeImpl <em>Interface Port Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1685,6 +1946,15 @@ public interface ComponentPackage extends EPackage {
 	int INTERFACE_PORT_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Interface Port Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_PORT_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfaceRefTypeImpl <em>Interface Ref Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1720,6 +1990,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int INTERFACE_REF_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Interface Ref Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_REF_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfaceSliceRefTypeImpl <em>Interface Slice Ref Type</em>}' class.
@@ -1768,6 +2047,15 @@ public interface ComponentPackage extends EPackage {
 	int INTERFACE_SLICE_REF_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Interface Slice Ref Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_SLICE_REF_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfaceSliceTypeImpl <em>Interface Slice Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1812,6 +2100,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int INTERFACE_SLICE_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Interface Slice Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_SLICE_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.InterfaceTypeImpl <em>Interface Type</em>}' class.
@@ -1932,6 +2229,15 @@ public interface ComponentPackage extends EPackage {
 	int INTERFACE_TYPE_FEATURE_COUNT = 11;
 
 	/**
+	 * The number of operations of the '<em>Interface Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERFACE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterRenamingImpl <em>Parameter Renaming</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1978,6 +2284,15 @@ public interface ComponentPackage extends EPackage {
 	int PARAMETER_RENAMING_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Parameter Renaming</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_RENAMING_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterSupplyTypeImpl <em>Parameter Supply Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2022,6 +2337,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETER_SUPPLY_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Parameter Supply Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_SUPPLY_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ParameterTypeImpl <em>Parameter Type</em>}' class.
@@ -2079,6 +2403,15 @@ public interface ComponentPackage extends EPackage {
 	int PARAMETER_TYPE_FEATURE_COUNT = 4;
 
 	/**
+	 * The number of operations of the '<em>Parameter Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.PortSliceTypeImpl <em>Port Slice Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2114,6 +2447,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int PORT_SLICE_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Port Slice Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT_SLICE_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.PortTypeImpl <em>Port Type</em>}' class.
@@ -2160,6 +2502,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int PORT_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Port Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolChoiceTypeImpl <em>Protocol Choice Type</em>}' class.
@@ -2217,6 +2568,15 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_CHOICE_TYPE_FEATURE_COUNT = 4;
 
 	/**
+	 * The number of operations of the '<em>Protocol Choice Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_CHOICE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolTypeImpl <em>Protocol Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2261,6 +2621,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROTOCOL_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Protocol Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolCombinatorTypeImpl <em>Protocol Combinator Type</em>}' class.
@@ -2316,6 +2685,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Protocol Combinator Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_TYPE_OPERATION_COUNT = PROTOCOL_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolCombinatorVisualTypeImpl <em>Protocol Combinator Visual Type</em>}' class.
@@ -2382,6 +2760,15 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_COMBINATOR_VISUAL_TYPE_FEATURE_COUNT = PROTOCOL_COMBINATOR_TYPE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Protocol Combinator Visual Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE_OPERATION_COUNT = PROTOCOL_COMBINATOR_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolPerformTypeImpl <em>Protocol Perform Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2444,6 +2831,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROTOCOL_PERFORM_TYPE_FEATURE_COUNT = PROTOCOL_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Protocol Perform Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_TYPE_OPERATION_COUNT = PROTOCOL_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ProtocolPerformVisualTypeImpl <em>Protocol Perform Visual Type</em>}' class.
@@ -2519,6 +2915,15 @@ public interface ComponentPackage extends EPackage {
 	int PROTOCOL_PERFORM_VISUAL_TYPE_FEATURE_COUNT = PROTOCOL_PERFORM_TYPE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Protocol Perform Visual Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROTOCOL_PERFORM_VISUAL_TYPE_OPERATION_COUNT = PROTOCOL_PERFORM_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.RecursiveEntryTypeImpl <em>Recursive Entry Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2545,6 +2950,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int RECURSIVE_ENTRY_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Recursive Entry Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECURSIVE_ENTRY_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SourceFileTypeImpl <em>Source File Type</em>}' class.
@@ -2638,6 +3052,15 @@ public interface ComponentPackage extends EPackage {
 	int SOURCE_FILE_TYPE_FEATURE_COUNT = 8;
 
 	/**
+	 * The number of operations of the '<em>Source File Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_FILE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SourceTypeImpl <em>Source Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2684,6 +3107,15 @@ public interface ComponentPackage extends EPackage {
 	int SOURCE_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Source Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SplitEnumeratorTypeImpl <em>Split Enumerator Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2710,6 +3142,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int SPLIT_ENUMERATOR_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Split Enumerator Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPLIT_ENUMERATOR_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SplitLinkTypeImpl <em>Split Link Type</em>}' class.
@@ -2747,6 +3188,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int SPLIT_LINK_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Split Link Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPLIT_LINK_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.SplitTypeImpl <em>Split Type</em>}' class.
@@ -2822,6 +3272,15 @@ public interface ComponentPackage extends EPackage {
 	int SPLIT_TYPE_FEATURE_COUNT = 6;
 
 	/**
+	 * The number of operations of the '<em>Split Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPLIT_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitActionTypeImpl <em>Unit Action Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2857,6 +3316,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIT_ACTION_TYPE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Unit Action Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_ACTION_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitBoundsTypeImpl <em>Unit Bounds Type</em>}' class.
@@ -2932,6 +3400,15 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_BOUNDS_TYPE_FEATURE_COUNT = 6;
 
 	/**
+	 * The number of operations of the '<em>Unit Bounds Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_BOUNDS_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitConditionTypeImpl <em>Unit Condition Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2969,6 +3446,15 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_CONDITION_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Unit Condition Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_CONDITION_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitRefTypeImpl <em>Unit Ref Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2988,13 +3474,22 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_REF_TYPE__CREF = 0;
 
 	/**
+	 * The feature id for the '<em><b>Inner Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_REF_TYPE__INNER_REPLICA = 1;
+
+	/**
 	 * The feature id for the '<em><b>Replica</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE__REPLICA = 1;
+	int UNIT_REF_TYPE__REPLICA = 2;
 
 	/**
 	 * The feature id for the '<em><b>Slice Replica</b></em>' attribute.
@@ -3003,7 +3498,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE__SLICE_REPLICA = 2;
+	int UNIT_REF_TYPE__SLICE_REPLICA = 3;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -3012,7 +3507,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE__UREF = 3;
+	int UNIT_REF_TYPE__UREF = 4;
 
 	/**
 	 * The number of structural features of the '<em>Unit Ref Type</em>' class.
@@ -3021,7 +3516,16 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_REF_TYPE_FEATURE_COUNT = 4;
+	int UNIT_REF_TYPE_FEATURE_COUNT = 5;
+
+	/**
+	 * The number of operations of the '<em>Unit Ref Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_REF_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitSliceTypeImpl <em>Unit Slice Type</em>}' class.
@@ -3041,6 +3545,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIT_SLICE_TYPE__CREF = UNIT_REF_TYPE__CREF;
+
+	/**
+	 * The feature id for the '<em><b>Inner Replica</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_SLICE_TYPE__INNER_REPLICA = UNIT_REF_TYPE__INNER_REPLICA;
 
 	/**
 	 * The feature id for the '<em><b>Replica</b></em>' attribute.
@@ -3113,6 +3626,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIT_SLICE_TYPE_FEATURE_COUNT = UNIT_REF_TYPE_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of operations of the '<em>Unit Slice Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_SLICE_TYPE_OPERATION_COUNT = UNIT_REF_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.UnitTypeImpl <em>Unit Type</em>}' class.
@@ -3215,6 +3737,15 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_TYPE_FEATURE_COUNT = 9;
 
 	/**
+	 * The number of operations of the '<em>Unit Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.VersionTypeImpl <em>Version Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3268,6 +3799,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int VERSION_TYPE_FEATURE_COUNT = 4;
+
+	/**
+	 * The number of operations of the '<em>Version Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TYPE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.VisualElementAttributesImpl <em>Visual Element Attributes</em>}' class.
@@ -3332,6 +3872,15 @@ public interface ComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int VISUAL_ELEMENT_ATTRIBUTES_FEATURE_COUNT = 5;
+
+	/**
+	 * The number of operations of the '<em>Visual Element Attributes</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VISUAL_ELEMENT_ATTRIBUTES_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.QuantificationType <em>Quantification Type</em>}' enum.
@@ -5839,6 +6388,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getUnitRefType_CRef();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitRefType#getInnerReplica <em>Inner Replica</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Inner Replica</em>'.
+	 * @see hPE.xml.component.UnitRefType#getInnerReplica()
+	 * @see #getUnitRefType()
+	 * @generated
+	 */
+	EAttribute getUnitRefType_InnerReplica();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitRefType#getReplica <em>Replica</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8160,6 +8720,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIT_REF_TYPE__CREF = eINSTANCE.getUnitRefType_CRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Inner Replica</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_REF_TYPE__INNER_REPLICA = eINSTANCE.getUnitRefType_InnerReplica();
 
 		/**
 		 * The meta object literal for the '<em><b>Replica</b></em>' attribute feature.

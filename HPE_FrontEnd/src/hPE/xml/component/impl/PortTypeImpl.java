@@ -7,22 +7,14 @@
 package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
-import hPE.xml.component.PortSliceType;
 import hPE.xml.component.PortType;
-
 import hPE.xml.component.VisualElementAttributes;
-import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class PortTypeImpl extends EObjectImpl implements PortType {
+public class PortTypeImpl extends MinimalEObjectImpl.Container implements PortType {
 	/**
 	 * The cached value of the '{@link #getVisualDescription() <em>Visual Description</em>}' containment reference.
 	 * <!-- begin-user-doc -->
