@@ -1,3 +1,5 @@
+
+
 using System;
 using System.IO;
 using System.Runtime.Remoting;
@@ -24,6 +26,8 @@ using System.Runtime.CompilerServices;
 
 using Catalog;
 using Instantiator;
+using System.Diagnostics;
+
 
 namespace br.ufc.pargo.hpe.backend
 {
@@ -37,8 +41,207 @@ namespace br.ufc.pargo.hpe.backend
 
             public BackEnd()
             {
-                Console.WriteLine("DGAC is up and running.");
-            }
+                Trace.WriteLine("DGAC is up and running.");
+           }
+
+			private static string output_str;
+
+			private static IDictionary<string, System.Diagnostics.Process> proc_managers = new Dictionary<string, System.Diagnostics.Process>();
+
+			public static void stopManager()
+			{
+				stopManager (null);
+			}
+
+			public static void stopManager(string session_id)
+			{
+				System.Diagnostics.Process proc = proc_managers [session_id != null ? session_id : "default"];
+				proc.StandardInput.WriteLine ("\x3");
+				proc.StandardInput.Flush ();
+				proc.WaitForExit();
+				Trace.WriteLine("STOP MANAGER");
+			}
+
+			public static void startManager()
+			{
+				startManager (null);
+			}
+
+			public static void startManager(string session_id)
+			{
+				string cmd = "sudo";
+				string args = "/usr/bin/mono-service bin/ManagerService.exe " + (session_id != null ? "--session " + session_id : "");
+
+				string userName = "heron";
+				string password_ = "narf@jchf9200"; 
+				string curDir = "hash-programming-environment";
+
+				System.Security.SecureString password = null;
+
+				if (password_ != null)
+				{
+					password = new System.Security.SecureString();
+					foreach (char c in password_)
+						password.AppendChar(c);
+					password.MakeReadOnly();
+				}
+
+				output_str = "";
+
+				System.Diagnostics.Process proc = new System.Diagnostics.Process();
+				proc_managers [session_id != null ? session_id : "default"] = proc;
+				proc.EnableRaisingEvents = false;
+				proc.StartInfo.CreateNoWindow = true;
+				proc.StartInfo.UseShellExecute = false;
+				proc.StartInfo.FileName = cmd;
+				proc.StartInfo.Arguments = args;
+				proc.StartInfo.RedirectStandardError = true;
+				proc.StartInfo.RedirectStandardOutput = true;
+				proc.StartInfo.RedirectStandardInput = true;
+				proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+				proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+				if (userName != null) proc.StartInfo.UserName = userName;
+				if (password != null) proc.StartInfo.Password = password;
+				if (curDir != null)
+				{
+					string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+					if (homeDir != null)
+					{
+						proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
+					}
+					else
+					{
+						proc.StartInfo.WorkingDirectory = curDir;
+					}
+				}
+
+				try
+				{
+					proc.Start();
+
+					proc.BeginErrorReadLine();
+					proc.BeginOutputReadLine();
+
+					Trace.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
+
+				}
+				catch (System.ComponentModel.Win32Exception w)
+				{
+					Trace.WriteLine("Message: " + w.Message);
+					Trace.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
+					Trace.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
+					Trace.WriteLine("StackTrace: " + w.StackTrace);
+					Trace.WriteLine("Source: " + w.Source);
+					Exception e = w.GetBaseException();
+					Trace.WriteLine("Base Exception Message: " + e.Message);
+
+					throw w;
+				}
+				finally
+				{
+				}
+			}
+
+			private static IDictionary<string, System.Diagnostics.Process> proc_workers = new Dictionary<string, System.Diagnostics.Process>();
+
+			private static void OutputHandler(object sendingProcess,
+			                                  DataReceivedEventArgs outLine)
+			{
+				//This event handler is not called until process is finished.
+				//When process is finished it gets called once for each line
+				if (!String.IsNullOrEmpty(outLine.Data))
+				{
+					Trace.WriteLine (outLine.Data);
+					output_str += (System.Environment.NewLine + outLine.Data);     
+				}
+			}
+
+			public static System.Diagnostics.Process startWorkers(string session_id)
+			{
+				string cmd = "mpirun";
+				string args = "--configfile worker.launch.config.9";
+
+				string userName = "heron";
+				string password_ = "narf@jchf9200"; 
+				string curDir = "hash-programming-environment";
+
+				System.Security.SecureString password = null;
+
+				if (password_ != null)
+				{
+					password = new System.Security.SecureString();
+					foreach (char c in password_)
+						password.AppendChar(c);
+					password.MakeReadOnly();
+				}
+
+				output_str = "";
+
+				System.Diagnostics.Process proc = new System.Diagnostics.Process();
+				proc_workers [session_id != null ? session_id : "default"] = proc;
+				proc.EnableRaisingEvents = false;
+				proc.StartInfo.CreateNoWindow = true;
+				proc.StartInfo.UseShellExecute = false;
+				proc.StartInfo.FileName = cmd;
+				proc.StartInfo.Arguments = args;
+				proc.StartInfo.RedirectStandardError = true;
+				proc.StartInfo.RedirectStandardOutput = true;
+				proc.StartInfo.RedirectStandardInput = true;
+				proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+				proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+				if (userName != null) proc.StartInfo.UserName = userName;
+				if (password != null) proc.StartInfo.Password = password;
+				if (curDir != null)
+				{
+					string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+					if (homeDir != null)
+					{
+						proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
+					}
+					else
+					{
+						proc.StartInfo.WorkingDirectory = curDir;
+					}
+				}
+
+				try
+				{
+					proc.Start();
+
+					proc.BeginErrorReadLine();
+					proc.BeginOutputReadLine();
+
+
+					Trace.WriteLine(userName + " runs " + cmd + " " + args + " on " + curDir);
+
+				}
+				catch (System.ComponentModel.Win32Exception w)
+				{
+					Trace.WriteLine("Message: " + w.Message);
+					Trace.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
+					Trace.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
+					Trace.WriteLine("StackTrace: " + w.StackTrace);
+					Trace.WriteLine("Source: " + w.Source);
+					Exception e = w.GetBaseException();
+					Trace.WriteLine("Base Exception Message: " + e.Message);
+
+					throw w;
+				}
+				finally
+				{
+				}
+				return proc;
+			}
+
+
+			public static void stopWorkers(string session_id)
+			{
+				System.Diagnostics.Process proc = proc_workers [session_id != null ? session_id : "default"];
+				proc.StandardInput.WriteLine ("\x3");
+				proc.StandardInput.Flush ();
+			    proc.WaitForExit();
+				Trace.WriteLine("STOP WORKERS");
+			}
 
 			#region FRAMEWORK_INSTANTIATION
 			
@@ -61,7 +264,7 @@ namespace br.ufc.pargo.hpe.backend
 				
 				ch = new IpcClientChannel(prop, client_provider);
                 ChannelServices.RegisterChannel(ch, false);
-                object[] activateAttribute = {new UrlAttribute("ipc://ManagerHost")};
+				object[] activateAttribute = {new UrlAttribute(/*"ipc://ManagerHost"*/"ipc://" + Constants.MANAGER_PORT_NAME)};
 				ManagerObject obj = (ManagerObject) Activator.CreateInstance(typeof(ManagerObject), null, activateAttribute);
                 return (gov.cca.AbstractFramework) obj;
             }
@@ -73,18 +276,18 @@ namespace br.ufc.pargo.hpe.backend
 				string service_name = Constants.WORKER_SERVICE_NAME + "-" + rank;
 				string uri_str = "tcp://" + node + ":" + port + "/" + service_name;
 				
-// Register the TCP channel.
-//        ChannelServices.RegisterChannel(new TcpChannel(), false);
+				// Register the TCP channel.
+				//        ChannelServices.RegisterChannel(new TcpChannel(), false);
 
-        // Create a url attribute object.
-        UrlAttribute attribute = new UrlAttribute(uri_str);
-        object[] activationAttributes = new object[] { attribute };
+		        // Create a url attribute object.
+		        UrlAttribute attribute = new UrlAttribute(uri_str);
+		        object[] activationAttributes = new object[] { attribute };
 
-        // Register the client for the remote object.
-        //RemotingConfiguration.RegisterActivatedClientType(typeof(WorkerObject),  uri_str);
+		        // Register the client for the remote object.
+		        //RemotingConfiguration.RegisterActivatedClientType(typeof(WorkerObject),  uri_str);
 
-			wo = (WorkerObject) Activator.CreateInstance(typeof(WorkerObject), null, activationAttributes); 			
-			wo.sayHi();
+				wo = (WorkerObject) Activator.CreateInstance(typeof(WorkerObject), null, activationAttributes); 			
+				wo.sayHi();
 		
                 return wo;
             }
@@ -161,7 +364,7 @@ namespace br.ufc.pargo.hpe.backend
 			{
 				    IpcClientChannel ch = null;
 
-                    ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);                     
+                    ManagerObject manager = (ManagerObject) getFrameworkInstance(out ch);                     
 
                     foreach (LoaderApp.InfoCompile unitToCompile in infoCompile)
                     {
@@ -177,7 +380,7 @@ namespace br.ufc.pargo.hpe.backend
                         Console.Error.Write(moduleName + ", ");
 
                         string publicKey = sendCompileCommandToWorker(library_path,
-                                                                           worker,
+                                                                           manager,
                                                                            sourceCode,
                                                                            moduleName,
                                                                            unitToCompile.references,
@@ -589,16 +792,16 @@ namespace br.ufc.pargo.hpe.backend
 			
 			#region RUN
 			
-            public String[] runApplication(string instantiatior_string, string userName, string password, string curDir)
+            public String[] runApplication(string instantiatior_string)
             {
 		    	int id_concrete = 0;
                 session_id = getSessionID(id_concrete);
 				string session_id_string = "session_" + session_id.ToString();
 				
-				return runApplicationNTimes(instantiatior_string, userName, password, curDir, 1, session_id_string);
+				return runApplicationNTimes(instantiatior_string, 1, session_id_string);
 			}
 			
-            public String[] runApplicationNTimes(string instantiatior_string, string userName, string password, string curDir, int rounds, string session_id_string)
+            public String[] runApplicationNTimes(string instantiatior_string, int rounds, string session_id_string)
             {	
                 string[] str_output = null;
                 try
@@ -610,23 +813,23 @@ namespace br.ufc.pargo.hpe.backend
 					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
 				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
 					
-					Console.WriteLine("Connecting to the builder service port");
+					Trace.WriteLine("Connecting to the builder service port");
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					
-					Console.WriteLine("Creating an instance of the application");
+					Trace.WriteLine("Creating an instance of the application");
                     //ComponentID app_cid = bsPort.createInstance("app", instantiatior_string, properties);
 					ManagerComponentID app_cid = (ManagerComponentID) createApplicationInstance (instantiatior_string, session_id_string, bsPort, frwServices, (ManagerObject) frw);
 					
-					Console.WriteLine("Connecting to the GoPort of the application");
+					Trace.WriteLine("Connecting to the GoPort of the application");
 					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
 					ConnectionID conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
 					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
 					
-					Console.WriteLine ("Doing " + rounds + " executions of the application.");
+					Trace.WriteLine ("Doing " + rounds + " executions of the application.");
 					for (int round=0; round < rounds; round++) 
 					{
-						Console.WriteLine("ROUND #" + round);	
+						Trace.WriteLine("ROUND #" + round);	
 						go_port.go(); 
 					}
 
@@ -642,14 +845,14 @@ namespace br.ufc.pargo.hpe.backend
 
 					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
 					
-					Console.WriteLine ("Finishing");
+					Trace.WriteLine ("Finishing");
 					
                 }
                 catch (Exception e)
                 {
-					Console.WriteLine("## Exception: " + e.Message);
-					Console.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
-					Console.WriteLine("## Trace: " + e.StackTrace);
+					Trace.WriteLine("## Exception: " + e.Message);
+					Trace.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					Trace.WriteLine("## Trace: " + e.StackTrace);
                     throw e;
                 }
 
@@ -668,7 +871,7 @@ namespace br.ufc.pargo.hpe.backend
 					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
 				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
 					
-					Console.WriteLine("Connecting to the builder service port");
+					Trace.WriteLine("Connecting to the builder service port");
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					
@@ -702,20 +905,20 @@ namespace br.ufc.pargo.hpe.backend
 					
 					bsPort.destroyInstance(app_cid_1, 0);
 			//		bsPort.destroyInstance(app_cid_2, 0);
-					Console.WriteLine("Test e3");
+					Trace.WriteLine("Test e3");
 					
 					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
-					Console.WriteLine("Test e4");
+					Trace.WriteLine("Test e4");
 					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
 					
-					Console.WriteLine ("Finishing");
+					Trace.WriteLine ("Finishing");
 					
                 }
                 catch (Exception e)
                 {
-					Console.WriteLine("## Exception: " + e.Message);
-					Console.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
-					Console.WriteLine("## Trace: " + e.StackTrace);
+					Trace.WriteLine("## Exception: " + e.Message);
+					Trace.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					Trace.WriteLine("## Trace: " + e.StackTrace);
                     throw e;
                 }
 
@@ -852,19 +1055,19 @@ namespace br.ufc.pargo.hpe.backend
                 IList<InterfaceParameter> ipars = BackEnd.ipdao.list(i.Id_abstract,i.Id_interface);
                 System.Type[] result = new System.Type[ipars.Count];
 				
-				Console.WriteLine ("IPARS.LENGTH = " + ipars.Count);
+				Trace.WriteLine ("IPARS.LENGTH = " + ipars.Count);
                 foreach (InterfaceParameter ipar in ipars)
                 {
-					Console.WriteLine("parameter ----- " + ipar.ParId + "#" + id_functor_app);
+					Trace.WriteLine("parameter ----- " + ipar.ParId + "#" + id_functor_app);
 					foreach (KeyValuePair<string,int> uuuu in arguments)
-						Console.WriteLine("KEY=" + uuuu.Key + "; VALUE=" + uuuu.Value); 
+						Trace.WriteLine("KEY=" + uuuu.Key + "; VALUE=" + uuuu.Value); 
 					
                     int id_functor_app_parameter;
                     string parid = ipar.ParId;
                     if (arguments.TryGetValue(parid, out id_functor_app_parameter) || 
                         arguments.TryGetValue(parid + "#" + id_functor_app, out id_functor_app_parameter))
                     {
-						Console.WriteLine("parameter (dentro do if) ----- " + id_functor_app_parameter);
+						Trace.WriteLine("parameter (dentro do if) ----- " + id_functor_app_parameter);
                         AbstractComponentFunctorApplication acfa_parameter = BackEnd.acfadao.retrieve(id_functor_app_parameter);
                         AbstractComponentFunctor acf_parameter = BackEnd.acfdao.retrieve(acfa_parameter.Id_abstract);
                         Interface iPar = BackEnd.idao.retrieveSuper(acf_parameter.Id_abstract, ipar.Id_unit_parameter,0);
@@ -881,10 +1084,10 @@ namespace br.ufc.pargo.hpe.backend
                         int class_nargs = iPar.Class_nargs;
                         string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 
-				Console.WriteLine("PAR class_name = "  + class_name);
-				Console.WriteLine("PAR class_nargs = " + class_nargs);
-				Console.WriteLine ("PAR strType = " + strType);
-				Console.WriteLine ("PAR parameters.Length = " + parameters.Length);
+				Trace.WriteLine("PAR class_name = "  + class_name);
+				Trace.WriteLine("PAR class_nargs = " + class_nargs);
+				Trace.WriteLine ("PAR strType = " + strType);
+				Trace.WriteLine ("PAR parameters.Length = " + parameters.Length);
 						
                         Assembly a = Assembly.Load(assembly_string);
                         System.Type t = a.GetType(strType);
@@ -948,11 +1151,11 @@ namespace br.ufc.pargo.hpe.backend
                 int class_nargs = u.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 				
-				Console.WriteLine("assembly_string = "  + assembly_string);
-				Console.WriteLine("class_name = "  + class_name);
-				Console.WriteLine("class_nargs = " + class_nargs);
-				Console.WriteLine ("strType = " + strType);
-				Console.WriteLine ("actualParams.Length = " + actualParams.Length);
+				Trace.WriteLine("assembly_string = "  + assembly_string);
+				Trace.WriteLine("class_name = "  + class_name);
+				Trace.WriteLine("class_nargs = " + class_nargs);
+				Trace.WriteLine ("strType = " + strType);
+				Trace.WriteLine ("actualParams.Length = " + actualParams.Length);
 				
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
@@ -962,25 +1165,25 @@ namespace br.ufc.pargo.hpe.backend
 					System.Type ttt = actualParams[i];
 					if (ttt == null) 
 					{
-					   Console.WriteLine("PARAM (actualParams): NULL ---" + t);
+					   Trace.WriteLine("PARAM (actualParams): NULL ---" + t);
 					   actualParams[i] = fetchTypeConstraint(u,i);					
 					}
 					else 
 					{
-					   Console.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
+					   Trace.WriteLine("PARAM (actualParams): " + ttt.AssemblyQualifiedName);
 					}
 				}
 				
-				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...1");
+				Trace.WriteLine("END CALCULATE GENERIC CLASS NAME ...1");
 				System.Type closedT = t;
 				if (actualParams.Length > 0)
 				{
-					Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...1.5 " + t==null);
+					Trace.WriteLine("END CALCULATE GENERIC CLASS NAME ...1.5 " + t==null);
 					closedT = t.MakeGenericType(actualParams);
 				}
-				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...2");
+				Trace.WriteLine("END CALCULATE GENERIC CLASS NAME ...2");
                 type = closedT.FullName;
-				Console.WriteLine("END CALCULATE GENERIC CLASS NAME ...3");
+				Trace.WriteLine("END CALCULATE GENERIC CLASS NAME ...3");
             }
 			
 			public static System.Type fetchTypeConstraint(br.ufc.pargo.hpe.backend.DGAC.database.Unit u, int i) 
@@ -1004,9 +1207,9 @@ namespace br.ufc.pargo.hpe.backend
                 int class_nargs = iPar.Class_nargs;
                 string strType = class_name + (class_nargs > 0 ? "`" + class_nargs : "");
 
-			//	Console.WriteLine("PAR class_name = "  + class_name);
-			//	Console.WriteLine("PAR class_nargs = " + class_nargs);
-			//	Console.WriteLine ("PAR strType = " + strType);
+			//	Trace.WriteLine("PAR class_name = "  + class_name);
+			//	Trace.WriteLine("PAR class_nargs = " + class_nargs);
+			//	Trace.WriteLine ("PAR strType = " + strType);
 						
                 Assembly a = Assembly.Load(assembly_string);
                 System.Type t = a.GetType(strType);
@@ -1021,17 +1224,17 @@ namespace br.ufc.pargo.hpe.backend
 			
             public static void determineArguments(IDictionary<string, int> arguments, int id_functor_app, out IDictionary<string, int> arguments_new)
             {
-				Console.WriteLine ("START determineArguments " + id_functor_app);
+				Trace.WriteLine ("START determineArguments " + id_functor_app);
 				
                 arguments_new = new Dictionary<string, int>(); ;
 
                 foreach (KeyValuePair<string, int> parameter in arguments)
                 {
-					Console.WriteLine("traversing arguments : " + parameter.Key);
+					Trace.WriteLine("traversing arguments : " + parameter.Key);
                     if (parameter.Key.Contains("#"))
                     {
                         arguments_new.Add(parameter);
-						Console.WriteLine("adding parameter key=" + parameter.Key + ", value="+  parameter.Value);
+						Trace.WriteLine("adding parameter key=" + parameter.Key + ", value="+  parameter.Value);
                     }
                 }
 
@@ -1045,11 +1248,11 @@ namespace br.ufc.pargo.hpe.backend
                         SupplyParameterParameter spp = (SupplyParameterParameter)sp;
                         int id_functor_app_actual;
                         bool achou = arguments.TryGetValue(spp.Id_argument, out id_functor_app_actual);
-						Console.WriteLine("TESTING " + spp.Id_argument + " : " + achou + " , " + id_functor_app_actual);
+						Trace.WriteLine("TESTING " + spp.Id_argument + " : " + achou + " , " + id_functor_app_actual);
                         if (achou)
                         {
                             arguments_new.Add(spp.Id_parameter, id_functor_app_actual);
-						    Console.WriteLine("adding parameter (determineArguments) 1 key=" + spp.Id_parameter + "; value=" + id_functor_app_actual);
+						    Trace.WriteLine("adding parameter (determineArguments) 1 key=" + spp.Id_parameter + "; value=" + id_functor_app_actual);
                         } 
 						
                     }
@@ -1057,14 +1260,14 @@ namespace br.ufc.pargo.hpe.backend
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
                         arguments_new.Add(spc.Id_parameter, spc.Id_functor_app_actual);
-						Console.WriteLine("adding parameter (determineArguments) 2 key=" + spc.Id_parameter + "; value="+ spc.Id_functor_app_actual);
+						Trace.WriteLine("adding parameter (determineArguments) 2 key=" + spc.Id_parameter + "; value="+ spc.Id_functor_app_actual);
 						traverseArguments(spc.Id_functor_app_actual, spc.Id_functor_app_actual, arguments, arguments_new);
                     }
                 }
-				Console.WriteLine ("END determineArguments " + id_functor_app);
+				Trace.WriteLine ("END determineArguments " + id_functor_app);
                 foreach (KeyValuePair<string, int> parameter in arguments_new)
                 {
-					Console.WriteLine("END determineArguments arguments_new: key=" + parameter.Key + "; value=" + parameter.Value);
+					Trace.WriteLine("END determineArguments arguments_new: key=" + parameter.Key + "; value=" + parameter.Value);
 				}
 
             }
@@ -1080,7 +1283,7 @@ namespace br.ufc.pargo.hpe.backend
 
 //                foreach (KeyValuePair<string, int> parameter in argumentsTop)
 //                {
-//					Console.WriteLine("traversing top arguments : key=" + parameter.Key + "; value=" + parameter.Value);
+//					Trace.WriteLine("traversing top arguments : key=" + parameter.Key + "; value=" + parameter.Value);
 //				}
 
                 foreach (SupplyParameter sp in spcList)
@@ -1094,13 +1297,13 @@ namespace br.ufc.pargo.hpe.backend
                         string key = spp.Id_parameter + "#" + id_functor_app_top;
                         if (!arguments.ContainsKey(key)) {
                             arguments.Add(key, id_functor_app_actual);
-							Console.WriteLine("adding parameter (traverseParameters) 3 key=" + key + "; value="+ id_functor_app_actual + " -- " + achou + " --- " + spp.Id_argument);
+							Trace.WriteLine("adding parameter (traverseParameters) 3 key=" + key + "; value="+ id_functor_app_actual + " -- " + achou + " --- " + spp.Id_argument);
 						}
                     }
                     else if (sp is SupplyParameterComponent)
                     {
                         SupplyParameterComponent spc = (SupplyParameterComponent)sp;
-						Console.WriteLine("traverseArguments - recursive - " + spc.Id_parameter + "," + spc.Id_functor_app + "," + spc.Id_functor_app_actual);
+						Trace.WriteLine("traverseArguments - recursive - " + spc.Id_parameter + "," + spc.Id_functor_app + "," + spc.Id_functor_app_actual);
                         traverseArguments(spc.Id_functor_app_actual, spc.Id_functor_app_actual, argumentsTop, arguments);
                     } 
                 }
@@ -1267,7 +1470,7 @@ namespace br.ufc.pargo.hpe.backend
 						}
 						else
 						{
-							Console.WriteLine("generateACFAforContext (DGAC.cs): Free parameter ? " + spp.Id_argument + "#" + spp.Id_functor_app);		
+							Trace.WriteLine("generateACFAforContext (DGAC.cs): Free parameter ? " + spp.Id_argument + "#" + spp.Id_functor_app);		
 						}	
 					}
 					spdao.insert(spc_new);
@@ -1310,12 +1513,12 @@ namespace br.ufc.pargo.hpe.backend
 					}
 				}
 					
-				Console.WriteLine("Connecting to the AutomaticSlices port of the application");
+				Trace.WriteLine("Connecting to the AutomaticSlices port of the application");
 				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
 				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
 				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
 					
-				Console.WriteLine("INITIALIZING " + cid);
+				Trace.WriteLine("INITIALIZING " + cid);
 				
 				initialize_port.initialize(); 
 				
@@ -1332,12 +1535,12 @@ namespace br.ufc.pargo.hpe.backend
 				                                     gov.cca.Services frwServices)
 			{
 									
-			    Console.WriteLine("Connecting to the AutomaticSlices port of the application");
+			    Trace.WriteLine("Connecting to the AutomaticSlices port of the application");
 				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
 				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
 				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
 					
-				Console.WriteLine("AFTER INITIALIZING " + cid);
+				Trace.WriteLine("AFTER INITIALIZING " + cid);
 				//after_initialized.Add(cid,true);
 				initialize_port.post_initialize();
 				
@@ -1457,9 +1660,9 @@ namespace br.ufc.pargo.hpe.backend
 	            }
 	            catch (Exception e)
 	            {
-					Console.WriteLine("## Exception: " + e.Message);
-					Console.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
-					Console.WriteLine("## Trace: " + e.StackTrace);
+					Trace.WriteLine("## Exception: " + e.Message);
+					Trace.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					Trace.WriteLine("## Trace: " + e.StackTrace);
 	                throw e;
 	            }
 	            finally
@@ -1501,54 +1704,54 @@ namespace br.ufc.pargo.hpe.backend
 				inner_conn_list = new Dictionary<string, ConnectionID>();					
 				fetchConnectionsAsUser(app_cid, inner_conn_list, bsPort, frwServices);
 
-				Console.WriteLine ("DETROY APPLICATION INSTANCE 1");
+				Trace.WriteLine ("DETROY APPLICATION INSTANCE 1");
 
 				foreach (KeyValuePair<string,ConnectionID> conn_pair in inner_conn_list)
 				{
 					string usesPortName = conn_pair.Key;
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 2 - " + usesPortName);
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 2 - " + usesPortName);
 					ConnectionID conn = conn_pair.Value;
 					cidInnerList.Add(conn.getProvider());
 					
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.1 - " + usesPortName);
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 2.1 - " + usesPortName);
 					services.releasePort(usesPortName);
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.2 - " + usesPortName);
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 2.2 - " + usesPortName);
 					bsPort.disconnect(conn, 0);
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.3 - " + usesPortName);
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 2.3 - " + usesPortName);
 					services.unregisterUsesPort(usesPortName);					
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 2.4 - " + usesPortName);
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 2.4 - " + usesPortName);
 				}
 				
 				foreach (ComponentID cid_inner in cidInnerList) 
 				{
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 3 - " + cid_inner.getInstanceName());
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 3 - " + cid_inner.getInstanceName());
 					destroyApplicationInstance((ManagerComponentID) cid_inner, 
 					                          bsPort, 
 					                          frwServices, 
 					                          frw);
 				}
 				
-				Console.WriteLine ("DETROY APPLICATION INSTANCE 4");
+				Trace.WriteLine ("DETROY APPLICATION INSTANCE 4");
 
 				IList<ConnectionID> provides_conn_list = new List<ConnectionID>();					
 				fetchConnectionsAsProvider(app_cid, provides_conn_list, bsPort, frwServices);
 				
-				Console.WriteLine ("DETROY APPLICATION INSTANCE 5");
+				Trace.WriteLine ("DETROY APPLICATION INSTANCE 5");
 
 				if (provides_conn_list.Count == 0)
 				{
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.1");
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 6.1");
 					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.2");
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 6.2");
 					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.3");
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 6.3");
 					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 6.4");
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 6.4");
 					if (app_cid.Kind == Constants.KIND_APPLICATION)
 						services.removeProvidesPort(Constants.GO_PORT_NAME);
-					Console.WriteLine ("DETROY APPLICATION INSTANCE 7");
+					Trace.WriteLine ("DETROY APPLICATION INSTANCE 7");
 				}
-				Console.WriteLine ("DETROY APPLICATION INSTANCE 8");
+				Trace.WriteLine ("DETROY APPLICATION INSTANCE 8");
 							
 				
 			}
@@ -1577,7 +1780,7 @@ namespace br.ufc.pargo.hpe.backend
 	            {
 	                Connector.openConnection();
 					
-					Console.WriteLine("Creating an instance of the application");
+					Trace.WriteLine("Creating an instance of the application");
 						
 	                FileInfo file = FileUtil.writeToFile(session_id_string + ".xml", instantiator_string);
 	                Instantiator.InstanceType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
@@ -1630,9 +1833,9 @@ namespace br.ufc.pargo.hpe.backend
 	            }
 	            catch (Exception e)
 	            {
-					Console.WriteLine("## Exception: " + e.Message);
-					Console.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
-					Console.WriteLine("## Trace: " + e.StackTrace);
+					Trace.WriteLine("## Exception: " + e.Message);
+					Trace.WriteLine("## Inner Exception: " + (e.InnerException == null ? "NULL" : e.InnerException.Message));
+					Trace.WriteLine("## Trace: " + e.StackTrace);
 	                throw e;
 	            }
 	            finally
@@ -1679,8 +1882,8 @@ namespace br.ufc.pargo.hpe.backend
 	                            					   IDictionary<string, int> argumentsTop,
 													   Instantiator.UnitMappingType[] unit_mapping_enclosing)
 			{	
-				Console.WriteLine("**********************************");
-				Console.WriteLine("BEGIN CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
+				Trace.WriteLine("**********************************");
+				Trace.WriteLine("BEGIN CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
 
 				frwServices.registerUsesPort(Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
 				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.RECONFIGURE_PORT_NAME, cid, Constants.RECONFIGURE_PORT_NAME);  
@@ -1705,7 +1908,7 @@ namespace br.ufc.pargo.hpe.backend
 				{
 					string portName = ic.Id_inner;
 
-					Console.WriteLine("createInnerComponentsOf: LOOP inner " + portName);
+					Trace.WriteLine("createInnerComponentsOf: LOOP inner " + portName);
 					
 					AbstractComponentFunctor acf = BackEnd.acfdao.retrieve(ic.Id_abstract_inner);
 					int slice_kind = Constants.kindMapping[acf.Kind];
@@ -1758,7 +1961,7 @@ namespace br.ufc.pargo.hpe.backend
 							
 							if (inner_cid == null) 
 							{
-								Console.WriteLine("createInnerComponetsOf: public inner component not found ! " + cid.getInstanceName() + "." + portName);
+								Trace.WriteLine("createInnerComponetsOf: public inner component not found ! " + cid.getInstanceName() + "." + portName);
 								continue;
 							}
 
@@ -1778,9 +1981,9 @@ namespace br.ufc.pargo.hpe.backend
 								}
 								
 								// connect to the new #-component
-								Console.WriteLine("BEGIN CONNECT " + cid.getInstanceName() + "." + portName + " to " + inner_cid.getInstanceName());
+								Trace.WriteLine("BEGIN CONNECT " + cid.getInstanceName() + "." + portName + " to " + inner_cid.getInstanceName());
 								connectInnerComponent(cid, portName, inner_cid, bsPort);	
-								Console.WriteLine("END CONNECT " + cid.getInstanceName() + "." + portName + " to " + inner_cid.getInstanceName());
+								Trace.WriteLine("END CONNECT " + cid.getInstanceName() + "." + portName + " to " + inner_cid.getInstanceName());
 								
 								if (curr_inner_cid != null && curr_cid == cid)
 								{
@@ -1798,10 +2001,10 @@ namespace br.ufc.pargo.hpe.backend
 				} 
 				else
 				{
-					Console.WriteLine("createInnerComponentsOf: ALREADY CONNECTED " + cid.getInstanceName() + " / " + ic.Id_inner);
+					Trace.WriteLine("createInnerComponentsOf: ALREADY CONNECTED " + cid.getInstanceName() + " / " + ic.Id_inner);
 				}
 
-				Console.WriteLine("createInnerComponentsOf: END TRAVERSING INNER COMPONENTS ");
+				Trace.WriteLine("createInnerComponentsOf: END TRAVERSING INNER COMPONENTS ");
 				
 				frwServices.releasePort(Constants.RECONFIGURE_PORT_NAME);
 				bsPort.disconnect(conn_cs,0);	
@@ -1809,16 +2012,16 @@ namespace br.ufc.pargo.hpe.backend
 				
 				foreach (KeyValuePair<InnerComponent,Instantiator.UnitMappingType[]> ic_ in icList2)
 				{
-					Console.WriteLine("createInnerComponentsOf: LOOP " + ic_.Key.Id_inner  + "," + ic_.Value.Length);
+					Trace.WriteLine("createInnerComponentsOf: LOOP " + ic_.Key.Id_inner  + "," + ic_.Value.Length);
 					InnerComponent ic = ic_.Key;
 					Instantiator.UnitMappingType[] unit_mapping_inner = ic_.Value;
 
 					if (ggg.ContainsKey(ic))
 					{
-						Console.WriteLine("createInnerComponentsOf: STEP 0 " + ic.Id_inner);
+						Trace.WriteLine("createInnerComponentsOf: STEP 0 " + ic.Id_inner);
 					}
 					
-					Console.WriteLine("createInnerComponentsOf: STEP 1 " + ic.Parameter_top + "#" + ic.Id_functor_app + "," + cid.Id_functor_app);
+					Trace.WriteLine("createInnerComponentsOf: STEP 1 " + ic.Parameter_top + "#" + ic.Id_functor_app + "," + cid.Id_functor_app);
 					string portName = ic.Id_inner;
 
 					ManagerComponentID inner_cid;
@@ -1865,12 +2068,12 @@ namespace br.ufc.pargo.hpe.backend
 					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
 					if (curr_cid.Kind == Constants.KIND_APPLICATION)
 						services.removeProvidesPort(Constants.GO_PORT_NAME);
-					Console.WriteLine("DESTROY INSTANCE " + curr_cid);
+					Trace.WriteLine("DESTROY INSTANCE " + curr_cid);
 					bsPort.destroyInstance(curr_cid, 0);
 				}
 									
-				Console.WriteLine("END CREATING INNER COMPONENTS OF " + cid.getInstanceName());
-				Console.WriteLine("********************************");
+				Trace.WriteLine("END CREATING INNER COMPONENTS OF " + cid.getInstanceName());
+				Trace.WriteLine("********************************");
 			}
 	
 			public static void connectInnerComponent (ManagerComponentID cid, 
@@ -1878,9 +2081,9 @@ namespace br.ufc.pargo.hpe.backend
 				                                        ManagerComponentID inner_cid, 
 							                            gov.cca.ports.BuilderService bsPort)
 			{
-				Console.WriteLine("BEGIN CONNECT");
+				Trace.WriteLine("BEGIN CONNECT");
 				bsPort.connect(cid, uses_port_name, inner_cid, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
-				Console.WriteLine("END CONNECT");
+				Trace.WriteLine("END CONNECT");
 			}
 
 			public static void disconnectInnerComponent (ConnectionID conn_id, 
@@ -1902,7 +2105,7 @@ namespace br.ufc.pargo.hpe.backend
 					unit_mapping_dict = new Dictionary<string, int[]>();
 					foreach (Instantiator.UnitMappingType unit_node in unit_mapping)
 					{
-						Console.WriteLine("copy_unit_mapping_to_dictionary - adding " + unit_node.unit_id + unit_node.unit_index);
+						Trace.WriteLine("copy_unit_mapping_to_dictionary - adding " + unit_node.unit_id + unit_node.unit_index);
 						count_nodes += unit_node.node.Length;
 						unit_mapping_dict.Add(unit_node.unit_id + unit_node.unit_index, unit_node.node);
 					}
@@ -1916,7 +2119,7 @@ namespace br.ufc.pargo.hpe.backend
 				IDictionary<string,int[]> unit_mapping_dict;
 				BackEnd.copy_unit_mapping_to_dictionary(unit_mapping_enclosing, out unit_mapping_dict, out count_nodes);
 
-				Console.WriteLine("build_unit_mapping_of_inner -1 - " + ic.Id_abstract_owner + "," + ic.Id_inner);
+				Trace.WriteLine("build_unit_mapping_of_inner -1 - " + ic.Id_abstract_owner + "," + ic.Id_inner);
 				IList<Slice> slice_list = BackEnd.sdao.listByInner(ic.Id_abstract_owner, ic.Id_inner);
 				
 
@@ -1927,12 +2130,12 @@ namespace br.ufc.pargo.hpe.backend
 				{
 					int[] nodes;
 					Interface i_host = BackEnd.idao.retrieve(ic.Id_abstract_owner, slice.Id_interface, slice.Unit_replica_host);
-					Console.WriteLine("build_unit_mapping_of_inner 0 - " + i_host.Id_interface_super_top + i_host.Unit_replica_super_top + "," + ic.Id_abstract_owner + ","+ ic.Id_inner);
+					Trace.WriteLine("build_unit_mapping_of_inner 0 - " + i_host.Id_interface_super_top + i_host.Unit_replica_super_top + "," + ic.Id_abstract_owner + ","+ ic.Id_inner);
 					unit_mapping_dict.TryGetValue(i_host.Id_interface_super_top + i_host.Unit_replica_super_top, out nodes);
 
 					Instantiator.UnitMappingType unit_mapping_slice;
 					Interface i = BackEnd.idao.retrieve(ic.Id_abstract_inner, slice.Id_interface_slice,slice.Unit_replica);
-					Console.WriteLine("build_unit_mapping_of_inner: " + ic.Id_abstract_inner + "," + slice.Id_interface_slice);
+					Trace.WriteLine("build_unit_mapping_of_inner: " + ic.Id_abstract_inner + "," + slice.Id_interface_slice);
 
 					if (unit_mapping_save.TryGetValue(i.Id_interface_super_top + i.Unit_replica_super_top, out unit_mapping_slice))
 					{
@@ -1940,7 +2143,7 @@ namespace br.ufc.pargo.hpe.backend
 						unit_mapping_slice.node.CopyTo(nodes_, 0);
 						nodes.CopyTo(nodes_, unit_mapping_slice.node.Length);
 						unit_mapping_slice.node = nodes_;
-						Console.WriteLine("build_unit_mapping_of_inner 1: add unit_id=" + unit_mapping_slice.unit_id + ", unit_index=" + unit_mapping_slice.unit_index + ", total nodes" + nodes_.Length);
+						Trace.WriteLine("build_unit_mapping_of_inner 1: add unit_id=" + unit_mapping_slice.unit_id + ", unit_index=" + unit_mapping_slice.unit_index + ", total nodes" + nodes_.Length);
 					} 
 					else 
 					{
@@ -1950,7 +2153,7 @@ namespace br.ufc.pargo.hpe.backend
 						unit_mapping_slice.node = nodes;									
 
 						unit_mapping_save.Add(unit_mapping_slice.unit_id + unit_mapping_slice.unit_index, unit_mapping_slice);
-						Console.WriteLine("build_unit_mapping_of_inner 2: add unit_id=" + unit_mapping_slice.unit_id + 
+						Trace.WriteLine("build_unit_mapping_of_inner 2: add unit_id=" + unit_mapping_slice.unit_id + 
 										", unit_index=" + unit_mapping_slice.unit_index + 
 										", total nodes" + nodes.Length);
 					}
@@ -1972,11 +2175,11 @@ namespace br.ufc.pargo.hpe.backend
 			{
 				unit_mapping_inner = null;
 				build_unit_mapping_of_inner(ic, unit_mapping_enclosing, out unit_mapping_inner);
-				Console.WriteLine("createInnerComponent - AFTER CALLING build_unit_mapping_to_inner id_abstract=" + ic.Id_abstract_owner + " inner = " + ic.Id_inner + " -- " + unit_mapping_enclosing.Length + "," + unit_mapping_inner.Length);
+				Trace.WriteLine("createInnerComponent - AFTER CALLING build_unit_mapping_to_inner id_abstract=" + ic.Id_abstract_owner + " inner = " + ic.Id_inner + " -- " + unit_mapping_enclosing.Length + "," + unit_mapping_inner.Length);
 
 				if (unit_mapping_inner.Length == 0)
 				{
-					Console.WriteLine("createInnerComponent: This inner component does not have slices in the units of the enclosing component.");
+					Trace.WriteLine("createInnerComponent: This inner component does not have slices in the units of the enclosing component.");
 					return null;
 				}
 				 
@@ -2008,23 +2211,23 @@ namespace br.ufc.pargo.hpe.backend
 				 * 		3. Pass an array of int property for nodes Constants.NODES_KEY 
 				 */			
 					
-				Console.WriteLine("BEFORE generateACFAForContext " + ic.Id_functor_app);
+				Trace.WriteLine("BEFORE generateACFAForContext " + ic.Id_functor_app);
 					foreach (KeyValuePair<string,int> uuuu in arguments)
-						Console.WriteLine("createInnerComponent (arguments) KEY=" + uuuu.Key + "; VALUE=" + uuuu.Value); 
+						Trace.WriteLine("createInnerComponent (arguments) KEY=" + uuuu.Key + "; VALUE=" + uuuu.Value); 
 					foreach (KeyValuePair<string,int> uuuu in argumentsTop)
-						Console.WriteLine("createInnerComponent (arguments TOP) KEY=" + uuuu.Key + "; VALUE=" + uuuu.Value); 
+						Trace.WriteLine("createInnerComponent (arguments TOP) KEY=" + uuuu.Key + "; VALUE=" + uuuu.Value); 
 				
 
 				//int[] nodes	= cid.WorkerNodes; // SPMD topology !!! Does not work for MPMD ...
 				
-				Console.WriteLine("createInnerComponent - id_functor_app="+id_functor_app + ",id_functor_app_inner="+id_functor_app_inner);
+				Trace.WriteLine("createInnerComponent - id_functor_app="+id_functor_app + ",id_functor_app_inner="+id_functor_app_inner);
 
 				int version = current_inner_cid == null ? 0 : current_inner_cid.Version + 1;
 				
 				//UnitMappingType[] unit_mapping_inner;
 
 				string inner_instance_name = cid.getInstanceName() + "-" + ic.Id_inner + "#" + version;
-				Console.WriteLine("BEFORE START CREATING INNER COMPONENT name=" + inner_instance_name + " !");
+				Trace.WriteLine("BEFORE START CREATING INNER COMPONENT name=" + inner_instance_name + " !");
 
 
 	
@@ -2035,16 +2238,16 @@ namespace br.ufc.pargo.hpe.backend
 				properties[Constants.ENCLOSING_ARGUMENTS] = arguments;
 				properties[Constants.NODES_KEY] = unit_mapping_inner;
 
-				Console.WriteLine();
-				Console.WriteLine("START CREATING INNER COMPONENT name=" + inner_instance_name + "...");
+				Trace.WriteLine("---");
+				Trace.WriteLine("START CREATING INNER COMPONENT name=" + inner_instance_name + "...");
 				foreach (Instantiator.UnitMappingType uuu in unit_mapping_inner)
 					foreach (int nnn in uuu.node)
-						Console.WriteLine("unit " +  uuu.unit_id + uuu.unit_index  + " at node " + nnn);
+						Trace.WriteLine("unit " +  uuu.unit_id + uuu.unit_index  + " at node " + nnn);
 
 				ManagerComponentID inner_cid = (ManagerComponentID) bsPort.createInstance(inner_instance_name, c.Library_path, properties);				
 				
-				Console.WriteLine("FINISH CREATING INNER COMPONENT name=" + inner_instance_name + "...");
-				Console.WriteLine();
+				Trace.WriteLine("FINISH CREATING INNER COMPONENT name=" + inner_instance_name + "...");
+				Trace.WriteLine("--");
 			    inner_cid.Version = version;
 					
 				return inner_cid;
@@ -2064,7 +2267,7 @@ namespace br.ufc.pargo.hpe.backend
 			 InnerComponentExposed ice = icedao.retrieveContainer(id_abstract_owner, id_inner_at_owner, ic.Id_inner);
 			 if (ice == null)
 			 {
-				Console.WriteLine("findInnerComponent (DGAC.cs): " +  ic.Id_inner + " not found in " + id_abstract_owner + "." + id_inner_at_owner);
+				Trace.WriteLine("findInnerComponent (DGAC.cs): " +  ic.Id_inner + " not found in " + id_abstract_owner + "." + id_inner_at_owner);
 				return null;
 			 }
 			 
@@ -2085,7 +2288,7 @@ namespace br.ufc.pargo.hpe.backend
 									
 			 if (cid_inner == null)
 			 {
-				Console.WriteLine("findInnerComponent (DGAC.cs): connection for " +  ice.Id_inner_rename + " not found in " + cid_owner);
+				Trace.WriteLine("findInnerComponent (DGAC.cs): connection for " +  ice.Id_inner_rename + " not found in " + cid_owner);
 				return null;
 			 }
 			 		

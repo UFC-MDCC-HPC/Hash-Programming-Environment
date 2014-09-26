@@ -5,5 +5,5 @@
 -r:/usr/lib/mono/DGAC/DGAC.dll
 
 -target:library
-
+-define:DEBUG;TRACE
 -out:./ws/bin/BackEndWS.asmx.dll

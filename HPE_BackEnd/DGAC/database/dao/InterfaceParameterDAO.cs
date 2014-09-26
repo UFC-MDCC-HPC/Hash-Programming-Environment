@@ -4,7 +4,8 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -19,7 +20,7 @@ public class InterfaceParameterDAO{
             "INSERT INTO interfaceparameters (id_interface, id_abstract, varid, parid, id_interface_parameter, id_unit_parameter, par_order)" +
             " VALUES ('" + ac.Id_interface + "'," + ac.Id_abstract + ",'" + ac.VarId + "','" + ac.ParId + "','" + ac.Id_interface_parameter + "','" + ac.Id_unit_parameter + "'," + ac.ParOrder + ")";
 
-   		Console.WriteLine("InterfaceParameter.cs: TRY INSERT: " + sql);
+   		Trace.WriteLine("InterfaceParameter.cs: TRY INSERT: " + sql);
 
 
         Connector.performSQLUpdate(sql);

@@ -10,13 +10,16 @@ using MPI;
 using System.Threading;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Ipc;
+using CommandLine.Utility;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
     public class WorkerService : System.ServiceProcess.ServiceBase
     {
         private TcpChannel ch;
-        private static int port = Constants.WORKER_PORT;
+        private int port = Constants.WORKER_PORT;
+		private string session_id = null;
 
         private MPI.Environment mpi = null;
         private Intracommunicator global_communicator = null;
@@ -25,26 +28,26 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public WorkerService(string[] args)
         {            
+			readArguments (args, out port, out session_id);
             InitializeComponent();
             StartMPI(args);
         }
  
         public void StartMPI(string[] args)
         {
-            Console.WriteLine("Starting MPI ... ");
+            Trace.WriteLine("Starting MPI ... ");
             mpi = new MPI.Environment(ref args, Threading.Multiple);
-            Console.Write("ok !");
+            Trace.Write("ok !");
             this.global_communicator = MPI.Communicator.world;
             number_of_workers = this.global_communicator.Size;
             my_rank = this.global_communicator.Rank;
-            Console.WriteLine("Rank #" + my_rank + " at processor " + MPI.Environment.ProcessorName + " - threading is " + MPI.Environment.Threading);
+            Trace.WriteLine("Rank #" + my_rank + " at processor " + MPI.Environment.ProcessorName + " - threading is " + MPI.Environment.Threading);
         }
 
 
         public static void Main(string[] args)
         {
-            port = args.Length == 0 ? -1 : System.Convert.ToInt32(args[0], 10);
-            Console.WriteLine("Initializing Worker");
+            Trace.WriteLine("Initializing Worker");
             System.ServiceProcess.ServiceBase[] ServicesToRun;
             ServicesToRun = new System.ServiceProcess.ServiceBase[] { new WorkerService(args) };
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
@@ -55,19 +58,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
           try 
           {  
-			string service_name = Constants.WORKER_SERVICE_NAME + "-" + my_rank;	
+			string service_name = Constants.WORKER_SERVICE_NAME + (session_id == null ? "" : "-" + session_id) + "-" + my_rank;	
 				
             if (port < 0) 
-            {          
                 port = Constants.WORKER_PORT + my_rank;
-            }
+ 
+            Trace.WriteLine("Starting " + service_name + " listening on port ... " + port);
 
-            Console.WriteLine("Starting " + service_name + " listening on port ... " + port);
-
-            //System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
-            //server_provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
-            //IDictionary prop = new Hashtable();
-            //prop["port"] = port;
             ch = new TcpChannel(port/*, server_provider */);
 
             ChannelServices.RegisterChannel(ch);
@@ -75,30 +72,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			RemotingConfiguration.ApplicationName = service_name;
             RemotingConfiguration.RegisterActivatedServiceType(typeof(WorkerObject));
 				
-			//string uri_str = "tcp://" + "localhost" + ":" + Constants.MANAGER_PORT + "/" + Constants.MANAGER_SERVICE_NAME;
-			//RemotingConfiguration.RegisterActivatedClientType(typeof(WorkerServicesImpl), uri_str);
-				
-//			TcpServerChannel channel = new TcpServerChannel(port);
-//		    ChannelServices.RegisterChannel(channel, false);
-//		    WorkerObject remoteObject = new WorkerObject();     
-//		    RemotingServices.Marshal(remoteObject, "WorkerObject.rem");	
-				
-				
-            //RemotingConfiguration.RegisterWellKnownServiceType(typeof(WorkerObject), Constants.WORKER_SERVICE_NAME, WellKnownObjectMode.Singleton);
-            Console.WriteLine("Worker #" + my_rank + " running !");
+            Trace.WriteLine("Worker #" + my_rank + " running !");
           }
           catch (Exception e)
           {
-            Console.WriteLine(e.Message);
+            Trace.WriteLine(e.Message);
           }
         }
 
         private void stopWorkerServer()
         {
-            Console.WriteLine("Worker is stopping !");
+            Trace.WriteLine("Worker is stopping !");
             ch.StopListening(null);
             ChannelServices.UnregisterChannel(ch);
-            Console.WriteLine("Worker Service Finished ");
+            Trace.WriteLine("Worker Service Finished ");
         }
 
         protected override void OnStart(string[] args)
@@ -118,9 +105,35 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             // 
             // WorkerService
             // 
-            this.ServiceName = Constants.WORKER_SERVICE_NAME;
+			this.ServiceName = Constants.WORKER_SERVICE_NAME + (session_id == null ? "" : "-" + session_id) + my_rank;
 
         }
 
+		static void readArguments(string[] args,
+		                          out int port, 
+		                          out string session_id) 
+		{
+			port = -1;
+			session_id = null;
+
+			Arguments CommandLine = new Arguments(args);			
+
+			if(CommandLine["port"] != null) 
+			{
+               if (!Int32.TryParse(CommandLine["port"], out port)) 
+			   {
+				   Console.Error.WriteLine("'-port <integer>' is expected");
+				   System.Environment.Exit(0);
+			   }
+			   Trace.WriteLine("--port " + port);
+			}
+
+			if(CommandLine["session"] != null) 
+			{
+               session_id = CommandLine["session"];
+			   Trace.WriteLine("--session " + session_id);
+			}
+			
+		}
     }
 }

@@ -5,6 +5,7 @@ using br.ufc.pargo.hpe.backend.DGAC.database;
 using br.ufc.hpe.backend.DGAC;
 using System.CodeDom;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
+using System.Diagnostics;
 
 namespace HPE_DGAC_LoadDB
 {
@@ -132,21 +133,21 @@ namespace HPE_DGAC_LoadDB
 
                 units.Add(uu.Id_unit, uu);
 				
-				Console.WriteLine("ui.sources={0}",ui.sources);
-				Console.WriteLine("ui.protocol={0}",ui.protocol);
-				Console.WriteLine("{0}={1}", c.Kind, Constants.KIND_COMPUTATION_NAME);
+				//Trace.WriteLine("ui.sources={0}",ui.sources);
+				//Trace.WriteLine("ui.protocol={0}",ui.protocol);
+				//Trace.WriteLine("{0}={1}", c.Kind, Constants.KIND_COMPUTATION_NAME);
 				
 				if (ui.sources == null && (c.Kind.Equals(Constants.KIND_COMPUTATION_NAME) 
 				                                               || c.Kind.Equals(Constants.KIND_SYNCHRONIZER_NAME)))
 				{
-					Console.WriteLine("ENTER WRAPPER GENERATOR " + c.Library_path);
+					Trace.WriteLine("ENTER WRAPPER GENERATOR " + c.Library_path);
 					
 					 IWrapperGenerator wg = new WrapperGenerator();
 					 string[] dependencies = null;
 					 CodeCompileUnit compile_unit = wg.create_wrapper(c.Library_path, ui.iRef, uu.Id_abstract, uu.Id_interface, uu.Unit_replica, out dependencies); 
 					 string source_code = wg.generate_source_code(ui.iRef, compile_unit);
 					
-					 Console.WriteLine(source_code);
+					 Trace.WriteLine(source_code);
 					
 				     SourceCode ss = new SourceCode();
                      ss.Type_owner = 'u';

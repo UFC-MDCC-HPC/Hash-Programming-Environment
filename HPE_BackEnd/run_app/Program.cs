@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using CommandLine.Utility;
+using System.Diagnostics;
 
 namespace Back_End_Test
 {
@@ -20,7 +21,10 @@ namespace Back_End_Test
 			string curDir;
 			int rounds;
 			string prefix;
-			
+
+			TextWriterTraceListener writer = new TextWriterTraceListener(System.Console.Out);
+			Trace.Listeners.Add(writer);
+
 			try 
 			{
 				readArguments(args, out instantiator_string_file, out user, out password, out curDir, out rounds, out prefix);
@@ -28,25 +32,23 @@ namespace Back_End_Test
 	            dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
 				
                 string instantiator_string = File.ReadAllText(instantiator_string_file);
-				//string instantiator_string_1 = File.ReadAllText("/home/heron/hash-programming-environment/run.sp.S.1.xml");
-				//string instantiator_string_2 = File.ReadAllText("/home/heron/hash-programming-environment/reconfigure_test.xml");
-				
+
 				string[] output = null;
 				if (prefix == null) 
 				{					
-				  output = dgac.runApplication(instantiator_string, user, password, curDir);
+				  output = dgac.runApplication(instantiator_string/*, user, password, curDir*/);
 				} 
 				else 
 				{
-				  output = dgac.runApplicationNTimes(instantiator_string, user, password, curDir, rounds, prefix);
+				  output = dgac.runApplicationNTimes(instantiator_string, /*user, password, curDir,*/ rounds, prefix);
 //					dgac.testReconfiguration(instantiator_string_1, instantiator_string_2, prefix);
 				}
 
                 int i = 0;
                 foreach (string o in output) 
                 {
-                    Console.WriteLine("--- Process " + (i++) + " ----------- ");
-                    Console.WriteLine(o);
+                    Trace.WriteLine("--- Process " + (i++) + " ----------- ");
+                    Trace.WriteLine(o);
                 }
 
 
@@ -87,7 +89,7 @@ namespace Back_End_Test
 			if(CommandLine["instantiator_file"] != null) 
 			{
                instantiator_string_file = CommandLine["instantiator_file"];
-			   Console.WriteLine("--instantiator_file = " + instantiator_string_file);
+			   Trace.WriteLine("--instantiator_file = " + instantiator_string_file);
 			}
             else 
 			{
@@ -98,25 +100,25 @@ namespace Back_End_Test
 			if(CommandLine["user"] != null) 
 			{
                user = CommandLine["user"];
-			   Console.WriteLine("--user = " + user);
+			   Trace.WriteLine("--user = " + user);
 			}
 			
 			if(CommandLine["password"] != null) 
 			{
                password = CommandLine["password"];
-			   Console.WriteLine("--password = " + password);
+			   Trace.WriteLine("--password = " + password);
 			}
 			
 			if(CommandLine["current_dir"] != null) 
 			{
                curDir = CommandLine["current_dir"];
-			   Console.WriteLine("--current_dir = " + curDir);
+			   Trace.WriteLine("--current_dir = " + curDir);
 			}
 			
 /*			if(CommandLine["enumerator_id"] != null) 
 			{
                eId = CommandLine["enumerator_id"];
-			   Console.WriteLine("--enumerator_id = " + eId);
+			   Trace.WriteLine("--enumerator_id = " + eId);
 			}
 			else 
 			{
@@ -127,7 +129,7 @@ namespace Back_End_Test
 			if(CommandLine["enumerator_value"] != null) 
 			{
                eVl = Int32.Parse(CommandLine["enumerator_value"]);
-			   Console.WriteLine("--enumerator_value = " + eVl);
+			   Trace.WriteLine("--enumerator_value = " + eVl);
 			}
 			else 
 			{
@@ -142,13 +144,13 @@ namespace Back_End_Test
 				   Console.Error.WriteLine("'-rounds <integer>' is expected");
 				   Environment.Exit(0);
 			   }
-			   Console.WriteLine("--rounds = " + rounds);
+			   Trace.WriteLine("--rounds = " + rounds);
 			}
 
 			if(CommandLine["prefix"] != null) 
 			{
                prefix = CommandLine["prefix"];
-			   Console.WriteLine("--prefix = " + prefix);
+			   Trace.WriteLine("--prefix = " + prefix);
 			}
 			
 		}

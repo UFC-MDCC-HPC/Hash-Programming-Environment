@@ -5,6 +5,7 @@ using System.Xml;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.utils{
@@ -135,13 +136,13 @@ public class FileUtil{
               if (bankReader.LocalName.Equals(property))
               {
                   string s = bankReader.ReadString(); 
-//                  Console.WriteLine("PROPERTY .... " + s);
+//                  Trace.WriteLine("PROPERTY .... " + s);
                   return s;
               }
           }
       }
       bankReader.Close();
-//      Console.WriteLine("PROPERTY NOT FOUND ....");
+//      Trace.WriteLine("PROPERTY NOT FOUND ....");
       return default_value;
   }
 
@@ -157,7 +158,7 @@ public class FileUtil{
               // Create an instance of the XmlSerializer specifying type and namespace.
               XmlSerializer serializer = new XmlSerializer(typeof(ReferenceListType));
 
-      Console.WriteLine(filename);
+      Trace.WriteLine(filename);
 
               // A FileStream is needed to read the XML document.
               FileStream fs = new FileStream(filename, FileMode.Open);
@@ -171,10 +172,10 @@ public class FileUtil{
               // Use the Deserialize method to restore the object's state.
               i = (ReferenceListType)serializer.Deserialize(reader);
 
-				Console.WriteLine("EXTERNAL REFERENCES:");
+				Trace.WriteLine("EXTERNAL REFERENCES:");
               foreach (ReferenceType extRef in i.reference)
               {
-					Console.WriteLine("KEY:" + extRef.destailedName + " VALUE:" + extRef.path);
+					Trace.WriteLine("KEY:" + extRef.destailedName + " VALUE:" + extRef.path);
                   d.Add(extRef.destailedName, extRef);
               }
 
@@ -183,7 +184,7 @@ public class FileUtil{
           }
           catch (Exception e)
           {
-              Console.WriteLine(e.Message);
+              Trace.WriteLine(e.Message);
           }
 
       return d;

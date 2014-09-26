@@ -6,22 +6,27 @@ using System.Runtime.Remoting.Channels.Ipc;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Collections;
 using System.Runtime.Remoting.Activation;
+using CommandLine.Utility;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
-    public partial class ManagerService : System.ServiceProcess.ServiceBase
+    public partial class ManagerService	  : System.ServiceProcess.ServiceBase
     {
         private IpcChannel channelManagerServer;
+		private string session_id = null;
+		private int port = -1;
 
-        public ManagerService()
+        public ManagerService(string[] args)
         {
+			readArguments (args, out port, out session_id);
             InitializeComponent();
         }
 
         public static void Main(string[] args)
         {
             System.ServiceProcess.ServiceBase[] ServicesToRun;
-            ServicesToRun = new System.ServiceProcess.ServiceBase[] { new ManagerService() };
+            ServicesToRun = new System.ServiceProcess.ServiceBase[] { new ManagerService(args) };
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
         }
 
@@ -29,7 +34,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private void startManagerServer()
         {
-            Console.WriteLine("Starting Manager ");
+            Trace.WriteLine("Starting Manager ");
 
             System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider server_provider = new System.Runtime.Remoting.Channels.BinaryServerFormatterSinkProvider();
             System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider client_provider = new System.Runtime.Remoting.Channels.BinaryClientFormatterSinkProvider();
@@ -40,62 +45,67 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             ChannelServices.RegisterChannel(channelManagerServer, false);
 			
-			RemotingConfiguration.ApplicationName = "ManagerHost";
+			RemotingConfiguration.ApplicationName = /*"ManagerHost"; */ Constants.MANAGER_PORT_NAME + (session_id == null ? "" : "-" + session_id);
             RemotingConfiguration.RegisterActivatedServiceType(typeof(ManagerObject));
-/*			
-            //RemotingConfiguration.RegisterWellKnownServiceType(typeof(ManagerObject),
-            //                                                  "ManagerHost.rem",
-            //                                                  WellKnownObjectMode.Singleton);
-            ManagerObject o = null;
 
-            try
-            {
-				object[] activateAttribute = 
-			              {new UrlAttribute("ipc://ManagerHost")};
-				o = (ManagerObject) Activator.CreateInstance(typeof(ManagerObject), null, activateAttribute);
-                // o = (ManagerObject)Activator.GetObject(typeof(ManagerObject), "ipc://ManagerHost/ManagerHost.rem");
-                Console.WriteLine("Manager Service Running on ");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message + ", INNER EXCEPTION: " + e.InnerException.Message);
-            }
+			Trace.WriteLine("Manager Service " + RemotingConfiguration.ApplicationName +  " running ...");
 
-            return o;*/
-        }
+		}
 
         private void stopManagerServer() 
         {
-            Console.WriteLine("Manager is stopping !");
+            Trace.WriteLine("Manager is stopping !");
             channelManagerServer.StopListening(null);
             ChannelServices.UnregisterChannel(channelManagerServer);
-            Console.WriteLine("Manager Service Finished ");
+            Trace.WriteLine("Manager Service Finished ");
         }
 
         protected override void OnStart(string[] args)
         {
+			Trace.Write("OnStart called...");
             startManagerServer();
-            //if (manager != null)
-            //{
-            //    manager.startWorkerClients();
-            //}
-            //else
-            //{
-             //   Console.Error.WriteLine("Error initializing the manager object !");
-            //}             
+            BackEnd.startWorkers(session_id);
+			Trace.WriteLine("OK !");
         }
 
         protected override void OnStop()
         {
-            if (manager != null)
-               manager.stopWorkerClients();
-
+			Trace.Write("OnStop called...");
+            BackEnd.stopWorkers(session_id);
             stopManagerServer();
-        }
+			Trace.WriteLine("OK !");
+       }
 
         private void InitializeComponent()
         {
             this.ServiceName = "HPE.BackEnd.Manager";
         }
-    }
+
+		static void readArguments(string[] args,
+		                          out int port, 
+		                          out string session_id) 
+		{
+			port = -1;
+			session_id = null;
+
+			Arguments CommandLine = new Arguments(args);			
+
+			if(CommandLine["port"] != null) 
+			{
+				if (!Int32.TryParse(CommandLine["port"], out port)) 
+				{
+					Console.Error.WriteLine("'-port <integer>' is expected");
+					System.Environment.Exit(0);
+				}
+				Trace.WriteLine("--port " + port);
+			}
+
+			if(CommandLine["session"] != null) 
+			{
+				session_id = CommandLine["session"];
+				Trace.WriteLine("--session " + session_id);
+			}
+
+		}
+   }
 }

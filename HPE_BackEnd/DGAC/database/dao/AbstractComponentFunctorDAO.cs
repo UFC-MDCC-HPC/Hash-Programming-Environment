@@ -3,7 +3,8 @@ using System.IO;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -25,7 +26,7 @@ public class AbstractComponentFunctorDAO{
             + (ac.Library_path == null ? "null" : ("'" + ac.Library_path + "'")) + "," 
             + (ac.Hash_component_UID == null ? "null" : ("'" + ac.Hash_component_UID + "'")) + ",'" + ac.Kind + "')";
 
-     	Console.WriteLine("AbstractComponentFunctor.cs: TRY INSERT: " + sql);
+     	Trace.WriteLine("AbstractComponentFunctor.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 

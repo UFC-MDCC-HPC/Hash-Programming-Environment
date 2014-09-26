@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
@@ -19,7 +20,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of)" +
                 " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + ")";
 
-     		Console.WriteLine("AbstractComponentFunctorParameter.cs: TRY INSERT: " + sql);
+     		Trace.WriteLine("AbstractComponentFunctorParameter.cs: TRY INSERT: " + sql);
 
             Connector.performSQLUpdate(sql);
 
@@ -105,7 +106,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
 	   if (acfp==null) 
 	   {
-	  	  Console.WriteLine("AbstractComponentFunctorParameterDAO.cs: PARAMETER NOT FOUND "+ id_abstract + "," + id_parameter);
+	  	  Trace.WriteLine("AbstractComponentFunctorParameterDAO.cs: PARAMETER NOT FOUND "+ id_abstract + "," + id_parameter);
 	   }
 			
         return acfp;

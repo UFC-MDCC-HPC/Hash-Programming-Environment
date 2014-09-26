@@ -49,6 +49,7 @@ DGAC/connector/wrapper/*.cs
 -optimize+
 
 -debug+
+-define:DEBUG;TRACE
 
 -r:System.Data
 -r:/usr/lib/mono/MySql.Data/MySql.Data.dll

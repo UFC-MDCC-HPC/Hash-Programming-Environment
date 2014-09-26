@@ -63,6 +63,9 @@
       <SubType>Component</SubType>
       <Link>RemotingServerWorker.cs</Link>
     </Compile>
+    <Compile Include="..\..\run_app\CommandLine.cs">
+      <Link>CommandLine.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">

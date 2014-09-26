@@ -75,17 +75,17 @@ namespace br.ufc.hpe.backend.DGAC
 		   if (cr.Errors.Count > 0)
 		   {
 		       // Display compilation errors.
-		        System.Diagnostics.Debug.WriteLine("Errors building");
+		        System.Diagnostics.Trace.WriteLine("Errors building");
 		        foreach (CompilerError ce in cr.Errors)
 		        {
-		            System.Diagnostics.Debug.WriteLine("  " + ce.ToString());
-		            System.Diagnostics.Debug.WriteLine("");
+		            System.Diagnostics.Trace.WriteLine("  " + ce.ToString());
+		            System.Diagnostics.Trace.WriteLine("");
 		        }
 		    }
 		    else
 		    {
-		        //System.Diagnostics.Debug.WriteLine("Source {0} built into {1} successfully.", sourceFile, cr.PathToAssembly);
-				System.Diagnostics.Debug.WriteLine("Source built successfully.");
+		        //System.Diagnostics.Trace.WriteLine("Source {0} built into {1} successfully.", sourceFile, cr.PathToAssembly);
+				System.Diagnostics.Trace.WriteLine("Source built successfully.");
 		    }
 		
             return cr;			
@@ -593,7 +593,7 @@ namespace br.ufc.hpe.backend.DGAC
 				if (!isig.slice_types.ContainsKey(s.PortName))
 					isig.slice_types.Add (s.PortName, par_ic);
 				else 
-					System.Diagnostics.Debug.WriteLine("EXISTENTE {0}", s.PortName);
+					System.Diagnostics.Trace.WriteLine("EXISTENTE {0}", s.PortName);
 				// 1st loop:
 				// InterfaceSignature [
 				//    the_interface = ('31', 'cells', '0', '', '0', 'common.datapartition.MultiPartitionCells.ICells', '', '0', 'cells', '0', '1')

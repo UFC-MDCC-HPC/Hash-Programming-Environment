@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using br.ufc.pargo.hpe.ports;
+using System.Diagnostics;
 
 namespace br.ufc.hpe.backend.DGAC
 {
@@ -44,7 +45,7 @@ namespace br.ufc.hpe.backend.DGAC
                 } 
                 catch (Exception e)
                 {
-                   Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                   Trace.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
                 }
             }			
             Console.Error.WriteLine("Joined Threads : " + session_id_string);
@@ -97,7 +98,7 @@ namespace br.ufc.hpe.backend.DGAC
                 } 
                 catch (Exception e)
                 {
-                   Console.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
+                   Trace.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
                 }
             }			
             Console.Error.WriteLine("Joined Threads : " + session_id_string);

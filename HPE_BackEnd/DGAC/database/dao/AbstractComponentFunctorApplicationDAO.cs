@@ -3,7 +3,8 @@ using System.IO;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -22,7 +23,7 @@ public class AbstractComponentFunctorApplicationDAO{
             "INSERT INTO abstractcomponentfunctorapplication (id_functor_app, id_abstract, id_functor_app_next)" +
             "VALUES (" + ac.Id_functor_app + "," + ac.Id_abstract + "," +  ac.Id_functor_app_next + ")";
 
-     Console.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
+     Trace.WriteLine("AbstractComponentFunctorApplication.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
 
@@ -66,7 +67,7 @@ public class AbstractComponentFunctorApplicationDAO{
 			
 	   if (acfa==null) 
 	   {
-	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA NOT FOUND "+ id_functor_app);
+	  	  Trace.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA NOT FOUND "+ id_functor_app);
 	   }
 			
        return acfa;
@@ -98,7 +99,7 @@ public class AbstractComponentFunctorApplicationDAO{
 			
 //	   if (acfa==null) 
 //	   {
-//	  	  Console.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
+//	  	  Trace.WriteLine("AbstractComponentFunctorApplicationDAO.cs: ACFA \"NEXT\" NOT FOUND "+ id_functor_app_next);
 //	   }
 			
        return acfa;

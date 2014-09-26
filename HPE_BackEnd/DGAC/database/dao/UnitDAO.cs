@@ -3,7 +3,8 @@ using System.IO;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -46,7 +47,7 @@ public class UnitDAO{
             "INSERT INTO unit (id_unit, id_abstract, id_interface, id_concrete, assembly_string, id_unit_super, unit_replica, class_name, class_nargs, uri_source, `order`)" +
             " VALUES ('" + ac.Id_unit  + "',"+ ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Id_concrete + ",'" + ac.Assembly_string +"','"+ ac.Id_unit_super + "',"+  ac.Unit_replica + ",'" + ac.Class_name + "',"+ac.Class_nargs+ ",'" + ac.URI_Source +"'," + ac.Order + ")";
 
-   		Console.WriteLine("Unit.cs: TRY INSERT 1: " + sql);
+   		Trace.WriteLine("Unit.cs: TRY INSERT 1: " + sql);
 
         Connector.performSQLUpdate(sql);
     }

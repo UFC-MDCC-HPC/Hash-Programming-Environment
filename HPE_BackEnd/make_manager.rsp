@@ -6,9 +6,11 @@
 -out:./bin/ManagerService.exe
 
 manager/RemotingServerManager.cs 
+manager/CommandLine.cs
 
 -r:DGAC
  
+-define:DEBUG;TRACE
 -target:exe
  
 

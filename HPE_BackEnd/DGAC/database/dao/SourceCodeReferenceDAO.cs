@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Data;
+using System.Diagnostics;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
@@ -24,7 +25,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             foreach (SourceCodeReference extRef in list(scr.Type_owner, scr.Id_owner_container, scr.Id_owner, scr.File_name))
             {
-				Console.WriteLine("SOURCE CODE EXTERNAL REFERENCE " + extRef.Reference);
+				Trace.WriteLine("SOURCE CODE EXTERNAL REFERENCE " + extRef.Reference);
                 extRefs.Add(extRef.Reference);
             }
 

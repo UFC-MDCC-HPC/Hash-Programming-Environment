@@ -4,7 +4,8 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -30,7 +31,7 @@ public class InterfaceActionDAO
 					     + ac.Protocol + "'," 
 					     + (ac.IsCondition ? "1" : "0") + ")";
 
-   		Console.WriteLine("InterfaceAction.cs: TRY INSERT: " + sql);
+   		Trace.WriteLine("InterfaceAction.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
     }

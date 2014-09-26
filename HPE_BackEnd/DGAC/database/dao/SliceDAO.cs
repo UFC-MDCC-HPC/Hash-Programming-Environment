@@ -3,7 +3,8 @@ using System.IO;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
@@ -18,7 +19,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				"INSERT INTO slice (id_abstract, id_interface, unit_replica_host, id_interface_slice, id_inner, slice_replica, inner_replica, unit_replica, transitive, property_name)" +
 				" VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface + "'," + ac.Unit_replica_host + ",'" + ac.Id_interface_slice + "','" + ac.Id_inner + "'," + ac.Slice_replica + "," + ac.Inner_replica + "," + ac.Unit_replica + "," + (ac.Transitive ? -1 : 0) + ",'" + ac.PortName + "')";
 			
-			Console.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
+			Trace.WriteLine("SliceDAO.cs: TRY INSERT SLICE : " + sql);
 			
             Connector.performSQLUpdate(sql);
 		
@@ -77,7 +78,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			
 		    if (s==null) 
 		    {
-		  	   Console.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice + ", slice_replica=" + slice_replica);
+		  	   Trace.WriteLine("SliceDAO.cs: Slice NOT FOUND " + "id_abstract=" + id_abstract + ", id_inner=" + id_inner + ", id_interface_slice=" + id_interface_slice + ", slice_replica=" + slice_replica);
 		    }
 				
             return s;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 using br.ufc.pargo.hpe.backend.DGAC.database;
+using System.Diagnostics;
 
 namespace HPE_DGAC_LoadDB
 {
@@ -186,7 +187,7 @@ namespace HPE_DGAC_LoadDB
 					int unit_replica = /*u.unit_replicaSpecified ? */ u.unit_replica /*: slice_replica*/;
 
 					string sRef = mkSliceRef(cRef, uRef, slice_replica);
-					Console.WriteLine("loadSliceReplicaToUnitReplicaMapping sRef=" + sRef + ","+unit_replica);
+					Trace.WriteLine("loadSliceReplicaToUnitReplicaMapping sRef=" + sRef + ","+unit_replica);
 					if (!sliceToUnitReplicaMapping.ContainsKey(sRef))
 						sliceToUnitReplicaMapping.Add(sRef, unit_replica);
 				}
@@ -206,7 +207,7 @@ namespace HPE_DGAC_LoadDB
 				if (!innersByVarName.ContainsKey(ir.varName))
 					innersByVarName.Add(ir.varName, ic);
 				else
-					Console.WriteLine("ALREADY EXISTS - key=" + ir.varName + ", value=" + ic.localRef);
+					Trace.WriteLine("ALREADY EXISTS - key=" + ir.varName + ", value=" + ic.localRef);
             }
 
             if (parameterSupply != null) foreach (ParameterSupplyType ir in parameterSupply)
@@ -215,14 +216,14 @@ namespace HPE_DGAC_LoadDB
 				if (!innersByVarName.ContainsKey(ir.varName))
 					innersByVarName.Add(ir.varName, ic);
 				else
-					Console.WriteLine("ALREADY EXISTS - key=" + ir.varName + ", value=" + ic.localRef);
+					Trace.WriteLine("ALREADY EXISTS - key=" + ir.varName + ", value=" + ic.localRef);
             }
 
             if (inner != null)
             {
                 foreach (InnerComponentType c in inner)
                 {
-					Console.WriteLine("BEGIN loadInnerComponent : " + c.localRef + " :: " + c.location);
+					Trace.WriteLine("BEGIN loadInnerComponent : " + c.localRef + " :: " + c.location);
 
                     // innerAll.Add(c);
                     if (((isNotInSupply(c) || this.findInSlices(c.localRef)) 
@@ -257,7 +258,7 @@ namespace HPE_DGAC_LoadDB
                         {
                             foreach (InnerComponentType port in c.port)
                             {
-								Console.WriteLine("loadInnerComponent - BEGIN PORT " + port.localRef);
+								Trace.WriteLine("loadInnerComponent - BEGIN PORT " + port.localRef);
                                 // --------------------------------------------------
                                 string varName = null;
                                 int id_abstract_port = app.Id_abstract;
@@ -265,32 +266,32 @@ namespace HPE_DGAC_LoadDB
 								
                                 InnerComponent ic_port = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(id_abstract_port,id_inner_port);
 								
-								Console.WriteLine("loadInnerComponent - STEP 1");
+								Trace.WriteLine("loadInnerComponent - STEP 1");
 
                                 if (c.parameter != null && ic_port != null)
                                 {
                                     foreach (ParameterRenaming par in c.parameter)
                                     {
-										Console.WriteLine("loadInnerComponent - STEP 2 begin" + par.formFieldId + "-"+ par.varName);
+										Trace.WriteLine("loadInnerComponent - STEP 2 begin" + par.formFieldId + "-"+ par.varName);
                                         if (par.formFieldId.Equals(ic_port.Parameter_top))
                                         {
                                             varName = par.varName;
                                         }
-										Console.WriteLine("loadInnerComponent - STEP 2 end " + par.formFieldId + " - "+ par.varName);
+										Trace.WriteLine("loadInnerComponent - STEP 2 end " + par.formFieldId + " - "+ par.varName);
                                     }
                                 }
 
                                 InnerComponentType port_replace = port;
                                 if (varName != null)
                                 {
-									Console.WriteLine("loadInnerComponent - STEP 3 " + varName);
+									Trace.WriteLine("loadInnerComponent - STEP 3 " + varName);
 									foreach (KeyValuePair<string, InnerComponentType> iii in innersByVarName) 
 									{
-											Console.WriteLine("loadInnerComponent " + iii.Key + " --- " + iii.Value.localRef + " , " + iii.Value.location);
+											Trace.WriteLine("loadInnerComponent " + iii.Key + " --- " + iii.Value.localRef + " , " + iii.Value.location);
 									}
                                     innersByVarName.TryGetValue(varName, out port_replace);
 								} else
-									Console.WriteLine("loadInnerComponent - STEP 3 ");
+									Trace.WriteLine("loadInnerComponent - STEP 3 ");
 
 
                                 // --------------------------------------------------
@@ -300,23 +301,23 @@ namespace HPE_DGAC_LoadDB
                                 innerAll.Add(port);
 
                                 InnerComponent iNewPort = new InnerComponent();
-								Console.WriteLine("loadInnerComponent - STEP 3.1");
+								Trace.WriteLine("loadInnerComponent - STEP 3.1");
                                 iNewPort.Id_abstract_owner = absC.Id_abstract;
-								Console.WriteLine("loadInnerComponent - STEP 3.2");
+								Trace.WriteLine("loadInnerComponent - STEP 3.2");
                                 string old_port_localRef = port.localRef;
-								Console.WriteLine("loadInnerComponent - STEP 3.3");
+								Trace.WriteLine("loadInnerComponent - STEP 3.3");
                                 port.localRef = lookForRenamingNew(c.localRef, port.localRef);
-								Console.WriteLine("loadInnerComponent - STEP 3.4");
+								Trace.WriteLine("loadInnerComponent - STEP 3.4");
                                 iNewPort.Id_inner = port.localRef;                               
-								Console.WriteLine("loadInnerComponent - STEP 3.5");
+								Trace.WriteLine("loadInnerComponent - STEP 3.5");
                                 iNewPort.Parameter_top = port_replace.parameter_id;
-								Console.WriteLine("loadInnerComponent - STEP 3.6");
+								Trace.WriteLine("loadInnerComponent - STEP 3.6");
                                 iNewPort.Transitive = true;
-								Console.WriteLine("loadInnerComponent - STEP 3.7");
+								Trace.WriteLine("loadInnerComponent - STEP 3.7");
                                 iNewPort.IsPublic = port.exposed;
-								Console.WriteLine("loadInnerComponent - STEP 3.7");
+								Trace.WriteLine("loadInnerComponent - STEP 3.7");
 								iNewPort.Multiple = port.multipleSpecified ? port.multiple : false;
-								Console.WriteLine("loadInnerComponent - STEP 3.9");
+								Trace.WriteLine("loadInnerComponent - STEP 3.9");
 
                                 AbstractComponentFunctorApplication appPort = newAbstractComponentFunctorApplication(port_replace);
                                 if (appPort == null)
@@ -338,7 +339,7 @@ namespace HPE_DGAC_LoadDB
                                 if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNewPort.Id_abstract_owner, iNewPort.Id_inner) == null)
                                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.insert(iNewPort);
 								
-								Console.WriteLine("loadInnerComponent - END PORT " + port.localRef);
+								Trace.WriteLine("loadInnerComponent - END PORT " + port.localRef);
 
                             }
                         }
@@ -346,23 +347,23 @@ namespace HPE_DGAC_LoadDB
 
                         if (includeAsInner.Contains(c) && br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNew.Id_abstract_owner, iNew.Id_inner) != null)
                         {
-							Console.WriteLine("loadInnerComponent - BLOCK 2 OPEN");
+							Trace.WriteLine("loadInnerComponent - BLOCK 2 OPEN");
                             br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.remove(iNew.Id_abstract_owner, iNew.Id_inner);
                             br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
-							Console.WriteLine("loadInnerComponent - BLOCK 2 CLOSE");
+							Trace.WriteLine("loadInnerComponent - BLOCK 2 CLOSE");
                         }
                         else if (br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(iNew.Id_abstract_owner, iNew.Id_inner) == null)
                         {
-							Console.WriteLine("loadInnerComponent - BLOCK 3 OPEN");
+							Trace.WriteLine("loadInnerComponent - BLOCK 3 OPEN");
                             br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.insert(iNew);
-							Console.WriteLine("loadInnerComponent - BLOCK 3 CLOSE");
+							Trace.WriteLine("loadInnerComponent - BLOCK 3 CLOSE");
                         }
 
                     }
                     
 					loadSliceReplicaToUnitReplicaMapping(c);
 
-					Console.WriteLine("END loadInnerComponent : " + c.localRef + " :: " + c.location);
+					Trace.WriteLine("END loadInnerComponent : " + c.localRef + " :: " + c.location);
 
                 }
             }
@@ -407,7 +408,7 @@ namespace HPE_DGAC_LoadDB
 
         private void importInnerComponentsOfSupper(AbstractComponentFunctor absC, IList<InnerComponentType> includeAsInner)
         {
-			Console.WriteLine("importInnerComponentsOfSupper : " + "START");
+			Trace.WriteLine("importInnerComponentsOfSupper : " + "START");
             IDictionary<string, SupplyParameter> parsSuper = new Dictionary<string, SupplyParameter>();
 
             // Inner components of the supertype.
@@ -425,18 +426,18 @@ namespace HPE_DGAC_LoadDB
                 IList<InnerComponent> iss = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.list(acfa.Id_abstract);
 					foreach (InnerComponent i in iss) if (!i.IsPublic)
                 {
-						Console.WriteLine("importInnerComponentsOfSupper 1: " + i.Id_inner + " , " + i.Id_functor_app + " , "+ (i.Parameter_top));
+						Trace.WriteLine("importInnerComponentsOfSupper 1: " + i.Id_inner + " , " + i.Id_functor_app + " , "+ (i.Parameter_top));
 
                     InnerComponent iNew = new InnerComponent();
                     if (i.Parameter_top != null)
                     {
                         SupplyParameter sp = null; 
                         parsSuper.TryGetValue(i.Parameter_top, out sp);
-							Console.WriteLine("importInnerComponentsOfSupper 2: " + i.Parameter_top + "," + i.Id_inner);
+							Trace.WriteLine("importInnerComponentsOfSupper 2: " + i.Parameter_top + "," + i.Id_inner);
 
                         if (sp is SupplyParameterComponent)
                         {
-							Console.WriteLine("importInnerComponentsOfSupper 3: " + "sp is SupplyParameterComponent");
+							Trace.WriteLine("importInnerComponentsOfSupper 3: " + "sp is SupplyParameterComponent");
 
                             // 1th CASE: It is not a parameter in the actual component.
                             // NOT YET TESTED !!!
@@ -453,7 +454,7 @@ namespace HPE_DGAC_LoadDB
                         }
                         else if (sp is SupplyParameterParameter)
                         {
-							Console.WriteLine("importInnerComponentsOfSupper 4: " + "sp is SupplyParameterParameter");
+							Trace.WriteLine("importInnerComponentsOfSupper 4: " + "sp is SupplyParameterParameter");
                             // 2nd CASE: It continues to be a parameter in the actual component.
                             SupplyParameterParameter spp = (SupplyParameterParameter)sp;
 
@@ -498,7 +499,7 @@ namespace HPE_DGAC_LoadDB
                     }
                 }
             }
-			Console.WriteLine("importInnerComponentsOfSupper : " + "FINISH");
+			Trace.WriteLine("importInnerComponentsOfSupper : " + "FINISH");
         }
 
 
@@ -534,10 +535,10 @@ namespace HPE_DGAC_LoadDB
 					if (parsSuper.Count >0) {
 						foreach (KeyValuePair<string, SupplyParameter> p in parsSuper)
 						{
-							Console.WriteLine("Key=" + p.Key + ", Value=" + p.Value.Id_abstract);
+							Trace.WriteLine("Key=" + p.Key + ", Value=" + p.Value.Id_abstract);
 						} 
 					}
-					else Console.WriteLine("parSupers EMPTY !!!!!!");
+					else Trace.WriteLine("parSupers EMPTY !!!!!!");
 
                     if (parsSuper.TryGetValue(spp.Id_argument, out spSuper))
 					{
@@ -545,18 +546,18 @@ namespace HPE_DGAC_LoadDB
 	                    {
 	                        SupplyParameterComponent spcSuper = (SupplyParameterComponent)spSuper;
 	                        spNew = new SupplyParameterComponent();
-								Console.WriteLine("liftFunctorApp: 1" + (spNew==null));
+								Trace.WriteLine("liftFunctorApp: 1" + (spNew==null));
 	                        SupplyParameterComponent spcNew = (SupplyParameterComponent)spNew;
 	
 	                        spcNew.Id_functor_app = acfaNew.Id_functor_app;
 	                        spcNew.Id_abstract = spSuper.Id_abstract;
 	                        spcNew.Id_parameter = spp.Id_parameter;
 	                        spcNew.Id_functor_app_actual = spSuper.Id_functor_app;
-								Console.WriteLine("liftFunctorApp: 2" + (spcNew==null));
+								Trace.WriteLine("liftFunctorApp: 2" + (spcNew==null));
 	                    }
 	                    else if (spSuper is SupplyParameterParameter)
 	                    {
-								Console.WriteLine("liftFunctorApp: 3" + (spNew==null));
+								Trace.WriteLine("liftFunctorApp: 3" + (spNew==null));
 	                        SupplyParameterParameter sppSuper = (SupplyParameterParameter)spSuper;
 	                        spNew = new SupplyParameterParameter();
 	                        SupplyParameterParameter sppNew = (SupplyParameterParameter)spNew;
@@ -566,10 +567,10 @@ namespace HPE_DGAC_LoadDB
 	                        sppNew.Id_parameter = spp.Id_argument;
 	                        sppNew.Id_argument = sppSuper.Id_argument;
 	                        sppNew.FreeVariable = spp.FreeVariable;
-								Console.WriteLine("liftFunctorApp: 4" + (sppNew==null));
+								Trace.WriteLine("liftFunctorApp: 4" + (sppNew==null));
 	                    }
 						else {
-								Console.WriteLine("liftFunctorApp: 5 " + (spp.Id_argument));
+								Trace.WriteLine("liftFunctorApp: 5 " + (spp.Id_argument));
 						}
 					}
 					else 
@@ -645,7 +646,7 @@ namespace HPE_DGAC_LoadDB
             if (parameter != null) 
                 foreach (ParameterType parameter_ in parameter)
                 {
-						Console.WriteLine("loadAbstractComponentFunctorParameters : PARAMETER " + parameter_.componentRef + ":" + parameter_.formFieldId);
+						Trace.WriteLine("loadAbstractComponentFunctorParameters : PARAMETER " + parameter_.componentRef + ":" + parameter_.formFieldId);
                     AbstractComponentFunctorParameter p = new AbstractComponentFunctorParameter();
 
                     p.Id_abstract = c_.Id_abstract;
@@ -664,7 +665,7 @@ namespace HPE_DGAC_LoadDB
 
                     pars.Add(p);
                 }
-			Console.WriteLine("loadAbstractComponentFunctorParameters : END");
+			Trace.WriteLine("loadAbstractComponentFunctorParameters : END");
             return pars;
         }
 

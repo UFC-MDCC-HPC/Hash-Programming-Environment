@@ -67,7 +67,7 @@ public class CommandLineUtil {
               foreach (string reference in references)
                   mounted_references += " -r:\"" + reference + (reference.EndsWith(".dll") ? "" : ".dll") + "\"";
               
-          Console.WriteLine(mounted_references);
+          Trace.WriteLine(mounted_references);
 
           // CREATE THE FILE <moduleName>.cs in the temporary directory with <contents> as the contents:
 
@@ -125,7 +125,7 @@ public class CommandLineUtil {
               {
                   mounted_references += " -r:\"" + reference + (reference.EndsWith(".dll") ? "" : ".dll") + "\"";
               }
-          Console.WriteLine(mounted_references);
+          Trace.WriteLine(mounted_references);
 
           // CREATE THE FILE <moduleName>.cs in the temporary directory with <contents> as the contents:
 
@@ -163,7 +163,7 @@ public class CommandLineUtil {
       string fileTarget = pathTarget + Path.DirectorySeparatorChar + assembly + ".dll";
       if (!Directory.Exists(pathTarget))
       {
-	  Console.WriteLine("From " + fileSource + " to " + fileTarget);
+	  Trace.WriteLine("From " + fileSource + " to " + fileTarget);
           Directory.CreateDirectory(pathTarget);
       }
       File.Copy(fileSource, fileTarget, true);
@@ -236,7 +236,7 @@ public class CommandLineUtil {
             }
         }
 
-        Console.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
+        Trace.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
 
         try
         {
@@ -259,13 +259,13 @@ public class CommandLineUtil {
         }
         catch (System.ComponentModel.Win32Exception w)
         {
-            Console.WriteLine("Message: " + w.Message);
-            Console.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
-            Console.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
-            Console.WriteLine("StackTrace: " + w.StackTrace);
-            Console.WriteLine("Source: " + w.Source);
+            Trace.WriteLine("Message: " + w.Message);
+            Trace.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
+            Trace.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
+            Trace.WriteLine("StackTrace: " + w.StackTrace);
+            Trace.WriteLine("Source: " + w.Source);
             Exception e = w.GetBaseException();
-            Console.WriteLine("Base Exception Message: " + e.Message);
+            Trace.WriteLine("Base Exception Message: " + e.Message);
 
             throw w;
         }

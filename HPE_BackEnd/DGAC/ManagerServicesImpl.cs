@@ -8,6 +8,9 @@ using System.Threading;
 using System;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
+using System.Diagnostics;
+
+
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
 	public interface ManagerServices : gov.cca.Services 
@@ -72,26 +75,26 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 		void Services.releasePort (string portName)
 		{
-			Console.WriteLine ("RELEASE PORT 1 " + portName);
+			Trace.WriteLine ("RELEASE PORT 1 " + portName);
 
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
-				Console.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
+				Trace.WriteLine ("RELEASE PORT 2 - i=" + i + " - nodes[i]=" + nodes[i]  /*+ " - " + WorkerServices.Length + " - " + nodes.Length*/);
 				gov.cca.Services ws = WorkerServices[nodes[i]];
 				try {
 					ws.releasePort(portName);
 				}
 				catch (CCAExceptionImpl e)
 			    {
-					Console.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
+					Trace.WriteLine ("RELEASE PORT 3 " + portName + " - i=" + i + " - nodes[i]=" + nodes[i]);
 					//if (e.getCCAExceptionType () != CCAExceptionType.PortNotDefined)
 					//	throw e;
 				}
 			}
-			Console.WriteLine ("RELEASE PORT 4 " + portName);
+			Trace.WriteLine ("RELEASE PORT 4 " + portName);
 			frw.releasePort(mkPortName(portName));
-			Console.WriteLine ("RELEASE PORT 5 " + portName);
+			Trace.WriteLine ("RELEASE PORT 5 " + portName);
 		}
 
 		gov.cca.TypeMap Services.createTypeMap ()

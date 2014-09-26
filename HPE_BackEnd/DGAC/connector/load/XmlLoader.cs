@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System;
 using br.ufc.pargo.hpe.basic;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.connector.load
 {
@@ -40,7 +41,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		public ReconfigurationRequest loadRequest (string xml, MetaHashComponent component)
 		{
 			ReconfigurationRequest request = null;
-			System.Console.WriteLine("[XmlLoader.loadRequest] Iniciando carga de script de reconfiguração... ");
+			Trace.WriteLine("[XmlLoader.loadRequest] Iniciando carga de script de reconfiguração... ");
          
 			if (true/*validator.IsValid (REQUEST_XSD, xml)*/) {
             
@@ -57,24 +58,24 @@ namespace br.ufc.pargo.hpe.connector.load
 				data = nodeRequest.SelectSingleNode ("targetComponent");
 				request.TargetComponent = data.InnerText;
 				
-				//System.Console.WriteLine("[XmlLoader.LoadRequest] Obtendo componente alvo {0}", request.TargetComponent);
+				//Trace.WriteLine("[XmlLoader.LoadRequest] Obtendo componente alvo {0}", request.TargetComponent);
 				
 				List<MetaParameter> parameterList = uLoader.getParameters (nodeRequest.SelectNodes ("parameter"));
 				
 				if (parameterList != null) {
-					System.Console.WriteLine("[XmlLoader.LoadRequest] Carregando as reconfigurações estruturais...");
+					Trace.WriteLine("[XmlLoader.LoadRequest] Carregando as reconfigurações estruturais...");
 					request.StructuralRequest = new StructuralReconfigurationRequest (parameterList);
 				}
             
 				BehavioralReconfigurationRequest behavioralRequest = null;
 
 				List<MetaInnerComponent> innerComponents = generateInnerComponents (nodeRequest.SelectNodes ("innerComponent"));
-				//System.Console.WriteLine("[XmlLoader.LoadRequest] Tem innerComponent para adicionar? {0}", innerComponents != null);
+				//Trace.WriteLine("[XmlLoader.LoadRequest] Tem innerComponent para adicionar? {0}", innerComponents != null);
 				if (innerComponents != null) {
 					behavioralRequest = new BehavioralReconfigurationRequest ();
 					
-					System.Console.WriteLine("[XmlLoader.LoadRequest] Carregando novos componentes aninhados...");
-					//System.Console.WriteLine("[XmlLoader.LoadRequest] {0} InnerComponent(s) adicionado(s)", innerComponents.Count);
+					Trace.WriteLine("[XmlLoader.LoadRequest] Carregando novos componentes aninhados...");
+					//Trace.WriteLine("[XmlLoader.LoadRequest] {0} InnerComponent(s) adicionado(s)", innerComponents.Count);
 					behavioralRequest.NewInnerComponents = innerComponents;
 					uLoader.CandidateInnerComponents = innerComponents;
 				}
@@ -83,7 +84,7 @@ namespace br.ufc.pargo.hpe.connector.load
 				XmlNodeList changeActionList = nodeRequest.SelectNodes ("changeAction");
 
 				if (changeActionList != null) {
-					System.Console.WriteLine("[XmlLoader.LoadRequest] Carregando as reconfigurações comportamentais...");
+					Trace.WriteLine("[XmlLoader.LoadRequest] Carregando as reconfigurações comportamentais...");
 					IEnumerator ienum = changeActionList.GetEnumerator ();
 					BehavioralChange change;
 					XmlNode changeNode;
@@ -100,25 +101,25 @@ namespace br.ufc.pargo.hpe.connector.load
 						changeNode = (XmlNode)ienum.Current;
                   
 						change = new BehavioralChange ();
-						//System.Console.WriteLine("[XmlLoader.LoadRequest] Criando uma nova BehavioralChange");
+						//Trace.WriteLine("[XmlLoader.LoadRequest] Criando uma nova BehavioralChange");
 						initialCode = generator.getCurrentCode ();
                   
 						attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("unit");
 						change.Unit = attr.Value;
-						//System.Console.WriteLine("[XmlLoader.LoadRequest] Unit a sofrer alteração: {0}", change.Unit);
+						//Trace.WriteLine("[XmlLoader.LoadRequest] Unit a sofrer alteração: {0}", change.Unit);
 
 						MetaUnit u = component.Units[change.Unit];
 
 						if (u != null) {
-							//System.Console.WriteLine("[XmlLoader.LoadRequest] Unit {0} encontrada!", change.Unit);
+							//Trace.WriteLine("[XmlLoader.LoadRequest] Unit {0} encontrada!", change.Unit);
 
 							attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("action");
 							change.Action = attr.Value;
-							//System.Console.WriteLine("[XmlLoader.LoadRequest] Ação a sofrer alteração: {0}", change.Action);
+							//Trace.WriteLine("[XmlLoader.LoadRequest] Ação a sofrer alteração: {0}", change.Action);
 							MetaAction a = u.Actions[change.Action];
 
 							if(a != null && !a.IsNative) {
-								//System.Console.WriteLine("[XmlLoader.LoadRequest] Ação {0} encontrada!", change.Action);
+								//Trace.WriteLine("[XmlLoader.LoadRequest] Ação {0} encontrada!", change.Action);
 								attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("type");
 								if (attr.Value.Equals ("remove")) {
 									change.Type = BehavioralChange.BehavioralChangeType.REMOVE;
@@ -129,24 +130,24 @@ namespace br.ufc.pargo.hpe.connector.load
 								attr = (XmlAttribute)changeNode.Attributes.GetNamedItem ("point");
 								change.Point = attr.Value;
 								
-								//System.Console.WriteLine("[XmlLoader.LoadRequest] Ponto a sofrer alteração: {0}", change.Point);
+								//Trace.WriteLine("[XmlLoader.LoadRequest] Ponto a sofrer alteração: {0}", change.Point);
 								Transition t = a.Protocol.getTransition(change.Point);
 
 								if(t != null) {
-									//System.Console.WriteLine("[XmlLoader.LoadRequest] Ponto {0} encontrado.", change.Point);
+									//Trace.WriteLine("[XmlLoader.LoadRequest] Ponto {0} encontrado.", change.Point);
 									change.NewSlices = uLoader.getSlices (changeNode.SelectNodes ("slice"));
 									uLoader.CandidateSlices = change.NewSlices;
 
 									if(change.Type == BehavioralChange.BehavioralChangeType.INCLUDE) {
-										//System.Console.WriteLine("[XmlLoader.LoadRequest] Obtendo novo protocolo");
+										//Trace.WriteLine("[XmlLoader.LoadRequest] Obtendo novo protocolo");
 										change.Transitions = uLoader.getTransitions (changeNode.SelectSingleNode ("protocol").FirstChild, u, t.InitialState, t.FinalState, a.Protocol.NumStates + aditionalStates, a.Protocol.LastTransationId + aditionalTrans);
 									
 										aditionalStates = uLoader.NumStates - a.Protocol.NumStates;
 										aditionalTrans = uLoader.NumTransations - a.Protocol.LastTransationId;
 										//TODO remover
-										//System.Console.WriteLine("Transações de reconfiguração");
+										//Trace.WriteLine("Transações de reconfiguração");
 										//foreach(Transition tst in change.Transitions) {
-										//	System.Console.WriteLine(tst);
+										//	Trace.WriteLine(tst);
 										//}
 									} else {
 										change.Transitions = new List<Transition>();
@@ -175,7 +176,7 @@ namespace br.ufc.pargo.hpe.connector.load
 			uLoader.CandidateSlices = null;
 			uLoader.CandidateInnerComponents = null;
 			
-			System.Console.WriteLine("[XmlLoader.loadRequest] Carga de script realizada com sucesso!");
+			Trace.WriteLine("[XmlLoader.loadRequest] Carga de script realizada com sucesso!");
 			return request;
 		}
 
@@ -183,7 +184,7 @@ namespace br.ufc.pargo.hpe.connector.load
 		{
          
 			MetaHashComponent component = null;
-         	System.Console.WriteLine("[XmlLoader.loadComponent] Iniciando carga de arquivo de configuração... {0}", xml);
+         	Trace.WriteLine("[XmlLoader.loadComponent] Iniciando carga de arquivo de configuração... {0}", xml);
 			
 			if (true/*validator.IsValid (COMPONENT_XSD, xml)*/) {
 				clear ();
@@ -196,12 +197,12 @@ namespace br.ufc.pargo.hpe.connector.load
 				document.Load (xml);
             
 				XmlNode nodeComponent = document.SelectSingleNode("hashComponent");
-				System.Console.WriteLine("[XmlLoader.loadComponente] ponto 1!");
+				Trace.WriteLine("[XmlLoader.loadComponente] ponto 1!");
 				
 				component.Package = nodeComponent.SelectSingleNode ("package").InnerText;
 				XmlNodeList usingNodeList = nodeComponent.SelectNodes ("using");
             
-				System.Console.WriteLine("[XmlLoader.loadComponente] ponto 1.1!");
+				Trace.WriteLine("[XmlLoader.loadComponente] ponto 1.1!");
 				IEnumerator ienum = usingNodeList.GetEnumerator ();
 				List<string> usingList = new List<string> ();
             
@@ -210,12 +211,12 @@ namespace br.ufc.pargo.hpe.connector.load
 					usingList.Add (usingNode.InnerText);
 				}
             
-				System.Console.WriteLine("[XmlLoader.loadComponente] ponto 1.2!");
+				Trace.WriteLine("[XmlLoader.loadComponente] ponto 1.2!");
 				if (usingList.Count > 0) {
 					component.UsingList = usingList;
 				}
             
-				System.Console.WriteLine("[XmlLoader.loadComponente] Ponto 2!");
+				Trace.WriteLine("[XmlLoader.loadComponente] Ponto 2!");
 				component.Kind = nodeComponent.SelectSingleNode ("kind").InnerText;
 				component.Name = nodeComponent.SelectSingleNode ("name").InnerText;
             
@@ -234,7 +235,7 @@ namespace br.ufc.pargo.hpe.connector.load
 				XmlNodeList unitList = nodeComponent.SelectNodes ("unit");
 				component.Units = uLoader.getUnits (unitList);
 				
-				System.Console.WriteLine("[XmlLoader.loadComponente] Ponto 3!");
+				Trace.WriteLine("[XmlLoader.loadComponente] Ponto 3!");
 				
 				foreach (MetaUnit mu in component.Units.Values) {
 
@@ -268,7 +269,7 @@ namespace br.ufc.pargo.hpe.connector.load
 				component.LastIdCode = generator.getCurrentCode ();
 			}
 			
-			System.Console.WriteLine("[XmlLoader.loadComponente] Carga realizada com sucesso!");
+			Trace.WriteLine("[XmlLoader.loadComponente] Carga realizada com sucesso!");
 			return component;
 		}
 

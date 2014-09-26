@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Data;
 using System.Web;
 using System.Collections;
@@ -27,8 +28,17 @@ namespace Back_End_WS
 		  	
 	    public BackEnd_WS()
 		{
-
+			BackEnd.startManager();
+			Console.WriteLine ("Manager STARTED !!");
+			BackEnd.stopManager();
+			Console.WriteLine ("Manager STOPED !!");
 		}
+
+//		~BackEnd_WS()
+//		{
+//		BackEnd.stopManager();
+//			Console.WriteLine ("Manager STOPED !!");
+//		}
 
 		[WebMethod]
 		public string getSiteName()
@@ -125,23 +135,6 @@ namespace Back_End_WS
         }
 
 
-        [WebMethod]
-        public string[] runApplication(int id_concrete, string[] eIds, int[] eVls, string userName, string password, string curDir)
-        {
-		
-            Console.WriteLine("STEP -1");	
-            string[] str_output = null;
-            try
-            {
-                str_output = null; //dgac.runApplication(id_concrete, eIds, eVls, userName, password, curDir);
-            }
-            catch (Exception e)
-            {
-                str_output = new String[1];
-                str_output[0] = "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
-            }
-            return str_output;
-        }
 
 
         [WebMethod]
@@ -159,24 +152,19 @@ namespace Back_End_WS
 
 		#region Sessions
 
-		private IDictionary<SessionID, BackEnd> dgac_sessions = null;
-
 		[WebMethod]
-		public SessionID openSession()
+		public string openSession(string session_id)
 		{
-			if (dgac_sessions == null)
-				dgac_sessions = new Dictionary<SessionID, BackEnd> ();
-
 			BackEnd dgac = new BackEnd();
 
-			SessionID session_id = new SessionID();
-			dgac_sessions.Add (session_id, dgac);
+			BackEnd.startManager(session_id);
+
 
 			return session_id;
 		}
 
-		[Serializable]
-		public class SessionID
+		[WebMethod]
+		public void closeSession(string session_id)
 		{
 		}
 
@@ -185,6 +173,29 @@ namespace Back_End_WS
 		// ligar portas
 
 		// executar
+
+		[WebMethod]
+		public string[] runApplication(string instantiator_string, string session)
+		{
+			string[] str_output = null;
+			BackEnd dgac = null;
+			if (dgac != null) 
+			{
+				try 
+				{
+					str_output = dgac.runApplication (instantiator_string);
+				} catch (Exception e) 
+				{
+					str_output = new String[1];
+					str_output [0] = "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
+				}
+			}
+			return str_output;
+		}
+
+
+
+
 
 
 

@@ -3,7 +3,8 @@ using System.IO;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -13,7 +14,7 @@ public class SupplyParameterDAO{
 
     public void insert(SupplyParameter ac)
     {
-			Console.WriteLine("SupplyParameter.cs: TRY INSERT 1: " + (ac==null));
+			Trace.WriteLine("SupplyParameter.cs: TRY INSERT 1: " + (ac==null));
 
         String sql1 =
             "INSERT INTO supplyparameter (id_parameter, id_functor_app, id_abstract)" +
@@ -24,7 +25,7 @@ public class SupplyParameterDAO{
 
         if (ac is SupplyParameterComponent)
         {
-   			Console.WriteLine("SupplyParameter.cs: TRY INSERT 2: ");
+   			Trace.WriteLine("SupplyParameter.cs: TRY INSERT 2: ");
             SupplyParameterComponent acc = (SupplyParameterComponent)ac;
             sql2 =
             "INSERT INTO supplyparametercomponent (id_parameter, id_functor_app, id_functor_app_actual)" +
@@ -32,15 +33,15 @@ public class SupplyParameterDAO{
         }
         else if (ac is SupplyParameterParameter)
         {
-   			Console.WriteLine("SupplyParameter.cs: TRY INSERT 3: ");
+   			Trace.WriteLine("SupplyParameter.cs: TRY INSERT 3: ");
             SupplyParameterParameter acp = (SupplyParameterParameter) ac;
             sql2 =
             "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
             " VALUES ('" + acp.Id_parameter + "'," + acp.Id_functor_app + ",'" + acp.Id_argument + "'," + (acp.FreeVariable ? 1 : 0) + ")";
         }
 
-   		Console.WriteLine("SupplyParameter.cs: TRY INSERT 4: " + sql1);
-   		Console.WriteLine("SupplyParameter.cs: TRY INSERT 5: " + sql2);
+   		Trace.WriteLine("SupplyParameter.cs: TRY INSERT 4: " + sql1);
+   		Trace.WriteLine("SupplyParameter.cs: TRY INSERT 5: " + sql2);
 
         Connector.performSQLUpdate(sql1);
         Connector.performSQLUpdate(sql2);
@@ -129,7 +130,7 @@ public class SupplyParameterDAO{
 			
 	   if (spc==null) 
 	   {
-	  	  Console.WriteLine("SupplyParameterDAO.cs: PARAMETER NOT FOUND "+ id_parameter + "," + id_functor_app);
+	  	  Trace.WriteLine("SupplyParameterDAO.cs: PARAMETER NOT FOUND "+ id_parameter + "," + id_functor_app);
 	   }
 			
        return spc;

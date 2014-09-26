@@ -22,6 +22,7 @@ using gov.cca;
 using gov.cca.ports;
 
 using br.ufc.pargo.hpe.backend.DGAC;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.connector.config
 {
@@ -100,7 +101,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			
 			foreach (MetaUnit u in application.Units.Values) 
 			{
-				//Console.WriteLine("[ConfigurationManager.LoadComponent] Unit {0}", the_unit.CID.getInstanceName);
+				//Trace.WriteLine("[ConfigurationManager.LoadComponent] Unit {0}", the_unit.CID.getInstanceName);
 				if (u.Name.Equals (this.unitName)) {
 					this.unit = u;
 					//u.Index = this.index;
@@ -113,7 +114,7 @@ namespace br.ufc.pargo.hpe.connector.config
 			}
 			
 			ready = true;
-			Console.WriteLine("[ConfigurationManager.LoadComponent] Unidade {0} carregada e apta para execução.", the_unit.CID.getInstanceName());
+			Trace.WriteLine("[ConfigurationManager.LoadComponent] Unidade {0} carregada e apta para execução.", the_unit.CID.getInstanceName());
 			N = the_unit.CID.getInstanceName().Equals ("app.adi_solver3D-adi");
 			
 		}
@@ -127,7 +128,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Run (string actionName)
 		{
-			//System.Diagnostics.Debug.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
+			//System.Diagnostics.Trace.WriteLine("[ConfigurationManager.Run] iniciando a ação " + actionName);
 			MetaAction action = null;
          
 			if (unit != null && unit.Entity != null) {
@@ -163,25 +164,25 @@ namespace br.ufc.pargo.hpe.connector.config
 
 		public bool EvaluateReconfiguration (string xmlRequest)
 		{
-			Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Iniciando avaliação da reconfiguração...");
+			Trace.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Iniciando avaliação da reconfiguração...");
 			ReconfigurationRequest r = loader.loadRequest (xmlRequest, application);
 			
 			if(r.StructuralRequest != null) {
-				Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Identificando os componentes impactos...");	
+				Trace.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Identificando os componentes impactos...");	
 				r.StructuralRequest.GenerateChanges(application);
 			}
 
-			//Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Requisição construída a partir do arquivo: " + xmlRequest);
+			//Trace.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Requisição construída a partir do arquivo: " + xmlRequest);
 			bool result = EvaluateReconfiguration(r); 
 			
-			Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliação Concluída!");
-			Console.WriteLine("");
+			Trace.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliação Concluída!");
+			Trace.WriteLine("");
 			return result;
 		}
 
 		public bool EvaluateReconfiguration (ReconfigurationRequest request)
 		{
-			//Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliando a reconfiguração");
+			//Trace.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliando a reconfiguração");
 			lock (thisLock) {
 				if (!reconfiguring) {
                
@@ -203,7 +204,7 @@ namespace br.ufc.pargo.hpe.connector.config
 						" Esta deverá ser confirmada ou cancelada antes de nova submissão.");
 				}
 			}
-			//Console.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliação Finalizada");
+			//Trace.WriteLine("[ConfigurationManager.EvaluateReconfiguration] Avaliação Finalizada");
 		}
 		
 		/*public bool CommitReconfiguration ()
@@ -219,7 +220,7 @@ namespace br.ufc.pargo.hpe.connector.config
 		{
 			Configuration protocol;
          
-			Console.WriteLine("[ConfigurationManager.Commit] Aplicando a reconfiguração...");
+			Trace.WriteLine("[ConfigurationManager.Commit] Aplicando a reconfiguração...");
 			lock (thisLock) {
 				if (reconfiguring) {
                
@@ -228,13 +229,13 @@ namespace br.ufc.pargo.hpe.connector.config
 						protocol = unit.Actions [es.ActionName].Protocol;
 						protocol.stopStates (es.StatesToStop);
 						WaitForSafeState (protocol.ReconfigMonitor, es);
-						Console.WriteLine("[ConfigurationManager.Commit] Estado seguro para reconfiguração!");
+						Trace.WriteLine("[ConfigurationManager.Commit] Estado seguro para reconfiguração!");
 						
 						if (request.StructuralRequest != null && request.StructuralRequest.Changes != null) {
-							Console.WriteLine("[ConfigurationManager.Commit] Aplicando reconfigurações estruturais...");
+							Trace.WriteLine("[ConfigurationManager.Commit] Aplicando reconfigurações estruturais...");
 							foreach (StructuralChange sc in request.StructuralRequest.Changes) {
 								if(SecurityAnalyzer.isChangeConcrete(sc)) {
-									Console.WriteLine("[ConfigurationManager.Commit] Reconfigurando a unidade {0}", sc.Old.Name);
+									Trace.WriteLine("[ConfigurationManager.Commit] Reconfigurando a unidade {0}", sc.Old.Name);
 									createConcreteUnit(sc.New, ((IUnit)sc.Old.Entity).CID.getInstanceName() /*+ "(new)"*/);
 									SubstituteUnit(sc.Old, sc.New);
 								}
@@ -247,10 +248,10 @@ namespace br.ufc.pargo.hpe.connector.config
 							foreach (BehavioralChange bc in behavioralRequest.Changes) {
 											
 								if (bc.NewSlices != null) {
-									//Console.WriteLine("[ConfigurationManager.Commit] Adicionando novas fatias");
+									//Trace.WriteLine("[ConfigurationManager.Commit] Adicionando novas fatias");
 									foreach (MetaSlice slice in bc.NewSlices.Values) {
 										if (!unit.Slices.ContainsKey(slice.Inner)) {
-											Console.WriteLine("[ConfigurationManager.Commit] Adicionando fatia '{0}'...", slice.Inner);
+											Trace.WriteLine("[ConfigurationManager.Commit] Adicionando fatia '{0}'...", slice.Inner);
 											createConcreteUnit(slice.Unit, slice.Inner /*+ "(new)"*/);
 											unit.AddSlice (slice.Inner, slice);
 										}
@@ -276,7 +277,7 @@ namespace br.ufc.pargo.hpe.connector.config
 					this.evaluations = null;
 					this.request = null;
 					
-					Console.WriteLine("[ConfigurationManager.Commit] Reconfiguração aplicada!");
+					Trace.WriteLine("[ConfigurationManager.Commit] Reconfiguração aplicada!");
 					
 					return true;
 				}
@@ -297,26 +298,26 @@ namespace br.ufc.pargo.hpe.connector.config
 		protected void WaitForSafeState (IMonitor monitor, ExecutionStateEvaluation es)
 		{
          
-			//System.System.Diagnostics.Debug.WriteLine(es.ToString());
+			//System.System.Diagnostics.Trace.WriteLine(es.ToString());
 			if (es.CriticalActions != null) {
-				Console.WriteLine("[ConfigurationManager.WaitForSafeState] Aguardando estado seguro...");
+				Trace.WriteLine("[ConfigurationManager.WaitForSafeState] Aguardando estado seguro...");
 				waiting = monitor.isRunning (es.CriticalActions);
 				while (waiting) {
                
-					Console.WriteLine("[ConfigurationManager.WaitForSafeState] esperando...");
+					Trace.WriteLine("[ConfigurationManager.WaitForSafeState] esperando...");
 					System.Threading.WaitHandle.WaitAll (new System.Threading.ManualResetEvent[] {resetEvent});
 					waiting = monitor.isRunning (es.CriticalActions); 
 				}
 			}
-			Console.WriteLine("[ConfigurationManager.WaitForSafeState] Estados críticos OK...");
+			Trace.WriteLine("[ConfigurationManager.WaitForSafeState] Estados críticos OK...");
 			
 			if (es.CriticalIntervals != null) {
-				//Console.WriteLine("[ConfigurationManager.WaitForSafeState] Esperando intervalos críticos...");
+				//Trace.WriteLine("[ConfigurationManager.WaitForSafeState] Esperando intervalos críticos...");
 				foreach (Interval interval in es.CriticalIntervals) {
                
 					waiting = monitor.isRunning (interval.InitialState, interval.FinalState);
 					while (waiting) {
-                  		Console.WriteLine("[ConfigurationManager.WaitForSafeState] Esperando intervalos {0} - {1}", interval.InitialState, interval.FinalState);
+						Trace.WriteLine("[ConfigurationManager.WaitForSafeState] Esperando intervalos " + interval.InitialState + " - " + interval.FinalState);
 						System.Threading.WaitHandle.WaitAll (new System.Threading.ManualResetEvent[] {resetEvent});
 						waiting = monitor.isRunning (interval.InitialState, interval.FinalState);
 					}

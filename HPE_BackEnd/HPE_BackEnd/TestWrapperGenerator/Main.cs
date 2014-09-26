@@ -5,6 +5,7 @@ using System.CodeDom;
 using br.ufc.pargo.hpe.connector.config;
 using System.IO;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
+using System.Diagnostics;
 
 namespace TestWrapperGenerator
 {
@@ -25,7 +26,7 @@ namespace TestWrapperGenerator
 		        hcl_string = sr.ReadToEnd();                
 		    }
 		
-			Console.WriteLine(hcl_string);	
+			Trace.WriteLine(hcl_string);	
 				
 			configurationManager.LoadComponent(path);				
 			

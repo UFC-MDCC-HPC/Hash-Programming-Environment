@@ -116,7 +116,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         ~WorkerServicesImpl()
         {
-            //    Console.WriteLine("DESTRUCTOR " + session_id);
+            //    Trace.WriteLine("DESTRUCTOR " + session_id);
             //    foreach (hpe.basic.IUnit slice in slices)
             //    {
             //        slice.destroySlice();

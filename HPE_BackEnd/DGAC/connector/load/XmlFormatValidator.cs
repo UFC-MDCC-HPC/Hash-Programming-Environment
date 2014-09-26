@@ -39,12 +39,12 @@ namespace br.ufc.pargo.hpe.connector.load {
          if (e.Severity == XmlSeverityType.Warning)
           {
             System.Diagnostics.Debug.Write("WARNING: ");
-            System.Diagnostics.Debug.WriteLine(e.Message);
+            System.Diagnostics.Trace.WriteLine(e.Message);
          }
          else if (e.Severity == XmlSeverityType.Error)
           {
             System.Diagnostics.Debug.Write("ERROR: ");
-            System.Diagnostics.Debug.WriteLine(e.Message);
+            System.Diagnostics.Trace.WriteLine(e.Message);
             ErrorsCount++;
          }
       }

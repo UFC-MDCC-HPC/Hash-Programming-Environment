@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.utils
 {
@@ -17,9 +18,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 
         private static string getPropertiesFilePath()
         {
-			Console.Write("LOADING PROPERTIES FILE: ");
+			Trace.Write("LOADING PROPERTIES FILE: ");
             string properties_file_path = getArgVal("--properties");
-            Console.WriteLine(properties_file_path);
+            Trace.WriteLine(properties_file_path);
             if (properties_file_path == null)
             {
                 properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
@@ -33,7 +34,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
                     properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
                 }
             }
-			Console.WriteLine(properties_file_path);
+			Trace.WriteLine(properties_file_path);
             return properties_file_path;
         }
         public static int WORKER_PORT = 4865;

@@ -7,6 +7,7 @@
 using System;
 using br.ufc.pargo.hpe.basic;
 using gov.cca.ports;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.kinds
 {
@@ -30,7 +31,7 @@ namespace br.ufc.pargo.hpe.kinds
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine("Error in execution (go): {0} *** {1}", e.Message, e.StackTrace);
+				Trace.WriteLine("Error in execution (go): " + e.Message + " *** " + e.StackTrace);
 			}
 			finally
 			{

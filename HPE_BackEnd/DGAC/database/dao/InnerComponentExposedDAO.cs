@@ -5,6 +5,7 @@ using System.Data.OleDb;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
@@ -20,7 +21,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO innercomponentexposed (id_abstract, id_inner_rename, id_inner_owner, id_inner)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_inner_rename + "','" + ac.Id_inner_owner + "','" + ac.Id_inner + "')";
 
-		    Console.WriteLine("InnerComponentExposedDAO.cs: TRY INSERT PUBLIC INNER COMPONENT :" + sql);
+		    Trace.WriteLine("InnerComponentExposedDAO.cs: TRY INSERT PUBLIC INNER COMPONENT :" + sql);
 			
             Connector.performSQLUpdate(sql);
         }

@@ -6,10 +6,12 @@
 -out:./bin/WorkerService.exe
 
 worker/RemotingServerWorker.cs 
+./run_app/CommandLine.cs
 
 -r:/usr/lib/mono/DGAC/DGAC.dll
 -r:/usr/lib/mono/MPI/MPI.dll
  
+-define:DEBUG;TRACE
 -target:exe
  
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Data;
+using System.Diagnostics;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
@@ -11,7 +12,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
     {
         public void insert(SourceCode ac)
         {
-			String contents = ac.Contents.Replace ("'", "\'");
+			String contents = ac.Contents.Replace ("'", "\\'");
 
             String sql =
                 "INSERT INTO sourcecode (type_owner, id_owner_container, id_owner, contents, file_type, file_name, file_order)" +
@@ -59,7 +60,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         internal void update(SourceCode ss)
         {
 			String contents = ss.Contents.Replace ("'", "\\'");
-			Console.WriteLine (contents);
+			Trace.WriteLine (contents);
 
            String sql =
                 "UPDATE sourcecode SET contents='" + contents + "' WHERE type_owner like '" + ss.Type_owner + "'"

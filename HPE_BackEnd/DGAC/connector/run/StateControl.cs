@@ -56,12 +56,12 @@ namespace br.ufc.pargo.hpe.connector.run
 			//artifício para suspender a execução do estado nos casos de reconfiguração.
 			ManualResetEvent resetEvent = protocol.getResetEvent (stateId);
 			if(ConfigurationManager.N)
-				//System.Diagnostics.Debug.WriteLine ("[StateControl.Go] STATE: " + stateId);
+				//System.Diagnostics.Trace.WriteLine ("[StateControl.Go] STATE: " + stateId);
 
 			if (resetEvent != null) {
-				System.Diagnostics.Debug.WriteLine("[StateControl.Go] DORMIU: estado " + stateId);
+				System.Diagnostics.Trace.WriteLine("[StateControl.Go] DORMIU: estado " + stateId);
 				WaitHandle.WaitAll (new ManualResetEvent[] {resetEvent});
-				System.Diagnostics.Debug.WriteLine("[StateControl.Go] ACORDOU: estado " + stateId);
+				System.Diagnostics.Trace.WriteLine("[StateControl.Go] ACORDOU: estado " + stateId);
 			}
 
 			Dictionary<int, int> transitions = protocol.Matrix [stateId];
@@ -80,7 +80,7 @@ namespace br.ufc.pargo.hpe.connector.run
 					ThreadPool.QueueUserWorkItem (branch.Go, null);
 				}
 			} else {
-				//System.Diagnostics.Debug.WriteLine("[StateControl.Go] Sinaliza Final!");
+				//System.Diagnostics.Trace.WriteLine("[StateControl.Go] Sinaliza Final!");
 				protocol.doneEvent.Set ();
 				//StateControl: Execução finalizada!
 			}
@@ -90,7 +90,7 @@ namespace br.ufc.pargo.hpe.connector.run
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Notify (bool result)
 		{
-			//System.Diagnostics.Debug.WriteLine("[StateControl.Notify] Finalização notificada- state:{0}]", stateId);
+			//System.Diagnostics.Trace.WriteLine("[StateControl.Notify] Finalização notificada- state:{0}]", stateId);
 			BranchInterpreter branch;
          
 			elseResult = elseResult || result;
@@ -99,7 +99,7 @@ namespace br.ufc.pargo.hpe.connector.run
 			
 			if (count == 0 && !elseResult && rid != Configuration.NOTHING) {
 				//Esse objeto morre. count = iterations + 1; //reinicio a contagem, caso haja uma nova exeucao do estado.
-				//System.Diagnostics.Debug.WriteLine("[StateControl.Notify] Criado BranchInterpreter- state:{0} | iteracao(-1):{1}", stateId, iterations);
+				//System.Diagnostics.Trace.WriteLine("[StateControl.Notify] Criado BranchInterpreter- state:{0} | iteracao(-1):{1}", stateId, iterations);
 				branch = new BranchInterpreter (stateId, iterations + 1, this);
 				ThreadPool.QueueUserWorkItem (branch.Go, null);
 			}

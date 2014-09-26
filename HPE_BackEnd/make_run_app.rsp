@@ -11,5 +11,6 @@
 -r:DGAC
 
 -target:exe
+-define:DEBUG;TRACE
 
 -out:./bin/hpe_run.exe

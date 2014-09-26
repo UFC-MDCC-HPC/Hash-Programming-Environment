@@ -14,6 +14,7 @@ using br.ufc.pargo.hpe.ports;
 using MPI;
 using br.ufc.pargo.hpe.kinds;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -270,7 +271,7 @@ namespace br.ufc.pargo.hpe.basic
 		#region ReconfigurationAdvicePort implementation
 		virtual public void changePort (string portName) 
 		{ 
-			Console.WriteLine("CHANGE PORT " + portName + " OF " + CID);
+			Trace.WriteLine("CHANGE PORT " + portName + " OF " + CID);
 			Slice[portName] = (IUnit) services.getPort (portName);
 		}
 		#endregion

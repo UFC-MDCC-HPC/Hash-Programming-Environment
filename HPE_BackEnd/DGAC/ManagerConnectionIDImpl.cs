@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
+using System.Diagnostics;
 
 namespace gov
 {
@@ -91,7 +92,7 @@ namespace gov
                     //return new WorkerConnectionIDImpl(wProvider, providesPortName, wUser, usesPortName);
 				if (i >= worker_connections.Length)
 					return null;
-				Console.WriteLine ("getWorkerConnectionID " + i + " *** " + worker_connections.Length);	
+				Trace.WriteLine ("getWorkerConnectionID " + i + " *** " + worker_connections.Length);	
 				return worker_connections[i];
             }
         }

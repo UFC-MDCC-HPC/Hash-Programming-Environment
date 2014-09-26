@@ -4,6 +4,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
@@ -18,7 +19,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                 "INSERT INTO sliceexposed (id_abstract, id_interface_slice, id_interface_slice_owner, id_inner, id_inner_owner,  slice_replica,  slice_replica_owner, id_inner_original, id_interface_slice_original)" +
                 " VALUES (" + ac.Id_abstract + ",'" + ac.Id_interface_slice + "','" + ac.Id_interface_slice_owner + "','" + ac.Id_inner + "','" + ac.Id_inner_owner + "'," + ac.Slice_replica + "," + ac.Slice_replica_owner + ",'" + ac.Id_inner_original + "','" + ac.Id_interface_slice_original + "')";
 
-			Console.WriteLine("SliceExposedDAO.cs: TRY INSERT PUBLIC SLICE : " + sql);
+			Trace.WriteLine("SliceExposedDAO.cs: TRY INSERT PUBLIC SLICE : " + sql);
 			
             Connector.performSQLUpdate(sql);
         }

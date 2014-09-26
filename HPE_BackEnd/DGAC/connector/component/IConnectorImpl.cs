@@ -6,6 +6,7 @@
 	using br.ufc.pargo.hpe.connector.config;
 	using br.ufc.pargo.hpe.backend.DGAC.utils;
 	using System.IO;
+using System.Diagnostics;
 	
 	namespace br.ufc.pargo.hpe.ConnectorImpl { 
 	
@@ -118,21 +119,21 @@
 		* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		public int perform_action(string action) {
 		 
-			//Console.WriteLine("[IConnectorImpl.perform_action] UNIT :" + Id_unit);
-			//Console.WriteLine("[IConnectorImpl.perform_action] iniciando action {0} | configNull {1}", action, (configurationManager == null));
+			//Trace.WriteLine("[IConnectorImpl.perform_action] UNIT :" + Id_unit);
+			//Trace.WriteLine("[IConnectorImpl.perform_action] iniciando action {0} | configNull {1}", action, (configurationManager == null));
 		 if(configurationManager != null) {
 			
-			//Console.WriteLine("[IConnectorImpl.perform_action] ready:{0}", ready);
+			//Trace.WriteLine("[IConnectorImpl.perform_action] ready:{0}", ready);
 			if(!ready) {
 				ConfigureComponent();
 			}
 
-			//Console.WriteLine("[IConnectorImpl.perform_action] ConfManager.UnitNull {0}", (configurationManager.Unit == null));
+			//Trace.WriteLine("[IConnectorImpl.perform_action] ConfManager.UnitNull {0}", (configurationManager.Unit == null));
 		    if(configurationManager.Unit.Entity == null) {
 		       configurationManager.Unit.Entity = this;
 		    }
 	
-			//Console.WriteLine("[IConnectorImpl.perform_action] run action:{0}", action);
+			//Trace.WriteLine("[IConnectorImpl.perform_action] run action:{0}", action);
 		    configurationManager.Run(action);
 		
 		    return 0;
@@ -153,7 +154,7 @@
 			
 		public new int go()
 		{	
-			//Console.WriteLine("[IConnectorImpl.go] iniciando... ready:{0}", ready);
+			//Trace.WriteLine("[IConnectorImpl.go] iniciando... ready:{0}", ready);
 			if(!ready) {
 				ConfigureComponent();
 			}
@@ -164,7 +165,7 @@
 		//public new int go()
 		protected void ConfigureComponent()
 		{
-			//Console.WriteLine("[IConnectorImpl.ConfigureComponent] iniciando...");
+			//Trace.WriteLine("[IConnectorImpl.ConfigureComponent] iniciando...");
 			try 
 			{				
 				string path = Constants.PATH_TEMP_WORKER + this.QualifiedComponentTypeName + ".hcl";
@@ -178,9 +179,9 @@
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("[IConnectorImpl.ConfigureComponent] Error reading, loading or execution the configuration file. ");
-				Console.WriteLine("EXCEPTION : " + e.Message);
-				if (e.InnerException != null) Console.WriteLine("INNER EXCEPTION" + e.InnerException.Message);
+				Trace.WriteLine("[IConnectorImpl.ConfigureComponent] Error reading, loading or execution the configuration file. ");
+				Trace.WriteLine("EXCEPTION : " + e.Message);
+				if (e.InnerException != null) Trace.WriteLine("INNER EXCEPTION" + e.InnerException.Message);
 				throw e;
 			}
 				
@@ -189,7 +190,7 @@
 			
 		public override void main ()
 		{ 
-			//Console.WriteLine("[IConnectorImpl.main]...");
+			//Trace.WriteLine("[IConnectorImpl.main]...");
 			int result = perform_action("main");	
 		}	
 			

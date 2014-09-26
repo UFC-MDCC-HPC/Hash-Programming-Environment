@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 
 using br.ufc.pargo.hpe.connector.meta;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.connector.reconfig
 {
@@ -38,7 +39,7 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 					foreach (MetaParameter innerParam in inner.Parameters) {
 						foreach (MetaParameter changedParam in changedParameters) {
 							if (innerParam.Identifier.Equals (changedParam.Identifier)) {
-								Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Componente '{0}' impactado pelo parametro '{1}': ", inner.Identifier, innerParam.Identifier);	
+								Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Componente '" + inner.Identifier + "' impactado pelo parametro '" + innerParam.Identifier + "': ");	
 								if (!changedInners.TryGetValue (inner.Identifier, out pair)) {
 									pair = new PairInnerComponent (inner, inner.Clone ());
 								
@@ -53,19 +54,19 @@ namespace br.ufc.pargo.hpe.connector.reconfig
 				}
 			}
 
-			Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Finalizada a avaliação dos InnerComponents!");
-			Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Avaliando unidades impactadas...");
+			Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Finalizada a avaliação dos InnerComponents!");
+			Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Avaliando unidades impactadas...");
 			foreach (PairInnerComponent innerPair in changedInners.Values) {
 			
 				if(innerPair.Old.Units != null) {
 					foreach (MetaUnit metaUnit in innerPair.Old.Units.Values) {
-						Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Unidade será '{0}.{1}' impactada.", ((MetaInnerComponent) metaUnit.Father).Identifier, metaUnit.Name);
+					//	Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] Unidade será '{0}.{1}' impactada.", ((MetaInnerComponent) metaUnit.Father).Identifier, metaUnit.Name);
 		
 						changes.Add (new StructuralChange (metaUnit, innerPair.New.Units [metaUnit.Name]));
-						//Console.WriteLine("OK {0} ", metaUnit.Name);
+						//Trace.WriteLine("OK {0} ", metaUnit.Name);
 					}
 				} else {
-					//Console.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] InnerComponent {0} não possui Units");		
+					//Trace.WriteLine ("[StructuralReconfigurationRequest.GenerateChanges] InnerComponent {0} não possui Units");		
 				}
 			}
 		}

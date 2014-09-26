@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -94,7 +95,7 @@ public class Slice {
     public bool isPublic()
     {
         InnerComponent ic = BackEnd.icdao.retrieve(this.Id_abstract, this.Id_inner);
-			Console.WriteLine("{0}.{1} is {2} !", this.Id_abstract, this.Id_inner, ic.IsPublic ? "public" : "private" );
+			//Trace.WriteLine("{0}.{1} is {2} !", this.Id_abstract, this.Id_inner, ic.IsPublic ? "public" : "private" );
         return ic.IsPublic;
     }
 

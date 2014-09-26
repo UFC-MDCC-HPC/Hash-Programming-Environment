@@ -75,6 +75,9 @@
       <SubType>Component</SubType>
       <Link>RemotingServerManager.cs</Link>
     </Compile>
+    <Compile Include="..\..\manager\CommandLine.cs">
+      <Link>CommandLine.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

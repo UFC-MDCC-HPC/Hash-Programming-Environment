@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
 
@@ -189,14 +190,14 @@ public class Interface {
 
     public IList<string> fetchReferences(IDictionary <string, AbstractComponentFunctorApplication> pars) 
     {
-			Console.WriteLine("ENTER fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
+			Trace.WriteLine("ENTER fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
 
 							foreach (KeyValuePair<string, AbstractComponentFunctorApplication> y in pars )
 							{
 								if (y.Key != null && y.Value != null)
-									Console.WriteLine("key=" + y.Key + ", value=" + y.Value.Id_abstract);
+									Trace.WriteLine("key=" + y.Key + ", value=" + y.Value.Id_abstract);
 								else {
-										Console.WriteLine("somthing strange : " + (y.Key==null ? "null" : y.Key.ToString()) + " , " + (y.Value==null ? "null" : y.Value.ToString()));
+										Trace.WriteLine("somthing strange : " + (y.Key==null ? "null" : y.Key.ToString()) + " , " + (y.Value==null ? "null" : y.Value.ToString()));
 								}
 							}
 
@@ -224,7 +225,7 @@ public class Interface {
 
         foreach (Slice s in slices)
         {
-			Console.WriteLine("SLICE (fetchReference): " + Id_abstract + ":" + Id_interface + ":" + s.Id_inner + " - " + s.PortName + " -- " + s.Slice_replica);
+			Trace.WriteLine("SLICE (fetchReference): " + Id_abstract + ":" + Id_interface + ":" + s.Id_inner + " - " + s.PortName + " -- " + s.Slice_replica);
 
             InnerComponent ic = br.ufc.pargo.hpe.backend.DGAC.BackEnd.icdao.retrieve(Id_abstract, s.Id_inner); 
 			if (ic != null)
@@ -237,25 +238,25 @@ public class Interface {
                 {
                     if (!pars.TryGetValue(ic.Parameter_top, out acfa)) {
                     	acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);                    
-						Console.WriteLine("fetchReferences - TRACE 1.1 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract);
+						Trace.WriteLine("fetchReferences - TRACE 1.1 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract);
 					}
 					else
 					{
-							Console.WriteLine("fetchReferences - TRACE 1.2 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract + ", ic.id_inner=" + ic.Id_inner);
+							Trace.WriteLine("fetchReferences - TRACE 1.2 - ic.Parameter_top=" + ic.Parameter_top + ", acfa.Id_abstract=" + acfa.Id_abstract + ", ic.id_inner=" + ic.Id_inner);
 					}
                 }
                 else
                 {
                     acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(ic.Id_functor_app);
-					Console.WriteLine("fetchReferences - TRACE 2 - acfa.Id_abstract=" + acfa.Id_abstract);
+					Trace.WriteLine("fetchReferences - TRACE 2 - acfa.Id_abstract=" + acfa.Id_abstract);
                 }
 
                 collectParameters(pars, acfa, out parsSlice);
 
-				Console.WriteLine("RETRIEVE BY MATCHING: " + acfa.Id_abstract + "," +  ic.Id_abstract_inner + "," + s.Id_interface_slice + "," + s.Slice_replica);
+				Trace.WriteLine("RETRIEVE BY MATCHING: " + acfa.Id_abstract + "," +  ic.Id_abstract_inner + "," + s.Id_interface_slice + "," + s.Slice_replica);
                 Interface i = br.ufc.pargo.hpe.backend.DGAC.BackEnd.idao.retrieveByMatching(acfa.Id_abstract, ic.Id_abstract_inner, s.Id_interface_slice, s.Slice_replica);
                 if (i == null) {
-                   Console.WriteLine("i is null : " + acfa.Id_abstract + "," + ic.Id_abstract_inner + "," + s.Id_interface_slice);
+                   Trace.WriteLine("i is null : " + acfa.Id_abstract + "," + ic.Id_abstract_inner + "," + s.Id_interface_slice);
                 }
                 AbstractComponentFunctor acfSlice = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa.Id_abstract);
 
@@ -276,7 +277,7 @@ public class Interface {
             }
         }
 
-			Console.WriteLine("EXIT fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
+			Trace.WriteLine("EXIT fetchReferences - id_abstract=" + this.Id_abstract + ", id_interface="+ this.Id_interface);
         return refs; 
     }
 
@@ -313,23 +314,23 @@ public class Interface {
                 SupplyParameterComponent sp_ = (SupplyParameterComponent) sp;
                 acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(sp_.Id_functor_app_actual);
                 parsSlice.Add(sp_.Id_parameter, acfaPar);
-				Console.WriteLine("collectParameter -TRACE 1 " + sp_.Id_parameter + ":" + acfaPar.Id_abstract);
+				Trace.WriteLine("collectParameter -TRACE 1 " + sp_.Id_parameter + ":" + acfaPar.Id_abstract);
             }
             else if (sp is SupplyParameterParameter)
             {
                 SupplyParameterParameter sp_ = (SupplyParameterParameter) sp;
                 acfaPar = null;
-				Console.WriteLine("collectParameter -TRACE 2 " + "#" + sp_.Id_functor_app + sp_.Id_parameter);
+				Trace.WriteLine("collectParameter -TRACE 2 " + "#" + sp_.Id_functor_app + sp_.Id_parameter);
                 
 				pars.TryGetValue("#" + sp_.Id_functor_app + sp_.Id_parameter, out acfaPar);
                 if (acfaPar == null)
                 {
-					Console.WriteLine("collectParameter -TRACE 3 " + sp_.Id_argument);
+					Trace.WriteLine("collectParameter -TRACE 3 " + sp_.Id_argument);
                     
                     if (pars.TryGetValue(sp_.Id_argument, out acfaPar))
                     {
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
-						Console.WriteLine("collectParameter -TRACE 4 " + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
+						Trace.WriteLine("collectParameter -TRACE 4 " + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
                     }
                     else 
                     {
@@ -338,12 +339,12 @@ public class Interface {
 								acfp = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.retrieve(sp_.Id_abstract,sp_.Id_parameter);
 						acfaPar = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(acfp.Bounds_of);
                         parsSlice.Add(sp_.Id_parameter, acfaPar);
-						Console.WriteLine("collectParameter -TRACE 5 " + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
+						Trace.WriteLine("collectParameter -TRACE 5 " + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
                     }
                 }
                 else
                 {
-					Console.WriteLine("collectParameter -TRACE 6 " + "#" + sp_.Id_functor_app + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
+					Trace.WriteLine("collectParameter -TRACE 6 " + "#" + sp_.Id_functor_app + sp_.Id_parameter + " : " + acfaPar.Id_abstract);
                     parsSlice.Add(sp_.Id_parameter, acfaPar);
                 }
 
@@ -386,7 +387,7 @@ public class Interface {
                 {
                     pars.TryGetValue(sp_.Id_argument, out acfaPar);
                 }
-					Console.WriteLine("collectFV : id_functor_app=" + acfa.Id_functor_app + ", id_abstract=" + acfa.Id_abstract + ", " + "#" + sp_.Id_functor_app + sp_.Id_parameter + ", " + ", " + sp_.Id_argument + (acfaPar==null));
+					Trace.WriteLine("collectFV : id_functor_app=" + acfa.Id_functor_app + ", id_abstract=" + acfa.Id_abstract + ", " + "#" + sp_.Id_functor_app + sp_.Id_parameter + ", " + ", " + sp_.Id_argument + (acfaPar==null));
                 apars.Add("#" + sp_.Id_functor_app + sp_.Id_parameter, acfaPar);
             }
 

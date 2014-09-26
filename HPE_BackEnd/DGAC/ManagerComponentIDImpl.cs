@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace gov
 {
@@ -141,7 +142,7 @@ namespace gov
             {
                 WorkerComponentID wcid;
 				foreach (KeyValuePair<int,WorkerComponentID> uuu in wcids)
-					Console.WriteLine("node = " + uuu.Key + "; " + "wcid = " + uuu.Value.getInstanceName());
+					Trace.WriteLine("node = " + uuu.Key + "; " + "wcid = " + uuu.Value.getInstanceName());
                 wcids.TryGetValue(node, out wcid);
                 return wcid;
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using br.ufc.pargo.hpe.backend.DGAC.database;
+using System.Diagnostics;
 
 namespace HPE_DGAC_LoadDB
 {
@@ -120,7 +121,7 @@ namespace HPE_DGAC_LoadDB
 
                 AbstractComponentFunctorApplication aAppNew = new AbstractComponentFunctorApplication();
                 aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
-			  //  Console.WriteLine("+++++++++++++++ " +  aAppNew.Id_functor_app);
+			  //  Trace.WriteLine("+++++++++++++++ " +  aAppNew.Id_functor_app);
                 aAppNew.Id_abstract = a.Id_abstract;
 
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
@@ -188,7 +189,7 @@ namespace HPE_DGAC_LoadDB
                 {
                     String formFieldId = p.formFieldId;
                     String varName = p.varName;
-					Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters -1 " + varName + "," + formFieldId);
+					Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters -1 " + varName + "," + formFieldId);
 
                     SupplyParameter p_ = null;
 
@@ -197,7 +198,7 @@ namespace HPE_DGAC_LoadDB
                     
                     if (topParameter != null)
                     {
-						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 0 " + topParameter.formFieldId + ", " + varName);
+						Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters 0 " + topParameter.formFieldId + ", " + varName);
                         p_ = new SupplyParameterParameter();
                         ((SupplyParameterParameter)p_).Id_argument = topParameter.formFieldId;
                         ((SupplyParameterParameter)p_).FreeVariable = false;
@@ -205,7 +206,7 @@ namespace HPE_DGAC_LoadDB
                     }
                     else if (s != null)
                     {
-						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 1 " + s.cRef + ", " + varName);
+						Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters 1 " + s.cRef + ", " + varName);
                         String cRef = s.cRef;
 
                         p_ = new SupplyParameterComponent();
@@ -221,7 +222,7 @@ namespace HPE_DGAC_LoadDB
                     }
                     else
                     {
-						Console.WriteLine("loadAbstractcomponentFunctorApplicationParameters 2 " + varName);
+						Trace.WriteLine("loadAbstractcomponentFunctorApplicationParameters 2 " + varName);
                         p_ = new SupplyParameterParameter();
                         ((SupplyParameterParameter)p_).Id_argument = null;
                         ((SupplyParameterParameter)p_).FreeVariable = true;
@@ -276,7 +277,7 @@ namespace HPE_DGAC_LoadDB
 
         protected AbstractComponentFunctor lookForAbstractComponentFunctor(string component_UID)
         {
-        	//Console.WriteLine("1");
+        	//Trace.WriteLine("1");
             AbstractComponentFunctorDAO acf = new AbstractComponentFunctorDAO();
             AbstractComponentFunctor acfa = acf.retrieveByUID(component_UID);
             return acfa;

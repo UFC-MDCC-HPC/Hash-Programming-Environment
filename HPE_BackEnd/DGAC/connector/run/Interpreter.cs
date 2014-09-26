@@ -26,21 +26,21 @@ namespace br.ufc.pargo.hpe.connector.run {
       //Dispara o início da execução da configuração indicada no construtor.
       public void Go() {
          
-         //Diagnostics.Debug.WriteLine("[Interpreter.Go] Execução iniciada! {0}", GetHashCode());
+         //Diagnostics.Trace.WriteLine("[Interpreter.Go] Execução iniciada! {0}", GetHashCode());
          
          if(!_action.IsNative) {
 			_action.Protocol.setResetEvent();
             new StateControl(_action.Protocol).Go();
          }
          else {
-			//Console.WriteLine("Execucao NATIVA! {0}", GetHashCode());
+			//Trace.WriteLine("Execucao NATIVA! {0}", GetHashCode());
             //Object unitEntity = _action.Father.Entity;
             //TODO chamar o método _action.name sobre o objeto unitEntity.
          }
 
 		WaitHandle.WaitAll(new ManualResetEvent[] {_action.Protocol.doneEvent});
          
-         //Console.WriteLine("[Interpreter.Go] Execução finalizada! {0}", GetHashCode());
+         //Trace.WriteLine("[Interpreter.Go] Execução finalizada! {0}", GetHashCode());
          
          //A finalização execução será realizada pelo StateControl.
       }

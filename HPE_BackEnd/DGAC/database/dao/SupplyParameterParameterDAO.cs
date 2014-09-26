@@ -4,7 +4,8 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Runtime.Serialization;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Diagnostics; 
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database{
@@ -18,7 +19,7 @@ public class SupplyParameterParameterDAO{
             "INSERT INTO supplyparameterparameter (id_parameter, id_functor_app, id_parameter_actual, freeVariable)" +
             " VALUES ('" + ac.Id_parameter + "'," + ac.Id_functor_app + ",'" + ac.Id_argument + "'," + ac.FreeVariable + ")";
 
-   		Console.WriteLine("SupplyParameterParameter.cs: TRY INSERT: " + sql);
+   		Trace.WriteLine("SupplyParameterParameter.cs: TRY INSERT: " + sql);
 
         Connector.performSQLUpdate(sql);
     }
@@ -51,7 +52,7 @@ public class SupplyParameterParameterDAO{
 			
 	   if (spc==null) 
 	   {
-	  	  Console.WriteLine("SupplyParameterParameterDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
+	  	  Trace.WriteLine("SupplyParameterParameterDAO.cs: Parameter NOT FOUND " + id_parameter + "," + id_functor_app);
 	   }
 			
        return spc;
