@@ -2411,8 +2411,6 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	{
 		
 		try {
-			if (varName.equals("SMAP"))
-			 System.out.println();
 			
 			Map<String, Pair<HComponent,Boolean>> toSupply = new HashMap<String,Pair<HComponent,Boolean>>();
 			Pair<HComponent,Boolean> pair_model = new Pair<HComponent,Boolean>(model,false);
@@ -3469,28 +3467,41 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	 */
 
 	private Map<String, HComponent> supplyMemory = new HashMap<String, HComponent>();
+	private Map<Integer, String> supplyOrder = new HashMap<Integer, String>();
 	private Map<String, Boolean> supplyTransitive = new HashMap<String, Boolean>();
 
 	public boolean checkIfVariableWasSupplied(String varName) {
 		return supplyMemory.containsKey(varName);
 	}
 
+	private Integer counter_supply = 0;
+	
 	public void rememberSupply(String varName, HComponent c, boolean transitive) {
 		if (supplyMemory == null)
 			supplyMemory = new HashMap<String, HComponent>();
 		supplyMemory.put(varName, c);
+		supplyOrder.put(counter_supply++, varName);
 		supplyTransitive.put(varName, transitive);
 	}
 
-	public Map<String, HComponent> getSupplierComponents() {
-
+	public List<Pair<String, HComponent>> getSupplierComponents() 
+	{
+		List<Pair<String,HComponent>> result = new ArrayList<Pair<String,HComponent>>();
 		/*
 		 * Todos os components que foram usados na configuracao para suprir
 		 * parametros de componentes internos.
 		 */
 		if (supplyMemory == null)
 			supplyMemory = new HashMap<String, HComponent>();
-		return supplyMemory;
+		
+		for (int i=0; i<counter_supply; i++)
+		{
+			String varName = supplyOrder.get(i);
+			HComponent component = supplyMemory.get(varName);
+			result.add(new Pair<String,HComponent>(varName, component)); 
+		}
+		
+		return result;
 
 	}
 	
@@ -3501,7 +3512,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 
 	public HComponent getSupplierComponent(String varName) {
 
-		Map<String, HComponent> supplyMemoryTop = ((HComponent) this.getTopConfiguration()).getSupplierComponents();
+		Map<String, HComponent> supplyMemoryTop = ((HComponent) this.getTopConfiguration()).supplyMemory;
 
 		return supplyMemoryTop.get(varName);
 

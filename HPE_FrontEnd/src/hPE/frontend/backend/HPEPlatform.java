@@ -35,7 +35,7 @@ public class HPEPlatform {
 		java.io.File fileHCL = HComponentFactoryImpl.getFileInWorkspace(filePathHCL.setDevice(null));
 
 		byte[] t_hcl = null;
-		if (fileHCL.exists())
+		if (fileHCL.exists()	)
 		{
 			InputStream is_hcl = new FileInputStream(fileHCL);	
 			t_hcl = new byte[is_hcl.available()];		

@@ -1418,8 +1418,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// save kind
 		xH.setKind(SupportedKinds.get(c.kindString()));
 		// save base type
-		HComponent sC = c.isAbstractConfiguration() ? c.getSuperType() : c
-				.getWhoItImplements();
+		HComponent sC = c.isAbstractConfiguration() ? c.getSuperType() : c.getWhoItImplements();
 		if (sC != null)
 			saveBaseType(sC, xH, c.isAbstractConfiguration());
 		// save package path
@@ -1645,8 +1644,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		List<HComponent> cs = new ArrayList<HComponent>();
 
 		cs.addAll(c.getComponents());
-		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
-			cs.add(p.getValue());
+		for (Pair<String, HComponent> p : c.getSupplierComponents())
+			cs.add(p.snd());
 
 		int max_order = 0;
 
@@ -1718,19 +1717,19 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			}
 		}
 
-		for (Entry<String, HComponent> p : c.getSupplierComponents().entrySet())
+		for (Pair<String, HComponent> p : c.getSupplierComponents())
 		/* if (!c.isTransitiveSupplier(p.getKey())) */
 		{
-			String cRef = p.getValue().getRef();
-			cRef = c.isTransitiveSupplier(p.getKey()) ? "T###" + cRef
-					+ p.getValue().hashCode() : cRef;
+			String cRef = p.snd().getRef();
+			cRef = c.isTransitiveSupplier(p.fst()) ? "T###" + cRef
+					+ p.snd().hashCode() : cRef;
 			if (!(cRefsSupply.contains(cRef) && cRef.startsWith("T###"))) {
 				if (cRefsSupply.contains(cRef)) {
 					throw new DuplicatedRefInnerException(cRef);
 				} else {
 					if (!cRefs.contains(cRef)) {
-						cs.add(i++, p.getValue());
-						newRefMap.put(p.getValue(), cRef);
+						cs.add(i++, p.snd());
+						newRefMap.put(p.snd(), cRef);
 						cRefs.add(cRef);
 						cRefsSupply.add(cRef);
 					}
@@ -2618,26 +2617,25 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	private void saveSupplyParameters(HComponent c,
 			EList<ParameterSupplyType> xI) {
 
-		for (Entry<String, HComponent> pair : c.getSupplierComponents()
-				.entrySet()) {
+		for (Pair<String, HComponent> pair : c.getSupplierComponents()) {
 			ParameterSupplyType s = factory.createParameterSupplyType();
 			String cRef = null;
 			String varName = null;
 
 			// SETUP VARIABLES
 
-			HComponent supplier = pair.getValue();
+			HComponent supplier = pair.snd();
 
-			varName = pair.getKey();
+			varName = pair.fst();
 			cRef = supplier.getRef();
 
 			// ---------------
 
-			cRef = c.isTransitiveSupplier(pair.getKey()) ? "T###" + cRef
+			cRef = c.isTransitiveSupplier(pair.fst()) ? "T###" + cRef
 					+ supplier.hashCode() : cRef;
 			s.setCRef(cRef);
 			s.setVarName(varName);
-			s.setDirect(!c.isTransitiveSupplier(pair.getKey()));
+			s.setDirect(!c.isTransitiveSupplier(pair.fst()));
 
 			xI.add(s);
 		}

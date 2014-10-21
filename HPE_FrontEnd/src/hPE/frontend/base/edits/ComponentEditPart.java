@@ -75,10 +75,7 @@ public class ComponentEditPart<ModelType extends HComponent,
 		HComponent component = (HComponent) (component_.getSupplier() == null ? component_ : component_.getSupplier()); 
 		FigureType component_figure = (FigureType) getFigure();
 		String name = ""; // component.getName2() + ": ";
-				
-		
-		List<HComponent> test  = (List<HComponent>) component.getExposedComponents();
-		
+						
 		boolean showBounds = true; //component.isDirectSonOfTheTopConfiguration();
 		boolean showParId  = true; //component.isDirectSonOfTheTopConfiguration();
 		
@@ -109,7 +106,7 @@ public class ComponentEditPart<ModelType extends HComponent,
         
 		Label ff = new Label(" " + name_ + " ");
 		Font font = new Font(null, "Courier New", 8, SWT.BOLD);
-		ff.setFont(font); 
+		ff.setFont(font);
 		
 		component_figure.setPort(!component_.isDirectSonOfTheTopConfiguration());
         component_figure.setBounds(calculateBounds(component_));
