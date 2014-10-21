@@ -865,8 +865,7 @@ namespace gov
                  * 		the returned ID does not destroy the component; 
                  * 		see destroyInstance instead.
                  */
-                cca.ComponentID createInstance(string instanceName, string className,
-                                   cca.TypeMap properties);
+                cca.ComponentID createInstance(string instanceName, string className, cca.TypeMap properties);
                 //throws cca.CCAException ; 
 
                 /** 

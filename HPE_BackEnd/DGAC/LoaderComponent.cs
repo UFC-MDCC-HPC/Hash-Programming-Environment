@@ -127,7 +127,7 @@ namespace HPE_DGAC_LoadDB
                 br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
 
                 // REGISTER parameters (follow supply-of, configure formal-parameter)
-                loadAbstractComponentFunctorApplicationParameters(c, aAppNew);
+                loadAbstractComponentFunctorApplicationParameters(c, aAppNew, aAppNew);
 
                 return aAppNew;
        //     }
@@ -135,31 +135,27 @@ namespace HPE_DGAC_LoadDB
 
         protected IList<AbstractComponentFunctorApplication> newAbstractComponentFunctorApplicationForImplements(ComponentInUseType c)
         {
-		    IList<AbstractComponentFunctor> ancestrals = new List<AbstractComponentFunctor>();
-			
+
+		    IList<AbstractComponentFunctor> ancestrals = new List<AbstractComponentFunctor>();	
+
+			AbstractComponentFunctor a_current = lookForAbstractComponentFunctor(c.hash_component_UID);
+			if (a_current == null)
+                return null;
+
 			{
-                AbstractComponentFunctor a = lookForAbstractComponentFunctor(c.hash_component_UID);
-				if (a == null)
-                {
-                    return null;
-                }
-				
-			    ancestrals.Add(a);				
-			    while (a.Id_functor_app_supertype >0) 
-			    {
-				   AbstractComponentFunctorApplication acfa_ancestral = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(a.Id_functor_app_supertype);
-				   a = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(acfa_ancestral.Id_abstract);
-			       ancestrals.Add(a);
-			    }
-			
-			
+				AbstractComponentFunctor a = a_current;
+				ancestrals.Add (a);				
+				while (a.Id_functor_app_supertype > 0) {
+					AbstractComponentFunctorApplication acfa_ancestral = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve (a.Id_functor_app_supertype);
+					a = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve (acfa_ancestral.Id_abstract);
+					ancestrals.Add (a);
+				}
 			}
 			
 			IList<AbstractComponentFunctorApplication> aAppNewList = new List<AbstractComponentFunctorApplication>();
 			
 			AbstractComponentFunctorApplication aAppNewOld = null;
 			AbstractComponentFunctorApplication aAppNew = null;
-			int next_id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
 			foreach (AbstractComponentFunctor a in ancestrals) 
 			{
                 // CREATE AbstractComponentFunctorApplication
@@ -168,7 +164,7 @@ namespace HPE_DGAC_LoadDB
                 aAppNew.Id_abstract = a.Id_abstract;
 				aAppNew.Id_functor_app = Connector.nextKey("id_functor_app", "abstractcomponentfunctorapplication");
 			    br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.insert(aAppNew);
-                loadAbstractComponentFunctorApplicationParameters(c, aAppNew);
+                loadAbstractComponentFunctorApplicationParameters(c, aAppNew, aAppNewOld == null ? aAppNew : aAppNewOld);
 				aAppNewList.Add(aAppNew);
 				if (aAppNewOld != null)
 				   br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.updateIdFunctorAppNext(aAppNewOld, aAppNew.Id_functor_app);
@@ -179,7 +175,9 @@ namespace HPE_DGAC_LoadDB
        //     }
         }
         
-        protected IList<SupplyParameter> loadAbstractComponentFunctorApplicationParameters(ComponentInUseType c, AbstractComponentFunctorApplication aNew)
+		protected IList<SupplyParameter> loadAbstractComponentFunctorApplicationParameters(ComponentInUseType c, 
+		                                                                                   AbstractComponentFunctorApplication aNew, 
+		                                                                                   AbstractComponentFunctorApplication aNew_context)
         {
             IList<SupplyParameter> pars = new List<SupplyParameter>();
 
@@ -240,9 +238,60 @@ namespace HPE_DGAC_LoadDB
                 }
             }
 
+			loadSuppliedParametersOfSupertype (c, aNew, aNew_context);
+
             return pars;
         }
 
+		void loadSuppliedParametersOfSupertype (ComponentInUseType c, AbstractComponentFunctorApplication aNew, AbstractComponentFunctorApplication aNew_context)
+		{
+
+			int id_functor_app_supertype;
+			if (aNew_context.Id_abstract != aNew.Id_abstract)				 
+			{
+				Trace.WriteLine ("id_abstract_context != aNew.Id_abstract : " + aNew_context.Id_abstract  + " " + aNew.Id_abstract);
+				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve (aNew_context.Id_abstract);
+				id_functor_app_supertype = acf.Id_functor_app_supertype;
+			} 
+			else 
+			{
+				Trace.WriteLine ("id_abstract_context == aNew.Id_abstract : " + aNew_context.Id_abstract  + " " + aNew.Id_abstract);
+				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve (aNew.Id_abstract);
+				id_functor_app_supertype = acf.Id_functor_app_supertype;
+			}
+
+			while (id_functor_app_supertype > 0) 
+			{
+				AbstractComponentFunctorApplication acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve (id_functor_app_supertype);
+
+				IList<SupplyParameter> sp_list = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.list (id_functor_app_supertype);
+				foreach (SupplyParameter sp in sp_list)
+				{
+					if (sp is SupplyParameterComponent) 
+					{
+						SupplyParameterComponent spc = (SupplyParameterComponent)sp;
+						SupplyParameterComponent spc_new = new SupplyParameterComponent ();
+
+						spc_new.Id_functor_app = aNew.Id_functor_app;
+						spc_new.Id_abstract = aNew.Id_abstract;
+						spc_new.Id_functor_app_actual = spc.Id_functor_app_actual;
+						spc_new.Id_parameter = spc.Id_parameter;					
+						br.ufc.pargo.hpe.backend.DGAC.BackEnd.spdao.insert(spc_new);
+					} 
+					else if (sp is SupplyParameterParameter) 
+					{
+
+					}
+
+				}
+
+				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve (acfa.Id_abstract);
+				id_functor_app_supertype = acf.Id_functor_app_supertype;
+
+				Trace.WriteLineIf (id_functor_app_supertype > 0, "LOOPING TO SUPERTYPE !!!");
+			}
+
+		}
 
         public ParameterType lookForParameterByCRef(string cRef)
         {

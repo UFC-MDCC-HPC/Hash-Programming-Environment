@@ -14,6 +14,7 @@ public class Component : HashComponent {
 	private int id_concrete;
 	private int id_concrete_supertype;
 	private int id_functor_app;
+	private int id_abstract;
 	
 	 
   	public string Library_path{
@@ -36,30 +37,34 @@ public class Component : HashComponent {
         set {id_functor_app = value;}
     }
 
-    public int Id_abstract
-    {
-        get { 
-			AbstractComponentFunctorApplication acfa = null;
-			AbstractComponentFunctorApplication acfa_previous = null;
-			bool found = false;
-			Component cThis = this;
-			while (!found)
-			{
-				acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app);             
-                acfa_previous = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve_next(acfa.Id_functor_app);					
-				if (acfa_previous == null)
+
+
+		public int Id_abstract
+	    {
+	        get { 
+		//		return id_abstract;
+				AbstractComponentFunctorApplication acfa = null;
+				AbstractComponentFunctorApplication acfa_previous = null;
+				bool found = false;
+				Component cThis = this;
+				while (!found)
 				{
-					found = true;
-				} 
-				else
-				{
-					cThis = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa_previous.Id_functor_app);					
+					acfa = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(cThis.Id_functor_app);             
+	                acfa_previous = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve_next(acfa.Id_functor_app);					
+					if (acfa_previous == null)
+					{
+						found = true;
+					} 
+					else
+					{
+						cThis = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa_previous.Id_functor_app);					
+					}
+						
 				}
 					
-			}
-				
-             return acfa.Id_abstract; 
-        }
+	             return acfa.Id_abstract; 
+	        }
+			set { id_abstract = value; }
     }
 
     public string Kind

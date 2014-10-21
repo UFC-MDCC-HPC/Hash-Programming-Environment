@@ -25,10 +25,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public static void Main(string[] args)
         {
-            System.ServiceProcess.ServiceBase[] ServicesToRun;
+			TextWriterTraceListener writer = new TextWriterTraceListener(System.Console.Out);
+			Trace.Listeners.Add(writer);
+
+			System.ServiceProcess.ServiceBase[] ServicesToRun;
             ServicesToRun = new System.ServiceProcess.ServiceBase[] { new ManagerService(args) };
             System.ServiceProcess.ServiceBase.Run(ServicesToRun);
-        }
+
+       }
 
         private ManagerObject manager = null;
 

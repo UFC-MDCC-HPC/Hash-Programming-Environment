@@ -57,6 +57,7 @@ CREATE TABLE `component` (
   `id_concrete` int(11) NOT NULL,
   `id_concrete_supertype` int(11) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
+  `id_abstract` int(11) NOT NULL,
   `hash_component_UID` varchar(320) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_concrete`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$

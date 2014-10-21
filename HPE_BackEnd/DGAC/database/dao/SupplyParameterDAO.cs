@@ -176,7 +176,44 @@ public class SupplyParameterDAO{
        
 	}//list
 	
-	
+	public IList<SupplyParameter> list2(int id_functor_app){
+
+			IList<SupplyParameter> list = null;
+			if (cache_c_pars.TryGetValue(id_functor_app, out list)) return list;
+			list = new List<SupplyParameter>();
+			cache_c_pars.Add(id_functor_app, list);
+
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			IList<string> parameters = new List<string>();
+
+			string sql =
+				"SELECT sp.id_parameter, sp.id_functor_app, sp.id_abstract " +
+					"FROM supplyparameter as sp, abstractcomponentfunctorparameter as acfp " +
+					"WHERE sp.id_abstract = acfp.id_abstract AND sp.id_parameter = acfp.id_parameter AND " +
+					"sp.id_functor_app=" + id_functor_app;
+			dbcmd.CommandText = sql;
+			IDataReader reader = dbcmd.ExecuteReader();
+			while(reader.Read()) {
+				string id_parameter = (string)reader["id_parameter"];;
+				parameters.Add(id_parameter);
+			}//while
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+
+			foreach (string id_parameter in parameters)
+			{
+				SupplyParameter sp = retrieve(id_parameter, id_functor_app);
+				list.Add(sp);
+			}
+
+			return list;
+
+		}//list
+
 
 }//class
 

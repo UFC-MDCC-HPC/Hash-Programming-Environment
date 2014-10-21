@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
 {	
@@ -66,13 +67,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         private bool onTop = false;		
 		
-        public void generalize() {
+        public void generalize() 
+		{
+			//Trace.WriteLine ("ENTER generalize " + onTop);
 			if (!onTop) {
 				
-				if (this.current_id_functor_app + 1 >= this.functor_app.Count)
-				   onTop = true;
-                else
-                   this.current_id_functor_app++;
+					if (this.current_id_functor_app >= this.functor_app.Count - 1) 
+					{
+						onTop = true;
+					} 
+					else 
+					{
+						//Trace.WriteLine ("ENTER generalize ELSE " + (this.Functor_app != null ? this.Functor_app.Id_functor_app : -1));
+						this.current_id_functor_app++;
+						//Trace.WriteLine ("ENTER generalize ELSE " + (this.Functor_app != null ? this.Functor_app.Id_functor_app : -1));
+					}
 			}
 		}
 		

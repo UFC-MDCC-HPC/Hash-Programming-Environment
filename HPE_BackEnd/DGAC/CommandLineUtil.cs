@@ -131,7 +131,7 @@ public class CommandLineUtil {
 
           createFile(contents, moduleNameWithoutExtension + ".cs");
 
-          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + "-debug+ -unsafe -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs"  + mounted_references, userName, password, curDir);
+          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + " -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs"  + mounted_references, userName, password, curDir);
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }
@@ -237,10 +237,10 @@ public class CommandLineUtil {
         }
 
         Trace.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
+				
 
         try
         {
-
             proc.Start();
 
             proc.BeginErrorReadLine();

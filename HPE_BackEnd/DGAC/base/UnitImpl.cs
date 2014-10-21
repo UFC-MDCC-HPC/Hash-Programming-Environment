@@ -35,8 +35,9 @@ namespace br.ufc.pargo.hpe.basic
 		#region GoPort implementation
 		public int go ()
 		{
+			Trace.WriteLine ("BEFORE CALLING GO " + this.go_app);
 			return go_app();
-			
+			Trace.WriteLine ("AFTER CALLING GO " + this.go_app);
 		}
 		#endregion
 	}
@@ -109,10 +110,8 @@ namespace br.ufc.pargo.hpe.basic
             this.services = services;
 			
 			foreach (string portName in PortNames)
-			{
 					services.registerUsesPort(portName, "", new TypeMapImpl());
-			}
-			
+
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, this.ClassName, new TypeMapImpl());
 			
 			InitializePort initialize_port_wrapper = new InitializePortWrapper(((InitializePort)this).initialize, ((InitializePort)this).post_initialize);                        
@@ -121,7 +120,8 @@ namespace br.ufc.pargo.hpe.basic
 			ReconfigurationAdvicePort reconfiguration_port_wrapper = new ReconfigurationAdvicePortWrapper(((ReconfigurationAdvicePort)this).changePort);                        
             services.addProvidesPort(reconfiguration_port_wrapper, Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
 			
-			if (Kind == Constants.KIND_APPLICATION) {	
+			if (Kind == Constants.KIND_APPLICATION) 
+			{	
 				gov.cca.ports.GoPort app_port_wrapper = new GoPortWrapper(((gov.cca.ports.GoPort) this).go);
 			    services.addProvidesPort(app_port_wrapper, Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
 			}

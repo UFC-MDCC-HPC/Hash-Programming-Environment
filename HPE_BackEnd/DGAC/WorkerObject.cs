@@ -793,15 +793,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         	public Port getServicePort(ComponentID user, string usedPortName)
 			{
-				//Trace.WriteLine("checking service port " + usedPortName);
+				Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "): checking service port " + usedPortName);
 				string portType;
 				if (usesPortTypes.TryGetValue(usedPortName, out portType))
 				{
-				  //  Trace.WriteLine("port type is " + portType);
+					Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "):port type is " + portType);
 					Port singleton_service_port = null;
 					ServiceProvider service_provider = null;
 					if (usedPortName.EndsWith(Constants.REGISTRY_PORT_NAME)) 
 					{
+						Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "): return 1");
 						return this;
 					}				
 					else if (this.provided_service_table.TryGetValue(portType,out service_provider))
@@ -809,20 +810,23 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						string providedPortName = service_provider.createService(portType);
 					    ConnectionID conn = frw_builder.connect(user, usedPortName, frw_services.getComponentID(), providedPortName);
 					
+						Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "): return 2");
 						return getPortProceed(usedPortName);
 				    }
 					else if (this.singleton_provided_port_table.TryGetValue(portType, out singleton_service_port))
 				    { 
+						Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "): return 3");
 						return singleton_service_port;
 				    }
 				}
+   			    Trace.WriteLine("WorkerObject.getServicePort(" + usedPortName + "): return null");
 				return null;
 			}
 
 //		[MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPort(string portName)
         {
-           // Trace.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
+            Trace.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
             if (!usesPortNamesInv.ContainsKey(portName))
             {
 				Trace.WriteLine("PORT NOT FOUND is " + portName);

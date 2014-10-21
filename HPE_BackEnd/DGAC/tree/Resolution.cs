@@ -10,60 +10,82 @@ using br.ufc.pargo.hpe.basic;
 using System.Diagnostics; 
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
-{
-	
-	
+{	
 	public class Resolution
 	{
 
-		public static Component tryGeneralize(TreeNode CTop, TreeNode C){
-            
-            Component CTopImpl = null;
-            //CTopImpl = findImplementation(CTop);
-			
-			if(C != null) {			
-				C.reset();
-				do {
-                    CTopImpl = tryGeneralize(CTop, C.Next);
-                    if (CTopImpl != null) return CTopImpl;
-                    CTopImpl = findImplementation(CTop);
-                    if (CTopImpl != null) return CTopImpl;
-                    else
-                    {
-                    //Trace.Write("BEFORE GENERALIZE:"); writeTreeNode(CTop); Trace.WriteLine("...");
-                        C.generalize();
-                      //  Trace.Write("AFTER GENERALIZE:"); writeTreeNode(CTop); Trace.WriteLine("...");
-                    }
-				} while (!C.OnTop);
-			}
-			
-			return CTopImpl;			
+		public static Component tryGeneralize(TreeNode CTop, TreeNode C)
+		{
+			C.reset ();
+			do {
+				Component CTopImpl = C.Next != null ? tryGeneralize (CTop, C.Next) : findImplementation(CTop);
+
+				if (CTopImpl != null) 
+					return CTopImpl;
+				else 
+					C.generalize ();
+				
+			} while (!C.OnTop);
+
+			return null;
 		}
 
-        private static void writeTreeNode(TreeNode t)
+        private static string writeTreeNode(TreeNode t)
         {
-            Trace.Write(t.Functor_app.Id_abstract + (t.Children.Count > 0 ? "[" : ""));
+			string result = t.Parameter_id + "@" + t.GetHashCode() + "=" + t.Functor_app.Id_abstract + (t.Children.Count > 0 ? "[" : ""); 
+            Trace.Write(result);
             foreach (TreeNode child in t.Children) {
-                writeTreeNode(child);
+                result += writeTreeNode(child);
+				result += ",";
                 Trace.Write(",");
             }
-            Trace.Write((t.Children.Count > 0 ? "]" : ""));
+			string s = t.Children.Count > 0 ? "]" : "";
+			result += s;
+            Trace.Write(s);
+			return result;
         }
+
+		private static string readTreeNode(TreeNode t)
+		{
+			string result = t.Functor_app.Id_abstract + (t.Children.Count > 0 ? "[" : ""); 
+			foreach (TreeNode child in t.Children) {
+				result += readTreeNode(child);
+				result += ",";
+			}
+			result += t.Children.Count > 0 ? "]" : "";
+			return result;
+		}
+
+		private static IDictionary<int,  IList<AbstractComponentFunctorApplication>> cache2 = new Dictionary<int,  IList<AbstractComponentFunctorApplication>>();
 
         // EFFICIENCY IS NOT YET A CONCERN ! NEED TO IMPROVE !
         private static Component findImplementation(TreeNode CTop)
         {
 			int id_abstract = CTop.Functor_app.Id_abstract;
-         
-            IList<AbstractComponentFunctorApplication> acfaList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.listByIdAbstract(id_abstract);
+		//	if (id_abstract != 26 && id_abstract != 12) {
+		//		String s = readTreeNode (CTop);
+		//		Trace.WriteLine (s);
+		//	} 	     
+            
 
-//            writeTreeNode(CTop); Trace.Write("TESTING ... ");
+			IList<AbstractComponentFunctorApplication> acfaList;
+
+			if (!cache2.TryGetValue (id_abstract, out acfaList)) 
+			{
+				acfaList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.listByIdAbstract (id_abstract);			
+				cache2.Add (id_abstract, acfaList);
+			} 
+
+		// Trace.WriteIf(id_abstract != 26 && id_abstract != 12,"TESTING ... ");
             foreach (AbstractComponentFunctorApplication acfa in acfaList)
             {
-//                Trace.Write(acfa.Id_functor_app + ",");
+		//		Trace.WriteIf(id_abstract != 26 && id_abstract != 12,acfa.Id_functor_app + ",");
 				
 					if (recMatchParameters(CTop, acfa)) 
 					{
+						Trace.Write ("IMPLEMENTATION FOUND !!!! ");
+					//	writeTreeNode (CTop);						
+
 	                    return br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
 					} 
             }
@@ -72,7 +94,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             return null;
         }
 
-        private static bool recMatchParameters(TreeNode node, AbstractComponentFunctorApplication acfa)
+
+
+		private static bool recMatchParameters(TreeNode node, AbstractComponentFunctorApplication acfa)
         {
             AbstractComponentFunctorApplication acfaSon = null;
 
@@ -148,9 +172,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 						if (ddd.Contains(parameter))
 						{
 							foreach (TreeNode ttt in ddd)
-							{
 								Trace.WriteLine("CYCLE PATH: argument=" + ttt.Parameter_id + "; value=" + ttt.Functor_app.Id_functor_app);
-							}
+
 							throw new Exception("CYCLE DETECTED " + parameter.Parameter_id + ", " + parameter.Functor_app.Id_functor_app);
 						}
 						ddd.Add(parameter);
@@ -181,7 +204,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             if (acfaRef.ParametersList.Count == 0)
             {
-                if (cache.TryGetValue(acfaRef.Id_abstract, out c))
+                if (cache.TryGetValue(acfaRef.Id_functor_app, out c))
                 {
                     return c;
                 }
@@ -189,19 +212,27 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             TreeNode root = GenerateTree.generate(actualParametersTop, acfaRef);
 
-			//writeTreeNode(root);
 
             Resolution.sort(root);
 
-            c = Resolution.tryGeneralize(root, root);
-/*			while (c==null && (root.trySpecializeRoot()))			
+			TreeNode tn = root;
+			while (tn != null) 
 			{
-				c = Resolution.tryGeneralize(root, root);
-			}*/
+				    Trace.Write (tn.Functor_app.Id_abstract + "@" + tn.GetHashCode() + "->");
+					tn = tn.Next;
+			}
+
+			writeTreeNode (root);
+
+			Trace.WriteLine ("AFTER Resolution.sort(root)");
+
+            c = Resolution.tryGeneralize(root, root);
+
+			Trace.WriteLine ("AFTER Resolution.tryGeneralize(root, root)");
 
             if (acfaRef.ParametersList.Count == 0)
             {
-                cache.Add(acfaRef.Id_abstract, c);
+                cache.Add(acfaRef.Id_functor_app, c);
             }
 			
 			//if (c!=null)

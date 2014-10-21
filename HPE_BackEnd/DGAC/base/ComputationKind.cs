@@ -11,7 +11,6 @@ using gov.cca.ports;
 namespace br.ufc.pargo.hpe.kinds
 {
 
-
     public interface IComputationKind : IActivateKind, GoPort
 	{	
 	}
@@ -19,6 +18,5 @@ namespace br.ufc.pargo.hpe.kinds
 	//[Serializable]
 	public abstract class Computation : Activate, IComputationKind {
 	   
-	}	
-	
+	}		
 }

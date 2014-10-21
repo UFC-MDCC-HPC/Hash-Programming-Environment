@@ -28,10 +28,13 @@ namespace Back_End_WS
 		  	
 	    public BackEnd_WS()
 		{
+			if (Trace.Listeners.Count <= 1) {
+			    TextWriterTraceListener writer = new TextWriterTraceListener(System.Console.Out);
+				Trace.Listeners.Add(writer);
+			}
+
 			BackEnd.startManager();
 			Console.WriteLine ("Manager STARTED !!");
-			BackEnd.stopManager();
-			Console.WriteLine ("Manager STOPED !!");
 		}
 
 //		~BackEnd_WS()
@@ -155,17 +158,28 @@ namespace Back_End_WS
 		[WebMethod]
 		public string openSession(string session_id)
 		{
-			BackEnd dgac = new BackEnd();
+			BackEnd.startSession(session_id);
 
-			BackEnd.startManager(session_id);
-
+			foreach (string sid in BackEnd.getSessions())
+				Console.WriteLine (sid);
 
 			return session_id;
 		}
 
 		[WebMethod]
+		public string[] getPorts(string session_id, string instance_id)
+		{
+			string[] ports = BackEnd.getPorts(session_id, instance_id);
+			return ports;
+		}
+
+		[WebMethod]
 		public void closeSession(string session_id)
 		{
+			BackEnd.finishSession (session_id);
+
+			foreach (string sid in BackEnd.getSessions())
+				Console.WriteLine (sid);
 		}
 
 		// criar instância de componente

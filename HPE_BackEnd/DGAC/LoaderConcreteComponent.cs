@@ -74,7 +74,8 @@ namespace HPE_DGAC_LoadDB
 	            c_.Id_concrete = Connector.nextKey("id_concrete", "component");
 	            c_.Hash_component_UID = c.header.hash_component_UID;
 	            c_.Library_path = c.header.packagePath + "." + c.header.name; 
-	            c_.Id_functor_app = cApp.Id_functor_app;               					
+	            c_.Id_functor_app = cApp.Id_functor_app;      
+				c_.Id_abstract = cApp.Id_abstract;
 					
 	            br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.insert(c_);
 				

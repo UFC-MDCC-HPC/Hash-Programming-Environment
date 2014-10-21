@@ -7,6 +7,7 @@ using gov.cca;
 using br.ufc.pargo.hpe.backend.DGAC.database;
 using System.Reflection;
 using br.ufc.pargo.hpe.backend.DGAC.utils;
+using System.Diagnostics;
 
 namespace br.ufc.pargo.hpe.backend.DGAC
 {
@@ -50,8 +51,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public Port getPort(string portName)
         {
+			Trace.WriteLine ("WorkerServicesImpl 1 - getPort(" + portName + ")");
 			Port port = framework.getServicePort(cid, mkPortName(portName.Trim()));
-            return port == null ? framework.getPort(mkPortName(portName.Trim())) : port;
+			Trace.WriteLine ("WorkerServicesImpl 2 - getPort(" + portName + ")");
+			if (port == null) 
+			{
+				port = framework.getPort (mkPortName (portName.Trim ()));
+				Trace.WriteLine ("WorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
+			}
+			return port;
         }
 
         public Port getPortNonblocking(string portName)

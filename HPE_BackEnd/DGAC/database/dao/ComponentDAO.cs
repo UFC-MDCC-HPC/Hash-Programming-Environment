@@ -22,8 +22,8 @@ public class ComponentDAO{
         int nextKey = Connector.nextKey("id_concrete","component");
 
         String sql =
-            "INSERT INTO component (id_concrete, id_concrete_supertype, id_functor_app, library_path, hash_component_UID)" +
-            " VALUES (" + nextKey + "," + ac.Id_concrete_supertype + "," + ac.Id_functor_app + ",'"+ ac.Library_path + "','"+ ac.Hash_component_UID +  "')";
+            "INSERT INTO component (id_concrete, id_concrete_supertype, id_functor_app, id_abstract, library_path, hash_component_UID)" +
+            " VALUES (" + nextKey + "," + ac.Id_concrete_supertype + "," + ac.Id_functor_app + "," + ac.Id_abstract + ",'"+ ac.Library_path + "','"+ ac.Hash_component_UID +  "')";
 
    		Trace.WriteLine("Component.cs: TRY INSERT: " + sql);
 
@@ -43,7 +43,7 @@ public class ComponentDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
-           "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
+           "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, id_abstract, hash_component_UID " +
            "FROM component " +
            "WHERE id_functor_app="+id_functor_app +" AND hash_component_uid not like '%delete%'";
        dbcmd.CommandText = sql;
@@ -54,6 +54,7 @@ public class ComponentDAO{
        		c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
        		c.Library_path = (string)reader["library_path"];
        		c.Id_functor_app = (int)reader["id_functor_app"];
+			c.Id_abstract = (int)reader["id_abstract"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
             cache_c_functor_app.Add(id_functor_app, c);
         }//while
@@ -74,7 +75,7 @@ public class ComponentDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-             "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
+             "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, id_abstract, hash_component_UID " +
              "FROM component " +
              "WHERE hash_component_UID like '" + hash_component_uid + "'";
         dbcmd.CommandText = sql;
@@ -86,6 +87,7 @@ public class ComponentDAO{
             c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
+			c.Id_abstract = (int)reader["id_abstract"];
             c.Hash_component_UID = (string) reader["hash_component_UID"];
         }//while
         // clean up
@@ -108,7 +110,7 @@ public class ComponentDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-             "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
+             "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, id_abstract, hash_component_UID " +
              "FROM component " +
              "WHERE library_path like '" + library_path + "'";
 
@@ -121,6 +123,7 @@ public class ComponentDAO{
             c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
+			c.Id_abstract = (int)reader["id_abstract"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
             if (cache_c_lp.ContainsKey(library_path))
                 cache_c_lp.Remove(library_path);
@@ -146,7 +149,7 @@ public class ComponentDAO{
        IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
       string sql =
-           "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
+           "SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, id_abstract, hash_component_UID " +
            "FROM component " +
            "WHERE id_concrete="+id_concrete;
        dbcmd.CommandText = sql;
@@ -157,6 +160,7 @@ public class ComponentDAO{
        		c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
        		c.Library_path = (string)reader["library_path"];
        		c.Id_functor_app = (int)reader["id_functor_app"];
+			c.Id_abstract = (int)reader["id_abstract"];
        		c.Hash_component_UID = (string)reader["hash_component_UID"];
             cache_c_id.Add(id_concrete, c);
        }//while
@@ -196,6 +200,7 @@ public class ComponentDAO{
             c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
             c.Library_path = (string)reader["library_path"];
             c.Id_functor_app = (int)reader["id_functor_app"];
+			c.Id_abstract = (int)reader["id_abstract"];
             c.Hash_component_UID = (string)reader["hash_component_UID"];
 			cList.Add(c);
         }//while
@@ -263,6 +268,34 @@ public class ComponentDAO{
         return cList;
     }
 		
+		public IList<Component> listByAbstractComponent(int id_abstract)
+		{
+			IList<Component> cList = new List<Component>();
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			string sql =
+				"SELECT id_concrete, id_concrete_supertype, library_path, id_functor_app, hash_component_UID " +
+					"FROM component WHERE id_abstract = '" + id_abstract + "'";
+			dbcmd.CommandText = sql;
+			IDataReader reader = dbcmd.ExecuteReader();
+			while (reader.Read())
+			{
+				Component c = new Component();
+				c.Id_concrete = (int)reader["id_concrete"];
+				c.Id_concrete_supertype = (int)reader["id_concrete_supertype"];
+				c.Library_path = (string)reader["library_path"];
+				c.Id_functor_app = (int)reader["id_functor_app"];
+				c.Id_abstract = (int)reader["id_abstract"];
+				c.Hash_component_UID = (string)reader["hash_component_UID"];
+				cList.Add(c);
+			}//while
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+			return cList;
+		}
 
 }//class
 
