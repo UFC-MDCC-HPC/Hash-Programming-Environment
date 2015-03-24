@@ -2773,7 +2773,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_IRef() {
+	public EAttribute getUnitType_Facet() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -2782,7 +2782,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_Multiple() {
+	public EAttribute getUnitType_IRef() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -2791,7 +2791,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_Private() {
+	public EAttribute getUnitType_Multiple() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -2800,7 +2800,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_Replica() {
+	public EAttribute getUnitType_Private() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -2809,7 +2809,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_URef() {
+	public EAttribute getUnitType_Replica() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -2818,8 +2818,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUnitType_VisibleInterface() {
+	public EAttribute getUnitType_URef() {
 		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUnitType_VisibleInterface() {
+		return (EAttribute)unitTypeEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -3283,6 +3292,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(unitTypeEClass, UNIT_TYPE__SUPER);
 		createEReference(unitTypeEClass, UNIT_TYPE__SLICES);
 		createEReference(unitTypeEClass, UNIT_TYPE__VISUAL_DESCRIPTION);
+		createEAttribute(unitTypeEClass, UNIT_TYPE__FACET);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__IREF);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__MULTIPLE);
 		createEAttribute(unitTypeEClass, UNIT_TYPE__PRIVATE);
@@ -3654,6 +3664,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getUnitType_Super(), this.getUnitRefType(), null, "super", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnitType_Slices(), this.getUnitSliceType(), null, "slices", null, 0, -1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnitType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnitType_Facet(), theXMLTypePackage.getInt(), "facet", "0", 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Private(), theXMLTypePackage.getBoolean(), "private", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5448,6 +5459,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
+		   });		
+		addAnnotation
+		  (getUnitType_Facet(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "facet"
 		   });		
 		addAnnotation
 		  (getUnitType_IRef(), 

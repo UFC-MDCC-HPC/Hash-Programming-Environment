@@ -2435,6 +2435,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			boolean isSubUnit = false;
 			boolean visibleInterface = true;
 			int index;
+			int facet;
 			String cRefSuper = null;
 			String uRefSuper = null;
 			Integer replica = null;
@@ -2450,6 +2451,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				isPrivate = u.getHidden();
 				isMultiple = u.isMultiple();
 				index = u.getSliceReplicaIndex();
+				facet = u.getFacet();
 				visibleInterface = u.visibleInterface();
 				uRef = u.getName2();
 				HInterface i = (HInterface) u.getInterface();
@@ -2471,6 +2473,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				uX.setVisibleInterface(visibleInterface);
 				uX.setVisualDescription(v);
 				uX.setReplica(index);
+				uX.setFacet(facet);
 
 				if (isSubUnit) {
 					UnitRefType superUnit = factory.createUnitRefType();
@@ -3009,6 +3012,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 		String uName = xU.getURef();
 		int index = xU.getReplica();
+		int facet = xU.getFacet();
 		int x = (int) xU.getVisualDescription().getX();
 		int y = (int) xU.getVisualDescription().getY();
 		int w = (int) xU.getVisualDescription().getW();
@@ -3020,23 +3024,19 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// if (u == null) {
 		if (index == 0) {
 			if (component.getSuperType() != null) {
-				u = xUsuper != null ? lookForSuperUnit(xUsuper) : c
-						.createUnit();
+				u = xUsuper != null ? lookForSuperUnit(xUsuper) : c.createUnit();
 			} else if (!component.isAbstractConfiguration()) {
-				u = xUsuper != null ? lookForImplementingUnit(xUsuper) : c
-						.createUnit();
+				u = xUsuper != null ? lookForImplementingUnit(xUsuper) : c.createUnit();
 			} else {
 				u = c.createUnit();
 			}
 		} else {
 			if (component.getSuperType() != null) {
 				IHPrimUnit u_ = c.getUnitByName(uName, 0);
-				u = (HUnit) (xUsuper != null ? lookForSuperUnit(xUsuper) : u_
-						.createReplica(u_, index));
+				u = (HUnit) (xUsuper != null ? lookForSuperUnit(xUsuper) : u_.createReplica(u_, index));
 			} else if (!component.isAbstractConfiguration()) {
 				IHPrimUnit u_ = c.getUnitByName(uName, 0);
-				u = (HUnit) (xUsuper != null ? lookForImplementingUnit(xUsuper)
-						: u_.createReplica(u_, index));
+				u = (HUnit) (xUsuper != null ? lookForImplementingUnit(xUsuper) : u_.createReplica(u_, index));
 			} else {
 				IHPrimUnit u_ = c.getUnitByName(uName, 0);
 				u = (HUnit) u_.createReplica(u_, index - 1);
@@ -3051,6 +3051,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		u.setBounds(new Rectangle(x, y, w, h));
 		u.setHidden(xU.isPrivate());
 		u.setMultiple(xU.isSetMultiple() ? xU.isMultiple() : u.isMultiple());
+		u.setFacet(facet);
 
 		if (xU.getIRef() != null)
 			u.setInterfaceName(xU.getIRef());

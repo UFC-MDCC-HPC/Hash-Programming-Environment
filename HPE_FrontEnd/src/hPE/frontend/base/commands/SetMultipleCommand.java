@@ -20,7 +20,7 @@ public class SetMultipleCommand extends Command {
 		
 		this.cBasis = cBasis;
 		
-		setLabel("Set Multiple");
+		setLabel("Set Parallel");
 	}
 	
 	

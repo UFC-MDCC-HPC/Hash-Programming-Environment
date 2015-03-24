@@ -56,6 +56,7 @@ public class InheritFromAction extends SelectionAction {
 	        		return false;
 	        if (c.isSuperType()) return false;
 			HComponent topConfiguration = (HComponent) c.getTopConfiguration();
+			if (!topConfiguration.isAbstract()) return false;
 			if (topConfiguration == null) return false;			
 			if (!topConfiguration.kindString().equals(c.kindString())) return false;
 			//if (topConfiguration.getUnits().size() > 0) return false;

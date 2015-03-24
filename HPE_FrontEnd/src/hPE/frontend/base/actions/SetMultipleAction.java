@@ -21,19 +21,19 @@ import org.eclipse.ui.IWorkbenchPart;
 public class SetMultipleAction extends SelectionAction {
 
 	private static final String
-		SET_MULTIPLE_REQUEST = "Set Multiple";  //$NON-NLS-1$
+		SET_PARALLEL_REQUEST = "Set Parallel";  //$NON-NLS-1$
 	
 	public static final String
-	    SET_MULTIPLE = "Set Multiple";  //$NON-NLS-1$
+	    SET_PARALLEL = "Set Parallel";  //$NON-NLS-1$
 	
 	Request request;
 	
 	public SetMultipleAction(IWorkbenchPart part) {
 		super(part);
-	    request = new Request(SET_MULTIPLE_REQUEST);
-	    setText("Set Multiple");
-	    setId("Set Multiple");
-	    setToolTipText("Set Multiple");
+	    request = new Request(SET_PARALLEL_REQUEST);
+	    setText("Set Parallel");
+	    setId("Set Parallel");
+	    setToolTipText("Set Parallel");
 	    setImageDescriptor(
 	    ImageDescriptor.createFromFile(HPEPlugin.class,"util/icons/rectangle24.gif")); //$NON-NLS-1$
 	    setHoverImageDescriptor(getImageDescriptor());		
@@ -80,7 +80,7 @@ public class SetMultipleAction extends SelectionAction {
 		List parts = getSelectedObjects();
 
 		CompoundCommand cc = new CompoundCommand();
-		cc.setDebugLabel("Set Multiple");//$NON-NLS-1$
+		cc.setDebugLabel("Set Parallel");//$NON-NLS-1$
 		for (int i=0; i<parts.size(); i++){
 			EditPart part = (EditPart) parts.get(i);
 			cc.add(part.getCommand(request));

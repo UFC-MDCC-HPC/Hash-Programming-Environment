@@ -22,6 +22,8 @@ public interface UnitTypeValidator {
 	boolean validateSuper(UnitRefType value);
 	boolean validateSlices(EList<UnitSliceType> value);
 	boolean validateVisualDescription(VisualElementAttributes value);
+	boolean validateFacet(int value);
+
 	boolean validateIRef(String value);
 	boolean validateMultiple(boolean value);
 	boolean validatePrivate(boolean value);

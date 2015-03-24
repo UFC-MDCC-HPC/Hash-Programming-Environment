@@ -12,9 +12,13 @@
     		<element name="node" type="int" maxOccurs="unbounded"
     			minOccurs="0">
     		</element>
-    		<element name="unit_mapping" type="tns:UnitMappingType" maxOccurs="unbounded" minOccurs="1"></element>
+    		<element name="unit_mapping" type="tns:UnitMappingType"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
     	</sequence>
     	<attribute name="library_path" type="string"></attribute>
+    	<attribute name="NewAttribute" type="string"></attribute>
+    	<attribute name="faceted" type="boolean" use="optional" default="false"></attribute>
     </complexType>
 
 
@@ -41,6 +45,9 @@
     	<attribute name="unit_index" type="int" use="optional"
     		default="0">
     	</attribute>
+    	<attribute name="facet" type="int" use="optional" default="0"></attribute>
+    	<attribute name="ip_address" type="string" use="optional"></attribute>
+    	<attribute name="port" type="int" use="optional"></attribute>
     </complexType>
 
     <attribute name="NewAttribute" type="string"></attribute>

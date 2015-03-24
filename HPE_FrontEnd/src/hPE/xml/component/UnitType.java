@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.UnitType#getSuper <em>Super</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#getSlices <em>Slices</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#getVisualDescription <em>Visual Description</em>}</li>
+ *   <li>{@link hPE.xml.component.UnitType#getFacet <em>Facet</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.UnitType#isPrivate <em>Private</em>}</li>
@@ -105,6 +106,61 @@ public interface UnitType extends EObject {
 	 * @generated
 	 */
 	void setVisualDescription(VisualElementAttributes value);
+
+	/**
+	 * Returns the value of the '<em><b>Facet</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Facet</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Facet</em>' attribute.
+	 * @see #isSetFacet()
+	 * @see #unsetFacet()
+	 * @see #setFacet(int)
+	 * @see hPE.xml.component.ComponentPackage#getUnitType_Facet()
+	 * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='facet'"
+	 * @generated
+	 */
+	int getFacet();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.UnitType#getFacet <em>Facet</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Facet</em>' attribute.
+	 * @see #isSetFacet()
+	 * @see #unsetFacet()
+	 * @see #getFacet()
+	 * @generated
+	 */
+	void setFacet(int value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.UnitType#getFacet <em>Facet</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetFacet()
+	 * @see #getFacet()
+	 * @see #setFacet(int)
+	 * @generated
+	 */
+	void unsetFacet();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.UnitType#getFacet <em>Facet</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Facet</em>' attribute is set.
+	 * @see #unsetFacet()
+	 * @see #getFacet()
+	 * @see #setFacet(int)
+	 * @generated
+	 */
+	boolean isSetFacet();
 
 	/**
 	 * Returns the value of the '<em><b>IRef</b></em>' attribute.

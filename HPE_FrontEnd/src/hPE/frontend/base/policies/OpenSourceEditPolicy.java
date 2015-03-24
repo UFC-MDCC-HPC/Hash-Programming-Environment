@@ -116,7 +116,8 @@ public void execute(){
 	
 	if (result == HBEVersionControlDialog.BUTTON_EDIT) {		
 	    if (version.getFiles().isEmpty()) {
- 			 openExistingSourceCodeFile(synthesizer.synthesize(i,version.getVersionID()));
+	    	 HBESourceVersion code = synthesizer.synthesize(i,version.getVersionID());
+ 			 openExistingSourceCodeFile(code);
  			 NAntBuilder builder = NAntBuilder.instance;
  			 builder.setComponent((HComponent) i.getConfiguration());
  			 builder.setMonitor(new NullProgressMonitor());

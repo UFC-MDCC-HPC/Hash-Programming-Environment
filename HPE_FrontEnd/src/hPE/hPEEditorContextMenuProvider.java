@@ -275,7 +275,7 @@ public class hPEEditorContextMenuProvider extends ContextMenuProvider {
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}
 		
-		action = getAction(SetMultipleAction.SET_MULTIPLE);
+		action = getAction(SetMultipleAction.SET_PARALLEL);
 		if (action.isEnabled())	{ 
 			menu.appendToGroup(GEFActionConstants.GROUP_REST, action);		
 		}

@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getSuper <em>Super</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getSlices <em>Slices</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getVisualDescription <em>Visual Description</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getFacet <em>Facet</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#getIRef <em>IRef</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link hPE.xml.component.impl.UnitTypeImpl#isPrivate <em>Private</em>}</li>
@@ -73,6 +74,35 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	 * @ordered
 	 */
 	protected VisualElementAttributes visualDescription;
+
+	/**
+	 * The default value of the '{@link #getFacet() <em>Facet</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFacet()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int FACET_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getFacet() <em>Facet</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFacet()
+	 * @generated
+	 * @ordered
+	 */
+	protected int facet = FACET_EDEFAULT;
+
+	/**
+	 * This is true if the Facet attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean facetESet;
 
 	/**
 	 * The default value of the '{@link #getIRef() <em>IRef</em>}' attribute.
@@ -352,6 +382,52 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getFacet() {
+		return facet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFacet(int newFacet) {
+		int oldFacet = facet;
+		facet = newFacet;
+		boolean oldFacetESet = facetESet;
+		facetESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.UNIT_TYPE__FACET, oldFacet, facet, !oldFacetESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetFacet() {
+		int oldFacet = facet;
+		boolean oldFacetESet = facetESet;
+		facet = FACET_EDEFAULT;
+		facetESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.UNIT_TYPE__FACET, oldFacet, FACET_EDEFAULT, oldFacetESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetFacet() {
+		return facetESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getIRef() {
 		return iRef;
 	}
@@ -605,6 +681,8 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 				return getSlices();
 			case ComponentPackage.UNIT_TYPE__VISUAL_DESCRIPTION:
 				return getVisualDescription();
+			case ComponentPackage.UNIT_TYPE__FACET:
+				return getFacet();
 			case ComponentPackage.UNIT_TYPE__IREF:
 				return getIRef();
 			case ComponentPackage.UNIT_TYPE__MULTIPLE:
@@ -639,6 +717,9 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 				return;
 			case ComponentPackage.UNIT_TYPE__VISUAL_DESCRIPTION:
 				setVisualDescription((VisualElementAttributes)newValue);
+				return;
+			case ComponentPackage.UNIT_TYPE__FACET:
+				setFacet((Integer)newValue);
 				return;
 			case ComponentPackage.UNIT_TYPE__IREF:
 				setIRef((String)newValue);
@@ -679,6 +760,9 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 			case ComponentPackage.UNIT_TYPE__VISUAL_DESCRIPTION:
 				setVisualDescription((VisualElementAttributes)null);
 				return;
+			case ComponentPackage.UNIT_TYPE__FACET:
+				unsetFacet();
+				return;
 			case ComponentPackage.UNIT_TYPE__IREF:
 				setIRef(IREF_EDEFAULT);
 				return;
@@ -715,6 +799,8 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 				return slices != null && !slices.isEmpty();
 			case ComponentPackage.UNIT_TYPE__VISUAL_DESCRIPTION:
 				return visualDescription != null;
+			case ComponentPackage.UNIT_TYPE__FACET:
+				return isSetFacet();
 			case ComponentPackage.UNIT_TYPE__IREF:
 				return IREF_EDEFAULT == null ? iRef != null : !IREF_EDEFAULT.equals(iRef);
 			case ComponentPackage.UNIT_TYPE__MULTIPLE:
@@ -741,7 +827,9 @@ public class UnitTypeImpl extends MinimalEObjectImpl.Container implements UnitTy
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (iRef: ");
+		result.append(" (facet: ");
+		if (facetESet) result.append(facet); else result.append("<unset>");
+		result.append(", iRef: ");
 		result.append(iRef);
 		result.append(", multiple: ");
 		if (multipleESet) result.append(multiple); else result.append("<unset>");

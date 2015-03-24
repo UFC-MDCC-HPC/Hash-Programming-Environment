@@ -20,8 +20,20 @@ import org.eclipse.draw2d.geometry.Rectangle;
 public abstract class HUnit extends HPrimUnit 
                             implements IHUnit {
 
-	static final long serialVersionUID = 1;
+	static final long serialVersionUID = 1;	
+	
+	private int facet = 0;
+	
+	public int getFacet() {
+		return facet;
+	}
 
+	public void setFacet(int facet) {
+		this.facet = facet;
+	}
+
+	
+	
 	
 	/** 
 	 * @uml.property name="unit_slice_abstractions"

@@ -484,7 +484,7 @@ public void init(IEditorSite site, IEditorInput input) throws PartInitException
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SetRecursiveAction.SET_RECURSIVE;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
-		id = SetMultipleAction.SET_MULTIPLE;
+		id = SetMultipleAction.SET_PARALLEL;
 		bars.setGlobalActionHandler(id, registry.getAction(id));
 		id = SplitEntryAction.SPLIT_ENTRY;
 		bars.setGlobalActionHandler(id, registry.getAction(id));

@@ -3674,13 +3674,22 @@ public interface ComponentPackage extends EPackage {
 	int UNIT_TYPE__VISUAL_DESCRIPTION = 2;
 
 	/**
+	 * The feature id for the '<em><b>Facet</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_TYPE__FACET = 3;
+
+	/**
 	 * The feature id for the '<em><b>IRef</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__IREF = 3;
+	int UNIT_TYPE__IREF = 4;
 
 	/**
 	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
@@ -3689,7 +3698,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__MULTIPLE = 4;
+	int UNIT_TYPE__MULTIPLE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Private</b></em>' attribute.
@@ -3698,7 +3707,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__PRIVATE = 5;
+	int UNIT_TYPE__PRIVATE = 6;
 
 	/**
 	 * The feature id for the '<em><b>Replica</b></em>' attribute.
@@ -3707,7 +3716,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__REPLICA = 6;
+	int UNIT_TYPE__REPLICA = 7;
 
 	/**
 	 * The feature id for the '<em><b>URef</b></em>' attribute.
@@ -3716,7 +3725,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__UREF = 7;
+	int UNIT_TYPE__UREF = 8;
 
 	/**
 	 * The feature id for the '<em><b>Visible Interface</b></em>' attribute.
@@ -3725,7 +3734,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE__VISIBLE_INTERFACE = 8;
+	int UNIT_TYPE__VISIBLE_INTERFACE = 9;
 
 	/**
 	 * The number of structural features of the '<em>Unit Type</em>' class.
@@ -3734,7 +3743,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_TYPE_FEATURE_COUNT = 9;
+	int UNIT_TYPE_FEATURE_COUNT = 10;
 
 	/**
 	 * The number of operations of the '<em>Unit Type</em>' class.
@@ -6529,6 +6538,17 @@ public interface ComponentPackage extends EPackage {
 	EReference getUnitType_VisualDescription();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitType#getFacet <em>Facet</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Facet</em>'.
+	 * @see hPE.xml.component.UnitType#getFacet()
+	 * @see #getUnitType()
+	 * @generated
+	 */
+	EAttribute getUnitType_Facet();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.UnitType#getIRef <em>IRef</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8828,6 +8848,14 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UNIT_TYPE__VISUAL_DESCRIPTION = eINSTANCE.getUnitType_VisualDescription();
+
+		/**
+		 * The meta object literal for the '<em><b>Facet</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT_TYPE__FACET = eINSTANCE.getUnitType_Facet();
 
 		/**
 		 * The meta object literal for the '<em><b>IRef</b></em>' attribute feature.

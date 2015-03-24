@@ -68,6 +68,7 @@
 		</attribute>
 		<attribute name="multiple" type="boolean" use="optional"></attribute>
 		<attribute name="replica" type="int" use="optional"></attribute>
+		<attribute name="facet" type="int" use="optional" default="0"></attribute>
 	</complexType>
 
 	<complexType name="InterfaceType">

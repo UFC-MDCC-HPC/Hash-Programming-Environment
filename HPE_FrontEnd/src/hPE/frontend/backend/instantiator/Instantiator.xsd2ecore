@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="Instantiator.xsd#/" outputs="instantiator.ecore#/"
+    topToBottom="true">
+  <nested inputs="bundleentry://322.fwk420148609/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="Instantiator.xsd#//ContextParameterType;XSDComplexTypeDefinition=1"
+      outputs="instantiator.ecore#//ContextParameterType">
+    <nested inputs="Instantiator.xsd#//ContextParameterType;XSDComplexTypeDefinition=1/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="instantiator.ecore#//ContextParameterType/actualParameter"/>
+    <nested inputs="Instantiator.xsd#//ContextParameterType;XSDComplexTypeDefinition=1/XSDAttributeUse"
+        outputs="instantiator.ecore#//ContextParameterType/formalParameterId"/>
+  </nested>
+  <nested inputs="bundleentry://322.fwk420148609/cache/www.w3.org/2001/XMLSchema.xsd#//int;XSDSimpleTypeDefinition=44"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Int"/>
+  <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3" outputs="instantiator.ecore#//UnitMappingType">
+    <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="instantiator.ecore#//UnitMappingType/node"/>
+    <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3/XSDAttributeUse=2"
+        outputs="instantiator.ecore#//UnitMappingType/facet"/>
+    <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3/XSDAttributeUse=3"
+        outputs="instantiator.ecore#//UnitMappingType/ipAddress"/>
+    <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3/XSDAttributeUse=4"
+        outputs="instantiator.ecore#//UnitMappingType/port"/>
+    <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3/XSDAttributeUse"
+        outputs="instantiator.ecore#//UnitMappingType/unitId"/>
+    <nested inputs="Instantiator.xsd#//UnitMappingType;XSDComplexTypeDefinition=3/XSDAttributeUse=1"
+        outputs="instantiator.ecore#//UnitMappingType/unitIndex"/>
+  </nested>
+  <nested inputs="Instantiator.xsd#//ComponentFunctorApplicationType;XSDComplexTypeDefinition"
+      outputs="instantiator.ecore#//ComponentFunctorApplicationType">
+    <nested inputs="Instantiator.xsd#//ComponentFunctorApplicationType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="instantiator.ecore#//ComponentFunctorApplicationType/contextParameter"/>
+    <nested inputs="Instantiator.xsd#//ComponentFunctorApplicationType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="instantiator.ecore#//ComponentFunctorApplicationType/node"/>
+    <nested inputs="Instantiator.xsd#//ComponentFunctorApplicationType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="instantiator.ecore#//ComponentFunctorApplicationType/unitMapping"/>
+    <nested inputs="Instantiator.xsd#//ComponentFunctorApplicationType;XSDComplexTypeDefinition/XSDAttributeUse"
+        outputs="instantiator.ecore#//ComponentFunctorApplicationType/libraryPath"/>
+  </nested>
+  <nested inputs="Instantiator.xsd#//application;XSDElementDeclaration" outputs="instantiator.ecore#//DocumentRoot/application"/>
+  <nested inputs="Instantiator.xsd#//NewAttribute;XSDAttributeDeclaration" outputs="instantiator.ecore#//DocumentRoot/newAttribute"/>
+  <nested inputs="Instantiator.xsd#//NodeMappingType;XSDComplexTypeDefinition=2" outputs="instantiator.ecore#//NodeMappingType">
+    <nested inputs="Instantiator.xsd#//NodeMappingType;XSDComplexTypeDefinition=2/XSDAttributeUse=2"
+        outputs="instantiator.ecore#//NodeMappingType/node"/>
+    <nested inputs="Instantiator.xsd#//NodeMappingType;XSDComplexTypeDefinition=2/XSDAttributeUse"
+        outputs="instantiator.ecore#//NodeMappingType/unitId"/>
+    <nested inputs="Instantiator.xsd#//NodeMappingType;XSDComplexTypeDefinition=2/XSDAttributeUse=1"
+        outputs="instantiator.ecore#//NodeMappingType/unitIndex"/>
+  </nested>
+</xsd2ecore:XSD2EcoreMappingRoot>
