@@ -241,7 +241,7 @@ namespace gov
              */
             void addProvidesPort(Port inPort,
                          string portName,
-                         string type,
+                     	 string type,
                          TypeMap properties);// throws CCAException ;
 
 

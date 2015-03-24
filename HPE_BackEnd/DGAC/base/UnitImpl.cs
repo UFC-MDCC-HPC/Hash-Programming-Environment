@@ -15,6 +15,7 @@ using MPI;
 using br.ufc.pargo.hpe.kinds;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using Instantiator;
 
 namespace br.ufc.pargo.hpe.basic
 {
@@ -35,9 +36,11 @@ namespace br.ufc.pargo.hpe.basic
 		#region GoPort implementation
 		public int go ()
 		{
+			int r;
 			Trace.WriteLine ("BEFORE CALLING GO " + this.go_app);
-			return go_app();
+			r = go_app();
 			Trace.WriteLine ("AFTER CALLING GO " + this.go_app);
+			return r;
 		}
 		#endregion
 	}
@@ -168,6 +171,38 @@ namespace br.ufc.pargo.hpe.basic
         public Intracommunicator PeerComm {get { return peer_comm; } set { this.peer_comm = value; }}
         public int PeerRank {get {return PeerComm.Rank; }}   
 		public int PeerSize { get { return PeerComm.Size; }}
+
+
+		IDictionary<string, IDictionary<int,FacetAccess>> facet;
+		public IDictionary<string, IDictionary<int,FacetAccess>> Facet { get { return facet;	} }
+
+		public void readFacetConfiguration(string[] facet_unit_id,
+		                                   int[] facet_unit_index,
+		                                   string[] facet_ip_address,
+		                                   int [] facet_port)
+		{
+			facet = new Dictionary<string, IDictionary<int,FacetAccess>> ();
+
+			for (int i=0; i < facet_unit_id.Length; i++) 
+			{
+				string unit_id = facet_unit_id[i];
+				int unit_index =  facet_unit_index[i];
+				string ip_address =  facet_ip_address[i];
+			    int port = facet_port [i];
+
+				if (facet.ContainsKey (unit_id)) 
+				{
+					facet [unit_id].Add (unit_index, new FacetAccess (ip_address, port));
+				} 
+				else 
+				{
+					IDictionary<int,FacetAccess> facet_access_dict = new Dictionary<int,FacetAccess> ();
+					facet_access_dict.Add (unit_index, new FacetAccess (ip_address, port));
+					facet.Add (unit_id, facet_access_dict);
+				}
+			}
+
+		}
 
 		IDictionary<string, int[]> unit_ranks = new Dictionary<string, int[]>();
  		public IDictionary<string, int[]> UnitRanks { get { return unit_ranks; } }

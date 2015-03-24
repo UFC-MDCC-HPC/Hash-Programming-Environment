@@ -62,10 +62,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         private static Component findImplementation(TreeNode CTop)
         {
 			int id_abstract = CTop.Functor_app.Id_abstract;
-		//	if (id_abstract != 26 && id_abstract != 12) {
-		//		String s = readTreeNode (CTop);
-		//		Trace.WriteLine (s);
-		//	} 	     
             
 
 			IList<AbstractComponentFunctorApplication> acfaList;
@@ -76,11 +72,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 				cache2.Add (id_abstract, acfaList);
 			} 
 
-		// Trace.WriteIf(id_abstract != 26 && id_abstract != 12,"TESTING ... ");
             foreach (AbstractComponentFunctorApplication acfa in acfaList)
             {
-		//		Trace.WriteIf(id_abstract != 26 && id_abstract != 12,acfa.Id_functor_app + ",");
-				
+
 					if (recMatchParameters(CTop, acfa)) 
 					{
 						Trace.Write ("IMPLEMENTATION FOUND !!!! ");
@@ -89,7 +83,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	                    return br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieveByFunctorApp(acfa.Id_functor_app);
 					} 
             }
-//            Trace.WriteLine("... END TEST");
 
             return null;
         }
@@ -100,10 +93,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         {
             AbstractComponentFunctorApplication acfaSon = null;
 
-			//AbstractComponentFunctorApplicationDAO acfadao = new AbstractComponentFunctorApplicationDAO();
-           // AbstractComponentFunctorParameterDAO acfpdao = new AbstractComponentFunctorParameterDAO();
-			
-          //  SupplyParameterComponentDAO spdao = new SupplyParameterComponentDAO();
             IList<SupplyParameterComponent> spList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.spcdao.list(acfa.Id_functor_app);
 			
 			IDictionary<string, int> ttt = new Dictionary<string,int>();
@@ -115,7 +104,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             foreach (TreeNode nodeSon in node.Children)
             {
                 string parameter_id = nodeSon.Parameter_id;
-              //  Trace.Write("CHK PARAM: " + parameter_id);
                 int id_functor_app_actual = -1;
                 bool found = false;
                 foreach (string parid in nodeSon.getParameterIdSyns())
@@ -127,10 +115,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaSon = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app_actual);
                         if (acfaSon.Id_abstract != nodeSon.Functor_app.Id_abstract)
                         {
-                          //  Trace.WriteLine("FAIL 1! ");
+                            Trace.WriteLine("FAIL 1! ");
                             return false;
                         }
-                       // Trace.WriteLine("MATCH! ");
+                        Trace.WriteLine("MATCH! ");
                     }
                 }
 
@@ -198,7 +186,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public static Component findHashComponent(IDictionary<string, int> actualParametersTop, AbstractComponentFunctorApplication acfaRef)
         {
-			//Trace.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
+			Trace.WriteLine("FIND HASH COMPONENT: " + acfaRef.Id_functor_app);
 				
             Component c;
 
@@ -211,7 +199,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             }
 
             TreeNode root = GenerateTree.generate(actualParametersTop, acfaRef);
-
 
             Resolution.sort(root);
 

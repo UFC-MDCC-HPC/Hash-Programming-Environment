@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:application xmlns:tns="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/instantiator instantiator.xsd ">
-	<tns:contextual_type component_ref="br.ufc.mdcc.mapreduce.example.graph.pagerank.PageRankApp">
+	<tns:contextual_type component_ref="br.ufc.mdcc.mapreduce.example.graph.clique.CliqueApp">
     <tns:argument parameter_id="platform">
       <tns:type component_ref="br.ufc.mdcc.common.Platform"/>
     </tns:argument>
@@ -8,11 +8,11 @@
   <tns:unit_mapping unit_id="master_process" unit_index="0">
     <tns:node>0</tns:node>
   </tns:unit_mapping>
-  <tns:unit_mapping unit_id="vote_map_process" unit_index="0">
+  <tns:unit_mapping unit_id="clique_map_process" unit_index="0">
     <tns:node>1</tns:node>
     <tns:node>2</tns:node>
   </tns:unit_mapping>
-  <tns:unit_mapping unit_id="vote_reduce_process" unit_index="0">
+  <tns:unit_mapping unit_id="clique_reduce_process" unit_index="0">
     <tns:node>3</tns:node>
   </tns:unit_mapping>
 </tns:application>

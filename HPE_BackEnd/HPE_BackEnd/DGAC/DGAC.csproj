@@ -46,7 +46,6 @@
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="sudo /usr/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" pauseExternalConsole="True" />
-        <Command type="AfterBuild" command="sudo /usr/local/bin/gacutil -i ${TargetName} -package DGAC" workingdir="${TargetDir}" externalConsole="True" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -449,7 +448,7 @@
       <Link>catalog.cs</Link>
     </Compile>
     <Compile Include="..\..\DGAC\instantiator.cs">
-      <Link>instantiator.cs</Link>
+      <Link>instantiator\instantiator.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

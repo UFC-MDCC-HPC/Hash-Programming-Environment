@@ -11,9 +11,23 @@ using MPI;
 using br.ufc.pargo.hpe.backend.DGAC;
 using gov.cca;
 using br.ufc.pargo.hpe.ports;
+using Instantiator;
 
 namespace br.ufc.pargo.hpe.basic
 {
+
+	public struct FacetAccess
+	{
+		public FacetAccess(string ip_address_arg, int port_arg)
+		{
+			ip_address = ip_address_arg;
+			port = port_arg;
+		}
+
+		string ip_address;
+		int port;
+	}
+
     public interface IUnit : Component, InitializePort, ReconfigurationAdvicePort
     {
 		string ClassName {get; set;}
@@ -46,7 +60,17 @@ namespace br.ufc.pargo.hpe.basic
 
 		IDictionary<string, IUnit> Slice {get;}
 
-		
+		// FACET
+		/* Para acessar o endereço IP (Facet[<unit_id>][<unit_index>].ip_address) ou 
+		 * porta (Facet[<unit_id>][<unit_index>].port) de uma faceta.
+		 * Ex: Facet["stream_unit"][2].ip_address
+		 *     Facet["test_unit"][0].port
+		 */
+		IDictionary<string, IDictionary<int,FacetAccess>> Facet { get; }
+		void readFacetConfiguration (string[] facet_unit_id,
+		                             int[] facet_unit_index,
+		                             string[] facet_ip_address,
+		                             int [] facet_port);
        
         gov.cca.Services Services { get; }
 

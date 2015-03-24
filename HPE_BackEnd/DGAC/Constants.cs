@@ -80,6 +80,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         //public static string ID_INNER_KEY = "id_inner";
         public const string UNIT_KEY = "id_interface";
         public const string PORT_NAME = "port_name";
+		public const string FACET_NUMBER = "facet_number";
         public const string ENCLOSING_ARGUMENTS = "arguments";
 		public const string ASSEMBLY_STRING_KEY = "assembly_string";
 		public const string PORT_NAMES_KEY = "port_name";
@@ -123,6 +124,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string KIND_SERVICE_NAME = "Service";
         public const string KIND_DATASTRUCTURE_NAME = "Data";
         public const string KIND_TOPOLOGY_NAME = "Topology";
+
+		public const string FACET_PRESENCE = "facet_presence";
+		public const string FACET_UNIT_ID = "facet_unit_id";
+		public const string FACET_UNIT_INDEX = "facet_unit_index";
+		public const string FACET_IP_ADDRESS = "facet_ip_address";
+		public const string FACET_PORT = "facet_port";
 
         public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()
         {

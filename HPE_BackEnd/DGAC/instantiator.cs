@@ -23,9 +23,36 @@ namespace Instantiator {
     [System.Xml.Serialization.XmlRootAttribute("application", Namespace="http://www.example.org/instantiator", IsNullable=false)]
     public partial class InstanceType {
         
+        private string instance_refField;
+        
+        private bool facetedField;
+        
         private ComponentFunctorApplicationType contextual_typeField;
         
         private UnitMappingType[] unit_mappingField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string instance_ref {
+            get {
+                return this.instance_refField;
+            }
+            set {
+                this.instance_refField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.ComponentModel.DefaultValue(false)]
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public bool faceted {
+            get {
+                return this.facetedField;
+            }
+            set {
+                this.facetedField = value;
+            }
+        }
         
         /// <remarks/>
         public ComponentFunctorApplicationType contextual_type {
@@ -132,6 +159,14 @@ namespace Instantiator {
         
         private int unit_indexField;
         
+        private int facetField;
+        
+        private string ip_addressField;
+        
+        private int portField;
+        
+        private bool portSpecifiedField;
+        
         private int[] nodeField;
         
         /// <remarks/>
@@ -154,6 +189,51 @@ namespace Instantiator {
             }
             set {
                 this.unit_indexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.ComponentModel.DefaultValue(0)]
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public int facet {
+            get {
+                return this.facetField;
+            }
+            set {
+                this.facetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string ip_address {
+            get {
+                return this.ip_addressField;
+            }
+            set {
+                this.ip_addressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public int port {
+            get {
+                return this.portField;
+            }
+            set {
+                this.portField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore()]
+        public virtual bool portSpecified {
+            get {
+                return this.portSpecifiedField;
+            }
+            set {
+                this.portSpecifiedField = value;
             }
         }
         

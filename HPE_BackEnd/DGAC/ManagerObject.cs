@@ -175,11 +175,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     int id_functor_app;
                     WorkerComponentID[] worker_cids;
                     int kind;
-				
+
 				    string portName = (string) ((TypeMapImpl)properties)[Constants.PORT_NAME];
+					int facet = (int)((TypeMapImpl)properties)[Constants.FACET_NUMBER];
 
                     this.createInstanceImpl2(instanceName, 
 				                             className, 
+				                             facet,
 				                             (TypeMapImpl)properties, 
 				                             out cid_nodes, 
 				                             out unit_ids, 
@@ -1081,6 +1083,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 			public void resolve_topology (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
 									  Instantiator.UnitMappingType[] unit_mapping,
+		                              int facet,
 		                              out string[] interface_ids, 
 									  out int[] unit_indexes,
 		                              out IList<Interface> iList, 
@@ -1092,15 +1095,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				unit_indexes = null;
 				iList = null;
 				nodes = null;
-
 				
-			Trace.WriteLine("resolve_topology 1 " + (unit_mapping == null) + ", length="+ (unit_mapping.Length));
+				Trace.WriteLine("resolve_topology 1 " + (unit_mapping == null) + ", length="+ (unit_mapping.Length));
 
 				int count_nodes;
 				IDictionary<string,int[]> unit_mapping_dict;
-				BackEnd.copy_unit_mapping_to_dictionary(unit_mapping, out unit_mapping_dict, out count_nodes);
+			 
+			    // Note: only the units associated to the current facet are considered for instantiation.
+				BackEnd.copy_unit_mapping_to_dictionary(facet, unit_mapping, out unit_mapping_dict, out count_nodes);
 
-				Trace.WriteLine("resolve_topology 2 - count_nodes=" + count_nodes);
+				Trace.WriteLine("resolve_topology 2 - count_nodes = " + count_nodes);
 
 				interface_ids = new string[count_nodes];
 				unit_indexes = new int[count_nodes];
@@ -1119,13 +1123,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						Trace.WriteLine("unit_mapping_dict - key="+ttt.Key);
 					unit_mapping_dict.TryGetValue(unit.Id_interface_super_top + unit.Unit_replica_super_top, out node_list);
 				    Trace.WriteLine (node_list == null);
-					foreach (int node in node_list)
+					if (node_list != null) 
 					{
-						Trace.WriteLine("unit " + unit.Id_interface + "[" + unit.Unit_replica + "] at node " + node);
-						interface_ids[i] = unit.Id_interface;
-						unit_indexes[i] = unit.Unit_replica;
-						nodes[i] = node;
-						i++;
+						foreach (int node in node_list) 
+						{
+							Trace.WriteLine ("unit " + unit.Id_interface + "[" + unit.Unit_replica + "] at node " + node);
+							interface_ids [i] = unit.Id_interface;
+							unit_indexes [i] = unit.Unit_replica;
+							nodes [i] = node;
+							i++;
+						}
+					} 
+					else 
+					{
+						Trace.WriteLine ("Unit " + unit.Id_interface_super_top + unit.Unit_replica_super_top + " does not belong to facet " + facet);
 					}
 				}
 
@@ -1136,57 +1147,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				Trace.WriteLine("END resolve_topology");
 			}
 
-			public void resolve_topology_obsolete (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
-		                              string[] unit_ids, int[] partition_indexes,
-		                              IList<Interface> iList, 
-		                              int[] node_list)
-		{
-			int id_functor_app = acfaRef.Id_functor_app;
-				
-		    IDictionary<string, int> actualParameters_new;
-		    DGAC.BackEnd.determineArguments(new Dictionary<string, int>(),
-		                                           id_functor_app,
-		                                           out actualParameters_new);
-		    
-		    InnerComponent ic = BackEnd.icdao.retrieve(acfaRef.Id_abstract,"topology");
-		
-		    AbstractComponentFunctorApplication acfaRefTopology = BackEnd.acfadao.retrieve(ic.Id_functor_app);
-		
-		    br.ufc.pargo.hpe.backend.DGAC.database.Component c_topology = DGAC.BackEnd.resolveUnit(acfaRefTopology,actualParameters_new,actualParameters_new);
-			AbstractComponentFunctor acf_topology = DGAC.BackEnd.acfdao.retrieve(c_topology.Id_abstract);
-		
-		    Unit u_topology = BackEnd.udao.retrieve(c_topology.Id_concrete, 1);
-		    string class_name = null;   
-		    
-			string id_interface = u_topology.Id_interface;
-			
-		    Interface i_topology = BackEnd.idao.retrieveSuper(c_topology.Id_abstract, id_interface, u_topology.Unit_replica);
-            System.Type[] actualParams = DGAC.BackEnd.calculateActualClassParameteres(i_topology, acfaRefTopology.Id_functor_app, actualParameters_new);
-		
-		    DGAC.BackEnd.calculateGenericClassName(u_topology, actualParams, out class_name);
-		
-		    string assembly_string = u_topology.Assembly_string;					
-		    
-		    ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
-            hpe.kinds.ITopologyKind unit_topology = (hpe.kinds.ITopologyKind) obj.Unwrap();
-		   // unit_topology.Id_unit = u_topology.Id_unit;
-		    
-		    unit_topology.PartitionCount = acf_topology.getPartitionCount(id_interface);
-					
-			int k = 0;
-			foreach (int node in node_list)
-			{
-				unit_topology.Rank = node;
-				int partition_index = unit_topology.PartitionIndex;
-				Slice s_topology = DGAC.BackEnd.sdao.retrieve(acf_topology.Id_abstract,"topology",0,"topology",partition_index);
-				unit_ids[k] = s_topology.Id_interface;
-				partition_indexes[k] = partition_index;				
-				k++;
-			}
-			
-			
-			throw new NotImplementedException ();
-		}
 
 		public string[] calculatePortNames (int id_abstract, string id_interface, int partition_index)
 		{
@@ -1214,6 +1174,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public int[] createInstanceImpl2(
             string instanceName,
             string componentName,
+			int facet,
             TypeMapImpl properties,
             out int[] cid_nodes,
             out string[] unit_ids,
@@ -1255,7 +1216,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						// Simple SPMD case - obsolete
 						resolve_topology(acfaRef,  
 										 (int[]) unit_mapping,
-										 out interface_ids, 
+					                     out interface_ids, 
 										 out unit_indexes, 
 										 out iList, 
 										 out nodes);
@@ -1265,6 +1226,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						// MPMD case, also covering SPMD.
 						resolve_topology(acfaRef,  
 										 (Instantiator.UnitMappingType[]) unit_mapping,
+					                 		facet,
 										 out interface_ids, 
 										 out unit_indexes, 
 										 out iList, 
@@ -1300,21 +1262,30 @@ namespace br.ufc.pargo.hpe.backend.DGAC
  					    worker_properties[Constants.ASSEMBLY_STRING_KEY] = u.Assembly_string;
 					    worker_properties[Constants.PORT_NAMES_KEY] = calculatePortNames(c.Id_abstract, id_interface, partition_index);
 						worker_properties[Constants.KIND_KEY] = c.Kind;
+
+						if (properties.getBool(Constants.FACET_PRESENCE, false)) 
+						{
+							worker_properties[Constants.FACET_PRESENCE] = true;
+							worker_properties[Constants.FACET_UNIT_ID] = properties[Constants.FACET_UNIT_ID];
+							worker_properties[Constants.FACET_UNIT_INDEX] = properties[Constants.FACET_UNIT_INDEX];
+							worker_properties[Constants.FACET_IP_ADDRESS] = properties[Constants.FACET_IP_ADDRESS];
+							worker_properties[Constants.FACET_PORT] = properties[Constants.FACET_PORT];
+						}
 					
                         string class_name_worker;
                         
                         System.Type[] arguments_new;
-					Trace.WriteLine("createInstanceImpl2 - GOING TO calculateActualParams ...");
+						Trace.WriteLine("createInstanceImpl2 - GOING TO calculateActualParams ...");
                         DGAC.BackEnd.calculateActualParams(arguments, acfaRef, id_interface, partition_index, out arguments_new);
-					Trace.WriteLine("createInstanceImpl2 - GOING TO calculateGenericClassName ...");
+						Trace.WriteLine("createInstanceImpl2 - GOING TO calculateGenericClassName ...");
                         DGAC.BackEnd.calculateGenericClassName(u, arguments_new, out class_name_worker);
-					Trace.WriteLine("createInstanceImpl2 - FINISHED calculateActualParams ...");
+						Trace.WriteLine("createInstanceImpl2 - FINISHED calculateActualParams ...");
 					
 					    // INSTANTIATE THE UNITS ACCROSS THE WORKERS
-                        GoWorker gw = new GoWorker(WorkerBuilder[nodes[k]], instanceName /*+ "." + id_interface*/, class_name_worker, worker_properties);
+                        GoWorker gw = new GoWorker(WorkerBuilder[nodes[k]], instanceName, class_name_worker, worker_properties);
                         Thread t = new Thread(gw.Run);
                         t.Start();
-				    Trace.WriteLine("START THREAD #" + k + " in " + nodes[k]);
+				    	Trace.WriteLine("START THREAD #" + k + " in " + nodes[k]);
                         wthreads.Add(t);
                         go_objs.Add(t, gw);
                         thread_node.Add(t, nodes[k]);
@@ -1384,168 +1355,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 return cid_nodes;
 
 		}
-		
-/*            [MethodImpl(MethodImplOptions.Synchronized)]
-            public int[] createInstanceImpl(
-                string instanceName,
-                string instantiator_string,
-                TypeMapImpl properties,
-                out int[] cid_nodes,
-                out string[] unit_ids,
-                out int[] indexes,
-                out int id_functor_app,
-                out int kind,
-                out WorkerComponentID[] worker_cids
-                )
-            {
-                IList<int> cid_nodes_list = new List<int>();
-                IList<string> unit_ids_list = new List<string>();
-                IList<int> indexes_list = new List<int>();
-                IList<WorkerComponentID> worker_cids_list = new List<WorkerComponentID>();
-
-                try
-                {
-                    Connector.openConnection();
-                    Connector.beginTransaction();
-
-                    Trace.WriteLine("createInstance manager");
-
-                    FileInfo file = FileUtil.writeToFile(instanceName + ".xml", instantiator_string);
-                    ComponentFunctorApplicationType instantiator = LoaderApp.DeserializeInstantiator(file.FullName);
-                    
-                    int[] nodes = instantiator.node;
-				
-                    DGAC.database.AbstractComponentFunctorApplication acfaRef = DGAC.BackEnd.loadACFAFromInstantiator(instantiator);
-                    id_functor_app = acfaRef.Id_functor_app;
-				
-				    // RUN THE RESOLUTION PROCEDURE		
-                    DGAC.database.Component c = DGAC.BackEnd.resolveUnit(acfaRef);
-                    kind = Constants.kindMapping[c.Kind];
-
-				    string[] interface_ids = new string[nodes.Length];
-				    int[] partition_indexes = new int[nodes.Length];
-				
-                    IList<Interface> iList = BackEnd.idao.list(c.Id_abstract);
-				    if (iList.Count == 1) // SPMD
-				    {
-					    for (int i = 0; i < nodes.Length; i++) {
-						    interface_ids[i] = iList[0].Id_interface;
-						    partition_indexes[i] = 0;
-					    }
-				    }
-				    else //MPMD
-				    {
-					    resolve_topology(acfaRef, interface_ids, partition_indexes, iList, nodes);
-			    	}
-
-                    Connector.commitTransaction();
-
-                    bool[] node_marking = new bool[WorkerFramework.Length];
-                    for (int i = 0; i < node_marking.Length; i++) node_marking[i] = false; 
-                    
-                    IDictionary<Thread, GoWorker> go_objs = new Dictionary<Thread, GoWorker>();
-                    IDictionary<Thread, int> thread_node = new Dictionary<Thread, int>();
-                    IDictionary<Thread, string> thread_unit_id = new Dictionary<Thread, string>();
-                    IDictionary<Thread, int> thread_index = new Dictionary<Thread, int>();
-
-                    IList<Thread> wthreads = new List<Thread>();
-				
-				    for (int k = 0; k < nodes.Length; k++)
-                    {                        
-				        string id_interface = interface_ids[k];
-					    int partition_index = partition_indexes[k];
-
-					    DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, id_interface, partition_index);
-					
-				        // SETUP PROPERTIES
-                        TypeMapImpl worker_properties = new TypeMapImpl(properties);
-                        worker_properties[Constants.KEY_KEY] = k;
-                        worker_properties[Constants.COMPONENT_KEY] = c.Library_path;
-                        worker_properties[Constants.UNIT_KEY] = id_interface ;
-                        worker_properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
-					
-                        string class_name_worker;
-                        
-                        System.Type[] actualParams;
-                        DGAC.BackEnd.calculateActualParams(acfaRef, id_interface, partition_index, out actualParams);
-                        DGAC.BackEnd.calculateGenericClassName(u, actualParams, out class_name_worker);
-					
-					    // INSTANTIATE THE UNITS ACCROSS THE WORKERS
-                        GoWorker gw = new GoWorker(WorkerBuilder[nodes[k]], instanceName , class_name_worker, worker_properties);
-                        Thread t = new Thread(gw.Run);
-                        t.Start();
-				    Trace.WriteLine("START THREAD #" + k + " in " + nodes[k]);
-                        wthreads.Add(t);
-                        go_objs.Add(t, gw);
-                        thread_node.Add(t, nodes[k]);
-                        thread_unit_id.Add(t, id_interface);
-                        thread_index.Add(t, 0);
-                        node_marking[nodes[k]] = true;
-                    }
-				
-                    for (int i = 0; i < node_marking.Length; i++)
-                    {
-                        if (!node_marking[i])
-                        {
-                            Thread t = new Thread(((WorkerObject)WorkerBuilder[i]).createInstance);
-                            wthreads.Add(t);
-                            t.Start();
-				    Trace.WriteLine("START NULL THREAD #" + i);
-                        }
-
-                    }
-				    Trace.WriteLine("START JOIN");
-				
-                    foreach (Thread t in wthreads)
-                    {
-                        t.Join();
-					    Trace.WriteLine("JOINED CREATE INSTANCE THREAD ");
-                        if (go_objs.ContainsKey(t))
-                        {
-                            GoWorker go_obj;
-                            go_objs.TryGetValue(t, out go_obj);
-                            int node;
-                            string unit_id;
-                            int index;
-                            thread_node.TryGetValue(t, out node);
-                            thread_unit_id.TryGetValue(t, out unit_id);
-                            thread_index.TryGetValue(t,out index);
-                            WorkerComponentID wcid = go_obj.WorkerCID;
-                            worker_cids_list.Add(wcid);
-                            cid_nodes_list.Add(node);
-                            unit_ids_list.Add(unit_id);
-                            indexes_list.Add(index);
-                        }
-                    }
-
-
-                }
-                catch (Exception e)
-                {
-                    Connector.endTransaction();
-                    Trace.WriteLine(e.Message);
-                    throw e;
-                }
-                finally
-                {
-                    Connector.closeConnection();
-                }
-
-                cid_nodes = new int[cid_nodes_list.Count];
-                indexes = new int[indexes_list.Count];
-                unit_ids = new string[unit_ids_list.Count];
-                worker_cids = new WorkerComponentID[worker_cids_list.Count];
-                cid_nodes_list.CopyTo(cid_nodes, 0);
-                indexes_list.CopyTo(indexes, 0);
-                unit_ids_list.CopyTo(unit_ids, 0);
-                worker_cids_list.CopyTo(worker_cids, 0);
-			
-                return cid_nodes;
-
-            }
-
-
-*/		
 
 
             protected class GoWorker 
@@ -1715,71 +1524,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 }
 
  
-/*                [MethodImpl(MethodImplOptions.Synchronized)]
-                public string[] runApplication(string session_id_string, ManagerComponentID mcid)
-		        {
-					return runApplication(session_id_string, mcid, 1);
-		        }
-		
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                public string[] runApplication(string session_id_string, ManagerComponentID mcid, int rounds)
-                {
-                    string[] outputs = new String[mcid.WorkerNodes.Length]; 
-                    IDictionary<Thread, RunApplicationThread> thread_list = new Dictionary<Thread,RunApplicationThread>();
-                    foreach (int node in mcid.WorkerNodes)
-                    {
-				       
-                        RunApplicationThread thread = new RunApplicationThread(node, (WorkerObject)WorkerFramework[node], session_id_string, mcid, rounds);
-                        Thread t = new Thread(thread.Run);
-                        thread_list.Add(t,thread);
-                        t.Start();
-                    }
-                    foreach (KeyValuePair<Thread,RunApplicationThread> t in thread_list)
-                    {
-                        try 
-                        {
-                           t.Key.Join();
-                           Trace.WriteLine("Worker thread arrived : " + session_id_string);
-                           outputs[t.Value.Node] = t.Value.Output;
-                        } 
-                        catch (Exception e)
-                        {
-                           Trace.WriteLine("Worker failed : " + session_id_string + ". error =" + e.Message);
-                        }
-                    }
-                    Trace.WriteLine("Joined Threads : " + session_id_string);
-                    
-                    return outputs;
-                }
-
-                internal class RunApplicationThread
-                {
-                    private string session_id_string;
-                    private ManagerComponentID mcid;
-                    private int node;
-                    public int Node {get {return node;}}
-                    private WorkerObject worker;
-                    private string result;
-			        private int rounds;
-                    public string Output {get {return result;}}
-
-                    public RunApplicationThread(int node, WorkerObject worker, string session_id_string, ManagerComponentID mcid, int rounds)
-                    {
-                        this.session_id_string = session_id_string;
-                        this.mcid = mcid;
-                        this.node = node;
-                        this.worker = worker;
-				        this.rounds = rounds;
-                    }
-
-                    public void Run()
-                    {
-                        result = worker.runApplication(session_id_string, mcid.getWorkerComponentID(node), rounds);
-                    }
-
-                }
-		 */
-				#region DEPLOYER
+			#region DEPLOYER
 		
 		
             /**

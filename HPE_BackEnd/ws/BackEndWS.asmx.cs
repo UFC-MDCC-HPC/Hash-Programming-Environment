@@ -208,6 +208,38 @@ namespace Back_End_WS
 		}
 
 
+		[WebMethod]
+		public string[] createComponentInstance(string instantiator_string, string session)
+		{
+			string str_output = createInstance (instantiator_string, 0, session);
+			return str_output;
+		}
+
+		[WebMethod]
+		public void createComponentInstance(string instance_name, string instantiator_string, int facet, string session)
+		{
+			/* STORM: The GoPort pattern will not be adopted. The component will have an inner component
+					 * representing the provides facet of a task port, as well as a set of inner components 
+					 * representing the uses and provides facets of environment ports. Every Task and Environment
+					 * port components will implement a communication protocol between the uses and provides facet
+					 */
+
+			/* For HPE, a version of these task and environment port components could exist for connecting
+					 * the application to the Front-End.
+					 */
+			BackEnd dgac = null;
+			if (dgac != null) 
+			{
+				try 
+				{
+					dgac.createApplicationInstance (instance_name, instantiator_string, facet);
+				} 
+				catch (Exception e) 
+				{
+
+				}
+			}
+		}
 
 
 

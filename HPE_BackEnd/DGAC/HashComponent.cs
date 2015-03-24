@@ -2359,6 +2359,8 @@
         
         private bool replicaSpecifiedField;
         
+        private int facetField;
+        
         private UnitRefType superField;
         
         private UnitSliceType[] slicesField;
@@ -2462,6 +2464,18 @@
             }
             set {
                 this.replicaSpecifiedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.ComponentModel.DefaultValue(0)]
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public int facet {
+            get {
+                return this.facetField;
+            }
+            set {
+                this.facetField = value;
             }
         }
         

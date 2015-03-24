@@ -317,17 +317,28 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
 				string[] portNames = properties.getStringArray(Constants.PORT_NAMES_KEY, new string[0]);
 				int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
-				
+
+
 				Trace.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 3 ; assembly_string = " + assembly_string + "; class name = "+  class_name);
 	
-	            ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
+				ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
 	            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit) obj.Unwrap();
 				unit_slice.Id_unit = id_unit;
 				unit_slice.PortNames = portNames;
 				unit_slice.Kind = kind;
 				unit_slice.ClassName = class_name;
 				unit_slice.QualifiedComponentTypeName = library_path;
-	
+
+				if (properties.getBool(Constants.FACET_PRESENCE, false))
+				{
+					string[] facet_unit_id = properties.getStringArray(Constants.FACET_UNIT_ID, new string[0]);
+					int[] facet_unit_index = properties.getIntArray(Constants.FACET_UNIT_INDEX, new int[0]);
+					string[] facet_ip_address = properties.getStringArray(Constants.FACET_IP_ADDRESS, new string[0]);
+					int [] facet_port= properties.getIntArray(Constants.FACET_PORT, new int[0]);
+
+					unit_slice.readFacetConfiguration(facet_unit_id, facet_unit_index, facet_ip_address, facet_port);
+				}
+
 	            Services services = new WorkerServicesImpl(this, cid, unit_slice);
 	            unit_slice.setServices(services);
 	
@@ -350,7 +361,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds: " + unit_ranks.Key + "[" + r + "]");
 
 					Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds: END TOPOLOGY");
-
 
 		            Trace.WriteLine(my_rank +  ": --- END - Worker " + my_rank + ": Split " + key + " !!!");
 	            } else {

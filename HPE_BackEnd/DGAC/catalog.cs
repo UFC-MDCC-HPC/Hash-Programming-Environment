@@ -468,52 +468,104 @@ namespace Catalog {
         }
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
-    public partial class UnitMappingType {
-        
-        private string unit_idField;
-        
-        private int unit_indexField;
-        
-        private int[] nodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string unit_id {
-            get {
-                return this.unit_idField;
-            }
-            set {
-                this.unit_idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.ComponentModel.DefaultValue(0)]
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public int unit_index {
-            get {
-                return this.unit_indexField;
-            }
-            set {
-                this.unit_indexField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("node", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int[] node {
-            get {
-                return this.nodeField;
-            }
-            set {
-                this.nodeField = value;
-            }
-        }
-    }
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+	[System.SerializableAttribute()]
+	[System.Diagnostics.DebuggerStepThroughAttribute()]
+	[System.ComponentModel.DesignerCategoryAttribute("code")]
+	[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/instantiator")]
+	public partial class UnitMappingType {
+
+		private string unit_idField;
+
+		private int unit_indexField;
+
+		private int facetField;
+
+		private string ip_addressField;
+
+		private int portField;
+
+		private bool portSpecifiedField;
+
+		private int[] nodeField;
+
+		/// <remarks/>
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public string unit_id {
+			get {
+				return this.unit_idField;
+			}
+			set {
+				this.unit_idField = value;
+			}
+		}
+
+		/// <remarks/>
+		[System.ComponentModel.DefaultValue(0)]
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public int unit_index {
+			get {
+				return this.unit_indexField;
+			}
+			set {
+				this.unit_indexField = value;
+			}
+		}
+
+		/// <remarks/>
+		[System.ComponentModel.DefaultValue(0)]
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public int facet {
+			get {
+				return this.facetField;
+			}
+			set {
+				this.facetField = value;
+			}
+		}
+
+		/// <remarks/>
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public string ip_address {
+			get {
+				return this.ip_addressField;
+			}
+			set {
+				this.ip_addressField = value;
+			}
+		}
+
+		/// <remarks/>
+		[System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+		public int port {
+			get {
+				return this.portField;
+			}
+			set {
+				this.portField = value;
+			}
+		}
+
+		/// <remarks/>
+		[System.Xml.Serialization.XmlIgnore()]
+		public virtual bool portSpecified {
+			get {
+				return this.portSpecifiedField;
+			}
+			set {
+				this.portSpecifiedField = value;
+			}
+		}
+
+		/// <remarks/>
+		[System.Xml.Serialization.XmlElementAttribute("node")]
+		public int[] node {
+			get {
+				return this.nodeField;
+			}
+			set {
+				this.nodeField = value;
+			}
+		}
+	}
 }
