@@ -35,9 +35,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>../src/hPE/frontend/connector/xml/hpe_component.xsd</name>
+			<name>src/hPE/frontend/connector/xml/hpe_component.xsd</name>
 			<type>1</type>
-			<locationURI>src/hPE/frontend/connector/xml/hpe_component.xsd</locationURI>
+			<locationURI>../src/hPE/frontend/connector/xml/hpe_component.xsd</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
