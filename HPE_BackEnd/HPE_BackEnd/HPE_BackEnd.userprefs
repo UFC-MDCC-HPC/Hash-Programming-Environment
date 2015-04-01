@@ -1,26 +1,29 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/ManagerObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/Constants.cs">
     <Files>
-      <File FileName="../ws/BackEndWS.asmx.cs" Line="230" Column="1" />
-      <File FileName="../DGAC/DGAC.cs" Line="2214" Column="13" />
-      <File FileName="ManagerService/HPEManagerService.cs" Line="14" Column="26" />
-      <File FileName="../manager/RemotingServerManager.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/ManagerObject.cs" Line="1139" Column="7" />
-      <File FileName="../DGAC/instantiator.cs" Line="148" Column="26" />
-      <File FileName="../DGAC/Constants.cs" Line="83" Column="51" />
+      <File FileName="../DGAC/DGAC.cs" Line="119" Column="6" />
+      <File FileName="../DGAC/tree/Resolution.cs" Line="187" Column="38" />
+      <File FileName="../DGAC/LoaderApp.cs" Line="196" Column="9" />
+      <File FileName="../ws/BackEndWS.asmx.cs" Line="219" Column="38" />
+      <File FileName="../DGAC/base/Unit.cs" Line="68" Column="1" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="343" Column="39" />
+      <File FileName="../DGAC/base/UnitImpl.cs" Line="163" Column="43" />
+      <File FileName="../DGAC/Constants.cs" Line="132" Column="49" />
+      <File FileName="../DGAC/catalog.cs" Line="528" Column="52" />
+      <File FileName="../DGAC/instantiator.cs" Line="14" Column="1" />
+      <File FileName="../DGAC/ManagerObject.cs" Line="1266" Column="62" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="DGAC" expanded="True">
             <Node name="instantiator" expanded="True" />
-            <Node name="manager" expanded="True">
-              <Node name="ManagerObject.cs" selected="True" />
+            <Node name="manager" expanded="True" />
+            <Node name="utils" expanded="True">
+              <Node name="Constants.cs" selected="True" />
             </Node>
-            <Node name="utils" expanded="True" />
           </Node>
-          <Node name="HPERun" expanded="True" />
         </State>
       </Pad>
     </Pads>
@@ -36,17 +39,18 @@
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/connector/wrapper/WrapperGenerator.cs" line="304" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/run_app/Program.cs" line="30" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/WorkerServicesImpl.cs" line="88" column="1" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="1996" column="1" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="1997" column="1" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2827" column="1" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2737" column="1" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2741" column="1" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2005" column="1" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2006" column="1" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2836" column="1" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2746" column="1" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/ManagerObject.cs" line="2750" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="657" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="730" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="738" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/DGAC.cs" line="1729" column="1" />
-      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/WorkerObject.cs" line="484" column="1" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/WorkerObject.cs" line="494" column="1" />
       <Breakpoint file="/home/heron/hash-programming-environment/DGAC/LoaderApp.cs" line="185" column="37" />
+      <Breakpoint file="/home/heron/hash-programming-environment/DGAC/instantiator.cs" line="1" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
