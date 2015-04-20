@@ -1,0 +1,1 @@
+MatVecProduct is the name of an example configuration.
