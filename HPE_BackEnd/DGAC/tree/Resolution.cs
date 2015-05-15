@@ -115,10 +115,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
                         acfaSon = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfadao.retrieve(id_functor_app_actual);
                         if (acfaSon.Id_abstract != nodeSon.Functor_app.Id_abstract)
                         {
-                            Trace.WriteLine("FAIL 1! ");
+                            // Trace.WriteLine("FAIL 1! ");
                             return false;
                         }
-                        Trace.WriteLine("MATCH! ");
+                        //Trace.WriteLine("MATCH! ");
                     }
                 }
 

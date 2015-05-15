@@ -185,19 +185,19 @@ namespace gov
 
             public override TypeMap cloneEmpty() { return null; }
 
-            public override int getInt(string key, int dflt) { object v; dict.TryGetValue(key, out v); return (int)v; }
-            public override long getLong(string key, long dflt) { object v; dict.TryGetValue(key, out v); return (long)v; }
-            public override float getFloat(string key, float dflt) { object v; dict.TryGetValue(key, out v); return (float)v; }
-            public override double getDouble(string key, double dflt) { object v; dict.TryGetValue(key, out v); return (double)v; }
-            public override string getString(string key, string dflt) { object v; dict.TryGetValue(key, out v); return (string)v; }
-            public override bool getBool(string key, bool dflt) { object v; dict.TryGetValue(key, out v); return (bool)v; }
+			public override int getInt(string key, int dflt) { object v; if (dict.TryGetValue(key, out v)) return (int)v; else return dflt; }
+			public override long getLong(string key, long dflt) { object v; if (dict.TryGetValue(key, out v)) return (long)v; else return dflt; }
+			public override float getFloat(string key, float dflt) { object v; if (dict.TryGetValue(key, out v)) return (float)v; else return dflt; }
+			public override double getDouble(string key, double dflt) { object v; if (dict.TryGetValue(key, out v)) return (double)v; else return dflt; }
+			public override string getString(string key, string dflt) { object v; if (dict.TryGetValue(key, out v)) return (string)v; else return dflt; }
+			public override bool getBool(string key, bool dflt) { object v; if (dict.TryGetValue(key, out v)) return (bool)v; else return dflt; }
 
-            public override int[] getIntArray(string key, int[] dflt) { object v; dict.TryGetValue(key, out v); return (int[])v; }
-            public override long[] getLongArray(string key, long[] dflt) { object v; dict.TryGetValue(key, out v); return (long[])v; }
-            public override float[] getFloatArray(string key, float[] dflt) { object v; dict.TryGetValue(key, out v); return (float[])v; }
-            public override double[] getDoubleArray(string key, double[] dflt) { object v; dict.TryGetValue(key, out v); return (double[])v; }
-            public override string[] getStringArray(string key, string[] dflt) { object v; dict.TryGetValue(key, out v); return (string[])v; }
-            public override bool[] getBoolArray(string key, bool[] dflt) { object v; dict.TryGetValue(key, out v); return (bool[])v; }
+			public override int[] getIntArray(string key, int[] dflt) { object v; if (dict.TryGetValue(key, out v)) return (int[])v; else return dflt; }
+			public override long[] getLongArray(string key, long[] dflt) { object v; if (dict.TryGetValue(key, out v)) return (long[])v; else return dflt; }
+			public override float[] getFloatArray(string key, float[] dflt) { object v; if (dict.TryGetValue(key, out v)) return (float[])v; else return dflt; }
+			public override double[] getDoubleArray(string key, double[] dflt) { object v; if (dict.TryGetValue(key, out v)) return (double[])v; else return dflt; }
+			public override string[] getStringArray(string key, string[] dflt) { object v; if (dict.TryGetValue(key, out v)) return (string[])v; else return dflt; }
+			public override bool[] getBoolArray(string key, bool[] dflt) { object v; if (dict.TryGetValue(key, out v)) return (bool[])v; else return dflt; }
 
             public override void putInt(string key, int value) { dict.Add(key, value); property_type.Add(key,Type.Int); }
             public override void putLong(string key, long value) { dict.Add(key, value); property_type.Add(key, Type.Long); }

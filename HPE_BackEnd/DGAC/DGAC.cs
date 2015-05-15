@@ -156,14 +156,10 @@ namespace br.ufc.pargo.hpe.backend
 				}
 			}
 
-			public static System.Diagnostics.Process startWorkers(string session_id)
+			public static System.Diagnostics.Process startWorkers(string session_id, string userName, string password_, string curDir)
 			{
 				string cmd = "mpirun";
 				string args = "--configfile worker.launch.config.9";
-
-				string userName = "heron";
-				string password_ = "narf@jchf9200"; 
-				string curDir = "hash-programming-environment";
 
 				System.Security.SecureString password = null;
 
@@ -275,7 +271,10 @@ namespace br.ufc.pargo.hpe.backend
 		
 				string service_name = Constants.WORKER_SERVICE_NAME + "-" + rank;
 				string uri_str = "tcp://" + node + ":" + port + "/" + service_name;
-				
+
+				Trace.WriteLine ("URI = " + uri_str + ",  SERVICE NAME = " + service_name);
+
+
 				// Register the TCP channel.
 				//        ChannelServices.RegisterChannel(new TcpChannel(), false);
 
@@ -817,11 +816,32 @@ namespace br.ufc.pargo.hpe.backend
 
 			}
 
-			private static IDictionary<string, Tuple<ManagerObject, gov.cca.Services>> open_sessions = new Dictionary<string, Tuple<ManagerObject, gov.cca.Services>>();
+			private static IDictionary<string, ISession> open_sessions = new Dictionary<string, ISession>();
 
-			//private static int teste = 0;
+			public interface ISession 
+			{
+				string SessionID { get; }
+				gov.cca.AbstractFramework Framework { get; }
+				gov.cca.Services Services { get; }
+			}
 
-			public static void startSession(string session_id)
+			private class Session : ISession
+			{
+				private string session_id;
+				private gov.cca.AbstractFramework framework;
+				private gov.cca.Services services;
+				public Session(string session_id, gov.cca.AbstractFramework framework, gov.cca.Services services) 
+				{
+					this.session_id = session_id;
+					this.framework = framework;
+					this.services = services;
+				}
+				public string SessionID { get {return session_id; } }
+				public gov.cca.AbstractFramework Framework { get {return framework;} }
+				public gov.cca.Services Services { get {return services; }}
+			}
+
+			public static ISession startSession(string session_id)
 			{
 				try
 				{
@@ -830,18 +850,15 @@ namespace br.ufc.pargo.hpe.backend
 					gov.cca.AbstractFramework frw = getFrameworkInstance();
 					gov.cca.Services frwServices = frw.getServices(session_id, "Session", properties);
 
-					//gov.cca.ComponentID host_cid = frwServices.getComponentID();
-
 					// Builder Service Port
 					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
-					//gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 
 					// Go Port
 					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
 
+					open_sessions.Add(session_id, new Session(session_id, (ManagerObject)frw, frwServices));
 
-					open_sessions.Add(session_id, new Tuple<ManagerObject, gov.cca.Services>((ManagerObject)frw, frwServices));
-
+					return open_sessions[session_id];
 				}
 				catch (Exception e)
 				{
@@ -852,11 +869,12 @@ namespace br.ufc.pargo.hpe.backend
 				}
 			}
 
+
+
 			public static string[] getPorts(string session_id, string instance_id)
 			{
-				Tuple<ManagerObject, gov.cca.Services> session_info = null;
-				open_sessions.TryGetValue(session_id, out session_info);
-				gov.cca.Services frwServices = session_info.Item2;
+				gov.cca.Services frwServices = open_sessions[session_id].Services;
+
 				gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 				ComponentID sid = frwServices.getComponentID ();
 
@@ -870,23 +888,14 @@ namespace br.ufc.pargo.hpe.backend
 			{
 				try
 				{
-					Tuple<ManagerObject, gov.cca.Services> session_info = null;
-					open_sessions.TryGetValue(session_id, out session_info);
-
-					gov.cca.Services frwServices = session_info.Item2;
-					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
-
-					frwServices.releasePort(Constants.GO_PORT_NAME);
-			//		bsPort.disconnect(conn_go, 0);
-
+					gov.cca.Services frwServices = open_sessions[session_id].Services;
+		
 					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
-
-					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
-
 					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
 
-					Trace.WriteLine ("Finishing");
+					open_sessions.Remove(session_id);
 
+					Trace.WriteLine ("Finishing");
 				}
 				catch (Exception e)
 				{
@@ -903,50 +912,50 @@ namespace br.ufc.pargo.hpe.backend
 			}
 
 
+
 			public String[] runApplicationNTimes(string instantiatior_string, int rounds, string session_id_string)
             {	
                 string[] str_output = null;
                 try
                 {
-                    TypeMapImpl properties = new TypeMapImpl();					
-					
-                    gov.cca.AbstractFramework frw = getFrameworkInstance();
-					
-					gov.cca.Services frwServices = frw.getServices(session_id_string, "ApplicationLauncher", properties);
-				    gov.cca.ComponentID host_cid = frwServices.getComponentID();
-					
-					Trace.WriteLine("Connecting to the builder service port");
-					frwServices.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, properties);
-					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
-					
+					TypeMapImpl properties = new TypeMapImpl();	
+
+					// START A NEW SESSION
+					Trace.WriteLine("Starting session " + session_id_string);
+					ISession session = startSession(session_id_string);
+					gov.cca.Services frwServices = session.Services;
+
+					// INSTANTIATE THE APPLICATION
 					Trace.WriteLine("Creating an instance of the application");
-                    //ComponentID app_cid = bsPort.createInstance("app", instantiatior_string, properties);
-					ManagerComponentID app_cid = (ManagerComponentID) createApplicationInstance ("app", instantiatior_string, 0, session_id_string);
-					
+ 					ManagerComponentID app_cid = (ManagerComponentID) createApplicationInstance ("app", instantiatior_string, 0, session_id_string);
+
+					// CONNECT THE GO PORT OF THE APPLICATION TO THE SESSION DRIVER.
 					Trace.WriteLine("Connecting to the GoPort of the application");
-					frwServices.registerUsesPort(Constants.GO_PORT_NAME, Constants.GO_PORT_TYPE, new TypeMapImpl());
+					gov.cca.ComponentID host_cid = frwServices.getComponentID();
+					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 					ConnectionID conn_go = bsPort.connect(host_cid, Constants.GO_PORT_NAME, app_cid, Constants.GO_PORT_NAME);
 					gov.cca.ports.GoPort go_port = (gov.cca.ports.GoPort) frwServices.getPort (Constants.GO_PORT_NAME);
-					
+
+					// DRIVE THE APPLICATION (call GO !)
 					Trace.WriteLine ("Doing " + rounds + " executions of the application.");
 					for (int round=0; round < rounds; round++) 
 					{
 						Trace.WriteLine("ROUND #" + round);	
-						go_port.go(); 
-					}
+						go_port.go(); 					}
 
+					// DESTROY APPLICATION INSTANCE.
+					destroyApplicationInstance(app_cid, bsPort, session_id_string);
 
-					destroyApplicationInstance(app_cid, bsPort, frwServices, (ManagerObject) frw);
-
+					// RELEASE PORTS USED BY THE SESSION.
 					frwServices.releasePort(Constants.GO_PORT_NAME);
-					bsPort.disconnect(conn_go, 0);
-
-					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
-
 					frwServices.releasePort(Constants.BUILDER_SERVICE_PORT_NAME);
 
-					frwServices.unregisterUsesPort(Constants.BUILDER_SERVICE_PORT_NAME);
-					
+					// DISCONNECT THE GO PORT
+					bsPort.disconnect(conn_go, 0);
+
+					// FINISH THE SESSION.
+					finishSession(session_id_string);
+
 					Trace.WriteLine ("Finishing");
 					
                 }
@@ -997,7 +1006,7 @@ namespace br.ufc.pargo.hpe.backend
 					bsPort.disconnect(conn_go, 0);
 					frwServices.unregisterUsesPort(Constants.GO_PORT_NAME);
 					
-					destroyApplicationInstance(app_cid_1, bsPort, frwServices, (ManagerObject) frw);
+					//destroyApplicationInstance(app_cid_1, bsPort, frwServices, (ManagerObject) frw);
 					
 					bsPort.destroyInstance(app_cid_1, 0);
 					Trace.WriteLine("Test e3");
@@ -1796,12 +1805,15 @@ namespace br.ufc.pargo.hpe.backend
 			}
 
 			
-	        public static void destroyApplicationInstance
-				                                       (ManagerComponentID app_cid, 
-				                                        gov.cca.ports.BuilderService bsPort, 
-				                                        gov.cca.Services frwServices,
-			                                            ManagerObject frw)
+	        public static void destroyApplicationInstance (ManagerComponentID app_cid, 
+				                                           gov.cca.ports.BuilderService bsPort, 
+			                                               string session_id)
 			{
+				Trace.WriteLine (" ----- BEGIN DESTROY " + app_cid.getInstanceName());
+
+				gov.cca.Services frwServices = open_sessions[session_id].Services;
+				ManagerObject frw = (ManagerObject) open_sessions[session_id].Framework;
+
 				Services services = frw.getComponentServices(app_cid);
 				IList<ComponentID> cidInnerList = new List<ComponentID>();
 				
@@ -1816,17 +1828,23 @@ namespace br.ufc.pargo.hpe.backend
 					ConnectionID conn = conn_pair.Value;
 					cidInnerList.Add(conn.getProvider());
 					
+					Trace.WriteLine (" ... BEGIN DESTROY uses ports " + usesPortName);
+
 					services.releasePort(usesPortName);
 					bsPort.disconnect(conn, 0);
 					services.unregisterUsesPort(usesPortName);					
+
+					Trace.WriteLine (" ... END DESTROY uses ports " + usesPortName);
 				}
-				
+
+
 				foreach (ComponentID cid_inner in cidInnerList) 
 				{
-					destroyApplicationInstance((ManagerComponentID) cid_inner, 
-					                          bsPort, 
-					                          frwServices, 
-					                          frw);
+					Trace.WriteLine ("WILL DESTROY " + cid_inner.getInstanceName () + " of " + app_cid.getInstanceName ());
+					if (frw.getComponentServices((ManagerComponentID)cid_inner) != null)
+						destroyApplicationInstance((ManagerComponentID) cid_inner, bsPort, session_id);
+					// else
+					//  the component was destroyed before ... 
 				}
 
 				IList<ConnectionID> provides_conn_list = new List<ConnectionID>();					
@@ -1834,13 +1852,19 @@ namespace br.ufc.pargo.hpe.backend
 
 				if (provides_conn_list.Count == 0)
 				{
+					Trace.WriteLine (" ... BEGIN DESTROY provides ports ");
 					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
 					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
+					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
 					if (app_cid.Kind == Constants.KIND_APPLICATION)
 						services.removeProvidesPort(Constants.GO_PORT_NAME);
+					Trace.WriteLine (" ... END DESTROY provides ports ");
 					bsPort.destroyInstance (app_cid, 0);
+					Trace.WriteLine (" ... DESTROYED instance: " + app_cid.getInstanceName());
+
 				}
 							
+				Trace.WriteLine (" ****** END DESTROY " + app_cid.getInstanceName() + ", provides_conn_list.Count=" + provides_conn_list.Count);
 				
 			}
 			
@@ -1861,9 +1885,9 @@ namespace br.ufc.pargo.hpe.backend
 	        {	
 	            try
 	            {
-					Tuple<ManagerObject, gov.cca.Services> session = open_sessions [session_id_string];
-					gov.cca.AbstractFramework frw = session.Item1;
-					gov.cca.Services frwServices = session.Item2;
+					ISession session = open_sessions[session_id_string];
+					gov.cca.Services frwServices = session.Services;
+
 					gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 
 					Connector.openConnection();
@@ -1880,15 +1904,10 @@ namespace br.ufc.pargo.hpe.backend
 					properties[Constants.ID_FUNCTOR_APP] = acfaRef.Id_functor_app;
 					properties[Constants.PORT_NAME] = null;
 
-					// CONFIGURE HOW UNITS ARE MAPPED ACCROSS NODES ...
-					/*if (instantiator.node != null && instantiator.node.Length > 0) 
-						properties[Constants.NODES_KEY] = instantiator.node; //obsolete
-					else */
 					if (instantiator.unit_mapping != null && instantiator.unit_mapping.Length > 0) 
 						properties[Constants.NODES_KEY] = instantiator.unit_mapping;
-					else {
+					else 
 						throw new Exception("DGAC.createApplicationInstance - UNEXPECTED ERROR ...");
-					}
 
 					IDictionary<string, int> arguments = new Dictionary<string,int>();
 					setUpParameters(acfaRef.Id_functor_app, arguments);	
@@ -1896,7 +1915,6 @@ namespace br.ufc.pargo.hpe.backend
 					IDictionary<string, int> argumentsTop = new Dictionary<string,int>(arguments);
 										
 					properties[Constants.ENCLOSING_ARGUMENTS] = argumentsTop;
-
 
 					if (instantiator.faceted)
 					{
@@ -1912,9 +1930,12 @@ namespace br.ufc.pargo.hpe.backend
 						properties[Constants.FACET_UNIT_INDEX] = facet_unit_index;
 						properties[Constants.FACET_IP_ADDRESS] = facet_ip_address;
 						properties[Constants.FACET_PORT] = facet_port;
+						properties[Constants.FACET_NUMBER] = facet;
 					}
 					else
+					{
 						properties[Constants.FACET_PRESENCE] = false;
+					}
 
 					// Check whether the application is changed
 					ManagerComponentID app_cid;
@@ -1935,7 +1956,6 @@ namespace br.ufc.pargo.hpe.backend
 					initializeApplication((ManagerComponentID)app_cid, bsPort, frwServices);					
 
 					return app_cid;
-					
 	            }
 	            catch (Exception e)
 	            {
@@ -1947,8 +1967,7 @@ namespace br.ufc.pargo.hpe.backend
 	            finally
 	            {
 	                Connector.closeConnection();
-	            }
-	
+	            }	
 	        }
 
 			static void tryReadFacetConfiguration (Instantiator.UnitMappingType[] unit_mapping, out string[] facet_unit_id, out int[] facet_unit_index, out string[] facet_ip_address, out int[] facet_port)
@@ -1991,7 +2010,7 @@ namespace br.ufc.pargo.hpe.backend
 			}
 
 			
-	        public static void createInnerComponentsOf(string session_id_string,
+	        public static void 	createInnerComponentsOf(string session_id_string,
 			                                           IList<ManagerComponentID> cid_chain, 
 			                                           ManagerComponentID curr_cid, 
 													   ManagerComponentID cid, 
@@ -2002,17 +2021,15 @@ namespace br.ufc.pargo.hpe.backend
 	                            					   IDictionary<string, int> argumentsTop,
 													   Instantiator.UnitMappingType[] unit_mapping_enclosing)
 			{	
-				Tuple<ManagerObject, gov.cca.Services> session = open_sessions [session_id_string];
-				ManagerObject frw = (ManagerObject) session.Item1;
-				gov.cca.Services frwServices = session.Item2;
-				gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
-
 				Trace.WriteLine("**********************************");
 				Trace.WriteLine("BEGIN CREATING INNER COMPONENTS OF " + cid.getInstanceName() + "-" + cid.Id_functor_app);
 
-				//frwServices.registerUsesPort(Constants.RECONFIGURE_PORT_NAME, Constants.RECONFIGURE_PORT_TYPE, new TypeMapImpl());
-				//ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.RECONFIGURE_PORT_NAME, cid, Constants.RECONFIGURE_PORT_NAME);  
-				//ReconfigurationAdvicePort reconfiguration_advice = (ReconfigurationAdvicePort) frwServices.getPort (Constants.RECONFIGURE_PORT_NAME);
+				// TAKE SESSION CONTEXT.
+				ISession session = open_sessions [session_id_string];
+				ManagerObject frw = (ManagerObject) session.Framework;
+				gov.cca.Services frwServices = session.Services;
+
+				gov.cca.ports.BuilderService bsPort = (gov.cca.ports.BuilderService) frwServices.getPort (Constants.BUILDER_SERVICE_PORT_NAME);
 
 				AbstractComponentFunctorApplication acfa = acfadao.retrieve(cid.Id_functor_app);	
 				int id_abstract = acfa.Id_abstract;
@@ -2189,6 +2206,7 @@ namespace br.ufc.pargo.hpe.backend
 					Services services = frw.getComponentServices(curr_cid);
 					services.removeProvidesPort(Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS);
 					services.removeProvidesPort(Constants.INITIALIZE_PORT_NAME);
+					services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
 					//services.removeProvidesPort(Constants.RECONFIGURE_PORT_NAME);
 					if (curr_cid.Kind == Constants.KIND_APPLICATION)
 						services.removeProvidesPort(Constants.GO_PORT_NAME);
@@ -2366,7 +2384,7 @@ namespace br.ufc.pargo.hpe.backend
 				properties[Constants.PORT_NAME] = ic.Id_inner;
 				properties[Constants.ENCLOSING_ARGUMENTS] = arguments;
 				properties[Constants.NODES_KEY] = unit_mapping_inner;
-				properties[Constants.FACET_NUMBER] = facet;
+			   properties[Constants.FACET_NUMBER] = facet;
 
 
 				Trace.WriteLine("---");

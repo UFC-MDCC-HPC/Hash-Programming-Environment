@@ -162,7 +162,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             DGAC.BackEnd.worker_framework = this;
 
             this.global_communicator = MPI.Communicator.world;
-            my_rank = this.global_communicator.Rank;
+            my_global_rank = this.global_communicator.Rank;
 
         }
 		
@@ -253,7 +253,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                                           string className,    // unit name (data)
                                           TypeMap properties)
         {
-			Trace.WriteLine(my_rank + ": createInstance --- " + properties.getString(Constants.KIND_KEY, "") + " " + instanceName + " --- " + className);
+			Trace.WriteLine(my_global_rank + ": createInstance --- " + properties.getString(Constants.KIND_KEY, "") + " " + instanceName + " --- " + className);
             ComponentID cid = null;
 
             Connector.openConnection();
@@ -308,10 +308,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
 			try {
-				Trace.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 1");
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 1");
 	            unitProperties.Add(cid, properties);
 				
-				Trace.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 2");
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 2");
 	            string id_unit = properties.getString(Constants.UNIT_KEY, "");
 	            string library_path = properties.getString(Constants.COMPONENT_KEY, "");
 				string assembly_string = properties.getString(Constants.ASSEMBLY_STRING_KEY, "");
@@ -319,7 +319,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
 
 
-				Trace.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - 3 ; assembly_string = " + assembly_string + "; class name = "+  class_name);
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 3 ; assembly_string = " + assembly_string + "; class name = "+  class_name);
 	
 				ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
 	            hpe.basic.IUnit unit_slice = (hpe.basic.IUnit) obj.Unwrap();
@@ -328,6 +328,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				unit_slice.Kind = kind;
 				unit_slice.ClassName = class_name;
 				unit_slice.QualifiedComponentTypeName = library_path;
+
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 4");
 
 				if (properties.getBool(Constants.FACET_PRESENCE, false))
 				{
@@ -339,40 +341,44 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					unit_slice.readFacetConfiguration(facet_unit_id, facet_unit_index, facet_ip_address, facet_port);
 				}
 
-	            Services services = new WorkerServicesImpl(this, cid, unit_slice);
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 5");
+
+				Services services = new WorkerServicesImpl(this, cid, unit_slice);
 	            unit_slice.setServices(services);
 	
-	            if (properties.hasKey(Constants.KEY_KEY)) {
-	                int key = properties.getInt(Constants.KEY_KEY, my_rank);
-					Trace.WriteLine(my_rank +  ": --- BEGIN - Worker " + my_rank + ": Split " + key + " !!!");
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 6");
 
-					unit_slice.WorldComm = this.global_communicator;
-		            unit_slice.Communicator = (MPI.Intracommunicator) this.global_communicator.Split(1, key);
+				if (properties.hasKey(Constants.KEY_KEY)) {
+	                int key = properties.getInt(Constants.KEY_KEY, my_global_rank);
+					Trace.WriteLine(my_global_rank +  ": --- BEGIN - Worker " + my_global_rank + ": Split " + key + " !!!");
+
+					unit_slice.WorldComm = this.worker_communicator;
+		            unit_slice.Communicator = (MPI.Intracommunicator) this.worker_communicator.Split(1, key);
 					unit_slice.PeerComm =  (MPI.Intracommunicator) unit_slice.Communicator.Split(Math.Abs(id_unit.GetHashCode()), unit_slice.Rank);
 
 					unit_slice.calculate_topology();
-					Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - SIZE");
+					Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - SIZE");
 					foreach (KeyValuePair<string, int> unit_size in unit_slice.UnitSize)
-						Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds:" + unit_size.Key + "=" + unit_size.Value);
+						Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds:" + unit_size.Key + "=" + unit_size.Value);
 
-					Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - RANK");
+					Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - RANK");
 					foreach (KeyValuePair<string, int[]> unit_ranks in unit_slice.UnitRanks)
 						foreach (int r in unit_ranks.Value)
-							Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds: " + unit_ranks.Key + "[" + r + "]");
+							Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds: " + unit_ranks.Key + "[" + r + "]");
 
-					Trace.WriteLine(this.my_rank + ": createInstanceForAllKinds: END TOPOLOGY");
+					Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds: END TOPOLOGY");
 
-		            Trace.WriteLine(my_rank +  ": --- END - Worker " + my_rank + ": Split " + key + " !!!");
+		            Trace.WriteLine(my_global_rank +  ": --- END - Worker " + my_global_rank + ": Split " + key + " !!!");
 	            } else {
-					Trace.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - NO SPLIT");
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - NO SPLIT");
 				}
 	
 			}
 			catch (Exception e) 
 			{
-				Trace.WriteLine(my_rank +  ": createInstanceBaseForAllKinds - EXCEPTION");
-				Trace.WriteLine(my_rank +  ": EXCEPTION MESSAGE -" + e.Message);
-				Trace.WriteLine(my_rank +  ": INNER EXCEPTION MESSAGE -" + e.InnerException.Message);
+				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - EXCEPTION");
+				Trace.WriteLine(my_global_rank +  ": EXCEPTION MESSAGE -" + e.Message);
+				Trace.WriteLine(my_global_rank +  ": INNER EXCEPTION MESSAGE -" + e.InnerException.Message);
 				throw e;
 			}
             return cid;
@@ -460,8 +466,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			if (usesPorts.Length > 0 || providesPorts.Length > 0)
 			{
-				Trace.WriteLine("The component must unregister its uses ports " +
-												   "and remove provides ports before destruction.");
+				Trace.WriteLine("The component must unregister its uses ports and remove provides ports before destruction.");
 				throw new CCAExceptionImpl(CCAExceptionType.Unexpected);				
 			}
 						
@@ -474,18 +479,25 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string[] getProvidedPortNames(ComponentID cid)
         {
+			Trace.WriteLine ("getProvidedPortNames #1 " + cid.getInstanceName());
 		    IList<string> portList;
 			if (componentIDs.ContainsKey(cid.getInstanceName()))
 			{
+				Trace.WriteLine ("getProvidedPortNames #2 " + cid.getInstanceName());
 				if (providesPortNames.ContainsKey(cid.getInstanceName()))
 				{
+					Trace.WriteLine ("getProvidedPortNames #3 " + cid.getInstanceName());
 					providesPortNames.TryGetValue(cid.getInstanceName(), out portList);			
+					Trace.WriteLine ("getProvidedPortNames #4 " + cid.getInstanceName());
 					string[] ports = new string[portList.Count];
+					Trace.WriteLine ("getProvidedPortNames #5 " + cid.getInstanceName());
 					portList.CopyTo(ports,0);
+					Trace.WriteLine ("getProvidedPortNames #6 " + cid.getInstanceName());
 		            return ports;
 				}
 				else
 				{
+					Trace.WriteLine ("getProvidedPortNames #7 " + cid.getInstanceName());
 					return new string[] {};
 				}
 			}
@@ -579,7 +591,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);	
 			}						
 			
-			Trace.WriteLine(my_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
+			Trace.WriteLine(my_global_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
 
 //			Trace.WriteLine(my_rank + ": connect 1");			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
@@ -709,7 +721,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			if (!port_manager.isReleased(user_port_name))
 			{
-				Trace.WriteLine ("DISCONNECT - EXCEPTION RELEASE PORT - " + user_port_name);
+				Trace.WriteLine (my_global_rank + ": DISCONNECT - EXCEPTION RELEASE PORT - " + user_port_name);
 				throw new CCAExceptionImpl(CCAExceptionType.UsesPortNotReleased);
 			}
 						
@@ -719,7 +731,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			}
 			
             connectionList.Remove(connID.ToString ());
-			Trace.WriteLine("disconnecting " + user_port_name + " from " + provider_port_name);
+			Trace.WriteLine(my_global_rank + ": disconnecting " + user_port_name + " from " + provider_port_name);
 
             connByUserPort.Remove(user_port_name);
             connByProviderPort.Remove(provider_port_name);
@@ -836,7 +848,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 //		[MethodImpl(MethodImplOptions.Synchronized)]
         public Port getPort(string portName)
         {
-            Trace.WriteLine("Worker" + my_rank + ": BEGIN getPort " + portName);
+            Trace.WriteLine("Worker" + my_global_rank + ": BEGIN getPort " + portName);
             if (!usesPortNamesInv.ContainsKey(portName))
             {
 				Trace.WriteLine("PORT NOT FOUND is " + portName);
@@ -863,7 +875,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             }
 
             Port port = this.getPortProceed(portName);
-            Trace.WriteLine("Worker" + my_rank + ": END getPort " + portName + " TYPE:" + port.GetType());
+            Trace.WriteLine("Worker" + my_global_rank + ": END getPort " + portName + " TYPE:" + port.GetType());
             return port;
 
         }
@@ -889,10 +901,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void releasePort(string portName)
         {
-
+			Trace.WriteLine (my_global_rank + ": RELEASE PORT " + portName + " ATTEMPT");
             if (!usesPortNamesInv.ContainsKey(portName))
             {
-				Trace.WriteLine("Port {0} not defined. It cannot be released.", portName);
+				Trace.WriteLine(my_global_rank + ": RELEASE PORT " + portName + " FAIL. Port cannot be released.");
+				foreach (string key in usesPortNamesInv.Keys) Trace.WriteLine ("key = " + key);
                 throw new CCAExceptionImpl(CCAExceptionType.PortNotDefined);
             }
 
@@ -901,7 +914,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             WorkerConnectionID hpeconn = (WorkerConnectionID)conn;
 
             port_manager.addPortRelease(portName);
-
+			Trace.WriteLine (my_global_rank + ": RELEASE PORT " + portName + " SUCCESS");
+			foreach (string key in usesPortNamesInv.Keys) Trace.WriteLine ("key = " + key);
         }
 
 
@@ -959,7 +973,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void unregisterUsesPort(string portName)
         {
-			Trace.WriteLine("Trying to unregister port " + portName);
+			Trace.WriteLine("Trying to unregister port #1" + portName);
 			
             if (connByUserPort.ContainsKey(portName))
             {
@@ -970,6 +984,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             if (usesPortNamesInv.ContainsKey(portName))
             {
+				Trace.WriteLine ("Trying to unregister port #2" + portName);
                 ComponentID cid;
                 usesPortNamesInv.TryGetValue(portName, out cid);
                 usesPortNamesInv.Remove(portName);
@@ -986,8 +1001,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             } 
 			else 
 			{
-				throw new CCAExceptionImpl("CCA Exception (worker): it is not possible" +
-										   " to unregister a port that was not registered port(" + portName + ")");
+				string exception_message = "CCA Exception (worker): it is not possible" +
+					" to unregister a port that was not registered port(" + portName + ")";
+				Trace.WriteLine (exception_message);
+				throw new CCAExceptionImpl(exception_message);
 			}
         }
 		
@@ -1110,9 +1127,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             this.connect(user_id, user_portName, provider_id, provider_portName);
         }
 
-		private int my_rank = -1;
+		private int my_global_rank = -1;
+		private int my_worker_rank = -1;
 
         private MPI.Intracommunicator global_communicator = null;
+		private MPI.Intracommunicator worker_communicator = null;
 
         /**
      * 	Creates an instance of a CCA component of the type defined by the 
@@ -1131,13 +1150,32 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void createInstance()
         {
-            my_rank = this.global_communicator.Rank;
-				Trace.WriteLine("BEGIN - NULL Worker " + my_rank + ": Split " + " !!!");
-            this.global_communicator.Split(0, my_rank);
-			Trace.WriteLine("END - NULL Worker " + my_rank + ": Split " +  " !!!");
+			Trace.WriteLine("BEGIN - NULL Worker " + my_global_rank + ": Split " + " !!!");
+            this.worker_communicator.Split(0, my_global_rank);
+			Trace.WriteLine("END - NULL Worker " + my_global_rank + ": Split " +  " !!!");
         }
 
+		private Intercommunicator binding_bridge_communicator = null;
 
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public void setUpCommunicationScope()
+		{
+			Trace.WriteLine (my_global_rank + ": BEGIN - setUpCommunicationScope " + (my_global_rank == 0 ? 0 : 1));
+
+			// CREATE THE WORKER COMMUNICATOR
+			worker_communicator = (MPI.Intracommunicator) this.global_communicator.Split (my_global_rank == 0 ? 0 : 1, my_global_rank);
+			my_worker_rank = worker_communicator.Rank;
+
+			// CREATE THE INTERCOMMUNICATOR
+			binding_bridge_communicator = new MPI.Intercommunicator (worker_communicator, 0, global_communicator, my_global_rank == 0 ? 1 : 0, 999);
+
+			int u = binding_bridge_communicator.Allreduce (my_global_rank, sum);
+			Trace.WriteLine ("testing intercommunicator - rank sum = " + u);
+
+			Trace.WriteLine (my_global_rank + ": END - setUpCommunicationScope - rank = " + my_worker_rank + ", inter-rank=" + binding_bridge_communicator.Rank);
+		}
+
+		private int sum(int a, int b) { return a + b; }
 		
 		//just for test
 		[MethodImpl(MethodImplOptions.Synchronized)]

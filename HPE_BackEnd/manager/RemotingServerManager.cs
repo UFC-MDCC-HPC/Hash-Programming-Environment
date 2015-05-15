@@ -68,7 +68,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         {
 			Trace.Write("OnStart called...");
             startManagerServer();
-            BackEnd.startWorkers(session_id);
+			BackEnd.startWorkers (session_id, null, null, System.Environment.CurrentDirectory);
 			Trace.WriteLine("OK !");
         }
 

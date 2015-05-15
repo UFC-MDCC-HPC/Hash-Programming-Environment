@@ -33,11 +33,4 @@
 		<nature>com.omondo.uml.std.Nature</nature>
 		<nature>org.eclipse.jem.beaninfo.BeanInfoNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/hPE/frontend/connector/xml/hpe_component.xsd</name>
-			<type>1</type>
-			<locationURI>../src/hPE/frontend/connector/xml/hpe_component.xsd</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

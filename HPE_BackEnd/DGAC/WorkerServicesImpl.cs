@@ -43,7 +43,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         private string mkPortName(string portName)
         {
-            return this.instanceName + ":" + portName;
+            return this.instanceName + ":" + portName.Trim();
         }
 
 
@@ -52,11 +52,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public Port getPort(string portName)
         {
 			Trace.WriteLine ("WorkerServicesImpl 1 - getPort(" + portName + ")");
-			Port port = framework.getServicePort(cid, mkPortName(portName.Trim()));
+			Port port = framework.getServicePort(cid, mkPortName(portName));
 			Trace.WriteLine ("WorkerServicesImpl 2 - getPort(" + portName + ")");
 			if (port == null) 
 			{
-				port = framework.getPort (mkPortName (portName.Trim ()));
+				port = framework.getPort (mkPortName(portName));
 				Trace.WriteLine ("WorkerServicesImpl 3 - getPort(" + portName + ") " + port.GetType());
 			}
 			return port;
@@ -64,13 +64,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public Port getPortNonblocking(string portName)
         {
-			Port port = framework.getServicePort(cid, mkPortName(portName.Trim()));
-            return port==null ? framework.getPortNonblocking(mkPortName(portName.Trim())) : port;
+			Port port = framework.getServicePort(cid, mkPortName(portName));
+            return port==null ? framework.getPortNonblocking(mkPortName(portName)) : port;
         }
 
         public void releasePort(string portName)
         {
-            framework.releasePort(mkPortName(portName.Trim()));
+            framework.releasePort(mkPortName(portName));
         }
 
         public TypeMap createTypeMap()

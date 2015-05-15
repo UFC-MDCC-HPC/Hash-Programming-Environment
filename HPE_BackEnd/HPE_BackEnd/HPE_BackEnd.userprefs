@@ -1,28 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/base/Unit.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/ManagerObject.cs">
     <Files>
-      <File FileName="../DGAC/DGAC.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/tree/Resolution.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/LoaderApp.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/base/Unit.cs" Line="28" Column="12" />
-      <File FileName="../DGAC/WorkerObject.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/base/UnitImpl.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/Constants.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/catalog.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/instantiator.cs" Line="1" Column="1" />
-      <File FileName="../DGAC/ManagerObject.cs" Line="1" Column="1" />
-      <File FileName="../ws/BackEndWS.asmx.cs" Line="1" Column="1" />
+      <File FileName="../DGAC/ManagerObject.cs" Line="1594" Column="7" />
+      <File FileName="../DGAC/DGAC.cs" Line="270" Column="40" />
+      <File FileName="../DGAC/WorkerObject.cs" Line="722" Column="27" />
+      <File FileName="../DGAC/WorkerServicesImpl.cs" Line="38" Column="55" />
+      <File FileName="../DGAC/ManagerServicesImpl.cs" Line="80" Column="34" />
+      <File FileName="../DGAC/WorkerConnectionIDImpl.cs" Line="30" Column="44" />
+      <File FileName="../DGAC/ManagerConnectionIDImpl.cs" Line="93" Column="40" />
+      <File FileName="../worker/RemotingServerWorker.cs" Line="41" Column="63" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="DGAC" expanded="True">
-            <Node name="cca" selected="True" />
-            <Node name="instantiator" expanded="True" />
+          <Node name="DGAC" expanded="True" selected="True">
             <Node name="manager" expanded="True" />
-            <Node name="utils" expanded="True" />
           </Node>
+          <Node name="WorkerService" expanded="True" />
         </State>
       </Pad>
     </Pads>

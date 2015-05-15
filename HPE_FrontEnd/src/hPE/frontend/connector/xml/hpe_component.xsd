@@ -1,1 +1,179 @@
-../../../../../../HPE_BackEnd/DGAC/connector/xml/hpe_component.xsd
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/HashComponent"
+	xmlns:tns="http://www.example.org/HashComponent">
+  <element name="hashComponent" type="tns:hashComponentType">
+  </element>
+
+  <simpleType name="hpekind">
+		<restriction base="string">
+			<enumeration value="Data"></enumeration>
+			<enumeration value="Computation"></enumeration>
+			<enumeration value="Synchronizer"></enumeration>
+			<enumeration value="Platform"></enumeration>
+			<enumeration value="Environment"></enumeration>
+			<enumeration value="Qualifier"></enumeration>
+			<enumeration value="Application"></enumeration>
+			<enumeration value="Enumerator"></enumeration>
+			<enumeration value="Facet"></enumeration>
+			<enumeration value="Domain"></enumeration>
+			<enumeration value="Topology"></enumeration>
+			<enumeration value="value"></enumeration>
+		</restriction>
+  </simpleType>
+  
+  <complexType name="hpetype">
+    <sequence>
+    	<element name="componentName" type="string" />
+    	<element name="publicInnerComponent" type="string" minOccurs="0"
+    		maxOccurs="unbounded" />
+    	<element name="parameter" type="tns:hpeparameter" minOccurs="0"
+    		maxOccurs="unbounded" />
+    	<element name="package" type="string" maxOccurs="1" minOccurs="0">
+    		<annotation>
+    			<documentation>O valor é "main" para o protocolo principal.</documentation>
+    		</annotation></element>
+    </sequence>
+  </complexType>
+  
+  <complexType name="hpeparameter">
+    <sequence>
+      <element name="identifier" type="string"/>
+            <element name="variable" type="string" minOccurs="0"/>
+            <element name="constraint" type="tns:hpeparameterType" />
+        </sequence>
+  </complexType>
+  
+  <complexType name="hpeparameterType">
+    <sequence>
+      <element name="componentConstraint" type="string"/>
+      <element name="parameter" type="tns:hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  
+  <complexType name="hpeaction">
+  	<sequence>
+    	<element name="identifier" type="string"/>
+       	<element name="protocol" type="tns:ProtocolChoiceType" maxOccurs="1" minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="ProtocolCombinatorType" abstract="false">
+  	<complexContent>
+  		<extension base="tns:ProtocolType">
+  			<sequence>
+  				<element name="action" type="tns:ProtocolChoiceType" maxOccurs="unbounded" minOccurs="1">
+  				</element>
+  			</sequence>
+  		</extension>
+  	</complexContent>
+  </complexType>
+
+  <complexType name="ProtocolChoiceType">
+  				<choice maxOccurs="1" minOccurs="1">
+  					<element name="par" type="tns:ProtocolCombinatorType"></element>
+  					<element name="seq" type="tns:ProtocolCombinatorType"></element>
+  					<element name="alt" type="tns:ProtocolCombinatorType"></element>
+  					<element name="perform" type="tns:ProtocolPerformType"></element>
+  				</choice>
+    </complexType>
+
+  <complexType name="GuardType">
+  	<choice maxOccurs="unbounded">
+  		<element name="condition" type="tns:ConditionType" />
+  		<element name="and" type="tns:GuardType" />
+  		<element name="or" type="tns:GuardType" />
+  	</choice>
+  	<attribute name="not" type="boolean"></attribute>
+  </complexType>
+
+<complexType name="hpeinnerComponent">
+	<sequence>
+    	<element name="kind" type="tns:hpekind"/>
+        <element name="identifier" type="string"/>
+        <element name="type" type="tns:hpetype"/>
+        <element name="access" type="tns:accessType">
+    	</element>
+    	<element name="exportActions" type="boolean"/>
+	</sequence>
+</complexType>
+
+    <complexType name="hpesliceType">
+    	<attribute use="required" name="inner" type="string">
+    	</attribute>
+    	<attribute name="unit" type="string" use="required"></attribute>
+    	<attribute name="index" default="0" type="int">
+    	</attribute>
+    </complexType>
+
+    <complexType name="unittype">
+    	<sequence>
+
+    		<element name="slice" minOccurs="1" maxOccurs="unbounded"
+    			type="tns:hpesliceType">
+    		</element>
+    		<element name="action" type="tns:hpeaction" minOccurs="0"
+    			maxOccurs="unbounded" />
+    		<element name="condition" type="tns:hpecondition" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="parallel" type="boolean"
+    		default="true">
+    	</attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="index" type="int"></attribute>
+    </complexType>
+
+    <complexType name="hashComponentType">
+      <sequence>
+        <element name="package" type="string"/>
+        <element name="using" type="string" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="kind" type="tns:hpekind"/>
+        <element name="name" type="string"/>
+        <element name="parameter" type="tns:hpeparameter" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="innerComponent" type="tns:hpeinnerComponent" minOccurs="0"  maxOccurs="unbounded"/>
+        <element name="superComponent" type="tns:hpetype" minOccurs="0"/>
+        <element name="unit" minOccurs="0" maxOccurs="unbounded" type="tns:unittype">
+        </element>
+      </sequence>
+    </complexType>
+
+
+    <simpleType name="accessType">
+            <restriction base="string">
+            	<enumeration value="public"/>
+                <enumeration value="private"/>
+            </restriction>
+    </simpleType>
+
+    <complexType name="ConditionType">
+    	<attribute name="slice_id" type="string"></attribute>
+    	<attribute name="cond_id" type="string" use="required"></attribute>
+    </complexType>
+    <complexType name="ProtocolPerformType">
+    	<complexContent>
+    		<extension base="tns:ProtocolType">
+
+    			<attribute name="slice_id" type="string"></attribute>
+
+    			<attribute name="action_id" type="string"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="ProtocolType" abstract="true">
+    	<sequence>
+    		<element name="guard" type="tns:GuardType" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="repeat" type="boolean"></attribute>
+    	<attribute name="id" type="string"></attribute>
+    </complexType>
+
+    <complexType name="hpecondition">
+    	<sequence>
+    		<element name="identifier" type="string"></element>
+    		<element name="guard" type="tns:GuardType"></element>
+    	</sequence>
+    </complexType>
+</schema> 
+
