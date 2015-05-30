@@ -1446,7 +1446,7 @@
     <eLiterals name="Application" value="6"/>
     <eLiterals name="Enumerator" value="7"/>
     <eLiterals name="Facet" value="8"/>
-    <eLiterals name="Domain" value="9"/>
+    <eLiterals name="Binding" value="9"/>
     <eLiterals name="Topology" value="10"/>
     <eLiterals name="value" value="11"/>
   </eClassifiers>

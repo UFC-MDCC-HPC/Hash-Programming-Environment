@@ -16,6 +16,17 @@ public class Interface {
     private string id_interface_super;
     private string id_interface_super_top;
 
+	private int facet;
+
+	public int Facet {
+		get {
+			return facet;
+		}
+		set {
+			this.facet = value;
+		}
+	}
+
 	private bool is_parallel;
 		
 

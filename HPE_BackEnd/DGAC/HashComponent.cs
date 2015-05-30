@@ -247,7 +247,7 @@
         Facet,
         
         /// <remarks/>
-        Domain,
+        Binding,
         
         /// <remarks/>
         Topology,

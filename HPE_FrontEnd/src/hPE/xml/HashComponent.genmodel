@@ -24,7 +24,7 @@
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Application"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Enumerator"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Facet"/>
-      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Domain"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Binding"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Topology"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/value"/>
     </genEnums>
@@ -326,6 +326,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitType/super"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitType/slices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//UnitType/visualDescription"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitType/facet"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitType/iRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitType/multiple"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//UnitType/private"/>

@@ -4,14 +4,12 @@ using System.Text;
 using System.IO;
 using CommandLine.Utility;
 using System.Diagnostics;
+using br.ufc.pargo.hpe.backend.DGAC;
 
 namespace Back_End_Test
 {
     class Program
     {
-
-        static br.ufc.pargo.hpe.backend.DGAC.BackEnd dgac = null;
-
         static void Main(string[] args)
         {
 			
@@ -29,18 +27,16 @@ namespace Back_End_Test
 			{
 				readArguments(args, out instantiator_string_file, out user, out password, out curDir, out rounds, out prefix);
 										
-	            dgac = new br.ufc.pargo.hpe.backend.DGAC.BackEnd();
-				
                 string instantiator_string = File.ReadAllText(instantiator_string_file);
 
 				string[] output = null;
 				if (prefix == null) 
 				{					
-				  output = dgac.runApplication(instantiator_string/*, user, password, curDir*/);
+				  output = BackEnd.runApplication(instantiator_string, prefix/*, user, password, curDir*/);
 				} 
 				else 
 				{
-				  output = dgac.runApplicationNTimes(instantiator_string, /*user, password, curDir,*/ rounds, prefix);
+				  output = BackEnd.runApplicationNTimes(instantiator_string, /*user, password, curDir,*/ rounds, prefix);
 //					dgac.testReconfiguration(instantiator_string_1, instantiator_string_2, prefix);
 				}
 

@@ -208,30 +208,21 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		sourceCode += "using " + packageNameImplements + "." + componentNameImplements + ";\n";
 		dependencies.add(buildDependencyName(cBase.getPackagePath().toString(), cBase.getComponentName(), primInheritedName2));
 		
-		sourceCode += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace		
+		sourceCode += "\n";
+		sourceCode += "namespace " + packageName + "." + componentName + "\n"; 
+		sourceCode += "{\n";  // begin namespace		
 		
-		sourceCode += "public class " + procName + " : " + "Base" + procName + ", " + inheritedName + "\n" ;  // begin class
-		
-		sourceCode += programTextVarBounds + "{\n\n";
-        	        				            		
-        sourceCode += "public " + procName.split("<")[0] + "() { \n"; // begin constructor signature
-			
-        if (this.getIsSubclass()) {
-        	sourceCode += tabs(1) + "super();\n";
-        }
-        
-        sourceCode += "\n} \n\n"; // end constructor body;
-        
-        for (String methodCode : this.getUserDeclarations()) {
+		sourceCode += tabs(1) + "public class " + procName + " : " + "Base" + procName + ", " + inheritedName + "\n" ;  // begin class
+		sourceCode += programTextVarBounds; 
+		sourceCode += tabs(1) + "{\n";
+        	        				            		        
+        for (String methodCode : this.getUserDeclarations()) 
         	sourceCode += methodCode;
-        }        
         
-	    sourceCode += "\n}\n"; // end main class	
+	    sourceCode += tabs(1) + "}\n"; // end main class	
 
-		sourceCode += "\n}\n"; // end namespace
+		sourceCode += "}\n"; // end namespace		
 		
-		
-//		String l = i.getConfiguration().getLocalLocation();	   
 	    String procFileName = i.getPrimName();		
 		HComponent cc = (HComponent) i.getConfiguration();
 		String l = cc.getRelativeLocation();
@@ -285,7 +276,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
  		   String varName = pair.fst().split("@")[0];
  		   HInterface bound = pair.snd();
- 		   programTextVarBounds += "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
+ 		   programTextVarBounds += "\n"; 
+ 		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName);
  		}
 
  		fillPortSlices(i,varContext);
@@ -370,9 +362,10 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		sourceCode += "using " + packageNameImplements + "." + componentNameImplements + ";\n";
 		dependencies.add(buildDependencyName(cBase.getPackagePath().toString(), cBase.getComponentName(), "Base" + primInheritedName));
 
-		sourceCode += "\nnamespace " + packageName + "." + componentName + " { \n\n";  // begin namespace		
-		
-		sourceCode += "public abstract class Base" + procName + ": " + i.getConfiguration().kindString().replace(" ", "") + ", Base" + inheritedName + this.getAdditionalExtendsListCode() + "\n" + programTextVarBounds + "{\n\n";  // begin class
+		sourceCode += "\nnamespace " + packageName + "." + componentName; 
+		sourceCode += " \n{\n";  
+		sourceCode += tabs(1) + "public abstract class Base" + procName + ": " + i.getConfiguration().kindString().replace(" ", "") + ", Base" + inheritedName + this.getAdditionalExtendsListCode() + programTextVarBounds + "\n"; 
+		sourceCode += tabs(1) + "{\n";  
         	        
  		Map<String, HInterfaceSlice> memSlices = new HashMap<String, HInterfaceSlice>();
 
@@ -385,7 +378,6 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		    	memSlices.put(sliceName, slice);
 		    	String defaultSliceName = slice.getOriginalName2();
 		    
-			    sourceCode += "private " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
 
 			    HPort portOfTheSlice = portMapping.get(slice); /*slice.getMyPort()*/;
 			    boolean isPublic = ((portOfTheSlice != null && !portOfTheSlice.isPrivate()) /*|| (portOfTheSlice == null && slice.isPublic())*/) /*|| !(slice instanceof HActivateInterfaceSlice)*/;
@@ -393,75 +385,26 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
 			    String id_inner = slice.getPortName();
 			    
-                //if (isPublic) {
-				    sourceCode += (isPublic ? "public " : "protected ") + typeName + " " + firstUpper(sliceName) + " {\n";
-				    sourceCode += tabs(1) + "get {\n";
-				    				    
-				    sourceCode += tabs(2) + "if (this." + sliceName + " == null)\n";
-					sourceCode += tabs(3) + "this." + sliceName + " = (" + typeName + ") Services.getPort(\"" + id_inner +  "\");\n";  ; // value;\n";
-				    sourceCode += tabs(2) + "return this." + sliceName + ";\n";
-				    /*if (tt.containsKey(sliceName)) {
-					    for (HInterfaceSlice ss : i.getSortedSlices(tt.get(sliceName))) {
-					    	String ss_name = portOfTheSlice.getDefaultNameOf(ss);
-					    	if (ss_name == null) {
-					    		ss_name = "?";
-					    	}
-					    	sourceCode += tabs(2) + ss.getName() + "." + firstUpper(ss_name) + " = value;\n";
-					    }				    
-				    }*/
-				    	
-				    sourceCode += tabs(1) + "}\n";
-				    sourceCode += "}\n\n";
-                //}
+			    sourceCode += tabs(2) + "private " + typeName + " " + sliceName + (isParameter(typeName, varContext) != null ? " = default(" + typeName + ")" : " = null") + ";\n\n";
+			    sourceCode += tabs(2) + (isPublic ? "public " : "protected ") + typeName + " " + firstUpper(sliceName) + "\n";
+			    sourceCode += tabs(2) + "{\n";
+			    sourceCode += tabs(3) + "get\n";
+			    sourceCode += tabs(3) + "{\n";				    				    
+			    sourceCode += tabs(4) + "if (this." + sliceName + " == null)\n";
+				sourceCode += tabs(5) + "this." + sliceName + " = (" + typeName + ") Services.getPort(\"" + id_inner +  "\");\n";  ; // value;\n";
+			    sourceCode += tabs(4) + "return this." + sliceName + ";\n";
+			    sourceCode += tabs(3) + "}\n";
+			    sourceCode += tabs(2) + "}\n";
 			    
 		    }			
 		}
 				    
-/*	    HComponent c = (HComponent) slice.getConfiguration();
-	    if (c instanceof HEnumeratorComponent) {
-	    	HEnumeratorComponent ec = (HEnumeratorComponent) c;
-	    	String enumeratorId = ec.getLinkToReplicator().getReplicator().getVarId(); 
-	    	programText += tabs(2) + "enumerator.put(" + enumeratorId + "," + typeName + ");\n";
-	    } */
-        
-		sourceCode += "\n"; // end declaration of inner slices
-		
-		
-        /* sourceCode += "public Base" + procName.split("<")[0] + "() { \n"; // begin constructor signature
-			
-        if (this.getIsSubclass()) {
-        	sourceCode += tabs(1) + "super();\n";
-        }        
-        
-        sourceCode += "\n} \n\n"; // end constructor body;
-        */
-        
-        /* HComponent c = (HComponent)i.getConfiguration();
-
-        
-        sourceCode += "public static string UID = \"" + c.getHashComponentUID() + "\";\n\n";
-        sourceCode += "override public void createSlices() {\n"; // begin constructor signature
-        sourceCode += tabs(1) + "base.createSlices();\n";        
-        
-		List<HInterfaceSlice> ss0 = new ArrayList<HInterfaceSlice>();
-        
-		for (List<HInterfaceSlice> ss_: theSlices.values()) {
-			ss0.addAll(ss_);
-		}        
-        
-                
-        sourceCode += "} \n\n"; // end createSlices body;
-        */
-
-        for (String methodCode : this.getBaseDeclarations()) {
+        for (String methodCode : this.getBaseDeclarations())
         	sourceCode += methodCode;
-        }        
         
-	    sourceCode += "\n}\n"; // end main class	
-
-		sourceCode += "\n}\n"; // end namespace
+	    sourceCode += tabs(1) + "}\n"; // end main class
+		sourceCode += "}"; // end namespace
 		
-//	    String l = i.getConfiguration().getLocalLocation();
 	    String procFileName = i.getPrimName();
 		HComponent cc = (HComponent) i.getConfiguration();
 		String l = cc.getRelativeLocation();
@@ -593,7 +536,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
 
 	public String toString() {
-		return "C# Language Class";
+		return "C# Class";
 	}
 
 	private List<String> additional_extends = null;

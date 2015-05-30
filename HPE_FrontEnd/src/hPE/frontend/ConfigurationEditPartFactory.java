@@ -55,6 +55,26 @@ import hPE.frontend.kinds.application.model.HApplicationInterfaceSlice;
 import hPE.frontend.kinds.application.model.HApplicationUnit;
 import hPE.frontend.kinds.application.model.HApplicationUnitSlice;
 import hPE.frontend.kinds.application.model.IHApplicationUnit;
+import hPE.frontend.kinds.binding.edits.BindingComponentEditPart;
+import hPE.frontend.kinds.binding.edits.BindingConfigurationEditPart;
+import hPE.frontend.kinds.binding.edits.BindingEntryEditPart;
+import hPE.frontend.kinds.binding.edits.BindingInterfaceEditPart;
+import hPE.frontend.kinds.binding.edits.BindingInterfaceSliceEditPart;
+import hPE.frontend.kinds.binding.edits.BindingUnitEditPart;
+import hPE.frontend.kinds.binding.edits.BindingUnitSliceEditPart;
+import hPE.frontend.kinds.binding.figures.BindingComponentFigure;
+import hPE.frontend.kinds.binding.figures.BindingConfigurationFigure;
+import hPE.frontend.kinds.binding.figures.BindingEntryFigure;
+import hPE.frontend.kinds.binding.figures.BindingInterfaceFigure;
+import hPE.frontend.kinds.binding.figures.BindingInterfaceSliceFigure;
+import hPE.frontend.kinds.binding.figures.BindingUnitFigure;
+import hPE.frontend.kinds.binding.figures.BindingUnitSliceFigure;
+import hPE.frontend.kinds.binding.model.HBindingComponent;
+import hPE.frontend.kinds.binding.model.HBindingInterface;
+import hPE.frontend.kinds.binding.model.HBindingInterfaceSlice;
+import hPE.frontend.kinds.binding.model.HBindingUnit;
+import hPE.frontend.kinds.binding.model.HBindingUnitSlice;
+import hPE.frontend.kinds.binding.model.IHBindingUnit;
 import hPE.frontend.kinds.computation.edits.ComputationComponentEditPart;
 import hPE.frontend.kinds.computation.edits.ComputationConfigurationEditPart;
 import hPE.frontend.kinds.computation.edits.ComputationEntryEditPart;
@@ -95,26 +115,6 @@ import hPE.frontend.kinds.data.model.HDataInterfaceSlice;
 import hPE.frontend.kinds.data.model.HDataUnit;
 import hPE.frontend.kinds.data.model.HDataUnitSlice;
 import hPE.frontend.kinds.data.model.IHDataUnit;
-import hPE.frontend.kinds.domain.edits.DomainComponentEditPart;
-import hPE.frontend.kinds.domain.edits.DomainConfigurationEditPart;
-import hPE.frontend.kinds.domain.edits.DomainEntryEditPart;
-import hPE.frontend.kinds.domain.edits.DomainInterfaceEditPart;
-import hPE.frontend.kinds.domain.edits.DomainInterfaceSliceEditPart;
-import hPE.frontend.kinds.domain.edits.DomainUnitEditPart;
-import hPE.frontend.kinds.domain.edits.DomainUnitSliceEditPart;
-import hPE.frontend.kinds.domain.figures.DomainComponentFigure;
-import hPE.frontend.kinds.domain.figures.DomainConfigurationFigure;
-import hPE.frontend.kinds.domain.figures.DomainEntryFigure;
-import hPE.frontend.kinds.domain.figures.DomainInterfaceFigure;
-import hPE.frontend.kinds.domain.figures.DomainInterfaceSliceFigure;
-import hPE.frontend.kinds.domain.figures.DomainUnitFigure;
-import hPE.frontend.kinds.domain.figures.DomainUnitSliceFigure;
-import hPE.frontend.kinds.domain.model.HDomainComponent;
-import hPE.frontend.kinds.domain.model.HDomainInterface;
-import hPE.frontend.kinds.domain.model.HDomainInterfaceSlice;
-import hPE.frontend.kinds.domain.model.HDomainUnit;
-import hPE.frontend.kinds.domain.model.HDomainUnitSlice;
-import hPE.frontend.kinds.domain.model.IHDomainUnit;
 import hPE.frontend.kinds.environment.edits.EnvironmentComponentEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentConfigurationEditPart;
 import hPE.frontend.kinds.environment.edits.EnvironmentEntryEditPart;
@@ -278,8 +278,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentConfigurationEditPart<HEnvironmentComponent,EnvironmentConfigurationFigure>();
 				else if (model instanceof HFacetComponent)
 					part = new FacetConfigurationEditPart<HFacetComponent,FacetConfigurationFigure>();
-				else if (model instanceof HDomainComponent)
-					part = new DomainConfigurationEditPart<HDomainComponent,DomainConfigurationFigure>();
+				else if (model instanceof HBindingComponent)
+					part = new BindingConfigurationEditPart<HBindingComponent,BindingConfigurationFigure>();
 				else 
 					part = new ConfigurationEditPart<HComponent,ConfigurationFigure>();
 			} 
@@ -308,8 +308,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new EnvironmentComponentEditPart<HEnvironmentComponent,EnvironmentComponentFigure>();
 				else if (model instanceof HFacetComponent)
 					part = new FacetComponentEditPart<HFacetComponent,FacetComponentFigure>();
-				else if (model instanceof HDomainComponent)
-					part = new DomainComponentEditPart<HDomainComponent,DomainComponentFigure>();
+				else if (model instanceof HBindingComponent)
+					part = new BindingComponentEditPart<HBindingComponent,BindingComponentFigure>();
 				else 
 					part = new ComponentEditPart<HComponent,ComponentFigure>();
 			}
@@ -340,8 +340,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierUnitEditPart<HQualifierUnit,QualifierUnitFigure>();
 				else if (model instanceof IHFacetUnit) 
 					part = new FacetUnitEditPart<HFacetUnit,FacetUnitFigure>();
-				else if (model instanceof IHDomainUnit) 
-					part = new DomainUnitEditPart<HDomainUnit,DomainUnitFigure>();
+				else if (model instanceof IHBindingUnit) 
+					part = new BindingUnitEditPart<HBindingUnit,BindingUnitFigure>();
 				else 
 					part = new UnitEditPart<HUnit,UnitFigure>();
 		    } else {
@@ -363,8 +363,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 					part = new QualifierEntryEditPart<HQualifierUnit,QualifierEntryFigure>();
 				else if (model instanceof HFacetUnit) 
 					part = new FacetEntryEditPart<HFacetUnit,FacetEntryFigure>();
-				else if (model instanceof HDomainUnit) 
-					part = new DomainEntryEditPart<HDomainUnit,DomainEntryFigure>();
+				else if (model instanceof HBindingUnit) 
+					part = new BindingEntryEditPart<HBindingUnit,BindingEntryFigure>();
 				else 
 					part = new EntryEditPart<HUnit,EntryFigure>();
 		    }
@@ -388,8 +388,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new QualifierUnitSliceEditPart<HQualifierUnitSlice,QualifierUnitSliceFigure>();
 			else if (model instanceof HFacetUnitSlice) 
 			    part = new FacetUnitSliceEditPart<HFacetUnitSlice,FacetUnitSliceFigure>();
-			else if (model instanceof HDomainUnitSlice) 
-			    part = new DomainUnitSliceEditPart<HDomainUnitSlice,DomainUnitSliceFigure>();
+			else if (model instanceof HBindingUnitSlice) 
+			    part = new BindingUnitSliceEditPart<HBindingUnitSlice,BindingUnitSliceFigure>();
 			else 
 			    part = new UnitSliceEditPart<HUnitSlice,UnitSliceFigure>();
 		} else if (model instanceof HInterfaceSlice) {
@@ -411,8 +411,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 			    part = new QualifierInterfaceSliceEditPart<HQualifierInterfaceSlice,QualifierInterfaceSliceFigure>();
 			else if (model instanceof HFacetInterfaceSlice) 
 			    part = new FacetInterfaceSliceEditPart<HFacetInterfaceSlice,FacetInterfaceSliceFigure>();
-			else if (model instanceof HDomainInterfaceSlice) 
-			    part = new DomainInterfaceSliceEditPart<HDomainInterfaceSlice,DomainInterfaceSliceFigure>();
+			else if (model instanceof HBindingInterfaceSlice) 
+			    part = new BindingInterfaceSliceEditPart<HBindingInterfaceSlice,BindingInterfaceSliceFigure>();
 			else 
 			    part = new InterfaceSliceEditPart<HInterfaceSlice,InterfaceSliceFigure>();
 		} else if (model instanceof HBinding) {
@@ -436,8 +436,8 @@ public class ConfigurationEditPartFactory implements EditPartFactory {
 				part = new QualifierInterfaceEditPart<HQualifierInterface,QualifierInterfaceFigure>();
 			else if (model instanceof HFacetInterface)
 				part = new FacetInterfaceEditPart<HFacetInterface,FacetInterfaceFigure>();
-			else if (model instanceof HDomainInterface)
-				part = new DomainInterfaceEditPart<HDomainInterface,DomainInterfaceFigure>();
+			else if (model instanceof HBindingInterface)
+				part = new BindingInterfaceEditPart<HBindingInterface,BindingInterfaceFigure>();
 			else 
 				part = new InterfaceEditPart<HInterface,InterfaceFigure>();
 		} else if (model instanceof HLinkToInterface) {

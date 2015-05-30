@@ -126,18 +126,16 @@ namespace Back_End_WS
         }
 
  		[WebMethod]
-        public /*byte[]*/ string readCatalog()
+        public string readCatalog()
         {
             Console.WriteLine("Reading Component Catalog");
 
             CatalogType env = br.ufc.pargo.hpe.backend.DGAC.BackEnd.readCatalog();
 
-           string xmlEnv = LoaderApp.SerializeCatalog(Constants.PATH_TEMP_WORKER + "catalog.xml", env);
+            string xmlEnv = LoaderApp.SerializeCatalog(Constants.PATH_TEMP_WORKER + "catalog.xml", env);
 
             return xmlEnv;
         }
-
-
 
 
         [WebMethod]
@@ -192,21 +190,27 @@ namespace Back_End_WS
 		public string[] runApplication(string instantiator_string, string session)
 		{
 			string[] str_output = null;
-			BackEnd dgac = null;
-			if (dgac != null) 
+
+			try 
 			{
-				try 
-				{
-					str_output = dgac.runApplication (instantiator_string);
-				} catch (Exception e) 
-				{
-					str_output = new String[1];
-					str_output [0] = "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
-				}
+				str_output = BackEnd.runApplication (instantiator_string, session);
+			} catch (Exception e) 
+			{
+				str_output = new String[1];
+				str_output [0] = "-- Message -- \n " + e.Message + "\n\n -- Stack Trace --\n" + e.StackTrace + "\n\n -- Inner Exception -- \n" + e.InnerException;
 			}
+
 			return str_output;
 		}
 
+		[WebMethod] 
+		public void createComponentInstance
+			          (string session_id_string,     // Identification of the session of the application workflow.
+			 		   string instance_name,         // Name of the component instance in the application.
+			           string instantiator_string)   // Description of the component and its placement.
+		{
+			BackEnd.createApplicationInstance (instance_name, instantiator_string, session_id_string);
+		}
 
 
 		#endregion Sessions

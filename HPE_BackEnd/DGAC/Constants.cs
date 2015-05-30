@@ -14,30 +14,67 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
     public class Constants
     {
 
-        public static string PROPERTIES_FILE = getPropertiesFilePath(); // "h:\\temp\\hpe.backend.properties";
+        public static string PROPERTIES_FILE = getPropertiesFilePath(); 
 
         private static string getPropertiesFilePath()
         {
-			Trace.Write("LOADING PROPERTIES FILE: ");
+			Trace.Write("LOADING PROPERTIES FILE: ---- " + HOME_PATH);
             string properties_file_path = getArgVal("--properties");
             Trace.WriteLine(properties_file_path);
             if (properties_file_path == null)
             {
-                properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
+               properties_file_path = Environment.GetEnvironmentVariable("BACKEND_PROPERTIES_FILE");
                if (properties_file_path == null)
-                {
-                    string homePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
-                                       Environment.OSVersion.Platform == PlatformID.MacOSX)
-                                          ? Environment.GetEnvironmentVariable("HOME")
-                                          : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-
-                    properties_file_path = Path.Combine(homePath, "hpe.backend.properties");
-                }
+                    properties_file_path = Path.Combine(HOME_PATH, "hpe.backend.properties");
             }
 			Trace.WriteLine(properties_file_path);
             return properties_file_path;
         }
-        public static int WORKER_PORT = 4865;
+
+		private static int base_binding_facet_port = -1;
+		private static int BASE_BINDING_FACET_PORT { 
+			get 
+			{  
+				if (base_binding_facet_port == -1) 
+				{
+					string v = Environment.GetEnvironmentVariable ("BASE_BINDING_FACET_PORT");
+					base_binding_facet_port = v != null ? int.Parse (v) : 5000;
+				}
+				return base_binding_facet_port;
+			}
+		}
+
+		private static int NEXT_FREE_BINDING_FACET_PORT = BASE_BINDING_FACET_PORT;
+
+		public static Object binding_facet_port_lock = new Object();
+
+		public static  int FREE_BINDING_FACET_PORT
+		{
+			get 
+			{
+				int result = 0;
+				lock (binding_facet_port_lock) 
+				{
+					result = NEXT_FREE_BINDING_FACET_PORT ++;
+				} 	
+				return result;
+			}
+		}
+
+		private static string home_path = null;
+
+		public static string HOME_PATH { 
+			get 
+			{  
+				if (home_path == null)
+				    home_path = (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
+					   			   ? Environment.GetEnvironmentVariable("HOME") : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+			    return home_path;
+            }
+		}
+
+
+	    public static int WORKER_PORT = 4865;
         public static int MANAGER_PORT = 4864;
         public static string WORKER_SERVICE_NAME = "WorkerService";
         public static string MANAGER_SERVICE_NAME = "ManagerService";
@@ -49,6 +86,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const int DLL_OUT = 0;
         public const int EXE_OUT = 1;
 
+		public static string IP_ADDRESS_BINDING_ROOT = FileUtil.readConstant ("ip_address_binding_root","0.0.0.0");
 		public static string SITE_NAME = FileUtil.readConstant("site_name", "unnamed");
 		public static string SITE_URL = FileUtil.readConstant("site_url");
         public static string PATH_TEMP_WORKER = FileUtil.readConstant("path_temp_worker");
@@ -64,9 +102,22 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public static string gac_util = FileUtil.readConstant("gac_util");
         public static string mpi_run = FileUtil.readConstant("mpi_run");
         public static string mpi_run_flags = FileUtil.readConstant("mpi_run_flags");
-        public static string hosts_file = FileUtil.readConstant("hosts_file", Path.DirectorySeparatorChar + "etc" + Path.DirectorySeparatorChar + "hpe_nodes");
+        //public static string hosts_file = FileUtil.readConstant("hosts_file", Path.Combine(HOME_PATH, "hpe_nodes"));
         public static string connectionString = FileUtil.readConstant("connection_string");
         public static string externalRefsFile = FileUtil.readConstant("external_references_file");
+
+		public static string HOSTS_FILE 
+		{ 							    
+			get 
+			{
+				string path_hosts_file = Environment.GetEnvironmentVariable ("PATH_HOSTS_FILE");
+				Trace.WriteLine ("PATH_HOSTS_FILE is null ? " + (path_hosts_file == null));
+				if (path_hosts_file == null)
+					path_hosts_file = FileUtil.readConstant("hosts_file", Path.Combine(HOME_PATH, "hpe_nodes"));
+				Trace.WriteLine ("PATH_HOSTS_FILE is " + path_hosts_file);
+				return path_hosts_file;
+			}
+		}
 
         public const string ENUMS_KEY = "enumerator";
         public const string NODES_KEY = "nodes";
@@ -80,7 +131,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         //public static string ID_INNER_KEY = "id_inner";
         public const string UNIT_KEY = "id_interface";
         public const string PORT_NAME = "port_name";
-		public const string FACET_NUMBER = "facet_number";
         public const string ENCLOSING_ARGUMENTS = "arguments";
 		public const string ASSEMBLY_STRING_KEY = "assembly_string";
 		public const string PORT_NAMES_KEY = "port_name";
@@ -93,9 +143,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string DEFAULT_PROVIDES_PORT_SERVICE = "service_client";
         public const string DEFAULT_USES_PORT_SERVICE = "service_server";
 
+		public const string FACET_IP_ADDRESS = "facet_ip_address";
+		public const string FACET_PORT = "facet_ip_port";
+		public static string FACET_NUMBER = "facet_number";
+
         public static string INITIALIZE_PORT_NAME = "initialize_port";
         public static string INITIALIZE_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";
-        public static string RECONFIGURE_PORT_NAME = "recnfigure_port";
+        public static string RECONFIGURE_PORT_NAME = "reconfigure_port";
         public static string RECONFIGURE_PORT_TYPE = "br.ufc.pargo.hpe.ports.ReconfigurationAdvicePort";
         public const string GO_PORT_TYPE = "gov.cca.ports.GoPort";
         public const string GO_PORT_NAME = "go";
@@ -110,39 +164,32 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const int KIND_PLATFORM = 4;
         public const int KIND_ENUMERATOR = 5;
         public const int KIND_QUALIFIER = 6;
-        public const int KIND_SERVICE = 7;
-        public const int KIND_DATASTRUCTURE = 8;
+        public const int KIND_DATASTRUCTURE = 7;
         public const int KIND_TOPOLOGY = 8;
+		public const int KIND_BINDING = 9;
 		
 		public const string KIND_APPLICATION_NAME = "Application";
         public const string KIND_COMPUTATION_NAME = "Computation";
         public const string KIND_SYNCHRONIZER_NAME = "Synchronizer";
         public const string KIND_ENVIRONMENT_NAME = "Environment";
         public const string KIND_PLATFORM_NAME      = "Platform";
-        public const string KIND_ENUMERATOR_NAME    = "Enumerator";
         public const string KIND_QUALIFIER_NAME = "Qualifier";
-        public const string KIND_SERVICE_NAME = "Service";
         public const string KIND_DATASTRUCTURE_NAME = "Data";
         public const string KIND_TOPOLOGY_NAME = "Topology";
+		public const string KIND_BINDING_NAME = "Binding";
 
-		public const string FACET_PRESENCE = "facet_presence";
-		public const string FACET_UNIT_ID = "facet_unit_id";
-		public const string FACET_UNIT_INDEX = "facet_unit_index";
-		public const string FACET_IP_ADDRESS = "facet_ip_address";
-		public const string FACET_PORT = "facet_port";
 
         public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()
         {
-            {"Application", Constants.KIND_APPLICATION},
-            {"Platform", Constants.KIND_PLATFORM},
-            {"Computation", Constants.KIND_COMPUTATION},
-            {"Data",Constants.KIND_DATASTRUCTURE},
-            {"Enumerator",Constants.KIND_ENUMERATOR},
-            {"Environment",Constants.KIND_ENVIRONMENT},
-            {"Qualifier",Constants.KIND_QUALIFIER},
-            {"Synchronizer", Constants.KIND_SYNCHRONIZER},
-            {"Service", Constants.KIND_SERVICE},
-            {"Topology", Constants.KIND_TOPOLOGY}
+			{KIND_APPLICATION_NAME, Constants.KIND_APPLICATION},
+			{KIND_PLATFORM_NAME, Constants.KIND_PLATFORM},
+			{KIND_COMPUTATION_NAME, Constants.KIND_COMPUTATION},
+			{KIND_DATASTRUCTURE_NAME,Constants.KIND_DATASTRUCTURE},
+			{KIND_ENVIRONMENT_NAME,Constants.KIND_ENVIRONMENT},
+			{KIND_QUALIFIER_NAME,Constants.KIND_QUALIFIER},
+			{KIND_SYNCHRONIZER_NAME, Constants.KIND_SYNCHRONIZER},
+			{KIND_BINDING_NAME, Constants.KIND_BINDING},
+			{KIND_TOPOLOGY_NAME, Constants.KIND_TOPOLOGY}
         };
 
         public static string getArgVal(string argId)

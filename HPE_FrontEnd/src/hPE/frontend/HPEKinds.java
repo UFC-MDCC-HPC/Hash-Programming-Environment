@@ -22,6 +22,7 @@ public class HPEKinds {
 		    k1.put("Architecture",5);
 		    k1.put("Qualifier",6);
 		    k1.put("Enumerator",7);
+		    k1.put("Binding",8);
 		} 
 				
 		return k1.get(kind);
@@ -38,6 +39,7 @@ public class HPEKinds {
 		    k2.put(5,"Architecture");
 		    k2.put(6,"Qualifier");
 		    k2.put(7,"Enumerator");
+		    k2.put(8,"Binding");
 		} 
 				
 		return k2.get(kind);

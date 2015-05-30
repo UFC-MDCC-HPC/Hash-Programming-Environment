@@ -699,6 +699,7 @@ namespace HPE_DGAC_LoadDB
                     i.Id_abstract = absC.Id_abstract;
                     i.Id_interface = uRef;
 					i.Unit_replica = unit_replica;
+					i.Facet = u.facet;
                     i.Id_interface_super = uRefSuper;
                     i.Class_name = xc.header.packagePath + "." + xc.header.name + "." + iRef;
                     i.Class_nargs = nargs; // TODO
@@ -728,8 +729,9 @@ namespace HPE_DGAC_LoadDB
 								Console.Error.WriteLine("STEP 5.4 END - " + ipx.parid);
                         }
                     }
-						Console.Error.WriteLine("BEFORE STEP 5.5");
-					Console.Error.WriteLine("STEP 5.5 --- " + (ui==null) + "," + (ui.sources[ui.sources.Length - 1].file==null));
+
+					Console.Error.WriteLine("BEFORE STEP 5.5 " + (ui==null));
+					Console.Error.WriteLine("STEP 5.5 --- " + (ui.sources[ui.sources.Length - 1].file==null));
 					int order = 0;
                     foreach (SourceFileType sft in ui.sources[ui.sources.Length - 1].file)
                     {

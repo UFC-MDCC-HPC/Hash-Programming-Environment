@@ -23,7 +23,7 @@ public class AbstractComponentFunctorDAO{
             "INSERT INTO abstractcomponentfunctor (id_abstract, id_functor_app_supertype, library_path, hash_component_UID, kind)" +
             " VALUES (" + nextKey + ","
             + ac.Id_functor_app_supertype + "," 
-            + (ac.Library_path == null ? "null" : ("'" + ac.Library_path + "'")) + "," 
+            + (ac.Library_path == null ? "null" : ("'" + ac.Library_path + "'")) + ","
             + (ac.Hash_component_UID == null ? "null" : ("'" + ac.Hash_component_UID + "'")) + ",'" + ac.Kind + "')";
 
      	Trace.WriteLine("AbstractComponentFunctor.cs: TRY INSERT: " + sql);

@@ -120,6 +120,8 @@ namespace gov
         [Serializable]
         public class TypeMapImpl : HPETypeMap
         {
+
+
            // public int teste = 0;
 
            // public static TypeMap NEW_EMPTY_TYPEMAP { get { return new TypeMapImpl(); } }

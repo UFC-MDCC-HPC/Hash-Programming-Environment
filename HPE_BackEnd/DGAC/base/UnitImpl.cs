@@ -60,12 +60,12 @@ namespace br.ufc.pargo.hpe.basic
 			this.after_initialize_mth = after_initialize_mth;
 		}
 		#region AutomaticSlicesPort implementation
-		public void initialize ()
+		public void on_initialize ()
 		{
 			this.initialize_mth();
 		}
 
-		public void post_initialize ()
+		public void after_initialize ()
 		{
 			this.after_initialize_mth();
 		}
@@ -117,7 +117,7 @@ namespace br.ufc.pargo.hpe.basic
 
             services.addProvidesPort(this, Constants.DEFAULT_PROVIDES_PORT_IMPLEMENTS, this.ClassName, new TypeMapImpl());
 			
-			InitializePort initialize_port_wrapper = new InitializePortWrapper(((InitializePort)this).initialize, ((InitializePort)this).post_initialize);                        
+			InitializePort initialize_port_wrapper = new InitializePortWrapper(((InitializePort)this).on_initialize, ((InitializePort)this).after_initialize);                        
             services.addProvidesPort(initialize_port_wrapper, Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
 
 			ReconfigurationAdvicePort reconfiguration_port_wrapper = new ReconfigurationAdvicePortWrapper(((ReconfigurationAdvicePort)this).changePort);                        
@@ -148,12 +148,12 @@ namespace br.ufc.pargo.hpe.basic
         #region IUnit Members
 		
 		[MethodImpl(MethodImplOptions.Synchronized)]
-        virtual public void initialize()
+        virtual public void on_initialize()
         {
         }
         
 		[MethodImpl(MethodImplOptions.Synchronized)]
-        virtual public void post_initialize()
+        virtual public void after_initialize()
         {
         }
 		
@@ -172,37 +172,6 @@ namespace br.ufc.pargo.hpe.basic
         public int PeerRank {get {return PeerComm.Rank; }}   
 		public int PeerSize { get { return PeerComm.Size; }}
 
-
-		IDictionary<string, IDictionary<int,FacetAccess>> facet;
-		public IDictionary<string, IDictionary<int,FacetAccess>> Facet { get { return facet;	} }
-
-		public void readFacetConfiguration(string[] facet_unit_id,
-		                                   int[] facet_unit_index,
-		                                   string[] facet_ip_address,
-		                                   int [] facet_port)
-		{
-			facet = new Dictionary<string, IDictionary<int,FacetAccess>> ();
-
-			for (int i=0; i < facet_unit_id.Length; i++) 
-			{
-				string unit_id = facet_unit_id[i];
-				int unit_index =  facet_unit_index[i];
-				string ip_address =  facet_ip_address[i];
-			    int port = facet_port [i];
-
-				if (facet.ContainsKey (unit_id)) 
-				{
-					facet [unit_id].Add (unit_index, new FacetAccess (ip_address, port));
-				} 
-				else 
-				{
-					IDictionary<int,FacetAccess> facet_access_dict = new Dictionary<int,FacetAccess> ();
-					facet_access_dict.Add (unit_index, new FacetAccess (ip_address, port));
-					facet.Add (unit_id, facet_access_dict);
-				}
-			}
-
-		}
 
 		IDictionary<string, int[]> unit_ranks = new Dictionary<string, int[]>();
  		public IDictionary<string, int[]> UnitRanks { get { return unit_ranks; } }

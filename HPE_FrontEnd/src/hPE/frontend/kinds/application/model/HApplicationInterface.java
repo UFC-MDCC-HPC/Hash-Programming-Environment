@@ -25,14 +25,14 @@ public class HApplicationInterface extends HComputationInterface {
 
 	public List<HBEAbstractSynthesizer> getSupportedSynthesizers() {
 		List<HBEAbstractSynthesizer> l = super.getSupportedSynthesizers();
-		l.clear();
-		HComponent c = (HComponent) this.getConfiguration().getTopConfiguration();
-		if (c.isAbstractConfiguration()) {
-			l.add(new hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
-		}
-		else {
-			l.add(new HBESynthesizerCSharpMain());
-		}
+		//l.clear();
+		//HComponent c = (HComponent) this.getConfiguration().getTopConfiguration();
+		//if (c.isAbstractConfiguration()) {
+		//	l.add(new hPE.frontend.kinds.activate.codegen.c_sharp.HBESynthesizerCSharpAbstract());
+		//}
+		//else {
+		//	l.add(new HBESynthesizerCSharpMain());
+		//}
 		return l;
 	}
 

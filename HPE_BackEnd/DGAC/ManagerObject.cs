@@ -18,6 +18,9 @@ using System.Runtime.Remoting.Activation;
 using br.ufc.hpe.backend.DGAC;
 using gov.cca.ports;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
 
 namespace br.ufc.pargo.hpe.backend.DGAC
@@ -80,15 +83,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             public gov.cca.Services getServices(string selfInstanceName, string selfClassName, TypeMap selfProperties)
             {
 			   
-			   int[] nodes = new int[WorkerFramework.Length];
+			   int[] nodes = new int[WorkerFramework.Count];
 			   for (int i=0; i<nodes.Length; i++)
-					nodes[i] = i;
+					nodes[i] = i-1;
 			
 			   ManagerComponentID cid = new ManagerComponentIDImpl(selfInstanceName, selfClassName, nodes);				
 			   ManagerServices manager_services = new ManagerServicesImpl(this, cid);
-			
+
 			   // Register the host in the worker frameworks
-			   for (int i=0; i < WorkerFramework.Length; i ++)
+			   foreach (int i in WorkerFramework.Keys)
 			   {
 				    WorkerServices worker_service = (WorkerServices) WorkerFramework[i].getServices(selfInstanceName,selfInstanceName, selfProperties);
                     manager_services.registerWorkerService(i, worker_service);
@@ -107,7 +110,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
 				ManagerServices services_ = (ManagerServices) services;
                 this.host_services.Remove (services_.getComponentID().getInstanceName());
-			    for (int node=0; node < WorkerFramework.Length; node ++)
+			    foreach (int node in WorkerFramework.Keys)
 			    {
                     WorkerFramework[node].releaseServices(services_.WorkerServices[node]);
                 }
@@ -121,7 +124,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					this.releaseServices(services);
 				}
 			
-                foreach (WorkerObject w in WorkerFramework) 
+                foreach (WorkerObject w in WorkerFramework.Values) 
                 {
                     w.shutdownFramework();
                 }				
@@ -151,11 +154,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				frw_services.registerUsesPort(Constants.BUILDER_SERVICE_PORT_NAME, Constants.BUILDER_SERVICE_PORT_TYPE, new TypeMapImpl());
 				frw_builder = (BuilderService) frw_services.getPort(Constants.BUILDER_SERVICE_PORT_NAME);
 
-			    for (int i=0; i<WorkerFramework.Length; i++)
-				{
+			    foreach (int i in WorkerFramework.Keys)
 					((gov.cca.Component) WorkerFramework[i]).setServices(frw_services.WorkerServices[i]);
-				}
-			
+
+
 			}
 			#endregion
       
@@ -177,18 +179,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     int kind;
 
 				    string portName = (string)((TypeMapImpl)properties)[Constants.PORT_NAME];
-				    int facet = properties.getInt(Constants.FACET_NUMBER,0);
 
-				this.createInstanceImpl2(instanceName, 
-				                             className, 
-				                             facet,
-				                             (TypeMapImpl)properties, 
-				                             out cid_nodes, 
-				                             out unit_ids, 
-				                             out indexes, 
-				                             out id_functor_app, 
-				                             out kind,
-				                             out worker_cids);
+					this.createInstanceImpl(instanceName, 
+				                            className,
+				                            (TypeMapImpl)properties, 
+				                            out cid_nodes, 
+				                            out unit_ids, 
+				                            out indexes, 
+				                            out id_functor_app, 
+				                            out kind,
+				                            out worker_cids);
 				
                     cid = new ManagerComponentIDImpl(instanceName, 
 				                                 	 className,
@@ -203,9 +203,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					int[] nodes = cid.WorkerNodes;
 					for (int i=0; i<nodes.Length; i++) 
 					{
+				 	    Trace.WriteLine("CREATEINSTANCEIMPL 1 " + nodes[i]);
 						WorkerComponentID wcid = worker_cids[i];
+					//foreach (int k in WorkerFramework.Keys)
+						Trace.WriteLine("CREATEINSTANCEIMPL 2 " + (wcid == null));
+
 						WorkerServices worker_services = ((WorkerObject)WorkerFramework[nodes[i]]).getServicesObjectOf(wcid.getInstanceName());
+					Trace.WriteLine("CREATEINSTANCEIMPL 3 " + nodes[i]);
 						cservices.registerWorkerService(nodes[i], worker_services);
+					Trace.WriteLine("CREATEINSTANCEIMPL 4 " + nodes[i]);
 					}
 				
                     this.registerComponent(cid, cservices, properties);
@@ -604,10 +610,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				Trace.WriteLine("connect_c2c -3");
                 ManagerComponentID user_ = (ManagerComponentID)user;
                 ManagerComponentID provider_ = (ManagerComponentID)provider;
-			foreach (int nnn in user_.WorkerNodes)
-				Trace.WriteLine ("connect_c2c -- user nodes " + nnn);
-			foreach (int nnn in provider_.WorkerNodes)
-				Trace.WriteLine ("connect_c2c -- provider nodes " + nnn);
+				foreach (int nnn in user_.WorkerNodes)
+					Trace.WriteLine ("connect_c2c -- user nodes " + nnn);
+				foreach (int nnn in provider_.WorkerNodes)
+					Trace.WriteLine ("connect_c2c -- provider nodes " + nnn);
 
 			Trace.WriteLine("connect_c2c -2 " + (user_ == null));
                 IDictionary<string, int[]> used_ports = this.getUsedPorts(user_);
@@ -1095,7 +1101,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 if (!properties.TryGetValue(Constants.NODES_KEY, out nodesObj))
                 {
                     // Se NODES_KEY não está disponível, considerar todos.
-                    nodes = new int[WorkerFramework.Length];
+                    nodes = new int[WorkerFramework.Count];
                     for (int i = 0; i < nodes.Length; i++)
                     {
                         nodes[i] = i;
@@ -1111,12 +1117,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			public void resolve_topology (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
 									  int[] unit_mapping,
 		                              out string[] interface_ids, 
-									  out int[] unit_indexes,
-		                              out IList<Interface> iList, 
+									  out int[] unit_indexes, 
 		                              out int[] nodes)
 			{
-					nodes = unit_mapping;
+					IList<Interface> iList;
 
+					nodes = unit_mapping;
 				    interface_ids = new string[nodes.Length];
 				    unit_indexes = new int[nodes.Length];
 				
@@ -1139,17 +1145,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 			public void resolve_topology (DGAC.database.AbstractComponentFunctorApplication acfaRef, 
 									  Instantiator.UnitMappingType[] unit_mapping,
-		                              int facet,
 		                              out string[] interface_ids, 
-									  out int[] unit_indexes,
-		                              out IList<Interface> iList, 
-									  out int[] nodes)
+									  out int[] unit_indexes, 
+									  out int[] nodes,
+		                              ref int facet)
 			{
 				Trace.WriteLine("BEGIN resolve_topology");
 
 				interface_ids = null;
 				unit_indexes = null;
-				iList = null;
+			    IList<Interface> iList = null;
 				nodes = null;
 				
 				Trace.WriteLine("resolve_topology 1 " + (unit_mapping == null) + ", length="+ (unit_mapping.Length));
@@ -1158,9 +1163,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				IDictionary<string,int[]> unit_mapping_dict;
 			 
 			    // Note: only the units associated to the current facet are considered for instantiation.
-				BackEnd.copy_unit_mapping_to_dictionary(facet, unit_mapping, out unit_mapping_dict, out count_nodes);
+				BackEnd.copy_unit_mapping_to_dictionary(unit_mapping, out unit_mapping_dict, out count_nodes);
 
-				Trace.WriteLine("resolve_topology 2 - count_nodes = " + count_nodes);
+			    Trace.WriteLine("resolve_topology 2 - count_nodes = " + count_nodes);
 
 				interface_ids = new string[count_nodes];
 				unit_indexes = new int[count_nodes];
@@ -1170,17 +1175,22 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 				Trace.WriteLine("resolve_topology 3 - " + acfaRef.Id_abstract);
 
+			    // int facet = -1;
 				int i = 0;
 				foreach (Interface unit in iList)
-				{
+				{					
+					Trace.WriteLine ("resolve_topology 4 - unit " + unit.Id_interface + ", facet " + unit.Facet);
 					int[] node_list;
-					Trace.WriteLine("resolve_topology - retrieving " + unit.Id_interface + unit.Unit_replica + "..." + unit_mapping.Length);
-					foreach (KeyValuePair<string,int[]> ttt in unit_mapping_dict)
-						Trace.WriteLine("unit_mapping_dict - key="+ttt.Key);
+					//Trace.WriteLine("resolve_topology - retrieving " + unit.Id_interface + unit.Unit_replica + "..." + unit_mapping.Length);
+					//foreach (KeyValuePair<string,int[]> ttt in unit_mapping_dict)
+					//	Trace.WriteLine("unit_mapping_dict - key="+ttt.Key);
 					unit_mapping_dict.TryGetValue(unit.Id_interface_super_top + unit.Unit_replica_super_top, out node_list);
-				    Trace.WriteLine (node_list == null);
+				    //Trace.WriteLine (node_list == null);
 					if (node_list != null) 
 					{
+						if (facet != -1 && facet != unit.Facet)
+							throw new Exception ("Invalid facet configuration - unit " + unit.Id_interface + " of facet " + unit.Facet + " does not belong to the current facet " + facet);
+
 						foreach (int node in node_list) 
 						{
 							Trace.WriteLine ("unit " + unit.Id_interface + "[" + unit.Unit_replica + "] at node " + node);
@@ -1189,11 +1199,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							nodes [i] = node;
 							i++;
 						}
+						facet = unit.Facet;
 					} 
 					else 
 					{
-						Trace.WriteLine ("Unit " + unit.Id_interface_super_top + unit.Unit_replica_super_top + " does not belong to facet " + facet);
-					}
+						if (facet != -1 && facet == unit.Facet)
+							throw new Exception ("Invalid facet configuration - unit " + unit.Id_interface + " belongs to the current facet " + facet);
+						Trace.WriteLine ("Unit " + unit.Id_interface_super_top + unit.Unit_replica_super_top + " does not belong to this facet ");
+					}					
 				}
 
 				Trace.WriteLine("resolve_topology 4");
@@ -1201,6 +1214,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				// ASSERT {i == count_nodes}
 
 				Trace.WriteLine("END resolve_topology");
+
+
 			}
 
 
@@ -1226,11 +1241,142 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			return portNameArray;
 		}
 
+		void create_server (string server_address, int server_port, out Socket listener)
+		{
+			// CREATE MY SERVER
+			IPAddress ipAddress = IPAddress.Parse (server_address);	
+			IPEndPoint localEndPoint = new IPEndPoint (ipAddress, server_port);
+
+			Console.WriteLine ("binding_exchange_port N - CREATE SERVER - ipHostInfo: " + ipAddress + ":" + server_port);
+
+			listener = new Socket (AddressFamily.InterNetwork,
+			                              SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
+
+			listener.Bind (localEndPoint);
+			listener.Listen (10);
+
+		}
+
+		void connect_to_the_next_server (string client_address, int client_port, out Socket sender)
+		{
+			// LINK TO THE OTHER SERVER
+			IPAddress ipAddressClient = IPAddress.Parse (client_address);
+			IPEndPoint remoteEP = new IPEndPoint (ipAddressClient, client_port);
+
+			Console.WriteLine ("binding_exchange_port N - LINK CLIENT - ipHostInfo: " + ipAddressClient + ":" + client_port);
+
+			// Create a TCP/IP  socket.
+			sender = new Socket (AddressFamily.InterNetwork, 
+			                     SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
+			bool isConnected = false;
+			int tries = 0;
+			while (!isConnected && tries <=30) 
+			{
+				try {
+					sender.Connect (remoteEP);
+					isConnected = true;
+				}
+				catch (Exception e) 
+				{
+					tries ++;
+					isConnected = false;
+					Console.WriteLine("CONNECTION FAILED N --- ATTEMPT #" + tries);
+					Thread.Sleep(1000);
+				}
+			}
+			if (!isConnected)
+				throw new Exception("binding-exchange-port N --- It was not possible to talk to the other side");
+
+			Console.WriteLine("binding_exchange_port N - CONNECTED.");
+		}
+
+		void send_to_the_next (Socket sender, string current_address, int current_port)
+		{
+			byte[] msgSent = Encoding.ASCII.GetBytes (current_address + ":" + current_port);
+			int bytesSent = sender.Send (msgSent);
+
+			Console.WriteLine ("binding_exchange_ports N --- this FACET sent " + current_address + ":" + current_port + " to the other FACET");
+
+		}
+
+		void receive_from_the_previous (Socket handler, ref string previous_address, ref int previous_port)
+		{
+			byte[] msgReceived = new byte[1024];
+			int bytesReceived = handler.Receive (msgReceived);
+			string previous_address_port = Encoding.ASCII.GetString (msgReceived, 0, bytesReceived);
+			string[] s = previous_address_port.Split(new char[] {':'});
+			previous_address = s[0];
+			previous_port = int.Parse(s[1]);
+
+			Console.WriteLine ("binding_exchange_ports N *** this FACET received " + previous_address + ":" + previous_port + " from the other FACET *** " + bytesReceived);
+		}
+
+		private void binding_exchange_ports_N (int this_facet, ref string[] facet_access_address, ref int[] facet_access_port)
+		{
+			int N = facet_access_port.Length;
+
+			string this_facet_address = null;
+			int this_facet_port = -1;
+			calculate_this_facet_address(ref this_facet_address, ref this_facet_port);
+
+			string current_address = this_facet_address;
+			int current_port = this_facet_port;
+
+			int next_facet;    
+			Math.DivRem (this_facet + 1, N, out next_facet);
+
+			Console.WriteLine ("this facet is " + this_facet + ", next facet is " + next_facet);
+
+			Socket listener = null;
+			create_server (facet_access_address [this_facet], facet_access_port [this_facet], out listener);
+			Socket handler = null;
+			ThreadStart ts = delegate {
+				handler = listener.Accept ();
+			};
+			Thread t = new Thread (ts);
+			t.Start ();
+
+			Socket sender = null;
+			connect_to_the_next_server (facet_access_address [next_facet], facet_access_port [next_facet], out sender);
+				
+			t.Join ();
+
+			for (int i=0; i<N-1; i++) 
+			{
+				int current_facet; 
+				Math.DivRem (this_facet + i, N, out current_facet);
+
+				string previous_address = null;
+				int previous_port = -1;
+
+				send_to_the_next (sender, current_address, current_port);
+				receive_from_the_previous (handler, ref previous_address, ref previous_port);
+
+				facet_access_address [current_facet] = current_address;
+				facet_access_port [current_facet] = current_port;
+
+				current_address = previous_address;
+				current_port = previous_port;
+			}
+
+			sender.Shutdown (SocketShutdown.Both);
+			sender.Close ();
+
+			handler.Shutdown (SocketShutdown.Both);
+			handler.Close ();
+		}
+
+		void calculate_this_facet_address (ref string this_facet_address, ref int this_facet_port)
+		{
+			this_facet_address = Constants.IP_ADDRESS_BINDING_ROOT;
+			this_facet_port = Constants.FREE_BINDING_FACET_PORT;
+			Trace.WriteLine ("######## calculate_this_facet_address --- " + this_facet_address + ":" + this_facet_port);
+		}
+
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public int[] createInstanceImpl2(
+        public int[] createInstanceImpl(
             string instanceName,
             string componentName,
-			int facet,
             TypeMapImpl properties,
             out int[] cid_nodes,
             out string[] unit_ids,
@@ -1250,6 +1396,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     Connector.openConnection();
                     Connector.beginTransaction();
 
+
                     Trace.WriteLine("createInstance manager");
 
 				    id_functor_app = (int) properties[Constants.ID_FUNCTOR_APP];
@@ -1263,8 +1410,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					//int[] nodes = properties.getIntArray(Constants.NODES_KEY, new int[] {});
 				    string[] interface_ids;
 				    int[] unit_indexes;
-                    IList<Interface> iList;
 					int[] nodes;
+					int this_facet = -1;
 
 					object unit_mapping = properties[Constants.NODES_KEY];
 					if (unit_mapping is int[])
@@ -1273,8 +1420,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						resolve_topology(acfaRef,  
 										 (int[]) unit_mapping,
 					                     out interface_ids, 
-										 out unit_indexes, 
-										 out iList, 
+										 out unit_indexes,
 										 out nodes);
 					} 
 					else
@@ -1282,18 +1428,42 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						// MPMD case, also covering SPMD.
 						resolve_topology(acfaRef,  
 										 (Instantiator.UnitMappingType[]) unit_mapping,
-					                 	 facet,
 										 out interface_ids, 
 										 out unit_indexes, 
-										 out iList, 
-										 out nodes);
+										 out nodes,
+					                 	 ref this_facet);
 					}
-				
+
+					/* BINDING:
+					   If the component is a binding, it is necessary to include the root unit, which is not referred in the instantiation file.
+				       The root unit is instantiated in the master worker. */				       
+					Trace.WriteLine(kind);
+
+				    int[] nodes_w = nodes;
+
+					if (kind.Equals(Constants.KIND_BINDING))
+					{
+						Trace.WriteLine("BINDING KIND !!! Adding root.");
+						string[] interface_ids_ = new string[interface_ids.Length + 1];
+						int[] unit_indexes_ = new int[unit_indexes.Length + 1];
+						int[] nodes_ = new int[nodes.Length + 1];
+						interface_ids.CopyTo(interface_ids_,1);
+						unit_indexes.CopyTo(unit_indexes_,1);
+						nodes.CopyTo(nodes_,1);
+						interface_ids_[0] = "root"; // the default name of the root unit of a binding component is "root".
+						unit_indexes_[0] = 0;       
+						nodes_[0] = -1;
+						interface_ids = interface_ids_;
+						unit_indexes = unit_indexes_;
+						nodes = nodes_;
+					}
+
+					// CHECK FACET
 
                     Connector.commitTransaction();
 
-                    bool[] node_marking = new bool[WorkerFramework.Length];
-                    for (int i = 0; i < node_marking.Length; i++) node_marking[i] = false; 
+				    IDictionary<int,bool> node_marking = new Dictionary<int,bool>();
+                    foreach (int i in WorkerFramework.Keys) node_marking[i] = false; 
                     
                     IDictionary<Thread, GoWorker> go_objs = new Dictionary<Thread, GoWorker>();
                     IDictionary<Thread, int> thread_node = new Dictionary<Thread, int>();
@@ -1301,7 +1471,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     IDictionary<Thread, int> thread_index = new Dictionary<Thread, int>();
 
                     IList<Thread> wthreads = new List<Thread>();
-				
+				for (int k = 0; k < nodes.Length; k++)
+				{
+					Trace.WriteLine("***************** k="+k + ", nodes["+k+"]="+nodes[k]);
+				}
 				    for (int k = 0; k < nodes.Length; k++)
                     {                        
 				        string id_interface = interface_ids[k];
@@ -1309,6 +1482,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 					    DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, id_interface, partition_index);
 						AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(c.Id_abstract);
+						Interface i = DGAC.BackEnd.idao.retrieve(c.Id_abstract, id_interface, partition_index);
 					
 				        // SETUP PROPERTIES
                         TypeMapImpl worker_properties = new TypeMapImpl(properties);
@@ -1319,15 +1493,31 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					    worker_properties[Constants.PORT_NAMES_KEY] = calculatePortNames(c.Id_abstract, id_interface, partition_index);
 						worker_properties[Constants.KIND_KEY] = c.Kind;
 
-						if (properties.getBool(Constants.FACET_PRESENCE, false)) 
+					    // Inform to the root unit the communication addresses of the other binding facets. 
+					    if (kind == Constants.KIND_BINDING && k == 0)
 						{
-							worker_properties[Constants.FACET_PRESENCE] = true;
-							worker_properties[Constants.FACET_UNIT_ID] = properties[Constants.FACET_UNIT_ID];
-							worker_properties[Constants.FACET_UNIT_INDEX] = properties[Constants.FACET_UNIT_INDEX];
-							worker_properties[Constants.FACET_IP_ADDRESS] = properties[Constants.FACET_IP_ADDRESS];
-							worker_properties[Constants.FACET_PORT] = properties[Constants.FACET_PORT];
+							if (!properties.ContainsKey(Constants.FACET_IP_ADDRESS) || !properties.ContainsKey(Constants.FACET_PORT))
+								throw new Exception ("createInstanceImpl: UNABLE TO CREATE BINGING INSTANCE - no access information for binding facets");
+
+							string[] facet_access_address = (string[]) properties[Constants.FACET_IP_ADDRESS];
+							int[] facet_access_port = (int[]) properties[Constants.FACET_PORT];
+							
+							if (facet_access_address.Length != acf.FacetCount || facet_access_port.Length != acf.FacetCount)
+								throw new Exception ("createInstanceImpl: UNABLE TO CREATE BINGING INSTANCE - inconsistent access information for binding facets");
+
+
+							/* TODO: promover uma sincronização de números de portas entre as facetas. 
+							 * Cada faceta deve oferecer um número de porta livre e informá-la as demais,
+							 * através do endereço e porta base de cada plataforma.							 * 
+							 */
+
+							binding_exchange_ports_N(this_facet, ref facet_access_address, ref facet_access_port);
+
+							worker_properties[Constants.FACET_IP_ADDRESS] = facet_access_address;
+							worker_properties[Constants.FACET_PORT] = facet_access_port;
+							worker_properties[Constants.FACET_NUMBER] = this_facet;
 						}
-					
+
                         string class_name_worker;
                         
                         System.Type[] arguments_new;
@@ -1338,7 +1528,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 						Trace.WriteLine("createInstanceImpl2 - FINISHED calculateActualParams ...");
 					
 					    // INSTANTIATE THE UNITS ACCROSS THE WORKERS
-                        GoWorker gw = new GoWorker(WorkerBuilder[nodes[k]], instanceName, class_name_worker, worker_properties);
+
+						BuilderService worker = WorkerBuilder[nodes[k]] ;
+                        GoWorker gw = new GoWorker(worker, instanceName, class_name_worker, worker_properties);
                         Thread t = new Thread(gw.Run);
                         t.Start();
 				    	Trace.WriteLine("START THREAD #" + k + " in " + nodes[k]);
@@ -1349,8 +1541,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         thread_index.Add(t, 0);
                         node_marking[nodes[k]] = true;
                     }
-				
-                    for (int i = 0; i < node_marking.Length; i++)
+
+					
+
+                    foreach (int i in node_marking.Keys)
                     {
                         if (!node_marking[i])
                         {
@@ -1366,14 +1560,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     foreach (Thread t in wthreads)
                     {
                         t.Join();
+					    
                         if (go_objs.ContainsKey(t))
                         {
                             GoWorker go_obj;
                             go_objs.TryGetValue(t, out go_obj);
-                            int node;
+							int node;
                             string unit_id;
                             int index;
-                            thread_node.TryGetValue(t, out node);
+							thread_node.TryGetValue(t, out node);
                             thread_unit_id.TryGetValue(t, out unit_id);
                             thread_index.TryGetValue(t,out index);
                             WorkerComponentID wcid = go_obj.WorkerCID;
@@ -1383,7 +1578,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                             indexes_list.Add(index);
 							Trace.WriteLine("JOINED CREATE INSTANCE THREAD " + node + ", " + unit_id);
                         }
-						else Trace.WriteLine("JOINED CREATE INSTANCE THREAD ");		
+						else 
+							Trace.WriteLine("JOINED CREATE INSTANCE THREAD ");		
                     }
 
 
@@ -1459,10 +1655,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					Trace.WriteLine("Hi!");
 				}
 
-                /* The Worker Object of each computing node */
-                private gov.cca.AbstractFramework[] worker_framework = null;
+
+				/* The Worker Object of each computing node */
+		        private IDictionary<int, gov.cca.AbstractFramework> worker_framework = null;
 		
-		        public gov.cca.AbstractFramework[] WorkerFramework 
+		        public IDictionary<int, gov.cca.AbstractFramework> WorkerFramework 
 		        {
 			       get {   
 				           if (worker_framework == null) 
@@ -1472,10 +1669,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				           return worker_framework;			
 			           } 
 		        }
+
+
+                private IDictionary<int, gov.cca.ports.BuilderService> worker_builder = null;
 		
-                private gov.cca.ports.BuilderService[] worker_builder = null;
-		
-		        private gov.cca.ports.BuilderService[] WorkerBuilder 
+				private IDictionary<int, gov.cca.ports.BuilderService> WorkerBuilder 
 		        {
 			       get {   
 				           if (worker_builder == null) 
@@ -1486,11 +1684,12 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			           } 
 		        }
 
+
 				private void connectToWorkerBuilders ()
 				{
-					worker_builder = new BuilderService[WorkerFramework.Length];
+					worker_builder = new Dictionary<int, gov.cca.ports.BuilderService>(); // BuilderService[WorkerFramework.Length];
 			
-				    for (int node=0; node < WorkerFramework.Length; node++)
+				    foreach (int node in WorkerFramework.Keys)
 					{
 						//worker_builder[node] = (gov.cca.ports.BuilderService) worker_framework[node];
 				
@@ -1514,7 +1713,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 					nodeList = new List<string>();
 					portList = new List<int>();
-					using (TextReader tr = new StreamReader(Constants.hosts_file))
+					using (TextReader tr = new StreamReader(Constants.HOSTS_FILE))
 					{
 						string one_line;
 						if ((one_line = tr.ReadLine()) != null)
@@ -1566,14 +1765,13 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 						Trace.WriteLine("READ NODE FILES - " + node.Count + "," + port.Count + "," + node_master + "," + port_master); 
 
-						gov.cca.AbstractFramework master_framework = null;
-						worker_framework = new gov.cca.AbstractFramework[node.Count];
+						worker_framework = new Dictionary<int, gov.cca.AbstractFramework>();
 
 						// CONNECT TO THE ENTRY WORKER 
 						
 						try
 						{   
-							master_framework = BackEnd.getFrameworkWorkerInstance(node_master, port_master, 0);
+					        worker_framework[-1] = BackEnd.getFrameworkWorkerInstance(node_master, port_master, 0);
 							Trace.WriteLine("CONNECTED TO MASTER in " + node_master + ":" + port_master);
 						}
 						catch (Exception e)
@@ -1610,10 +1808,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 						
 						IList<Thread> threads = new List<Thread>();
-				        WorkerObject mfo = (WorkerObject) master_framework;
-						Thread t0 = new Thread(mfo.setUpCommunicationScope);
-						threads.Add(t0);
-						foreach (AbstractFramework wf in WorkerFramework)
+						foreach (AbstractFramework wf in WorkerFramework.Values)
 						{
 							WorkerObject wfo = (WorkerObject) wf;
 							Thread t1 = new Thread(wfo.setUpCommunicationScope); 
@@ -1633,7 +1828,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         Trace.WriteLine("STACK TRACE: " + e.StackTrace);
                     }
 
-                    Trace.WriteLine(WorkerFramework.Length + " Worker clients started !");
+                    Trace.WriteLine(WorkerFramework.Count + " Worker clients started !");
 
                 }
 

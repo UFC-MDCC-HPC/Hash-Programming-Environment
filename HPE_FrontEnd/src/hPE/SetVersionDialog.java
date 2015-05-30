@@ -1,9 +1,9 @@
 package hPE;
 
 import hPE.frontend.kinds.application.model.HApplicationComponent;
+import hPE.frontend.kinds.binding.model.HBindingComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
@@ -39,7 +39,7 @@ public class SetVersionDialog extends Composite {
 	private Button radioQualifier = null;
 	private Button radioService = null;
 	private Button radioFacet = null;
-	private Button radioDomain = null;
+	private Button radioBinding = null;
 	
 	public SetVersionDialog(SelectionListener sl, Composite parent, int style) {
 		super(parent, style);
@@ -148,12 +148,12 @@ public class SetVersionDialog extends Composite {
 		radioFacet.setBounds(new Rectangle(343, 18, 70, 16));
 		radioFacet.setText(HFacetComponent.KIND);
 		
-		radioDomain = new Button(groupKinds, SWT.RADIO);
-		radioDomain.addSelectionListener(sl);
-		radioDomain.setEnabled(true);
-		radioDomain.setSelection(false);
-		radioDomain.setBounds(new Rectangle(343, 38, 70, 16));
-		radioDomain.setText(HDomainComponent.KIND);
+		radioBinding = new Button(groupKinds, SWT.RADIO);
+		radioBinding.addSelectionListener(sl);
+		radioBinding.setEnabled(true);
+		radioBinding.setSelection(false);
+		radioBinding.setBounds(new Rectangle(343, 38, 70, 16));
+		radioBinding.setText(HBindingComponent.KIND);
 
 	}
 
@@ -197,8 +197,8 @@ public class SetVersionDialog extends Composite {
 		return this.radioFacet;
 	}
 
-	public Button getRadioDomain() {
-		return this.radioDomain;
+	public Button getRadioBinding() {
+		return this.radioBinding;
 	}
 
 	public Button getRadioButtonAbstract() {

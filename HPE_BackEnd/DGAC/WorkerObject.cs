@@ -17,6 +17,7 @@ using gov.cca.ports;
 using br.ufc.pargo.hpe.ports;
 //using br.ufc.lia.hpe.kinds;
 using System.Diagnostics;
+using br.ufc.pargo.hpe.kinds;
 
 
 delegate void GoMethod();
@@ -194,11 +195,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             unitProperties.Add(cid, selfProperties);
             WorkerServicesImpl services = new WorkerServicesImpl(this, cid);
             this.registerComponentID(cid, services);
-			
-			//TcpServerChannel channel = new TcpServerChannel(port);
-     		//ChannelServices.RegisterChannel(channel, false);     
-     		//RemotingServices.Marshal(services, "WorkerServices.rem");	
-			
+
             return services;            
         }
 
@@ -265,13 +262,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 case Constants.KIND_APPLICATION: cid = createInstanceForApplications(instanceName, className, properties); break;
                 case Constants.KIND_COMPUTATION:
                 case Constants.KIND_DATASTRUCTURE:
-                case Constants.KIND_ENUMERATOR:
                 case Constants.KIND_ENVIRONMENT:
                 case Constants.KIND_PLATFORM:
                 case Constants.KIND_QUALIFIER:
-                case Constants.KIND_SERVICE:
+			    case Constants.KIND_BINDING:
                 case Constants.KIND_SYNCHRONIZER: cid = createInstanceBaseForAllKinds(instanceName, className, properties); break;
-                default: throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
+				default:
+					Trace.WriteLine ("Unrecognized component kind: " + kind);
+					throw new CCAExceptionImpl(CCAExceptionType.Unexpected); 
             }
 
             // REGISTER CREATESLICES PORT
@@ -304,6 +302,16 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         }
 
+		void configure_facet_address (IBindingRootKind unit_slice, string[] ip_address_facets, int[] port_facets)
+		{
+			for (int i=0; i<ip_address_facets.Length; i++)
+			{
+				FacetAccess facet_access = new FacetAccess(ip_address_facets[i], port_facets[i]);
+
+				unit_slice.addFacetAccessInfo(i, facet_access);
+			}
+		}
+
         private ComponentID createInstanceBaseForAllKinds(string instanceName, string class_name, TypeMap properties)
         {
             ComponentID cid = new WorkerComponentIDImpl(instanceName);
@@ -318,7 +326,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				string[] portNames = properties.getStringArray(Constants.PORT_NAMES_KEY, new string[0]);
 				int kind = Constants.kindMapping[properties.getString(Constants.KIND_KEY, "")];
 
-
 				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 3 ; assembly_string = " + assembly_string + "; class name = "+  class_name);
 	
 				ObjectHandle obj = Activator.CreateInstance(assembly_string, class_name);
@@ -331,18 +338,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 4");
 
-				if (properties.getBool(Constants.FACET_PRESENCE, false))
-				{
-					string[] facet_unit_id = properties.getStringArray(Constants.FACET_UNIT_ID, new string[0]);
-					int[] facet_unit_index = properties.getIntArray(Constants.FACET_UNIT_INDEX, new int[0]);
-					string[] facet_ip_address = properties.getStringArray(Constants.FACET_IP_ADDRESS, new string[0]);
-					int [] facet_port= properties.getIntArray(Constants.FACET_PORT, new int[0]);
-
-					unit_slice.readFacetConfiguration(facet_unit_id, facet_unit_index, facet_ip_address, facet_port);
-				}
-
-				Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 5");
-
 				Services services = new WorkerServicesImpl(this, cid, unit_slice);
 	            unit_slice.setServices(services);
 	
@@ -353,10 +348,38 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					Trace.WriteLine(my_global_rank +  ": --- BEGIN - Worker " + my_global_rank + ": Split " + key + " !!!");
 
 					unit_slice.WorldComm = this.worker_communicator;
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 61");
 		            unit_slice.Communicator = (MPI.Intracommunicator) this.worker_communicator.Split(1, key);
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 62");
 					unit_slice.PeerComm =  (MPI.Intracommunicator) unit_slice.Communicator.Split(Math.Abs(id_unit.GetHashCode()), unit_slice.Rank);
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 63");
+
+					// BRIDGE BINDING INTER-COMMUNICATOR
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 7");
+
+					if (kind == Constants.KIND_BINDING)
+					{
+						IBindingKind unit_slice_binding = (IBindingKind) unit_slice; 
+						unit_slice_binding.RootCommunicator = new MPI.Intercommunicator (unit_slice.Communicator, 0, global_communicator, my_global_rank == 0 ? 1 : 0, 999);
+
+						Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 8");
+
+						if (unit_slice is IBindingRootKind)
+						{
+							IBindingRootKind unit_slice_binding_root = (IBindingRootKind) unit_slice;
+							string[] ip_address_facets = properties.getStringArray(Constants.FACET_IP_ADDRESS, new string[0]);
+							int[] port_facets = properties.getIntArray(Constants.FACET_PORT, new int[0]);
+							int this_facet = properties.getInt(Constants.FACET_NUMBER, 0);
+							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 9" + ip_address_facets.Length + "," + port_facets.Length);
+							configure_facet_address(unit_slice_binding_root, ip_address_facets, port_facets);
+							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 10");
+					unit_slice_binding_root.ThisFacet = this_facet;
+							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 11 " + this_facet);
+						}
+					}
 
 					unit_slice.calculate_topology();
+
 					Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds: BEGIN TOPOLOGY - SIZE");
 					foreach (KeyValuePair<string, int> unit_size in unit_slice.UnitSize)
 						Trace.WriteLine(this.my_global_rank + ": createInstanceForAllKinds:" + unit_size.Key + "=" + unit_size.Value);
@@ -593,45 +616,30 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			
 			Trace.WriteLine(my_global_rank + ": begin connect " + user_port_name + " to " + provider_port_name);
 
-//			Trace.WriteLine(my_rank + ": connect 1");			
+			Trace.WriteLine(my_global_rank + ": connect 1");			
             ConnectionID connection = new WorkerConnectionIDImpl(provider, providingPortName, user, usingPortName);
-//			Trace.WriteLine(my_rank + ": connect 2");
+			Trace.WriteLine(my_global_rank + ": connect 2 " + (connection.ToString()));
             connectionList.Add(connection.ToString(), connection);
-//			Trace.WriteLine(my_rank + ": connect 3");
+			Trace.WriteLine(my_global_rank + ": connect 3");
             bool first_connection = addConnByProviderPort(provider_port_name, connection);
-//			Trace.WriteLine(my_rank + ": connect 4");
+			Trace.WriteLine(my_global_rank + ": connect 4");
             connByUserPort.Add(user_port_name, connection);			
-//			Trace.WriteLine(my_rank + ": connect 5");
+			Trace.WriteLine(my_global_rank + ": connect 5");
 			port_manager.resetPort(user_port_name);
-//			Trace.WriteLine(my_rank + ": connect 6");
+			Trace.WriteLine(my_global_rank + ": connect 6");
             this.tryAwakeConnectingUserPort(user_port_name);
-//			Trace.WriteLine(my_rank + ": connect 7");
+			Trace.WriteLine(my_global_rank + ": connect 7");
 
             IUnit user_unit, provider_unit;
             this.unitInstances.TryGetValue(user.getInstanceName(), out user_unit);
-//			Trace.WriteLine(my_rank + ": connect 8");
+			Trace.WriteLine(my_global_rank + ": connect 8");
             this.unitInstances.TryGetValue(provider.getInstanceName(), out provider_unit);
-//			Trace.WriteLine(my_rank + ": connect 9");
+			Trace.WriteLine(my_global_rank + ": connect 9");
 
             if (user_unit != null)
-            {
-//                provider_unit.GlobalRank = user_unit.GlobalRank;
-//				Trace.WriteLine(my_rank + ": connect 10");
-//                provider_unit.WorldComm = user_unit.WorldComm;
-//				Trace.WriteLine(my_rank + ": connect 11");
-				
-				/* --- TODO: NOT VALID FOR MPMD */
-//				provider_unit.Rank = provider_unit.GlobalRank;
-//				Trace.WriteLine(my_rank + ": connect 12");
-//				provider_unit.Size = provider_unit.WorldComm.Size;
-//				Trace.WriteLine(my_rank + ": connect 13");
-
-				//provider_unit.addContainerSlice(user_unit, usingPortName);
 				user_unit.addSlice(provider_unit,usingPortName);
-            }
-//			Trace.WriteLine(my_rank + ": connect 14 " + (connection==null));
 
-//			Trace.WriteLine(my_rank + ": end connect " + user_port_name + " to " + provider_port_name + " (" + (connection==null) + ")");
+			Trace.WriteLine(my_global_rank + ": end connect " + user_port_name + " to " + provider_port_name + " (" + (connection==null) + ")");
 
             return connection;
         }

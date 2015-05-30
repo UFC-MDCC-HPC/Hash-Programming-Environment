@@ -19,6 +19,7 @@ public class InterfaceDAO{
         String sql =
             "INSERT INTO interface (id_interface, " +
                                    "unit_replica, " +
+								   "facet, " + 
                                    "id_abstract, " +
                                    "assembly_string, " +
                                    "id_interface_super, " /*+
@@ -31,7 +32,8 @@ public class InterfaceDAO{
                                    "is_parallel, " +
                                    "`order`)" +
             " VALUES ('" + ac.Id_interface + "'," 
-					     + ac.Unit_replica + ", " 
+					     + ac.Unit_replica + ", "
+						 + ac.Facet + ", "
 					     + ac.Id_abstract + ",'" 
 					     + ac.Assembly_string + "','" 
 					     + ac.Id_interface_super + "'," 
@@ -59,7 +61,7 @@ public class InterfaceDAO{
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_interface, unit_replica, id_abstract, assembly_string, id_interface_super, unit_replica_super, id_interface_super_top, unit_replica_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+           "SELECT id_interface, unit_replica, facet, id_abstract, assembly_string, id_interface_super, unit_replica_super, id_interface_super_top, unit_replica_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
            "FROM interface "+
            "WHERE id_interface like '" + id_interface + "' AND " + 
 				"id_abstract=" + id_abstract 
@@ -73,6 +75,7 @@ public class InterfaceDAO{
            i = new Interface();
            i.Id_interface = (string)reader["id_interface"];
 	       i.Unit_replica = (int)reader["unit_replica"];
+		   i.Facet = (int)reader["facet"];
            i.Id_abstract = (int)reader["id_abstract"];
            i.Assembly_string = (string)reader["assembly_string"];
            i.Id_interface_super = (string)reader["id_interface_super"];
@@ -118,7 +121,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+            "SELECT id_interface, unit_replica, facet, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " ORDER BY `order`";
         dbcmd.CommandText = sql;
@@ -128,6 +131,7 @@ public class InterfaceDAO{
             Interface i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
 			i.Unit_replica = (int)reader["unit_replica"];
+			i.Facet = (int)reader["facet"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
 	        i.Is_parallel = ((int)reader["is_parallel"]) != 0;
@@ -167,7 +171,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+            "SELECT id_interface, unit_replica, facet, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE id_abstract=" + id_abstract + " and id_interface ='" + id_interface + "' ORDER BY `order`";
         dbcmd.CommandText = sql;
@@ -177,6 +181,7 @@ public class InterfaceDAO{
             Interface i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
 			i.Unit_replica = (int)reader["unit_replica"];
+			i.Facet = (int)reader["facet"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
 	        i.Is_parallel = ((int)reader["is_parallel"]) != 0;
@@ -276,7 +281,7 @@ public class InterfaceDAO{
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_interface, unit_replica, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
+            "SELECT id_interface, unit_replica, facet, unit_replica_super, unit_replica_super_top, id_abstract, assembly_string, id_interface_super, id_interface_super_top, class_name, class_nargs, uri_source, `order`, is_parallel " +
             "FROM interface " +
             "WHERE class_name like '" + library_path + "'";
         dbcmd.CommandText = sql;
@@ -286,6 +291,7 @@ public class InterfaceDAO{
             i = new Interface();
             i.Id_interface = (string)reader["id_interface"];
 			i.Unit_replica = (int)reader["unit_replica"];
+			i.Facet = (int)reader["facet"];
             i.Id_abstract = (int)reader["id_abstract"];
             i.Assembly_string = (string)reader["assembly_string"];
             i.Id_interface_super = (string)reader["id_interface_super"];
@@ -360,6 +366,30 @@ public class InterfaceDAO{
 
         return null;
     }
+
+	public int count_facets (int id_abstract)
+	{
+			Interface i = null;
+			IDbConnection dbcon = Connector.DBcon;
+			IDbCommand dbcmd = dbcon.CreateCommand();
+			string sql =
+				"SELECT DISTINCT facet FROM interface where id_abstract=" + id_abstract + " and facet>=0 group by facet";
+			dbcmd.CommandText = sql;
+
+			IDataReader reader = dbcmd.ExecuteReader();
+			int count = 0;
+			while (reader.Read())	count++;
+
+			// clean up
+			reader.Close();
+			reader = null;
+			dbcmd.Dispose();
+			dbcmd = null;
+
+			return count;
+	}
+
+
 }//class
 
 }//namespace

@@ -30,9 +30,9 @@ import hPE.frontend.kinds.activate.model.protocol.HProtocolPerform;
 import hPE.frontend.kinds.activate.model.protocol.IProtocol;
 import hPE.frontend.kinds.activate.model.protocol.IProtocolCombinator;
 import hPE.frontend.kinds.application.model.HApplicationComponent;
+import hPE.frontend.kinds.binding.model.HBindingComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
-import hPE.frontend.kinds.domain.model.HDomainComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
 import hPE.frontend.kinds.facet.model.HFacetComponent;
 import hPE.frontend.kinds.platform.model.HPlatformComponent;
@@ -2440,10 +2440,10 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String uRefSuper = null;
 			Integer replica = null;
 
-			for (IHPrimUnit u__ : u_.getClones()) {
+			for (IHPrimUnit u__ : u_.getClones()) 
+			{
 				UnitType uX = factory.createUnitType();
-				VisualElementAttributes v = factory
-						.createVisualElementAttributes();
+				VisualElementAttributes v = factory.createVisualElementAttributes();
 
 				HUnit u = (HUnit) u__;
 
@@ -2459,8 +2459,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				iRef = i != null ? i.getPrimName() : null;
 				if (isSubUnit) {
 					HUnitStub stubU = u.getMostRecentStub();
-					cRefSuper = ((HComponent) stubU.getConfiguration())
-							.getRef();
+					cRefSuper = ((HComponent) stubU.getConfiguration()).getRef();
 					uRefSuper = stubU.getOriginalName();
 				}
 
@@ -3282,8 +3281,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			// c = new HEnumeratorComponent(name, location, uri);
 		} else if (kind.getName().equals(HFacetComponent.KIND)) {
 			c = new HFacetComponent(name, location, uri);
-		} else if (kind.getName().equals(HDomainComponent.KIND)) {
-			c = new HDomainComponent(name, location, uri);
+		} else if (kind.getName().equals(HBindingComponent.KIND)) {
+			c = new HBindingComponent(name, location, uri);
 		} else if (kind.getName().equals(HTopologyComponent.KIND)) {
 			c = new HTopologyComponent(name, location, uri);
 		} else {

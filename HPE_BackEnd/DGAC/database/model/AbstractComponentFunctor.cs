@@ -12,6 +12,18 @@ public class AbstractComponentFunctor : HashComponent {
 	private int id_functor_app_supertype;
 	private int id_abstract;
 	
+	private int facet_count = -1;
+	public int FacetCount
+	{
+		get {
+				if (facet_count == -1) 
+					facet_count = BackEnd.idao.count_facets(Id_abstract); 
+				return facet_count;
+			}
+	}
+
+	
+
 	//private IList parameters;
 
     private string library_path;

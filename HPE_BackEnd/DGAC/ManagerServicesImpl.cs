@@ -45,11 +45,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		public IDictionary<int, WorkerServices> WorkerServices {
 			get 
 			{
-				//WorkerServices[] worker_services_array = new WorkerServices[worker_services_list.Count];
-				//foreach (KeyValuePair<int, WorkerServices> ws in worker_services_list)
-				//{   
-				//    worker_services_array[ws.Key] = ws.Value;
-				//}
 				return worker_services_list;
 			}
 		}
@@ -107,6 +102,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			int[] nodes = cid.WorkerNodes;
 			for (int i=0; i<nodes.Length; i++)
 			{
+				Trace.WriteLine ("registerUsesPort - " + nodes[i]);
 				gov.cca.Services ws = WorkerServices[nodes[i]];
 				ws.registerUsesPort(portName, type, properties);
 			}

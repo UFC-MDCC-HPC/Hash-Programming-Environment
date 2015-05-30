@@ -300,9 +300,6 @@
     <Compile Include="..\..\DGAC\GoPortImpl.cs">
       <Link>manager\GoPortImpl.cs</Link>
     </Compile>
-    <Compile Include="..\..\DGAC\base\ActivateKind.cs">
-      <Link>base\ActivateKind.cs</Link>
-    </Compile>
     <Compile Include="..\..\DGAC\connector\ConfigurationPort.cs">
       <Link>connector\ConfigurationPort.cs</Link>
     </Compile>
@@ -449,6 +446,15 @@
     </Compile>
     <Compile Include="..\..\DGAC\instantiator.cs">
       <Link>instantiator\instantiator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\BindingKind.cs">
+      <Link>base\ActivateKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\BindingKind.cs">
+      <Link>base\BindingKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DGAC\base\ActivateKind.cs">
+      <Link>base\ActivateKind.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

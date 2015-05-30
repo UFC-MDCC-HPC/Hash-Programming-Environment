@@ -109,14 +109,14 @@ public enum SupportedKinds implements Enumerator {
 	FACET(8, "Facet", "Facet"),
 
 	/**
-	 * The '<em><b>Domain</b></em>' literal object.
+	 * The '<em><b>Binding</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #DOMAIN_VALUE
+	 * @see #BINDING_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	DOMAIN(9, "Domain", "Domain"),
+	BINDING(9, "Binding", "Binding"),
 
 	/**
 	 * The '<em><b>Topology</b></em>' literal object.
@@ -273,19 +273,19 @@ public enum SupportedKinds implements Enumerator {
 	public static final int FACET_VALUE = 8;
 
 	/**
-	 * The '<em><b>Domain</b></em>' literal value.
+	 * The '<em><b>Binding</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Domain</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Binding</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #DOMAIN
-	 * @model name="Domain"
+	 * @see #BINDING
+	 * @model name="Binding"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DOMAIN_VALUE = 9;
+	public static final int BINDING_VALUE = 9;
 	
 	
 	/**
@@ -335,7 +335,7 @@ public enum SupportedKinds implements Enumerator {
 			APPLICATION,
 			ENUMERATOR,
 			FACET,
-			DOMAIN,
+			BINDING,
 			TOPOLOGY,
 			VALUE,
 		};
@@ -397,7 +397,7 @@ public enum SupportedKinds implements Enumerator {
 			case APPLICATION_VALUE: return APPLICATION;
 			case ENUMERATOR_VALUE: return ENUMERATOR;
 			case FACET_VALUE: return FACET;
-			case DOMAIN_VALUE: return DOMAIN;
+			case BINDING_VALUE: return BINDING;
 			case TOPOLOGY_VALUE: return TOPOLOGY;
 			case VALUE_VALUE: return VALUE;
 		}

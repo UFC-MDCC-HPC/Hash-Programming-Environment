@@ -131,8 +131,9 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
    		   String varName = pair.fst().split("@")[0];
    		   HInterface bound = pair.snd();
-   		   programTextVarBounds += "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
+   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
    		}
+ 		
 		
         
         fillPortSlices(i,varContext);
@@ -190,25 +191,19 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
 		programText += "\n";	
 		
- 		programText = programText += "namespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
+ 		programText += "namespace " + packageName + "." + componentName + "\n"; 
+ 		programText += "{\n";  // begin namespace
 
-		programText += "public interface " + procName + " : " + "Base" + procName + (inheritedName2!=null ? ", " + inheritedName2 : "" ) + "\n";  // begin class
+		programText += tabs(1) + "public interface " + procName + " : " + "Base" + procName + (inheritedName2!=null ? ", " + inheritedName2 : "" ) + "\n";  // begin class
 
  		programText += programTextVarBounds;
  		
- 		programText += "{\n\n";
- 								
-       // for (String methodCode : this.getMethodSignatures()) {
-       // 	programText += methodCode;
-       // }        
-        
-	    programText += "\n} // end main interface \n"; // end main class	
+ 		programText += tabs(1) + "{\n";
+ 								        
+	    programText += tabs(1) + "}\n"; // end main class	
 
-		programText += "\n} // end namespace \n"; // end namespace
+		programText += "}"; // end namespace
 		
-		
-		
-//		String l = i.getConfiguration().getLocalLocation();
 		HComponent c = (HComponent) i.getConfiguration();
 		String l = c.getRelativeLocation();
 		
@@ -261,7 +256,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
    		   String varName = pair.fst().split("@")[0];
    		   HInterface bound = pair.snd();
-   		   programTextVarBounds += "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
+   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
    		}
 
         
@@ -299,21 +294,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 				}
 			}
 		}
-		
-		
-/*		for (List<HInterfaceSlice> ss : theSlices.values()) {
-			HInterfaceSlice s = ss.get(0);
-			String typeName = s.getInterface().getPrimName();
-			HComponent config = (HComponent) s.getConfiguration();
-			String packageNameUsing = config.getPackagePath().toString();
-			String componentNameUsing = config.getComponentName();
-			if (!usings.contains(typeName)) {
-				programText += "using " + packageNameUsing + "." + componentNameUsing + "." + typeName + ";\n";
-			    dependencies.add(buildDependencyName(packageNameUsing, componentNameUsing, typeName));
-			}
-			usings.add(typeName);
-		} */
-		
+				
 		for (HInterface b : paramBounds) {
 			HComponent cb = (HComponent) b.getConfiguration();
 			String useStr = cb.getPackagePath() + "." + cb.getComponentName();
@@ -346,13 +327,12 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		
 		programText += "\n";	
 		
- 		programText = programText += "namespace " + packageName + "." + componentName + " { \n\n";  // begin namespace
-
-		programText += "public interface Base" + procName + " : " + (inheritedName!=null ? "Base" + inheritedName + ", " : "" )  + "I" + i.getConfiguration().kindString().replace(" ", "") + "Kind \n";  // begin class
-
+ 		programText = programText += "namespace " + packageName + "." + componentName + "\n"; 
+ 		programText += "{\n";  
+		programText += tabs(1) + "public interface Base" + procName + " : " + (inheritedName!=null ? "Base" + inheritedName + ", " : "" )  + "I" + i.getConfiguration().kindString().replace(" ", "") + "Kind \n";  // begin class
  		programText += programTextVarBounds;
  		
- 		programText += "{\n\n";
+ 		programText += tabs(1) + "{\n";
  		
 		// por enquanto, a mudan�a do nome da interface est� bloqueada... assim, o nome da classe ser� sempre o nome da interface com um 
 		// underscore.
@@ -381,34 +361,30 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
 		}		
 
         
-        for (Entry<String,List<HInterfaceSlice>> s : theSlices.entrySet()) {
+        for (Entry<String,List<HInterfaceSlice>> s : theSlices.entrySet()) 
+        {
 		    String typeName = s.getKey();
-		    for (HInterfaceSlice slice : s.getValue()) {
+		    for (HInterfaceSlice slice : s.getValue()) 
+		    {
 		    	String sliceName = slice.getName();
-		    	String defaultSliceName = slice.getDefaultName();
-		    
-		    	HPort portOfTheSlice = slice.getMyPort();
-		    	
-			    boolean isPublic = !portOfTheSlice.isPrivate(); //|| !(slice instanceof HActivateInterfaceSlice);
+		    	String defaultSliceName = slice.getDefaultName();		    
+		    	HPort portOfTheSlice = slice.getMyPort();		    	
+			    boolean isPublic = !portOfTheSlice.isPrivate(); 
 		        
                 defaultSliceName = defaultSliceName == null ? sliceName : defaultSliceName;
                 
 			    if (isPublic) 
-			    	programText += tabs(1) + typeName + " " + firstUpper(sliceName) + " {get;}\n";
+			    	programText += tabs(2) + typeName + " " + firstUpper(sliceName) + " {get;}\n";
 			    			    
 		    }			
 		}
 				
-		programText += "\n"; // end declaration of inner slices
-		
-        for (String methodCode : this.getMethodSignatures()) {
-        	programText += methodCode;
-        }
+		for (String methodCode : this.getMethodSignatures()) 
+        	programText += methodCode;        
         
-        
-	    programText += "\n} // end main interface \n"; // end main class	
+	    programText += tabs(1) + "}\n"; // end main class	
 
-		programText += "\n} // end namespace \n"; // end namespace
+		programText += "}"; // end namespace
 		
 		HComponent c = (HComponent) i.getConfiguration();
 		String l = c.getRelativeLocation();

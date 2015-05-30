@@ -136,7 +136,7 @@ public class FileUtil{
               if (bankReader.LocalName.Equals(property))
               {
                   string s = bankReader.ReadString(); 
-//                  Trace.WriteLine("PROPERTY .... " + s);
+                  Trace.WriteLine("PROPERTY .... " + s);
                   return s;
               }
           }

@@ -40,7 +40,7 @@ public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClas
 	}
 	
 	public String getSynthesizerType(boolean abs) {
-		return abs ? "C# Language Interface" : "C# Language Class";
+		return abs ? "C# Interface" : "C# Class";
 	}
 	
 	public static String getType() {

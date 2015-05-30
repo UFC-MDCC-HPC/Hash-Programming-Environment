@@ -3700,7 +3700,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.APPLICATION);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.ENUMERATOR);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.FACET);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.DOMAIN);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.BINDING);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TOPOLOGY);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.VALUE);
 
@@ -3723,70 +3723,70 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";	
 		addAnnotation
 		  (baseTypeTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "BaseTypeType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getBaseTypeType_ExtensionType(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "extensionType"
-		   });		
+		   });	
 		addAnnotation
 		  (getBaseTypeType_Component(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "component"
-		   });		
+		   });	
 		addAnnotation
 		  (colorComplexTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ColorComplexType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getColorComplexType_B(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "b"
-		   });		
+		   });	
 		addAnnotation
 		  (getColorComplexType_G(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "g"
-		   });		
+		   });	
 		addAnnotation
 		  (getColorComplexType_R(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "r"
-		   });			
+		   });	
 		addAnnotation
 		  (componentBodyTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ComponentBodyType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Group(), 
 		   source, 
 		   new String[] {
 			 "kind", "group",
 			 "name", "group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_InnerComponent(), 
 		   source, 
@@ -3794,7 +3794,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "innerComponent",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Parameter(), 
 		   source, 
@@ -3802,7 +3802,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "parameter",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_SupplyParameter(), 
 		   source, 
@@ -3810,7 +3810,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "supplyParameter",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_InnerRenaming(), 
 		   source, 
@@ -3818,7 +3818,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "innerRenaming",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Fusion(), 
 		   source, 
@@ -3826,7 +3826,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "fusion",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Split(), 
 		   source, 
@@ -3834,7 +3834,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "split",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_RecursiveEntry(), 
 		   source, 
@@ -3842,7 +3842,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "recursiveEntry",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Interface(), 
 		   source, 
@@ -3850,7 +3850,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "interface",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Unit(), 
 		   source, 
@@ -3858,7 +3858,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "unit",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_Enumerator(), 
 		   source, 
@@ -3866,7 +3866,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "enumerator",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentBodyType_FusionsOfReplicators(), 
 		   source, 
@@ -3874,238 +3874,238 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "fusionsOfReplicators",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (componentHeaderTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ComponentHeaderType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_BaseType(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "baseType"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_Versions(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "versions"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_VisualAttributes(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualAttributes"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_HashComponentUID(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "hash_component_UID"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_IsAbstract(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "isAbstract"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_Kind(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "kind"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_LocationURI(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "locationURI"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_Name(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "name"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentHeaderType_PackagePath(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "packagePath"
-		   });		
+		   });	
 		addAnnotation
 		  (componentInUseTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ComponentInUseType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Parameter(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "parameter"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Port(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "port"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_UnitBounds(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "unitBounds"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_HashComponentUID(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "hash_component_UID"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_LocalRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "localRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Location(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "location"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Multiple(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "multiple"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Name(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "name"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Package(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "package"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_ParameterId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "parameter_id"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentInUseType_Version(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "version"
-		   });		
+		   });	
 		addAnnotation
 		  (componentTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ComponentType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentType_Header(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "header"
-		   });		
+		   });	
 		addAnnotation
 		  (getComponentType_ComponentInfo(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "componentInfo"
-		   });		
+		   });	
 		addAnnotation
 		  (conditionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ConditionType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getConditionType_CondId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cond_id"
-		   });		
+		   });	
 		addAnnotation
 		  (getConditionType_SliceId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "slice_id"
-		   });		
+		   });	
 		addAnnotation
 		  (documentRootEClass, 
 		   source, 
 		   new String[] {
 			 "name", "",
 			 "kind", "mixed"
-		   });		
+		   });	
 		addAnnotation
 		  (getDocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
 			 "kind", "elementWildcard",
 			 "name", ":mixed"
-		   });		
+		   });	
 		addAnnotation
 		  (getDocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "xmlns:prefix"
-		   });		
+		   });	
 		addAnnotation
 		  (getDocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "xsi:schemaLocation"
-		   });		
+		   });	
 		addAnnotation
 		  (getDocumentRoot_Component(), 
 		   source, 
@@ -4113,7 +4113,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "component",
 			 "namespace", "##targetNamespace"
-		   });		
+		   });	
 		addAnnotation
 		  (getDocumentRoot_NewAttribute(), 
 		   source, 
@@ -4121,350 +4121,350 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "attribute",
 			 "name", "NewAttribute",
 			 "namespace", "##targetNamespace"
-		   });		
+		   });	
 		addAnnotation
 		  (entryTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EntryType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getEntryType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (enumerableComponentTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumerableComponentType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (enumerableEntryTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumerableEntryType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableEntryType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableEntryType_Index(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "index"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableEntryType_URef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
-		   });		
+		   });	
 		addAnnotation
 		  (enumerableTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumerableType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableType_Ref(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "ref"
-		   });		
+		   });	
 		addAnnotation
 		  (enumerableUnitSliceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumerableUnitSliceType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableUnitSliceType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableUnitSliceType_SplitReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "splitReplica"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableUnitSliceType_SRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "sRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumerableUnitSliceType_URef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
-		   });		
+		   });	
 		addAnnotation
 		  (enumerableUnitTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumerableUnitType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (enumeratorFromRecursionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumeratorFromRecursionType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorFromRecursionType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (enumeratorRefTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumeratorRefType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorRefType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (enumeratorTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "EnumeratorType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_OriginRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "originRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_Links(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "links"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_FromRecursion(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "fromRecursion"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_Cardinality(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cardinality"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_FromSplit(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "fromSplit"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_Ref(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "ref"
-		   });		
+		   });	
 		addAnnotation
 		  (getEnumeratorType_VarId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "varId"
-		   });		
+		   });	
 		addAnnotation
 		  (exposePortTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ExposePortType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getExposePortType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getExposePortType_Exposed(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "exposed"
-		   });		
+		   });	
 		addAnnotation
 		  (getExposePortType_PRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "pRef"
-		   });		
+		   });	
 		addAnnotation
 		  (extendsTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ExtendsType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getExtendsType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (extensionTypeTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ExtensionTypeType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getExtensionTypeType_Implements(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "implements"
-		   });		
+		   });	
 		addAnnotation
 		  (getExtensionTypeType_Extends(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "extends"
-		   });		
+		   });	
 		addAnnotation
 		  (fusionOfReplicatorsTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "FusionOfReplicatorsType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getFusionOfReplicatorsType_ERef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "eRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getFusionOfReplicatorsType_OriginRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "originRef"
-		   });		
+		   });	
 		addAnnotation
 		  (fusionsOfReplicatorsTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "FusionsOfReplicatorsType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getFusionsOfReplicatorsType_FusionOfReplicators(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "fusionOfReplicators"
-		   });		
+		   });	
 		addAnnotation
 		  (fusionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "FusionType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getFusionType_CRefs(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "cRefs"
-		   });		
+		   });	
 		addAnnotation
 		  (getFusionType_PRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "pRef"
-		   });		
+		   });	
 		addAnnotation
 		  (guardConditionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "GuardConditionType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getGuardConditionType_Condition1(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "condition"
-		   });		
+		   });	
 		addAnnotation
 		  (guardTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "GuardType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getGuardType_Group(), 
 		   source, 
 		   new String[] {
 			 "kind", "group",
 			 "name", "group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getGuardType_Condition(), 
 		   source, 
@@ -4472,7 +4472,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "condition",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getGuardType_And(), 
 		   source, 
@@ -4480,7 +4480,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "and",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getGuardType_Or(), 
 		   source, 
@@ -4488,1097 +4488,1097 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "kind", "element",
 			 "name", "or",
 			 "group", "#group:0"
-		   });		
+		   });	
 		addAnnotation
 		  (getGuardType_Not(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "not"
-		   });		
+		   });	
 		addAnnotation
 		  (implementsTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ImplementsType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getImplementsType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (innerComponentTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InnerComponentType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getInnerComponentType_Exposed(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "exposed"
-		   });		
+		   });	
 		addAnnotation
 		  (innerRenamingTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InnerRenamingType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getInnerRenamingType_CNewName(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cNewName"
-		   });		
+		   });	
 		addAnnotation
 		  (getInnerRenamingType_COldName(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cOldName"
-		   });		
+		   });	
 		addAnnotation
 		  (getInnerRenamingType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (interfaceParameterTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InterfaceParameterType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceParameterType_Iname(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "iname"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceParameterType_Order(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "order"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceParameterType_Parid(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "parid"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceParameterType_Uname(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uname"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceParameterType_Varid(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "varid"
-		   });		
+		   });	
 		addAnnotation
 		  (interfacePortTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InterfacePortType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfacePortType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfacePortType_Slice(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "slice"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfacePortType_Name(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "name"
-		   });		
+		   });	
 		addAnnotation
 		  (interfaceRefTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InterfaceRefType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceRefType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceRefType_IRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "iRef"
-		   });		
+		   });	
 		addAnnotation
 		  (interfaceSliceRefTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InterfaceSliceRefType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceSliceRefType_ComponentRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "componentRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceSliceRefType_InterfaceRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "interfaceRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceSliceRefType_SliceRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "sliceRef"
-		   });		
+		   });	
 		addAnnotation
 		  (interfaceSliceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InterfaceSliceType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceSliceType_OriginRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "originRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceSliceType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceSliceType_IsRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "isRef"
-		   });		
+		   });	
 		addAnnotation
 		  (interfaceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "InterfaceType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Slice(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "slice"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Sources(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "sources"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Port(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "port"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_ExternalReferences(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "externalReferences"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Parameter(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "parameter"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Action(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "action"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Condition(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "condition"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_Protocol(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "protocol"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_IRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "iRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getInterfaceType_NArgs(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "nArgs"
-		   });		
+		   });	
 		addAnnotation
 		  (parameterRenamingEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ParameterRenaming",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterRenaming_FormFieldId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "formFieldId"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterRenaming_Order(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "order"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterRenaming_VarName(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "varName"
-		   });		
+		   });	
 		addAnnotation
 		  (parameterSupplyTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ParameterSupplyType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterSupplyType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterSupplyType_Direct(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "direct"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterSupplyType_VarName(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "varName"
-		   });		
+		   });	
 		addAnnotation
 		  (parameterTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ParameterType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterType_ComponentRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "componentRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterType_FormFieldId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "formFieldId"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterType_Order(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "order"
-		   });		
+		   });	
 		addAnnotation
 		  (getParameterType_VarName(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "varName"
-		   });		
+		   });	
 		addAnnotation
 		  (portSliceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "PortSliceType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getPortSliceType_PRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "pRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getPortSliceType_SRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "sRef"
-		   });		
+		   });	
 		addAnnotation
 		  (portTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "PortType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getPortType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getPortType_Exposed(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "exposed"
-		   });		
+		   });	
 		addAnnotation
 		  (getPortType_PRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "pRef"
-		   });		
+		   });	
 		addAnnotation
 		  (protocolChoiceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ProtocolChoiceType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolChoiceType_Par(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "par"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolChoiceType_Seq(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "seq"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolChoiceType_Alt(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "alt"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolChoiceType_Perform(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "perform"
-		   });		
+		   });	
 		addAnnotation
 		  (protocolCombinatorTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ProtocolCombinatorType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolCombinatorType_Action(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "action"
-		   });		
+		   });	
 		addAnnotation
 		  (protocolCombinatorVisualTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ProtocolCombinatorVisualType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolCombinatorVisualType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (protocolPerformTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ProtocolPerformType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolPerformType_ActionId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "action_id"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolPerformType_SliceId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "slice_id"
-		   });		
+		   });	
 		addAnnotation
 		  (protocolPerformVisualTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ProtocolPerformVisualType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolPerformVisualType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (protocolTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "ProtocolType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolType_Guard(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "guard"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolType_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
-		   });		
+		   });	
 		addAnnotation
 		  (getProtocolType_Repeat(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "repeat"
-		   });		
+		   });	
 		addAnnotation
 		  (quantificationTypeEEnum, 
 		   source, 
 		   new String[] {
 			 "name", "QuantificationType"
-		   });		
+		   });	
 		addAnnotation
 		  (quantificationTypeObjectEDataType, 
 		   source, 
 		   new String[] {
 			 "name", "QuantificationType:Object",
 			 "baseType", "QuantificationType"
-		   });		
+		   });	
 		addAnnotation
 		  (recursiveEntryTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "RecursiveEntryType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getRecursiveEntryType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (sourceFileTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "SourceFileType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_Dependency(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "dependency"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_ExternalDependency(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "externalDependency"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_Contents(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "contents"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_FileType(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "fileType"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_Name(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "name"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_SrcType(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "srcType"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_Uri(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uri"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceFileType_VersionId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "versionId"
-		   });		
+		   });	
 		addAnnotation
 		  (sourceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "SourceType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceType_File(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "file"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceType_SourceType(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "sourceType"
-		   });		
+		   });	
 		addAnnotation
 		  (getSourceType_VersionId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "versionId"
-		   });		
+		   });	
 		addAnnotation
 		  (splitEnumeratorTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "SplitEnumeratorType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitEnumeratorType_ERef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "eRef"
-		   });		
+		   });	
 		addAnnotation
 		  (splitLinkTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "SplitLinkType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitLinkType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitLinkType_URef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
-		   });		
+		   });	
 		addAnnotation
 		  (splitTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "SplitType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitType_SplitLink(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "splitLink"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitType_SplitEnumerator(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "splitEnumerator"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitType_OriginRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "originRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitType_CRefPermutation(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRefPermutation"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitType_ERef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "eRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getSplitType_N(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "n"
-		   });		
+		   });	
 		addAnnotation
 		  (supportedKindsEEnum, 
 		   source, 
 		   new String[] {
 			 "name", "SupportedKinds"
-		   });		
+		   });	
 		addAnnotation
 		  (supportedKindsObjectEDataType, 
 		   source, 
 		   new String[] {
 			 "name", "SupportedKinds:Object",
 			 "baseType", "SupportedKinds"
-		   });		
+		   });	
 		addAnnotation
 		  (unitActionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "UnitActionType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitActionType_Protocol(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "protocol"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitActionType_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
-		   });		
+		   });	
 		addAnnotation
 		  (unitBoundsTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "UnitBoundsType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitBoundsType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitBoundsType_Parallel(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "parallel"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitBoundsType_Replica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitBoundsType_SliceReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "slice_replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitBoundsType_UnitReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "unit_replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitBoundsType_URef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
-		   });		
+		   });	
 		addAnnotation
 		  (unitConditionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "UnitConditionType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitConditionType_Guard(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "guard"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitConditionType_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
-		   });		
+		   });	
 		addAnnotation
 		  (unitRefTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "UnitRefType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitRefType_CRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "cRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitRefType_InnerReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "inner_replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitRefType_Replica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitRefType_SliceReplica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "slice_replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitRefType_URef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
-		   });		
+		   });	
 		addAnnotation
 		  (unitSliceTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "UnitSliceType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitSliceType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitSliceType_Port(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "port"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitSliceType_SliceName(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "sliceName"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitSliceType_Transitive(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "transitive"
-		   });		
+		   });	
 		addAnnotation
 		  (unitTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "UnitType",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_Super(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "super"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_Slices(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "slices"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_VisualDescription(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "visualDescription"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_Facet(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "facet"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_IRef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "iRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_Multiple(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "multiple"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_Private(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "private"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_Replica(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "replica"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_URef(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "uRef"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnitType_VisibleInterface(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "visibleInterface"
-		   });		
+		   });	
 		addAnnotation
 		  (versionTypeEClass, 
 		   source, 
 		   new String[] {
 			 "name", "VersionType",
 			 "kind", "empty"
-		   });		
+		   });	
 		addAnnotation
 		  (getVersionType_Field1(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "field1"
-		   });		
+		   });	
 		addAnnotation
 		  (getVersionType_Field2(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "field2"
-		   });		
+		   });	
 		addAnnotation
 		  (getVersionType_Field3(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "field3"
-		   });		
+		   });	
 		addAnnotation
 		  (getVersionType_Field4(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "field4"
-		   });		
+		   });	
 		addAnnotation
 		  (visualElementAttributesEClass, 
 		   source, 
 		   new String[] {
 			 "name", "VisualElementAttributes",
 			 "kind", "elementOnly"
-		   });		
+		   });	
 		addAnnotation
 		  (getVisualElementAttributes_Color(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "color"
-		   });		
+		   });	
 		addAnnotation
 		  (getVisualElementAttributes_H(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "h"
-		   });		
+		   });	
 		addAnnotation
 		  (getVisualElementAttributes_W(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "w"
-		   });		
+		   });	
 		addAnnotation
 		  (getVisualElementAttributes_X(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "x"
-		   });		
+		   });	
 		addAnnotation
 		  (getVisualElementAttributes_Y(), 
 		   source, 

@@ -24,7 +24,7 @@ namespace br.ufc.hpe.backend.DGAC
 		}
 
 		#region AutomaticSlicesPort implementation
-		public void initialize ()
+		public void on_initialize ()
 		{
 			
             IDictionary<Thread, InitializeThread> thread_list = new Dictionary<Thread,InitializeThread>();
@@ -66,7 +66,7 @@ namespace br.ufc.hpe.backend.DGAC
             public void Run()
             {
 				try {
-					worker_initialize_port.initialize();				
+					worker_initialize_port.on_initialize();				
 				}
 				catch (Exception e)
 				{
@@ -77,7 +77,7 @@ namespace br.ufc.hpe.backend.DGAC
         }
 
 		#region AutomaticSlicesPort implementation
-		public void post_initialize ()
+		public void after_initialize ()
 		{
 			
             IDictionary<Thread, AfterInitializeThread> thread_list = new Dictionary<Thread,AfterInitializeThread>();
@@ -116,7 +116,7 @@ namespace br.ufc.hpe.backend.DGAC
 
             public void Run()
             {
-				worker_initialize_port.post_initialize();				
+				worker_initialize_port.after_initialize();				
             }
 
         }

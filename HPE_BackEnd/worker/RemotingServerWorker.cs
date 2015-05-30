@@ -18,7 +18,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
     public class WorkerService : System.ServiceProcess.ServiceBase
     {
         private TcpChannel ch;
-        private int port = Constants.WORKER_PORT;
+		private int port;
 		private string session_id = null;
 
         private MPI.Environment mpi = null;
@@ -28,7 +28,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         public WorkerService(string[] args)
         {            
-			readArguments (args, out port, out session_id);
             InitializeComponent();
             StartMPI(args);
         }
@@ -63,15 +62,20 @@ namespace br.ufc.pargo.hpe.backend.DGAC
           try 
           {  
 			string service_name = Constants.WORKER_SERVICE_NAME + (session_id == null ? "" : "-" + session_id) + "-" + my_rank;	
-				
+
             if (port < 0) 
                 port = Constants.WORKER_PORT + my_rank;
  
             Trace.WriteLine("Starting " + service_name + " listening on port ... " + port);
 
-            ch = new TcpChannel(port/*, server_provider */);
-
-            ChannelServices.RegisterChannel(ch);
+			try {
+	            ch = new TcpChannel(port);
+	            ChannelServices.RegisterChannel(ch);
+			}
+			catch (RemotingException e)
+			{
+					Trace.WriteLine ("EXCEPTION: " + e.Message + " ... continuing execution.");
+			}
 				
 			RemotingConfiguration.ApplicationName = service_name;
             RemotingConfiguration.RegisterActivatedServiceType(typeof(WorkerObject));
@@ -94,6 +98,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
         protected override void OnStart(string[] args)
         {
+			readArguments (args, out port, out session_id);
             this.startWorkerServer();
 
          }

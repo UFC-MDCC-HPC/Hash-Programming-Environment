@@ -9,6 +9,7 @@ import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HComponent;
 import hPE.frontend.base.model.HUnit;
+import hPE.frontend.kinds.binding.model.HBindingComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.computation.model.HComputationUnit;
 import hPE.frontend.kinds.data.model.HDataComponent;
@@ -41,6 +42,7 @@ public class HApplicationComponent extends HComputationComponent {
     	if (c instanceof HEnvironmentComponent) return true;
     	if (c instanceof HSynchronizationComponent) return true;
     	if (c instanceof HComputationComponent) return true;
+    	if (c instanceof HBindingComponent) return true;
     	return super.accepts(c);
     }
     
