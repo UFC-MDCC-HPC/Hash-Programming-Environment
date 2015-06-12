@@ -141,7 +141,7 @@ namespace Back_End_WS
         [WebMethod]
         public string hosts()
         {
-            TextReader tr = new StreamReader(Constants.hosts_file);
+            TextReader tr = new StreamReader(Constants.HOSTS_FILE);
 
             string hstr = tr.ReadToEnd();
             tr.Close();

@@ -501,8 +501,8 @@
     		</element>
     	</sequence>
     	<attribute name="uri" type="string"></attribute>
-        <attribute name="srcType" type="string"></attribute>
-        <attribute name="fileType" type="string"></attribute>
+        <attribute name="srcType" type="string" use="optional"></attribute>
+        <attribute name="fileType" type="string" use="optional"></attribute>
     	<attribute name="versionId" type="string"></attribute>
     	<attribute name="name" type="string"></attribute>
     	<attribute name="contents" type="string" use="optional"></attribute>

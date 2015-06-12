@@ -13,6 +13,7 @@ public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClas
 	private static final long serialVersionUID = -1915974147641117394L;
 	private HBESourceCSharpClassDefinition src_base = null; 
 	private HBESourceCSharpClassDefinition src_user = null; 
+	private List<HBESourceCSharpClassDefinition> src_otherfiles = null;
 	
 	public HBESourceVersionCSharp() {
 		super();
@@ -25,6 +26,14 @@ public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClas
 	public void setUserSource(HBESourceCSharpClassDefinition src) {
 		this.src_user = src;
 	}
+	
+	public void addSource(HBESourceCSharpClassDefinition src) 
+	{
+		if (this.src_otherfiles == null)
+			this.src_otherfiles = new ArrayList<HBESourceCSharpClassDefinition>();
+		
+		this.src_otherfiles.add(src);
+	}
 
 	public List<HBESourceCSharpClassDefinition> getFiles() {
 		List<HBESourceCSharpClassDefinition> l = new ArrayList<HBESourceCSharpClassDefinition>();
@@ -32,6 +41,8 @@ public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClas
 		    l.add(this.src_base);
 		if (this.src_user != null)
 			l.add(this.src_user);
+		if (this.src_otherfiles != null)
+			l.addAll(this.src_otherfiles);
 		return l;
 	}
 	
@@ -55,9 +66,12 @@ public class HBESourceVersionCSharp extends HBESourceVersion<HBESourceCSharpClas
 	    return src_user;	
 	}
 	
-	public void addFile(HBESourceCSharpClassDefinition f) throws Exception {
-	      if (this.src_base == null && (f.getSrcType() == null || f.getSrcType().equals("base"))) this.src_base = f;
-	      else if (this.src_user == null && (f.getSrcType() != null && f.getSrcType().equals("user"))) this.src_user = f;
+	public void addFile(HBESourceCSharpClassDefinition f) throws Exception 
+	{
+	      if (this.src_base == null && (f.getSrcType() == null || f.getSrcType().equals("base"))) this.setBaseSource(f);
+	      else if (this.src_user == null && (f.getSrcType() != null && f.getSrcType().equals("user"))) this.setUserSource(f);
+	      else if (f.getSrcType() == null) 
+	    	  this.addSource(f);	      
 	      else 
 	    	  throw new Exception("HBESourceVersionCSharp.addFile: Source already defined !");
 	}

@@ -113,9 +113,11 @@ public class CommandLineUtil {
   /// <param name="file">The command line that includes de source file name</param>
   /// <returns>bool</returns>
   /// 
-  public static bool compile_source(string contents, string moduleNameWithoutExtension, string[] references, 
-		                            string userName, string password, String curDir){
-//          string moduleNameWithoutExtension = moduleName.Split('.')[0];
+  public static bool compile_source(Tuple<string,string>[] sourceContents, string moduleName, string[] references, 
+		                            string userName, string password, String curDir)
+	{
+			Trace.WriteLine ("Module NAME is " + moduleName);
+
           
           //references
 
@@ -129,9 +131,20 @@ public class CommandLineUtil {
 
           // CREATE THE FILE <moduleName>.cs in the temporary directory with <contents> as the contents:
 
-          createFile(contents, moduleNameWithoutExtension + ".cs");
+		  string sourceCompileString = " ";
+		  foreach (Tuple<string,string> sourceContentsItem in sourceContents) 
+		  {
+			string sourceName = sourceContentsItem.Item1 + ".cs";
+			createFile (sourceContentsItem.Item2, sourceName);
+			sourceCompileString += Constants.PATH_TEMP_WORKER + sourceName + " ";
+		  }
 
-          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags + " -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".dll /keyfile:" + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".snk " + Constants.PATH_TEMP_WORKER + moduleNameWithoutExtension + ".cs"  + mounted_references, userName, password, curDir);
+          runCommand(Constants.cs_compiler, Constants.cs_compiler_flags 
+			           + " -lib:" + Constants.PATH_DGAC + "," + Constants.UNIT_PACKAGE_PATH + " -r:DGAC.dll" 
+			           + " /target:library /out:" + Constants.PATH_TEMP_WORKER + moduleName + ".dll" 
+			           + " /keyfile:" + Constants.PATH_TEMP_WORKER + moduleName + ".snk" 
+			           + sourceCompileString  
+			           + mounted_references, userName, password, curDir);
           // -r:mpibasicimpl\\IMPIBasicImpl.dll 
           return true;
   }
@@ -150,20 +163,20 @@ public class CommandLineUtil {
   /// </summary>
   /// <param name="assembly">The assembly name</param>
   /// <returns>bool</returns>
-  public static bool gacutil_install(string cuid, string assembly, int gac, string userName, string password){
+  public static bool gacutil_install(string library_path, string assembly, int gac, string userName, string password){
 
       runCommand(Constants.gac_util, "-u " + assembly);
-      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + cuid, userName, password, null);
+      runCommand(Constants.gac_util, "-i " + Constants.PATH_TEMP_WORKER + assembly + ".dll" + " -package " + library_path, userName, password, null);
 
 //      runCommand("copy", Constants.PATH_TEMP_WORKER + assembly + ".dll" + " " + Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + cuid );
 
       string package_path = Constants.UNIT_PACKAGE_PATH.Replace("\"", "");
       string fileSource = Constants.PATH_TEMP_WORKER + assembly + ".dll";
-      string pathTarget = package_path + Path.DirectorySeparatorChar + cuid;
+      string pathTarget = package_path + Path.DirectorySeparatorChar + library_path;
       string fileTarget = pathTarget + Path.DirectorySeparatorChar + assembly + ".dll";
       if (!Directory.Exists(pathTarget))
       {
-	  Trace.WriteLine("From " + fileSource + " to " + fileTarget);
+	  	  Trace.WriteLine("From " + fileSource + " to " + fileTarget);
           Directory.CreateDirectory(pathTarget);
       }
       File.Copy(fileSource, fileTarget, true);

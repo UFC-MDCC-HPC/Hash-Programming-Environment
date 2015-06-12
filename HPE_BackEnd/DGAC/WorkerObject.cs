@@ -309,6 +309,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				FacetAccess facet_access = new FacetAccess(ip_address_facets[i], port_facets[i]);
 
 				unit_slice.addFacetAccessInfo(i, facet_access);
+
+				Trace.WriteLine ("ADDING FACET TO UNIT SLICE - fact=" + i + ", address = " + ip_address_facets[i] + ", port = " + port_facets[i]);
 			}
 		}
 
@@ -360,7 +362,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					if (kind == Constants.KIND_BINDING)
 					{
 						IBindingKind unit_slice_binding = (IBindingKind) unit_slice; 
-						unit_slice_binding.RootCommunicator = new MPI.Intercommunicator (unit_slice.Communicator, 0, global_communicator, my_global_rank == 0 ? 1 : 0, 999);
+						unit_slice_binding.RootCommunicator = new MPI.Intercommunicator(unit_slice.Communicator, 0, global_communicator, my_global_rank == 0 ? 1 : 0, 999);
 
 						Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 8");
 

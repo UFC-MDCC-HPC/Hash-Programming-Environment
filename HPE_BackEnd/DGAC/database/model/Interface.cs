@@ -226,9 +226,9 @@ public class Interface {
             string refname = LoaderApp.buildDllName(acfsuper.Library_path, iSuper.Assembly_string);
             if (!refs.Contains(refname))
                 refs.Add(refname);
-            string refnamebase = LoaderApp.buildDllNameBase(acfsuper.Library_path, iSuper.Assembly_string);
-            if (!refs.Contains(refnamebase))
-                refs.Add(refnamebase);
+            //string refnamebase = LoaderApp.buildDllNameBase(acfsuper.Library_path, iSuper.Assembly_string);
+            //if (!refs.Contains(refnamebase))
+            //    refs.Add(refnamebase);
         }
 
         // Traverse slices.
@@ -282,9 +282,9 @@ public class Interface {
                 string refname = LoaderApp.buildDllName(acfSlice.Library_path, i.Assembly_string);
                 if (!refs.Contains(refname))
                     refs.Add(refname);
-                string refnamebase = LoaderApp.buildDllNameBase(acfSlice.Library_path, i.Assembly_string);
-                if (!refs.Contains(refnamebase))
-                    refs.Add(refnamebase);
+                //string refnamebase = LoaderApp.buildDllNameBase(acfSlice.Library_path, i.Assembly_string);
+                //if (!refs.Contains(refnamebase))
+                //    refs.Add(refnamebase);
             }
         }
 

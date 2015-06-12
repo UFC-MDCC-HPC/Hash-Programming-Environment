@@ -146,6 +146,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 		public const string FACET_IP_ADDRESS = "facet_ip_address";
 		public const string FACET_PORT = "facet_ip_port";
 		public static string FACET_NUMBER = "facet_number";
+		public static string ENCLOSING_FACET_NUMBER = "enclosing_facet_number";
 
         public static string INITIALIZE_PORT_NAME = "initialize_port";
         public static string INITIALIZE_PORT_TYPE = "br.ufc.pargo.hpe.ports.AutomaticSlicesPort";

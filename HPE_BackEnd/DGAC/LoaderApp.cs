@@ -251,63 +251,52 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
 				AbstractComponentFunctor acf = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(interfaceUnit.Id_abstract);
 
-                IList<string> stringCompilationSet = new List<string>();
-
+				IList<string> referencesArrayAll_list = new List<string> ();
+  
                 IDictionary<string, AbstractComponentFunctorApplication> pars = component.Arguments;
 				
 				Trace.WriteLine ("BEGIN TAKING REFERENCES OF " + (unit.Id_abstract) + ", " + id_concrete);
                 foreach (string reference in interfaceUnit.fetchReferences(pars))
                 {
 					Trace.WriteLine(reference);
-                    stringCompilationSet.Add(reference);
+					referencesArrayAll_list.Add(reference);
                 }
 				Trace.WriteLine ("END TAKING REFERENCES OF " + (unit.Id_abstract));
 
                 string file_name_Interface = buildDllName(acf.Library_path, interfaceUnit.Assembly_string);
-                if (!stringCompilationSet.Contains(file_name_Interface))
-                    stringCompilationSet.Add(file_name_Interface);
+				if (!referencesArrayAll_list.Contains(file_name_Interface))
+					referencesArrayAll_list.Add(file_name_Interface);
 
-                string file_name_Interface_base = buildDllNameBase(acf.Library_path, interfaceUnit.Assembly_string);
-                if (!stringCompilationSet.Contains(file_name_Interface_base))
-                    stringCompilationSet.Add(file_name_Interface_base);
+             //   string file_name_Interface_base = buildDllNameBase(acf.Library_path, interfaceUnit.Assembly_string);
+			//	if (!referencesArrayAll_list.Contains(file_name_Interface_base))
+				//	referencesArrayAll_list.Add(file_name_Interface_base);
 
-                string[] referencesArray = new string[stringCompilationSet.Count];
-                stringCompilationSet.CopyTo(referencesArray, 0);
-                IList<string> libRefs = new List<string>();
-                IList<SourceCode> scList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.list('u', unit.Id_concrete, unit.Id_unit);
-                foreach (SourceCode sc in scList)
+                IList<SourceCode> scList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.list('u', unit.Id_concrete, unit.Id_unit);  
+
+				InfoCompile info = new InfoCompile();
+
+				info.sourceContents = new Tuple<string,string>[scList.Count];
+				int source_counter = 0;
+				foreach (SourceCode sc in scList)
                 {
                     IList<string> sourceRefs = sc.ExternalReferences;
-                    string[] referencesArrayAll = new string[referencesArray.Length + sourceRefs.Count];
-                    referencesArray.CopyTo(referencesArrayAll, 0);
-                    sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
-
-                    InfoCompile info = new InfoCompile();
-                    info.moduleName = sc.File_name.Split('.')[0]; // buildDllName(unit.Assembly_string); ;
-                    info.unitId = unit.Id_unit;
-                    info.sourceCode = sc.Contents;
-                    info.cuid = component.Hash_component_UID;
-                    info.library_path = component.Library_path;
-                    info.id = component.Id_concrete;
-
-                    string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
-                    libRefs.CopyTo(referencesArray_, 0);
-                    referencesArrayAll.CopyTo(referencesArray_, libRefs.Count);
-                    info.references = referencesArray_;
-
-                    if (sc.File_type.Equals("exe"))
-                    {
-                        info.output_type = Constants.EXE_OUT;
-                    }
-                    else
-                    {
-                        libRefs.Add(buildDllName(component.Library_path, component.Library_path + "." + info.moduleName.Split('.')[0]));
-                        info.output_type = Constants.DLL_OUT;
-                    }
-
-                    referencesSet.Add(info);
+					foreach (string sourceRef in sourceRefs) referencesArrayAll_list.Add (sourceRef);
+					info.sourceContents [source_counter] = new Tuple<string,string> (sc.File_name.Split('.')[0], sc.Contents);
+					source_counter ++;
                 }
 
+				string[] referencesArrayAll = new string[referencesArrayAll_list.Count];
+				referencesArrayAll_list.CopyTo (referencesArrayAll, 0);
+
+				info.moduleName = unit.Class_name;
+				info.unitId = unit.Id_unit;
+				info.cuid = component.Hash_component_UID;
+				info.library_path = component.Library_path;
+				info.id = component.Id_concrete;
+				info.output_type = Constants.DLL_OUT;
+				info.references = referencesArrayAll;
+
+				referencesSet.Add(info);
 
             }//foreach
 
@@ -323,45 +312,44 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
             foreach (Interface i in iList)
             {				
-                IList<string> stringCompilationSet = new List<string>();
+				IList<string> referencesArrayAll_list = new List<string> ();
 
-                foreach (string reference in i.References)
+				foreach (string reference in i.References)
                 {
 					Trace.WriteLine("REFERENCE: " + id_abstract + " - " + i.Class_name + " -- " + reference);
-                    stringCompilationSet.Add(reference);
+					referencesArrayAll_list.Add (reference);
                 }
 
-                string[] referencesArray = new string[stringCompilationSet.Count];
-                stringCompilationSet.CopyTo(referencesArray, 0);
-
-                IList<string> libRefs = new List<string>();
                 IList<SourceCode> scList = br.ufc.pargo.hpe.backend.DGAC.BackEnd.scdao.list('i', i.Id_abstract, i.Id_interface);
-                foreach (SourceCode sc in scList)
+
+				InfoCompile info = new InfoCompile();
+
+				info.sourceContents = new Tuple<string,string>[scList.Count];
+
+				int source_counter = 0;
+				foreach (SourceCode sc in scList)
                 {
                     IList<string> sourceRefs = sc.ExternalReferences;
-                    string[] referencesArrayAll = new string[referencesArray.Length + sourceRefs.Count];
-                    referencesArray.CopyTo(referencesArrayAll, 0);
-                    sourceRefs.CopyTo(referencesArrayAll, referencesArray.Length);
+					foreach (string sourceRef in sourceRefs) referencesArrayAll_list.Add (sourceRef);
+					info.sourceContents [source_counter] = new Tuple<string, string> (sc.File_name.Split('.')[0], sc.Contents);
+					source_counter ++;
+				}
 
-                    InfoCompile info = new InfoCompile();
+				string[] referencesArrayAll = new string[referencesArrayAll_list.Count];
+				referencesArrayAll_list.CopyTo (referencesArrayAll, 0);
 
-                    string[] referencesArray_ = new string[referencesArrayAll.Length + libRefs.Count];
-                    libRefs.CopyTo(referencesArray_, 0);
-                    referencesArrayAll.CopyTo(referencesArray_, libRefs.Count);
-                    info.references = referencesArray_;
+				AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
+				info.moduleName = i.Class_name;
+				info.unitId = i.Id_interface;
+				info.partition_index = i.Unit_replica;
+				info.cuid = acf1.Hash_component_UID;
+				info.library_path = acf1.Library_path;
+				info.id = acf1.Id_abstract;
+				info.references = referencesArrayAll;
 
-                    AbstractComponentFunctor acf1 = br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfdao.retrieve(id_abstract);
-                    info.moduleName = sc.File_name.Split('.')[0];//  buildDllName(i.Assembly_string);
-                    info.unitId = i.Id_interface;
-					info.partition_index = i.Unit_replica;
-                    info.sourceCode = sc.Contents;
-                    info.cuid = acf1.Hash_component_UID;
-                    info.library_path = acf1.Library_path;
-                    info.id = acf1.Id_abstract;
-                    info.output_type = sc.File_type.Equals("exe") ? Constants.EXE_OUT : Constants.DLL_OUT;
-                    referencesSet.Add(info);
-                    libRefs.Add(buildDllName(acf1.Library_path, acf1.Library_path + "." + info.moduleName.Split('.')[0]));
-                }
+				referencesSet.Add(info);
+				// libRefs.Add(buildDllName(acf1.Library_path, acf1.Library_path + "." + info.sourceName.Split('.')[0])); // DESNECESSÁRIO, pois agora tudo vai ser compilado junto
+				info.output_type = /*sc.File_type.Equals("exe") ? Constants.EXE_OUT : */ Constants.DLL_OUT;
 
 
             }//foreach
@@ -401,12 +389,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 
         public struct InfoCompile
         {
-
+			public string moduleName;
             public string[] references;
-            public string moduleName;
 			public int partition_index;
             public string unitId;
-            public string sourceCode;
+			public Tuple<string,string>[] sourceContents;
             public string cuid;
             public string library_path;
             public int id;

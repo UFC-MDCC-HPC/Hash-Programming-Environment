@@ -2328,21 +2328,21 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (HBESourceVersion<HBEAbstractFile> src : sources) {
 			SourceType s = factory.createSourceType();
 
-			List<SourceFileType> fsX = s.getFile();
+			List<SourceFileType> fsX = s.getFile(); 	 	
 
 			for (HBEAbstractFile f : src.getFiles()) {
 				SourceFileType fX = factory.createSourceFileType();
 				String uri = f.getBinaryPath().toString();
-				String fileType = f.getFileType();
+				//String fileType = f.getFileType();
 				String versionIdF = f.getVersionID();
 				String srcType = f.getSrcType();
 				fX.setUri(uri);
-				fX.setFileType(fileType);
+				//fX.setFileType(fileType);
 				fX.setName(f.getFileName());
 				fX.setContents(f.getCurrentContents());
-				fX.setVersionId(checkVersion(versionIdF) ? versionIdF
-						: "1.0.0.0");
-				fX.setSrcType(srcType == null ? "base" : srcType);
+				fX.setVersionId(checkVersion(versionIdF) ? versionIdF : "1.0.0.0");
+				if (srcType != null)
+					fX.setSrcType(srcType);
 				List<String> deps = fX.getDependency();
 				deps.addAll(f.getDependencies());
 				List<String> edeps = fX.getExternalDependency();
@@ -3142,13 +3142,12 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			String versionId = s.getVersionId();
 			versionId = checkVersion(versionId) ? versionId : "1.0.0.0";
 			String sourceType = s.getSourceType();
-			HBESourceVersion<HBEAbstractFile> source = i
-					.createSourceVersion(sourceType);
+			HBESourceVersion<HBEAbstractFile> source = i.createSourceVersion(sourceType);
 			source.setVersionID(versionId);
 
-			for (SourceFileType f : s.getFile()) {
-				String fileType = f.getFileType().equals("dll") ? "library" : f
-						.getFileType();
+			for (SourceFileType f : s.getFile()) 
+			{
+				String fileType = "library";
 				String locallocation = this.component.getRelativeLocation();
 				URI uriRootPath = URI.createURI(locallocation);
 				String rootPath = uriRootPath.toString();
@@ -3161,11 +3160,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 				String srcType = f.getSrcType();
 
-				HBEAbstractFile ff = createFile(fileType, name, contents,
-						rootPath, versionIdF, i, srcType);
+				HBEAbstractFile ff = createFile(fileType, name, contents, rootPath, versionIdF, i, srcType);
 				ff.setDependencies(new ArrayList<String>(f.getDependency()));
-				ff.addExternalReferences(new ArrayList<String>(f
-						.getExternalDependency()));
+				ff.addExternalReferences(new ArrayList<String>(f.getExternalDependency()));
 
 				try {
 					source.addFile(ff);

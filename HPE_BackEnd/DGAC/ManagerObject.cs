@@ -1148,6 +1148,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		                              out string[] interface_ids, 
 									  out int[] unit_indexes, 
 									  out int[] nodes,
+		                              int enclosing_facet,
 		                              ref int facet)
 			{
 				Trace.WriteLine("BEGIN resolve_topology");
@@ -1199,7 +1200,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							nodes [i] = node;
 							i++;
 						}
-						facet = unit.Facet;
+						facet = unit.Facet < 0 ? enclosing_facet : unit.Facet;
 					} 
 					else 
 					{
@@ -1254,6 +1255,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 			listener.Bind (localEndPoint);
 			listener.Listen (10);
+			
+		
 
 		}
 
@@ -1308,7 +1311,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			previous_address = s[0];
 			previous_port = int.Parse(s[1]);
 
-			Console.WriteLine ("binding_exchange_ports N *** this FACET received " + previous_address + ":" + previous_port + " from the other FACET *** " + bytesReceived);
+			Trace.WriteLine ("binding_exchange_ports N *** this FACET received " + previous_address + ":" + previous_port + " from the other FACET *** " + bytesReceived);
 		}
 
 		private void binding_exchange_ports_N (int this_facet, ref string[] facet_access_address, ref int[] facet_access_port)
@@ -1319,13 +1322,14 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 			int this_facet_port = -1;
 			calculate_this_facet_address(ref this_facet_address, ref this_facet_port);
 
+			Trace.WriteLine ("binding_exchange_ports N - this_facet_address is " + this_facet_address + " / this_facet_port is " + this_facet_port);	
 			string current_address = this_facet_address;
 			int current_port = this_facet_port;
 
 			int next_facet;    
 			Math.DivRem (this_facet + 1, N, out next_facet);
 
-			Console.WriteLine ("this facet is " + this_facet + ", next facet is " + next_facet);
+			Trace.WriteLine ("this facet is " + this_facet + ", next facet is " + next_facet);
 
 			Socket listener = null;
 			create_server (facet_access_address [this_facet], facet_access_port [this_facet], out listener);
@@ -1341,22 +1345,21 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 				
 			t.Join ();
 
-			for (int i=0; i<N-1; i++) 
-			{
-				int current_facet; 
-				Math.DivRem (this_facet + i, N, out current_facet);
+			int current_facet = this_facet; 
+			facet_access_address [current_facet] = current_address;
+			facet_access_port [current_facet] = current_port;
 
-				string previous_address = null;
-				int previous_port = -1;
+			for (int i=1; i<N; i++) 
+			{
+				Math.DivRem (current_facet + 1, N, out current_facet);
+
+				Trace.WriteLine ("binding_exchange_ports N - current facet is " + current_facet);
 
 				send_to_the_next (sender, current_address, current_port);
-				receive_from_the_previous (handler, ref previous_address, ref previous_port);
+				receive_from_the_previous (handler, ref current_address, ref current_port);
 
 				facet_access_address [current_facet] = current_address;
 				facet_access_port [current_facet] = current_port;
-
-				current_address = previous_address;
-				current_port = previous_port;
 			}
 
 			sender.Shutdown (SocketShutdown.Both);
@@ -1396,11 +1399,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     Connector.openConnection();
                     Connector.beginTransaction();
 
-
-                    Trace.WriteLine("createInstance manager");
+                    Trace.WriteLine("createInstance manager " + instanceName + ", " + componentName);
 
 				    id_functor_app = (int) properties[Constants.ID_FUNCTOR_APP];
 					IDictionary<string,int> arguments = (IDictionary<string,int>) properties[Constants.ENCLOSING_ARGUMENTS];
+				    int enclosing_facet = (int) properties[Constants.ENCLOSING_FACET_NUMBER];
 				
 				    DGAC.database.Component c = BackEnd.cdao.retrieve_libraryPath(componentName);
 					kind = Constants.kindMapping[c.Kind];
@@ -1431,6 +1434,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 										 out interface_ids, 
 										 out unit_indexes, 
 										 out nodes,
+					                     enclosing_facet,
 					                 	 ref this_facet);
 					}
 
@@ -1502,8 +1506,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							string[] facet_access_address = (string[]) properties[Constants.FACET_IP_ADDRESS];
 							int[] facet_access_port = (int[]) properties[Constants.FACET_PORT];
 							
-							if (facet_access_address.Length != acf.FacetCount || facet_access_port.Length != acf.FacetCount)
-								throw new Exception ("createInstanceImpl: UNABLE TO CREATE BINGING INSTANCE - inconsistent access information for binding facets");
+							//if (facet_access_address.Length != acf.FacetCount || facet_access_port.Length != acf.FacetCount)
+							//	throw new Exception ("createInstanceImpl: UNABLE TO CREATE BINGING INSTANCE - inconsistent access information for binding facets");
 
 
 							/* TODO: promover uma sincronização de números de portas entre as facetas. 
@@ -1512,6 +1516,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							 */
 
 							binding_exchange_ports_N(this_facet, ref facet_access_address, ref facet_access_port);
+
+							for (int ii=0; ii<facet_access_address.Length; ii++) Trace.WriteLine("AFTER binding_exchange_ports_N : facet_access_address[" + ii + "] =" + facet_access_address[ii]);
+							for (int ii=0; ii<facet_access_port.Length; ii++) Trace.WriteLine("AFTER binding_exchange_ports_N :facet_access_address[" + ii + "] =" + facet_access_port[ii]);
 
 							worker_properties[Constants.FACET_IP_ADDRESS] = facet_access_address;
 							worker_properties[Constants.FACET_PORT] = facet_access_port;
@@ -1859,34 +1866,24 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 public string compileClass
                     (string library_path,                                            
-                     string contents, 
-                     string moduleName_, 
+			 		 string moduleName,
+                     Tuple<string,string>[] sourceContents, 
                      string[] references, 
                      int outFile, 
                      string userName, 
                      string password, 
                      string curDir)
                 {
-                    string moduleName = library_path + "." + moduleName_;
                     string publicKeyToken = null; 
-                    string moduleNameWithoutExtension = moduleName; // .Split('.')[0];
 
-                    if (outFile == Constants.EXE_OUT)
-                    {
-                        CommandLineUtil.compile_to_exe(contents, moduleName, references, userName, password, curDir);
-                    }
-                    else
-                    {
-                        //creates the strong key, for new assembly
-                        publicKeyToken = CommandLineUtil.create_strong_key(moduleNameWithoutExtension, userName, password, curDir);
-                        //compile, generate dll 
-                        CommandLineUtil.compile_source(contents, moduleNameWithoutExtension, references, userName, password, curDir);
-                        //installing on local GAC
-                        CommandLineUtil.gacutil_install(library_path, moduleNameWithoutExtension, 1, userName, password);
-                    }
-                    // Erase temporary files.
-                    // CommandLineUtil.clean(moduleNameWithoutExtension);
-                    return publicKeyToken;
+					//creates the strong key, for new assembly
+                    publicKeyToken = CommandLineUtil.create_strong_key(moduleName, userName, password, curDir);
+                    //compile, generate dll 
+                    CommandLineUtil.compile_source(sourceContents, moduleName, references, userName, password, curDir);
+                    //installing on local GAC
+                    CommandLineUtil.gacutil_install(library_path, moduleName, 1, userName, password);
+
+					return publicKeyToken;
                 }
 		        
 		        /*
