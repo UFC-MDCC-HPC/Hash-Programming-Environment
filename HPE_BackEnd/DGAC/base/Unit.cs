@@ -57,7 +57,7 @@ namespace br.ufc.pargo.hpe.basic
         
 		void addSlice(IUnit slice, string portName);
 		
-        new void on_initialize();
+	    new void on_initialize();
         new void after_initialize();
         void destroySlice();
 		

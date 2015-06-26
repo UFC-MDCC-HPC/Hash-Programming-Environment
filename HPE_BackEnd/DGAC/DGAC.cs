@@ -1887,17 +1887,27 @@ namespace br.ufc.pargo.hpe.backend
 					else 
 						throw new Exception("DGAC.createApplicationInstance - UNEXPECTED ERROR ...");
 
-					// read facet information, if it exists.
-					string[] binding_access_address = new string[instantiator.facet_address.Length];
-					int[] binding_access_port = new int[instantiator.facet_address.Length];
 
-					int i=0;
-					foreach (FacetAddressType fa in instantiator.facet_address)
+					Trace.WriteLine("create component instance 1");
+
+					string[] binding_access_address = null;
+					int[] binding_access_port = null;
+
+					if (instantiator.facet_address != null)
 					{
-						binding_access_address[i] = fa.address;
-						binding_access_port[i] = fa.port;
-						i++;
-					}				    
+						// read facet information, if it exists.
+						binding_access_address = new string[instantiator.facet_address.Length];
+						binding_access_port = new int[instantiator.facet_address.Length];
+						int i=0;
+						foreach (FacetAddressType fa in instantiator.facet_address)
+						{
+							binding_access_address[i] = fa.address;
+							binding_access_port[i] = fa.port;
+							i++;
+						}
+					}
+
+					Trace.WriteLine("create component instance 2");
 
 					IDictionary<string, int> arguments = new Dictionary<string,int>();
 					setUpParameters(acfaRef.Id_functor_app, arguments);	
@@ -2088,43 +2098,42 @@ namespace br.ufc.pargo.hpe.backend
 							inner_conn_list.TryGetValue(portName, out curr_inner_connid);
 							curr_inner_cid = curr_inner_connid != null ? (ManagerComponentID) curr_inner_connid.getProvider() : null;
 							
-		                    if (ic.IsPublic)
-							{
-								/* Look for the inner component in the transitively enclosing 
+								if (ic.IsPublic) {
+									/* Look for the inner component in the transitively enclosing 
 								 * component where it is private.
 								 */
-								int i = 0;
-								foreach (ManagerComponentID cid_owner in cid_chain) 
-								{
-									Instantiator.UnitMappingType[] unit_mapping_inner;
-									// find the inner componetn in the current parent 
-									inner_cid = findInnerComponent(cid_owner, cid, ic, id_abstract_owner[i], id_inner_at_owner[i], bsPort, out unit_mapping_inner);
+									int i = 0;
+									foreach (ManagerComponentID cid_owner in cid_chain) {
+										Instantiator.UnitMappingType[] unit_mapping_inner;
+										// find the inner componetn in the current parent 
+										inner_cid = findInnerComponent (cid_owner, cid, ic, id_abstract_owner [i], id_inner_at_owner [i], bsPort, out unit_mapping_inner);
 										
-									/* if not found, look at the the next parent in
+										/* if not found, look at the the next parent in
 									 * the next iteration. Otherwise, finish the loop.
 									 */
-									if (inner_cid != null)
-									{
-										icList2.Add (ic, unit_mapping_inner);
-										ggg.Add(ic,true);
-										break;
-									}
+										if (inner_cid != null) {
+											icList2.Add (ic, unit_mapping_inner);
+											ggg.Add (ic, true);
+											break;
+										}
 										
-									i++;
-								}
+										i++;
+									}
 																		
-							} 
-							else  /* If the inner component private, create it. */
-							{	
-								Instantiator.UnitMappingType[] unit_mapping_inner;
+								} 
+								else 
+								{  /* If the inner component private, create it. */
+									Instantiator.UnitMappingType[] unit_mapping_inner;
 
-								string[] binding_access_address_inner = null;
-								int[] binding_access_port_inner = null;
+									string[] binding_access_address_inner = null;
+									int[] binding_access_port_inner = null;
+									int this_facet = 0;
 
-								translate_facet_address (cid, ic, binding_access_address, binding_access_port, ref binding_access_address_inner, ref binding_access_port_inner);
-
-								int this_facet = -1;
-								calculate_this_facet (id_abstract, unit_mapping_enclosing, out this_facet);
+									if (binding_access_address != null && binding_access_address != null)
+									{
+										translate_facet_address (cid, ic, binding_access_address, binding_access_port, ref binding_access_address_inner, ref binding_access_port_inner);
+										calculate_this_facet (id_abstract, unit_mapping_enclosing, out this_facet);
+									}
 
 								inner_cid = createInnerComponent(cid, ic, curr_inner_cid, bsPort, arguments, argumentsTop, unit_mapping_enclosing, out unit_mapping_inner,
 								                                 binding_access_address_inner,
