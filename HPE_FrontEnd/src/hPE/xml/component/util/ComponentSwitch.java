@@ -192,6 +192,12 @@ public class ComponentSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentPackage.EXTERNAL_LIBRARY_TYPE: {
+				ExternalLibraryType externalLibraryType = (ExternalLibraryType)theEObject;
+				T result = caseExternalLibraryType(externalLibraryType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ComponentPackage.FUSION_OF_REPLICATORS_TYPE: {
 				FusionOfReplicatorsType fusionOfReplicatorsType = (FusionOfReplicatorsType)theEObject;
 				T result = caseFusionOfReplicatorsType(fusionOfReplicatorsType);
@@ -220,6 +226,12 @@ public class ComponentSwitch<T> extends Switch<T> {
 			case ComponentPackage.GUARD_TYPE: {
 				GuardType guardType = (GuardType)theEObject;
 				T result = caseGuardType(guardType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentPackage.HEXTERNAL_LIBRARY_TYPE: {
+				HExternalLibraryType hExternalLibraryType = (HExternalLibraryType)theEObject;
+				T result = caseHExternalLibraryType(hExternalLibraryType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -740,6 +752,21 @@ public class ComponentSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>External Library Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>External Library Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExternalLibraryType(ExternalLibraryType object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Fusion Of Replicators Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -811,6 +838,21 @@ public class ComponentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGuardType(GuardType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>HExternal Library Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>HExternal Library Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseHExternalLibraryType(HExternalLibraryType object) {
 		return null;
 	}
 

@@ -302,6 +302,62 @@ namespace br.ufc.pargo.hpe.backend
 			}
 
 			#region DEPLOY
+
+			static IList<LoaderApp.InfoCompile> fetchSharedLibraryCompile (IList<ExternalLibraryType> externalLibrary)
+			{
+
+				IList<LoaderApp.InfoCompile> referencesSet = new List<LoaderApp.InfoCompile>();
+				if (externalLibrary == null)
+					return referencesSet;
+
+				Trace.WriteLine ("fetchSharedLibraryCompile #1");
+
+				foreach (ExternalLibraryType elt in externalLibrary) 
+				{
+					LoaderApp.InfoCompile info = new LoaderApp.InfoCompile();
+
+					Trace.WriteLine ("fetchSharedLibraryCompile #2");
+
+					IList<string> returnExternalReferences = new List<string>();
+					IDictionary<string, ReferenceType> refList = FileUtil.loadExternalReferences();
+
+					Trace.WriteLine ("fetchSharedLibraryCompile #3");
+
+					if (elt.externalDependency != null) 
+					{
+						foreach (string extRef in elt.externalDependency) 
+						{
+							ReferenceType pathRef;
+							string path;
+							if (refList.TryGetValue (extRef, out pathRef))
+								path = pathRef.path;
+							else 
+							{
+								path = Constants.UNIT_PACKAGE_PATH + Path.DirectorySeparatorChar + extRef;
+								Console.Error.WriteLine ("External reference " + extRef + " not found. Using default " + path + ".");
+							}
+							returnExternalReferences.Add (path + Path.DirectorySeparatorChar + extRef + ".dll");
+						}
+
+					}
+					Trace.WriteLine ("fetchSharedLibraryCompile #4");
+
+					info.id = -1;
+					info.references = new string[returnExternalReferences.Count];
+					returnExternalReferences.CopyTo(info.references,0);
+					info.sourceContents = new Tuple<string,string>[1];
+					info.moduleName = elt.name.Split('.')[0];
+					info.sourceContents[0] = new Tuple<string,string>(info.moduleName, elt.contents);
+					info.library_path = info.moduleName;
+
+					Trace.WriteLine ("fetchSharedLibraryCompile #5");
+					referencesSet.Add (info);
+				}
+
+				Trace.WriteLine ("fetchSharedLibraryCompile #6");
+
+				return referencesSet;
+			}
 			
             public static int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
             {
@@ -316,10 +372,12 @@ namespace br.ufc.pargo.hpe.backend
                     LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
                     HashComponent cAbs_ = null;
 
+					IList<ExternalLibraryType> externalLibrary = null;
+
                     abstractloader.componentExists(ct.header.hash_component_UID, out cAbs_);
                     if (cAbs_ == null)
                     {
-                        cAbs = (AbstractComponentFunctor)abstractloader.loadComponent(ct);
+                        cAbs = (AbstractComponentFunctor)abstractloader.loadComponent(ct, ref externalLibrary);
                     }
                     else
                     {
@@ -328,13 +386,28 @@ namespace br.ufc.pargo.hpe.backend
                         Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
                         abstractloader.updateSources(ct, cAbs);
                         exists = 0;
+
+						externalLibrary = new List<ExternalLibraryType>();
+						foreach (Object o in ct.componentInfo)
+						{
+							if (o is ExternalLibraryType)
+							{
+								if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
+								externalLibrary.Add((ExternalLibraryType)o);
+							}
+						}
+						
                     }
 
                     Console.Error.Write("Compiling sources ...");
 
-                    ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
+					ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
+					sendToCompile(sharedLibraryCompile, userName, password, curDir, exists);
+                    
+					ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
 					sendToCompile(infoCompile, userName, password, curDir, exists);
-                    Console.Error.Write("ok ");
+                    
+					Console.Error.Write("ok ");
 
                     Connector.commitTransaction(); // if it is ok, commit ...
 
@@ -385,11 +458,17 @@ namespace br.ufc.pargo.hpe.backend
                                                                       userName,
                                                                       password,
                                                                       curDir);
-						switch(set_public_key)
-						{
-							case 1: idao.setPublicKey(id, unitName, partition_index, publicKey); break;
-							case 2: udao.setPublicKey(cuid, unitName, publicKey); break;
+					    
+					if (id > 0) {
+						switch (set_public_key) {
+						case 1:
+							idao.setPublicKey (id, unitName, partition_index, publicKey);
+							break;
+						case 2:
+							udao.setPublicKey (cuid, unitName, publicKey);
+							break;
 						}
+					}
 						
                     }
 
@@ -437,10 +516,12 @@ namespace br.ufc.pargo.hpe.backend
                     LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
                     HashComponent cConc_ = null;
 
-                    concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
+					IList<ExternalLibraryType> externalLibrary = null;
+
+					concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
                     if (cConc_ == null)
                     {
-                        cConc = (DGAC.database.Component)concreteloader.loadComponent(ct);
+                        cConc = (DGAC.database.Component)concreteloader.loadComponent(ct, ref externalLibrary);
                     }
                     else
                     {
@@ -448,10 +529,23 @@ namespace br.ufc.pargo.hpe.backend
                         cConc = (DGAC.database.Component)cConc_;
                         concreteloader.updateSources(ct, cConc);
                         exists = 0;
-                    }
+
+						externalLibrary = new List<ExternalLibraryType>();
+						foreach (Object o in ct.componentInfo)
+						{
+							if (o is ExternalLibraryType)
+							{
+								if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
+								externalLibrary.Add((ExternalLibraryType)o);
+							}
+						}
+               }
 
                     Console.Error.Write("Compiling sources ...");
 					
+					ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
+					sendToCompile(sharedLibraryCompile, userName, password, curDir, exists);
+
 					ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
 					sendToCompile(infoCompile, userName, password, curDir, exists);
 
@@ -1604,15 +1698,16 @@ namespace br.ufc.pargo.hpe.backend
 					}
 				}
 					
-				Trace.WriteLine("Connecting to the AutomaticSlices port of the application");
+				Trace.WriteLine("onInitializeApplication - START - Connecting to the Initialize port");
 				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
 				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
 				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
+				Trace.WriteLine("onInitializeApplication - END - Connecting to the Initialize port");
 					
-				Trace.WriteLine("INITIALIZING " + cid);
-				
+
 				initialize_port.on_initialize(); 
 				
+				Trace.WriteLine("AFTER RUNNING on_initialize" + cid);
 				//initialized.Add(cid,true);
 					
 				frwServices.releasePort(Constants.INITIALIZE_PORT_NAME);
@@ -1626,15 +1721,17 @@ namespace br.ufc.pargo.hpe.backend
 				                                     gov.cca.Services frwServices)
 			{
 									
-			    Trace.WriteLine("Connecting to the AutomaticSlices port of the application");
+				Trace.WriteLine("afterInitializeApplication - START - Connecting to the Initialize port");
 				frwServices.registerUsesPort(Constants.INITIALIZE_PORT_NAME, Constants.INITIALIZE_PORT_TYPE, new TypeMapImpl());
 				ConnectionID conn_cs = bsPort.connect(frwServices.getComponentID(), Constants.INITIALIZE_PORT_NAME, cid, Constants.INITIALIZE_PORT_NAME);            
 				InitializePort initialize_port = (InitializePort) frwServices.getPort (Constants.INITIALIZE_PORT_NAME);
+				Trace.WriteLine("afterInitializeApplication - END - Connecting to the Initialize port");
 					
-				Trace.WriteLine("AFTER INITIALIZING " + cid);
 				//after_initialized.Add(cid,true);
 				initialize_port.after_initialize();
-				
+
+				Trace.WriteLine("AFTER RUNNING after_initialize" + cid);
+
 				frwServices.releasePort(Constants.INITIALIZE_PORT_NAME);
 				bsPort.disconnect(conn_cs,0);	
 				frwServices.unregisterUsesPort(Constants.INITIALIZE_PORT_NAME);

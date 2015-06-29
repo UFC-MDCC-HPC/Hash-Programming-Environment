@@ -56,6 +56,7 @@ import hPE.xml.component.ConditionType;
 import hPE.xml.component.DocumentRoot;
 import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExtensionTypeType;
+import hPE.xml.component.ExternalLibraryType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.GuardType;
 import hPE.xml.component.InnerComponentType;
@@ -94,7 +95,9 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -267,8 +270,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			if (rs.size() != 1)
 				throw new HPEInvalidComponentResourceException();
 
-			ComponentType component = ((DocumentRootImpl) rs.get(0))
-					.getComponent();
+			ComponentType component = ((DocumentRootImpl) rs.get(0)).getComponent();
 
 			return component;
 
@@ -1194,6 +1196,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				if (this.isSubType)
 					component.setExtends(this.basetype);
 
+				loadExternalLibraries(xCinfo);
 				readInterfaces(xCinfo); //
 				loadUnits(xCinfo);//
 				setupParameters(xCinfo);
@@ -1227,6 +1230,17 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 
 		return null;
+	}
+
+	private void loadExternalLibraries(ComponentBodyType xCinfo) 
+	{
+	    for (ExternalLibraryType ext_library : xCinfo.getExternalLibrary())
+	    {
+	    	String name = ext_library.getName();
+	    	String[] external_dependency = (String[]) ext_library.getExternalDependency().toArray();
+	    	this.component.addExternalLibrary(name, external_dependency);
+	    }
+		
 	}
 
 	private void checkKeyFile() throws IOException {
@@ -1518,9 +1532,32 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		saveInterfaces(c, xI.getInterface());
 		saveUnits(c, xI.getUnit());
 		saveRecursiveEntries(c, xI.getRecursiveEntry());
+		saveExternalLibraries(c.getExternalLibrarySet(), xI.getExternalLibrary());
 		// saveEnumerator(c.gettReplicators(), xI.getEnumerator());
 		// saveEnumeratorFusions(c.gettReplicators(),
 		// xI.getFusionsOfReplicators());
+	}
+
+	private void saveExternalLibraries(
+			Map<String, String[]> externalLibrarySet,
+			EList<ExternalLibraryType> externalLibrary) 
+	{
+		for (Entry<String, String[]> e : externalLibrarySet.entrySet())
+		{
+			String library_name = e.getKey();
+			ExternalLibraryType elt = factory.createExternalLibraryType();
+			externalLibrary.add(elt);
+		    elt.setName(library_name);
+		    String source_code = null;
+		    source_code = this.getCurrentContents(library_name);
+		    
+			elt.setContents(source_code);
+			
+			EList<String> l = elt.getExternalDependency();
+			for (String external_dependency : e.getValue())
+				l.add(external_dependency);
+		}
+		
 	}
 
 	private void saveInnerRenamings(HComponent c, EList<InnerRenamingType> xRs) {
@@ -2321,6 +2358,44 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
+	public String getCurrentContents(String libraryName) 
+	{
+		String return_contents = null;
+		
+		IPath rootPath = new Path(this.component.getRelativeLocation());		
+		IPath path = rootPath.removeLastSegments(1).append("src").append(libraryName);
+		    	
+    	java.io.File file = HComponentFactoryImpl.getFileInWorkspace(path);
+    	
+    	StringBuffer s = new StringBuffer();
+
+		try {				
+			FileInputStream contents = new FileInputStream(file);
+			if (contents != null) {
+				Reader reader = new InputStreamReader(contents);
+				char[] readBuffer = new char[2048];
+				int n = reader.read(readBuffer);
+				while (n > 0) {
+					s.append(readBuffer, 0, n);
+					n = reader.read(readBuffer);
+				}
+				 			
+				return_contents = s.toString();
+				
+			} 
+						
+		}  
+		catch (IOException e) {
+        	JOptionPane.showMessageDialog(null,
+        		    "Error Reading File Contents - ".concat(e.getMessage()),
+        		    "Error",
+        		    JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return return_contents;
+		
+	}
+
 	private void saveSources(
 			Collection<HBESourceVersion<HBEAbstractFile>> sources,
 			EList<SourceType> sourcesX) {
@@ -2333,11 +2408,9 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			for (HBEAbstractFile f : src.getFiles()) {
 				SourceFileType fX = factory.createSourceFileType();
 				String uri = f.getBinaryPath().toString();
-				//String fileType = f.getFileType();
 				String versionIdF = f.getVersionID();
 				String srcType = f.getSrcType();
 				fX.setUri(uri);
-				//fX.setFileType(fileType);
 				fX.setName(f.getFileName());
 				fX.setContents(f.getCurrentContents());
 				fX.setVersionId(checkVersion(versionIdF) ? versionIdF : "1.0.0.0");

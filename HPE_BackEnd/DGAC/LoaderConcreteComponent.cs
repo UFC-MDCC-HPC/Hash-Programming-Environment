@@ -36,10 +36,10 @@ namespace HPE_DGAC_LoadDB
        
        /* The parameter fileName points to the location of a concrete component.
         */
-        public new HashComponent loadComponent(ComponentType c)
+		public new HashComponent loadComponent(ComponentType c, ref IList<ExternalLibraryType> externalLibrary)
         {
             this.xc = c;
-            cConc = (Component) base.loadComponent(c);
+            cConc = (Component) base.loadComponent(c, ref externalLibrary);
             return cConc;
         }
 

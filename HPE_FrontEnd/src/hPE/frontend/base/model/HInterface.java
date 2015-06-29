@@ -923,9 +923,7 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 	}
 
 	public HBESourceVersion createSourceVersion(String sourceType) {
-		if (sourceType
-				.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp
-						.getType())) {
+		if (sourceType.equals(hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp.getType())) {
 			return new hPE.frontend.kinds.application.codegen.c_sharp.HBESourceVersionCSharp();
 		} else if (sourceType.equals(HBESourceVersionCSharp.getType())) {
 			return new HBESourceVersionCSharp();

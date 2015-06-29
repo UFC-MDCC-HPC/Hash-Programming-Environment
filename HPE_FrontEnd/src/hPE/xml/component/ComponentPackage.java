@@ -281,13 +281,22 @@ public interface ComponentPackage extends EPackage {
 	int COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS = 11;
 
 	/**
+	 * The feature id for the '<em><b>External Library</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY = 12;
+
+	/**
 	 * The number of structural features of the '<em>Body Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_BODY_TYPE_FEATURE_COUNT = 12;
+	int COMPONENT_BODY_TYPE_FEATURE_COUNT = 13;
 
 	/**
 	 * The number of operations of the '<em>Body Type</em>' class.
@@ -1306,6 +1315,61 @@ public interface ComponentPackage extends EPackage {
 	int EXTENSION_TYPE_TYPE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.ExternalLibraryTypeImpl <em>External Library Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.ExternalLibraryTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getExternalLibraryType()
+	 * @generated
+	 */
+	int EXTERNAL_LIBRARY_TYPE = 20;
+
+	/**
+	 * The feature id for the '<em><b>External Dependency</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_LIBRARY_TYPE__EXTERNAL_DEPENDENCY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Contents</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_LIBRARY_TYPE__CONTENTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_LIBRARY_TYPE__NAME = 2;
+
+	/**
+	 * The number of structural features of the '<em>External Library Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_LIBRARY_TYPE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>External Library Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTERNAL_LIBRARY_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.FusionOfReplicatorsTypeImpl <em>Fusion Of Replicators Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1313,7 +1377,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSION_OF_REPLICATORS_TYPE = 20;
+	int FUSION_OF_REPLICATORS_TYPE = 21;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -1359,7 +1423,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionsOfReplicatorsType()
 	 * @generated
 	 */
-	int FUSIONS_OF_REPLICATORS_TYPE = 21;
+	int FUSIONS_OF_REPLICATORS_TYPE = 22;
 
 	/**
 	 * The feature id for the '<em><b>Fusion Of Replicators</b></em>' containment reference list.
@@ -1396,7 +1460,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getFusionType()
 	 * @generated
 	 */
-	int FUSION_TYPE = 22;
+	int FUSION_TYPE = 23;
 
 	/**
 	 * The feature id for the '<em><b>CRefs</b></em>' attribute list.
@@ -1442,7 +1506,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardType()
 	 * @generated
 	 */
-	int GUARD_TYPE = 24;
+	int GUARD_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Group</b></em>' attribute list.
@@ -1515,7 +1579,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getGuardConditionType()
 	 * @generated
 	 */
-	int GUARD_CONDITION_TYPE = 23;
+	int GUARD_CONDITION_TYPE = 24;
 
 	/**
 	 * The feature id for the '<em><b>Group</b></em>' attribute list.
@@ -1590,6 +1654,34 @@ public interface ComponentPackage extends EPackage {
 	int GUARD_CONDITION_TYPE_OPERATION_COUNT = GUARD_TYPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.impl.HExternalLibraryTypeImpl <em>HExternal Library Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.impl.HExternalLibraryTypeImpl
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getHExternalLibraryType()
+	 * @generated
+	 */
+	int HEXTERNAL_LIBRARY_TYPE = 26;
+
+	/**
+	 * The number of structural features of the '<em>HExternal Library Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEXTERNAL_LIBRARY_TYPE_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>HExternal Library Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HEXTERNAL_LIBRARY_TYPE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link hPE.xml.component.impl.ImplementsTypeImpl <em>Implements Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1597,7 +1689,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getImplementsType()
 	 * @generated
 	 */
-	int IMPLEMENTS_TYPE = 25;
+	int IMPLEMENTS_TYPE = 27;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -1634,7 +1726,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerComponentType()
 	 * @generated
 	 */
-	int INNER_COMPONENT_TYPE = 26;
+	int INNER_COMPONENT_TYPE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1779,7 +1871,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInnerRenamingType()
 	 * @generated
 	 */
-	int INNER_RENAMING_TYPE = 27;
+	int INNER_RENAMING_TYPE = 29;
 
 	/**
 	 * The feature id for the '<em><b>CNew Name</b></em>' attribute.
@@ -1834,7 +1926,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceParameterType()
 	 * @generated
 	 */
-	int INTERFACE_PARAMETER_TYPE = 28;
+	int INTERFACE_PARAMETER_TYPE = 30;
 
 	/**
 	 * The feature id for the '<em><b>Iname</b></em>' attribute.
@@ -1907,7 +1999,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfacePortType()
 	 * @generated
 	 */
-	int INTERFACE_PORT_TYPE = 29;
+	int INTERFACE_PORT_TYPE = 31;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -1962,7 +2054,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceRefType()
 	 * @generated
 	 */
-	int INTERFACE_REF_TYPE = 30;
+	int INTERFACE_REF_TYPE = 32;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2008,7 +2100,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceRefType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_REF_TYPE = 31;
+	int INTERFACE_SLICE_REF_TYPE = 33;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2063,7 +2155,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceSliceType()
 	 * @generated
 	 */
-	int INTERFACE_SLICE_TYPE = 32;
+	int INTERFACE_SLICE_TYPE = 34;
 
 	/**
 	 * The feature id for the '<em><b>Origin Ref</b></em>' containment reference.
@@ -2118,7 +2210,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getInterfaceType()
 	 * @generated
 	 */
-	int INTERFACE_TYPE = 33;
+	int INTERFACE_TYPE = 35;
 
 	/**
 	 * The feature id for the '<em><b>Slice</b></em>' containment reference list.
@@ -2245,7 +2337,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterRenaming()
 	 * @generated
 	 */
-	int PARAMETER_RENAMING = 34;
+	int PARAMETER_RENAMING = 36;
 
 	/**
 	 * The feature id for the '<em><b>Form Field Id</b></em>' attribute.
@@ -2300,7 +2392,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterSupplyType()
 	 * @generated
 	 */
-	int PARAMETER_SUPPLY_TYPE = 35;
+	int PARAMETER_SUPPLY_TYPE = 37;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2355,7 +2447,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getParameterType()
 	 * @generated
 	 */
-	int PARAMETER_TYPE = 36;
+	int PARAMETER_TYPE = 38;
 
 	/**
 	 * The feature id for the '<em><b>Component Ref</b></em>' attribute.
@@ -2419,7 +2511,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortSliceType()
 	 * @generated
 	 */
-	int PORT_SLICE_TYPE = 37;
+	int PORT_SLICE_TYPE = 39;
 
 	/**
 	 * The feature id for the '<em><b>PRef</b></em>' attribute.
@@ -2465,7 +2557,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getPortType()
 	 * @generated
 	 */
-	int PORT_TYPE = 38;
+	int PORT_TYPE = 40;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -2520,7 +2612,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolChoiceType()
 	 * @generated
 	 */
-	int PROTOCOL_CHOICE_TYPE = 39;
+	int PROTOCOL_CHOICE_TYPE = 41;
 
 	/**
 	 * The feature id for the '<em><b>Par</b></em>' containment reference.
@@ -2584,7 +2676,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolType()
 	 * @generated
 	 */
-	int PROTOCOL_TYPE = 44;
+	int PROTOCOL_TYPE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2639,7 +2731,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorType()
 	 * @generated
 	 */
-	int PROTOCOL_COMBINATOR_TYPE = 40;
+	int PROTOCOL_COMBINATOR_TYPE = 42;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2703,7 +2795,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolCombinatorVisualType()
 	 * @generated
 	 */
-	int PROTOCOL_COMBINATOR_VISUAL_TYPE = 41;
+	int PROTOCOL_COMBINATOR_VISUAL_TYPE = 43;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2776,7 +2868,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformType()
 	 * @generated
 	 */
-	int PROTOCOL_PERFORM_TYPE = 42;
+	int PROTOCOL_PERFORM_TYPE = 44;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2849,7 +2941,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getProtocolPerformVisualType()
 	 * @generated
 	 */
-	int PROTOCOL_PERFORM_VISUAL_TYPE = 43;
+	int PROTOCOL_PERFORM_VISUAL_TYPE = 45;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -2931,7 +3023,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getRecursiveEntryType()
 	 * @generated
 	 */
-	int RECURSIVE_ENTRY_TYPE = 45;
+	int RECURSIVE_ENTRY_TYPE = 47;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -2968,7 +3060,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceFileType()
 	 * @generated
 	 */
-	int SOURCE_FILE_TYPE = 46;
+	int SOURCE_FILE_TYPE = 48;
 
 	/**
 	 * The feature id for the '<em><b>Dependency</b></em>' attribute list.
@@ -3068,7 +3160,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSourceType()
 	 * @generated
 	 */
-	int SOURCE_TYPE = 47;
+	int SOURCE_TYPE = 49;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' containment reference list.
@@ -3123,7 +3215,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitEnumeratorType()
 	 * @generated
 	 */
-	int SPLIT_ENUMERATOR_TYPE = 48;
+	int SPLIT_ENUMERATOR_TYPE = 50;
 
 	/**
 	 * The feature id for the '<em><b>ERef</b></em>' attribute.
@@ -3160,7 +3252,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitLinkType()
 	 * @generated
 	 */
-	int SPLIT_LINK_TYPE = 49;
+	int SPLIT_LINK_TYPE = 51;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3206,7 +3298,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSplitType()
 	 * @generated
 	 */
-	int SPLIT_TYPE = 50;
+	int SPLIT_TYPE = 52;
 
 	/**
 	 * The feature id for the '<em><b>Split Link</b></em>' containment reference list.
@@ -3288,7 +3380,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitActionType()
 	 * @generated
 	 */
-	int UNIT_ACTION_TYPE = 51;
+	int UNIT_ACTION_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>Protocol</b></em>' containment reference.
@@ -3334,7 +3426,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitBoundsType()
 	 * @generated
 	 */
-	int UNIT_BOUNDS_TYPE = 52;
+	int UNIT_BOUNDS_TYPE = 54;
 
 	/**
 	 * The feature id for the '<em><b>Visual Description</b></em>' containment reference.
@@ -3416,7 +3508,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitConditionType()
 	 * @generated
 	 */
-	int UNIT_CONDITION_TYPE = 53;
+	int UNIT_CONDITION_TYPE = 55;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
@@ -3462,7 +3554,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitRefType()
 	 * @generated
 	 */
-	int UNIT_REF_TYPE = 54;
+	int UNIT_REF_TYPE = 56;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3535,7 +3627,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitSliceType()
 	 * @generated
 	 */
-	int UNIT_SLICE_TYPE = 55;
+	int UNIT_SLICE_TYPE = 57;
 
 	/**
 	 * The feature id for the '<em><b>CRef</b></em>' attribute.
@@ -3644,7 +3736,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getUnitType()
 	 * @generated
 	 */
-	int UNIT_TYPE = 56;
+	int UNIT_TYPE = 58;
 
 	/**
 	 * The feature id for the '<em><b>Super</b></em>' containment reference.
@@ -3762,7 +3854,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVersionType()
 	 * @generated
 	 */
-	int VERSION_TYPE = 57;
+	int VERSION_TYPE = 59;
 
 	/**
 	 * The feature id for the '<em><b>Field1</b></em>' attribute.
@@ -3826,7 +3918,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVisualElementAttributes()
 	 * @generated
 	 */
-	int VISUAL_ELEMENT_ATTRIBUTES = 58;
+	int VISUAL_ELEMENT_ATTRIBUTES = 60;
 
 	/**
 	 * The feature id for the '<em><b>Color</b></em>' containment reference.
@@ -3899,7 +3991,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationType()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE = 59;
+	int QUANTIFICATION_TYPE = 61;
 
 	/**
 	 * The meta object id for the '{@link hPE.xml.component.SupportedKinds <em>Supported Kinds</em>}' enum.
@@ -3909,7 +4001,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKinds()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS = 60;
+	int SUPPORTED_KINDS = 62;
 
 	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
@@ -3919,7 +4011,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 61;
+	int QUANTIFICATION_TYPE_OBJECT = 63;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -3929,7 +4021,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 62;
+	int SUPPORTED_KINDS_OBJECT = 64;
 
 
 	/**
@@ -4137,6 +4229,17 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getComponentBodyType_FusionsOfReplicators();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getExternalLibrary <em>External Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>External Library</em>'.
+	 * @see hPE.xml.component.ComponentBodyType#getExternalLibrary()
+	 * @see #getComponentBodyType()
+	 * @generated
+	 */
+	EReference getComponentBodyType_ExternalLibrary();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link hPE.xml.component.ComponentBodyType#getSplit <em>Split</em>}'.
@@ -4925,6 +5028,49 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getExtensionTypeType_Extends();
 
 	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.ExternalLibraryType <em>External Library Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>External Library Type</em>'.
+	 * @see hPE.xml.component.ExternalLibraryType
+	 * @generated
+	 */
+	EClass getExternalLibraryType();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link hPE.xml.component.ExternalLibraryType#getExternalDependency <em>External Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>External Dependency</em>'.
+	 * @see hPE.xml.component.ExternalLibraryType#getExternalDependency()
+	 * @see #getExternalLibraryType()
+	 * @generated
+	 */
+	EAttribute getExternalLibraryType_ExternalDependency();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ExternalLibraryType#getContents <em>Contents</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Contents</em>'.
+	 * @see hPE.xml.component.ExternalLibraryType#getContents()
+	 * @see #getExternalLibraryType()
+	 * @generated
+	 */
+	EAttribute getExternalLibraryType_Contents();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ExternalLibraryType#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see hPE.xml.component.ExternalLibraryType#getName()
+	 * @see #getExternalLibraryType()
+	 * @generated
+	 */
+	EAttribute getExternalLibraryType_Name();
+
+	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.FusionOfReplicatorsType <em>Fusion Of Replicators Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5094,6 +5240,16 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getGuardType_Not();
+
+	/**
+	 * Returns the meta object for class '{@link hPE.xml.component.HExternalLibraryType <em>HExternal Library Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>HExternal Library Type</em>'.
+	 * @see hPE.xml.component.HExternalLibraryType
+	 * @generated
+	 */
+	EClass getHExternalLibraryType();
 
 	/**
 	 * Returns the meta object for class '{@link hPE.xml.component.ImplementsType <em>Implements Type</em>}'.
@@ -6958,6 +7114,14 @@ public interface ComponentPackage extends EPackage {
 		EReference COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS = eINSTANCE.getComponentBodyType_FusionsOfReplicators();
 
 		/**
+		 * The meta object literal for the '<em><b>External Library</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY = eINSTANCE.getComponentBodyType_ExternalLibrary();
+
+		/**
 		 * The meta object literal for the '<em><b>Split</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7576,6 +7740,40 @@ public interface ComponentPackage extends EPackage {
 		EAttribute EXTENSION_TYPE_TYPE__EXTENDS = eINSTANCE.getExtensionTypeType_Extends();
 
 		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.ExternalLibraryTypeImpl <em>External Library Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.ExternalLibraryTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getExternalLibraryType()
+		 * @generated
+		 */
+		EClass EXTERNAL_LIBRARY_TYPE = eINSTANCE.getExternalLibraryType();
+
+		/**
+		 * The meta object literal for the '<em><b>External Dependency</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTERNAL_LIBRARY_TYPE__EXTERNAL_DEPENDENCY = eINSTANCE.getExternalLibraryType_ExternalDependency();
+
+		/**
+		 * The meta object literal for the '<em><b>Contents</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTERNAL_LIBRARY_TYPE__CONTENTS = eINSTANCE.getExternalLibraryType_Contents();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTERNAL_LIBRARY_TYPE__NAME = eINSTANCE.getExternalLibraryType_Name();
+
+		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.FusionOfReplicatorsTypeImpl <em>Fusion Of Replicators Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7712,6 +7910,16 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GUARD_TYPE__NOT = eINSTANCE.getGuardType_Not();
+
+		/**
+		 * The meta object literal for the '{@link hPE.xml.component.impl.HExternalLibraryTypeImpl <em>HExternal Library Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.impl.HExternalLibraryTypeImpl
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getHExternalLibraryType()
+		 * @generated
+		 */
+		EClass HEXTERNAL_LIBRARY_TYPE = eINSTANCE.getHExternalLibraryType();
 
 		/**
 		 * The meta object literal for the '{@link hPE.xml.component.impl.ImplementsTypeImpl <em>Implements Type</em>}' class.

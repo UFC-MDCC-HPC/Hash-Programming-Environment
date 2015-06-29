@@ -1,24 +1,3 @@
-drop table `hashmodel`.`abstractcomponentfunctor`;
-drop table `hashmodel`.`abstractcomponentfunctorapplication`;
-drop table `hashmodel`.`abstractcomponentfunctorparameter`;
-drop table `hashmodel`.`component`;
-drop table `hashmodel`.`innercomponent`;
-drop table `hashmodel`.`innercomponentexposed`;
-drop table `hashmodel`.`interface`;
-drop table `hashmodel`.`interfaceaction`;
-drop table `hashmodel`.`interfaceparameters`;
-drop table `hashmodel`.`sessions`;
-drop table `hashmodel`.`slice`;
-drop table `hashmodel`.`sliceexposed`;
-drop table `hashmodel`.`sourcecode`;
-drop table `hashmodel`.`sourcecode_references`;
-drop table `hashmodel`.`supplyparameter`;
-drop table `hashmodel`.`supplyparametercomponent`;
-drop table `hashmodel`.`supplyparameterparameter`;
-drop table `hashmodel`.`unit`;
-
-delimiter $$
-
 CREATE TABLE `abstractcomponentfunctor` (
   `id_functor_app_supertype` int(11) DEFAULT NULL,
   `library_path` varchar(150) DEFAULT NULL,
@@ -27,30 +6,21 @@ CREATE TABLE `abstractcomponentfunctor` (
   `kind` varchar(45) NOT NULL,
   PRIMARY KEY (`id_abstract`),
   UNIQUE KEY `UID` (`hash_component_UID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `abstractcomponentfunctorapplication` (
   `id_functor_app` int(11) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   `id_functor_app_next` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id_functor_app`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `abstractcomponentfunctorparameter` (
   `id_parameter` varchar(30) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   `bounds_of` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_parameter`,`id_abstract`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `component` (
   `library_path` varchar(150) NOT NULL DEFAULT '' COMMENT 'the package where the component is placed.',
@@ -60,10 +30,7 @@ CREATE TABLE `component` (
   `id_abstract` int(11) NOT NULL,
   `hash_component_UID` varchar(320) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_concrete`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `innercomponent` (
   `id_abstract_owner` int(11) NOT NULL,
@@ -73,12 +40,9 @@ CREATE TABLE `innercomponent` (
   `parameter_top` varchar(45) DEFAULT NULL,
   `transitive` int(11) DEFAULT '0',
   `public` int(11) DEFAULT '0',
-  `multiple` int(11) DEFAULT '0' NOT NULL,
+  `multiple` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_abstract_owner`,`id_inner`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `innercomponentexposed` (
   `id_abstract` int(11) NOT NULL AUTO_INCREMENT,
@@ -86,10 +50,7 @@ CREATE TABLE `innercomponentexposed` (
   `id_inner_owner` varchar(40) NOT NULL DEFAULT '"',
   `id_inner` varchar(40) DEFAULT '"',
   PRIMARY KEY (`id_abstract`,`id_inner_rename`,`id_inner_owner`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `interface` (
   `id_abstract` int(11) NOT NULL,
@@ -108,11 +69,9 @@ CREATE TABLE `interface` (
   `conditions` text COMMENT '"condition_1; condition_2; ... condition_n". Nomes de condições separados por ponto-e-vírgula para evitar outra tabela.',
   `protocol` text COMMENT 'string xml',
   `is_parallel` int(11) DEFAULT '0',
+  `facet` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_abstract`,`id_interface`,`unit_replica`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `interfaceaction` (
   `id_abstract` int(11) NOT NULL,
@@ -123,10 +82,7 @@ CREATE TABLE `interfaceaction` (
   `is_condition` int(11) DEFAULT '0',
   PRIMARY KEY (`id_abstract`,`id_interface`,`partition_index`,`id_action`),
   KEY `id_abstract` (`id_abstract`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `interfaceparameters` (
   `id_interface` varchar(40) NOT NULL,
@@ -137,19 +93,13 @@ CREATE TABLE `interfaceparameters` (
   `id_unit_parameter` varchar(40) NOT NULL,
   `par_order` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_interface`,`parid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `sessions` (
   `session_id` int(11) NOT NULL AUTO_INCREMENT,
   `id_concrete` int(11) DEFAULT NULL,
   PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `slice` (
   `id_abstract` int(11) NOT NULL DEFAULT '0',
@@ -163,10 +113,7 @@ CREATE TABLE `slice` (
   `property_name` varchar(40) NOT NULL,
   `transitive` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_abstract`,`id_inner`,`inner_replica`,`id_interface_slice`,`slice_replica`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `sliceexposed` (
   `id_abstract` int(11) NOT NULL DEFAULT '0',
@@ -179,10 +126,7 @@ CREATE TABLE `sliceexposed` (
   `slice_replica` int(11) NOT NULL DEFAULT '-1',
   `slice_replica_owner` int(11) NOT NULL,
   PRIMARY KEY (`id_abstract`,`id_inner_owner`,`id_interface_slice_owner`,`id_inner_original`,`id_interface_slice_original`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='* id_abstract + id_inner + id_interface_slice + partition_in'$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='* id_abstract + id_inner + id_interface_slice + partition_in';
 
 CREATE TABLE `sourcecode` (
   `type_owner` char(1) NOT NULL COMMENT '"u" (unit) or "i" (interface)',
@@ -193,10 +137,7 @@ CREATE TABLE `sourcecode` (
   `id_owner_container` int(11) NOT NULL,
   `file_order` int(11) NOT NULL,
   PRIMARY KEY (`type_owner`,`id_owner_container`,`id_owner`,`file_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `sourcecode_references` (
   `type_owner` char(1) NOT NULL,
@@ -205,30 +146,21 @@ CREATE TABLE `sourcecode_references` (
   `file_name` varchar(45) NOT NULL,
   `reference` varchar(45) NOT NULL,
   PRIMARY KEY (`type_owner`,`id_owner_container`,`id_owner`,`file_name`,`reference`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `supplyparameter` (
   `id_parameter` varchar(30) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `id_abstract` int(11) NOT NULL,
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `supplyparametercomponent` (
   `id_parameter` varchar(30) NOT NULL,
   `id_functor_app` int(11) NOT NULL,
   `id_functor_app_actual` int(11) NOT NULL,
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `supplyparameterparameter` (
   `id_parameter` varchar(30) NOT NULL,
@@ -236,10 +168,7 @@ CREATE TABLE `supplyparameterparameter` (
   `id_parameter_actual` varchar(30) NOT NULL,
   `freeVariable` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_parameter`,`id_functor_app`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-delimiter $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `unit` (
   `id_concrete` int(11) NOT NULL,
@@ -254,7 +183,4 @@ CREATE TABLE `unit` (
   `class_nargs` int(11) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_concrete`,`id_unit`,`unit_replica`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
-
-
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

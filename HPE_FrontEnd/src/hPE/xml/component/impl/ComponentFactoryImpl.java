@@ -81,11 +81,13 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 			case ComponentPackage.EXPOSE_PORT_TYPE: return createExposePortType();
 			case ComponentPackage.EXTENDS_TYPE: return createExtendsType();
 			case ComponentPackage.EXTENSION_TYPE_TYPE: return createExtensionTypeType();
+			case ComponentPackage.EXTERNAL_LIBRARY_TYPE: return createExternalLibraryType();
 			case ComponentPackage.FUSION_OF_REPLICATORS_TYPE: return createFusionOfReplicatorsType();
 			case ComponentPackage.FUSIONS_OF_REPLICATORS_TYPE: return createFusionsOfReplicatorsType();
 			case ComponentPackage.FUSION_TYPE: return createFusionType();
 			case ComponentPackage.GUARD_CONDITION_TYPE: return createGuardConditionType();
 			case ComponentPackage.GUARD_TYPE: return createGuardType();
+			case ComponentPackage.HEXTERNAL_LIBRARY_TYPE: return createHExternalLibraryType();
 			case ComponentPackage.IMPLEMENTS_TYPE: return createImplementsType();
 			case ComponentPackage.INNER_COMPONENT_TYPE: return createInnerComponentType();
 			case ComponentPackage.INNER_RENAMING_TYPE: return createInnerRenamingType();
@@ -371,6 +373,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ExternalLibraryType createExternalLibraryType() {
+		ExternalLibraryTypeImpl externalLibraryType = new ExternalLibraryTypeImpl();
+		return externalLibraryType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FusionOfReplicatorsType createFusionOfReplicatorsType() {
 		FusionOfReplicatorsTypeImpl fusionOfReplicatorsType = new FusionOfReplicatorsTypeImpl();
 		return fusionOfReplicatorsType;
@@ -414,6 +426,16 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	public GuardType createGuardType() {
 		GuardTypeImpl guardType = new GuardTypeImpl();
 		return guardType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public HExternalLibraryType createHExternalLibraryType() {
+		HExternalLibraryTypeImpl hExternalLibraryType = new HExternalLibraryTypeImpl();
+		return hExternalLibraryType;
 	}
 
 	/**

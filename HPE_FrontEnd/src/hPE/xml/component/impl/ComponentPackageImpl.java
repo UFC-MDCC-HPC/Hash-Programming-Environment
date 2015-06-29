@@ -28,11 +28,13 @@ import hPE.xml.component.EnumeratorType;
 import hPE.xml.component.ExposePortType;
 import hPE.xml.component.ExtendsType;
 import hPE.xml.component.ExtensionTypeType;
+import hPE.xml.component.ExternalLibraryType;
 import hPE.xml.component.FusionOfReplicatorsType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.GuardConditionType;
 import hPE.xml.component.GuardType;
+import hPE.xml.component.HExternalLibraryType;
 import hPE.xml.component.ImplementsType;
 import hPE.xml.component.InnerComponentType;
 import hPE.xml.component.InnerRenamingType;
@@ -230,6 +232,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass externalLibraryTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass fusionOfReplicatorsTypeEClass = null;
 
 	/**
@@ -259,6 +268,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EClass guardTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hExternalLibraryTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -759,6 +775,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EReference getComponentBodyType_FusionsOfReplicators() {
 		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getComponentBodyType_ExternalLibrary() {
+		return (EReference)componentBodyTypeEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -1423,6 +1448,42 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getExternalLibraryType() {
+		return externalLibraryTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExternalLibraryType_ExternalDependency() {
+		return (EAttribute)externalLibraryTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExternalLibraryType_Contents() {
+		return (EAttribute)externalLibraryTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExternalLibraryType_Name() {
+		return (EAttribute)externalLibraryTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFusionOfReplicatorsType() {
 		return fusionOfReplicatorsTypeEClass;
 	}
@@ -1560,6 +1621,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EAttribute getGuardType_Not() {
 		return (EAttribute)guardTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHExternalLibraryType() {
+		return hExternalLibraryTypeEClass;
 	}
 
 	/**
@@ -3016,6 +3086,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__UNIT);
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__ENUMERATOR);
 		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS);
+		createEReference(componentBodyTypeEClass, COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY);
 
 		componentHeaderTypeEClass = createEClass(COMPONENT_HEADER_TYPE);
 		createEReference(componentHeaderTypeEClass, COMPONENT_HEADER_TYPE__BASE_TYPE);
@@ -3106,6 +3177,11 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(extensionTypeTypeEClass, EXTENSION_TYPE_TYPE__IMPLEMENTS);
 		createEAttribute(extensionTypeTypeEClass, EXTENSION_TYPE_TYPE__EXTENDS);
 
+		externalLibraryTypeEClass = createEClass(EXTERNAL_LIBRARY_TYPE);
+		createEAttribute(externalLibraryTypeEClass, EXTERNAL_LIBRARY_TYPE__EXTERNAL_DEPENDENCY);
+		createEAttribute(externalLibraryTypeEClass, EXTERNAL_LIBRARY_TYPE__CONTENTS);
+		createEAttribute(externalLibraryTypeEClass, EXTERNAL_LIBRARY_TYPE__NAME);
+
 		fusionOfReplicatorsTypeEClass = createEClass(FUSION_OF_REPLICATORS_TYPE);
 		createEAttribute(fusionOfReplicatorsTypeEClass, FUSION_OF_REPLICATORS_TYPE__EREF);
 		createEAttribute(fusionOfReplicatorsTypeEClass, FUSION_OF_REPLICATORS_TYPE__ORIGIN_REF);
@@ -3126,6 +3202,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEReference(guardTypeEClass, GUARD_TYPE__AND);
 		createEReference(guardTypeEClass, GUARD_TYPE__OR);
 		createEAttribute(guardTypeEClass, GUARD_TYPE__NOT);
+
+		hExternalLibraryTypeEClass = createEClass(HEXTERNAL_LIBRARY_TYPE);
 
 		implementsTypeEClass = createEClass(IMPLEMENTS_TYPE);
 		createEAttribute(implementsTypeEClass, IMPLEMENTS_TYPE__CREF);
@@ -3388,6 +3466,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentBodyType_Unit(), this.getUnitType(), null, "unit", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentBodyType_Enumerator(), this.getEnumeratorType(), null, "enumerator", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentBodyType_FusionsOfReplicators(), this.getFusionsOfReplicatorsType(), null, "fusionsOfReplicators", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getComponentBodyType_ExternalLibrary(), this.getExternalLibraryType(), null, "externalLibrary", null, 0, -1, ComponentBodyType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentHeaderTypeEClass, ComponentHeaderType.class, "ComponentHeaderType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentHeaderType_BaseType(), this.getBaseTypeType(), null, "baseType", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3478,6 +3557,11 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getExtensionTypeType_Implements(), theXMLTypePackage.getBoolean(), "implements", null, 0, 1, ExtensionTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExtensionTypeType_Extends(), theXMLTypePackage.getBoolean(), "extends", null, 0, 1, ExtensionTypeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(externalLibraryTypeEClass, ExternalLibraryType.class, "ExternalLibraryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getExternalLibraryType_ExternalDependency(), theXMLTypePackage.getString(), "externalDependency", null, 0, -1, ExternalLibraryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExternalLibraryType_Contents(), theXMLTypePackage.getString(), "contents", null, 0, 1, ExternalLibraryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExternalLibraryType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ExternalLibraryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(fusionOfReplicatorsTypeEClass, FusionOfReplicatorsType.class, "FusionOfReplicatorsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFusionOfReplicatorsType_ERef(), theXMLTypePackage.getString(), "eRef", null, 1, 1, FusionOfReplicatorsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFusionOfReplicatorsType_OriginRef(), theXMLTypePackage.getString(), "originRef", null, 0, -1, FusionOfReplicatorsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3498,6 +3582,8 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getGuardType_And(), this.getGuardType(), null, "and", null, 0, -1, GuardType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getGuardType_Or(), this.getGuardType(), null, "or", null, 0, -1, GuardType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGuardType_Not(), theXMLTypePackage.getBoolean(), "not", null, 0, 1, GuardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(hExternalLibraryTypeEClass, HExternalLibraryType.class, "HExternalLibraryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(implementsTypeEClass, ImplementsType.class, "ImplementsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getImplementsType_CRef(), theXMLTypePackage.getString(), "cRef", null, 1, 1, ImplementsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3873,6 +3959,14 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "element",
 			 "name", "fusionsOfReplicators",
+			 "group", "#group:0"
+		   });	
+		addAnnotation
+		  (getComponentBodyType_ExternalLibrary(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "externalLibrary",
 			 "group", "#group:0"
 		   });	
 		addAnnotation
@@ -4382,6 +4476,34 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "extends"
 		   });	
 		addAnnotation
+		  (externalLibraryTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "ExternalLibraryType",
+			 "kind", "elementOnly"
+		   });	
+		addAnnotation
+		  (getExternalLibraryType_ExternalDependency(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "externalDependency"
+		   });	
+		addAnnotation
+		  (getExternalLibraryType_Contents(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "contents"
+		   });	
+		addAnnotation
+		  (getExternalLibraryType_Name(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "name"
+		   });	
+		addAnnotation
 		  (fusionOfReplicatorsTypeEClass, 
 		   source, 
 		   new String[] {
@@ -4495,6 +4617,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "not"
+		   });	
+		addAnnotation
+		  (hExternalLibraryTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "HExternalLibraryType",
+			 "kind", "empty"
 		   });	
 		addAnnotation
 		  (implementsTypeEClass, 

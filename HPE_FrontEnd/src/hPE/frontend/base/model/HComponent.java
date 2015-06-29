@@ -3998,8 +3998,18 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		else
 			return -1;
 	}
+
+	private Map<String, String[]> external_library = new HashMap<String, String[]>();
 	
+	public void addExternalLibrary(String name, String[] external_dependency) 
+	{
+		external_library.put(name, external_dependency);		
+	}
 	
+	public Map<String, String[]> getExternalLibrarySet()
+	{
+		return external_library;
+	}
 	
 
 }

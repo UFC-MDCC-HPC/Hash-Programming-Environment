@@ -1,6 +1,5 @@
 package hPE.frontend.base.codegen;
 
-import hPE.frontend.base.dialogs.AddReferencesDialog.Reference;
 import hPE.frontend.base.model.HHasExternalReferences;
 import hPE.xml.factory.HComponentFactoryImpl;
 
@@ -12,10 +11,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
@@ -105,28 +102,13 @@ public abstract class HBEAbstractFile implements Serializable, HHasExternalRefer
 				
 				this.contents = ss;
 			} 
-			
-		    return this.contents;
-			
-		} /* catch (CoreException e) {
-			if (this.contents != null)
-				persistSourceFile();
-        	// JOptionPane.showMessageDialog(null,
-        	//	    "Error Fetching File Contents - ".concat(e.getMessage()),
-        	//	    "Error",
-        	//	    JOptionPane.ERROR_MESSAGE);
-	    } */ 
+						
+		}  
 		catch (IOException e) {
         	JOptionPane.showMessageDialog(null,
         		    "Error Reading File Contents - ".concat(e.getMessage()),
         		    "Error",
         		    JOptionPane.ERROR_MESSAGE);
-//		} catch (ClassNotFoundException e) {
-//        	JOptionPane.showMessageDialog(null,
-//        		    "Error Fetching File Contents".concat(e.getMessage()),
-//        		    "Error",
-//        		    JOptionPane.ERROR_MESSAGE);
-//			
 		}
 		
 		return this.contents;

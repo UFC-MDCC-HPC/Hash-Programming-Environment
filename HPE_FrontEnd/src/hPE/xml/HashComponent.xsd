@@ -45,6 +45,7 @@
         		type="tns:FusionsOfReplicatorsType">
         	</element>
 
+        	<element name="externalLibrary" type="tns:ExternalLibraryType"></element>
         </choice>
 	</complexType>
 
@@ -663,4 +664,14 @@
  		</extension>
  	</complexContent>
  </complexType>
+
+    <complexType name="HExternalLibraryType"></complexType>
+
+    <complexType name="ExternalLibraryType">
+    	<sequence>
+            <element name="externalDependency" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+        </sequence>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="contents" type="string" use="optional"></attribute>
+    </complexType>
 </schema>

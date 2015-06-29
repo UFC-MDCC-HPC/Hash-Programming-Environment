@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link hPE.xml.component.ComponentBodyType#getUnit <em>Unit</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentBodyType#getEnumerator <em>Enumerator</em>}</li>
  *   <li>{@link hPE.xml.component.ComponentBodyType#getFusionsOfReplicators <em>Fusions Of Replicators</em>}</li>
+ *   <li>{@link hPE.xml.component.ComponentBodyType#getExternalLibrary <em>External Library</em>}</li>
  * </ul>
  * </p>
  *
@@ -232,6 +233,23 @@ public interface ComponentBodyType extends EObject {
 	 * @generated
 	 */
 	EList<FusionsOfReplicatorsType> getFusionsOfReplicators();
+
+	/**
+	 * Returns the value of the '<em><b>External Library</b></em>' containment reference list.
+	 * The list contents are of type {@link hPE.xml.component.ExternalLibraryType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>External Library</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>External Library</em>' containment reference list.
+	 * @see hPE.xml.component.ComponentPackage#getComponentBodyType_ExternalLibrary()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='externalLibrary' group='#group:0'"
+	 * @generated
+	 */
+	EList<ExternalLibraryType> getExternalLibrary();
 
 	/**
 	 * Returns the value of the '<em><b>Split</b></em>' containment reference list.

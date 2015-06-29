@@ -21,14 +21,18 @@ namespace HPE_DGAC_LoadDB
         protected IList<InterfaceType> anInterface = null;
         protected IList<UnitType> unit = null;
         protected IList<EnumeratorType> enumerator = null;
+		protected IList<ExternalLibraryType> externalLibrary = null;
 		//protected IList<FusionsOfReplicatorsType> fusionOfReplicators = null;
 
-        public HashComponent loadComponent(ComponentType c)
+		public HashComponent loadComponent(ComponentType c, ref IList<ExternalLibraryType>  externalLibrary)
         {
             //ComponentHeaderType ch = c.header;
             LoadBodyItems(c.componentInfo);
 
             HashComponent cc = loadComponent_(c);
+
+			externalLibrary = this.externalLibrary;
+
             return cc;
         }
 
@@ -96,12 +100,12 @@ namespace HPE_DGAC_LoadDB
                 {
                     if (enumerator == null) enumerator = new List<EnumeratorType>();
                     enumerator.Add((EnumeratorType)o);
-                }   
-				//else if (o is FusionsOfReplicatorsType)
-				//{
-				//    if (fusionOfReplicators == null) fusionOfReplicators = new List<FusionsOfReplicatorsType>();
-				//    fusionOfReplicators.Add((FusionsOfReplicatorsType)o);
-				//}
+                } 
+				else if (o is ExternalLibraryType)
+				{
+					if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
+					externalLibrary.Add((ExternalLibraryType)o);
+				}
                 else
                 {
                     // Tipos inesperado ....

@@ -30,10 +30,10 @@ namespace HPE_DGAC_LoadDB
 
         }
 
-        public new HashComponent loadComponent(ComponentType c)
+		public new HashComponent loadComponent(ComponentType c, ref IList<ExternalLibraryType>  externalLibrary)
         {
             this.xc = c;
-            AbstractComponentFunctor absC = (AbstractComponentFunctor)base.loadComponent(c);
+			AbstractComponentFunctor absC = (AbstractComponentFunctor)base.loadComponent(c, ref externalLibrary);
             loadInnerComponents(absC);
             loadInterfaces(absC);
             return absC;

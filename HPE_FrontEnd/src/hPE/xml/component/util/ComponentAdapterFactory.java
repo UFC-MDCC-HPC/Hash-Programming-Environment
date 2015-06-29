@@ -152,6 +152,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 				return createExtensionTypeTypeAdapter();
 			}
 			@Override
+			public Adapter caseExternalLibraryType(ExternalLibraryType object) {
+				return createExternalLibraryTypeAdapter();
+			}
+			@Override
 			public Adapter caseFusionOfReplicatorsType(FusionOfReplicatorsType object) {
 				return createFusionOfReplicatorsTypeAdapter();
 			}
@@ -170,6 +174,10 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseGuardType(GuardType object) {
 				return createGuardTypeAdapter();
+			}
+			@Override
+			public Adapter caseHExternalLibraryType(HExternalLibraryType object) {
+				return createHExternalLibraryTypeAdapter();
 			}
 			@Override
 			public Adapter caseImplementsType(ImplementsType object) {
@@ -608,6 +616,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.ExternalLibraryType <em>External Library Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.ExternalLibraryType
+	 * @generated
+	 */
+	public Adapter createExternalLibraryTypeAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link hPE.xml.component.FusionOfReplicatorsType <em>Fusion Of Replicators Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -674,6 +696,20 @@ public class ComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGuardTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hPE.xml.component.HExternalLibraryType <em>HExternal Library Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hPE.xml.component.HExternalLibraryType
+	 * @generated
+	 */
+	public Adapter createHExternalLibraryTypeAdapter() {
 		return null;
 	}
 

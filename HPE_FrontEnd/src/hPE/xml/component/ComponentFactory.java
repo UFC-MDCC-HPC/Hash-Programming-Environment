@@ -206,6 +206,15 @@ public interface ComponentFactory extends EFactory {
 	ExtensionTypeType createExtensionTypeType();
 
 	/**
+	 * Returns a new object of class '<em>External Library Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>External Library Type</em>'.
+	 * @generated
+	 */
+	ExternalLibraryType createExternalLibraryType();
+
+	/**
 	 * Returns a new object of class '<em>Fusion Of Replicators Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -249,6 +258,15 @@ public interface ComponentFactory extends EFactory {
 	 * @generated
 	 */
 	GuardType createGuardType();
+
+	/**
+	 * Returns a new object of class '<em>HExternal Library Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HExternal Library Type</em>'.
+	 * @generated
+	 */
+	HExternalLibraryType createHExternalLibraryType();
 
 	/**
 	 * Returns a new object of class '<em>Implements Type</em>'.

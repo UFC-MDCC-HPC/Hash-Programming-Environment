@@ -9,6 +9,7 @@ package hPE.xml.component.impl;
 import hPE.xml.component.ComponentBodyType;
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.EnumeratorType;
+import hPE.xml.component.ExternalLibraryType;
 import hPE.xml.component.FusionType;
 import hPE.xml.component.FusionsOfReplicatorsType;
 import hPE.xml.component.InnerComponentType;
@@ -48,6 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link hPE.xml.component.impl.ComponentBodyTypeImpl#getUnit <em>Unit</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentBodyTypeImpl#getEnumerator <em>Enumerator</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ComponentBodyTypeImpl#getFusionsOfReplicators <em>Fusions Of Replicators</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ComponentBodyTypeImpl#getExternalLibrary <em>External Library</em>}</li>
  * </ul>
  * </p>
  *
@@ -190,6 +192,15 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<ExternalLibraryType> getExternalLibrary() {
+		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<SplitType> getSplit() {
 		return getGroup().list(ComponentPackage.Literals.COMPONENT_BODY_TYPE__SPLIT);
 	}
@@ -226,6 +237,8 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 				return ((InternalEList<?>)getEnumerator()).basicRemove(otherEnd, msgs);
 			case ComponentPackage.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS:
 				return ((InternalEList<?>)getFusionsOfReplicators()).basicRemove(otherEnd, msgs);
+			case ComponentPackage.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY:
+				return ((InternalEList<?>)getExternalLibrary()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -263,6 +276,8 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 				return getEnumerator();
 			case ComponentPackage.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS:
 				return getFusionsOfReplicators();
+			case ComponentPackage.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY:
+				return getExternalLibrary();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -323,6 +338,10 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 				getFusionsOfReplicators().clear();
 				getFusionsOfReplicators().addAll((Collection<? extends FusionsOfReplicatorsType>)newValue);
 				return;
+			case ComponentPackage.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY:
+				getExternalLibrary().clear();
+				getExternalLibrary().addAll((Collection<? extends ExternalLibraryType>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -371,6 +390,9 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 			case ComponentPackage.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS:
 				getFusionsOfReplicators().clear();
 				return;
+			case ComponentPackage.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY:
+				getExternalLibrary().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -407,6 +429,8 @@ public class ComponentBodyTypeImpl extends MinimalEObjectImpl.Container implemen
 				return !getEnumerator().isEmpty();
 			case ComponentPackage.COMPONENT_BODY_TYPE__FUSIONS_OF_REPLICATORS:
 				return !getFusionsOfReplicators().isEmpty();
+			case ComponentPackage.COMPONENT_BODY_TYPE__EXTERNAL_LIBRARY:
+				return !getExternalLibrary().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
