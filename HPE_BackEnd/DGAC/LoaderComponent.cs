@@ -115,7 +115,7 @@ namespace HPE_DGAC_LoadDB
 
         protected AbstractComponentFunctorApplication newAbstractComponentFunctorApplication(ComponentInUseType c)
         {
-                AbstractComponentFunctor a = lookForAbstractComponentFunctor(c.hash_component_UID);
+                AbstractComponentFunctor a = lookForAbstractComponentFunctor(c.package, c.name);
                 if (a == null)
                 {
                     return null;
@@ -142,7 +142,7 @@ namespace HPE_DGAC_LoadDB
 
 		    IList<AbstractComponentFunctor> ancestrals = new List<AbstractComponentFunctor>();	
 
-			AbstractComponentFunctor a_current = lookForAbstractComponentFunctor(c.hash_component_UID);
+			AbstractComponentFunctor a_current = lookForAbstractComponentFunctor(c.package, c.name);
 			if (a_current == null)
                 return null;
 
@@ -328,11 +328,12 @@ namespace HPE_DGAC_LoadDB
         }
 
 
-        protected AbstractComponentFunctor lookForAbstractComponentFunctor(string component_UID)
+        protected AbstractComponentFunctor lookForAbstractComponentFunctor(string package, string name)
         {
+			string library_path = package + "." + name;
         	//Trace.WriteLine("1");
             AbstractComponentFunctorDAO acf = new AbstractComponentFunctorDAO();
-            AbstractComponentFunctor acfa = acf.retrieveByUID(component_UID);
+			AbstractComponentFunctor acfa = acf.retrieve_libraryPath (library_path);   // .retrieveByUID(component_UID);
             return acfa;
         }
         

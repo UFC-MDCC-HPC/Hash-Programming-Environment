@@ -8,6 +8,7 @@ package hPE.xml.component.impl;
 
 import hPE.xml.component.ComponentPackage;
 import hPE.xml.component.ParameterType;
+import hPE.xml.component.VarianceType;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getComponentRef <em>Component Ref</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getFormFieldId <em>Form Field Id</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getVariance <em>Variance</em>}</li>
  *   <li>{@link hPE.xml.component.impl.ParameterTypeImpl#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
@@ -98,6 +100,35 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 	 * @ordered
 	 */
 	protected boolean orderESet;
+
+	/**
+	 * The default value of the '{@link #getVariance() <em>Variance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVariance()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final VarianceType VARIANCE_EDEFAULT = VarianceType.CONTRAVARIANT;
+
+	/**
+	 * The cached value of the '{@link #getVariance() <em>Variance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVariance()
+	 * @generated
+	 * @ordered
+	 */
+	protected VarianceType variance = VARIANCE_EDEFAULT;
+
+	/**
+	 * This is true if the Variance attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean varianceESet;
 
 	/**
 	 * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
@@ -231,6 +262,52 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public VarianceType getVariance() {
+		return variance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVariance(VarianceType newVariance) {
+		VarianceType oldVariance = variance;
+		variance = newVariance == null ? VARIANCE_EDEFAULT : newVariance;
+		boolean oldVarianceESet = varianceESet;
+		varianceESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentPackage.PARAMETER_TYPE__VARIANCE, oldVariance, variance, !oldVarianceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetVariance() {
+		VarianceType oldVariance = variance;
+		boolean oldVarianceESet = varianceESet;
+		variance = VARIANCE_EDEFAULT;
+		varianceESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ComponentPackage.PARAMETER_TYPE__VARIANCE, oldVariance, VARIANCE_EDEFAULT, oldVarianceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetVariance() {
+		return varianceESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getVarName() {
 		return varName;
 	}
@@ -261,6 +338,8 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 				return getFormFieldId();
 			case ComponentPackage.PARAMETER_TYPE__ORDER:
 				return getOrder();
+			case ComponentPackage.PARAMETER_TYPE__VARIANCE:
+				return getVariance();
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				return getVarName();
 		}
@@ -283,6 +362,9 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 				return;
 			case ComponentPackage.PARAMETER_TYPE__ORDER:
 				setOrder((Integer)newValue);
+				return;
+			case ComponentPackage.PARAMETER_TYPE__VARIANCE:
+				setVariance((VarianceType)newValue);
 				return;
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				setVarName((String)newValue);
@@ -308,6 +390,9 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 			case ComponentPackage.PARAMETER_TYPE__ORDER:
 				unsetOrder();
 				return;
+			case ComponentPackage.PARAMETER_TYPE__VARIANCE:
+				unsetVariance();
+				return;
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				setVarName(VAR_NAME_EDEFAULT);
 				return;
@@ -329,6 +414,8 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 				return FORM_FIELD_ID_EDEFAULT == null ? formFieldId != null : !FORM_FIELD_ID_EDEFAULT.equals(formFieldId);
 			case ComponentPackage.PARAMETER_TYPE__ORDER:
 				return isSetOrder();
+			case ComponentPackage.PARAMETER_TYPE__VARIANCE:
+				return isSetVariance();
 			case ComponentPackage.PARAMETER_TYPE__VAR_NAME:
 				return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
 		}
@@ -351,6 +438,8 @@ public class ParameterTypeImpl extends MinimalEObjectImpl.Container implements P
 		result.append(formFieldId);
 		result.append(", order: ");
 		if (orderESet) result.append(order); else result.append("<unset>");
+		result.append(", variance: ");
+		if (varianceESet) result.append(variance); else result.append("<unset>");
 		result.append(", varName: ");
 		result.append(varName);
 		result.append(')');

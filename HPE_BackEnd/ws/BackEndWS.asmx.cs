@@ -69,9 +69,9 @@ namespace Back_End_WS
                     FileUtil.saveByteArrayIntoFile(data, path);
                     ComponentType c = LoaderApp.DeserializeObject(path);
                     if (c.header.baseType != null && c.header.baseType.extensionType.ItemElementName == ItemChoiceType1.implements)
-                        BackEnd.registerConcreteComponent(c, userName, password, curDir);
+                        BackEnd.registerConcreteComponentTransaction(c, userName, password, curDir);
                     else
-                        BackEnd.registerAbstractComponent(c, userName, password, curDir);
+                        BackEnd.registerAbstractComponentTransaction(c, userName, password, curDir);
                 }
             } 
 			catch (Exception e) 
@@ -141,7 +141,7 @@ namespace Back_End_WS
         [WebMethod]
         public string hosts()
         {
-            TextReader tr = new StreamReader(Constants.HOSTS_FILE);
+			TextReader tr = new StreamReader(Constants.HOSTS_FILE);
 
             string hstr = tr.ReadToEnd();
             tr.Close();

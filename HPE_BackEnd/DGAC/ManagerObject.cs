@@ -84,8 +84,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
             {
 			   
 			   int[] nodes = new int[WorkerFramework.Count];
-			   for (int i=0; i<nodes.Length; i++)
-					nodes[i] = i-1;
+				for (int i=0; i<nodes.Length; i++)
+					nodes [i] = i - 1;
 			
 			   ManagerComponentID cid = new ManagerComponentIDImpl(selfInstanceName, selfClassName, nodes);				
 			   ManagerServices manager_services = new ManagerServicesImpl(this, cid);
@@ -1475,10 +1475,11 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                     IDictionary<Thread, int> thread_index = new Dictionary<Thread, int>();
 
                     IList<Thread> wthreads = new List<Thread>();
-				for (int k = 0; k < nodes.Length; k++)
-				{
-					Trace.WriteLine("***************** k="+k + ", nodes["+k+"]="+nodes[k]);
-				}
+					for (int k = 0; k < nodes.Length; k++)
+					{
+						Trace.WriteLine("***************** k="+k + ", nodes["+k+"]="+nodes[k]);
+					}
+
 				    for (int k = 0; k < nodes.Length; k++)
                     {                        
 				        string id_interface = interface_ids[k];
@@ -1486,8 +1487,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 					    DGAC.database.Unit u = DGAC.BackEnd.takeUnit(c, id_interface, partition_index);
 						AbstractComponentFunctor acf = DGAC.BackEnd.acfdao.retrieve(c.Id_abstract);
-						Interface i = DGAC.BackEnd.idao.retrieve(c.Id_abstract, id_interface, partition_index);
-					
+
 				        // SETUP PROPERTIES
                         TypeMapImpl worker_properties = new TypeMapImpl(properties);
                         worker_properties[Constants.KEY_KEY] = k;
@@ -1547,9 +1547,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
                         thread_unit_id.Add(t, id_interface);
                         thread_index.Add(t, 0);
                         node_marking[nodes[k]] = true;
-                    }
-
-					
+                    }					
 
                     foreach (int i in node_marking.Keys)
                     {
@@ -1774,7 +1772,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 						worker_framework = new Dictionary<int, gov.cca.AbstractFramework>();
 
-						// CONNECT TO THE ENTRY WORKER 
+						// CONNECT TO THE ROOT WORKER 
 						
 						try
 						{   

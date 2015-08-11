@@ -14,19 +14,10 @@ namespace br.ufc.pargo.hpe.kinds
 
     public interface IApplicationKind : IComputationKind, IUnit
     {
-       // MPI.Intracommunicator LocalCommunicator { set; get; }
-    }
+     }
 	
 	//[Serializable]
     public abstract class Application : Computation, IApplicationKind
     {
-/*        private MPI.Intracommunicator local_comm = null;
-
-        public MPI.Intracommunicator LocalCommunicator
-        {
-            get { return local_comm; }
-            set { this.local_comm = value; }
-        }
-*/        
     }
 }

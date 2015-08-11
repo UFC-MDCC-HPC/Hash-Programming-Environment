@@ -11,6 +11,7 @@ import hPE.frontend.base.model.HPort;
 import hPE.frontend.kinds.base.model.HHasPortsInterfaceSlice;
 import hPE.util.Pair;
 import hPE.util.Triple;
+import hPE.xml.component.VarianceType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 				HInterface i_ = (HInterface)slice.getInterface();
 				
 				// Na linha a seguir, isAbstract2 foi substituido por isAbstract ...
-				String sliceTypeName = i_.isParameter() ? c.getVariableName((HComponent) i.getConfiguration()).split("@")[0] :  i_.getName2(false, varContext, null);
+				String sliceTypeName = i_.isParameter() ? c.getVariableName((HComponent) i.getConfiguration()).split("@")[0] :  i_.getName2(false,varContext, null);
 				if (theSlices.containsKey(sliceTypeName)) {
 					slices = theSlices.get(sliceTypeName);
 				} else {
@@ -136,7 +137,8 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         
         for (Triple<String,HInterface,String> p : pars) {
 			String varName = p.fst(); 
- 			if (!varContext.contains(varName)) {
+			VarianceType variance_type = topC.getParameterVariance(p.trd());
+ 			if (!varContext.contains(varName) && variance_type.equals(VarianceType.CONTRAVARIANT)) {
 	 			HInterface i1 = p.snd();
 	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
 	 		//	if (c.isParameter() && c.getSupplier() != null) {
@@ -165,7 +167,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
  		
  		fillPortSlices(i,varContext);
         
-		String procName = i.getName2(false,varContext, null);
+		String procName = i.getName2(true, varContext,null);
 				
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
@@ -200,7 +202,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
         dependencies.add(pathD);
 		
 		String primInheritedName2 = i.getInheritedName().split("<")[0];
-		String inheritedName = procName.replaceFirst(i.getPrimName(), primInheritedName2);		
+		String inheritedName = i.getName2(false, varContext,null).replaceFirst(i.getPrimName(), primInheritedName2);		
 		HComponent cBase = ((HComponent) i.getConfiguration()).getWhoItImplements();
 		String packageNameImplements = cBase.getPackagePath().toString();
 		String componentNameImplements = cBase.getComponentName();
@@ -251,9 +253,13 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		String programTextVarBounds = "";
         List<HInterface> paramBounds = new ArrayList<HInterface>();
         List<String> paramBoundsName = new ArrayList<String>();
- 		for (Triple<String,HInterface,String> p : i.getParameters(topC)) {
+ 		for (Triple<String,HInterface,String> p : i.getParameters(topC)) 
+ 		{
 			String varName = p.fst(); 
- 			if (!varContext.contains(varName)) {
+			VarianceType variance_type = topC.getParameterVariance(p.trd());
+			
+ 			if (!varContext.contains(varName) && variance_type.equals(VarianceType.CONTRAVARIANT)) 
+ 			{
 	 			HInterface i1 = p.snd();
 	 			HComponent c = (HComponent) i1.getCompliantUnits().get(0).getConfiguration();
 	 			// if (c.isParameter() && c.getSupplier() != null) {
@@ -261,8 +267,10 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		 			   HInterface bound = p.snd();
 		 			   bounds.add(bound);
 		 			   traverseParams(bound,bounds);
-		 			   for (HInterface oneBound : bounds) {
-		 				  if (!paramBoundsName.contains(oneBound.getPrimName())) {
+		 			   for (HInterface oneBound : bounds) 
+		 			   {
+		 				  if (!paramBoundsName.contains(oneBound.getPrimName())) 
+		 				  {
 		 					  paramBoundsName.add(oneBound.getPrimName());
 		 					  paramBounds.add(oneBound);
 		 				  }
@@ -282,7 +290,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 
  		fillPortSlices(i,varContext);
         
-		String procName = i.getName2(false,varContext, null);
+		String procName = i.getName2(true, varContext,null);
 				
 		String packageName = ((HComponent)i.getConfiguration()).getPackagePath().toString();
 		String componentName = i.getConfiguration().getComponentName();
@@ -354,7 +362,7 @@ public class HBESynthesizerCSharpConcrete extends HBEAbstractSynthesizer<HBESour
 		}
 
 		String primInheritedName = i.getInheritedName().split("<")[0];
-		String inheritedName = procName.replaceFirst(i.getPrimName(), primInheritedName);		
+		String inheritedName = i.getName2(false, varContext,null).replaceFirst(i.getPrimName(), primInheritedName);		
 		HComponent cBase = ((HComponent) i.getConfiguration()).getWhoItImplements();
 		String packageNameImplements = cBase.getPackagePath().toString();
 		String componentNameImplements = cBase.getComponentName();

@@ -4,6 +4,8 @@
  */
 package hPE.xml.component.validation;
 
+import hPE.xml.component.VarianceType;
+
 
 /**
  * A sample validator interface for {@link hPE.xml.component.ParameterType}.
@@ -17,5 +19,7 @@ public interface ParameterTypeValidator {
 	boolean validateComponentRef(String value);
 	boolean validateFormFieldId(String value);
 	boolean validateOrder(int value);
+	boolean validateVariance(VarianceType value);
+
 	boolean validateVarName(String value);
 }

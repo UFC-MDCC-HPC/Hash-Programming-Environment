@@ -2,7 +2,7 @@
 <xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="HashComponent.xsd#/" outputs="component.ecore#/"
     topToBottom="true">
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//boolean;XSDSimpleTypeDefinition=10"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//boolean;XSDSimpleTypeDefinition=10"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
   <nested inputs="HashComponent.xsd#//ExtensionTypeType;XSDComplexTypeDefinition=33"
       outputs="component.ecore#//ExtensionTypeType">
@@ -11,7 +11,7 @@
     <nested inputs="HashComponent.xsd#//ExtensionTypeType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=1"
         outputs="component.ecore#//ExtensionTypeType/extends"/>
   </nested>
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//unsignedByte;XSDSimpleTypeDefinition=51"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//unsignedByte;XSDSimpleTypeDefinition=51"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//UnsignedByte"/>
   <nested inputs="HashComponent.xsd#//ColorComplexType;XSDComplexTypeDefinition=16"
       outputs="component.ecore#//ColorComplexType">
@@ -22,7 +22,7 @@
     <nested inputs="HashComponent.xsd#//ColorComplexType;XSDComplexTypeDefinition=16/XSDAttributeUse"
         outputs="component.ecore#//ColorComplexType/r"/>
   </nested>
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//unsignedInt;XSDSimpleTypeDefinition=49"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//unsignedInt;XSDSimpleTypeDefinition=49"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//UnsignedInt"/>
   <nested inputs="HashComponent.xsd#//VisualElementAttributes;XSDComplexTypeDefinition=5"
       outputs="component.ecore#//VisualElementAttributes">
@@ -37,9 +37,9 @@
     <nested inputs="HashComponent.xsd#//VisualElementAttributes;XSDComplexTypeDefinition=5/XSDAttributeUse=1"
         outputs="component.ecore#//VisualElementAttributes/y"/>
   </nested>
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//int;XSDSimpleTypeDefinition=44"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//int;XSDSimpleTypeDefinition=44"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//Int"/>
   <nested inputs="HashComponent.xsd#//ParameterRenaming;XSDComplexTypeDefinition=22"
       outputs="component.ecore#//ParameterRenaming">
@@ -70,9 +70,9 @@
     <nested inputs="HashComponent.xsd#//UnitBoundsType;XSDComplexTypeDefinition=28/XSDAttributeUse"
         outputs="component.ecore#//UnitBoundsType/uRef"/>
   </nested>
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//anyURI;XSDSimpleTypeDefinition=25"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//anyURI;XSDSimpleTypeDefinition=25"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//AnyURI"/>
-  <nested inputs="bundleentry://2181.fwk1048278180/cache/www.w3.org/2001/XMLSchema.xsd#//ID;XSDSimpleTypeDefinition=37"
+  <nested inputs="bundleentry://2181.fwk563797592/cache/www.w3.org/2001/XMLSchema.xsd#//ID;XSDSimpleTypeDefinition=37"
       outputs="http://www.eclipse.org/emf/2003/XMLType#//ID"/>
   <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4"
       outputs="component.ecore#//ComponentInUseType">
@@ -84,21 +84,21 @@
         outputs="component.ecore#//ComponentInUseType/port"/>
     <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=3"
         outputs="component.ecore#//ComponentInUseType/unitBounds"/>
-    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=4"
-        outputs="component.ecore#//ComponentInUseType/hashComponentUID"/>
-    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=3"
-        outputs="component.ecore#//ComponentInUseType/localRef"/>
-    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=2"
-        outputs="component.ecore#//ComponentInUseType/location"/>
     <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=7"
-        outputs="component.ecore#//ComponentInUseType/multiple"/>
-    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse"
-        outputs="component.ecore#//ComponentInUseType/name"/>
+        outputs="component.ecore#//ComponentInUseType/hashComponentUID"/>
+    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=2"
+        outputs="component.ecore#//ComponentInUseType/localRef"/>
     <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=6"
-        outputs="component.ecore#//ComponentInUseType/package"/>
-    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=5"
-        outputs="component.ecore#//ComponentInUseType/parameterId"/>
+        outputs="component.ecore#//ComponentInUseType/location"/>
+    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=4"
+        outputs="component.ecore#//ComponentInUseType/multiple"/>
     <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=1"
+        outputs="component.ecore#//ComponentInUseType/name"/>
+    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse"
+        outputs="component.ecore#//ComponentInUseType/package"/>
+    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=3"
+        outputs="component.ecore#//ComponentInUseType/parameterId"/>
+    <nested inputs="HashComponent.xsd#//ComponentInUseType;XSDComplexTypeDefinition=4/XSDAttributeUse=5"
         outputs="component.ecore#//ComponentInUseType/version"/>
   </nested>
   <nested inputs="HashComponent.xsd#//BaseTypeType;XSDComplexTypeDefinition=32" outputs="component.ecore#//BaseTypeType">
@@ -141,7 +141,7 @@
     <nested inputs="HashComponent.xsd#//SupportedKinds;XSDSimpleTypeDefinition/XSDEnumerationFacet=10"
         outputs="component.ecore#//SupportedKinds/Topology"/>
     <nested inputs="HashComponent.xsd#//SupportedKinds;XSDSimpleTypeDefinition/XSDEnumerationFacet=11"
-        outputs="component.ecore#//SupportedKinds/value"/>
+        outputs="component.ecore#//SupportedKinds/System"/>
   </nested>
   <nested inputs="HashComponent.xsd#//ComponentHeaderType;XSDComplexTypeDefinition=14"
       outputs="component.ecore#//ComponentHeaderType">
@@ -164,6 +164,14 @@
     <nested inputs="HashComponent.xsd#//ComponentHeaderType;XSDComplexTypeDefinition=14/XSDAttributeUse=2"
         outputs="component.ecore#//ComponentHeaderType/packagePath"/>
   </nested>
+  <nested inputs="HashComponent.xsd#//VarianceType;XSDSimpleTypeDefinition=2" outputs="component.ecore#//VarianceType">
+    <nested inputs="HashComponent.xsd#//VarianceType;XSDSimpleTypeDefinition=2/XSDEnumerationFacet"
+        outputs="component.ecore#//VarianceType/covariant"/>
+    <nested inputs="HashComponent.xsd#//VarianceType;XSDSimpleTypeDefinition=2/XSDEnumerationFacet=1"
+        outputs="component.ecore#//VarianceType/contravariant"/>
+    <nested inputs="HashComponent.xsd#//VarianceType;XSDSimpleTypeDefinition=2/XSDEnumerationFacet=2"
+        outputs="component.ecore#//VarianceType/invariant"/>
+  </nested>
   <nested inputs="HashComponent.xsd#//ParameterType;XSDComplexTypeDefinition=6" outputs="component.ecore#//ParameterType">
     <nested inputs="HashComponent.xsd#//ParameterType;XSDComplexTypeDefinition=6/XSDAttributeUse=1"
         outputs="component.ecore#//ParameterType/componentRef"/>
@@ -171,6 +179,8 @@
         outputs="component.ecore#//ParameterType/formFieldId"/>
     <nested inputs="HashComponent.xsd#//ParameterType;XSDComplexTypeDefinition=6/XSDAttributeUse=3"
         outputs="component.ecore#//ParameterType/order"/>
+    <nested inputs="HashComponent.xsd#//ParameterType;XSDComplexTypeDefinition=6/XSDAttributeUse=4"
+        outputs="component.ecore#//ParameterType/variance"/>
     <nested inputs="HashComponent.xsd#//ParameterType;XSDComplexTypeDefinition=6/XSDAttributeUse=2"
         outputs="component.ecore#//ParameterType/varName"/>
   </nested>
@@ -475,6 +485,15 @@
     <nested inputs="HashComponent.xsd#//FusionsOfReplicatorsType;XSDComplexTypeDefinition=35/XSDParticle/XSDModelGroup/XSDParticle"
         outputs="component.ecore#//FusionsOfReplicatorsType/fusionOfReplicators"/>
   </nested>
+  <nested inputs="HashComponent.xsd#//ExternalLibraryType;XSDComplexTypeDefinition=59"
+      outputs="component.ecore#//ExternalLibraryType">
+    <nested inputs="HashComponent.xsd#//ExternalLibraryType;XSDComplexTypeDefinition=59/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="component.ecore#//ExternalLibraryType/externalDependency"/>
+    <nested inputs="HashComponent.xsd#//ExternalLibraryType;XSDComplexTypeDefinition=59/XSDAttributeUse=1"
+        outputs="component.ecore#//ExternalLibraryType/contents"/>
+    <nested inputs="HashComponent.xsd#//ExternalLibraryType;XSDComplexTypeDefinition=59/XSDAttributeUse"
+        outputs="component.ecore#//ExternalLibraryType/name"/>
+  </nested>
   <nested inputs="HashComponent.xsd#//ComponentBodyType;XSDComplexTypeDefinition"
       outputs="component.ecore#//ComponentBodyType">
     <nested inputs="HashComponent.xsd#//ComponentBodyType;XSDComplexTypeDefinition/XSDParticle"
@@ -501,6 +520,8 @@
         outputs="component.ecore#//ComponentBodyType/enumerator"/>
     <nested inputs="HashComponent.xsd#//ComponentBodyType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=10"
         outputs="component.ecore#//ComponentBodyType/fusionsOfReplicators"/>
+    <nested inputs="HashComponent.xsd#//ComponentBodyType;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=11"
+        outputs="component.ecore#//ComponentBodyType/externalLibrary"/>
   </nested>
   <nested inputs="HashComponent.xsd#//ComponentType;XSDComplexTypeDefinition=7" outputs="component.ecore#//ComponentType">
     <nested inputs="HashComponent.xsd#//ComponentType;XSDComplexTypeDefinition=7/XSDParticle/XSDModelGroup/XSDParticle"
@@ -561,6 +582,8 @@
     <nested inputs="HashComponent.xsd#//GuardConditionType;XSDComplexTypeDefinition=54/XSDAttributeUse"
         outputs="component.ecore#//GuardConditionType/condition1"/>
   </nested>
+  <nested inputs="HashComponent.xsd#//HExternalLibraryType;XSDComplexTypeDefinition=58"
+      outputs="component.ecore#//HExternalLibraryType"/>
   <nested inputs="HashComponent.xsd#//ImplementsType;XSDComplexTypeDefinition=30"
       outputs="component.ecore#//ImplementsType">
     <nested inputs="HashComponent.xsd#//ImplementsType;XSDComplexTypeDefinition=30/XSDParticle/XSDModelGroup/XSDParticle"

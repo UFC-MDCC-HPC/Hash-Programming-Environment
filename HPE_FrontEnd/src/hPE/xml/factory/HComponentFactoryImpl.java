@@ -83,6 +83,7 @@ import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
+import hPE.xml.component.VarianceType;
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
 import hPE.xml.component.impl.DocumentRootImpl;
@@ -223,8 +224,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			boolean isExtending, boolean isImplementing, boolean cached,
 			boolean relativePath) throws HPEInvalidComponentResourceException {
 		ComponentType component = loadComponentX(uri, cached, relativePath);
-		return buildComponent(component, uri, isTop, isExtending,
-				isImplementing);
+		return buildComponent(component, uri, isTop, isExtending, isImplementing);
 	}
 
 	private static String workspace_path = null;
@@ -239,25 +239,21 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 	}
 
 	// Loads a ComponentType object from XML in a HComponent object
-	public ComponentType loadComponentX(URI uri, boolean cache,
-			boolean relativePath) throws HPEInvalidComponentResourceException {
+	public ComponentType loadComponentX(URI uri, boolean cache, boolean relativePath) throws HPEInvalidComponentResourceException {
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
 			resourceSet
 					.getResourceFactoryRegistry()
 					.getExtensionToFactoryMap()
-					.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-							new ComponentResourceFactoryImpl());
-			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI,
-					ComponentPackage.eINSTANCE);
+					.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new ComponentResourceFactoryImpl());
+			resourceSet.getPackageRegistry().put(ComponentPackage.eNS_URI, ComponentPackage.eINSTANCE);
 
 			Resource resource = null;
 			/*
 			 * if (this.workspace != null || cache) { resource =
 			 * resourceSet.getResource(uri, true); } else
 			 */if (relativePath) {
-				URI uriFull = URI.createFileURI(this.getWorkspacePath()
-						+ Path.SEPARATOR + uri.toString());
+				URI uriFull = URI.createFileURI(this.getWorkspacePath() + Path.SEPARATOR + uri.toString());
 				resource = resourceSet.getResource(uriFull, true);
 			} else {
 				URI uriFull = uri; // URI.createFileURI(uri.toString());
@@ -373,15 +369,15 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 			ExtensionTypeType extType = xBaseType.getExtensionType();
 			ComponentInUseType baseComponent = xBaseType.getComponent();
 
+			String package_ = baseComponent.getPackage();
 			String name = baseComponent.getName();
-			URI locationUri = URI.createURI(baseComponent.getLocation());
+			URI locationUri = URI.createURI(package_ + "." + name + Path.SEPARATOR + name + ".hpe");
 			VisualElementAttributes v = baseComponent.getVisualDescription();
 			Rectangle bounds = new Rectangle((int) v.getX(), (int) v.getY(),
 					(int) v.getW(), (int) v.getH());
-			String package_ = baseComponent.getPackage();
-			String version = baseComponent.getVersion();
+			//String version = baseComponent.getVersion();
 
-			java.io.File fileCache = getCachePath(package_, name, version);
+			java.io.File fileCache = getCachePath(package_, name);
 			URI innerUri = null;
 
 			boolean copyToCache = false;
@@ -458,7 +454,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					!copyToCache, false);
 
 			if (copyToCache)
-				copyProjectToCache(superType, version, locationUri);
+				copyProjectToCache(superType, locationUri);
 
 			if (retrieveLibraries)
 				retrieveLibraries(superType, locationUri);
@@ -494,15 +490,16 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					mC1.put(xInnerC.getLocalRef(), xInnerC);
 
 					String name = xInnerC.getName();
-					URI locationUri = xInnerC.getLocation() != null 
-												? URI.createURI(xInnerC.getLocation()) 
-												: URI.createURI(HPEProperties.get(PreferenceConstants.LOCAL_LOCATION));
 					String package_ = xInnerC.getPackage();
+					String location = package_ + "." + name + Path.SEPARATOR + name + ".hpe"; 
+					URI locationUri = location /* xInnerC.getLocation() */ != null 
+												? URI.createURI(location) 
+												: URI.createURI(HPEProperties.get(PreferenceConstants.LOCAL_LOCATION));
 					String ref = xInnerC.getLocalRef();
-					String version = xInnerC.getVersion();
+					//String version = xInnerC.getVersion();
 					boolean isExposed = xInnerC.isExposed();
 					boolean isMultiple = xInnerC.isSetMultiple() ? xInnerC.isMultiple() : false;
-					java.io.File fileCache = getCachePath(package_, name, version);
+					java.io.File fileCache = getCachePath(package_, name);
 					URI innerUri = null;
 
 					boolean copyToCache = false;
@@ -586,7 +583,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 					}
 
 					if (copyToCache)
-						copyProjectToCache(innerC, version, locationUri);
+						copyProjectToCache(innerC, locationUri);
 
 					if (retrieveLibraries)
 						retrieveLibraries(innerC, locationUri);
@@ -632,8 +629,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				catch (HPEInvalidComponentResourceException e) 
 				{
 					String message = "ERROR loading component "
-							+ xInnerC.getPackage() + "." + xInnerC.getName()
-							+ " from " + xInnerC.getLocation()
+							+ xInnerC.getPackage() + "." + xInnerC.getName() 
 							+ "! (inner component " + xInnerC.getLocalRef()
 							+ ").";
 					;
@@ -644,7 +640,6 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 				{
 					String message = "Component " + xInnerC.getPackage() + "."
 							+ xInnerC.getName() + " NOT fuound in "
-							+ xInnerC.getLocation() + "! (inner component "
 							+ xInnerC.getLocalRef() + ").";
 					System.err.println(message);
 					JOptionPane.showMessageDialog(null, message, "Loading Component Error", JOptionPane.ERROR_MESSAGE);
@@ -679,8 +674,13 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	}
 
-	public static void copyProjectToCache(HComponent innerC, String version,
-			URI locationURI) {
+	public static void copyProjectToCache(HComponent innerC, URI locationURI) 
+	{
+		copyProjectToCache(innerC, "1.0.0.0", locationURI);
+	}
+	
+
+	private static void copyProjectToCache(HComponent innerC, String version, URI locationURI) {
 
 		IPath pathC = new Path(innerC.getLocalLocation());
 		if (pathC.segment(0).equals("file:")) {
@@ -787,11 +787,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		}
 	}
 
-	public static File getCachePath(String pk, String componentName,
-			String version) {
+	public static File getCachePath(String pk, String componentName)
+	{
+		return getCachePath(pk, componentName, "1.0.0.0");
+	}
+	
+	private static File getCachePath(String pk, String componentName, String version) {
 
-		URI locationURI = HComponent.getStandardLocationPath(pk, componentName,
-				version);
+		URI locationURI = HComponent.getStandardLocationPath(pk, componentName, version);
 
 		return getCachePath(locationURI);
 	}
@@ -1045,13 +1048,14 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		EList<ParameterType> parametersX = xCinfo.getParameter();
 
 		for (ParameterType param : parametersX) {
-			String formFieldId = param.getFormFieldId();
+			String par_id = param.getFormFieldId();
 			String sBaseC = param.getComponentRef();
 			int order = param.getOrder();
 			HComponent baseC = mC2.get(mC1.get(sBaseC));
-			baseC.setParameter(formFieldId);
+			baseC.setParameter(par_id);
 			if (param.isSetOrder())
-				component.setParameterOrder(formFieldId, order);
+				component.setParameterOrder(par_id, order);
+			component.setParameterVariance(par_id, component.getParameterVariance(par_id, param.getVariance()));
 		}
 
 	}
@@ -1690,30 +1694,30 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		for (HComponent ic : cs) {
 
 			if (ic.isParameter() && ic.getSupplier() == null) {
-				String formFieldId = null;
+				String par_id = null;
 				String cRef = null;
 				String varName = null;
 
 				// SETUP VARIABLES
 
-				formFieldId = ic.getParameterIdentifier(c);
+				par_id = ic.getParameterIdentifier(c);
 				cRef = ic.getRef();
 				varName = ic.getVariableName(c);
 
 				// ---------------
 
 				ParameterType p = factory.createParameterType();
-				p.setFormFieldId(formFieldId);
+				p.setFormFieldId(par_id);
 				p.setComponentRef(cRef);
 				p.setVarName(varName);
+				p.setVariance(component.getParameterVariance(par_id));
 
 				cparameters.put(varName, cRef);
 
 				// parameters must be saved with an order.
-				int order = component.getParameterOrder(formFieldId);
+				int order = component.getParameterOrder(par_id);
 				if (order < 0)
-					unordered_parameters.add(new Pair<String, ParameterType>(
-							formFieldId, p));
+					unordered_parameters.add(new Pair<String, ParameterType>(par_id, p));
 				else {
 					p.setOrder(order);
 					max_order = order > max_order ? order : max_order;
@@ -1822,12 +1826,11 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		String name = ic.getComponentName();
 		String localRef = ic.getRef();
 
-		String location = ic.getRemoteLocation() == null ? ic
-				.getRelativeLocation() : ic.getRemoteLocation();
+		String location = ic.getRemoteLocation() == null ? ic.getRelativeLocation() : ic.getRemoteLocation();
 		String package_ = ic.getPackagePath().toString();
 		boolean exposed = ic.isPublic();
 		boolean isMultiple = ic.isMultiple();
-		String hash_component_UID = ic.getHashComponentUID();
+		//String hash_component_UID = ic.getHashComponentUID();
 
 		String parameterId = ic.getParameterIdentifier(this.component);
 
@@ -1842,7 +1845,7 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 		// d.setVersion(version);
 		d.setExposed(exposed);
 		d.setMultiple(isMultiple);
-		d.setHashComponentUID(hash_component_UID);
+		//d.setHashComponentUID(hash_component_UID);
 		d.setVisualDescription(v);
 		if (!parameterId.equals("type ?"))
 			d.setParameterId(parameterId);
@@ -2213,23 +2216,24 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 
 	private void saveParameters(
 			List<Triple<String, HInterface, String>> parameters,
-			EList<InterfaceParameterType> parametersX) {
-
+			EList<InterfaceParameterType> parametersX) 
+	{
 		Map<String, Integer> m = new HashMap<String, Integer>();
 
 		Map<Integer, InterfaceParameterType> parameter_order = new HashMap<Integer, InterfaceParameterType>();
 		int max_order = 0;
 
-		for (Triple<String, HInterface, String> parameter : parameters) {
+		for (Triple<String, HInterface, String> parameter : parameters) 
+		{
 			String par_id = parameter.trd();
-			InterfaceParameterType parX = factory
-					.createInterfaceParameterType();
-			parX.setParid(par_id);
-			if (!m.containsKey(par_id)) {
+			VarianceType variance_type = this.component.getParameterVariance(par_id);
+			if (!m.containsKey(par_id) && (this.component.isAbstract() || variance_type.equals(VarianceType.CONTRAVARIANT))) 
+			{
+				InterfaceParameterType parX = factory.createInterfaceParameterType();
+				parX.setParid(par_id);
 				parX.setVarid(parameter.fst());
 				parX.setIname(parameter.snd().getPrimName());
-				parX.setUname(parameter.snd().getCompliantUnits().get(0)
-						.getName2());
+				parX.setUname(parameter.snd().getCompliantUnits().get(0).getName2());
 
 				int order = component.getParameterOrder(par_id);
 				if (order >= 0) {
@@ -2819,12 +2823,8 @@ public final class HComponentFactoryImpl implements HComponentFactory {
 						}
 
 						if (u1 == null) {
-							System.err
-									.println("HComponentFactoryImpl.loadSlices(): IHUnit "
-											+ uRef + " not found in " + cRef);
-							JOptionPane.showMessageDialog(null,
-									"HComponentFactoryImpl.loadSlices(): IHUnit "
-											+ uRef + " not found in " + cRef,
+							System.err.println("HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef);
+							JOptionPane.showMessageDialog(null,	"HComponentFactoryImpl.loadSlices(): IHUnit " + uRef + " not found in " + cRef,
 									"Loading Component Error",
 									JOptionPane.ERROR_MESSAGE);
 						} else {

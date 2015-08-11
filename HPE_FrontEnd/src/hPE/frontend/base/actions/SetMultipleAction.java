@@ -48,7 +48,7 @@ public class SetMultipleAction extends SelectionAction {
 			return false;
 		List parts = getSelectedObjects();
 		
-		for (int i=0; i<parts.size(); i++){
+		for (int i=0; i<parts.size(); i++){	
 			Object o = parts.get(i);
 			if (!(o instanceof EditPart)) return false;
 			EditPart part = (EditPart)o;
@@ -66,7 +66,7 @@ public class SetMultipleAction extends SelectionAction {
 		    	HComponent c = (HComponent) u.getConfiguration();		
 		    	if (c.kindString().equals(HTopologyComponent.KIND)) return false;
 		    	HComponent cTop = (HComponent) c.getTopConfiguration();
-		    	if (cTop.getSuperType() != null) return false;
+		    	//if (cTop.getSuperType() != null) return false;
 		    	if (u.getBinding() != null) return false;
 		    }
 			

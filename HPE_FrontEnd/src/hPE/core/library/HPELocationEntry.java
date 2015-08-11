@@ -164,8 +164,7 @@ public class HPELocationEntry {
 				pk += "." + pkName[i];
 			}
 
-			file = HComponentFactoryImpl.getCachePath(pk, componentName,
-					version);
+			file = HComponentFactoryImpl.getCachePath(pk, componentName);
 
 			if (!file.exists()) {
 

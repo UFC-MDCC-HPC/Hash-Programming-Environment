@@ -11,6 +11,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const int CREATE_INSTANCE = 0;
     }
 
+	public enum EnvironmentPortType { user, provider};
+
     public class Constants
     {
 
@@ -73,6 +75,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
             }
 		}
 
+		public static string DIRECTORY_NAME_BINDING_WEB_SERVICES;
 
 	    public static int WORKER_PORT = 4865;
         public static int MANAGER_PORT = 4864;
@@ -91,18 +94,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 		public static string SITE_URL = FileUtil.readConstant("site_url");
         public static string PATH_TEMP_WORKER = FileUtil.readConstant("path_temp_worker");
         public static string PATH_DGAC = FileUtil.readConstant("path_dgac");
-        // public static string PATH_MONO_BIN = FileUtil.readConstant("path_dgac");
         public static string UNIT_PACKAGE_PATH = FileUtil.readConstant("unit_package_path"); // HASH_UNIT_PACKAGE";
         public static string PATH_BIN = FileUtil.readConstant("path_bin");
- //       public static string SERVICE_NAME = FileUtil.readConstant("service_name");
-        public static string cs_compiler = FileUtil.readConstant("cs_compiler"); // "mcs"
+        public static string cs_compiler = FileUtil.readConstant("cs_compiler","dmcs"); // "mcs"
         public static string cs_compiler_flags = FileUtil.readConstant("cs_compiler_flags"); // "mcs"
         public static string cli_runtime = FileUtil.readConstant("cli_runtime"); // "mono"
         public static string key_generator = FileUtil.readConstant("key_generator");
         public static string gac_util = FileUtil.readConstant("gac_util");
         public static string mpi_run = FileUtil.readConstant("mpi_run");
         public static string mpi_run_flags = FileUtil.readConstant("mpi_run_flags");
-        //public static string hosts_file = FileUtil.readConstant("hosts_file", Path.Combine(HOME_PATH, "hpe_nodes"));
         public static string connectionString = FileUtil.readConstant("connection_string");
         public static string externalRefsFile = FileUtil.readConstant("external_references_file");
 
@@ -157,18 +157,18 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string PARAMETER_PORT_TYPE = "gov.cca.ports.ParameterPort";
         public const string PARAMETER_PORT_NAME = "parameter";
 
-        public const int KIND_UNRECOGNIZED = -1;
-        public const int KIND_APPLICATION = 0;
-        public const int KIND_COMPUTATION = 1;
-        public const int KIND_SYNCHRONIZER = 2;
-        public const int KIND_ENVIRONMENT = 3;
-        public const int KIND_PLATFORM = 4;
-        public const int KIND_ENUMERATOR = 5;
-        public const int KIND_QUALIFIER = 6;
-        public const int KIND_DATASTRUCTURE = 7;
-        public const int KIND_TOPOLOGY = 8;
-		public const int KIND_BINDING = 9;
-		
+		public const int KIND_UNRECOGNIZED = -1;
+		public const int KIND_APPLICATION = 0;
+		public const int KIND_COMPUTATION = 1;
+		public const int KIND_SYNCHRONIZER = 2;
+		public const int KIND_ENVIRONMENT = 3;
+		public const int KIND_PLATFORM = 4;
+		public const int KIND_QUALIFIER = 5;
+		public const int KIND_DATASTRUCTURE = 6;
+		public const int KIND_BINDING = 7;
+		public const int KIND_SYSTEM = 8;
+		public const int KIND_PROXY = 9;
+
 		public const string KIND_APPLICATION_NAME = "Application";
         public const string KIND_COMPUTATION_NAME = "Computation";
         public const string KIND_SYNCHRONIZER_NAME = "Synchronizer";
@@ -178,7 +178,35 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
         public const string KIND_DATASTRUCTURE_NAME = "Data";
         public const string KIND_TOPOLOGY_NAME = "Topology";
 		public const string KIND_BINDING_NAME = "Binding";
+		public const string KIND_SYSTEM_NAME = "System";
+		public const string KIND_PROXY_NAME = "Proxy";
 
+		public static IDictionary<VarianceType, string> varianceValue = new Dictionary<VarianceType, string>()
+		{
+			{VarianceType.invariant, "invariant"},
+			{VarianceType.covariant, "covariant"},
+			{VarianceType.contravariant, "contravariant"}
+		};
+
+		public static IDictionary<string, VarianceType> varianceValueInv = new Dictionary<string, VarianceType>()
+		{
+			{"invariant", VarianceType.invariant},
+			{"covariant", VarianceType.covariant},
+			{"contravariant", VarianceType.contravariant}
+		};
+
+
+		public static IDictionary<EnvironmentPortType, string> envUnitName = new Dictionary<EnvironmentPortType, string>()
+		{
+			{EnvironmentPortType.user,"client"},
+			{EnvironmentPortType.provider, "server"}
+		};
+
+		public static IDictionary<EnvironmentPortType, string> envInterfaceName = new Dictionary<EnvironmentPortType, string>()
+		{
+			{EnvironmentPortType.user,"IClient"},
+			{EnvironmentPortType.provider, "IServer"}
+		};
 
         public static Dictionary<string, int> kindMapping = new Dictionary<string, int>()
         {
@@ -190,8 +218,10 @@ namespace br.ufc.pargo.hpe.backend.DGAC.utils
 			{KIND_QUALIFIER_NAME,Constants.KIND_QUALIFIER},
 			{KIND_SYNCHRONIZER_NAME, Constants.KIND_SYNCHRONIZER},
 			{KIND_BINDING_NAME, Constants.KIND_BINDING},
-			{KIND_TOPOLOGY_NAME, Constants.KIND_TOPOLOGY}
-        };
+			//{KIND_TOPOLOGY_NAME, Constants.KIND_TOPOLOGY},
+			{KIND_SYSTEM_NAME, Constants.KIND_SYSTEM},
+			{KIND_PROXY_NAME, Constants.KIND_PROXY}
+		};
 
         public static string getArgVal(string argId)
         {

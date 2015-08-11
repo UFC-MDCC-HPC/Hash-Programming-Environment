@@ -16,9 +16,9 @@ namespace HPE_DGAC_LoadDB
 
        ComponentType xc;
 
-       public override bool componentExists(string hash_component_uid, out HashComponent cRef)
+       public override bool componentExists(string library_path, out HashComponent cRef)
        {
-           Component concC = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve_uid(hash_component_uid);
+           Component concC = br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.retrieve_libraryPath(library_path);
            if (concC == null)
            {
                cRef = null;
@@ -80,7 +80,6 @@ namespace HPE_DGAC_LoadDB
 	            br.ufc.pargo.hpe.backend.DGAC.BackEnd.cdao.insert(c_);
 				
 	            loadUnits(c_);
-//                loadInners(c_);
 
 			}
 

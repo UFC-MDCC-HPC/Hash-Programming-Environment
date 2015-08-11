@@ -89,7 +89,7 @@ public interface ComponentHeaderType extends EObject {
 	 * @return the value of the '<em>Visual Attributes</em>' containment reference.
 	 * @see #setVisualAttributes(VisualElementAttributes)
 	 * @see hPE.xml.component.ComponentPackage#getComponentHeaderType_VisualAttributes()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='visualAttributes'"
 	 * @generated
 	 */

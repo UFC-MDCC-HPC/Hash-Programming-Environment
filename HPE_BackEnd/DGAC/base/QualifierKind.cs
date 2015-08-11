@@ -11,12 +11,12 @@ namespace br.ufc.pargo.hpe.kinds
 {
 
 
-    public interface IQualifierKind : IUnit
+    public interface IQualifierKind /*: IUnit*/
 	{
 		
 	}
 	
-	public abstract class Qualifier : Unit, IQualifierKind {
+	/*public abstract class Qualifier : Unit, IQualifierKind {
 	   
-	}	
+	}*/	
 }

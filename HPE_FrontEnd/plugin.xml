@@ -172,4 +172,18 @@
             type="component"
             class="hPE.xml.component.util.ComponentResourceFactoryImpl"/>
    </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated HashComponent4 -->
+      <package
+            uri="http://www.example.org/HashComponent"
+            class="org.example.hash.component.ComponentPackage"
+            genModel="src/hPE/xml/HashComponent4.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated HashComponent4 -->
+      <parser
+            type="component"
+            class="org.example.hash.component.util.ComponentResourceFactoryImpl"/>
+   </extension>
 </plugin>

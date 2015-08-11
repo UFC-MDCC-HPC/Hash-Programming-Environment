@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hPE.xml.component.ParameterType#getComponentRef <em>Component Ref</em>}</li>
  *   <li>{@link hPE.xml.component.ParameterType#getFormFieldId <em>Form Field Id</em>}</li>
  *   <li>{@link hPE.xml.component.ParameterType#getOrder <em>Order</em>}</li>
+ *   <li>{@link hPE.xml.component.ParameterType#getVariance <em>Variance</em>}</li>
  *   <li>{@link hPE.xml.component.ParameterType#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
@@ -135,6 +136,64 @@ public interface ParameterType extends EObject {
 	 * @generated
 	 */
 	boolean isSetOrder();
+
+	/**
+	 * Returns the value of the '<em><b>Variance</b></em>' attribute.
+	 * The default value is <code>"contravariant"</code>.
+	 * The literals are from the enumeration {@link hPE.xml.component.VarianceType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Variance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Variance</em>' attribute.
+	 * @see hPE.xml.component.VarianceType
+	 * @see #isSetVariance()
+	 * @see #unsetVariance()
+	 * @see #setVariance(VarianceType)
+	 * @see hPE.xml.component.ComponentPackage#getParameterType_Variance()
+	 * @model default="contravariant" unsettable="true"
+	 *        extendedMetaData="kind='attribute' name='variance'"
+	 * @generated
+	 */
+	VarianceType getVariance();
+
+	/**
+	 * Sets the value of the '{@link hPE.xml.component.ParameterType#getVariance <em>Variance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Variance</em>' attribute.
+	 * @see hPE.xml.component.VarianceType
+	 * @see #isSetVariance()
+	 * @see #unsetVariance()
+	 * @see #getVariance()
+	 * @generated
+	 */
+	void setVariance(VarianceType value);
+
+	/**
+	 * Unsets the value of the '{@link hPE.xml.component.ParameterType#getVariance <em>Variance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetVariance()
+	 * @see #getVariance()
+	 * @see #setVariance(VarianceType)
+	 * @generated
+	 */
+	void unsetVariance();
+
+	/**
+	 * Returns whether the value of the '{@link hPE.xml.component.ParameterType#getVariance <em>Variance</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Variance</em>' attribute is set.
+	 * @see #unsetVariance()
+	 * @see #getVariance()
+	 * @see #setVariance(VarianceType)
+	 * @generated
+	 */
+	boolean isSetVariance();
 
 	/**
 	 * Returns the value of the '<em><b>Var Name</b></em>' attribute.

@@ -69,6 +69,7 @@ import hPE.xml.component.UnitConditionType;
 import hPE.xml.component.UnitRefType;
 import hPE.xml.component.UnitSliceType;
 import hPE.xml.component.UnitType;
+import hPE.xml.component.VarianceType;
 import hPE.xml.component.VersionType;
 import hPE.xml.component.VisualElementAttributes;
 import org.eclipse.emf.ecore.EAttribute;
@@ -533,6 +534,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EEnum varianceTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType quantificationTypeObjectEDataType = null;
 
 	/**
@@ -541,6 +549,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * @generated
 	 */
 	private EDataType supportedKindsObjectEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType varianceTypeObjectEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -2114,8 +2129,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterType_VarName() {
+	public EAttribute getParameterType_Variance() {
 		return (EAttribute)parameterTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterType_VarName() {
+		return (EAttribute)parameterTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -3023,6 +3047,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getVarianceType() {
+		return varianceTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getQuantificationTypeObject() {
 		return quantificationTypeObjectEDataType;
 	}
@@ -3034,6 +3067,15 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 	 */
 	public EDataType getSupportedKindsObject() {
 		return supportedKindsObjectEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getVarianceTypeObject() {
+		return varianceTypeObjectEDataType;
 	}
 
 	/**
@@ -3269,6 +3311,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__COMPONENT_REF);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__FORM_FIELD_ID);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__ORDER);
+		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__VARIANCE);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__VAR_NAME);
 
 		portSliceTypeEClass = createEClass(PORT_SLICE_TYPE);
@@ -3394,10 +3437,12 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		// Create enums
 		quantificationTypeEEnum = createEEnum(QUANTIFICATION_TYPE);
 		supportedKindsEEnum = createEEnum(SUPPORTED_KINDS);
+		varianceTypeEEnum = createEEnum(VARIANCE_TYPE);
 
 		// Create data types
 		quantificationTypeObjectEDataType = createEDataType(QUANTIFICATION_TYPE_OBJECT);
 		supportedKindsObjectEDataType = createEDataType(SUPPORTED_KINDS_OBJECT);
+		varianceTypeObjectEDataType = createEDataType(VARIANCE_TYPE_OBJECT);
 	}
 
 	/**
@@ -3471,7 +3516,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(componentHeaderTypeEClass, ComponentHeaderType.class, "ComponentHeaderType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentHeaderType_BaseType(), this.getBaseTypeType(), null, "baseType", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponentHeaderType_Versions(), this.getVersionType(), null, "versions", null, 1, -1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComponentHeaderType_VisualAttributes(), this.getVisualElementAttributes(), null, "visualAttributes", null, 1, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponentHeaderType_VisualAttributes(), this.getVisualElementAttributes(), null, "visualAttributes", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_IsAbstract(), theXMLTypePackage.getBoolean(), "isAbstract", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentHeaderType_Kind(), this.getSupportedKinds(), "kind", null, 0, 1, ComponentHeaderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3486,7 +3531,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEReference(getComponentInUseType_UnitBounds(), this.getUnitBoundsType(), null, "unitBounds", null, 0, -1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_HashComponentUID(), theXMLTypePackage.getString(), "hashComponentUID", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_LocalRef(), theXMLTypePackage.getString(), "localRef", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getComponentInUseType_Location(), theXMLTypePackage.getAnyURI(), "location", null, 1, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentInUseType_Location(), theXMLTypePackage.getAnyURI(), "location", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentInUseType_Package(), theXMLTypePackage.getString(), "package", null, 0, 1, ComponentInUseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3625,7 +3670,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(interfaceTypeEClass, InterfaceType.class, "InterfaceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInterfaceType_Slice(), this.getInterfaceSliceType(), null, "slice", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Sources(), this.getSourceType(), null, "sources", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInterfaceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterfaceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Port(), this.getInterfacePortType(), null, "port", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterfaceType_ExternalReferences(), theXMLTypePackage.getString(), "externalReferences", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterfaceType_Parameter(), this.getInterfaceParameterType(), null, "parameter", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3649,6 +3694,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getParameterType_ComponentRef(), theXMLTypePackage.getString(), "componentRef", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_FormFieldId(), theXMLTypePackage.getString(), "formFieldId", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_Order(), theXMLTypePackage.getInt(), "order", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterType_Variance(), this.getVarianceType(), "variance", "contravariant", 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_VarName(), theXMLTypePackage.getString(), "varName", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(portSliceTypeEClass, PortSliceType.class, "PortSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3741,7 +3787,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEAttribute(getUnitRefType_URef(), theXMLTypePackage.getString(), "uRef", null, 1, 1, UnitRefType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(unitSliceTypeEClass, UnitSliceType.class, "UnitSliceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getUnitSliceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUnitSliceType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 0, 1, UnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitSliceType_Port(), theXMLTypePackage.getString(), "port", null, 0, -1, UnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitSliceType_SliceName(), theXMLTypePackage.getString(), "sliceName", null, 0, 1, UnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitSliceType_Transitive(), theXMLTypePackage.getBoolean(), "transitive", null, 0, 1, UnitSliceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3749,7 +3795,7 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		initEClass(unitTypeEClass, UnitType.class, "UnitType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnitType_Super(), this.getUnitRefType(), null, "super", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnitType_Slices(), this.getUnitSliceType(), null, "slices", null, 0, -1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUnitType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUnitType_VisualDescription(), this.getVisualElementAttributes(), null, "visualDescription", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Facet(), theXMLTypePackage.getInt(), "facet", "0", 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_IRef(), theXMLTypePackage.getString(), "iRef", null, 1, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnitType_Multiple(), theXMLTypePackage.getBoolean(), "multiple", null, 0, 1, UnitType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3788,11 +3834,17 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.FACET);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.BINDING);
 		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.TOPOLOGY);
-		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.VALUE);
+		addEEnumLiteral(supportedKindsEEnum, SupportedKinds.SYSTEM);
+
+		initEEnum(varianceTypeEEnum, VarianceType.class, "VarianceType");
+		addEEnumLiteral(varianceTypeEEnum, VarianceType.COVARIANT);
+		addEEnumLiteral(varianceTypeEEnum, VarianceType.CONTRAVARIANT);
+		addEEnumLiteral(varianceTypeEEnum, VarianceType.INVARIANT);
 
 		// Initialize data types
 		initEDataType(quantificationTypeObjectEDataType, QuantificationType.class, "QuantificationTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(supportedKindsObjectEDataType, SupportedKinds.class, "SupportedKindsObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(varianceTypeObjectEDataType, VarianceType.class, "VarianceTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -4997,6 +5049,13 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 			 "name", "order"
 		   });	
 		addAnnotation
+		  (getParameterType_Variance(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "variance"
+		   });	
+		addAnnotation
 		  (getParameterType_VarName(), 
 		   source, 
 		   new String[] {
@@ -5637,6 +5696,19 @@ public class ComponentPackageImpl extends EPackageImpl implements ComponentPacka
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "visibleInterface"
+		   });	
+		addAnnotation
+		  (varianceTypeEEnum, 
+		   source, 
+		   new String[] {
+			 "name", "VarianceType"
+		   });	
+		addAnnotation
+		  (varianceTypeObjectEDataType, 
+		   source, 
+		   new String[] {
+			 "name", "VarianceType:Object",
+			 "baseType", "VarianceType"
 		   });	
 		addAnnotation
 		  (versionTypeEClass, 

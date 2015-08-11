@@ -33,6 +33,22 @@ public class AbstractComponentFunctor : HashComponent {
         set {library_path = value;}
     }
 
+	public string Name
+	{
+		get {
+				string[] path = library_path.Split(new Char[] {'.'});
+				return path[path.Length-1];
+			}
+	}
+
+	public string Package
+	{
+		get {
+				int pos = library_path.LastIndexOf (".");
+				return library_path.Substring(pos+1);
+			}
+	}
+
     private string kind;
     public string Kind
     {

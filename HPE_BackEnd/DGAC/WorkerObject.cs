@@ -259,13 +259,15 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
             switch (kind)
             {
-                case Constants.KIND_APPLICATION: cid = createInstanceForApplications(instanceName, className, properties); break;
+				case Constants.KIND_SYSTEM:
+				case Constants.KIND_APPLICATION: cid = createInstanceForApplications(instanceName, className, properties); break;
                 case Constants.KIND_COMPUTATION:
                 case Constants.KIND_DATASTRUCTURE:
                 case Constants.KIND_ENVIRONMENT:
                 case Constants.KIND_PLATFORM:
                 case Constants.KIND_QUALIFIER:
 			    case Constants.KIND_BINDING:
+				case Constants.KIND_PROXY:
                 case Constants.KIND_SYNCHRONIZER: cid = createInstanceBaseForAllKinds(instanceName, className, properties); break;
 				default:
 					Trace.WriteLine ("Unrecognized component kind: " + kind);
@@ -349,9 +351,9 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	                int key = properties.getInt(Constants.KEY_KEY, my_global_rank);
 					Trace.WriteLine(my_global_rank +  ": --- BEGIN - Worker " + my_global_rank + ": Split " + key + " !!!");
 
-					unit_slice.WorldComm = this.worker_communicator;
+					unit_slice.WorldComm = this.global_communicator; // this.worker_communicator;
 					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 61");
-		            unit_slice.Communicator = (MPI.Intracommunicator) this.worker_communicator.Split(1, key);
+					unit_slice.Communicator = (MPI.Intracommunicator) unit_slice.WorldComm.Split(1, key);
 					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 62");
 					unit_slice.PeerComm =  (MPI.Intracommunicator) unit_slice.Communicator.Split(Math.Abs(id_unit.GetHashCode()), unit_slice.Rank);
 					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 63");
@@ -1161,7 +1163,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public void createInstance()
         {
 			Trace.WriteLine("BEGIN - NULL Worker " + my_global_rank + ": Split " + " !!!");
-            this.worker_communicator.Split(0, my_global_rank);
+            this.global_communicator/*.worker_communicator*/.Split(0, my_global_rank);
 			Trace.WriteLine("END - NULL Worker " + my_global_rank + ": Split " +  " !!!");
         }
 
@@ -1170,6 +1172,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void setUpCommunicationScope()
 		{
+
 			Trace.WriteLine (my_global_rank + ": BEGIN - setUpCommunicationScope " + (my_global_rank == 0 ? 0 : 1));
 
 			// CREATE THE WORKER COMMUNICATOR
@@ -1178,9 +1181,6 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 
 			// CREATE THE INTERCOMMUNICATOR
 			binding_bridge_communicator = new MPI.Intercommunicator (worker_communicator, 0, global_communicator, my_global_rank == 0 ? 1 : 0, 999);
-
-			int u = binding_bridge_communicator.Allreduce (my_global_rank, sum);
-			Trace.WriteLine ("testing intercommunicator - rank sum = " + u);
 
 			Trace.WriteLine (my_global_rank + ": END - setUpCommunicationScope - rank = " + my_worker_rank + ", inter-rank=" + binding_bridge_communicator.Rank);
 		}

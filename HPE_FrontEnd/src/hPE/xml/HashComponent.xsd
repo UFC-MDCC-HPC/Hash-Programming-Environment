@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.example.org/HashComponent"
-	xmlns:tns="http://www.example.org/HashComponent">
+	    targetNamespace="http://www.example.org/HashComponent"
+	    xmlns:tns="http://www.example.org/HashComponent">
+	    
     <element name="component" type="tns:ComponentType"></element>
 
 	<complexType name="ComponentBodyType">
@@ -58,7 +59,7 @@
 				type="tns:UnitSliceType">
 			</element>
 			<element name="visualDescription"
-				type="tns:VisualElementAttributes">
+				type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="0">
 			</element>
 		</sequence>
 		<attribute name="uRef" type="string" use="required"></attribute>
@@ -82,7 +83,7 @@
 			</element>
 
 			<element name="visualDescription"
-				type="tns:VisualElementAttributes">
+				type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="0">
 			</element>
 			<element name="port" type="tns:InterfacePortType"
 				maxOccurs="unbounded" minOccurs="0">
@@ -133,16 +134,16 @@
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
 		</sequence>
-		<attribute name="name" type="string"></attribute>
-		<attribute name="version" type="ID" use="optional"></attribute>
-		<attribute name="location" type="anyURI" use="required"></attribute>
+        <attribute name="package" type="string"></attribute>
+        <attribute name="name" type="string"></attribute>
 		<attribute name="localRef" type="string"></attribute>
 
-		<attribute name="hash_component_UID" type="string"></attribute>
-		<attribute name="parameter_id" type="string"></attribute>
-		<attribute name="package" type="string"></attribute>
+        <attribute name="parameter_id" type="string"></attribute>
 		<attribute name="multiple" type="boolean" use="optional"></attribute>
-	</complexType>
+        <attribute name="version" type="ID" use="optional"></attribute>
+        <attribute name="location" type="anyURI" use="optional"></attribute>
+        <attribute name="hash_component_UID" type="string" use="optional"></attribute>
+    </complexType>
 
 	<simpleType name="SupportedKinds">
 		<restriction base="string">
@@ -154,10 +155,10 @@
 			<enumeration value="Qualifier"></enumeration>
 			<enumeration value="Application"></enumeration>
 			<enumeration value="Enumerator"></enumeration>
-			<enumeration value="Facet"></enumeration>
 			<enumeration value="Binding"></enumeration>
 			<enumeration value="Topology"></enumeration>
-			<enumeration value="value"></enumeration>
+			<enumeration value="System"></enumeration>
+			<enumeration value="Proxy"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -177,6 +178,7 @@
 		<attribute name="componentRef" type="string" use="required"></attribute>
 		<attribute name="varName" type="string"></attribute>
 		<attribute name="order" type="int" use="optional"></attribute>
+		<attribute name="variance" type="tns:VarianceType" use="optional" default="contravariant"></attribute>
 	</complexType>
 	<complexType name="ComponentType">
 		<sequence>
@@ -258,7 +260,7 @@
 			<element name="versions" type="tns:VersionType"
 				maxOccurs="unbounded" minOccurs="1">
 			</element>
-			<element name="visualAttributes" type="tns:VisualElementAttributes"></element>
+			<element name="visualAttributes" type="tns:VisualElementAttributes" minOccurs="0" maxOccurs="1"></element>
 		</sequence>
 		<attribute name="kind" type="tns:SupportedKinds"></attribute>
 		<attribute name="name" type="string"></attribute>
@@ -293,7 +295,7 @@
 			<extension base="tns:UnitRefType">
 				<sequence>
 					<element name="visualDescription"
-						type="tns:VisualElementAttributes">
+						type="tns:VisualElementAttributes" maxOccurs="1" minOccurs="0">
 					</element>
 					<element name="port" type="string"
 						maxOccurs="unbounded" minOccurs="0">
@@ -501,12 +503,12 @@
     			maxOccurs="unbounded" minOccurs="0">
     		</element>
     	</sequence>
-    	<attribute name="uri" type="string"></attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="contents" type="string" use="optional"></attribute>
+        <attribute name="uri" type="string" use="optional"></attribute>
         <attribute name="srcType" type="string" use="optional"></attribute>
         <attribute name="fileType" type="string" use="optional"></attribute>
-    	<attribute name="versionId" type="string"></attribute>
-    	<attribute name="name" type="string"></attribute>
-    	<attribute name="contents" type="string" use="optional"></attribute>
+    	<attribute name="versionId" type="string" use="optional"></attribute>
     </complexType>
 
     <complexType name="InterfacePortType">
@@ -674,4 +676,12 @@
     	<attribute name="name" type="string"></attribute>
     	<attribute name="contents" type="string" use="optional"></attribute>
     </complexType>
+
+    <simpleType name="VarianceType">
+    	<restriction base="string">
+    		<enumeration value="covariant"></enumeration>
+    		<enumeration value="contravariant"></enumeration>
+    		<enumeration value="invariant"></enumeration>
+    	</restriction>
+    </simpleType>
 </schema>

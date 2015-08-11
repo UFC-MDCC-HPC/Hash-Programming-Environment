@@ -245,16 +245,16 @@
         Enumerator,
         
         /// <remarks/>
-        Facet,
-        
-        /// <remarks/>
         Binding,
         
         /// <remarks/>
         Topology,
         
         /// <remarks/>
-        value,
+        System,
+        
+        /// <remarks/>
+        Proxy,
     }
     
     /// <remarks/>
@@ -352,23 +352,23 @@
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(InnerComponentType))]
     public partial class ComponentInUseType {
         
+        private string packageField;
+        
         private string nameField1;
+        
+        private string localRefField;
+        
+        private string parameter_idField;
+        
+        private bool multipleField;
+        
+        private bool multipleSpecifiedField;
         
         private string versionField;
         
         private string locationField;
         
-        private string localRefField;
-        
         private string hash_component_UIDField1;
-        
-        private string parameter_idField;
-        
-        private string packageField;
-        
-        private bool multipleField;
-        
-        private bool multipleSpecifiedField;
         
         private VisualElementAttributes visualDescriptionField;
         
@@ -380,12 +380,67 @@
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string package {
+            get {
+                return this.packageField;
+            }
+            set {
+                this.packageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public string name {
             get {
                 return this.nameField1;
             }
             set {
                 this.nameField1 = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string localRef {
+            get {
+                return this.localRefField;
+            }
+            set {
+                this.localRefField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public string parameter_id {
+            get {
+                return this.parameter_idField;
+            }
+            set {
+                this.parameter_idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public bool multiple {
+            get {
+                return this.multipleField;
+            }
+            set {
+                this.multipleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore()]
+        public virtual bool multipleSpecified {
+            get {
+                return this.multipleSpecifiedField;
+            }
+            set {
+                this.multipleSpecifiedField = value;
             }
         }
         
@@ -413,67 +468,12 @@
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string localRef {
-            get {
-                return this.localRefField;
-            }
-            set {
-                this.localRefField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public string hash_component_UID {
             get {
                 return this.hash_component_UIDField1;
             }
             set {
                 this.hash_component_UIDField1 = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string parameter_id {
-            get {
-                return this.parameter_idField;
-            }
-            set {
-                this.parameter_idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public string package {
-            get {
-                return this.packageField;
-            }
-            set {
-                this.packageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
-        public bool multiple {
-            get {
-                return this.multipleField;
-            }
-            set {
-                this.multipleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore()]
-        public virtual bool multipleSpecified {
-            get {
-                return this.multipleSpecifiedField;
-            }
-            set {
-                this.multipleSpecifiedField = value;
             }
         }
         
@@ -974,6 +974,8 @@
         
         private bool orderSpecifiedField1;
         
+        private VarianceType varianceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
         public string formFieldId {
@@ -1028,6 +1030,34 @@
                 this.orderSpecifiedField1 = value;
             }
         }
+        
+        /// <remarks/>
+        [System.ComponentModel.DefaultValue(VarianceType.contravariant)]
+        [System.Xml.Serialization.XmlAttributeAttribute(Namespace="")]
+        public VarianceType variance {
+            get {
+                return this.varianceField;
+            }
+            set {
+                this.varianceField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17020")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.example.org/HashComponent")]
+    public enum VarianceType {
+        
+        /// <remarks/>
+        covariant,
+        
+        /// <remarks/>
+        contravariant,
+        
+        /// <remarks/>
+        invariant,
     }
     
     /// <remarks/>

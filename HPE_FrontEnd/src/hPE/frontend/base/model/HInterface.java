@@ -262,31 +262,32 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 
 	}
 
-	public String getParameterModifierName2(boolean complete,
-			List<String> varContext) {
-
+	public String getParameterModifierName2(boolean onlyVariables, List<String> varContext) 
+	{
 		int parameterized = 0;
 		String nameWithParameters = "";
 
 		List<String> vs = new ArrayList<String>();
 
-		for (Triple<String, HInterface, String> triple : this.getParameters()) {
+		for (Triple<String, HInterface, String> triple : this.getParameters()) 
+		{
 			HInterface i = triple.snd();
 			String parId = triple.trd();
 
-			if (parameterized == 0)
-				nameWithParameters = nameWithParameters.concat("<");
-			parameterized++;
-			if (!vs.contains(parId)) {
+			if (!vs.contains(parId) && !onlyVariables) 
+			{
+				if (parameterized == 0)
+					nameWithParameters = nameWithParameters.concat("<");
+				parameterized++;
 				if (parameterized > 1)
 					nameWithParameters += ", ";
-				nameWithParameters = nameWithParameters
-						+ i.getName2(false, varContext, null);
+				nameWithParameters = nameWithParameters + i.getName2(false, varContext, null);
 			}
 			vs.add(parId /* varName */);
 		}
 
-		if (parameterized > 0) {
+		if (parameterized > 0) 
+		{
 			nameWithParameters = nameWithParameters.concat(">");
 		}
 
@@ -354,28 +355,20 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		}
 	}
 
-	public String getName2(boolean showSuperType, List<String> varContext,
-			String varNameCtx) {
-
-		HComponent c = (HComponent) this.getCompliantUnits().get(0)
-				.getConfiguration();
-		String varName = c.getVariableName((HComponent) this.getConfiguration()
-				.getTopConfiguration());
-		boolean showVariable = (varNameCtx == null || !varName
-				.equals(varNameCtx))
-				&& varContext != null
-				&& varContext.contains(varName.split("@")[0]);
+	public String getName2(boolean onlyVariables, List<String> varContext, String varNameCtx) 
+	{
+		HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
+		String varName = c.getVariableName((HComponent) this.getConfiguration().getTopConfiguration());
+		boolean showVariable = (varNameCtx == null || !varName.equals(varNameCtx)) && varContext != null && varContext.contains(varName.split("@")[0]);
 		boolean showBounds = !showVariable;
 
 		return (showVariable ? varName.split("@")[0] : "")
 				+ (showVariable && showBounds ? ":" : "")
-				+ (showBounds ? this.getNonAbstractName2(false, varContext)
-						: "");
+				+ (showBounds ? this.getNonAbstractName2(onlyVariables, varContext) : "");
 	}
 
 	public boolean isParameter() {
-		HComponent c = (HComponent) this.getCompliantUnits().get(0)
-				.getConfiguration();
+		HComponent c = (HComponent) this.getCompliantUnits().get(0).getConfiguration();
 		return c.isParameter() && (c.getSupplier() == null);
 	}
 
@@ -384,12 +377,8 @@ public abstract class HInterface extends HPrimInterface implements IInterface,
 		return c.isAbstractConfiguration();
 	}
 
-	private String getNonAbstractName2(boolean showSuperType,
-			List<String> varContext) {
-		return this.getPrimName()
-				+ this.getParameterModifierName2(showSuperType, varContext)
-				+ (showSuperType && this.hasSuperType() ? ": "
-						+ this.getInheritedName() : "");
+	private String getNonAbstractName2(boolean onlyVariables, List<String> varContext) {
+		return this.getPrimName() + this.getParameterModifierName2(onlyVariables,varContext);
 	}
 
 	private String getNonAbstractName(boolean showSuperType,

@@ -185,6 +185,10 @@ namespace br.ufc.pargo.hpe.basic
 		public void calculate_topology ()
 		{
 			string[] rank_units = this.Communicator.Allgather<string>(this.Id_unit);
+
+			Trace.WriteLine (this.Rank + " ALL GATHER :");
+			foreach (string unit_id in rank_units) Trace.Write (unit_id + ",");
+			Console.WriteLine (".");
 			
 			IDictionary<string, IList<int>> unit_rank_list = new Dictionary<string, IList<int>>();
 

@@ -149,6 +149,11 @@ public class AbstractComponentFunctorDAO{
      
     }
 
+	internal AbstractComponentFunctor retrieve_libraryPath(string package, string name)
+	{
+		return retrieve_libraryPath (package + "." + name);
+	}
+
     internal AbstractComponentFunctor retrieve_libraryPath(string library_path)
     {
         AbstractComponentFunctor acf = null;

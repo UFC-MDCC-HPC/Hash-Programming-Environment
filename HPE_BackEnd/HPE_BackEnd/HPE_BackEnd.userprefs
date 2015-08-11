@@ -1,28 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/Constants.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DGAC/LoaderSystem.cs">
     <Files>
-      <File FileName="../DGAC/base/BindingKind.cs" Line="48" Column="43" />
-      <File FileName="../DGAC/WorkerObject.cs" Line="298" Column="44" />
-      <File FileName="../DGAC/Constants.cs" Line="152" Column="59" />
+      <File FileName="../DGAC/LoaderSystem.cs" Line="554" Column="45" />
+      <File FileName="../DGAC/base/ProxyKind.cs" Line="15" Column="5" />
+      <File FileName="../ws/BackEndWS.asmx.cs" Line="74" Column="69" />
+      <File FileName="../DGAC/DGAC.cs" Line="432" Column="51" />
+      <File FileName="../DGAC/ManagerObject.cs" Line="1878" Column="60" />
+      <File FileName="../DGAC/CommandLineUtil.cs" Line="211" Column="5" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="DGAC" expanded="True" selected="True">
-            <Node name="base" expanded="True" />
-            <Node name="utils" expanded="True" />
-            <Node name="worker" expanded="True" />
-          </Node>
-          <Node name="WorkerService" expanded="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/DGAC/ManagerObject.cs" line="1107" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

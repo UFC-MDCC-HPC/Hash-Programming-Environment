@@ -358,61 +358,72 @@ namespace br.ufc.pargo.hpe.backend
 
 				return referencesSet;
 			}
-			
-            public static int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
-            {
-                AbstractComponentFunctor cAbs = null;
+			public static int registerAbstractComponent(ComponentType ct)
+			{
+				return registerAbstractComponent (ct, null, null, null);
+			}
+
+			public static int registerAbstractComponent(ComponentType ct, string userName, string password, string curDir)
+			{
+				AbstractComponentFunctor cAbs = null;
+
+				int exists = 1;
+				LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
+				HashComponent cAbs_ = null;
+
+				IList<ExternalLibraryType> externalLibrary = null;
+
+				string library_path = ct.header.packagePath + "." + ct.header.name;
+
+				abstractloader.componentExists(library_path, out cAbs_);
+				if (cAbs_ == null)
+				{
+					cAbs = (AbstractComponentFunctor)abstractloader.loadComponent(ct, ref externalLibrary);
+				}
+				else
+				{
+					cAbs = (AbstractComponentFunctor)cAbs_;
+					IList<DGAC.database.Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
+					Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
+					abstractloader.updateSources(ct, cAbs);
+					exists = 0;
+
+					externalLibrary = new List<ExternalLibraryType>();
+					foreach (Object o in ct.componentInfo)
+					{
+						if (o is ExternalLibraryType)
+						{
+							if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
+							externalLibrary.Add((ExternalLibraryType)o);
+						}
+					}
+				}
+
+				Console.Error.Write("Compiling sources ...");
+
+				ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
+				sendToCompile(sharedLibraryCompile, userName, password, curDir, exists);
+
+				ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
+				sendToCompile(infoCompile, userName, password, curDir, exists);
+	
+				return cAbs != null ? cAbs.Id_abstract : -1;
+			}
+
+            public static int registerAbstractComponentTransaction(ComponentType ct, string userName, string password, string curDir)
+			{   
+				int res = -1;
+
                 try
                 {
                     Connector.openConnection();
                     Connector.beginTransaction();
-                    //ManagerObject worker = (ManagerObject) getFrameworkInstance(out ch);
-
-                    int exists = 1;
-                    LoaderAbstractComponent abstractloader = new LoaderAbstractComponent();
-                    HashComponent cAbs_ = null;
-
-					IList<ExternalLibraryType> externalLibrary = null;
-
-                    abstractloader.componentExists(ct.header.hash_component_UID, out cAbs_);
-                    if (cAbs_ == null)
-                    {
-                        cAbs = (AbstractComponentFunctor)abstractloader.loadComponent(ct, ref externalLibrary);
-                    }
-                    else
-                    {
-                        cAbs = (AbstractComponentFunctor)cAbs_;
-                        IList<DGAC.database.Component> cList = cdao.retrieveThatImplements(cAbs.Id_abstract);
-                        Console.Error.WriteLine("Abstract component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating sources ...");
-                        abstractloader.updateSources(ct, cAbs);
-                        exists = 0;
-
-						externalLibrary = new List<ExternalLibraryType>();
-						foreach (Object o in ct.componentInfo)
-						{
-							if (o is ExternalLibraryType)
-							{
-								if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
-								externalLibrary.Add((ExternalLibraryType)o);
-							}
-						}
-						
-                    }
-
-                    Console.Error.Write("Compiling sources ...");
-
-					ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
-					sendToCompile(sharedLibraryCompile, userName, password, curDir, exists);
                     
-					ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Abstract(cAbs.Id_abstract);
-					sendToCompile(infoCompile, userName, password, curDir, exists);
+					res = registerAbstractComponent(ct,userName,password,curDir);
                     
-					Console.Error.Write("ok ");
+	                Connector.commitTransaction(); // if it is ok, commit ...
 
-                    Connector.commitTransaction(); // if it is ok, commit ...
-
-		    Console.Error.WriteLine("commited !");
-
+		    		Console.Error.WriteLine("commited !");
                 }
                 catch (Exception e)
                 {
@@ -427,7 +438,7 @@ namespace br.ufc.pargo.hpe.backend
                     Connector.closeConnection();
                 }
 				
-				return cAbs != null ? cAbs.Id_abstract : -1;
+				return res;
             }
 			
 			public static void sendToCompile (ICollection<LoaderApp.InfoCompile> infoCompile, string userName, string password, string curDir, int set_public_key)
@@ -502,54 +513,69 @@ namespace br.ufc.pargo.hpe.backend
                 {
                     Connector.closeConnection();
                 }
-                        }
+            }
+
+			static public int registerConcreteComponent (ComponentType ct, string userName, string password, string curDir)
+			{
+				DGAC.database.Component cConc = null;
+
+				int exists = 2;
+				LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
+				HashComponent cConc_ = null;
+
+				IList<ExternalLibraryType> externalLibrary = null;
+
+				string library_path = ct.header.packagePath + "." + ct.header.name;
+
+				concreteloader.componentExists(library_path, out cConc_);
+				if (cConc_ == null)
+				{
+					cConc = (DGAC.database.Component)concreteloader.loadComponent(ct, ref externalLibrary);
+				}
+				else
+				{
+					Console.Error.WriteLine("Concrete component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
+					cConc = (DGAC.database.Component)cConc_;
+					concreteloader.updateSources(ct, cConc);
+					exists = 0;
+
+					externalLibrary = new List<ExternalLibraryType>();
+					foreach (Object o in ct.componentInfo)
+					{
+						if (o is ExternalLibraryType)
+						{
+							if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
+							externalLibrary.Add((ExternalLibraryType)o);
+						}
+					}
+				}
+
+				Console.Error.Write("Compiling sources ...");
+
+				ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
+				sendToCompile(sharedLibraryCompile, userName, password, curDir, exists);
+
+				ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
+				sendToCompile(infoCompile, userName, password, curDir, exists);
+
+				return cConc != null ? cConc.Id_concrete : -1;
+			}
 			
-            public static int registerConcreteComponent(ComponentType ct, string userName, string password, string curDir)
-            {
-                DGAC.database.Component cConc = null;
+			public static int registerConcreteComponent(ComponentType ct)
+			{
+				return registerConcreteComponent (ct, null, null, null);
+			}
+
+			public static int registerConcreteComponentTransaction(ComponentType ct, string userName, string password, string curDir)
+			{   
+				int res = -1;
+
                 try
                 {
                     Connector.openConnection();
                     Connector.beginTransaction();
 
-                    int exists = 2;
-                    LoaderConcreteComponent concreteloader = new LoaderConcreteComponent();
-                    HashComponent cConc_ = null;
-
-					IList<ExternalLibraryType> externalLibrary = null;
-
-					concreteloader.componentExists(ct.header.hash_component_UID, out cConc_);
-                    if (cConc_ == null)
-                    {
-                        cConc = (DGAC.database.Component)concreteloader.loadComponent(ct, ref externalLibrary);
-                    }
-                    else
-                    {
-                        Console.Error.WriteLine("Concrete component " + ct.header.packagePath + "." + ct.header.name + " is already deployed. Updating ...");
-                        cConc = (DGAC.database.Component)cConc_;
-                        concreteloader.updateSources(ct, cConc);
-                        exists = 0;
-
-						externalLibrary = new List<ExternalLibraryType>();
-						foreach (Object o in ct.componentInfo)
-						{
-							if (o is ExternalLibraryType)
-							{
-								if (externalLibrary == null) externalLibrary = new List<ExternalLibraryType>();
-								externalLibrary.Add((ExternalLibraryType)o);
-							}
-						}
-               }
-
-                    Console.Error.Write("Compiling sources ...");
-					
-					ICollection<LoaderApp.InfoCompile> sharedLibraryCompile = fetchSharedLibraryCompile(externalLibrary);
-					sendToCompile(sharedLibraryCompile, userName, password, curDir, exists);
-
-					ICollection<LoaderApp.InfoCompile> infoCompile = LoaderApp.getReferences_Concrete(cConc.Id_concrete);
-					sendToCompile(infoCompile, userName, password, curDir, exists);
-
-                    Console.Error.Write("ok ");
+					res = registerConcreteComponent(ct,userName,password,curDir);
 
                     Connector.commitTransaction(); // if it is ok, commit ...
 
@@ -567,8 +593,8 @@ namespace br.ufc.pargo.hpe.backend
                     Connector.closeConnection();
                     //releaseManager(ch);
                 }
-				
-				return cConc != null ? cConc.Id_concrete : -1;
+
+				return res;
             }
 
             private static string sendCompileCommandToWorker(string library_path, string moduleName, ManagerObject worker, Tuple<string,string>[] sourceContents, string[] refs, int outFile, string userName, string password, String curDir)
@@ -2514,9 +2540,7 @@ namespace br.ufc.pargo.hpe.backend
 
 				string inner_instance_name = cid.getInstanceName() + "-" + ic.Id_inner + "#" + version;
 				Trace.WriteLine("BEFORE START CREATING INNER COMPONENT name=" + inner_instance_name + " !");
-
-
-	
+					
 				// Instantiate the inner component.
 				TypeMapImpl properties = new TypeMapImpl();					
 				properties[Constants.ID_FUNCTOR_APP] = id_functor_app;

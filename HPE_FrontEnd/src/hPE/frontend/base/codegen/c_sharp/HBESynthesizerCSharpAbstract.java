@@ -54,7 +54,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
         for (HPort port : ports) {
         	if (!port.isInherited()) {
                 HComponent pc = (HComponent)port.getConfiguration();
-        		String sliceTypeName = ((HInterface)port.getInterface()).isParameter() ? pc.getVariableName((HComponent) i.getConfiguration()):  ((HInterface)port.getInterface()).getName2(false,varContext, null);
+        		String sliceTypeName = ((HInterface)port.getInterface()).isParameter() ? pc.getVariableName((HComponent) i.getConfiguration()):  ((HInterface)port.getInterface()).getName2(false,varContext,null);
 				if (theSlices.containsKey(sliceTypeName)) {
 					slices = theSlices.get(sliceTypeName);
 				} else {
@@ -131,7 +131,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
    		   String varName = pair.fst().split("@")[0];
    		   HInterface bound = pair.snd();
-   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
+   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false,varContext, varName) + "\n";
    		}
  		
 		
@@ -256,7 +256,7 @@ public class HBESynthesizerCSharpAbstract extends HBEAbstractSynthesizer<HBESour
  		for (Pair<String, HInterface> pair : interface_bounds) {
    		   String varName = pair.fst().split("@")[0];
    		   HInterface bound = pair.snd();
-   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false, varContext, varName) + "\n";
+   		   programTextVarBounds += tabs(2) + "where " + varName + ":" + bound.getName2(false,varContext, varName) + "\n";
    		}
 
         

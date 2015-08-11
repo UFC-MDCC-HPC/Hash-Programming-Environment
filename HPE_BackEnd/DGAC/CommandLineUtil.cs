@@ -204,88 +204,102 @@ public class CommandLineUtil {
          }
     }
 
-    public static int runCommand(string cmd, string args) {
+
+	public static int runCommandComplete(System.Diagnostics.Process proc) 
+	{
+		int ExitCode = -1;
+		try
+		{
+			proc.WaitForExit();
+
+			ExitCode = proc.ExitCode;
+			proc.Close();
+
+			if (ExitCode > 0)
+			{
+					string message = "Error executing command: " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments + "\n" + output_str;
+				throw new Exception(message);
+			}
+		}
+		catch (System.ComponentModel.Win32Exception w)
+		{
+			Trace.WriteLine("Message: " + w.Message);
+			Trace.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
+			Trace.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
+			Trace.WriteLine("StackTrace: " + w.StackTrace);
+			Trace.WriteLine("Source: " + w.Source);
+			Exception e = w.GetBaseException();
+			Trace.WriteLine("Base Exception Message: " + e.Message);
+
+			throw w;
+		}
+		finally
+		{
+		}
+		return ExitCode;
+	}
+
+	public static System.Diagnostics.Process runCommandStart(string cmd, string args, string userName, string password_, String curDir) 
+	{
+			int ExitCode;
+
+			System.Security.SecureString password = null;
+
+			if (password_ != null)
+			{
+				password = new System.Security.SecureString();
+				foreach (char c in password_)
+					password.AppendChar(c);
+				password.MakeReadOnly();
+			}
+
+			output_str = "";
+
+			System.Diagnostics.Process proc = new System.Diagnostics.Process();
+			proc.EnableRaisingEvents = false;
+			proc.StartInfo.CreateNoWindow = true;
+			proc.StartInfo.UseShellExecute = false;
+			proc.StartInfo.FileName = cmd;
+			proc.StartInfo.Arguments = args;
+			proc.StartInfo.RedirectStandardError = true;
+			proc.StartInfo.RedirectStandardOutput = true;
+			proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+			proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+			if (userName != null) proc.StartInfo.UserName = userName;
+			if (password != null) proc.StartInfo.Password = password;
+			if (curDir != null)
+			{
+				string homeDir = System.Environment.GetEnvironmentVariable("HOME");
+				if (homeDir != null)
+				{
+					proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
+				}
+				else
+				{
+					proc.StartInfo.WorkingDirectory = curDir;
+				}
+			}
+
+			Trace.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
+
+			proc.Start();
+
+			proc.BeginErrorReadLine();
+			proc.BeginOutputReadLine();
+
+			return proc;
+
+			return proc;
+	}
+
+	public static int runCommand(string cmd, string args) {
         return runCommand(cmd, args, null, null, null);			
     }
 
     public static int runCommand(string cmd, string args, string userName, string password_, String curDir)
     {
-        int ExitCode;
-
-        System.Security.SecureString password = null;
-
-        if (password_ != null)
-        {
-            password = new System.Security.SecureString();
-            foreach (char c in password_)
-                password.AppendChar(c);
-            password.MakeReadOnly();
-        }
-
-        output_str = "";
-
-        System.Diagnostics.Process proc = new System.Diagnostics.Process();
-        proc.EnableRaisingEvents = false;
-        proc.StartInfo.CreateNoWindow = true;
-        proc.StartInfo.UseShellExecute = false;
-        proc.StartInfo.FileName = cmd;
-        proc.StartInfo.Arguments = args;
-        proc.StartInfo.RedirectStandardError = true;
-        proc.StartInfo.RedirectStandardOutput = true;
-        proc.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
-        proc.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
-        if (userName != null) proc.StartInfo.UserName = userName;
-        if (password != null) proc.StartInfo.Password = password;
-        if (curDir != null)
-        {
-            string homeDir = System.Environment.GetEnvironmentVariable("HOME");
-            if (homeDir != null)
-            {
-                proc.StartInfo.WorkingDirectory = Path.Combine(homeDir, curDir);
-            }
-            else
-            {
-                proc.StartInfo.WorkingDirectory = curDir;
-            }
-        }
-
-        Trace.WriteLine(userName + " runs " + cmd + args + " on " + curDir);
-				
-
-        try
-        {
-            proc.Start();
-
-            proc.BeginErrorReadLine();
-            proc.BeginOutputReadLine();
-
-            proc.WaitForExit();
-
-            ExitCode = proc.ExitCode;
-            proc.Close();
-
-            if (ExitCode > 0)
-            {
-                string message = "Error executing command: " + cmd + " " + args + "\n" + output_str;
-                throw new Exception(message);
-            }
-        }
-        catch (System.ComponentModel.Win32Exception w)
-        {
-            Trace.WriteLine("Message: " + w.Message);
-            Trace.WriteLine("ErrorCode: " + w.ErrorCode.ToString());
-            Trace.WriteLine("NativeErrorCode: " + w.NativeErrorCode.ToString());
-            Trace.WriteLine("StackTrace: " + w.StackTrace);
-            Trace.WriteLine("Source: " + w.Source);
-            Exception e = w.GetBaseException();
-            Trace.WriteLine("Base Exception Message: " + e.Message);
-
-            throw w;
-        }
-        finally
-        {
-        }
-        return ExitCode;
+			System.Diagnostics.Process proc = runCommandStart(cmd, args, userName, password_, curDir);			
+			return runCommandComplete (proc);
     }
 
 

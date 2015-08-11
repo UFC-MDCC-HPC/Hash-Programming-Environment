@@ -138,10 +138,14 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 				return createQuantificationTypeFromString(eDataType, initialValue);
 			case ComponentPackage.SUPPORTED_KINDS:
 				return createSupportedKindsFromString(eDataType, initialValue);
+			case ComponentPackage.VARIANCE_TYPE:
+				return createVarianceTypeFromString(eDataType, initialValue);
 			case ComponentPackage.QUANTIFICATION_TYPE_OBJECT:
 				return createQuantificationTypeObjectFromString(eDataType, initialValue);
 			case ComponentPackage.SUPPORTED_KINDS_OBJECT:
 				return createSupportedKindsObjectFromString(eDataType, initialValue);
+			case ComponentPackage.VARIANCE_TYPE_OBJECT:
+				return createVarianceTypeObjectFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -159,10 +163,14 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 				return convertQuantificationTypeToString(eDataType, instanceValue);
 			case ComponentPackage.SUPPORTED_KINDS:
 				return convertSupportedKindsToString(eDataType, instanceValue);
+			case ComponentPackage.VARIANCE_TYPE:
+				return convertVarianceTypeToString(eDataType, instanceValue);
 			case ComponentPackage.QUANTIFICATION_TYPE_OBJECT:
 				return convertQuantificationTypeObjectToString(eDataType, instanceValue);
 			case ComponentPackage.SUPPORTED_KINDS_OBJECT:
 				return convertSupportedKindsObjectToString(eDataType, instanceValue);
+			case ComponentPackage.VARIANCE_TYPE_OBJECT:
+				return convertVarianceTypeObjectToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -813,6 +821,26 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public VarianceType createVarianceTypeFromString(EDataType eDataType, String initialValue) {
+		VarianceType result = VarianceType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertVarianceTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public QuantificationType createQuantificationTypeObjectFromString(EDataType eDataType, String initialValue) {
 		return createQuantificationTypeFromString(ComponentPackage.Literals.QUANTIFICATION_TYPE, initialValue);
 	}
@@ -842,6 +870,24 @@ public class ComponentFactoryImpl extends EFactoryImpl implements ComponentFacto
 	 */
 	public String convertSupportedKindsObjectToString(EDataType eDataType, Object instanceValue) {
 		return convertSupportedKindsToString(ComponentPackage.Literals.SUPPORTED_KINDS, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VarianceType createVarianceTypeObjectFromString(EDataType eDataType, String initialValue) {
+		return createVarianceTypeFromString(ComponentPackage.Literals.VARIANCE_TYPE, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertVarianceTypeObjectToString(EDataType eDataType, Object instanceValue) {
+		return convertVarianceTypeToString(ComponentPackage.Literals.VARIANCE_TYPE, instanceValue);
 	}
 
 	/**

@@ -15,6 +15,7 @@ import hPE.util.NullObject;
 import hPE.util.ObjectInputStream_;
 import hPE.util.ObjectOutputStream_;
 import hPE.util.Pair;
+import hPE.xml.component.VarianceType;
 import hPE.xml.factory.HComponentFactoryImpl;
 
 import java.beans.PropertyChangeListener;
@@ -1543,7 +1544,7 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 						showBounds_ = showBounds_ && ((!topC.getVars().contains(varName)) || this.isTopConfiguration());
 						boolean showVar = (config.isParameter() && config.getSupplier() == null) || topC.getVars().contains(varName);
 						nameWithParameters = nameWithParameters
-								+ (showParId ? parId + " = " : "")
+								+ (showParId ? parId + " " + this.getVarianceModifier(parId) + " = " : "")
 								+ (showVar ? varName : "")
 								+ (showVar && showBounds_ ? ": " : "")
 								+ (showBounds_ ? config.getNameWithParameters(
@@ -1565,6 +1566,16 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 		}
 
 		return nameWithParameters;
+	}
+
+	private String getVarianceModifier(String parId) 
+	{
+	    if (this.getParameterVariance(parId).equals(VarianceType.COVARIANT))
+	    	return "+";
+	    else if (this.getParameterVariance(parId).equals(VarianceType.CONTRAVARIANT))
+	    	return "-";
+	    else 
+	    	return "!";
 	}
 
 	public String getNameWithParameters(boolean complete, boolean showBounds,  boolean showParId) {
@@ -2092,6 +2103,25 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 			}
 		}
 		return null;
+	}
+
+	public List<HComponent> getSuperTypeChain() 
+	{
+		List<HComponent> superTypeChain = new ArrayList<HComponent>();
+		
+		getSuperTypeChain(superTypeChain);
+		
+		return superTypeChain;
+	}
+	
+	private void getSuperTypeChain(List<HComponent> superTypeChain) {
+
+		for (HComponent sc : this.getComponents()) {
+			if (sc.isSuperType() && (sc.allUnitsAreStubs() || sc.getUnits().size() == 0)) {
+				sc.getSuperTypeChain(superTypeChain);
+				superTypeChain.add(sc);
+			}
+		}
 	}
 
 	private boolean superType = false;
@@ -3978,6 +4008,38 @@ public abstract class HComponent extends HVisualElement implements HNamed,
 	public Map<String,List<HComponent>> getFusions()
 	{
 		return fusions;
+	}
+	
+	private Map<String,VarianceType> parameter_variance = new HashMap<String, VarianceType>();
+	
+	public void setParameterVariance(String par_id, VarianceType variance_type)
+	{
+		if (parameter_variance.containsKey(par_id))
+			parameter_variance.remove(par_id);		
+		parameter_variance.put(par_id, variance_type);
+	}
+
+	public VarianceType getParameterVariance(String par_id)
+	{
+		return getParameterVariance(par_id, VarianceType.CONTRAVARIANT);
+	}
+	
+	public VarianceType getParameterVariance(String par_id, VarianceType default_variance)
+	{
+		HComponent c = this.isAbstract() ? this : this.getWhoItImplements();
+		
+		List<HComponent> superTypeChain = c.getSuperTypeChain();
+		
+		for (HComponent cSuper : superTypeChain) 
+		{
+			if (cSuper.parameter_variance.containsKey(par_id))
+				return cSuper.parameter_variance.get(par_id);
+		}		
+		
+		if (c.parameter_variance.containsKey(par_id))
+			return c.parameter_variance.get(par_id);
+		else
+			return default_variance;
 	}
 	
 	private Map<String,Integer> parameter_order = new HashMap<String,Integer>();

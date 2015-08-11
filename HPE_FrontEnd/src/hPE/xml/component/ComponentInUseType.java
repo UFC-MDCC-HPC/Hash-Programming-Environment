@@ -181,7 +181,7 @@ public interface ComponentInUseType extends EObject {
 	 * @return the value of the '<em>Location</em>' attribute.
 	 * @see #setLocation(String)
 	 * @see hPE.xml.component.ComponentPackage#getComponentInUseType_Location()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.AnyURI" required="true"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.AnyURI"
 	 *        extendedMetaData="kind='attribute' name='location'"
 	 * @generated
 	 */

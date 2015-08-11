@@ -127,14 +127,14 @@ public enum SupportedKinds implements Enumerator {
 	 * @ordered
 	 */
 	TOPOLOGY(10, "Topology", "Topology"), /**
-	 * The '<em><b>Value</b></em>' literal object.
+	 * The '<em><b>System</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #VALUE_VALUE
+	 * @see #SYSTEM_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	VALUE(11, "value", "value");
+	SYSTEM(11, "System", "System");
 
 	/**
 	 * The '<em><b>Data</b></em>' literal value.
@@ -304,19 +304,19 @@ public enum SupportedKinds implements Enumerator {
 	public static final int TOPOLOGY_VALUE = 10;
 
 	/**
-	 * The '<em><b>Value</b></em>' literal value.
+	 * The '<em><b>System</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Value</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>System</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #VALUE
-	 * @model name="value"
+	 * @see #SYSTEM
+	 * @model name="System"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int VALUE_VALUE = 11;
+	public static final int SYSTEM_VALUE = 11;
 
 	/**
 	 * An array of all the '<em><b>Supported Kinds</b></em>' enumerators.
@@ -337,7 +337,7 @@ public enum SupportedKinds implements Enumerator {
 			FACET,
 			BINDING,
 			TOPOLOGY,
-			VALUE,
+			SYSTEM,
 		};
 
 	/**
@@ -399,7 +399,7 @@ public enum SupportedKinds implements Enumerator {
 			case FACET_VALUE: return FACET;
 			case BINDING_VALUE: return BINDING;
 			case TOPOLOGY_VALUE: return TOPOLOGY;
-			case VALUE_VALUE: return VALUE;
+			case SYSTEM_VALUE: return SYSTEM;
 		}
 		return null;
 	}

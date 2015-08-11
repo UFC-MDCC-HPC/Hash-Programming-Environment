@@ -190,8 +190,8 @@
         <details key="name" value="versions"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="visualAttributes" lowerBound="1"
-        eType="#//VisualElementAttributes" containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="visualAttributes" eType="#//VisualElementAttributes"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="visualAttributes"/>
@@ -281,8 +281,7 @@
         <details key="name" value="localRef"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//AnyURI">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//AnyURI">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="location"/>
@@ -980,8 +979,8 @@
         <details key="name" value="sources"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="visualDescription" lowerBound="1"
-        eType="#//VisualElementAttributes" containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="visualDescription" eType="#//VisualElementAttributes"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="visualDescription"/>
@@ -1120,6 +1119,13 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="order"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variance" eType="#//VarianceType"
+        defaultValueLiteral="contravariant" unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="variance"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1485,10 +1491,10 @@
     <eLiterals name="Qualifier" value="5"/>
     <eLiterals name="Application" value="6"/>
     <eLiterals name="Enumerator" value="7"/>
-    <eLiterals name="Facet" value="8"/>
-    <eLiterals name="Binding" value="9"/>
-    <eLiterals name="Topology" value="10"/>
-    <eLiterals name="value" value="11"/>
+    <eLiterals name="Binding" value="8"/>
+    <eLiterals name="Topology" value="9"/>
+    <eLiterals name="System" value="10"/>
+    <eLiterals name="Proxy" value="11"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="SupportedKindsObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -1626,8 +1632,8 @@
       <details key="name" value="UnitSliceType"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="visualDescription" lowerBound="1"
-        eType="#//VisualElementAttributes" containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="visualDescription" eType="#//VisualElementAttributes"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="visualDescription"/>
@@ -1673,8 +1679,8 @@
         <details key="name" value="slices"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="visualDescription" lowerBound="1"
-        eType="#//VisualElementAttributes" containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="visualDescription" eType="#//VisualElementAttributes"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="visualDescription"/>
@@ -1727,6 +1733,20 @@
         <details key="name" value="visibleInterface"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VarianceType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="VarianceType"/>
+    </eAnnotations>
+    <eLiterals name="covariant"/>
+    <eLiterals name="contravariant" value="1"/>
+    <eLiterals name="invariant" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="VarianceTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="VarianceType:Object"/>
+      <details key="baseType" value="VarianceType"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VersionType">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">

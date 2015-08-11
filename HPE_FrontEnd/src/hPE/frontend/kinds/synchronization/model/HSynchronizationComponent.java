@@ -4,6 +4,7 @@ import hPE.frontend.base.interfaces.IComponent;
 import hPE.frontend.base.interfaces.IPackageLocation;
 import hPE.frontend.base.model.HUnit;
 import hPE.frontend.kinds.activate.model.HActivateComponent;
+import hPE.frontend.kinds.binding.model.HBindingComponent;
 import hPE.frontend.kinds.computation.model.HComputationComponent;
 import hPE.frontend.kinds.data.model.HDataComponent;
 import hPE.frontend.kinds.environment.model.HEnvironmentComponent;
@@ -36,6 +37,7 @@ public class HSynchronizationComponent extends HActivateComponent {
     	if (c instanceof HDataComponent) return true;
     	if (c instanceof HPlatformComponent) return true;
     	if (c instanceof HEnvironmentComponent) return true;
+    	if (c instanceof HBindingComponent) return true;
     	return super.accepts(c);
     }	
 

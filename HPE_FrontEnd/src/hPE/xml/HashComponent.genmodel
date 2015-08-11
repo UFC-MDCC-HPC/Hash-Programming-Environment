@@ -26,10 +26,16 @@
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Facet"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Binding"/>
       <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/Topology"/>
-      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/value"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//SupportedKinds/System"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="component.ecore#//VarianceType">
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//VarianceType/covariant"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//VarianceType/contravariant"/>
+      <genEnumLiterals ecoreEnumLiteral="component.ecore#//VarianceType/invariant"/>
     </genEnums>
     <genDataTypes ecoreDataType="component.ecore#//QuantificationTypeObject"/>
     <genDataTypes ecoreDataType="component.ecore#//SupportedKindsObject"/>
+    <genDataTypes ecoreDataType="component.ecore#//VarianceTypeObject"/>
     <genClasses ecoreClass="component.ecore#//BaseTypeType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//BaseTypeType/extensionType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//BaseTypeType/component"/>
@@ -52,6 +58,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//ComponentBodyType/unit"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//ComponentBodyType/enumerator"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//ComponentBodyType/fusionsOfReplicators"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//ComponentBodyType/externalLibrary"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//ComponentHeaderType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference component.ecore#//ComponentHeaderType/baseType"/>
@@ -140,6 +147,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExtensionTypeType/implements"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExtensionTypeType/extends"/>
     </genClasses>
+    <genClasses ecoreClass="component.ecore#//ExternalLibraryType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExternalLibraryType/externalDependency"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExternalLibraryType/contents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ExternalLibraryType/name"/>
+    </genClasses>
     <genClasses ecoreClass="component.ecore#//FusionOfReplicatorsType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionOfReplicatorsType/eRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//FusionOfReplicatorsType/originRef"/>
@@ -161,6 +173,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference component.ecore#//GuardType/or"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//GuardType/not"/>
     </genClasses>
+    <genClasses ecoreClass="component.ecore#//HExternalLibraryType"/>
     <genClasses ecoreClass="component.ecore#//ImplementsType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ImplementsType/cRef"/>
     </genClasses>
@@ -225,6 +238,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/componentRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/formFieldId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/variance"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute component.ecore#//ParameterType/varName"/>
     </genClasses>
     <genClasses ecoreClass="component.ecore#//PortSliceType">

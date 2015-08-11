@@ -91,7 +91,7 @@ public interface UnitType extends EObject {
 	 * @return the value of the '<em>Visual Description</em>' containment reference.
 	 * @see #setVisualDescription(VisualElementAttributes)
 	 * @see hPE.xml.component.ComponentPackage#getUnitType_VisualDescription()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='visualDescription'"
 	 * @generated
 	 */

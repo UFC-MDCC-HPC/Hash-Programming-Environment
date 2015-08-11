@@ -223,7 +223,7 @@ namespace HPE_DGAC_LoadDB
             {
                 foreach (InnerComponentType c in inner)
                 {
-					Trace.WriteLine("BEGIN loadInnerComponent : " + c.localRef + " :: " + c.location);
+					Trace.WriteLine("BEGIN loadInnerComponent : " + c.localRef + " :: " + c.package + "." + c.name);
 
                     // innerAll.Add(c);
                     if (((isNotInSupply(c) || this.findInSlices(c.localRef)) 
@@ -287,7 +287,7 @@ namespace HPE_DGAC_LoadDB
 									Trace.WriteLine("loadInnerComponent - STEP 3 " + varName);
 									foreach (KeyValuePair<string, InnerComponentType> iii in innersByVarName) 
 									{
-											Trace.WriteLine("loadInnerComponent " + iii.Key + " --- " + iii.Value.localRef + " , " + iii.Value.location);
+										Trace.WriteLine("loadInnerComponent " + iii.Key + " --- " + iii.Value.localRef + " , " + c.package + "." + c.name);
 									}
                                     innersByVarName.TryGetValue(varName, out port_replace);
 								} else
@@ -363,7 +363,7 @@ namespace HPE_DGAC_LoadDB
                     
 					loadSliceReplicaToUnitReplicaMapping(c);
 
-					Trace.WriteLine("END loadInnerComponent : " + c.localRef + " :: " + c.location);
+					Trace.WriteLine("END loadInnerComponent : " + c.localRef + " :: " + c.package + "." + c.name);
 
                 }
             }
@@ -660,6 +660,7 @@ namespace HPE_DGAC_LoadDB
                     }
 
                     p.Bounds_of = cApp.Id_functor_app;
+					p.Variance = parameter_.variance;
 
                     br.ufc.pargo.hpe.backend.DGAC.BackEnd.acfpdao.insert(p);
 

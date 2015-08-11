@@ -2477,13 +2477,22 @@ public interface ComponentPackage extends EPackage {
 	int PARAMETER_TYPE__ORDER = 2;
 
 	/**
+	 * The feature id for the '<em><b>Variance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_TYPE__VARIANCE = 3;
+
+	/**
 	 * The feature id for the '<em><b>Var Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_TYPE__VAR_NAME = 3;
+	int PARAMETER_TYPE__VAR_NAME = 4;
 
 	/**
 	 * The number of structural features of the '<em>Parameter Type</em>' class.
@@ -2492,7 +2501,7 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_TYPE_FEATURE_COUNT = 4;
+	int PARAMETER_TYPE_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Parameter Type</em>' class.
@@ -4004,6 +4013,16 @@ public interface ComponentPackage extends EPackage {
 	int SUPPORTED_KINDS = 62;
 
 	/**
+	 * The meta object id for the '{@link hPE.xml.component.VarianceType <em>Variance Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.VarianceType
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVarianceType()
+	 * @generated
+	 */
+	int VARIANCE_TYPE = 63;
+
+	/**
 	 * The meta object id for the '<em>Quantification Type Object</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4011,7 +4030,7 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getQuantificationTypeObject()
 	 * @generated
 	 */
-	int QUANTIFICATION_TYPE_OBJECT = 63;
+	int QUANTIFICATION_TYPE_OBJECT = 64;
 
 	/**
 	 * The meta object id for the '<em>Supported Kinds Object</em>' data type.
@@ -4021,7 +4040,18 @@ public interface ComponentPackage extends EPackage {
 	 * @see hPE.xml.component.impl.ComponentPackageImpl#getSupportedKindsObject()
 	 * @generated
 	 */
-	int SUPPORTED_KINDS_OBJECT = 64;
+	int SUPPORTED_KINDS_OBJECT = 65;
+
+
+	/**
+	 * The meta object id for the '<em>Variance Type Object</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hPE.xml.component.VarianceType
+	 * @see hPE.xml.component.impl.ComponentPackageImpl#getVarianceTypeObject()
+	 * @generated
+	 */
+	int VARIANCE_TYPE_OBJECT = 66;
 
 
 	/**
@@ -5823,6 +5853,17 @@ public interface ComponentPackage extends EPackage {
 	EAttribute getParameterType_Order();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterType#getVariance <em>Variance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Variance</em>'.
+	 * @see hPE.xml.component.ParameterType#getVariance()
+	 * @see #getParameterType()
+	 * @generated
+	 */
+	EAttribute getParameterType_Variance();
+
+	/**
 	 * Returns the meta object for the attribute '{@link hPE.xml.component.ParameterType#getVarName <em>Var Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6910,6 +6951,16 @@ public interface ComponentPackage extends EPackage {
 	EEnum getSupportedKinds();
 
 	/**
+	 * Returns the meta object for enum '{@link hPE.xml.component.VarianceType <em>Variance Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Variance Type</em>'.
+	 * @see hPE.xml.component.VarianceType
+	 * @generated
+	 */
+	EEnum getVarianceType();
+
+	/**
 	 * Returns the meta object for data type '{@link hPE.xml.component.QuantificationType <em>Quantification Type Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6932,6 +6983,18 @@ public interface ComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getSupportedKindsObject();
+
+	/**
+	 * Returns the meta object for data type '{@link hPE.xml.component.VarianceType <em>Variance Type Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Variance Type Object</em>'.
+	 * @see hPE.xml.component.VarianceType
+	 * @model instanceClass="hPE.xml.component.VarianceType"
+	 *        extendedMetaData="name='VarianceType:Object' baseType='VarianceType'"
+	 * @generated
+	 */
+	EDataType getVarianceTypeObject();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -8370,6 +8433,14 @@ public interface ComponentPackage extends EPackage {
 		EAttribute PARAMETER_TYPE__ORDER = eINSTANCE.getParameterType_Order();
 
 		/**
+		 * The meta object literal for the '<em><b>Variance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER_TYPE__VARIANCE = eINSTANCE.getParameterType_Variance();
+
+		/**
 		 * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9226,6 +9297,16 @@ public interface ComponentPackage extends EPackage {
 		EEnum SUPPORTED_KINDS = eINSTANCE.getSupportedKinds();
 
 		/**
+		 * The meta object literal for the '{@link hPE.xml.component.VarianceType <em>Variance Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.VarianceType
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getVarianceType()
+		 * @generated
+		 */
+		EEnum VARIANCE_TYPE = eINSTANCE.getVarianceType();
+
+		/**
 		 * The meta object literal for the '<em>Quantification Type Object</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9244,6 +9325,16 @@ public interface ComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType SUPPORTED_KINDS_OBJECT = eINSTANCE.getSupportedKindsObject();
+
+		/**
+		 * The meta object literal for the '<em>Variance Type Object</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hPE.xml.component.VarianceType
+		 * @see hPE.xml.component.impl.ComponentPackageImpl#getVarianceTypeObject()
+		 * @generated
+		 */
+		EDataType VARIANCE_TYPE_OBJECT = eINSTANCE.getVarianceTypeObject();
 
 	}
 

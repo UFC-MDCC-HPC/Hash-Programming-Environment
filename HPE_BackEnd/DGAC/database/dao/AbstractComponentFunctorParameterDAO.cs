@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using br.ufc.pargo.hpe.backend.DGAC.utils;
 
 namespace br.ufc.pargo.hpe.backend.DGAC.database
 {
@@ -17,8 +18,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         public void insert(AbstractComponentFunctorParameter ac)
         {
             String sql =
-                "INSERT INTO abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of)" +
-                " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + ")";
+                "INSERT INTO abstractcomponentfunctorparameter (id_parameter, id_abstract, bounds_of, variance)" +
+                " VALUES ('" + ac.Id_parameter + "'," + ac.Id_abstract + "," + ac.Bounds_of + "," + ac.Variance + ")";
 
      		Trace.WriteLine("AbstractComponentFunctorParameter.cs: TRY INSERT: " + sql);
 
@@ -42,7 +43,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 	   IDbConnection dbcon = Connector.DBcon;
        IDbCommand dbcmd = dbcon.CreateCommand();
        string sql =
-           "SELECT id_abstract, id_parameter, bounds_of " +
+           "SELECT id_abstract, id_parameter, bounds_of, variance " +
            "FROM abstractcomponentfunctorparameter " +
            "WHERE id_abstract="+id_abstract;
        dbcmd.CommandText = sql;
@@ -52,7 +53,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
 			acfp.Bounds_of = (int)reader["bounds_of"];
 			acfp.Id_abstract = (int)reader["id_abstract"];
 			acfp.Id_parameter = (string)reader["id_parameter"] ;
-       		 
+			acfp.Variance =  Constants.varianceValueInv[(string)reader["variance"]];
             list.Add(acfp);
        }//while
        // clean up
@@ -84,7 +85,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
         IDbConnection dbcon = Connector.DBcon;
         IDbCommand dbcmd = dbcon.CreateCommand();
         string sql =
-            "SELECT id_abstract, id_parameter, bounds_of " +
+            "SELECT id_abstract, id_parameter, bounds_of, variance " +
             "FROM abstractcomponentfunctorparameter " +
             "WHERE id_abstract=" + id_abstract + " AND id_parameter like '" + id_parameter + "'";
         dbcmd.CommandText = sql;
@@ -95,6 +96,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC.database
             acfp.Bounds_of = (int)reader["bounds_of"];
             acfp.Id_abstract = (int)reader["id_abstract"];
             acfp.Id_parameter = (string)reader["id_parameter"];
+			acfp.Variance =  Constants.varianceValueInv[(string)reader["variance"]];
             cache_c_pars_2.Add(key, acfp);
         }//if
 
