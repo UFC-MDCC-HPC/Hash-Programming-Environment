@@ -351,7 +351,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 	                int key = properties.getInt(Constants.KEY_KEY, my_global_rank);
 					Trace.WriteLine(my_global_rank +  ": --- BEGIN - Worker " + my_global_rank + ": Split " + key + " !!!");
 
-					unit_slice.WorldComm = this.global_communicator; // this.worker_communicator;
+					unit_slice.WorldComm = /*this.global_communicator;*/ this.worker_communicator; // HERON ----
 					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 61");
 					unit_slice.Communicator = (MPI.Intracommunicator) unit_slice.WorldComm.Split(1, key);
 					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 62");
@@ -359,7 +359,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 63");
 
 					// BRIDGE BINDING INTER-COMMUNICATOR
-					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 7");
+					Trace.WriteLine(my_global_rank +  "," + unit_slice.Communicator.Rank + ": createInstanceBaseForAllKinds - 7");
 
 					if (kind == Constants.KIND_BINDING)
 					{
@@ -381,6 +381,8 @@ namespace br.ufc.pargo.hpe.backend.DGAC
 							Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 11 " + this_facet);
 						}
 					}
+
+					Trace.WriteLine(my_global_rank +  ": createInstanceBaseForAllKinds - 7 - PASSOU DIRETO");
 
 					unit_slice.calculate_topology();
 
@@ -1163,7 +1165,7 @@ namespace br.ufc.pargo.hpe.backend.DGAC
         public void createInstance()
         {
 			Trace.WriteLine("BEGIN - NULL Worker " + my_global_rank + ": Split " + " !!!");
-            this.global_communicator/*.worker_communicator*/.Split(0, my_global_rank);
+            this/*.global_communicator*/.worker_communicator.Split(0, my_global_rank); // HERON ----
 			Trace.WriteLine("END - NULL Worker " + my_global_rank + ": Split " +  " !!!");
         }
 

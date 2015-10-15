@@ -86,14 +86,18 @@ public class AbstractComponentFunctorDAO{
     {
 
         AbstractComponentFunctor acf = null;
+			Console.WriteLine ("RETRIEVE BY UID 0 " + hash_component_UID);
         IDbConnection dbcon = Connector.DBcon;
+			Console.WriteLine ("RETRIEVE BY UID 1 " + " dbcon==null ? " + (dbcon == null));
         IDbCommand dbcmd = dbcon.CreateCommand();
+			Console.WriteLine ("RETRIEVE BY UID 2 ");
         string sql =
              "SELECT hash_component_UID, id_abstract, id_functor_app_supertype, library_path, kind " +
              "FROM abstractcomponentfunctor " +
              "WHERE hash_component_UID like '" + hash_component_UID + "'";
         dbcmd.CommandText = sql;
         IDataReader reader = dbcmd.ExecuteReader();
+			Console.WriteLine ("RETRIEVE BY UID 3" + hash_component_UID);
         if (reader.Read())
         {
             acf = new AbstractComponentFunctor();
@@ -108,6 +112,7 @@ public class AbstractComponentFunctorDAO{
         {
             // NOT FOUND !
         }
+			Console.WriteLine ("RETRIEVE BY UID 4" + hash_component_UID);
         if (reader.Read())
         {
             throw new Exception("More than one line FOUND for field hash_component_UID (AbastractComponentFunctorDAO)");

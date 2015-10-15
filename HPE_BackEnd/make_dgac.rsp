@@ -56,4 +56,5 @@ DGAC/connector/wrapper/*.cs
 -r:System.Runtime.Remoting
 -r:System.Xml
 -r:/usr/lib/mono/MPI/MPI.dll
+-r:System.ServiceModel
 -out:bin/DGAC.dll

@@ -39,42 +39,6 @@ namespace HPE_DGAC_LoadDB
             return absC;
         }
 		
-		
-		/*
-        private void loadSplits(int id_abstract, Dictionary<string,string> es)
-        {
-            int splitIx = 0;
-
-            if (split != null)
-            {
-                foreach (SplitType s in split)
-                {
-                    string id_enumerator = buildEnumeratorId(s.originRef, s.eRef).Trim();
-                    foreach (string id_enumerator_split in s.splitEnumerator) // all these enumerators are enumerators of the top configuration ...
-                    {
-                        EnumeratorSplit ews = new EnumeratorSplit();
-
-                        string id_enumerator_group = null;
-                        es.TryGetValue(id_enumerator, out id_enumerator_group);
-                        id_enumerator_group = id_enumerator_group == null ? id_enumerator : id_enumerator_group;
-
-                        string id_enumerator_split_2 = null;
-                        es.TryGetValue(id_enumerator_split, out id_enumerator_split_2);
-                        id_enumerator_split_2 = id_enumerator_split_2 == null ? id_enumerator_split : id_enumerator_split_2; 
-
-                        ews.Id_abstract = id_abstract;
-                        ews.Id_split = ++splitIx;
-                        ews.Id_enumerator = id_enumerator_group;
-                        ews.Id_enumerator_split = id_enumerator_split_2;
-                        ews.Id_total_split = s.n;    // sem essa linha Id_total_split sempre é ZERO. Fiquei na dúvida ...
-
-                      //  EnumeratorSplitDAO splitdao = new EnumeratorSplitDAO();
-                        br.ufc.pargo.hpe.backend.DGAC.BackEnd.exldao.insert(ews);
-                    }
-                }
-            
-        }
-        */
 
         private IList<ParameterRenaming> parameterRenamingSupper = null;
 
@@ -82,16 +46,12 @@ namespace HPE_DGAC_LoadDB
         {
             // CREATE Component
             
-          //  InnerComponentExposedDAO iNewExpDAO = new InnerComponentExposedDAO();
-         //   InnerComponentDAO iNewDAO = new InnerComponentDAO();
-
             AbstractComponentFunctor c_ = new AbstractComponentFunctor();
             c_.Id_abstract = Connector.nextKey("id_abstract", "abstractcomponentfunctor");
             c_.Hash_component_UID = c.header.hash_component_UID;
             c_.Library_path = c.header.packagePath + "." + c.header.name;
             c_.Kind = c.header.kind.ToString();
             
-           // IList<AbstractComponentFunctorParameter> absParams = loadAbstractComponentFunctorParameters(c_);
 
             if (c.header.baseType != null)
             {
@@ -1007,14 +967,5 @@ namespace HPE_DGAC_LoadDB
                 }
             }
         }
- 
-       /* private Interface lookForUnit(AbstractComponentFunctor c, string uRefS)
-        {
-            InterfaceDAO udao = new InterfaceDAO();
-            Interface u = udao.retrieve(c.Id_abstract, uRefS);
-            return u;
-        }*/
-
-  
     }
 }
