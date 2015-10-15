@@ -86,11 +86,8 @@ public class AbstractComponentFunctorDAO{
     {
 
         AbstractComponentFunctor acf = null;
-			Console.WriteLine ("RETRIEVE BY UID 0 " + hash_component_UID);
         IDbConnection dbcon = Connector.DBcon;
-			Console.WriteLine ("RETRIEVE BY UID 1 " + " dbcon==null ? " + (dbcon == null));
         IDbCommand dbcmd = dbcon.CreateCommand();
-			Console.WriteLine ("RETRIEVE BY UID 2 ");
         string sql =
              "SELECT hash_component_UID, id_abstract, id_functor_app_supertype, library_path, kind " +
              "FROM abstractcomponentfunctor " +
