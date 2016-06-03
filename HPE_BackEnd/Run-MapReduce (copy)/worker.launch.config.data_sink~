@@ -1,1 +1,0 @@
--n 1 /usr/bin/mono-service -l:Worker1.lock ../bin/WorkerService.exe --port 4865 --debug --no-daemon
