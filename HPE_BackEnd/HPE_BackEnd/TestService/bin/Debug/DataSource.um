@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:unit_mapping xmlns:tns="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/instantiator instantiator.xsd ">
+  <tns:unit facet_instance="0" facet="0" unit_id="data_source" unit_index="0">
+    <tns:node>0</tns:node>
+   </tns:unit>
+</tns:unit_mapping>
+

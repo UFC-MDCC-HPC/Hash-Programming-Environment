@@ -1,0 +1,6 @@
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/IConnector.dll
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/IConnector.dll.mdb
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/DGAC.dll
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/DGAC.dll.mdb
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/MPI.dll
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/connector/br.ufc.pargo.hpe.ConnectorImpl/bin/1.0.0.0/MySql.Data.dll

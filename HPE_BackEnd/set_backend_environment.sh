@@ -1,0 +1,5 @@
+#!/bin/sh
+export HPE_NEXT_FREE_WORKER_PORT=4865
+export HPE_NEXT_FREE_PLATFORM_SERVICE_PORT=8082
+export HPE_PLATFORM_ACCESS=http://localhost
+

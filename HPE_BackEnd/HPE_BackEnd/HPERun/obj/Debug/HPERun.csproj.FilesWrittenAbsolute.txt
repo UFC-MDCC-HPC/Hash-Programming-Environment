@@ -1,0 +1,9 @@
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/bin/Debug/HPERun.exe.mdb
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/bin/Debug/HPERun.exe
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/obj/Debug/HPERun.exe
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/obj/Debug/HPERun.exe.mdb
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/bin/Debug/DGAC.dll
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/bin/Debug/DGAC.dll.mdb
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/bin/Debug/MPI.dll
+/home/heron/Copy/ufc_mdcc_hpc/Hash-Programming-Environment/HPE_BackEnd/HPE_BackEnd/HPERun/bin/Debug/MySql.Data.dll

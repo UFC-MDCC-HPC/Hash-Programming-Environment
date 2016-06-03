@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:application xmlns:tns="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/instantiator instantiator.xsd ">
+  <tns:contextual_type component_ref="mapreduce.System">
+  </tns:contextual_type>
+  <tns:facet_instance>1</tns:facet_instance>
+  <tns:unit_mapping facet_instance="0" facet="0" unit_id="peer_0" unit_index="0">
+    <tns:node>0</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping facet_instance="1" facet="1" unit_id="peer_1" unit_index="0">
+    <tns:node>0</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping facet_instance="2" facet="2" unit_id="peer_2" unit_index="0">
+    <tns:node>0</tns:node>
+    <tns:node>1</tns:node>
+    <tns:node>2</tns:node>
+    <tns:node>3</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping facet_instance="3" facet="3" unit_id="peer_3" unit_index="0">
+    <tns:node>0</tns:node>
+    <tns:node>1</tns:node>
+    <tns:node>2</tns:node>
+    <tns:node>3</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping facet_instance="4" facet="4" unit_id="root" unit_index="0">
+    <tns:node>0</tns:node>
+  </tns:unit_mapping>
+  <tns:facet_address facet_instance = "0" facet = "0" address="127.0.0.1" port="6000"></tns:facet_address>
+  <tns:facet_address facet_instance = "1" facet = "1" address="127.0.0.1" port="21000"></tns:facet_address>
+  <tns:facet_address facet_instance = "2" facet = "2" address="127.0.0.1" port="12000"></tns:facet_address>
+  <tns:facet_address facet_instance = "3" facet = "3" address="127.0.0.1" port="15000"></tns:facet_address>
+  <tns:facet_address facet_instance = "4" facet = "4" address="127.0.0.1" port="18000"></tns:facet_address>
+</tns:application>
+

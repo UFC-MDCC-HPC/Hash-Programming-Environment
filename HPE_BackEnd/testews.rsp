@@ -1,0 +1,9 @@
+./ws/Teste.asmx.cs
+-r:System.Web.Services.dll 
+-r:System.Runtime.Remoting.dll
+-r:System.Data.dll 
+-r:/usr/lib/mono/DGAC/DGAC.dll
+
+-target:library
+-define:DEBUG;TRACE
+-out:./ws/bin/Teste.asmx.dll

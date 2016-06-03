@@ -1,0 +1,4 @@
+#!/bin/sh
+export PATH_HOSTS_FILE=./map_1.hpe_nodes
+export BASE_BINDING_FACET_PORT=5384
+$1

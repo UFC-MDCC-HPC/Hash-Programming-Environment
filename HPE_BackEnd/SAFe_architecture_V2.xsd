@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/SAFe_architecture_V2"
+	xmlns:tns="http://www.example.org/SAFe_architecture_V2"
+	elementFormDefault="qualified">
+
+
+	<complexType name="Architecture">
+		<sequence>
+			<element name="application" type="tns:Application"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="workflow" type="tns:Workflow" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="body" type="tns:kindSetType" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="env_binding" maxOccurs="unbounded"
+				minOccurs="1">
+				<complexType>
+					<complexContent>
+						<extension base="tns:BindingType">
+							<sequence>
+								<element name="uses" type="tns:PortUses"
+									maxOccurs="1" minOccurs="1">
+								</element>
+								<element name="provides"
+									type="tns:PortProvides" maxOccurs="1" minOccurs="1">
+								</element>
+							</sequence>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+			<element name="task_binding" maxOccurs="unbounded"
+				minOccurs="1">
+				<complexType>
+					<complexContent>
+						<extension base="tns:BindingType">
+							<sequence>
+								<element name="task_A" type="tns:Port"
+									maxOccurs="1" minOccurs="1">
+								</element>
+								<element name="task_B" type="tns:Port"
+									maxOccurs="1" minOccurs="1">
+								</element>
+							</sequence>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="application_name" type="string" use="required">
+			<annotation>
+				<documentation>It is the qualified name of the application, given by the application provider.</documentation>
+			</annotation></attribute>
+	</complexType>
+
+	<element name="architecture" type="tns:Architecture"></element>
+
+	<complexType name="Workflow">
+		<complexContent>
+			<extension base="tns:Component"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="Computation">
+		<complexContent>
+			<extension base="tns:Component">
+				<sequence>
+					<element name="env_port" maxOccurs="unbounded" minOccurs="0">
+						<complexType>
+							<complexContent>
+								<extension base="tns:BindingType">
+									<sequence>
+										<element name="uses" type="tns:PortUses"
+											maxOccurs="1" minOccurs="1">
+										</element>
+										<element name="provides"
+											type="tns:PortProvides" maxOccurs="1" minOccurs="1">
+										</element>
+									</sequence>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+					<element name="task_port" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="Repository">
+		<complexContent>
+			<extension base="tns:Component"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="Connector">
+		<complexContent>
+			<extension base="tns:Component"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="Platform">
+		<complexContent>
+			<extension base="tns:Component"></extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="Qualifier">
+		<complexContent>
+			<extension base="tns:Component"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="PortUses">
+		<complexContent>
+			<extension base="tns:Port"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="PortProvides">
+		<complexContent>
+			<extension base="tns:Port"></extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="bodyType">
+		<sequence>
+			<element name="component" type="tns:kindSetType" maxOccurs="unbounded"
+				minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="Port">
+		<sequence>
+			<element name="action" maxOccurs="unbounded" minOccurs="0">
+				<complexType>
+					<attribute name="name" type="string"></attribute>
+					<attribute name="id" type="int"></attribute>
+				</complexType></element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="id" type="int" use="required"></attribute>
+	</complexType>
+
+	<complexType name="attachmentType">
+		<sequence>
+			<element name="uses" type="tns:PortUses" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="provides" type="tns:PortProvides"
+				maxOccurs="1" minOccurs="1">
+			</element>
+		</sequence>
+		<attribute name="id" type="int"></attribute>
+		<attribute name="name" type="string"></attribute>
+	</complexType>
+
+	<complexType name="Component">
+		<sequence>
+			<choice maxOccurs="unbounded" minOccurs="1">
+				<element name="env_ports" maxOccurs="1" minOccurs="0">
+					<complexType>
+						<choice maxOccurs="unbounded" minOccurs="1">
+							<element name="uses" type="tns:PortUses" maxOccurs="unbounded"
+								minOccurs="0">
+							</element>
+							<element name="provides" type="tns:PortProvides"
+								maxOccurs="unbounded" minOccurs="0">
+							</element>
+						</choice>
+					</complexType>
+				</element>
+				<element name="task_ports" maxOccurs="1" minOccurs="0">
+					<complexType>
+						<sequence>
+							<element name="task_port" type="tns:Port" maxOccurs="unbounded"
+								minOccurs="1">
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</choice>
+			<element name="contract" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="id" type="int"></attribute>
+					<attribute name="name" type="string"></attribute>
+					<attribute name="url" type="string"></attribute>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="id" type="int" use="required"></attribute>
+	</complexType>
+
+
+	<complexType name="kindSetType">
+		<choice maxOccurs="unbounded" minOccurs="1">
+			<element name="computation" type="tns:Computation" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="repository" type="tns:Repository" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="qualifier" type="tns:Qualifier" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="platform" type="tns:Platform" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="connector" type="tns:Connector" maxOccurs="unbounded"
+				minOccurs="0"></element>
+		</choice>
+	</complexType>
+
+
+	<complexType name="Application">
+		<complexContent>
+			<extension base="tns:Component"></extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="BindingType">
+		<attribute name="id" type="int"></attribute>
+		<attribute name="name" type="string"></attribute>
+	</complexType>
+</schema>

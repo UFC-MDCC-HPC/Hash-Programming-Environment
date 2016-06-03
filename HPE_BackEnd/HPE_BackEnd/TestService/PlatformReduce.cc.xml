@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:application xmlns:tns="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/instantiator instantiator.xsd ">
+  <tns:contextual_type component_ref="br.ufc.mdcc.hpcshelf.platform.Platform">
+   <tns:argument parameter_id="maintainer">
+      <tns:type component_ref="br.ufc.mdcc.hpcshelf.platform.maintainer.LocalHost"/>
+    </tns:argument>
+  </tns:contextual_type>
+</tns:application>
+

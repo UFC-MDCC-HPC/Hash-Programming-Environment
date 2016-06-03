@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="ComponentRepository.asmx.cs" Class="br.ufc.pargo.hpe.cca.ports.ComponentRepository.ComponentRepository" %>

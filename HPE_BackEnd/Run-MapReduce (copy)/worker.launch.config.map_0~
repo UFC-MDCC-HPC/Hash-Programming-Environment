@@ -1,0 +1,4 @@
+-n 1 /usr/bin/mono-service -l:Worker3.lock ../bin/WorkerService.exe --port 4867 --debug --no-daemon
+-n 1 /usr/bin/mono-service -l:Worker4.lock ../bin/WorkerService.exe --port 4868 --debug --no-daemon
+-n 1 /usr/bin/mono-service -l:Worker5.lock ../bin/WorkerService.exe --port 4869 --debug --no-daemon
+-n 1 /usr/bin/mono-service -l:Worker6.lock ../bin/WorkerService.exe --port 4870 --debug --no-daemon

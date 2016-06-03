@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="Core.asmx.cs" Class="br.ufc.mdcc.hpe.CoreService.Core" %>

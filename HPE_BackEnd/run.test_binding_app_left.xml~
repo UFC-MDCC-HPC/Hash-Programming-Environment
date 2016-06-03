@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:application xmlns:tns="http://www.example.org/instantiator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/instantiator instantiator.xsd ">
+  <tns:contextual_type component_ref="teste.TestBindingApp">
+  </tns:contextual_type>
+  <tns:facet_instance>0</tns:facet_instance>
+  <tns:unit_mapping facet_instance="0" facet="0" unit_id="left_unit" unit_index="0">
+    <tns:node>0</tns:node>
+    <tns:node>1</tns:node>
+    <tns:node>2</tns:node>
+    <tns:node>3</tns:node>
+  </tns:unit_mapping>
+  <tns:unit_mapping facet_instance="1" facet="1" unit_id="right_unit" unit_index="0">
+    <tns:node>0</tns:node>
+    <tns:node>1</tns:node>
+    <tns:node>2</tns:node>
+    <tns:node>3</tns:node>
+  </tns:unit_mapping>
+  <tns:facet_address facet_instance = "0" facet = "0" address="127.0.0.1" port="8085"></tns:facet_address>
+  <tns:facet_address facet_instance = "0" facet = "1" address="127.0.0.1" port="8086"></tns:facet_address>
+</tns:application>
+

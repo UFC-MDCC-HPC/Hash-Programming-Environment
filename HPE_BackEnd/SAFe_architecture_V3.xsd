@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://www.example.org/SAFe_architecture_V3" 
+        xmlns:tns="http://www.example.org/SAFe_architecture_V3" 
+        elementFormDefault="qualified">
+
+    <element name="architecture" type="tns:Architecture"></element>
+    
+    <complexType name="Architecture">
+    	<sequence>
+            <element name="application" type="tns:Component" maxOccurs="1" minOccurs="1"></element>
+            <element name="workflow" type="tns:Component" maxOccurs="1" minOccurs="1"></element>
+    		<element name="body" type="tns:bodyType" maxOccurs="1" minOccurs="1"></element>
+    		<element name="env_binding" type="tns:env_bindingType" maxOccurs="unbounded" minOccurs="1"></element>
+    		<element name="task_binding" type="tns:task_bindingType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Port">
+        <attribute name="type" type="tns:PortType"></attribute>
+    </complexType>
+    
+    <complexType name="EnvPort">
+    	<complexContent>
+    		<extension base="tns:Port"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="TaskPort">
+    	<complexContent>
+    		<extension base="tns:Port">
+    			<sequence>
+    				<element name="action" type="tns:Action" maxOccurs="unbounded" minOccurs="0"></element>
+    			</sequence>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="UsesPort">
+    	<complexContent>
+    		<extension base="tns:EnvPort"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="ProvidesPort">
+    	<complexContent>
+    		<extension base="tns:EnvPort"></extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="Application">
+    	<complexContent>
+    		<extension base="tns:Component"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="Component">
+    	<sequence>
+    		<element name="envPort" type="tns:EnvPort" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Workflow">
+    	<complexContent>
+    		<extension base="tns:Component"></extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="Worker">
+    	<complexContent>
+    		<extension base="tns:Component">
+    			<sequence>
+    				<element name="taskPorts" type="string"></element>
+    			</sequence>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="Computation">
+    	<complexContent>
+    		<extension base="tns:Worker"></extension>
+    	</complexContent>
+    </complexType>
+    
+    <complexType name="Connector">
+    	<complexContent>
+    		<extension base="tns:Worker"></extension>
+    	</complexContent>
+    </complexType>
+
+    <simpleType name="PortType">
+    	<restriction base="string">
+    		<enumeration value="environment"/>
+    		<enumeration value="task"/>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="Action"></complexType>
+
+    <complexType name="bodyType">
+    	<choice maxOccurs="unbounded" minOccurs="1">
+    		<element name="computation" type="tns:Computation" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="connector" type="tns:Connector" maxOccurs="unbounded" minOccurs="0"></element>
+    	</choice>
+    </complexType>
+
+    <complexType name="env_bindingType">
+    	<sequence>
+    		<element name="uses" type="tns:UsesPort" maxOccurs="1" minOccurs="1"></element>
+    		<element name="provides" type="tns:ProvidesPort" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="task_bindingType">
+    	<sequence>
+    		<element name="task_A" type="tns:TaskPort" maxOccurs="1" minOccurs="1"></element>
+    		<element name="task_B" type="tns:TaskPort" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+</schema>
